@@ -10,10 +10,9 @@ description: >
 
 **Model:** Haiku 4.5. Chain of Draft: max 5 words per reasoning step. Structural extraction only — no content judgment.
 **Requires:** document version label for section map naming.
-**GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
 
 ## Modes
-**A – Section Map:** extract all headings → `references/section-map.md`. GET + SHA before write; PUT back after (Project Instructions §GitHub API). Reuse across sessions; regenerate only on version change.
+**A – Section Map:** extract all headings → `references/section-map.md` (output file; reuse across sessions; regenerate only on version change)
 Format: `| Heading | Level | Line range | Est. tokens | Parent |`
 
 **B – Section Extraction:** extract sections by heading or line range → `chunk_[section-code]_[slug].md`
