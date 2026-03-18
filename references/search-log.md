@@ -2,93 +2,158 @@
 <!-- Managed by research-log-manager. Do not edit manually. -->
 <!-- Schema: see Project Instructions — research-log-manager skill definition -->
 
+---
 
-## lrv-contrast-visual-impairment-built-environment|VIS
-```yaml
-slug: lrv-contrast-visual-impairment-built-environment|VIS
-query: "luminance reflectance value contrast threshold visual impairment accessible built environment"
-last_searched: 2026-03-18 11:30
+slug: mobility-wheelchair-built-environment|MOB
+query: "ambulatory mobility upper limb impairment accessible built environment OT evidence"
+last_searched: 2026-03-17 17:00
 early_close_triggered: true
 languages:
-  EN: {status: SEARCHED, results: 10, db: [web]}
-  DE: {status: SEARCHED, results: 5, db: [web], note: "DIN 32975; DIN 18040-1/3; BBSR 2024; DBSV guide"}
-  NO: {status: SEARCHED, results: 3, db: [web], note: "TEK17 §12-16; §8-6"}
-  SV: {status: SEARCHED, results: 2, db: [web], note: "thin - EN 17210 reference only"}
-  FR: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  DA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  FI: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  ZH: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  JA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-top_sources: [DIN-32975, DIN-18040-3, BS-8300-2018, TEK17-12-16, Dain-2022]
-bpc_ref: "lrv-contrast-visual-impairment-built-environment|VIS"
-thin_flags: [SV]
+  EN: {status: SEARCHED, results: 20, db: [PubMed, Consensus, SG, web]}
+  DE: {status: SEARCHED, results: 5, db: [web], note: "DIN 18040-1/2/3; HEWI guides"}
+  NO: {status: SEARCHED, results: 3, db: [web], note: "TEK17; EqualAccess"}
+  SV: {status: SEARCHED, results: 4, db: [web], note: "BBR/Boverket; Kiwa certification"}
+  FR: {status: SEARCHED, results: 3, db: [web], note: "CEREMA; PMR regulations; OSAUPT"}
+  DA: {status: SEARCHED, results: 3, db: [web], note: "BR18; SBi Guidelines 230"}
+  FI: {status: SEARCHED, results: 4, db: [web], note: "Decree 241/2017; Aalto research; F1 code"}
+  ZH: {status: SEARCHED, results: 3, db: [web], note: "GB 50763-2012; GB 55019-2021; Wuhan study"}
+  JA: {status: SEARCHED, results: 4, db: [web], note: "Barrier-Free Act 2006/2021; MLIT; Tokyo ordinance"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+top_sources: [Clemson2023, DSouza2011, AlLawati2017, LeeS2017, Kennedy2015, Levine2023, Levine2025, KimC2014, Hutchison2023, Cockayne2021]
+bpc_ref: "mobility-wheelchair-built-environment|MOB"
+thin_flags: []
 no_data_flags: []
-```
 
-## corridor-width-accessible-route-public-buildings|MOB
-```yaml
-slug: corridor-width-accessible-route-public-buildings|MOB
-query: "corridor width accessible route public building accessibility standard"
-last_searched: 2026-03-18 11:30
+---
+
+slug: visual-hearing-impairment-built-environment|VIS|DEAF
+query: "visual impairment hearing impairment accessible built environment wayfinding lighting acoustics"
+last_searched: 2026-03-17 18:30
 early_close_triggered: true
 languages:
-  EN: {status: SEARCHED, results: 8, db: [web]}
-  DE: {status: SEARCHED, results: 5, db: [web], note: "DIN 18040-1 1500mm confirmed"}
-  NO: {status: SEARCHED, results: 3, db: [web], note: "TEK17 §8-6 1800/1400mm confirmed"}
-  SV: {status: SEARCHED, results: 2, db: [web], note: "thin - EN 17210 reference only"}
-  FR: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  DA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  FI: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  ZH: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  JA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-top_sources: [DIN-18040-1, TEK17-8-6, ISO-21542, BS-8300-2018]
-bpc_ref: "corridor-width-accessible-route-public-buildings|MOB"
-thin_flags: [SV]
+  EN: {status: SEARCHED, results: 18, db: [PubMed, Consensus, web]}
+  DE: {status: SEARCHED, results: 3, db: [web], note: "DIN 18040-1 luminance contrast; Two-Senses Principle"}
+  NO: {status: SEARCHED, results: 5, db: [web], note: "Norges Blindeforbund krav; ledelinjer standards"}
+  SV: {status: SEARCHED, results: 2, db: [web], note: "BBR accessibility; Boverket"}
+  FR: {status: SEARCHED, results: 2, db: [web], note: "CEREMA; ERP standards"}
+  DA: {status: SEARCHED, results: 2, db: [web], note: "BR18 accessibility provisions"}
+  FI: {status: SEARCHED, results: 2, db: [web], note: "Decree 241/2017 sensory provisions"}
+  ZH: {status: SEARCHED, results: 2, db: [web], note: "GB 50763 tactile ground indicators"}
+  JA: {status: SEARCHED, results: 3, db: [web], note: "JIS T9251; tenji block research; MLIT 2021"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+top_sources: [Zali2025, Frontiers2021, Dain2022, Ryskulova2021, LuSR2018, Bauman2010-DeafSpace, IEC60118-4, ISO23599-2019, NorgesBlind-krav]
+bpc_ref: "visual-hearing-impairment-built-environment|VIS|DEAF"
+thin_flags: []
 no_data_flags: []
-```
 
-## grab-bar-height-accessible-bathroom|MOB
-```yaml
-slug: grab-bar-height-accessible-bathroom|MOB
-query: "grab bar height accessible bathroom WC standard accessibility"
-last_searched: 2026-03-18 11:30
+---
+
+slug: neurological-dementia-built-environment|NEU|DEM
+query: "neurological ABI dementia built environment design occupational therapy evidence"
+last_searched: 2026-03-17 19:30
 early_close_triggered: true
 languages:
-  EN: {status: SEARCHED, results: 10, db: [web]}
-  DE: {status: SEARCHED, results: 5, db: [web], note: "DIN 18040 WC folding grip 740-760mm; shower 850mm confirmed"}
-  NO: {status: SEARCHED, results: 3, db: [web], note: "NS 11001 / TEK17 §12-9 range 800-850mm"}
-  SV: {status: SEARCHED, results: 2, db: [web], note: "European range 800-850mm"}
-  FR: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  DA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  FI: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  ZH: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  JA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-top_sources: [DIN-18040-1, ADA-604.5, BS-8300-2018, Levine-2023, Lee-2019]
-bpc_ref: "grab-bar-height-accessible-bathroom|MOB"
-thin_flags: [SV]
+  EN: {status: SEARCHED, results: 20, db: [PubMed, web]}
+  DE: {status: SEARCHED, results: 3, db: [web], note: "German TBI rehab standards; DIN 18040 Two-Senses"}
+  NO: {status: SEARCHED, results: 2, db: [web], note: "SINTEF dementia design; TEK17"}
+  SV: {status: SEARCHED, results: 2, db: [web], note: "BBR; Swedish dementia research Lund University"}
+  FR: {status: SEARCHED, results: 3, db: [web], note: "Village Landais Alzheimer; De Hogeweyk comparison"}
+  DA: {status: SEARCHED, results: 2, db: [web], note: "BR18; DSDC Scandinavian affiliate research"}
+  FI: {status: SEARCHED, results: 2, db: [web], note: "Decree 241/2017 care facilities; Finnish dementia design"}
+  ZH: {status: SEARCHED, results: 2, db: [web], note: "Japan small-scale homelike dementia units"}
+  JA: {status: SEARCHED, results: 3, db: [web], note: "Japanese group-living dementia quality of life research"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+top_sources: [VanBuuren2022, Milà-Villarroel2020, Fleming2011-EAT, DSDC-EADDAT, Davis2010-MS-thermo, Christogianni2022, Brown2023-ABI-OT, AOTA2023-TBI, Nakanishi2012-JA]
+bpc_ref: "neurological-dementia-built-environment|NEU|DEM"
+thin_flags: []
 no_data_flags: []
-```
 
-## visual-alarm-device-seizure-risk-photosensitive-epilepsy|NEU
-```yaml
-slug: visual-alarm-device-seizure-risk-photosensitive-epilepsy|NEU
-query: "visual alarm device strobe flash rate photosensitive epilepsy seizure risk built environment"
-last_searched: 2026-03-18 11:30
+---
+
+slug: neurodivergent-mental-health-built-environment|NDV|MH
+query: "neurodivergent autism ADHD PTSD trauma mental health built environment design evidence"
+last_searched: 2026-03-17 20:00
 early_close_triggered: true
 languages:
-  EN: {status: SEARCHED, results: 8, db: [web]}
-  DE: {status: SEARCHED, results: 3, db: [web], note: "DIN VDE 0833-2; no PSE-specific alternative guidance"}
-  NO: {status: SEARCHED, results: 2, db: [web], note: "EN 54-23 compliance; no PSE exemption"}
-  SV: {status: SEARCHED, results: 1, db: [web], note: "thin - EN 54-23 reference only"}
-  FR: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  DA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  FI: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  ZH: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-  JA: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
-top_sources: [BS-EN-54-23, Epilepsy-Foundation-2024, PMC-2025-PSE-guidelines, DIN-VDE-0833-2]
-bpc_ref: "visual-alarm-device-seizure-risk-photosensitive-epilepsy|NEU"
-thin_flags: [SV, NO]
+  EN: {status: SEARCHED, results: 18, db: [PubMed, web]}
+  DE: {status: SEARCHED, results: 2, db: [web], note: "DIN 18040 sensory Two-Senses; German autism design research"}
+  NO: {status: SEARCHED, results: 2, db: [web], note: "TEK17; Buro Happold Nordic references"}
+  SV: {status: SEARCHED, results: 2, db: [web], note: "Lund University sensory design research"}
+  FR: {status: SEARCHED, results: 2, db: [web], note: "French sensory room specifications; trauma-informed housing"}
+  DA: {status: SEARCHED, results: 1, db: [web], note: "DSDC references; BR18"}
+  FI: {status: SEARCHED, results: 2, db: [web], note: "Finnish neurodivergent design guidelines"}
+  ZH: {status: THIN, results: 1, db: [web], note: "Chinese autism design research (thin)"}
+  JA: {status: SEARCHED, results: 2, db: [web], note: "Japanese sensory design; ADHD architecture"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+top_sources: [PAS6463-2022, Mostafa-ASPECTSS, PMC9658651-TID, PMC10689333-TID-youth, Motionspot-2022, BuroHappold-2024, SAMHSA-TIC, Cuningham-TID]
+bpc_ref: "neurodivergent-mental-health-built-environment|NDV|MH"
+thin_flags: [ZH]
 no_data_flags: []
-gap_flagged: "P1 systemic - no jurisdiction specifies non-strobe VAD for PSE populations"
-```
 
+---
+
+slug: chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS
+query: "chronic pain fibromyalgia ME/CFS POTS built environment design occupational therapy evidence"
+last_searched: 2026-03-17 20:30
+early_close_triggered: true
+languages:
+  EN: {status: SEARCHED, results: 14, db: [PubMed, web]}
+  DE: {status: NO-DATA, results: 0, db: [web], note: "No DE OT built environment evidence found for PAIN/OFS"}
+  NO: {status: NO-DATA, results: 0, db: [web], note: "No NO evidence found"}
+  SV: {status: THIN, results: 1, db: [web], note: "Swedish fibromyalgia prevalence data only"}
+  FR: {status: THIN, results: 1, db: [web], note: "French OT chronic pain reference only"}
+  DA: {status: NO-DATA, results: 0, db: [web]}
+  FI: {status: NO-DATA, results: 0, db: [web]}
+  ZH: {status: NO-DATA, results: 0, db: [web]}
+  JA: {status: NO-DATA, results: 0, db: [web]}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+top_sources: [PMC6260403-OT-CP, AOTA-FM-2018, Autonomic-POTS-2018, CDC-MECFS, Bateman-Horne, PMID18805903-POTS-CFS]
+bpc_ref: "chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS"
+thin_flags: [SV, FR, DE, NO]
+no_data_flags: [DA, FI, ZH, JA]
+
+---
+
+slug: deafblind-intellectual-disability-built-environment|DBL|IntD
+query: "DeafBlind intellectual disability built environment design occupational therapy evidence"
+last_searched: 2026-03-17 21:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 8, db: [PubMed, web], note: "Very thin base — no Tier 1-2 evidence found for DBL built environment"}
+  DE: {status: SEARCHED, results: 1, db: [web], note: "Bundesvereinigung Lebenshilfe (IntD only)"}
+  NO: {status: SEARCHED, results: 1, db: [web], note: "SINTEF reference only"}
+  SV: {status: THIN, results: 1, db: [web]}
+  FR: {status: THIN, results: 1, db: [web]}
+  DA: {status: NO-DATA, results: 0, db: [web]}
+  FI: {status: NO-DATA, results: 0, db: [web]}
+  ZH: {status: NO-DATA, results: 0, db: [web]}
+  JA: {status: NO-DATA, results: 0, db: [web]}
+  NL: {status: SEARCHED, results: 2, db: [web], note: "Vilans (IntD — Netherlands)"}
+  ES: {status: SEARCHED, results: 1, db: [web], note: "Plena inclusion (IntD — Spain)"}
+  PT: {status: NOT-RUN, results: 0, db: []}
+  KO: {status: NOT-RUN, results: 0, db: []}
+  IT: {status: NOT-RUN, results: 0, db: []}
+top_sources: [Sense-UK, Helen-Keller-Intl, Perkins-School-DBL, Bundesvereinigung-Lebenshilfe, Vilans-NL, PlenainclusiónES, DSDC-DBL-VIS]
+bpc_ref: "deafblind-intellectual-disability-built-environment|DBL|IntD"
+thin_flags: [EN, SV, FR, DE, NO]
+no_data_flags: [DA, FI, ZH, JA]
