@@ -10,149 +10,66 @@ description: >
 ---
 
 **Model:** Sonnet 4.6
-**Skill registry:** Full registry below.
-**Rules:** `references/project-standards.md` (read from GitHub at session start)
-
----
-
-## GitHub Backend
-
-All persistent project state lives in `jordanelias/guidebook` on branch `main`.
-
-**PAT:** Required at session start. If not present in context, prompt user before proceeding:
-> "Please provide your GitHub PAT to continue."
-
-**Read a file:**
-```
-GET https://api.github.com/repos/jordanelias/guidebook/contents/{path}
-Authorization: token {PAT}
-```
-Response `content` field is base64-encoded. Decode before parsing. Capture `sha` for any subsequent write.
-
-**Write a file:**
-```
-PUT https://api.github.com/repos/jordanelias/guidebook/contents/{path}
-Authorization: token {PAT}
-Body: { "message": "{commit message}", "content": "{base64-encoded}", "sha": "{current sha}" }
-```
-Always GET before PUT to obtain current SHA. On 409 conflict: re-GET and retry once.
-
-**Commit message convention:**
-```
-workplan-orchestrator: {ACTION} [{YYYY-MM-DD HH:MM}]
-```
+**GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
 
 ---
 
 ## Session Start Protocol (mandatory — every new conversation)
 
-Run this protocol before any task intake. Do not skip.
+### 1 — Load session state
+GET `session_log.md`. Find most recent `session_close` YAML block.
+- **Found:** Report last session datetime, last skill run, next action, open P1 gap count, blockers. Confirm with user before resuming. Do not auto-resume.
+- **Empty/not found:** "No prior session. Starting fresh."
 
-### Step 1 — Read session_log.md from GitHub
-GET `session_log.md`. Decode. Find the most recent `session_close` YAML block.
+### 2 — Load gap register
+GET `gap_register.md`. Extract OPEN P1 items. Surface to user if any; otherwise proceed silently.
 
-- **YAML block found:** Report to user:
-  ```
-  Last session: {session_close datetime}
-  Document: {document}
-  Last stage completed: {last entry in skills_run}
-  Next action: {next_action.skill} on {next_action.input_file}
-  Open P1 gaps: {count from gaps_added minus gaps_resolved}
-  Blockers: {blockers list or "none"}
-  ```
-  Confirm with user before resuming. Do not auto-resume.
+### 3 — Load project standards
+GET `references/project-standards.md`. Load rules into active context.
 
-- **No YAML block / file empty:** Report: "No prior session found. Starting fresh." Proceed to task intake.
+### 4 — Confirm PAT
+If PAT not yet provided: prompt user. Do not proceed without it.
 
-### Step 2 — Read gap_register.md from GitHub
-GET `gap_register.md`. Decode. Extract all OPEN P1 items.
-
-- If P1 items exist: surface them to user before proceeding.
-- If none: proceed silently.
-
-### Step 3 — Read project-standards.md from GitHub
-GET `references/project-standards.md`. Decode. Load rules into active context for this session.
-
-### Step 4 — Confirm PAT is available
-If PAT was not provided at session open: prompt now. Do not proceed to task intake without it.
+**Skip condition:** "fast-track" or "go" skips user confirmation at Task Intake only. Protocol still runs.
 
 ---
 
 ## Task Intake
-
-1. Session Start Protocol complete → proceed.
-2. New task: identify scope + goal → select workflow → confirm with user in ≤3 lines → execute.
-3. Resumed task: confirm next action from YAML block → execute from that stage.
-
-**Skip condition:** user includes "fast-track" or "go" → skip user confirmation step only. Session Start Protocol still runs.
+New task: identify scope + goal → select workflow → confirm in ≤3 lines → execute.
+Resumed task: confirm next action from YAML → execute from that stage.
 
 ---
 
 ## Workflows
 
-**Full Section Review**
-L1 (Haiku): `haiku-chunker` A+B → section map + chunks
-L2 (parallel): `structure-auditor` · `markdown-formatter` · `guidebook-auditor` A+B+C · `content-gap-analyzer` · `framing-checker` · `evidence-auditor`
-L3: `research-log-manager` CHECK → `multilingual-research` (from L2 gaps) · `citation-verifier` (all claims) → `research-log-manager` LOG
-L4 (Haiku ok): `guidebook-auditor` C · `volii-validator` provisional · `cross-reference-resolver`
-→ aggregate → `prose-style-checker` → `critique-report-writer`
+| Workflow | Skill sequence |
+|---|---|
+| **Full Section Review** | haiku-chunker → [structure-auditor · markdown-formatter · guidebook-auditor A+B+C · content-gap-analyzer · framing-checker · evidence-auditor] → [research-log-manager CHECK · multilingual-research · citation-verifier · research-log-manager LOG] → [guidebook-auditor C · volii-validator · cross-reference-resolver] → prose-style-checker → critique-report-writer |
+| **Item Specification** | item-consolidation-analyzer → item-specification-writer → [framing-checker · evidence-auditor] → prose-style-checker → volii-validator |
+| **Structural Change** | structure-auditor → markdown-formatter → cross-reference-resolver → find-and-replace → guidebook-auditor A |
+| **Bulk Text Change** | find-and-replace (all six stages — classification before execution) |
+| **Citation Audit** | citation-verifier → critique-report-writer §7 |
+| **Evidence Gap** | content-gap-analyzer → research-log-manager CHECK → multilingual-research → research-log-manager LOG → gap list |
+| **Format Check** | structure-auditor → markdown-formatter → guidebook-auditor A+B |
+| **Framing + Style** | framing-checker → prose-style-checker |
+| **New Chapter** | content-gap-analyzer → research-log-manager CHECK → multilingual-research → research-log-manager LOG → citation-verifier → item-specification-writer → evidence brief |
+| **Research Retrieval** | research-log-manager CHECK → if COMPLETE: retrieve BPC · if PARTIAL/STALE/NOT FOUND: multilingual-research → research-log-manager LOG |
+| **Version Comparison** | version-diff on two aligned chunks |
+| **Supplementary Volume** | supplemental-integrator → [find-and-replace · volii-validator · cross-reference-resolver] → guidebook-auditor A |
+| **Document Assembly** | chunk-assembler → cross-reference-resolver → guidebook-auditor A |
+| **Session Wrap** | session-consolidator |
 
-**Item Specification**
-`item-consolidation-analyzer` → `item-specification-writer` → [`framing-checker` · `evidence-auditor`] → `prose-style-checker` → `volii-validator`
-
-**Structural Change Package**
-`structure-auditor` → `markdown-formatter` → `cross-reference-resolver` → `find-and-replace` → `guidebook-auditor` A
-
-**Bulk Text Change**
-`find-and-replace` (all six stages required — classification before execution)
-
-**Citation Audit**
-`citation-verifier` → `critique-report-writer` §7
-
-**Evidence Gap**
-`content-gap-analyzer` → `research-log-manager` CHECK → `multilingual-research` → `research-log-manager` LOG → gap list
-
-**Format Check**
-`structure-auditor` → `markdown-formatter` → `guidebook-auditor` A+B
-
-**Framing + Style**
-`framing-checker` → `prose-style-checker`
-
-**New Chapter**
-`content-gap-analyzer` → `research-log-manager` CHECK → `multilingual-research` → `research-log-manager` LOG → `citation-verifier` → `item-specification-writer` → evidence brief
-
-**Research Retrieval**
-`research-log-manager` CHECK → if COMPLETE: retrieve from BPC → pass to `item-specification-writer` · if PARTIAL/STALE/NOT FOUND: `multilingual-research` → `research-log-manager` LOG
-
-**Version Comparison**
-`version-diff` on two aligned chunks
-
-**Supplementary Volume Integration**
-`supplemental-integrator` → [`find-and-replace` · `volii-validator` · `cross-reference-resolver`] → `guidebook-auditor` A
-
-**Document Assembly**
-`chunk-assembler` (requires current section map) → `cross-reference-resolver` → `guidebook-auditor` A
-
-**Session Wrap**
-`session-consolidator`
-
-**Parallel rule:** L2 and L4 agents in Full Section Review run independently. No agent takes another L2/L4 agent's output as input within the same level.
+**Parallel rule:** L2 and L4 agents in Full Section Review run independently. No L2/L4 agent takes another's output as input within the same level.
 
 ---
 
 ## Gap Register — Write Protocol
+When any skill produces a gap item:
+1. GET `gap_register.md` + SHA.
+2. Append: `GAP-XXX | P{1|2|3} | OPEN | {skill} | {section} | {description} | {YYYY-MM-DD HH:MM}`
+3. PUT back. Commit: `workplan-orchestrator: append GAP-XXX [{YYYY-MM-DD HH:MM}]`
 
-When any skill produces a gap item, write it to GitHub:
-
-1. GET `gap_register.md` — capture content + SHA.
-2. Append new OPEN item in this format:
-   ```
-   GAP-XXX | P{1|2|3} | OPEN | {skill} | {section} | {description} | {YYYY-MM-DD HH:MM}
-   ```
-3. PUT updated file back with SHA.
-4. Commit message: `workplan-orchestrator: append GAP-XXX to gap_register [{YYYY-MM-DD HH:MM}]`
-
-Never overwrite CLOSED items. Append only.
+Never overwrite CLOSED items.
 
 ---
 
@@ -162,51 +79,51 @@ Never overwrite CLOSED items. Append only.
 | Skill | Model | Role |
 |---|---|---|
 | `workplan-orchestrator` | — | This skill |
-| `session-consolidator` | Sonnet 4.6 | Session end; gap register; YAML handoff |
+| `session-consolidator` | Sonnet 4.6 | Session end; YAML handoff to GitHub |
 
 ### Document Processing
 | Skill | Model | Role |
 |---|---|---|
 | `haiku-chunker` | Haiku 4.5 | Chunk docs >500 lines; build section map |
-| `structure-auditor` | Haiku 4.5 | Heading hierarchy audit; structural violations |
-| `markdown-formatter` | Haiku 4.5 | Correct heading levels and markdown consistency |
-| `chunk-assembler` | Haiku/Sonnet | Reassemble chunks; section-map-derived order |
-| `find-and-replace` | Haiku/Sonnet | Bulk text substitution with classification and validation |
-| `table-formatter` | Haiku 4.5 | Repair and standardise tables |
+| `structure-auditor` | Haiku 4.5 | Heading hierarchy; structural violations |
+| `markdown-formatter` | Haiku 4.5 | Heading levels; markdown consistency |
+| `chunk-assembler` | Haiku/Sonnet | Reassemble chunks in section-map order |
+| `find-and-replace` | Haiku/Sonnet | Bulk text substitution with classification |
+| `table-formatter` | Haiku 4.5 | Table repair and standardisation |
 
 ### Content Analysis
 | Skill | Model | Role |
 |---|---|---|
-| `guidebook-auditor` | Haiku (A/C/E) · Sonnet (B/D) | Format, consistency, structure audit |
-| `content-gap-analyzer` | Sonnet 4.6 | Population and topic coverage gap detection |
+| `guidebook-auditor` | Haiku (A/C/E) · Sonnet (B/D) | Format, consistency, structure |
+| `content-gap-analyzer` | Sonnet 4.6 | Population and topic coverage gaps |
 | `framing-checker` | Sonnet 4.6 | Social model framing; CRPD alignment |
-| `evidence-auditor` | Sonnet 4.6 | Evidence stratification; overclaiming detection |
-| `item-consolidation-analyzer` | Sonnet 4.6 | Merge/split/scope items within a category |
-| `version-diff` | Sonnet 4.6 | Semantic diff between document versions |
+| `evidence-auditor` | Sonnet 4.6 | Evidence stratification; overclaiming |
+| `item-consolidation-analyzer` | Sonnet 4.6 | Merge/split/scope items |
+| `version-diff` | Sonnet 4.6 | Semantic diff between versions |
 
 ### Writing and Specification
 | Skill | Model | Role |
 |---|---|---|
-| `prose-style-checker` | Sonnet 4.6 | Project prose register; concision; voice |
-| `item-specification-writer` | Sonnet 4.6 | Draft and revise item-level specifications |
+| `prose-style-checker` | Sonnet 4.6 | Register; concision; voice |
+| `item-specification-writer` | Sonnet 4.6 | Draft and revise specifications |
 | `practice-note-generator` | Sonnet 4.6 | OT practitioner field tools |
 
 ### Research and Verification
 | Skill | Model | Role |
 |---|---|---|
 | `citation-verifier` | Sonnet 4.6 | Citation audit; hallucination screen |
-| `multilingual-research` | Sonnet 4.6 + web | 14-language literature search; always preceded by research-log-manager CHECK and followed by LOG |
-| `research-log-manager` | Sonnet 4.6 | GitHub-backed search log and best-practices compendium |
-| `literature-review-planner` | Sonnet 4.6 + web | Systematic review protocol; PRISMA alignment |
-| `economics-researcher` | Sonnet 4.6 + web | Economics evidence; funding programme research |
+| `multilingual-research` | Sonnet 4.6 + web | 14-language search; CHECK before / LOG after |
+| `research-log-manager` | Sonnet 4.6 | GitHub-backed search log and BPC |
+| `literature-review-planner` | Sonnet 4.6 + web | Systematic review protocol; PRISMA |
+| `economics-researcher` | Sonnet 4.6 + web | Economics evidence; funding programmes |
 | `jurisdiction-tracker` | Sonnet 4.6 + web | Standards currency by jurisdiction |
 
 ### Reference Management
 | Skill | Model | Role |
 |---|---|---|
-| `cross-reference-resolver` | Haiku/Sonnet | Audit and repair internal narrative cross-references |
-| `volii-validator` | Haiku/Sonnet | Item code validation against application volume library |
-| `supplemental-integrator` | Haiku/Sonnet | Integrate supplementary population volumes |
+| `cross-reference-resolver` | Haiku/Sonnet | Audit and repair internal cross-references |
+| `volii-validator` | Haiku/Sonnet | Item code validation |
+| `supplemental-integrator` | Haiku/Sonnet | Integrate supplementary volumes |
 
 ### Reporting
 | Skill | Model | Role |
@@ -216,11 +133,7 @@ Never overwrite CLOSED items. Append only.
 ---
 
 ## Risk Escalation
-After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → append REVIEW item to `gap_register.md` on GitHub with signals, section, and triggering skill.
-
----
+After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → append REVIEW item to `gap_register.md` on GitHub.
 
 ## Token Rules
-Never re-run a completed stage. Consume existing outputs. Checkpoint per stage: 1–2 lines only. Context limit approaching → complete stage, invoke `session-consolidator`, instruct user to start new chat.
-
-All timestamps: `YYYY-MM-DD HH:MM`.
+Never re-run a completed stage. Consume existing outputs. Checkpoint per stage: 1–2 lines. Context limit approaching → complete stage, invoke `session-consolidator`, instruct user to start new chat. All timestamps: `YYYY-MM-DD HH:MM`.
