@@ -139,3 +139,8 @@ RULE: Context limit approaching → complete current stage, invoke session-conso
 CONDITION: Context approaching limit.
 ACTION: Prioritise clean session close over partial additional work.
 DATE: Established — pre-session
+
+RULE: Early-close gate is SUSPENDED for all multilingual-research runs on population categories (C-04, E-08, G-03, B-10, DBL, PAIN, OFS, MOB, VIS, DEAF, NEU, DEM, NDV, MH, and any item-level search). All 9 core languages must be fully searched before a run closes. EXCEPTION: IntD (intellectual disability) — early-close gate remains active for IntD searches only, as literature is confirmed absent in non-English sources and further search yields no additional evidence.
+CONDITION: Any multilingual-research run on any topic/population except IntD.
+ACTION: Run all 9 core languages to completion before synthesising. Do not close at early-close gate. Record all NO-DATA and THIN results explicitly.
+DATE: 2026-03-18 15:00
