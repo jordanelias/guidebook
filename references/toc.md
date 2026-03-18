@@ -37,7 +37,7 @@
   - DAR Cost Multiplier Table
 - §1.7 CRPD Framework Alignment
 - §1.8 Evidence Frameworks
-- §1.11 Scope
+- §1.9 Scope
 
 ## Part 2: Disability Categories
 
