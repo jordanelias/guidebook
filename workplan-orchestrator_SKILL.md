@@ -89,6 +89,7 @@ Never overwrite CLOSED items.
 | `markdown-formatter` | Haiku 4.5 | Heading levels; markdown consistency |
 | `chunk-assembler` | Haiku/Sonnet | Reassemble chunks in section-map order |
 | `find-and-replace` | Haiku/Sonnet | Bulk text substitution with classification |
+| `fix-linebreaks` | Haiku 4.5 | Join hard-wrapped prose lines from DOCX conversion |
 | `table-formatter` | Haiku 4.5 | Table repair and standardisation |
 
 ### Content Analysis
@@ -106,6 +107,7 @@ Never overwrite CLOSED items.
 |---|---|---|
 | `prose-style-checker` | Sonnet 4.6 | Register; concision; voice |
 | `item-specification-writer` | Sonnet 4.6 | Draft and revise specifications |
+| `vol2-item-formatter` | Haiku/Sonnet | Format and validate Vol 2 item blocks |
 | `practice-note-generator` | Sonnet 4.6 | OT practitioner field tools |
 
 ### Research and Verification
