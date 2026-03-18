@@ -89,3 +89,21 @@
 **Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · Newcastle-POTS-2018
 **Divergent findings:** None found (insufficient evidence base for divergence)
 **Notes:** GAP-029 P2 OPEN. Guidebook must disclose PAIN/OFS specifications are expert consensus from clinical evidence, not built-environment research. H-04 temperature range absent for MS/OFS/PAIN — GAP-ITEM-SPEC. SCOPE-GATE-CANDIDATES: DA, FI, ZH, JA for PAIN/OFS — 4 consecutive NO-DATA. GAP-ITEM-NEW: reclining/tilt seating specification.
+
+## deafblind-built-environment-design|DBL
+**Updated:** 2026-03-18 14:30  **Evidence tier:** 4-5
+**Consensus finding:** Zero Tier 1-2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4-5: DeafSpace Design Guidelines (2010), practitioner guidance (JJones 2025), organisational guidance (NELOWV 2025). Nordic Welfare Centre provides clinical/communication research only.
+**Key design principles (all Tier 4-5):** Tactile-first redundancy; textured zone transitions; corridors >=1500mm for intervenor; glare-free shadow-free illumination; vibrotactile alert supplement; intervenor clear floor space >=900x1500mm at service counters (GAP-NEW-01); acoustic differentiation (A-15) as primary navigation channel.
+**Jurisdictions confirmed:** No jurisdiction has DBL-specific built-environment standards
+**Early-close:** yes  **Thin/No-data:** NO, SV, DE
+**Key sources:** DeafSpace (2010); NELOWV (2025); JJones (2025); Nordic Welfare Centre; MDPI Buildings 14(3):707 (2024)
+**Gap registered:** THIN BASE - zero Tier 1-2; GAP-NEW-01/02/03/04 confirmed
+
+## intellectual-disability-built-environment-design|IntD
+**Updated:** 2026-03-18 14:30  **Evidence tier:** 3-4
+**Consensus finding:** Tier 3-4 evidence supports specific IntD built-environment principles. MDPI 2026 (Tier 3) most detailed analysis. NDIS SDA (AU, Tier 4) only jurisdiction-specific standard. No European standard provides quantified IntD provisions.
+**Key design principles:** One-way legible circulation; radial/loop layouts; no blind corners; pictogram + single-word signage; colour-zone wayfinding; different ceiling heights for zone demarcation; reception facility at decision points; tactile floor materials per zone; enhanced luminance contrast; consistent predictable layout.
+**Jurisdictions confirmed:** AU (NDIS SDA Improved Liveability); CA (CSA B651:23 s.4.7 qualitative)
+**Early-close:** yes  **Thin/No-data:** NO, SV, DE
+**Key sources:** MDPI Buildings 16(3):489 (2026); PMC (2025) IntD home design scoping; NDIS SDA (2019); Castell (2008); CSA B651:23
+**Gap registered:** THIN BASE - quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed
