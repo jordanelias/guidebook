@@ -59,3 +59,14 @@ GAP-NEW-10 | P2 | OPEN | content-gap-analyzer | NR-HLT,NR-EDU | ALL: de-escalati
 GAP-NEW-11 | P2 | OPEN | content-gap-analyzer | R-LIV,NR-WRK | OFS,PAIN: reclining/tilt seating provision for users who cannot remain upright; no standard exists; needed for OFS/ME, OFS/POTS, PAIN populations; expert consensus + clinical evidence only | 2026-03-17 21:30
 GAP-NEW-12 | P2 | OPEN | content-gap-analyzer | R-BED | ALL: DAR provision for ground floor bedroom designation; allows future care needs without structural change; referenced in DAR doctrine but not as a standalone Vol 2 item | 2026-03-17 21:30
 GAP-NEW-13 | P2 | OPEN | content-gap-analyzer | NR-TRP | VIS,DEAF,DBL: real-time accessible information display at transport interchange points (caption displays, tactile departure boards); absent from guidebook; covered partially by some transport standards | 2026-03-17 21:30
+GAP-IMPL-01 | P2 | OPEN | workplan-orchestrator | H-01 | Controls accessible height: 1100mm vs 1200mm tension for powered wheelchair reach range unresolved. Evidence review required for next edition. | 2026-03-18 20:00
+GAP-IMPL-02 | P2 | OPEN | item-specification-writer | G-08 | Resilient/cushioned flooring for PAIN: deferred — single source only; citation floor not met. Requires additional evidence before item creation. | 2026-03-18 20:00
+GAP-IMPL-03 | P2 | OPEN | multilingual-research | H-05 | Real-time captioned transport information: deferred — requires dedicated multilingual-research run before item creation. | 2026-03-18 20:00
+GAP-IMPL-04 | P2 | OPEN | citation-verifier | A-09 | Desmeules et al. (2003) incomplete citation — no volume/page/DOI. Confirm before publication. | 2026-03-18 20:00
+GAP-IMPL-05 | P2 | OPEN | citation-verifier | A-09 | Staud (2011) — verify PMID or DOI before publication. | 2026-03-18 20:00
+GAP-IMPL-06 | P3 | OPEN | multilingual-research | I-02 | Kitchen one-handed operation: single grey literature source only (ILCWA). Citation floor failure. | 2026-03-18 20:00
+GAP-STEP5-01 | P1 | OPEN | item-specification-writer | B-10 | SAFETY: seizure risk for photosensitive populations from VAD flash rate not disclosed. Required before publication. | 2026-03-18 20:00
+GAP-STEP5-02 | P1 | OPEN | item-specification-writer | D-08 | Population conflation: IntD conflated with DEM/NDV under "cognitive difficulties". Clinically incorrect. Required before publication. | 2026-03-18 20:00
+GAP-STEP6-01 | P2 | OPEN | item-specification-writer | C-04 | Split required: C-04a (≥30 LRV general) + C-04b (≥40 LRV critical navigation). CONFLICTED per Dain 2022. | 2026-03-18 20:00
+GAP-STEP6-02 | P2 | OPEN | item-specification-writer | C-04/C-05 | Conflict resolution note required in Part IV. | 2026-03-18 20:00
+GAP-STEP6-03 | P2 | OPEN | item-specification-writer | E-08 | DBL intervenor width: ≥1500mm on primary routes where DBL identified. DIN 18040-1 evidence. | 2026-03-18 20:00
