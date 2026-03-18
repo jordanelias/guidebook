@@ -268,3 +268,9 @@ RULE: GitHub skills/ directory is inventory only. Skills in skills/ on GitHub ar
 CONDITION: Any skill invocation or skill file access.
 ACTION: Always read and execute skills from /mnt/project/. Write updated skill content to both /mnt/project/ (canonical) and skills/ on GitHub (inventory copy). Never fetch from GitHub skills/ at runtime.
 DATE: 2026-03-18 22:15
+
+
+RULE: SUPERSEDED — the rule dated 2026-03-18 18:30 stating "Updated skill files are written to skills/ directory on GitHub. When a skill has both a project file and a skills/ GitHub file, the GitHub version takes precedence." is superseded by the inventory rule dated 2026-03-18 22:15. GitHub skills/ is inventory only and is never read at runtime. /mnt/project/ is always canonical.
+CONDITION: Any skill invocation.
+ACTION: Ignore the superseded precedence rule. Always execute from /mnt/project/.
+DATE: 2026-03-18 22:25
