@@ -21,13 +21,12 @@ description: >
 **Input:** assembled document (or section map + chunks) · scope (full doc / specific volumes)  
 **Output:** cross-reference register (YAML) + resolution table + find-and-replace handoff spec  
 **Chunk ceiling:** 500 lines per pass. Always use section map to guide scope.
-**GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
 
 ---
 
 ## 1. Reference Pattern Inventory
 
-This skill resolves these reference types. New patterns → GET `references/ref-patterns.md` + SHA, append, PUT back (Project Instructions §GitHub API).
+This skill resolves these reference types. Add new patterns to `references/ref-patterns.md` if the document introduces new conventions.
 
 | Type | Pattern examples | Notes |
 |---|---|---|
