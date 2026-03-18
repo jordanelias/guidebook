@@ -214,3 +214,19 @@ RULE: Updated skill files are written to skills/ directory on GitHub. When a ski
 CONDITION: Any skill updated through the 2026-03-18 audit.
 ACTION: Check skills/{skill-name}_SKILL.md on GitHub first. Fall back to /mnt/project/{skill-name}_SKILL.md only if not found on GitHub.
 DATE: 2026-03-18 18:30
+
+
+RULE: Part V (Engineering and Coordination) is a fully authored section containing the Engineering Coordination Register (V.1) and discipline brief templates (V.2–V.5) for AC, EE, ME, and SE. The 2026-03-18 20:20 placeholder rule is superseded. Part V is no longer a stub.
+CONDITION: Any edit or reference to Part V content.
+ACTION: Use Part-V-MEP-Coordination-2026-03-18-rev4 as the canonical Part V content. Do not add placeholder notes. Do not treat Part V as incomplete.
+DATE: 2026-03-18 18:30
+
+RULE: Part VI (Working with Specialist Consultants) is a fully authored Volume 2 section covering OT appointment, dementia design specialists, DeafSpace consultants, sensory design specialists, and accessibility auditors. It is placed in Volume 2 after Part V (Engineering and Coordination), not in Volume 3.
+CONDITION: Any structural edit, assembly pass, or cross-reference to specialist consultant guidance.
+ACTION: Place Part VI immediately after Part V in Volume 2. Do not place in Volume 3. Use Part-VI-Specialist-Consultants-2026-03-18 as canonical content.
+DATE: 2026-03-18 18:30
+
+RULE: §I.8 "From Approach to Application" is the closing section of Volume 2 Part I (Synthesis and Sequencing). It follows §I.7 (Worked Examples). Cross-reference "Vol 1 §1.4a" in §I.8 is to be verified against actual §1.4 sub-section numbering before integration and corrected if needed.
+CONDITION: Any assembly or integration pass touching Volume 2 Part I.
+ACTION: Insert §I.8 after §I.7. Verify and correct the §1.4a cross-reference. Update Part and Section Map in front matter.
+DATE: 2026-03-18 18:30
