@@ -230,3 +230,5 @@ RULE: §I.8 "From Approach to Application" is the closing section of Volume 2 Pa
 CONDITION: Any assembly or integration pass touching Volume 2 Part I.
 ACTION: Insert §I.8 after §I.7. Verify and correct the §1.4a cross-reference. Update Part and Section Map in front matter.
 DATE: 2026-03-18 18:30
+
+RULE: VIS/DEAF is not a valid population code. CONDITION: All documents, skills, tables, and code lists in this project. ACTION: Use VIS for vision impairment only; use DEAF for Deaf/hard of hearing; use DBL for DeafBlind. VIS/DEAF must never appear. DATE: 2026-03-18 19:00
