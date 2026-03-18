@@ -160,3 +160,9 @@ RULE: DBL and IntD room matrix additions carry tiered evidence disclosure. DBL: 
 CONDITION: Any DBL or IntD provision added to room matrices.
 ACTION: Apply disclosure per item-spec-revisions-2026-03-18-18-00.md §6.
 DATE: 2026-03-18 18:30
+
+
+RULE: If a publication blocker requires citation verification and two or more independent searches across sessions have returned no confirmed source, the item or specification value is to be deleted from the guidebook rather than indefinitely flagged. The deletion is the resolution. Do not accumulate unresolvable UNVERIFIED flags — they degrade the document and create false precision. Apply this rule to A-09 0.1 m/s RMS threshold (delete the post-installation velocity target) and to any future items where repeated citation search fails to locate a source.
+CONDITION: Any specification value carrying [UNVERIFIED] after two or more independent search attempts have failed to locate a source.
+ACTION: Delete the specific value or claim from the guidebook text. Retain the item structure if the remainder of the item is evidence-supported. Log the deletion in gap_register.md as CLOSED-DELETED.
+DATE: 2026-03-18 19:10
