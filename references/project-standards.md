@@ -262,3 +262,9 @@ RULE: Supplementary Volume uses Supp. Part 1–4 with §1.x–§4.x section codi
 CONDITION: Any cross-reference to the Supplementary Volume from the main guidebook or skills.
 ACTION: Use "Supp. Part [n] §[n.x]" form. Do not use "Section I", "Section II" etc. for the Supplementary Volume.
 DATE: 2026-03-18 19:00
+
+
+RULE: GitHub skills/ directory is inventory only. Skills in skills/ on GitHub are never read or executed — they exist solely as a human-readable record of what skills are registered in the project. Canonical execution source is always /mnt/project/{skill}_SKILL.md. Reading skills from GitHub adds unnecessary token overhead and is forbidden.
+CONDITION: Any skill invocation or skill file access.
+ACTION: Always read and execute skills from /mnt/project/. Write updated skill content to both /mnt/project/ (canonical) and skills/ on GitHub (inventory copy). Never fetch from GitHub skills/ at runtime.
+DATE: 2026-03-18 22:15
