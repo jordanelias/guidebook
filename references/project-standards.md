@@ -189,3 +189,13 @@ RULE: Updated skill files are written to `skills/` directory on GitHub. Project 
 CONDITION: Any skill that has been updated through the 2026-03-18 audit.
 ACTION: When loading skills, check `skills/{skill-name}_SKILL.md` on GitHub first. Fall back to `/mnt/project/{skill-name}_SKILL.md` only if not found on GitHub.
 DATE: 2026-03-18 18:30
+
+RULE: Category J (Bariatric Provisions — J-01 through J-05) is to be struck entirely from Volume 2 Part IV Item Specification Library. BAR provisions are held exclusively in Supplementary Volume §IV. No mention of BAR (large body size) is to appear anywhere in Volumes 1, 2, or 3. Any BAR-coded item, cross-reference, or heading found in Volumes 1–3 is a structural error requiring deletion.
+CONDITION: Any edit, review, or item-specification pass touching Volumes 1–3.
+ACTION: Flag and delete Category J items and any BAR reference found in Volumes 1–3. Do not relocate — they already exist in Supplementary Volume §IV.
+DATE: 2026-03-18 20:10
+
+RULE: Biophilic Design (BIO-01–BIO-05) and Thermal Comfort (TC-01–TC-05) are to appear exclusively in Volume 3 Appendix B and Appendix C respectively. No mention of these items in Volumes 1, 2, or 3 main body text. Supplementary Resource A (Biophilic) and Supplementary Resource B (Thermal Comfort) as they appear in the Volume 2 body (lines ~7401–7536) are to be struck.
+CONDITION: Any edit or structural review touching Volume 2 or Volume 3 main body.
+ACTION: Delete Supplementary Resource A and B from Volume 2 body. Volume 3 Appendix B and C are the canonical locations. Update any internal cross-references accordingly.
+DATE: 2026-03-18 20:10
