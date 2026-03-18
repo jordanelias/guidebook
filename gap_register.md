@@ -70,3 +70,6 @@ GAP-STEP5-02 | P1 | OPEN | item-specification-writer | D-08 | Population conflat
 GAP-STEP6-01 | P2 | OPEN | item-specification-writer | C-04 | Split required: C-04a (≥30 LRV general) + C-04b (≥40 LRV critical navigation). CONFLICTED per Dain 2022. | 2026-03-18 20:00
 GAP-STEP6-02 | P2 | OPEN | item-specification-writer | C-04/C-05 | Conflict resolution note required in Part IV. | 2026-03-18 20:00
 GAP-STEP6-03 | P2 | OPEN | item-specification-writer | E-08 | DBL intervenor width: ≥1500mm on primary routes where DBL identified. DIN 18040-1 evidence. | 2026-03-18 20:00
+
+GAP-STRUCT-01 | P1 | OPEN | workplan-orchestrator | V2-Part-IV-Category-J | STRUCTURAL: Category J (BAR J-01 through J-05) to be struck entirely from Volume 2 Part IV Item Specification Library. BAR provisions are canonical in Supplementary Volume §IV only. No BAR mention permitted anywhere in Volumes 1–3. Delete; do not relocate. | 2026-03-18 20:10
+GAP-STRUCT-02 | P1 | OPEN | workplan-orchestrator | V2-Supplementary-Resources | STRUCTURAL: Supplementary Resource A (Biophilic Design BIO-01–BIO-05) and Supplementary Resource B (Thermal Comfort TC-01–TC-05) to be struck from Volume 2 body (~lines 7401–7536). Canonical location is Volume 3 Appendix B and Appendix C respectively. Update all internal cross-references. | 2026-03-18 20:10
