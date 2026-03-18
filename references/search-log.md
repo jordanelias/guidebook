@@ -189,3 +189,61 @@ no_data_flags: []
 gap_flagged: "THIN BASE - Tier 3-4 evidence; quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed"
 ```
 
+
+
+---
+
+```yaml
+slug: accessible-laundry-room-design|MOB
+query: "accessible laundry room wheelchair front-loading washer plinth height appliance reach standards"
+last_searched: 2026-03-18 17:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 14, db: [web, US-Access-Board], note: "ADA S611 clear specs; NDIS SDA; OT practice guidance; SD State Extension"}
+  SV: {status: SEARCHED, results: 6, db: [web], note: "BBR 3:148 requires laundry facilities accessible; gemensam tvättstuga accessibility required; turning radius 1.3m indoor; no specific appliance height spec"}
+  NO: {status: THIN, results: 1, db: [web], note: "TEK17 covers general accessibility; no specific laundry appliance provisions found"}
+  DA: {status: THIN, results: 1, db: [web], note: "BR18 general accessibility; no laundry-specific provisions"}
+  FI: {status: THIN, results: 1, db: [web], note: "Decree 241/2017 covers common facilities; no laundry-specific specs"}
+  DE: {status: SEARCHED, results: 3, db: [web], note: "DIN 18040-2 requires laundry rooms (Gemeinschaftsräume) wheelchair accessible; no appliance height spec"}
+  FR: {status: THIN, results: 1, db: [web], note: "CEREMA ERP standards cover common areas; no laundry-specific specs"}
+  ZH: {status: THIN, results: 1, db: [web], note: "GB 50763 general accessible design; no laundry appliance specs"}
+  JA: {status: THIN, results: 1, db: [web], note: "MLIT barrier-free law covers common areas; no laundry-specific specs"}
+  NL: {status: NO-DATA, results: 0, db: [web], note: "NEN 9120 covers common areas; no laundry-specific research found"}
+  ES: {status: NO-DATA, results: 0, db: [web]}
+  PT: {status: NO-DATA, results: 0, db: [web]}
+  KO: {status: THIN, results: 1, db: [web], note: "Korean welfare standards — no laundry-specific provisions"}
+  IT: {status: NO-DATA, results: 0, db: [web]}
+top_sources: [ADA-S611-2010, US-Access-Board-Washers, SD-State-Extension-2020, NDIS-SDA-LAU, Boverket-BBR-3-148, DIN-18040-2-LAU, UDLL-Rossetti-2021]
+bpc_ref: "accessible-laundry-room-design|MOB"
+thin_flags: [NO, DA, FI, FR, ZH, JA, KO]
+no_data_flags: [NL, ES, PT, IT]
+```
+
+---
+
+```yaml
+slug: floor-vibration-wheelchair-disability|MOB|NEU
+query: "floor vibration wheelchair users disability ISO 2631 building accessibility 0.1 m/s RMS"
+last_searched: 2026-03-18 17:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 12, db: [PubMed, web], note: "ISO 10137:2007 structural standard; ISO 2631-1 WBV occupational; Garcia-Mendez 2013 wheelchair WBV (SCI Journal); Misch 2022 WBV limits manual WC; SCI P354 floor vibration design; NHS HTM 08-01 hospital floors; Chenier-Aissaoui caveat re ISO applicability to SCI users"}
+  DE: {status: THIN, results: 1, db: [web], note: "DIN 4150-2 covers structural vibration in buildings; occupant comfort focus; no disability-specific provisions"}
+  NO: {status: NO-DATA, results: 0, db: [web]}
+  SV: {status: NO-DATA, results: 0, db: [web]}
+  DA: {status: NO-DATA, results: 0, db: [web]}
+  FI: {status: NO-DATA, results: 0, db: [web]}
+  FR: {status: THIN, results: 1, db: [web], note: "general occupant comfort; no disability-specific"}
+  ZH: {status: NO-DATA, results: 0, db: [web]}
+  JA: {status: NO-DATA, results: 0, db: [web]}
+  NL: {status: NO-DATA, results: 0, db: [web]}
+  ES: {status: NO-DATA, results: 0, db: [web]}
+  PT: {status: NO-DATA, results: 0, db: [web]}
+  KO: {status: NO-DATA, results: 0, db: [web]}
+  IT: {status: NO-DATA, results: 0, db: [web]}
+top_sources: [ISO-10137-2007, ISO-2631-1, Garcia-Mendez-2013-JSCM, Misch-2022-JRATE, SCI-P354-2007, Chenier-Aissaoui-2014, NHS-HTM-08-01]
+bpc_ref: "floor-vibration-wheelchair-disability|MOB|NEU"
+thin_flags: [DE, FR]
+no_data_flags: [NO, SV, DA, FI, ZH, JA, NL, ES, PT, KO, IT]
+note: "CRITICAL FINDING: A-09 0.1 m/s RMS threshold — ISO 2631-1 is occupational standard for able-bodied seated workers; Garcia-Mendez 2013 confirms wheelchair users are continuously exposed ABOVE ISO 2631-1 health caution zone in daily community use (0.83 ± 0.17 m/s2). Chenier & Aissaoui explicitly note ISO 2631-1 was not developed for SCI/disability populations. No disability-specific vibration standard exists for built environments. 0.1 m/s RMS cited in A-09 is NOT an ISO 2631-1 value — source of this specific threshold requires verification."
+```
