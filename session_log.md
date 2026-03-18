@@ -99,3 +99,30 @@ next_action:
     - "item-specification-writer: TC-01 OFS temperature range (≤19-21°C)"
     - "find-and-replace: PAIN/OFS evidence disclosure note to all affected items"
     - "item-specification-writer: formal DBL-02 item registration"
+
+
+---
+session_close: 2026-03-18 19:00
+document: "Guidebook for Accessible Design V8.8 2026-03-12 14:00"
+skills_run:
+  - citation-verifier (A-09 0.1 m/s RMS — partial; interrupted)
+  - session-consolidator
+gaps_added: []
+gaps_resolved: []
+escalations_triggered: 0
+patterns_noted:
+  - "DIN 4150-2 uses KB units (1 KB = 1 mm/s weighted RMS velocity for human comfort, not m/s). The 0.1 m/s in A-09 is therefore NOT a DIN 4150-2 threshold — DIN 4150-2 threshold is 0.1 KB = 0.1 mm/s, three orders of magnitude smaller. A-09 value is either a transcription error (mm/s misread as m/s) or sourced from a different standard entirely."
+  - "NHS HTM 08-01 covers acoustic design for hospitals but does NOT contain a 0.1 m/s floor vibration threshold — it references SCI P354 and BS 6472 for floor vibration, not a simple velocity RMS."
+  - "HTM 08-01 has been superseded — referenced as archived since at least 2013; current version is 2013 but archived status noted by NBS. Search did not locate a vibration velocity threshold of 0.1 m/s in any source."
+rules_added: []
+blockers:
+  - "GAP-A09-01 STILL OPEN: A-09 0.1 m/s RMS likely a transcription error — DIN 4150-2 threshold is 0.1 KB = 0.1 mm/s (0.0001 m/s), not 0.1 m/s. Citation-verifier run incomplete. Must be resolved before publication — P1 blocker persists."
+  - "All items from prior session close remain: TC-01 OFS temp, find-and-replace PAIN/OFS disclosure, DBL-02 full spec, H-05 transport captions."
+research_log_updated: false
+next_action:
+  skill: citation-verifier
+  target: "A-09 0.1 m/s RMS threshold — likely transcription error (should be 0.1 mm/s per DIN 4150-2 KB unit)"
+  parameters:
+    priority: P1
+    finding: "DIN 4150-2 KB threshold is 0.1 KB = 0.1 mm/s. If A-09 specification intends 0.1 mm/s RMS (not 0.1 m/s), the engineering spec is plausible and the error is notational only. Confirm intended unit and correct accordingly."
+    action: "Verify whether A-09 target should read <0.1 mm/s RMS (DIN 4150-2 human comfort) or retain <0.1 m/s with explicit source. If former: correct notation and add DIN 4150-2 citation. If latter: source required."
