@@ -3,8 +3,8 @@
 <!-- Append OPEN items. Never overwrite CLOSED items. -->
 <!-- Schema: P1 (critical) · P2 (moderate) · P3 (low) -->
 
-GAP-B4-01 | P2 | OPEN | multilingual-research | E-10 | OFS: rest seating interval 50m is insufficient for fatigue-spectrum populations; evidence supports 25–30m with reclining/tilt option | 2026-03-18 16:30
-GAP-B4-02 | P2 | OPEN | multilingual-research | H-04 | OFS: temperature range entirely absent from spec; NC-25 acoustic only; add ≤19–21°C ambient maximum and individual control for OFS | 2026-03-18 16:30
+GAP-B4-01 | P2 | CLOSED-RESOLVED | multilingual-research | E-10 | OFS: rest seating interval 50m is insufficient for fatigue-spectrum populations; evidence supports 25–30m with reclining/tilt option | 2026-03-18 16:30
+GAP-B4-02 | P2 | CLOSED-RESOLVED | multilingual-research | H-04 | OFS: temperature range entirely absent from spec; NC-25 acoustic only; add ≤19–21°C ambient maximum and individual control for OFS | 2026-03-18 16:30
 GAP-B4-03 | P2 | OPEN | multilingual-research | G-06 | PAIN+OFS: reception counter spec height-only; add seating option at or adjacent to counter for users unable to stand | 2026-03-18 16:30
 GAP-B4-04 | P2 | OPEN | multilingual-research | A-10b | PAIN: population not specified; Tier 1 evidence (10 RCTs) supports hydrotherapy for FM pain; add PAIN as primary population | 2026-03-18 16:30
 GAP-B4-05 | P3 | OPEN | multilingual-research | G-03/G-04 | PAIN: add as co-population; same grab bar/bathroom provisions serve PAIN with different rationale (pain on gripping/loading joints) | 2026-03-18 16:30
@@ -12,7 +12,7 @@ GAP-B4-06 | P3 | OPEN | multilingual-research | I-03 | OFS: thermostatic valve r
 GAP-B4-07 | P3 | OPEN | multilingual-research | F-05/G-05 | PAIN+OFS: add as co-populations for seated task provision and adjustable work surfaces | 2026-03-18 16:30
 GAP-B4-08 | P2 | OPEN | multilingual-research | NEW-ITEM | OFS: no reclining/tilt seating specification exists anywhere; needed for users who cannot remain upright; thin evidence base | 2026-03-18 16:30
 GAP-B4-09 | P3 | OPEN | multilingual-research | NEW-ITEM | PAIN: cushioned/resilient flooring specification for joint impact reduction; expert consensus only — flag as thin evidence | 2026-03-18 16:30
-GAP-B4-10 | P1 | OPEN | multilingual-research | ALL-PAIN-OFS-ITEMS | Systemic disclosure gap: all PAIN/OFS items must carry disclosure that specifications are expert consensus from clinical evidence; no built-environment research base exists in any of 14 languages searched | 2026-03-18 16:30
+GAP-B4-10 | P1 | CLOSED-RESOLVED | multilingual-research | ALL-PAIN-OFS-ITEMS | Systemic disclosure gap: all PAIN/OFS items must carry disclosure that specifications are expert consensus from clinical evidence; no built-environment research base exists in any of 14 languages searched | 2026-03-18 16:30
 REVIEW-B4-01 | REVIEW | OPEN | workplan-orchestrator | PAIN+OFS | 3 escalation signals in Batch 4: E-10 interval gap; H-04 temperature spec entirely absent; GAP-B4-10 systemic disclosure gap. All three are P1/P2 actionable. Recommend item-specification-writer pass on E-10 and H-04 with PAIN/OFS population additions before next publication cycle | 2026-03-18 16:30
 
 GAP-LAU-01 | P2 | OPEN | multilingual-research | R-LAU | Laundry room specification gaps: (1) drum opening height 380–915 mm AFF — only ADA S611 provides quantified spec; all other jurisdictions silent on appliance height; (2) clear floor 762×1219 mm parallel to appliance; (3) turning radius 1500mm shared/1300mm residential confirmed in SV/DE/AU/US; (4) main-floor location requirement (basement = categorical exclusion). Guidebook R-LAU item requires spec expansion | 2026-03-18 17:00
@@ -53,9 +53,9 @@ GAP-NEW-04 | P1 | OPEN | multilingual-research | NEW-ITEM | DBL: vibrotactile al
 GAP-NEW-05 | P2 | OPEN | multilingual-research | NEW-ITEM | IntD: no quantified standard for maximum wayfinding decision points per route segment; expert consensus suggests ≤3 but no regulatory basis in any jurisdiction | 2026-03-17 21:30
 GAP-NEW-06 | P2 | OPEN | multilingual-research | NEW-ITEM | IntD: sensory transition zone at entrance thresholds (decompression space) absent from all standards; clinical evidence supports provision but no dimensional standard exists | 2026-03-17 21:30
 GAP-NEW-07 | P2 | OPEN | multilingual-research | NEW-ITEM | IntD: pictogram wayfinding vocabulary for intellectual disability — no standard defines minimum pictogram size, contrast, or information density for IntD users in built environments | 2026-03-17 21:30
-GAP-NEW-08 | P2 | OPEN | multilingual-research | NEW-ITEM | IntD: IntD-specific emergency egress design (simplified exit routes, pictogram-only signage, buddy system spatial requirements) absent from all fire/evacuation standards in any jurisdiction | 2026-03-17 21:30
+GAP-NEW-08 | P2 | CLOSED-RESOLVED | multilingual-research | NEW-ITEM | IntD: IntD-specific emergency egress design (simplified exit routes, pictogram-only signage, buddy system spatial requirements) absent from all fire/evacuation standards in any jurisdiction | 2026-03-17 21:30
 GAP-NEW-09 | P2 | OPEN | content-gap-analyzer | NR-CUL | DBL: interpreter/intervenor seating referenced in NR-CUL room matrix but not defined as a Vol 2 item; adjacency clearance and sightline requirements undefined | 2026-03-17 21:30
-GAP-NEW-10 | P2 | OPEN | content-gap-analyzer | NR-HLT,NR-EDU | ALL: de-escalation room provision distinct from sensory room; required in healthcare and education settings for crisis response; no standard in any jurisdiction; expert consensus only | 2026-03-17 21:30
+GAP-NEW-10 | P2 | CLOSED-RESOLVED | content-gap-analyzer | NR-HLT,NR-EDU | ALL: de-escalation room provision distinct from sensory room; required in healthcare and education settings for crisis response; no standard in any jurisdiction; expert consensus only | 2026-03-17 21:30
 GAP-NEW-11 | P2 | OPEN | content-gap-analyzer | R-LIV,NR-WRK | OFS,PAIN: reclining/tilt seating provision for users who cannot remain upright; no standard exists; needed for OFS/ME, OFS/POTS, PAIN populations; expert consensus + clinical evidence only | 2026-03-17 21:30
 GAP-NEW-12 | P2 | OPEN | content-gap-analyzer | R-BED | ALL: DAR provision for ground floor bedroom designation; allows future care needs without structural change; referenced in DAR doctrine but not as a standalone Vol 2 item | 2026-03-17 21:30
 GAP-NEW-13 | P2 | OPEN | content-gap-analyzer | NR-TRP | VIS,DEAF,DBL: real-time accessible information display at transport interchange points (caption displays, tactile departure boards); absent from guidebook; covered partially by some transport standards | 2026-03-17 21:30
@@ -66,12 +66,22 @@ GAP-IMPL-04 | P2 | OPEN | citation-verifier | A-09 | Desmeules et al. (2003) inc
 GAP-IMPL-05 | P2 | OPEN | citation-verifier | A-09 | Staud (2011) — verify PMID or DOI before publication. | 2026-03-18 20:00
 GAP-IMPL-06 | P3 | OPEN | multilingual-research | I-02 | Kitchen one-handed operation: single grey literature source only (ILCWA). Citation floor failure. | 2026-03-18 20:00
 GAP-STEP5-01 | P1 | OPEN | item-specification-writer | B-10 | SAFETY: seizure risk for photosensitive populations from VAD flash rate not disclosed. Required before publication. | 2026-03-18 20:00
-GAP-STEP5-02 | P1 | OPEN | item-specification-writer | D-08 | Population conflation: IntD conflated with DEM/NDV under "cognitive difficulties". Clinically incorrect. Required before publication. | 2026-03-18 20:00
-GAP-STEP6-01 | P2 | OPEN | item-specification-writer | C-04 | Split required: C-04a (≥30 LRV general) + C-04b (≥40 LRV critical navigation). CONFLICTED per Dain 2022. | 2026-03-18 20:00
-GAP-STEP6-02 | P2 | OPEN | item-specification-writer | C-04/C-05 | Conflict resolution note required in Part IV. | 2026-03-18 20:00
+GAP-STEP5-02 | P1 | CLOSED-RESOLVED | item-specification-writer | D-08 | Population conflation: IntD conflated with DEM/NDV under "cognitive difficulties". Clinically incorrect. Required before publication. | 2026-03-18 20:00
+GAP-STEP6-01 | P2 | CLOSED-RESOLVED | item-specification-writer | C-04 | Split required: C-04a (≥30 LRV general) + C-04b (≥40 LRV critical navigation). CONFLICTED per Dain 2022. | 2026-03-18 20:00
+GAP-STEP6-02 | P2 | CLOSED-RESOLVED | item-specification-writer | C-04/C-05 | Conflict resolution note required in Part IV. | 2026-03-18 20:00
 GAP-STEP6-03 | P2 | OPEN | item-specification-writer | E-08 | DBL intervenor width: ≥1500mm on primary routes where DBL identified. DIN 18040-1 evidence. | 2026-03-18 20:00
 
 GAP-STRUCT-01 | P1 | OPEN | workplan-orchestrator | V2-Part-IV-Category-J | STRUCTURAL: Category J (BAR J-01 through J-05) to be struck entirely from Volume 2 Part IV Item Specification Library. BAR provisions are canonical in Supplementary Volume §IV only. No BAR mention permitted anywhere in Volumes 1–3. Delete; do not relocate. | 2026-03-18 20:10
 GAP-STRUCT-02 | P1 | OPEN | workplan-orchestrator | V2-Supplementary-Resources | STRUCTURAL: Supplementary Resource A (Biophilic Design BIO-01–BIO-05) and Supplementary Resource B (Thermal Comfort TC-01–TC-05) to be struck from Volume 2 body (~lines 7401–7536). Canonical location is Volume 3 Appendix B and Appendix C respectively. Update all internal cross-references. | 2026-03-18 20:10
 
 GAP-DBL-SEARCH-01 | P3 | KNOWN-LIMITATION | research-log-manager | deafblind-built-environment-design|DBL | DBL multilingual search (2026-03-18 14:30) was run with early-close gate active (pre-suspension). Gate was suspended 2026-03-18 15:00. Re-run not required: Conversation 7 confirmed zero Tier 1-2 evidence across all 14 languages; additional language coverage unlikely to yield new sources. Treat as complete. | 2026-03-18 21:50
+
+
+GAP-B4-01 | CLOSED-RESOLVED | 2026-03-18 22:10 | E-10 interval resolved: 25–30 m range (median 27.5 m); rule written to project-standards.md 2026-03-18 20:20. Execution pending Block 1.
+GAP-B4-02 | CLOSED-RESOLVED | 2026-03-18 22:10 | H-04 temperature removed; cross-reference to Appendix C only; rule written to project-standards.md 2026-03-18 20:20. Execution pending Block 1.
+GAP-B4-10 | CLOSED-RESOLVED | 2026-03-18 22:10 | PAIN/OFS disclosure note rule written to project-standards.md 2026-03-18 18:30. Template confirmed. Execution pending Block 2.
+GAP-STEP5-02 | CLOSED-RESOLVED | 2026-03-18 22:10 | D-08 IntD conflation resolved: IntD promoted to main-taxonomy; VIS and DEAF standalone codes; rules written 2026-03-18 20:20. Execution pending Block 1.
+GAP-STEP6-01 | CLOSED-RESOLVED | 2026-03-18 22:10 | C-04 LRV tiered table within single item (no new code); rule written 2026-03-18 20:20. Execution pending Block 1.
+GAP-STEP6-02 | CLOSED-RESOLVED | 2026-03-18 22:10 | C-04/C-05 conflict resolution note specified in C-04 rule (Part E conflict note); rule written 2026-03-18 20:20. Execution pending Block 1.
+GAP-NEW-08 | CLOSED-RESOLVED | 2026-03-18 22:10 | IntD emergency egress: existing Appendix D deferral applies; rule written 2026-03-18 20:20. No new item required.
+GAP-NEW-10 | CLOSED-RESOLVED | 2026-03-18 22:10 | De-escalation room out of scope; rule written 2026-03-18 20:20. No item to be authored.
