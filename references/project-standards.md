@@ -274,3 +274,9 @@ RULE: SUPERSEDED — the rule dated 2026-03-18 18:30 stating "Updated skill file
 CONDITION: Any skill invocation.
 ACTION: Ignore the superseded precedence rule. Always execute from /mnt/project/.
 DATE: 2026-03-18 22:25
+
+
+RULE: §1.5 of Volume 1 is the canonical evidence hierarchy for this project. The tier ordering is: Tier 1 = OT clinical research; Co-primary Tier 1 = lived experience and participatory design research (CRPD Art. 4.3); Tier 2 = NGO/advocacy organisation guidelines; Tier 3 = systematic reviews and meta-analyses; Tier 4 = international standards with evidence basis; Tier 5 = jurisdiction-specific regulatory documents and grey literature. This ordering supersedes any generic clinical research pyramid (RCT > cohort > consensus) used in prior skill versions.
+CONDITION: Any skill, document, or instruction that references an evidence tier or ranks source types.
+ACTION: Apply §1.5 hierarchy. Lived experience is co-primary at Tier 1, not subordinate. NGO guidelines outrank systematic reviews. OT clinical evidence is highest authority.
+DATE: 2026-03-18 22:35
