@@ -166,3 +166,26 @@ RULE: If a publication blocker requires citation verification and two or more in
 CONDITION: Any specification value carrying [UNVERIFIED] after two or more independent search attempts have failed to locate a source.
 ACTION: Delete the specific value or claim from the guidebook text. Retain the item structure if the remainder of the item is evidence-supported. Log the deletion in gap_register.md as CLOSED-DELETED.
 DATE: 2026-03-18 19:10
+
+---
+
+## Population Code Additions (2026-03-18)
+
+RULE: IntD (Intellectual Disability) is a confirmed active research population for this guidebook. It is NOT a main-taxonomy code and does NOT appear in Volume 2 population matrices. It is a supplementary scope population used in gap register items, research planning, and practice notes only.
+CONDITION: Any task involving IntD population items (GAP-NEW-05 through GAP-NEW-08 and related items).
+ACTION: Tag gap register entries and research items as IntD. Do not add IntD to Vol 2 item Applicable Groups or population matrices. Create IntD as a supplementary code only if a supplementary volume is commissioned.
+DATE: 2026-03-18 18:30
+
+---
+
+## Session Architecture (2026-03-18)
+
+RULE: Session logs are stored at `sessions/session_YYYY-MM-DD-HHMM.md` — one new file per session. The legacy `session_log.md` file is deprecated as of 2026-03-18.
+CONDITION: All session start and session end operations.
+ACTION: workplan-orchestrator Session Start Protocol: LIST `sessions/` directory, sort descending, GET most recent file. session-consolidator: CREATE new `sessions/session_{YYYY-MM-DD-HHMM}.md` file — never append to an existing session file. Do not read or write `session_log.md`.
+DATE: 2026-03-18 18:30
+
+RULE: Updated skill files are written to `skills/` directory on GitHub. Project files at `/mnt/project/` are the execution source for skills not yet migrated. When a skill has both a project file and a `skills/` GitHub file, the `skills/` GitHub version takes precedence as the canonical version (per Project Instructions §Skill Registry architecture intent).
+CONDITION: Any skill that has been updated through the 2026-03-18 audit.
+ACTION: When loading skills, check `skills/{skill-name}_SKILL.md` on GitHub first. Fall back to `/mnt/project/{skill-name}_SKILL.md` only if not found on GitHub.
+DATE: 2026-03-18 18:30
