@@ -1,5 +1,4 @@
 # Section Map
-<!-- Managed by haiku-chunker. Regenerate only on version change. -->
-<!-- Schema: heading_level | heading_text | line_number | chunk_id -->
-<!-- Last generated: [YYYY-MM-DD HH:MM] for [DOC-ID] -->
+<!-- Managed by haiku-chunker and guidebook-auditor. GET before scan; PUT back after update. -->
+<!-- Regenerate only on version change. -->
 
