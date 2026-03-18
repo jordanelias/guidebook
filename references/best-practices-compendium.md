@@ -275,3 +275,159 @@
   - Ramp gradient: ADA 8.3% vs. DIN/TEK17 6–6.7% vs. France 5% preferred
   - Mandatory residential: Australia/Norway/India/Sweden mandatory vs. UK/US/Canada voluntary
 **Notes:** DIN 18040 revision impasse — monitor for summer/autumn 2025 publication. BBR Sweden July 2025 — English translation not confirmed. EAA EU patchwork adoption is a confirmed policy gap. All E-items specifying turning space must note ISO vs. ANSI discrepancy and recommend 1702 mm for new build.
+
+## ecological-psychology-haptic-affordances-built-environment|ALL
+**Updated:** 2026-03-18 22:30  **Evidence tier:** 3–4 (theoretical with empirical application)
+**Consensus finding:** Affordances are organism-specific action possibilities — the same environment affords different actions to different users. Accessibility specifications (900 mm corridor, 175 mm riser, 1200 mm counter) are minimum functional thresholds at which affordances switch from available to unavailable. Handrails and grab bars are haptic navigation structures, not safety add-ons — interruption at any point destroys the haptic route.
+**Key frameworks:**
+  - Gibson (1979): affordances are action possibilities in the environment, specific to the organism — foundational; design for the full range of functional capacities
+  - Heft (2001): affordances exist in nested hierarchies (room → building → site); wayfinding routes are assemblages of affordances, not individual perception events
+  - Reed & Jones (1982): affordances are individual-specific, not merely species-specific; accessibility standards are minimum functional thresholds, not optimal affordances
+  - Turvey & Carello (1995): haptic affordances — handrails, grab bars, and textured floors are haptic navigation structures; continuous handrail = continuous haptic pathway for blind users
+  - Barker (1968): built environments contain behaviour settings that prescribe and regularize behaviour; accessible design must ensure the full range of users can participate in the prescribed behaviour
+**Design implications:**
+  - Specifications are functional thresholds, not optimal values — design above minimum where foreseeable populations require it
+  - Misaffordances (environments signalling an action possibility that does not exist) are actively harmful; high-gloss floor appearing wet to DEM user is a misaffordance
+  - Haptic pathway continuity: handrail interruptions at doorways, corners, or landings break the tactile route — specify as continuous
+  - Behaviour setting audit: for each room, confirm that the prescribed behaviour is achievable by the full range of disability groups the room will serve
+**Jurisdictions confirmed:** ISO 21542:2021 §8 references affordance-based design principles; no jurisdiction adopts the framework as a standard
+**Early-close:** Yes  **Thin/No-data:** None (theoretical, no language-specific search required)
+**Key sources:** Gibson1979 · Heft2001 · Reed1982 · Turvey-Carello1995 · Barker1968
+**Divergent findings:** —
+**Notes:** Primary theoretical basis for the guidebook's specification logic. Not a BPC entry requiring multilingual research; retained as theoretical reference for item-writing. Cross-reference: OT frameworks BPC entry.
+
+## wayfinding-cognitive-science-spatial-design|ALL
+**Updated:** 2026-03-18 22:30  **Evidence tier:** 2–4
+**Consensus finding:** Spatial configuration outperforms signage density as the primary wayfinding mechanism. Architecture should be self-explanatory at the layout level, with signage as reinforcement. Wayfinding fails when it imposes excessive extraneous cognitive load — directly reducing functional capacity for users with TBI/ABI, dementia, ADHD, or PCS.
+**Key evidence:**
+  - Spatial configuration vs. signage: floor plan configuration has a stronger effect on wayfinding accuracy than signage quantity — buildings should be designed for topological legibility first (O'Neill 1991, Tier 3; Passini 1984)
+  - Cognitive load: extraneous cognitive load from complex environments reduces available bandwidth for task performance; for users with cognitive impairment, extraneous load quickly exceeds capacity → disorientation, fatigue, withdrawal (Sweller 1988; Paas & van Merriënboer 1994)
+  - Three wayfinding stages: decision-making, decision execution, information processing — each stage has distinct environmental support requirements (Passini 1984)
+  - Cognitive map progression: landmark knowledge → route knowledge → survey knowledge; dementia reverses this sequence — allocentric mapping fails first, egocentric and landmark navigation most preserved (Tolman 1948; Siegel & White 1975; PMC8545728 2021)
+  - Schema scaffolding: distinctive room identities (colour + material + fixture) provide external schema to replace degraded internal cognitive maps in dementia and ABI (Bartlett 1932; Grey et al. 2015)
+  - Attentional resources: directed attention is a finite resource; restorative environments provide involuntary attention cues, reducing cognitive fatigue (Kahneman 1973; Kaplan & Kaplan 1989)
+**Design implications (quantified):**
+  - ≤2 decision points visible simultaneously from any position on primary route (cognitive load principle)
+  - Each room should have a unique visual identity achievable through any surviving sensory channel (multi-modal distinctiveness for DEM/ABI)
+  - Landmark-based navigation at all key decision points — most robust for cognitive decline
+  - Spatial layout drives wayfinding; signage reinforces but does not replace architectural legibility
+**Three-tier wayfinding system (evidence-based):**
+  - Tier 1 — Architectural affordances: spatial hierarchy, landmarks, loop floor plans, visual access between spaces (most robust for all disability categories)
+  - Tier 2 — Iconic affordances: ≤3 ISO 7010 symbols per sign; lower cognitive load than text under stress/fatigue
+  - Tier 3 — Linguistic affordances: FALC/Easy Read text with symbol support
+  - Tier 1 is the primary accessibility layer; Tiers 2 and 3 reinforce, not replace
+**Jurisdictions confirmed:** ISO 21542:2021 requires redundant wayfinding at key decision points; BS 8300:2018 specifies multi-format wayfinding; no jurisdiction quantifies ≤2 decision points
+**Early-close:** Yes  **Thin/No-data:** None
+**Key sources:** Passini1984 · ONeill1991 · Sweller1988 · PMC8545728 · SiegelWhite1975 · Grey2015 · Kahneman1973
+**Divergent findings:** —
+**Notes:** Cross-reference wayfinding-dementia-spatial-design|DEM entry for DEM-specific application. Three-tier wayfinding system is retained as a synthesized item across 6+ evidence sources. PCS/TBI evidence: cognitive fatigue makes text-based wayfinding unreliable for ABI patients (CAOT 2018).
+
+## stair-ramp-threshold-biomechanics-accessibility|MOB
+**Updated:** 2026-03-18 22:30  **Evidence tier:** 2–4
+**Consensus finding:** Accessibility specifications for stairs, ramps, thresholds, corridors, and seating height are biomechanically derived, not arbitrary. Each specification corresponds to a functional threshold with documented evidence.
+**Key biomechanical evidence:**
+
+  **Stair geometry:**
+  - Optimal riser-going ratio: 2R + G = 600–630 mm (Blondel's rule); for R=175 mm → G=280 mm minimum (Templer 1992, Tier 4)
+  - Each 6 mm riser irregularity increases misstep probability by ~18% (Templer 1992)
+  - Stair descent fall risk is 3× stair ascent (Simoneau et al. 1991, Tier 3)
+  - 175 mm max riser specification: biomechanically derived
+
+  **Ramp gradient:**
+  - Above 1:12 gradient: manual wheelchair propulsion requires high-force two-arm technique → increased shoulder injury risk over time (Waters et al. 1985, Tier 3)
+  - Provides biomechanical basis for 1:20 recommended gradient vs. 1:12 code minimum
+  - Kim et al. (2014): ramp gradients >6% substantially increase propulsion effort and fall risk
+
+  **Threshold:**
+  - Thresholds >6 mm begin to intercept normal gait trajectory in older adults (Pavol et al. 2001, Tier 3)
+  - Toe clearance during level walking averages 12 mm in older adults — thresholds ≤4 mm specification derived from this
+  - 2 cm threshold defeats 45.8% of wheelchair users on first attempt (Al Lawati et al. 2017, Tier 3)
+
+  **Corridor width:**
+  - Below 900 mm: metabolic cost increases 30–45% for manual wheelchair users due to trunk lean and restricted stroke length (Koontz et al. 2012, Tier 3)
+  - At 1200 mm: metabolic cost normalises to open corridor conditions
+  - Biomechanical basis for 1200 mm preferred vs. 900 mm minimum
+
+  **Seating height:**
+  - 450–500 mm seat height: 40% reduction in hip extensor moment compared to 380 mm standard sofa height (Rodosky et al. 1989, Tier 3)
+  - Reduced sit-to-stand capacity is an independent predictor of falls in older adults (Lord et al. 1993)
+
+  **Grab bar load:**
+  - Peak force during bathtub exit fall recovery: 1.3 kN (KITE Research Institute 2023–2025, Tier 3)
+  - Provides structural basis for ≥1.3 kN load rating specification
+
+  **Contrast sensitivity:**
+  - Contrast sensitivity at 6 cycles/degree reduced by ~50% at age 70+ compared to young adults (Owsley et al. 2001, Tier 3)
+  - ≥30 LRV contrast threshold empirically derived from contrast sensitivity data for age-related visual decline
+  - Note: 30% LRV standard lacks a published evidence basis for current threshold (Manandhar et al. 2022) — highest achievable contrast recommended as interim best practice
+
+**Ranges:**
+  - Riser height: ≤175 mm; going ≥280 mm at R=175 mm
+  - Ramp gradient: ≤5–6% preferred; ≤8.3% (1:12) absolute maximum for short assisted rises
+  - Threshold: 0–4 mm; ≤13 mm absolute maximum
+  - Corridor width: ≥900 mm minimum; ≥1200 mm preferred (metabolic normalization)
+  - Seating height: 450–500 mm AFF (biomechanically optimal)
+  - Grab bar load: ≥1.3 kN per fixing point
+  - LRV contrast: ≥30% current standard; 65% Michelson for easily visible (see VIS BPC entry)
+
+**Jurisdictions confirmed:** Specifications confirmed across ADA, BS 8300, DIN 18040, TEK17, AS 1428, CSA B651:23, ISO 21542:2021 — with significant divergence on ramp gradient and corridor width (see jurisdiction-matrix BPC entry)
+**Early-close:** Yes  **Thin/No-data:** None
+**Key sources:** Templer1992 · Waters1985 · Pavol2001 · AlLawati2017 · Koontz2012 · Rodosky1989 · LordSR1993 · KITE2023-2025 · Owsley2001 · Manandhar2022
+**Divergent findings:** Ramp gradient biomechanics (≤6%) vs. ADA code minimum (8.3%) — non-English standards more evidence-aligned. 30% LRV standard: no published evidence basis for current threshold.
+
+## detectable-gradient-protocol-sensory-zones|NDV|DEM
+**Updated:** 2026-03-18 22:30  **Evidence tier:** 3–4 (synthesized across 5+ sources)
+**Consensus finding:** Multi-sensory zone boundaries — simultaneous visual, acoustic, spatial, and luminance signals at zone transitions — are well-supported by PAS 6463:2022, ISO 21542:2021, Mostafa ASPECTSS 2.0, and Williams et al. (2024). The "Detectable Gradient Protocol" specifies minimum perceptually detectable thresholds at each zone boundary.
+**Evidence base:**
+  - Multi-sensory redundancy at hazardous transitions: ISO 21542:2021 §9 (tactile + visual, verified)
+  - Graduated sensory zone transitions reduce AUT arousal in post-occupancy evaluations: Mostafa (2021) ASPECTSS 2.0, Tier 2 (DOI: 10.3389/fpsyt.2021.727353)
+  - Graduated sensory environments with multi-modal zone boundaries: PAS 6463:2022 §6.4, Tier 4
+  - Sensory adaptive environments (multi-modal cues) show positive outcomes for autistic children: Williams et al. (2024) scoping review, Tier 1
+  - ART "being away" component requires detectable environmental transition: Kaplan & Kaplan (1989)
+**Protocol specification (minimum perceptually detectable thresholds):**
+  - Visual: ≥30 LRV contrast change at zone boundary surface
+  - Acoustic: ≥0.2 s RT60 change between zones (well above just-noticeable difference of ~5% at RT60 <1.0 s per Beranek 2004)
+  - Luminance: ≥50 lux reduction between zones (conservative; JND for illuminance is ~15–20%; 50 lux at 300 lux background = 17%, borderline; at 200 lux background = 25%, clearly detectable)
+  - Spatial: ceiling height change and/or corridor width change at zone boundary
+**Important correction:** RT60 change (reverberation time) and NC change (steady-state noise level) are independent acoustic parameters — do not substitute one for the other. Zone boundaries may involve either a detectable RT60 change OR a background noise level change, not stated as equivalent.
+**Zone model (three zones):**
+  - Zone 1 — High activation: entry, reception, communal spaces; higher stimulation baseline
+  - Zone 2 — Moderate activation: living rooms, corridors, shared circulation; transitional
+  - Zone 3 — Low activation: bedrooms, bathrooms, quiet rooms; minimum stimulation retreat
+  - Each zone transition uses a buffer zone ≥1.5 m with multi-sensory signals
+**Jurisdictions confirmed:** PAS 6463:2022 (UK, guidance only); ASPECTSS 2.0 cross-jurisdictional; no mandatory standard operationalises the Detectable Gradient Protocol
+**Early-close:** Yes  **Thin/No-data:** None (synthesized protocol, not language-searched)
+**Key sources:** ISO21542-2021-s9 · PAS6463-2022-s6.4 · Mostafa-ASPECTSS2021 · Williams2024 · Beranek2004 · KaplanKaplan1989
+**Divergent findings:** —
+**Notes:** Numeric thresholds (0.2 s RT60, 50 lux, 30 LRV) are working specifications derived from perception science — label as "minimum perceptually detectable" not empirically validated clinical thresholds. Apply at all population types where sensory environment is a primary design driver: NDV, DEM, NEU/ABI, NDV/MH, OFS.
+
+## residential-dar-provisions-priority-register|MOB
+**Updated:** 2026-03-18 22:30  **Evidence tier:** 4–5 (cost data, regulatory, OT practice)
+**Consensus finding:** DAR (Design for Adaptable Readiness) provisions must be physically embedded in construction drawings — not in specification text alone. An accessibility requirement absent from a named drawing will not be built. Cost multipliers for missed DAR provisions range from ×5 to ×75+; structural provisions are effectively irreversible without major intervention.
+**DAR provisions by cost multiplier (retrofit vs. construction):**
+  | Provision | Room | Cost multiplier | Drawing required |
+  |---|---|---|---|
+  | Grab bar blocking (all positions) | Bathroom | ×75 | Structural/blocking drawings |
+  | Ceiling hoist tracking blocking | Bedroom | ×20–40 | Structural drawings |
+  | Stairlift structural channel | Staircase | ×15–30 | Structural drawings |
+  | Zero-threshold floor recess (wet room) | Bathroom | ×20–40 | Section drawings |
+  | Through-floor lift structural zone | Staircase | ×50+ | Structural drawings (SE confirmation) |
+  | Smart lock conduit | Entry | ×8 | Electrical drawings |
+  | Bedside control conduit | Bedroom | ×8 | Electrical drawings |
+  | EV charger conduit | Garage | ×5 | Electrical drawings |
+  | Accessible entry door framing ≥950 mm | Entry | ×5–15 | Floor plan/door schedule |
+  | BAR structural floor provision | Bathroom | Structural cost | Structural drawings (SE) |
+**Key principles:**
+  - ALL DAR provisions must appear on a named drawing by design stage CD (construction documentation) — verbal specifications or document-only references are insufficient
+  - Grab bar blocking: most impactful single DAR item — ×75 cost multiplier at retrofit; 18 mm structural plywood, 600–1200 mm AFF at all toilet, shower, bath positions (CAN/ASC 2.8:2025)
+  - Hoist blocking: essential in all bedrooms where MOB or aging population is anticipated — ×20–40 multiplier; continuous run ≥3600 mm centred on bed zone (BS EN ISO 10535)
+  - Stairlift provision: no winder at top or bottom tread; structural channel full stair length (×15–30 multiplier)
+  - Through-floor lift zone: structural zone ≥900×1200 mm on each floor at same position — must be committed at schematic design (×50+ if missed)
+**Commissioning-stage verification (new build):**
+  - Photographic record of grab bar blocking before wall lining
+  - Structural drawings showing blocking locations filed with O&M manual
+  - Conduit test-pull confirmed before plastering
+**Sources:** CAN/ASC 2.8:2025 · Lifetime-Homes-Standards · BS-EN-ISO-10535 · RHFAC-v4 · CIH-2022-Adaptable-Housing · Habinteg2022
+**Jurisdictions confirmed:** Canada (CAN/ASC 2.8:2025 most detailed) · UK (Lifetime Homes; Wheelchair User Housing, Habinteg) · Australia (NDIS SDA requirements) · Norway (TEK17 blocking requirements)
+**Divergent findings:** Cost multiplier values are industry estimates (UK/CA cost data); formal peer-reviewed cost data not identified — flag ×75 as UNVERIFIED pending formal cost data source
+**Notes:** These are construction-phase provisions — the BPC entry serves as a planning reference for architects at brief and schematic stage. Cross-reference fold-down-grab-bar-specification|MOB and bariatric-turning-radius-built-environment|BAR for specific fitting specifications.
