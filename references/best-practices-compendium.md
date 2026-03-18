@@ -120,3 +120,48 @@
 **Key sources:** Sense-UK · Helen-Keller-Intl · Perkins-School-DBL · Bundesvereinigung-Lebenshilfe · Vilans-NL · DSDC-DBL-VIS
 **Divergent findings:** None — insufficient evidence base to identify divergence
 **Notes:** GAP-NEW candidates confirmed: DBL intervenor clear floor space at service counters; tactile building map station; DBL haptic communication clear floor zone; vibrotactile alert provision; maximum wayfinding decision points (IntD); sensory transition zone (IntD); pictogram wayfinding vocabulary (IntD); IntD-specific emergency egress. Both populations absent from all 16 room matrices — systemic GAP-ROOM-POP.
+
+## acoustic-zoning-restorative-interval-ART|NDV
+**Updated:** 2026-03-18 13:15  **Evidence tier:** 1 (ART principle) / 0 (20m distance)
+**Consensus finding:** ART (Kaplan & Kaplan 1989) supports restorative zones in built environments. No study in any language quantifies a 20m spatial interval for attention restoration onset. The 20m distance is without evidential basis.
+**Range:** No empirical threshold for zone separation distance
+**Jurisdictions confirmed:** Universal gap across all languages searched
+**Early-close:** yes (unanimous NO-DATA)  **Thin/No-data:** DE, NO, SV
+**Key sources:** Kaplan & Kaplan (1989); Ohly et al. (2016) systematic review
+**Gap registered:** UNSUPPORTED - 20m distance: no evidence in any language
+
+## lighting-transition-zone-visual-adaptation|VIS
+**Updated:** 2026-03-18 13:15  **Evidence tier:** 4
+**Consensus finding:** Visual adaptation is temporal (cones: 10-12 min; rods: 25-60 min), not spatial. No standard in any language specifies a 5m minimum transition zone. Luminance uniformity ratios (EN 12464-1) are the appropriate specification mechanism.
+**Range:** No 5m threshold; luminance step-ratio max 10:1 (single step) / 3:1 (primary zones)
+**Jurisdictions confirmed:** EN 12464-1 (EU); DIN 18040-1 (DE); PAS 6463 (UK)
+**Early-close:** yes  **Thin/No-data:** DE, NO, SV (no distance threshold found)
+**Key sources:** EN 12464-1:2021; DIN 18040-1:2010; PAS 6463:2022; Cornell vision physiology
+**Gap registered:** UNSUPPORTED - 5m distance: no evidence in any language
+
+## gloss-floor-surface-visual-impairment|VIS
+**Updated:** 2026-03-18 13:15  **Evidence tier:** 4 (qualitative)
+**Consensus finding:** Avoid high-gloss floor finishes -- qualitative guidance universally supported (BS 8300; DIN 18040-1). No jurisdiction specifies a GU threshold. BSI committee confirms no research-based GU evidence exists.
+**Range:** No GU threshold in any jurisdiction; editorial estimate of <=30 GU is unsupported
+**Jurisdictions confirmed:** UK (qualitative only); DE (qualitative only); NO (slip resistance only)
+**Early-close:** yes  **Thin/No-data:** all languages re GU threshold
+**Key sources:** BS 8300-2:2018; BSI committee statement (Architects Journal); DIN 18040-1
+**Gap registered:** THIN BASE - 30 GU threshold: editorial estimate; no regulatory or research basis
+
+## one-handed-kitchen-design-built-environment|MOB/UPL
+**Updated:** 2026-03-18 13:15  **Evidence tier:** 5/4
+**Consensus finding:** One-handed kitchen use is a confirmed OT domain. No indexed peer-reviewed built-environment design specifications exist in any language. ILCWA grey literature and VA/DoD CPG 2021 are the highest available sources.
+**Range:** No quantified specifications; design principles: one-hand operable controls, lever faucets, 400-1200mm AFF storage
+**Jurisdictions confirmed:** UK (accessible kitchen guidance -- qualitative); DE (DIN 18040-2 wheelchair sink clearance -- not one-handed specific); SV (SCI housing study)
+**Early-close:** yes  **Thin/No-data:** NO (no data found)
+**Key sources:** ILCWA (T5); VA/DoD CPG 2021 (T4); Lipson-Smith 2021 BMJ Open; Norin 2020 SCI study
+**Gap registered:** THIN BASE - literature gap confirmed; spec is appropriate expert consensus
+
+## wayfinding-decision-points-cognitive-disability|IntD
+**Updated:** 2026-03-18 13:15  **Evidence tier:** 3-4
+**Consensus finding:** Reducing decision points for DEM and IntD populations is strongly supported. No study in any language quantifies a maximum acceptable number of decision points per route. Principle: minimise to lowest number consistent with building function.
+**Range:** Minimum feasible -- no empirical upper limit established
+**Jurisdictions confirmed:** Principle -- universal; maximum count -- no standard in any jurisdiction
+**Early-close:** yes  **Thin/No-data:** SV
+**Key sources:** Passini 2000; Davis 2016 PMC; Farran & Courbois 2013; TAHPI Part W; Aranda 2015
+**Gap registered:** UNSUPPORTED - maximum decision-point count: GAP-NEW-05 confirmed
