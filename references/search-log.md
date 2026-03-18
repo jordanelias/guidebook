@@ -141,3 +141,49 @@ bpc_ref: "chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS"
 thin_flags: [SV, FR, DE, NO]
 no_data_flags: [DA, FI, ZH, JA]
 ```
+
+## deafblind-built-environment-design|DBL
+```yaml
+slug: deafblind-built-environment-design|DBL
+query: "DeafBlind built environment design tactile navigation intervenor space accessible building standards"
+last_searched: 2026-03-18 14:30
+early_close_triggered: true
+languages:
+  EN: {status: SEARCHED, results: 10, db: [web]}
+  NO: {status: SEARCHED, results: 2, db: [web], note: "Nordic Welfare Centre clinical only; Tennoy 2013 no DBL provisions"}
+  SV: {status: SEARCHED, results: 2, db: [web], note: "Nordic Welfare Centre shared; no built-env specs"}
+  DE: {status: SEARCHED, results: 1, db: [web], note: "DIN 18040 - no DBL provisions"}
+  FR: {status: NOT-RUN, results: 0, note: "early-close gate triggered - universal gap confirmed"}
+  DA: {status: NOT-RUN, results: 0}
+  FI: {status: NOT-RUN, results: 0}
+  ZH: {status: NOT-RUN, results: 0}
+  JA: {status: NOT-RUN, results: 0}
+top_sources: [DeafSpace-2010, NELOWV-2025, JJones-2025, Nordic-Welfare-Centre, MDPI-Buildings-2024]
+bpc_ref: "deafblind-built-environment-design|DBL"
+thin_flags: [NO, SV, DE]
+no_data_flags: []
+gap_flagged: "THIN BASE - zero Tier 1-2 evidence in any language; GAP-NEW-01/02/03/04 confirmed"
+```
+
+## intellectual-disability-built-environment-design|IntD
+```yaml
+slug: intellectual-disability-built-environment-design|IntD
+query: "intellectual disability inclusive design built environment pictogram wayfinding NDIS SDA evidence"
+last_searched: 2026-03-18 14:30
+early_close_triggered: true
+languages:
+  EN: {status: SEARCHED, results: 10, db: [web]}
+  NO: {status: SEARCHED, results: 2, db: [web], note: "Nordic Welfare Centre social care focus; no built-env design research"}
+  SV: {status: SEARCHED, results: 1, db: [web], note: "thin; Nordic universal design gap noted"}
+  DE: {status: SEARCHED, results: 1, db: [web], note: "DIN 18040 s.4.4 qualitative cognitive orientation only"}
+  FR: {status: NOT-RUN, results: 0, note: "early-close gate triggered"}
+  DA: {status: NOT-RUN, results: 0}
+  FI: {status: NOT-RUN, results: 0}
+  ZH: {status: NOT-RUN, results: 0}
+  JA: {status: NOT-RUN, results: 0}
+top_sources: [MDPI-Buildings-2026, PMC-2025-IntD-scoping, NDIS-SDA-2019, Castell-2008, CSA-B651-23]
+bpc_ref: "intellectual-disability-built-environment-design|IntD"
+thin_flags: [NO, SV, DE]
+no_data_flags: []
+gap_flagged: "THIN BASE - Tier 3-4 evidence; quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed"
+```
