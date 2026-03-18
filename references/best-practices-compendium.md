@@ -497,3 +497,120 @@
 **Key sources:** Dunn1997-sensory-model · PAS6463:2022 · Allen-CDM · ASPECTSS2021 · PEO-Law1996 · RHFAC-v4
 **Divergent findings:** Sensory seeking vs. sensory avoiding design requirements are partially irreconcilable in a single space — spatial separation (Detectable Gradient Protocol zones) is the primary resolution; individual user control is the secondary resolution
 **Notes:** Cross-reference detectable-gradient-protocol-sensory-zones|NDV|DEM entry. Dunn's model is applied in Vol 2 Part IV Categories A, B, C, and F. "Calibrated across all four profiles" is the mandated approach — not optimising for the modal NDV user.
+
+## luminance-contrast-lrv-evidence-base|VIS
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 3–4
+**Consensus finding:** The 30% LRV (Light Reflectance Value) contrast threshold adopted by six national standards (UK BS 8300, DIN 18040-2, CEREMA France, Swedish BFS, Norwegian TEK17, Japanese MLIT) derives from UK Disability Discrimination Act final-stage regulatory guidance, not from peer-reviewed empirical evidence of sufficiency for people with low vision. It is a regulatory floor, not an evidence-derived optimum.
+**Key evidence:**
+  - Regulatory origin confirmed: 30% threshold adopted from UK DDA guidance; directly carried into AS 1428.1:2009 and AS 1428.1:2021 without independent empirical validation (GAP-007 research, 2026)
+  - Functional benefit of contrast enhancement: real-world camera study found combined step-face and edge contrast enhancement reduced fall-related events vs. control stairway (OR = 2.87, p = .023) — supports enhancement but does not validate 30% as a threshold (Harper et al. 2022, Tier 3, Journal of Ergonomics DOI: 10.35248/2165-7556-22.12.303)
+  - High-contrast nosing significantly reduced descending gait speed (coeff. −0.07, p = .010), consistent with improved hazard perception (Brown et al. 2023, Tier 3, Ergonomics DOI: 10.1080/00140139.2022.2141347)
+  - Computational modelling: low-contrast nosings become invisible at moderate visual impairment levels even at 30% LRV under certain lighting conditions (Thompson 2017/2022, PMC PMC8993136)
+  - For people with severe visual impairment: approximately 65% Michelson contrast (equivalent to ~75% LRV difference) is needed for reliable surface boundary detection — approximately 2.5× the current 30% standard (Dain et al., cited in Manandhar et al. 2022)
+  - CNIB (2024): explicitly states 30% LRV as a minimum regulatory floor, not a functional optimum; recommends maximum achievable contrast
+  - DSDC EADDAT validation (Marquardt 2011): uses contrast as binary variable (present/absent) — does not validate specific threshold
+**Practical guidance specification (replacing the 30% floor as design target):**
+  - Code compliance minimum: ≥30% LRV difference (all jurisdictions)
+  - Guidebook best practice target: ≥50% LRV difference (NIHR-funded review recommendation; consistent with US Access Board 2-inch contrast band guidance)
+  - Severe vision impairment: aim for ≥65% Michelson contrast at all critical junctions (stair nosings, platform edges, kerb lines)
+  - Width of contrast strip: ≥50 mm (UK NIHR review); ≥51 mm (US Access Board) — narrower strips (<38 mm) fail to show gait benefit
+  - Active research gap flag: no peer-reviewed study has established 30% as sufficient, and emerging evidence suggests it is substantially insufficient for the most severely impaired users. All C-items must carry: "Note: The 30% LRV minimum is a regulatory floor with unknown empirical basis. This guidebook recommends achieving the highest practicable contrast at all critical junctions."
+**Standards confirmed:** BS 8300 · AS 1428.1:2021 · DIN 18040-2 · TEK17 · BFS 2024:12 · MLIT Japan — all adopt ≥30% LRV without citing an original empirical study
+**Jurisdictions confirmed:** UK · Australia/NZ · Germany · Norway · Sweden · Japan · France (CEREMA)
+**Early-close:** Yes  **Thin/No-data:** None (confirmed absence of evidence for threshold is itself the finding)
+**Key sources:** Harper2022 · Brown2023 · Thompson2022 · Dain-cited-Manandhar2022 · CNIB2024 · AS1428.1:2021 · BS8300:2018
+**Divergent findings:** —
+**Notes:** Decision D-03 confirmed: all C-items must carry the regulatory-floor caveat. This is one of the most significant evidence-standards gaps in the entire guidebook. DO NOT cite 30% as an evidence-based optimum. Cite it as a regulatory minimum and recommend highest achievable contrast as design intent.
+
+## government-grant-programmes-home-adaptation|ALL
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory/programme data)
+**Consensus finding:** Government-funded home adaptation grant programmes exist in all major English-speaking and Northern European jurisdictions. UK Disabled Facilities Grant is the largest per-household grant programme by volume (£711m/year, £30,000 max per household). All programmes require OT assessment or equivalent disability certification. No programme covers full design-stage accessible construction — all address retrofit.
+**Grant programme matrix (verified as at 2024–25 budget year):**
+  | Jurisdiction | Programme | Max Grant | Eligibility | FY Budget |
+  |---|---|---|---|---|
+  | UK | Disabled Facilities Grant (DFG) | £30,000/household (means-tested) | Disabled persons in private/social housing; qualifying adaptations | £711m (2024–25); £723m confirmed (2026–27) |
+  | Ireland | Housing Adaptation Grant (HAG) | €30,000 max; €8,000 mobility aids grant | Owner-occupiers/private tenants with disability; means-tested | 2024 |
+  | Australia | NDIS Home Modifications | Variable (plan-based) | NDIS participants with functional impairment; OT report required | 2024–25 |
+  | Canada | Home Accessibility Tax Credit (HATC) | CAD $20,000 max eligible expenditure; 15% credit = up to $3,000 | Persons with disability or age 65+ | 2024 |
+  | USA | VA SAH/SHA grants | SAH: up to $109,986; SHA: up to $22,036 | Veterans with service-connected severe disability | FY2024 |
+  | USA | HUD Section 504 | $10,000 grant + $27,500 loan | Very-low income disabled homeowners in rural areas | 2024 |
+  | Switzerland | IV (Invalidenversicherung) | Varies; federal/cantonal co-funding | Disability insurance beneficiaries | 2024 |
+  | Germany | KfW 159 programme | Loan at reduced rate (grant element varies) | Residential barrier-reduction; note: KfW "Altersgerecht Umbauen" suspended December 2021 (oversubscribed); confirm current status before citing | ⚠ VERIFY |
+**Key notes:**
+  - All programmes address retrofit, not design-stage provision — confirming the economic primacy of design-stage accessible construction (see accessible-design-economics-cost-premium|ALL entry)
+  - UK DFG is the most-studied: Habinteg (2010) Lifetime Homes; RCOT Living Well by Design (2023); documented demand exceeds supply in most local authorities
+  - Australia NDIS: most flexible international model — individual funding allocation with OT assessment determining scope; no per-item cap
+  - Canada HATC: tax credit mechanism (non-refundable) — benefits only taxable households; less effective for low-income disabled people
+  - USA VA SAH/SHA: highest grant ceiling in any jurisdiction; limited to veterans with specific service-connected conditions
+  - BCIS gap note: UK construction cost data for accessible design provisions is not independently available via open-access sources. UK practitioners should refer to: DFG unit cost data (MHCLG); Habinteg accessible homes guidance; JRF housing economics publications; QS benchmarks from recent accessible housing schemes
+**Jurisdictions confirmed:** UK · Ireland · Australia · Canada · USA · Switzerland · Germany (verify KfW status)
+**Early-close:** Yes  **Thin/No-data:** Nordic jurisdictions — no dedicated home adaptation grant programmes identified; accessibility is funded through housing benefit and disability support systems rather than targeted adaptation grants
+**Key sources:** MHCLG-DFG-2024 · NDIS-2024 · CRA-HATC-2024 · VA-SAH-FY2024 · HUD-S504 · KfW-159
+**Notes:** ⚠ KfW "Altersgerecht Umbauen" grant programme suspended December 2021 — do not cite as current. Replacement is KfW loan 159 (barrier-free conversion) at reduced interest rate. Verify status with KfW before citing in Vol 3. All figures carry year and currency per project standing rules.
+
+## european-accessibility-act-scope-clarification|INTL
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory)
+**Consensus finding:** The European Accessibility Act (Directive EU 2019/882) applies to digital products and services ONLY. It does not mandate physical built environment accessibility requirements in any EU member state. Any reference to EAA in the context of physical building standards is a misattribution and must be corrected.
+**Key facts:**
+  - EAA transposition deadline: 28 June 2022 (all 27 EU member states — transposed by mid-2025)
+  - EAA enforcement began: 28 June 2025 (products and services placed on market after this date)
+  - Transitional period for pre-2025 products/services: ends 28 June 2030
+  - Self-service terminal exception: up to 2045 (maximum 20 years of use)
+**EAA scope (what it DOES cover):**
+  - Electronic communications services
+  - Audio-visual media services
+  - Passenger transport information (digital interfaces)
+  - Banking services (digital)
+  - E-commerce
+  - Self-service terminals — ATMs, ticketing machines, check-in kiosks
+  - Consumer electronics — TVs, smartphones, computers
+  - E-books and reading software
+**EAA scope (what it does NOT cover):**
+  - Physical built environment dimensional requirements (door widths, ramp gradients, grab bar positions)
+  - Building codes or planning regulations — these remain at member state discretion
+  - Construction standards — EN 17210:2021 (functional requirements) is the relevant document; not directly mandatory
+**Built environment accessibility governance in the EU (correct framing):**
+  - National building codes — DIN 18040 (Germany), NEN 1814 (Netherlands), NS 11001 (Norway), BFS 2024:12 (Sweden), etc.
+  - EN 17210:2021 — functional requirements for accessible built environment; companion CEN/TR 17621 + CEN/TR 17622; under revision for EAA alignment; revised harmonised standards due September 2025; NOT uniformly mandatory across EU member states
+  - CRPD obligations — primary normative basis for built environment accessibility across all CRPD signatory states
+**Guidebook corrective action:**
+  - If EAA cited in context of physical built environment provisions: add correction note — "EAA (Directive 2019/882) applies to digital products and services; physical built environment provisions remain at national level"
+  - EAA IS relevant to guidebook H-series items (touchscreens, self-service terminals, BLE beacons, building management interfaces) — these fall within EAA digital product scope
+  - CRPD Committee (2024) Concluding Observations on the Netherlands explicitly recommend extending mandatory accessibility to built environment — relevant to CRPD framing in §1.7
+**Netherlands Bbl 2024 update:** Besluit bouwwerken leefomgeving (Bbl) in force 1 January 2024, replacing Bouwbesluit 2012. Accessibility requirements carried forward; no substantive change to core thresholds. NEN 9120 in development (not yet in force March 2026).
+**Spain DALCO UNE 41500:2020 update:** DALCO (Deambulación, Aprehensión, Localización, Comunicación) series UNE 41500:2020 is the standards framework for specifying accessibility by functional need alongside CTE DB-SUA.
+**New Zealand NZS 4121:2001 update:** Formally under revision by Whaikaha (Ministry of Disabled People, est. July 2022) and Standards New Zealand; updated standard expected approximately mid-2026. Accessibility for New Zealanders Act (ANZA) 2023 provides reform framework.
+**Jurisdictions confirmed:** EU-27 · Netherlands · Spain · New Zealand
+**Key sources:** Directive-EU-2019-882 · EN17210:2021 · Rijksoverheid-Bbl2024 · UNE41500:2020 · NZS4121:2001-under-revision · accessible-eu-centre-ec
+
+## ndv-aut-built-environment-quantified-thresholds|NDV
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 3–5 (thin base; practitioner consensus dominant)
+**Consensus finding:** Evidence for specific quantitative built environment design thresholds for NDV/AUT populations is Tier 4–5 (practitioner consensus and limited empirical work). Peer-reviewed literature provides directional guidance on domains but rarely specifies validated dB or lux thresholds. The evidence is building but has not yet reached RCT-level validation for built environment specifications.
+**Three primary design domains (Tola et al. 2021, Tier 1 scoping review):**
+  1. Sensory quality — minimise stimuli; provide quiet/retreat spaces; manage transition zones; control acoustics first, then visual and olfactory
+  2. Intelligibility — clear spatial layouts; predictable organisation; compartmentalised activity zones
+  3. Predictability — consistent layouts; routine-supporting design; reduced visual complexity
+**Most specific quantified evidence available:**
+  - Acoustics — background noise: target <55 dB(A) in focused attention spaces for autistic students vs. neurotypical controls; disturbances at 55–60 dB(A) were disproportionately disruptive for ASD (Caniato et al. 2024 — single classroom study; PROVISIONAL — flag as directional only)
+  - Acoustics — RT60: Bettarello et al. (2021) — first acoustic threshold study providing specific RT/background noise data for autism-specific spaces. Measured ASD daily-care facility; found most rooms did not comply with recommended thresholds without intervention; sound-absorbing materials achieved compliance. Recommends calibrated 3D acoustic modelling per room type (Tier 3, Applied Sciences DOI: 10.3390/app11093942)
+  - Lighting: controllable preferred; avoid harsh/flickering; no specific validated lux threshold beyond general PAS 6463 guidance (Tier 5)
+  - Thermal/olfactory: controllable; avoid scented materials (Tier 5, PAS 6463:2022)
+**Domain summary table:**
+  | Domain | Direction | Best available threshold | Evidence tier |
+  |---|---|---|---|
+  | Acoustics — RT60 | Short RT; reduce echo | No validated disability-specific threshold; RT60 ≤0.4 s for general healthcare (ISO) | Tier 4 |
+  | Acoustics — background noise | <55 dB(A) for focused attention | Caniato et al. 2024 — single study; PROVISIONAL | Tier 5 (single study) |
+  | Lighting — intensity | Controllable; avoid harsh/flicker | No validated lux threshold | Tier 5 |
+  | Spatial layout | Simple; predictable; compartmentalised | No mm threshold; directional only | Tier 5 |
+  | Transition spaces | Gradual sensory transition | No validated distance; ≥1.5 m buffer (PAS 6463) | Tier 4 |
+  | Quiet/retreat spaces | Mandatory in shared/institutional | 8 m² minimum (PAS 6463 §14.1) | Tier 4 |
+  | Thermal/olfactory | Controllable; fragrance-free | No validated threshold | Tier 5 |
+**ASPECTSS Design Index (Mostafa 2008/2019/2021):** Seven criteria — acoustics, spatial sequencing, escape space, compartmentalisation, transition spaces, sensory zoning, safety. Established practitioner consensus framework. ASPECTSS 2.0 (Frontiers in Psychiatry 2021, DOI: 10.3389/fpsyt.2021.727353) — autism-specific design with post-occupancy evaluation data.
+**PAS 6463:2022:** First BSI standard specifically for neurodiversity-inclusive design; guidance only (PAS, not mandatory BS); covers autism, ADHD, dyslexia, dyspraxia; emphasises design principles and process rather than specific quantitative thresholds.
+**Standing caveat for all NDV F-series items:** "Evidence for NDV sensory design is Tier 4–5 (practitioner consensus, limited empirical data). Specific quantitative thresholds remain under active investigation. All F-series specifications are expert consensus-based pending peer-reviewed threshold studies."
+**Evidence gap:** No RCT-level study has established built environment design thresholds (dB, lux, mm) specifically for NDV populations. The practitioner-evidence gap is confirmed across all 14 languages searched. PAS 6463 acknowledges the evidence base is an "emerging specialism."
+**Jurisdictions confirmed:** UK (PAS 6463:2022); no mandatory NDV-specific standard in any other jurisdiction
+**Early-close:** Yes  **Thin/No-data:** ZH, NL, ES, PT, KO, IT — all thin or no-data for NDV-specific built environment evidence
+**Key sources:** Tola2021 · Bettarello2021 · Black2022 · Caniato2024 · PAS6463:2022 · Mostafa-ASPECTSS2021 · Weber2022
+**Divergent findings:** —
+**Notes:** Cross-reference sensory-processing-model-design-application|NDV for Dunn framework application. The <55 dB(A) figure from Caniato et al. (2024) is a single classroom study — cite with caveat "directional only; pending replication." ASPECTSS Design Index is the most operationalised framework but remains practitioner consensus.
