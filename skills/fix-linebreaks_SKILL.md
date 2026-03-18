@@ -22,19 +22,41 @@ description: >
 
 ---
 
-## Join rule
+## Join rules
+
+**Structural elements never joined (applies to both rules):**
+ATX headings (`#` `##` `###` `####` `#####`) · table rows (`|`) · list items (`-` `*` `+` `1.`) · code fences (` ``` `) · blockquotes (`>`) · horizontal rules (`---` `***`)
+
+A line is structural if it starts with any of the above markers. Neither the candidate line nor the following line may be structural for a join to occur.
+
+---
+
+### Rule 1 — Blank-line soft wrap
 
 A single blank line between two content lines triggers a join if ALL of the following are true:
 
 | Condition | Signal |
 |---|---|
 | Second line starts with lowercase letter, `(`, or bare digit | Continuation |
-| Preceding line does not end with `.` `!` `?` | Sentence did not end |
-| Neither line is a structural element | Not heading, table row, list item, code fence, blockquote |
+| Preceding line does not end with `.` `!` `?` `:` `—` | Sentence did not end |
+| Neither line is a structural element | See structural elements above |
 
 Two or more consecutive blank lines → intentional separator → always preserved.
 
-**Structural elements never joined:** ATX headings · table rows (`|`) · horizontal rules · code fences · blockquotes · list items (`* - + 1.`)
+---
+
+### Rule 2 — Hard-wrap join (no blank line)
+
+Two adjacent non-blank lines are joined if ALL of the following are true:
+
+| Condition | Signal |
+|---|---|
+| First line is 58–74 characters long | Within hard-wrap band for this source |
+| First line does not end with `.` `!` `?` `:` `—` | Sentence did not end |
+| Second line starts with a lowercase letter or `(` | Continuation |
+| Neither line is a structural element | See structural elements above |
+
+Note: the 58–74 band is calibrated to this guidebook's DOCX export (observed range 61–72, ±3 buffer). Adjust if source changes.
 
 ---
 
