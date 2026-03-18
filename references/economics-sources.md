@@ -1,5 +1,4 @@
 # Economics Sources
-<!-- Managed by economics-researcher. Do not edit manually. -->
-<!-- Schema: jurisdiction | programme | verified data | date verified | source URL -->
-<!-- Append after each verification run. Never overwrite existing entries. -->
+<!-- Managed by economics-researcher. GET before search; PUT back after verification. -->
+<!-- Format: jurisdiction · programme · source · verified date -->
 
