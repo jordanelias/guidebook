@@ -199,3 +199,63 @@ RULE: Biophilic Design (BIO-01–BIO-05) and Thermal Comfort (TC-01–TC-05) are
 CONDITION: Any edit or structural review touching Volume 2 or Volume 3 main body.
 ACTION: Delete Supplementary Resource A and B from Volume 2 body. Volume 3 Appendix B and C are the canonical locations. Update any internal cross-references accordingly.
 DATE: 2026-03-18 20:10
+
+RULE: IntD (Intellectual Disability) is a main-body population category. It appears in Volume 1 Part II and receives full item coverage in Volume 2 matrices. IntD items are authored in Vol 2 Part IV and appear in residential and non-residential matrices. All IntD items carry THIN-BASE disclosure (Tier 3-4 only; no quantified architectural standard in any jurisdiction).
+CONDITION: Any task touching IntD population coverage.
+ACTION: Treat IntD as a full main-taxonomy category. Author items in main body with THIN-BASE disclosure on all specifications.
+DATE: 2026-03-18 20:20
+
+RULE: VIS and DEAF are separate independent population codes — never grouped or combined. VIS = visual impairment. DEAF = Deaf/hard of hearing/hearing device users. VIS/DEAF as a compound code is an error. DBL (DeafBlind) is a third distinct code, not a combination of VIS + DEAF.
+CONDITION: All population code usage throughout Volumes 1-3, matrices, item specs, glossary, abbreviations.
+ACTION: Replace all VIS/DEAF compound instances with standalone VIS or DEAF as appropriate. Update all matrices, glossary, and quick reference tables.
+DATE: 2026-03-18 20:20
+
+RULE: E-10 rest seating interval is specified at 25-30m (Tier 1 range; median 27.5m), replacing the previous 20m value. OFS populations additionally require reclining/tilt seating option at each station.
+CONDITION: E-10 item specification and all room-matrix references to rest seating interval.
+ACTION: Update E-10 to 25-30m range with 27.5m median. Add OFS seating-type note. Update all room matrices that reference the 20m value.
+DATE: 2026-03-18 20:20
+
+RULE: H-04 does not include temperature specification. Temperature for OFS/PAIN populations is addressed exclusively in Thermal Comfort Appendix C. Any temperature content in H-04 is to be removed and replaced with: "For thermal environment requirements for OFS and PAIN populations, see Appendix C."
+CONDITION: H-04 item specification.
+ACTION: Remove temperature content from H-04. Add single cross-reference note to Appendix C. Do not create temperature items in main body.
+DATE: 2026-03-18 20:20
+
+RULE: C-04 LRV contrast is presented as a split tiered table within the single item C-04. No new item code is created. Table: row 1 = general accessible environments >=30 LRV; row 2 = critical navigation junctions >=40 LRV. Conflict resolution note cross-referencing C-04 vs C-05 to be added in Part E.
+CONDITION: C-04 item specification.
+ACTION: Replace single-value spec with two-row tiered table. Add Part E conflict note.
+DATE: 2026-03-18 20:20
+
+RULE: When Category J items are struck from Volume 2 Part IV, all cross-references to J-01 through J-05 in room matrices, entry paths, and reading guides are deleted without replacement. No pointer to Supplementary Volume Section IV is added.
+CONDITION: find-and-replace pass striking Category J.
+ACTION: Delete all J-code cross-references. Do not replace with BAR or Supplementary Volume references.
+DATE: 2026-03-18 20:20
+
+RULE: Biophilic Design and Thermal Comfort are not referenced in Volumes 1-3 main body beyond a single opening notice in the volume front matter: "This guidebook includes supplementary appendices covering biophilic design (Appendix B) and thermal comfort (Appendix C)." No inline BIO- or TC- cross-references are permitted in Part IV item specs or room matrices.
+CONDITION: Any item specification or matrix referencing BIO- or TC- codes.
+ACTION: Remove all inline BIO- and TC- cross-references. Retain the single opening notice only.
+DATE: 2026-03-18 20:20
+
+RULE: De-escalation rooms are out of scope for this guidebook. No item to be authored. May be noted as a gap only.
+CONDITION: Any request to author a de-escalation room item.
+ACTION: Decline item creation. Log as scope-exclusion if raised.
+DATE: 2026-03-18 20:20
+
+RULE: IntD-specific emergency egress is covered by the existing deferral to jurisdiction-specific building codes (Appendix D). No separate IntD egress item to be authored.
+CONDITION: Any request to author IntD egress provisions.
+ACTION: Refer to Appendix D deferral. No new item.
+DATE: 2026-03-18 20:20
+
+RULE: Part V (Engineering and Coordination) contains placeholder headings only. Each of V.1-V.5 carries the note: "Brief template to be provided. Engage relevant specialist consultant at [design stage]." No full template content is to be authored in this edition.
+CONDITION: Part V content.
+ACTION: Add placeholder note under each V.1-V.5 heading. Do not author templates.
+DATE: 2026-03-18 20:20
+
+RULE: Part I section numbering gap: sections 1.9 and 1.10 are absent. Section 1.11 Scope is renumbered to 1.9. No content is authored for the gap. All cross-references to 1.11 throughout the document are updated to 1.9.
+CONDITION: Part I section numbering.
+ACTION: Renumber 1.11 to 1.9. Update all cross-references.
+DATE: 2026-03-18 20:20
+
+RULE: DBL (DeafBlind) is included in the Part III co-occurrence matrix (III.3) and co-occurrence design guidance (III.4) as a standalone population — not as a combination of VIS + DEAF. A note at the end of III.4 explains that DBL requirements arise from the primacy of tactility and combined sensory loss, not from the sum of VIS and DEAF provisions.
+CONDITION: Part III co-occurrence matrix and guidance.
+ACTION: Add DBL row/column to III.3 matrix. Add DBL guidance to III.4. Add explanatory note at end of III.4.
+DATE: 2026-03-18 20:20
