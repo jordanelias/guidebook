@@ -144,3 +144,19 @@ RULE: Early-close gate is SUSPENDED for all multilingual-research runs on popula
 CONDITION: Any multilingual-research run on any topic/population except IntD.
 ACTION: Run all 9 core languages to completion before synthesising. Do not close at early-close gate. Record all NO-DATA and THIN results explicitly.
 DATE: 2026-03-18 15:00
+
+
+RULE: A-09 0.1 m/s RMS threshold carries UNVERIFIED flag and must not be published without source verification. The value does not correspond to any located ISO 2631-1, ISO 10137, or BS 6472 metric. Candidate source is DIN 4150-2 structural velocity criterion — applicability to disability occupant health unconfirmed.
+CONDITION: Any publication or version release including A-09.
+ACTION: citation-verifier targeted run on A-09 0.1 m/s source must be completed and UNVERIFIED flag resolved or retained with full disclosure before publication. GAP-A09-01 P1 OPEN.
+DATE: 2026-03-18 18:30
+
+RULE: All PAIN and OFS item specifications must carry the following disclosure: "Specifications for this item serving PAIN and/or OFS populations are derived from expert consensus and clinical evidence; no built-environment design research base exists for these populations in any of 14 languages searched (March 2026). [EXPERT CONSENSUS — March 2026]"
+CONDITION: Any item specification serving PAIN or OFS populations, including E-10, G-06, A-09, and all room matrix provisions.
+ACTION: Apply disclosure note via find-and-replace pass. Template text in item-spec-revisions-2026-03-18-18-00.md §8.
+DATE: 2026-03-18 18:30
+
+RULE: DBL and IntD room matrix additions carry tiered evidence disclosure. DBL: [EXPERT CONSENSUS — no standard; March 2026]. IntD: [TIER 4-5; March 2026]. These disclosures are mandatory and must not be omitted.
+CONDITION: Any DBL or IntD provision added to room matrices.
+ACTION: Apply disclosure per item-spec-revisions-2026-03-18-18-00.md §6.
+DATE: 2026-03-18 18:30
