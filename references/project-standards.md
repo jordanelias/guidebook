@@ -242,3 +242,23 @@ RULE: Change Orders are stored at references/change-orders/CO-{NNNN}-{YYYY-MM-DD
 CONDITION: All structural edits executed by find-and-replace or cross-reference-resolver.
 ACTION: Locate and read the relevant Change Order before executing. Mark Sign-off checkboxes as tasks complete.
 DATE: 2026-03-18 19:00
+
+RULE: Guidebook volumes use Roman numerals (I, II, III). Parts are numbered sequentially 1–13 across all volumes. Sections use §[part].[section].[subsection] format. Item Specification Library (Part 8) category codes (A–I) and item codes (A-01 etc.) are exempt — they do not change with part renumbering. Cross-volume item code prefix is V2-P8-xx (formerly V2-P4-xx).
+CONDITION: Any document, skill, table, or specification in this project referencing volume, part, section, or item codes.
+ACTION: Use Roman numeral volumes, Arabic part numbers 1–13, §x.x.x section codes. Never use Roman numeral part labels (Part I, Part II etc.) or lettered parts (Part E). Part 8 item codes use category letter prefix only (A-01, not §8.A-01).
+DATE: 2026-03-18 19:00
+
+RULE: Category J (Bariatric Provisions) does not exist in Volume II Part 8. All bariatric provisions are in Supplementary Volume Supp. Part 4. The V2-P8-J prefix is invalid.
+CONDITION: Any skill, specification, cross-reference, or item code lookup in Volume II.
+ACTION: Route all bariatric/BAR item references to Supplementary Volume §4.x. Flag any V2-P8-J or Category J reference in Volume II as an error.
+DATE: 2026-03-18 19:00
+
+RULE: BIO and TC items are in Appendices B and C respectively, not in Part 8.
+CONDITION: Any cross-reference to BIO-01–BIO-05 or TC-01–TC-05.
+ACTION: Cite as Appendix B (BIO items) or Appendix C (TC items). Do not reference Part 8 or Part IV for these items.
+DATE: 2026-03-18 19:00
+
+RULE: Supplementary Volume uses Supp. Part 1–4 with §1.x–§4.x section coding, independent of main guidebook numbering.
+CONDITION: Any cross-reference to the Supplementary Volume from the main guidebook or skills.
+ACTION: Use "Supp. Part [n] §[n.x]" form. Do not use "Section I", "Section II" etc. for the Supplementary Volume.
+DATE: 2026-03-18 19:00
