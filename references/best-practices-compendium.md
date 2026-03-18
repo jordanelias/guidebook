@@ -107,3 +107,21 @@
 **Key sources:** MDPI Buildings 16(3):489 (2026); PMC (2025) IntD home design scoping; NDIS SDA (2019); Castell (2008); CSA B651:23
 **Gap registered:** THIN BASE - quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed
 
+
+
+## accessible-laundry-room-design|MOB
+**Updated:** 2026-03-18 17:00  **Evidence tier:** 4–5 (regulatory + OT practice)
+**Consensus finding:** Accessible laundry rooms require front-loading appliances at floor level or on riser (not stacked), clear floor space ≥762×1219 mm parallel to appliance, 1500 mm turning radius (public/shared) or 1300 mm (private dwelling), controls and drum opening 380–915 mm AFF, counter/sink ≤864 mm AFF with knee clearance, storage 230–1370 mm AFF. Main-floor location mandatory — basement/stairs create categorical exclusion.
+**Range:** Drum opening 380–915 mm AFF (ADA S611); controls ≤1220 mm AFF (ADA forward reach over obstruction); sink/counter ≤864 mm AFF; clear floor 762×1219 mm; turning radius 1500 mm (shared) / 1300 mm (residential)
+**Jurisdictions confirmed:** US (ADA S611:2010; US Access Board); AU (NDIS SDA High Physical Support — plinth + adjustable height); SE (BBR 3:148 — shared laundry accessible, no appliance-specific height); DE (DIN 18040-2 — Gemeinschaftsräume wheelchair accessible)
+**Early-close:** no  **Thin/No-data:** NL, ES, PT, IT (no laundry-specific research in any of 4 languages)
+**Key sources:** ADA-S611-2010 · US-Access-Board-Washers · NDIS-SDA · Boverket-BBR-3-148 · DIN-18040-2 · SD-State-Extension-2020
+**Gap noted:** ADA S611 is the only jurisdiction with quantified laundry appliance specifications. All other jurisdictions address laundry room accessibility generically (clear floor, turning radius, door width) without appliance-specific height values. This creates a significant guidance gap for R-LAU item specification.
+
+## floor-vibration-wheelchair-disability|MOB|NEU
+**Updated:** 2026-03-18 17:00  **Evidence tier:** 3–4 (observational + structural standards)
+**Consensus finding:** Wheelchair users in community settings are routinely exposed to WBV at or above ISO 2631-1 health caution zone (mean 0.83 m/s² weighted RMS over ~13 hrs/day — Garcia-Mendez 2013). Floor type is the single largest determinant of WBV transmitted to the cervical spine and forehead of manual wheelchair users (Larivière 2024). ISO 2631-1 was not designed for SCI/disability populations and may not accurately reflect risk levels for this group (Chénier & Aissaoui 2014). NHS HTM 08-01 provides hospital floor vibration performance standard. ISO 10137:2007 provides general building serviceability criteria for occupants; no disability-specific floor vibration standard exists in any jurisdiction.
+**Critical A-09 flag:** The 0.1 m/s RMS threshold cited in guidebook item A-09 does NOT correspond to any located ISO 2631-1 value. ISO 2631-1 action/limit values are expressed as weighted accelerations (m/s²) over 8h, not simple RMS velocity. The 0.1 m/s value may be a VDV-based or velocity-based threshold from DIN 4150-2 (structural vibration, Germany) — but its application to disability accessibility is unverified. **FLAG: [UNVERIFIED — source of 0.1 m/s RMS threshold in A-09 required before publication]**
+**Jurisdictions confirmed:** None — no jurisdiction has a disability-specific floor vibration standard
+**Early-close:** no  **Thin/No-data:** NO, SV, DA, FI, ZH, JA, NL, ES, PT, KO, IT — all NO-DATA for disability-specific building vibration
+**Key sources:** Garcia-Mendez-2013-JSCM · Misch-2022-JRATE · Chenier-Aissaoui-2014 · ISO-10137-2007 · ISO-2631-1 · SCI-P354-2007 · NHS-HTM-08-01
