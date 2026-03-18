@@ -80,16 +80,15 @@
 ---
 
 ## chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS
-**Updated:** 2026-03-17 20:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
-**PAIN Consensus:** OT built-environment evidence is near-zero; all provisions derived from ergonomic and energy conservation principles. Highest-impact: seated task provision, storage at waist-to-shoulder height, thermostatic shower controls, rest seating. Hydrotherapy has Tier 1 evidence (10 RCTs) for FM pain.
-**OFS Consensus:** Zero indexed built-environment research. All provisions derived from clinical understanding of orthostatic intolerance and post-exertional malaise. Highest-impact: rest seating (every 25–30 m, with reclining option), cool ambient environment, lift provision, thermostatic shower, bedroom-bathroom adjacency.
-**Jurisdictions confirmed:** EN only
-**Early-close:** Yes (gate triggered by thin base, not sufficiency)
-**Thin/No-data:** DE · NO · SV (thin) · FR (thin) · DA · FI · ZH · JA (NO-DATA)
-**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · Newcastle-POTS-2018
-**Divergent findings:** None found (insufficient evidence base for divergence)
-**Notes:** GAP-029 P2 OPEN. Guidebook must disclose PAIN/OFS specifications are expert consensus from clinical evidence, not built-environment research. H-04 temperature range absent for MS/OFS/PAIN — GAP-ITEM-SPEC. SCOPE-GATE-CANDIDATES: DA, FI, ZH, JA for PAIN/OFS — 4 consecutive NO-DATA. GAP-ITEM-NEW: reclining/tilt seating specification.
-
+**Updated:** 2026-03-18 16:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
+**PAIN Consensus:** OT built-environment evidence is near-zero across all 14 languages. All provisions derived from ergonomic and energy conservation principles. Highest-impact: seated task provision, storage at waist-to-shoulder height (750–1050 mm), thermostatic shower controls, rest seating. Hydrotherapy has Tier 1 evidence (10 RCTs) for FM pain reduction. ES and PT OT literature confirms clinical role only — no built-environment specifications.
+**OFS Consensus:** Zero indexed built-environment research in any of 14 languages. All provisions derived from clinical understanding of orthostatic intolerance and post-exertional malaise. Highest-impact: rest seating (every 25–30 m with reclining option), cool ambient environment (≤19–21°C), lift provision, thermostatic shower, bedroom-bathroom adjacency.
+**Extended language pass (2026-03-18):** NL (NEN 9120:2025), IT (DM 236/89), KO (Welfare Facilities Standard) — all cover MOB/sensory/cognitive only; no PAIN/OFS provisions in any national standard. Unanimous NO-DATA for built-environment design across 10 of 14 languages. EN is sole evidence source; SV, FR, ES, PT returned thin clinical OT references only.
+**Critical gap:** GAP-029 P2 OPEN — confirmed universal. Both populations lack any built-environment evidence base in any language or jurisdiction. Guidebook must disclose that PAIN/OFS specifications are expert consensus derived from clinical evidence, not built-environment research.
+**Temperature spec gap:** H-04 (HVAC/Thermal) — temperature range absent from all 14-language standard search. GAP-ITEM-SPEC confirmed cross-jurisdictional.
+**New item candidates:** Reclining/tilt seating specification; cushioned flooring specification (thin EN-only evidence).
+**SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/OFS searches. ES and PT retained in core (THIN).
+**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · Newcastle-POTS-2018 · Ismail2023
 ## deafblind-built-environment-design|DBL
 **Updated:** 2026-03-18 14:30  **Evidence tier:** 4-5
 **Consensus finding:** Zero Tier 1-2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4-5: DeafSpace Design Guidelines (2010), practitioner guidance (JJones 2025), organisational guidance (NELOWV 2025). Nordic Welfare Centre provides clinical/communication research only.
@@ -107,3 +106,4 @@
 **Early-close:** yes  **Thin/No-data:** NO, SV, DE
 **Key sources:** MDPI Buildings 16(3):489 (2026); PMC (2025) IntD home design scoping; NDIS SDA (2019); Castell (2008); CSA B651:23
 **Gap registered:** THIN BASE - quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed
+
