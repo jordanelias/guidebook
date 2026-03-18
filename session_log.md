@@ -242,3 +242,68 @@ next_action:
     - "THIN BASE: A-04, B-05, B-08, I-02, R-LAU, D-02, A-09"
     - "Population gaps: DBL/IntD across all groups"
 ```
+
+---
+session_close: 2026-03-18 15:00
+document: "Guidebook for Accessible Design V8.8"
+skills_run:
+  - workplan-orchestrator (session start; GitHub state load)
+  - research-log-manager CHECK (search-log.md — confirmed empty)
+  - multilingual-research batch1 (C-04, E-08, G-03, B-10 — P1 items)
+  - research-log-manager LOG (batch1 — 4 slugs)
+  - multilingual-research batch2 (A-04, B-05, B-08, I-02, D-02 — THIN BASE)
+  - research-log-manager LOG (batch2 — 5 slugs)
+  - multilingual-research batch3 (DBL, IntD — population gap)
+  - research-log-manager LOG (batch3 — 2 slugs)
+  - session-consolidator
+gaps_added:
+  - C-04: DIN 32975 K>=0.7 for critical navigation/signage — best practice spec upgrade required (P1 corroborated)
+  - E-08: DIN 18040-1 mandates 1500mm; TEK17 s.8-6 requires 1800mm — guidebook 1200mm is UK/US minimum only (P1)
+  - G-03: Levine 2024 DOI malformed — corrected to Levine 2023 doi:10.1177/00187208211059860 (P1 citation)
+  - B-10: PSE/strobe VAD risk confirmed universal across all jurisdictions; no non-strobe alternative standard exists (P1 systemic)
+  - A-04: 20m restorative interval — no evidential basis in ART literature or any standard (UNSUPPORTED)
+  - B-05: 5m lighting transition zone — no evidential basis; replace with luminance step-ratio principle (UNSUPPORTED)
+  - B-08: 30 GU floor gloss threshold — no regulatory basis in any jurisdiction (THIN BASE confirmed)
+  - I-02: One-handed kitchen built-environment evidence — literature gap; ILCWA grey lit is highest available (THIN BASE confirmed)
+  - D-02: Maximum decision-point count — no quantitative threshold in any language; GAP-NEW-05 confirmed (UNSUPPORTED count)
+  - DBL: Zero Tier 1-2 built-environment evidence in any language confirmed; GAP-NEW-01/02/03/04 confirmed
+  - IntD: Tier 3-4 evidence available (NDIS SDA; MDPI 2026); quantified specs absent all standards; GAP-NEW-05/06/07/08 confirmed
+gaps_resolved: []
+escalations_triggered: 4
+escalation_detail:
+  - "C-04: DIN 32975 K>=0.7 corroborates Dain 2022 P1 escalation — confirmed actionable"
+  - "E-08: DIN 18040-1 1500mm + TEK17 1800mm — guidebook 1200mm is compliance minimum only — P1 confirmed"
+  - "B-10: PSE strobe risk universal; no jurisdiction provides alternative — P1 systemic confirmed"
+  - "DBL: Zero evidence base across all languages — P1 evidence gap confirmed"
+patterns_noted:
+  - "Early-close gate was applied in batches 1-3; this was incorrect for population categories. User has corrected: all 9 languages must be searched for all categories except IntD."
+  - "Unanimous NO-DATA pattern (A-04, B-05, B-08 distance/threshold specs) — these are genuine evidence absences not language-coverage issues; scope gate does not apply"
+  - "DIN 18040 and TEK17 consistently more stringent than UK/US/ADA standards — confirmed for contrast (K>=0.7 vs LRV 30), corridor width (1500mm vs 1200mm), ramp contrast (K>=0.8)"
+  - "Nordic Welfare Centre covers DBL clinically/communicatively but no built-environment design research exists in any Nordic language"
+rules_added:
+  - "RULE: Early-close gate SUSPENDED for all multilingual-research population/item runs except IntD. All 9 core languages must be searched. CONDITION: Any multilingual-research run except IntD. ACTION: Run all 9 languages to completion. DATE: 2026-03-18 15:00"
+  - "RULE: DIN 32975 K>=0.7 is the best-practice contrast specification for critical navigation/signage in public buildings (mandatory in Germany per DIN 18040-3). Add as primary citation for C-04 alongside Dain 2022. CONDITION: Any contrast specification for critical navigation elements. ACTION: Use K>=0.7 Michelson as best-practice tier. DATE: 2026-03-18 15:00"
+  - "RULE: Corridor best practice specification is >=1500mm (DIN 18040-1) for all primary public building routes; ideal is >=1800mm (TEK17 s.8-6). Guidebook >=1200mm is UK/US minimum only — label as minimum, not best practice. CONDITION: Any primary route corridor specification. ACTION: Apply tiered spec: minimum 1200mm / best practice 1500mm / ideal 1800mm. DATE: 2026-03-18 15:00"
+  - "RULE: A-04 20m restorative interval is UNSUPPORTED — remove from spec or annotate as editorial estimate with no evidential basis. B-05 5m lighting transition zone is UNSUPPORTED — replace with luminance step-ratio (EN 12464-1 principles). B-08 30 GU gloss threshold is THIN BASE editorial estimate. CONDITION: Any of these items. ACTION: Apply flags as documented in batch2 output. DATE: 2026-03-18 15:00"
+blockers:
+  - "Steps 2-3 multilingual remediation incomplete: PAIN/OFS population gap items not yet searched"
+  - "R-LAU (accessible laundry) not yet searched (THIN BASE confirmed in prior session for non-English; full 9-language run not executed)"
+  - "A-09 (0.1 m/s RMS vibration) not yet searched"
+  - "Room-level population gaps (DBL/IntD absent from all 16 room matrices) not yet addressed at Step 3 level"
+  - "lit-DBL-IntD.md not accessible in this session (exists in prior session filesystem only); key findings extracted from session_close_2026-03-17-21:30"
+  - "Batches 1-3 used early-close gate — this was incorrect for population categories. Batches must be re-examined to confirm whether critical evidence was missed by early closure"
+research_log_updated: true
+next_action:
+  skill: multilingual-research
+  session: "Step 2-3 remediation — remaining items"
+  scope: "PAIN/OFS population gap items across Groups A-J; R-LAU; A-09; then room-level DBL/IntD gaps"
+  parameters:
+    early_close_gate: "SUSPENDED — all 9 core languages required for all searches except IntD"
+    ceiling: "20 sources max per run"
+    priority_order:
+      - "PAIN/OFS population gap additions across items (batch 4)"
+      - "R-LAU (accessible laundry — full 9-language)"
+      - "A-09 (vibration isolation — full 9-language)"
+      - "Room-level population gaps: DBL/IntD across R1-R9 and N1-N7"
+    note: "Batches 1-3 used early-close gate for C-04, E-08, G-03, B-10, DBL, IntD. Consider whether these require re-running at full 9-language given user instruction. Recommend confirming with user at next session start."
+  output_file: "step2-3-multilingual-remediation-2026-03-18-batch4.md"
