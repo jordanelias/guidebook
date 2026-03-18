@@ -1067,3 +1067,35 @@ bpc_ref: "multilingual-evidence-convergence-non-english|ALL"
 thin_flags: [FI, ZH]
 no_data_flags: []
 ```
+
+
+---
+
+## Co-Primary Tier 1 / Tier 2 Gap-Fill Supplement
+**Date:** 2026-03-18 23:59  
+**Trigger:** All prior searches conducted under PRISMA clinical pyramid; Co-primary Tier 1 (lived experience) and Tier 2 (NGO/advocacy) source classes not actively retrieved.  
+**Pass type:** Targeted supplement — 9 core languages, Co-primary Tier 1 / Tier 2 scope only.
+
+### Slugs Supplemented
+
+| Slug | New sources added | Evidence gap confirmed |
+|---|---|---|
+| `mobility-wheelchair-built-environment\|MOB` | NHF Quality Criteria (NO), DHR 2025 (SV), APF/IFOP 2020 (FR), BSK e.V. (DE), DPI Japan 2023 (JA), CDPF supervision programme (ZH), Motionspot re-tiered to Co-primary Tier 1 | No new gaps |
+| `visual-hearing-impairment-built-environment\|VIS\|DEAF` | RNIB Building Sight 2023 (EN), RNID (EN), Norges Blindeforbund re-tiered (NO) | RNIB Building Sight was critical gap — now resolved |
+| `neurodivergent-mental-health-built-environment\|NDV\|MH` | Caldwell et al. 2025 (EN), SREF 2024 (EN), McAllister & McBeth 2022 (EN) | No new gaps |
+| `neurological-dementia-built-environment\|NEU\|DEM` | Alzheimer Society re-tiered to Tier 2, BrainXchange Tier 2, Dementia Alliance International Co-primary Tier 1 | No new gaps |
+| `chronic-pain-fatigue-spectrum-built-environment\|PAIN\|OFS` | PLRC (indirect), Bateman Horne Center (indirect) | CONFIRMED: no Co-primary Tier 1 or Tier 2 built environment guidance in any language — prior NO-DATA finding accurate |
+| `deafblind-built-environment-design\|DBL` | Sense TouchBase Pears 2017 (Tier 2 practice example) | CONFIRMED: GAP-DBL-SEARCH-01 KNOWN-LIMITATION correct — zero guideline documents in any language |
+| `intellectual-disability-built-environment-design\|IntD` | People First Canada Co-primary Tier 1, Inclusion International Tier 2 | THIN-BASE unchanged — no quantified design specifications from any source |
+
+### Effect on Specification Confidence
+- MOB turning circle: STRONG (elevated from ADEQUATE)
+- MOB ramp gradient: STRONG (elevated from ADEQUATE)
+- NDV sensory room/retreat: STRONG (Co-primary Tier 1 corroboration confirmed)
+- NDV transition spaces: STRONG (elevated from ADEQUATE)
+- VIS wayfinding/built environment: ADEQUATE→STRONG (RNIB Building Sight gap closed)
+- PAIN/OFS: unchanged — THIN BASE
+- DBL: unchanged — THIN BASE
+- IntD: unchanged — THIN BASE
+
+### No specification values changed.
