@@ -38,8 +38,11 @@ Every directive maps to one of these typed operations. Parse the user's natural-
 | `XREF` | Update cross-reference label | Change only the cross-reference annotation on an existing entry (e.g. update "→ Supp Vol §IV" pointers) |
 | `MERGE` | Combine entries | Merge two sibling entries into one; resolve content overlap instructions |
 | `SPLIT` | Divide entry | Split one entry into two; specify split point |
+| `RENUMBER` | Resequence identifiers | Close numbering gaps in a sibling sequence after any REMOVE, MOVE, ADD, MERGE, or SPLIT; always auto-triggered within the affected scope |
 
 A single user statement may generate multiple typed operations. List all before executing.
+
+**Auto-trigger rule:** `RENUMBER` is automatically appended to any operation batch that affects the sequence of numbered siblings (sections, subsections, or items within a category). It is never omitted when gaps would result. The user does not need to request it explicitly.
 
 ---
 
@@ -88,6 +91,7 @@ Wait for user confirmation before executing. Skip confirmation only if user incl
    - `ADD`: Insert new line at correct position with `*(new — v{version} {date})*` annotation.
    - `XREF`: Update the cross-reference annotation text on the relevant line.
    - `MERGE` / `SPLIT`: Restructure lines accordingly; annotate.
+   - `RENUMBER`: Resequence all sibling entries in the affected scope to eliminate gaps. Update every identifier in the ToC that falls within the resequenced range. Produce a complete before→after mapping table (used in the Change Order).
 3. PUT updated `toc.md`. Commit: `toc-editor: {operation summary} [{YYYY-MM-DD HH:MM}]`
 
 ---
@@ -158,6 +162,19 @@ ADD:
 > Insert the following new block after heading: `{preceding heading}`
 > [Content block, if provided — or flag as: CONTENT REQUIRED before execution]
 
+RENUMBER:
+> Resequence all identifiers in scope: `{Part/Section/Category}`, siblings `{first}` through `{last}`.
+> Before→after mapping (apply every substitution in this order — do not skip any):
+>
+> | Old identifier | New identifier | Variant forms to search |
+> |---|---|---|
+> | `§1.11` | `§1.9` | `§ 1.11`, `section 1.11`, `Part I §1.11`, `(§1.11)` |
+> | … | … | … |
+>
+> **Execution order:** work from the lowest number upward to avoid double-substitution.
+> **Scope:** apply within `{volume/part}` only — do not alter identifiers in other parts even if numerically similar.
+> **Cross-reference chase:** any section outside this scope that cites an old identifier must also be updated — see Cross-Reference Chase table below.
+
 ---
 
 ## Cross-Reference Chase
@@ -179,6 +196,7 @@ requiring a follow-up pass with `cross-reference-resolver`:
 | cross-reference-resolver | [scope] | P1/P2 |
 | guidebook-auditor | Verify heading hierarchy post-change | P2 |
 | volii-validator | Re-validate item codes if recoded | P1 if RECODE |
+| find-and-replace | Apply RENUMBER mapping table in sequence (low→high) | P1 if RENUMBER |
 
 ---
 
@@ -237,6 +255,8 @@ NEXT STEPS:
 
 - Parse all operations from a single user statement in one pass.
 - Batch multiple operations into one Change Order if issued together.
+- RENUMBER is always included when any REMOVE, MOVE, ADD, MERGE, or SPLIT affects a numbered sibling sequence — never omit it, never wait for the user to request it.
+- Before closing any Change Order, scan the affected scope in toc.md for numbering gaps. If any gap exists (e.g. §1.8 → §1.11), append a RENUMBER operation even if the primary operation was not a removal.
 - If a REMOVE/REDIRECT operation targets a section with >10 downstream cross-references: flag as HIGH-IMPACT and require explicit user confirmation before generating the Change Order.
 - Never modify the guidebook source file directly. toc-editor outputs instructions only; execution is performed by find-and-replace and cross-reference-resolver.
 
