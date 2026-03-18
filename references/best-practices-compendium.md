@@ -854,3 +854,53 @@
   - Spanish INE (2019): only 14% of pre-1981 Spanish dwellings have level entry — lowest compliance rate Western Europe
 **Source document:** Multilingual Systematic Review: Accessible Built Environment Design (2026-03-09 1800)
 **Key sources:** Marquardt2011-TUDresden · AIJ-EpiStudies · BuroKade-DeHogeweyk · TERRAGON-DStGB2017 · KfW-Prognos · SINTEF-Byggforsk · Boverket2022 · NationaltVidenscenter · Ielegems-Vanrie2024-full
+
+
+---
+
+## Co-Primary Tier 1 / Tier 2 Gap-Fill Supplement
+**Updated:** 2026-03-18 23:59  **Pass type:** Targeted Co-primary Tier 1 / Tier 2 supplement — all 9 core languages
+
+### New Tier 2 Organisations Added to MOB Slug
+
+**NHF Quality Criteria Guide (NO, Tier 2):** Norges Handikapforbund published explicit quality criteria supplementing TEK17/SINTEF. Criteria stricter than TEK17 on ramp gradient (consistent with DIN 18040, stricter than ADA). Confirms community-derived convergence with Tier 3 clinical evidence.
+**Source:** NHF / Husbanken. Tilgjengelige bygg og uteområder. Oslo: Husbanken, n.d.
+
+**DHR Report (SV, Tier 2):** DHR (Delaktighet Handlingskraft Rörelsefrihet). "Nya byggregler riskerar tillgängligheten." 2025. Survey of 290 municipalities: new BFS 2024:12 lacks concrete accessibility recommendations; 2/3 municipalities expect inadequate enforcement. Raises confidence ceiling on BFS 2024:12 as reliable standard reference.
+
+**APF France Handicap / IFOP (FR, Co-primary Tier 1 + Tier 2):** Consultation nationale n=11,905 (6,142 disabled people). Finding: 9/10 people experience daily accessibility barriers. Housing testimonials document corridor width, door weight, lift access inadequacy. ELAN 2018 law reduced accessible new housing from 100% to 20% — confirmed as policy regression by community evidence.
+**Source:** IFOP pour APF France Handicap. Accessibilité en France : toutes et tous concernés ! Paris: APF France Handicap / IFOP, 2020.
+
+**BSK e.V. ABC Barrierefreies Bauen (DE, Tier 2):** Bundesverband Selbsthilfe Körperbehinderter. Community-developed guide: "ABC Barrierefreies Bauen — Praktische Tipps und Ratschläge zum barrierefreien Planen, Bauen und Wohnen." Covers planning, building and residential modification. Produced by and for physically disabled people.
+
+**DPI Japan / バリアフリー部会 (JA, Tier 2):** DPI日本会議. Active participant in 2023 housing design guideline review (国交省住宅局); challenged inadequacy of 2009 standards for wheelchair bathroom access. Barrier-Free Committee active since 1986; drove 2018 and 2020 Barrier-Free Law amendments.
+**Source:** DPI日本会議 (2023). 第1回住宅設計ガイドライン検討会報告. dpi-japan.org
+
+**CDPF Supervision Programme (ZH, Co-primary Tier 1):** 中国残联 built environment supervision programme: 9,458 disabled supervisors of accessible environment construction (2024); systematic user experience evaluation of accessible built environments. Confirmed implementation gaps between GB 55019-2021 requirements and field reality.
+**Source:** 中国残疾人联合会 (2024). 2024年残疾人事业发展统计公报. cdpf.org.cn
+
+### New Co-Primary Tier 1 Sources Added to NDV Slug
+
+**Caldwell et al. (2025, EN, Co-primary Tier 1):** "A calm space to reset: perceptions of sensory rooms in Australian public buildings." Archnet-IJAR. Mixed-methods, n=57, autistic and neurodivergent participants. Confirms lived experience preferences: low arousal, predictability, neutral lighting, strong ventilation, reduced noise. Directly corroborates PAS 6463 sensory room guidance.
+
+**SREF — Sensory Responsive Environments Framework (2024, EN, Co-primary Tier 1):** Qualitative lived experience study, n=31 interviews (autistic, ADHD, dyslexic participants). Identifies sensory barriers and supportive elements in outdoor built environments. Produces Sensory Responsive Environments Framework. MDPI Land, 13(5), 636.
+
+**McAllister & McBeth (2022, EN, Co-primary Tier 1):** "Autism Spectrum Condition and the Built Environment." Cities & Health. Participatory route analysis with autistic focus group. Identifies cognitive and sensory barriers in urban navigation including proprioceptive challenges with uneven surfaces.
+
+### New Tier 2 Sources Added to VIS/DEAF Slug
+
+**RNIB Building Sight (2023, EN, Tier 2):** Royal National Institute of Blind People. "Building Sight: Design principles and practical recommendations for accessible buildings and environments." 2023. Primary community-developed built environment guide from UK's leading sight loss charity. Covers lighting, contrast, wayfinding, tactile surfaces, signage. [ABSENT FROM PRIOR BPC — critical gap now closed.]
+**Source:** RNIB (2023). Building Sight. London: RNIB.
+
+**RNID (EN, Tier 2):** Royal National Institute for Deaf People. Built environment guidance on hearing loop placement, visual alarm systems, acoustic design. Tier 2 counterpart to RNIB for DEAF slug.
+
+### Confirmation: PAIN/OFS Evidence Gap
+No Co-primary Tier 1 or Tier 2 organisation producing built environment design guidance for PAIN/OFS (ME/CFS, fibromyalgia, POTS, MCAS) was found in any of the 9 core languages. PLRC and ME Association confirmed as patient community organisations but without specific built environment design guidance. THIN BASE disclosure on all PAIN/OFS specifications confirmed as accurate. Bateman Horne Center note: severe ME/CFS presentations (housebound/bedbound, 25% of cases) require "silent, dark or dimly-lit room" — indirect built environment implication for bedroom and rest space design.
+
+### Confirmation: DBL Evidence Gap
+Sense (UK) TouchBase Pears (2017, Glenn Howells Architects) confirmed as Tier 2 practice example for DeafBlind-specific built environment. No Tier 2 guideline document found. GAP-DBL-SEARCH-01 KNOWN-LIMITATION status confirmed correct.
+
+### IntD New Sources
+**People First Canada (EN, Co-primary Tier 1):** Self-advocacy organisation; explicitly referenced as co-design participant in CSA B651:23 development. No built environment specification guide produced independently.
+**Inclusion International (EN, Tier 2):** International federation of intellectual disability self-advocacy organisations; position statements on accessible environments. No quantified design specifications.
+THIN-BASE disclosure on all IntD specifications confirmed unchanged.
