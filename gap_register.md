@@ -85,3 +85,7 @@ GAP-STEP6-01 | CLOSED-RESOLVED | 2026-03-18 22:10 | C-04 LRV tiered table within
 GAP-STEP6-02 | CLOSED-RESOLVED | 2026-03-18 22:10 | C-04/C-05 conflict resolution note specified in C-04 rule (Part E conflict note); rule written 2026-03-18 20:20. Execution pending Block 1.
 GAP-NEW-08 | CLOSED-RESOLVED | 2026-03-18 22:10 | IntD emergency egress: existing Appendix D deferral applies; rule written 2026-03-18 20:20. No new item required.
 GAP-NEW-10 | CLOSED-RESOLVED | 2026-03-18 22:10 | De-escalation room out of scope; rule written 2026-03-18 20:20. No item to be authored.
+
+GAP-TIER-01 | P2 | CLOSED-RESOLVED | research-log-manager | VIS/DEAF slug | RNIB Building Sight (2023) absent from VIS evidence base — primary UK community-developed built environment guide for sight loss. Now added to BPC as Tier 2. Specification confidence elevated. | 2026-03-18 23:59
+GAP-TIER-02 | P3 | KNOWN-LIMITATION | research-log-manager | PAIN/OFS slug | No Co-primary Tier 1 or Tier 2 organisation produces built environment design guidance for PAIN/OFS in any of 9 core languages. Prior NO-DATA finding confirmed accurate. THIN-BASE disclosure mandatory on all PAIN/OFS specifications. | 2026-03-18 23:59
+GAP-TIER-03 | P3 | KNOWN-LIMITATION | research-log-manager | ALL slugs | Prior multilingual research runs used PRISMA clinical pyramid; Co-primary Tier 1 (lived experience) and Tier 2 (NGO/advocacy) sources systematically underweighted. Gap-fill pass complete 2026-03-18. No specification values changed; confidence ratings elevated where corroboration found. | 2026-03-18 23:59
