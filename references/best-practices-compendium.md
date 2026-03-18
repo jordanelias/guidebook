@@ -614,3 +614,76 @@
 **Key sources:** Tola2021 · Bettarello2021 · Black2022 · Caniato2024 · PAS6463:2022 · Mostafa-ASPECTSS2021 · Weber2022
 **Divergent findings:** —
 **Notes:** Cross-reference sensory-processing-model-design-application|NDV for Dunn framework application. The <55 dB(A) figure from Caniato et al. (2024) is a single classroom study — cite with caveat "directional only; pending replication." ASPECTSS Design Index is the most operationalised framework but remains practitioner consensus.
+
+## mob-upl-built-environment-evidence-synthesis|MOB
+**Updated:** 2026-03-18 23:45  **Evidence tier:** 1–3
+**Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains with the largest evidence-practice conflicts across all major standards. UPL built environment evidence base is critically thin — zero indexed studies on one-handed kitchen/bathroom design.
+**Core evidence-practice conflicts:**
+  - Turning circle: ADA/BS 8300 1525 mm serves only 50th percentile; 2108 mm needed for 95th-percentile power chairs; 2489 mm for scooters (D'Souza et al. 2011, n=339, Tier 3). Only CSA B651:23 (2100 mm) approaches the 95th percentile.
+  - Toilet transfer: 90% of older disabled persons stand-pivot transfer (not lateral transfer assumed by ADA 18-inch centreline); 30-inch centreline preferred for assisted transfers (Sanford & Bosch 2013, n=20, Tier 3)
+  - Grab bar type: two vertical bars produce smallest COP deviation and are most preferred; horizontal bars (ADA-mandated) are least preferred and least stable (Kennedy et al. 2015, Tier 3)
+  - Threshold: 2 cm defeats 45.8% of wheelchair users on first attempt; women OR 2.71 of failure vs. men (Al Lawati et al. 2017, n=214, Tier 3)
+  - Grab bar load: 1.3 kN peak force during bathtub exit fall recovery (KITE Research 2023–2025)
+  - Grab bar placement: grasp location varies with body height (r=0.67) — fixed placement cannot serve all users (Levine et al. 2025, Tier 3)
+**Non-English standards as evidence-aligned benchmarks:**
+  - Ramp gradient: ADA/BS 8300 8.3% (1:12) vs. DIN 18040 6% (1:16.7), TEK17 6.7% (1:15), France 5% preferred
+  - Corridor width: ADA 914 mm vs. TEK17 1800 mm on ramps, France ERP 1400 mm
+  - Turning circle: ADA 1525 mm vs. CSA B651:23 2100 mm, Sweden indoor 1300 mm
+  - Rest seating: ADA (not specified) vs. BS 8300 every 50 m, France every 10 m on ramps
+  - Hardware: DIN 18040 U-shaped mandatory at 85 cm; Japan sliding/pushbutton doors mandatory for accessible WC
+  - Dual handrail heights: TEK17 dual option (900 mm + 700 mm) — no evidence base but consensus strong
+**UPL evidence (critical gaps):**
+  - Zero PubMed-indexed studies on one-handed kitchen/bathroom built-environment design
+  - Zero studies linking grip strength measurements to hardware specifications
+  - German DIN 18040 offers most detailed hardware specs (U-shape, 85 cm height, force tables) — non-English standards essential reference for UPL
+  - Bilateral fold-down grab bars at 813 mm height, 356 mm from toilet CL outperform ADA configuration (Lee et al. 2017, Tier 3)
+  - Wall-mounted vertical bars biomechanically superior to rim-mounted (>30° trunk flexion with rim-mounted — King & Novak 2024)
+**Jurisdictions confirmed:** UK · AU · CA · US · DE · NO · SV · FR · JA
+**Key sources:** DSouza2011 · Togni2022 · AlLawati2017 · Sanford2013 · Kennedy2015 · Levine2023 · Levine2025 · Kim2014 · Zanotto2023 · Cockayne2021 · Lee2017
+**Divergent findings:** OT home assessment effectiveness: Cochrane (RR 0.88 high-risk) vs. OTIS RCT (no benefit in general at-risk elderly, IRR 1.17, p=0.07) — targeting criteria unclear; high-risk subgroup qualification required
+
+## design-framework-evidence-audit|ALL
+**Updated:** 2026-03-18 23:45  **Evidence tier:** 1–5 (by framework)
+**Consensus finding:** Design frameworks in accessibility practice span a wide evidence spectrum. ICF is gold standard (WHO, 191 states). Competence-Press and ART/SRT are evidence-based. ASPECTSS, DeafSpace, and trauma-informed design are practice-based with emerging evidence. No validated design framework exists for fatigue-spectrum (OFS/PAIN) populations — this is the most critical cross-cutting evidence gap.
+**Evidence classification by framework:**
+  | Framework | Classification | Evidence basis |
+  |---|---|---|
+  | ICF (WHO 2001) | Evidence-based (gold standard) | 191 WHO member states; WFOT, AOTA, CMS adoption; Housing Enabler internationally validated |
+  | Competence-Press (Lawton 1973) | Evidence-based | 50+ years; WHO Age-Friendly Cities; Wahl, Iwarsson & Oswald 2012 update; Iwarsson Housing Enabler r=0.74 |
+  | ART + SRT (Kaplan; Ulrich 1984) | Evidence-based | ART: hundreds of empirical studies; SRT: 1,000+ studies since Ulrich 1984 |
+  | DSDC/EADDAT (Stirling) | Evidence-based (core principles) | Systematic review 429+ items; Kelly reliability study 30 care homes; Cronbach α=0.82 |
+  | Biophilic Design (general) | Evidence-based (general) | Browning et al. 2014; WELL; PAS 6463 |
+  | ASPECTSS (Mostafa 2008/2021) | Practice-based, emerging evidence | UIA awards; author's own POEs; Black et al. 2022 scoping review; no RCTs |
+  | DeafSpace (Gallaudet/Bauman) | Practice-based | IAUD Gold 2015; no formal POEs; no systematic reviews |
+  | Sensory Zoning | Practice-based with professional endorsement | PAS 6463:2022 (BSI); RIBA/Sport England/TfL steering group |
+  | Trauma-Informed Design | Practice-based, emerging evidence | Holohan et al. 2022 scoping review; VA MH Design Guide; SAMHSA principles |
+  | OFS/Fatigue Design | Practice-based only | CRITICAL GAP — no validated framework exists |
+  | Chronic Pain Design | Practice-based only | CRITICAL GAP — no validated framework exists |
+  | Biophilic Design (disability-specific) | Emerging evidence | UNSW 2024 autism/nature; Hutson & Hutson 2023 neuroinclusive workplaces |
+**Key distinctions:**
+  - ICF supersedes EHP as primary OT framework — EHP has limited independent validation
+  - Competence-Press Model is NOT superseded by ICF — it is extended and operationalised by it
+  - DSDC EADDAT: single validation study (Marquardt 2011); independent psychometric replication not published
+  - ASPECTSS: 2014 and 2023 UIA awards; presented at NAS/UN CRPD/Harvard GSD; PAS 6463 incorporates concepts without naming ASPECTSS; no RIBA/AIA endorsement; no building code references
+  - PAS 6463:2022 is the only national standard for neurodiversity in the built environment globally
+**Jurisdictions confirmed:** Cross-jurisdictional (frameworks are discipline-level, not jurisdiction-specific)
+**Key sources:** ICF-WHO2001 · Lawton-Nahemow1973 · Ulrich1984 · DSDC-EADDAT2022 · Marquardt2011 · Mostafa2021-ASPECTSS · PAS6463:2022 · Holohan2022 · Iwarsson2005
+
+## jurisdiction-grant-programmes-comprehensive|ALL
+**Updated:** 2026-03-18 23:45  **Evidence tier:** 5 (regulatory/programme data, verified)
+**Consensus finding:** Comprehensive home adaptation grant programmes exist across all major jurisdictions. Nordic countries (Sweden, Norway, Denmark) operate uncapped needs-based systems. UK DFG is the highest-volume English-language programme. Singapore operates the most generous subsidy rate (87.5–95%). All programmes cover retrofit only; none fund design-stage accessible construction.
+**Selected programme corrections/updates vs. earlier BPC entry:**
+  - VA SAH: updated to $126,526 aggregate max (FY2026), not $109,986
+  - UK DFG Wales: £36,000 max; means test removed for small/medium works (Scotland: no cap, 100% for benefit recipients)
+  - France MaPrimeAdapt' (launched January 2024): 50–70% of works; max €15,400; covers 70+ and disabled at any age — NEW, not in previous entry
+  - Quebec PAD: suspended April 2025 — DO NOT CITE as current
+  - KfW 455-B grant: suspended January 2025; KfW 159 loan programme continues
+  - Netherlands WMO: municipal; no fixed national maximum; €21/month own contribution (2025)
+  - Sweden: 997M SEK national total 2024; average 18,600 SEK; no statutory maximum; no age/income restriction
+  - Norway: Husbanken — no fixed cap; holistic needs assessment
+  - Denmark §116: no cap; 100% funding of full necessary cost; no age/income limit
+  - Singapore EASE 2.0: extended to private property February 2025; 87.5–95% subsidy
+  - Japan: ¥200,000 lifetime limit (90% reimbursement = ¥180,000 benefit); plus tax credit and fixed asset tax reduction
+  - South Korea: three-tier system ₩5.9M / ₩10.95M / ₩16.01M by repair size (2025)
+**Nordic model note:** Sweden, Norway, and Denmark operate fundamentally different models from UK/Canada/USA — no fixed caps, assessed on functional need, no means testing (Sweden/Norway/Denmark). These are the strongest access-to-adaptation systems internationally.
+**Key sources:** CRA-HATC · VA-SAH-FY2026 · MHCLG-DFG · ANAH-MaPrimeAdapt · HDB-EASE2 · KfW-159 · Husbanken · Bostadsanpassning-2024 · Riksdagen-Lov116
