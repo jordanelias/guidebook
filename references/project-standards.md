@@ -232,3 +232,13 @@ ACTION: Insert §I.8 after §I.7. Verify and correct the §1.4a cross-reference.
 DATE: 2026-03-18 18:30
 
 RULE: VIS/DEAF is not a valid population code. CONDITION: All documents, skills, tables, and code lists in this project. ACTION: Use VIS for vision impairment only; use DEAF for Deaf/hard of hearing; use DBL for DeafBlind. VIS/DEAF must never appear. DATE: 2026-03-18 19:00
+
+RULE: references/toc.md on GitHub is the canonical structural record of the Guidebook (volumes, parts, sections, items, codes, labels).
+CONDITION: Any structural or nomenclature change to the Guidebook — removing, renaming, recoding, moving, or adding any volume, part, section, or item.
+ACTION: Use toc-editor skill. toc-editor updates toc.md and generates a Change Order (references/change-orders/CO-NNNN-*.md). find-and-replace and cross-reference-resolver execute against the guidebook source using the Change Order. Never make structural changes to the guidebook without a corresponding toc.md update and Change Order.
+DATE: 2026-03-18 19:00
+
+RULE: Change Orders are stored at references/change-orders/CO-{NNNN}-{YYYY-MM-DD-HHMM}.md and are the authoritative record of structural changes to the Guidebook.
+CONDITION: All structural edits executed by find-and-replace or cross-reference-resolver.
+ACTION: Locate and read the relevant Change Order before executing. Mark Sign-off checkboxes as tasks complete.
+DATE: 2026-03-18 19:00
