@@ -114,7 +114,6 @@ Never overwrite CLOSED items.
 | `item-specification-writer` | Sonnet 4.6 | Draft and revise specifications |
 | `vol2-item-formatter` | Haiku/Sonnet | Format and validate Vol 2 item blocks |
 | `practice-note-generator` | Sonnet 4.6 | OT practitioner field tools |
-| `plain-language-synthesizer` | Sonnet 4.6 | 3,000–5,000 word practitioner summaries (FK Grade 8–9) |
 
 ### Research and Verification
 | Skill | Model | Role |
