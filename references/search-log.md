@@ -6,113 +6,102 @@
 
 ```yaml
 slug: mobility-built-environment
-query: "wheelchair mobility impairment accessible built environment OT evidence turning space ramp grab bar"
-last_searched: 2026-03-19 21:15
+query: "ambulatory mobility upper limb impairment accessible built environment OT evidence wheelchair turning ramp door"
+last_searched: 2026-03-19 22:30
 early_close_triggered: false
-note: "Full re-run under Protocol v4. Replaces prior entry (mobility-wheelchair-built-environment, 2026-03-17) which used retired early-close gate and lacked jurisdiction_coverage block. Five languages (NL, ES, PT, KO, IT) and 13 jurisdictions remain NOT-RUN — LOG marked PARTIAL. Best-practice synthesis complete."
 
 native_aliases:
-  SV: rörelsehinder / tillgänglighet / hjälpmedelsanpassning [CLEAN]
-  NO: bevegelseshemming / universell utforming / rullestoltilgjengelighet [CLEAN]
-  DA: bevægelseshandicap / tilgængelighed / kørestolstilgængelighed [CLEAN]
-  FI: liikuntavamma / esteettömyys / pyörätuolitilat [CLEAN]
-  FR: handicap moteur / accessibilité PMR / fauteuil roulant [PARTIAL — PMR broader than MOB]
-  DE: Mobilitätseinschränkung / Barrierefreiheit / Rollstuhlnutzer [CLEAN]
+  SV: rörelsehinder / tillgänglighet för rörelsehindrade / hjälpmedelsanpassning [CLEAN]
+  NO: bevegelseshemming / universell utforming for bevegelseshemmede / rullestoltilgjengelighet [CLEAN]
+  DA: bevægelseshandicap / tilgængelighed for bevægelseshæmmede / kørestolstilgængelighed [CLEAN]
+  FI: liikuntavamma / esteettömyys liikuntavammaisille / pyörätuolitilat [CLEAN]
+  FR: handicap moteur / accessibilité PMR / fauteuil roulant [PARTIAL]
+  DE: Mobilitätseinschränkung / Barrierefreiheit für Rollstuhlnutzer [CLEAN]
   ZH: 肢体残疾 / 无障碍设施 / 轮椅使用者 [CLEAN]
-  JA: 肢体不自由 / 車いす使用者 / バリアフリー移動 [PARTIAL — splits AMB/UPL]
+  JA: 肢体不自由 / 車いす使用者 / バリアフリー移動 [PARTIAL]
   NL: motorische beperking / rolstoeltoegankelijkheid [CLEAN]
-  ES: discapacidad motora / silla de ruedas / movilidad reducida [CLEAN]
-  PT: deficiência motora / cadeirante / mobilidade reduzida [CLEAN]
+  ES: discapacidad motora / accesibilidad para usuarios de silla de ruedas [CLEAN]
+  PT: deficiência motora / acessibilidade para cadeirantes / mobilidade reduzida [CLEAN]
   KO: 지체장애 / 휠체어 접근성 / 이동 편의시설 [CLEAN]
-  IT: disabilità motoria / sedia a rotelle / mobilità ridotta [CLEAN]
+  IT: disabilità motoria / accessibilità per utenti di sedia a rotelle [CLEAN]
 
 concept_boundary_warnings:
-  - FR: PMR (personne à mobilité réduite) is the statutory term but broader than MOB — includes pregnancy, temporary injury. Filter to disability-specific provisions.
-  - JA: 肢体不自由 includes upper limb impairment separately from lower limb/mobility — distinguish MOB/AMB from MOB/UPL in findings.
+  - FR: PMR broader than MOB — includes pregnancy, temporary injury. Filter to disability-specific provisions.
+  - JA: 肢体不自由 includes upper limb impairment separately from ambulatory MOB.
 
 languages:
-  EN: {status: SEARCHED, results: 20, db: [PubMed, Consensus, SG, web], co1_pass: complete, native_standards_pass: complete}
-  SV: {status: SEARCHED, results: 5, db: [web], co1_pass: complete, native_standards_pass: complete, note: "Funktionsrätt Sverige BBR consultation; Boverket BFS 2024:12 — new rules from 1 July 2025; transition to 30 June 2026"}
-  NO: {status: SEARCHED, results: 6, db: [web], co1_pass: complete, native_standards_pass: complete, note: "NHF Tilgjengelige bygg og uteområder (Husbanken-funded); TEK17; NS 11001-1:2018"}
-  DA: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: complete, note: "BR18 retrieved; SBi-anvisning 230 not yet retrieved"}
-  FI: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: complete, note: "Decree 241/2017; Invalidiliitto ESKEH not yet retrieved"}
-  FR: {status: SEARCHED, results: 6, db: [web], co1_pass: complete, native_standards_pass: complete, note: "APF France Handicap Co-1; Arrêté 20 avril 2017; CEREMA voirie et espaces publics"}
-  DE: {status: SEARCHED, results: 7, db: [web, REHADAT], co1_pass: complete, native_standards_pass: complete, note: "BAG Selbsthilfe advocacy; DIN 18040-1/2/3; NRW Praxisleitfaden; nullbarriere.de; Bundesfachstelle Barrierefreiheit"}
-  ZH: {status: SEARCHED, results: 5, db: [web], co1_pass: partial, native_standards_pass: complete, note: "CDPF noted; GB 50763-2012; MLIT 建築設計標準 retrieved for JA but relates; GB/MLIT distinct"}
-  JA: {status: SEARCHED, results: 8, db: [web, J-STAGE], co1_pass: complete, native_standards_pass: complete, note: "DPI Japan housing handbook 2024; MLIT 建築設計標準 2025 update (180cm toilet turning for large buildings); Barrier-Free Law"}
-  NL: {status: SEARCHED, results: 5, db: [web], co1_pass: partial, native_standards_pass: complete, note: "Ieder(in) in NEN normcommissie; NEN 9120:2025; Bbl; Brussels GSV Title IV (BE retrieved separately)"}
-  ES: {status: SEARCHED, results: 5, db: [web], co1_pass: complete, native_standards_pass: complete, note: "CERMI residential guide; Arrêté CTE DB SUA; interior dimensions retrieved"}
-  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  EN: {status: SEARCHED, results: 22, db: [PubMed, Consensus, SG, web, ACA, Summer-Foundation, NCC], co1_pass: complete, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 4, db: [web, BFS-2024-12], co1_pass: partial, native_standards_pass: complete}
+  NO: {status: SEARCHED, results: 3, db: [web, Husbanken, TEK17], co1_pass: partial, native_standards_pass: complete}
+  DA: {status: SEARCHED, results: 3, db: [web, SBi-230, BR18], co1_pass: partial, native_standards_pass: complete}
+  FI: {status: SEARCHED, results: 4, db: [web, ESKEH, Invalidiliitto, Decree-241], co1_pass: partial, native_standards_pass: complete}
+  FR: {status: SEARCHED, results: 4, db: [web, APF, CEREMA, SIA-500], co1_pass: partial, native_standards_pass: complete}
+  DE: {status: SEARCHED, results: 5, db: [web, DIN18040, HEWI, BAG-Selbsthilfe], co1_pass: partial, native_standards_pass: complete}
+  ZH: {status: SEARCHED, results: 3, db: [web, GB50763, CDPF], co1_pass: partial, native_standards_pass: complete}
+  JA: {status: SEARCHED, results: 5, db: [web, MLIT-2025, DPI-Japan-2024, BF-Act], co1_pass: complete, native_standards_pass: complete}
+  NL: {status: SEARCHED, results: 3, db: [web, NEN9120-2025], co1_pass: not-run, native_standards_pass: complete}
+  ES: {status: THIN, results: 2, db: [web, CERMI, CTE-SUA], co1_pass: partial, native_standards_pass: complete}
+  PT: {status: SEARCHED, results: 4, db: [web, DL163-2006, INR], co1_pass: not-run, native_standards_pass: complete}
+  KO: {status: SEARCHED, results: 4, db: [web, 편의증진법-2024, MOHW], co1_pass: not-run, native_standards_pass: complete}
+  IT: {status: SEARCHED, results: 4, db: [web, DM236-89, FISH, ENS-notes], co1_pass: not-run, native_standards_pass: complete}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "PVA Accessible Home Design 2nd ed; VA Barrier-Free Design 2025 (1675mm/5-6 for power WC); IDeA Center AWM Final Report (Steinfeld/Maisel 2010); ADA 2010 Standards"}
-  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "Habinteg Inclusive Housing Design Guide 2024 (RCOTSS OT authored, CAE/RIBA); Wheelchair Housing Design Guide 3rd ed; Building Regs Part M Volume 1 M4(2)/M4(3); BS 8300:2018"}
-  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "RHFAC v4 (1700mm turning = 5ft diameter for power WC); CSA B651-23 (850mm door clear opening); NBC 2020 Part 3.8"}
-  AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "BAG Selbsthilfe; DIN 18040-1/2/3; NRW Praxisleitfaden; Bundesfachstelle Barrierefreiheit; KfW Altersgerecht Umbauen programme"}
-  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "APF France Handicap #23MillionsDeVoix; Arrêté 20 avril 2017; CEREMA accessibilité voirie; Arrêté 8 déc 2014"}
-  BE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "Brussels GSV Title IV retrieved (turning circle ≥1.50m; door clear passage 90cm min)"}
-  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "Ieder(in) normcommissie; NEN 9120:2025 (free access); Bbl; draaicirkel ≥1.50m confirmed"}
-  SE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "Funktionsrätt Sverige BBR response; Boverket BFS 2024:12 (new rules from July 2025)"}
-  NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "NHF quality criteria publication; TEK17; NS 11001-1:2018; rullestoltilgjengelighet data (SSB)"}
-  DK: {status: SEARCHED, co1_attempted: partial, tier5_attempted: false, tier6_attempted: true, note: "BR18 retrieved; SBi-anvisning 230 not yet retrieved"}
-  FI: {status: SEARCHED, co1_attempted: partial, tier5_attempted: false, tier6_attempted: true, note: "Decree 241/2017; ESKEH not retrieved"}
-  JP: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "DPI Japan housing handbook 2024 (Co-1 campaign); MLIT 建築設計標準 2025 (180cm toilet turning upgrade); Barrier-Free Law checklist"}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: SEARCHED, co1_attempted: partial, tier5_attempted: false, tier6_attempted: true, note: "CDPF noted; GB 50763-2012 retrieved via JA/ZH comparison; 无障碍设施 general provisions confirmed"}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "CERMI community building guide; CTE DB SUA; residential interior dimension guidance (SALUDEXTREMADURA)"}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "EN 17210:2021 referenced in NL NEN 9120:2025; EDF not directly retrieved"}
-  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "ISO 21542:2021 referenced across standards; not directly retrieved"}
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  IE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CH: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  BE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  FI: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  JP: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  KR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CN: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ES: {status: THIN, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  PT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  IT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  EU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
 
 jurisdiction_coverage_summary:
-  searched: [US, UK, CA, DE, FR, BE, NL, SE, NO, DK, FI, JP, CN, ES, EU, ISO]
-  thin: []
+  searched: [US, UK, CA, AU, IE, NZ, SG, DE, CH, FR, BE, NL, SE, NO, DK, FI, JP, KR, CN, BR, PT, IT, EU, ISO]
+  thin: [ES]
   no_data: []
-  not_run: [AU, IE, NZ, SG, CH, KR, BR, PT, IT]
-  co1_complete: [US, UK, CA, DE, FR, SE, NO, JP, ES]
-  co1_not_attempted: [AU, IE, NZ, SG, CH, KR, BR, PT, IT, BE, EU, ISO]
+  not_run: []
+  co1_complete: [US, UK, CA, AU, IE, JP, FR, DE, SE, NO, FI, CH]
+  co1_not_attempted: [NZ, SG, NL, DK, KR, BR, PT, IT, ISO]
+  tier5_complete: [US, UK, CA, AU, IE, NZ, SG, DE, CH, FR, SE, NO, DK, FI, JP, ES, NL, EU, ISO, BE]
+  tier5_not_attempted: [KR, CN, BR, PT, IT]
 
 co1_pass_summary:
-  complete: [EN, SV, NO, FR, DE, JA, ES]
-  partial: [DA, FI, ZH, NL]
-  not-run: [PT, KO, IT]
+  complete: [EN, JA]
+  partial: [SV, NO, DA, FI, FR, DE, ZH, ES]
+  not-run: [NL, PT, KO, IT]
 
 native_standards_pass_summary:
-  complete: [EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES]
+  complete: [EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]
   partial: []
-  not-run: [PT, KO, IT]
+  not-run: []
 
-companion_networks: {loaded: [MOB-Co1, Network F (OT)], scholar_targets: 3, retrieved: 6}
-citation_mining: {backward: 3, forward: 0, sources_added: 2, note: "Inline: Steinfeld 2010 backward → Ringaert 2001 (CA UDI), Bails 1983 (AU); IDeA Center DR#21 forward → D'Souza 2018 accommodation model"}
+companion_networks: {loaded: [PDA-AU, Summer-Foundation-AU, BCA-SG, CEUD-IE, DPA-NZ, Invalidiliitto-FI, APF-FR, Procap-CH, NHF-NO, DPI-Japan, 한국장애인개발원-KR], scholar_targets: 12, retrieved: 11}
+citation_mining: {backward: 4, forward: 3, sources_added: 5}
 at_database_pass: partial
 
-top_sources:
-  - Steinfeld E, Maisel J, Feathers D, D'Souza C (2010). Anthropometry and Standards for Wheeled Mobility: An International Comparison. Assistive Technology 22(1):51-67. DOI:10.1080/10400430903496580
-  - Steinfeld E, Paquet V, D'Souza C, Joseph C, Maisel J (2010). Anthropometry of Wheeled Mobility Project — Final Report. IDeA Center, University at Buffalo. Prepared for US Access Board.
-  - VA CFM (2025). VA Barrier-Free Design Standard. US Department of Veterans Affairs. https://www.cfm.va.gov/til/etc/dsBarrFree-2025-05.pdf
-  - PVA (2021). Accessible Home Design: Architectural Solutions for the Wheelchair User, 2nd Edition. Washington DC: PVA.
-  - Habinteg Housing Association / CAE / RIBA (2024). Inclusive Housing Design Guide. Authored by Runnalls J (RCOTSS-Housing OT). London: RIBA.
-  - Habinteg / RCOTSS-Housing (2018). Wheelchair Housing Design Guide, 3rd Edition. London: RIBA.
-  - NHF / Husbanken (2014). Tilgjengelige bygg og uteområder: Universell utforming og likestilling. Oslo: Husbanken.
-  - MLIT Japan (2025). 高齢者、障害者等の円滑な移動等に配慮した建築設計標準. Ministry of Land, Infrastructure, Transport and Tourism.
-  - DPI Japan (2024). 障害者の居住にも対応した住宅の設計ハンドブック. DPI 日本会議.
-  - Boverket (2025). BFS 2024:12 Tillgänglighet och användbarhet. Karlskrona: Boverket. [In force 1 July 2025; transition to 30 June 2026]
-  - NEN (2025). NEN 9120:2025 Toegankelijkheid van gebouwen. Delft: NEN. [Free to download]
-  - CERMI (2013, updated). Accesibilidad en edificios de comunidades de propietarios. Madrid: CERMI/Ayuntamiento de Madrid.
-
-bpc_ref: mobility-built-environment
-thin_flags: [DA-SBi230, FI-ESKEH]
+top_sources: [Steinfeld2010-IDeA, Steinfeld2010-AWM, VA-BFDS-2025, PVA-2021, Habinteg-RCOTSS-2024, RHFAC-v4.2, DPI-Japan-2024, Boverket-BFS2024, NEN9120-2025, BCA-Code-2025, ABNT-NBR9050-2020, Summer-Foundation-2024, Ringaert2001]
+bpc_ref: "mobility-built-environment"
+thin_flags: [ES]
 no_data_flags: []
 ```
+
 
 
 ---
