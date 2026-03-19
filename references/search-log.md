@@ -2655,3 +2655,53 @@ no_data_flags: [rest-seating-interval — confirmed NO-DATA across all 14 langua
 PROVISIONAL: true
 ACCEPTED_GAPS: [Co-1 not run — DPO orgs do not produce separate lift dimension guidance; rest seating NO-DATA accepted — no building standard exists in any jurisdiction; 16 jurisdictions THIN for specific lift/corridor standards — EN 81-70 universal applicability accepted as proxy]
 ```
+slug: room-acoustic-performance|ALL
+query: "room acoustic performance reverberation background noise disability accessibility built environment"
+last_searched: 2026-03-19 [session date]
+early_close_triggered: false
+
+languages:
+  EN: {status: SEARCHED, results: 40+, db: [PubMed, web, Acoustic Society, BSI, DfE, ASHA]}
+  DE: {status: SEARCHED, results: 12+, db: [web, DIN, IFBSORGE, Baunormen]}
+  IT: {status: SEARCHED, results: 8+, db: [web, UNI, ANIT, Ingenio]}
+  DA: {status: SEARCHED, results: 4, db: [web, BR18, Audiologi.dk, SBi]}
+  NO: {status: SEARCHED, results: 4, db: [web, NS 8175, NTNU]}
+  SV: {status: THIN, results: 2, db: [web, SS 25268 reference via BR18]}
+  FI: {status: THIN, results: 2, db: [web, references via Nordic pass]}
+  FR: {status: SEARCHED, results: 8+, db: [web, CEREMA, Légifrance, NF S 31-080]}
+  ZH: {status: SEARCHED, results: 6, db: [web, GB 50118-2010, Zhihu]}
+  JA: {status: SEARCHED, results: 5, db: [web, MEXT, AIJ AIJES-S001-2008, JAEIC]}
+  NL: {status: NOT-RUN, results: 0, db: []}
+  ES: {status: THIN, results: 1, db: [web]}
+  PT: {status: THIN, results: 1, db: [web, UNI/IT via comparative ref]}
+  KO: {status: NOT-RUN, results: 0, db: []}
+
+co1_pass_summary:
+  complete: [EN, FR, DE]
+  partial: [JA, DA, NO, ZH, IT]
+  not-run: [SV, FI, NL, ES, PT, KO]
+
+native_aliases:
+  EN: reverberation time / RT60 / background noise level / room acoustics / speech intelligibility / noise criterion (NC)
+  DE: Nachhallzeit / Hörsamkeit / Hintergrundgeräusch / Raumakustik / Sprachverständlichkeit
+  IT: tempo di riverberazione / intelligibilità del parlato / rumore di fondo / acustica degli ambienti
+  DA: efterklangstid / rumakustik / taleforståelse / baggrundsstøj
+  NO: etterklangstid / lydforhold / taletydelighet / bakgrunnsstøy
+  SV: efterklangstid / rumakustik / taligförståelighet / bakgrundsljud
+  FI: jälkikaiunta-aika / huoneakustiikka / puheen ymmärrettävyys / taustamelutaso
+  FR: durée de réverbération / temps de réverbération / intelligibilité de la parole / bruit de fond / acoustique intérieure
+  ZH: 混响时间 (hùnxiǎng shíjiān) / 背景噪声 / 语言清晰度 / 室内声学
+  JA: 残響時間 (zankyō jikan) / 音環境 / 語音明瞭度 / 背景騒音
+  KO: 잔향시간 / 실내음향 / 음성명료도 / 배경소음
+
+concept_boundary_warnings:
+  - ZH: GB 50118-2010 specifies RT60 by room type; no disability-population-specific differentiation in Chinese standards. Evidence on NDV/DEAF acoustic needs is derived from EN/IT/DE literature, not independent ZH evidence.
+  - JA: AIJ AIJES-S001-2008 is the primary standard; disability-specific acoustic provisions in Japan primarily addressed through Barrier-Free Law (2020 amendments adding school obligations) rather than dedicated acoustic performance standards.
+  - SV: SS 25268 addresses schools; disability-specific acoustic provisions are not separately enumerated from general standards.
+  - KO: No specific search conducted; Korean welfare facility acoustic standard likely exists but not retrieved.
+
+top_sources: [Bettarello2021, DIN18041-2016, BB93-2015, ANSI-ASA-S12.60-2010, UNI11532-2-2020, NS8175-2019, BrainXchange-DEM-Noise, Iglehart2020-DEAF-RT, PAS6463-2022, CEREMA-DMA-AcousticAccessibility, Murgia2022-SR, Devos2019-PMC]
+bpc_ref: "room-acoustic-performance|ALL"
+thin_flags: [SV, FI, ES, PT, KO]
+no_data_flags: [NL, KO]
+citation_mining: {backward: 8, forward: 4, sources_added: 3}
