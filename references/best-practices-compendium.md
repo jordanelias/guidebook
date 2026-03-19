@@ -1773,3 +1773,98 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 12. DIN 18040-2:2011. Barrierefreies Bauen — Wohnungen. [DE] Tier 6 ✅
 13. BS 8300:2018. Accessible + inclusive built environment. BSI. [UK] Tier 5 ✅
 14. Bateni, H., & Maki, B.E. (2005). Assistive devices for balance. *Arch Phys Med Rehabil*, 86(1), 134–145. Tier 3 ✅
+
+
+---
+
+## residential-kitchen-and-task-surfaces
+**Updated:** 2026-03-19 20:47  **Evidence tier range:** 2–6  **Status: PROVISIONAL** (co1 ~9/24 jx; tier5 ~9/24 jx — user-accepted gaps; 14 jurisdictions outstanding)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| SV | *tillgängligt kök / höjdjusterbar bänkskiva / knäfrirum* | ✓ CLEAN | — |
+| NO | *tilgjengelig kjøkken / høydejusterbar benkeplate / kneklaringsrom* | ✓ CLEAN | — |
+| DA | *tilgængeligt køkken / højdejusterbar bordplade / knæfrirum* | ✓ CLEAN | — |
+| FI | *esteetön keittiö / korkeussäädettävä työtaso / polvitila* | ✓ CLEAN | — |
+| FR | *cuisine accessible / plan de travail réglable / cuisine PMR* | ✓ CLEAN | PMR frame dominates; OT clinical evidence less visible |
+| DE | *barrierefreie Küche / höhenverstellbare Arbeitsfläche / Kniefreiheit* | ✓ CLEAN | KDA/Wohnraumanpassung richer on rationale |
+| ZH | *无障碍厨房 / 可调高度台面 / 轮椅膝部净空* | ✓ CLEAN | — |
+| JA | *バリアフリーキッチン / 高さ調整可能ワークトップ / 膝下クリアランス* | ✓ CLEAN | — |
+| NL | *toegankelijke keuken / in hoogte verstelbaar werkblad / onderrijdbare keuken* | ✓ CLEAN | WMO-keuken is a distinct NL concept; retrieve from WMO guidance |
+| ES | *cocina accesible / encimera regulable en altura / espacio libre bajo encimera* | ✓ CLEAN | — |
+| PT | *cozinha acessível / bancada regulável em altura / espaço livre sob a bancada* | ✓ CLEAN | — |
+| KO | *접근 가능한 주방 / 높이 조절 가능 조리대 / 무릎 여유 공간* | ✓ CLEAN | — |
+| IT | *cucina accessibile / piano di lavoro regolabile / spazio libero sotto il piano* | ✓ CLEAN | — |
+| EN | *accessible kitchen / height-adjustable worktop / knee clearance / roll-under sink / one-handed operation* | ✓ CLEAN | — |
+
+**⚠ ALL:** Height-adjustable worktop evidence is primarily from European manufacturers + workplace ergonomics. Residential OT clinical evidence is sparse — derive from general home modification SRs.
+
+### Best-practice synthesis
+**Most inclusive provision:** L-shaped or U-shaped layout with continuous worktop run; motorised height-adjustable section covering hob, sink, and ≥300 mm prep zone both sides; knee clearance ≥700 mm high × ≥600 mm deep under adjustable sections; turning circle ≥1500 mm clear; induction hob preferred; storage 400–1350 mm AFF.
+
+**Most targeted provision:** Worktop adjustable 700–900 mm AFF (motorised with anti-collision sensor); knee clearance ≥700 mm × ≥600 mm × ≥800 mm wide under hob and sink; sink shallow ≤150 mm depth, offset siphon to rear, insulated traps; lever or sensor tap; oven 700–1200 mm AFF with side-opening or fold-down door; induction hob flush to worktop; pull-out/swing-out base units; wall units lower edge ≤1350 mm AFF; sockets 100–150 mm above worktop.
+
+**Conflict resolution:** Where fixed height is required, population-informed default for wheelchair users is 750–800 mm AFF; ambulant users 850–900 mm. Height-adjustable section at hob and sink takes priority. Fixed sections can be standard height if supplemented by a lower preparation zone.
+
+**Highest-ambition actionable specification:**
+1. L or U-shaped layout — no carrying hot/heavy items across open space
+2. Motorised height-adjustable worktop 700–900 mm AFF with anti-collision sensor at hob, sink, and ≥300 mm prep zone each side
+3. Knee clearance: ≥700 mm high × ≥600 mm deep × ≥800 mm wide under adjustable sections
+4. Sink: shallow ≤150 mm basin; offset siphon to rear; insulated traps and pipework
+5. Single-lever or sensor tap; swivel spout; thermostatic limitation ≤43°C
+6. Oven 700–1200 mm AFF; side-opening or fold-down retractable door; heat-resistant surface adjacent
+7. Induction hob flush to worktop; front or side controls ≤1000 mm AFF
+8. Pull-out or swing-out base units — no standard hinged doors at primary use zones
+9. Wall units: lower edge ≤1350 mm AFF; motorised drop-down units preferred
+10. Turning circle ≥1500 mm × 1500 mm clear — not on circulation route
+11. Sockets 100–150 mm above worktop surface; side wall or worktop front preferred
+12. Task lighting ≥300 lux; no shadow from user over work zone
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Kitchen modification is the second most common home adaptation; OT assessment required gateway for funded adaptations | EN, DE, NL, FR | UK, AU, NL, DE, FR | Co-2 + Tier 5 |
+| Motorised height-adjustable worktop is primary intervention for WC-user kitchen independence; winding mechanism inferior | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, US | Tier 5 + Co-2 |
+| Fixed worktop height for WC users: 750–800 mm AFF consensus | EN, ES, FR, NL, DE | UK, US, DE, ES, FR, NL | Tier 6 + Tier 5 |
+| Knee clearance ≥700 mm high under hob and sink — cross-jurisdictional consensus minimum | EN, DE, NL, ES, FR, AU | UK, DE, NL, ES, FR, AU, US | Tier 6 + Tier 5 |
+| L or U-shaped layout reduces carrying of hot/heavy items — safety-critical for MOB/UPL | EN, NL, FR | UK, NL, FR, ES | Co-2 + Tier 5 |
+| Induction hob preferred for wheelchair users — eliminates flame burn risk | EN, DE, NL | UK, DE, NL | Co-2 |
+| Sink: shallow basin, offset siphon to rear, insulated traps — burn prevention | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, US | Co-2 + Tier 5 |
+| Strong evidence OT-led home modification improves ADL function (Stark 2017 SR, n=36 studies) | EN | US, UK, AU | Tier 3 |
+| Turning circle ≥1500 mm × 1500 mm clear of circulation route | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, AU | Tier 6 + Tier 5 |
+| Oven at 700–1200 mm AFF with side/fold-down door — prevents reaching into low hot oven | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, US | Co-2 + Tier 5 |
+
+### Divergent findings
+| Topic | Source A | Source B | Cause |
+|---|---|---|---|
+| Fixed WC worktop height | UK/ES: 750–800 mm | US ADA: 710–860 mm | Manual vs power WC population; ADA range accommodates both |
+| Worktop depth | UK/DE/NL: 600 mm max | US: 610 mm | Metric vs imperial rounding — functionally equivalent |
+| Knee clearance height | UK: 700 mm; ISO: 685 mm | DE DIN 18040-2: 670 mm | Regulatory context; 700 mm preferred as more accommodating |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| IE, SG, SE, BE, CH, DK, FI, KR, CN, BR, PT, IT, EU | Various | Not searched this session | No | No |
+| NZ, JP | EN/JA | Standard referenced; no Co-1 retrieved | No | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Stark et al. 2017 | Backward | Gitlin 2006 (multicomponent RCT); Chase 2012 (fall prevention SR) |
+| Foundations/AKW UK kitchen guide | Forward | BS 8300:2018 kitchen; Golding-Day 2018 |
+| AS 1428.2:1992 | Backward | Steinfeld 1979 (wheelchair reach range) |
+
+### Key sources
+1. Stark, S., et al. (2017). Effect of home modification interventions on participation. *AJOT*, 71(2), 7102290010. [US] Tier 3 ✅
+2. Foundations UK / AKW (2023). Accessible Kitchen Design Guide (DFG). [UK] Co-2 ✅
+3. Disability Rights UK (2024). Disabled Facilities Grants. [UK] Tier 2 ✅
+4. DIN 18040-2:2011. Barrierefreies Bauen — Wohnungen. [DE] Tier 6 ✅
+5. BS 8300:2018. Accessible + inclusive built environment — kitchen. BSI. [UK] Tier 5 ✅
+6. AD M Part M4(3):2015. Wheelchair user standard — kitchen. [UK] Tier 6 ✅
+7. AS 1428.2:1992. Design for access and mobility. [AU] Tier 6 ✅
+8. ADA 2010. Kitchen reach range and knee clearance. [US] Tier 6 ✅
+9. Wellecke, C., et al. (2022). OT survey — kitchen modifications. [AU] Co-2 ✅
+10. ISO 21542:2021. Accessibility and usability of the built environment. [ISO] Tier 4 ✅
+11. First in Architecture (2024). Metric Data 10: Kitchen standards for wheelchair users. [UK] Tier 5 ✅
+12. Gitlin, L.N., et al. (2006). Multicomponent home intervention RCT. *JAGS*, 54(5), 809–816. [US] Tier 3 ✅
