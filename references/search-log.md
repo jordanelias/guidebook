@@ -2143,3 +2143,319 @@ bpc_ref: "residential-kitchen-and-task-surfaces"
 thin_flags: [NZ, JP]
 no_data_flags: []
 ```
+
+---
+
+```yaml
+slug: residential-entry-and-threshold
+query: "accessible residential entry threshold level access ramp gradient entrance approach"
+last_searched: 2026-03-19 21:00
+early_close_triggered: false
+
+native_aliases:
+  SV: tröskel · trinnfri entré · ramplutning [PARTIAL]
+  NO: trinnfri atkomst · terskel · inngangsparti [CLEAN]
+  DA: trinfriadgang · tærskel · rampe [PARTIAL]
+  FI: esteettömyys · kynnys · luiska [PARTIAL]
+  FR: seuil · accès PMR · plan incliné · cheminement accessible [CLEAN]
+  DE: Barrierefreiheit · Eingang · Schwelle · Rampensteigung · DIN 18040 [CLEAN]
+  ZH: 无障碍入口 (wúzhàng'ài rùkǒu) · 坡道 (pōdào) · 门槛 (ménkǎn) [PARTIAL]
+  JA: バリアフリー入口 · スロープ勾配 · 段差 · 玄関アプローチ [CLEAN]
+  NL: drempelvrij · hellingbaan · toegankelijke entree · drempel [CLEAN]
+  ES: acceso sin barreras · rampa · umbral · entrada accesible [PARTIAL]
+  PT: acesso sem barreiras · rampa · desnível · soleira [CLEAN]
+  KO: 무장애 입구 (mujanghae ipgu) · 경사로 (gyeongsa-ro) · 문턱 (muntheok) [PARTIAL]
+  IT: accesso privo di barriere · rampa · soglia · ingresso accessibile [PARTIAL]
+concept_boundary_warnings:
+  - JA: バリアフリー法 applies primarily to specific building types; residential entry requirements are partly under 高齢者等配慮対策等級 (Housing Performance Indication); search must include both legal frameworks
+  - ZH: 无障碍 (wúzhàng'ài) is the official statutory term; academic/progressive literature uses 无障碍环境建设条例 2023 as key reference
+
+languages:
+  EN: {status: SEARCHED, results: 12, db: [RCOT, Habinteg/CAE, ADA, RHFAC, NCC, AS1428, Foundations UK], co1_pass: partial, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 4, db: [Boverket BBR/BFS2024:12], co1_pass: not-run, native_standards_pass: complete}
+  NO: {status: SEARCHED, results: 5, db: [DiBK TEK17 §12-4 §12-16], co1_pass: not-run, native_standards_pass: complete}
+  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FR: {status: SEARCHED, results: 5, db: [Légifrance Arrêté 8 déc 2014], co1_pass: not-run, native_standards_pass: complete}
+  DE: {status: SEARCHED, results: 4, db: [DIN 18040-2, ift Rosenheim draft 2023], co1_pass: not-run, native_standards_pass: complete}
+  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  JA: {status: SEARCHED, results: 4, db: [MLIT バリアフリー法 誘導基準], co1_pass: not-run, native_standards_pass: complete}
+  NL: {status: SEARCHED, results: 4, db: [Bbl art.4.182, NEN 9120:2025], co1_pass: partial, native_standards_pass: complete}
+  ES: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: SEARCHED, results: 5, db: [NBR 9050:2020], co1_pass: not-run, native_standards_pass: complete}
+  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+
+jurisdiction_coverage_summary:
+  searched: [US, UK, CA, AU, DE, FR, NL, SE, NO, JP, BR, EU, ISO]
+  thin: [PT]
+  no_data: []
+  not_run: [IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT]
+  co1_complete: []
+  co1_not_attempted: [DE, FR, SE, NO, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
+  tier5_complete: [US, UK, CA, AU, NL, SE, NO]
+  tier5_not_attempted: [DE, FR, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
+
+co1_pass_summary: {complete: [], partial: [EN, NL], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, ES, PT, KO, IT]}
+native_standards_pass_summary: {complete: [EN, SV, NO, FR, DE, JA, NL, PT], partial: [], not-run: [DA, FI, ZH, ES, KO, IT]}
+companion_networks: {loaded: [Habinteg/CAE, RCOTSS-Housing, RHFAC/RHF, Physical Disability Australia, DiBK Norway, Boverket Sweden, NEN Netherlands], scholar_targets: 3, retrieved: 7}
+citation_mining: {backward: 2, forward: 1, sources_added: 2}
+at_database_pass: not-run
+
+top_sources:
+  - Habinteg/CAE Inclusive Housing Design Guide 2024 (Runnalls & Walker, OT-authored, UK Tier 5)
+  - RCOT Adaptations Without Delay 2019 (UK, Tier 3/Co-2)
+  - Habinteg Wheelchair Housing Design Guide 3rd ed. 2018 (UK, Tier 5)
+  - RHFAC Rating Survey v4.0 January 2024 (CA, Tier 5)
+  - ADA 2010 §§302-405 (US, Tier 6)
+  - ADA 2010 §404 Entrances, Doors and Gates (US, Tier 6)
+  - DiBK TEK17 §12-4 §12-16 §1-3(m) (NO, Tier 6)
+  - DIN 18040-2 current + draft 2023 (DE, Tier 6+)
+  - Boverket BBR / BFS 2024:12 (SE, Tier 6)
+  - NBR 9050:2020 (BR, Tier 6)
+  - Arrêté 8 décembre 2014 (FR, Tier 6)
+  - NCC 2022 / Livable Housing Design Guidelines Silver (AU, Tier 5-6)
+  - AS 1428.1:2021 (AU, Tier 6)
+  - Bbl art.4.182 + NEN 9120:2025 (NL, Tier 5-6)
+  - MLIT Barrier-Free Law 誘導基準 (JP, Tier 6)
+  - ISO 21542:2021 (ISO, Tier 4)
+bpc_ref: "residential-entry-and-threshold"
+thin_flags: [PT]
+no_data_flags: []
+PROVISIONAL: true
+ACCEPTED_GAPS: [10 jurisdictions NOT-RUN (IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT); Co-1 complete 0/24; Tier 5 complete 7/24; native aliases missing DA/FI/ZH/KO/IT/ES]
+```
+
+---
+
+```yaml
+slug: threshold-and-level-access
+query: "accessible threshold level access door sill step-free built environment"
+last_searched: 2026-03-19 21:00
+early_close_triggered: false
+
+native_aliases:
+  SV: tröskel · nivåskillnad · trinnfri [PARTIAL]
+  NO: terskel · trinnfri · nivåforskjell [CLEAN]
+  DA: tærskel · niveauforskel [PARTIAL]
+  FI: kynnys · tasoerot [PARTIAL]
+  FR: seuil · ressaut · dénivellation [CLEAN]
+  DE: Schwelle · Niveauausgleich · niveaugleich [CLEAN]
+  ZH: 门槛 (ménkǎn) · 高差 (gāochā) [PARTIAL]
+  JA: 段差 (dansā) · 敷居 (shikii) · バリアフリー [CLEAN]
+  NL: drempel · niveauverschil · drempelvrij [CLEAN]
+  ES: umbral · desnivel [PARTIAL]
+  PT: soleira · desnível [CLEAN]
+  KO: 문턱 (muntheok) · 단차 (dancha) [PARTIAL]
+  IT: soglia · dislivello [PARTIAL]
+concept_boundary_warnings:
+  - JA: The domestic threshold (敷居 shikii) carries cultural significance in Japanese housing as symbolic boundary between inside/outside; complete elimination is contested in traditional architecture contexts. Modern バリアフリー法 requires 段差なし (no level difference) at accessible routes; this is a concept boundary, not an empirical divergence.
+
+languages:
+  EN: {status: SEARCHED, results: 10, db: [ADA, DIN, Bbl, NBR, TEK17, BBR], co1_pass: partial, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 2, db: [Boverket], co1_pass: not-run, native_standards_pass: complete}
+  NO: {status: SEARCHED, results: 3, db: [TEK17 §1-3(m)], co1_pass: not-run, native_standards_pass: complete}
+  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FR: {status: SEARCHED, results: 3, db: [Légifrance Arrêté 2014], co1_pass: not-run, native_standards_pass: complete}
+  DE: {status: SEARCHED, results: 3, db: [DIN 18040-2, ift draft 2023], co1_pass: not-run, native_standards_pass: complete}
+  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  JA: {status: SEARCHED, results: 3, db: [MLIT バリアフリー法], co1_pass: not-run, native_standards_pass: complete}
+  NL: {status: SEARCHED, results: 3, db: [Bbl, NEN 9120:2025], co1_pass: partial, native_standards_pass: complete}
+  ES: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: SEARCHED, results: 3, db: [NBR 9050:2020], co1_pass: not-run, native_standards_pass: complete}
+  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+
+jurisdiction_coverage_summary:
+  searched: [US, UK, CA, AU, DE, FR, NL, SE, NO, JP, BR, EU, ISO]
+  thin: [PT]
+  no_data: []
+  not_run: [IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT]
+  co1_complete: []
+  co1_not_attempted: [DE, FR, SE, NO, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
+  tier5_complete: [US, UK, CA, AU, NL, SE]
+  tier5_not_attempted: [DE, FR, NO, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
+
+co1_pass_summary: {complete: [], partial: [EN, NL], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, ES, PT, KO, IT]}
+native_standards_pass_summary: {complete: [EN, SV, NO, FR, DE, JA, NL, PT], partial: [], not-run: [DA, FI, ZH, ES, KO, IT]}
+companion_networks: {loaded: [Habinteg/CAE, RCOTSS-Housing, DiBK Norway, Boverket Sweden, NEN Netherlands], scholar_targets: 2, retrieved: 5}
+citation_mining: {backward: 1, forward: 0, sources_added: 1}
+at_database_pass: not-run
+
+top_sources:
+  - ADA 2010 §303 (changes in level) (US, Tier 6)
+  - UK Part M ADM / LABC guidance (UK, Tier 6/5)
+  - DIN 18040-2 §5 Schwelle (current + draft 2023) (DE, Tier 6)
+  - TEK17 §1-3(m) definition of trinnfri (NO, Tier 6)
+  - Boverket BBR §3:146 threshold (SE, Tier 6)
+  - Bbl art.4.182 (NL, Tier 6)
+  - NEN 9120:2025 (NL, Tier 5)
+  - NBR 9050:2020 §4 desníveis (BR, Tier 6)
+  - MLIT バリアフリー法 段差 provisions (JP, Tier 6)
+  - NCC LHDG Silver criterion 1 (AU, Tier 5)
+  - Arrêté 8 décembre 2014 ressaut ≤20mm (FR, Tier 6)
+  - ISO 21542:2021 (ISO, Tier 4)
+bpc_ref: "threshold-and-level-access"
+thin_flags: [PT]
+no_data_flags: []
+PROVISIONAL: true
+ACCEPTED_GAPS: [10 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 6/24; native aliases missing DA/FI/ZH/KO/IT/ES]
+```
+
+---
+
+```yaml
+slug: reach-range-and-accessible-controls
+query: "reach range accessible controls switches sockets door handles wheelchair upper limb"
+last_searched: 2026-03-19 21:00
+early_close_triggered: false
+
+native_aliases:
+  SV: räckvidden · manöverdon · strömbrytare höjd [PARTIAL]
+  NO: rekkevidde · betjening · bryterhøyde [PARTIAL]
+  DA: rækkevidde · betjeningshøjde [PARTIAL]
+  FI: ulottuvuus · laitteiden korkeus [PARTIAL]
+  FR: portée · hauteur de commande · contrôles accessibles [PARTIAL]
+  DE: Greifraum · Bedienungshöhe · Schalter · Steckdosen [CLEAN]
+  ZH: 可及范围 (kě jí fànwéi) · 控制高度 [PARTIAL]
+  JA: 操作可能域 · 手の届く範囲 · スイッチ高さ [PARTIAL]
+  NL: reikbereik · bedieningshoogte · schakelaar hoogte [PARTIAL]
+  ES: alcance · altura de controles · accesibilidad de mandos [PARTIAL]
+  PT: alcance manual · altura de acionadores · controles acessíveis [CLEAN]
+  KO: 손이 닿는 범위 · 조작 높이 [PARTIAL]
+  IT: portata · altezza comandi · accessibilità controlli [PARTIAL]
+concept_boundary_warnings:
+  - JA: Japanese built environment standards focus on 操作部 (sōsa-bu = operable parts) as a concept distinct from reach range; search must include 手すりの高さ (handrail heights) and 操作ボタン位置 (button positions)
+
+languages:
+  EN: {status: SEARCHED, results: 10, db: [ADA §308, RHFAC, BS 8300, DIN 18040-2, NBR 9050, AS 1428.2], co1_pass: partial, native_standards_pass: complete}
+  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  NO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FR: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DE: {status: SEARCHED, results: 3, db: [DIN 18040-2 door handle/window heights], co1_pass: not-run, native_standards_pass: complete}
+  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  JA: {status: THIN, results: 1, db: [MLIT barrier-free partial], co1_pass: not-run, native_standards_pass: not-run}
+  NL: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  ES: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: SEARCHED, results: 3, db: [NBR 9050:2020 §4.6 alcance manual], co1_pass: not-run, native_standards_pass: complete}
+  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+
+jurisdiction_coverage_summary:
+  searched: [US, UK, CA, AU, DE, BR, EU, ISO]
+  thin: [JP]
+  no_data: []
+  not_run: [IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, KR, CN, ES, IT, PT]
+  co1_complete: []
+  co1_not_attempted: [DE, CA, AU, BR, EU, ISO, JP, IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, KR, CN, ES, IT, PT]
+  tier5_complete: [US, UK, AU]
+  tier5_not_attempted: [CA, DE, BR, EU, ISO, JP, IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, KR, CN, ES, IT, PT]
+
+co1_pass_summary: {complete: [], partial: [EN], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]}
+native_standards_pass_summary: {complete: [EN, DE, PT], partial: [], not-run: [SV, NO, DA, FI, FR, ZH, JA, NL, ES, KO, IT]}
+companion_networks: {loaded: [ADA National Network, LPA (Little People of America advocacy context)], scholar_targets: 1, retrieved: 1}
+citation_mining: {backward: 1, forward: 1, sources_added: 1}
+at_database_pass: not-run
+
+top_sources:
+  - ADA 2010 §308 Reach Ranges (US, Tier 6)
+  - ADA 2004/ADAAG review — side reach reduction history (LPA/ANSI A117.1) (US, Tier 6)
+  - ADA §404 door hardware / lever handles (US, Tier 6)
+  - CMHC Renovating for Accessibility — door force ≤38N (CA, Tier 5)
+  - Steinfeld et al. AAATE 2016 — door force 30N acceptable to 94.7% WC users (Tier 1 — DOI: 10.3233/978-1-61499-684-2-612)
+  - ADA actuator force ≤22.2N (US, Tier 6)
+  - DIN 18040-2 door handle 850mm, window handle 850–1050mm, parapet ≤600mm (DE, Tier 6)
+  - NBR 9050:2020 §4.6 lateral reach ranges with/without trunk displacement; puxador 800–1100mm (BR, Tier 6)
+  - AS 1428.2-1992 enhanced reach ranges — 90th percentile WC users (AU, Tier 5)
+  - BS 8300:2018 switches/sockets 450–1200mm; controls clear of corners (UK, Tier 5)
+  - RHFAC power door operator 800–1100mm mounting height (CA, Tier 5)
+bpc_ref: "reach-range-and-accessible-controls"
+thin_flags: [JP]
+no_data_flags: []
+PROVISIONAL: true
+ACCEPTED_GAPS: [16 jurisdictions NOT-RUN for controls; Co-1 complete 0/24; Tier 5 3/24; native aliases incomplete for 10 languages]
+```
