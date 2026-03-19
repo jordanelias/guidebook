@@ -422,3 +422,7 @@ jurisdiction_coverage_summary:
   tier5_not_attempted: []
 
 DATE: 2026-03-19 19:28
+RULE: 1524mm ADA turning circle is not a permitted specification floor in this guidebook. It is based on 1970s anthropometric data and is rejected as a design baseline.
+CONDITION: Any MOB turning space specification, any item referencing ADA 1524mm.
+ACTION: The minimum permitted floor is 1700mm (RHFAC/BS8300 best practice). ADA 1524mm may be cited as a historical data point or evidence of regulatory lag only. It must never appear as a design value or minimum threshold in any item specification, BPC synthesis, or guidance text.
+DATE: 2026-03-19 22:45
