@@ -87,10 +87,11 @@ Every prescriptive claim must carry one of:
 - `[Tier 1]` — OT clinical research, intervention-tested
 - `[Co-1]` — Lived experience / participatory design (CRPD Art. 4.3)
 - `[Tier 2]` — Disability-led NGO/DPO/advocacy guidelines
-- `[Tier 3]` — Systematic review or meta-analysis
-- `[Tier 4]` — International standard with evidence basis
-- `[Tier 5]` — National beyond-code framework
-- `[Tier 6]` — Statutory code (reference baseline only)
+- `[Tier 3 — CPG]` — OT professional body clinical practice guidelines (CAOT, AOTA, RCOT, COTEC, WFOT, and national equivalents)
+- `[Tier 4]` — Systematic review or meta-analysis
+- `[Tier 5]` — International standard with evidence basis
+- `[Tier 6]` — National beyond-code framework
+- `[Tier 7]` — Statutory code (reference baseline only)
 - `[UNSUPPORTED — citation required]` — no source available
 - `[UNVERIFIED — DOI/URL required before publication]` — source not confirmed
 - `[EXPERT CONSENSUS — March 2026]` — PAIN/OFS/DBL/IntD provisions without built-environment evidence base
