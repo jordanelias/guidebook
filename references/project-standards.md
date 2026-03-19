@@ -339,3 +339,5 @@ DATE: 2026-03-19 04:08
 
 
 RULE: Slugs in search-log.md, best-practices-compendium.md, and slug-registry.md must not include population code abbreviations as pipe-delimited suffixes (e.g. |MOB, |VIS, |ALL). Slugs are topic-only, human-readable strings. Population scope is recorded in the query field and BPC content — not the slug key.  CONDITION: Any new or updated search-log or BPC entry.  ACTION: Normalise slug to topic-only format before LOG. Strip any pipe-delimited suffix on CHECK.  DATE: 2026-03-18 23:30
+
+RULE: Each slug covers exactly one population. Combined slugs (e.g. a slug covering both VIS and DEAF) are not permitted. Where research was conducted in a single pass covering multiple populations, the primary slug holds the full content; secondary population slugs hold a see-also pointer referencing the primary slug.  CONDITION: Any new slug creation or split of an existing combined slug.  ACTION: Create one slug per population. If primary/secondary distinction applies, secondary slug entry contains 'SEE-ALSO: {primary-slug}' only.  DATE: 2026-03-18 23:30
