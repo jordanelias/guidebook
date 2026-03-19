@@ -1868,3 +1868,215 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 10. ISO 21542:2021. Accessibility and usability of the built environment. [ISO] Tier 4 ✅
 11. First in Architecture (2024). Metric Data 10: Kitchen standards for wheelchair users. [UK] Tier 5 ✅
 12. Gitlin, L.N., et al. (2006). Multicomponent home intervention RCT. *JAGS*, 54(5), 809–816. [US] Tier 3 ✅
+
+
+---
+
+## residential-entry-and-threshold
+**Updated:** 2026-03-19 21:05  **Evidence tier range:** 4–6  
+**STATUS: PROVISIONAL — 11 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 7/24. Do not use as sole basis for specification writing.**
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| NO | trinnfri atkomst / terskel | ✓ CLEAN | TEK17 §1-3(m) defines trinnfri as ≤25mm — not zero |
+| JA | バリアフリー入口 / 段差 | ⚠ PARTIAL | Housing Performance Indication grades add residential layer; search both legal frameworks |
+| ZH | 无障碍入口 | ⚠ PARTIAL | 2023 无障碍环境建设条例 is new framework; 2020 data may be superseded |
+| FR | seuil / ressaut | ✓ CLEAN | Arrêté 2014 uses "ressaut" for step at threshold — specific statutory term |
+
+### Best-practice synthesis
+**Most inclusive provision:** A fully level approach from the accessible parking bay to the entrance door, with zero threshold height, on continuous firm non-slip surface. Where site constraints prevent level access, a permanent integrated ramp of ≤1:20 gradient is the next best provision (not 1:12, which requires significant upper-limb effort for self-propelling WC users).
+
+**Most targeted provision:** The 1:20 self-propulsion gradient with level landing (≥1500mm depth × door width minimum) at top and bottom, enabling independent access without assistance for the broadest range of manual wheelchair users, power chair users, rollator users, and stroller users simultaneously.
+
+**Conflict resolution:** Ramp-only access serves MOB/WC well but disadvantages MOB/AMB (ambulant disabled), OFS, and NEU populations who often prefer steps with handrail. Best practice provides both ramp and complementary stepped route where site permits. This is the Scottish Technical Handbook requirement and RCOT best practice recommendation.
+
+**Highest-ambition actionable specification:** Level approach (gradient ≤1:50 entire path, cross-fall ≤1:48); zero threshold at entrance door; minimum clear door width ≥900mm (best practice) / ≥850mm (minimum); level landing ≥1500×1500mm outside door clear of arc; automatic door opener provided; tactile/visual attention indicator at entrance; luminance contrast ≥0.4 (entrance vs surroundings). Where level access cannot be achieved: permanent integrated ramp ≤1:20, ≥900mm clear width, bilateral handrails, rest landing every 750mm rise or 10m run (whichever comes first), luminance contrast marking at ramp top and bottom.
+
+### Consensus findings
+| Finding | Jurisdictions confirming | Languages | Tier |
+|---|---|---|---|
+| Level (step-free) entrance is the baseline standard for accessible dwellings | UK, CA, AU (mandatory Silver), US (Fair Housing), NO, SE, NL, JP | EN, NO, SV, JA, NL, FR, DE | 5–6 |
+| Ramp gradient: ≤1:12 is the statutory maximum; ≤1:20 is the self-propulsion standard | UK, US, CA, AU, NO, SE, FR, DE, BR, NL, JP | All searched languages | 5–6 |
+| Threshold ≤20mm with chamfered/bevelled profile is the cross-jurisdictional convergence | UK (≤15mm), US (≤13mm), DE (≤20mm draft ≤10mm), NO (≤25mm / ≤20mm chamfered), NL (≤20mm), FR (≤20mm), AU (35mm ramp at ≤1:8), BR (≤20mm) | EN, NO, DE, NL, FR, PT | 6 |
+| Level landing ≥1500×1500mm at entrance door top | UK, NO, DE, JP (1500mm), FR (1400×1200mm minimum) | EN, NO, DE, JA, FR | 6 |
+| Entrance approach path: continuous, firm, non-slip, ≥900–1200mm clear width | AU, UK, NO, FR, BR, NL | EN, NO, NL, FR, PT | 5–6 |
+| Ramp must be complemented by stepped route for ambulant disabled | UK (Scotland TH), NO (TEK17) | EN, NO | 5–6 |
+| Automatic door openers are best practice at main entrances | NO (§12-4), UK, CA, AU | EN, NO | 5 |
+| Tactile/visual attention indicator at entrance required where universal design applies | NO (TEK17 §12-4), AU (NCC), DE (DIN 18040) | EN, NO, DE | 5–6 |
+
+### Divergent findings
+| Topic | Position A | Position B | Cause |
+|---|---|---|---|
+| Threshold maximum | ADA/US ≤13mm (½ in.) / UK ≤15mm | NO ≤25mm (≤20mm if chamfered) / DE ≤20mm (draft ≤10mm) | Regulatory lag in NO/DE; trend toward tighter values in drafts |
+| Ramp as primary vs secondary | AU/CA/UK/NO: ramp is primary level access solution | SE: single/two-family homes may retrofit later | Tenure context and statutory scope |
+| JA threshold concept | 段差なし principle (no level difference) | Cultural 敷居 (shikii) threshold in traditional housing | Concept boundary — statutory law governs over cultural convention |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| IE | EN | NOT-RUN | No | No |
+| NZ | EN | NOT-RUN | No | No |
+| SG | EN | NOT-RUN | No | No |
+| CH | DE/FR | NOT-RUN | No | No |
+| BE | NL/FR | NOT-RUN | No | No |
+| DK | DA | NOT-RUN | No | No |
+| FI | FI | NOT-RUN | No | No |
+| KR | KO | NOT-RUN | No | No |
+| CN | ZH | NOT-RUN | No | No |
+| ES | ES | NOT-RUN | No | No |
+| IT | IT | NOT-RUN | No | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Habinteg IHDG 2024 | Backward → WHDG 3rd ed. 2018 | 1 |
+| RCOT Adaptations Without Delay 2019 | Forward | 1 |
+
+### Key sources
+1. Habinteg/CAE, Runnalls J. & Walker M. (2024) Inclusive Housing Design Guide. RIBA/Habinteg. UK. Tier 5.
+2. Habinteg (2018) Wheelchair Housing Design Guide, 3rd ed. RIBA/Habinteg/RCOTSS-H. UK. Tier 5.
+3. RCOT / Housing LIN (2019) Adaptations Without Delay. Royal College of Occupational Therapists. UK. Tier Co-2.
+4. US Access Board (2010) ADA Standards §§302–405 Accessible Routes, Entrances, Ramps. US. Tier 6.
+5. Rick Hansen Foundation (2024) RHFAC Rating Survey v4.0 §2 Exterior Approach and Entrance. CA. Tier 5.
+6. Direktoratet for byggkvalitet (2017, updated) TEK17 §12-4 Inngangsparti; §12-16 Rampe; §1-3(m) Trinnfri. NO. Tier 6.
+7. DIN 18040-2:2011 + Draft E DIN 18040-2:2023. DE. Tier 6.
+8. Boverket BFS 2024:12 / BBR §3:122 §3:146. SE. Tier 6.
+9. ABNT NBR 9050:2020 §6.2 Rampas. BR. Tier 6.
+10. Légifrance (2014) Arrêté du 8 décembre 2014 accessibilité ERP existants. FR. Tier 6.
+11. ABCB (2022) NCC 2022 + Livable Housing Design Guidelines 4th ed. AU. Tier 5–6.
+12. AS 1428.1:2021 Design for access and mobility. Standards Australia. AU. Tier 6.
+13. NEN 9120:2025 Toegankelijkheid van gebouwen (NL implementation EN 17210). NL. Tier 5.
+14. Informatiepunt Leefomgeving (2025) Bbl art.4.182 drempel ≤20mm. NL. Tier 6.
+15. MLIT (2018–2024) バリアフリー法 建築物移動等円滑化誘導基準. JP. Tier 6.
+16. ISO 21542:2021 Building Construction – Accessibility and Usability. ISO. Tier 4.
+
+---
+
+## threshold-and-level-access
+**Updated:** 2026-03-19 21:05  **Evidence tier range:** 4–6  
+**STATUS: PROVISIONAL — 11 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 6/24. Do not use as sole basis for specification writing.**
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| JA | 段差 (dansā) / 敷居 (shikii) | ⚠ PARTIAL | 敷居 is cultural/architectural threshold — not equivalent to regulatory 段差. バリアフリー法 mandates 段差なし (no level difference). |
+| NO | trinnfri per §1-3(m) | ✓ CLEAN | Statutory definition allows up to 25mm with chamfer — "step-free" in Norwegian law does not mean zero |
+
+### Best-practice synthesis
+**Most inclusive provision:** Zero level change at all accessible route thresholds. Where a weather or structural threshold is unavoidable: ≤13mm (ADA/US) or ≤15mm (UK) maximum, with bevelled/chamfered profile not exceeding 45°. This removes barriers for manual WC caster wheels, rollator front wheels, and eliminates the tripping hazard for ambulant populations.
+
+**Most targeted provision:** Thermally broken accessible threshold unit (proprietary sealed threshold with weather bar embedded below floor surface), achieving 0mm internal-to-external level difference with drainage channel, tested to thermal performance standards. This represents the best-practice resolution of the tension between weather protection and accessibility.
+
+**Conflict resolution:** The 13mm/15mm/20mm/25mm cross-jurisdictional variation reflects different weather protection assumptions, not different functional requirements. The functional requirement is uniform: WC caster wheels (typically 75mm diameter on manual WC) cannot reliably navigate upstands >6mm without tipping risk at low approach speeds. The 13mm ADA and 15mm UK values better reflect functional WC capability than the 20–25mm values in NO/DE. The direction of travel in drafts (DE reducing to 10mm) confirms convergence toward tighter standards.
+
+**Highest-ambition actionable specification:** Zero level change at all accessible entrances. Where technically unavoidable: upstand ≤13mm maximum, bevelled at ≤1:2 (no vertical face), with drainage channel integrated into threshold unit. Profile must not exceed 15mm total height on weather side. Threshold material: slip-resistant, visually contrasting to door surround.
+
+### Consensus findings
+| Finding | Jurisdictions confirming | Languages | Tier |
+|---|---|---|---|
+| Level change ≤5mm: no treatment needed | BR | PT | 6 |
+| Level change 5–13mm: bevelled/chamfered, no vertical face | US | EN | 6 |
+| Level change 6–15mm: chamfered not steeper than 45° | UK | EN | 6 |
+| Level change ≤20mm: chamfered, maximum statutory in multiple jurisdictions | DE, NO (≤20mm if chamfered), NL, FR, BR | DE, NO, NL, FR, PT | 6 |
+| Level change >20mm: ramp mandatory (all jurisdictions) | US, UK, CA, AU, NO, SE, NL, FR, DE, BR, JP | All searched | 5–6 |
+| Zero threshold is the design intent; tolerance values are failure modes | AU LHDG, UK M4(3), NO universell utforming | EN, NO, SV | 5–6 |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| Threshold max | ADA ≤13mm / UK ≤15mm | NO ≤25mm / DE ≤20mm | Weather protection assumptions; functional data supports tighter limits |
+| "Step-free" definition | AU/UK: zero threshold | NO: ≤25mm called trinnfri | Regulatory boundary mismatch — not empirical |
+| Retrofit threshold | AS 1428.1: ≤35mm at 1:8 ramp in doorways | ADA: ≤13mm no exceptions | Retrofit vs new-build context |
+
+### NO-DATA / THIN
+Same as residential-entry-and-threshold — see above.
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| ADA §303 threshold provisions | Backward | 1 |
+
+### Key sources
+1–14: Same as residential-entry-and-threshold (threshold values embedded in same statutory standards)
+15. iDigHardware (2019/2021) Decoded: Thresholds and Changes in Level. ADA §303 analysis. US. Tier 6 commentary.
+
+---
+
+## reach-range-and-accessible-controls
+**Updated:** 2026-03-19 21:05  **Evidence tier range:** 1–6  
+**STATUS: PROVISIONAL — 16 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 3/24. Do not use as sole basis for specification writing.**
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| JA | 操作可能域 / 操作ボタン位置 | ⚠ PARTIAL | Japanese standards use 操作部 (operable parts) as primary concept; reach range is implied rather than specified dimensionally in most Japanese accessible design guidance |
+| DE | Greifraum / Bedienungshöhe | ✓ CLEAN | DIN 18040-2 specifies heights for door handles (850mm), window handles (850–1050mm), parapet (≤600mm) — discrete values rather than a reach envelope |
+
+### Best-practice synthesis
+**Most inclusive provision:** All operable controls (switches, sockets, door hardware, intercoms, letterbox controls, security panels) within the reach zone 400–1100mm above finished floor (AFH). This zone accommodates the documented forward and side reach limits of the most constrained WC users including users with upper-limb impairment and limited trunk stability. It also accommodates standing users and children.
+
+**Most targeted provision for MOB/UPL (upper limb impairment):** Controls positioned at 900–1050mm AFH — the upper-mid zone — with lever-form hardware operable with a closed fist (no pinching, no gripping, no wrist twist required), activation force ≤22.2N, control body ≥25mm in at least one dimension, located ≥400mm from any corner or wall obstruction to allow side approach.
+
+**Conflict resolution:** The ADA side-reach maximum was 1370mm (1991 ADAAG); LPA advocacy and ANSI A117.1 lowered it to 1220mm. This is a Co-1-driven improvement. Best practice adopts 1220mm as the absolute maximum regardless of reach type. Lower (1100mm) is best practice for the most constrained users. The NBR 9050 lateral reach-with-trunk-displacement envelope extends to higher values but this represents functional compensation, not design intent — design should eliminate the need for trunk displacement.
+
+**Door hardware:** Lever handle or U-shaped pull mandatory. Round door knobs prohibited (require wrist twist — functionally inaccessible for significant proportion of UPL and arthritis population). Automatic door openers best practice for all entrance doors.
+
+**Door force:** ≤30N preferred (94.7% WC user acceptance per AAATE 2016 Tier 1 study); ≤38N maximum (CMHC CA Tier 5). ADA specifies no max for interior hinged doors (fire doors limited by code); automatic door actuator force ≤22.2N.
+
+### Consensus findings
+| Finding | Jurisdictions confirming | Languages | Tier |
+|---|---|---|---|
+| Forward unobstructed high reach ≤1220mm AFH | US, CA (CSA B651) | EN | 6 |
+| Forward unobstructed low reach ≥380mm AFH | US | EN | 6 |
+| Side unobstructed high reach ≤1220mm AFH (lowered from 1370mm) | US (post-ANSI A117.1 revision) | EN | 6 |
+| Door hardware: lever or U-pull; no round knobs | US, UK, CA, AU, DE | EN, DE | 5–6 |
+| Door handle height 850mm | DE (DIN 18040-2) | DE | 6 |
+| Controls zone 800–1100mm AFH (puxador height) | BR (NBR 9050) | PT | 6 |
+| Actuator / push-button force ≤22.2N | US | EN | 6 |
+| Door opening force ≤30N preferred; ≤38N maximum | CA (CMHC), AAATE 2016 study | EN | 5 / 1 |
+| Switches/sockets 450–1200mm; best practice 450–1050mm | UK (BS 8300) | EN | 5 |
+| Controls ≥400mm from any corner/obstruction | UK (ADM FAQ), US | EN | 5–6 |
+| Window sill (parapet) ≤600mm for seated view | DE (DIN 18040-2) | DE | 6 |
+| Window handle 850–1050mm | DE (DIN 18040-2) | DE | 6 |
+| RHFAC power door operator 800–1100mm AFH | CA | EN | 5 |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| Side reach max | US 1991 ADAAG: 1370mm | US post-ANSI A117.1: 1220mm | LPA Co-1 advocacy — documented functional improvement |
+| Reach range concept | US/UK/CA: dimensional envelope | DE: discrete height specifications per control type | Different regulatory approach; functionally equivalent intent |
+| Door force max | CA: ≤38N | ADA: no max specified (fire doors excepted) | Regulatory gap in US; CA best practice fills it |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| JP | JA | THIN — reach range not specified dimensionally in MLIT guidance | No | No |
+| FR | FR | NOT-RUN | No | No |
+| SE | SV | NOT-RUN | No | No |
+| NO | NO | NOT-RUN | No | No |
+| NL | NL | NOT-RUN | No | No |
+| IT | IT | NOT-RUN | No | No |
+| ES | ES | NOT-RUN | No | No |
+| KR | KO | NOT-RUN | No | No |
+| CN | ZH | NOT-RUN | No | No |
+| IE/NZ/SG/CH/BE/DK/FI | Various | NOT-RUN | No | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Steinfeld et al. 2016 AAATE door force | Backward → older IDeA Center door force studies | 1 |
+| ADA §308 | Forward → ANSI A117.1 side reach revision | 1 |
+
+### Key sources
+1. US Access Board (2010) ADA 2010 Standards §308 Reach Ranges. US. Tier 6.
+2. Steinfeld E. et al. (2016) Experimental Studies of Wheelchair and Walker Users Passing Through Doors with Different Opening Force. AAATE 2016. DOI: 10.3233/978-1-61499-684-2-612. Tier 1.
+3. CMHC (2021) Renovating for Accessibility: Building Entrances — door force ≤38N. CA. Tier 5.
+4. US Access Board (2014) Understanding New Accessibility Requirements for Doors — actuator force ≤22.2N. US. Tier 6.
+5. DIN 18040-2:2011 §5 Bedienungshöhen door handle 850mm, window 850–1050mm, parapet ≤600mm. DE. Tier 6.
+6. ABNT NBR 9050:2020 §4.6 Alcance Manual lateral com/sem deslocamento do tronco; puxador 800–1100mm. BR. Tier 6.
+7. BS 8300:2018 §8 Controls and switches 450–1200mm; controls clear of corners. UK. Tier 5.
+8. RHFAC Rating Survey v4.0 (2024) §2.4 power door operator 800–1100mm. CA. Tier 5.
+9. Standards Australia AS 1428.2-1992 §15 reach range enhanced requirements (90th percentile WC users). AU. Tier 5.
+10. CSA Group / RHF (2025) RHFAC exam — CSA B651 door clear opening ≥850mm. CA. Tier 6.
+11. ADA National Network (2017) Opening Doors to Everyone — door closer 5-second minimum. US. Tier 5.
