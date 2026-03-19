@@ -132,17 +132,7 @@ resolution_register:
 
 ## Stage 5 — Find-and-Replace Handoff
 
-For all HIGH-confidence resolutions, produce a find-and-replace specification for each substitution:
-
-```
-FIND: [exact string]
-REPLACE: [corrected string]
-SCOPE: [volume/part]
-MATCH TYPE: Exact
-INSTANCES: [N expected]
-```
-
-Pass this specification to find-and-replace skill for execution. Do not execute substitutions directly.
+For all HIGH-confidence resolutions, produce a find-and-replace specification (FIND · REPLACE · SCOPE · MATCH TYPE · INSTANCES) per the find-and-replace skill Stage 0 format. Pass to find-and-replace for execution — do not execute substitutions directly.
 
 ---
 
