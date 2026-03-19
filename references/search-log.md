@@ -2034,3 +2034,112 @@ bpc_ref: "accessible-bathroom-and-grab-bar"
 thin_flags: [SE, FR]
 no_data_flags: []
 ```
+
+---
+
+```yaml
+slug: residential-kitchen-and-task-surfaces
+query: "accessible kitchen disability wheelchair worktop height knee clearance one-handed operation OT home modification"
+last_searched: 2026-03-19 20:47
+early_close_triggered: false
+status: PARTIAL
+provisional: true
+blocker_accepted: "BLOCKER-1 co1_attempted~9/24; BLOCKER-2 tier5_attempted~9/24. User accepted PROVISIONAL LOG. Outstanding: IE/SG/SE/DK/FI/KR/CN/BR/PT/IT/BE/CH/EU/ISO."
+
+native_aliases:
+  SV: "tillgängligt kök / höjdjusterbar bänkskiva / knäfrirum [CLEAN]"
+  NO: "tilgjengelig kjøkken / høydejusterbar benkeplate / kneklaringsrom [CLEAN]"
+  DA: "tilgængeligt køkken / højdejusterbar bordplade / knæfrirum [CLEAN]"
+  FI: "esteetön keittiö / korkeussäädettävä työtaso / polvitila [CLEAN]"
+  FR: "cuisine accessible / plan de travail réglable / espace libre sous le plan / cuisine PMR [CLEAN]"
+  DE: "barrierefreie Küche / höhenverstellbare Arbeitsfläche / Kniefreiheit / Wohnraumanpassung Küche [CLEAN]"
+  ZH: "无障碍厨房 / 可调高度台面 / 轮椅膝部净空 [CLEAN]"
+  JA: "バリアフリーキッチン / 高さ調整可能ワークトップ / 膝下クリアランス [CLEAN]"
+  NL: "toegankelijke keuken / in hoogte verstelbaar werkblad / onderrijdbare keuken [CLEAN]"
+  ES: "cocina accesible / encimera regulable en altura / espacio libre bajo encimera [CLEAN]"
+  PT: "cozinha acessível / bancada regulável em altura / espaço livre sob a bancada [CLEAN]"
+  KO: "접근 가능한 주방 / 높이 조절 가능 조리대 / 무릎 여유 공간 [CLEAN]"
+  IT: "cucina accessibile / piano di lavoro regolabile / spazio libero sotto il piano [CLEAN]"
+concept_boundary_warnings:
+  - ALL: "Height-adjustable worktop evidence is primarily European manufacturer + workplace ergonomics. Residential-disability OT clinical evidence is sparse — derive from workplace ergonomics + standards + OT home modification SRs."
+  - NL: "WMO-keuken / onderrijdbare keuken is a distinct NL funding+design concept — retrieve directly from WMO guidance documents."
+  - LPA: "LPA reach-range requirements (LPA-08 Supp Vol) are distinct from wheelchair knee clearance — do not conflate."
+
+languages:
+  EN: {status: SEARCHED, results: 12, db: [PubMed, web, Consensus], co1_pass: complete, native_standards_pass: complete}
+  DE: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: complete}
+  NL: {status: SEARCHED, results: 5, db: [web], co1_pass: partial, native_standards_pass: partial}
+  FR: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: partial}
+  ES: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: partial}
+  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  NO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  JA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  ES: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+
+jurisdiction_coverage_summary:
+  searched: [US, UK, CA, AU, DE, FR, NL, ES, ISO]
+  thin: [NZ, JP]
+  no_data: []
+  not_run: [NO, IE, SG, SE, BE, CH, DK, FI, KR, CN, BR, PT, IT, EU]
+  co1_complete: [US, UK, CA, AU, DE, FR, NL, ES]
+  co1_not_attempted: [NO, NZ, JP, IE, SG, SE, BE, CH, DK, FI, KR, CN, BR, PT, IT, EU, ISO]
+  tier5_complete: [US, UK, AU, DE, NL]
+  tier5_not_attempted: [CA, FR, ES, NZ, JP, NO, IE, SG, SE, BE, CH, DK, FI, KR, CN, BR, PT, IT, EU, ISO]
+
+co1_pass_summary:
+  complete: [EN]
+  partial: [DE, NL, FR, ES]
+  not-run: [SV, NO, DA, FI, JA, ZH, KO, PT, IT]
+companion_networks: {loaded: [Disability Rights UK, Foundations UK, AKW Kitchen Guide, RCOT/DFG], scholar_targets: 3, retrieved: 3}
+citation_mining: {backward: 4, forward: 3, sources_added: 4}
+at_database_pass: partial
+
+top_sources:
+  - Stark2017-AJOT-home-modification-SR
+  - Foundations-AKW-2023-accessible-kitchen-DFG
+  - DisabilityRightsUK-DFG-2024
+  - DIN18040-2-2011-kitchen
+  - BS8300-2018-kitchen
+  - ADM-Part-M4(3)-2015
+  - AS1428-2-1992-worktop-reach
+  - ADA-2010-kitchen
+  - Wellecke2022-Summer-Foundation-OT-survey
+  - ISO21542-2021
+  - FirstInArchitecture-metric-data-10
+  - Gitlin2006-multicomponent-RCT
+bpc_ref: "residential-kitchen-and-task-surfaces"
+thin_flags: [NZ, JP]
+no_data_flags: []
+```
