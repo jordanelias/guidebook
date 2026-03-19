@@ -47,6 +47,10 @@ For each file below: GET current content from GitHub. Check against session work
 - Every slug confirmed in search-log → BPC entry `## {slug}` present.
 - Fix: cannot reconstruct BPC content post-hoc → flag as BLOCKER.
 
+**Project Instructions**
+- Compare session decisions (new rules, structural changes, skill updates, population code changes) against PI content.
+- If PI is stale → flag as BLOCKER with specific section(s) requiring update. Do not auto-edit PI — flag for author action.
+
 **sessions/ directory**
 - No prior session's `next_action` is being skipped without explanation in the current session YAML.
 - No duplicate filename for the current session timestamp.
@@ -106,11 +110,12 @@ rules_added: []
 blockers: []
 research_log_updated: true|false
 reconciliation:
-  gap_register:     {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
-  project_standards: {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
-  search_log:       {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
-  bpc:              {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
-  sessions:         {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  gap_register:        {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  project_standards:   {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  search_log:          {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  bpc:                 {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  sessions:            {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  project_instructions: {checked: true, stale_sections: 0, blockers: 0}
 next_action:
   skill: name
   session: description
