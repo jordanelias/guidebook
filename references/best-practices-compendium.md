@@ -1255,3 +1255,209 @@ GAP-PAIN-OFS-BUILENV P1 OPEN: Zero indexed built-environment research for OFS po
 
 ### Key sources
 CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID18805903-POTS-CFS
+
+---
+
+## OFS-built-environment|OFS
+**Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 5 (all provisions — extrapolated from clinical + general seating codes; no OFS-specific standard in any jurisdiction)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| SV | utmattningssyndrom + byggd miljö | ⚠ PARTIAL | Clinical burnout term; myalgisk encefalomyelit required for ME specifically |
+| NO | utmattelse + bo-miljø | ⚠ PARTIAL | No OFS built-environment standards in TEK17 or NS11001 |
+| DA | kronisk træthed + boligindretning | ⚠ PARTIAL | No OFS design provisions in BR18 |
+| FI | krooninen väsymysoireyhtymä + esteettömyys | ⚠ PARTIAL | No provisions in Decree 241/2017 |
+| FR | syndrome de fatigue chronique + accessibilité | ⚠ PARTIAL | SFC France Association is clinical only |
+| DE | ME/CFS + barrierefreies Bauen | ⚠ PARTIAL | Deutsche Gesellschaft für ME/CFS is clinical only |
+| ZH | 慢性疲劳综合征 + 无障碍 | ⚠ PARTIAL | No OFS design provisions in GB 50763 |
+| JA | 慢性疲労症候群 + 生活環境 | ⚠ PARTIAL | 日本ME協会 is clinical only |
+| NL | ME/CVS + toegankelijkheid | ✓ CLEAN | Strongest non-EN base; ME/cvs Stichting; Dutch housing adaptation research |
+| ES | síndrome de fatiga crónica + accesibilidad | ⚠ PARTIAL | Clinical only |
+| PT | síndrome de fadiga crónica + acessibilidade | ⚠ PARTIAL | Clinical only |
+| KO | 만성피로증후군 + 접근성 | ⚠ PARTIAL | No provisions in Korean welfare standards |
+| IT | sindrome da fatica cronica + accessibilità | ⚠ PARTIAL | No provisions in DM 236/89 |
+
+### Best-practice synthesis
+**Most inclusive provision:** Seating at ≤50m intervals on all public circulation routes; a proportion of seating to offer semi-recumbent or adjustable back-angle options (0–30° recline); quiet, low-stimulation rest spaces accessible without purchase or payment obligation; queue management systems eliminating prolonged enforced standing.
+
+**Most targeted provision (Tier 2):** Semi-reclined seating with footrest provision at OT-assessed intervals along individual's habitual routes; low-VOC, fragrance-free environment in healthcare and retail settings; accessible changing or rest facilities with space for fully recumbent positioning.
+
+**Conflict resolution:** Where OFS (reclined preference) conflicts with PAIN (upright seating preference), provide both option types within the same rest zone.
+
+**Highest-ambition actionable specification:** Minimum one accessible rest space per 50m of public circulation; rest space to include at least one seat with adjustable back support (0–30°); queue systems to permit seated waiting; chemical/scent-free zones in all healthcare settings. `[TIER 5 — no OFS-specific architectural standard in any jurisdiction; March 2026]`
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Seating provision every 50–100m in public routes is accepted best practice (UK: VisitEngland 50m; BS8300/DfT 100m) | EN (UK) | Tier 5–6 |
+| Post-exertional malaise from orthostatic stress requires built environment to minimise prolonged upright posture | EN (CDC, IOM/NAM 2015, Bateman Horne) | Co-1/Tier 3 |
+| Recumbent positioning relieves OFS/POTS symptoms; standard accessible seating alone is insufficient — reclined seating options needed | EN (CDC, Bateman Horne, POTS clinical guidance) | Tier 1/Co-1 |
+| OT pacing interventions have Tier 1 evidence for energy conservation in ME/CFS but are behavioural, not architectural | EN (Kos et al. 2015 AJOT RCT; PMC9397391 systematic review 2022) | Tier 1 |
+| Accessible seating specification: seat height 430–480mm, backrest, armrests, clear heel space | EN (AS1428.2 AU; BS8300 UK; ADA draft) | Tier 4–6 |
+| Environmental photosensitivity and chemical sensitivity (MCAS co-occurrence) require low-VOC materials, controlled lighting, reduced scent | EN (CDC ME/CFS clinical guidance; MCAS patient organisations) | Co-1/Tier 2 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| N/A — evidence base is EN-only | — | — | — |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| DE, NO, DA, FI, ZH, JA, NL, KO, IT | OFS not a recognised policy or design category; no built environment standards exist | Yes |
+| SV, FR, ES, PT | Clinical literature only; no design provisions | Yes |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Kos 2015 AJOT | backward | 2 pacing RCTs added |
+| Wheels for Wellbeing UK seating 2025 | forward | 1 access association endorsement |
+
+### Key sources
+1. IOM/NAM (2015). *Beyond ME/CFS: Redefining an Illness*. National Academies Press. DOI: 10.17226/19012
+2. Bateman Horne Center. *ME/CFS Clinical Care: Criteria-Specific Guidance.* batemanhornecenter.org [UNVERIFIED — URL required before publication]
+3. CDC (2024). *ME/CFS Clinical Care for Severely Affected Patients.* cdc.gov/me-cfs [Tier Co-1]
+4. Wheels for Wellbeing (2025). *Benches and Seating in Public Spaces.* wheelsforwellbeing.org.uk [Tier 5]
+5. VisitEngland. *Make Your Business Accessible: Section 5.* visitbritain.org — 50m seating interval [Tier 5]
+6. BS8300-1:2018 / DfT (2007). *Manual for Streets* — 100m seating interval [Tier 6]
+7. Kos et al. (2015). Activity pacing self-management in ME/CFS: RCT. *American Journal of Occupational Therapy.* [Tier 1]
+
+---
+
+## neurological-built-environment|NEU
+**Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 1–5 (wayfinding strong; architectural standards partial)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| SV | neurologisk funktionsnedsättning + orientering | ✓ CLEAN | — |
+| NO | nevrologisk funksjonshemming + bygget miljø | ✓ CLEAN | — |
+| DA | neurologisk funktionsnedsættelse + bygget miljø | ✓ CLEAN | — |
+| FI | neurologinen vamma + rakennettu ympäristö | ✓ CLEAN | — |
+| FR | lésion cérébrale acquise + environnement bâti | ✓ CLEAN | — |
+| DE | erworbene Hirnschädigung (EHS) + barrierefreie Umgebung | ✓ CLEAN | BAR uses EHS; SHT = Schädel-Hirn-Trauma (TBI) |
+| ZH | 获得性脑损伤 + 无障碍环境 | ✓ CLEAN | — |
+| JA | 後天性脳損傷 / 高次脳機能障害 + バリアフリー | ✓ CLEAN | 高次脳機能障害 required for policy/rehab retrieval |
+| NL | verworven hersenletsel + gebouwde omgeving | ✓ CLEAN | — |
+| ES | daño cerebral adquirido + entorno construido | ✓ CLEAN | — |
+| PT | lesão cerebral adquirida + ambiente construído | ✓ CLEAN | — |
+| KO | 후천성 뇌 손상 + 접근성 | ✓ CLEAN | — |
+| IT | lesione cerebrale acquisita + ambiente costruito | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Linear or clearly differentiated floor plan layouts with minimal directional changes (≤2 per route segment); distinctive landmark elements at every decision point; high-contrast signage at eye level on both sides of corridor; pictographic wayfinding (not text-only).
+
+**Most targeted provision (Tier 2):** OT assessment of specific navigation impairment type (egocentric disorientation / topographic disorientation / landmark agnosia) determines specific environmental modification strategy; for unilateral neglect — high-contrast cues positioned on the neglected side.
+
+**Conflict resolution:** Where floor plan simplicity conflicts with spatial differentiation (variety vs. uniformity): prioritise linear layouts with diverse visual cues at decision points — this provides structure without disorienting repetition.
+
+**Highest-ambition actionable specification:** Corridor layouts with ≤2 directional changes per route segment; distinctive visual landmark at each decision point; luminance contrast ≥30 LRV at floor/wall junctions; pictographic + colour-coded signage; adequate circulation width for mobility device use post-stroke (minimum 1200mm clear width; preferred 1500mm).
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Spatial configuration (floor plan legibility) is the primary environmental determinant of wayfinding for ABI/stroke; signage/cues cannot compensate for poor layout | EN (Marquardt & Schmieg 2009; Bowes et al. Stirling 2019) | Tier 3 |
+| ~25% of stroke survivors retain navigation impairment at 12 months; wayfinding correlates with quality of life | EN (van der Ham et al. 2021; Hamre et al. 2020) | Tier 3 |
+| Landmark-based wayfinding is the most effective compensatory strategy for ABI/stroke | EN (Antonakos et al. 2004 DSQ; Claessen & van der Ham 2017) | Tier 1/Co-1 |
+| Straight, short corridors with minimal direction changes support wayfinding performance | EN (Marquardt & Schmieg 2009; 7-rehab-clinic study 2022) | Tier 3 |
+| Highly inaccessible home environments associated with lower self-efficacy and worse rehabilitation outcomes post-stroke | EN/SV (Iwarsson & Ståhl 2003; PMC10621028 Swedish study 2023) | Tier 3 |
+| Unilateral neglect (30–60% of ABI cases) requires high-contrast environmental cues on the neglected side | EN (van der Ham et al.; Livingstone & Skelton 2007) | Tier 1/3 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| Layout symmetry: gestalt symmetry supports cognitive map formation vs. symmetry reduces differentiation | EN (Weisman 1981, Canter 1974) | EN (Baskaya et al. 2004) | Empirical divergence — resolution: balance symmetry of structure with visual diversity at decision nodes |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| All non-EN | EN-primary evidence base for ABI wayfinding research; non-EN extended pass not run this session | No warning — clean concepts; gap is retrieval coverage not conceptual boundary |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| van der Ham 2021 | backward | Claessen & van der Ham 2017; Livingstone & Skelton 2007 |
+| PMC 2022 stroke rehab clinic study | forward | 2 wayfinding technology studies |
+
+### Key sources
+1. Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture. *Health Environments Research & Design.* [Tier 3 — wayfinding layout primary]
+2. van der Ham, I. et al. (2021). Navigation ability in patients with ABI: population-wide online study. *Neuropsychological Rehabilitation.* [Tier 3]
+3. Antonakos, C. et al. (2004). Wayfinding with visuo-spatial impairment from stroke and TBI. *Disability Studies Quarterly* 24(3). [Tier Co-1]
+4. Hamre, C. et al. (2020). Navigation impairment at 12 months post-stroke. [Tier 3] [UNVERIFIED — full citation required]
+5. Iwarsson, S. & Ståhl, A. (2003). Accessibility, usability and universal design. *Disability & Rehabilitation* 25(2):57–66. [Tier 1 framework]
+6. PMC10621028 (2023). Housing accessibility and rehabilitation outcomes after stroke. *OTJR.* [Tier 3 SV]
+7. Claessen, M. & van der Ham, I. (2017). Navigation impairment assessment in neurological patients. [Tier 3] [UNVERIFIED — full citation required]
+
+---
+
+## dementia-built-environment|DEM
+**Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 3–5 (strong systematic review base; quantified lighting from DSDC Stirling)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| SV | demensanpassad miljö / demensvänlig design | ✓ CLEAN | — |
+| NO | demensvennlig miljø / demensvennlig utforming | ✓ CLEAN | Retrieve from Helsedirektoratet directly |
+| DA | demensvenligt miljø / demensegnet bolig | ✓ CLEAN | — |
+| FI | muistisairausystävällinen ympäristö | ✓ CLEAN | — |
+| FR | environnement adapté à la démence | ✓ CLEAN | Retrieve CEREMA + PMND before academic DBs |
+| DE | demenzfreundliches Wohnen / Wohnkonzepte für Menschen mit Demenz | ✓ CLEAN | KDA is major reference absent from EN bibliographies; retrieve directly |
+| ZH | 失智症友善环境 | ✓ CLEAN | — |
+| JA | 認知症対応環境 / 認知的アクセシビリティ | ✓ CLEAN | Primary via J-STAGE and 日本認知症学会; group home term 認知症対応型共同生活介護 |
+| NL | dementievriendelijke omgeving | ✓ CLEAN | BuroKade/Vivium De Hogeweyk POE is primary NL source |
+| ES | entorno amigable con la demencia / accesibilidad cognitiva | ✓ CLEAN | — |
+| PT | ambiente adaptado à demência | ✓ CLEAN | — |
+| KO | 치매 친화적 환경 | ✓ CLEAN | 중앙치매센터 is primary source |
+| IT | ambiente favorevole alla demenza | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Building layouts with linear or continuous-loop circulation, minimal directional changes; minimum 300 lux in corridors / 500 lux in task areas; high-contrast luminance cues at floor/wall junctions, toilet doors, and bedroom entry points; distinctive landmark objects at all decision points; personalised door identifiers for residential rooms; no high-gloss or reflective flooring; no dark-coloured floor mats at thresholds (perceived as holes).
+
+**Most targeted provision (Tier 2):** OT assessment of cognitive staging and specific disorientation type (landmark, route, or survey knowledge failure) informs environmental modification priority; personalised room-entry cues co-designed with resident and family; DSDC EADDAT audit used as ongoing monitoring instrument.
+
+**Conflict resolution:** Where VIS needs (high contrast) align with DEM needs (colour-coded wayfinding), specify both simultaneously — they are complementary. Where DEM flat-floor preference conflicts with MOB threshold reduction, use flush thresholds with colour contrast band.
+
+**Highest-ambition actionable specification:** Single-corridor or continuous-loop floor plan for dementia residential care settings; pictographic + colour-coded signage at all decision points; minimum 0.4 LRV contrast between adjacent horizontal/vertical surfaces; toilet door visible from resident bedroom (or within direct sightline from bedroom doorway); secure outdoor garden accessible without steps; all floor mats to have LRV ≥30 contrast with floor (never dark on pale).
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Lighting optimisation in care homes can improve resident orientation by up to 30%; minimum 300 lux corridors / 500 lux task areas (DSDC recommendation) | EN/UK (DSDC Stirling research; Kirklees guidance) | Tier 3–5 |
+| Floor plan configuration is the most influential environmental factor for dementia wayfinding; signage/colour alone cannot compensate for poor layout | EN/NL (Marquardt & Schmieg 2009; Bowes et al. Stirling 2019; PMC8725382 NL floorplan study) | Tier 3 |
+| Appearance/familiarity/recognisability is the most-cited design category in dementia literature (43% of 429 items) | EN (Bowes, Dawson, Greasley-Adams & McCabe — Stirling systematic review 2019) | Tier 3 |
+| Wayfinding/orientation is second-most addressed category (34% of items, 58 studies) | EN (Bowes et al. 2019; DSDC EADDAT) | Tier 3 |
+| Black/dark mats at thresholds perceived as holes by many people with dementia — common design error | EN/UK (DSDC Stirling; Kirklees guidance) | Co-1/Tier 3 |
+| DSDC EADDAT (2022) adopted by Transport for London and Kirklees Council; current gold-standard audit tool | EN/UK (DSDC Stirling) | Tier 5 |
+| German KDA Wohnkonzepte für Menschen mit Demenz is a major non-anglophone design reference absent from EN bibliography | DE (Kuratorium Deutsche Altershilfe) | Tier 5 |
+| Japanese MHLW group home (認知症対応型共同生活介護) standards include dementia-specific built environment provisions | JA (MHLW; 日本認知症学会) | Tier 5–6 |
+| Norwegian Nasjonal faglig retningslinje om demens contains built environment specifications | NO (Helsedirektoratet) | Tier 5–6 |
+| French CEREMA and PMND produce facility design guidelines | FR | Tier 5 |
+| Loop-path corridor systems (residents can walk continuously) associated with reduced agitation — Danish evidence | DA (Nationalt Videnscenter for Demens) | Tier 3 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| Symmetrical vs. diverse layouts | EN gestalt evidence supports symmetry for cognitive map | EN spatial differentiation evidence supports diversity | Empirical divergence — see NEU BPC for resolution |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| NO, FI, FR, DE, ZH, ES, PT, KO, IT | Extended pass not run; concept boundary clean — gap is retrieval coverage | No — extended run recommended |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Bowes et al. 2019 Stirling systematic review | backward | Marquardt & Schmieg 2009; Fleming et al. 2009 |
+| DSDC EADDAT 2022 | forward | Transport for London adoption; Kirklees guidance 2024 |
+| PMC8725382 NL floorplan study | backward | Marquardt 2009; Voogd 1982 MCA method |
+
+### Key sources
+1. Bowes, A., Dawson, A., Greasley-Adams, C. & McCabe, L. (2019). *Designing Environments for People with Dementia: A Systematic Literature Review.* Emerald. DOI: 10.1108/978-1-78769-971-720191004 [Tier 3 — 429 items]
+2. DSDC, University of Stirling (2022). *Environments for Ageing and Dementia Design Assessment Tool (EADDAT).* stir.ac.uk/dsdc [Tier 5]
+3. Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture: environments that facilitate wayfinding in nursing homes. *American Journal of Alzheimer's Disease and Other Dementias.* [Tier 3]
+4. BuroKade/Vivium (n.d.). De Hogeweyk post-occupancy evaluation. [Dutch-language — NL Tier Co-1] [UNVERIFIED — formal citation required]
+5. PMC8725382 (2022). Dementia-friendly design: design criteria and typologies supporting wayfinding. *International Journal of Environmental Research and Public Health.* [Tier 3 NL]
+6. KDA — Kuratorium Deutsche Altershilfe. *Wohnkonzepte für Menschen mit Demenz.* [DE Tier 5] [UNVERIFIED — ISBN/year required]
+7. Helsedirektoratet. *Nasjonal faglig retningslinje om demens.* [NO Tier 5–6] [UNVERIFIED — URL required]
+8. Nationalt Videnscenter for Demens (Denmark). Sensory garden and loop-path research. [DA Tier 3] [UNVERIFIED — specific publication required]
