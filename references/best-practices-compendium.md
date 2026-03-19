@@ -1679,3 +1679,97 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 5. ABNT NBR 16537:2024 — Acessibilidade — Sinalização tátil no piso. [PT · Tier 6]
 6. 편의증진법 시행규칙 별표1 §3 — 시각장애인 유도 블록. [KO · Tier 6]
 7. 한국시각장애인연합회 publications — tactile route advocacy. [KO · Tier 2]
+
+
+---
+
+## accessible-bathroom-and-grab-bar
+**Updated:** 2026-03-19 20:22  **Evidence tier range:** 1–6  **Status: PROVISIONAL** (co1 8/24 jx; tier5 8/24 jx — user-accepted gaps; 16 jurisdictions outstanding)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| SV | *tillgängligt badrum / stödhandtag / badrumsanpassning* | ✓ CLEAN | Ageing evidence dominant; OT clinical under-indexed |
+| NO | *tilgjengelig bad / støttehåndtak / boligtilpasning bad* | ✓ CLEAN | — |
+| DA | *tilgængeligt baderum / støttegreb* | ✓ CLEAN | — |
+| FI | *esteetön kylpyhuone / tukikahva* | ✓ CLEAN | — |
+| FR | *salle de bain accessible / barre d'appui / douche à l'italienne* | ✓ CLEAN | Ageing-in-place (*maintien à domicile*) evidence dominant |
+| DE | *barrierefreies Badezimmer / Haltegriff / bodengleiche Dusche / Wohnraumanpassung Bad* | ✓ CLEAN | KDA + VDI 6008 richer on clinical rationale than DIN 18040-2 |
+| ZH | *无障碍卫生间 / 扶手 / 浴室改造* | ⚠ PARTIAL | Public-facility vs residential frame diverge; search both in outstanding pass |
+| JA | *手すり / 住宅改修 / バリアフリーバス* | ✓ CLEAN | MLIT distinguishes bar position by activity type |
+| NL | *toegankelijke badkamer / beugel / drempelvrije douche* | ✓ CLEAN | — |
+| ES | *baño accesible / barra de apoyo / ducha italiana* | ✓ CLEAN | — |
+| PT | *banheiro acessível / barra de apoio / chuveiro sem desnível* | ✓ CLEAN | — |
+| KO | *장애인 화장실 / 안전손잡이* | ✓ CLEAN | 편의증진법 grab bar geometry may be more specific than ADA |
+| IT | *bagno accessibile / maniglione / doccia a filo pavimento* | ✓ CLEAN | — |
+| EN | *accessible bathroom / wet room / grab bar / zero-threshold shower* | ✓ CLEAN | Distinguish ageing-in-place from disability-specific OT evidence |
+
+### Best-practice synthesis
+**Most inclusive provision:** Permanent bilateral wall-mounted grab bar assembly (vertical + horizontal/angled combination) at toilet and shower/bath entry; 18 mm structural plywood blocking pre-installed at all positions at construction; zero-threshold shower with ≤1:80 floor slope; slip-resistant floor PTV ≥36 wet. This combination removes the primary physical barriers to independent bathing and toileting for the broadest range of MOB, MOB/UPL, and NEU profiles.
+
+**Most targeted provision:** Bilateral horizontal bars 800–900 mm AFF at toilet (both sides); angled bar at cistern wall; shower entry vertical bar; fold-down horizontal bar 800–850 mm in shower zone. Bar diameter 32–45 mm with textured grip surface. Load rating ≥1.5 kN continuous static / ≥2.5 kN peak dynamic. Wall clearance 35–45 mm. LRV contrast ≥30 vs wall and floor. Bar position resolved through OT co-design at Tier 2.
+
+**Conflict resolution:** Where space is constrained, zero-threshold shower takes precedence over grab bar count; pre-installed blocking ensures bilateral bars can be added later without structural intervention. Asymmetric limb function → bilateral provision at all positions is more protective than dominant-side only. DEM requires both bilateral positioning and high LRV contrast simultaneously.
+
+**Highest-ambition actionable specification:**
+1. 18 mm structural plywood blocking 600–1200 mm AFF at all toilet, shower, bath positions — construction-critical
+2. Bilateral horizontal bars 800–900 mm AFF at WC, both sides
+3. Angled bar at cistern wall
+4. Vertical entry bar at shower threshold
+5. Fold-down horizontal bar 800–850 mm in shower zone
+6. Bar diameter 32–45 mm, textured grip profile
+7. Load rating ≥1.5 kN continuous / ≥2.5 kN peak dynamic
+8. LRV ≥30 contrast vs wall and floor
+9. Zero-threshold shower, floor slope ≤1:80 to drain
+10. Slip resistance PTV ≥36 wet throughout shower zone
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Grab bars at toilet and shower/bath are the most-recommended bathroom AT intervention for fall prevention | EN, DE, JA, NO | US, UK, CA, AU, NZ, DE, JP, NO | Co-2 + Tier 3 |
+| Permanent wall-mounted vertical grab bar biomechanically superior to rim-mounted or wall-only for bathtub entry/exit | EN | CA, US | Tier 1 |
+| Bilateral grab bar positioning at toilet reduces lower limb joint moments for STS and sit-down | EN | CA, US | Tier 1 |
+| Structural wall blocking pre-installed at construction is highest-leverage DAR provision (75× retrofit cost penalty if missed) | EN, DE | UK, CA, AU, DE, NO, SE | Tier 5 + Co-2 |
+| Zero-threshold shower is highest-priority structural adaptation for wheelchair and ambulant mobility-impaired users | EN, DE, JA, NO | UK, CA, AU, NZ, DE, JP, NO | Tier 5 + Tier 6 |
+| Home modifications including bathroom grab rails produce RCT-confirmed 26% reduction in fall injury rates (Keall HIPI 2015) | EN | NZ | Tier 3 |
+| Grab bar use increases in buildings with universal-access policies (Levine 2022 national survey) | EN | CA | Tier 1 |
+| Stigma and aesthetics are significant barriers to grab bar installation; design normalisation is a population-level target | EN, JA | CA, JP | Co-1 + Tier 1 |
+| Summer Foundation AU OT survey (n=144): step-free showers + bathroom accessibility = top design priorities for ageing-in-place and hospital discharge | EN | AU | Co-2 |
+| DIN 18040-2: wall construction must allow future grab bar retrofit — not mandatory to install at construction | DE | DE | Tier 6 |
+
+### Divergent findings
+| Topic | Source A | Source B | Cause |
+|---|---|---|---|
+| Grab bar height at shower | DIN 18040-1/2: horizontal bar at 850 mm | KITE/UHN: body height correlated with grasp — range not single value | Regulatory (DE) vs biomechanics (CA) — range specification preferred; 850 mm within 800–900 mm range |
+| Vertical vs horizontal bar preference | Guitard 2011: vertical preferred for balance recovery at bathtub entry | Guay 2020: both needed — vertical for step-over; horizontal for bath-floor STS | Activity-specific — both configurations required |
+| Permanent vs rim-mounted | Greene 2024: rim-mounted inferior (greater trunk flex, higher loads, less preferred) | Consumer guidance: rim-mounted promoted as low-cost alternative | Biomechanics governs specification; rim-mounted is interim-only |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| IE, SG, BE, NL, CH, DK, FI, KR, CN, BR, ES, PT, IT, EU, ISO | Various | Not searched this session | No | No |
+| SE | SV | Standard referenced; no Co-1 retrieved | No | Partial |
+| FR | FR | Standard referenced; no Co-1 or Tier 5 retrieved | No | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Levine et al. 2025 (JMIR Rehab) | Backward | Greene 2024; Guay 2020; Guitard 2011; Lee 2019 |
+| Keall et al. 2015 (Lancet) | Forward | MHIPI 2021; Keall 2017 cost-benefit; BATH-OUT 2018 |
+| Wellecke et al. 2022 | Backward | King 2018; Levine 2021 |
+
+### Key sources
+1. Levine, I.C., et al. (2025). Grab bar grasp location during bathtub exit and STS. *JMIR Rehab Assist Technol*, 12:e69442. [CA] Tier 1 ✅
+2. Greene, R., et al. (2024). Wall-mounted vs rim-mounted grab bars. *CJOT*, 91(2):183–193. [CA] Tier 1 ✅
+3. Lee, S.J., et al. (2019). Bilateral swing-away grab bars — toilet transfer biomechanics. *Disabil Rehabil Assist Technol*, 14, 292–300. [US] Tier 1 ✅
+4. Guitard, P., et al. (2011). Bath grab bar configurations following balance perturbation. *Assist Technol*, 23(4), 205–215. [CA] Tier 1 ✅
+5. Guay, M., et al. (2020). Force applied to grab bar during bathtub transfers. *Clin Biomech*, 80, 105109. [CA] Tier 1 ✅
+6. Sekiguchi, Y., et al. (2017). Grab bar effect on dynamic stability — bathtub entry. *Gait Posture*, 53, 75–80. [JP] Tier 1 ✅
+7. Levine, I.C., et al. (2022). Consumer perspectives on grab bars — Canadian national survey. *Front Public Health*, 10:915100. [CA] Tier 1/Co-1 ✅
+8. Keall, M.D., et al. (2015). HIPI home modifications RCT. *Lancet*, 385, 231–238. [NZ] Tier 3 ✅
+9. Keall, M.D., et al. (2021). MHIPI — Māori. *Lancet Public Health*, 6:e631–e640. [NZ] Tier 3 ✅
+10. Wellecke, C., et al. (2022). Accessible design features — OT survey. *Disabil Health J*, 15(3):101281. [AU] Co-2 ✅
+11. Golding-Day, M., et al. (2018). BATH-OUT feasibility RCT. *BMC Public Health*. [UK] Tier 3 ✅
+12. DIN 18040-2:2011. Barrierefreies Bauen — Wohnungen. [DE] Tier 6 ✅
+13. BS 8300:2018. Accessible + inclusive built environment. BSI. [UK] Tier 5 ✅
+14. Bateni, H., & Maki, B.E. (2005). Assistive devices for balance. *Arch Phys Med Rehabil*, 86(1), 134–145. Tier 3 ✅
