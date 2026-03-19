@@ -1788,6 +1788,10 @@ top_sources:
 bpc_ref: mobility-built-environment
 thin_flags: [NL, IT]
 no_data_flags: []
+jurisdiction_gaps: [CA, AU-beyond-code, SG, BE, PT-full, ES-full, UK-tier5]
+tier_gaps: [Co-1-all-languages, Tier-1-IDeA-WheelMobDB, Tier-3-Cochrane, Tier-5-beyond-code-frameworks]
+protocol_deviation: Co-1/Tier-2 pass not executed before standards pass — inverts evidence hierarchy. All findings currently grounded in Tier 6 only for most languages.
+no_data_flags: []
 
 slug: visual-impairment-built-environment
 query: "visual impairment blind low vision built environment tactile wayfinding contrast lighting"
