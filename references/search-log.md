@@ -1652,3 +1652,78 @@ no_data_flags: []
 bpc_ref: "dementia-built-environment|DEM"
 note: "Strong EN/NL/DK evidence base. KDA (DE), MHLW (JA), Helsedirektoratet (NO), CEREMA+PMND (FR) are priority targets for extended pass."
 ```
+slug: OT-interprofessional-universal-design|ALL
+query: "occupational therapy interprofessional universal design built environment"
+last_searched: 2026-03-19 14:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 14, db: [PubMed, Consensus, SG, web]}
+  SV: {status: SEARCHED, results: 4, db: [web]}
+  NO: {status: SEARCHED, results: 3, db: [web]}
+  DA: {status: SEARCHED, results: 2, db: [web]}
+  FI: {status: NO-DATA, results: 0, db: [web], note: "Suomen Toimintaterapeuttiliitto: no built environment publications"}
+  FR: {status: NO-DATA, results: 0, db: [web], note: "Ergothérapie France: no built environment design publications"}
+  DE: {status: THIN, results: 1, db: [web], note: "DVE: practice confirms OT role but no built environment design standard"}
+  ZH: {status: SEARCHED, results: 3, db: [web]}
+  JA: {status: SEARCHED, results: 4, db: [web]}
+  NL: {status: NO-DATA, results: 0, db: [web], note: "Ergotherapie Nederland: no built environment design standard"}
+  ES: {status: SEARCHED, results: 3, db: [web]}
+  PT: {status: SEARCHED, results: 4, db: [web]}
+  KO: {status: SEARCHED, results: 3, db: [web]}
+  IT: {status: THIN, results: 1, db: [web], note: "AITO: practice reference only"}
+top_sources: [Young-2019, Watchorn-2019, AOTA-2022-PS, CAOT-2025]
+bpc_ref: "OT-interprofessional-universal-design|ALL"
+thin_flags: [DE, IT]
+no_data_flags: [FI, FR, NL]
+
+---
+
+slug: CHD-school-design-built-environment|CHD
+query: "children school building design accessibility neurodivergence sensory environment"
+last_searched: 2026-03-19 16:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 12, db: [PubMed, Consensus, SG, web]}
+  SV: {status: SEARCHED, results: 5, db: [web]}
+  NO: {status: SEARCHED, results: 6, db: [web]}
+  DA: {status: SEARCHED, results: 3, db: [web]}
+  FI: {status: THIN, results: 1, db: [web]}
+  FR: {status: SEARCHED, results: 4, db: [web]}
+  DE: {status: SEARCHED, results: 5, db: [web]}
+  ZH: {status: SEARCHED, results: 6, db: [web], note: "Strong evidence — 建标156-2011; Beijing 2019; Zhejiang DB3303/T 084-2025"}
+  JA: {status: SEARCHED, results: 5, db: [web], note: "Strong — MEXT 2020; 特別支援学校施設整備指針"}
+  NL: {status: NOT-RUN}
+  ES: {status: NOT-RUN}
+  PT: {status: SEARCHED, results: 3, db: [web]}
+  KO: {status: SEARCHED, results: 3, db: [web]}
+  IT: {status: NOT-RUN}
+top_sources: [Rajotte-2024, SPSM-2024, MEXT-2020, China-建标156-2011, Choi-2018-KO]
+bpc_ref: "CHD-school-design-built-environment|CHD"
+thin_flags: [FI]
+no_data_flags: []
+
+---
+
+slug: bariatric-grab-bar-structural-design|MOB-BAR
+query: "bariatric grab bar load rating structural specification built environment"
+last_searched: 2026-03-19 16:30
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 5, db: [web]}
+  SV: {status: NO-DATA, results: 0, db: [web], note: "No Scandinavian bariatric grab bar OT evidence found"}
+  NO: {status: NO-DATA, results: 0, db: [web], note: "No Norwegian bariatric grab bar OT evidence found"}
+  DA: {status: NOT-RUN}
+  FI: {status: NOT-RUN}
+  FR: {status: NOT-RUN}
+  DE: {status: NOT-RUN}
+  ZH: {status: NOT-RUN}
+  JA: {status: NOT-RUN}
+  NL: {status: NOT-RUN}
+  ES: {status: NOT-RUN}
+  PT: {status: NOT-RUN}
+  KO: {status: NOT-RUN}
+  IT: {status: NOT-RUN}
+top_sources: [Guay-2020, Novak-2024, HMInfo-2015, iHFG-bariatric]
+bpc_ref: "bariatric-grab-bar-structural-design|MOB-BAR"
+thin_flags: []
+no_data_flags: [SV, NO]
