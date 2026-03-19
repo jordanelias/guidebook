@@ -120,3 +120,5 @@ GAP-073 | P1 | OPEN | multilingual-research | mobility-built-environment | TIER 
 GAP-074 | P2 | CLOSED-RESOLVED | multilingual-research | mobility-built-environment | Co-1 and Tier 5 gap-fill complete 2026-03-19. All 9 NOT-RUN jurisdictions (NZ, SG, NL, DK, KR, BR, PT, IT, ISO) now Co-1 attempted; Tier 5 now attempted for KR, CN, BR, PT, IT. BE Tier 5 remains outstanding (not Co-1). MOB status: COMPLETE. BPC addendum written. | 2026-03-19 23:55
 
 GAP-075 | P3 | OPEN | multilingual-research | mobility-built-environment | ES THIN: CERMI and CTE/SUA retrieved; no OT-specific or Co-1 research found in Spanish for MOB built environment; CERMI advocacy publications need direct retrieval | 2026-03-19 22:30
+
+GAP-075 | P2 | OPEN | multilingual-research | accessible-bathroom-and-grab-bar | 16 jurisdictions NOT-RUN: IE/SG/SE/FR/BE/NL/CH/DK/FI/KR/CN/BR/ES/PT/IT/EU/ISO — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:22
