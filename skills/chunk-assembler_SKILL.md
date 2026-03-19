@@ -38,20 +38,7 @@ If any check fails, stop and report to user.
 
 **Assembly order is derived entirely from the current section map — never hardcoded.**
 
-Read the section map to determine:
-- Volume sequence (H1 headings)
-- Part sequence within each volume (H2 headings)
-- Section sequence within each part (H3 headings)
-
-Assemble in the order the section map specifies. If the section map and a chunk's internal heading conflict, flag the conflict — do not silently resolve it.
-
-**Standard document zones** (derive positions from section map; do not assume fixed positions):
-1. Front matter (title, version block, contents, section map, quick reference, reading paths)
-2. Volume 1 parts in section-map order
-3. Volume 2 parts in section-map order
-4. Volume 3 parts in section-map order
-5. Supplementary volumes in section-map order
-6. Back matter (bibliography, glossary, index, appendices)
+Read the section map to determine volume, part, and section sequence. If the section map and a chunk's internal heading conflict, flag — do not silently resolve.
 
 ---
 
