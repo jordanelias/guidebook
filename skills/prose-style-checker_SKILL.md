@@ -119,10 +119,4 @@ Output corrected text block in full, with flagged items replaced. Mark each corr
 Flag table (Pass 1).
 Corrected text block (Pass 2).
 
----
 
-## Integration
-
-- Run before: `critique-report-writer`, `practice-note-generator`, final editorial pass
-- Run after: `framing-checker` (framing fixes may change sentence structure requiring style pass)
-- Output feeds: `find-and-replace` (mechanical substitutions) · `item-specification-writer` (revised items) · `critique-report-writer` (final style rating)
