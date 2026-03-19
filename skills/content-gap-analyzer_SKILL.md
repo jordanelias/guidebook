@@ -35,10 +35,7 @@ description: >
      id: GAP-XXX
      type: evidence|framing|citation|format|code|cross-ref
      section: "..."
-     description: "[one sentence — what is missing and why it matters]"
      priority: P1|P2|P3
      status: OPEN
      skill_responsible: content-gap-analyzer
-     date: YYYY-MM-DD HH:MM
      ```
-     Or in compact register format: `GAP-XXX | P{1|2|3} | OPEN | content-gap-analyzer | {section} | {description} | {YYYY-MM-DD HH:MM}`
