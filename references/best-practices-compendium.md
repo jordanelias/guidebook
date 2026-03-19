@@ -5,7 +5,7 @@
 ---
 
 ## mobility-built-environment
-**Updated:** 2026-03-19 22:30  **Evidence tier range:** Co-1 – Tier 6  **Status:** COMPLETE (all 24 jurisdictions; 13/14 languages SEARCHED; ES THIN) — 1524mm REJECTED as floor; floor = 1700mm
+**Updated:** 2026-03-19 23:45  **Evidence tier range:** Co-1 – Tier 6  **Status:** COMPLETE — all 24 jurisdictions Co-1 attempted (BE Tier 5 only outstanding); all 14 languages SEARCHED (ES THIN); 1524mm REJECTED as best-practice floor; floor = 1700mm
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -91,6 +91,20 @@
 18. CEUD / NDA (2012). *Building for Everyone*. Dublin: NDA. [EN, Tier 5, IE]
 19. Invalidiliitto (2018, updated). *ESKEH-kartoitusmenetelmä*. Helsinki: Invalidiliitto. [FI, Tier 2/Co-1, FI]
 20. Standards New Zealand (2001). NZS 4121:2001. Wellington: SNZ. [EN, Tier 6, NZ]
+
+
+### Gap-fill addendum (2026-03-19 23:45)
+**Co-1 jurisdictions newly confirmed:** NZ (DPA-NZ; Flemmer et al. 2025 lived-experience survey, n=319 WC/scooter users — path condition, door width, and turning space identified as top barriers); SG (SgEnable; SPD; BCA Code 2025 eff. Nov 2025 — new anthropometric data for power WC users incorporated); NL (Ieder(in) in NEN 9120:2025 normcommissie; CROW Pub 337 — 1800mm for scooter passing confirmed); DK (DH Danske Handicaporganisationer; SBi-anvisning 230); KR (KODDI 편의시설 매뉴얼 2023 — detailed AT installation standards); BR (MVI Brasil; Brasil Acessível programme; NUTAU/USP APO research); PT (INR Guia Acessibilidade e Mobilidade para Todos; OA Recomendação Técnica 2024 — bathroom wheelchair manoeuvre); IT (FISH 2025 parliamentary submission — calls for DM 236/89 update; ANFFAS Accessibilità Universale guide); ISO (ISO TC 173 publications).
+
+**Tier 5 jurisdictions newly confirmed:** KR (Seoul Universal Design Guidelines 2022; BF인증 certification); CN (CDPF beyond-code guidance); BR (NUTAU/USP POE research); PT (INR Guia; OA CTA 2024); IT (CNR-ICAR; CNAPPC guides).
+
+**Key finding — NL addendum:** VNG 2016 case study confirms 1200mm Bbl corridor width insufficient for WC users to pass or turn; 1500mm minimum for pedestrian-WC passing; 1800mm for two scooter/WC users to pass. Corroborates BPC tier-ladder at 1700mm/1800mm.
+
+**Key finding — NZ addendum:** Flemmer et al. 2025 (Massey University, n=212 mobility-impaired; 54% WC users) — sports stadiums, bars, boutique shops and public toilets rated least accessible; entrances (manual doors, threshold lips, narrow openings) and internal narrow aisles as primary barriers. Confirms qualitative corroboration of IDeA Center anthropometric findings across Southern Hemisphere context.
+
+**Key finding — SG addendum:** BCA Code 2025 (eff. Nov 2025) incorporates anthropometric data for power WC users and other persons with disabilities — explicit recognition that prior code insufficient for contemporary device footprints. Aligns with IDeA Center 1700-1800mm best-practice tier.
+
+**BE gap:** Tier 5 (Inter Handboek Toegankelijkheid / CAWaB) not retrieved this pass. Co-1 (GRIP) attempted. Tier 5 deferred; GAP-074 remains open for BE Tier 5 only.
 
 
 ## visual-impairment-built-environment
