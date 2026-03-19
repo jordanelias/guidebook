@@ -1919,3 +1919,118 @@ top_sources:
 bpc_ref: visual-impairment-built-environment
 thin_flags: [IT]
 no_data_flags: []
+
+---
+
+```yaml
+slug: accessible-bathroom-and-grab-bar
+query: "accessible bathroom grab bar wet room zero-threshold shower transfer biomechanics disability OT"
+last_searched: 2026-03-19 20:22
+early_close_triggered: false
+status: PARTIAL
+provisional: true
+blocker_accepted: "BLOCKER-1 co1_attempted=8/24 (need 12); BLOCKER-2 tier5_attempted=8/24 (need 16). User accepted PROVISIONAL LOG. Outstanding: BE/NL/CH/DK/FI/KR/CN/BR/ES/PT/IT/IE/SG/SE/FR/EU/ISO."
+
+native_aliases:
+  SV: "tillgängligt badrum / stödhandtag / badrumsanpassning / snusyta i bad [CLEAN]"
+  NO: "tilgjengelig bad / støttehåndtak / terskelfrittdusj / boligtilpasning bad [CLEAN]"
+  DA: "tilgængeligt baderum / støttegreb / brusekabine uden trin [CLEAN]"
+  FI: "esteetön kylpyhuone / tukikahva / kynnyksetön suihku [CLEAN]"
+  FR: "salle de bain accessible / barre d'appui / douche à l'italienne / adaptation maintien à domicile [CLEAN]"
+  DE: "barrierefreies Badezimmer / Haltegriff / bodengleiche Dusche / Wohnraumanpassung Bad [CLEAN]"
+  ZH: "无障碍卫生间 / 扶手 / 浴室改造 / 住宅改造 [PARTIAL — public vs residential frame diverge]"
+  JA: "手すり / 住宅改修 / バリアフリーバス / 浴室手すり [CLEAN]"
+  NL: "toegankelijke badkamer / beugel / drempelvrije douche / badkameraanpassing [CLEAN]"
+  ES: "baño accesible / barra de apoyo / ducha italiana / adaptación de baño [CLEAN]"
+  PT: "banheiro acessível / barra de apoio / chuveiro sem desnível [CLEAN]"
+  KO: "장애인 화장실 / 안전손잡이 / 욕실 개조 [CLEAN]"
+  IT: "bagno accessibile / maniglione / doccia a filo pavimento [CLEAN]"
+concept_boundary_warnings:
+  - ALL: "Ageing-in-place literature recommends fewer and less precisely positioned bars than OT clinical evidence for disability populations. Distinguish provenance; OT clinical governs for specification."
+  - ZH: "无障碍 covers public-facility bathrooms primarily; residential evidence in 住宅改造 — both must be searched in outstanding pass."
+  - DE: "Wohnraumanpassung Bad literature (KDA, VDI 6008) richer than DIN 18040-2 on grab bar positioning rationale."
+
+languages:
+  EN: {status: SEARCHED, results: 14, db: [PubMed, web, Consensus], co1_pass: complete, native_standards_pass: complete}
+  DE: {status: SEARCHED, results: 5, db: [web], co1_pass: partial, native_standards_pass: complete}
+  JA: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: partial}
+  NO: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: partial}
+  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FR: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NL: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  ES: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  JP: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: THIN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_coverage_summary:
+  searched: [US, UK, CA, AU, NZ, DE, JP, NO]
+  thin: [SE, FR]
+  no_data: []
+  not_run: [IE, SG, BE, NL, CH, DK, FI, KR, CN, BR, ES, PT, IT, EU, ISO]
+  co1_complete: [US, UK, CA, AU, NZ, DE, JP, NO]
+  co1_not_attempted: [IE, SG, SE, FR, BE, NL, CH, DK, FI, KR, CN, BR, ES, PT, IT, EU, ISO]
+  tier5_complete: [US, UK, CA, AU, NZ, DE, JP, NO, SE]
+  tier5_not_attempted: [IE, SG, FR, BE, NL, CH, DK, FI, KR, CN, BR, ES, PT, IT, EU, ISO]
+
+co1_pass_summary:
+  complete: [EN]
+  partial: [DE, JA, NO]
+  not-run: [SV, DA, FI, FR, NL, ES, PT, KO, IT, ZH]
+native_standards_pass_summary:
+  complete: [EN, DE]
+  partial: [JA, NO]
+  not-run: [SV, DA, FI, FR, NL, ES, PT, KO, IT, ZH]
+companion_networks: {loaded: [RCOT/RCOTSSH, Summer Foundation, KITE/UHN, Keall/Housing+Health NZ], scholar_targets: 4, retrieved: 4}
+citation_mining: {backward: 8, forward: 5, sources_added: 6}
+at_database_pass: partial
+
+top_sources:
+  - Levine2025-JMIR-grab-bar-grasp-bathtub
+  - Greene2024-CJOT-wall-vs-rim-grab-bar
+  - Lee2019-bilateral-toilet-transfer
+  - Guitard2011-balance-perturbation-grab-bar
+  - Guay2020-force-grab-bar-bathtub
+  - Sekiguchi2017-grab-bar-dynamic-stability
+  - Levine2022-consumer-perspectives-grab-bar
+  - Keall2015-HIPI-Lancet-RCT
+  - Keall2021-MHIPI-Lancet-Public-Health
+  - Wellecke2022-Summer-Foundation-OT-survey
+  - GoldingDay2018-BATH-OUT-RCT
+  - DIN18040-2-2011
+  - BS8300-2018
+  - Bateni2005-assistive-devices
+bpc_ref: "accessible-bathroom-and-grab-bar"
+thin_flags: [SE, FR]
+no_data_flags: []
+```
