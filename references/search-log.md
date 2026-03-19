@@ -1438,3 +1438,217 @@ bpc_ref: "fatigue-spectrum-built-environment"
 thin_flags: [SV, FR, ES, PT]
 no_data_flags: [DE, NO, DA, FI, ZH, JA, NL, KO, IT]
 ```
+---
+
+```yaml
+slug: OFS-built-environment|OFS
+query: "ME/CFS POTS MCAS orthostatic fatigue spectrum built environment rest seating pacing design"
+last_searched: 2026-03-19 00:10
+early_close_triggered: false
+native_aliases:
+  SV: utmattningssyndrom + byggd miljö [PARTIAL]
+  NO: utmattelse + bo-miljø [PARTIAL]
+  DA: kronisk træthed + boligindretning [PARTIAL]
+  FI: krooninen väsymysoireyhtymä + esteettömyys [PARTIAL]
+  FR: syndrome de fatigue chronique + accessibilité [PARTIAL]
+  DE: ME/CFS + barrierefreies Bauen [PARTIAL]
+  ZH: 慢性疲劳综合征 + 无障碍 [PARTIAL]
+  JA: 慢性疲労症候群 + 生活環境 [PARTIAL]
+  NL: ME/CVS + toegankelijkheid + woningaanpassing [CLEAN]
+  ES: síndrome de fatiga crónica + accesibilidad [PARTIAL]
+  PT: síndrome de fadiga crónica + acessibilidade [PARTIAL]
+  KO: 만성피로증후군 + 접근성 [PARTIAL]
+  IT: sindrome da fatica cronica + accessibilità [PARTIAL]
+concept_boundary_warnings:
+  - ALL: OFS is not a recognised regulatory or design category in any jurisdiction. Evidence maps onto ME/CFS, POTS, invisible disability literature separately. No OFS-specific built environment standards in any language.
+  - NL: Strongest non-EN base — ME/cvs Stichting; search via woningaanpassing + ME/CVS
+  - DE: Deutsche Gesellschaft für ME/CFS publishes clinical guidance only
+languages:
+  EN: {status: SEARCHED, results: 14, db: [CDC, PubMed, Bateman-Horne, Wheels-for-Wellbeing-UK, BS8300, VisitEngland, ADA-JAN], co1_pass: partial, native_standards_pass: partial}
+  SV: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NO: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DA: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FR: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DE: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ZH: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NL: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ES: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: partial}
+co1_pass_summary:
+  complete: []
+  partial: [EN]
+  not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]
+native_standards_pass_summary:
+  complete: []
+  partial: [EN — UK BS8300/VisitEngland seating standards, AU AS1428.2]
+  not-run: [all non-EN — no OFS-specific standards in any jurisdiction]
+companion_networks:
+  loaded: [Network-C-OFS]
+  scholar_targets: 5
+  retrieved: 3
+citation_mining:
+  backward: 4
+  forward: 2
+  sources_added: 1
+at_database_pass: partial
+top_sources:
+  - IOM-NAM-2015-SEID
+  - Bateman-Horne-MECFS-clinical
+  - CDC-MECFS-severe
+  - Wheels-for-Wellbeing-UK-seating-2025
+  - VisitEngland-50m-seating
+  - BS8300-DfT-100m-seating
+  - Kos-2015-AJOT-pacing-RCT
+thin_flags: [SV, FR, ES, PT]
+no_data_flags: [NO, DA, FI, DE, ZH, JA, NL, KO, IT]
+bpc_ref: "OFS-built-environment|OFS"
+note: "UNIVERSAL DESIGN GAP: No jurisdiction has OFS-specific built environment standards. All provisions extrapolated from ME/CFS clinical management guidelines and general accessible seating codes. Evidence tier Tier 5 for all architectural provisions. [TIER 5 — no OFS-specific architectural standard in any jurisdiction; March 2026]"
+```
+
+---
+
+```yaml
+slug: neurological-built-environment|NEU
+query: "neurological ABI stroke traumatic brain injury built environment wayfinding cognitive accessibility OT"
+last_searched: 2026-03-19 00:10
+early_close_triggered: false
+native_aliases:
+  SV: neurologisk funktionsnedsättning + byggd miljö + orientering [CLEAN]
+  NO: nevrologisk funksjonshemming + bygget miljø [CLEAN]
+  DA: neurologisk funktionsnedsættelse + bygget miljø [CLEAN]
+  FI: neurologinen vamma + rakennettu ympäristö [CLEAN]
+  FR: lésion cérébrale acquise + environnement bâti [CLEAN]
+  DE: erworbene Hirnschädigung + barrierefreie Umgebung [CLEAN]
+  ZH: 获得性脑损伤 + 无障碍环境 [CLEAN]
+  JA: 後天性脳損傷 / 高次脳機能障害 + バリアフリー [CLEAN]
+  NL: verworven hersenletsel + gebouwde omgeving [CLEAN]
+  ES: daño cerebral adquirido + entorno construido [CLEAN]
+  PT: lesão cerebral adquirida + ambiente construído [CLEAN]
+  KO: 후천성 뇌 손상 + 접근성 [CLEAN]
+  IT: lesione cerebrale acquisita + ambiente costruito [CLEAN]
+concept_boundary_warnings:
+  - JA: 高次脳機能障害 is the Japanese administrative term for ABI cognitive sequelae; required alongside 後天性脳損傷 to recover policy and rehabilitation guidance
+  - DE: BAR (Bundesarbeitsgemeinschaft Rehabilitation) uses Erworbene Hirnschädigung (EHS) as primary term; Schädel-Hirn-Trauma (SHT) for TBI specifically
+languages:
+  EN: {status: SEARCHED, results: 20, db: [PubMed, DSQ, PMC, Frontiers, TandFonline, SJOT], co1_pass: partial, native_standards_pass: partial}
+  SV: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NO: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DA: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FR: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DE: {status: THIN, results: 3, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ZH: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NL: {status: NOT-SEARCHED, results: 0, co1_pass: not-run, native_standards_pass: not-run}
+  ES: {status: NOT-SEARCHED, results: 0, co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: NOT-SEARCHED, results: 0, co1_pass: not-run, native_standards_pass: not-run}
+  KO: {status: NOT-SEARCHED, results: 0, co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-SEARCHED, results: 0, co1_pass: not-run, native_standards_pass: not-run}
+co1_pass_summary:
+  complete: []
+  partial: [EN]
+  not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]
+native_standards_pass_summary:
+  complete: []
+  partial: [EN, SV, NO, DA, FI, FR, DE, ZH, JA]
+  not-run: [NL, ES, PT, KO, IT]
+companion_networks:
+  loaded: []
+  scholar_targets: 3
+  retrieved: 2
+citation_mining:
+  backward: 5
+  forward: 3
+  sources_added: 2
+at_database_pass: partial
+top_sources:
+  - Marquardt-Schmieg-2009-wayfinding-layout
+  - vanderHam-2021-ABI-navigation-population-wide
+  - Antonakos-Giordani-2004-DSQ-wayfinding
+  - Hamre-2020-navigation-QoL
+  - Iwarsson-Stahl-2003-accessibility-framework
+  - PMC2022-stroke-wayfinding-rehab-clinics
+  - PMC10621028-stroke-housing-SV
+thin_flags: [SV, NO, DA, FI, FR, DE, ZH, JA]
+no_data_flags: []
+bpc_ref: "neurological-built-environment|NEU"
+note: "EN evidence strong for wayfinding/ABI. Non-EN pass PARTIAL only — extended run recommended for DE (BAR framework / EHS term), JA (高次脳機能障害), NL/Nordic rehab facility design literature."
+```
+
+---
+
+```yaml
+slug: dementia-built-environment|DEM
+query: "dementia built environment design wayfinding layout lighting DSDC EADDAT non-anglophone KDA MHLW"
+last_searched: 2026-03-19 00:18
+early_close_triggered: false
+native_aliases:
+  SV: demensanpassad miljö / demensvänlig design [CLEAN]
+  NO: demensvennlig miljø / demensvennlig utforming [CLEAN]
+  DA: demensvenligt miljø / demensegnet bolig [CLEAN]
+  FI: muistisairausystävällinen ympäristö / kognitiivinen esteettömyys [CLEAN]
+  FR: environnement adapté à la démence / milieu de vie démence [CLEAN]
+  DE: demenzfreundliches Wohnen / Wohnkonzepte für Menschen mit Demenz [CLEAN]
+  ZH: 失智症友善环境 (shīzhìzhèng yǒushàn huánjìng) / 认知无障碍 [CLEAN]
+  JA: 認知症対応環境 / 認知的アクセシビリティ [CLEAN]
+  NL: dementievriendelijke omgeving / dementievriendelijk wonen [CLEAN]
+  ES: entorno amigable con la demencia / accesibilidad cognitiva [CLEAN]
+  PT: ambiente adaptado à demência / acessibilidade cognitiva [CLEAN]
+  KO: 치매 친화적 환경 / 인지 접근성 [CLEAN]
+  IT: ambiente favorevole alla demenza / accessibilità cognitiva [CLEAN]
+concept_boundary_warnings:
+  - DE: KDA Wohnkonzepte für Menschen mit Demenz is a major design reference absent from EN bibliographies; retrieve directly before any academic DB search
+  - JA: 認知症対応型共同生活介護 group home standards are MHLW-regulated; primary retrieval via J-STAGE and 日本認知症学会 not general web
+  - NO: Nasjonal faglig retningslinje om demens contains built environment specifications; retrieve directly from Helsedirektoratet
+  - FR: CEREMA and Plan Maladies Neuro-Dégénératives (PMND) produce facility design guidelines; retrieve before academic DBs
+languages:
+  EN: {status: SEARCHED, results: 20, db: [PubMed, DSDC-EADDAT, PMC, Emerald-Insight, Frontiers, DSDC-Stirling], co1_pass: complete, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 3, db: [Socialstyrelsen, web], co1_pass: partial, native_standards_pass: complete}
+  NO: {status: THIN, results: 2, db: [Helsedirektoratet, web], co1_pass: partial, native_standards_pass: partial}
+  DA: {status: SEARCHED, results: 3, db: [NationaltVidenscenter, web], co1_pass: complete, native_standards_pass: complete}
+  FI: {status: THIN, results: 2, db: [Muistiliitto, web], co1_pass: partial, native_standards_pass: partial}
+  FR: {status: THIN, results: 2, db: [CEREMA, FranceAlzheimer], co1_pass: partial, native_standards_pass: partial}
+  DE: {status: THIN, results: 3, db: [KDA, DeutscheAlzheimer, web], co1_pass: partial, native_standards_pass: partial}
+  ZH: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: SEARCHED, results: 4, db: [MHLW, 日本認知症学会, J-STAGE, web], co1_pass: partial, native_standards_pass: partial}
+  NL: {status: SEARCHED, results: 4, db: [AlzheimerNederland, Vilans, BuroKade-DeHogeweyk, web], co1_pass: complete, native_standards_pass: complete}
+  ES: {status: THIN, results: 2, db: [CEAFA, web], co1_pass: partial, native_standards_pass: partial}
+  PT: {status: THIN, results: 2, db: [APFADA, web], co1_pass: partial, native_standards_pass: partial}
+  KO: {status: THIN, results: 2, db: [중앙치매센터, web], co1_pass: partial, native_standards_pass: partial}
+  IT: {status: THIN, results: 2, db: [FedAlzheimer, web], co1_pass: partial, native_standards_pass: partial}
+co1_pass_summary:
+  complete: [EN, NL, DA]
+  partial: [SV, NO, FI, FR, DE, JA, ES, PT, KO, IT]
+  not-run: [ZH]
+native_standards_pass_summary:
+  complete: [EN, NL, DA, SV]
+  partial: [NO, FI, FR, DE, JA, ZH, ES, PT, KO, IT]
+  not-run: []
+companion_networks:
+  loaded: []
+  scholar_targets: 6
+  retrieved: 4
+citation_mining:
+  backward: 8
+  forward: 5
+  sources_added: 3
+at_database_pass: complete
+top_sources:
+  - Bowes-Dawson-Stirling-2019-systematic-429items
+  - DSDC-EADDAT-2022
+  - Marquardt-Schmieg-2009-layout-wayfinding
+  - BuroKade-DeHogeweyk-NL-POE
+  - NationaltVidenscenter-DK
+  - KDA-Wohnkonzepte-DE
+  - MHLW-GroupHome-JA
+  - Helsedirektoratet-demens-NO
+  - PMC8725382-floorplan-criteria-NL
+thin_flags: [NO, FI, FR, DE, ZH, ES, PT, KO, IT]
+no_data_flags: []
+bpc_ref: "dementia-built-environment|DEM"
+note: "Strong EN/NL/DK evidence base. KDA (DE), MHLW (JA), Helsedirektoratet (NO), CEREMA+PMND (FR) are priority targets for extended pass."
+```
