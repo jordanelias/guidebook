@@ -336,3 +336,6 @@ RULE: research-log-manager schema carries five new Option 2 fields: native_alias
 CONDITION: Every research-log-manager LOG call.
 ACTION: Populate all Option 2 fields. Empty native_aliases or missing concept_boundary_warnings at LOG time = BLOCKER.
 DATE: 2026-03-19 04:08
+
+
+RULE: Slugs in search-log.md, best-practices-compendium.md, and slug-registry.md must not include population code abbreviations as pipe-delimited suffixes (e.g. |MOB, |VIS, |ALL). Slugs are topic-only, human-readable strings. Population scope is recorded in the query field and BPC content — not the slug key.  CONDITION: Any new or updated search-log or BPC entry.  ACTION: Normalise slug to topic-only format before LOG. Strip any pipe-delimited suffix on CHECK.  DATE: 2026-03-18 23:30
