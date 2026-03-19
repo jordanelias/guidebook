@@ -566,3 +566,487 @@
 
 - fatigue-spectrum-built-environment
 - hearing-impairment-built-environment
+
+---
+
+# Slug Registry — Additions
+**Appended:** 2026-03-19
+**Scope:** Design library throughlines (Categories A–H) + residential rooms (R-ENT · R-GAR · R-LAU · R-BED · R-BA · R-LIV · R-KIT · R-HAL · R-STA)
+**Method:** Throughline analysis — each slug covers a conceptual evidence domain spanning multiple items, not a one-to-one item mapping.
+**Ageing-in-place:** Used as a generic cross-population search lens on all residential slugs and on applicable design-library slugs. Not a population code. Surfaces home-modification, Lifetime Homes, Visitability, and Nordic age-friendly housing evidence that is otherwise siloed from disability-specific literature.
+
+---
+
+## Design Library — Population Code Index (additions)
+
+| Code | New slug(s) | Priority |
+|---|---|---|
+| DEAF | `assistive-listening-systems\|DEAF` | P1 |
+| DEAF · NEU · NDV · DEM | `room-acoustic-performance\|DEAF-NEU-NDV-DEM` | P1 |
+| NDV · NEU · MH · OFS | `sensory-relief-space-design\|NDV-NEU-MH-OFS` | P1 |
+| NEU · NDV · DEM · VIS | `therapeutic-lighting-design\|NEU-NDV-DEM-VIS` | P1 |
+| VIS · DEAF | `visual-alerting-and-wayfinding-light\|VIS-DEAF` | P1 |
+| VIS · DEM · NDV | `luminance-contrast-and-pattern\|VIS-DEM-NDV` | P1 |
+| DEM · NEU · NDV · VIS | `cognitive-wayfinding-design\|DEM-NEU-NDV-VIS` | P1 |
+| MOB · OFS | `accessible-circulation-geometry\|MOB-OFS` | P1 |
+| MOB · OFS · ALL | `threshold-and-level-access\|MOB-OFS-ALL` | P1 |
+| MOB · MOB/UPL · VIS · DEAF | `reach-range-and-accessible-controls\|MOB-VIS-DEAF` | P1 |
+
+## Residential — Population Code Index (additions)
+
+| Code | New slug(s) | Priority |
+|---|---|---|
+| MOB · MOB/UPL | `accessible-bathroom-and-grab-bar\|MOB` | P1 |
+| MOB · MOB/UPL · LPA | `residential-kitchen-and-task-surfaces\|MOB-LPA` | P1 |
+| MOB · OFS · DEM · ALL | `residential-entry-and-threshold\|MOB-OFS-DEM` | P1 |
+| MOB · DEM · OFS | `residential-internal-circulation\|MOB-DEM-OFS` | P1 |
+| MOB · OFS · DEM | `residential-bedroom-living-ot\|MOB-OFS-DEM` | P2 |
+
+---
+
+## Full Slug Entries — Design Library Throughlines
+
+---
+
+### `room-acoustic-performance|DEAF-NEU-NDV-DEM`
+**Domain:** Room acoustic performance for disability populations; reverberation time (RT60); background noise levels (NC/NR); sound transmission class (STC); noise reduction coefficient (NRC); HVAC acoustic specification; flutter echo; partition performance; acoustic absorption materials. Serves DEAF (speech intelligibility), NEU (noise sensitivity, cognitive fatigue), NDV (sensory overload), DEM (acoustic calm).
+**Covers items:** A-01 · A-02 · A-03 · A-04 · A-05 · A-06 · A-07 · A-08 · A-09 · A-14
+**Governing compendium concept group:** CG 9
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Rumsakustik / efterklangstid / RT60 / ljuddämpning / bullerdämpning* | CLEAN |
+| NO | *Romakustikk / etterklangstid / RT60 / lyddemping / NS 8175* | CLEAN |
+| DA | *Rumakustik / efterklangstid / RT60 / lydabsorption / støjdæmpning* | CLEAN |
+| FI | *Huoneakustiikka / jälkikaiunta-aika / RT60 / äänenvaimennus* | CLEAN |
+| FR | *Acoustique intérieure / temps de réverbération / RT60 / isolation acoustique / arrêté acoustique* | CLEAN |
+| DE | *Raumakustik / Nachhallzeit / RT60 / Schallabsorption / DIN 18041* | CLEAN |
+| ZH | *室内声学 (shìnèi shēngxué) / 混响时间 / RT60 / 隔声性能* | CLEAN |
+| JA | *室内音響 (shitsunai onkyō) / 残響時間 / RT60 / 吸音性能* | CLEAN |
+| NL | *Ruimteakoestiek / nagalmtijd / RT60 / geluidsabsorptie / NEN-EN ISO 3382* | CLEAN |
+| ES | *Acústica de recintos / tiempo de reverberación / TR60 / absorción acústica / CTE HR* | CLEAN |
+| PT | *Acústica de ambientes / tempo de reverberação / TR60 / absorção sonora / NBR 10151* | CLEAN |
+| KO | *실내 음향 / 잔향 시간 / RT60 / 흡음 성능 / 학교 시설 기준* | CLEAN |
+| IT | *Acustica degli ambienti / tempo di riverberazione / TR60 / assorbimento acustico / UNI 11532* | CLEAN |
+
+**Concept boundary warnings:**
+- FR: French acoustic regulation (*arrêté relatif à l'acoustique des bâtiments*) governs residential performance separately from ERP — search both regulatory tracks. *Arrêté 2014* covers PMR spatial provisions; acoustic performance is a separate instrument.
+- DE: DIN 18041:2016 is the definitive German standard for room acoustics in disability contexts; it supersedes DIN 18041:2004 and explicitly addresses DEAF and NEU populations — this is a primary source.
+- JA: MEXT school acoustic standard and MLIT barrier-free law treat acoustic performance separately — search both. *文部科学省* governs schools; *国土交通省* governs barrier-free performance.
+- KO: The Korean *편의증진법* does not specify RT60 values — KS (Korean Standards) and school facility standards govern. Search KS F ISO 3382 implementation and *학교시설 환경개선 5개년 계획* (school facility improvement plan) separately.
+
+---
+
+### `assistive-listening-systems|DEAF`
+**Domain:** Assistive listening system installation and performance; induction hearing loop (ILS) geometry and field strength; IEC 60118-4 / BS EN 60118-4 compliance; counter loop placement; room perimeter loop; Auracast / Bluetooth LE Audio as successor technology; ITU-T H.series development; cochlear implant telecoil interface; loop coverage mapping.
+**Covers items:** A-10 · A-10b · A-11 · A-12
+**Governing compendium concept group:** CG 3.3
+**Distinct from:** `deaf-acoustic-built-environment` (which covers room acoustic performance for DEAF users, not ALS technology installation)
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Hörslinga / teleslinga / induktionsslinga / hörseltekniska hjälpmedel* | CLEAN |
+| NO | *Teleslynge / hørselsslyfe / induktiv slyfe / hørselstekniske hjelpemidler* | CLEAN |
+| DA | *Teleslynge / induktionssløjfe / hørehjælpemidler / høreslyfeanlæg* | CLEAN |
+| FI | *Induktiosilmukka / kuuntelusilmukka / teleslinga / kuulonapuväline* | CLEAN |
+| FR | *Boucle à induction magnétique (BIM) / boucle magnétique / système d'aide à l'audition* | CLEAN |
+| DE | *Induktionsschleife / Höranlage / Hörschleife / DIN VDE 0834 / EN 60118-4* | CLEAN |
+| ZH | *感应线圈 (gǎnyìng xiànquān) / 磁感应助听系统 / 助听环境设施* | CLEAN |
+| JA | *磁気誘導ループ (jiki yūdō rūpu) / ヒアリングループ / 補聴援助システム* | PARTIAL |
+| NL | *Ringleiding / inductielus / hoorlus / hoorassistentiesysteem* | CLEAN |
+| ES | *Bucle magnético / bucle de inducción / sistema de ayuda a la audición* | CLEAN |
+| PT | *Loop de indução / sistema de indução magnética / sistema de assistência auditiva* | CLEAN |
+| KO | *자기유도루프 / 청각장애인 보조청취시스템 / 유도루프 시스템* | CLEAN |
+| IT | *Anello ad induzione magnetica / sistema di ausilio all'udito / cappio magnetico* | CLEAN |
+
+**Concept boundary warnings:**
+- JA: *磁気誘導ループ* is the technical term but Japanese barrier-free policy predominantly uses *補聴援助システム* (hearing assistance system) generically — search both. Auracast has no Japanese standardisation yet; search under *Bluetooth LE Audio* + *補聴器*.
+- All languages: Auracast / Bluetooth LE Audio infrastructure readiness (A-12) has no standard in any jurisdiction as of March 2026. Evidence base is manufacturer white papers and ITU-T H.series drafts only — flag all as THIN; rely on IEC 60118-4 loop evidence for specification grounding.
+- DE: Standard corrected from DIN VDE 0828-1 to DIN VDE 0834 / EN 60118-4 (per compendium v2.0 audit finding).
+
+---
+
+### `sensory-relief-space-design|NDV-NEU-MH-OFS`
+**Domain:** Quiet room and sensory room provision; low-stimulation enclosure design; sensory gradient from entry to occupation; olfactory control and fragrance-free zones; graduated re-entry from sensory room to general space; no-sound-masking requirement for NEU populations; sensory decompression space evidence; ASPECTSS design principles in non-school settings; trauma-informed spatial decompression.
+**Covers items:** A-13 · A-16 · A-17 · D-05 · F-01 · F-02 · F-03
+**Governing compendium concept group:** CG 5 (emerging vocabulary)
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Sensorisk fristad / avlastningsrum / stimulusreducerat rum / sensorisk gradient* | PARTIAL |
+| NO | *Sanseavlastningsrom / stimulusredusert rom / rolig rom / sensorisk gradient* | PARTIAL |
+| DA | *Sensorisk fristed / stimulusreduceret rum / roligt rum / sensorisk gradient* | PARTIAL |
+| FI | *Aistirauhoittumistila / viriketön tila / hiljainen huone / sensorinen gradientti* | PARTIAL |
+| FR | *Espace de décharge sensorielle / espace snoezelen / salle apaisante / salle de retrait sensoriel* | PARTIAL |
+| DE | *Snoezelen-Raum / Rückzugsraum / reizarmer Raum / Sensorikraum / Ruheraum* | CLEAN |
+| ZH | *感觉减压空间 (gǎnjué jiǎnyā kōngjiān) / 感统训练室 / 安静室 / 感官中性空间* | PARTIAL |
+| JA | *感覚調整室 (kankaku chōsei shitsu) / 静穏室 / 刺激軽減空間 / スヌーズレン* | PARTIAL |
+| NL | *Snoezelen-ruimte / prikkelarme ruimte / rustige ruimte / sensorische terugtrektruimte* | CLEAN |
+| ES | *Sala de descompresión sensorial / sala snoezelen / espacio de baja estimulación / sala tranquila* | PARTIAL |
+| PT | *Sala de descompressão sensorial / sala snoezelen / espaço de baixa estimulação* | PARTIAL |
+| KO | *감각 감압 공간 / 감각통합 훈련실 / 정온 공간 / 스누젤렌룸* | PARTIAL |
+| IT | *Spazio di decompressione sensoriale / stanza snoezelen / ambiente a bassa stimolazione / stanza tranquilla* | PARTIAL |
+
+**Concept boundary warnings:**
+- All languages: *Snoezelen* is the dominant native term in most languages but originated as a therapeutic multi-sensory stimulation concept (Hulsegge and Verheul, 1987), not a low-stimulation relief space. The two concepts are opposed: Snoezelen adds sensory stimulation; sensory relief spaces reduce it. Searches using *snoezelen* will surface stimulation-room evidence (relevant for DEM) not decompression evidence (relevant for NDV/NEU). Distinguish explicitly in synthesis.
+- ZH: *感统训练室* (sensory integration training room) is a clinical therapy term — distinguish built environment provision from therapy room design.
+- All languages: This is the thinnest evidence base in the design library. NDV quiet room provision is well-supported for school settings (ASPECTSS) but residential and workplace evidence is sparse. Flag THIN outside school context; derive from school evidence base cautiously.
+
+---
+
+### `therapeutic-lighting-design|NEU-NDV-DEM-VIS`
+**Domain:** Circadian lighting and melanopic equivalent daylight illuminance (EML/EDI); flicker-free LED specification (IEEE 1789-2015); individual dimming and user control; indirect and cove lighting; warm colour temperature for evening (CCT ≤2700 K); elimination of fluorescent overhead lighting; maximisation of natural light; lighting as DEM orientation support; NEU photosensitivity mitigation.
+**Covers items:** B-01 · B-03 · B-04 · B-06 · B-07 · B-09 · B-11
+**Ageing-in-place lens:** Age-related contrast sensitivity decline, scotopic vision loss, and increased glare sensitivity make therapeutic lighting a primary ageing-in-place design factor. Search *éclairage adapté au vieillissement* (FR), *altersgerechte Beleuchtung* (DE), *高齢者照明環境* (JA), *äldreboende belysning* (SV) in addition to disability-specific terms.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Ljusterapi / dygnsrytmbelysning / bländfri belysning / flimmerfri belysning / äldreboende belysning* | CLEAN |
+| NO | *Døgnrytmbelysning / terapeutisk belysning / blendingsfri belysning / flimmerfri belysning* | CLEAN |
+| DA | *Døgnrytmebelysning / terapeutisk belysning / blændfri belysning / flimmerfri belysning* | CLEAN |
+| FI | *Vuorokausirytmivalaistus / terapeuttinen valaistus / häikäisemätön valaistus / välkkymätön valaistus* | CLEAN |
+| FR | *Éclairage circadien / éclairage thérapeutique / éclairage sans éblouissement / éclairage adapté au vieillissement* | CLEAN |
+| DE | *Circadiane Beleuchtung / therapeutische Beleuchtung / blendfreie Beleuchtung / altersgerechte Beleuchtung / flimmerfreie LED* | CLEAN |
+| ZH | *昼夜节律照明 (zhòuyè jiélǜ zhàomíng) / 治疗性照明 / 无眩光照明 / 老年人照明环境* | CLEAN |
+| JA | *サーカディアン照明 (sākadian shōmei) / 治療的照明 / 高齢者照明環境 / フリッカーフリー照明* | CLEAN |
+| NL | *Circadiaanse verlichting / therapeutische verlichting / verblindingsvrije verlichting / ouderenverlichting* | CLEAN |
+| ES | *Iluminación circadiana / iluminación terapéutica / iluminación sin deslumbramiento / iluminación para el envejecimiento* | CLEAN |
+| PT | *Iluminação circadiana / iluminação terapêutica / iluminação sem ofuscamento / iluminação para envelhecimento* | CLEAN |
+| KO | *일주기 리듬 조명 / 치료적 조명 / 눈부심 없는 조명 / 고령자 조명 환경* | CLEAN |
+| IT | *Illuminazione circadiana / illuminazione terapeutica / illuminazione senza abbagliamento / illuminazione per anziani* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: EML/EDI (melanopic equivalent daylight illuminance) is a recently standardised metric (CIE S 026:2018). Most non-English regulatory standards have not yet adopted it — expect CLEAN conceptual match but THIN standard-value evidence outside EN/DE. Derive from EN and CIE guidance; flag jurisdiction-specific values as absent.
+- DE: *altersgerechte Beleuchtung* is a well-developed German evidence base — search separately via KDA and Kuratorium Deutsche Altershilfe publications.
+
+---
+
+### `visual-alerting-and-wayfinding-light|VIS-DEAF`
+**Domain:** Visual fire alarm (VAD/strobe) placement and performance; LRV contrast at critical junctions as wayfinding support; glare and reflectance as navigation barrier; lighting transition zone design at major illuminance changes; lip-reading and sign language illumination (shadow-free face illumination).
+**Covers items:** B-02 · B-05 · B-08 · B-10
+**Governing compendium concept group:** CG 8 (luminance contrast) + CG 2.1 (DEAF signing space)
+**Distinct from:** `luminance-contrast-and-pattern` (which covers surface and material LRV) and `therapeutic-lighting-design` (which covers spectrum and circadian quality)
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Visuell brandlarm / blixtsignal / kontrastbelysning / bländskyddsbelysning* | CLEAN |
+| NO | *Visuelt brannvarsel / blitsvarsel / kontrastbelysning / TEK17 lys* | CLEAN |
+| DA | *Visuel brandmelding / blixtsignal / kontrastbelysning / BR18 lys* | CLEAN |
+| FI | *Visuaalinen palohälytin / salamahälytin / kontrastivälivalaistus* | CLEAN |
+| FR | *Détecteur visuel d'incendie / flash stroboscopique d'évacuation / signalisation lumineuse d'alarme / éclairage de contraste* | CLEAN |
+| DE | *Optischer Feueralarm / Blitzleuchte / visuelles Warnsystem / DIN VDE 0833 / Kontrastbeleuchtung* | CLEAN |
+| ZH | *视觉火灾报警 (shìjué huǒzāi bàojǐng) / 频闪报警器 / 对比度照明 / 视觉疏散指示* | CLEAN |
+| JA | *光警報装置 (hikari keihō sōchi) / 視覚的火災警報 / コントラスト照明 / 視覚誘導照明* | CLEAN |
+| NL | *Visueel brandalarm / stroboscoopalarm / contrastverlichting / waarschuwingsverlichting* | CLEAN |
+| ES | *Alarma visual de incendio / flash estroboscópico / iluminación de contraste / señalización luminosa de emergencia* | CLEAN |
+| PT | *Alarme visual de incêndio / flash estroboscópico / iluminação de contraste / sinalização luminosa de emergência* | CLEAN |
+| KO | *시각 화재 경보 / 점멸 경보기 / 대비 조명 / 시각적 피난 유도* | CLEAN |
+| IT | *Allarme visivo antincendio / lampeggiatore stroboscopico / illuminazione di contrasto / segnalazione luminosa d'emergenza* | CLEAN |
+
+**Concept boundary warnings:**
+- DE: DIN VDE 0833 governs fire alarm systems including visual alerting — primary source. Contrast between visual alarm and visual wayfinding lighting is not always clearly distinguished in German regulatory guidance; synthesise both.
+- All languages: Lip-reading illumination (B-02) is addressed almost exclusively in Deaf-community and DeafSpace literature, not general lighting standards. Expect THIN in standards-based searches; rely on Co-1/Tier 2 sources (Gallaudet / NDCS / national Deaf associations) for this item.
+
+---
+
+### `luminance-contrast-and-pattern|VIS-DEM-NDV`
+**Domain:** Luminance contrast (LRV differential) at critical junctions; colour palette selection for disability populations; pattern avoidance on flooring and walls; DEM inverse contrast rule (floor perceived as drop); plain low-contrast flooring for DEM; colour-coded wayfinding zones; tactile surface differentiation for VIS.
+**Covers items:** C-01 · C-02 · C-03 · C-04 · C-05 · C-06
+**Governing compendium concept group:** CG 8
+**Ageing-in-place lens:** Age-related contrast sensitivity decline makes LRV specification a primary ageing-in-place factor. *Contraste de luminance et vieillissement* (FR), *Leuchtdichtekontrast im Alter* (DE) surface age-specific evidence distinct from disability evidence.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Luminanskontrast / LRV-differens / kontrastmarkering / mönsterundvikande / demensanpassad färgsättning* | CLEAN |
+| NO | *Luminanskontrast / reflektansverdier / kontrastmarkering / mønsterunngåelse / demensvennlig fargesetting* | CLEAN |
+| DA | *Luminanskontrast / LRV-differens / kontrastmarkering / mønsterunddragelse / demensvenlighed farver* | CLEAN |
+| FI | *Luminanssikontrasti / LRV-ero / kontrastivärimerkintä / kuvioiden välttäminen / dementiapotilaan väriympäristö* | CLEAN |
+| FR | *Contraste de luminance / facteur de luminance / marquage de contraste / évitement des motifs / CEREMA* | PARTIAL |
+| DE | *Leuchtdichtekontrast / Kontrast K / DIN 32975 / Kontrastmarkierung / Musterfreiheit / demenzgerechte Farbgebung* | CLEAN |
+| ZH | *亮度对比度 / LRV差值 / 对比标记 / 避免图案 / 失智症友善色彩* | CLEAN |
+| JA | *輝度比 / 明度差 / コントラストマーキング / パターン回避 / 認知症対応色彩* | CLEAN |
+| NL | *Luminantiecontrast / reflectiewaarde / contrastmarkering / patroonvermijding / dementievriendelijke kleurstelling* | CLEAN |
+| ES | *Contraste de luminancia / diferencial LRV / marcado de contraste / evitación de patrones / CTE SUA* | CLEAN |
+| PT | *Contraste de luminância / diferencial LRV / marcação de contraste / evitação de padrões / NBR 9050* | CLEAN |
+| KO | *휘도 대비 / LRV 차이 / 대비 표시 / 패턴 회피 / 치매 친화적 색채* | CLEAN |
+| IT | *Contrasto di luminanza / differenziale LRV / marcatura di contrasto / evitazione dei motivi / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- FR: French standard uses *facteur de luminance* expressed as a percentage ratio (≥70%), not LRV differential (≥30 points). These are different measurement conventions — do not conflate in synthesis. CEREMA guidance must be read to convert.
+- JA: Japanese standard uses *輝度比* (luminance ratio ≥ 3:1), not LRV differential. Conversion required for specification reconciliation.
+- ES: CTE SUA uses percentage (≥70%) — same conversion issue as FR.
+- DEM inverse contrast rule (C-05): evidence is almost exclusively Anglo-Scottish (DSDC, Stirling) and German (KDA). Other language traditions have minimal evidence on this specific provision — flag THIN and derive from those primary sources.
+
+---
+
+### `cognitive-wayfinding-design|DEM-NEU-NDV-VIS`
+**Domain:** Cognitive wayfinding design; loop circulation preventing dead ends; single primary route simplicity; toilet visibility without navigation; landmarks at decision points; sightline design; no blind corners; pictogram and single-word signage; transparent glazed panels for orientation; consistent furniture layout. Applies across DEM, NEU, NDV, and VIS populations with different but convergent rationales.
+**Covers items:** D-01 · D-02 · D-03 · D-04 · D-07 · D-08 · D-09 · D-10
+**Governing compendium concept group:** CG 10 (dementia design) + CG 5 (emerging vocabulary)
+**Ageing-in-place lens:** Cognitive wayfinding evidence in residential contexts comes substantially from ageing-in-place and dementia care literature. *高齢者向けワイファインディング* (JA), *orientierung im Alter* (DE), *Leve hele livet* wayfinding component (NO) are targeted search terms.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Kognitiv orientering / demensvänlig orientering / orienteringsanvisningar / bildpiktogram / möblering och orienteringslandmärken* | CLEAN |
+| NO | *Kognitiv orientering / demensvennlig orientering / orienteringsskilt / piktogrammer / møblering og landemerker* | CLEAN |
+| DA | *Kognitiv orientering / demensvenlighed orientering / orienteringsskiltning / piktogrammer / møblering og vartegn* | CLEAN |
+| FI | *Kognitiivinen orientoituminen / dementiaystävällinen orientoituminen / kuvasignalisaatio / huonekalujen johdonmukaisuus* | CLEAN |
+| FR | *Orientation cognitive / repères visuels / balisage pictogramme / cohérence du mobilier / cheminement intuitif* | CLEAN |
+| DE | *Kognitive Orientierung / demenzgerechte Orientierung / Leitzeichensystem / Piktogramme / Orientierungslandmarken / KDA* | CLEAN |
+| ZH | *认知导航 (rènzhī dǎoháng) / 失智症友善空间指引 / 图文标识 / 标志性导向元素* | CLEAN |
+| JA | *認知的案内 (ninchiteki annai) / 認知症対応ウェイファインディング / ピクトグラム / 家具レイアウトの一貫性* | CLEAN |
+| NL | *Cognitieve oriëntatie / dementievriendelijke oriëntatie / pictogramborden / meubilairsconsistentie / herkenningspunten* | CLEAN |
+| ES | *Orientación cognitiva / señalización pictográfica / diseño para demencia / coherencia del mobiliario / referencias visuales* | CLEAN |
+| PT | *Orientação cognitiva / sinalização pictográfica / design para demência / coerência do mobiliário / referências visuais* | CLEAN |
+| KO | *인지적 길 찾기 / 치매 친화적 공간 안내 / 그림 표지판 / 가구 일관성* | CLEAN |
+| IT | *Orientamento cognitivo / progettazione per la demenza / segnaletica pittografica / coerenza dell'arredamento / punti di riferimento* | CLEAN |
+
+**Concept boundary warnings:**
+- DE: KDA (*Kuratorium Deutsche Altershilfe*) and *Deutsche Alzheimer Gesellschaft* are primary sources for German-language DEM wayfinding evidence — retrieve directly before academic database search.
+- JA: Japanese group home (*グループホーム*) design standards contain specific wayfinding provisions for DEM — search MHLW facility standards (*老人福祉施設*) directly.
+- All languages: NDV (particularly AUT) and DEM wayfinding evidence uses different rationales but often converges on similar provisions. Distinguish underlying evidence carefully in synthesis; do not merge AUT and DEM findings.
+
+---
+
+### `accessible-circulation-geometry|MOB-OFS`
+**Domain:** Accessible lift minimum car dimensions; platform lift provision; corridor clear width (minimum and best practice); rest seating intervals on circulation routes; automatic sliding door provision; turning circle/manoeuvring space dimensions; wheelchair circulation routes.
+**Covers items:** E-01 · E-02 · E-08 · E-09 · E-10 · E-11
+**Governing compendium concept group:** CG 6 (turning radius) + CG 7 (door width) + CG 3.1 (corridor width)
+**Ageing-in-place lens:** Rest seating interval evidence and lift provision evidence derives substantially from ageing-in-place literature. *Aldersvennlig bolig* (NO), *generationengerechtes Wohnen* (DE), *住み続けられる住宅* (JA) all address this evidence domain. Search in parallel with disability-specific sources.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Hissbredd / korridor fribredd / vilplatser / snusyta / automatiska dörrar / tillgänglig hiss* | CLEAN |
+| NO | *Hissdimensjoner / korridor friareal / hvilebenker / snusrom / automatiske dører / aldersvennlig sirkulasjon* | CLEAN |
+| DA | *Elevatordimensioner / korridor fribredde / hvilepladser / vendeplads / automatiske døre* | CLEAN |
+| FI | *Hissin mitat / käytävän vapaa leveys / levähdyspaikat / kääntymistila / automaattiovet* | CLEAN |
+| FR | *Dimensions d'ascenseur / largeur libre de couloir / aires de repos / espace de retournement / portes automatiques* | CLEAN |
+| DE | *Aufzugmaße / Flurbreite / Ruhebänke / Bewegungsfläche / automatische Türen / DIN 18040* | CLEAN |
+| ZH | *电梯尺寸 / 走廊净宽 / 休息座椅 / 轮椅回转空间 / 自动门* | CLEAN |
+| JA | *エレベーター寸法 / 廊下有効幅員 / 休憩ベンチ / 車いす転回スペース / 自動ドア / バリアフリー法施行令* | CLEAN |
+| NL | *Liftafmetingen / gangbreedte / rustplaatsen / draaicirkel / automatische deuren / NEN 9120* | CLEAN |
+| ES | *Dimensiones de ascensor / anchura libre de pasillo / zonas de descanso / espacio de giro / puertas automáticas / CTE SUA* | CLEAN |
+| PT | *Dimensões de elevador / largura livre de corredor / áreas de descanso / espaço de giro / portas automáticas / NBR 9050* | CLEAN |
+| KO | *엘리베이터 치수 / 복도 유효 폭 / 휴식 공간 / 휠체어 회전공간 / 자동문 / 편의시설 설치 기준* | CLEAN |
+| IT | *Dimensioni ascensore / larghezza netta corridoio / aree di sosta / spazio di manovra / porte automatiche / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Rest seating interval evidence (E-10) is almost entirely derived from OFS/ME-CFS clinical literature and OT energy conservation research rather than built environment standards — no jurisdiction specifies a seating interval in its building code. Expect NO-DATA from standards searches; rely on OT clinical literature and Tiresias / ME Association guidance.
+- KO: Korean *편의시설 설치 기준* specifies corridor width and turning space values that are more granular than ADA in several categories (per compendium S-08 finding) — retrieve directly; do not assume ADA values are representative.
+
+---
+
+### `threshold-and-level-access|MOB-OFS-ALL`
+**Domain:** Level (zero-step) entry provision; ramp gradient specification; ramp design for OFS/MS fatigue; accessible parking dimensions and location; weather protection at entry; slip resistance (PTV/pendulum value) for wet surfaces; threshold design as DAR trigger.
+**Covers items:** E-03 · E-04 · E-05 · E-06 · E-07
+**Ageing-in-place lens:** Level entry and ramp provision are the highest-frequency home modification interventions in ageing-in-place literature across all jurisdictions. This slug will surface Lifetime Homes criterion 5 (level or gently sloping approach), Visitability (one zero-step entry), HAFI (Canada), and Nordic *aldersvennlig bolig* evidence. Search *adaptation du logement pour le maintien à domicile* (FR), *Wohnraumanpassung Schwellensenkung* (DE), *住宅改修段差解消* (JA) in addition to disability-specific terms.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Nolltröskel / tillgänglig entré / rampgradient / halkfria ytor / parkeringsbredd / väderskyddad entré* | CLEAN |
+| NO | *Nullterskel / tilgjengelig inngang / rampegradient / sklisikre flater / parkeringsbredde / aldersvennlig adkomst* | CLEAN |
+| DA | *Nultærskel / tilgængelig indgang / rampegradient / skridsikre overflader / parkeringsbredde* | CLEAN |
+| FI | *Tasainen kynnys / esteetön sisäänkäynti / luiskan kaltevuus / liukuestepinnat / pysäköintileveys* | CLEAN |
+| FR | *Seuil nul / entrée accessible / pente de rampe / revêtement antidérapant / largeur de stationnement / maintien à domicile* | CLEAN |
+| DE | *Schwellenfreiheit / barrierefreier Eingang / Rampengefälle / rutschhemmender Belag / Wohnraumanpassung / DIN 18040-2* | CLEAN |
+| ZH | *无障碍入口 / 坡道坡度 / 防滑地面 / 停车位宽度 / 住宅改造* | CLEAN |
+| JA | *段差解消 (dansakaishō) / バリアフリー玄関 / スロープ勾配 / 滑り止め / 住宅改修 / バリアフリー法* | CLEAN |
+| NL | *Drempelvrij / toegankelijke entree / hellingshoekingang / antislipvloer / parkeerplaatsbreedte / woningaanpassing* | CLEAN |
+| ES | *Entrada sin escalón / acceso a nivel / pendiente de rampa / pavimento antideslizante / ancho de aparcamiento / CTE SUA* | CLEAN |
+| PT | *Entrada sem degrau / acesso nivelado / inclinação de rampa / piso antiderrapante / largura de estacionamento / NBR 9050* | CLEAN |
+| KO | *단차 없는 입구 / 무장애 출입구 / 경사로 기울기 / 미끄럼 방지 바닥 / 주차 폭 / 편의증진법* | CLEAN |
+| IT | *Ingresso senza gradini / accesso livellato / pendenza rampa / pavimento antiscivolo / larghezza parcheggio / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Ageing-in-place home modification evidence (住宅改修, Wohnraumanpassung, adaptation du logement) runs in parallel to disability-specific evidence and frequently uses different terminology. Both tracks must be searched; findings should be synthesised but provenance distinguished.
+- JA: *段差解消* (step elimination) is the primary Japanese term for level access in both the barrier-free and ageing-in-place literature — it is the correct primary search term for this slug in Japanese, preferable to any translation of "level entry."
+
+---
+
+### `reach-range-and-accessible-controls|MOB-VIS-DEAF`
+**Domain:** Accessible height zone for controls and switches (400–1100 mm AFF); operable force limits for switches and hardware (≤22 N); individual environmental control (IEC) for lighting and temperature; visual paging and real-time captioning provision; accessible intercom and video door entry; adjustable-height work surface range; reception counter accessible height section.
+**Covers items:** G-05 · G-06 · H-01 · H-02 · H-03 · H-04
+**Governing compendium concept group:** CG 7 (door width / operating force)
+**Ageing-in-place lens:** Reach range and operable force evidence derives heavily from ageing-in-place and OT home modification literature. Age-related strength loss (grip, pinch), reduced ROM, and upper limb changes are primary evidence sources — search *controls accessibilité personnes âgées* (FR), *Bedienelemente Barrierefreiheit Alter* (DE) in addition to disability terms.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Betjeningshöjd / åtkomsthöjd / manöverkraft / individuell miljökontroll / visuellt pagingsystem / bildtelefon* | CLEAN |
+| NO | *Betjeningshøyde / rekkevidde / manøvreringskraft / individuell miljøstyring / visuell varsling* | CLEAN |
+| DA | *Betjeningshøjde / rækkevidde / betjeningskraft / individuel miljøstyring / visuel varsling* | CLEAN |
+| FI | *Käyttökorkeusalue / ulottuvuusalue / käyttövoima / yksilöllinen ympäristönhallinta / visuaalinen hälytys* | CLEAN |
+| FR | *Hauteur de commande / zone de portée / effort de manœuvre / contrôle environnemental individuel / système de page visuel* | CLEAN |
+| DE | *Bedienhöhe / Greifbereich / Betätigungskraft / individuelle Umgebungssteuerung / visuelles Rufsystem / DIN 18040* | CLEAN |
+| ZH | *操控高度 / 可及范围 / 操控力 / 个人环境控制系统 / 可视对讲系统* | CLEAN |
+| JA | *操作高さ / リーチレンジ / 操作力 / 個別環境制御システム / 視覚的呼び出しシステム* | CLEAN |
+| NL | *Bedieningshoogte / bereikzone / bedieningskracht / individuele omgevingsbeheersing / visueel oproepsysteem* | CLEAN |
+| ES | *Altura de mando / zona de alcance / fuerza de maniobra / control ambiental individual / sistema de llamada visual / DALCO* | CLEAN |
+| PT | *Altura de comando / zona de alcance / força de manobra / controle ambiental individual / sistema de chamada visual / NBR 9050* | CLEAN |
+| KO | *조작 높이 / 도달 범위 / 조작력 / 개인 환경 제어 / 시각적 호출 시스템 / 편의증진법* | CLEAN |
+| IT | *Altezza di comando / zona di portata / forza di manovra / controllo ambientale individuale / sistema di chiamata visiva / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Individual environmental control (H-02) evidence is primarily from AT and smart home literature, not building standards — building codes do not address IEC provision. Expect NO-DATA from standards databases; search AT product evidence, OT smart home literature, and NDV/OFS patient organisation publications.
+- ES: Spanish *DALCO* accessibility criterion (*Aprehensión*) specifically addresses operable force — this is the correct primary regulatory reference for ES reach range and force evidence.
+
+---
+
+## Full Slug Entries — Residential Rooms
+
+---
+
+### `accessible-bathroom-and-grab-bar|MOB`
+**Domain:** Accessible wet room configuration (zero threshold, no shower tray); grab bar clinical positioning (bilateral, oblique, horizontal, vertical); grab bar geometry and load rating; transfer space at WC; turning circle at bathroom entry; anti-scald provision for MOB/UPL; shower seat provision; residential versus institutional bathroom design differences; home bathroom modification evidence.
+**Covers items:** G-03 · G-04 · I-03 · R-BA (R-BA-01 through R-BA-05)
+**Governing compendium concept group:** CG 3.5 (accessible toilet/wet room) + CG 6 (turning radius)
+**Ageing-in-place lens:** Bathroom modification is the single most-evidenced home adaptation intervention in the ageing-in-place literature across all jurisdictions. *Wohnraumanpassung Bad* (DE), *adaptation salle de bain maintien à domicile* (FR), *浴室改造 / 住宅改修* (JA), *badkameraaanpassing* (NL), *boligtilpasning bad* (NO), *badrumsanpassning* (SV) are all rich evidence sources. Search in parallel with disability-specific sources; synthesis must distinguish ageing-evidence from disability-specific evidence where the two diverge (particularly on grab bar positioning, where OT evidence for disability populations is more specific than ageing-in-place guidance).
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Tillgängligt badrum / duschutrymme utan tröskel / handtag / stödhandtag / duschsits / badrumsanpassning / snusyta i badrum* | CLEAN |
+| NO | *Tilgjengelig bad / terskelfrittdusj / støttehåndtak / dusjsete / boligtilpasning bad / snusrom i bad* | CLEAN |
+| DA | *Tilgængeligt badeværelse / tærskelfridt brusebad / støttegreb / brusesæde / boligtilpasning badeværelse* | CLEAN |
+| FI | *Esteetön kylpyhuone / kynnyksetön suihku / tukikahva / suihkuistuin / asunnon muutostyöt kylpyhuone* | CLEAN |
+| FR | *Salle de bain accessible / douche à l'italienne / barre d'appui / siège de douche / adaptation salle de bain maintien à domicile* | CLEAN |
+| DE | *Barrierefreies Bad / ebenerdige Dusche / Haltegriff / Duschsitz / Wohnraumanpassung Bad / DIN 18040-2* | CLEAN |
+| ZH | *无障碍浴室 / 零坎位淋浴 / 扶手安装 / 沐浴椅 / 浴室改造 / 住宅改修* | CLEAN |
+| JA | *バリアフリーバスルーム / 段差なしシャワー / 手すり設置 (てすりせっち) / シャワーチェア / 浴室改修* | CLEAN |
+| NL | *Toegankelijke badkamer / drempelvrije douche / beugel / douchestoel / badkameraanpassing / NEN 9120* | CLEAN |
+| ES | *Baño accesible / ducha a nivel / barra de apoyo / asiento de ducha / adaptación de baño para mayores / CTE SUA* | CLEAN |
+| PT | *Banheiro acessível / box sem degrau / barra de apoio / assento de banho / adaptação de banheiro para idosos / NBR 9050* | CLEAN |
+| KO | *접근 가능한 욕실 / 턱 없는 샤워 / 안전 손잡이 설치 / 샤워 의자 / 욕실 개조 / 편의시설 설치 기준* | CLEAN |
+| IT | *Bagno accessibile / doccia a filo pavimento / maniglione / sedile doccia / adattamento del bagno per anziani / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Grab bar positioning evidence from ageing-in-place research tends to recommend fewer and less precisely positioned bars than OT clinical evidence for disability populations. Distinguish evidence provenance in synthesis; OT clinical evidence (Co-1/Tier 1) takes precedence over ageing-in-place guidance for specification of grab bar position.
+- KO: Korean *편의시설 설치 기준* specifies grab bar positioning in more detail than ADA in several scenarios — retrieve directly.
+
+---
+
+### `residential-kitchen-and-task-surfaces|MOB-LPA`
+**Domain:** Residential kitchen accessibility; adjustable-height worktop range; knee clearance under counter for wheelchair users; one-handed kitchen operation; appliance placement and reach range; sink and hob height; storage at accessible height; pull-out shelving; accessible tap and control specification; cooktop safety (anti-scald); laundry appliance height.
+**Covers items:** I-02 · G-05 · R-KIT · R-LAU (partially)
+**Ageing-in-place lens:** Kitchen modification evidence is the second most common home adaptation category in ageing-in-place literature. *Küchenanpassung für Senioren* (DE), *adaptation cuisine maintien à domicile* (FR), *キッチン改修 高齢者* (JA) are primary search terms. Height-adjustable kitchen evidence base (Neff, Blum) is primarily European; North American evidence emphasises knee clearance.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Tillgängligt kök / höjdjusterbar bänkskiva / knäfrirum under diskbänk / envändskök / hushållsmaskinhöjd* | CLEAN |
+| NO | *Tilgjengelig kjøkken / høydejusterbar benkeplate / kneklaringsrom / envhåndskjøkken / boligtilpasning kjøkken* | CLEAN |
+| DA | *Tilgængeligt køkken / højdejusterbar bordplade / knæfrirum / enkelhåndskøkken / boligtilpasning køkken* | CLEAN |
+| FI | *Esteetön keittiö / korkeussäädettävä työtaso / polvitila / yhden käden käyttö / asunnon muutostyöt keittiö* | CLEAN |
+| FR | *Cuisine accessible / plan de travail réglable en hauteur / espace libre sous le plan / cuisine adaptée maintien à domicile* | CLEAN |
+| DE | *Barrierefreie Küche / höhenverstellbare Arbeitsfläche / Kniefreiheit / Einhandküche / Wohnraumanpassung Küche / DIN 18040-2* | CLEAN |
+| ZH | *无障碍厨房 / 可调高度台面 / 轮椅膝部净空 / 单手操作厨房 / 厨房改造* | CLEAN |
+| JA | *バリアフリーキッチン / 高さ調整可能ワークトップ / 膝下クリアランス / 片手操作 / キッチン改修* | CLEAN |
+| NL | *Toegankelijke keuken / in hoogte verstelbaar werkblad / knieholte-vrije ruimte / eenhandig koken / keukenadaptatie* | CLEAN |
+| ES | *Cocina accesible / encimera regulable en altura / espacio libre bajo encimera / operación con una mano / adaptación cocina mayores* | CLEAN |
+| PT | *Cozinha acessível / bancada regulável em altura / espaço livre sob a bancada / operação com uma mão / adaptação cozinha para idosos* | CLEAN |
+| KO | *접근 가능한 주방 / 높이 조절 가능 조리대 / 무릎 여유 공간 / 한 손 조작 주방 / 주방 개조* | CLEAN |
+| IT | *Cucina accessibile / piano di lavoro regolabile in altezza / spazio libero sotto il piano / utilizzo con una mano / adattamento cucina anziani* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Height-adjustable worktop evidence (ISO/EN motor-driven and manual systems) is primarily industrial/workplace ergonomics literature. Residential kitchen applications are less well-evidenced; derive from workplace ergonomics and OT home modification sources. Knoll, Neff, and Blum (European kitchen system manufacturers) have published specification evidence — flag as grey literature Tier 5 / manufacturer-source.
+- LPA note: LPA kitchen evidence (LPA-08 in Supplementary Volume) is a distinct and thinner evidence base than MOB kitchen evidence. Distinguish LPA-specific reach-range requirements from wheelchair-user knee clearance requirements in synthesis.
+
+---
+
+### `residential-entry-and-threshold|MOB-OFS-DEM`
+**Domain:** Residential entry accessibility; zero-step threshold at principal entrance; covered approach and weather protection; accessible parking adjacent to dwelling; door hardware at entry (lever handle, operable force); video door entry with visual feedback; threshold as DAR trigger; accessible approach route from parking to entry; garage to dwelling access.
+**Covers items:** R-ENT · R-GAR · E-06 (residential application)
+**Ageing-in-place lens:** Entry threshold and approach route modifications are the highest-frequency interventions in home modification programmes across all jurisdictions. This slug will be the primary entry point for Lifetime Homes criterion 1–4 (approach and entry), Visitability (one zero-step entry), HAFI programme evidence (Canada), *MaPrimeAdapt* (FR), *Wohnraumanpassung Eingang* (DE), and Nordic *aldersvennlig bolig* entry criteria. The ageing-in-place evidence base for this slug exceeds the disability-specific evidence base in volume — search both; distinguish in synthesis.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Tillgänglig entré / nolltröskel / väderskyddat entreeutrymme / tillgänglig parkering / dörrhandtag / bostadens entré* | CLEAN |
+| NO | *Tilgjengelig inngang / nullterskel / vær­beskytt inngang / tilgjengelig parkering / dørgrep / aldersvennlig adkomst* | CLEAN |
+| DA | *Tilgængelig indgang / nultærskel / vejrbeskyttet indgang / tilgængelig parkering / dörgreb / ældrevenlig adgang* | CLEAN |
+| FI | *Esteetön sisäänkäynti / tasainen kynnys / sään suojaama sisäänkäynti / esteetön pysäköinti / ovenkahva / asunnon muutostyöt sisäänkäynti* | CLEAN |
+| FR | *Entrée accessible / seuil nul / abri d'entrée / stationnement accessible / poignée de porte / maintien à domicile entrée / MaPrimeAdapt* | CLEAN |
+| DE | *Barrierefreier Eingang / Schwellenfreiheit / Witterungsschutz Eingang / barrierefreier Stellplatz / Türgriff / Wohnraumanpassung Eingang / DIN 18040-2* | CLEAN |
+| ZH | *无障碍入口 / 零台阶 / 遮蔽入口 / 无障碍停车位 / 住宅改修入口 / 适老化改造入口* | CLEAN |
+| JA | *バリアフリー玄関 / 段差解消 / 雨よけ / 車いす駐車スペース / レバーハンドル / 住宅改修玄関 / 高齢者向け玄関改修* | CLEAN |
+| NL | *Toegankelijke entree / drempelvrij / overdekte entree / toegankelijk parkeren / deurkruk / woningaanpassing entree* | CLEAN |
+| ES | *Entrada accesible / sin escalón / protección contra la intemperie / aparcamiento accesible / manilla de puerta / adaptación de acceso mayores* | CLEAN |
+| PT | *Entrada acessível / sem degrau / proteção contra intempéries / estacionamento acessível / maçaneta / adaptação de acesso para idosos* | CLEAN |
+| KO | *접근 가능한 입구 / 단차 없는 현관 / 기상 보호 입구 / 접근 가능한 주차 / 레버형 손잡이 / 노인 주택 현관 개조* | CLEAN |
+| IT | *Ingresso accessibile / senza gradino / protezione dalle intemperie / parcheggio accessibile / maniglia a leva / adattamento accesso anziani / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: The ageing-in-place and disability-specific evidence bases often converge on the same provision (zero-step threshold) for different reasons — stumbling prevention (ageing) versus wheelchair access (disability). Both rationales support the specification, but the evidence quality differs. OT clinical evidence for wheelchair users (Co-1/Tier 1) provides the strongest specification basis; ageing-in-place evidence reinforces the population breadth.
+
+---
+
+### `residential-internal-circulation|MOB-DEM-OFS`
+**Domain:** Residential hallway and internal corridor clear widths; turning circle at doorways and in hallways; stair design (rise, going, pitch); stair handrail provision (bilateral, continuous, extended); stair nosing luminance contrast; circulation-route grab bar provision; stair as DAR trigger (future lift provision); hallway width as wheelchair passing space.
+**Covers items:** R-HAL · R-STA
+**Governing compendium concept group:** CG 6 (turning radius) + CG 7 (door width) + CG 3.1 (corridor width)
+**Ageing-in-place lens:** Stair modification (handrail retrofitting, nosing marking, lift provision) and hallway width are primary Lifetime Homes and ageing-in-place criteria. *Treppengeländer Barrierefreiheit* (DE), *main courante escalier maintien à domicile* (FR), *手すり取り付け 階段* (JA), *trappegelender boligtilpasning* (NO), *trapräcke bostadsanpassning* (SV) all surface rich evidence. Lifetime Homes criterion 15 (stair potential lift provision) and criterion 11 (turning area at doorways) are directly relevant.
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Korridor fribredd / snusyta vid dörröppning / trappdesign / trappled / ledstång / trapprätcke / bostadsanpassning trappa* | CLEAN |
+| NO | *Korridor friareal / snusrom ved døroppning / trappdesign / trappegelender / boligtilpasning trapp / aldersvennlig sirkulasjon* | CLEAN |
+| DA | *Korridor fribredde / vendeplads ved døroppning / trappdesign / trappegelænder / boligtilpasning trappe* | CLEAN |
+| FI | *Käytävän vapaa leveys / kääntymistila ovella / portaan suunnittelu / portaan kaide / asunnon muutostyöt portaat* | CLEAN |
+| FR | *Largeur libre couloir / espace de manœuvre à la porte / conception escalier / main courante / maintien à domicile escalier* | CLEAN |
+| DE | *Flurbreite / Bewegungsfläche an Türen / Treppengestaltung / Handlauf / Wohnraumanpassung Treppe / DIN 18040-2* | CLEAN |
+| ZH | *走廊净宽 / 门口转弯空间 / 楼梯设计 / 扶手安装 / 住宅改修楼梯 / 适老化改造楼梯* | CLEAN |
+| JA | *廊下有効幅員 / 扉前転回空間 / 階段設計 / 手すり設置 (てすりせっち) / 住宅改修階段 / 高齢者階段手すり* | CLEAN |
+| NL | *Gangbreedte / manoeuvreerruimte bij deuren / trappenontwerp / trapleuning / woningaanpassing trap / NEN 9120* | CLEAN |
+| ES | *Anchura libre pasillo / espacio de maniobra en puerta / diseño escalera / pasamanos / adaptación escalera mayores / CTE SUA* | CLEAN |
+| PT | *Largura livre corredor / espaço de manobra na porta / projeto de escada / corrimão / adaptação escada para idosos / NBR 9050* | CLEAN |
+| KO | *복도 유효 폭 / 문 앞 회전 공간 / 계단 설계 / 손잡이 설치 / 주택 계단 개조 / 고령자 계단 손잡이* | CLEAN |
+| IT | *Larghezza netta corridoio / spazio di manovra alle porte / progettazione scala / corrimano / adattamento scala anziani / DM 236/89* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Stair handrail evidence from ageing-in-place literature is strong and consistent (bilateral, continuous grip) but less specific about geometry than OT clinical evidence. Use ageing-in-place evidence to confirm broad provision; OT clinical evidence for grip diameter, end configuration, and extension beyond nosing.
+- DE: DIN 18040-2 (residential barrier-free design) is the primary standard — covers both hallway widths and stair provisions in a single instrument; retrieve before other DE sources.
+
+---
+
+### `residential-bedroom-living-ot|MOB-OFS-DEM`
+**Domain:** OT home modification evidence in residential bedroom, living room, and laundry contexts; hoist and ceiling track provision (bedroom); transfer space at bed; bed height and adjustability; living room seating height variety; reach to controls and sockets in living room and bedroom; laundry appliance height and reach; home modification programme evidence (HAFI, Disabled Facilities Grant, ANAH MaPrimeAdapt, *bostadsanpassningsbidrag*, *boligtilpasningsstøtte*); post-occupancy evaluation of home modifications.
+**Covers items:** R-BED · R-LIV · R-LAU
+**Routing note:** Evidence for this slug is most efficiently surfaced via `OT-built-environment-interface` (already registered) supplemented by residential-specific and ageing-in-place terms below. When both slugs are available in BPC, retrieve `OT-built-environment-interface` first and use this slug for residential-specific depth where evidence is thin.
+**Ageing-in-place lens:** Home modification programme evidence (grants, OT assessment, installation) is the primary evidence vehicle for bedroom and living room provisions in all jurisdictions. Search grant programme evaluations as primary evidence source: *bostadsanpassningsbidrag* (SE), *boligtilpasningsstøtte* (NO), Disabled Facilities Grant (UK), HAFI (CA), *MaPrimeAdapt* (FR), *住宅改修費支給* (JA).
+
+| Language | Native term | Map |
+|---|---|---|
+| SV | *Sovrum tillgänglighet / taklyft / sänghöjd / transferyta vid säng / bostadsanpassningsbidrag / vardagsrum tillgänglighet* | CLEAN |
+| NO | *Soverom tilgjengelighet / taklift / senghøyde / transferareal ved seng / boligtilpasningsstøtte / stue tilgjengelighet* | CLEAN |
+| DA | *Soveværelse tilgængelighed / loftslifte / sengehøjde / transferareal ved seng / boligtilpasningsstøtte / stue tilgængelighed* | CLEAN |
+| FI | *Makuuhuone esteettömyys / kattonosturi / sängyn korkeus / siirtymätila sängyn vieressä / asunnon muutostyötuki / olohuone esteettömyys* | CLEAN |
+| FR | *Chambre accessible / lève-personne plafond / hauteur de lit / espace de transfert lit / MaPrimeAdapt / séjour accessible* | CLEAN |
+| DE | *Barrierefreies Schlafzimmer / Deckenlift / Betthöhe / Transferfläche am Bett / Wohnraumanpassung Schlafzimmer / barrierefreies Wohnzimmer* | CLEAN |
+| ZH | *无障碍卧室 / 吊顶式升降机 / 床高调节 / 床边转移空间 / 住宅改修卧室 / 无障碍起居室* | CLEAN |
+| JA | *バリアフリー寝室 / 天井走行リフト / ベッド高さ調整 / ベッドサイド移乗スペース / 住宅改修費支給 / バリアフリーリビング* | CLEAN |
+| NL | *Toegankelijke slaapkamer / plafondlift / bedhoogte / transferruimte bij bed / woningaanpassingsteun / toegankelijke woonkamer* | CLEAN |
+| ES | *Dormitorio accesible / grúa de techo / altura de cama / espacio de transferencia cama / adaptación dormitorio mayores / salón accesible* | CLEAN |
+| PT | *Quarto acessível / elevador de teto / altura da cama / espaço de transferência cama / adaptação quarto para idosos / sala acessível* | CLEAN |
+| KO | *접근 가능한 침실 / 천장 리프트 / 침대 높이 / 침대 옆 이동 공간 / 주택 침실 개조 / 접근 가능한 거실* | CLEAN |
+| IT | *Camera da letto accessibile / sollevatore da soffitto / altezza letto / spazio di trasferimento letto / adattamento camera anziani / soggiorno accessibile* | CLEAN |
+
+**Concept boundary warnings:**
+- All languages: Ceiling hoist/track evidence (R-BED hoist provision) is primarily from care home and rehabilitation settings, not residential home modification. Residential hoist installation evidence is thinner; derive from care home evidence and flag residential application as extrapolated (Tier 3 derivation).
+- All languages: Laundry provisions (R-LAU — appliance height, front-loading, controls) have almost no dedicated accessible design research literature in any language. Evidence is derived from OT energy conservation and upper limb impairment literature. Flag as THIN across all languages; source from AT product guidance and OT clinical resource guides.
+
+---
+
+## Retired Slugs (additions)
+
+*(None at this time — all new entries above are net additions.)*
+
+---
+
+## Citation-Mining Targets (additions)
+
+| Source | Action |
+|---|---|
+| Keall et al. (2015, Lancet) NZ HIPI RCT | Already listed — confirm grab bar + bathroom evidence captured |
+| KDA *Wohnkonzepte für Menschen mit Demenz* | Backward + forward mining for DEM wayfinding + residential slugs |
+| HAFI programme evaluation (BC Housing, Canada) | Forward mining for residential entry + threshold slug |
+| Lifetime Homes 16 Criteria (Habinteg 2010) | Backward mining for all residential slugs |
+| DSDC Dementia Design Audit Tool (Stirling) | Forward mining for cognitive wayfinding + DEM room evidence |
+| Mostafa ASPECTSS studies (2014, 2024) | Forward mining for sensory relief space slug |
+| *편의시설 설치 기준* (Korean installation standards) | Direct retrieval for all MOB residential slugs; values more granular than ADA |
+| KDA / Kuratorium Deutsche Altershilfe publications | Direct retrieval for DEM wayfinding, therapeutic lighting, residential slugs |
