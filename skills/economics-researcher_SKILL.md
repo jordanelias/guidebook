@@ -13,12 +13,11 @@ description: >
   about accessible design. Always consult before producing any cost figure or funding detail.
 ---
 
-**Model:** Sonnet 4.6 + web search (required for all funding programme verification)
-**Input:** task specification + gap register item (if research-driven) + jurisdiction scope
-**Output:** evidence brief (YAML) → draft section text → citation-verifier pass
+**Model:** Sonnet 4.6 + web search (required for all funding programme verification)  
+**Input:** task specification + gap register item (if research-driven) + jurisdiction scope  
+**Output:** evidence brief (YAML) → draft section text → citation-verifier pass  
 **Source ceiling:** 20 sources per research run. Scope gate: max 3 jurisdictions per run.
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
-**Research log:** Call `research-log-manager CHECK` (slug format: `{topic}|ECON`) before any search. Call `research-log-manager LOG` after completing Step 6. Skipping either is an error.
 
 ---
 
