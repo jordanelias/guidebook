@@ -563,3 +563,6 @@
 | `trauma-informed-design\` | `mental-health-built-environment\` |
 | `disability-intersectionality-built-environment\` | `intersectionality-disability-design\` |
 | `assistive-technology-built-environment-interface\` | `assistive-technology-built-environment\` |
+
+- fatigue-spectrum-built-environment
+- hearing-impairment-built-environment
