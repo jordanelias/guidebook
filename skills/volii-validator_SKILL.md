@@ -14,8 +14,7 @@ description: >
 
 **Model:** Haiku 4.5 (extraction) · Sonnet 4.6 (mismatch judgment)
 **Intake:** pre-chunked section or item code list. Full document → `haiku-chunker` Mode D first.
-**Storage:** `references/volii-registry.md` on GitHub — one YAML entry per item code.
-GET + SHA before writing. Append or update entries. PUT back. Mode switch (PROVISIONAL → FULL) triggers a full re-validation pass against the registry.
+**Storage:** `guidebook:volii:{item-code}`
 
 Storage entry:
 ```yaml
@@ -24,10 +23,8 @@ first_seen: "Vol I §3.2 — refers to acoustic zoning"
 declared_categories: [NEU, NDV]
 vol_ii_status: UNVERIFIED-PENDING|CONFIRMED|NOT_FOUND|MISMATCH
 vol_ii_description: ""
-last_updated: YYYY-MM-DD HH:MM
+last_updated: YYYY-MM-DD
 ```
-
-**Mode switch:** Transition from PROVISIONAL to FULL mode when the application volume full text is confirmed available. Announce mode switch to user; re-run full validation pass before proceeding.
 
 ## Modes
 
@@ -42,4 +39,4 @@ last_updated: YYYY-MM-DD HH:MM
 | Code | Reference Location | Declared Categories | Library Status | Notes |
 
 Summary: X codes — Y CONFIRMED / Z NOT_FOUND / W MISMATCH / V UNVERIFIED-PENDING
-Persist all entries to `references/volii-registry.md` on GitHub (GET + SHA + append/update + PUT).
+Persist all entries to storage.
