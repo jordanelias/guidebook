@@ -29,20 +29,17 @@
 ---
 
 ## visual-impairment-built-environment
-**Updated:** 2026-03-17 18:30  **Evidence tier:** 1–3
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–3
 **VIS Consensus finding:** Lighting level, consistency and gradual transition are the highest-impact environmental factors for VIS fall prevention and navigation. The 30% LRV contrast standard is unsupported by evidence; 65% Michelson contrast is needed for "easily visible" to severely impaired users.
-**DEAF Consensus finding:** Clear sightlines, diffuse face-level lighting, and IEC 60118-4-compliant hearing loops are the primary built-environment requirements; Auracast is the emerging successor technology.
 **Ranges:**
   - VIS lighting: minimum 300 lux at critical nodes; 400 lux at WC and control panels; transition ≥5 m
   - VIS contrast: ≥65% Michelson for easily visible; ≥30% for marginally perceptible (current standard)
   - VIS TWSI: truncated domes (attention) + raised bars (guidance); ≥210 mm width; 0.4 contrast ratio to floor
   - VIS luminance contrast (ledelinje): ≥0.4 ratio; ≥0.8 at hazard/stair danger zones
-  - DEAF loop: IEC 60118-4; ±3 dB field uniformity; required at all assembly + service + meeting spaces
-  - DEAF acoustics: STI ≥0.5; RT60 ≤0.6 s
 **Jurisdictions confirmed:** UK · AU · US · Norway · Germany · Finland · Japan · China · Denmark
 **Early-close:** Yes (≥8 Tier 1–3 sources)
 **Thin/No-data:** None
-**Key sources:** Zali2025 · Dain2022 · Ryskulova2021 · ISO23599:2019 · IEC60118-4 · Bauman2010 · Norges-Blindeforbund-krav
+**Key sources:** Zali2025 · Dain2022 · Ryskulova2021 · ISO23599:2019 · Norges-Blindeforbund-krav
 **Divergent findings:**
   - LRV threshold: BS 8300 30 LRV vs. Dain 2022 evidence for 65% Michelson
   - TWSI system: ADA domes-only vs. ISO 23599 full two-part system
@@ -52,43 +49,34 @@
 ---
 
 ## neurological-built-environment
-**Updated:** 2026-03-17 19:30  **Evidence tier:** 1–3
-**DEM Consensus:** Small-scale homelike environments (≤10 residents), short articulated corridors, visual access between spaces, circadian lighting, and sensory gardens constitute the core DEM design evidence base. EADDAT (Stirling DSDC) is the sole validated assessment tool. Bold floor contrast patterns are contraindicated — misread as level changes.
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–3
 **NEU/MS Consensus:** 60–80% heat sensitivity; air conditioning is primary built-environment countermeasure; ambient temperature ≤19–21°C; personalised HVAC control; ramps ≤6% gradient; rest seating every 30 m.
 **NEU/PD Consensus:** Smooth flooring; no threshold lips; wide corridors; bilateral bathroom grab bars; visual and floor-pattern gait cues; bedroom-bathroom adjacency; staged single-floor living planning.
 **NEU/ABI+PCS Consensus:** Eliminate fluorescent lighting; low RT60; A-16 sensory room provision; simplified spatial layouts; landmark-based wayfinding; low-stimulation environments.
 **Jurisdictions confirmed:** UK · AU · US · Netherlands · Japan · Germany · France · Finland · Norway · Sweden · Denmark · China
 **Early-close:** Yes
 **Thin/No-data:** None
-**Key sources:** VanBuuren2022 · Milà-Villarroel2020 · Davis2010 · AOTA2023 · DSDC-EADDAT · Brown2023
-**Divergent findings:** DEM + VIS contrast guidance conflict (no joint standard) · DEM + PD floor pattern conflict (irreconcilable in shared space — spatial separation required)
-**Notes:** H-04 temperature spec for MS populations is a confirmed GAP-ITEM-SPEC. NEU/PD gait cueing floor pattern is GAP-ITEM-NEW. HVAC temperature range absent from all standards.
+**Key sources:** VanBuuren2022 · · Davis2010 · AOTA2023 · Brown2023
+**Divergent findings:** **Notes:** H-04 temperature spec for MS populations is a confirmed GAP-ITEM-SPEC. NEU/PD gait cueing floor pattern is GAP-ITEM-NEW. HVAC temperature range absent from all standards.
 
 ---
 
 ## neurodivergent-built-environment
-**Updated:** 2026-03-17 20:00  **Evidence tier:** 1–4 (mixed; PAS 6463 at tier 4, scoping reviews at tier 1)
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (mixed; PAS 6463 at tier 4, scoping reviews at tier 1)
 **NDV Consensus:** PAS 6463:2022 (BSI UK) is the sole national design standard for neurodiversity; guidance-level only. Core requirements: sensory quiet rooms, acoustic management, muted palette, indirect lighting, eliminate fluorescent, user control, reduced visual noise. ASPECTSS Design Index covers autism specifically. No mandatory regulatory standard exists in any jurisdiction.
-**NDV/MH Consensus:** Trauma-informed design (TID) is an emerging evidence-based framework. Core principles: safety, choice/control, empowerment, nature connection. PTSD-specific evidence concentrated in homeless/DV shelter settings. Quiet retreat and de-escalation rooms are primary spatial requirements.
 **Jurisdictions confirmed:** UK · Germany · Norway · Sweden · France · Denmark · Finland · Japan
 **Early-close:** Yes
 **Thin/No-data:** ZH (Chinese NDV evidence base thin — scope gate candidate)
-**Key sources:** PAS6463:2022 · PMC9658651 · Mostafa-ASPECTSS · Buro Happold 2024 · Tola2021
-**Divergent findings:** NDV/AUT muted palette vs. NDV/MH (PTSD) bright colours — spatial separation required · Sensory room (A-16) requirements partially conflict across NDV, NEU/ABI, NDV/MH — adjustable multi-mode design needed
-**Notes:** GAP-ITEM-NEW candidates: visual noise reduction specification; de-escalation/safe retreat room (distinct from A-16).
-
+**Key sources:** PAS6463:2022 · · Mostafa-ASPECTSS · Buro Happold 2024 · Tola2021
+**Divergent findings:** NDV/AUT muted palette vs. NDV/MH (**Notes:** GAP-ITEM-NEW candidates: visual noise reduction specification; de-escalation/safe 
 ---
 
 ## chronic-pain-built-environment
-**Updated:** 2026-03-18 16:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
 **PAIN Consensus:** OT built-environment evidence is near-zero across all 14 languages. All provisions derived from ergonomic and energy conservation principles. Highest-impact: seated task provision, storage at waist-to-shoulder height (750–1050 mm), thermostatic shower controls, rest seating. Hydrotherapy has Tier 1 evidence (10 RCTs) for FM pain reduction. ES and PT OT literature confirms clinical role only — no built-environment specifications.
-**OFS Consensus:** Zero indexed built-environment research in any of 14 languages. All provisions derived from clinical understanding of orthostatic intolerance and post-exertional malaise. Highest-impact: rest seating (every 25–30 m with reclining option), cool ambient environment (≤19–21°C), lift provision, thermostatic shower, bedroom-bathroom adjacency.
-**Extended language pass (2026-03-18):** NL (NEN 9120:2025), IT (DM 236/89), KO (Welfare Facilities Standard) — all cover MOB/sensory/cognitive only; no PAIN/OFS provisions in any national standard. Unanimous NO-DATA for built-environment design across 10 of 14 languages. EN is sole evidence source; SV, FR, ES, PT returned thin clinical OT references only.
-**Critical gap:** GAP-029 P2 OPEN — confirmed universal. Both populations lack any built-environment evidence base in any language or jurisdiction. Guidebook must disclose that PAIN/OFS specifications are expert consensus derived from clinical evidence, not built-environment research.
-**Temperature spec gap:** H-04 (HVAC/Thermal) — temperature range absent from all 14-language standard search. GAP-ITEM-SPEC confirmed cross-jurisdictional.
+**Extended language pass (2026-03-18):** NL (NEN 9120:2025), IT (DM 236/89), KO (Welfare Facilities Standard) — all cover MOB/sensory/cognitive only; no PAIN/**Critical gap:** GAP-029 P2 OPEN — confirmed universal. Both populations lack any built-environment evidence base in any language or jurisdiction. Guidebook must disclose that PAIN/**Temperature spec gap:** H-04 (HVAC/Thermal) — temperature range absent from all 14-language standard search. GAP-ITEM-SPEC confirmed cross-jurisdictional.
 **New item candidates:** Reclining/tilt seating specification; cushioned flooring specification (thin EN-only evidence).
-**SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/OFS searches. ES and PT retained in core (THIN).
-**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · Newcastle-POTS-2018 · Ismail2023
+**SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · · Ismail2023
 ## deafblind-built-environment-design
 **Updated:** 2026-03-18 14:30  **Evidence tier:** 4-5
 **Consensus finding:** Zero Tier 1-2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4-5: DeafSpace Design Guidelines (2010), practitioner guidance (JJones 2025), organisational guidance (NELOWV 2025). Nordic Welfare Centre provides clinical/communication research only.
@@ -1149,28 +1137,121 @@ Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT 
 
 ---
 
-## dementia-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
-
-**SEE-ALSO:** Full evidence for this population is recorded under `neurological-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE neurological-built-environment` for full BPC content.
-
----
-
-## mental-health-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
-
-**SEE-ALSO:** Full evidence for this population is recorded under `neurodivergent-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE neurodivergent-built-environment` for full BPC content.
-
----
-
-## fatigue-spectrum-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
-
-**SEE-ALSO:** Full evidence for this population is recorded under `chronic-pain-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE chronic-pain-built-environment` for full BPC content.
-
----
 
 ## hearing-impairment-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** 2–4
+**Note:** DEAF spatial design evidence is in `deaf-spatial-design`; acoustic and loop evidence is in `deaf-acoustic-built-environment`. This entry covers findings that were co-researched with VIS in the prior combined slug and are not duplicated in those two slugs.
 
-**SEE-ALSO:** Full evidence for this population is recorded under `deaf-acoustic-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE deaf-acoustic-built-environment` for full BPC content.
+### Best-practice synthesis
+**Most inclusive provision:** IEC 60118-4-compliant hearing loop at all assembly, service-counter, and meeting spaces; clear sightlines and diffuse face-level lighting throughout; Auracast-ready infrastructure as future provision.
+**Most targeted provision:** High-top service counters (freeing hands for signing) at all public-facing desks; visual alerting systems (flashing) at all auditory alarm points; STI ≥0.5 and RT60 ≤0.6 s in all occupied spaces.
+**Conflict resolution:** N/A — no intra-DEAF conflicts identified.
+**Highest-ambition actionable specification:** Hearing loop (IEC 60118-4; ±3 dB uniformity) at every assembly space >4 seats, all service counters, and all meeting rooms; visual alarm at every auditory alarm point; STI ≥0.6 in healthcare and education settings.
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Hearing loop required at assembly spaces | EN, DE, NO, SV, FR, DA, FI, JA | 4 |
+| STI ≥0.5 minimum in occupied spaces | EN, DE, NO | 3–4 |
+| RT60 ≤0.6 s recommended | EN, DE | 3 |
+| Visual alerting at all auditory alarms | EN, DE, NO, SV | 4 |
+| Auracast as emerging successor to loop | EN | 4-PROVISIONAL |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| Loop mandate scope | ADA (fixed-seat assembly only) | BS 8300 + DIN (all service counters and meetings) | Regulatory context |
+
+### Key sources
+IEC60118-4 · Bauman2010-DeafSpace · BS8300-2018 · DIN18041-2016 · HLAA-Auracast-2025
+
+
+## dementia-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** 1–3
+
+### Best-practice synthesis
+**Most inclusive provision:** Small-scale homelike environment (≤10 residents), short articulated corridors with looping path, visual access between all living and toilet spaces, and circadian lighting throughout.
+**Most targeted provision:** Direct toilet sightline from bed (DSDC EADDAT validated; Marquardt 2011 OR 2.33); bold floor contrast contraindicated (misread as level change); sensory garden with looping path and seating.
+**Conflict resolution:** DEM + VIS contrast guidance conflict — no joint standard exists; guidebook must address explicitly. DEM + PD floor pattern conflict irreconcilable in shared space — spatial separation required.
+**Highest-ambition actionable specification:** ≤10 residents per cluster; toilet visible from 50% of bed positions; corridor length ≤20 m between orientation landmarks; circadian lighting 2700–6500 K with automatic transition.
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Small-scale homelike (≤10 residents) reduces agitation | EN, DE, NO, SV, FR, DA, FI, ZH, JA, NL | 1–3 |
+| Short articulated corridor with looping path | EN, DE, NL, DA | 2–3 |
+| Toilet sightline from bed reduces incontinence episodes | EN, DE, FR, NL | 1 (Marquardt 2011 n=47%) |
+| Circadian lighting improves sleep/agitation | EN, DE, NO | 2–3 |
+| Bold floor contrast patterns contraindicated | EN, DE, NL | 2–3 |
+| Sensory garden with looping path reduces wandering | EN, DA, NO | 2–3 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| Contrast guidance at junctions | VIS ≥30% LRV recommended | DEM — bold contrast misread as level change | Empirical conflict — population conflict |
+
+### Key sources
+Marquardt2011-HERD · DSDC-EADDAT-2022 · BuroKade-DeHogeweyk-POE · VanBuuren2022 · Milà-Villarroel2020 · NationaltVidenscenter-SensoryGarden · SBi-anvisning-263-2016
+
+
+## mental-health-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** 2–4
+
+### Best-practice synthesis
+**Most inclusive provision:** Trauma-informed design (TID) throughout — safety, choice, collaboration, empowerment, and cultural humility as spatial principles; quiet retreat room provided in all multi-occupancy settings.
+**Most targeted provision:** De-escalation/safe retreat room (distinct from A-16 sensory room); predictable spatial sequence; no dead-end corridors; user control of lighting and acoustic conditions.
+**Conflict resolution:** NDV/AUT muted palette vs NDV/MH (PTSD) bright-colour preference — spatial separation required; adjustable multi-mode design preferred.
+**Highest-ambition actionable specification:** Dedicated quiet retreat room ≥9 m² with user-adjustable lighting (2700–6500 K), acoustic treatment (RT60 ≤0.4 s), and no through-traffic; all corridor routes loop or terminate at a named destination.
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Quiet retreat / de-escalation room | EN, DE, NO, SV | 2–4 |
+| User control of lighting and acoustics | EN, DE, SV | 2–4 |
+| Predictable spatial sequence; no dead ends | EN | 2–3 |
+| Nature connection / biophilic elements | EN | 2–3 |
+| Trauma-informed design framework (TID) | EN | 2–4 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| Colour preference | NDV/AUT — muted palette | NDV/MH/PTSD — some evidence for bright colour | Empirical |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted? |
+|---|---|---|
+| ZH | Chinese NDV/MH built-environment evidence thin | Yes — scope gate candidate |
+
+### Key sources
+PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022
+
+
+## fatigue-spectrum-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** 3–5 (THIN BASE)
+
+### Best-practice synthesis
+**Most inclusive provision:** Rest seating with reclining option every 25–30 m on all circulation routes; lift provision at all level changes; bedroom-bathroom adjacency; cool ambient environment ≤19–21°C.
+**Most targeted provision:** Thermostatic shower with seated option; no threshold lips; reclining seating option in all waiting and work settings; personal HVAC control.
+**Conflict resolution:** OFS (cool ≤19°C) conflicts with PAIN/fibromyalgia (warm ≥24°C) — personalised HVAC control is the only resolution; shared-space specification cannot satisfy both.
+**Highest-ambition actionable specification:** Rest seating with backrest and armrests every 25 m; reclining option at ≥30% of seating positions in waiting areas; personal temperature control ±3°C in all workplaces and care settings.
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Rest seating every 25–30 m | EN | 3–4 |
+| Lift at all level changes | EN | 4–5 |
+| Bedroom-bathroom adjacency | EN | 3–4 |
+| Cool ambient temperature ≤19–21°C | EN | 3–4 |
+| Thermostatic shower with seated option | EN | 3–4 |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted? |
+|---|---|---|
+| DE, NO, DA, FI, ZH, JA, NL, KO, IT | No OFS built-environment provisions in any national standard | Yes — universal gap confirmed |
+| SV, FR, ES, PT | Thin — clinical OT references only; no built-environment specifications | Yes |
+
+### Critical gap
+GAP-PAIN-OFS-BUILENV P1 OPEN: Zero indexed built-environment research for OFS populations in any language. All specifications are expert consensus derived from clinical evidence. Guidebook must disclose this limitation explicitly.
+
+### Key sources
+CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID18805903-POTS-CFS
