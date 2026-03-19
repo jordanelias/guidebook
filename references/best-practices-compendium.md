@@ -4,7 +4,7 @@
 
 ---
 
-## mobility-wheelchair-built-environment|MOB
+## mobility-wheelchair-built-environment
 **Updated:** 2026-03-17 17:00  **Evidence tier:** 1–3
 **Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains; all three have major evidence-practice conflicts with ADA/BS 8300/AS 1428.
 **Ranges:**
@@ -28,7 +28,7 @@
 
 ---
 
-## visual-hearing-impairment-built-environment|VIS|DEAF
+## visual-hearing-impairment-built-environment
 **Updated:** 2026-03-17 18:30  **Evidence tier:** 1–3
 **VIS Consensus finding:** Lighting level, consistency and gradual transition are the highest-impact environmental factors for VIS fall prevention and navigation. The 30% LRV contrast standard is unsupported by evidence; 65% Michelson contrast is needed for "easily visible" to severely impaired users.
 **DEAF Consensus finding:** Clear sightlines, diffuse face-level lighting, and IEC 60118-4-compliant hearing loops are the primary built-environment requirements; Auracast is the emerging successor technology.
@@ -51,7 +51,7 @@
 
 ---
 
-## neurological-dementia-built-environment|NEU|DEM
+## neurological-dementia-built-environment
 **Updated:** 2026-03-17 19:30  **Evidence tier:** 1–3
 **DEM Consensus:** Small-scale homelike environments (≤10 residents), short articulated corridors, visual access between spaces, circadian lighting, and sensory gardens constitute the core DEM design evidence base. EADDAT (Stirling DSDC) is the sole validated assessment tool. Bold floor contrast patterns are contraindicated — misread as level changes.
 **NEU/MS Consensus:** 60–80% heat sensitivity; air conditioning is primary built-environment countermeasure; ambient temperature ≤19–21°C; personalised HVAC control; ramps ≤6% gradient; rest seating every 30 m.
@@ -66,7 +66,7 @@
 
 ---
 
-## neurodivergent-mental-health-built-environment|NDV|MH
+## neurodivergent-mental-health-built-environment
 **Updated:** 2026-03-17 20:00  **Evidence tier:** 1–4 (mixed; PAS 6463 at tier 4, scoping reviews at tier 1)
 **NDV Consensus:** PAS 6463:2022 (BSI UK) is the sole national design standard for neurodiversity; guidance-level only. Core requirements: sensory quiet rooms, acoustic management, muted palette, indirect lighting, eliminate fluorescent, user control, reduced visual noise. ASPECTSS Design Index covers autism specifically. No mandatory regulatory standard exists in any jurisdiction.
 **NDV/MH Consensus:** Trauma-informed design (TID) is an emerging evidence-based framework. Core principles: safety, choice/control, empowerment, nature connection. PTSD-specific evidence concentrated in homeless/DV shelter settings. Quiet retreat and de-escalation rooms are primary spatial requirements.
@@ -79,7 +79,7 @@
 
 ---
 
-## chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS
+## chronic-pain-fatigue-spectrum-built-environment
 **Updated:** 2026-03-18 16:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
 **PAIN Consensus:** OT built-environment evidence is near-zero across all 14 languages. All provisions derived from ergonomic and energy conservation principles. Highest-impact: seated task provision, storage at waist-to-shoulder height (750–1050 mm), thermostatic shower controls, rest seating. Hydrotherapy has Tier 1 evidence (10 RCTs) for FM pain reduction. ES and PT OT literature confirms clinical role only — no built-environment specifications.
 **OFS Consensus:** Zero indexed built-environment research in any of 14 languages. All provisions derived from clinical understanding of orthostatic intolerance and post-exertional malaise. Highest-impact: rest seating (every 25–30 m with reclining option), cool ambient environment (≤19–21°C), lift provision, thermostatic shower, bedroom-bathroom adjacency.
@@ -89,7 +89,7 @@
 **New item candidates:** Reclining/tilt seating specification; cushioned flooring specification (thin EN-only evidence).
 **SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/OFS searches. ES and PT retained in core (THIN).
 **Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · Newcastle-POTS-2018 · Ismail2023
-## deafblind-built-environment-design|DBL
+## deafblind-built-environment-design
 **Updated:** 2026-03-18 14:30  **Evidence tier:** 4-5
 **Consensus finding:** Zero Tier 1-2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4-5: DeafSpace Design Guidelines (2010), practitioner guidance (JJones 2025), organisational guidance (NELOWV 2025). Nordic Welfare Centre provides clinical/communication research only.
 **Key design principles (all Tier 4-5):** Tactile-first redundancy; textured zone transitions; corridors >=1500mm for intervenor; glare-free shadow-free illumination; vibrotactile alert supplement; intervenor clear floor space >=900x1500mm at service counters (GAP-NEW-01); acoustic differentiation (A-15) as primary navigation channel.
@@ -98,7 +98,7 @@
 **Key sources:** DeafSpace (2010); NELOWV (2025); JJones (2025); Nordic Welfare Centre; MDPI Buildings 14(3):707 (2024)
 **Gap registered:** THIN BASE - zero Tier 1-2; GAP-NEW-01/02/03/04 confirmed
 
-## intellectual-disability-built-environment-design|IntD
+## intellectual-disability-built-environment-design
 **Updated:** 2026-03-18 14:30  **Evidence tier:** 3-4
 **Consensus finding:** Tier 3-4 evidence supports specific IntD built-environment principles. MDPI 2026 (Tier 3) most detailed analysis. NDIS SDA (AU, Tier 4) only jurisdiction-specific standard. No European standard provides quantified IntD provisions.
 **Key design principles:** One-way legible circulation; radial/loop layouts; no blind corners; pictogram + single-word signage; colour-zone wayfinding; different ceiling heights for zone demarcation; reception facility at decision points; tactile floor materials per zone; enhanced luminance contrast; consistent predictable layout.
@@ -109,7 +109,7 @@
 
 
 
-## accessible-laundry-room-design|MOB
+## accessible-laundry-room-design
 **Updated:** 2026-03-18 17:00  **Evidence tier:** 4–5 (regulatory + OT practice)
 **Consensus finding:** Accessible laundry rooms require front-loading appliances at floor level or on riser (not stacked), clear floor space ≥762×1219 mm parallel to appliance, 1500 mm turning radius (public/shared) or 1300 mm (private dwelling), controls and drum opening 380–915 mm AFF, counter/sink ≤864 mm AFF with knee clearance, storage 230–1370 mm AFF. Main-floor location mandatory — basement/stairs create categorical exclusion.
 **Range:** Drum opening 380–915 mm AFF (ADA S611); controls ≤1220 mm AFF (ADA forward reach over obstruction); sink/counter ≤864 mm AFF; clear floor 762×1219 mm; turning radius 1500 mm (shared) / 1300 mm (residential)
@@ -118,7 +118,7 @@
 **Key sources:** ADA-S611-2010 · US-Access-Board-Washers · NDIS-SDA · Boverket-BBR-3-148 · DIN-18040-2 · SD-State-Extension-2020
 **Gap noted:** ADA S611 is the only jurisdiction with quantified laundry appliance specifications. All other jurisdictions address laundry room accessibility generically (clear floor, turning radius, door width) without appliance-specific height values. This creates a significant guidance gap for R-LAU item specification.
 
-## floor-vibration-wheelchair-disability|MOB|NEU
+## floor-vibration-wheelchair-disability
 **Updated:** 2026-03-18 17:00  **Evidence tier:** 3–4 (observational + structural standards)
 **Consensus finding:** Wheelchair users in community settings are routinely exposed to WBV at or above ISO 2631-1 health caution zone (mean 0.83 m/s² weighted RMS over ~13 hrs/day — Garcia-Mendez 2013). Floor type is the single largest determinant of WBV transmitted to the cervical spine and forehead of manual wheelchair users (Larivière 2024). ISO 2631-1 was not designed for SCI/disability populations and may not accurately reflect risk levels for this group (Chénier & Aissaoui 2014). NHS HTM 08-01 provides hospital floor vibration performance standard. ISO 10137:2007 provides general building serviceability criteria for occupants; no disability-specific floor vibration standard exists in any jurisdiction.
 **Critical A-09 flag:** The 0.1 m/s RMS threshold cited in guidebook item A-09 does NOT correspond to any located ISO 2631-1 value. ISO 2631-1 action/limit values are expressed as weighted accelerations (m/s²) over 8h, not simple RMS velocity. The 0.1 m/s value may be a VDV-based or velocity-based threshold from DIN 4150-2 (structural vibration, Germany) — but its application to disability accessibility is unverified. **FLAG: [UNVERIFIED — source of 0.1 m/s RMS threshold in A-09 required before publication]**
@@ -126,7 +126,7 @@
 **Early-close:** no  **Thin/No-data:** NO, SV, DA, FI, ZH, JA, NL, ES, PT, KO, IT — all NO-DATA for disability-specific building vibration
 **Key sources:** Garcia-Mendez-2013-JSCM · Misch-2022-JRATE · Chenier-Aissaoui-2014 · ISO-10137-2007 · ISO-2631-1 · SCI-P354-2007 · NHS-HTM-08-01
 
-## biophilic-design-healthcare-workplace|BIO
+## biophilic-design-healthcare-workplace
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 1–3
 **Consensus finding:** Three independent systematic reviews establish strong evidence that biophilic design reduces hospitalisation time, pain, and provider stress in healthcare settings; restorative effects are measurable at indoor scale and extend to structured complexity and natural elements, not only outdoor views.
 **Key evidence:**
@@ -141,7 +141,7 @@
 **Divergent findings:** Ulrich (1984) foundational but single-hospital n=46; use 2024 systematic reviews as primary evidence; cite Ulrich only as historical foundation
 **Notes:** No jurisdiction has a mandatory biophilic design standard. WELL v2 and LEED address this via certification only. BIO items must use systematic review evidence as primary basis. Restorative design for ALL populations — not population-specific. Biophilic outdoor transitional spaces function as decompression/regulation environments for NDV populations (Latiff et al. 2024).
 
-## thermal-comfort-older-adults-care-settings|TC
+## thermal-comfort-older-adults-care-settings
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 1–3
 **Consensus finding:** Standard PMV/PPD thermal comfort model has limited suitability for older adults; age-differentiated targets are required. Neutral temperature for older adults in care settings is approximately 24.9°C (comfort zone 18.3–26.3°C). Unheated bathroom cold shock is the leading residential thermal hazard in cold climates, responsible for 6,073 bathtub drowning deaths in Japan (2023).
 **Key evidence:**
@@ -157,7 +157,7 @@
 **Divergent findings:** Older adult thermal comfort target (24.9°C) directly conflicts with MS/OFS cool environment target (≤19–21°C) — shared spaces with mixed populations require zoned HVAC or individual controls; no standard addresses this conflict
 **Notes:** GAP-ITEM-SPEC confirmed: H-04 temperature range absent from all jurisdictions. TC-items for care/residential must cite age-differentiated targets. Do NOT use standard ASHRAE/EN ISO 7730 PMV values for occupant groups ≥65 or with MS/OFS conditions.
 
-## acoustics-speech-intelligibility-disability|A
+## acoustics-speech-intelligibility-disability
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 1–3
 **Consensus finding:** Reverberation above 0.6 sec prevents 100% speech perception even at high SNR. Hearing-impaired listeners are significantly more affected than normal-hearing listeners by both reduced SNR and reverberation. RT differentiation between hearing-impaired and general population is well-evidenced and should be explicit in all specification items.
 **Key evidence:**
@@ -176,7 +176,7 @@
 **Divergent findings:** Standards specify RT60 ≤0.6 s for classrooms generally; hearing-impaired evidence base requires ≤0.3 s — a 2× difference not reflected in most regulatory documents
 **Notes:** RT differentiation (hearing-impaired vs general) is well-evidenced but absent from most national building codes. Cross-reference A-items with VIS/DEAF BPC entry for hearing loop integration. NDV/ASD and NEU/ABI populations also benefit from RT ≤0.3 s — see NDV/MH BPC entry.
 
-## wayfinding-dementia-spatial-design|DEM
+## wayfinding-dementia-spatial-design
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 2–3
 **Consensus finding:** People with dementia retain capacity for sub-plans and minor decisions but progressively lose ability to form cognitive maps. Design should target residual egocentric (route-following) navigation; allocentric (cognitive map) navigation is impaired earliest in Alzheimer's disease.
 **Key evidence:**
@@ -197,7 +197,7 @@
 **Divergent findings:** —
 **Notes:** CRPD Article 9 accessibility obligation extends to wayfinding design. Bold floor contrast patterns contraindicated for DEM — misread as level changes (see VIS/DEAF BPC entry for VIS/DEM conflict). DO NOT CITE: van Buuren & Mohammadi 2023 (removed citation — use van Buuren et al. 2025, PMC11931140 instead).
 
-## fold-down-grab-bar-specification|MOB
+## fold-down-grab-bar-specification
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 4–5 (standards-based; no peer-reviewed clinical trials for fold-down bars in isolation)
 **Consensus finding:** Fold-down grab bars require ≥200 kg safe working load minimum for standard provision; structural wall backing/blocking is mandatory at all positions and must span full toilet wall length to allow bilateral positioning. ADA floor standard is 250 lbs (1.1 kN). Centrepoint of fold-down bar to be 400 mm from toilet centreline.
 **Load ratings:**
@@ -219,7 +219,7 @@
 **Divergent findings:** —
 **Notes:** PROVISIONAL: BS 8300:2018 specific clauses not retrieved in search; DIN 18040-3 and NS 11001-2 further search recommended. DO NOT CITE: Novak et al. 2024 (removed citation). Grab bar type preference (vertical vs horizontal) — see mobility-wheelchair-built-environment|MOB entry. Replacement source search for fold-down bars: GAP-001 partially resolved by Session B_P1.
 
-## bariatric-turning-radius-built-environment|BAR
+## bariatric-turning-radius-built-environment
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 3–5 (empirical + standards)
 **Consensus finding:** Standard accessible turning circles (1500–1525 mm) are insufficient for bariatric wheelchairs; ≥1900 mm clear diameter is the evidence-informed recommendation for bariatric-specific turning space in new build. 1800 mm is the minimum where 1900 mm is unachievable.
 **Key evidence:**
@@ -236,7 +236,7 @@
 **Divergent findings:** Steinfeld 1925 mm empirical vs. VA 1830 mm federal standard — guidebook should cite 1900 mm as the rounded, evidence-informed figure
 **Notes:** BAR cross-reference code only — not a main taxonomy code; not in Volume 2. Item belongs in Supplementary Volume §IV. Current BAR-03 specification (1800 mm) is supported by VA and IWA standards; upgrade to 1900 mm recommended for new build. Stroupe & Sarbaugh "radius" likely means diameter — verify terminology before citing.
 
-## ot-frameworks-built-environment|OT
+## ot-frameworks-built-environment
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 1–4
 **Consensus finding:** All four major OT frameworks explicitly position the physical built environment as a primary enabler or barrier to occupational participation. PEOP is the most internationally validated across populations and settings. Kawa Model is most directly aligned with CRPD social model framing.
 **Frameworks:**
@@ -249,7 +249,7 @@
 **Key sources:** TownsendPolatajko2007 · Kielhofner2008 · BaumEtal2015 · Iwama2006 · Siu2024-PMC
 **Notes:** CRPD General Comment No. 2 (2014) provides the normative basis. Kawa Model is recommended as primary framing language for guidebook item writing — barriers are external, not intrinsic. All frameworks support the Three-Tier Design Hierarchy position that the built environment is the primary variable.
 
-## jurisdiction-matrix-accessibility-standards|INTL
+## jurisdiction-matrix-accessibility-standards
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 4–5 (standards and regulatory documents)
 **Consensus finding:** Mandatory residential accessibility requirements exist in Australia (NCC 2022, Class 1a+2), India (MoHUA 2021/RPwD 2023), Norway (TEK17), and Sweden (BBR). UK, Canada, and USA rely on voluntary/sector-adopted standards. Major gap: individual residential unit accessibility is not mandated in Brazil (NBR 9050 covers common areas only).
 **Key facts by jurisdiction:**
@@ -276,7 +276,7 @@
   - Mandatory residential: Australia/Norway/India/Sweden mandatory vs. UK/US/Canada voluntary
 **Notes:** DIN 18040 revision impasse — monitor for summer/autumn 2025 publication. BBR Sweden July 2025 — English translation not confirmed. EAA EU patchwork adoption is a confirmed policy gap. All E-items specifying turning space must note ISO vs. ANSI discrepancy and recommend 1702 mm for new build.
 
-## ecological-psychology-haptic-affordances-built-environment|ALL
+## ecological-psychology-haptic-affordances-built-environment
 **Updated:** 2026-03-18 22:30  **Evidence tier:** 3–4 (theoretical with empirical application)
 **Consensus finding:** Affordances are organism-specific action possibilities — the same environment affords different actions to different users. Accessibility specifications (900 mm corridor, 175 mm riser, 1200 mm counter) are minimum functional thresholds at which affordances switch from available to unavailable. Handrails and grab bars are haptic navigation structures, not safety add-ons — interruption at any point destroys the haptic route.
 **Key frameworks:**
@@ -296,7 +296,7 @@
 **Divergent findings:** —
 **Notes:** Primary theoretical basis for the guidebook's specification logic. Not a BPC entry requiring multilingual research; retained as theoretical reference for item-writing. Cross-reference: OT frameworks BPC entry.
 
-## wayfinding-cognitive-science-spatial-design|ALL
+## wayfinding-cognitive-science-spatial-design
 **Updated:** 2026-03-18 22:30  **Evidence tier:** 2–4
 **Consensus finding:** Spatial configuration outperforms signage density as the primary wayfinding mechanism. Architecture should be self-explanatory at the layout level, with signage as reinforcement. Wayfinding fails when it imposes excessive extraneous cognitive load — directly reducing functional capacity for users with TBI/ABI, dementia, ADHD, or PCS.
 **Key evidence:**
@@ -322,7 +322,7 @@
 **Divergent findings:** —
 **Notes:** Cross-reference wayfinding-dementia-spatial-design|DEM entry for DEM-specific application. Three-tier wayfinding system is retained as a synthesized item across 6+ evidence sources. PCS/TBI evidence: cognitive fatigue makes text-based wayfinding unreliable for ABI patients (CAOT 2018).
 
-## stair-ramp-threshold-biomechanics-accessibility|MOB
+## stair-ramp-threshold-biomechanics-accessibility
 **Updated:** 2026-03-18 22:30  **Evidence tier:** 2–4
 **Consensus finding:** Accessibility specifications for stairs, ramps, thresholds, corridors, and seating height are biomechanically derived, not arbitrary. Each specification corresponds to a functional threshold with documented evidence.
 **Key biomechanical evidence:**
@@ -375,7 +375,7 @@
 **Key sources:** Templer1992 · Waters1985 · Pavol2001 · AlLawati2017 · Koontz2012 · Rodosky1989 · LordSR1993 · KITE2023-2025 · Owsley2001 · Manandhar2022
 **Divergent findings:** Ramp gradient biomechanics (≤6%) vs. ADA code minimum (8.3%) — non-English standards more evidence-aligned. 30% LRV standard: no published evidence basis for current threshold.
 
-## detectable-gradient-protocol-sensory-zones|NDV|DEM
+## detectable-gradient-protocol-sensory-zones
 **Updated:** 2026-03-18 22:30  **Evidence tier:** 3–4 (synthesized across 5+ sources)
 **Consensus finding:** Multi-sensory zone boundaries — simultaneous visual, acoustic, spatial, and luminance signals at zone transitions — are well-supported by PAS 6463:2022, ISO 21542:2021, Mostafa ASPECTSS 2.0, and Williams et al. (2024). The "Detectable Gradient Protocol" specifies minimum perceptually detectable thresholds at each zone boundary.
 **Evidence base:**
@@ -401,7 +401,7 @@
 **Divergent findings:** —
 **Notes:** Numeric thresholds (0.2 s RT60, 50 lux, 30 LRV) are working specifications derived from perception science — label as "minimum perceptually detectable" not empirically validated clinical thresholds. Apply at all population types where sensory environment is a primary design driver: NDV, DEM, NEU/ABI, NDV/MH, OFS.
 
-## residential-dar-provisions-priority-register|MOB
+## residential-dar-provisions-priority-register
 **Updated:** 2026-03-18 22:30  **Evidence tier:** 4–5 (cost data, regulatory, OT practice)
 **Consensus finding:** DAR (Design for Adaptable Readiness) provisions must be physically embedded in construction drawings — not in specification text alone. An accessibility requirement absent from a named drawing will not be built. Cost multipliers for missed DAR provisions range from ×5 to ×75+; structural provisions are effectively irreversible without major intervention.
 **DAR provisions by cost multiplier (retrofit vs. construction):**
@@ -432,7 +432,7 @@
 **Divergent findings:** Cost multiplier values are industry estimates (UK/CA cost data); formal peer-reviewed cost data not identified — flag ×75 as UNVERIFIED pending formal cost data source
 **Notes:** These are construction-phase provisions — the BPC entry serves as a planning reference for architects at brief and schematic stage. Cross-reference fold-down-grab-bar-specification|MOB and bariatric-turning-radius-built-environment|BAR for specific fitting specifications.
 
-## accessible-design-economics-cost-premium|ALL
+## accessible-design-economics-cost-premium
 **Updated:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)
 **Consensus finding:** When accessibility is integrated from brief/schematic stage, its cost in new construction is 0.94%–3.92% of project cost by building type — or zero for provisions that are planning decisions rather than materials. The same provisions as post-occupancy retrofit cost 10–40× more. The strongest economic argument is not a financial model; it is the cost curve.
 **Construction cost premium by building type (new build):**
@@ -477,7 +477,7 @@
 **Divergent findings:** Property value premiums: Hangzhou elevator study 5.53% — single jurisdiction, not generalisable
 **Notes:** CAUTION — do not cite ESG rent premium of 25–50% without verified source (CIT-03 correction: claim deleted from v8). Hangzhou elevator study (CIT-04 correction): jurisdiction-specific only.
 
-## sensory-processing-model-design-application|NDV
+## sensory-processing-model-design-application
 **Updated:** 2026-03-18 23:00  **Evidence tier:** 2–4
 **Consensus finding:** Dunn's Sensory Processing Model identifies four processing profiles that require distinct — and in some cases conflicting — environmental design responses. Accessible design specifications for acoustic (Category A), lighting (Category B), and colour/surface (Category C) must be calibrated across all four profiles simultaneously, not optimised for a single profile.
 **Four profiles and design implications:**
@@ -498,7 +498,7 @@
 **Divergent findings:** Sensory seeking vs. sensory avoiding design requirements are partially irreconcilable in a single space — spatial separation (Detectable Gradient Protocol zones) is the primary resolution; individual user control is the secondary resolution
 **Notes:** Cross-reference detectable-gradient-protocol-sensory-zones|NDV|DEM entry. Dunn's model is applied in Vol 2 Part IV Categories A, B, C, and F. "Calibrated across all four profiles" is the mandated approach — not optimising for the modal NDV user.
 
-## luminance-contrast-lrv-evidence-base|VIS
+## luminance-contrast-lrv-evidence-base
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 3–4
 **Consensus finding:** The 30% LRV (Light Reflectance Value) contrast threshold adopted by six national standards (UK BS 8300, DIN 18040-2, CEREMA France, Swedish BFS, Norwegian TEK17, Japanese MLIT) derives from UK Disability Discrimination Act final-stage regulatory guidance, not from peer-reviewed empirical evidence of sufficiency for people with low vision. It is a regulatory floor, not an evidence-derived optimum.
 **Key evidence:**
@@ -522,7 +522,7 @@
 **Divergent findings:** —
 **Notes:** Decision D-03 confirmed: all C-items must carry the regulatory-floor caveat. This is one of the most significant evidence-standards gaps in the entire guidebook. DO NOT cite 30% as an evidence-based optimum. Cite it as a regulatory minimum and recommend highest achievable contrast as design intent.
 
-## government-grant-programmes-home-adaptation|ALL
+## government-grant-programmes-home-adaptation
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory/programme data)
 **Consensus finding:** Government-funded home adaptation grant programmes exist in all major English-speaking and Northern European jurisdictions. UK Disabled Facilities Grant is the largest per-household grant programme by volume (£711m/year, £30,000 max per household). All programmes require OT assessment or equivalent disability certification. No programme covers full design-stage accessible construction — all address retrofit.
 **Grant programme matrix (verified as at 2024–25 budget year):**
@@ -548,7 +548,7 @@
 **Key sources:** MHCLG-DFG-2024 · NDIS-2024 · CRA-HATC-2024 · VA-SAH-FY2024 · HUD-S504 · KfW-159
 **Notes:** ⚠ KfW "Altersgerecht Umbauen" grant programme suspended December 2021 — do not cite as current. Replacement is KfW loan 159 (barrier-free conversion) at reduced interest rate. Verify status with KfW before citing in Vol 3. All figures carry year and currency per project standing rules.
 
-## european-accessibility-act-scope-clarification|INTL
+## european-accessibility-act-scope-clarification
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory)
 **Consensus finding:** The European Accessibility Act (Directive EU 2019/882) applies to digital products and services ONLY. It does not mandate physical built environment accessibility requirements in any EU member state. Any reference to EAA in the context of physical building standards is a misattribution and must be corrected.
 **Key facts:**
@@ -583,7 +583,7 @@
 **Jurisdictions confirmed:** EU-27 · Netherlands · Spain · New Zealand
 **Key sources:** Directive-EU-2019-882 · EN17210:2021 · Rijksoverheid-Bbl2024 · UNE41500:2020 · NZS4121:2001-under-revision · accessible-eu-centre-ec
 
-## ndv-aut-built-environment-quantified-thresholds|NDV
+## ndv-aut-built-environment-quantified-thresholds
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 3–5 (thin base; practitioner consensus dominant)
 **Consensus finding:** Evidence for specific quantitative built environment design thresholds for NDV/AUT populations is Tier 4–5 (practitioner consensus and limited empirical work). Peer-reviewed literature provides directional guidance on domains but rarely specifies validated dB or lux thresholds. The evidence is building but has not yet reached RCT-level validation for built environment specifications.
 **Three primary design domains (Tola et al. 2021, Tier 1 scoping review):**
@@ -615,7 +615,7 @@
 **Divergent findings:** —
 **Notes:** Cross-reference sensory-processing-model-design-application|NDV for Dunn framework application. The <55 dB(A) figure from Caniato et al. (2024) is a single classroom study — cite with caveat "directional only; pending replication." ASPECTSS Design Index is the most operationalised framework but remains practitioner consensus.
 
-## mob-upl-built-environment-evidence-synthesis|MOB
+## mob-upl-built-environment-evidence-synthesis
 **Updated:** 2026-03-18 23:45  **Evidence tier:** 1–3
 **Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains with the largest evidence-practice conflicts across all major standards. UPL built environment evidence base is critically thin — zero indexed studies on one-handed kitchen/bathroom design.
 **Core evidence-practice conflicts:**
@@ -642,7 +642,7 @@
 **Key sources:** DSouza2011 · Togni2022 · AlLawati2017 · Sanford2013 · Kennedy2015 · Levine2023 · Levine2025 · Kim2014 · Zanotto2023 · Cockayne2021 · Lee2017
 **Divergent findings:** OT home assessment effectiveness: Cochrane (RR 0.88 high-risk) vs. OTIS RCT (no benefit in general at-risk elderly, IRR 1.17, p=0.07) — targeting criteria unclear; high-risk subgroup qualification required
 
-## design-framework-evidence-audit|ALL
+## design-framework-evidence-audit
 **Updated:** 2026-03-18 23:45  **Evidence tier:** 1–5 (by framework)
 **Consensus finding:** Design frameworks in accessibility practice span a wide evidence spectrum. ICF is gold standard (WHO, 191 states). Competence-Press and ART/SRT are evidence-based. ASPECTSS, DeafSpace, and trauma-informed design are practice-based with emerging evidence. No validated design framework exists for fatigue-spectrum (OFS/PAIN) populations — this is the most critical cross-cutting evidence gap.
 **Evidence classification by framework:**
@@ -669,7 +669,7 @@
 **Jurisdictions confirmed:** Cross-jurisdictional (frameworks are discipline-level, not jurisdiction-specific)
 **Key sources:** ICF-WHO2001 · Lawton-Nahemow1973 · Ulrich1984 · DSDC-EADDAT2022 · Marquardt2011 · Mostafa2021-ASPECTSS · PAS6463:2022 · Holohan2022 · Iwarsson2005
 
-## jurisdiction-grant-programmes-comprehensive|ALL
+## jurisdiction-grant-programmes-comprehensive
 **Updated:** 2026-03-18 23:45  **Evidence tier:** 5 (regulatory/programme data, verified)
 **Consensus finding:** Comprehensive home adaptation grant programmes exist across all major jurisdictions. Nordic countries (Sweden, Norway, Denmark) operate uncapped needs-based systems. UK DFG is the highest-volume English-language programme. Singapore operates the most generous subsidy rate (87.5–95%). All programmes cover retrofit only; none fund design-stage accessible construction.
 **Selected programme corrections/updates vs. earlier BPC entry:**
@@ -688,7 +688,7 @@
 **Nordic model note:** Sweden, Norway, and Denmark operate fundamentally different models from UK/Canada/USA — no fixed caps, assessed on functional need, no means testing (Sweden/Norway/Denmark). These are the strongest access-to-adaptation systems internationally.
 **Key sources:** CRA-HATC · VA-SAH-FY2026 · MHCLG-DFG · ANAH-MaPrimeAdapt · HDB-EASE2 · KfW-159 · Husbanken · Bostadsanpassning-2024 · Riksdagen-Lov116
 
-## body-sizes-supplementary-populations|CHD|LPA|EXH|BAR
+## body-sizes-supplementary-populations
 **Updated:** 2026-03-18 23:59  **Evidence tier:** 3–5 (anthropometric data, standards, limited OT evidence)
 **Consensus finding:** All four supplementary populations (children, short stature/dwarfism, extreme height, large body size) are entirely absent from all reviewed international accessibility standards (ADA, BS 8300, ISO 21542, DIN 18040, NS 11001, BCA 2025, CSA B651). Design provisions must be derived from anthropometric databases and expert consensus in the absence of dedicated standards.
 **CHD — Children (age-staged):**
@@ -723,7 +723,7 @@
 **Key sources:** Hoover-Fong2021-CLARITY · WHO-Growth-Standards · McDowell2021-NHANES · Steinfeld2006-RESNA · VA-BFDS-2025 · NHS-HBN-00-03 · FGI-Guidelines
 **Notes:** BAR relocated out of main taxonomy — not a disability code, not in Volume 2. CHD, LPA, EXH are supplementary volume codes only, never main taxonomy. Cross-reference bariatric-turning-radius-built-environment|BAR entry for turning space specifications.
 
-## air-quality-voc-chemical-sensitivity-built-environment|OFS|NDV
+## air-quality-voc-chemical-sensitivity-built-environment
 **Updated:** 2026-03-19 00:30  **Evidence tier:** 4–5 (clinical trigger literature + engineering standards; no RCT-level evidence for built-environment-specific thresholds)
 **Consensus finding:** MCAS, multiple chemical sensitivity (MCS), PCS/TBI, and chemically sensitive NDV populations require both policy-level fragrance-free zones and built-in physical air quality specifications. MERV 13+ filtration and TVOC ≤0.5 mg/m³ are the primary built-environment interventions; all specifications are derived from MCAS trigger literature and HVAC engineering standards, not from built-environment RCTs.
 **Key specifications (F-04 item):**
@@ -743,7 +743,7 @@
 **Evidence gaps:** No RCT-level evidence linking MERV 13 specification to MCAS symptom reduction in built environments. All specifications are Tier X (expert consensus derived from clinical trigger literature). Evidence review recommended at next revision.
 **Key sources:** Afrin2020-Brain-Behavior-Immunity · MastCellAction2023 · CIBSE-Guide-A-2015 · PAS6463:2022 · EN-ISO-16000-9 · WELL-v2-Air · Steinemann2018 · MSIF-Atlas2023
 
-## ms-thermal-temperature-conflict-resolution|NEU|PAIN|OFS
+## ms-thermal-temperature-conflict-resolution
 **Updated:** 2026-03-19 00:30  **Evidence tier:** 2–4
 **Consensus finding:** MS (Uhthoff's phenomenon), fibromyalgia, and OFS/MCAS thermal requirements are directly conflicting and irreconcilable in a shared space without individual controls. The only design resolution is ambient ≤18–21°C with individual supplemental heating at each seat/workstation. No single fixed ambient temperature serves all three populations.
 **Conflict table:**
@@ -766,7 +766,7 @@
 **Divergent findings:** MS ≤18°C floor conflicts directly with older adult 24.9°C neutral; fibromyalgia ≥20°C warmth need — spatial separation or individual controls are the only resolutions; no single ambient temperature satisfies all populations simultaneously
 **Notes:** Cross-reference thermal-comfort-older-adults-care-settings|TC entry for Baquero 2023 data. This entry addresses the inter-population conflict explicitly; the older adult entry addresses the evidence base for that specific population. The conflict resolution (individual controls) is the primary clinical and design conclusion.
 
-## visitability-residential-accessibility-minimum-standards|MOB
+## visitability-residential-accessibility-minimum-standards
 **Updated:** 2026-03-19 00:30  **Evidence tier:** 4–5 (programme evaluation + cost data)
 **Consensus finding:** Visitability — three core requirements for all new single-family and low-rise residential construction — adds approximately $100–600 to new construction cost and achieves basic access for wheelchair users to visit any home. It is the documented minimum accessible residential provision, below which a building functionally excludes wheelchair users from social participation at private homes.
 **Three core visitability requirements (Concrete Change/Eleanor Smith 1987):**
@@ -788,7 +788,7 @@
 **Key sources:** Concrete-Change-1987 · CMHC-Universal-Design · ADA-Standards-2010 · FHA-Design-Manual · DIN-18040-2 · TEK17 · NCC-2022
 **Notes:** Cross-reference residential-dar-provisions-priority-register|MOB for the full DAR cost multiplier register. Visitability is the minimum; Lifetime Homes (UK), CAN/ASC B652 (Canada), and NS 11001-2 (Norway) represent progressive above-minimum standards.
 
-## cross-population-conflict-resolutions|ALL
+## cross-population-conflict-resolutions
 **Updated:** 2026-03-19 01:00  **Evidence tier:** 1–4 (OT clinical + standards; conflict resolutions are expert consensus)
 **Consensus finding:** Nine documented conflicts between accessibility provisions for different disability categories have explicit architectural resolutions. Conflicts arise because single-category specifications calibrated correctly for one population create barriers or hazards for another. The resolution principle is: safety-critical provisions take Tier 1 priority; OT clinical evidence governs equal-priority conflicts; the most constrained user governs where evidence is equal; range or zoning resolves irreconcilable point conflicts.
 **Priority hierarchy (Part IIB §B.2):**
@@ -815,7 +815,7 @@
 **Source:** v1.6 Part IIB (Resolving Conflicting Accessibility Requirements); v8.9 Part E conflict register
 **Key sources:** PAS6463:2022 · ISO23599:2019 · IEC60118-4 · DSDC2024 · Marquardt2011 · MSIF-Atlas2023
 
-## multilingual-evidence-convergence-non-english|ALL
+## multilingual-evidence-convergence-non-english
 **Updated:** 2026-03-19 01:00  **Evidence tier:** 3–5 (systematic review; non-English sources)
 **Consensus finding:** Seven provisions have stronger empirical evidence in non-English language literature than in English-language sources. Five provisions have cross-linguistic consensus (≥5 language bodies). Three provisions lack any non-English evidence base and rest entirely on English-language sources.
 **Stronger in non-English literature:**
@@ -907,7 +907,7 @@ THIN-BASE disclosure on all IntD specifications confirmed unchanged.
 
 ---
 
-## deaf-spatial-design|DEAF
+## deaf-spatial-design
 **Updated:** 2026-03-19 01:05  **Evidence tier range:** Co-1–Tier 5
 
 ### Concept boundary notes
@@ -992,7 +992,7 @@ Primary internal corridors serving Deaf users are to achieve a clear width of no
 
 ---
 
-## deaf-acoustic-built-environment|DEAF
+## deaf-acoustic-built-environment
 **Updated:** 2026-03-19 01:45  **Evidence tier range:** Tier 1–Tier 4
 
 ### Concept boundary notes
@@ -1071,7 +1071,7 @@ Hearing loop systems in all assembly and service counter spaces are to comply wi
 
 ---
 
-## deafblind-built-environment|DBL
+## deafblind-built-environment
 **Updated:** 2026-03-19 02:40  **Evidence tier range:** Co-1–Tier 4
 
 ### Concept boundary notes
