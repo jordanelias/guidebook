@@ -355,3 +355,70 @@ RULE: Evidence hierarchy is seven tiers (Option A, D-18 extension). Tier 1 = OT 
 CONDITION: Any source classification, evidence tier marker, or skill that embeds a tier table.
 ACTION: Apply seven-tier hierarchy. Use [Tier 3 — CPG] marker for OT CPGs. Renumber all existing [Tier 3]→[Tier 4], [Tier 4]→[Tier 5], [Tier 5]→[Tier 6], [Tier 6]→[Tier 7] in guidebook body (deferred — see gap_register.md GAP for tier-marker renumber pass). Supersedes prior D-18 rule and §1.5 hierarchy rule dated 2026-03-18 22:35.
 DATE: 2026-03-19 19:00
+
+RULE: The canonical jurisdiction list for all multilingual-research runs is 24 jurisdictions, as defined in the jurisdiction-tracker skill (§4.7.3). Jurisdictions: Germany · Belgium · Norway · France · Brazil · Japan · Canada · Switzerland · Australia · UK · USA · EU · ISO · Singapore · Sweden · Denmark · Finland · China · Ireland · New Zealand · South Korea · Spain · Netherlands · Italy. This supersedes the prior 17-jurisdiction list. Ireland (IE), New Zealand (NZ), Switzerland (CH), Finland (FI), and Italy (IT) are additions.
+CONDITION: Any multilingual-research run, any research-log-manager LOG call, any gap_register entry citing jurisdiction coverage.
+ACTION: All 24 jurisdictions must appear in the search-log entry for a slug with a recorded status: SEARCHED · THIN · NO-DATA · NOT-RUN. A LOG entry missing any of the 24 jurisdictions is incomplete and must not be marked COMPLETE. research-log-manager LOG must refuse to write a COMPLETE status if any jurisdiction has no recorded status.
+DATE: 2026-03-19 19:28
+
+RULE: Language coverage and jurisdiction coverage are distinct axes. Both must be satisfied independently. A language pass does not substitute for a jurisdiction pass.
+CONDITION: Any multilingual-research run planning or LOG evaluation.
+ACTION: EN covers: USA, UK, Canada, Australia, Ireland, New Zealand, Singapore (primary); EU and ISO (as standards bodies). Each of these must be tracked as a separate jurisdiction entry in the search-log, not collapsed into a single EN pass. ZH covers: China. JA covers: Japan. KO covers: South Korea. FR covers: France, Belgium (FR-region), Switzerland (FR-region). DE covers: Germany, Switzerland (DE-region), Austria (if in scope). NL covers: Netherlands, Belgium (NL-region). PT covers: Brazil (primary), Portugal. IT covers: Italy. SV covers: Sweden. NO covers: Norway. DA covers: Denmark. FI covers: Finland. Where a single-language pass covers multiple jurisdictions, each jurisdiction must be recorded separately with its own tier coverage status.
+DATE: 2026-03-19 19:28
+
+RULE: Each jurisdiction requires a tier coverage record. The LOG gate enforces this.
+CONDITION: Every research-log-manager LOG call.
+ACTION: The search-log entry must include a jurisdiction_coverage block (see schema below). For each of the 24 jurisdictions, record: status (SEARCHED · THIN · NO-DATA · NOT-RUN), co1_attempted (true/false), tier5_attempted (true/false), tier6_attempted (true/false). A LOG call is a BLOCKER if: (a) any jurisdiction is absent from the block; (b) co1_attempted is false for more than 12 of 24 jurisdictions; (c) tier5_attempted is false for more than 16 of 24 jurisdictions. These thresholds are minimums — full coverage is the target.
+DATE: 2026-03-19 19:28
+
+RULE: The pre-LOG completeness check is mandatory and non-skippable. research-log-manager LOG executes this check before writing any entry.
+CONDITION: Every research-log-manager LOG call, without exception.
+ACTION: Before writing to GitHub, research-log-manager LOG must verify: (1) all 24 jurisdictions present in jurisdiction_coverage block; (2) co1_pass_summary lists at least one language as complete; (3) best_practice_synthesis field is populated (non-empty); (4) citation_mining backward and forward counts are recorded (may be 0 if no Tier 1/2 sources found, but the field must be present and explained); (5) native_aliases populated for all 14 languages. If any check fails: do not write; surface as named BLOCKER with the specific field missing. The user must resolve or explicitly accept the gap before LOG proceeds.
+DATE: 2026-03-19 19:28
+
+RULE: A slug BPC entry is PROVISIONAL until all 24 jurisdictions have a recorded status and co1_pass is complete for at least 9 of 14 languages. PROVISIONAL entries must carry a warning header and must not be used as the sole basis for specification writing.
+CONDITION: Any BPC entry written before full coverage is achieved; any item-specification-writer run that draws on a BPC entry.
+ACTION: Write the PROVISIONAL warning header on the BPC entry at LOG time if coverage thresholds are not met. item-specification-writer must check for PROVISIONAL status before using a BPC entry. If PROVISIONAL: note the gaps in the specification draft and flag [BPC PROVISIONAL — jurisdiction/tier gaps; see gap_register].
+DATE: 2026-03-19 19:28
+
+RULE: Search-log entries must include a jurisdiction_coverage block with the following schema. This supersedes the prior language-only schema.
+CONDITION: Every new or updated search-log entry.
+ACTION: Add jurisdiction_coverage block after the languages block:
+
+jurisdiction_coverage:
+  DE: {status: SEARCHED|THIN|NO-DATA|NOT-RUN, co1_attempted: true|false, tier5_attempted: true|false, tier6_attempted: true|false}
+  BE: {status: ..., co1_attempted: ..., tier5_attempted: ..., tier6_attempted: ...}
+  NO: {status: ..., ...}
+  FR: {status: ..., ...}
+  BR: {status: ..., ...}
+  JA: {status: ..., ...}
+  CA: {status: ..., ...}
+  CH: {status: ..., ...}
+  AU: {status: ..., ...}
+  UK: {status: ..., ...}
+  US: {status: ..., ...}
+  EU: {status: ..., ...}
+  ISO: {status: ..., ...}
+  SG: {status: ..., ...}
+  SE: {status: ..., ...}
+  DK: {status: ..., ...}
+  FI: {status: ..., ...}
+  CN: {status: ..., ...}
+  IE: {status: ..., ...}
+  NZ: {status: ..., ...}
+  KR: {status: ..., ...}
+  ES: {status: ..., ...}
+  NL: {status: ..., ...}
+  IT: {status: ..., ...}
+
+jurisdiction_coverage_summary:
+  searched: []
+  thin: []
+  no_data: []
+  not_run: []
+  co1_complete: []
+  co1_not_attempted: []
+  tier5_complete: []
+  tier5_not_attempted: []
+
+DATE: 2026-03-19 19:28
