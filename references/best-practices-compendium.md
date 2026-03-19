@@ -2367,3 +2367,33 @@ REF-RAP-17: SBi-anvisning 218 — DA school acoustics
 - IT (UNI 11532-2) is the most advanced standard for NDV-equivalent provisions: explicitly names students with hearing deficits or attention/concentration disorders as a distinct category (categoria A3.1/A4) with more stringent RT60 and STI requirements
 - ANSI/ASA S12.60-2010 is the only standard with a mandatory RT60 ≤ 0.3 s for DEAF users — no equivalent in DIN 18041, BB93, or any other reviewed standard
 - DIN 18041:2016 introduced disability/inclusion as a driver for its 2016 revision (explicitly citing BGG, Behindertengleichstellungsgesetz, UN-CRPD) — the only standard that explicitly frames its requirements within a disability rights framework
+
+## visual-alerting-and-wayfinding-light|VIS,DEAF,DBL
+**Updated:** 2026-03-19 13:30  **Evidence tier:** 4–6 (international standards consensus)
+**Consensus finding:** Visual alarm devices (VADs) on independent circuits are required in all occupied spaces where deaf, hard-of-hearing, or DBL users may be present; sleeping areas require additional vibrotactile supplementation; IEC 60118-4 hearing loop is the international floor for communication access.
+**Flash rate range:** 0.5–2 Hz (EN 54-23 / EU) or 1–3 Hz (ADA/NFPA 72 / US) — both exclude rates associated with photosensitive epilepsy risk
+**Jurisdictions confirmed:** UK, EU, US, NO, FR, DE, ZH (GB 50763), JA (FDMA 2016 guideline)
+**Divergent findings:** JA: 光警報装置 recommended not mandatory; KO: no dedicated VAD standard confirmed
+**Early-close:** no  **Thin/No-data:** FI (EN 54-23 applies but no FI-specific provision); KO (no VAD-specific standard)
+**Citation mining:** Standards domain — not applicable
+**Key sources:** BS EN 54-23:2010; NFPA 72; IEC 60118-4:2014+AMD1; FDMA JP 2016; GB 50763-2012 §8; Décret 2009-1272 (FR); Bufdir.no (NO)
+
+## therapeutic-lighting-design|ALL
+**Updated:** 2026-03-19 13:30  **Evidence tier:** 1–3 (clinical research); Tier 4–6 (standards)
+**Consensus finding:** Circadian-effective daytime lighting (≥150–200 EML at eye level, ≥4000 K CCT) significantly improves sleep-wake outcomes and reduces agitation in dementia; evening shift to ≤2700 K / ≤10 EML supports circadian entrainment; flicker-free LED (IEEE 1789-2015) is mandatory for NDV/NEU populations.
+**Key specification:** Morning bright light ≥2500 lux (photopic) / ≥200 EML demonstrated in RCTs for dementia; WELL v2 Feature 54: ≥200 EML at 75% of workstations 9am–1pm; SV: CS ≥0.3 for ≥30 min morning (workplace standard)
+**Jurisdictions confirmed:** US (WELL v2, IEEE 1789), UK (Building Regs L + CIBSE), SV (BBR/BFS 2024, Arbetsmiljöverket 2019), NO, DA (DemensCentrum Aarhus), CN (RCT), EU (EN 12464-1)
+**Divergent findings:** EML metric not yet in regulatory form outside WELL v2 and ISO/CIE 8995-1:2025; most national codes reference natural light qualitatively only
+**Early-close:** no  **Thin/No-data:** FI, FR, DE, ZH, JA, KO (no circadian-specific statutory provision found)
+**Citation mining:** Kolberg et al. 2021 (NO/melanopic EDI nursing homes); Konis 2017 Building and Environment
+**Key sources:** REF-10 (ScienceDirect ambient bright light RCT); REF-12 (MDPI 24-week cluster RCT); REF-14 (Solarlits systematic review 2024); REF-17 (Arbetsmiljöverket 2019 SV); REF-18 (WELL v2); REF-19 (Chromaviso/DemensCentrum DA)
+
+## luminance-contrast-and-pattern|VIS,DEM,NDV
+**Updated:** 2026-03-19 13:30  **Evidence tier:** 1–2 (Lukman et al. 2020); Tier 3–6 (standards and reviews)
+**Consensus finding:** LRV ≥30 difference (UK/AU) / Michelson K ≥0.4 (DE) at all critical junctions is the internationally confirmed minimum for VIS navigation; patterned and high-contrast floor transitions are contraindicated in DEM environments; colour contrast alone cannot substitute for luminance contrast.
+**DEM inverse rule:** ≤10 LRV differential between adjacent floor material zones to prevent step-misperception (DSDC evidence; supported by Alzheimer's Society perceptual mechanism documentation)
+**Jurisdictions confirmed:** UK (BS 8300, Part M), AU (AS 1428.1), DE (DIN 32975, DIN 18040-1), FR (CEREMA), EU (EN 17210), ZH (GB 50763 tactile indicator contrast), JA (JIS T 9251)
+**Divergent findings:** DE specifies tiered contrast (K≥0.4 for orientation vs K≥0.7 for signage) — more granular than UK flat ≥30 LRV; formula differs (Michelson vs LRV difference) but thresholds broadly equivalent
+**Early-close:** no  **Thin/No-data:** ZH, JA, KO (dementia-specific floor pattern guidance not found)
+**Citation mining:** PubMed 8716494 floor patterns wandering Alzheimer's added from DSDC literature
+**Key sources:** REF-20 (Lukman et al. 2020 HERD OT study); REF-21 (Arditi PMC 2017 LRV evidence base analysis); REF-22 (DIN 32975); REF-24 (BS 8300/Part M); REF-25 (DSDC dementia flooring); REF-26 (PubMed 8716494); REF-28 (DBSV Fachbroschüre DE)
