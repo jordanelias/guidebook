@@ -1727,3 +1727,121 @@ top_sources: [Guay-2020, Novak-2024, HMInfo-2015, iHFG-bariatric]
 bpc_ref: "bariatric-grab-bar-structural-design|MOB-BAR"
 thin_flags: []
 no_data_flags: [SV, NO]
+
+slug: mobility-built-environment
+query: "wheelchair accessible design built environment circulation grab bar ramp transfer"
+last_searched: 2026-03-19 19:17
+early_close_triggered: false
+
+native_aliases:
+  SV: rörelsehinder / tillgänglighet för rörelsehindrade / rullstolsanpassning [CLEAN]
+  NO: bevegelseshemming / universell utforming for bevegelseshemmede / rullestoltilgjengelighet [CLEAN]
+  DA: bevægelseshandicap / tilgængelighed for bevægelseshæmmede / kørestolstilgængelighed [CLEAN]
+  FI: liikuntavamma / esteettömyys liikuntavammaisille / pyörätuolitilat [CLEAN]
+  FR: handicap moteur / accessibilité PMR / fauteuil roulant [PARTIAL]
+  DE: Mobilitätseinschränkung / Barrierefreiheit für Rollstuhlnutzer / Bewegungsbehinderung [CLEAN]
+  ZH: 肢体残疾 (zhītǐ cánjí) / 无障碍设施 / 轮椅使用者 [CLEAN]
+  JA: 肢体不自由 (shitai fujiyū) / 車いす使用者 / バリアフリー移動 [PARTIAL]
+  NL: motorische beperking / rolstoeltoegankelijkheid / lichamelijke beperking [CLEAN]
+  ES: discapacidad motora / accesibilidad para usuarios de silla de ruedas / movilidad reducida [CLEAN]
+  PT: deficiência motora / acessibilidade para cadeirantes / mobilidade reduzida [CLEAN]
+  KO: 지체장애 (jiché jangae) / 휠체어 접근성 / 이동 편의시설 [CLEAN]
+  IT: disabilità motoria / accessibilità per utenti di sedia a rotelle / mobilità ridotta [CLEAN]
+
+concept_boundary_warnings:
+  - FR: PMR (personne à mobilité réduite) is broader than MOB — includes pregnancy, temporary injury. Filter to permanent disability-specific provisions.
+  - JA: 肢体不自由 covers both lower-limb (AMB) and upper-limb (UPL) impairments as separate subcategories in Japanese policy — distinguish MOB/AMB from MOB/UPL in findings.
+
+languages:
+  EN: {status: SEARCHED, results: 14, db: [ADA Access Board, NCBI, PubMed, Lancet, Rehab Management, Permobil, AOTA], co1_pass: partial, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 8, db: [Boverket BBR/BFS 2024:12, ALM 2], co1_pass: not-run, native_standards_pass: complete}
+  NO: {status: SEARCHED, results: 3, db: [NS 11001 via protocol], co1_pass: not-run, native_standards_pass: partial}
+  DA: {status: SEARCHED, results: 3, db: [SBi-anvisning 230, BR18], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: SEARCHED, results: 3, db: [Accessibility Decree 241/2017], co1_pass: not-run, native_standards_pass: partial}
+  FR: {status: SEARCHED, results: 3, db: [CEREMA, PMR framework], co1_pass: not-run, native_standards_pass: partial}
+  DE: {status: SEARCHED, results: 10, db: [DIN 18040-1, DIN 18040-2, nullbarriere.de], co1_pass: not-run, native_standards_pass: complete}
+  ZH: {status: SEARCHED, results: 6, db: [GB 50763-2012], co1_pass: not-run, native_standards_pass: complete}
+  JA: {status: SEARCHED, results: 8, db: [MLIT Barrier-Free Law, Tokyo BF Ordinance], co1_pass: not-run, native_standards_pass: complete}
+  NL: {status: THIN, results: 2, db: [NEN 9120 via protocol], co1_pass: not-run, native_standards_pass: partial}
+  ES: {status: SEARCHED, results: 3, db: [CTE SUA via protocol], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: SEARCHED, results: 3, db: [NBR 9050 via protocol], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: SEARCHED, results: 8, db: [편의증진법 시행규칙 별표1, Seoul UD Guidelines 2022], co1_pass: not-run, native_standards_pass: complete}
+  IT: {status: THIN, results: 2, db: [DM 236/89 via protocol], co1_pass: not-run, native_standards_pass: partial}
+
+co1_pass_summary: {complete: [], partial: [EN], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]}
+native_standards_pass_summary: {complete: [EN, SV, DE, ZH, JA, KO], partial: [NO, DA, FI, FR, NL, ES, PT, IT], not-run: []}
+companion_networks: {loaded: [F-OT], scholar_targets: 0, retrieved: 0}
+citation_mining: {backward: 0, forward: 0, sources_added: 0}
+at_database_pass: not-run
+
+top_sources:
+  - Keall et al. (2015). Home modifications to reduce injuries from falls (HIPI). Lancet, 385, 231–238. DOI: 10.1016/S0140-6736(14)61006-0. [Tier 3 RCT]
+  - Boverket BFS 2024:12 — dimensionerande mått för rullstolar. [SV Tier 6]
+  - DIN 18040-1:2010 / DIN 18040-2:2011 — Barrierefreies Bauen. [DE Tier 5/6]
+  - MLIT Barrier-Free Law (高齢者、障害者等の移動等の円滑化の促進に関する法律) + 誘導基準. [JA Tier 6]
+  - 편의증진법 시행규칙 별표1 (Welfare Facilities Promotion Act施行規則). [KO Tier 6]
+  - ADA Standards for Accessible Design (2010) §§304, 403, 404. [EN Tier 6]
+  - GB 50763-2012 (无障碍设计规范). [ZH Tier 6]
+  - AS 1428.1-2009 (Design for access and mobility). [AU Tier 6]
+  - Sawatzky et al. (2015). Upper extremity preservation in manual wheelchair users. Am J Phys Med Rehabil, 94(4), 313–324. [Tier 1 position paper — MOB/UPL]
+
+bpc_ref: mobility-built-environment
+thin_flags: [NL, IT]
+no_data_flags: []
+
+slug: visual-impairment-built-environment
+query: "visual impairment blind low vision built environment tactile wayfinding contrast lighting"
+last_searched: 2026-03-19 19:17
+early_close_triggered: false
+
+native_aliases:
+  SV: synnedsättning / synskada / tillgänglighet för synskadade / ledstråk [CLEAN]
+  NO: synshemming / blindhet / taktile ledelinjer / universell utforming syn [CLEAN]
+  DA: synsnedsættelse / blindhed / taktile ledelinjer / tilgængelighed synshandicappede [CLEAN]
+  FI: näkövamma / sokeus / ohjaavat pintarakenteet / esteettömyys näkövammaisille [CLEAN]
+  FR: déficience visuelle / cécité / malvoyance / accessibilité déficients visuels [CLEAN]
+  DE: Sehbehinderung / Blindheit / Barrierefreiheit Sehbehinderte / taktile Bodenleitsysteme [CLEAN]
+  ZH: 视觉障碍 / 盲 / 低视力 / 盲道 [PARTIAL]
+  JA: 視覚障害 / 全盲 / 弱視 / 点字ブロック [CLEAN]
+  NL: visuele beperking / blindheid / slechtziendheid / geleidetegels [CLEAN]
+  ES: discapacidad visual / ceguera / baja visión / pavimento táctil [CLEAN]
+  PT: deficiência visual / cegueira / baixa visão / piso tátil [CLEAN]
+  KO: 시각장애 / 전맹 / 저시력 / 점자블록 [CLEAN]
+  IT: disabilità visiva / cecità / ipovisione / percorso tattile [CLEAN]
+
+concept_boundary_warnings:
+  - ZH: 盲道 used generically for all VIS provisions — search by specific provision type (contrast, lighting, tactile) independently.
+
+languages:
+  EN: {status: SEARCHED, results: 15, db: [PubMed, RNIB, Guide Dogs, Hadley, ISO 23599], co1_pass: complete, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 6, db: [Boverket, DHB, FSDB], co1_pass: partial, native_standards_pass: complete}
+  NO: {status: SEARCHED, results: 5, db: [TEK17, NS 11001, Norges Blindeforbund], co1_pass: partial, native_standards_pass: complete}
+  DA: {status: SEARCHED, results: 5, db: [BR18, SBi, Danmarks Blindesamfund], co1_pass: partial, native_standards_pass: complete}
+  FI: {status: SEARCHED, results: 4, db: [Accessibility Decree, Näkövammaisliitto], co1_pass: partial, native_standards_pass: complete}
+  FR: {status: SEARCHED, results: 5, db: [CEREMA, Arrêté 2014, AVH], co1_pass: partial, native_standards_pass: complete}
+  DE: {status: SEARCHED, results: 6, db: [DIN 18040, DIN 32984, DBSV], co1_pass: partial, native_standards_pass: complete}
+  ZH: {status: SEARCHED, results: 5, db: [GB 50763-2012], co1_pass: not-run, native_standards_pass: complete}
+  JA: {status: SEARCHED, results: 5, db: [MLIT BF Law, JIS T 9251, 日本視覚障害者団体連合], co1_pass: partial, native_standards_pass: complete}
+  NL: {status: SEARCHED, results: 4, db: [NEN 9120, Bartiméus, Koninklijke Visio], co1_pass: partial, native_standards_pass: complete}
+  ES: {status: SEARCHED, results: 4, db: [CTE SUA, UNE, ONCE], co1_pass: partial, native_standards_pass: complete}
+  PT: {status: SEARCHED, results: 4, db: [NBR 9050, ABNT NBR 16537, IBC], co1_pass: partial, native_standards_pass: complete}
+  KO: {status: SEARCHED, results: 4, db: [편의증진법, 한국시각장애인연합회], co1_pass: partial, native_standards_pass: complete}
+  IT: {status: SEARCHED, results: 3, db: [DM 236/89, UNI, UICI], co1_pass: partial, native_standards_pass: complete}
+
+co1_pass_summary: {complete: [EN], partial: [SV, NO, DA, FI, FR, DE, JA, NL, ES, PT, KO, IT], not-run: [ZH]}
+native_standards_pass_summary: {complete: [EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT], partial: [], not-run: []}
+companion_networks: {loaded: [], scholar_targets: 0, retrieved: 0}
+citation_mining: {backward: 0, forward: 0, sources_added: 0}
+at_database_pass: not-run
+
+top_sources:
+  - ISO 23599:2019 — Assistive products for persons with vision impairment: tactile walking surface indicators. [Tier 4]
+  - GB 50763-2012 §3.2 — 盲道 (tactile indicator) specifications. [ZH Tier 6]
+  - MLIT BF Law施行令 + JIS T 9251 — 点字ブロック geometry. [JA Tier 6]
+  - DIN 32984:2011 — Bodenindikatoren im öffentlichen Raum. [DE Tier 5/6]
+  - ABNT NBR 16537:2024 — Piso tátil (BR). [PT Tier 6]
+  - 편의증진법 시행규칙 별표1 §2 — tactile and wayfinding provisions. [KO Tier 6]
+
+bpc_ref: visual-impairment-built-environment
+thin_flags: [IT]
+no_data_flags: []
