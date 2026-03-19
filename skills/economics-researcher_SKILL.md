@@ -100,9 +100,9 @@ Pass all new citations to citation-verifier before the evidence brief is closed.
 
 ---
 
-## Standard Content Areas
+## Reference File
 
-Design-stage cost comparison · retrofit cost multipliers · government funding programmes · property value evidence · return on investment · systemic economic arguments (mandatory vs voluntary standards outcomes). Current verified data for each area in `references/economics-sources.md` — consult before searching.
+`references/economics-sources.md` on GitHub — verified funding data, cost benchmarks, ROI evidence. GET before any search. After verification: GET + SHA + append + PUT back.
 
 ---
 
@@ -116,14 +116,6 @@ Author-year throughout. Government programme data: `[Agency/Ministry]. ([Year]).
 
 Stop and confirm with user:
 
-- Cost data varies by >50% across sources in the same jurisdiction — do not average; report the range and explain the variance
-- A funding programme has been announced but not yet implemented — flag as `[PENDING IMPLEMENTATION — do not cite as current]`
-- Source is a contractor, manufacturer, or industry body with a commercial interest in the claim — flag conflict of interest explicitly; seek independent corroboration
-
----
-
-## Reference Files
-
-`references/economics-sources.md` on GitHub — verified funding programme data, cost benchmarks, and ROI evidence. GET before any search. After verification: GET + SHA, append new entries, PUT back (Project Instructions §GitHub API).
-
-> This reference file holds the jurisdiction-specific content (grant names, maxima, legislation references, cost tables) that changes over time. The skill body contains process rules only. Do not embed specific figures in this skill file.
+- Cost data varies >50% across sources in same jurisdiction — report range, explain variance; do not average
+- Funding programme announced but not yet implemented → `[PENDING IMPLEMENTATION — do not cite as current]`
+- Source has commercial interest in the claim — flag conflict; seek independent corroboration
