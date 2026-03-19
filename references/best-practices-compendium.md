@@ -1462,3 +1462,127 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 6. KDA — Kuratorium Deutsche Altershilfe. *Wohnkonzepte für Menschen mit Demenz.* [DE Tier 5] [PROVISIONAL — KDA is a verified organisation (est. 1962, Berlin); extensive dementia housing publications confirmed via Pro ALTER journal and BMFSFJ-funded research reports; specific title not locatable as standalone publication; likely series of project reports. Re-search via BMFSFJ Forschungsdatenbank and KDA project archive (kda.de/laufende-projekte/projektarchiv/)]
 7. Helsedirektoratet (first published 16 August 2017; last updated 23 February 2024). *Nasjonal faglig retningslinje om demens* [nettdokument]. Oslo: Helsedirektoratet. URL: https://www.helsedirektoratet.no/retningslinjer/demens [NO Tier 5–6 — verified]
 8. [SOURCE REDIRECTED] Prior reference to 'Nationalt Videnscenter for Demens sensory garden research' cannot be verified — DDRC (videnscenterfordemens.dk) is a clinical research centre; sensory garden/loop-path built environment literature is more likely sourced from SBi-anvisning 263 (2016) or Dagmarsminde/Midgaard Fredericia POE documentation. Replace with: Gonzalez, M.T. & Kirkevold, M. (2014). Benefits of sensory garden and horticultural activities in dementia care: a modified scoping review. *Journal of Clinical Nursing* 23:2698–2715. DOI: 10.1111/jocn.12388 [EN/NO Tier 3 — verified via PMC citation chain]
+
+## mobility-built-environment
+**Updated:** 2026-03-19 19:18  **Evidence tier range:** 1–6
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| FR | PMR / handicap moteur | ⚠ PARTIAL | PMR includes temporary and non-disability conditions; filter to permanent disability provisions |
+| JA | 肢体不自由 | ⚠ PARTIAL | Encompasses both MOB/AMB and MOB/UPL as distinct subcategories in JA policy; findings distinguished |
+| All others | See search-log | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Corridor clear width not less than 1500 mm throughout all primary and secondary circulation routes, to accommodate the full range of wheeled mobility devices including rear-wheel drive power wheelchairs and scooters without requiring backing manoeuvres. Turning space not less than 1800 mm × 1800 mm at all corridor junctions, room entries, lift approaches, and dead-end terminations.
+
+**Most targeted provision:** Transfer space at WC to be bilateral where possible (not unilateral), with minimum 900 mm clear at each side; grab bar positioning to be co-designed with the individual user's transfer technique and upper limb function (OT Tier 1 rationale — Sawatzky et al. 2015 upper limb preservation evidence). Door clear width not less than 900 mm throughout public and residential accessible routes. Lever hardware at 850–900 mm AFF throughout.
+
+**Conflict resolution:** Where floor area is constrained (existing dwellings, retrofit contexts), turning space may reduce to 1500 mm diameter provided a reversible DAR strategy is recorded — i.e. the spatial path to achieving 1800 mm is documented. The 1200 mm minimum is the legal floor, not the design target.
+
+**Highest-ambition actionable specification:** Corridor clear width ≥1500 mm (primary routes); ≥1200 mm (secondary, minimum). Turning space ≥1800 × 1800 mm at junctions and room entries; 1500 mm in residential where 1800 mm is not achievable (DAR recorded). Door clear width ≥900 mm. Passing space ≥1800 × 1800 mm every ≤15 m on routes ≥1500 mm wide. Ramp gradient ≤1:20 (best practice), ≤1:12 (minimum). Grab bars bilateral at WC and shower; positioning co-designed with OT assessment.
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| Corridor minimum 1200 mm clear width | EN, SV, DE, ZH, JA, KO, AU, FR, NO | 6 (all jurisdictions) |
+| Turning space minimum 1500 mm diameter / 1500 × 1500 mm | EN, SV, DE, ZH, JA, KO, AU, NO | 6 (all jurisdictions) |
+| Door clear width minimum 800–900 mm | EN, SV, DE, ZH, JA, KO | 6 |
+| Ramp maximum gradient 1:12 (statutory); 1:20 best practice | EN, SV, DE, ZH, JA, KO | 5–6 |
+| Home modifications (grab bars, handrails, ramps) reduce fall injuries 26% | EN | 3 (Keall et al. 2015 RCT) |
+| OT-delivered home safety assessment more effective than non-OT delivery | EN | 3 (Gillespie et al. Cochrane, cited in Keall) |
+| Power wheelchair turning radii vary by drive type: mid-wheel tightest; rear-wheel requires ≥1800 mm | EN | 1 (clinical practice, Rehab Management) |
+| Upper limb overuse is a primary health risk for manual wheelchair users; environment must reduce propulsion effort | EN | 1 (Sawatzky et al. 2015 position paper) |
+| Best-practice residential corridor ≥1200 mm; public ≥1500 mm | SV (BBR/BFS 2024:12), DE (DIN 18040-1), NO (NS 11001) | 5 |
+| KO passing zone every ≤50 m (1500 × 1500 mm) is more frequent than ADA (every ≤61 m); KO parking provision more granular | KO | 6 |
+| JA Tokyo Ordinance requires ≥1400 mm where standard BF Law requires ≥1200 mm | JA | 6 |
+| SV distinguishes indoor (1300 mm dia.), outdoor-small (1500 mm), outdoor-large (2000 mm) turning circles by wheelchair type — most explicit type-differentiated standard found | SV (BFS 2024:12) | 6 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| Passing zone frequency | KO: every 50 m | ADA/EN: every 61 m (200 ft) | Regulatory — KO stricter |
+| Turning circle differentiation by wheelchair type | SV: 3-tier (1300/1500/2000 mm) | ADA/EN: single 1524 mm (60") | Regulatory — SV more granular |
+| Corridor best practice | DE/NO: ≥1500 mm primary | ADA: 914 mm minimum | Regulatory — DE/NO significantly more generous |
+| PMR scope (FR) | FR: includes pregnancy/temporary | Others: disability-specific | Boundary mismatch — FR PMR is not MOB-equivalent |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| NL | NEN 9120 exists but values not directly retrieved in this run; grey literature only | No |
+| IT | DM 236/89 is the primary instrument; full value table not retrieved | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Keall et al. 2015 (Lancet) | Forward via Semantic Scholar | MHIPI (Keall et al. 2021, Lancet Pub Health); cost-benefit (Keall et al. 2017, Inj Prev) |
+| Sawatzky et al. 2015 | Not yet mined | Deferred — citation-miner |
+
+### Key sources
+1. Keall et al. (2015). HIPI study. Lancet, 385, 231–238. DOI: 10.1016/S0140-6736(14)61006-0 [EN · Tier 3 RCT]
+2. Keall et al. (2021). MHIPI study. Lancet Public Health, 6, e631–e640 [EN · Tier 3 RCT]
+3. Sawatzky et al. (2015). Upper extremity preservation in manual wheelchair users. Am J Phys Med Rehabil, 94(4), 313–324 [EN · Tier 1]
+4. Boverket BFS 2024:12 (supersedes BBR) — dimensionerande mått. [SV · Tier 6]
+5. DIN 18040-1:2010 + DIN 18040-2:2011 — Barrierefreies Bauen. [DE · Tier 5/6]
+6. MLIT Barrier-Free Law施行令 + 誘導基準 (MLIT 2021 revision). [JA · Tier 6]
+7. 편의증진법 시행규칙 별표1 (Welfare Facilities Promotion Act Rules). [KO · Tier 6]
+8. ADA Standards for Accessible Design (2010) §§304, 403, 404. US Access Board. [EN · Tier 6]
+9. AS 1428.1-2009 — Design for access and mobility. Standards Australia. [AU · Tier 6]
+10. GB 50763-2012 — 无障碍设计规范. Ministry of Housing and Urban-Rural Development, PRC. [ZH · Tier 6]
+
+
+## visual-impairment-built-environment
+**Updated:** 2026-03-19 19:18  **Evidence tier range:** 4–6
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| ZH | 盲道 | ⚠ PARTIAL | 盲道 used generically; search by specific provision type (tactile, contrast, lighting) separately |
+| All others | See search-log | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Continuous tactile walking surface indicator (TWSI) system throughout all primary interior and exterior circulation routes, conforming to ISO 23599:2019: directional (ribbed) indicators throughout unobstructed routes; attention (domed) indicators at all decision points, hazard alerts, and facility entries. TWSI raised profile ≥4–5 mm; colour contrast to adjacent surface ≥70% LRV differential. Audio wayfinding at all primary entry points and lift call buttons.
+
+**Most targeted provision:** For low vision users (who are the majority of VIS population and are often overlooked in tactile-only design): luminance contrast ≥30 LRV points at all critical junctions (stair nosings, door frames, counter edges, floor level changes); consistent lighting levels ≥300 lux in circulation areas without glare; no sudden illuminance transitions exceeding 5:1 ratio between adjacent zones. TWSI detectable by both cane and foot sensation.
+
+**Conflict resolution:** TWSI colour (yellow/mid-yellow is the consensus standard) may conflict with dementia design requirements for plain, low-pattern flooring. Resolution: use detectable profile rather than relying on colour alone; yellow TWSI is acceptable where dementia colour provisions apply if profiling is the primary detection mechanism.
+
+**Highest-ambition actionable specification:** Continuous ISO 23599:2019 TWSI (ribbed directional + domed attention) on all primary routes. ≥4 mm raised profile. Minimum ≥70% LRV contrast to adjacent surface. Audio beaconing at building entries. Luminance contrast ≥30 LRV points at all level changes and critical junctions. Consistent ≥300 lux circulation lighting without glare. Braille and tactile text on all fixed signage at 1400–1600 mm AFF. Contrasting door frames and hardware at all circulation entries.
+
+### Consensus findings
+| Finding | Languages confirming | Tier |
+|---|---|---|
+| TWSI (tactile walking surface indicators) mandatory on primary routes | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | 4–6 (ISO 23599 + all jurisdictions) |
+| Directional (ribbed) + attention (domed) TWSI types required | EN, ZH, JA, KO, PT | 4–6 |
+| TWSI raised profile ≥4 mm | ZH (GB 50763), JA (JIS T 9251) | 6 |
+| TWSI colour contrast to adjacent surface (yellow/mid-yellow standard) | ZH (GB 50763), SV, JA | 6 |
+| Luminance contrast at critical junctions | EN, SV, DE, NO, DA | 5–6 (DIN 32975, BS 8300, NS 11001) |
+| TWSI continuity — must not be obstructed | ZH, JA, KO, EN | 6 (mandatory / strongly worded) |
+| Audio signals at pedestrian crossings | ZH, JA, KO, EN | 6 |
+| Braille and tactile signage at lift buttons, stairs, building entries | EN, SV, DE, ZH, JA, KO | 5–6 |
+| Consistent lighting levels without sudden transitions | EN, SV, DE | 5 (beyond-code guidance) |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| TWSI width | JA: standardised per JIS T 9251 | ZH: 250–500 mm range | Regulatory — different standards |
+| Colour specification | ZH: medium yellow specifically | Others: general "contrasting colour" | Regulatory — ZH more prescriptive |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| IT | DM 236/89 provisions exist but full tactile indicator specification thin | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| ISO 23599:2019 | Forward | Not yet mined — deferred |
+
+### Key sources
+1. ISO 23599:2019 — Assistive products for persons with vision impairment: tactile walking surface indicators. [International · Tier 4]
+2. GB 50763-2012 §3.2 — 盲道 specifications. [ZH · Tier 6]
+3. MLIT BF Law + JIS T 9251:2006 — 点字ブロック. [JA · Tier 4/6]
+4. DIN 32984:2011-10 — Bodenindikatoren im öffentlichen Raum. [DE · Tier 5/6]
+5. ABNT NBR 16537:2024 — Acessibilidade — Sinalização tátil no piso. [PT · Tier 6]
+6. 편의증진법 시행규칙 별표1 §3 — 시각장애인 유도 블록. [KO · Tier 6]
+7. 한국시각장애인연합회 publications — tactile route advocacy. [KO · Tier 2]
