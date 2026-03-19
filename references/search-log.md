@@ -1099,3 +1099,10 @@ no_data_flags: []
 - IntD: unchanged — THIN BASE
 
 ### No specification values changed.
+
+
+<!-- JURISDICTION NOTE: Ireland (IE) and Singapore (SG) are standing jurisdictions. -->
+<!-- Include in Pass A (Co-1/Tier 2) and Pass B (native standards) of every run. -->
+<!-- IE: CEUD Building for Everyone series, NDA, Building Regulations Part M:2010 -->
+<!-- SG: BCA Accessibility Code 2019, SgEnable, SADeaf, SAVH, Universal Design Mark -->
+<!-- Added: 2026-03-18 23:00 -->
