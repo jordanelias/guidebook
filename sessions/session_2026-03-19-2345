@@ -1,0 +1,61 @@
+session_close: 2026-03-19 [time]
+document: Guidebook_for_Accessible_Design_8v09_2026-03-18-12-50.md
+skills_run:
+  - workplan-orchestrator (session start protocol)
+  - multilingual-research (room-acoustic-performance|ALL — 13/14 languages, 18/24 jurisdictions, PARTIAL)
+  - research-log-manager LOG (room-acoustic-performance|ALL — PARTIAL)
+
+gaps_added:
+  - GAP-RAP-01 P2 OPEN (NDV/AUT acoustic provisions: no quantified standard in any jurisdiction)
+  - GAP-RAP-02 P1 CLOSED (Bettarello 2021 citation verified correct)
+  - GAP-RAP-03 P2 OPEN (NC-25 / dB(A) equivalence note absent)
+  - GAP-RAP-04 P3 OPEN (AIJ AIJES-S001-2008 absent from bibliography)
+  - GAP-RAP-05 P3 OPEN (UNI 11532-2:2020 absent from bibliography)
+  - GAP-RAP-06 P2 OPEN (DEAF-specific RT60 ≤ 0.3 s target not in guidebook)
+
+gaps_resolved:
+  - GAP-RAP-02 CLOSED (citation verification — Bettarello 2021 confirmed)
+
+escalations_triggered: 0
+
+patterns_noted:
+  - Bettarello et al. (2021) is confirmed as correctly cited throughout the guidebook. The Bettarello citation family (Bettarello + Caniato) is now the most active research group in autism/NDV acoustic design; their 2024 study extends the 2021 findings.
+  - DIN 18041:2016 is the only national standard that explicitly grounds its acoustic requirements in disability rights law (BGG, UN-CRPD) — this alignment with the guidebook's CRPD framing makes DIN 18041 a Tier 4/5 source of unusual strength for German-language jurisdictions.
+  - IT (UNI 11532-2:2020) is unexpectedly the most explicit jurisdiction for NDV-equivalent acoustic provisions in any European standard: explicitly names hearing deficit + attention/concentration disorder populations as a distinct acoustic category (A3.1/A4) with more stringent targets.
+  - DEAF acoustic standard is uniquely strong in the US (ANSI/ASA S12.60-2010/Part 1, Footnote e): 0.3 s RT60 for hearing-impaired classrooms is the only jurisdiction-level mandatory DEAF-specific acoustic parameter found across all 18 jurisdictions reviewed.
+  - No jurisdiction has a room acoustic standard specifically addressing NDV/AUT beyond general sensory provisions. Bettarello (2021) is genuinely ahead of the field — this is noted in the ScienceDirect 2025 paper itself.
+  - DEM acoustic design is an English-language-dominated evidence domain. Non-English language evidence exists (Devos 2019 Belgium in English; Danish nursing home research) but the primary knowledge base is EN.
+  - KO (Korean) acoustic standards not retrieved. This should be targeted in the next session's literature pass.
+
+rules_added: []
+
+blockers: []
+
+research_log_updated: true
+
+reconciliation:
+  gap_register:         {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  project_standards:    {checked: false, discrepancies: 0, fixed: 0, blockers: 0}
+  search_log:           {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  bpc:                  {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  sessions:             {checked: false, discrepancies: 0, fixed: 0, blockers: 0}
+  project_instructions: {checked: false, stale_sections: 0, blockers: 0}
+
+next_action:
+  skill: multilingual-research
+  session: "Continue design library literature review. Priority order per session_2026-03-19-2300: (1) therapeutic-lighting-design — CIE S 026:2018 EML/EDI evidence plus circadian/DEM lighting; (2) DEAF jurisdiction pass (deaf-spatial-design + deaf-acoustic-built-environment — language coverage complete, jurisdiction blocks absent); (3) KO acoustic standards pass to complete room-acoustic-performance|ALL. After these: item-specification-writer pass on MOB turning circle items using mobility-built-environment BPC."
+  parameters:
+    slugs_next:
+      - therapeutic-lighting-design
+      - deaf-spatial-design (jurisdiction pass)
+      - deaf-acoustic-built-environment (jurisdiction pass)
+      - room-acoustic-performance|ALL (KO completion + remaining 6 jurisdictions)
+    completed_this_session:
+      - room-acoustic-performance|ALL: PARTIAL (13/14 languages, 18/24 jurisdictions)
+    key_new_sources:
+      - Iglehart (2020) AJA — DEAF RT60 0.3 s, Tier 1
+      - Murgia et al. (2022) LSHSS — classroom acoustics systematic review, Tier 3
+      - Devos et al. (2019) PMC — DEM soundscape Belgium, Tier 2
+      - CEREMA/DMA (2019) — FR DEAF acoustic accessibility guide, Tier 2
+      - Caniato et al. (2024) SciDir — NDV acoustic (most recent), Tier 1
+      - UNI 11532-2:2020 — IT school acoustic standard (NDV-explicit), Tier 5
