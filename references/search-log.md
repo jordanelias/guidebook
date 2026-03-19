@@ -2705,3 +2705,90 @@ bpc_ref: "room-acoustic-performance|ALL"
 thin_flags: [SV, FI, ES, PT, KO]
 no_data_flags: [NL, KO]
 citation_mining: {backward: 8, forward: 4, sources_added: 3}
+
+FILE: references/search-log.md — APPEND
+
+slug: visual-alerting-and-wayfinding-light|VIS,DEAF,DBL
+query: "visual alarm device VAD accessibility deaf hard of hearing strobe standard; visual fire alarm hearing impaired EN 54-23; alarme visuelle incendie sourds; visuelle Brandmeldeanlage Barrierefreiheit; 視覚的警報装置聴覚障害; 无障碍建筑视觉报警装置"
+last_searched: 2026-03-19 12:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 10, db: [web, PubMed-adjacent standards]}
+  SV: {status: SEARCHED, results: 2, db: [web], note: "EN 54-23 applies; no SV-specific additions"}
+  NO: {status: SEARCHED, results: 4, db: [web, Bufdir], note: "Bufdir hearing alerting guidance confirmed; TEK17 general reference"}
+  DA: {status: SEARCHED, results: 1, db: [web], note: "EN 54-23 applies via BR18; no DA-specific addition"}
+  FI: {status: THIN, results: 0, db: [web], note: "No FI-specific alerting standard found; EN 54-23 applies via Finnish building regulations"}
+  FR: {status: SEARCHED, results: 6, db: [web], note: "NF S 61-936; Code du travail R4225-8; ERP GN-8 confirmed"}
+  DE: {status: SEARCHED, results: 4, db: [web, nullbarriere.de], note: "DIN VDE 0826-1; VDI 6008; DIN 18040 references confirmed"}
+  ZH: {status: SEARCHED, results: 3, db: [web], note: "GB 50763-2012 §8.1.4 confirmed; hearing loop and visual paging in healthcare buildings"}
+  JA: {status: SEARCHED, results: 4, db: [web], note: "FDMA 2016 guideline (光警報装置); recommended not mandatory under 消防法; empirical evidence from 7-site study n=71"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate — core 9 language limit"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  KO: {status: THIN, results: 1, db: [web], note: "No VAD-specific standard found; general welfare facility standard confirmed; flag for KO-specific pass"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+top_sources: [REF-01, REF-02, REF-05, REF-06, REF-09]
+bpc_ref: "visual-alerting-and-wayfinding-light|VIS,DEAF,DBL"
+thin_flags: [FI, KO]
+no_data_flags: []
+citation_mining: {backward: 0, forward: 0, sources_added: 0, note: "Standards-heavy domain; citation mining not applicable for normative sources"}
+co1_pass_summary: {complete: [NO (Bufdir), EN (National Deaf Center, HLAA)], partial: [FR, DE], not-run: [SV, DA, FI, ZH, JA, KO]}
+native_standards_pass_summary: {complete: [EN, NO, FR, DE, ZH, JA], partial: [SV, DA], not-run: [FI, KO]}
+
+---
+
+slug: therapeutic-lighting-design|ALL
+query: "circadian lighting dementia EML melanopic lux accessible design; therapeutic lighting sleep cognitive impairment; dygnsljus cirkadisk demens vård; Kreislichttherapie; 생체리듬 조명; cirkadisk belysning äldrevård"
+last_searched: 2026-03-19 12:30
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 8, db: [PubMed-adjacent, ScienceDirect, web]}
+  SV: {status: SEARCHED, results: 5, db: [Boverket, Folkhälsomyndigheten, Arbetsmiljöverket], note: "CS ≥0.3 workplace guideline; BBR natural light requirements; dagsljus kunskapssammanställning"}
+  NO: {status: SEARCHED, results: 2, db: [web], note: "Kolberg et al. 2021 melanopic EDI nursing homes confirmed as Norwegian source via EN search"}
+  DA: {status: SEARCHED, results: 2, db: [web, Chromaviso], note: "DemensCentrum Aarhus evidence confirmed (n=46 residents, Tier 2–3)"}
+  FI: {status: THIN, results: 1, db: [web], note: "FI building code requires natural light; no circadian-specific provision found"}
+  FR: {status: THIN, results: 1, db: [web], note: "CCH requires natural light; no circadian-EML specific provision found"}
+  DE: {status: THIN, results: 1, db: [web], note: "DIN 5035 illuminance general; no DIN circadian-specific provision; WELL v2 applies"}
+  ZH: {status: THIN, results: 1, db: [web], note: "GB 50034 general lighting; RCT evidence exists but in EN-translated form; no ZH circadian standard"}
+  JA: {status: THIN, results: 1, db: [web], note: "建基法 natural light requirement; MLIT building standard; no circadian-specific provision"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  KO: {status: THIN, results: 0, db: [], note: "No KO circadian-specific standard found"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+top_sources: [REF-10, REF-12, REF-14, REF-17, REF-18]
+bpc_ref: "therapeutic-lighting-design|ALL"
+thin_flags: [FI, FR, DE, ZH, JA, KO]
+no_data_flags: []
+citation_mining: {backward: 2, forward: 1, sources_added: 2, note: "Kolberg et al. 2021 mined from REF-12 reference list; Konis 2017 via REF-14"}
+co1_pass_summary: {complete: [], partial: [EN (WELL Institute, IES)], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, KO]}
+native_standards_pass_summary: {complete: [EN, SV], partial: [NO, DA, FR, DE, ZH, JA], not-run: [FI, KO]}
+
+---
+
+slug: luminance-contrast-and-pattern|VIS,DEM,NDV
+query: "LRV luminance contrast 30 accessible design visual impairment dementia floor pattern; Leuchtdichtekontrast Barrierefreiheit DIN 18040; contraste lumineux accessibilité; 輝度コントラスト バリアフリー; 亮度对比度 无障碍"
+last_searched: 2026-03-19 13:00
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 9, db: [PubMed-adjacent, web]}
+  SV: {status: THIN, results: 1, db: [web], note: "BFS 2024 general contrast requirements; no SV-specific LRV research"}
+  NO: {status: THIN, results: 1, db: [web], note: "NS 11001 general; no NO-specific LRV research"}
+  DA: {status: THIN, results: 1, db: [web], note: "BR18 general; SBi guidance"}
+  FI: {status: THIN, results: 0, db: [], note: "Finnish accessibility decree: contrast required; no empirical research"}
+  FR: {status: SEARCHED, results: 2, db: [web, CEREMA], note: "CEREMA contrast guidance confirmed; French ERP requirements"}
+  DE: {status: SEARCHED, results: 6, db: [web, nullbarriere.de, DIN resources], note: "DIN 32975 K≥0.4/0.7; DIN 18040-1 §4.4.2; DBSV Fachbroschüre confirmed"}
+  ZH: {status: THIN, results: 1, db: [web], note: "GB 50763 盲道 contrast requirements confirmed; dementia-specific contrast not found"}
+  JA: {status: THIN, results: 1, db: [web], note: "JIS T 9251 点字ブロック contrast; no dementia-specific floor pattern standard"}
+  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+  KO: {status: THIN, results: 0, db: [], note: "점자블록 contrast confirmed as embedded in welfare standard; dementia-specific not found"}
+  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate"}
+top_sources: [REF-20, REF-21, REF-22, REF-24, REF-25, REF-26]
+bpc_ref: "luminance-contrast-and-pattern|VIS,DEM,NDV"
+thin_flags: [SV, NO, DA, FI, ZH, JA, KO]
+no_data_flags: []
+citation_mining: {backward: 1, forward: 0, sources_added: 1, note: "PubMed 8716494 (floor patterns wandering) mined from DSDC reference body"}
+co1_pass_summary: {complete: [EN (RNIB, Alzheimer's Society UK, DSDC)], partial: [DE (DBSV)], not-run: [SV, NO, DA, FI, FR, ZH, JA, KO]}
+native_standards_pass_summary: {complete: [EN, DE, FR], partial: [SV, NO, DA, ZH, JA], not-run: [FI, KO]}
