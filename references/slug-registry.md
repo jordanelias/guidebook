@@ -581,26 +581,26 @@
 
 | Code | New slug(s) | Priority |
 |---|---|---|
-| DEAF | `assistive-listening-systems\|DEAF` | P1 |
-| DEAF · NEU · NDV · DEM | `room-acoustic-performance\|DEAF-NEU-NDV-DEM` | P1 |
-| NDV · NEU · MH · OFS | `sensory-relief-space-design\|NDV-NEU-MH-OFS` | P1 |
-| NEU · NDV · DEM · VIS | `therapeutic-lighting-design\|NEU-NDV-DEM-VIS` | P1 |
-| VIS · DEAF | `visual-alerting-and-wayfinding-light\|VIS-DEAF` | P1 |
-| VIS · DEM · NDV | `luminance-contrast-and-pattern\|VIS-DEM-NDV` | P1 |
-| DEM · NEU · NDV · VIS | `cognitive-wayfinding-design\|DEM-NEU-NDV-VIS` | P1 |
-| MOB · OFS | `accessible-circulation-geometry\|MOB-OFS` | P1 |
-| MOB · OFS · ALL | `threshold-and-level-access\|MOB-OFS-ALL` | P1 |
-| MOB · MOB/UPL · VIS · DEAF | `reach-range-and-accessible-controls\|MOB-VIS-DEAF` | P1 |
+| DEAF | `assistive-listening-systems` | P1 |
+| DEAF · NEU · NDV · DEM | `room-acoustic-performance` | P1 |
+| NDV · NEU · MH · OFS | `sensory-relief-space-design` | P1 |
+| NEU · NDV · DEM · VIS | `therapeutic-lighting-design` | P1 |
+| VIS · DEAF | `visual-alerting-and-wayfinding-light` | P1 |
+| VIS · DEM · NDV | `luminance-contrast-and-pattern` | P1 |
+| DEM · NEU · NDV · VIS | `cognitive-wayfinding-design` | P1 |
+| MOB · OFS | `accessible-circulation-geometry` | P1 |
+| MOB · OFS · ALL | `threshold-and-level-access` | P1 |
+| MOB · MOB/UPL · VIS · DEAF | `reach-range-and-accessible-controls` | P1 |
 
 ## Residential — Population Code Index (additions)
 
 | Code | New slug(s) | Priority |
 |---|---|---|
-| MOB · MOB/UPL | `accessible-bathroom-and-grab-bar\|MOB` | P1 |
-| MOB · MOB/UPL · LPA | `residential-kitchen-and-task-surfaces\|MOB-LPA` | P1 |
-| MOB · OFS · DEM · ALL | `residential-entry-and-threshold\|MOB-OFS-DEM` | P1 |
-| MOB · DEM · OFS | `residential-internal-circulation\|MOB-DEM-OFS` | P1 |
-| MOB · OFS · DEM | `residential-bedroom-living-ot\|MOB-OFS-DEM` | P2 |
+| MOB · MOB/UPL | `accessible-bathroom-and-grab-bar` | P1 |
+| MOB · MOB/UPL · LPA | `residential-kitchen-and-task-surfaces` | P1 |
+| MOB · OFS · DEM · ALL | `residential-entry-and-threshold` | P1 |
+| MOB · DEM · OFS | `residential-internal-circulation` | P1 |
+| MOB · OFS · DEM | `residential-bedroom-living-ot` | P2 |
 
 ---
 
@@ -608,7 +608,7 @@
 
 ---
 
-### `room-acoustic-performance|DEAF-NEU-NDV-DEM`
+### `room-acoustic-performance`
 **Domain:** Room acoustic performance for disability populations; reverberation time (RT60); background noise levels (NC/NR); sound transmission class (STC); noise reduction coefficient (NRC); HVAC acoustic specification; flutter echo; partition performance; acoustic absorption materials. Serves DEAF (speech intelligibility), NEU (noise sensitivity, cognitive fatigue), NDV (sensory overload), DEM (acoustic calm).
 **Covers items:** A-01 · A-02 · A-03 · A-04 · A-05 · A-06 · A-07 · A-08 · A-09 · A-14
 **Governing compendium concept group:** CG 9
@@ -637,7 +637,7 @@
 
 ---
 
-### `assistive-listening-systems|DEAF`
+### `assistive-listening-systems`
 **Domain:** Assistive listening system installation and performance; induction hearing loop (ILS) geometry and field strength; IEC 60118-4 / BS EN 60118-4 compliance; counter loop placement; room perimeter loop; Auracast / Bluetooth LE Audio as successor technology; ITU-T H.series development; cochlear implant telecoil interface; loop coverage mapping.
 **Covers items:** A-10 · A-10b · A-11 · A-12
 **Governing compendium concept group:** CG 3.3
@@ -666,7 +666,7 @@
 
 ---
 
-### `sensory-relief-space-design|NDV-NEU-MH-OFS`
+### `sensory-relief-space-design`
 **Domain:** Quiet room and sensory room provision; low-stimulation enclosure design; sensory gradient from entry to occupation; olfactory control and fragrance-free zones; graduated re-entry from sensory room to general space; no-sound-masking requirement for NEU populations; sensory decompression space evidence; ASPECTSS design principles in non-school settings; trauma-informed spatial decompression.
 **Covers items:** A-13 · A-16 · A-17 · D-05 · F-01 · F-02 · F-03
 **Governing compendium concept group:** CG 5 (emerging vocabulary)
@@ -694,7 +694,7 @@
 
 ---
 
-### `therapeutic-lighting-design|NEU-NDV-DEM-VIS`
+### `therapeutic-lighting-design`
 **Domain:** Circadian lighting and melanopic equivalent daylight illuminance (EML/EDI); flicker-free LED specification (IEEE 1789-2015); individual dimming and user control; indirect and cove lighting; warm colour temperature for evening (CCT ≤2700 K); elimination of fluorescent overhead lighting; maximisation of natural light; lighting as DEM orientation support; NEU photosensitivity mitigation.
 **Covers items:** B-01 · B-03 · B-04 · B-06 · B-07 · B-09 · B-11
 **Ageing-in-place lens:** Age-related contrast sensitivity decline, scotopic vision loss, and increased glare sensitivity make therapeutic lighting a primary ageing-in-place design factor. Search *éclairage adapté au vieillissement* (FR), *altersgerechte Beleuchtung* (DE), *高齢者照明環境* (JA), *äldreboende belysning* (SV) in addition to disability-specific terms.
@@ -721,7 +721,7 @@
 
 ---
 
-### `visual-alerting-and-wayfinding-light|VIS-DEAF`
+### `visual-alerting-and-wayfinding-light`
 **Domain:** Visual fire alarm (VAD/strobe) placement and performance; LRV contrast at critical junctions as wayfinding support; glare and reflectance as navigation barrier; lighting transition zone design at major illuminance changes; lip-reading and sign language illumination (shadow-free face illumination).
 **Covers items:** B-02 · B-05 · B-08 · B-10
 **Governing compendium concept group:** CG 8 (luminance contrast) + CG 2.1 (DEAF signing space)
@@ -749,7 +749,7 @@
 
 ---
 
-### `luminance-contrast-and-pattern|VIS-DEM-NDV`
+### `luminance-contrast-and-pattern`
 **Domain:** Luminance contrast (LRV differential) at critical junctions; colour palette selection for disability populations; pattern avoidance on flooring and walls; DEM inverse contrast rule (floor perceived as drop); plain low-contrast flooring for DEM; colour-coded wayfinding zones; tactile surface differentiation for VIS.
 **Covers items:** C-01 · C-02 · C-03 · C-04 · C-05 · C-06
 **Governing compendium concept group:** CG 8
@@ -779,7 +779,7 @@
 
 ---
 
-### `cognitive-wayfinding-design|DEM-NEU-NDV-VIS`
+### `cognitive-wayfinding-design`
 **Domain:** Cognitive wayfinding design; loop circulation preventing dead ends; single primary route simplicity; toilet visibility without navigation; landmarks at decision points; sightline design; no blind corners; pictogram and single-word signage; transparent glazed panels for orientation; consistent furniture layout. Applies across DEM, NEU, NDV, and VIS populations with different but convergent rationales.
 **Covers items:** D-01 · D-02 · D-03 · D-04 · D-07 · D-08 · D-09 · D-10
 **Governing compendium concept group:** CG 10 (dementia design) + CG 5 (emerging vocabulary)
@@ -808,7 +808,7 @@
 
 ---
 
-### `accessible-circulation-geometry|MOB-OFS`
+### `accessible-circulation-geometry`
 **Domain:** Accessible lift minimum car dimensions; platform lift provision; corridor clear width (minimum and best practice); rest seating intervals on circulation routes; automatic sliding door provision; turning circle/manoeuvring space dimensions; wheelchair circulation routes.
 **Covers items:** E-01 · E-02 · E-08 · E-09 · E-10 · E-11
 **Governing compendium concept group:** CG 6 (turning radius) + CG 7 (door width) + CG 3.1 (corridor width)
@@ -836,7 +836,7 @@
 
 ---
 
-### `threshold-and-level-access|MOB-OFS-ALL`
+### `threshold-and-level-access`
 **Domain:** Level (zero-step) entry provision; ramp gradient specification; ramp design for OFS/MS fatigue; accessible parking dimensions and location; weather protection at entry; slip resistance (PTV/pendulum value) for wet surfaces; threshold design as DAR trigger.
 **Covers items:** E-03 · E-04 · E-05 · E-06 · E-07
 **Ageing-in-place lens:** Level entry and ramp provision are the highest-frequency home modification interventions in ageing-in-place literature across all jurisdictions. This slug will surface Lifetime Homes criterion 5 (level or gently sloping approach), Visitability (one zero-step entry), HAFI (Canada), and Nordic *aldersvennlig bolig* evidence. Search *adaptation du logement pour le maintien à domicile* (FR), *Wohnraumanpassung Schwellensenkung* (DE), *住宅改修段差解消* (JA) in addition to disability-specific terms.
@@ -863,7 +863,7 @@
 
 ---
 
-### `reach-range-and-accessible-controls|MOB-VIS-DEAF`
+### `reach-range-and-accessible-controls`
 **Domain:** Accessible height zone for controls and switches (400–1100 mm AFF); operable force limits for switches and hardware (≤22 N); individual environmental control (IEC) for lighting and temperature; visual paging and real-time captioning provision; accessible intercom and video door entry; adjustable-height work surface range; reception counter accessible height section.
 **Covers items:** G-05 · G-06 · H-01 · H-02 · H-03 · H-04
 **Governing compendium concept group:** CG 7 (door width / operating force)
@@ -895,7 +895,7 @@
 
 ---
 
-### `accessible-bathroom-and-grab-bar|MOB`
+### `accessible-bathroom-and-grab-bar`
 **Domain:** Accessible wet room configuration (zero threshold, no shower tray); grab bar clinical positioning (bilateral, oblique, horizontal, vertical); grab bar geometry and load rating; transfer space at WC; turning circle at bathroom entry; anti-scald provision for MOB/UPL; shower seat provision; residential versus institutional bathroom design differences; home bathroom modification evidence.
 **Covers items:** G-03 · G-04 · I-03 · R-BA (R-BA-01 through R-BA-05)
 **Governing compendium concept group:** CG 3.5 (accessible toilet/wet room) + CG 6 (turning radius)
@@ -923,7 +923,7 @@
 
 ---
 
-### `residential-kitchen-and-task-surfaces|MOB-LPA`
+### `residential-kitchen-and-task-surfaces`
 **Domain:** Residential kitchen accessibility; adjustable-height worktop range; knee clearance under counter for wheelchair users; one-handed kitchen operation; appliance placement and reach range; sink and hob height; storage at accessible height; pull-out shelving; accessible tap and control specification; cooktop safety (anti-scald); laundry appliance height.
 **Covers items:** I-02 · G-05 · R-KIT · R-LAU (partially)
 **Ageing-in-place lens:** Kitchen modification evidence is the second most common home adaptation category in ageing-in-place literature. *Küchenanpassung für Senioren* (DE), *adaptation cuisine maintien à domicile* (FR), *キッチン改修 高齢者* (JA) are primary search terms. Height-adjustable kitchen evidence base (Neff, Blum) is primarily European; North American evidence emphasises knee clearance.
@@ -950,7 +950,7 @@
 
 ---
 
-### `residential-entry-and-threshold|MOB-OFS-DEM`
+### `residential-entry-and-threshold`
 **Domain:** Residential entry accessibility; zero-step threshold at principal entrance; covered approach and weather protection; accessible parking adjacent to dwelling; door hardware at entry (lever handle, operable force); video door entry with visual feedback; threshold as DAR trigger; accessible approach route from parking to entry; garage to dwelling access.
 **Covers items:** R-ENT · R-GAR · E-06 (residential application)
 **Ageing-in-place lens:** Entry threshold and approach route modifications are the highest-frequency interventions in home modification programmes across all jurisdictions. This slug will be the primary entry point for Lifetime Homes criterion 1–4 (approach and entry), Visitability (one zero-step entry), HAFI programme evidence (Canada), *MaPrimeAdapt* (FR), *Wohnraumanpassung Eingang* (DE), and Nordic *aldersvennlig bolig* entry criteria. The ageing-in-place evidence base for this slug exceeds the disability-specific evidence base in volume — search both; distinguish in synthesis.
@@ -976,7 +976,7 @@
 
 ---
 
-### `residential-internal-circulation|MOB-DEM-OFS`
+### `residential-internal-circulation`
 **Domain:** Residential hallway and internal corridor clear widths; turning circle at doorways and in hallways; stair design (rise, going, pitch); stair handrail provision (bilateral, continuous, extended); stair nosing luminance contrast; circulation-route grab bar provision; stair as DAR trigger (future lift provision); hallway width as wheelchair passing space.
 **Covers items:** R-HAL · R-STA
 **Governing compendium concept group:** CG 6 (turning radius) + CG 7 (door width) + CG 3.1 (corridor width)
@@ -1004,7 +1004,7 @@
 
 ---
 
-### `residential-bedroom-living-ot|MOB-OFS-DEM`
+### `residential-bedroom-living-ot`
 **Domain:** OT home modification evidence in residential bedroom, living room, and laundry contexts; hoist and ceiling track provision (bedroom); transfer space at bed; bed height and adjustability; living room seating height variety; reach to controls and sockets in living room and bedroom; laundry appliance height and reach; home modification programme evidence (HAFI, Disabled Facilities Grant, ANAH MaPrimeAdapt, *bostadsanpassningsbidrag*, *boligtilpasningsstøtte*); post-occupancy evaluation of home modifications.
 **Covers items:** R-BED · R-LIV · R-LAU
 **Routing note:** Evidence for this slug is most efficiently surfaced via `OT-built-environment-interface` (already registered) supplemented by residential-specific and ageing-in-place terms below. When both slugs are available in BPC, retrieve `OT-built-environment-interface` first and use this slug for residential-specific depth where evidence is thin.
