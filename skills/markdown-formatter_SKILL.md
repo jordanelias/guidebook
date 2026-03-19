@@ -94,19 +94,6 @@ Write the change log before producing the corrected output. If no changes needed
 
 ---
 
-## What This Skill Does NOT Do
-
-- Does not change heading text content (wording, order, meaning)
-- Does not rewrite prose
-- Does not move sections
-- Does not add or delete sections
-- Does not correct grammar or style
-- Does not audit evidence or framing
-
-All content decisions belong to other skills. This skill is a mechanical formatter.
-
----
-
 ## Escalation Triggers
 
 Stop and confirm with user:
