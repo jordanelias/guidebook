@@ -124,3 +124,15 @@ GAP-075 | P3 | OPEN | multilingual-research | mobility-built-environment | ES TH
 GAP-075 | P2 | OPEN | multilingual-research | accessible-bathroom-and-grab-bar | 16 jurisdictions NOT-RUN: IE/SG/SE/FR/BE/NL/CH/DK/FI/KR/CN/BR/ES/PT/IT/EU/ISO — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:22
 
 GAP-076 | P2 | OPEN | multilingual-research | residential-kitchen-and-task-surfaces | 14 jurisdictions NOT-RUN: NO/IE/SG/SE/BE/CH/DK/FI/KR/CN/BR/PT/IT/EU; NZ/JP THIN — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:47
+
+GAP-RAP-01 | P2 | OPEN | multilingual-research | A-01/A-02/A-08 | NDV/AUT acoustic provisions: no jurisdiction has a quantified RT60 target specific to autistic users. Bettarello et al. (2021) and Caniato et al. (2024) are the strongest available evidence but do not produce a normative standard. Guidebook's current NDV acoustic targets (NC-25, RT60 ≤ 0.6 s) are derived from general standards and are confirmed insufficient for this population. Recommend flagging all Category A items with NDV population coding as THIN-POPULATION-SPEC pending new research. | 2026-03-19
+
+GAP-RAP-02 | P1 | CLOSED [2026-03-19] | citation-verifier | A-01/A-02/A-03 etc. | Bettarello et al. (2021) Applied Sciences 11(9), 3942 DOI:10.3390/app11093942 — VERIFIED CORRECT. No citation correction required. | 2026-03-19
+
+GAP-RAP-03 | P2 | OPEN | multilingual-research | A-08 | NC-25 to dB(A) equivalence note absent from guidebook. NC-25 ≈ 33–37 dB(A) depending on frequency content. DIN 18041:2016 does not use NC nomenclature but aligns. Cross-reference equivalence should be added to A-08 evidence basis note. | 2026-03-19
+
+GAP-RAP-04 | P3 | OPEN | bibliography-updater | Appendix A / bibliography | AIJ AIJES-S001-2008 (学校施設の音環境保全基準) — primary Japanese room acoustic standard for schools — absent from guidebook bibliography and Appendix A. Add before next publication. | 2026-03-19
+
+GAP-RAP-05 | P3 | OPEN | bibliography-updater | Appendix A / bibliography | UNI 11532-2:2020 — primary Italian school acoustic standard; explicitly addresses hearing-deficit and attention/concentration disorder populations (categoria A3.1/A4); absent from guidebook bibliography and Appendix A. Add before next publication. | 2026-03-19
+
+GAP-RAP-06 | P2 | OPEN | item-specification-writer | A-02/A-08 + DEAF item | DEAF-specific RT60 target: ANSI/ASA S12.60-2010/Part 1 specifies ≤ 0.3 s for classrooms with hearing-impaired students (≤ 283 m³) — Tier 1 evidence (Iglehart 2020). Guidebook does not state a DEAF-specific RT60 sub-target. Recommend adding a population-differentiated note to the NR-EDU matrix and to A-08 HVAC noise control item: where DEAF is a primary population in a classroom ≤ 283 m³, RT60 target is ≤ 0.3 s (not the general ≤ 0.5–0.6 s). | 2026-03-19
