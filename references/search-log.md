@@ -5,7 +5,7 @@
 ---
 
 ```yaml
-slug: mobility-wheelchair-built-environment|MOB
+slug: mobility-wheelchair-built-environment
 query: "ambulatory mobility upper limb impairment accessible built environment OT evidence"
 last_searched: 2026-03-17 17:00
 early_close_triggered: true
@@ -25,7 +25,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Clemson2023, DSouza2011, AlLawati2017, LeeS2017, Kennedy2015, Levine2023, Levine2025, KimC2014, Hutchison2023, Cockayne2021]
-bpc_ref: "mobility-wheelchair-built-environment|MOB"
+bpc_ref: "mobility-wheelchair-built-environment"
 thin_flags: []
 no_data_flags: []
 ```
@@ -33,7 +33,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: visual-hearing-impairment-built-environment|VIS|DEAF
+slug: visual-hearing-impairment-built-environment
 query: "visual impairment hearing impairment accessible built environment wayfinding lighting acoustics"
 last_searched: 2026-03-17 18:30
 early_close_triggered: true
@@ -53,7 +53,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Zali2025, Frontiers2021, Dain2022, Ryskulova2021, LuSR2018, Bauman2010-DeafSpace, IEC60118-4, ISO23599-2019, NorgesBlind-krav]
-bpc_ref: "visual-hearing-impairment-built-environment|VIS|DEAF"
+bpc_ref: "visual-hearing-impairment-built-environment"
 thin_flags: []
 no_data_flags: []
 ```
@@ -61,7 +61,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: neurological-dementia-built-environment|NEU|DEM
+slug: neurological-dementia-built-environment
 query: "neurological ABI dementia built environment design occupational therapy evidence"
 last_searched: 2026-03-17 19:30
 early_close_triggered: true
@@ -81,7 +81,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [VanBuuren2022, Milà-Villarroel2020, Fleming2011-EAT, DSDC-EADDAT, Davis2010-MS-thermo, Christogianni2022, Brown2023-ABI-OT, AOTA2023-TBI, Nakanishi2012-JA]
-bpc_ref: "neurological-dementia-built-environment|NEU|DEM"
+bpc_ref: "neurological-dementia-built-environment"
 thin_flags: []
 no_data_flags: []
 ```
@@ -89,7 +89,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: neurodivergent-mental-health-built-environment|NDV|MH
+slug: neurodivergent-mental-health-built-environment
 query: "neurodivergent autism ADHD PTSD trauma mental health built environment design evidence"
 last_searched: 2026-03-17 20:00
 early_close_triggered: true
@@ -109,7 +109,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [PAS6463-2022, Mostafa-ASPECTSS, PMC9658651-TID, PMC10689333-TID-youth, Motionspot-2022, BuroHappold-2024, SAMHSA-TIC, Cuningham-TID]
-bpc_ref: "neurodivergent-mental-health-built-environment|NDV|MH"
+bpc_ref: "neurodivergent-mental-health-built-environment"
 thin_flags: [ZH]
 no_data_flags: []
 ```
@@ -117,7 +117,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS
+slug: chronic-pain-fatigue-spectrum-built-environment
 query: "chronic pain fibromyalgia ME/CFS POTS built environment design occupational therapy evidence"
 last_searched: 2026-03-18 16:30
 early_close_triggered: false
@@ -138,14 +138,14 @@ languages:
   KO: {status: NO-DATA, results: 0, db: [web], note: "Korean Welfare Facilities Standard covers MOB/sensory only; Korean OT CFS literature clinical only"}
   IT: {status: NO-DATA, results: 0, db: [web], note: "DM 236/89 and DPR 503/96 cover motoria/sensoriale only; Italian OT fibromialgia literature clinical only; CNAPPC follows same framework"}
 top_sources: [PMC6260403-OT-CP, AOTA-FM-2018, Autonomic-POTS-2018, CDC-MECFS, Bateman-Horne, PMID18805903-POTS-CFS]
-bpc_ref: "chronic-pain-fatigue-spectrum-built-environment|PAIN|OFS"
+bpc_ref: "chronic-pain-fatigue-spectrum-built-environment"
 thin_flags: [SV, FR, ES, PT]
 no_data_flags: [DE, NO, DA, FI, ZH, JA, NL, KO, IT]
 ```
 
 ## deafblind-built-environment-design|DBL
 ```yaml
-slug: deafblind-built-environment-design|DBL
+slug: deafblind-built-environment-design
 query: "DeafBlind built environment design tactile navigation intervenor space accessible building standards"
 last_searched: 2026-03-18 14:30
 early_close_triggered: true
@@ -160,7 +160,7 @@ languages:
   ZH: {status: NOT-RUN, results: 0}
   JA: {status: NOT-RUN, results: 0}
 top_sources: [DeafSpace-2010, NELOWV-2025, JJones-2025, Nordic-Welfare-Centre, MDPI-Buildings-2024]
-bpc_ref: "deafblind-built-environment-design|DBL"
+bpc_ref: "deafblind-built-environment-design"
 thin_flags: [NO, SV, DE]
 no_data_flags: []
 gap_flagged: "THIN BASE - zero Tier 1-2 evidence in any language; GAP-NEW-01/02/03/04 confirmed"
@@ -168,7 +168,7 @@ gap_flagged: "THIN BASE - zero Tier 1-2 evidence in any language; GAP-NEW-01/02/
 
 ## intellectual-disability-built-environment-design|IntD
 ```yaml
-slug: intellectual-disability-built-environment-design|IntD
+slug: intellectual-disability-built-environment-design
 query: "intellectual disability inclusive design built environment pictogram wayfinding NDIS SDA evidence"
 last_searched: 2026-03-18 14:30
 early_close_triggered: true
@@ -183,7 +183,7 @@ languages:
   ZH: {status: NOT-RUN, results: 0}
   JA: {status: NOT-RUN, results: 0}
 top_sources: [MDPI-Buildings-2026, PMC-2025-IntD-scoping, NDIS-SDA-2019, Castell-2008, CSA-B651-23]
-bpc_ref: "intellectual-disability-built-environment-design|IntD"
+bpc_ref: "intellectual-disability-built-environment-design"
 thin_flags: [NO, SV, DE]
 no_data_flags: []
 gap_flagged: "THIN BASE - Tier 3-4 evidence; quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed"
@@ -194,7 +194,7 @@ gap_flagged: "THIN BASE - Tier 3-4 evidence; quantified specs absent from all st
 ---
 
 ```yaml
-slug: accessible-laundry-room-design|MOB
+slug: accessible-laundry-room-design
 query: "accessible laundry room wheelchair front-loading washer plinth height appliance reach standards"
 last_searched: 2026-03-18 17:00
 early_close_triggered: false
@@ -214,7 +214,7 @@ languages:
   KO: {status: THIN, results: 1, db: [web], note: "Korean welfare standards — no laundry-specific provisions"}
   IT: {status: NO-DATA, results: 0, db: [web]}
 top_sources: [ADA-S611-2010, US-Access-Board-Washers, SD-State-Extension-2020, NDIS-SDA-LAU, Boverket-BBR-3-148, DIN-18040-2-LAU, UDLL-Rossetti-2021]
-bpc_ref: "accessible-laundry-room-design|MOB"
+bpc_ref: "accessible-laundry-room-design"
 thin_flags: [NO, DA, FI, FR, ZH, JA, KO]
 no_data_flags: [NL, ES, PT, IT]
 ```
@@ -222,7 +222,7 @@ no_data_flags: [NL, ES, PT, IT]
 ---
 
 ```yaml
-slug: floor-vibration-wheelchair-disability|MOB|NEU
+slug: floor-vibration-wheelchair-disability
 query: "floor vibration wheelchair users disability ISO 2631 building accessibility 0.1 m/s RMS"
 last_searched: 2026-03-18 17:00
 early_close_triggered: false
@@ -242,7 +242,7 @@ languages:
   KO: {status: NO-DATA, results: 0, db: [web]}
   IT: {status: NO-DATA, results: 0, db: [web]}
 top_sources: [ISO-10137-2007, ISO-2631-1, Garcia-Mendez-2013-JSCM, Misch-2022-JRATE, SCI-P354-2007, Chenier-Aissaoui-2014, NHS-HTM-08-01]
-bpc_ref: "floor-vibration-wheelchair-disability|MOB|NEU"
+bpc_ref: "floor-vibration-wheelchair-disability"
 thin_flags: [DE, FR]
 no_data_flags: [NO, SV, DA, FI, ZH, JA, NL, ES, PT, KO, IT]
 note: "CRITICAL FINDING: A-09 0.1 m/s RMS threshold — ISO 2631-1 is occupational standard for able-bodied seated workers; Garcia-Mendez 2013 confirms wheelchair users are continuously exposed ABOVE ISO 2631-1 health caution zone in daily community use (0.83 ± 0.17 m/s2). Chenier & Aissaoui explicitly note ISO 2631-1 was not developed for SCI/disability populations. No disability-specific vibration standard exists for built environments. 0.1 m/s RMS cited in A-09 is NOT an ISO 2631-1 value — source of this specific threshold requires verification."
@@ -251,7 +251,7 @@ note: "CRITICAL FINDING: A-09 0.1 m/s RMS threshold — ISO 2631-1 is occupation
 ---
 
 ```yaml
-slug: biophilic-design-healthcare-workplace|BIO
+slug: biophilic-design-healthcare-workplace
 query: "biophilic design healthcare workplace disability mental health ART SRT evidence accessible environments"
 last_searched: 2026-03-04 14:00
 early_close_triggered: true
@@ -272,7 +272,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Ulrich1984-Science, Kaplan1995-JEP, Browning2014-14Patterns, Hutson2023-Neuroinclusive, UNSW2024-Autism-Nature, Ulrich2008-HERD-600studies, WELL-v2-Biophilic, PAS6463-2022]
-bpc_ref: "biophilic-design-healthcare-workplace|BIO"
+bpc_ref: "biophilic-design-healthcare-workplace"
 thin_flags: [NO, SV, FR, DA, ZH]
 no_data_flags: [FI]
 ```
@@ -280,7 +280,7 @@ no_data_flags: [FI]
 ---
 
 ```yaml
-slug: thermal-comfort-older-adults-care-settings|TC
+slug: thermal-comfort-older-adults-care-settings
 query: "thermal comfort older adults dementia care settings heat shock bathroom temperature cardiovascular disability"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -301,7 +301,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Baquero2023-n1065, AIJ-HeatShock-Epidemiology, MHLW-Bathtub-Deaths, ISO7730-2005, WELL-v2-Thermal, CIBSE-TM52, Fanger1970]
-bpc_ref: "thermal-comfort-older-adults-care-settings|TC"
+bpc_ref: "thermal-comfort-older-adults-care-settings"
 thin_flags: [NO, SV, DA, FI, ZH]
 no_data_flags: []
 ```
@@ -309,7 +309,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: acoustics-speech-intelligibility-disability|A
+slug: acoustics-speech-intelligibility-disability
 query: "acoustics speech intelligibility RT60 NC disability hearing impairment neurodivergence built environment"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -330,7 +330,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Bettarello2021-ASD-Acoustic, Caniato2024, PAS6463-2022, IEC60118-4-2017, ANSI-ASA-S12.60, SINTEF-87Schools, FGI-Guidelines, IEEE1789-2015]
-bpc_ref: "acoustics-speech-intelligibility-disability|A"
+bpc_ref: "acoustics-speech-intelligibility-disability"
 thin_flags: [DA, FI, ZH]
 no_data_flags: []
 ```
@@ -338,7 +338,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: wayfinding-dementia-spatial-design|DEM
+slug: wayfinding-dementia-spatial-design
 query: "wayfinding dementia spatial design loop floor plan toilet visibility DSDC EADDAT evidence"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -359,7 +359,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Marquardt2011-HERD-ToiletVisibility, DSDC-EADDAT-2022, BuroKade-DeHogeweyk-POE, NationaltVidenscenter-SensoryGarden, VillageLandais-FR-eval, Alzheimer-Society-Design, SBi-anvisning-263-2016]
-bpc_ref: "wayfinding-dementia-spatial-design|DEM"
+bpc_ref: "wayfinding-dementia-spatial-design"
 thin_flags: [NO, FI, ZH]
 no_data_flags: []
 ```
@@ -367,7 +367,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: fold-down-grab-bar-specification|MOB
+slug: fold-down-grab-bar-specification
 query: "fold-down grab bar hinged rail specification load rating SWL accessible bathroom standards"
 last_searched: 2026-03-12 18:00
 early_close_triggered: false
@@ -388,7 +388,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [ADA-Access-Board-Ch6, WHO-APS-Draft-2024, ISO17966-2016, ISO21542-2021-S14, FHA-Design-Manual, NS11001-2-2018, Levine2023-KITE, Lee2017-HERD-BilateralFoldown]
-bpc_ref: "fold-down-grab-bar-specification|MOB"
+bpc_ref: "fold-down-grab-bar-specification"
 thin_flags: [SV, FR, ZH, JA]
 no_data_flags: [DA, FI]
 ```
@@ -396,7 +396,7 @@ no_data_flags: [DA, FI]
 ---
 
 ```yaml
-slug: bariatric-turning-radius-built-environment|BAR
+slug: bariatric-turning-radius-built-environment
 query: "bariatric wheelchair turning radius built environment specification evidence IDeA Center"
 last_searched: 2026-03-12 18:00
 early_close_triggered: false
@@ -417,7 +417,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Steinfeld2006-RESNA-1925mm, VA-BFDS-2025, DSouza2011-IDeA-339, IWA-1800, ASPHP-Bariatric-Guidebook, CSA-B651-23]
-bpc_ref: "bariatric-turning-radius-built-environment|BAR"
+bpc_ref: "bariatric-turning-radius-built-environment"
 thin_flags: [DE]
 no_data_flags: [NO, SV, FR, DA, FI, ZH, JA]
 note: "EN-primary evidence base. Steinfeld 2006 RESNA 1925mm is the sole empirical peer-reviewed study. All other sources are standards or grey literature."
@@ -426,7 +426,7 @@ note: "EN-primary evidence base. Steinfeld 2006 RESNA 1925mm is the sole empiric
 ---
 
 ```yaml
-slug: ot-frameworks-built-environment|OT
+slug: ot-frameworks-built-environment
 query: "occupational therapy frameworks built environment ICF Housing Enabler Competence Press PEOP EHP evidence"
 last_searched: 2026-03-04 14:00
 early_close_triggered: true
@@ -447,7 +447,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [ICF-WHO-2001, Iwarsson-Nygren-Slaug-2005-SJOT, Lawton-Nahemow-1973, Wahl-Iwarsson-Oswald-2012, Gibson-1979-Affordances, Kaplan1989-ART, Ulrich1984-SRT, Dunn-SPM, WFOT-position]
-bpc_ref: "ot-frameworks-built-environment|OT"
+bpc_ref: "ot-frameworks-built-environment"
 thin_flags: [NO, FR, DA, JA]
 no_data_flags: [FI, ZH]
 ```
@@ -455,7 +455,7 @@ no_data_flags: [FI, ZH]
 ---
 
 ```yaml
-slug: jurisdiction-matrix-accessibility-standards|INTL
+slug: jurisdiction-matrix-accessibility-standards
 query: "accessibility standards jurisdictions ADA BS 8300 DIN 18040 NCC ISO 21542 built environment international comparison"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -476,7 +476,7 @@ languages:
   KO: {status: SEARCHED, results: 3, db: [web], note: "BF certification 94 indicators; KODDI; MOLIT expansion 0.9m door 2024"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — 13 jurisdictions confirmed coverage"}
 top_sources: [ADA2010, BS8300-2018, DIN18040-1-2-3, NS11001-2018, BFS2024-12, NCC2022, BCA2025, ISO21542-2021, EN17210-2021, CRPD-Art9, Bbl2024, NEN9120-2025, MLIT2021, GB55019-2021, BF-KO-2024]
-bpc_ref: "jurisdiction-matrix-accessibility-standards|INTL"
+bpc_ref: "jurisdiction-matrix-accessibility-standards"
 thin_flags: []
 no_data_flags: []
 ```
@@ -484,7 +484,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: ecological-psychology-haptic-affordances-built-environment|ALL
+slug: ecological-psychology-haptic-affordances-built-environment
 query: "ecological psychology affordances haptic perception built environment accessible design Warren Gibson body-scaled"
 last_searched: 2026-03-04 14:00
 early_close_triggered: true
@@ -505,7 +505,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Gibson1979-Affordances, Warren1984-Stair, Warren-Whang1987, ONeil-Russell2017, Pagano-Day-Hartman2021, Heft2001-EcologicalPsychology, Rauschecker2018-Haptic]
-bpc_ref: "ecological-psychology-haptic-affordances-built-environment|ALL"
+bpc_ref: "ecological-psychology-haptic-affordances-built-environment"
 thin_flags: [DE, FR]
 no_data_flags: [NO, SV, DA, FI, ZH, JA]
 note: "EN-primary corpus. Non-English literature does not produce parallel research on ecological psychology applied to accessible design. Framework is anglophone in origin and application."
@@ -514,7 +514,7 @@ note: "EN-primary corpus. Non-English literature does not produce parallel resea
 ---
 
 ```yaml
-slug: wayfinding-cognitive-science-spatial-design|ALL
+slug: wayfinding-cognitive-science-spatial-design
 query: "wayfinding cognitive science spatial design legibility decision points landmarks built environment"
 last_searched: 2026-03-04 14:00
 early_close_triggered: true
@@ -535,7 +535,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Lynch1960-ImageCity, Holscher-Wiener-corpus, Hegarty2006, ONeill1991, Marquardt2011-HERD, DSDC-EADDAT-2022, CABE2006]
-bpc_ref: "wayfinding-cognitive-science-spatial-design|ALL"
+bpc_ref: "wayfinding-cognitive-science-spatial-design"
 thin_flags: [NO, SV, FR, ZH, JA]
 no_data_flags: [DA, FI]
 ```
@@ -543,7 +543,7 @@ no_data_flags: [DA, FI]
 ---
 
 ```yaml
-slug: stair-ramp-threshold-biomechanics-accessibility|MOB
+slug: stair-ramp-threshold-biomechanics-accessibility
 query: "stair ramp threshold biomechanics accessibility wheelchair propulsion gradient evidence"
 last_searched: 2026-03-17 17:00
 early_close_triggered: false
@@ -564,7 +564,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Kim2014-KoreaRamp, AlLawati2017-Threshold, Harper2022-StairContrast, Brown2023-Ergonomics, Boverket-SINTEF-1in20, DIN18040-2-6percent, TEK17-1in15, AIJ-ThresholdFall, Fallah-Ghanbari-2025]
-bpc_ref: "stair-ramp-threshold-biomechanics-accessibility|MOB"
+bpc_ref: "stair-ramp-threshold-biomechanics-accessibility"
 thin_flags: [DA, FI, ZH]
 no_data_flags: []
 ```
@@ -572,7 +572,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: detectable-gradient-protocol-sensory-zones|NDV|DEM
+slug: detectable-gradient-protocol-sensory-zones
 query: "detectable gradient sensory zones transition protocol accessible building neurodivergent dementia"
 last_searched: 2026-03-17 20:00
 early_close_triggered: true
@@ -593,7 +593,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [PAS6463-2022, Mostafa-ASPECTSS-2021, Tola2021-ScopingReview, DSDC-EADDAT-2022, Kaplan1995-JEP]
-bpc_ref: "detectable-gradient-protocol-sensory-zones|NDV|DEM"
+bpc_ref: "detectable-gradient-protocol-sensory-zones"
 thin_flags: [DE, SV, DA]
 no_data_flags: [NO, FR, FI, ZH, JA]
 ```
@@ -601,7 +601,7 @@ no_data_flags: [NO, FR, FI, ZH, JA]
 ---
 
 ```yaml
-slug: residential-dar-provisions-priority-register|MOB
+slug: residential-dar-provisions-priority-register
 query: "DAR design for adaptable readiness residential provisions cost multiplier grab bar blocking accessible housing"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -622,7 +622,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [CAN-ASC-2.8-2025, CSA-B652, Habinteg-LH, RCOT-LivingWell-2023, Levine2023-KITE, hcma-RHF-2024, ABCB-RIS-2021, NS11001-2-2018, DIN18040-2-adaptable]
-bpc_ref: "residential-dar-provisions-priority-register|MOB"
+bpc_ref: "residential-dar-provisions-priority-register"
 thin_flags: [SV, FR, DA, FI, ZH]
 no_data_flags: []
 ```
@@ -630,7 +630,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: accessible-design-economics-cost-premium|ALL
+slug: accessible-design-economics-cost-premium
 query: "accessible design universal design construction cost premium retrofit cost multiplier ROI economics"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -651,7 +651,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [TERRAGON-DStGB-2017, KfW-Prognos-IWU, hcma-RHF-2024, ABCB-CIE-RIS-2021, Ielegems-Vanrie-2024-full, ADA-NationalNetwork, WorldBank-2008, Fuglerud2015-NO, Ratzka1984]
-bpc_ref: "accessible-design-economics-cost-premium|ALL"
+bpc_ref: "accessible-design-economics-cost-premium"
 thin_flags: [SV, FR]
 no_data_flags: [DA, FI, ZH, JA]
 ```
@@ -659,7 +659,7 @@ no_data_flags: [DA, FI, ZH, JA]
 ---
 
 ```yaml
-slug: sensory-processing-model-design-application|NDV
+slug: sensory-processing-model-design-application
 query: "Dunn sensory processing model built environment design application neurodivergent four profiles"
 last_searched: 2026-03-04 14:00
 early_close_triggered: true
@@ -680,7 +680,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Dunn1997-FourProfiles, Dunn1999-SPM-Clinical, PAS6463-2022, AOTA-SPM-Review-2022, Mostafa-ASPECTSS-2021, Tola2021]
-bpc_ref: "sensory-processing-model-design-application|NDV"
+bpc_ref: "sensory-processing-model-design-application"
 thin_flags: [DE, SV]
 no_data_flags: [NO, FR, DA, FI, ZH, JA]
 note: "EN-primary corpus. Dunn's model was developed in English and clinical OT research on its built-environment application is almost entirely English-language."
@@ -689,7 +689,7 @@ note: "EN-primary corpus. Dunn's model was developed in English and clinical OT 
 ---
 
 ```yaml
-slug: luminance-contrast-lrv-evidence-base|VIS
+slug: luminance-contrast-lrv-evidence-base
 query: "luminance contrast LRV 30% stair nosing evidence built environment visual impairment"
 last_searched: 2026-03-12 20:00
 early_close_triggered: false
@@ -710,7 +710,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Harper2022-StairContrast, Brown2023-Ergonomics, Thompson2022-PMC, CNIB2024, AS1428.1-2021, DIN32975-K07, NIHR-TreadEdge, USAccessBoard-51mm]
-bpc_ref: "luminance-contrast-lrv-evidence-base|VIS"
+bpc_ref: "luminance-contrast-lrv-evidence-base"
 thin_flags: [DA, FI, ZH]
 no_data_flags: []
 ```
@@ -718,7 +718,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: government-grant-programmes-home-adaptation|ALL
+slug: government-grant-programmes-home-adaptation
 query: "government grant programmes home adaptation disability accessibility UK DFG Australia NDIS Canada"
 last_searched: 2026-03-12 20:00
 early_close_triggered: false
@@ -739,7 +739,7 @@ languages:
   KO: {status: SEARCHED, results: 2, db: [web], note: "주거급여 3-tier ₩5.9M/₩10.95M/₩16.01M; disability add-on ₩3.8M"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [MHCLG-DFG-2024, NDIS-2024, CRA-HATC-2024, VA-SAH-FY2026, ANAH-MaPrimeAdapt-2024, KfW-159-2025, Husbanken-2025, Bostadsanpassning-2024, Riksdagen-Lov116, HDB-EASE2-2025]
-bpc_ref: "government-grant-programmes-home-adaptation|ALL"
+bpc_ref: "government-grant-programmes-home-adaptation"
 thin_flags: [FI, ZH]
 no_data_flags: []
 ```
@@ -747,7 +747,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: european-accessibility-act-scope-clarification|INTL
+slug: european-accessibility-act-scope-clarification
 query: "European Accessibility Act EAA 2019/882 built environment scope digital products member states"
 last_searched: 2026-03-12 20:00
 early_close_triggered: false
@@ -768,7 +768,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — EAA is EU-only"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — EAA is EU-only"}
 top_sources: [Directive-EU-2019-882, EN17210-2021, accessible-eu-centre, NEN9120-2025, Bbl2024, UNE41500-2020, NZS4121-2001-revision, CRPD-NL-2024]
-bpc_ref: "european-accessibility-act-scope-clarification|INTL"
+bpc_ref: "european-accessibility-act-scope-clarification"
 thin_flags: [SV, DA, FI, PT]
 no_data_flags: []
 ```
@@ -776,7 +776,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: ndv-aut-built-environment-quantified-thresholds|NDV
+slug: ndv-aut-built-environment-quantified-thresholds
 query: "neurodivergent autism built environment quantified thresholds dB lux acoustic PAS 6463"
 last_searched: 2026-03-12 20:00
 early_close_triggered: false
@@ -797,7 +797,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Tola2021-ScopingReview, Bettarello2021-ASD-Acoustic, Black2022-Autism-SAGE, PAS6463-2022, Mostafa-ASPECTSS-2021, Caniato2024-PROVISIONAL, SPSM-Tillganglighetsmodellen-2024]
-bpc_ref: "ndv-aut-built-environment-quantified-thresholds|NDV"
+bpc_ref: "ndv-aut-built-environment-quantified-thresholds"
 thin_flags: [SV, FR, DA, FI, ZH, JA]
 no_data_flags: [NO]
 ```
@@ -805,7 +805,7 @@ no_data_flags: [NO]
 ---
 
 ```yaml
-slug: mob-upl-built-environment-evidence-synthesis|MOB
+slug: mob-upl-built-environment-evidence-synthesis
 query: "MOB UPL upper limb impairment built environment evidence synthesis wheelchair turning grab bar kitchen"
 last_searched: 2026-03-17 17:00
 early_close_triggered: false
@@ -826,7 +826,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [DSouza2011-IDeA-339, AlLawati2017-Threshold, Sanford-Bosch2013, Kennedy2015-GrabBarType, Levine2023-KITE, Lee2017-BilateralFoldown, Cockayne2021-OTIS, Togni2022-IMU, Zanotto2023-MSFalls, DIN18040-2-UHandle, SINTEF-SJOT-ramp]
-bpc_ref: "mob-upl-built-environment-evidence-synthesis|MOB"
+bpc_ref: "mob-upl-built-environment-evidence-synthesis"
 thin_flags: []
 no_data_flags: []
 note: "CRITICAL GAP confirmed: zero indexed studies on one-handed kitchen/bathroom built-environment design in any language. UPL evidence base = zero for these specific topics."
@@ -835,7 +835,7 @@ note: "CRITICAL GAP confirmed: zero indexed studies on one-handed kitchen/bathro
 ---
 
 ```yaml
-slug: design-framework-evidence-audit|ALL
+slug: design-framework-evidence-audit
 query: "OT design frameworks evidence audit ICF Competence Press ASPECTSS DeafSpace biophilic evidence classification"
 last_searched: 2026-03-12 18:00
 early_close_triggered: true
@@ -856,7 +856,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [ICF-WHO-2001, Lawton-Nahemow-1973, Ulrich1984-SRT, Kaplan1989-ART, DSDC-429-items, Mostafa-ASPECTSS-UIA, DeafSpace-Edwards-Harold, Holohan2022-TID, SAMHSA-TIC-2014, Wahl-Iwarsson-Oswald-2012]
-bpc_ref: "design-framework-evidence-audit|ALL"
+bpc_ref: "design-framework-evidence-audit"
 thin_flags: [DE, SV]
 no_data_flags: [NO, FR, DA, FI, ZH, JA]
 ```
@@ -864,7 +864,7 @@ no_data_flags: [NO, FR, DA, FI, ZH, JA]
 ---
 
 ```yaml
-slug: jurisdiction-grant-programmes-comprehensive|ALL
+slug: jurisdiction-grant-programmes-comprehensive
 query: "home adaptation grant programmes disability accessibility 17 jurisdictions comprehensive matrix"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -885,7 +885,7 @@ languages:
   KO: {status: SEARCHED, results: 2, db: [web], note: "주거급여 3-tier; disability add-on"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [MHCLG-DFG-2024, VA-SAH-FY2026, ANAH-MaPrimeAdapt-2024, KfW-159-2025, Husbanken-2025, Bostadsanpassning-2024, Riksdagen-Lov116-2024, HDB-EASE2-2025, NDIS-2025, CRA-HATC-2024]
-bpc_ref: "jurisdiction-grant-programmes-comprehensive|ALL"
+bpc_ref: "jurisdiction-grant-programmes-comprehensive"
 thin_flags: [FI]
 no_data_flags: [ZH]
 ```
@@ -893,7 +893,7 @@ no_data_flags: [ZH]
 ---
 
 ```yaml
-slug: body-sizes-supplementary-populations|CHD|LPA|EXH|BAR
+slug: body-sizes-supplementary-populations
 query: "body sizes children short stature dwarfism extreme height bariatric built environment design"
 last_searched: 2026-03-11 20:00
 early_close_triggered: false
@@ -914,7 +914,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Hoover-Fong2021-CLARITY, WHO-Growth-Standards, CDC-NHANES-2015-18, VA-BFDS-2025, NHS-HBN-00-03, FGI-Guidelines, Tofts2017-Australian-LPA, Merker2018-AJMG]
-bpc_ref: "body-sizes-supplementary-populations|CHD|LPA|EXH|BAR"
+bpc_ref: "body-sizes-supplementary-populations"
 thin_flags: [DE, JA]
 no_data_flags: [NO, SV, FR, DA, FI, ZH]
 note: "UNIVERSAL GAP: No international standard in any language addresses CHD, LPA, or EXH built environment provisions. BAR addressed in EN healthcare standards only (FGI, VA, NHS). First-principles anthropometric derivation required for all four populations."
@@ -923,7 +923,7 @@ note: "UNIVERSAL GAP: No international standard in any language addresses CHD, L
 ---
 
 ```yaml
-slug: air-quality-voc-chemical-sensitivity-built-environment|OFS|NDV
+slug: air-quality-voc-chemical-sensitivity-built-environment
 query: "air quality VOC chemical sensitivity MCAS built environment MERV filtration fragrance-free design"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -944,7 +944,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Afrin2020-Brain-Behavior-Immunity, MastCellAction2023, CIBSE-Guide-A-2015, PAS6463-2022, EN-ISO-16000-9, WELL-v2-Air, Steinemann2018, Molderings2011-MCAS-17pct]
-bpc_ref: "air-quality-voc-chemical-sensitivity-built-environment|OFS|NDV"
+bpc_ref: "air-quality-voc-chemical-sensitivity-built-environment"
 thin_flags: [DE]
 no_data_flags: [NO, SV, FR, DA, FI, ZH, JA]
 note: "TIER X: No RCT-level evidence for MERV 13 specification in relation to MCAS symptom reduction in built environments. Specifications are derived from MCAS trigger literature and HVAC engineering standards. Evidence review recommended at next revision. F-04 guidebook item struck from specification library pending stronger evidence — BPC entry retained as evidence record."
@@ -953,7 +953,7 @@ note: "TIER X: No RCT-level evidence for MERV 13 specification in relation to MC
 ---
 
 ```yaml
-slug: ms-thermal-temperature-conflict-resolution|NEU|PAIN|OFS
+slug: ms-thermal-temperature-conflict-resolution
 query: "MS Uhthoff phenomenon thermal conflict fibromyalgia temperature built environment design resolution"
 last_searched: 2026-03-04 14:00
 early_close_triggered: false
@@ -974,7 +974,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [MSIF-Atlas2023, Staud2011-FM-Warmth, Geisser2021-FM-AcousticThermal, Baquero2023-n1065, CDC-MECFS, Newcastle-POTS-2018, ISO7730-2005, CAOT2018, WELL-v2-Thermal]
-bpc_ref: "ms-thermal-temperature-conflict-resolution|NEU|PAIN|OFS"
+bpc_ref: "ms-thermal-temperature-conflict-resolution"
 thin_flags: [DE, SV, JA]
 no_data_flags: [NO, FR, DA, FI, ZH]
 note: "TC-01 guidebook item status uncertain (may have been struck pending stronger evidence) — BPC entry retained as evidence record for the conflict. Individual population evidence is Tier 2-3; the combined conflict resolution is expert consensus only."
@@ -983,7 +983,7 @@ note: "TC-01 guidebook item status uncertain (may have been struck pending stron
 ---
 
 ```yaml
-slug: visitability-residential-accessibility-minimum-standards|MOB
+slug: visitability-residential-accessibility-minimum-standards
 query: "visitability residential accessibility minimum standards three requirements cost construction"
 last_searched: 2026-03-05 00:00
 early_close_triggered: false
@@ -1004,7 +1004,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Concrete-Change-1987, ADA-FHA-7-features, DIN18040-2-adaptable, NS11001-2-2018, Habinteg-LH, CMHC-Universal-Design, NCC2022-Livable]
-bpc_ref: "visitability-residential-accessibility-minimum-standards|MOB"
+bpc_ref: "visitability-residential-accessibility-minimum-standards"
 thin_flags: [SV, FR, DA, FI, ZH]
 no_data_flags: []
 ```
@@ -1012,7 +1012,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: cross-population-conflict-resolutions|ALL
+slug: cross-population-conflict-resolutions
 query: "accessible design conflict resolution multi-disability cross-population specification priority hierarchy"
 last_searched: 2026-03-09 15:00
 early_close_triggered: true
@@ -1033,7 +1033,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Guidebook-v1.6-PartIIB, DSDC-2024-PatternFalls, ISO23599-2019, IEC60118-4, PAS6463-2022, Marquardt2011]
-bpc_ref: "cross-population-conflict-resolutions|ALL"
+bpc_ref: "cross-population-conflict-resolutions"
 thin_flags: [DE]
 no_data_flags: [NO, SV, FR, DA, FI, ZH, JA]
 note: "EN-primary. Cross-population conflict resolution methodology is developed within the guidebook; no parallel framework exists in non-English literature."
@@ -1042,7 +1042,7 @@ note: "EN-primary. Cross-population conflict resolution methodology is developed
 ---
 
 ```yaml
-slug: multilingual-evidence-convergence-non-english|ALL
+slug: multilingual-evidence-convergence-non-english
 query: "multilingual systematic review accessible built environment non-English evidence convergence"
 last_searched: 2026-03-09 18:00
 early_close_triggered: false
@@ -1063,7 +1063,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — 12 languages searched"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Marquardt2011-TUDresden-DE, AIJ-HeatShock-JA, BuroKade-DeHogeweyk-NL, TERRAGON-DStGB-2017-DE, SINTEF-87Schools-NO, Boverket2022-SV, NationaltVidenscenter-DA, Ielegems-Vanrie-2024-full-NL-FR, CEREMA-FR, JIS-T9251-JA]
-bpc_ref: "multilingual-evidence-convergence-non-english|ALL"
+bpc_ref: "multilingual-evidence-convergence-non-english"
 thin_flags: [FI, ZH]
 no_data_flags: []
 ```
@@ -1110,7 +1110,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: deaf-spatial-design|DEAF
+slug: deaf-spatial-design
 query: "Deaf signing space corridor width sightlines visual communication built environment spatial design"
 last_searched: 2026-03-19 01:05
 early_close_triggered: false
@@ -1185,13 +1185,13 @@ top_sources:
 
 thin_flags: [SV, NO, DA, FI, FR, DE, JA, NL, ES, PT, KO, IT]
 no_data_flags: [ZH]
-bpc_ref: "deaf-spatial-design|DEAF"
+bpc_ref: "deaf-spatial-design"
 ```
 
 ---
 
 ```yaml
-slug: deaf-acoustic-built-environment|DEAF
+slug: deaf-acoustic-built-environment
 query: "Deaf hard of hearing acoustic environment reverberation hearing loop STI cochlear implant built environment"
 last_searched: 2026-03-19 01:45
 early_close_triggered: false
@@ -1262,13 +1262,13 @@ top_sources:
 
 thin_flags: [ZH, JA]
 no_data_flags: []
-bpc_ref: "deaf-acoustic-built-environment|DEAF"
+bpc_ref: "deaf-acoustic-built-environment"
 ```
 
 ---
 
 ```yaml
-slug: deafblind-built-environment|DBL
+slug: deafblind-built-environment
 query: "DeafBlind built environment tactile infrastructure protactile intervenor spatial clearance vibrotactile orientation"
 last_searched: 2026-03-19 02:40
 early_close_triggered: false
@@ -1341,5 +1341,5 @@ top_sources:
 
 thin_flags: [FR, DE, NL, IT, KO]
 no_data_flags: [ZH]
-bpc_ref: "deafblind-built-environment|DBL"
+bpc_ref: "deafblind-built-environment"
 ```
