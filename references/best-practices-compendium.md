@@ -1258,7 +1258,7 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 
 ---
 
-## OFS-built-environment|OFS
+## OFS-built-environment
 **Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 5 (all provisions — extrapolated from clinical + general seating codes; no OFS-specific standard in any jurisdiction)
 
 ### Concept boundary notes
@@ -1325,7 +1325,7 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 
 ---
 
-## neurological-built-environment|NEU
+## neurological-built-environment
 **Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 1–5 (wayfinding strong; architectural standards partial)
 
 ### Concept boundary notes
@@ -1392,7 +1392,7 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 
 ---
 
-## dementia-built-environment|DEM
+## dementia-built-environment
 **Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 3–5 (strong systematic review base; quantified lighting from DSDC Stirling)
 
 ### Concept boundary notes
