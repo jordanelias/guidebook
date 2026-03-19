@@ -15,13 +15,7 @@ description: >
 **Output audience:** Design professionals AND academic reviewers.  
 **Research log:** `research-log-manager CHECK` before any search run. `research-log-manager LOG` after. Skipping either is an error.
 
-**PICO sequence (mandatory):** Begin with population need and functional outcome evidence — not standard values.
-1. What does best-practice evidence show is optimal for this population?
-2. What do standards require as minimum?
-3. What is the gap between optimal and minimum?
-4. What is the design synthesis?
-
-Never anchor on a standard value and seek confirming evidence. Standards appear at Step 2, not Step 1.
+**PICO sequence (mandatory):** Begin with population need and functional outcome (optimal first) — not standard values. Standards appear at Step 2 as minimum baseline only.
 
 ---
 
@@ -58,9 +52,9 @@ Cluster name: [term A OR term B] AND [term C OR term D] NOT [term E]
 - Quality appraisal tools: RCT → PEDro; Observational → NOS; Systematic review → AMSTAR-2; Standards → AGREE-II
 
 ### Section 4 — Evidence Hierarchy (project-specific)
-Per guidebook §1.5. Co-1 (lived experience) = Tier 1 (OT clinical) in authority. Both precede Tier 2 (NGO/advocacy) → Tier 3 (OT CPGs — CAOT, AOTA, RCOT, COTEC, WFOT, national equivalents) → Tier 4 (systematic reviews / meta-analyses) → Tier 5 (international standards) → Tier 6 (national beyond-code frameworks) → Tier 7 (statutory codes).
+Per guidebook §1.5. Co-1 (lived experience) = Tier 1 (OT clinical) in authority. Both precede Tier 2 (NGO/advocacy) → Co-2 (OT CPGs — CAOT, AOTA, RCOT, COTEC, WFOT, national equivalents) → Tier 3 (systematic reviews / meta-analyses) → Tier 4 (international standards with evidence basis) → Tier 5 (national beyond-code frameworks) → Tier 6 (statutory codes).
 
-Tiers 5–7 are authority sources, not evidence of effect. Tiers 1–4 and Co-1 provide empirical evidence of effect. Both types are needed; they must not be conflated.
+Tiers 5–6 are authority sources, not evidence of effect. Tiers 1–4, Co-1, and Co-2 provide empirical evidence of effect. Both types are needed; they must not be conflated.
 
 ### Section 5 — Priority Research Agenda
 
