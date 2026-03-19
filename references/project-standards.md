@@ -334,10 +334,19 @@ DATE: 2026-03-19 04:08
 
 RULE: research-log-manager schema carries five new Option 2 fields: native_aliases, concept_boundary_warnings, co1_pass_summary, native_standards_pass_summary, companion_networks, citation_mining, at_database_pass. All must be populated on every LOG call.
 CONDITION: Every research-log-manager LOG call.
-ACTION: Populate all Option 2 fields. Empty native_aliases or missing concept_boundary_warnings at LOG time = BLOCKER.
-DATE: 2026-03-19 04:08
+ACTION: Populate all Option 2 fields. Empty native_aliases or missing concept_boundary_warnings at LOG time = BLOCKER. DATE: 2026-03-19 04:08
 
+RULE: Slugs in search-log.md, best-practices-compendium.md, and slug-registry.md must not include population code abbreviations as pipe-delimited suffixes (e.g. |MOB, |VIS, |ALL). Slugs are topic-only, human-readable strings. Population scope is recorded in the query field and BPC content — not the slug key.
+CONDITION: Any new or updated search-log or BPC entry.
+ACTION: Normalise slug to topic-only format before LOG. Strip any pipe-delimited suffix on CHECK.
+DATE: 2026-03-18 23:30
 
-RULE: Slugs in search-log.md, best-practices-compendium.md, and slug-registry.md must not include population code abbreviations as pipe-delimited suffixes (e.g. |MOB, |VIS, |ALL). Slugs are topic-only, human-readable strings. Population scope is recorded in the query field and BPC content — not the slug key.  CONDITION: Any new or updated search-log or BPC entry.  ACTION: Normalise slug to topic-only format before LOG. Strip any pipe-delimited suffix on CHECK.  DATE: 2026-03-18 23:30
+RULE: Each slug covers exactly one population. Combined slugs (e.g. a slug covering both VIS and DEAF) are not permitted. Where research was conducted in a single pass covering multiple populations, the primary slug holds the full content; secondary population slugs hold a see-also pointer referencing the primary slug.
+CONDITION: Any new slug creation or split of an existing combined slug.
+ACTION: Create one slug per population. If primary/secondary distinction applies, secondary slug entry contains 'SEE-ALSO: {primary-slug}' only.
+DATE: 2026-03-18 23:30
 
-RULE: Each slug covers exactly one population. Combined slugs (e.g. a slug covering both VIS and DEAF) are not permitted. Where research was conducted in a single pass covering multiple populations, the primary slug holds the full content; secondary population slugs hold a see-also pointer referencing the primary slug.  CONDITION: Any new slug creation or split of an existing combined slug.  ACTION: Create one slug per population. If primary/secondary distinction applies, secondary slug entry contains 'SEE-ALSO: {primary-slug}' only.  DATE: 2026-03-18 23:30
+RULE: OT professional body guidelines are Tier 3
+CONDITION: Any source is an OT professional body publication — including but not limited to CAOT, AOTA, RCOT, COTEC, WFOT, DVE, AITO, Ergoterapeutene, FSA, OT Australia, and national equivalents — whether a practice document, position statement, practice guideline, or professional framework.
+ACTION: Assign Tier 3 in evidence hierarchy. Update §1.5 primary sources list. Add [Tier 3 — D-18] notation in bibliography Section D. Do not list OT body guidelines in Tier 1 primary sources (Tier 1 is reserved for intervention-tested peer-reviewed OT clinical research). Do not list OT body guidelines in Tier 5 (Tier 5 is for national beyond-code regulatory frameworks).
+DATE: 2026-03-19 DECISION: D-18
