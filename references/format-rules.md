@@ -34,6 +34,7 @@
 - Soft imperative subjunctive throughout: "to be", "not to exceed", "to provide"
 - No direct commands ("must", "shall") except where citing statutory code language
 - No passive constructions that obscure the design obligation
+- Concise
 
 ### 2.2 Sentence Rules
 - ≤25 words per specification sentence
