@@ -280,3 +280,34 @@ RULE: §1.5 of Volume 1 is the canonical evidence hierarchy for this project. Th
 CONDITION: Any skill, document, or instruction that references an evidence tier or ranks source types.
 ACTION: Apply §1.5 hierarchy. Lived experience is co-primary at Tier 1, not subordinate. NGO guidelines outrank systematic reviews. OT clinical evidence is highest authority.
 DATE: 2026-03-18 22:35
+
+
+RULE: Native-language concept vocabulary must be loaded before any multilingual-research run.
+CONDITION: Any multilingual-research run, Step 0.
+ACTION: Call keyword-lookup with slug + population codes + all 14 language codes. Use returned native terms as primary search strings. Do not substitute English translations. Where a native concept has no English equivalent (e.g., DE Barrierefreiheit, NO universell utforming, FI esteettomyys/saavutettavuus distinction), preserve the native concept in synthesis output; never flatten to English.
+DATE: 2026-03-18 23:00
+
+RULE: Co-1 / Tier 2 disability-led organisation pass must precede all academic database searches.
+CONDITION: Any multilingual-research run, Pass A.
+ACTION: For each language, search the relevant disability-led organisation publications (national Deaf associations, DPOs, patient-led research collectives, community design guides) before PubMed, Consensus, Scholar Gateway, or any other academic database. The clinical pyramid is not the default search order for this project.
+DATE: 2026-03-18 23:00
+
+RULE: Forward and backward citation mining is mandatory for every confirmed Tier 1-2 source.
+CONDITION: Any confirmed Tier 1 or Co-1 or Tier 2 source retrieved during a multilingual-research run.
+ACTION: Run backward pass (mine source reference list) and forward pass (Google Scholar cited-by, assess top 10). Log counts in BPC entry citation_mining fields. This is PRISMA standard methodology and is never optional.
+DATE: 2026-03-18 23:00
+
+RULE: Ireland (IE) and Singapore (SG) are standing jurisdictions in all multilingual-research runs.
+CONDITION: Any multilingual-research run, Passes A-D.
+ACTION: Always include IE (CEUD Building for Everyone series, NDA, Building Regulations Part M:2010, DeafHear IE, NCBI) and SG (BCA Accessibility Code 2019, SgEnable, SADeaf, SAVH, UD Mark) in every research run. Do not treat these as optional extended-language jurisdictions. They are required in Pass A (Co-1/Tier 2) and Pass B (native standards) on every run.
+DATE: 2026-03-18 23:00
+
+RULE: The early-close gate is permanently removed from multilingual-research.
+CONDITION: Any multilingual-research run.
+ACTION: All 14 languages must be searched to completion on every run. Extended languages (NL, ES, PT, KO, IT) are standard, not optional. The early-close gate produced Anglophone-heavy closures. Remove any reference to it from skill descriptions or execution plans.
+DATE: 2026-03-18 23:00
+
+RULE: keyword-lookup is a registered skill. Its canonical execution source is /mnt/project/keyword-lookup_SKILL.md.
+CONDITION: Any multilingual-research run Step 0, or any task requiring native-language search term generation.
+ACTION: Read and execute from /mnt/project/keyword-lookup_SKILL.md. GitHub skills/ copy is inventory only.
+DATE: 2026-03-18 23:00
