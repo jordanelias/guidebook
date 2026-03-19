@@ -33,7 +33,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: visual-hearing-impairment-built-environment
+slug: visual-impairment-built-environment
 query: "visual impairment hearing impairment accessible built environment wayfinding lighting acoustics"
 last_searched: 2026-03-17 18:30
 early_close_triggered: true
@@ -53,7 +53,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [Zali2025, Frontiers2021, Dain2022, Ryskulova2021, LuSR2018, Bauman2010-DeafSpace, IEC60118-4, ISO23599-2019, NorgesBlind-krav]
-bpc_ref: "visual-hearing-impairment-built-environment"
+bpc_ref: "visual-impairment-built-environment"
 thin_flags: []
 no_data_flags: []
 ```
@@ -61,7 +61,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: neurological-dementia-built-environment
+slug: neurological-built-environment
 query: "neurological ABI dementia built environment design occupational therapy evidence"
 last_searched: 2026-03-17 19:30
 early_close_triggered: true
@@ -81,7 +81,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [VanBuuren2022, Milà-Villarroel2020, Fleming2011-EAT, DSDC-EADDAT, Davis2010-MS-thermo, Christogianni2022, Brown2023-ABI-OT, AOTA2023-TBI, Nakanishi2012-JA]
-bpc_ref: "neurological-dementia-built-environment"
+bpc_ref: "neurological-built-environment"
 thin_flags: []
 no_data_flags: []
 ```
@@ -89,7 +89,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: neurodivergent-mental-health-built-environment
+slug: neurodivergent-built-environment
 query: "neurodivergent autism ADHD PTSD trauma mental health built environment design evidence"
 last_searched: 2026-03-17 20:00
 early_close_triggered: true
@@ -109,7 +109,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [PAS6463-2022, Mostafa-ASPECTSS, PMC9658651-TID, PMC10689333-TID-youth, Motionspot-2022, BuroHappold-2024, SAMHSA-TIC, Cuningham-TID]
-bpc_ref: "neurodivergent-mental-health-built-environment"
+bpc_ref: "neurodivergent-built-environment"
 thin_flags: [ZH]
 no_data_flags: []
 ```
@@ -117,7 +117,7 @@ no_data_flags: []
 ---
 
 ```yaml
-slug: chronic-pain-fatigue-spectrum-built-environment
+slug: chronic-pain-built-environment
 query: "chronic pain fibromyalgia ME/CFS POTS built environment design occupational therapy evidence"
 last_searched: 2026-03-18 16:30
 early_close_triggered: false
@@ -138,7 +138,7 @@ languages:
   KO: {status: NO-DATA, results: 0, db: [web], note: "Korean Welfare Facilities Standard covers MOB/sensory only; Korean OT CFS literature clinical only"}
   IT: {status: NO-DATA, results: 0, db: [web], note: "DM 236/89 and DPR 503/96 cover motoria/sensoriale only; Italian OT fibromialgia literature clinical only; CNAPPC follows same framework"}
 top_sources: [PMC6260403-OT-CP, AOTA-FM-2018, Autonomic-POTS-2018, CDC-MECFS, Bateman-Horne, PMID18805903-POTS-CFS]
-bpc_ref: "chronic-pain-fatigue-spectrum-built-environment"
+bpc_ref: "chronic-pain-built-environment"
 thin_flags: [SV, FR, ES, PT]
 no_data_flags: [DE, NO, DA, FI, ZH, JA, NL, KO, IT]
 ```
@@ -805,7 +805,7 @@ no_data_flags: [NO]
 ---
 
 ```yaml
-slug: mob-upl-built-environment-evidence-synthesis
+slug: upper-limb-impairment-built-environment
 query: "MOB UPL upper limb impairment built environment evidence synthesis wheelchair turning grab bar kitchen"
 last_searched: 2026-03-17 17:00
 early_close_triggered: false
@@ -826,7 +826,7 @@ languages:
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
 top_sources: [DSouza2011-IDeA-339, AlLawati2017-Threshold, Sanford-Bosch2013, Kennedy2015-GrabBarType, Levine2023-KITE, Lee2017-BilateralFoldown, Cockayne2021-OTIS, Togni2022-IMU, Zanotto2023-MSFalls, DIN18040-2-UHandle, SINTEF-SJOT-ramp]
-bpc_ref: "mob-upl-built-environment-evidence-synthesis"
+bpc_ref: "upper-limb-impairment-built-environment"
 thin_flags: []
 no_data_flags: []
 note: "CRITICAL GAP confirmed: zero indexed studies on one-handed kitchen/bathroom built-environment design in any language. UPL evidence base = zero for these specific topics."
@@ -1342,4 +1342,57 @@ top_sources:
 thin_flags: [FR, DE, NL, IT, KO]
 no_data_flags: [ZH]
 bpc_ref: "deafblind-built-environment"
+```
+
+---
+
+```yaml
+slug: dementia-built-environment
+query: "wayfinding, environment, cognitive support for dementia"
+last_searched: 2026-03-18 23:30
+note: "SEE-ALSO: Full evidence for this population is in slug 'neurological-built-environment'. This entry is a redirect pointer only."
+languages: {}
+top_sources: []
+bpc_ref: "dementia-built-environment"
+thin_flags: []
+no_data_flags: []
+```
+---
+
+```yaml
+slug: mental-health-built-environment
+query: "mental health PTSD trauma built environment design"
+last_searched: 2026-03-18 23:30
+note: "SEE-ALSO: Full evidence for this population is in slug 'neurodivergent-built-environment'. This entry is a redirect pointer only."
+languages: {}
+top_sources: []
+bpc_ref: "mental-health-built-environment"
+thin_flags: []
+no_data_flags: []
+```
+---
+
+```yaml
+slug: fatigue-spectrum-built-environment
+query: "ME/CFS POTS fatigue spectrum built environment design"
+last_searched: 2026-03-18 23:30
+note: "SEE-ALSO: Full evidence for this population is in slug 'chronic-pain-built-environment'. This entry is a redirect pointer only."
+languages: {}
+top_sources: []
+bpc_ref: "fatigue-spectrum-built-environment"
+thin_flags: []
+no_data_flags: []
+```
+---
+
+```yaml
+slug: hearing-impairment-built-environment
+query: "hearing impairment Deaf hard of hearing built environment acoustics"
+last_searched: 2026-03-18 23:30
+note: "SEE-ALSO: Full evidence for this population is in slug 'deaf-acoustic-built-environment'. This entry is a redirect pointer only."
+languages: {}
+top_sources: []
+bpc_ref: "hearing-impairment-built-environment"
+thin_flags: []
+no_data_flags: []
 ```
