@@ -18,22 +18,22 @@
 
 | Code | Slug(s) | Priority |
 |---|---|---|
-| MOB | `mobility-built-environment\|MOB` | P1 |
-| VIS | `visual-impairment-built-environment\|VIS` | P1 |
-| DEAF | `deaf-spatial-design\|DEAF` · `deaf-acoustic-built-environment\|DEAF` | P1 |
-| NEU | `neurological-built-environment\|NEU` | P1 |
-| DEM | `dementia-built-environment\|DEM` | P1 |
-| NDV | `neurodivergence-built-environment\|NDV` | P1 |
-| NDV/MH | `mental-health-built-environment\|NDV/MH` | P2 |
-| PAIN | `chronic-pain-built-environment\|PAIN` | P2 |
-| DBL | `deafblind-built-environment\|DBL` | P1 |
-| OFS | `OFS-built-environment\|OFS` | P1 |
-| IntD | `intellectual-disability-built-environment\|IntD` | P2 |
-| ALL | `critical-disability-studies-architecture\|ALL` · `OT-built-environment-interface\|ALL` · `intersectionality-disability-design\|ALL` · `assistive-technology-built-environment\|ALL` · `post-occupancy-evaluation-disability\|ALL` | P1/P2 |
-| CHD (Supp.) | `children-disability-built-environment\|CHD` | P2 |
-| LPA (Supp.) | `little-people-built-environment\|LPA` | P2 |
-| EXH (Supp.) | `exceptional-height-built-environment\|EXH` | P3 |
-| BAR (Supp.) | `large-body-size-built-environment\|BAR` | P2 |
+| MOB | `mobility-built-environment\` | P1 |
+| VIS | `visual-impairment-built-environment\` | P1 |
+| DEAF | `deaf-spatial-design\` · `deaf-acoustic-built-environment\` | P1 |
+| NEU | `neurological-built-environment\` | P1 |
+| DEM | `dementia-built-environment\` | P1 |
+| NDV | `neurodivergence-built-environment\` | P1 |
+| NDV/MH | `mental-health-built-environment\` | P2 |
+| PAIN | `chronic-pain-built-environment\` | P2 |
+| DBL | `deafblind-built-environment\` | P1 |
+| OFS | `OFS-built-environment\` | P1 |
+| IntD | `intellectual-disability-built-environment\` | P2 |
+| ALL | `critical-disability-studies-architecture\` · `OT-built-environment-interface\` · `intersectionality-disability-design\` · `assistive-technology-built-environment\` · `post-occupancy-evaluation-disability\` | P1/P2 |
+| CHD (Supp.) | `children-disability-built-environment\` | P2 |
+| LPA (Supp.) | `little-people-built-environment\` | P2 |
+| EXH (Supp.) | `exceptional-height-built-environment\` | P3 |
+| BAR (Supp.) | `large-body-size-built-environment\` | P2 |
 
 ---
 
@@ -41,7 +41,7 @@
 
 ---
 
-### `mobility-built-environment|MOB`
+### `mobility-built-environment`
 **Domain:** Wheelchair circulation; ambulant accessibility; reach ranges; ramp and step design; door hardware; transfer space; grab bar provision; floor surfaces; vertical circulation; powered mobility; upper limb impairment provisions
 
 | Language | Native term | Map |
@@ -66,7 +66,7 @@
 
 ---
 
-### `visual-impairment-built-environment|VIS`
+### `visual-impairment-built-environment`
 **Domain:** Wayfinding for blind and low vision users; tactile walking surface indicators; colour and luminance contrast; lighting levels; tactile signage; Braille; audio description; guide dog access; low vision interior design
 
 | Language | Native term | Map |
@@ -90,7 +90,7 @@
 
 ---
 
-### `deaf-spatial-design|DEAF`
+### `deaf-spatial-design`
 **Domain:** Signing space; corridor width; sightlines; visual access; wayfinding; lip-reading lighting; visual fire alerting; visual communication zones; spatial grammar of signed languages
 
 | Language | Native term | Map |
@@ -118,7 +118,7 @@
 
 ---
 
-### `deaf-acoustic-built-environment|DEAF`
+### `deaf-acoustic-built-environment`
 **Domain:** Reverberation time; background noise; speech intelligibility; hearing loop placement; room geometry; acoustic zoning; cochlear implant acoustic environment; Auracast/Bluetooth LE Audio
 
 | Language | Native term | Map |
@@ -143,7 +143,7 @@
 
 ---
 
-### `neurological-built-environment|NEU`
+### `neurological-built-environment`
 **Domain:** ABI/TBI design; post-concussion syndrome environment; cognitive fatigue in spatial navigation; lighting and noise sensitivity; orientation and wayfinding; predictable low-stimulus environments; NEU/PCS provisions
 
 | Language | Native term | Map |
@@ -167,7 +167,7 @@
 
 ---
 
-### `dementia-built-environment|DEM`
+### `dementia-built-environment`
 **Domain:** Dementia-specific design; orientation and wayfinding; landmark-based navigation; circadian lighting; colour contrast for dementia; safe wandering routes; care home and domestic design; Dementia Design Audit Tool
 
 | Language | Native term | Map |
@@ -188,7 +188,7 @@
 
 ---
 
-### `neurodivergence-built-environment|NDV`
+### `neurodivergence-built-environment`
 **Domain:** AUT sensory design (ASPECTSS, PAS 6463); ADHD spatial design; sensory processing disorder; dyscalculia/dyslexia wayfinding; OCD environmental triggers; Tourette's spatial exposure; sensory zoning; NDV/SENS provisions
 
 | Language | Native term | Map |
@@ -213,7 +213,7 @@
 
 ---
 
-### `mental-health-built-environment|NDV/MH`
+### `mental-health-built-environment`
 **Domain:** Trauma-informed design; Sanctuary Model; SAMHSA guidelines; psychiatric unit design; PTSD environmental triggers; safety, control, and choice in shared spaces; de-escalation design; sensory rooms
 
 | Language | Native term | Map |
@@ -234,7 +234,7 @@
 
 ---
 
-### `chronic-pain-built-environment|PAIN`
+### `chronic-pain-built-environment`
 **Domain:** Fibromyalgia and chronic pain design; central sensitisation environmental triggers; rest and activity pacing; thermal comfort for PAIN users; tactile surface sensitivity; fatigue/pain interaction with spatial design
 
 | Language | Native term | Map |
@@ -258,7 +258,7 @@
 
 ---
 
-### `deafblind-built-environment|DBL`
+### `deafblind-built-environment`
 **Domain:** Tactile infrastructure; protactile spatial requirements; vibrotactile alerting; intervener service space; haptic landmark design; tactile navigation; tactile mapping; long cane + guide dog co-navigation space
 
 | Language | Native term | Map |
@@ -283,7 +283,7 @@
 
 ---
 
-### `OFS-built-environment|OFS`
+### `OFS-built-environment`
 **Domain:** Energy conservation; rest seating intervals and route length; thermal environment; surface heights for POTS; air quality and chemical sensitivity for MCAS; exertion economy in spatial planning; activity pacing
 
 | Language | Native term | Map |
@@ -307,7 +307,7 @@
 
 ---
 
-### `intellectual-disability-built-environment|IntD`
+### `intellectual-disability-built-environment`
 **Domain:** Intellectual disability and built environment; cognitive accessibility; Easy Read / FALC signage; predictable spatial layouts; support worker co-navigation space; Makaton-compatible design; sensory environments for IntD
 
 **Note:** All IntD specifications carry `[TIER 4-5; no quantified architectural standard in any jurisdiction; March 2026]`. Expect THIN across all languages.
@@ -334,7 +334,7 @@
 
 ---
 
-### `critical-disability-studies-architecture|ALL`
+### `critical-disability-studies-architecture`
 **Domain:** Misfits theory; crip theory; normate body; social model grounding for specification writing; architectural history of exclusion; ableism and built form; Universal Design theory critique; disability justice and architecture
 
 | Language | Native term | Map |
@@ -358,7 +358,7 @@
 
 ---
 
-### `OT-built-environment-interface|ALL`
+### `OT-built-environment-interface`
 **Domain:** OT interprofessional design practice; AOTA/CAOT/RCOT/COTEC evidence; OT housing literature; COPM applied to built environment; home modification evidence; OT involvement at design stage; AT-environment codependence
 
 | Language | Native term | Map |
@@ -379,7 +379,7 @@
 
 ---
 
-### `intersectionality-disability-design|ALL`
+### `intersectionality-disability-design`
 **Domain:** Disability + gender; disability + race/ethnicity; disability + age; Indigenous accessible design; culturally responsive accessible design; compound barrier analysis; disability justice framework
 
 | Language | Native term | Map |
@@ -400,7 +400,7 @@
 
 ---
 
-### `assistive-technology-built-environment|ALL`
+### `assistive-technology-built-environment`
 **Domain:** AT-environment codependence (AT2030); power wheelchair circulation; AAC device sightlines; cochlear implant acoustics as AT-environment interface; AT enabling vs. built environment barriers
 
 | Language | Native term | Map |
@@ -421,7 +421,7 @@
 
 ---
 
-### `post-occupancy-evaluation-disability|ALL`
+### `post-occupancy-evaluation-disability`
 **Domain:** POE methodology adapted for accessible design; Brazilian APO tradition; COPM as POE proxy; HERD journal; user satisfaction measurement; building performance for accessibility
 
 | Language | Native term | Map |
@@ -442,7 +442,7 @@
 
 ---
 
-### `children-disability-built-environment|CHD`
+### `children-disability-built-environment`
 **Domain:** Paediatric accessible design; child-height reach ranges; paediatric healthcare design; sensory-appropriate school environments; children's wheelchair turning space; CHD anthropometric data  
 **Priority:** P2 (Supplementary Volume)
 
@@ -464,7 +464,7 @@
 
 ---
 
-### `little-people-built-environment|LPA`
+### `little-people-built-environment`
 **Domain:** Little people / short stature accessible design; LPA-specific reach range; anthropometric data; counter and surface heights; ATM and kiosk access for LPA  
 **Priority:** P2 (Supplementary Volume)
 
@@ -486,7 +486,7 @@
 
 ---
 
-### `exceptional-height-built-environment|EXH`
+### `exceptional-height-built-environment`
 **Domain:** Exceptional/tall stature; door clearance height; overhead hazard detection; EXH-specific clearance provisions  
 **Priority:** P3 (Supplementary Volume)
 
@@ -508,7 +508,7 @@
 
 ---
 
-### `large-body-size-built-environment|BAR`
+### `large-body-size-built-environment`
 **Domain:** Bariatric design provisions; large body size spatial requirements; seating and fixture load ratings; turning and transfer space; dignity-centred large body design  
 **Priority:** P2 (Supplementary Volume — Supp. Part 4 only. BAR is not a main taxonomy code.)
 
@@ -550,16 +550,16 @@
 
 | Retired slug | Maps to |
 |---|---|
-| `signing-space-corridor\|DEAF` | `deaf-spatial-design\|DEAF` |
-| `BSL-signing-space-dimensions\|DEAF` | `deaf-spatial-design\|DEAF` |
-| `cochlear-implant-acoustic-environment\|DEAF` | `deaf-acoustic-built-environment\|DEAF` |
-| `protactile-haptic-infrastructure\|DBL` | `deafblind-built-environment\|DBL` |
-| `ME-CFS-environment-built\|OFS` | `OFS-built-environment\|OFS` |
-| `POTS-orthostatic-environment\|OFS` | `OFS-built-environment\|OFS` |
-| `misfits-theory-built-environment\|ALL` | `critical-disability-studies-architecture\|ALL` |
-| `building-access-hamraie-2017\|ALL` | Citation-mining target only |
-| `OT-interprofessional-design-teams\|ALL` | `OT-built-environment-interface\|ALL` |
-| `ADHD-built-environment-design\|NDV` | `neurodivergence-built-environment\|NDV` |
-| `trauma-informed-design\|NDV/MH` | `mental-health-built-environment\|NDV/MH` |
-| `disability-intersectionality-built-environment\|ALL` | `intersectionality-disability-design\|ALL` |
-| `assistive-technology-built-environment-interface\|ALL` | `assistive-technology-built-environment\|ALL` |
+| `signing-space-corridor\` | `deaf-spatial-design\` |
+| `BSL-signing-space-dimensions\` | `deaf-spatial-design\` |
+| `cochlear-implant-acoustic-environment\` | `deaf-acoustic-built-environment\` |
+| `protactile-haptic-infrastructure\` | `deafblind-built-environment\` |
+| `ME-CFS-environment-built\` | `OFS-built-environment\` |
+| `POTS-orthostatic-environment\` | `OFS-built-environment\` |
+| `misfits-theory-built-environment\` | `critical-disability-studies-architecture\` |
+| `building-access-hamraie-2017\` | Citation-mining target only |
+| `OT-interprofessional-design-teams\` | `OT-built-environment-interface\` |
+| `ADHD-built-environment-design\` | `neurodivergence-built-environment\` |
+| `trauma-informed-design\` | `mental-health-built-environment\` |
+| `disability-intersectionality-built-environment\` | `intersectionality-disability-design\` |
+| `assistive-technology-built-environment-interface\` | `assistive-technology-built-environment\` |
