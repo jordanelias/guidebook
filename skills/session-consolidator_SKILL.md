@@ -25,9 +25,7 @@ Compile from conversation history:
 - `multilingual-research` LOG calls completed or missed
 
 ### 1b. Reconcile state files against session work
-Run immediately after Step 1 — before extracting patterns or writing rules.
-
-For each file below: GET current content from GitHub. Check against session work compiled in Step 1. Fix any discrepancy inline (update the file, PUT back). If a fix cannot be completed inline, flag as BLOCKER — do not silently skip.
+Run immediately after Step 1. For each file: GET from GitHub, check against session work, fix inline, PUT back. Cannot fix → BLOCKER.
 
 **gap_register.md**
 - Every gap described as raised this session → entry exists with correct ID, priority, status OPEN, and today's timestamp.
@@ -130,6 +128,4 @@ next_action:
 - Next action
 - GitHub write status (✓ / ⚠ fallback)
 
----
-
-**Fallback:** if any PUT fails after one retry — output the relevant content as a fenced code block with manual paste instructions. Never silently drop state.
+**Fallback:** PUT fails after one retry → output as fenced code block with manual paste instructions. Never drop state.
