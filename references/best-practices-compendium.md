@@ -28,7 +28,7 @@
 
 ---
 
-## visual-hearing-impairment-built-environment
+## visual-impairment-built-environment
 **Updated:** 2026-03-17 18:30  **Evidence tier:** 1–3
 **VIS Consensus finding:** Lighting level, consistency and gradual transition are the highest-impact environmental factors for VIS fall prevention and navigation. The 30% LRV contrast standard is unsupported by evidence; 65% Michelson contrast is needed for "easily visible" to severely impaired users.
 **DEAF Consensus finding:** Clear sightlines, diffuse face-level lighting, and IEC 60118-4-compliant hearing loops are the primary built-environment requirements; Auracast is the emerging successor technology.
@@ -51,7 +51,7 @@
 
 ---
 
-## neurological-dementia-built-environment
+## neurological-built-environment
 **Updated:** 2026-03-17 19:30  **Evidence tier:** 1–3
 **DEM Consensus:** Small-scale homelike environments (≤10 residents), short articulated corridors, visual access between spaces, circadian lighting, and sensory gardens constitute the core DEM design evidence base. EADDAT (Stirling DSDC) is the sole validated assessment tool. Bold floor contrast patterns are contraindicated — misread as level changes.
 **NEU/MS Consensus:** 60–80% heat sensitivity; air conditioning is primary built-environment countermeasure; ambient temperature ≤19–21°C; personalised HVAC control; ramps ≤6% gradient; rest seating every 30 m.
@@ -66,7 +66,7 @@
 
 ---
 
-## neurodivergent-mental-health-built-environment
+## neurodivergent-built-environment
 **Updated:** 2026-03-17 20:00  **Evidence tier:** 1–4 (mixed; PAS 6463 at tier 4, scoping reviews at tier 1)
 **NDV Consensus:** PAS 6463:2022 (BSI UK) is the sole national design standard for neurodiversity; guidance-level only. Core requirements: sensory quiet rooms, acoustic management, muted palette, indirect lighting, eliminate fluorescent, user control, reduced visual noise. ASPECTSS Design Index covers autism specifically. No mandatory regulatory standard exists in any jurisdiction.
 **NDV/MH Consensus:** Trauma-informed design (TID) is an emerging evidence-based framework. Core principles: safety, choice/control, empowerment, nature connection. PTSD-specific evidence concentrated in homeless/DV shelter settings. Quiet retreat and de-escalation rooms are primary spatial requirements.
@@ -79,7 +79,7 @@
 
 ---
 
-## chronic-pain-fatigue-spectrum-built-environment
+## chronic-pain-built-environment
 **Updated:** 2026-03-18 16:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
 **PAIN Consensus:** OT built-environment evidence is near-zero across all 14 languages. All provisions derived from ergonomic and energy conservation principles. Highest-impact: seated task provision, storage at waist-to-shoulder height (750–1050 mm), thermostatic shower controls, rest seating. Hydrotherapy has Tier 1 evidence (10 RCTs) for FM pain reduction. ES and PT OT literature confirms clinical role only — no built-environment specifications.
 **OFS Consensus:** Zero indexed built-environment research in any of 14 languages. All provisions derived from clinical understanding of orthostatic intolerance and post-exertional malaise. Highest-impact: rest seating (every 25–30 m with reclining option), cool ambient environment (≤19–21°C), lift provision, thermostatic shower, bedroom-bathroom adjacency.
@@ -615,7 +615,7 @@
 **Divergent findings:** —
 **Notes:** Cross-reference sensory-processing-model-design-application|NDV for Dunn framework application. The <55 dB(A) figure from Caniato et al. (2024) is a single classroom study — cite with caveat "directional only; pending replication." ASPECTSS Design Index is the most operationalised framework but remains practitioner consensus.
 
-## mob-upl-built-environment-evidence-synthesis
+## upper-limb-impairment-built-environment
 **Updated:** 2026-03-18 23:45  **Evidence tier:** 1–3
 **Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains with the largest evidence-practice conflicts across all major standards. UPL built environment evidence base is critically thin — zero indexed studies on one-handed kitchen/bathroom design.
 **Core evidence-practice conflicts:**
@@ -1146,3 +1146,31 @@ Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT 
 6. ABNT NBR 16537:2024. Acessibilidade — Sinalização tátil no piso — Diretrizes para elaboração de projetos. ABNT. — Tier 4 [PT] — only jurisdiction explicitly extending tactile paving to surdo-cegueira
 7. DINF. (n.d.). 盲ろう者のコミュニケーション. DINF Japan. URL: https://www.dinf.ne.jp/doc/japanese/resource/blind/z02002/z0200204.html — Tier 2 [JA]
 8. DeafBlind Information Australia. (2022). Adapting the Environment. URL: https://www.deafblindinformation.org.au/living-with-deafblindness/adapting-the-environment/ — Tier 2 [EN/AU]
+
+---
+
+## dementia-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
+
+**SEE-ALSO:** Full evidence for this population is recorded under `neurological-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE neurological-built-environment` for full BPC content.
+
+---
+
+## mental-health-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
+
+**SEE-ALSO:** Full evidence for this population is recorded under `neurodivergent-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE neurodivergent-built-environment` for full BPC content.
+
+---
+
+## fatigue-spectrum-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
+
+**SEE-ALSO:** Full evidence for this population is recorded under `chronic-pain-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE chronic-pain-built-environment` for full BPC content.
+
+---
+
+## hearing-impairment-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier range:** see primary slug
+
+**SEE-ALSO:** Full evidence for this population is recorded under `deaf-acoustic-built-environment`. This entry is a redirect pointer. Run `research-log-manager RETRIEVE deaf-acoustic-built-environment` for full BPC content.
