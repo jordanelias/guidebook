@@ -311,3 +311,28 @@ RULE: keyword-lookup is a registered skill. Its canonical execution source is /m
 CONDITION: Any multilingual-research run Step 0, or any task requiring native-language search term generation.
 ACTION: Read and execute from /mnt/project/keyword-lookup_SKILL.md. GitHub skills/ copy is inventory only.
 DATE: 2026-03-18 23:00
+
+RULE: Slugs are infrastructure keys, not conceptual claims. Each slug entry carries native_aliases (14 languages with CLEAN/PARTIAL map quality ratings) and concept_boundary_warnings specifying where the English frame distorts and how the search should deviate.
+CONDITION: Every multilingual-research run and every research-log-manager LOG call.
+ACTION: Load native_aliases from slug-registry.md before generating search queries. Where a PARTIAL rating exists, apply the concept_boundary_warning deviation. BPC synthesis for that language opens with the concept boundary table — before findings.
+DATE: 2026-03-19 04:08
+
+RULE: The slug registry (references/slug-registry.md) is the canonical list of all research domains. It covers all main taxonomy population codes (MOB, VIS, DEAF, NEU, DEM, NDV, NDV/MH, PAIN, DBL, OFS, IntD, ALL) and all supplementary volume codes (CHD, LPA, EXH, BAR). All slugs carry pre-populated native_aliases and concept_boundary_warnings for all 14 languages.
+CONDITION: Any new multilingual-research run.
+ACTION: Check slug-registry.md first. Use the broadest domain slug that covers the research need. Do not create sub-slugs for sub-findings — surface them within the run. Add new slugs to slug-registry.md via research-log-manager only.
+DATE: 2026-03-19 04:08
+
+RULE: Best-practice synthesis is mandatory on every multilingual-research run. Synthesis is not a catalogue of findings.
+CONDITION: Every multilingual-research run at synthesis stage, before research-log-manager LOG.
+ACTION: For every slug, identify the most amenable, inclusive, forgiving, caring, accommodating, dignified, specific, and targeted provision the evidence supports. Record in BPC best_practice_synthesis field. If this field is empty at LOG time, session-consolidator flags BLOCKER.
+DATE: 2026-03-19 04:08
+
+RULE: PICO framing in literature-review-planner must begin with population need and functional outcome evidence — not standard values. Standard values appear at Step 2 (minimum baseline), not Step 1 (optimal evidence).
+CONDITION: Any literature-review-planner run.
+ACTION: Step 1 = what does best-practice evidence show is optimal? Step 2 = what do standards require as minimum? Step 3 = what is the gap? Step 4 = design synthesis. Never anchor on a standard value and seek confirming evidence.
+DATE: 2026-03-19 04:08
+
+RULE: research-log-manager schema carries five new Option 2 fields: native_aliases, concept_boundary_warnings, co1_pass_summary, native_standards_pass_summary, companion_networks, citation_mining, at_database_pass. All must be populated on every LOG call.
+CONDITION: Every research-log-manager LOG call.
+ACTION: Populate all Option 2 fields. Empty native_aliases or missing concept_boundary_warnings at LOG time = BLOCKER.
+DATE: 2026-03-19 04:08
