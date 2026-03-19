@@ -1650,7 +1650,7 @@ top_sources:
 thin_flags: [SV, NO, DA, FI, FR, DE, ZH, JA]
 no_data_flags: []
 bpc_ref: "neurological-built-environment|NEU"
-note: "EN evidence strong for wayfinding/ABI. Non-EN pass PARTIAL only — extended run recommended for DE (BAR framework / EHS term), JA (高次脳機能障害), NL/Nordic rehab facility design literature."
+note: "EN evidence strong for wayfinding/ABI. DE extended pass complete: BAR is rehabilitation coordination body (not built env design org); DE built env NEU guidance embedded in Wohnraumanpassung practice (SGB XI 40) and DIN 18040 — no standalone document. JA extended pass complete: 高次脳機能障害 provisions in prefectural support centre guidance and MLIT 建築設計標準 (already in BPC). NL/Nordic pass still recommended for rehabilitation facility design literature."
 ```
 
 ---
@@ -1724,7 +1724,7 @@ top_sources:
 thin_flags: [NO, FI, FR, DE, ZH, ES, PT, KO, IT]
 no_data_flags: []
 bpc_ref: "dementia-built-environment|DEM"
-note: "Strong EN/NL/DK evidence base. KDA (DE), MHLW (JA), Helsedirektoratet (NO), CEREMA+PMND (FR) are priority targets for extended pass."
+note: "Strong EN/NL/DK evidence base. Extended pass complete: CEREMA 2022 Fiche 8 confirmed (UHR design); PMND 2021-2022 architecture provisions confirmed; KDA confirmed as programmatic framework org (not specification publisher) — KDA DEM design embedded in Pro Alter series; MHLW group home unit standard confirmed (5-9 persons/unit); Marquardt Bueter Motzek 2014 confirmed as anchor systematic review; Vilans NL confirmed as Co-1 knowledge centre; De Hogeweyk POE still PROVISIONAL."
 ```
 slug: OT-interprofessional-universal-design
 query: "occupational therapy interprofessional universal design built environment"
