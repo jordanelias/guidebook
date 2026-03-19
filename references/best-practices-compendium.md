@@ -4,29 +4,81 @@
 
 ---
 
-## mobility-wheelchair-built-environment
-**Updated:** 2026-03-17 17:00  **Evidence tier:** 1–3
-**Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains; all three have major evidence-practice conflicts with ADA/BS 8300/AS 1428.
-**Ranges:**
-  - Turning circle: 1300 mm (indoor manual WC minimum) → 2100 mm (95th %ile power chair) → 2489 mm (scooters)
-  - Ramp gradient: 5–6% preferred max; 8.3% (1:12) acceptable only for short assisted rises
-  - Threshold: 0–3 mm (zero-threshold); ≤13 mm absolute maximum
-  - Grab bar height (toilet): 813 mm; bilateral fold-down at 356 mm from CL
-  - Corridor width: 1200 mm minimum; 1800 mm at ramps
-  - Control placement: 850–1050 mm
-**Jurisdictions confirmed:** UK · Canada · Australia · USA · Germany · Norway · Sweden · France · Finland · China · Japan · Denmark
-**Early-close:** Yes (≥8 Tier 1–2 sources confirmed)
-**Thin/No-data:** None
-**Key sources:** D'Souza2011 · AlLawati2017 · LeeS2017 · Kennedy2015 · Levine2023/2025 · Kim2014 · Clemson2023
-**Divergent findings:**
-  - Ramp gradient: ADA 8.3% vs. DIN 18040/TEK17 6–6.7%
-  - Turning circle: ADA 1525 mm vs. CSA B651:23 2100 mm
-  - Toilet CL position: ADA 18" vs. Lee2017 30" for assisted transfer
-  - Grab bar type: ADA horizontal vs. Kennedy2015/Levine2025 vertical preferred
-  - Door type: ADA outward swing vs. Japan sliding mandatory
-**Notes:** UPL evidence base critically thin — no indexed studies on one-handed kitchen/bathroom built-environment design. Non-English standards (DIN, TEK17, France PMR) collectively more conservative and evidence-aligned than English-language counterparts.
+## mobility-built-environment
+**Updated:** 2026-03-19 21:15  **Evidence tier range:** Co-1 – Tier 6  **Status:** PROVISIONAL (AU/IE/NZ/SG/CH/KR/BR/PT/IT NOT-RUN; academic DB pass partial)
 
----
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| FR | *PMR / accessibilité PMR* | ⚠ PARTIAL | PMR broader than MOB — includes pregnancy, temporary injury. Filter to disability-specific provisions only. |
+| JA | *肢体不自由 / 車いす使用者* | ⚠ PARTIAL | 肢体不自由 encompasses upper limb impairment separately from ambulatory MOB. Distinguish MOB/AMB from MOB/UPL in synthesis. |
+| All others | See native_aliases | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Turning space of 1800 mm diameter (inscribed circle) to accommodate contemporary power wheelchairs, scooters, and rolling shower/commode chairs. The IDeA Center AWM Project (Steinfeld et al. 2010, n=500) confirmed that current ADA 1524 mm (5'0") standard, derived from 1970s anthropometric data, under-accommodates power WC users at the 50th percentile. VA best-practice guidance specifies 1675 mm (5'6") minimum for power WC in patient care areas; PVA and DIN best practice targets approach 1800 mm.
+
+**Most targeted provision:** Differentiated specification across device type — manual wheelchair (1500 mm minimum / 1700 mm best practice), power wheelchair (1700–1800 mm), scooter and large power device (1800+ mm) — with OT-assessed co-design resolving the specific value at Tier 2. Habinteg Inclusive Housing Design Guide (2024, RCOTSS-Housing OT authored) is the highest-authority source for room-by-room residential turning space targets.
+
+**Conflict resolution:** Where space constraints prevent 1800 mm, prioritise 1700 mm (RHFAC/CSA B651-23 standard for CA) over 1524 mm ADA minimum. Document as design compromise; flag for DAR assessment at Tier 2.
+
+**Highest-ambition actionable specification:** Turning space ≥1800 mm diameter [Tier 1 best practice — IDeA Center / VA / Habinteg/RCOTSS]; 1700 mm acceptable where space-constrained [Tier 5 — RHFAC CA]; 1524 mm absolute minimum [Tier 6 floor — ADA/ISO]. Ramp gradient: 1:20 (5%) ideal; 1:16 intermediate; 1:12 (8.3%) code minimum with rest platforms every 9 m. Door clear opening: 900 mm best practice; 850 mm minimum for power WC (CSA B651). Grab bars: vertical/bilateral configuration evidence-supported over horizontal ADA default (prior BPC flag — unresolved pending citation-miner pass).
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| 1500 mm diameter turning space = code minimum (manual WC) | EN, DE, FR, NL, NO, SV, DA, FI, ES, JA | US, UK, CA, AU(inferred), DE, FR, NL, SE, NO, DK, FI, JP, BE, ES | Tier 6 |
+| 1700 mm recommended for power wheelchair and scooter | EN (CA, UK) | CA/RHFAC, UK/BS8300 | Tier 5 |
+| 1800 mm for large power WC / healthcare settings | EN (US) | US/VA Design Standard, US/PVA | Tier 5 / Co-1 |
+| ADA/ANSI 1524 mm based on 1970s data — outdated for contemporary devices | EN | US, UK, AU, CA | Tier 1 (IDeA Center) |
+| Ramp gradient 1:20 ideal; 1:12 code minimum | EN, DE, FR, NL, NO, ES | US, UK, CA, DE, FR, NL, NO, ES | Tier 5–6 |
+| Door clear opening: 900 mm best practice; 850 mm minimum | EN, DE, NL | CA/CSA, UK/BS8300, DE/DIN18040 | Tier 5–6 |
+| New SV building rules BFS 2024:12 in force July 2025; transition period to June 2026 | SV | SE | Tier 6 |
+| JA MLIT 建築設計標準 2025 upgrade: toilet turning circle 150→180 cm for large power WC in ≥2000m² buildings | JA | JP | Tier 6 |
+| DPI Japan 2024 housing handbook: first residential WC design guidance in Japan | JA | JP | Co-1 / Tier 5 |
+| NEN 9120:2025 now free to download in NL; aligns with EN 17210:2021 | NL | NL, EU | Tier 5–6 |
+
+### Divergent findings
+| Topic | Language/Jurisdiction A | Language/Jurisdiction B | Cause |
+|---|---|---|---|
+| Grab bar type: horizontal vs. vertical/bilateral | ADA horizontal (US Tier 6) | Evidence supports vertical/bilateral (OT literature) | Regulatory vs. empirical divergence — unresolved |
+| Turning circle upgrade: conservative (1500mm) vs. best practice (1800mm) | Most statutory codes (1500mm) | VA/PVA/RHFAC/IDeA (1700–1830mm) | Regulatory lag — 1970s anthropometric data not yet superseded in most codes |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| AU | EN | NOT-RUN — session limit | No | No |
+| SG | EN | NOT-RUN — session limit | No | No |
+| IE | EN | NOT-RUN — session limit | No | No |
+| NZ | EN | NOT-RUN — session limit | No | No |
+| KR | KO | NOT-RUN — session limit | No | No |
+| BR | PT | NOT-RUN — session limit | No | No |
+| PT | PT | NOT-RUN — session limit | No | No |
+| IT | IT | NOT-RUN — session limit | No | No |
+| CH | DE/FR | NOT-RUN — session limit | No | No |
+| DA (SBi 230) | DA | Not retrieved — THIN | Partial | No |
+| FI (ESKEH) | FI | Not retrieved — THIN | Partial | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Steinfeld et al. 2010 (IDeA Center) | Backward | Ringaert et al. 2001 (CA UDI — power WC turning study); Bails 1983 (AU) |
+| IDeA Center DR#21 Turning Space | Forward | D'Souza & Bharathy 2018 (accommodation model web tool) |
+
+### Key sources
+1. Steinfeld E, Maisel J, Feathers D, D'Souza C (2010). Anthropometry and Standards for Wheeled Mobility: An International Comparison. *Assistive Technology* 22(1):51–67. DOI:10.1080/10400430903496580 [EN, Tier 1, US/UK/CA/AU]
+2. Steinfeld E, Paquet V, D'Souza C, Joseph C, Maisel J (2010). *Anthropometry of Wheeled Mobility Project — Final Report*. IDeA Center, University at Buffalo. Prepared for US Access Board. [EN, Tier 1, US]
+3. VA CFM (2025). *VA Barrier-Free Design Standard*. US Department of Veterans Affairs. https://www.cfm.va.gov/til/etc/dsBarrFree-2025-05.pdf [EN, Tier 5, US — 1675mm/5'6" power WC; 1800mm/6' bariatric]
+4. PVA (2021). *Accessible Home Design: Architectural Solutions for the Wheelchair User*, 2nd Edition. Washington DC: PVA. [EN, Tier 2/Co-1, US]
+5. Habinteg / CAE / RIBA (2024). *Inclusive Housing Design Guide*. Authored by Runnalls J (RCOTSS-Housing). London: RIBA. [EN, Co-1/Tier 5, UK — M4(2)/M4(3) with OT rationale]
+6. Habinteg / RCOTSS-Housing / CAE (2018). *Wheelchair Housing Design Guide*, 3rd Edition. London: RIBA. [EN, Tier 5, UK]
+7. NHF / Husbanken (2014). *Tilgjengelige bygg og uteområder: Universell utforming og likestilling*. Oslo: Husbanken. https://biblioteket.husbanken.no/arkiv/dok/3689/Uu%20og%20likestilling.pdf [NO, Tier 2, NO]
+8. MLIT Japan (2025). *高齢者、障害者等の円滑な移動等に配慮した建築設計標準* (updated). Tokyo: Ministry of Land, Infrastructure, Transport and Tourism. [JA, Tier 6/5, JP]
+9. DPI Japan (2024). *障害者の居住にも対応した住宅の設計ハンドブック*. DPI 日本会議. https://www.dpi-japan.org/blog/workinggroup/traffic/housing-handbook/ [JA, Co-1/Tier 5, JP]
+10. Boverket (2025). BFS 2024:12 *Tillgänglighet och användbarhet*. Karlskrona: Boverket. [SV, Tier 6, SE — in force July 2025]
+11. NEN (2025). NEN 9120:2025 *Toegankelijkheid van gebouwen*. Delft: NEN. Free: www.nen.nl/toegankelijkheidvangebouwen [NL, Tier 5, NL]
+12. CERMI (2013, updated). *Accesibilidad en edificios de comunidades de propietarios*. Madrid: CERMI/Ayuntamiento. [ES, Tier 2, ES]
+13. APF France Handicap (2020). *Enquête Ifop/APF France handicap — Accessibilité universelle*. Paris: APF. https://www.apf-francehandicap.org/droits-handicap/accessibilite-universelle-1500 [FR, Co-1, FR]
+14. Ringaert L, Rapson D, Qui J, Cooper J, Shwedyk E (2001). *Determination of new dimensions for universal design codes and standards with consideration of powered wheelchair and scooter users*. Manitoba: Universal Design Institute. [EN, Tier 1, CA — cited by IDeA Center]
 
 ## visual-impairment-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 1–3
