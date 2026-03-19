@@ -1316,7 +1316,7 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 
 ### Key sources
 1. IOM/NAM (2015). *Beyond ME/CFS: Redefining an Illness*. National Academies Press. DOI: 10.17226/19012
-2. Bateman Horne Center. *ME/CFS Clinical Care: Criteria-Specific Guidance.* batemanhornecenter.org [UNVERIFIED — URL required before publication]
+2. Bateman Horne Center. *ME/CFS Clinical Care: Criteria-Specific Guidance.* batemanhornecenter.org/providers/mecfs/criteria-specific-guidance/ [Tier Co-1 — verified]
 3. CDC (2024). *ME/CFS Clinical Care for Severely Affected Patients.* cdc.gov/me-cfs [Tier Co-1]
 4. Wheels for Wellbeing (2025). *Benches and Seating in Public Spaces.* wheelsforwellbeing.org.uk [Tier 5]
 5. VisitEngland. *Make Your Business Accessible: Section 5.* visitbritain.org — 50m seating interval [Tier 5]
@@ -1384,10 +1384,11 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 1. Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture. *Health Environments Research & Design.* [Tier 3 — wayfinding layout primary]
 2. van der Ham, I. et al. (2021). Navigation ability in patients with ABI: population-wide online study. *Neuropsychological Rehabilitation.* [Tier 3]
 3. Antonakos, C. et al. (2004). Wayfinding with visuo-spatial impairment from stroke and TBI. *Disability Studies Quarterly* 24(3). [Tier Co-1]
-4. Hamre, C. et al. (2020). Navigation impairment at 12 months post-stroke. [Tier 3] [UNVERIFIED — full citation required]
+4. Hamre, C., Fure, B., Helbostad, J.L., Wyller, T.B., Ihle-Hansen, H., Vlachos, G., Ursin, M.H. & Tangen, G.G. (2020). Impairments in spatial navigation during walking in patients ≤70 years with mild stroke. *Topics in Stroke Rehabilitation* 27(8):601–609. DOI: 10.1080/10749357.2020.1755814 [Tier 3 — verified; PMID 32316862]
 5. Iwarsson, S. & Ståhl, A. (2003). Accessibility, usability and universal design. *Disability & Rehabilitation* 25(2):57–66. [Tier 1 framework]
 6. PMC10621028 (2023). Housing accessibility and rehabilitation outcomes after stroke. *OTJR.* [Tier 3 SV]
-7. Claessen, M. & van der Ham, I. (2017). Navigation impairment assessment in neurological patients. [Tier 3] [UNVERIFIED — full citation required]
+7a. Claessen, M.H.G. & van der Ham, I.J.M. (2017). Classification of navigation impairment: A systematic review of neuropsychological case studies. *Neuroscience & Biobehavioral Reviews* 73:81–97. DOI: 10.1016/j.neubiorev.2016.12.015 [Tier 3 — verified; PMID 27993606]
+7b. Claessen, M.H.G. et al. (2017). A systematic investigation of navigation impairment in chronic stroke patients: Evidence for three distinct types. *Neuropsychologia* 103:154–161. DOI: 10.1016/j.neuropsychologia.2017.07.001 [Tier 3 — verified; PMID 28684296]
 
 ---
 
@@ -1456,8 +1457,8 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 1. Bowes, A., Dawson, A., Greasley-Adams, C. & McCabe, L. (2019). *Designing Environments for People with Dementia: A Systematic Literature Review.* Emerald. DOI: 10.1108/978-1-78769-971-720191004 [Tier 3 — 429 items]
 2. DSDC, University of Stirling (2022). *Environments for Ageing and Dementia Design Assessment Tool (EADDAT).* stir.ac.uk/dsdc [Tier 5]
 3. Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture: environments that facilitate wayfinding in nursing homes. *American Journal of Alzheimer's Disease and Other Dementias.* [Tier 3]
-4. BuroKade/Vivium (n.d.). De Hogeweyk post-occupancy evaluation. [Dutch-language — NL Tier Co-1] [UNVERIFIED — formal citation required]
+4. Vivium Zorggroep / BuroKade (n.d.). De Hogeweyk post-occupancy evaluation [internal Dutch-language document]. [NL Tier Co-1] [UNVERIFIABLE — internal organisational document; not publicly indexed; cannot formally cite. Confirm with Vivium Zorggroep, Weesp, Netherlands. Use as background evidence only until formally published.]
 5. PMC8725382 (2022). Dementia-friendly design: design criteria and typologies supporting wayfinding. *International Journal of Environmental Research and Public Health.* [Tier 3 NL]
-6. KDA — Kuratorium Deutsche Altershilfe. *Wohnkonzepte für Menschen mit Demenz.* [DE Tier 5] [UNVERIFIED — ISBN/year required]
-7. Helsedirektoratet. *Nasjonal faglig retningslinje om demens.* [NO Tier 5–6] [UNVERIFIED — URL required]
-8. Nationalt Videnscenter for Demens (Denmark). Sensory garden and loop-path research. [DA Tier 3] [UNVERIFIED — specific publication required]
+6. KDA — Kuratorium Deutsche Altershilfe. *Wohnkonzepte für Menschen mit Demenz.* [DE Tier 5] [PROVISIONAL — KDA is a verified organisation (est. 1962, Berlin); extensive dementia housing publications confirmed via Pro ALTER journal and BMFSFJ-funded research reports; specific title not locatable as standalone publication; likely series of project reports. Re-search via BMFSFJ Forschungsdatenbank and KDA project archive (kda.de/laufende-projekte/projektarchiv/)]
+7. Helsedirektoratet (first published 16 August 2017; last updated 23 February 2024). *Nasjonal faglig retningslinje om demens* [nettdokument]. Oslo: Helsedirektoratet. URL: https://www.helsedirektoratet.no/retningslinjer/demens [NO Tier 5–6 — verified]
+8. [SOURCE REDIRECTED] Prior reference to 'Nationalt Videnscenter for Demens sensory garden research' cannot be verified — DDRC (videnscenterfordemens.dk) is a clinical research centre; sensory garden/loop-path built environment literature is more likely sourced from SBi-anvisning 263 (2016) or Dagmarsminde/Midgaard Fredericia POE documentation. Replace with: Gonzalez, M.T. & Kirkevold, M. (2014). Benefits of sensory garden and horticultural activities in dementia care: a modified scoping review. *Journal of Clinical Nursing* 23:2698–2715. DOI: 10.1111/jocn.12388 [EN/NO Tier 3 — verified via PMC citation chain]
