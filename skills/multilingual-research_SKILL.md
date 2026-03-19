@@ -90,17 +90,7 @@ A completed language pass does not satisfy jurisdiction coverage. EN covers USA,
 
 
 
-For each jurisdiction: retrieve publications from companion network organisation nodes directly using native-language terms. Do not search for organisations via general search — go to their publication pages. Record co1\_attempted: true/false per jurisdiction.
-
-
-
-This step covers three co-authority source classes retrieved together:
-
-\- \*\*Co-1\*\* — disability-led lived experience and participatory design publications (DPOs, Deaf associations, community design guides)
-
-\- \*\*Tier 2\*\* — disability-led NGO/advocacy guidelines
-
-\- \*\*Co-2\*\* — OT professional body clinical practice guidelines (RCOT/RCOTSSH · CAOT · AOTA · OT Australia · WFOT · COTEC · national equivalents). Retrieved directly from professional body publication pages per jurisdiction — not via academic database search.
+For each jurisdiction: retrieve directly from publication pages using native-language terms — Co-1 (DPO/lived experience), Tier 2 (disability-led NGO/advocacy), and Co-2 (OT professional body CPGs). Do not use general search. Record co1\_attempted: true/false per jurisdiction.
 
 
 
@@ -110,33 +100,33 @@ Co-2 OT CPG targets by jurisdiction (minimum):
 
 |---|---|
 
-| US | AOTA (American Occupational Therapy Association) — position statements, CPGs, home modification resources |
+| US | AOTA — position statements, CPGs, home modification resources |
 
-| UK | RCOT (Royal College of Occupational Therapists) · RCOTSSH (Specialist Section in Housing) — Housing Adaptations Without Delay; GenHOME project |
+| UK | RCOT · RCOTSSH — Housing Adaptations Without Delay; GenHOME project |
 
-| CA | CAOT (Canadian Association of Occupational Therapists) — CPGs, housing OT resources |
+| CA | CAOT — CPGs, housing OT resources |
 
 | AU | OT Australia — practice standards, position papers |
 
-| IE | AOTI (Association of Occupational Therapists of Ireland) |
+| IE | AOTI |
 
-| NZ | Occupational Therapy New Zealand Whakaora Ngangahau Aotearoa (OTNZ-WNA) |
+| NZ | OTNZ-WNA |
 
-| SG | Singapore Association of Occupational Therapists (SAOT) |
+| SG | SAOT |
 
-| DE | DVE (Deutscher Verband der Ergotherapeuten) |
+| DE | DVE |
 
-| CH | ErgotherapeutInnen-Verband Schweiz (EVS) |
+| CH | EVS (ErgotherapeutInnen-Verband Schweiz) |
 
-| FR | ANFE (Association Nationale Française des Ergothérapeutes) |
+| FR | ANFE |
 
-| BE | VVBE / FMBE (Flemish and French OT associations) |
+| BE | VVBE / FMBE |
 
 | NL | Ergotherapie Nederland |
 
-| SE | FSA (Förbundet Sveriges Arbetsterapeuter) |
+| SE | FSA |
 
-| NO | NITO Ergoterapeutene / Ergoterapeutene (Norwegian OT association) |
+| NO | Ergoterapeutene |
 
 | DK | Ergoterapeutforeningen |
 
@@ -148,15 +138,15 @@ Co-2 OT CPG targets by jurisdiction (minimum):
 
 | CN | 中国康复医学会作业治疗专业委员会 |
 
-| BR | COFFITO (Conselho Federal de Fisioterapia e Terapia Ocupacional) |
+| BR | COFFITO |
 
-| ES | APETO / COTOE (Spanish OT associations) |
+| ES | APETO / COTOE |
 
-| PT | ATOP (Associação Portuguesa de Terapeutas Ocupacionais) |
+| PT | ATOP |
 
-| IT | AITO (Associazione Italiana Terapisti Occupazionali) |
+| IT | AITO |
 
-| EU/ISO | COTEC (Council of Occupational Therapists for the European Countries) · WFOT |
+| EU/ISO | COTEC · WFOT |
 
 
 
@@ -436,21 +426,7 @@ If all checks pass → write LOG entry with status determined by coverage:
 
 
 
-Begin with population need and functional outcome evidence — not standard values.
-
-
-
-1\. What does best-practice evidence show is optimal for this population?
-
-2\. What do standards require as minimum?
-
-3\. What is the gap?
-
-4\. What is the design synthesis?
-
-
-
-Never anchor search on a standard value then seek confirming evidence.
+Begin with population need and functional outcome (optimal provision first) — not standard values. Standards appear at Step 2 as minimum baseline only. Never anchor on a standard value then seek confirming evidence.
 
 
 
@@ -466,11 +442,9 @@ After each completed step:
 
 ```
 
-CHECKPOINT \[YYYY-MM-DD HH:MM] — slug: {slug} — step: {step} — languages complete: {list} — jurisdictions complete: {list} — sources found: {N}
+CHECKPOINT \[YYYY-MM-DD HH:MM] — slug: {slug} — step: {step} — languages complete: {N/14} — jurisdictions complete: {N/24} — sources found: {N}
 
 ```
-
-Checkpoints must name both languages complete and jurisdictions complete as separate counts.
 
 
 
