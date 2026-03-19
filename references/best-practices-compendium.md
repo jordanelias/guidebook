@@ -1259,6 +1259,18 @@ IEC60118-4 · Bauman2010-DeafSpace · BS8300-2018 · DIN18041-2016 · HLAA-Aurac
 Marquardt2011-HERD · DSDC-EADDAT-2022 · BuroKade-DeHogeweyk-POE · VanBuuren2022 · Milà-Villarroel2020 · NationaltVidenscenter-SensoryGarden · SBi-anvisning-263-2016
 
 
+### Extended pass additions (2026-03-19)
+| Source | Lang | Jurisdiction | Finding | Tier |
+|---|---|---|---|---|
+| CEREMA 2022 Fiche 8 *Construire ou rénover une structure d'accueil Alzheimer* | FR | FR | UHR architectural design mandated to reduce agitation and support orientation/wandering; coherence between architectural conception and social/care project required at programming stage | Tier 5 |
+| PMND 2021–2022 Feuille de route MND (Ministère Solidarités et Santé) | FR | FR | PASA/UHR/UCC design specifications referenced; new strategy 2024–2028 pending | Tier 5 |
+| KDA Pro Alter series / Betreutes Wohnen 2022 (Kremer-Preiß / Klemm) | DE | DE | KDA produces programmatic frameworks for dementia-friendly neighbourhoods and group living; no standalone architectural specifications — built env DEM guidance in DE comes from DIN 18040-1 supplemented by KDA programmatic criteria | Tier 5 |
+| MHLW 指定地域密着型サービス基準 (Group Home Standards) | JA | JP | Unit structure mandated: 5–9 residents/unit; each unit has shared living/dining/kitchen; domestic scale design philosophy; no turning circle dimension specified beyond general BF access | Tier 6 |
+| Marquardt G, Bueter K, Motzek T (2014). Impact of Built Environment on People with Dementia. *HERD* 8(1):127–157 | EN | Multiple | 127+ study systematic review; wayfinding (legible floor plans, landmarks, colour contrast), lighting (400+ lux with low glare), outdoor access with looped paths are highest-evidence design interventions | Tier 3 |
+| Vilans (NL, ongoing). Leefomgeving en wonen met dementie | NL | NL | Co-1 knowledge centre confirming dementievriendelijke omgeving design principles; primarily behavioural/technology focus — spatial specifications reference BuroKade/De Hogeweyk model | Tier 2/Co-1 |
+
+**KDA clarification note:** KDA does not publish standalone architectural specification documents. Prior BPC entry referencing "KDA Wohnkonzepte Demenz" as a single locatable publication is withdrawn; replace with KDA Pro Alter series reference.
+
 ## mental-health-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier range:** 2–4
 
