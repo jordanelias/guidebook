@@ -1441,7 +1441,7 @@ no_data_flags: [DE, NO, DA, FI, ZH, JA, NL, KO, IT]
 ---
 
 ```yaml
-slug: OFS-built-environment|OFS
+slug: OFS-built-environment
 query: "ME/CFS POTS MCAS orthostatic fatigue spectrum built environment rest seating pacing design"
 last_searched: 2026-03-19 00:10
 early_close_triggered: false
@@ -1512,7 +1512,7 @@ note: "UNIVERSAL DESIGN GAP: No jurisdiction has OFS-specific built environment 
 ---
 
 ```yaml
-slug: neurological-built-environment|NEU
+slug: neurological-built-environment
 query: "neurological ABI stroke traumatic brain injury built environment wayfinding cognitive accessibility OT"
 last_searched: 2026-03-19 00:10
 early_close_triggered: false
@@ -1582,7 +1582,7 @@ note: "EN evidence strong for wayfinding/ABI. Non-EN pass PARTIAL only — exten
 ---
 
 ```yaml
-slug: dementia-built-environment|DEM
+slug: dementia-built-environment
 query: "dementia built environment design wayfinding layout lighting DSDC EADDAT non-anglophone KDA MHLW"
 last_searched: 2026-03-19 00:18
 early_close_triggered: false
@@ -1652,7 +1652,7 @@ no_data_flags: []
 bpc_ref: "dementia-built-environment|DEM"
 note: "Strong EN/NL/DK evidence base. KDA (DE), MHLW (JA), Helsedirektoratet (NO), CEREMA+PMND (FR) are priority targets for extended pass."
 ```
-slug: OT-interprofessional-universal-design|ALL
+slug: OT-interprofessional-universal-design
 query: "occupational therapy interprofessional universal design built environment"
 last_searched: 2026-03-19 14:00
 early_close_triggered: false
@@ -1678,7 +1678,7 @@ no_data_flags: [FI, FR, NL]
 
 ---
 
-slug: CHD-school-design-built-environment|CHD
+slug: CHD-school-design-built-environment
 query: "children school building design accessibility neurodivergence sensory environment"
 last_searched: 2026-03-19 16:00
 early_close_triggered: false
@@ -1704,7 +1704,7 @@ no_data_flags: []
 
 ---
 
-slug: bariatric-grab-bar-structural-design|MOB-BAR
+slug: bariatric-grab-bar-structural-design
 query: "bariatric grab bar load rating structural specification built environment"
 last_searched: 2026-03-19 16:30
 early_close_triggered: false
