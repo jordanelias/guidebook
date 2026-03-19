@@ -122,3 +122,5 @@ GAP-074 | P2 | CLOSED-RESOLVED | multilingual-research | mobility-built-environm
 GAP-075 | P3 | OPEN | multilingual-research | mobility-built-environment | ES THIN: CERMI and CTE/SUA retrieved; no OT-specific or Co-1 research found in Spanish for MOB built environment; CERMI advocacy publications need direct retrieval | 2026-03-19 22:30
 
 GAP-075 | P2 | OPEN | multilingual-research | accessible-bathroom-and-grab-bar | 16 jurisdictions NOT-RUN: IE/SG/SE/FR/BE/NL/CH/DK/FI/KR/CN/BR/ES/PT/IT/EU/ISO — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:22
+
+GAP-076 | P2 | OPEN | multilingual-research | residential-kitchen-and-task-surfaces | 14 jurisdictions NOT-RUN: NO/IE/SG/SE/BE/CH/DK/FI/KR/CN/BR/PT/IT/EU; NZ/JP THIN — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:47
