@@ -1464,6 +1464,8 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 8. [SOURCE REDIRECTED] Prior reference to 'Nationalt Videnscenter for Demens sensory garden research' cannot be verified — DDRC (videnscenterfordemens.dk) is a clinical research centre; sensory garden/loop-path built environment literature is more likely sourced from SBi-anvisning 263 (2016) or Dagmarsminde/Midgaard Fredericia POE documentation. Replace with: Gonzalez, M.T. & Kirkevold, M. (2014). Benefits of sensory garden and horticultural activities in dementia care: a modified scoping review. *Journal of Clinical Nursing* 23:2698–2715. DOI: 10.1111/jocn.12388 [EN/NO Tier 3 — verified via PMC citation chain]
 
 ## mobility-built-environment
+> ⚠ PROVISIONAL — Co-1 pass incomplete; Canadian NBC/RHFAC absent; power WC turning diameter range incomplete. See GAP-067, GAP-068, GAP-069. Do not use for specification writing until resolved.
+
 **Updated:** 2026-03-19 19:18  **Evidence tier range:** 1–6
 
 ### Concept boundary notes
