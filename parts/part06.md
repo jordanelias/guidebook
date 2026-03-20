@@ -1,8 +1,8 @@
-## Part 5: Residential Application Matrices
+## Part 6: Residential Application Matrices
 
 ** Neufert Residential and Non-Residential OT Analysis dimensional data is not yet integrated into Part II room matrices. Dimensional specifications from Neufert sources should be added to relevant room matrices when the source file is confirmed readable. This does not affect item specifications or population guidance — only dimensional annotations marked [NEUFERT: pending] in the working draft. See Volume 2 for status.
 
-### 5.0 How to Read the Residential Matrices
+### 6.0 How to Read the Residential Matrices
 
 Each room matrix is structured as: 1.
 
@@ -22,7 +22,7 @@ Each room matrix is structured as: 1.
 
 | DD=developed design | CD=construction documents | SPEC=specification | COMM=commissioning | OPS=operation — |
 
-### 5.0a Universal Residential Provisions
+### 6.0a Universal Residential Provisions
 
 The following provisions apply to ALL new and substantially refurbished dwellings, regardless of size or occupancy. They are non-negotiable and must appear on the stated drawing at the indicated stage. This list provides symmetry with the Universal Non-Residential Provisions in Part III §I5.0.
 
@@ -40,7 +40,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | B-05 | Gradual lighting transition (entry to interior) | DD | Lighting design |
 | G-04 | MERV 13 air filtration provision | SD | MEP brief |  |
 
-### 5.1 R-ENT: Entry
+### 6.1 R-ENT: Entry
 
 **Room criticality:** The entry is the most consequential zone in the residence. It is the point of access and return, the location of the primary security system, the threshold between external and internal environments, and the first sensory transition zone. Failure here blocks all other provisions. Primary populations: MOB (step-free), BAR (wide clear opening — → Supp Vol IV), VIS/vis (approach wayfinding), DEAF (visual intercom), DBL (tactile approach), OFS/POTS (automatic door, canopy weather protection).
 
@@ -98,7 +98,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Smart lock conduit noted on electrical drawings
 - [ ] Visual fire alarm provision noted on electrical drawings —
 
-### 5.2 R-GAR: Garage and Vehicle Space
+### 6.2 R-GAR: Garage and Vehicle Space
 
 **Room criticality:** The garage is the primary access point for adapted vehicle users (modified vehicles, hand controls, tail lifts). It is also the primary internal entry point in many dwellings — the path from garage to interior must be step-free and lever-operated. Primary populations: MOB (vehicle transfer space, step-free to interior), BAR (larger vehicle space — → Supp Vol IV), UPL (lever hardware on all garage doors and interior connections).
 
@@ -136,7 +136,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] EV conduit provision on electrical drawings
 - [ ] Automatic garage door shown on floor plan and electrical drawings —
 
-### 5.3 R-LAU: Laundry
+### 6.3 R-LAU: Laundry
 
 **Room criticality:** The laundry is the most poorly specified residential room in the current Part V library — zero citations existed in v7.0. It is disproportionately significant for UPL users (overhead reach to top-loader); MOB users (front-loader access, turning circle); PAIN users (bending, sustained posture). The laundry is also the primary source of fragrant detergent exposure for OFS users. A laundry with a top-loading washing machine, high shelf storage, and narrow doorway is inaccessible to a majority of disabled users.
 
@@ -175,7 +175,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Extract ventilation provision (≥10 ACH) on M\&E drawings
 - [ ] Lever taps on plumbing drawings (if laundry sink) —
 
-### 5.4 R-BED: Bedroom
+### 6.4 R-BED: Bedroom
 
 **Room criticality:** The bedroom is an ALL-population room — it is relevant to every disability code. It is the primary circadian environment (B-01), the sleeping and rest environment (acoustic, thermal), and the location of the highest-consequence adaptation (hoist installation). The bedroom is also the primary space for smart technology integration (H-04 bedside control of all building services). The bedroom ceiling is the only location for hoist tracking provision that cannot be retrofitted without structural demolition.
 
@@ -224,7 +224,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Acoustic door to bedroom (STC ≥35) on door schedule
 - [ ] Circadian lighting on reflected ceiling plan —
 
-### 5.5 R-BA-05 → R-BA-01: Bathroom (Turning Circle First, then Full Spec)
+### 6.5 R-BA-05 → R-BA-01: Bathroom (Turning Circle First, then Full Spec)
 
 **NOTE on sequence:** Per the residential analysis, R-BA-05 (turning circle) is a prerequisite for all other bathroom provisions. It is therefore presented first in the sequence.
 
@@ -288,7 +288,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Extract ventilation ≥15 ACH on M\&E drawings
 - [ ] Lever taps on plumbing drawings —
 
-### 5.6 R-LIV: Living Room
+### 6.6 R-LIV: Living Room
 
 **Room criticality:** The living room is the primary social and quality-of-life space. It is ALL-population, with particular significance for DEM (cognitive orientation and social engagement), NDV (sensory environment for sustained occupation), OFS (air quality and thermal comfort), and MOB (furniture layout and turning circle). It is also the location of the primary natural light and biophilic provisions.
 
@@ -350,7 +350,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Circadian lighting on reflected ceiling plan and electrical drawings
 - [ ] Temperature maximum (TC-01) in HVAC brief —
 
-### 5.7 R-KIT: Kitchen
+### 6.7 R-KIT: Kitchen
 
 **R-KIT-03 MERGE EXECUTED:** Per residential analysis, R-KIT-03 (storage) is merged into R-KIT-01 as a Storage Configuration sub-section. R-KIT-03 had zero citations and was a sub-set of the cabinetry specification package.
 
@@ -404,7 +404,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Range hood noise specification (NC-30) in MEP brief
 - [ ] Turning circle ≥1500 mm confirmed on furniture layout plan —
 
-### 5.8 R-HAL: Hallway and Internal Circulation
+### 6.8 R-HAL: Hallway and Internal Circulation
 
 **Room criticality:** The hallway is the continuous accessibility spine of the dwelling. Failure in the hallway (narrow width, threshold steps, dark night routes, door hardware failures) fragments access to every other room. It is particularly significant for DEM (night navigation, consistent layout), VIS/vis (contrast wayfinding), and MOB (clear width, turning circles at door junctions). The hallway is also the first place that DEM disorientation becomes dangerous.
 
@@ -440,7 +440,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Night-light path (motion sensor + low-level LED) on electrical drawings
 - [ ] LRV ≥30 door frame contrast confirmed on finish schedule —
 
-### 5.9 R-STA: Staircase
+### 6.9 R-STA: Staircase
 
 **Room criticality:** The staircase is the primary vertical access barrier and the highest fall-risk zone in multi-storey dwellings. It is most significant for VIS/vis (nosing contrast), MOB (handrail bilaterality), and DEM (handrail continuity, tread lighting). The staircase is also the primary DAR location for future stairlift or home lift provisions — a DAR failure here cannot be corrected without major structural intervention.
 
@@ -490,7 +490,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Handrail both sides, continuous, shown on stair section drawing
 - [ ] Nosing contrast (full-width) on stair detail drawing —
 
-### 5.10 Residential Matrix: Consolidated DAR Priority Register
+### 6.10 Residential Matrix: Consolidated DAR Priority Register
 
 The following table summarises all DAR provisions across the residential matrix, ordered by cost-of-inaction severity. All provisions marked CRITICAL must appear on a named drawing at construction documentation stage — a verbal specification is insufficient.
 
