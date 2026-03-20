@@ -661,3 +661,149 @@ point of building approach; inadequate parking or excessive distance forces exer
 ### E-05 Weather Protection at Entry (Covered Canopy Minimum 3000×2000 mm)
 
 **Applicable Groups:** MOB, PAIN, OFS, VIS
+
+**Specifications:**
+
+Canopy depth: ≥3000 mm; width: ≥2000 mm
+
+Gradient: ≤1:50 beneath canopy
+
+Drainage: to perimeter (no central drain creating trip hazard)
+
+Canopy height: ≥2500 mm (BAR powerchair clearance)
+
+Lighting: ≥100 lux at entry surface level; night-activated
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part VIII §8.4.2.
+
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
+
+**Cross-reference:** E-06 (Level Entry); J-08 (BAR Parking)
+
+**Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
+
+### E-06 Level Entry (Zero Step at All Accessible Entrances)
+
+**Applicable Groups:** MOB, BAR, VIS, DEM, OFS
+
+**Description:** Zero step (≤4 mm threshold) at all accessible entrances. Where site topography requires raised threshold: ramped approach ≤1:20 (E-03). No stepped entry at any accessible entrance.
+
+Single level entry flush with finish floor level.
+
+**Specifications:**
+
+Threshold: ≤4 mm at accessible entry (preferred); ≤10 mm permitted where drainage constraints make zero threshold impractical (DIN 18040-2 reduced-barrier variant — imperceptible to most wheelchair users in daily use per Bundesfachstelle Barrierefreiheit, 2022)
+
+Ramped approach where required: ≤1:20 (E-03)
+
+Door mat: flush with floor level; recessed mat well preferred
+
+Level surface maintained for 1500 × 1500 mm clear inside entry
+
+DAR: all new residential — design for future level approach even if not constructed initially (CAN/ASC 2.8:2025)
+
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Level entry (zero step) is a site-level and threshold decision. Retrofit of a stepped entry requires ramp construction, threshold lowering, drainage provision, and potentially structural work at the door opening. Threshold lowering in masonry construction requires structural assessment. See Part VIII §8.4.2 C.1.3.
+
+**Key citations:** CSA Group. (2023). CSA B651:2023. CSA. Standard Norge. (2018). NS 11001-1:2018 [Norwegian\]. Standard Norge. CAN/ASC 2.8:2025. ASC.
+
+**Cross-reference:** E-03 (Ramp Gradient); E-05 (Canopy); E-07 (Slip Resistance)
+
+**Evidence basis (OT):** EHP Framework (alter strategy). Level entry is the canonical 'alter' intervention: the environmental context is
+
+changed (threshold eliminated) to directly expand the performance range, enabling the occupation of independent building entry for any
+
+user whose mobility impairment or energy limitation makes threshold negotiation a barrier.
+
+### E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)
+
+**Applicable Groups:** MOB, DEM, VIS, BAR (fall prevention)
+
+**Description:** All floor surfaces on accessible routes achieve PTV (Pendulum Test Value) ≥36 in wet condition. External approaches, entry vestibules, bathrooms, and kitchens: PTV ≥36 wet (HSE guidance).
+
+Dry-only internal circulation: PTV ≥36 dry.
+
+**Specifications:**
+
+PTV ≥36 wet: external approaches, entry vestibules, bathrooms, kitchens, ramps
+
+PTV ≥36 dry: all internal circulation
+
+Test: BS 7976-2 pendulum test
+
+Maintenance: cleaning regime must not reduce PTV below threshold; specify in cleaning contract
+
+Post-occupancy: re-test at 12 months if floor condition changes
+
+**Retrofit cost note:** Retrofit penalty: LOW. Slip resistance PTV ≥36 wet is a floor finish specification. Retrofit is floor covering
+
+replacement or surface treatment application. Anti-slip coating can be applied to existing surfaces at modest cost. See Part VIII §8.4.1.
+
+**Key citations:** HSE. (2014). Slips and trips: Guidance for the catering industry. [PTV ≥36 reference.\] British Standards Institution. (2018). BS 8300:2018. BSI.
+
+**Cross-reference:** B-08 (Matte Floor — gloss and PTV compatibility); G-04 (Wet Room); E-06 (Level Entry)
+
+**Evidence basis (OT):** Biomechanical FOR. PTV ≥36 wet is derived from biomechanical research on the coefficient of friction required to
+
+prevent slip initiation under ambulant and mobility-device loads on wet surfaces; below PTV 36 wet, the risk of slip-initiated fall
+
+exceeds clinically acceptable thresholds for populations with reduced balance and reaction time.
+
+### E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)
+
+**Applicable Groups:** MOB, BAR, VIS, DEM
+
+**Description:** All primary accessible routes: 1200 mm clear width minimum (code minimum 1000 mm in most jurisdictions — E-08 exceeds code). Where 1200 mm continuous not achievable: passing bay ≥1500×1500 mm at maximum 10 m intervals. BAR routes: 1500 mm clear width (J-06).
+
+**Specifications:**
+
+Primary routes: 1200 mm clear width minimum large body size/BAR (→ Supp Vol IV) primary routes: 1500 mm clear width (J-06)
+
+Where <1200 mm continuous: passing bay ≥1500×1500 mm at ≤10 m intervals
+
+No furniture, equipment, or signage projecting into corridor
+
+Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
+
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part VIII §8.4.2 C.1.3.
+
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
+
+**Cross-reference:** J-06 (BAR Corridor Width); E-01 (Lift Car Width)
+
+**Evidence basis (OT):** Biomechanical FOR. The 1200mm clear width (exceeding 1000mm code minimum) is grounded in wheelchair propulsion
+
+biomechanics: corridors narrower than 1200mm force compensatory manoeuvres that increase shoulder joint loading and reduce propulsion
+
+efficiency, directly restricting the performance range of manual wheelchair users.
+
+### E-09 Tactile Walking Surface Indicators (ISO 23599:2019)
+
+**Applicable Groups:** VIS, DBL
+
+**Description:** TWSI (Tactile Walking Surface Indicators) installed at all hazard points and on primary accessible routes for VIS users.
+
+Domed (warning) profiles at hazards; bar (directional) profiles for guidance routes. Per ISO 23599:2019.
+
+**Specifications:**
+
+Domed profile: at stair heads, platform edges, road crossings, escalator heads
+
+Bar profile: directional guidance on primary accessible routes only
+
+Colour: maximum tonal contrast with adjacent surface; minimum 30 LRV
+
+Profile height: 5 mm ±1 mm (ISO 23599:2019)
+
+Material: durable, slip-resistant; confirmed for climate zone
+
+DEM environments: domed TWSI maximum 3 mm profile; same-colour as adjacent floor (B.4.6 conflict resolution)
+
+**Retrofit cost note:** Retrofit penalty: LOW. Tactile walking surface indicators are surface-applied or recessed tiles. Retrofit is a floor
+
+works operation — tile removal, TWSI installation, and reinstatement. No structural implications. See Part VIII §8.4.1.
+
+**Key citations:** ISO. (2019). ISO 23599:2019 — Assistive products — Tactile walking surface indicators. ISO. CNIB Foundation. (2024). Clearing our path. CNIB. Japan Blind People's Association. (2022). [Japanese.\] JBPA.
+
+**Cross-reference:** Part IV, Part E §E.4.6 (TWSI vs DEM --- resolution specified)
+
+**Evidence basis (OT):** Compensatory FOR. TWSI are environmental compensation devices that substitute tactile (proprioceptive/plantar) information for absent visual information during navigation; the ISO 23599:2019 profile specifications are derived from the sensory detection thresholds required for the compensation to be reliably perceptible under normal ambulant conditions.
