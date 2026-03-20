@@ -2842,3 +2842,44 @@ top_sources: [Unwin-2022-PMC9340127, Rashid-2025-BRI, Architecture-Access-Amaze-
 bpc_ref: "sensory-relief-space-design|NDV"
 thin_flags: [SV, NO, DA, FI, FR, DE, ZH, JA]
 no_data_flags: []
+
+slug: OT-built-environment-interface|ALL
+query: "occupational therapy built environment interprofessional design teams universal design"
+last_searched: 2026-03-19 14:30
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 12, db: [web, PubMed-equivalent, RCOT, CAOT, AOTA]}
+  FR: {status: SEARCHED, results: 4, db: [web, Cairn.info]}
+  DE: {status: SEARCHED, results: 4, db: [web, DVE]}
+  JA: {status: THIN, results: 2, db: [web, JAOT], note: "OT role framed as 住環境整備 only; design-stage collaboration thin"}
+  SV: {status: NOT-SEARCHED, results: 0, db: []}
+  NO: {status: NOT-SEARCHED, results: 0, db: []}
+  DA: {status: NOT-SEARCHED, results: 0, db: []}
+  FI: {status: NOT-SEARCHED, results: 0, db: []}
+  ZH: {status: NOT-RUN, results: 0, db: []}
+  NL: {status: NOT-RUN, results: 0, db: []}
+  ES: {status: NOT-RUN, results: 0, db: []}
+  PT: {status: NOT-RUN, results: 0, db: []}
+  KO: {status: NOT-RUN, results: 0, db: []}
+  IT: {status: NOT-RUN, results: 0, db: []}
+top_sources: [REF-01, REF-02, REF-03, REF-04, REF-12]
+bpc_ref: "OT-built-environment-interface|ALL"
+thin_flags: [JA]
+no_data_flags: []
+
+
+  EN: {status: SEARCHED, results: 9, db: [web, DbI, Frontiers]}
+  FR: {status: THIN, results: 1, db: [web], note: "DbI guidelines are international reference; no FR-specific literature"}
+  DE: {status: THIN, results: 1, db: [web], note: "Beratungsstelle mentions taubblind category; no dedicated specification"}
+  Nordic: {status: THIN, results: 1, db: [web, Sense Scotland], note: "Nordic Centre is clinical/communications-focused; no architectural guidance specific to DBL"}
+  JA: {status: NO-DATA, results: 0, db: [web], note: "No 盲ろう者-specific architectural standard identified"}
+  ZH: {status: NOT-RUN, results: 0, db: []}
+  NL: {status: NOT-RUN, results: 0, db: []}
+  ES: {status: NOT-RUN, results: 0, db: []}
+  PT: {status: NOT-RUN, results: 0, db: []}
+  KO: {status: NOT-RUN, results: 0, db: []}
+  IT: {status: NOT-RUN, results: 0, db: []}
+top_sources: [REF-20, REF-21, REF-23, REF-28]
+bpc_ref: "deafblind-built-environment|DBL"
+thin_flags: [FR, DE, Nordic]
+no_data_flags: [JA]
