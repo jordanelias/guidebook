@@ -2485,3 +2485,33 @@ REF-RAP-17: SBi-anvisning 218 — DA school acoustics
 
 **Guidebook items affected:** A-16 (primary); H-02 (cross-reference elevation); F-01, F-03 (confirmed)
 **New gaps raised:** GAP-SRS-01 (H-02 elevation in A-16)
+
+## OT-built-environment-interface|ALL
+**Updated:** 2026-03-19 14:30  **Evidence tier:** 1–3 (Co-2 primary)
+**Consensus finding:** OT brings unique person-environment-occupation competence to built environment design, but formal integration at design stage (vs post-occupancy adaptation) remains under-evidenced and under-practised.
+**Key specifications from evidence:**
+- Step-free external access + zero-threshold shower + ground-floor bedroom/bathroom = the three highest-priority OT-specified features (Wellecke et al. 2022, n=144 Australian OTs, Tier 1)
+- OT-led home modification processes produce superior outcomes to other-profession-led processes (systematic review evidence)
+- Russell 4-phase 9-subphase protocol = only formalised OT-design process to date
+- Interprofessional barriers: different professional languages; designers unaware of OT scope; absence of systematic collaboration framework
+- Only ~10% of architectural clients request inclusive design beyond minimum accessibility compliance (Zallio & Clarkson 2023)
+**Thin:** JA (design-stage collaboration absent from JAOT scope)
+**Key sources:** REF-01 (Young 2019 scoping), REF-02 (Wellecke 2022 survey), REF-03 (Russell 2018 protocol), REF-04/05/06 (Zallio & Clarkson 2021/2022/2023), REF-11 (Trouvé 2016 FR)
+**Divergent findings:** JA frames OT-environment interface as post-illness home adaptation only, not upstream design team membership.
+
+## deafblind-built-environment|DBL
+**Updated:** 2026-03-19 14:30  **Evidence tier:** 2–4 (Co-1 for Protactile layer)
+**Consensus finding:** DBL-specific built environment design evidence is thin in all languages; the strongest sources are DbI guidelines (Tier 2), ISO 23599:2019 (Tier 4), and Protactile movement documentation (Co-1).
+**Key specifications from evidence:**
+- Tactile-first: all spatial information accessible through touch alone; visual/audio are redundancy
+- Consistent layout is highest-priority: any unannounced change eliminates tactile wayfinding
+- Tactile floor routes along primary circulation spine (ISO 23599:2019)
+- Vibrotactile alerting for all alarm/communication systems
+- Interpreter/SSP seating: 1200×1200mm clear floor zone per DBL user position
+- Embossed/thermoform tactile maps at all major decision points; updated every 3 years minimum
+- Protactile/distantism critique: environments must support co-presence and direct tactile communication, not just intermediary-based access
+**Evidence gap (Tier X):** No Tier 1 OT clinical research on DBL-specific built environment spatial provisions in any reviewed language. Guidebook DBL specifications should carry THIN-BASE disclosure.
+**Thin:** FR, DE, Nordic (clinical focus only)
+**No-data:** JA
+**Key sources:** REF-20 (DbI guidelines), REF-21 (Clark 2024), REF-22 (Nuccio & granda), REF-23 (Swobodzinski 2021), REF-28 (Chidiac et al. 2024)
+**Divergent findings:** None (insufficient data across languages for meaningful divergence)
