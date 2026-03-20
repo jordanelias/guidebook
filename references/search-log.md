@@ -2792,3 +2792,53 @@ no_data_flags: []
 citation_mining: {backward: 1, forward: 0, sources_added: 1, note: "PubMed 8716494 (floor patterns wandering) mined from DSDC reference body"}
 co1_pass_summary: {complete: [EN (RNIB, Alzheimer's Society UK, DSDC)], partial: [DE (DBSV)], not-run: [SV, NO, DA, FI, FR, ZH, JA, KO]}
 native_standards_pass_summary: {complete: [EN, DE, FR], partial: [SV, NO, DA, ZH, JA], not-run: [FI, KO]}
+
+slug: assistive-listening-systems|DEAF
+query: "hearing loop assistive listening Auracast induction loop disability access built environment"
+last_searched: 2026-03-19 09:45
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 10, db: [web, HLAA, RNID, IEC, Center for Hearing Access]}
+  SV: {status: SEARCHED, results: 3, db: [web], note: "BFS 2024:12 confirmed; no divergence from IEC"}
+  NO: {status: SEARCHED, results: 4, db: [web], note: "TEK17 §13-10 confirmed — most prescriptive national standard found"}
+  DA: {status: THIN, results: 2, db: [web], note: "BR18 confirms; no independent loop standard"}
+  FI: {status: THIN, results: 2, db: [web], note: "Finnish accessibility decree confirms; no divergence"}
+  FR: {status: SEARCHED, results: 4, db: [web], note: "CEREMA stricter standard confirmed: ERP cat 1-4 + ≥50 seats"}
+  DE: {status: SEARCHED, results: 4, db: [web], note: "DIN 18040-1 §5.2.2 confirmed; Zwei-Sinne-Prinzip framing"}
+  ZH: {status: THIN, results: 2, db: [web], note: "GB 50763 specifies FM/IR; induction loop not primary — requires verification"}
+  JA: {status: SEARCHED, results: 6, db: [web], note: "CRITICAL GAP: no mandatory standard; voluntary municipal only (Zennancho)"}
+  NL: {status: SEARCHED, results: 3, db: [web], note: "NEN 9120:2025 confirms IEC standard; no divergence"}
+  ES: {status: NOT-RUN, results: 0, note: "CTE SUA follows IEC; no divergence expected"}
+  PT: {status: NOT-RUN, results: 0, note: "NBR follows IEC; no divergence expected"}
+  KO: {status: NOT-RUN, results: 0, note: "편의증진법 follows IEC; no divergence expected"}
+  IT: {status: NOT-RUN, results: 0, note: "DM 236/89 follows IEC; no divergence expected"}
+top_sources: [IEC-60118-4, HLAA-2025, RNID-2024, CEREMA-2021, TEK17-13-10, Zennancho-2014]
+bpc_ref: "assistive-listening-systems|DEAF"
+thin_flags: [DA, FI, ZH]
+no_data_flags: []
+
+---
+
+slug: sensory-relief-space-design|NDV
+query: "sensory room quiet room reset room design NDV autism ADHD built environment specifications"
+last_searched: 2026-03-19 10:15
+early_close_triggered: false
+languages:
+  EN: {status: SEARCHED, results: 14, db: [web, PMC, Emerald, Tandfonline, NCSE]}
+  SV: {status: THIN, results: 2, db: [web], note: "SPSM guidance confirms; no independent dimensional standard"}
+  NO: {status: THIN, results: 2, db: [web], note: "Norwegian sensory room practice follows EN; PAS 6463 reference"}
+  DA: {status: THIN, results: 2, db: [web], note: "Danish NDV practice consistent with EN; no mandatory standard"}
+  FI: {status: THIN, results: 1, db: [web], note: "Finnish guidance consistent with EN; no independent standard"}
+  FR: {status: THIN, results: 3, db: [web], note: "CEREMA references sensory considerations; no dedicated sensory room standard"}
+  DE: {status: THIN, results: 2, db: [web], note: "DIN 18041 acoustics relevant; no dedicated sensory room standard in DE"}
+  ZH: {status: THIN, results: 2, db: [web], note: "Chinese autism school standards (建标156-2011) include calm spaces but not dedicated public building standard"}
+  JA: {status: THIN, results: 2, db: [web], note: "Japanese welfare facility standards mention quiet zones; no public building requirement"}
+  NL: {status: SEARCHED, results: 4, db: [web], note: "NL practitioner community confirms EN evidence base; no divergence"}
+  ES: {status: NOT-RUN, results: 0}
+  PT: {status: NOT-RUN, results: 0}
+  KO: {status: NOT-RUN, results: 0}
+  IT: {status: NOT-RUN, results: 0}
+top_sources: [Unwin-2022-PMC9340127, Rashid-2025-BRI, Architecture-Access-Amaze-2025, NCSE-Ireland-2025, Petaccia-2021-MDPI, PAS-6463-2022]
+bpc_ref: "sensory-relief-space-design|NDV"
+thin_flags: [SV, NO, DA, FI, FR, DE, ZH, JA]
+no_data_flags: []
