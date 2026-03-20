@@ -426,3 +426,9 @@ RULE: 1524mm ADA turning circle is not a permitted specification floor in this g
 CONDITION: Any MOB turning space specification, any item referencing ADA 1524mm.
 ACTION: The minimum permitted floor is 1700mm (RHFAC/BS8300 best practice). ADA 1524mm may be cited as a historical data point or evidence of regulatory lag only. It must never appear as a design value or minimum threshold in any item specification, BPC synthesis, or guidance text.
 DATE: 2026-03-19 22:45
+
+RULE: At session end, log each completed workplan reference code to the session YAML as a completed_items list entry with -DONE suffix.
+CONDITION: Any session where a named workplan item (e.g. WS-1 Pre-session, BPC-1, P11 item N) is fully executed.
+ACTION: List item as "{code}-DONE" in session YAML completed_items block. This is the canonical completion record — workplan files on GitHub are updated where they exist; /mnt/project/ workplan files are read-only and cannot be edited.
+DATE: 2026-03-19 20:00
+
