@@ -305,17 +305,11 @@ without structural intervention. See Part VIII §8.4.1.
 *Compartmentalisation (formerly F-02):* Alcoves, sub-rooms, and compartmentalised sub-spaces in all large open-plan areas. Maximum open-plan zone 200 m² without acoustic sub-division. Alcoves: 3 m²; 3-wall enclosure; NRC ≥0.70. Sub-rooms: STC ≥35 partition. All sub-zones equal design quality.
 
 **Specifications:**
-
 Area: 6 m² (individual); 10 m² (paired)
-
 Partition: STC ≥35
-
 RT60: ≤0.4 s
-
 Full dimming: 100%--10 lux
-
 No transparent panels to open-plan area (visual privacy)
-
 Minimum: 1 per 20 open-plan workstations
 
 **Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Enclosed low-stimulation spaces require dedicated floor area and acoustic separation. Retrofit within an occupied building requires partition installation, acoustic treatment, and area allocation. Cost depends on whether structural works are needed. See Part VIII §8.4.2.
@@ -367,13 +361,9 @@ Contrast)
 **Description:** No right-angle blind corners on primary circulation routes. Corners treated with: 45° splay; convex mirror (minimum 300 mm diameter); or glazed panel with vision panel through corner. Applies at all corridor junctions on primary accessible routes.
 
 **Specifications:**
-
 No blind right-angle corners on primary circulation
-
 Treatment: 45° splay, convex mirror ≥300 mm, or vision-panel corner
-
 Mirror: positioned for sightline from 2 m approach on each leg
-
 Vision-panel glass: safety glazing (Class 2 or better); obscure if privacy required
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Curved or mirrored junctions at blind corners require finish and joinery modification. Retrofit is a decoration and joinery programme; structural corner modification is more significant. See Part VIII §8.4.1.
@@ -397,19 +387,12 @@ acquired low-literacy disability (VIS, DEM, post-stroke aphasia).
 **Description:** All wayfinding signage uses pictogram + single word. No multi-line text. No symbol-dense information panels. Consistent font: rounded sans-serif (e.g., Arial, Frutiger). Character height ≥150 mm at 10 m viewing distance. Contrast ≥30 LRV. Braille equivalent at all directional and room identification signage.
 
 **Specifications:**
-
 Pictogram: above or left of word; minimum 50 mm height
-
 Word: single-word descriptor; sentence case; rounded sans-serif
-
 Character height: ≥150 mm at 10 m viewing distance
-
 Contrast: ≥30 LRV text vs background
-
 Braille: Grade 2 Braille equivalent at 1400--1600 mm AFF at all room
-
 ID signs
-
 Tactile lettering: raised 0.8 mm; at 1400--1600 mm AFF
 
 **Retrofit cost note:** Retrofit penalty: LOW. Pictogram and signage installation is a surface-mounted programme. Retrofit is signage
@@ -437,13 +420,9 @@ process multi-word directional sentences or abstract symbols.
 **Description:** Furniture layout in primary occupied spaces maintained consistently. No rearrangement of furniture or wayfinding elements without prior consultation with primary users. Applies particularly in DEM care and VIS specialist environments where spatial memory is a primary navigation strategy.
 
 **Specifications:**
-
 Furniture arrangement: permanent/semi-permanent in DEM and VIS environments
-
 Any rearrangement: documented and communicated to all identified users minimum 5 days in advance
-
 Floor markings: furniture position marked on floor plan and maintained by facilities management
-
 No ad-hoc event furniture in primary wayfinding corridors
 
 **Retrofit cost note:** Retrofit penalty: ZERO. Consistent furniture layout is a management and procurement decision with zero build cost
@@ -497,17 +476,11 @@ DEM users and a safety concern for MH users who require advance visibility of th
 **Description:** Accessible outdoor garden with: secured perimeter (no open exit to unsupervised road); loop path (no dead ends — DEM principle from D-01 applied outdoors); seating every 20 m; hard surface throughout (PTV ≥36 wet). Natural planting within reach of path.
 
 **Specifications:**
-
 Secured perimeter: no unsupervised exit to road or open public area
-
 Loop path: continuous; no dead-ends
-
 Hard surface throughout: PTV ≥36 wet
-
 Seating: every 20 m; 450 mm seat height; armrests; covered option
-
 Planting: within reach of path; non-toxic species (DEM); no thorns
-
 Accessible entry: level or ramp ≤1:20
 
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Safe accessible garden with loop path and secured perimeter requires new hard landscaping, path construction, perimeter enclosure, planting, and drainage — significant external works in an existing outdoor space. At design stage it is a landscape brief decision. See Part VIII §8.4.2.
