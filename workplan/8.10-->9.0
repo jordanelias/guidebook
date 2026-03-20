@@ -1,0 +1,739 @@
+# Comprehensive Workplan: Guidebook for Accessible Design — v8.8 → v9.0
+**Produced:** 2026-03-19 22:00  
+**Supersedes:** Workplan_Guidebook_v8-8_to_v9-0_2026-03-19.md  
+**GitHub state verified:** 2026-03-19 22:00  
+**Decisions confirmed:** A = Merge (OFS); B = Consolidate (hearing-impairment orphan)
+
+---
+
+## Part 0 — State Inventory
+
+### 0.1 GitHub Reference Ecosystem — Current State
+
+| File | Lines | Issues |
+|---|---|---|
+| `references/best-practices-compendium.md` | 2,518 | 65 slug headings; 21 in full schema; 44 abbreviated or corrupted; 6 duplicate slugs; 1 non-schema heading; 5 pipe slugs needing rename |
+| `references/search-log.md` | 2,886 | 66 slug entries; duplicates mirror BPC duplication; old schema (pre-Option 2 fields) in ~37 entries; pipe slugs in 7 entries |
+| `references/slug-registry.md` | Current | 15 canonical slugs registered; 5 additional residential/library slugs; pipe suffix format used in slug codes (legacy) |
+| `references/project-standards.md` | 429 lines | 72 rules; current; one SUPERSEDED rule present (skills/GitHub directory) |
+| `references/toc.md` | Current | CO-0001 applied; Parts 1–13; Roman numeral volumes |
+| `references/change-orders/CO-0001-2026-03-18-1900.md` | Current | Approved; execution not started |
+| `gap_register.md` | 125 entries | 15 P1 OPEN; 59 P2 OPEN; structural issues documented in gap_register_review |
+| `bibliography-v8.md` | **NOT ON GITHUB** | Exists in `/mnt/project/` (274 lines); ~112 entries across 4 sections; not committed; not linked to BPC |
+| `references/section-map.md` | Present | Currency relative to CO-0001 not confirmed |
+
+### 0.2 BPC Schema Audit Summary
+
+| Category | Count | Slugs |
+|---|---|---|
+| Full schema (with `### Best-practice synthesis`) | 21 | `mobility-built-environment` (×3), `visual-impairment-built-environment` (×2), `deaf-spatial-design`, `deaf-acoustic-built-environment`, `deafblind-built-environment` (×2), `hearing-impairment-built-environment`, `dementia-built-environment` (×2), `mental-health-built-environment`, `fatigue-spectrum-built-environment`, `OFS-built-environment`, `neurological-built-environment` (×2), `accessible-bathroom-and-grab-bar`, `residential-kitchen-and-task-surfaces`, `residential-entry-and-threshold`, `threshold-and-level-access`, `reach-range-and-accessible-controls`, `cognitive-wayfinding-design`, `accessible-circulation-geometry`, `room-acoustic-performance|ALL` |
+| Abbreviated schema (no Best-practice synthesis) | 37 | All entries from `visual-impairment-built-environment` (first instance) through `multilingual-evidence-convergence-non-english`; plus 4 pipe-suffixed entries at lines 2371–2444 |
+| Corrupted / non-schema | 1 | `## Co-Primary Tier 1 / Tier 2 Gap-Fill Supplement` — not a slug; is a research supplement heading |
+| Duplicate slugs (same slug, two entries) | 6 pairs | `mobility-built-environment` (×3 total); `visual-impairment-built-environment` (×2); `neurological-built-environment` (×2); `dementia-built-environment` (×2); `deafblind-built-environment` (×2); `deafblind-built-environment-design` (superseded by full `deafblind-built-environment`) |
+| Pipe-suffix slugs requiring rename | 5 | `visual-alerting-and-wayfinding-light\|VIS,DEAF,DBL`; `therapeutic-lighting-design\|ALL`; `luminance-contrast-and-pattern\|VIS,DEM,NDV`; `assistive-listening-systems\|DEAF`; `sensory-relief-space-design\|NDV` |
+| Slugs in search-log NOT in BPC | 3 | `OT-interprofessional-universal-design`; `CHD-school-design-built-environment`; `bariatric-grab-bar-structural-design` |
+| Slugs in BPC NOT in slug-registry | Many | Abbreviated-schema slugs predate the registry; registry has ~20 canonical entries |
+
+### 0.3 Bibliography Gap Summary
+
+The project bibliography exists only in `/mnt/project/bibliography-v8.md` (274 lines, ~112 entries). It is **not committed to GitHub**, not linked from the guidebook body (which has an empty placeholder), and does not reflect sources accumulated since March 2026. The BPC has 30 DOI references and cites sources across 21 Key Sources sections that have no corresponding bibliography entries.
+
+**Missing from bibliography (confirmed):**
+- All sources added in BPC entries since 2026-03-17 (~60+ sources)
+- All BPC-8 additions specified in Workplan_BPC_Corrections (16 new + 4 updates)
+- Cross-reference bibliography compendium Category A additions (12 high-value confirmed sources including Keall 2015 Lancet Tier 1 RCT)
+- BPC Key Sources sections from 21 full-schema slugs
+- Recent standards: NEN 9120:2025; NCC 2022; ABCB Livable Housing v1.3; Habinteg 2024
+
+### 0.4 Skill Ecosystem — Deployment Summary
+
+Skills execute from `/mnt/project/` (canonical execution source per project-standards Rule). GitHub `skills/` directory is inventory-only — **never read at runtime**. All 26 registered skills are in `/mnt/project/`. Three skills relevant to this workplan are defined inline in Project Instructions only (no `/mnt/project/` file): `research-log-manager`, `workplan-orchestrator`, `session-consolidator`.
+
+`keyword-lookup` is a registered skill (`/mnt/project/keyword-lookup_SKILL.md`) that must be called before any `multilingual-research` run (complements the Keyword Compendium `view` step). This step is distinct from and supplementary to the Compendium view.
+
+`citation-miner` is listed as "to build (P2)" — does not yet exist. Citation mining is performed inline within `multilingual-research` until built.
+
+`vol2-item-formatter` is in the orchestrator skill registry and is the terminal step in the Item Specification workflow. Confirm the skill file is present in `/mnt/project/` before WS-3 execution begins.
+
+---
+
+## Part 1 — Pre-Flight Decisions (Both Confirmed)
+
+| Decision | Confirmed | Action |
+|---|---|---|
+| **A — OFS/Fatigue merge** | ✅ Merge | Absorb `fatigue-spectrum-built-environment` content into `OFS-built-environment`; absorb rest seating ≤25–30m, MS thermal sub-note, Tier 1 energy conservation citations into OFS best-practice synthesis; delete `fatigue-spectrum-built-environment` from BPC and search-log |
+| **B — Hearing-impairment consolidate** | ✅ Consolidate (= B1) | Extract unique CI-specific acoustic and HOH-workplace content from `hearing-impairment-built-environment`; absorb into `deaf-acoustic-built-environment` and `deaf-spatial-design`; delete orphan from BPC and search-log |
+
+---
+
+## Part 2 — Critical Path and Work Stream Architecture
+
+```
+PHASE 0 (Parallel — no dependencies):
+  WS-4  Gap register hygiene
+  WS-5  BPC corrections (Sessions 1–2 + BPC-7 re-research)
+  WS-6  Infrastructure + bibliography bootstrap
+  BPC-1 Safety-critical temperature correction (IMMEDIATE)
+
+PHASE 1 (Sequential — WS-1 gates everything below):
+  WS-1  Pre-session: fix-linebreaks on source file
+  WS-1A CO-0001 execution (12 passes, find-and-replace Stages 0–6)
+  WS-1B Structural verification (haiku-chunker → cross-reference-resolver → audit)
+
+PHASE 2 (After Phase 1):
+  WS-2  Body corrections (Sessions A–D)
+  BPC-3 through BPC-6 (after Decisions A+B confirmed, BPC-1+2 complete)
+
+PHASE 3 (After Phase 2):
+  WS-3  Population coverage additions (DBL, IntD, DEAF, new items)
+  WS-6B Bibliography compilation (after BPC-8)
+
+PHASE 4 (All phases complete):
+  WS-7  Final assembly, audit, version increment, session close
+```
+
+---
+
+## Part 3 — Work Stream 1: Structural Execution (CO-0001)
+
+### WS-1 Pre-session — DOCX Conversion Prep (mandatory; PI Rule 14)
+
+**Rule:** `fix-linebreaks` before any analysis or substitution skill on a DOCX-converted file.  
+**Risk:** CO-0001 has 12 find-and-replace passes. Running them against hard-wrapped Part 8 text (~5,000 lines, ~8–10 words per line) will produce systematic missed instances and false positives in item specifications. This is not recoverable after execution.
+
+1. Run `fix-linebreaks` on `Guidebook_for_Accessible_Design_8v09_2026-03-18-12-50.md` (full file, 11,763 lines). Idempotent — safe to run on clean sections.
+2. Spot-check: item A-01 description. If still one sentence per line → `fix-linebreaks` did not execute. Do not proceed.
+3. Backslash escape artifacts (`\\'s`, `\\\[`, `\\\\`) are a separate artifact class. After `fix-linebreaks`, run a targeted `find-and-replace` Stage 1 discovery pass for `\\\\` and `\\\[`. Classify and execute if present.
+4. Output: clean `.md` base file for all subsequent operations.
+
+### WS-1 Session A — CO-0001 Execution
+
+**Pre-flight (PI Rule 13 mandatory — no fast-track exception):**  
+Verify on GitHub:
+- `references/toc.md` reflects Parts 1–13 structure (CO-0001 applied to ToC ✓)
+- CO-0001 sign-off checklist: `toc.md updated: ✓` and `Change Order committed: ✓`
+- No structural decisions made since CO-0001 that require a CO-0002 first
+
+`find-and-replace` — all six stages (0–6) per pass. Stages 0–6 are: spec confirmation, instance discovery (Haiku), classification (Sonnet), downstream impact, execution, validation, gap register write.
+
+| Pass | CO ref | Escalation notes |
+|---|---|---|
+| 1 | CO-0001-A: Volume 1/2/3 → I/II/III | >50 instances — confirm bulk at Stage 0 |
+| 2 | CO-0001-B: Part labels + codes Vol I (Parts 1–3) | |
+| 3 | CO-0001-C: Delete Part IV block | REMOVE — redirect all cross-refs to Part 7 §7.x before deleting content |
+| 4 | CO-0001-D: Part labels + codes Vol II (Parts 4–10); V2-P4- → V2-P8- | CODE instances: pause at Stage 2; `volii-validator` on V2-P4- instances before replacing |
+| 5 | CO-0001-E: Part labels + codes Vol III (Parts 11–13) | |
+| 6 | CO-0001-F: Delete Category J (J-01–J-05) + all cross-refs | Every cross-ref → `*(see Supplementary Volume Supp. Part 4)*` before content deletion |
+| 7 | CO-0001-G: Move BIO-01–BIO-05 from Part 8 to Appendix B | MOVE — update Part 8 intro "Supp-A" → "Appendix B" |
+| 8 | CO-0001-H: Move TC-01–TC-05 from Part 8 to Appendix C | MOVE — update Part 8 intro "Supp-B" → "Appendix C" |
+| 9 | CO-0001-I: Reposition Appendices as standalone `#` section | |
+| 10 | CO-0001-J: Supp. Vol. Sections I–IV → Supp. Parts 1–4 | |
+| 11 | CO-0001-K: Delete Supp. Vol. Section V (Revision Notes) | No redirect — content is on GitHub |
+| 12 | CO-0001-L: Update front matter Part and Section Map | |
+| 13 | Deferred: 82× "Chapter C" → "Part VIII §8.4" | ALL AMBIGUOUS at Stage 2 — present every instance to author; no batch execution |
+| 14 | Deferred: 12× "Part VIII (case studies)" → "Part IX" (now Part 13) | |
+
+Stage 6 gap register write after each pass. Update CO-0001 sign-off checklist on GitHub after completion.
+
+### WS-1 Session B — Structural Verification
+
+**`haiku-chunker` first (PI Rule 2 mandatory).** Document >11,000 lines post-changes. Section map from this run is the reference for all downstream sessions.
+
+Parallel (Haiku 4.5):
+- `cross-reference-resolver` — CO-0001 Cross-Reference Chase table (10 known + any new from Stage 3 reports)
+- `guidebook-auditor` pass A — heading hierarchy; no orphaned Roman-numeral headings; no §III.x or §E.x or §V.x in Volumes I–III
+- `volii-validator` — confirm V2-P8-XX universal; flag any remaining V2-P4-XX
+- `structure-auditor` — Appendices at correct `#` level; Supp. Parts 1–4 consistent hierarchy
+- `markdown-formatter` — heading level inconsistencies from BIO/TC moves and Appendix repositioning
+
+---
+
+## Part 4 — Work Stream 2: Body Corrections
+
+**Prerequisites:** WS-1 Sessions A + B complete.
+
+### WS-2 Session A — P1 Safety and Evidence Corrections
+
+**Via `find-and-replace` (mechanical substitution):**
+
+| Ref | Correction | Notes |
+|---|---|---|
+| GAP-066 / PR-003 | Tier renumber: Tier 3→4, 4→5, 5→6, 6→7 throughout body | Per 7-tier D-18 rule (project-standards.md). High count — confirm bulk at Stage 0. CODE instances in tier markers: Stage 2 classification |
+| PR-007 / GAP-A09-01 residual | Delete `<0.1 m/s RMS` from Part 9 A-09 engineering table | Value deleted from item body; residual in table |
+| S-32 | Part 10 §10.4.2: "VIS/DEAF is a primary population code" → "DEAF is a primary population code" | |
+| F-13 | Supp. Vol. preamble: add DEAF to population code list | Insertion after DBL |
+| S-03 | Supp. Vol. preamble: "Guidebook v7" → "v8.8" | |
+| S-36 | §1.11 → §1.9; update all §1.11 cross-references | HEADING instance — Stage 2 flag; ToC + section map update |
+| A-10/A-11/A-12 Applicable Groups | "VIS (hearing device users)" → DEAF | |
+| D-08 Applicable Groups | Remove "VIS (cognitive)"; add IntD explicitly | |
+| 10 items (E-01/02/04/06/07/10/11, G-04/06/07) | Remove BAR from Applicable Groups; add Supp. Vol. footnote | Single Stage 1 discovery; per-item classification |
+
+**Verify `fix-linebreaks` complete:** Spot-check A-01 before proceeding.
+
+**Via `item-specification-writer` → `framing-checker` → `prose-style-checker`:**
+
+| Ref | Correction |
+|---|---|
+| PR-004 | §1.5: update to 7-tier D-18 structure; add Co-2 (OT CPGs); correct CAOT/COTEC/WFOT/AOTA from "Tier 1" to "Co-2" |
+| PR-006 / GAP-STEP5-01 | B-10: draft seizure risk safety note; reconcile 75 cd (item) vs ≥110 cd (§2.4 DEAF) — adopt EN 54-23 spatial coverage method; add footnote explaining BS 8300 legacy minimum |
+| S-29 | Complete truncated Co-1 paragraph ("…and Patient Led Research") |
+
+**Via `framing-checker` → `prose-style-checker`:**
+
+| Ref | Correction |
+|---|---|
+| F-05 | §2.4 DEAF: restructure into two distinct paragraphs (audiological categories; Deaf cultural community) |
+| T-03 | §1.1 Safety: "deaf occupant" → "Deaf or hard of hearing occupant" |
+| FR-01 | §1.7: add CRPD Article 19 (independent living) to CRPD alignment section |
+
+### WS-2 Session B — Pending Specification Value Executions
+
+All items route via `item-specification-writer` → `evidence-auditor` → `prose-style-checker`:
+
+| Ref | Item | Resolution |
+|---|---|---|
+| GAP-B4-01 | E-10 rest seating | "20m" → "25–30 m range (median 27.5 m); reclining seating option required on primary OFS-designated routes" |
+| GAP-STEP6-01 | C-04 LRV | Replace flat ≥30 with tiered table: ≥30 general; ≥35 DEM/elderly; ≥40 aged care/DBL environments |
+| GAP-STEP6-02 | C-05 | Confirm C-04/C-05 conflict resolution text is in body; if absent, draft and insert |
+| H-04 | H-04 temperature | Confirm temperature range removed; cross-reference to Appendix C added |
+| H-01 | H-01 control height | Add: "1100 mm standard; 1200 mm where powered wheelchair users are primary occupants" |
+| S-003/S-007 | Part E cross-references | §E.3.x → §E.4.x throughout front matter and Part 3 — use `cross-reference-resolver` |
+
+### WS-2 Session C — P2 Document Identity
+
+**Via `find-and-replace`:**
+
+| Ref | Correction |
+|---|---|
+| S-01/S-02/PR-017 | Standardise all internal version references to v8.8; update supersession statement |
+| S-33 | Volume 2 abbreviations table: Category K/I renaming |
+| S-34 | Abbreviations: V2-P8-XX format (canonical) |
+| U-003 | Worked example 5: remove BAR as primary population; replace with Supp. Vol. cross-reference |
+| S-012 | Remove G-03 "Evidence note (v8.0)..." editorial process note from body |
+
+**Via `item-specification-writer` → `prose-style-checker`:**
+
+| Ref | Correction |
+|---|---|
+| S-04 | Complete Three-Volume Structure table (draft Vol II and III rows) |
+| S-06 | Update Part and Section Map to §1.9 |
+| S-26/S-27 | Replace empty Master Bibliography placeholder with editorial note pointing to `bibliography-v9.md` (see WS-6) |
+| S-38 | Fix Part E: §E.3 absent — add §E.3 stub or renumber §E.4 → §E.3 (author decision) |
+| PR-010 | Correct Part II intro population category count |
+| PR-018 | Fix §1.9/§1.10 numbering gap |
+| PR-019 | Add full citation for Hangzhou elevator price study in §12.3.3 |
+| U-005 | Remove "Status: DRAFT" editorial note from Part 10 body |
+
+**Via `framing-checker` → `prose-style-checker`:**
+
+| Ref | Correction |
+|---|---|
+| F-06 | Add CRPD environmental barrier framing sentence to PAIN category definition |
+| F-07 | Supplement IntD category definition with environmental barrier framing |
+
+### WS-2 Session D — Ghost Item Resolution (author decision required)
+
+Items referenced in Part 9 engineering tables but absent from Part 8 specification library:
+
+| Ref | Items | Decision needed |
+|---|---|---|
+| S-010 | F-06 (Acoustic Zone Separation — HVAC Duct Cross-Talk), F-07 | Draft as new Part 8 items OR remove from Part 9 tables with note |
+| S-011 | I-04 (Accessible Bathroom Drainage), I-05 (Hoist Ceiling Track Power), I-06 (Kitchen UPL Power) | Draft as new Part 8 items OR remove from Part 9 tables |
+
+If drafting: use full Item Specification workflow (`item-consolidation-analyzer` → `item-specification-writer` → `[framing-checker · evidence-auditor]` → `prose-style-checker` → `volii-validator` → `vol2-item-formatter`). Evidence basis for F-06, F-07, I-04–I-06 will require `research-log-manager CHECK` before drafting.
+
+---
+
+## Part 5 — Work Stream 3: Population Coverage Additions
+
+**Prerequisites:** WS-1 + WS-2 Session A complete.  
+**Skill sequence for all new items:** `item-consolidation-analyzer` → `item-specification-writer` → `[framing-checker · evidence-auditor]` → `prose-style-checker` → `volii-validator` → `vol2-item-formatter`  
+**`haiku-chunker` required before any full-volume analysis pass (PI Rule 2).** ≤30 items per `item-specification-writer` run.
+
+### WS-3 Session A — DBL Evidence Disclosure + Protactile Integration
+
+This is the confirmed `next_action` from session_2026-03-19-2358.md.
+
+1. `item-specification-writer`: Add THIN-BASE disclosure to all DBL item specifications in Volume 2: `[THIN BASE — Tier 2+4 only; no Tier 1 OT clinical research in any jurisdiction or language; March 2026]`
+2. `item-specification-writer`: Add Protactile/co-presence paragraph to §2.10 as Co-1 evidence layer — Clark (2024) *Touch the Future* and Nuccio & granda as Co-1 citations
+3. `item-specification-writer`: Add Protactile spatial design implications to E-09, D-08, D-09, H-03, H-04
+4. `framing-checker`: Confirm "tactile-first" framing is maintained throughout DBL provisions
+5. Note in §10.2: acknowledge upstream design-stage collaboration evidence gap (GAP-OT-BE-01)
+
+### WS-3 Session B — DBL Room Matrix Systematic Pass (GAP-S4-SYST-01, P1)
+
+DBL absent from 15 of 16 room matrices. All insertions carry: `[EXPERT CONSENSUS — no standard in any jurisdiction; March 2026]` per project-standards rule.
+
+**New items to draft first** (these are prerequisites for room matrix insertions):
+
+| New item | Gap ref | Evidence basis | Disclosure required |
+|---|---|---|---|
+| DBL intervenor adjacency at service counters | GAP-NEW-01 | DbI Nordic; Sense UK (2022) — Tier 2 | No standard in any jurisdiction |
+| DBL tactile building map station | GAP-NEW-02 | ISO 23599:2019 — Tier 4; DbI guidelines | No dimension standard in any jurisdiction |
+| DBL haptic communication clear floor zone | GAP-NEW-03 | Protactile (Clark 2024) — Co-1 | 1500 mm adjacency — no standard |
+| DBL vibrotactile alert provision | GAP-NEW-04 | Expert consensus only | EXPERT CONSENSUS disclosure mandatory |
+
+Room matrix pass order: R-ENT → R-BED → NR-HLT → NR-EDU → NR-WRK → NR-CUL → NR-HOS → NR-RET → NR-TRP → R-LIV → R-BA → R-KIT → R-HAL → R-STA → R-LAU → R-GAR
+
+### WS-3 Session C — IntD Interim Matrix Insertions (GAP-S4-SYST-02, P1)
+
+IntD absent from all 16 room matrices. All insertions carry: `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]` per project-standards rule. Interim provisions only — flag each: "v9.0 interim; full evidence review deferred to v10.0."
+
+Minimum insertion per matrix: easy-read wayfinding and signage; low-stimulation environment option (cross-reference A-16); service counter accessible information format.
+
+### WS-3 Session D — DEAF Residential Coverage
+
+DEAF absent from 10 of 16 residential room matrices. Add DEAF provisions to R-BED, R-BA, R-LIV, R-KIT, R-HAL, R-STA per critique report §3.1 findings.
+
+### WS-3 Session E — Unregistered P1 New Items
+
+Draft conflict resolution notes for unregistered P1 items (register first in WS-4, then draft):
+
+| Item | Resolution required |
+|---|---|
+| DEM + PD floor pattern conflict | Gait cueing (PD) requires high-contrast floor pattern; DEM requires plain floors — conflict resolution note for Part 7 (formerly Part E) |
+| NDV/AUT + NDV/MH colour conflict | Muted palettes (AUT) vs. warm/saturated/biophilic (MH) — resolution note for Part 7 |
+| E-03 walker user gradient gap | Add evidence gap note: no study distinguishes walker from wheelchair user in ramp gradient standards; specification carries [THIN BASE] disclosure |
+
+---
+
+## Part 6 — Work Stream 4: Gap Register Hygiene
+
+**Prerequisites:** None. Runs in parallel with WS-1.
+
+### WS-4 Session A — Structural Cleanup
+
+Per gap_register_review_2026-03-19.md findings:
+
+1. **GitHub completeness check.** GET gap_register.md. Confirm whether GAP-001–029 and GAP-036–053 exist on GitHub. If absent, flag as P1 project risk to author — these 47 entries may include unresolved P1 items from early March.
+2. **Fix GAP-075 duplicate.** Renumber bathroom/grab-bar entry from GAP-075 to GAP-077. Update any BPC cross-reference to this entry.
+3. **Remove 10 redundant update blocks.** Check each for additional detail not in original entry first; if unique detail exists, merge into original description field before deleting. Affected IDs: GAP-A09-01, GAP-A09-02, GAP-B4-01, GAP-B4-02, GAP-B4-10, GAP-STEP5-02, GAP-STEP6-01, GAP-STEP6-02, GAP-NEW-08, GAP-NEW-10.
+4. **Remove 3 production metadata headers** from file body.
+5. **Fix non-standard status values.** GAP-067/068/069/072: move resolution detail to description field; set status to `CLOSED-RESOLVED`. GAP-RAP-02: add HH:MM to timestamp. GAP-070: set to `OPEN` (partially searched is still open). REVIEW-LAU-A09-01: set to `OPEN`.
+6. **Fix GAP-056** priority: P4 → P3.
+
+### WS-4 Session B — Register Unregistered Findings
+
+New entries required. Assign sequential IDs from the next available number after the highest existing ID.
+
+**P1 (register then route to WS-3 for drafting):**
+
+| Issue | Skill owner | Source |
+|---|---|---|
+| DEM + PD floor pattern conflict — no conflict resolution framework for this dyad | content-gap-analyzer | Session YAML 2026-03-17 |
+| NDV/AUT + NDV/MH colour conflict — no conflict resolution note | content-gap-analyzer | Session YAML 2026-03-17 |
+| E-03: walker user ramp gradient gap — no evidence distinguishes walker from wheelchair users | evidence-auditor | Item review 2026-03-17 |
+| A-10/A-11/A-12: per-item VIS(hearing device users) population code correction | find-and-replace | Step 2 audit |
+
+**P2 (register; address in content review cycle after v9.0):**
+
+| Issue |
+|---|
+| A-04: 20 m restorative interval UNSUPPORTED — no study derives this distance |
+| B-05: 5 m lighting transition zone UNSUPPORTED |
+| F-03: 5 m sensory room re-entry exclusion zone UNSUPPORTED |
+| MOB/AMB walker users not differentiated from wheelchair users in ramp/gradient standards |
+| NEU/PD gait cueing floor pattern specification absent from all standards |
+| I-03: one-handed bathroom design THIN BASE |
+| D-06: 300×300 mm shadow box height does not serve seated wheelchair users (eye level ~1100–1200 mm) |
+| Deferred production item: 82× "Chapter C" → "Part VIII §8.4" — register as P2 execution task |
+| Deferred production item: 12× "Part VIII (case studies)" → "Part IX" (now Part 13) |
+
+**Confirm/close:**
+- García-Setién (2022): confirm resolved or re-enter as open citation gap
+- GAP-S001-xx through GAP-S002-xx: confirm migration status from 2026-03-13 sessions
+
+### WS-4 Session C — Post-Execution Close-Out
+
+After WS-1 completes: close GAP-STRUCT-01 and GAP-STRUCT-02 with CLOSED-RESOLVED status. Register any new structural gaps from WS-1 Stage 6 outputs.
+
+---
+
+## Part 7 — Work Stream 5: BPC Corrections
+
+**Safety-critical: BPC-1 executes IMMEDIATELY — before any other BPC session and before WS-1.**
+
+### BPC-1 — P1/P2 Direct Text Corrections (IMMEDIATE)
+
+Execute all operations in `Workplan_BPC_Corrections_2026-03-19.md §Session 1`. The most critical:
+
+**1A (patient safety — execute first):** `cross-population-conflict-resolutions` conflict 4 temperature: `Ambient ≤22°C (MS/NEU floor` → `Ambient ≤18°C (MS/NEU floor`. Wrong threshold = patient harm risk for MS/Uhthoff users.
+
+Full BPC-1 operation list (10 operations):
+- 1A: Temperature floor correction (≤22°C → ≤18°C)
+- 1B: Tier claim corrections — 8 systematic/scoping reviews misclassified as Tier 1, must be Tier 3
+- 1C: A-09 threshold — THIN BASE → UNVERIFIED
+- 1D: Staleness corrections (VA SAH grant FY2024 → FY2026; KfW suspension note rewrite)
+- 1E: Propagate De Hogeweyk UNVERIFIABLE flag to two additional entries
+- 1F: Propagate Gonzalez & Kirkevold replacement citation to `multilingual-evidence-convergence-non-english`
+- 1G: Ielegems & Vanrie spelling/date correction
+- 1H: DBL framing correction (corridor clearance framing)
+- 1I: Rest seating interval context note to OFS-built-environment (public realm vs. building interior scope clarification)
+- 1J: Reclassify 5 entries from COMPLETE to PARTIAL (Co-1 coverage failures)
+
+### BPC-2 — Structural Cleanup
+
+Parallel with BPC-1:
+- Delete superseded entry `deafblind-built-environment-design` (lines 159–166); verify no unique content first
+- Remove `## Co-Primary Tier 1 / Tier 2 Gap-Fill Supplement` heading block (non-schema heading; distribute content first per BPC-3A)
+- Remove rogue metadata headers (lines 2401–2403)
+- Resolve four duplicate slug pairs:
+  - `mobility-built-environment` (×3 → ×1): consolidate all three into the most recent full-schema entry (updated 2026-03-19 19:18); extract Gap-fill Addendum Co-1 content (6 jurisdictional confirmations) into the consolidated entry first
+  - `visual-impairment-built-environment` (×2 → ×1): extract contrast threshold findings from first instance; confirm in second instance
+  - `neurological-built-environment` (×2 → ×1): verify no unique content in truncated first instance
+  - `dementia-built-environment` (×2 → ×1): confirm Extended pass additions content is in second instance
+
+### BPC-3 — Co-Primary Distribution + OFS Merge (Decision A confirmed)
+
+**3A.** Distribute `Co-Primary Tier 1 / Tier 2 Gap-Fill Supplement` content:
+- To `mobility-built-environment`: add 6 Co-1 jurisdictional confirmations (NHF/NO, DHR/SV, APF-IFOP/FR, BSK/DE, DPI Japan/JA, CDPF/ZH)
+- To `neurodivergent-built-environment`: add Caldwell et al. (2025), SREF (2024), McAllister & McBeth (2022)
+- To `visual-impairment-built-environment`: add RNIB (2023) *Building Sight*; to `deaf-spatial-design`: add RNID guidance
+- Remove the non-schema heading block after distribution
+
+**3B.** OFS Merge:
+1. Copy from `fatigue-spectrum-built-environment` into `OFS-built-environment` `### Consensus findings`: rest seating ≤25–30m note, MS thermal sub-note, Tier 1 energy conservation citations not in OFS entry
+2. Update `OFS-built-environment` `### Best-practice synthesis`
+3. Update `OFS-built-environment` `### Key sources`
+4. Delete `fatigue-spectrum-built-environment` from BPC
+5. Update search-log.md: remove `fatigue-spectrum-built-environment` slug entry; note merge in `OFS-built-environment` entry
+
+### BPC-4 — Hearing-Impairment Consolidation (Decision B confirmed)
+
+1. Review `hearing-impairment-built-environment` content (lines 1220–1247 in BPC; full schema)
+2. Extract unique content: CI-specific acoustic provisions (beyond hearing-aid content); multi-modal communication environments; HOH workplace reasonable adjustment provisions
+3. Add CI-specific acoustic content to `deaf-acoustic-built-environment` `### Consensus findings`
+4. Add HOH workplace and multi-modal content to `deaf-spatial-design` `### Consensus findings`
+5. Delete `hearing-impairment-built-environment` from BPC
+6. Update search-log.md: remove `hearing-impairment-built-environment` slug entry
+
+### BPC-5 — Schema Conversion Batch A (5 entries)
+
+**Dependencies:** BPC-1 (tier corrections in place), BPC-2 (duplicates resolved), BPC-3 (Co-Primary content distributed)
+
+Full schema template from `Workplan_BPC_Corrections_2026-03-19.md §Session 5` governs all conversions. Entries to convert:
+
+| Entry | Current state | Key note |
+|---|---|---|
+| `neurodivergent-built-environment` | Corrupted mid-sentence | Reconstruct Divergent Findings: NDV/AUT muted palette vs. NDV/MH safety contrast conflict; mark PARTIAL |
+| `intellectual-disability-built-environment-design` | Well-structured abbreviated | THIN-BASE disclosure on all specs: `[TIER 4–5; no quantified architectural standard; March 2026]` |
+| `accessible-laundry-room-design` | Well-structured abbreviated | Preserve ADA S611 as sole source with quantified specs — note in Divergent Findings |
+| `floor-vibration-wheelchair-disability` | Well-structured | UNVERIFIED flag on A-09 threshold must remain; mark PARTIAL (0 Co-1 jurisdictions) |
+| `biophilic-design-healthcare-workplace` | Tier corrections needed first (BPC-1B) | Apply all Tier 3 corrections before converting |
+
+### BPC-6 — Schema Conversion Batch B (9 entries + 5 pipe slug renames)
+
+**Dependencies:** BPC-1 (tier corrections applied)
+
+**Pipe slug renames (apply first — affects heading, search-log slug field, slug-registry):**
+
+| Current slug | New slug |
+|---|---|
+| `visual-alerting-and-wayfinding-light\|VIS,DEAF,DBL` | `visual-alerting-wayfinding-light-vis-deaf-dbl` |
+| `therapeutic-lighting-design\|ALL` | `therapeutic-lighting-design-all` |
+| `luminance-contrast-and-pattern\|VIS,DEM,NDV` | `luminance-contrast-and-pattern-vis-dem-ndv` |
+| `assistive-listening-systems\|DEAF` | `assistive-listening-systems-deaf` |
+| `sensory-relief-space-design\|NDV` | `sensory-relief-space-design-ndv` |
+| `room-acoustic-performance\|ALL` | `room-acoustic-performance-all` (rename only — already full schema) |
+| `OT-built-environment-interface\|ALL` | `OT-built-environment-interface-all` |
+| `deafblind-built-environment\|DBL` | `deafblind-built-environment-dbl` (merge with existing `deafblind-built-environment` after confirming unique content) |
+
+**Schema conversions (per individual notes in `Workplan_BPC_Corrections_2026-03-19.md §Session 6`):**
+- `thermal-comfort-older-adults-care-settings`: Baquero et al. 2023 Tier 3 correction; conflict with MS/OFS requirement must lead Divergent Findings
+- `acoustics-speech-intelligibility-disability`: Murgia 2023 Tier 3 correction; 0.3 s vs 0.6 s RT differentiation leads
+- `wayfinding-dementia-spatial-design`: apply Ielegems spelling/date fix; preserve DO-NOT-CITE for van Buuren & Mohammadi 2023
+- `fold-down-grab-bar-specification`, `visual-alerting-wayfinding-light-vis-deaf-dbl`, `therapeutic-lighting-design-all`, `luminance-contrast-and-pattern-vis-dem-ndv`, `assistive-listening-systems-deaf`, `sensory-relief-space-design-ndv`
+
+### BPC-7 — Re-research: `chronic-pain-built-environment`
+
+**Independent — can run any time. Estimated highest token cost of any single BPC session.**
+
+**Mandatory pre-run protocol (PI Rules 12, 16, 17):**
+1. `research-log-manager CHECK` — confirm STALE or NOT FOUND; if COMPLETE <90 days, stop
+2. `keyword-lookup` — query PAIN concept group for native-language aliases
+3. `view` Keyword Compendium Part 3, PAIN concept group — extract native-language terms; load concept boundary warnings (ZH: TCM framework conceptualises chronic pain differently from biomedical CRPS/fibromyalgia; JA: 慢性痛 vs 線維筋痛症 are distinct search terms requiring separate queries)
+4. `view` Protocol v4 §COMPANION NETWORKS for PAIN — identify AFAQ, FMS Action Network, FMQ UK, AFIBRO-ES, ME Association UK, Lupus Europe as Co-1 retrieval targets
+
+Reconstruct the corrupted entry. Known valid content to preserve before overwriting is documented in `Workplan_BPC_Corrections_2026-03-19.md §Session 7`. Expected result: PARTIAL (near-zero Tier 1 built environment evidence across all languages; Tier 1 hydrotherapy evidence is the strongest finding).
+
+### BPC-8 — Bibliography Integration
+
+Add all confirmed new sources to `bibliography-v9.md` (see WS-6 below — bibliography is being rebuilt separately). The BPC-8 session adds:
+
+**P1 — Tier 1 sources (must add before any publication use of dependent items):**
+- Keall et al. (2015) *The Lancet* NZ HIPI RCT (DOI: 10.1016/S0140-6736(14)61006-0)
+- Keall et al. (2021) *The Lancet Public Health* MHIPI RCT
+- Sawatzky et al. (2015) — upper limb preservation following SCI
+- Iglehart (2020) — classroom acoustics for listeners with hearing loss (PMC 7229780)
+- Unwin et al. (2022) — sensory room usage in adults with autism (PMC9340127)
+- Badajoz-Davila et al. (2020) — speech intelligibility for CI users in reverberant rooms
+
+**P2 — Tier 2–5 sources:**
+- Full list in `Workplan_BPC_Corrections_2026-03-19.md §Session 8`
+
+**Updates to existing entries:**
+- VA SAH grant: $109,986 → $126,526 (FY2026)
+- KfW 455-B: add suspension note (January 2025); restart expected Spring 2026
+- De Hogeweyk POE: add `[UNVERIFIABLE]` flag
+
+### BPC Verification Pass
+
+**After BPC-8.** Haiku 4.5. Run 12 grep checks from `Workplan_BPC_Corrections_2026-03-19.md §Verification Pass`. Any failure → log as residual gap.
+
+---
+
+## Part 8 — Work Stream 6: Infrastructure + Bibliography
+
+### WS-6 Session A — Protocol Confirmation (GAP-PROTO-01, GAP-PROTO-02)
+
+1. Confirm `/mnt/project/multilingual-research_SKILL.md` reflects v4 protocol (Co-1 pass first; no early-close gate; 24-jurisdiction schema). If not updated, update now.
+2. Confirm `research-log-manager` schema in Project Instructions matches deployed version — Option 2 fields present: `native_aliases`, `concept_boundary_warnings`, `co1_pass_summary`, `companion_networks`, `citation_mining`, `at_database_pass`. Spot-check 3 recent search-log entries for correct field structure.
+3. Verify `vol2-item-formatter` exists at `/mnt/project/vol2-item-formatter_SKILL.md` before WS-3 begins.
+
+### WS-6 Session B — Search-Log Hygiene
+
+Five slugs confirmed to fail pre-LOG completeness — update `references/search-log.md` on GitHub:
+
+| Slug | Issue | Action |
+|---|---|---|
+| `chronic-pain-built-environment` | 0 Co-1 jurisdictions; corrupted | Mark STALE; will be replaced by BPC-7 |
+| `accessible-laundry-room-design` | 0 Co-1; 4 jurisdictions only | Mark PARTIAL; add BPC-5 date |
+| `floor-vibration-wheelchair-disability` | 0 Co-1 | Mark PARTIAL |
+| `threshold-and-level-access` | 0 Co-1; 11 NOT-RUN | Mark PARTIAL |
+| `reach-range-and-accessible-controls` | 0 Co-1; 16 NOT-RUN | Mark PARTIAL |
+
+Also: remove `fatigue-spectrum-built-environment` slug entry (merged into OFS per Decision A). Remove `hearing-impairment-built-environment` slug entry (consolidated per Decision B). Remove `deafblind-built-environment-design` slug entry (superseded).
+
+Rename pipe-suffix slugs in search-log to match BPC-6 new names.
+
+### WS-6 Session C — `citation-miner` Skill Build (P2)
+
+Build `citation-miner` before next major research cycle. Use `skill-creator` SKILL.md. Skill scope: backward citation mining (reference list of confirmed Tier 1–2 source) + forward citation mining (Google Scholar "cited by"). Outputs: source list with tier classification; count fields for search-log `citation_mining` block. This replaces the inline citation mining currently performed within `multilingual-research`.
+
+### WS-6 Session D — Bibliography Rebuild (v9.0 Master Bibliography)
+
+The existing `bibliography-v8.md` (274 lines, ~112 entries in `/mnt/project/`) has not been committed to GitHub and does not reflect any sources added since early March 2026. The guidebook body has an empty bibliography placeholder.
+
+**Build `bibliography-v9.md` as a new file committed to GitHub at `references/bibliography-v9.md`.**
+
+Sources to integrate (in order of addition):
+
+**Tier 1 — Base bibliography-v8 entries (~112 entries, 4 sections: Standards/Codes, DPO Sources, Research, OT Frameworks)**
+
+**Tier 2 — BPC Key Sources (21 full-schema slugs × Key sources sections)**  
+Extract all sources from `### Key sources` sections in the 21 full-schema BPC entries. Deduplicate against base bibliography. ~60–80 new entries expected.
+
+**Tier 3 — BPC-8 additions (22 new sources from `Workplan_BPC_Corrections_2026-03-19.md §Session 8`)**
+
+**Tier 4 — Cross-reference bibliography compendium additions (confirmed missing from bibliography)**  
+From `cross-reference-bibliography-compendium-2026-03-18.md §Part 1`:
+- CMHC Housing Design Catalogue (2025)
+- Habinteg *Inclusive Housing Design Guide* (2024)
+- Habinteg *Living Not Existing* (2023)
+- Wheelchair Housing Design Guide 3rd ed. (2018)
+- Summer Foundation *Moving Out, Moving On* (2025)
+- Keall et al. (2015, 2017) — Tier 1 (already in BPC-8 above)
+- NEN 9120:2025; ABCB Livable Housing v1.3; BCA Universal Design Mark
+
+From `cross-reference-bibliography-compendium-2026-03-18.md §Part 2 Category A`:
+- AOTA Position Statement (2022) *Inclusive Environments* — DOI:10.5014/ajot.2022.76S3001
+- Young et al. (2019) — OT design teams scoping review — DOI:10.3928/24761222-20190625-04
+- Buildings 14(10):3300 (2024) — DEAF-specific lift access
+- Steinfeld & Maisel (2012) *Universal Design: Creating Inclusive Environments* Wiley
+- Zallio & Clarkson (2021) *Building and Environment* 206:108352
+- Statistics Canada CSD 2022 (December 2024)
+- AT2030 Global Action Report (Patrick et al. 2024)
+- CEUD/NDA Ireland Building for Everyone series
+
+**Format:** APA 7th edition throughout. Maintain 5-section structure from bibliography-v8: A (Standards/Codes), B (DPO/Advocacy), C (Research), D (OT Frameworks), E (NEW: Economics and Grant Programmes). Add editorial key from bibliography-v8 (✅/⚠/❌/[translated from X]).
+
+**After completion:**
+- Commit to GitHub at `references/bibliography-v9.md`
+- Update guidebook body placeholder (WS-2 Session C S-26/S-27) to reference `bibliography-v9.md`
+- Update bibliography version header from v8.0 to v9.0
+
+---
+
+## Part 9 — Work Stream 7: Final Assembly and Release
+
+**Prerequisites:** WS-1 + WS-2 + WS-3 all complete; WS-6D (bibliography) complete; BPC corrections complete.
+
+### WS-7 Session A — Document Assembly
+
+**`chunk-assembler` pre-assembly requirements (mandatory per skill):**
+1. Section map exists and is current (from WS-1 Session B `haiku-chunker` run) — confirm currency; if any WS-2/WS-3 changes added sections, update section map first
+2. All chunks are version-stamped COMPLETE or REVIEWED — confirm
+3. No chunk is in DRAFT/PENDING state
+4. Version number confirmed: v9.0
+
+Run `chunk-assembler`. Process in volume order; validate after each volume before proceeding to next.
+
+`cross-reference-resolver` full pass on assembled document.
+
+`guidebook-auditor` pass A — confirm structural integrity of assembled document.
+
+### WS-7 Session B — Final Audit Passes
+
+**`haiku-chunker` first.** Section map from WS-1 Session B may be reused if current; confirm.
+
+Run in parallel per Full Section Review workflow:
+- `guidebook-auditor` passes A, B, C
+- `framing-checker` — full document regression check across all WS-2 and WS-3 content
+- `evidence-auditor` — confirm all DBL/IntD/DEAF provisions carry correct disclosures; no overclaiming in new WS-3 items
+- `citation-verifier` — audit all citations in WS-3 new items and WS-2 evidence hierarchy update; flag any UNVERIFIED sources introduced during v9.0 production cycle; PROVISIONAL mode given bibliography status at time of audit
+- `prose-style-checker` — apply to all new content added in WS-3; full register and style pass
+
+Risk escalation: after each parallel analysis level, tally escalation signals. ≥2 → append REVIEW item to gap_register.md per workplan-orchestrator rule.
+
+### WS-7 Session C — Version Update
+
+`find-and-replace` — convert all internal version references to v9.0:
+- Front matter header: v8.8 → v9.0
+- Supersession statement: v9.0 supersedes v8.8 (which superseded v6.2 Final Rev 6.1)
+- All internal section-header version stubs ("v8.0"): delete entirely or replace with "v9.0"
+- Supplementary Volume preamble: v8.8 → v9.0
+
+### WS-7 Session D — Session Close and GitHub State Write
+
+Run `session-consolidator`:
+
+1. Reconcile all 8 state files (gap_register, project-standards, search-log, BPC, sessions, section-map, toc, bibliography)
+2. Append all new rules from v9.0 production cycle to `references/project-standards.md`
+3. Close all resolved gaps in `gap_register.md` with CLOSED-RESOLVED status
+4. Confirm bibliography is committed to `references/bibliography-v9.md`
+5. Write session close YAML to `sessions/session_YYYY-MM-DD-HHMM.md`
+6. Update `references/toc.md` if any structural changes were made in WS-7
+7. Report: accomplishments · remaining gaps · rules added · next action · GitHub write status
+
+---
+
+## Part 10 — Skill and Reference Ecosystem Deployment
+
+### Execution Sources (definitive)
+
+| Source | Purpose | Rule |
+|---|---|---|
+| `/mnt/project/{skill}_SKILL.md` | Runtime execution — ALL skills read from here | Canonical; never read from GitHub `skills/` at runtime |
+| Project Instructions §Skill Definitions | `research-log-manager`, `workplan-orchestrator`, `session-consolidator` | Defined inline; no `/mnt/project/` file |
+| `references/toc.md` (GitHub) | Canonical guidebook structure record | Read before any structural change |
+| `references/project-standards.md` (GitHub) | All 72 rules; loaded at session start | Read at session start protocol |
+| `references/best-practices-compendium.md` (GitHub) | Research synthesis per slug | Read via `research-log-manager RETRIEVE` |
+| `references/search-log.md` (GitHub) | Coverage status per slug | Read via `research-log-manager CHECK` |
+| `references/slug-registry.md` (GitHub) | Canonical slug list with native aliases | Read at start of any multilingual-research run |
+| `references/bibliography-v9.md` (GitHub) | Master bibliography — **to be created in WS-6D** | Read by `citation-verifier` |
+| `/mnt/project/keyword-lookup_SKILL.md` | Native-language concept vocabulary per slug | Called before every multilingual-research run (complements Compendium view) |
+
+### Skills Required for v9.0 — Deployment Check
+
+Before starting execution sessions, confirm each skill file is present in `/mnt/project/`:
+
+| Skill | Used in | Confirm present |
+|---|---|---|
+| `fix-linebreaks` | WS-1 Pre-session | `/mnt/project/fix-linebreaks_SKILL.md` |
+| `find-and-replace` | WS-1A, WS-2A, WS-2C, WS-7C | `/mnt/project/find-and-replace_SKILL.md` |
+| `haiku-chunker` | WS-1B, WS-7B (all analysis sessions) | `/mnt/project/haiku-chunker_SKILL.md` |
+| `cross-reference-resolver` | WS-1B, WS-2B, WS-7A | `/mnt/project/cross-reference-resolver_SKILL.md` |
+| `guidebook-auditor` | WS-1B, WS-7B | `/mnt/project/guidebook-auditor_SKILL.md` |
+| `structure-auditor` | WS-1B | `/mnt/project/structure-auditor_SKILL.md` |
+| `markdown-formatter` | WS-1B | `/mnt/project/markdown-formatter_SKILL.md` |
+| `volii-validator` | WS-1A (pass 4), WS-3 | `/mnt/project/volii-validator_SKILL.md` |
+| `item-specification-writer` | WS-2A, WS-2B, WS-3 | `/mnt/project/item-specification-writer_SKILL.md` |
+| `item-consolidation-analyzer` | WS-3 (before all new items) | `/mnt/project/item-consolidation-analyzer_SKILL.md` |
+| `framing-checker` | WS-2A, WS-3, WS-7B | `/mnt/project/framing-checker_SKILL.md` |
+| `evidence-auditor` | WS-2B, WS-3, WS-7B | `/mnt/project/evidence-auditor_SKILL.md` |
+| `prose-style-checker` | WS-2A–C, WS-3, WS-7B | `/mnt/project/prose-style-checker_SKILL.md` |
+| `vol2-item-formatter` | WS-3 (terminal step) | `/mnt/project/vol2-item-formatter_SKILL.md` — **confirm present** |
+| `chunk-assembler` | WS-7A | `/mnt/project/chunk-assembler_SKILL.md` |
+| `citation-verifier` | WS-7B | `/mnt/project/citation-verifier_SKILL.md` |
+| `keyword-lookup` | Before every multilingual-research run | `/mnt/project/keyword-lookup_SKILL.md` |
+| `multilingual-research` | BPC-7 | `/mnt/project/multilingual-research_SKILL.md` — confirm v4 protocol |
+| `toc-editor` | Any new structural change | `/mnt/project/toc-editor_SKILL.md` |
+| `session-consolidator` | WS-7D and every session end | Defined in Project Instructions |
+
+**Not yet built (do not call):** `citation-miner` (build in WS-6C), `poe-assessor`, `intersectionality-checker`
+
+### Research Run Protocol (all multilingual-research runs)
+
+Every run, in strict order:
+1. `research-log-manager CHECK` (normalise slug; confirm STALE/PARTIAL/NOT FOUND)
+2. `keyword-lookup` for target slug's concept group (native-language aliases)
+3. `view` Keyword Compendium Part 3 for target slug (concept boundary warnings)
+4. `view` Protocol v4 §COMPANION NETWORKS for target population code(s)
+5. Build 24-jurisdiction work list
+6. Execute Steps 1–5 per multilingual-research skill (Co-1 first; no exceptions)
+7. Pre-LOG completeness check (7 conditions)
+8. `research-log-manager LOG` (write only if all blockers clear or explicitly accepted)
+
+---
+
+## Part 11 — P1 Publication Blockers Summary
+
+All items below must be resolved before v9.0 is distributed externally.
+
+| # | Item | Work stream | Status |
+|---|---|---|---|
+| 1 | BPC ≤22°C → ≤18°C temperature error (patient safety) | BPC-1 | EXECUTE IMMEDIATELY |
+| 2 | CO-0001 full execution (12 passes) | WS-1A | Not started |
+| 3 | `fix-linebreaks` on source file | WS-1 Pre-session | Not started |
+| 4 | Part 8 item specs unreadable (hard-wrapped) | WS-1 Pre-session | Not started |
+| 5 | Category J (J-01–J-05) deletion | WS-1A Pass 6 | Not started |
+| 6 | GAP-066: Tier renumber throughout body | WS-2A | Not started |
+| 7 | §1.5 evidence hierarchy: 7-tier D-18 update | WS-2A | Not started |
+| 8 | B-10 seizure risk safety note (GAP-STEP5-01) | WS-2A | Not started |
+| 9 | A-09 Part 9 table residual value | WS-2A | Not started |
+| 10 | VIS/DEAF invalid code (S-32) | WS-2A | Not started |
+| 11 | DEAF absent from Supp. Vol. population list (F-13) | WS-2A | Not started |
+| 12 | DBL THIN-BASE disclosure on all Volume 2 item specs | WS-3A | Not started |
+| 13 | DBL absent from 15 room matrices (GAP-S4-SYST-01) | WS-3B | Not started |
+| 14 | IntD absent from all 16 room matrices (GAP-S4-SYST-02) | WS-3C | Not started |
+| 15 | DEM + PD floor pattern conflict (P1, unregistered) | WS-4B → WS-3E | Not registered |
+| 16 | NDV/AUT + NDV/MH colour conflict (P1, unregistered) | WS-4B → WS-3E | Not registered |
+| 17 | E-03 walker gradient gap (P1, unregistered) | WS-4B → WS-3E | Not registered |
+| 18 | Bibliography: empty placeholder in guidebook body | WS-6D + WS-2C | Not started |
+| 19 | GAP-PROTO-01/02: protocol and schema fixes | WS-6A | Not started |
+
+---
+
+## Part 12 — Items Deferred to Post-v9.0
+
+| Item | Rationale |
+|---|---|
+| IntD full chapter | Deferred per project-standards; interim only in v9.0 |
+| Additional Part 7 co-occurrence resolutions (7 unresolved pairings) | Evidence synthesis required; out of current cycle scope |
+| `citation-miner` skill (runtime) | Build in WS-6C; replaces inline mining in next cycle |
+| `poe-assessor`, `intersectionality-checker` | P2 build items |
+| Emergency evacuation guidance (Appendix D expansion) | Jurisdiction-specific; editorial note only |
+| MOB Tier 5 beyond-code completion (GAP-071) | Next research cycle |
+| MOB systematic review gap (GAP-073) | Next research cycle |
+| Digital/ICT accessibility | P3 thematic gap |
+| Climate change adaptation | P3 thematic gap |
+| PAIN/OFS item-level unsupported distance values (A-04, B-05, F-03) | P2; evidence review deferred |
+| B-09 glare control for VIS/DBL at unshielded windows | P2 |
+| A-05 carpet MOB conflict note | P2 |
+
+---
+
+## Part 13 — Commit Convention and Session Discipline
+
+**Commit messages:** `{skill-name}: {action} [{YYYY-MM-DD HH:MM}]`
+
+**Checkpoint format (1–2 lines max):**
+```
+CHECKPOINT [YYYY-MM-DD HH:MM] — task: {task} — stage: {stage} — status: {done/in-progress/blocked}
+```
+
+**Session end:** Always invoke `session-consolidator`. Never drop state. PUT fails → output YAML as fenced code block; instruct manual paste.
+
+**Context limit approaching:** Complete current stage. Do not start a new one. Invoke `session-consolidator`. Instruct new chat with handoff summary.
+
+**Suggested session-level commit milestones:**
+- `fix-linebreaks: full source file conversion prep [YYYY-MM-DD HH:MM]`
+- `find-and-replace: CO-0001-A through CO-0001-L execution [YYYY-MM-DD HH:MM]`
+- `cross-reference-resolver: CO-0001 chase complete [YYYY-MM-DD HH:MM]`
+- `find-and-replace: tier renumber GAP-066 execution [YYYY-MM-DD HH:MM]`
+- `item-specification-writer: DBL thin-base + Protactile integration [YYYY-MM-DD HH:MM]`
+- `item-specification-writer: DBL room matrix pass complete [YYYY-MM-DD HH:MM]`
+- `research-log-manager: BPC corrections batch complete [YYYY-MM-DD HH:MM]`
+- `bibliography: v9.0 master bibliography committed [YYYY-MM-DD HH:MM]`
+- `chunk-assembler: v9.0 draft assembled [YYYY-MM-DD HH:MM]`
+- `session-consolidator: v9.0 session close [YYYY-MM-DD HH:MM]`
