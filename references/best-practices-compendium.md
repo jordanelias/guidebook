@@ -101,6 +101,7 @@
 20. Standards New Zealand (2001). NZS 4121:2001. Wellington: SNZ. [EN, Tier 6, NZ]
 
 
+21. BSK e.V. (n.d.). *ABC Barrierefreies Bauen*. Schönaich: Bundesverband Selbsthilfe Körperbehinderter. [DE, Tier 2, DE — community-developed planning guide]
 ### Gap-fill addendum (2026-03-19 23:45)
 **Co-1 jurisdictions newly confirmed:** NZ (DPA-NZ; Flemmer et al. 2025 lived-experience survey, n=319 WC/scooter users — path condition, door width, and turning space identified as top barriers); SG (SgEnable; SPD; BCA Code 2025 eff. Nov 2025 — new anthropometric data for power WC users incorporated); NL (Ieder(in) in NEN 9120:2025 normcommissie; CROW Pub 337 — 1800mm for scooter passing confirmed); DK (DH Danske Handicaporganisationer; SBi-anvisning 230); KR (KODDI 편의시설 매뉴얼 2023 — detailed AT installation standards); BR (MVI Brasil; Brasil Acessível programme; NUTAU/USP APO research); PT (INR Guia Acessibilidade e Mobilidade para Todos; OA Recomendação Técnica 2024 — bathroom wheelchair manoeuvre); IT (FISH 2025 parliamentary submission — calls for DM 236/89 update; ANFFAS Accessibilità Universale guide); ISO (ISO TC 173 publications).
 
@@ -124,6 +125,11 @@
 **Key sources:** PAS6463:2022 · · Mostafa-ASPECTSS · Buro Happold 2024 · Tola2021
 **Divergent findings:** NDV/AUT muted palette vs. NDV/MH (**Notes:** GAP-ITEM-NEW candidates: visual noise reduction specification; de-escalation/safe 
 ---
+
+**Co-1 sources added 2026-03-19:**
+- Caldwell, J., et al. (2025). A calm space to reset: perceptions of sensory rooms in Australian public buildings. *Archnet-IJAR*. Mixed-methods, n=57, autistic and neurodivergent participants. [EN, Co-1]
+- Sensory Responsive Environments Framework (SREF) (2024). *MDPI Land*, 13(5), 636. Qualitative lived experience, n=31. [EN, Co-1]
+- McAllister, K., & McBeth, C. (2022). Autism Spectrum Condition and the Built Environment. *Cities & Health*. Participatory route analysis. [EN, Co-1]
 
 ## chronic-pain-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
@@ -900,55 +906,6 @@
 
 ---
 
-## Co-Primary Tier 1 / Tier 2 Gap-Fill Supplement
-**Updated:** 2026-03-18 23:59  **Pass type:** Targeted Co-primary Tier 1 / Tier 2 supplement — all 9 core languages
-
-### New Tier 2 Organisations Added to MOB Slug
-
-**NHF Quality Criteria Guide (NO, Tier 2):** Norges Handikapforbund published explicit quality criteria supplementing TEK17/SINTEF. Criteria stricter than TEK17 on ramp gradient (consistent with DIN 18040, stricter than ADA). Confirms community-derived convergence with Tier 3 clinical evidence.
-**Source:** NHF / Husbanken. Tilgjengelige bygg og uteområder. Oslo: Husbanken, n.d.
-
-**DHR Report (SV, Tier 2):** DHR (Delaktighet Handlingskraft Rörelsefrihet). "Nya byggregler riskerar tillgängligheten." 2025. Survey of 290 municipalities: new BFS 2024:12 lacks concrete accessibility recommendations; 2/3 municipalities expect inadequate enforcement. Raises confidence ceiling on BFS 2024:12 as reliable standard reference.
-
-**APF France Handicap / IFOP (FR, Co-primary Tier 1 + Tier 2):** Consultation nationale n=11,905 (6,142 disabled people). Finding: 9/10 people experience daily accessibility barriers. Housing testimonials document corridor width, door weight, lift access inadequacy. ELAN 2018 law reduced accessible new housing from 100% to 20% — confirmed as policy regression by community evidence.
-**Source:** IFOP pour APF France Handicap. Accessibilité en France : toutes et tous concernés ! Paris: APF France Handicap / IFOP, 2020.
-
-**BSK e.V. ABC Barrierefreies Bauen (DE, Tier 2):** Bundesverband Selbsthilfe Körperbehinderter. Community-developed guide: "ABC Barrierefreies Bauen — Praktische Tipps und Ratschläge zum barrierefreien Planen, Bauen und Wohnen." Covers planning, building and residential modification. Produced by and for physically disabled people.
-
-**DPI Japan / バリアフリー部会 (JA, Tier 2):** DPI日本会議. Active participant in 2023 housing design guideline review (国交省住宅局); challenged inadequacy of 2009 standards for wheelchair bathroom access. Barrier-Free Committee active since 1986; drove 2018 and 2020 Barrier-Free Law amendments.
-**Source:** DPI日本会議 (2023). 第1回住宅設計ガイドライン検討会報告. dpi-japan.org
-
-**CDPF Supervision Programme (ZH, Co-primary Tier 1):** 中国残联 built environment supervision programme: 9,458 disabled supervisors of accessible environment construction (2024); systematic user experience evaluation of accessible built environments. Confirmed implementation gaps between GB 55019-2021 requirements and field reality.
-**Source:** 中国残疾人联合会 (2024). 2024年残疾人事业发展统计公报. cdpf.org.cn
-
-### New Co-Primary Tier 1 Sources Added to NDV Slug
-
-**Caldwell et al. (2025, EN, Co-primary Tier 1):** "A calm space to reset: perceptions of sensory rooms in Australian public buildings." Archnet-IJAR. Mixed-methods, n=57, autistic and neurodivergent participants. Confirms lived experience preferences: low arousal, predictability, neutral lighting, strong ventilation, reduced noise. Directly corroborates PAS 6463 sensory room guidance.
-
-**SREF — Sensory Responsive Environments Framework (2024, EN, Co-primary Tier 1):** Qualitative lived experience study, n=31 interviews (autistic, ADHD, dyslexic participants). Identifies sensory barriers and supportive elements in outdoor built environments. Produces Sensory Responsive Environments Framework. MDPI Land, 13(5), 636.
-
-**McAllister & McBeth (2022, EN, Co-primary Tier 1):** "Autism Spectrum Condition and the Built Environment." Cities & Health. Participatory route analysis with autistic focus group. Identifies cognitive and sensory barriers in urban navigation including proprioceptive challenges with uneven surfaces.
-
-### New Tier 2 Sources Added to VIS/DEAF Slug
-
-**RNIB Building Sight (2023, EN, Tier 2):** Royal National Institute of Blind People. "Building Sight: Design principles and practical recommendations for accessible buildings and environments." 2023. Primary community-developed built environment guide from UK's leading sight loss charity. Covers lighting, contrast, wayfinding, tactile surfaces, signage. [ABSENT FROM PRIOR BPC — critical gap now closed.]
-**Source:** RNIB (2023). Building Sight. London: RNIB.
-
-**RNID (EN, Tier 2):** Royal National Institute for Deaf People. Built environment guidance on hearing loop placement, visual alarm systems, acoustic design. Tier 2 counterpart to RNIB for DEAF slug.
-
-### Confirmation: PAIN/OFS Evidence Gap
-No Co-primary Tier 1 or Tier 2 organisation producing built environment design guidance for PAIN/OFS (ME/CFS, fibromyalgia, POTS, MCAS) was found in any of the 9 core languages. PLRC and ME Association confirmed as patient community organisations but without specific built environment design guidance. THIN BASE disclosure on all PAIN/OFS specifications confirmed as accurate. Bateman Horne Center note: severe ME/CFS presentations (housebound/bedbound, 25% of cases) require "silent, dark or dimly-lit room" — indirect built environment implication for bedroom and rest space design.
-
-### Confirmation: DBL Evidence Gap
-Sense (UK) TouchBase Pears (2017, Glenn Howells Architects) confirmed as Tier 2 practice example for DeafBlind-specific built environment. No Tier 2 guideline document found. GAP-DBL-SEARCH-01 KNOWN-LIMITATION status confirmed correct.
-
-### IntD New Sources
-**People First Canada (EN, Co-primary Tier 1):** Self-advocacy organisation; explicitly referenced as co-design participant in CSA B651:23 development. No built environment specification guide produced independently.
-**Inclusion International (EN, Tier 2):** International federation of intellectual disability self-advocacy organisations; position statements on accessible environments. No quantified design specifications.
-THIN-BASE disclosure on all IntD specifications confirmed unchanged.
-
----
-
 ## deaf-spatial-design
 **Updated:** 2026-03-19 01:05  **Evidence tier range:** Co-1–Tier 5
 
@@ -1192,34 +1149,6 @@ Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT 
 ---
 
 
-## hearing-impairment-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** 2–4
-**Note:** DEAF spatial design evidence is in `deaf-spatial-design`; acoustic and loop evidence is in `deaf-acoustic-built-environment`. This entry covers findings that were co-researched with VIS in the prior combined slug and are not duplicated in those two slugs.
-
-### Best-practice synthesis
-**Most inclusive provision:** IEC 60118-4-compliant hearing loop at all assembly, service-counter, and meeting spaces; clear sightlines and diffuse face-level lighting throughout; Auracast-ready infrastructure as future provision.
-**Most targeted provision:** High-top service counters (freeing hands for signing) at all public-facing desks; visual alerting systems (flashing) at all auditory alarm points; STI ≥0.5 and RT60 ≤0.6 s in all occupied spaces.
-**Conflict resolution:** N/A — no intra-DEAF conflicts identified.
-**Highest-ambition actionable specification:** Hearing loop (IEC 60118-4; ±3 dB uniformity) at every assembly space >4 seats, all service counters, and all meeting rooms; visual alarm at every auditory alarm point; STI ≥0.6 in healthcare and education settings.
-
-### Consensus findings
-| Finding | Languages confirming | Tier |
-|---|---|---|
-| Hearing loop required at assembly spaces | EN, DE, NO, SV, FR, DA, FI, JA | 4 |
-| STI ≥0.5 minimum in occupied spaces | EN, DE, NO | 3–4 |
-| RT60 ≤0.6 s recommended | EN, DE | 3 |
-| Visual alerting at all auditory alarms | EN, DE, NO, SV | 4 |
-| Auracast as emerging successor to loop | EN | 4-PROVISIONAL |
-
-### Divergent findings
-| Topic | Lang A | Lang B | Cause |
-|---|---|---|---|
-| Loop mandate scope | ADA (fixed-seat assembly only) | BS 8300 + DIN (all service counters and meetings) | Regulatory context |
-
-### Key sources
-IEC60118-4 · Bauman2010-DeafSpace · BS8300-2018 · DIN18041-2016 · HLAA-Auracast-2025
-
-
 ## mental-health-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier range:** 2–4
 
@@ -1251,38 +1180,6 @@ IEC60118-4 · Bauman2010-DeafSpace · BS8300-2018 · DIN18041-2016 · HLAA-Aurac
 ### Key sources
 PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022
 
-
-## fatigue-spectrum-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** 3–5 (THIN BASE)
-
-### Best-practice synthesis
-**Most inclusive provision:** Rest seating with reclining option every 25–30 m on all circulation routes; lift provision at all level changes; bedroom-bathroom adjacency; cool ambient environment ≤19–21°C.
-**Most targeted provision:** Thermostatic shower with seated option; no threshold lips; reclining seating option in all waiting and work settings; personal HVAC control.
-**Conflict resolution:** OFS (cool ≤19°C) conflicts with PAIN/fibromyalgia (warm ≥24°C) — personalised HVAC control is the only resolution; shared-space specification cannot satisfy both.
-**Highest-ambition actionable specification:** Rest seating with backrest and armrests every 25 m; reclining option at ≥30% of seating positions in waiting areas; personal temperature control ±3°C in all workplaces and care settings.
-
-### Consensus findings
-| Finding | Languages confirming | Tier |
-|---|---|---|
-| Rest seating every 25–30 m | EN | 3–4 |
-| Lift at all level changes | EN | 4–5 |
-| Bedroom-bathroom adjacency | EN | 3–4 |
-| Cool ambient temperature ≤19–21°C | EN | 3–4 |
-| Thermostatic shower with seated option | EN | 3–4 |
-
-### NO-DATA / THIN
-| Language | Reason | Predicted? |
-|---|---|---|
-| DE, NO, DA, FI, ZH, JA, NL, KO, IT | No OFS built-environment provisions in any national standard | Yes — universal gap confirmed |
-| SV, FR, ES, PT | Thin — clinical OT references only; no built-environment specifications | Yes |
-
-### Critical gap
-GAP-PAIN-OFS-BUILENV P1 OPEN: Zero indexed built-environment research for OFS populations in any language. All specifications are expert consensus derived from clinical evidence. Guidebook must disclose this limitation explicitly.
-
-### Key sources
-CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID18805903-POTS-CFS
-
----
 
 ## OFS-built-environment
 **Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 5 (all provisions — extrapolated from clinical + general seating codes; no OFS-specific standard in any jurisdiction)
@@ -1321,6 +1218,7 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 | Recumbent positioning relieves OFS/POTS symptoms; standard accessible seating alone is insufficient — reclined seating options needed | EN (CDC, Bateman Horne, POTS clinical guidance) | Tier 1/Co-1 |
 | OT pacing interventions have Tier 1 evidence for energy conservation in ME/CFS but are behavioural, not architectural | EN (Kos et al. 2015 AJOT RCT; PMC9397391 systematic review 2022) | Tier 1 |
 | Accessible seating specification: seat height 430–480mm, backrest, armrests, clear heel space | EN (AS1428.2 AU; BS8300 UK; ADA draft) | Tier 4–6 |
+| Cool ambient temperature ≤19–21°C (MS Uhthoff threshold; benefits POTS thermal intolerance) | EN (CDC ME/CFS; MS Trust; fatigue-spectrum BPC) | Co-1/Tier 3 |
 | Environmental photosensitivity and chemical sensitivity (MCAS co-occurrence) require low-VOC materials, controlled lighting, reduced scent | EN (CDC ME/CFS clinical guidance; MCAS patient organisations) | Co-1/Tier 2 |
 
 ### Divergent findings
@@ -1558,6 +1456,7 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 7. 한국시각장애인연합회 publications — tactile route advocacy. [KO · Tier 2]
 
 
+8. RNIB (2023). *Building Sight: Design principles and practical recommendations for accessible buildings and environments*. London: RNIB. [EN, Tier 2, UK — primary community-developed VIS built environment guide]
 ---
 
 ## accessible-bathroom-and-grab-bar
