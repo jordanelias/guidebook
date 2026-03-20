@@ -117,19 +117,77 @@
 
 
 ## neurodivergent-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (mixed; PAS 6463 at tier 4, scoping reviews at tier 1)
-**NDV Consensus:** PAS 6463:2022 (BSI UK) is the sole national design standard for neurodiversity; guidance-level only. Core requirements: sensory quiet rooms, acoustic management, muted palette, indirect lighting, eliminate fluorescent, user control, reduced visual noise. ASPECTSS Design Index covers autism specifically. No mandatory regulatory standard exists in any jurisdiction.
-**Jurisdictions confirmed:** UK · Germany · Norway · Sweden · France · Denmark · Finland · Japan
-**Early-close:** Yes
-**Thin/No-data:** ZH (Chinese NDV evidence base thin — scope gate candidate)
-**Key sources:** PAS6463:2022 · · Mostafa-ASPECTSS · Buro Happold 2024 · Tola2021
-**Divergent findings:** NDV/AUT muted palette vs. NDV/MH (**Notes:** GAP-ITEM-NEW candidates: visual noise reduction specification; de-escalation/safe 
----
+**Updated:** 2026-03-19 22:00  **Evidence tier range:** Co-1, 1–4
 
-**Co-1 sources added 2026-03-19:**
-- Caldwell, J., et al. (2025). A calm space to reset: perceptions of sensory rooms in Australian public buildings. *Archnet-IJAR*. Mixed-methods, n=57, autistic and neurodivergent participants. [EN, Co-1]
-- Sensory Responsive Environments Framework (SREF) (2024). *MDPI Land*, 13(5), 636. Qualitative lived experience, n=31. [EN, Co-1]
-- McAllister, K., & McBeth, C. (2022). Autism Spectrum Condition and the Built Environment. *Cities & Health*. Participatory route analysis. [EN, Co-1]
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | neurodivergent built environment | ✓ CLEAN | — |
+| DE | neurodiversitätsgerechtes Bauen | ✓ CLEAN | — |
+| FR | environnement bâti neurodiversité | ⚠ PARTIAL | French OT literature uses "troubles neurodéveloppementaux" (NDD framing); design guidance absent from professional body publications |
+| NL | neurodivers gebouwde omgeving | ⚠ PARTIAL | Dutch NDD framing similar to FR; no built-environment design research found |
+| SV | neurodiversitet byggd miljö | ✓ CLEAN | SDR/HRF publications confirm concept |
+| NO | nevrodiversitet bygget miljø | ✓ CLEAN | — |
+| DA | neurodiversitet bygget miljø | ✓ CLEAN | — |
+| FI | neurodiversiteetti rakennettu ympäristö | ⚠ PARTIAL | FI OT body (Suomen Toimintaterapeuttiliitto) produces no built-environment design publications |
+| JA | 神経多様性 建築環境 | ✓ CLEAN | — |
+| ZH | 神经多样性 建筑环境 | ⚠ PARTIAL | ZH evidence base thin; scope-gate candidate per GAP-055 |
+| ES | neurodiversidad entorno construido | ✓ CLEAN | — |
+| PT | neurodiversidade ambiente construído | ✓ CLEAN | — |
+| KO | 신경다양성 건축 환경 | ✓ CLEAN | — |
+| IT | neurodiversità ambiente costruito | ⚠ PARTIAL | AITO: practice confirms OT role; no interprofessional built-environment design research found per GAP-056 |
+
+### Best-practice synthesis
+**Most inclusive provision:** Sensory quiet room (A-16) with user-controlled environmental settings (lighting level/CCT, acoustic attenuation, thermal) accessible within 25 m of any primary occupancy space — removes sensory overload barrier for NDV/AUT, NDV/ADHD, and NDV/SENS users simultaneously.
+**Most targeted provision:** Zone-differentiated sensory environments (low-stimulation → standard → stimulating) with clear visual demarcation and user wayfinding to preferred zone — responds to the full NDV spectrum rather than a single-profile default.
+**Conflict resolution:** NDV/AUT muted, low-chroma palette conflicts with NDV/MH evidence favouring warm, saturated, biophilic colour environments. Resolution: apply muted palette as default in shared spaces; provide warm-colour, biophilic breakout zones; do not apply high-contrast safety marking in primary circulation of autism-designated environments without NDV/MH provision analysis.
+**Highest-ambition actionable specification:** All occupied buildings to provide at least one sensory-quiet room (A-16) per floor plate, with user-controlled lighting (2700–5000 K, 10–500 lux dimmable), acoustic attenuation ≤30 dBA, and no fluorescent or stroboscopic lighting anywhere in the building.
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Sensory quiet/reset rooms reduce overload events for autistic occupants | EN, DE, NO, SV, JA | UK (PAS 6463), AU (Caldwell 2025), IE (CEUD), CA | Co-1, 4 |
+| Muted, low-chroma palette (NCS chroma ≤4) reduces anxiety and stimulation in NDV/AUT | EN, DE, SV, NO | UK (PAS 6463, ASPECTSS), NO (SINTEF) | 4 |
+| Indirect, dimmable lighting; eliminate fluorescent/stroboscopic sources | EN, DE, SV, DA, NO, JA | UK, AU, IE, CA, NO | 4 |
+| User control over environment (lighting, acoustic, thermal) is the single highest-impact provision across NDV subtypes | EN, SV, NO | UK (PAS 6463), AU, IE | Co-1, 4 |
+| Reduced visual noise (clear sight lines, minimal signage clutter, no patterned flooring) | EN, DE, NO | UK (PAS 6463), AU | 4 |
+| Acoustic management: RT60 ≤0.3 s in NDV-designated spaces | EN, DE | UK (BB93 + PAS 6463), DE | 3, 4 |
+| Consistent, predictable layout (no ambiguous decision nodes) supports NDV/ADHD and AUT navigation | EN, JA | UK, JP | Co-1, 4 |
+| Biophilic outdoor transitional zones function as decompression/regulation environments for NDV populations | EN | AU, UK | Co-1 (Latiff et al. 2024) |
+
+### Divergent findings
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
+|---|---|---|---|
+| Colour palette | NDV/AUT: muted, desaturated (NCS chroma ≤4) per PAS 6463 | NDV/MH: warm, biophilic, saturated tones support recovery environments | Empirical divergence — different NDV subtype needs; not resolvable by single palette |
+| Lighting colour temperature | NDV/AUT: consistent 4000 K (no dynamic shift); predictability preferred | NDV/MH: dynamic CCT (4000 K day → 2700 K evening) for circadian support | Empirical divergence — AUT predictability vs MH circadian needs; resolve by subtype zoning |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| CN | ZH | Scope-gate candidate; no NDV built-environment research found | Yes | No |
+| FR | FR | OT body produces no built-environment design publications; GAP-055 | Yes (APF checked — no NDV design output) | Yes (CEREMA — no NDV guidance) |
+| NL | NL | Confirmed NO-DATA 3+ attempts; GAP-057 | Yes | Yes (toegankelijkbouwen.nl — no NDV content) |
+| FI | FI | OT body produces no built-environment design publications; GAP-055 | Yes | Yes (Invalidiliitto — no NDV-specific) |
+| IT | IT | AITO: OT role confirmed; no design research; GAP-056 | Yes | Yes (CNR-ICAR — no NDV-specific) |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| PAS 6463:2022 | Forward | Buro Happold (2024) neurodiversity in workplace design |
+| Mostafa ASPECTSS | Forward | Tola et al. (2021) — school design AUT |
+| Caldwell et al. (2025) | Backward | McAllister & McBeth (2022); SREF (2024) |
+
+### Key sources
+1. BSI (2022). *PAS 6463:2022 Design for the Mind — Neurodiversity and the Built Environment*. BSI. [EN, UK, Tier 4]
+2. Mostafa, M. (2008). An architecture for autism: Concepts of design intervention for the autistic user. *Archnet-IJAR*, 2(1), 189–211. [EN, Tier 4 — ASPECTSS Index]
+3. Buro Happold (2024). *Neurodiversity and the Workplace*. [EN, UK, Co-1/Tier 2]
+4. Tola, E., & Izzet, D. O. (2021). Optimizing Architectural Design for Children with Autism. *Applied Sciences*, 11, 8470. [EN, Tier 3]
+5. Caldwell, J., et al. (2025). A calm space to reset: perceptions of sensory rooms in Australian public buildings. *Archnet-IJAR*. [EN, AU, Co-1]
+6. Sensory Responsive Environments Framework (SREF) (2024). *MDPI Land*, 13(5), 636. [EN, Co-1]
+7. McAllister, K., & McBeth, C. (2022). Autism Spectrum Condition and the Built Environment. *Cities & Health*. [EN, Co-1]
+8. Latiff, A., et al. (2024). Biophilic outdoor transitional spaces for NDV populations. [EN, Co-1]
+
+---
 
 ## chronic-pain-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
@@ -137,6 +195,7 @@
 **Extended language pass (2026-03-18):** NL (NEN 9120:2025), IT (DM 236/89), KO (Welfare Facilities Standard) — all cover MOB/sensory/cognitive only; no PAIN/**Critical gap:** GAP-029 P2 OPEN — confirmed universal. Both populations lack any built-environment evidence base in any language or jurisdiction. Guidebook must disclose that PAIN/**Temperature spec gap:** H-04 (HVAC/Thermal) — temperature range absent from all 14-language standard search. GAP-ITEM-SPEC confirmed cross-jurisdictional.
 **New item candidates:** Reclining/tilt seating specification; cushioned flooring specification (thin EN-only evidence).
 **SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · · Ismail2023
+## deafblind-built-environment-design
 ## deafblind-built-environment-design
 **Updated:** 2026-03-18 14:30  **Evidence tier:** 4-5
 **Consensus finding:** Zero Tier 1-2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4-5: DeafSpace Design Guidelines (2010), practitioner guidance (JJones 2025), organisational guidance (NELOWV 2025). Nordic Welfare Centre provides clinical/communication research only.
@@ -146,48 +205,267 @@
 **Key sources:** DeafSpace (2010); NELOWV (2025); JJones (2025); Nordic Welfare Centre; MDPI Buildings 14(3):707 (2024)
 **Gap registered:** THIN BASE - zero Tier 1-2; GAP-NEW-01/02/03/04 confirmed
 
+
 ## intellectual-disability-built-environment-design
-**Updated:** 2026-03-18 14:30  **Evidence tier:** 3-4
-**Consensus finding:** Tier 3-4 evidence supports specific IntD built-environment principles. MDPI 2026 (Tier 3) most detailed analysis. NDIS SDA (AU, Tier 4) only jurisdiction-specific standard. No European standard provides quantified IntD provisions.
-**Key design principles:** One-way legible circulation; radial/loop layouts; no blind corners; pictogram + single-word signage; colour-zone wayfinding; different ceiling heights for zone demarcation; reception facility at decision points; tactile floor materials per zone; enhanced luminance contrast; consistent predictable layout.
-**Jurisdictions confirmed:** AU (NDIS SDA Improved Liveability); CA (CSA B651:23 s.4.7 qualitative)
-**Early-close:** yes  **Thin/No-data:** NO, SV, DE
-**Key sources:** MDPI Buildings 16(3):489 (2026); PMC (2025) IntD home design scoping; NDIS SDA (2019); Castell (2008); CSA B651:23
-**Gap registered:** THIN BASE - quantified specs absent from all standards; GAP-NEW-05/06/07/08 confirmed
+**Updated:** 2026-03-19 22:00  **Evidence tier range:** 3–4
+**STATUS: PROVISIONAL** — all specifications carry `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`; v9.0 interim only; full evidence review deferred to v10.0.
 
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | intellectual disability built environment | ✓ CLEAN | — |
+| DE | geistige Behinderung barrierefreies Bauen | ✓ CLEAN | — |
+| SV | intellektuell funktionsnedsättning byggd miljö | ✓ CLEAN | — |
+| NO | utviklingshemming bygget miljø | ✓ CLEAN | — |
+| DA | intellektuel funktionsnedsættelse bygget miljø | ✓ CLEAN | — |
+| FI | kehitysvammaisuus rakennettu ympäristö | ✓ CLEAN | — |
+| FR | déficience intellectuelle environnement bâti | ✓ CLEAN | — |
+| NL | verstandelijke beperking gebouwde omgeving | ✓ CLEAN | — |
+| JA | 知的障害 建築環境 | ✓ CLEAN | — |
+| ZH | 智力障碍 建筑环境 | ✓ CLEAN | — |
+| ES | discapacidad intelectual entorno construido | ✓ CLEAN | — |
+| PT | deficiência intelectual ambiente construído | ✓ CLEAN | — |
+| KO | 지적 장애 건축 환경 | ✓ CLEAN | — |
+| IT | disabilità intellettiva ambiente costruito | ✓ CLEAN | — |
 
+### Best-practice synthesis
+**Most inclusive provision:** One-way legible circulation routes with colour-zone wayfinding and pictogram + single-word signage at all decision nodes — removes orientation barriers for IntD users without requiring cognitive map formation. `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`
+**Most targeted provision:** Reception/assistance point within sight of the entrance, with low counter height and easy-read information format — combines physical and cognitive access at the critical first contact point. `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`
+**Conflict resolution:** N/A — no confirmed conflicts with other population specifications at this evidence level.
+**Highest-ambition actionable specification:** Buildings in IntD-designated use categories to provide: loop/radial circulation with no dead-end branches; pictogram + single-word signage at all route junctions; zone-differentiated ceiling heights for spatial orientation; accessible information format at all service counters. `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| One-way legible circulation; radial/loop layouts; no blind corners | EN | AU (NDIS SDA), CA (CSA B651) | 3, 4 `[TIER 4–5]` |
+| Pictogram + single-word signage at decision points | EN | AU, CA | 3, 4 `[TIER 4–5]` |
+| Colour-zone wayfinding (distinct colour per functional zone) | EN | AU (NDIS SDA Improved Liveability) | 4 `[TIER 4–5]` |
+| Different ceiling heights for zone demarcation | EN | AU | 3 `[TIER 4–5]` |
+| Reception/assistance facility at decision points | EN | CA (CSA B651 s.4.7) | 4 `[TIER 4–5]` |
+| Enhanced luminance contrast; consistent predictable layout | EN | AU, CA | 3, 4 `[TIER 4–5]` |
+| Tactile floor material differentiation per zone | EN | AU | 4 `[TIER 4–5]` |
+
+### Divergent findings
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
+|---|---|---|---|
+| Quantified thresholds | AU (NDIS SDA): qualitative principles only | All other jurisdictions: no IntD-specific standard at all | Regulatory context — AU is the sole jurisdiction with any IntD provision |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| All except AU, CA | All | No quantified IntD built-environment standard in any jurisdiction | Yes (14 languages attempted) | Yes |
+| DE | DE | BVKM publications: care setting design referenced; no quantified specs | Yes | Yes (VDI 6008 — no IntD-specific content) |
+| NO, SV | NO, SV | Nordic welfare approaches: person-centred care; no architectural specs | Yes | Yes |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| MDPI Buildings 16(3):489 (2026) | Backward | Castell (2008); PMC scoping review 2025 |
+| NDIS SDA (2019) | Forward | No new sources found |
+
+### Key sources
+1. MDPI. (2026). *Buildings*, 16(3), 489. IntD home design. [EN, Tier 3]
+2. PMC. (2025). IntD home design scoping review. [EN, Tier 3]
+3. NDIS SDA. (2019). Specialist Disability Accommodation Design Standard — Improved Liveability. NDIA. [EN, AU, Tier 4]
+4. Castell, S. (2008). *Designing for People with Dementia and Other Cognitive Disabilities*. [EN, Tier 4]
+5. CSA B651:23 s.4.7. (2023). Qualitative IntD provisions. [EN, CA, Tier 4]
 
 ## accessible-laundry-room-design
-**Updated:** 2026-03-18 17:00  **Evidence tier:** 4–5 (regulatory + OT practice)
-**Consensus finding:** Accessible laundry rooms require front-loading appliances at floor level or on riser (not stacked), clear floor space ≥762×1219 mm parallel to appliance, 1500 mm turning radius (public/shared) or 1300 mm (private dwelling), controls and drum opening 380–915 mm AFF, counter/sink ≤864 mm AFF with knee clearance, storage 230–1370 mm AFF. Main-floor location mandatory — basement/stairs create categorical exclusion.
-**Range:** Drum opening 380–915 mm AFF (ADA S611); controls ≤1220 mm AFF (ADA forward reach over obstruction); sink/counter ≤864 mm AFF; clear floor 762×1219 mm; turning radius 1500 mm (shared) / 1300 mm (residential)
-**Jurisdictions confirmed:** US (ADA S611:2010; US Access Board); AU (NDIS SDA High Physical Support — plinth + adjustable height); SE (BBR 3:148 — shared laundry accessible, no appliance-specific height); DE (DIN 18040-2 — Gemeinschaftsräume wheelchair accessible)
-**Early-close:** no  **Thin/No-data:** NL, ES, PT, IT (no laundry-specific research in any of 4 languages)
-**Key sources:** ADA-S611-2010 · US-Access-Board-Washers · NDIS-SDA · Boverket-BBR-3-148 · DIN-18040-2 · SD-State-Extension-2020
-**Gap noted:** ADA S611 is the only jurisdiction with quantified laundry appliance specifications. All other jurisdictions address laundry room accessibility generically (clear floor, turning radius, door width) without appliance-specific height values. This creates a significant guidance gap for R-LAU item specification.
+**Updated:** 2026-03-19 22:00  **Evidence tier range:** 4–5
+**STATUS: PARTIAL** — 4 jurisdictions searched; Co-1 pass: 0 jurisdictions; ADA S611 is the sole source with quantified appliance-height specifications.
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | accessible laundry room design | ✓ CLEAN | — |
+| DE | barrierefreier Waschraum | ✓ CLEAN | — |
+| SV | tillgänglig tvättstuga | ✓ CLEAN | — |
+| NO | tilgjengelig vaskerom | ✓ CLEAN | — |
+| DA | tilgængeligt vaskerum | ✓ CLEAN | — |
+| FI | esteetön pyykkihuone | ✓ CLEAN | — |
+| FR | buanderie accessible | ✓ CLEAN | — |
+| NL | toegankelijke wasruimte | ⚠ PARTIAL | NL laundry-specific guidance not found; NEN 9120:2025 covers room accessibility generically only |
+| JA | 洗濯室 バリアフリー | ✓ CLEAN | — |
+| ZH | 无障碍洗衣房 | ✓ CLEAN | — |
+| ES | lavadero accesible | ⚠ PARTIAL | ES laundry-specific guidance not found |
+| PT | área de serviço acessível | ⚠ PARTIAL | PT laundry-specific guidance not found |
+| KO | 장애인 세탁실 | ✓ CLEAN | — |
+| IT | lavanderia accessibile | ⚠ PARTIAL | IT laundry-specific guidance not found |
+
+### Best-practice synthesis
+**Most inclusive provision:** Front-loading appliances on risers to 380–430 mm drum centre height, with clear floor space 760×1220 mm parallel to appliance and 1500 mm turning radius — removes the most common barrier (top-loading machines and floor-level front-loaders inaccessible to seated users) for MOB, UPL, and OFS users simultaneously.
+**Most targeted provision:** Controls and dispensers at 380–1220 mm AFF with lever/push-button operation and audible/tactile feedback — maximises reach and force reduction for UPL and NEU users.
+**Conflict resolution:** N/A — no confirmed conflicts with other population specifications at this evidence level.
+**Highest-ambition actionable specification:** All shared/common laundry rooms to provide: front-loading appliances at ≤430 mm drum centre height or on adjustable platform; controls 380–1220 mm AFF; clear floor ≥760×1220 mm; counter/sink ≤864 mm with knee clearance; 1500 mm turning radius; main-floor location (no stairs). `[ADA S611; Tier 4–5; no Tier 1–3 evidence; March 2026]`
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Front-loading appliances at accessible height (drum centre ≤430 mm AFF) or on riser | EN | US (ADA S611), AU (NDIS SDA) | 4, 5 |
+| Clear floor space ≥760×1220 mm parallel to appliance | EN | US (ADA S611) | 4 |
+| Turning radius: ≥1500 mm (shared/public), ≥1300 mm (private residential) | EN | US (ADA), SE (BBR 3:148) | 4, 5 |
+| Controls and drum opening: 380–1220 mm AFF | EN | US (ADA S611, forward reach over obstruction ≤1220 mm) | 4 |
+| Counter/sink ≤864 mm AFF with knee clearance | EN | US (ADA S611) | 4 |
+| Main-floor location mandatory — basement/stairs create categorical exclusion | EN | US, AU | 4, 5 |
+| Shared laundry rooms in multi-res: full wheelchair accessibility required | SV | SE (BBR 3:148) | 5 |
+| Shared laundry rooms: DIN 18040-2 Gemeinschaftsräume wheelchair clearance | DE | DE (DIN 18040-2) | 4 |
+
+### Divergent findings
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
+|---|---|---|---|
+| Appliance height specificity | US (ADA S611): quantified drum centre and control heights | All other jurisdictions (SE, DE, AU): generic room-level accessibility only, no appliance-specific heights | Regulatory context — ADA S611 is the only standard with quantified laundry appliance specifications; all others defer to general wheelchair access requirements |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| NL | NL | No laundry-specific research | Yes (Ieder(in) — no output) | Yes (toegankelijkbouwen.nl — generic only) |
+| ES | ES | No laundry-specific research | Yes (CERMI — no output) | Yes (ONCE — generic only) |
+| PT | PT | No laundry-specific research | Yes (INR — no output) | Yes |
+| IT | IT | No laundry-specific research | Yes (FISH — no output) | Yes |
+| JP, KR, CN, BR, FR, BE, IE, NZ, SG, CH, NO, DK, FI | Multiple | No laundry-specific accessibility research or standard in any of these jurisdictions | Partial | Partial |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| ADA S611:2010 | Forward | US Access Board washers/dryers guidance (2021) |
+| BBR 3:148 | Forward | No new sources found |
+
+### Key sources
+1. ADA Standards for Accessible Design S611. (2010). Washing Machines and Clothes Dryers. DOJ. [EN, US, Tier 4]
+2. US Access Board. (2021). *Accessible Washers and Dryers*. [EN, US, Tier 5]
+3. NDIS SDA Design Standard. (2019). High Physical Support — laundry. NDIA. [EN, AU, Tier 4]
+4. Boverket (BBR 3:148). *Tillgänglighet i gemensamma tvättstugor*. [SV, SE, Tier 5]
+5. DIN 18040-2. (2011). *Barrierefreies Bauen — Wohnungen*. DIN. [DE, DE, Tier 4]
+6. SD State Extension. (2020). Accessible Laundry Room Design. [EN, US, Tier 5]
 
 ## floor-vibration-wheelchair-disability
-**Updated:** 2026-03-18 17:00  **Evidence tier:** 3–4 (observational + structural standards)
-**Consensus finding:** Wheelchair users in community settings are routinely exposed to WBV at or above ISO 2631-1 health caution zone (mean 0.83 m/s² weighted RMS over ~13 hrs/day — Garcia-Mendez 2013). Floor type is the single largest determinant of WBV transmitted to the cervical spine and forehead of manual wheelchair users (Larivière 2024). ISO 2631-1 was not designed for SCI/disability populations and may not accurately reflect risk levels for this group (Chénier & Aissaoui 2014). NHS HTM 08-01 provides hospital floor vibration performance standard. ISO 10137:2007 provides general building serviceability criteria for occupants; no disability-specific floor vibration standard exists in any jurisdiction.
-**Critical A-09 flag:** The 0.1 m/s RMS threshold cited in guidebook item A-09 does NOT correspond to any located ISO 2631-1 value. ISO 2631-1 action/limit values are expressed as weighted accelerations (m/s²) over 8h, not simple RMS velocity. The 0.1 m/s value may be a VDV-based or velocity-based threshold from DIN 4150-2 (structural vibration, Germany) — but its application to disability accessibility is unverified. **FLAG: [UNVERIFIED — source of 0.1 m/s RMS threshold in A-09 required before publication]**
-**Jurisdictions confirmed:** None — no jurisdiction has a disability-specific floor vibration standard
-**Early-close:** no  **Thin/No-data:** NO, SV, DA, FI, ZH, JA, NL, ES, PT, KO, IT — all NO-DATA for disability-specific building vibration
-**Key sources:** Garcia-Mendez-2013-JSCM · Misch-2022-JRATE · Chenier-Aissaoui-2014 · ISO-10137-2007 · ISO-2631-1 · SCI-P354-2007 · NHS-HTM-08-01
+**Updated:** 2026-03-19 22:00  **Evidence tier range:** 3–4
+**STATUS: PARTIAL** — 0 Co-1 jurisdictions; UNVERIFIED flag on A-09 threshold must remain. No disability-specific floor vibration standard exists in any jurisdiction.
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | floor vibration wheelchair whole body vibration | ✓ CLEAN | — |
+| DE | Bodenvibrationen Rollstuhl Ganzkörperschwingung | ✓ CLEAN | DIN 4150-2 is structural vibration standard (buildings), not disability accessibility — do not conflate |
+| SV | golvvibrationer rullstol helkroppsvibration | ✓ CLEAN | — |
+| NO | gulvvibrasjoner rullestol helkroppsvibrasjon | ✓ CLEAN | — |
+| DA | gulvvibrationer kørestol helkropsvibrationer | ✓ CLEAN | — |
+| FI | lattiavärähtelyt pyörätuoli kokokehon tärinä | ✓ CLEAN | — |
+| FR | vibrations sol fauteuil roulant vibrations corps entier | ✓ CLEAN | — |
+| NL | vloervibraties rolstoel lichaamstrillingen | ✓ CLEAN | — |
+| JA | 床振動 車椅子 全身振動 | ✓ CLEAN | — |
+| ZH | 地板振动 轮椅 全身振动 | ✓ CLEAN | — |
+| ES | vibraciones suelo silla de ruedas vibración cuerpo entero | ✓ CLEAN | — |
+| PT | vibrações piso cadeira de rodas vibração corpo inteiro | ✓ CLEAN | — |
+| KO | 바닥 진동 휠체어 전신 진동 | ✓ CLEAN | — |
+| IT | vibrazioni pavimento sedia a rotelle vibrazioni corpo intero | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Resilient floor materials (carpet on underlay; rubber; cork; vinyl with foam backing) in all primary circulation routes and residential areas — reduces WBV transmission to wheelchair users without requiring structural intervention. Evidence: floor type is the single largest determinant of WBV in manual wheelchair users (Larivière 2024, Tier 3).
+**Most targeted provision:** Avoid hard, rigid flooring surfaces (concrete, tile, stone) in areas with high wheelchair traffic; specify resilient floor coverings at design stage — most effective when specified at DD rather than retrofit.
+**Conflict resolution:** MOB/UPL users (manual wheelchair): WBV reduction via resilient flooring is primary; MOB/VIS users: highly patterned soft flooring creates navigation hazard — resolve by specifying plain-colour resilient surfaces.
+**Highest-ambition actionable specification:** All primary circulation routes and residential dwelling areas to specify resilient flooring materials; avoid hard rigid surfaces in wheelchair-primary environments. `[No disability-specific floor vibration standard in any jurisdiction; all specifications are engineering/research-derived; March 2026]`
+**CRITICAL FLAG:** Item A-09 in the guidebook cites a 0.1 m/s RMS threshold. This value does NOT correspond to any located ISO 2631-1 value. ISO 2631-1 action/limit values are weighted accelerations (m/s²) over 8h, not simple RMS velocity. The source of this threshold is unverified. A-09 must carry: `[UNVERIFIED — source of 0.1 m/s RMS threshold required before publication]`.
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Wheelchair users in community settings exposed to WBV at/above ISO 2631-1 health caution zone | EN | Cross-jurisdictional (Garcia-Mendez 2013) | 3 |
+| Floor type is the single largest determinant of WBV transmitted to cervical spine of manual wheelchair users | EN | Cross-jurisdictional (Larivière 2024) | 3 |
+| ISO 2631-1 was not designed for SCI/disability populations; may not accurately reflect risk for this group | EN | Cross-jurisdictional (Chénier & Aissaoui 2014) | 3 |
+| NHS HTM 08-01 provides hospital floor vibration performance standard (structural, not disability-specific) | EN | UK | 4 |
+| ISO 10137:2007 provides building serviceability criteria for occupants — no disability-specific floor vibration standard | EN | ISO | 4 |
+| No disability-specific floor vibration standard exists in any jurisdiction | EN, DE, SV, NO, DA, FI, FR, NL, JA, ZH, ES, PT, KO, IT | All 24 jurisdictions | 4 |
+
+### Divergent findings
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
+|---|---|---|---|
+| A-09 threshold provenance | Guidebook: 0.1 m/s RMS cited | ISO 2631-1: weighted acceleration (m/s²), no 0.1 m/s value | UNVERIFIED — source of 0.1 m/s value is unknown; may derive from DIN 4150-2 (structural, not accessibility) |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| All 24 jurisdictions | All 14 | No disability-specific floor vibration standard exists anywhere | Yes (no DPO publishes on this topic) | Yes (no beyond-code framework addresses this) |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Garcia-Mendez (2013) | Forward | Larivière (2024); Misch (2022) |
+| ISO 2631-1 | Forward | Chénier & Aissaoui (2014) |
+
+### Key sources
+1. Garcia-Mendez, Y., et al. (2013). Health risks of vibration exposure to wheelchair users. *Journal of Spinal Cord Medicine*, 36(4), 365–375. [EN, Tier 3]
+2. Larivière, O., et al. (2024). Floor type and WBV in manual wheelchair users. *Journal of Rehabilitation and Assistive Technologies Engineering*. [EN, Tier 3]
+3. Misch, A., et al. (2022). Whole-body vibration and wheelchair users. *JRATE*. [EN, Tier 3]
+4. Chénier, F., & Aissaoui, R. (2014). Effect of wheelchair frame on vibration transmission. *Medical Engineering & Physics*, 36(7), 872–879. [EN, Tier 3]
+5. ISO 2631-1. (1997/2004). *Mechanical Vibration and Shock — Evaluation of Human Exposure to Whole-Body Vibration*. ISO. [Tier 4]
+6. ISO 10137:2007. *Bases for Design of Structures — Serviceability of Buildings*. ISO. [Tier 4]
+7. NHS HTM 08-01. *Acoustics — Hospital Floors (Vibration Criteria)*. NHS. [EN, UK, Tier 4]
 
 ## biophilic-design-healthcare-workplace
-**Updated:** 2026-03-18 22:00  **Evidence tier:** 1–3
-**Consensus finding:** Three independent systematic reviews establish strong evidence that biophilic design reduces hospitalisation time, pain, and provider stress in healthcare settings; restorative effects are measurable at indoor scale and extend to structured complexity and natural elements, not only outdoor views.
-**Key evidence:**
-  - Healthcare: 61-source systematic review confirms biophilic design reduces hospitalisation time, mortality, pain, and provider stress (Al Khatib et al. 2024, Tier 1)
-  - Workplace: 16 studies all show statistically significant positive relationship between nature exposure and restorative outcomes (Gonçalves et al. 2023, Tier 1)
-  - Indoor vegetation: EEG study shows measurable restorative and cognitive benefits; working memory improved (Rhee et al. 2023, Tier 2)
-  - User group stratification: outpatients prioritise fresh air/daylight/thermal comfort; inpatients prioritise security/prospect-refuge/daylight; staff prioritise privacy/quietness — design must vary by space typology (Tekin et al. 2023, Tier 1)
-  - ART review (571 sources, 2010–2022): restorative effect measurable via HRV and salivary cortisol; blood pressure is inferior measurement proxy (Liu Y et al. 2024, Tier 1)
-**Jurisdictions confirmed:** Cross-jurisdictional (no jurisdiction-specific standards for biophilic design)
-**Early-close:** Yes  **Thin/No-data:** None
-**Key sources:** AlKhatib2024 · Goncalves2023 · Rhee2023 · Tekin2023 · LiuY2024 · Ulrich1984
-**Divergent findings:** Ulrich (1984) foundational but single-hospital n=46; use 2024 systematic reviews as primary evidence; cite Ulrich only as historical foundation
-**Notes:** No jurisdiction has a mandatory biophilic design standard. WELL v2 and LEED address this via certification only. BIO items must use systematic review evidence as primary basis. Restorative design for ALL populations — not population-specific. Biophilic outdoor transitional spaces function as decompression/regulation environments for NDV populations (Latiff et al. 2024).
+**Updated:** 2026-03-19 22:00  **Evidence tier range:** 3 (systematic reviews); Co-1 (lived experience)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | biophilic design healthcare workplace | ✓ CLEAN | — |
+| DE | biophiles Design Krankenhaus Arbeitsplatz | ✓ CLEAN | — |
+| SV | biofil design sjukvård arbetsplats | ✓ CLEAN | — |
+| NO | biofilisk design helsevesen arbeidsplass | ✓ CLEAN | — |
+| DA | biofilisk design sundhed arbejdsplads | ✓ CLEAN | — |
+| FI | biofiilinen suunnittelu terveydenhuolto työpaikka | ✓ CLEAN | — |
+| FR | design biophilique santé lieu de travail | ✓ CLEAN | — |
+| NL | biofilisch ontwerp gezondheidszorg werkplek | ✓ CLEAN | — |
+| JA | バイオフィリックデザイン 医療施設 職場 | ✓ CLEAN | — |
+| ZH | 亲生命设计 医疗 工作场所 | ✓ CLEAN | — |
+| ES | diseño biofílico salud lugar de trabajo | ✓ CLEAN | — |
+| PT | design biofílico saúde local de trabalho | ✓ CLEAN | — |
+| KO | 바이오필릭 디자인 의료 직장 | ✓ CLEAN | — |
+| IT | design biofilico sanità luogo di lavoro | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Daylight access and nature views from primary patient/occupant areas — the single most replicated biophilic intervention in healthcare, with measurable effects on hospitalisation time and pain outcomes across 61-source systematic review (Al Khatib et al. 2024, Tier 3).
+**Most targeted provision:** Space typology–differentiated design: outpatient areas prioritise fresh air/daylight/thermal comfort; inpatient areas prioritise security/prospect-refuge/daylight; staff areas prioritise privacy/quietness (Tekin et al. 2023, Tier 3).
+**Conflict resolution:** Biophilic warm/saturated/stimulating environments for NDV/MH conflict with muted, low-stimulation palette for NDV/AUT. Resolution: provide biophilic breakout zones as optional destinations, not primary circulation finishes. See NDV slug divergent findings.
+**Highest-ambition actionable specification:** All healthcare and workplace buildings to provide: direct nature views or high-quality nature representations from primary occupancy areas; indoor vegetation or structured natural complexity per space type; daylight with CCT matched to time-of-day and space function; biophilic outdoor transitional zones for decompression. No mandatory standard in any jurisdiction — specify via WELL v2 or LEED credit pathway where applicable.
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Biophilic design reduces hospitalisation time, mortality, pain, and provider stress in healthcare settings | EN | Cross-jurisdictional (Al Khatib et al. 2024, 61-source systematic review) | 3 |
+| Nature exposure in workplace shows statistically significant positive restorative outcomes across 16 studies | EN | Cross-jurisdictional (Gonçalves et al. 2023, Tier 3) | 3 |
+| Indoor vegetation produces measurable restorative and cognitive benefits; working memory improved | EN | Cross-jurisdictional (Rhee et al. 2023 EEG study) | 3 |
+| Restorative effect measurable via HRV and salivary cortisol; blood pressure is inferior proxy | EN | Cross-jurisdictional (Liu Y et al. 2024, 571-source ART review) | 3 |
+| Space typology determines which biophilic element is prioritised; user group stratification confirmed | EN | Cross-jurisdictional (Tekin et al. 2023) | 3 |
+| Biophilic outdoor transitional spaces function as decompression/regulation environments for NDV populations | EN | AU, UK | Co-1 (Latiff et al. 2024) |
+
+### Divergent findings
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
+|---|---|---|---|
+| Evidence vintage | Ulrich (1984): foundational single-hospital study, n=46 | Al Khatib et al. (2024): 61-source systematic review | Tier difference — use 2024 SR as primary evidence; cite Ulrich as historical foundation only |
+| Colour/stimulation | NDV/MH/healthcare: biophilic warm tones support recovery | NDV/AUT: muted low-chroma palette required | Empirical divergence — different population needs; resolve via zoning |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| All jurisdictions | All 14 | No mandatory biophilic design standard in any jurisdiction | Yes | Yes (WELL v2 and LEED are voluntary certification only) |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Al Khatib et al. (2024) | Backward | Ulrich (1984); Kellert & Calabrese (2015) |
+| Gonçalves et al. (2023) | Forward | Liu Y et al. (2024) |
+| Rhee et al. (2023) | Forward | Latiff et al. (2024) |
+
+### Key sources
+1. Al Khatib, H., et al. (2024). Biophilic design in healthcare: systematic review, 61 sources. [EN, Tier 3]
+2. Gonçalves, A., et al. (2023). Nature exposure and workplace restorative outcomes: 16 studies. [EN, Tier 3]
+3. Rhee, J., et al. (2023). Indoor vegetation and cognitive restoration: EEG study. [EN, Tier 3]
+4. Tekin, B., et al. (2023). User group stratification in biophilic healthcare design. [EN, Tier 3]
+5. Liu, Y., et al. (2024). Attention Restoration Theory: 571-source review; HRV/cortisol measurement. [EN, Tier 3]
+6. Ulrich, R. S. (1984). View through a window may influence recovery from surgery. *Science*, 224, 420–421. [EN, historical reference only — Tier 3/single study]
+7. Latiff, A., et al. (2024). Biophilic outdoor transitional zones for NDV populations. [EN, Co-1]
+
 
 ## thermal-comfort-older-adults-care-settings
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 1–3
