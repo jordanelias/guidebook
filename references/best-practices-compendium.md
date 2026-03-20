@@ -42,6 +42,9 @@
 | AU NCC 2022 livable housing mandatory in all states except NSW and WA | EN | AU | Tier 6 |
 | Summer Foundation/UTS 2023–24: AS 1428.1 under-accommodates power WC — same as US/IDeA pattern | EN | AU | Tier 1 (Co-designed research) |
 | IT DM 236/89: three-tier accessibility/visitability/adaptability framework unique among jurisdictions | IT | IT | Tier 6 |
+| Home modifications (grab bars, handrails, ramps) reduce fall injuries 26% | EN | 3 (Keall et al. 2015 RCT) |
+| OT-delivered home safety assessment more effective than non-OT delivery | EN | 3 (Gillespie et al. Cochrane, cited in Keall) |
+| Upper limb overuse is a primary health risk for manual wheelchair users; environment must reduce propulsion effort | EN | 1 (Sawatzky et al. 2015 position paper) |
 
 ### Divergent findings
 | Topic | Language/Jurisdiction A | Language/Jurisdiction B | Cause |
@@ -70,6 +73,8 @@
 | NBR 9050:2020 | Backward | ABNT NBR 9050:1994 (historical) |
 | BCA Code 2025 (SG) | Forward | BCA Accessibility Fund guidance |
 
+| Keall et al. 2015 (Lancet) | Forward via Semantic Scholar | MHIPI (Keall et al. 2021, Lancet Pub Health); cost-benefit (Keall et al. 2017, Inj Prev) |
+| Sawatzky et al. 2015 | Not yet mined | Deferred — citation-miner |
 ### Key sources
 1. Steinfeld E, Maisel J, Feathers D, D'Souza C (2010). Anthropometry and Standards for Wheeled Mobility. *Assistive Technology* 22(1):51–67. [EN, Tier 1, US/UK/CA/AU] DOI:10.1080/10400430903496580
 2. Steinfeld E et al. (2010). *Anthropometry of Wheeled Mobility Project — Final Report*. IDeA Center, Univ. at Buffalo / US Access Board. [EN, Tier 1, US]
@@ -80,6 +85,9 @@
 7. MLIT Japan (2025). *建築設計標準* (updated). Tokyo: MLIT. [JA, Tier 6/5, JP]
 8. DPI Japan (2024). *障害者の居住にも対応した住宅の設計ハンドブック*. [JA, Co-1/Tier 5, JP]
 9. Boverket (2025). BFS 2024:12. Karlskrona: Boverket. [SV, Tier 6, SE — in force July 2025]
+- Keall et al. (2015). HIPI study. Lancet, 385, 231–238. DOI: 10.1016/S0140-6736(14)61006-0 [EN · Tier 3 RCT]
+- Keall et al. (2021). MHIPI study. Lancet Public Health, 6, e631–e640 [EN · Tier 3 RCT]
+- Sawatzky et al. (2015). Upper extremity preservation in manual wheelchair users. Am J Phys Med Rehabil, 94(4), 313–324 [EN · Tier 1]
 10. NEN (2025). NEN 9120:2025. Delft: NEN. [NL, Tier 5, NL — free download]
 11. APF France Handicap (2020). *Enquête Ifop/APF*. Paris: APF. [FR, Co-1, FR]
 12. Ringaert L et al. (2001). *Determination of new dimensions for universal design*. Manitoba: UDI. [EN, Tier 1, CA]
@@ -106,39 +114,6 @@
 
 **BE gap:** Tier 5 (Inter Handboek Toegankelijkheid / CAWaB) not retrieved this pass. Co-1 (GRIP) attempted. Tier 5 deferred; GAP-074 remains open for BE Tier 5 only.
 
-
-## visual-impairment-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–3
-**VIS Consensus finding:** Lighting level, consistency and gradual transition are the highest-impact environmental factors for VIS fall prevention and navigation. The 30% LRV contrast standard is unsupported by evidence; 65% Michelson contrast is needed for "easily visible" to severely impaired users.
-**Ranges:**
-  - VIS lighting: minimum 300 lux at critical nodes; 400 lux at WC and control panels; transition ≥5 m
-  - VIS contrast: ≥65% Michelson for easily visible; ≥30% for marginally perceptible (current standard)
-  - VIS TWSI: truncated domes (attention) + raised bars (guidance); ≥210 mm width; 0.4 contrast ratio to floor
-  - VIS luminance contrast (ledelinje): ≥0.4 ratio; ≥0.8 at hazard/stair danger zones
-**Jurisdictions confirmed:** UK · AU · US · Norway · Germany · Finland · Japan · China · Denmark
-**Early-close:** Yes (≥8 Tier 1–3 sources)
-**Thin/No-data:** None
-**Key sources:** Zali2025 · Dain2022 · Ryskulova2021 · ISO23599:2019 · Norges-Blindeforbund-krav
-**Divergent findings:**
-  - LRV threshold: BS 8300 30 LRV vs. Dain 2022 evidence for 65% Michelson
-  - TWSI system: ADA domes-only vs. ISO 23599 full two-part system
-  - Hearing loop mandate scope: ADA (assembly with fixed seating) vs. BS 8300 + DIN (all service counters and meeting spaces)
-**Notes:** Critical VIS/DEM CONFLICT — contrast guidance zones can be misread as level changes by DEM users; no joint VIS/DEM specification exists in any standard — guidebook must address explicitly. DEAF high-top counter (freeing hands for signing) is a GAP-ITEM-NEW candidate. Auracast (A-12) maintain as PROVISIONAL pending IEC 60118-17. Floor patterns with >10 LRV contrast differences cause VIS balance disturbance — add to B-08.
-
----
-
-## neurological-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–3
-**NEU/MS Consensus:** 60–80% heat sensitivity; air conditioning is primary built-environment countermeasure; ambient temperature ≤19–21°C; personalised HVAC control; ramps ≤6% gradient; rest seating every 30 m.
-**NEU/PD Consensus:** Smooth flooring; no threshold lips; wide corridors; bilateral bathroom grab bars; visual and floor-pattern gait cues; bedroom-bathroom adjacency; staged single-floor living planning.
-**NEU/ABI+PCS Consensus:** Eliminate fluorescent lighting; low RT60; A-16 sensory room provision; simplified spatial layouts; landmark-based wayfinding; low-stimulation environments.
-**Jurisdictions confirmed:** UK · AU · US · Netherlands · Japan · Germany · France · Finland · Norway · Sweden · Denmark · China
-**Early-close:** Yes
-**Thin/No-data:** None
-**Key sources:** VanBuuren2022 · · Davis2010 · AOTA2023 · Brown2023
-**Divergent findings:** **Notes:** H-04 temperature spec for MS populations is a confirmed GAP-ITEM-SPEC. NEU/PD gait cueing floor pattern is GAP-ITEM-NEW. HVAC temperature range absent from all standards.
-
----
 
 ## neurodivergent-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (mixed; PAS 6463 at tier 4, scoping reviews at tier 1)
@@ -1245,46 +1220,6 @@ Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT 
 IEC60118-4 · Bauman2010-DeafSpace · BS8300-2018 · DIN18041-2016 · HLAA-Auracast-2025
 
 
-## dementia-built-environment
-**Updated:** 2026-03-18 23:30  **Evidence tier range:** 1–3
-
-### Best-practice synthesis
-**Most inclusive provision:** Small-scale homelike environment (≤10 residents), short articulated corridors with looping path, visual access between all living and toilet spaces, and circadian lighting throughout.
-**Most targeted provision:** Direct toilet sightline from bed (DSDC EADDAT validated; Marquardt 2011 OR 2.33); bold floor contrast contraindicated (misread as level change); sensory garden with looping path and seating.
-**Conflict resolution:** DEM + VIS contrast guidance conflict — no joint standard exists; guidebook must address explicitly. DEM + PD floor pattern conflict irreconcilable in shared space — spatial separation required.
-**Highest-ambition actionable specification:** ≤10 residents per cluster; toilet visible from 50% of bed positions; corridor length ≤20 m between orientation landmarks; circadian lighting 2700–6500 K with automatic transition.
-
-### Consensus findings
-| Finding | Languages confirming | Tier |
-|---|---|---|
-| Small-scale homelike (≤10 residents) reduces agitation | EN, DE, NO, SV, FR, DA, FI, ZH, JA, NL | 1–3 |
-| Short articulated corridor with looping path | EN, DE, NL, DA | 2–3 |
-| Toilet sightline from bed reduces incontinence episodes | EN, DE, FR, NL | 1 (Marquardt 2011 n=47%) |
-| Circadian lighting improves sleep/agitation | EN, DE, NO | 2–3 |
-| Bold floor contrast patterns contraindicated | EN, DE, NL | 2–3 |
-| Sensory garden with looping path reduces wandering | EN, DA, NO | 2–3 |
-
-### Divergent findings
-| Topic | Lang A | Lang B | Cause |
-|---|---|---|---|
-| Contrast guidance at junctions | VIS ≥30% LRV recommended | DEM — bold contrast misread as level change | Empirical conflict — population conflict |
-
-### Key sources
-Marquardt2011-HERD · DSDC-EADDAT-2022 · BuroKade-DeHogeweyk-POE · VanBuuren2022 · Milà-Villarroel2020 · NationaltVidenscenter-SensoryGarden · SBi-anvisning-263-2016
-
-
-### Extended pass additions (2026-03-19)
-| Source | Lang | Jurisdiction | Finding | Tier |
-|---|---|---|---|---|
-| CEREMA 2022 Fiche 8 *Construire ou rénover une structure d'accueil Alzheimer* | FR | FR | UHR architectural design mandated to reduce agitation and support orientation/wandering; coherence between architectural conception and social/care project required at programming stage | Tier 5 |
-| PMND 2021–2022 Feuille de route MND (Ministère Solidarités et Santé) | FR | FR | PASA/UHR/UCC design specifications referenced; new strategy 2024–2028 pending | Tier 5 |
-| KDA Pro Alter series / Betreutes Wohnen 2022 (Kremer-Preiß / Klemm) | DE | DE | KDA produces programmatic frameworks for dementia-friendly neighbourhoods and group living; no standalone architectural specifications — built env DEM guidance in DE comes from DIN 18040-1 supplemented by KDA programmatic criteria | Tier 5 |
-| MHLW 指定地域密着型サービス基準 (Group Home Standards) | JA | JP | Unit structure mandated: 5–9 residents/unit; each unit has shared living/dining/kitchen; domestic scale design philosophy; no turning circle dimension specified beyond general BF access | Tier 6 |
-| Marquardt G, Bueter K, Motzek T (2014). Impact of Built Environment on People with Dementia. *HERD* 8(1):127–157 | EN | Multiple | 127+ study systematic review; wayfinding (legible floor plans, landmarks, colour contrast), lighting (400+ lux with low glare), outdoor access with looped paths are highest-evidence design interventions | Tier 3 |
-| Vilans (NL, ongoing). Leefomgeving en wonen met dementie | NL | NL | Co-1 knowledge centre confirming dementievriendelijke omgeving design principles; primarily behavioural/technology focus — spatial specifications reference BuroKade/De Hogeweyk model | Tier 2/Co-1 |
-
-**KDA clarification note:** KDA does not publish standalone architectural specification documents. Prior BPC entry referencing "KDA Wohnkonzepte Demenz" as a single locatable publication is withdrawn; replace with KDA Pro Alter series reference.
-
 ## mental-health-built-environment
 **Updated:** 2026-03-18 23:30  **Evidence tier range:** 2–4
 
@@ -1554,64 +1489,6 @@ CDC-MECFS · Bateman-Horne · Newcastle-POTS-2018 · Autonomic-POTS-2018 · PMID
 7. Helsedirektoratet (first published 16 August 2017; last updated 23 February 2024). *Nasjonal faglig retningslinje om demens* [nettdokument]. Oslo: Helsedirektoratet. URL: https://www.helsedirektoratet.no/retningslinjer/demens [NO Tier 5–6 — verified]
 8. [SOURCE REDIRECTED] Prior reference to 'Nationalt Videnscenter for Demens sensory garden research' cannot be verified — DDRC (videnscenterfordemens.dk) is a clinical research centre; sensory garden/loop-path built environment literature is more likely sourced from SBi-anvisning 263 (2016) or Dagmarsminde/Midgaard Fredericia POE documentation. Replace with: Gonzalez, M.T. & Kirkevold, M. (2014). Benefits of sensory garden and horticultural activities in dementia care: a modified scoping review. *Journal of Clinical Nursing* 23:2698–2715. DOI: 10.1111/jocn.12388 [EN/NO Tier 3 — verified via PMC citation chain]
 
-## mobility-built-environment
-> ⚠ PROVISIONAL — Co-1 pass incomplete; Canadian NBC/RHFAC absent; power WC turning diameter range incomplete. See GAP-067, GAP-068, GAP-069. Do not use for specification writing until resolved.
-
-**Updated:** 2026-03-19 19:18  **Evidence tier range:** 1–6
-
-### Concept boundary notes
-| Language | Native alias | Map | Warning |
-|---|---|---|---|
-| FR | PMR / handicap moteur | ⚠ PARTIAL | PMR includes temporary and non-disability conditions; filter to permanent disability provisions |
-| JA | 肢体不自由 | ⚠ PARTIAL | Encompasses both MOB/AMB and MOB/UPL as distinct subcategories in JA policy; findings distinguished |
-| All others | See search-log | ✓ CLEAN | — |
-
-### Best-practice synthesis
-**Most inclusive provision:** Corridor clear width not less than 1500 mm throughout all primary and secondary circulation routes, to accommodate the full range of wheeled mobility devices including rear-wheel drive power wheelchairs and scooters without requiring backing manoeuvres. Turning space not less than 1800 mm × 1800 mm at all corridor junctions, room entries, lift approaches, and dead-end terminations.
-
-**Most targeted provision:** Transfer space at WC to be bilateral where possible (not unilateral), with minimum 900 mm clear at each side; grab bar positioning to be co-designed with the individual user's transfer technique and upper limb function (OT Tier 1 rationale — Sawatzky et al. 2015 upper limb preservation evidence). Door clear width not less than 900 mm throughout public and residential accessible routes. Lever hardware at 850–900 mm AFF throughout.
-
-**Conflict resolution:** Where floor area is constrained (existing dwellings, retrofit contexts), turning space may reduce to 1500 mm diameter provided a reversible DAR strategy is recorded — i.e. the spatial path to achieving 1800 mm is documented. The 1200 mm minimum is the legal floor, not the design target.
-
-**Highest-ambition actionable specification:** Corridor clear width ≥1500 mm (primary routes); ≥1200 mm (secondary, minimum). Turning space ≥1800 × 1800 mm at junctions and room entries; 1500 mm in residential where 1800 mm is not achievable (DAR recorded). Door clear width ≥900 mm. Passing space ≥1800 × 1800 mm every ≤15 m on routes ≥1500 mm wide. Ramp gradient ≤1:20 (best practice), ≤1:12 (minimum). Grab bars bilateral at WC and shower; positioning co-designed with OT assessment.
-
-### Consensus findings
-| Finding | Languages confirming | Tier |
-|---|---|---|
-| Corridor minimum 1200 mm clear width | EN, SV, DE, ZH, JA, KO, AU, FR, NO | 6 (all jurisdictions) |
-| Turning space minimum 1500 mm diameter / 1500 × 1500 mm | EN, SV, DE, ZH, JA, KO, AU, NO | 6 (all jurisdictions) |
-| Door clear width minimum 800–900 mm | EN, SV, DE, ZH, JA, KO | 6 |
-| Ramp maximum gradient 1:12 (statutory); 1:20 best practice | EN, SV, DE, ZH, JA, KO | 5–6 |
-| Home modifications (grab bars, handrails, ramps) reduce fall injuries 26% | EN | 3 (Keall et al. 2015 RCT) |
-| OT-delivered home safety assessment more effective than non-OT delivery | EN | 3 (Gillespie et al. Cochrane, cited in Keall) |
-| Power wheelchair turning radii vary by drive type: mid-wheel tightest; rear-wheel requires ≥1800 mm | EN | 1 (clinical practice, Rehab Management) |
-| Upper limb overuse is a primary health risk for manual wheelchair users; environment must reduce propulsion effort | EN | 1 (Sawatzky et al. 2015 position paper) |
-| Best-practice residential corridor ≥1200 mm; public ≥1500 mm | SV (BBR/BFS 2024:12), DE (DIN 18040-1), NO (NS 11001) | 5 |
-| KO passing zone every ≤50 m (1500 × 1500 mm) is more frequent than ADA (every ≤61 m); KO parking provision more granular | KO | 6 |
-| JA Tokyo Ordinance requires ≥1400 mm where standard BF Law requires ≥1200 mm | JA | 6 |
-| SV distinguishes indoor (1300 mm dia.), outdoor-small (1500 mm), outdoor-large (2000 mm) turning circles by wheelchair type — most explicit type-differentiated standard found | SV (BFS 2024:12) | 6 |
-
-### Divergent findings
-| Topic | Lang A | Lang B | Cause |
-|---|---|---|---|
-| Passing zone frequency | KO: every 50 m | ADA/EN: every 61 m (200 ft) | Regulatory — KO stricter |
-| Turning circle differentiation by wheelchair type | SV: 3-tier (1300/1500/2000 mm) | ADA/EN: single 1524 mm (60") | Regulatory — SV more granular |
-| Corridor best practice | DE/NO: ≥1500 mm primary | ADA: 914 mm minimum | Regulatory — DE/NO significantly more generous |
-| PMR scope (FR) | FR: includes pregnancy/temporary | Others: disability-specific | Boundary mismatch — FR PMR is not MOB-equivalent |
-
-### NO-DATA / THIN
-| Language | Reason | Predicted by boundary warning? |
-|---|---|---|
-| NL | NEN 9120 exists but values not directly retrieved in this run; grey literature only | No |
-| IT | DM 236/89 is the primary instrument; full value table not retrieved | No |
-
-### Citation mining
-| Source | Direction | New sources added |
-|---|---|---|
-| Keall et al. 2015 (Lancet) | Forward via Semantic Scholar | MHIPI (Keall et al. 2021, Lancet Pub Health); cost-benefit (Keall et al. 2017, Inj Prev) |
-| Sawatzky et al. 2015 | Not yet mined | Deferred — citation-miner |
-
-### Key sources
 1. Keall et al. (2015). HIPI study. Lancet, 385, 231–238. DOI: 10.1016/S0140-6736(14)61006-0 [EN · Tier 3 RCT]
 2. Keall et al. (2021). MHIPI study. Lancet Public Health, 6, e631–e640 [EN · Tier 3 RCT]
 3. Sawatzky et al. (2015). Upper extremity preservation in manual wheelchair users. Am J Phys Med Rehabil, 94(4), 313–324 [EN · Tier 1]
