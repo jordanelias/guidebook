@@ -1,0 +1,699 @@
+## CATEGORY F: SENSORY ZONING
+
+Sensory zoning is the deliberate organisation of a building's sensory environment so that stimulation level varies predictably, decreasing from public/entry zones to primary occupied/private zones.
+
+### F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
+
+**Applicable Groups:** NDV, PCS, AUT, MH, DEM, OFS
+
+**Description:** The complete building journey from arrival to primary occupied space is organised so that sensory load decreases progressively. Entry/reception: highest acceptable load. Transition zones: intermediate. Primary occupied spaces: lowest load. No abrupt step-change in either direction.
+
+**Specifications:**
+
+Entry zone: NC 35; muted palette (NCS chroma ≤6); 300--500 lux
+
+Transition: NC 30; NCS chroma ≤4; 200--300 lux
+
+Primary occupied spaces: NC 25; NCS chroma ≤3; 100--200 lux
+
+No single transition >NC-10 acoustic change
+
+Restorative element at each transition (BIO-01, BIO-02)
+
+**Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Sensory gradient from entry to occupation is a room arrangement and
+
+material-specification decision at zero additional cost at design stage. Retrofit requires redecoration, material replacement, and
+
+possibly layout modification. See Part VIII §8.4.1.
+
+**Key citations:** Kaplan, R., \& Kaplan, S. (1989). The experience of nature. Cambridge University Press. British Standards Institution.
+
+(2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3.
+
+**Cross-reference:** A-04 (Acoustic Zoning); B-05 (Lighting Transitions)
+
+**Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. Sensory gradient from high-stimulation entry to low-stimulation primary occupied space alters the context progressively to keep cumulative sensory load within the processing capacity of sensory-sensitive users; abrupt transitions from high-load to low-load zones constitute shock stimuli that are themselves a trigger.
+
+### F-02 Olfactory Control (Fragrance-Free Zones in Sensitive Areas)
+
+**Applicable Groups:** NDV, PAIN, MH, OFS
+
+**Description:** No air freshener, scent diffuser, or fragranced cleaning product in spaces designated as sensory sensitive or CFS/ME-accessible. Fragrance-free policy posted at entry to fragrance-free zones. Cleaning specification: fragrance-free products only.
+
+**Specifications:**
+
+No scent diffusers, aerosol air fresheners, or strong-scented candles in sensitive spaces
+
+Cleaning products: fragrance-free specified in cleaning contract
+
+HVAC: no scent injection at air handling units in sensitive zones
+
+Policy signage: 'Fragrance-Free Zone' at entry
+
+Maintenance: regular audit of compliance
+
+**Retrofit cost note:** Retrofit penalty: LOW. Olfactory control through fragrance-free zone designation is primarily a management and
+
+HVAC specification decision. Retrofit may require zoned ventilation modifications but primarily involves policy and signage changes. See
+
+Part VIII §8.4.1.
+
+**Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Patient Led Research Collaborative. (2024). ME/CFS management guide.
+
+**Cross-reference:** A-08 (HVAC); H-02 (Individual Environmental Control)
+
+**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Fragrance-free zones implement the EHP 'prevent' strategy by removing chemical trigger sources before they reach OFS/MCAS, NDV, and PAIN users; the specification of no introduced fragrance sources (diffusers, cleaning products, personal fragrance signage) is the minimum preventive context.
+
+### F-03 Graduated Stimulation Re-entry (Sensory Room to General Space Transition)
+
+**Applicable Groups:** NDV, PCS, AUT, OFS
+
+**Description:** The transition from sensory room (A-16) or quiet room to general circulation is a graduated zone, not an abrupt step-change.
+
+A 3--5 m transition space (intermediate stimulation level) is provided between the sensory room exit and the general circulation route.
+
+**Specifications:**
+
+Transition zone: 3--5 m depth between sensory room exit and primary circulation
+
+Intermediate stimulation: NC 30; muted palette; 100--200 lux
+
+Seating available in transition zone
+
+No high contrast or high-stimulation elements within 5 m of sensory room exit
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Graduated stimulation re-entry zones require spatial provision of a transition
+
+space. At design stage this is a planning decision. Retrofit requires area allocation and acoustic/visual treatment as a partition or alcove
+
+intervention. See Part VIII §8.4.2.
+
+**Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Kaplan, S. (1995). Journal of Environmental Psychology, 15(3), 169--182.
+
+**Cross-reference:** A-16 (Sensory Room); F-01 (Sensory Gradient)
+
+**Evidence basis (OT):** EHP Framework (establish strategy); Dunn's Sensory Processing Model. Graduated re-entry implements EHP's 'establish' strategy: the design builds on the user's existing regulatory capacity by providing a low-stimulation transition space that allows sensory regulation to be re-established at the user's own pace before re-entering higher stimulation zones.
+
+### F-04 Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)
+
+**Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity),
+
+PAIN (fragrance triggers), NEU (chemical sensitivity in PCS/ABI)
+
+**Description:** New item added in Rev 6.0 per OFS category review (Stage 3). A comprehensive air quality specification for all spaces regularly occupied by OFS/MCAS, chemically sensitive NDV, or PCS users. F-04 extends and complements F-02 (Fragrance-free zones): where F-02 addresses introduced fragrances at the policy level, F-04 addresses the built-in physical specification of filtration, materials, and thermal stability that determines baseline air quality.
+
+**Specifications:**
+
+Filtration: MERV 13 minimum in all air handling units serving
+
+OFS-occupied spaces
+
+Fresh air supply: ≥10 L/s per person in primary occupied spaces; ≥15
+
+L/s per person where OFS, BAR, or immunocompromised (DEM/NEU post-COVID) users are primary occupants
+
+VOC specification: all finishes, adhesives, sealants, flooring, ceilings, and furniture within OFS-occupied spaces: TVOC ≤0.5 mg/m³ at
+
+28 days post-installation, measured per EN ISO 16000-9
+
+Cleaning products: specify low-fragrance, low-VOC cleaning products in maintenance specification; no aerosol sprays on OFS-occupied floors
+
+during occupied hours
+
+Thermal stability: ambient temperature variation ≤1°C per hour in primary occupied spaces; ≤2°C across any zone on the primary route;
+
+maximum 3°C differential at entry vestibule to main space; target ambient 21°C on primary routes
+
+HVAC commissioning: air quality test at practical completion and at 28 days post-occupation; results documented in building log
+
+No fragrance diffusers: electronic, passive, or HVAC-integrated scent diffusion systems excluded from OFS-occupied environments (extends
+
+F-02)
+
+Plantings: where biophilic planting is specified (BIO-02), select low-VOC, low pollen species; avoid strongly scented flowering plants
+
+on OFS-occupied floors
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. MERV 13+ filtration and low-VOC specification require correct HVAC plant
+
+selection and finish specification at design stage. Retrofit requires filter upgrade (plant modification) and full finish replacement
+
+programme (significant disruption and cost). See Part VIII, C.1.2.
+
+**Key citations:** Mast Cell Action. (2023). Environmental triggers: guidance for building design. Mast Cell Action. Afrin, L.B., et al. (2020). Mast cell activation disease: An underappreciated cause of neurological and psychiatric symptoms. Brain, Behavior, and Immunity, 89, 218--225. CIBSE. (2015). CIBSE Guide A: Environmental Design (8th ed.). CIBSE. British Standards Institution. (2022). PAS 6463:2022. BSI. EN ISO 16000-9:2006. Indoor air — Part 9: Determination of emission of volatile organic compounds. ISO.
+
+**Tier X:** No RCT-level evidence for MERV 13 specification in relation to MCAS symptom reduction identified as of March 2026.
+
+Specifications are derived from MCAS trigger literature and HVAC engineering standards. Evidence review recommended at next revision.
+
+**Cross-reference:** F-02 (Fragrance-free zones — policy-level extension of this item); A-08 (HVAC noise control — same AHU specification; coordinate); BIO-02 (Interior planting — species selection for low-VOC); §2.11 OFS; §2.6 NDV
+
+**Evidence basis (OT):** Compensatory FOR; Dunn's Sensory Processing Model. Air quality provisions implement the Compensatory FOR by removing chemical and particulate environmental triggers that would otherwise require OFS/MCAS and chemically sensitive users to withdraw from the space; the MERV 13 and TVOC ≤0.5 specifications are derived from the trigger thresholds documented in MCAS and chemical sensitivity clinical literature.
+
+### F-05 Seated-Task Design (All Primary Occupational Tasks Achievable Without Sustained Standing)
+
+**Applicable Groups:** OFS/POTS, OFS/CFS, MOB (wheelchair users ---
+
+G-06 below), UPL, BAR; also benefits ALL users at service points
+
+**Description:** New item added in Rev 6.0 per OFS category review (Stage 3). Every primary occupational interaction in the building --- service counter transaction, kiosk use, workstation task, check-in, reception, triage, waiting — must be achievable without sustained standing (defined as standing for more than 2 continuous minutes without a seating option). F-05 requires that all task locations are provided with appropriate seating, and that the task can be completed from a seated position without a visible distinction from the standard standing transaction.
+
+**Specifications:**
+
+Service counters: all counter transaction types achievable from a seated position at the accessible lowered counter section (G-06:
+
+760--860mm AFF) without requiring the user to stand at any point
+
+Queue systems: seating available within the queue area — not at a separate accessible position — so that the queue position is held
+
+without standing; take-a-number or digital queue systems are an acceptable alternative to physical queue standing
+
+Kiosks and self-service terminals: all interaction elements within
+
+400--1200mm AFF; knee clearance below terminal ≥690mm height × 760mm width × 480mm depth (consistent with G-06 and H-01); seating or
+
+perching support available at all kiosk stations
+
+Where workstations are provided (office, workplace, educational): all primary work tasks achievable seated; height-adjustable desks or fixed
+
+seated-height workstations (≤760mm surface height) for OFS-designated workstations
+
+Waiting areas: seated waiting available within all waiting areas with no standing-only option; minimum ratio 1:4 accessible seats to
+
+standard seats in any waiting area
+
+Visual design: seated task provisions should not be visually distinct from standard provisions where achievable (consistent with BAR dignity
+
+principle and MH non-clinical aesthetics principle)
+
+**Retrofit cost note:** Retrofit penalty: LOW. Seated-task design is primarily a furniture and fixture height specification. Retrofit is furniture/fixture replacement and counter height modification. See Part VIII §8.4.1.
+
+**Key citations:** Benarroch, E.E. (2012). Postural tachycardia syndrome. Mayo Clinic Proceedings, 87(12), 1214--1225. Blitshteyn, S.,
+
+\& Whitelaw, S. (2021). POTS and other autonomic disorders after
+
+COVID-19. Autonomic Neuroscience, 235, 102841. Patient Led Research
+
+Collaborative. (n.d.). Clinician's pacing and management guide for
+
+ME/CFS and Long COVID. PLRC. British Standards Institution. (2018). BS
+
+8300:2018. BSI. ISO 21542:2021. Building construction ---
+
+Accessibility and usability. ISO.
+
+**Tier X:** No systematic review of seated-task design requirements specific to POTS in built environments identified as of March 2026.
+
+Specifications are derived from POTS clinical literature and extrapolated from existing accessible service counter standards.
+
+Evidence review recommended at next revision.
+
+**Cross-reference:** G-06 (Reception counter lowered section — F-05 requires this as minimum; adds seated-queue and kiosk requirements);
+
+H-01 (Controls reach zone); E-10 (Rest seating on circulation routes
+
+— covers the route; F-05 covers the task point); §2.11 OFS/POTS;
+
+H-02 (Individual Environmental Control — H-02 specifies user adjustability of environmental parameters; F-05 specifies task
+
+accessibility at service/workstation points: distinct, complementary scope)
+
+**Evidence basis (OT):** Life Balance Model; EHP (alter strategy). Seated-task design alters the environmental context of service delivery and workstation design to eliminate the requirement for sustained standing as a pre-condition of participation; for OFS/POTS users whose orthostatic intolerance makes sustained standing a physiological hazard, this item implements the EHP 'alter' strategy at the task level — the task remains but the postural demand is removed.
+
+## CATEGORY G: FURNITURE, FIXTURES AND INTERIOR ELEMENTS
+
+### G-01 Defensible Seating (Back-to-Wall, Entry Sightline Configuration)
+
+**Applicable Groups:** MH (PTSD, trauma, anxiety), AUT, DEAF
+
+**Description:** Seating in all waiting areas and communal spaces includes options with back-to-wall positioning and clear sightlines to all room entries. Minimum 30% of seating in any public waiting area meets this specification. No seating with back to open space or unobserved corridor.
+
+**Specifications:**
+
+30% of seating in public waiting areas: wall-backed with entry sightline
+
+No seating with back to open/unobserved space
+
+Multiple sightline options available without user requesting special seating
+
+Co-located with general seating — not segregated 'accessible' area
+
+**Retrofit cost note:** Retrofit penalty: LOW. Defensible seating configuration is a furniture procurement and placement decision.
+
+Retrofit is furniture repositioning and procurement without structural implications. See Part VIII, C.1.1.
+
+**Key citations:** Dignified Design. (2024). 22 design elements for permanent supportive housing. DeafSpace Project, Gallaudet University.
+
+(2010). DeafSpace design guidelines. British Standards Institution.
+
+(2022). PAS 6463:2022. BSI.
+
+**Cross-reference:** D-07 (No Blind Corners); D-10 (Transparent
+
+Partitions); C-01 (Palette)
+
+**Evidence basis (OT):** PEOP Model (volition subsystem); Prospect-Refuge Theory. Defensible seating implements both Prospect-Refuge Theory (back-to-wall, sightline to exit satisfies the evolutionary preference for refuge with prospect) and PEOP's volition subsystem: the ability to choose a seating position that supports psychological safety is a fundamental occupational participation right for MH/PTSD users.
+
+### G-02 Variety of Seating Types (Three Heights at Every Seating Area)
+
+**Applicable Groups:** MOB, PAIN, AUT, DEM, ALL
+
+**Description:** Every primary seating area provides minimum three seating types simultaneously: (a) standard chair with armrests, 430--450 mm seat height; (b) higher chair or stool, 550--600 mm; (c) soft/padded lower chair, 380--400 mm. Co-located; no segregation.
+
+**Specifications:**
+
+Three seating types co-located in every primary seating area
+
+Type A: 430--450 mm seat height; armrests; upholstered
+
+Type B: 550--600 mm seat height; footrest available
+
+Type C: 400 mm seat height; soft upholstery
+
+BAR seating: minimum 1 reinforced chair ≥250 kg per area (J-02)
+
+No 'disabled seating' label — variety for all
+
+**Retrofit cost note:** Retrofit penalty: LOW. Variety of seating types at three heights is a procurement decision. Retrofit is
+
+furniture replacement and procurement. See Part VIII §8.4.1.
+
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. The Kelsey. (2023). Inclusive design standards.
+
+**Cross-reference:** G-01 (Defensible Seating); G-03 (Armrests); J-02 (BAR Seating)
+
+**Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions derives from biomechanical research on the muscle force requirements of sit-to-stand transfer: 450--500mm seat height reduces hip extensor moment by \~40% compared to 380mm (Rodosky et al. 1989); armrest availability reduces peak shoulder force during sit-to-stand by 15--25%.
+
+### G-03 Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)
+
+**Applicable Groups:** MOB, DEM, PAIN, UPL
+
+**Description:** Toilet: bilateral horizontal bars at 800--900 mm AFF on both sides of WC centre line; angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
+
+**Specifications:**
+
+Toilet: bilateral horizontal bars at 800--900 mm AFF both sides
+
+Angled bar at cistern wall
+
+Bar diameter: 32--45 mm; BAR contexts: 45--50 mm (J-03)
+
+Load: ≥1.5 kN continuous static; ≥2.5 kN peak dynamic (fall-arrest)
+
+Blocking: 18 mm structural plywood, 300×600 mm minimum per bar position
+
+Wall clearance: 35--45 mm
+
+LRV: ≥30 vs wall AND floor (JOTA, 2022)
+
+Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part VII for DAR blocking provisions; Part VIII, C.1.3.
+
+**Key citations:** Levine, I.C., Nirmalanathan, K., Montgomery, R.E., \& Novak, A.C. (2024). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12. doi:10.2196/jmir.2024. ✅ [Verified: JMIR Rehab Assist Technol; KITE/UHN Toronto team; n=65; motion capture; body height correlated with optimal grasp position — informs height range specification.] Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., \& Prilutsky, B. (2019). Effects of bilateral swing-away grab bars on the biomechanics of stand-to-sit and sit-to-stand toilet transfers. *Disability and Rehabilitation: Assistive Technology*, 14, 292–300. ✅ [Verified: bilateral grab bar placement reduces lower limb joint moments — direct biomechanical basis for bilateral specification.] Bateni, H., \& Maki, B.E. (2005). Assistive devices for balance and mobility. *Archives of Physical Medicine and Rehabilitation*, 86(1), 134–145. ✅ British Standards Institution. (2018). BS 8300:2018. BSI.
+
+**Evidence note (v8.0):** Original Levine citation (2023, toilet transfer) was unverified — removed. Replaced with Levine et al. (2024), the published KITE/UHN bathtub STS study (JMIR Rehab Assist Technol), which directly addresses grab bar grasp positioning and is from the same research team. Evidence tier: Tier 1 OT clinical research (biomechanical, n=65, peer-reviewed). Lee et al. (2019) provides independent bilateral placement evidence.
+
+(2018). BS 8300:2018. BSI.
+
+**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); J-03 (BAR Bars)
+
+**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5kN static/≥2.5kN dynamic load rating, bilateral provision) are derived from transfer biomechanics research; the EHP 'adapt' strategy frames the grab bar as a context modification that enables the occupation of bathing, toileting, and transfer independently — occupations that are impossible without the adapted context.
+
+### G-04 Accessible Bathroom (Wet Room Configuration — Zero Threshold)
+
+**Applicable Groups:** MOB, DEM, PAIN, UPL, BAR
+
+**Description:** Shower area as continuous wet room: no shower tray, no threshold, no step. Continuous floor from bathroom to shower; linear drain at wall or tiled trench; floor slope ≤1:80 to drain. Shower area minimum 900×900 mm clear (1200×900 mm preferred). BAR: minimum 1500×1500 mm clear (J-04).
+
+**Specifications:**
+
+Zero threshold: no shower tray, no threshold ≤3 mm
+
+Floor slope: ≤1:80 to drain (non-wheelchair) / ≤1:80 (wheelchair-accessible)
+
+Drain: within 1200 mm of all shower area points
+
+Shower clear area: ≥900 mm; ≥1200×900 mm preferred
+
+BAR: ≥1500×1500 mm clear shower area (J-04)
+
+Slip resistance: PTV ≥36 wet throughout shower area
+
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part VIII §8.4.2 C.1.3.
+
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. DIN. (2011). DIN 18040-2:2011 [German\]. DIN.
+
+**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance); J-04 (BAR Wet Room)
+
+**Evidence basis (OT):** EHP Framework (create strategy); Biomechanical FOR. The wet room creates a new environmental context (zero-threshold wash space) that enables the occupation of showering/bathing for users who cannot step over a shower tray; the Biomechanical FOR grounds the fall-prevention specifications (PTV ≥36, fold-down seat, grab bar positions derived from transfer mechanics).
+
+### G-05 Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range)
+
+**Applicable Groups:** MOB, PAIN, UPL
+
+**Description:** Minimum 20% of all workstations in any workspace:
+
+height-adjustable (electric or manual) from 650 mm to 870 mm AFF. Knee clearance depth ≥600 mm at all heights.
+
+**Specifications:**
+
+20% of all workstations: height-adjustable
+
+Height range: 650--870 mm AFF
+
+Knee clearance: ≥600 mm depth at all heights
+
+Electric mechanism preferred (manual height adjustment excludes UPL users)
+
+Reception counters: accessible height section per G-06
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Adjustable-height work surfaces require purpose-built adjustable units or height-adjustable mechanisms. Retrofit is furniture/fixture replacement; fixed counter modification involves joinery and services relocation. See Part VIII §8.4.1.
+
+**Key citations:** The Kelsey. (2023). Inclusive design standards. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. CSA Group. (2023). CSA B651:2023. CSA.
+
+**Cross-reference:** G-06 (Reception Counter); G-07 (Waiting Area Seating)
+
+**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Height-adjustable desks (660--1200mm range) adapt the workspace context to accommodate the full range of seated and standing working postures; the 660mm lower limit is derived from the minimum clearance required for a powered wheelchair user's knee and footplate height.
+
+### G-06 Reception Counter (Accessible Height Section — 760--860 mm AFF)
+
+**Applicable Groups:** MOB, BAR, UPL, VIS
+
+**Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below (≥690 mm height × 760 mm width × 480 mm depth). Full hearing loop at counter (A-10). LRV ≥30 contrast at counter edge vs floor.
+
+**Specifications:**
+
+Lowered section: 760--860 mm AFF; continuous with counter (not separate station)
+
+Knee clearance: ≥690 mm height × 760 mm width × 480 mm depth
+
+Counter hearing loop: A-10 compliant
+
+Staff eye contact at wheelchair eye level (seated behind lower section)
+
+LRV ≥30 at counter edge vs floor
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part VIII §8.4.2.
+
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
+
+**Cross-reference:** A-10 (Counter Hearing Loop); G-05 (Adjustable-Height Desks); J-01 (BAR Counter)
+
+**Evidence basis (OT):** Biomechanical FOR. Counter height 760--860mm AFF with ≥690mm knee clearance is derived from the biomechanical requirements of conducting a seated counter interaction: the height enables face-to-face communication at eye level between a seated user and a standing staff member, and the knee clearance allows the wheelchair user to approach flush to the counter without needing to reach across an obstruction.
+
+### G-07 Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)
+
+**Applicable Groups:** MOB, BAR, DEM, OFS
+
+**Description:** Accessible waiting seating within 10 m of reception.
+
+Minimum 10% of waiting seats wheelchair companion pairs (1200×1200 mm per pair). No serpentine queue management barriers on accessible
+
+routes. Rest option within queue.
+
+**Specifications:**
+
+Wheelchair-companion seating: minimum 10% of total; 1200×1200 mm per pair
+
+No queue barriers on accessible route
+
+Rest seating: within queue where wait >5 minutes expected
+
+BAR seating: minimum 2 armless reinforced chairs rated ≥250 kg per waiting area (J-02)
+
+Accessible toilet: within 20 m of waiting area
+
+**Retrofit cost note:** Retrofit penalty: LOW. Waiting area seating configuration is a procurement and layout decision. Retrofit is
+
+furniture repositioning and procurement. See Part VIII §8.4.1.
+
+**Key citations:** British Standards Institution. (2018). BS
+
+8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF.
+
+**Cross-reference:** J-02 (BAR Seating); G-02 (Variety of Seating);
+
+G-01 (Defensible Seating)
+
+**Evidence basis (OT):** PEOP Model. Dignified waiting design addresses the PEOP volition subsystem: the ability to wait for a
+
+service with the same comfort, privacy, and dignity as a non-disabled person is a core occupational participation right. Accessible seating
+
+within the primary waiting area (not a segregated accessible area) implements this principle.
+
+## CATEGORY H: CONTROLS, TECHNOLOGY AND INDIVIDUAL ENVIRONMENTAL CONTROL
+
+### H-01 All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)
+
+**Applicable Groups:** MOB, PAIN, DEM, UPL
+
+**Description:** All user-operated controls (light switches, thermostats, door handles, intercom buttons, window operators, access
+
+control readers) at 400--1100 mm AFF and operable with one closed fist without tight grasping, pinching, or twisting. Lever handles on all
+
+doors. Rocker or touch switches (not toggle). Large push-pads ≥50 mm diameter.
+
+**Specifications:**
+
+Height range: 400--1100 mm AFF (standard upper limit, this Guidebook)
+
+Operability: one closed fist; no pinch, grasp, or twist required
+
+Force: ≤22 N
+
+Lever handles on all doors; no round knobs
+
+Push-pads: ≥50 mm diameter
+
+**Jurisdiction note — upper reach zone discrepancy:** DIN 18040-2 specifies 400--1200 mm AFF for storage/controls (OT reach studies for
+
+self-propelling wheelchair users). NS 11001/SINTEF specifies 400--1300 mm for powered wheelchair users (greater reach envelope). This
+
+Guidebook retains 1100 mm as the standard upper limit pending the full
+
+SINTEF dataset review (flagged in §8.10.4). Designers in German,
+
+Norwegian, or Swedish jurisdictions should apply the local standard.
+
+For powered wheelchair users, 1200 mm is supportable from available evidence.
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Controls at accessible height (400--1100 mm AFF) is a specification decision at design stage. Retrofit of controls at incorrect heights requires electrical chase extension, box repositioning, and redecoration — a moderate electrical works programme across a whole building. See Part VIII §8.4.2.
+
+**Key citations:** CSA Group. (2023). CSA B651:2023. CSA. British
+
+Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
+
+21542:2021. ISO.
+
+**Cross-reference:** H-02 (Individual Environmental Control); E-11 (Automatic Door); I-01 (UPL Controls)
+
+**Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelope of a seated wheelchair user (ISO 26800:2011); the ≤22 N activation force is the UPL threshold from clinical grip strength research; the ≥50 mm dimension for push-pad controls derives from the minimum target size for reliable activation with reduced fine motor control.
+
+### H-02 Individual Environmental Control (Lighting and Temperature Per Space)
+
+**Applicable Groups:** AUT, PCS, DEM, MH, PAIN, OFS
+
+**Description:** Every primary occupied space has in-room or at-desk control of: (a) overhead lighting dimming (accessible without staff); (b) blinds or solar shading (motorised or accessible cord); (c) local thermostat (±2°C from setpoint). Smart BMS preset scenes acceptable where full individual control creates risk (DEM thermal safety).
+
+**Specifications:**
+
+In-room dimming control: accessible in every primary occupied space
+
+In-room shading control: motorised where manual access limited
+
+Thermostat/temperature adjustment: ≤1100 mm AFF; ≤22 N force
+
+DEM: BMS with override limits rather than fully individual control (overheating/hypothermia risk)
+
+CAOT principle: adjustability without staff mediation
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Individual environmental control per space requires dedicated wiring and smart
+
+control infrastructure. Retrofit requires wiring extension, device installation, and integration with existing building controls. See
+
+Part VIII §8.4.2.
+
+**Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS
+
+6463:2022. BSI. Dignified Design. (2024). 22 design elements for permanent supportive housing.
+
+**Cross-reference:** B-06 (Individual Dimming); A-16 (Sensory Room); H-01 (Accessible Controls — H-01 specifies physical control ergonomics; H-02 specifies the capability for the user to adjust environmental parameters: reach-and-operate vs adapt-and-personalise); F-05 (Seated Task Design — F-05 addresses task accessibility at service points and workstations; H-02 addresses environmental adjustment capability: distinct scope)
+
+**Evidence basis (OT):** EHP Framework (adapt strategy); Dunn's Sensory Processing Model. Individual environmental control (lighting, temperature, acoustic environment) implements EHP's 'adapt' strategy at the individual level: the context is adaptable to each user's current sensory state rather than fixed at a population average; for OFS/POTS users, individual thermal control is a physiological management tool, not a comfort preference.
+
+### H-03 Visual Paging and Real-Time Captioning in Assembly Spaces
+
+**Applicable Groups:** DEAF, DBL
+
+**Description:** All assembly spaces ≥25 persons: (a) real-time captioning display (CART) or auto-captioning via accessible screen; (b) visual paging display integrated with PA for emergency alerts; (c) remote captioning connection infrastructure (network port or wireless AP for CART operator).
+
+**Specifications:**
+
+CART infrastructure: network port or WiFi AP for CART operator in every assembly space ≥25 persons
+
+Visual paging display: visible from all seating positions
+
+Emergency integration: visual alert linked to fire alarm panel (confirmed at commissioning)
+
+Screen position: caption screen visible while occupants watch speaker/presentation
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Visual paging and real-time captioning systems require display hardware, AV infrastructure, and network provision. Retrofit in a finished building requires surface-run cables or conduit chasing. Design-stage conduit provision eliminates visible surface runs. See Part VII; Part VIII, C.1.2.
+
+**Key citations:** World Federation of the Deaf. (2022). Built environment access for Deaf users. WFD. Hearing Loss Association of
+
+America. (2023). CART captioning. HLAA. Building and Construction
+
+Authority. (2025). BCA Code 2025. BCA.
+
+**Cross-reference:** A-11 (Room Hearing Loop); B-10 (Visual Fire
+
+Alarm); H-04 (Accessible Intercom)
+
+**Evidence basis (OT):** Compensatory FOR. Real-time captioning (CART) and visual paging compensate for the absent auditory channel in
+
+Deaf/HoH users, enabling the occupation of participation in assembly events, announcements, and emergency information that would otherwise
+
+be inaccessible; the speech-to-text accuracy specification (≥98% for prepared speech) ensures the compensation is functionally effective.
+
+### H-04 Accessible Intercom and Video Door Entry with Visual and Tactile Feedback
+
+**Applicable Groups:** DEAF, VIS, MOB, DEM
+
+**Description:** Building intercoms at entry points: (a) visual display ≥100 mm showing caller video alongside audio; (b) tactile feedback confirming button press; (c) button size ≥30 mm; (d) microphone/speaker at 900--1100 mm AFF; (e) BMS integration for remote door release from accessible indoor location.
+
+**Specifications:**
+
+Visual display: ≥100 mm screen at intercom
+
+Tactile feedback: vibration/click confirmation on button press
+
+Button: ≥30 mm
+
+Height: 900--1100 mm AFF
+
+BMS integration: indoor remote release accessible from primary habitable room
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Accessible video door entry requires intercom replacement and wiring. Retrofit is primarily electrical and joinery; structural works are minor. See Part VIII §8.4.1.
+
+**Key citations:** DeafSpace Project, Gallaudet University. (2010).
+
+DeafSpace design guidelines. Japan Federation of the Deaf. (2022).
+
+[Japanese.\] JFD.
+
+**Cross-reference:** E-11 (Automatic Door); H-01 (Accessible Controls)
+
+**Evidence basis (OT):** Compensatory FOR. Visual and tactile intercom/doorbell systems compensate for absent auditory detection
+
+(Deaf users) and absent visual detection (blind users) of entry events; the dual-modality specification ensures that at least one
+
+compensation channel is available regardless of which sensory impairment is present.
+
+**Coverage gap note (v8.0):** NDV and NEU users require low-overload, predictable control interfaces. Standard H-01 accessible height covers MOB/PAIN/DEM; NDV sensitivity to sensory clutter and NEU cognitive fatigue are not yet addressed as H-category sub-specifications. Cross-reference F-01, F-06. Deferred to v9.0.
+
+## CATEGORY I: UPPER LIMB AND AMPUTATION PROVISIONS
+
+Category K items address environments specifically for UPL users. All
+
+UPL provisions apply throughout the building where UPL users are anticipated; they are not confined to specialist rooms.
+
+### I-01 Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)
+
+**Applicable Groups:** UPL, MOB, DEM, PAIN
+
+**Description:** All hardware one-hand operable without grip, pinch, or twist. Lever door handles on all doors; D-ring or bar pulls on all
+
+drawers and cabinet doors; single-lever taps throughout; push-pad access controls. Force: ≤22 N throughout.
+
+**Specifications:**
+
+All door hardware: lever handles (not round knobs or twist latches)
+
+Cabinet pulls: D-ring or bar pulls (hook-grip compatible for prosthetic users)
+
+Taps: single-lever mixer throughout (not separate hot/cold knobs)
+
+Force: ≤22 N for all hardware
+
+Push-pads: ≥50 mm diameter at all access control points
+
+**Retrofit cost note:** Retrofit penalty: LOW. Lever and D-pull hardware is a specification and procurement decision. Retrofit is
+
+hardware replacement across all door and window ironmongery — a low-cost trade operation. See Part VIII §8.4.1.
+
+**Key citations:** ISO. (2021). ISO 21542:2021. ISO. CSA Group.
+
+(2023). CSA B651:2023. CSA. >
+
+**Cross-reference:** H-01 (Controls Height); G-03 (Grab Bars — UPL bilateral); I-02 (Kitchen); I-03 (Bathroom)
+
+**Evidence basis (OT):** Biomechanical FOR. Lever door hardware, ≤22 N force, and return-tip specification are derived directly from the
+
+Biomechanical FOR: the lever handle converts the grip-rotation motion required by a round knob into a push-down motion achievable with a
+
+closed fist, palm, or prosthetic limb, reducing the motor complexity and peak force requirement to within the functional capacity range of
+
+UPL users.
+
+### I-02 Kitchen (One-Handed Operation Throughout)
+
+**Applicable Groups:** UPL
+
+**Description:** Kitchen designed for full one-handed operation: induction cooktop (flat, front-controls, auto shutoff); side-hinged oven (not drop-down); under-counter knee space at cooktop and sink; non-slip surface; raised perimeter lip ≥15 mm. Single-lever thermostatic mixer tap. D-pull handles throughout.
+
+**Specifications:**
+
+Cooktop: induction; flat surface; front-mounted controls 400--1100 mm
+
+AFF; auto-shutoff
+
+Oven: side-hinged door; slide-in range with pull-out shelf alternative
+
+Microwave: counter mounted or under-counter at 760--900 mm AFF
+
+Refrigerator: side-by-side or French door style; under-counter drawer alternative
+
+Countertop: non-slip surface; raised lip ≥15 mm at perimeter; suction mount points
+
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Kitchen one-handed operation throughout requires purpose specified kitchen furniture, appliances, and controls. Full retrofit requires complete kitchen replacement including appliances, cabinetry, and services connections. See Part VIII §8.4.2 C.1.3.
+
+**Key citations:** Independent Living Centre Western
+
+Australia. (2024). Kitchen modifications for one-handed function.
+
+**Cross-reference:** I-01 (Hardware); R-KIT-01 (Residential Kitchen)
+
+**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Kitchen one-handed operation provisions (lever taps, drawer pull hardware, single-hand appliances, knee clearance under worktops) adapt the kitchen environment to enable the occupation of cooking which the standard kitchen context makes impossible for bilateral UPL users — implementing EHP's 'adapt' strategy at the task-context level.
+
+### I-03 Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)
+
+**Applicable Groups:** UPL, PAIN (MS heat sensitivity)
+
+**Description:** Thermostatic mixing valve preset to 38°C (UPL anti-scald — cannot disengage rapidly with one hand). For MS users: 35°C. Single-lever or push-button shower control. Bilateral grab bars (G-03). Towel hooks at bilateral 1100--1400 mm positions.
+
+**Specifications:**
+
+TMV: 38°C (UPL anti-scald); 37°C (MS general); 35°C (Uhthoff-positive
+
+— R-BA-03)
+
+Single lever or push-button shower controls (not separate hot/cold)
+
+Bilateral grab bars: both sides of WC and shower (G-03)
+
+Towel hooks: bilateral positions at 1100--1400 mm AFF
+
+Soap/shampoo dispensers: wall-mounted at 900--1100 mm AFF (one-hand pump)
+
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Bathroom UPL provisions require hardware replacement, thermostatic valve installation, and structural blocking for grab bars. In an existing bathroom without pre-installed blocking, grab bar installation requires wall opening and blocking insertion. Full retrofit in a non-compliant bathroom approaches full bathroom refurbishment cost. See Part VIII, C.1.2 -- C.1.3; G-03 for grab bar blocking note.
+
+**Key citations:** Multiple Sclerosis International
+
+Federation. (2023). Atlas of MS. MSIF. Petajan, J.H., \& White, A.T.
+
+(1999). Sports Medicine, 27(3), 179--191. [Uhthoff — IS-51 resolved: 0.5°C range.\]
+
+**Cross-reference:** G-03 (Grab Bars); G-04 (Wet Room); R-BA-03 (TMV specification)
+
+**Evidence basis (OT):** Biomechanical FOR; Compensatory FOR. Anti-scald thermostatic controls at 38°C compensate for the reduced sensation in UPL users with peripheral neuropathy (who cannot detect scalding temperatures by touch) and for the Uhthoff's-sensitive MS users (NEU/PAIN) for whom hot water contact causes acute neurological symptom worsening; the 38°C threshold is derived from the tissue damage threshold at typical exposure durations.
