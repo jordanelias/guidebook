@@ -1,6 +1,6 @@
-## Part 6: Non-Residential Application Matrices
+## Part 7: Non-Residential Application Matrices
 
-### 6.0 Universal Non-Residential Provisions (Revised)
+### 7.0 Universal Non-Residential Provisions (Revised)
 
 The following provisions apply to ALL non-residential buildings regardless of type, size, or occupancy. They are non-negotiable for any new or substantially refurbished building. They must appear on the stated drawing at the stated design stage.
 
@@ -23,7 +23,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | F-04 | MERV 13 air filtration | SD | MEP brief | OFS/NDV health; baseline indoor air quality standard |
 | E-10 | Rest seating at ≤25 m on all primary routes | DD | Layout plan | OFS/PAIN/MOB — public user population | — |
 
-### 6.1 NR-EDU: Education (Schools, Universities, Training Facilities)
+### 7.1 NR-EDU: Education (Schools, Universities, Training Facilities)
 
 **Primary populations:** NDV/AUT/ADHD (15–20% of school-age population, Autism Europe 2022; US CDC 2023 — most significant NDV demand in any building type), MOB (physical access throughout), VIS (visual learning environments), DEM (not primary in education except adult learning/memory clinics).
 
@@ -57,7 +57,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Hearing loop (A-11) in all classrooms and assembly spaces on electrical drawings
 - [ ] Emergency evacuation strategy (E-12): refuge locations on fire strategy —
 
-### 6.2 NR-HLT: Healthcare (Hospitals, Clinics, Primary Care, Mental Health)
+### 7.2 NR-HLT: Healthcare (Hospitals, Clinics, Primary Care, Mental Health)
 
 **Primary populations:** The full disability spectrum simultaneously. Clinical spaces serve patients (full disability range), staff (occupational health — NDV, OFS, MOB reasonable adjustments), and visitors (older adult-concentrated). DEM-specific provisions (DSDC 2024 audit programme) apply throughout all older adult and dementia care settings. MOB-clinical interactions (transfer, scan positioning) are the primary OT specification challenge.
 
@@ -95,7 +95,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Fragrance-free policy in FM brief (not only construction spec)
 - [ ] Emergency evacuation strategy: PEEP protocol + refuge locations on fire strategy —
 
-### 6.3 NR-WRK: Workplace (Offices, Co-Working, Studios)
+### 7.3 NR-WRK: Workplace (Offices, Co-Working, Studios)
 
 **Primary populations:** NDV/MH + OFS is the defining non-residential working population co-occurrence. Approximately 20% of working-age adults report a mental health condition (WHO 2022); 5–10% report chronic fatigue or pain. Acoustic and thermal control are the primary OT provisions beyond physical access. Remote working has reduced urgency for some OFS categories — design must serve those who cannot remote-work.
 
@@ -128,7 +128,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Individual temperature control at each enclosed office on M\&E drawings
 - [ ] Open-plan ceiling NRC ≥0.85 specified (no parallel hard surfaces ≥4 m) —
 
-### 6.4 NR-RET: Retail and Commercial
+### 7.4 NR-RET: Retail and Commercial
 
 **Primary populations:** Full disability spectrum — public retail receives the complete adult disability range within a single day. Service counter and accessible parking proximity are the two most documented retail barriers in DDA/ADA audit data. Sensory environment is systematically underspecified in retail compliance assessments.
 
@@ -158,7 +158,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Dual-height counter (760 mm + 900 mm) on floor plan
 - [ ] Accessible fitting room on floor plan (turning circle + grab bar blocking) —
 
-### 6.5 NR-CUL: Cultural (Museums, Libraries, Theatres, Galleries, Places of Worship)
+### 7.5 NR-CUL: Cultural (Museums, Libraries, Theatres, Galleries, Places of Worship)
 
 **Primary populations:** Widest disability range in any building type after transport. Cultural buildings serve the full age range (children to older adults) with the full disability spectrum. The acoustic challenge is particularly complex: concert halls (RT60 1.5–2.5 s, high SPL) are hostile to NDV users; galleries require near-silence that benefits NDV but challenges VIS users dependent on audio description.
 
@@ -190,7 +190,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Accessible wheelchair positions (≥1% capacity, distributed) on theatre/auditorium plan
 - [ ] Interpreter seating position with B-02 face illuminance on electrical drawings —
 
-### 6.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
+### 7.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
 
 **Primary populations:** Hotel accessible rooms are the most poorly specified non-residential accessible space in international standards. Most standards address physical access only. The hotel room is a temporary residential environment and must be assessed against Part VI residential specifications, not NR specifications alone.
 
@@ -220,7 +220,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] ≥20% dining tables with turning circle on restaurant layout plan
 - [ ] Pool hoist provision on pool plan (if applicable) —
 
-### 6.7 NR-TRP: Transport (Stations, Airports, Terminals, Interchanges)
+### 7.7 NR-TRP: Transport (Stations, Airports, Terminals, Interchanges)
 
 **Primary populations:** Transport infrastructure serves the full disability spectrum under time pressure — the most hostile accessibility environment in any non-residential type. DEM wayfinding failures in transport environments are the leading cause of DEM-related community incidents (Alzheimer Society 2019). NDV sensory overload (PA systems, visual displays, crowds) is a primary barrier. MOB faces crowd density obstruction.
 
