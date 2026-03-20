@@ -1,3 +1,76 @@
+## Part 5: Item Specification Library
+
+## CATEGORY A: ACOUSTICS
+
+All RT60 specifications are for the 500 Hz octave band in the occupied condition unless stated otherwise. NC ratings are single-number noise criterion measurements. STI = Speech Transmission Index (≥0.5 = good speech intelligibility). STC = Sound Transmission Class (partition isolation rating). All hearing loop specifications: IEC 60118-4:2014+AMD1:2017.
+
+### A-01 Acoustic Buffer Zones at Noisy Adjacencies
+
+**Applicable Groups:** ALL (especially NDV, PCS, AUT, MIS, DEM)
+
+**Description:** 5 m deep acoustic buffer zone between any noise-generating adjacency (kitchen, plant room, reception desk, circulation corridor) and primary occupied spaces serving sensory sensitive users. Buffer zone finishes: high NRC (≥0.85) ceiling panels; carpeted floor; no parallel hard surfaces. Background noise in primary space: NC-25 maximum.
+
+**Specifications:**
+Buffer zone depth: 3 m (minimum); 5 m (preferred)
+Ceiling: NRC ≥0.85 acoustic panels throughout buffer
+Floor: carpet or acoustic vinyl
+Background noise target in sensitive space: NC-25 maximum
+No parallel hard wall surfaces in buffer zone
+Applicable: any space where DEM, PCS, AUT, or MIS users are primary occupants
+
+**Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic buffer zoning is a room-adjacency planning decision costing nothing at 
+design stage. Retrofit requires spatial reorganisation, partition addition, room-use relocation, or mechanical decoupling at significant 
+cost and disruption.
+
+**Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. WELL Building Institute. (2024). WELL v2. IWBI.
+
+**Cross-reference:** A-02 (Acoustic Ceiling); A-08 (HVAC Noise); A-16 (Sensory Room)
+
+**Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. The buffer zone alters the acoustic context to keep the sound level entering sensitive spaces below the neurological threshold at which sensory avoiding and sensory-sensitive users experience distress; the 3--5m depth and NC-25 target are calibrated to this threshold, not to code minimums.
+
+### A-02 Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces
+
+**Applicable Groups:** ALL (especially NDV, DEM, MH, PAIN, OFS)
+
+**Description:** Acoustic ceiling panels with NRC ≥0.85 installed in all primary occupied spaces — open-plan offices, classrooms, therapy rooms, communal areas, circulation corridors. Combined with A-01, A-05, and A-17 to achieve target RT60.
+
+**Specifications:**
+NRC ≥0.85 on all ceiling panels in occupied spaces
+Coverage: 80% of ceiling area (not spot treatment)
+Corridor ceilings: NRC ≥0.75 minimum
+Where DEM or NEU/acquired brain injury is primary occupant group: NRC ≥0.90 (clinical requirement; ISO 3382-2)
+Post-installation RT60 measurement at 500 Hz required
+
+**Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part VIII §8.4.1.
+
+**Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
+
+**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room)
+
+**Evidence basis (OT):** Dunn's Sensory Processing Model. RT60 reduction via ceiling treatment directly lowers the cumulative acoustic load experienced by sensory-avoiding and sensory-sensitive users, reducing the neurological effort cost of occupying the space and preserving cognitive and physical energy for the primary occupation.
+
+### A-03 Acoustic Door (STC ≥35) at All Sensitive Space Boundaries
+
+**Applicable Groups:** AUT, PCS, DEM, MH, SENS
+
+**Description:** Acoustic door with STC ≥35 at all boundaries between noise-generating and noise-sensitive spaces. Includes: solid-core door leaf; acoustic perimeter seal; acoustic threshold seal; no letter box or undercut that bypasses the acoustic seal.
+
+**Specifications:**
+Door leaf: STC ≥35 (laboratory rating); field target STC ≥32
+Perimeter seal: full four-side compression seal
+Threshold seal: drop-seal or sweep
+No letterbox penetrations; no undercuts ≥ 3mm
+Closer: hydraulic door closer specified
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic door replacement is a moderate retrofit; achieving STC ≥35 requires 
+full frame and threshold sealing which may require opening up surrounding construction. At design stage, specification cost is near-zero. See Part VIII §8.4.3.
+
+**Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. ISO 10140-2:2010. Acoustics Laboratory measurement of sound insulation. ISO.
+
+**Cross-reference:** A-01 (Buffer Zone); A-14 (Double-Leaf Partition); A-16 (Sensory Room)
+
+**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. The acoustic door implements EHP's 'prevent' intervention by eliminating the pathway through which auditory triggers travel to sensory sensitive occupants; STC ≥35 is the minimum attenuation required to reduce noise from an adjacent NC-40 zone to the NC-25 target within.
+
 ### A-04 Acoustic Zoning: Graduated from Arrival to Primary Occupation
 
 **Applicable Groups:** ALL
