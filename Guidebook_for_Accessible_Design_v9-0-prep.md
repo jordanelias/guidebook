@@ -20,12 +20,6 @@ This guidebook provides design specifications grounded in the best available evi
 
 **The central principle:** Building codes represent legal minimums. This guidebook operates above the code floor throughout, calibrated to Tier 1 occupational therapy clinical research and the best available multilingual evidence. Meeting code is a necessary but completely insufficient condition for producing an accessible environment.
 
-### Three-Volume Structure
-
-| Volume             | Parts | Content                                                                           |
-| -------------------- | ------- | ----------------------------------------------------------------------------------- |
-| **Volume 1** | I--IV | Foundations, Disability Categories, Multiple Categories, Conflicting Requirements |
-
 ## Companion Volumes
 
 This guidebook is accompanied by supplementary resources that extend coverage beyond the three-volume core:
@@ -74,19 +68,21 @@ Nine documented conflicts with resolution specifications and priority hierarchy
 
 MEP brief templates; acoustic, mechanical, structural and electrical engineer coordination items (Part M)
 
-## Volume 3: DAR, Economics, Evidence
+**Part 10 - Occupational Therapists and Specialty Consultants**
 
-**Part VII — Design for Adaptable Readiness (DAR)**
+## Volume III: DAR, Economics, Evidence
 
-§7.1 Cost Multiplier Table · §7.2 CAN/ASC 2.8:2025 (current as of January 2026) · §7.3 Lifetime Homes · §7.4 Visitability · §7.5 Aging in Place · §7.6 Nordic Models · §7.7 Case Study Evidence
+**Part 11 — Design for Adaptable Readiness (DAR)**
 
-**Part VIII — The Economics of Accessible Construction**
+§11.1 Cost Multiplier Table · §11.2 CAN/ASC 2.8:2025 (current as of January 2026) · §11.3 Lifetime Homes · §11.4 Visitability · §11.5 Aging in Place · §11.6 Nordic Models · §11.7 Case Study Evidence
 
-§8.0 Scope · §8.1 Cost Myth · §8.2 Core Ratio · §8.3 Four Value Dimensions · §8.4 Cost Intelligence Tables (8 categories) · §8.5 Integrated Design Value · §8.6 Evidence Landscape · §8.7 Economic Timeline · §8.8 Client Arguments \& Procurement · §8.9 Cross-Reference Index · §8.10 Limitations \& Evidence Appeal
+**Part 12 — The Economics of Accessible Construction**
 
-**Part IX — Case Studies***(14 documented environments)*
+§12.0 Scope · §12.1 Cost Myth · §12.2 Core Ratio · §12.3 Four Value Dimensions · §12.4 Cost Intelligence Tables · §12.5 Integrated Design Value · §12.6 Evidence Landscape · §12.7 Economic Timeline · §12.8 Client Arguments \& Procurement · §12.9 Cross-Reference Index · §12.10 Limitations \& Evidence Appeal
 
-IX-01 Maggie's Centre Inverness · IX-02 Gallaudet DeafSpace Campus · IX-03 The Kelsey Civic Commons · IX-04 DSDC Iris Murdoch Building · IX-05 AtkinsRéalis HQ · IX-06 Lyngby-Taarbæk School · IX-07 Singapore HDB UD Flats · IX-08 Gallaudet SLCC · IX-09 De Hogeweyk · IX-10 DSDC Audit Programme · IX-11 ASPECTSS Autism School · IX-12 Village Landais Alzheimer · IX-13 Carpe Diem Bærum · IX-14 BC HAFI Programme
+**Part 13 — Case Studies***
+
+§13.01 Maggie's Centre Inverness · §13.02 Gallaudet DeafSpace Campus · §13.03 The Kelsey Civic Commons · §13.04 DSDC Iris Murdoch Building · §13.05 AtkinsRéalis HQ · §13.06 Lyngby-Taarbæk School · §13.07 Singapore HDB UD Flats · §13.08 Gallaudet SLCC · §13.09 De Hogeweyk · §13.10 DSDC Audit Programme · §13.11 ASPECTSS Autism School · §13.12 Village Landais Alzheimer · §13.13 Carpe Diem Bærum · §13.14 BC HAFI Programme
 
 ## Appendices
 
@@ -94,31 +90,13 @@ Appendix A: Global Standards Catalogue · Appendix B: Biophilic Design — Summa
 
 ## Supplementary Volume: Designing for Different Body Sizes
 
-**Section I — Children (CHD):** Age-appropriate environments across five developmental bands (ages 0–17)
+**Supplement 1 — Children (CHD):** Age-appropriate environments across five developmental bands (ages 0–17)
 
-**Section II — Short Stature / Dwarfism (LPA):** Anthropometric-grounded provisions for adults and adolescents of short stature
+**Supplement 2 — Short Stature / Dwarfism (LPA):** Anthropometric-grounded provisions for adults and adolescents of short stature
 
-**Section III — Extreme Height / Gigantism (EXH):** Provisions for persons significantly exceeding population height norms
+**Supplement 3 — Extreme Height / Gigantism (EXH):** Provisions for persons significantly exceeding population height norms
 
-**Section IV — Large Body Size (BAR):** Structural, spatial, and equipment provisions for large body size (relocated from main guidebook)
-
-**Section V — Guidebook Revision Notes:** Amendment register for main guidebook cross-references
-
-## Disability Category Quick Reference
-
-| Code    | Category                | Key Design Priority                                         | Vol 2 Part IV Item Categories |
-| --------- | ------------------------- | ------------------------------------------------------------- | ------------------- |
-| MOB     | Mobility \& Strength     | Step-free routes, turning space, door widths                | E, I, K           |
-| MOB/UPL | Upper Limb \& Amputation | Lever hardware, bilateral grab bars                         | K, I, J           |
-| VIS     | Vision \& Hearing        | LRV contrast, TWSI, hearing loops, visual alarms            | B, C, A, E        |
-| NEU     | Neurological \& ABI      | Acoustic calm, flicker-free light, thermal stability        | A, B, TC          |
-| DEM     | Dementia                | Loop plan, toilet visibility, plain floors, wayfinding      | D, C, A, BIO      |
-| NDV     | Neurodivergence         | Sensory gradient, quiet room, predictability                | G, A, B, C        |
-| NDV/MH  | Mental Health / PTSD    | Defensible seating, exit sightlines, non-clinical aesthetic | I, D, BIO         |
-| PAIN    | Chronic Pain            | Vibration isolation, cushioned seating, thermal warmth      | A, TC, I          |
-| BAR     | Large Body Size         | → Supp Vol, Section IV (see Supplementary Volume)          | —                |
-| DBL     | DeafBlind               | Tactile-first, vibrotactile alerts, consistent layout       | E, B, D           |
-| OFS     | Orthostatic \& Fatigue   | Rest seating ≤20m, air quality, seated tasks               | E, G, TC          |
+**Supplement 4 — Large Body Size (BAR):** Structural, spatial, and equipment provisions for large body size
 
 ## Abbreviations and Codes
 
@@ -128,23 +106,23 @@ MOB · MOB/UPL · VIS · DEAF · NEU · NEU/PCS · DEM · NDV · NDV/MH · NDV/A
 
 ### Design Item Prefixes
 
-A (Acoustics) · B (Lighting) · C (Colour/Surface) · D (Spatial Layout/Wayfinding) · E (Entry/Circulation) · G (Sensory Zoning) · I (Furniture/Interiors) · J (Controls/Technology) · K (Upper Limb)
+A (Acoustics) · B (Lighting) · C (Colour/Surface) · D (Spatial Layout/Wayfinding) · E (Entry/Circulation) · F (Sensory Zoning) · G (Furniture/Interiors) · H (Controls/Technology) · I (Upper Limb)
 
 #### Item Code Convention
 
 Short form (within Volume 2): A-01, D-03, G-03
 
-Cross-volume form: V2-P4-A01, V2-P4-D03, V2-P4-I03
+Cross-volume form: P7-A01, P7-D03, P7-I03
 
 ### Technical Abbreviations
 
 AFF — Above Finished Floor · ART — Attention Restoration Theory · CCT — Correlated Colour Temperature · CRI — Colour Rendering Index · DAR — Design for Adaptable Readiness · EHP — Ecology of Human Performance · ICF — International Classification of Functioning · LRV --- Light Reflectance Value · NC — Noise Criterion · NRC — Noise Reduction Coefficient · OT — Occupational Therapist/Therapy · PEOP --- Person-Environment-Occupation-Performance · PTV — Pendulum Test Value · RT60 — Reverberation Time · SRT — Stress Recovery Theory · STC — Sound Transmission Class · STI — Speech Transmission Index · TWSI — Tactile Walking Surface Indicators · UGR — Unified Glare Rating · UD — Universal Design                               |
 
-## Part I: Foundations of Accessible Design
+---
 
-*Accessible Built Environments — Utopian Best Practice Guidebook v8.0*
+# Volume I: Foundations, Categories, Synthesis
 
-*Volume 1*
+## Part 1: Foundations of Accessible Design
 
 ### §1.1 Definitions:
 
@@ -190,18 +168,6 @@ True accessibility encompasses:
 ### §1.2 The Code-as-Floor Principle
 
 Building codes represent legal minimums — not design targets, not expressions of best practice, and not statements about what constitutes a good environment for disabled people. This document operates above the code floor throughout. Statutory requirements are referenced as baselines only (Evidence Tier 6). Where codes conflict with higher-tier evidence, higher-tier evidence governs. The following multilingual endorsements of the code-as-floor principle confirm that this position is not a minority view, but the unanimous position of every major national accessibility body and advocacy organisation reviewed across 17 jurisdictions:
-
-* **The Kelsey Inclusive Design Standards (USA, 2023):** 'Code is a floor, not a ceiling.' The Kelsey's 300-element framework was developed precisely because the ADA 'has essential requirements, but it offers the bare minimum.'
-* **Australian Building Codes Board (ABCB, 2023):** The mandatory Silver livability standard constitutes 'the minimum necessary provisions, rather than an exemplar of best practice.'
-* **Rick Hansen Foundation (Canada, RHFAC v4.0, 2024):** RHFAC was created to evaluate buildings beyond code compliance. Category 11 (Mind-Friendly Environments), introduced 2024, has no statutory equivalent in any jurisdiction.
-* **PAS 6463:2022 (BSI, UK):** The first internationally published neurodiversity design standard contains no requirements that map to any existing building code.
-* **Boverket (Sweden, BFS 2024:12):** 'Tillgänglighetsreglerna sätter en lägsta nivå. God tillgänglighet kräver att man går längre än vad lagen kräver.' (Accessibility regulations set a minimum level. Good accessibility requires going further than the law demands.)
-* **CERMI / CEACOG (Spain, 2024):** 'Las normas de accesibilidad constituyen un suelo, no un techo.' (Accessibility standards constitute a floor, not a ceiling.)
-* **Ordem dos Arquitectos (Portugal, 2023):** 'As NTA deveriam ser mais completas, incluindo disposições sobre necessidades específicas até agora omissas.' (The NTA should be more comprehensive, including provisions on specific needs currently omitted.)
-* **CAWaB / Collectif Accessibilité Wallonie-Bruxelles (Belgium, 2024):** 'Momenteel houden wettelijke normen in Wallonië onvoldoende rekening met de toegankelijkheid van openbare ruimten.' (Legal standards take insufficient account of the accessibility of public spaces.)
-* **Building and Construction Authority (Singapore, 2025):** 'The provisions in this Code do not represent the only possible solutions... Qualified Persons may develop alternative methods to meet regulatory objectives.'
-* **SBi-anvisning 230 / BUILD, Aalborg University (Denmark, 2020):** 'BR18-kravene er minimumskrav der sikrer fysisk passage, men ikke adresserer sensorisk, kognitiv eller neurologisk tilgængelighed.' (BR18 requirements are minimum requirements that ensure physical passage but do not address sensory, cognitive or neurological accessibility.)
-* **DIN 18040 Kommentar / BAG Selbsthilfe (Germany, 2023):** 'Die DIN-Normen definieren Mindestanforderungen, die in vielen Fällen nicht ausreichen, um eine echte Nutzbarkeit für alle Behinderungsformen zu gewährleisten.' (The DIN standards define minimum requirements that in many cases are not sufficient to guarantee genuine usability for all forms of disability.)
 
 The logical implication: meeting building code is a necessary but completely insufficient condition for producing an accessible environment. Every specification in this document is calibrated above code, based on the best available evidence, primarily Tier 1 occupational therapy clinical research.
 
@@ -253,7 +219,7 @@ This guidebook applies a three-tier design hierarchy. DAR (Design for Adaptable 
 
 |  **Tier**    |  **Standard**                               |  **Context**                                                                                |  **Specification   form**                                                                                                              |  **DAR**   |
 | --------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-|  **Tier 0**  |  **Universal  Design / Code Compliance**    |  No specific  population can be anticipated. Averaged, anonymous user.                       |  Single fixed  values, calibrated to statistical average.                                                                               |  Mandatory  |
+|  **Tier 0**  |  **Universal  Design / Code Compliance**    |  No specific  population can be anticipated. Averaged, anonymous user.                       |  Range of values calibrated to an abstractly disabled non-existent person.                                                                            |  Mandatory  |
 |  **Tier 1**  |  **Population-Informed  Inclusive Design**  |  Identifiable  disability populations among regular users. This guidebook's primary domain.  |  Ranges.  Median is the population-informed default. Range encodes functional capacity  distribution across the identified population.  |  Mandatory  |
 |  **Tier 2**  |  **Person-Specific  Inclusive Design**      |  Individual  occupant or named user is known. OT assessment available.                       |  Position  within the Tier 1 range, resolved by the individual's functional capacity  assessment.                                      |  Mandatory  |
 
@@ -325,6 +291,8 @@ In alignment with CRPD Article 4.3, which requires States Parties to actively in
 
 NGO and advocacy guidelines are developed by and for disabled communities. They incorporate lived experience expertise — a form of validity that clinical and technical standards frequently lack. *Primary Tier 2 sources:* CNIB (Canada); Alzheimer Society / BrainXchange (Canada); DeafSpace Project, Gallaudet University (USA); HLAA (USA); The Kelsey IDS (USA); Motionspot (UK); NAS (UK); APF France Handicap; CERMI; ONCE Foundation (Spain); CAWaB; SgEnable (Singapore); KODDI (South Korea); DbI Nordic programme; Sense UK. Collaborative (USA/UK).
 
+**Co-primary Tier 2 — Occupational Therapy Clinical Practice Guidelines**
+
 **Tier 3 — Systematic Reviews and Meta-Analyses**
 
 *Primary Tier 3 sources:* Bettarello et al. (2021); Marquardt (2011); Koontz et al. (2012); Ulrich (1984, 1991); Petaccia et al. (2021); Wellecke et al. (2022); Sherrington et al. (2019); Räty et al. (2021).
@@ -344,19 +312,6 @@ Legal minimum. Design that meets code only is not best practice and in many case
 ### §1.6 The DAR Principle — Design for Adaptable Readiness
 
 Design for Adaptable Readiness (DAR) is the principle that construction-stage decisions should preserve the building's ability to accommodate future accessibility modifications at minimal cost. The most expensive accessible features to retrofit are negligible to incorporate at the schematic design stage.
-
-#### DAR Cost Multiplier Table
-
-| Provision                                                                                                                                                                                                                                                                                       | At Construction                                | Retrofit Cost                                     | Multiplier |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------------- | ------------ |
-| Grab bar blocking (structural)                                                                                                                                                                                                                                                                  | £40 (CAD <$68)                               | £3,000 (CAD $680–$5,100)                      | \~75×     |
-| Ceiling hoist infrastructure                                                                                                                                                                                                                                                                    | £25 (CAD <$43)                               | £3,000–£6,000 (CAD $5,100–$10,200)          | \~150×    |
-| Through-floor lift shaft space                                                                                                                                                                                                                                                                  | £2,000–£5,000 (CAD $3,400–$8,500)        | £20,000–£50,000 (CAD $34,000–$85,000)       | 10×       |
-| Wider bathroom (+1 additional m²)                                                                                                                                                                                                                                                              | £1,500 (CAD $1,360–$2,550)                 | £15,000–£40,000 (CAD $25,500–$68,000)       | 10–25×   |
-| Level entry (no-step approach)                                                                                                                                                                                                                                                                  | £2,000 (CAD $850–$3,400)                   | £5,000–£30,000 (CAD $8,500–$51,000)         | 2.5–15×  |
-| Electrical conduit for stairlift                                                                                                                                                                                                                                                                | £500 (CAD $340–$850)                       | £2,000 + unit (CAD $1,360–$3,400 + unit)      | 4×+       |
-| DAR framing for wider door                                                                                                                                                                                                                                                                      | £200/door (CAD $340/door)                    | £1,500–£5,000/door (CAD $2,550–$8,500/door) | 7–25×    |
-| Large body size floor loading (4.0 kN/m²)                                                                                                                                                                                                                                                      | £500 (CAD $340–$850) *→ Supp Vol, §IV* | £5,000–£20,000 (CAD $8,500–$34,000)         | 10–40×   |
 
 **Policy implication:** DAR provision in new construction is the highest-return accessible design investment available. Building codes that do not require DAR provisions impose these multiplied costs on ageing homeowners and disability communities.
 
@@ -388,41 +343,30 @@ The following theoretical frameworks underpin the evidence basis for design spec
 
 **§1.8.9 Attention Restoration Theory (ART) and Stress Recovery Theory (SRT)** ART and SRT provide the evidence basis for biophilic design provisions (Appendix B (Biophilic Design)), natural lighting specifications (B-09), and sensory retreat provisions (A-16, F-01).
 
-**§1.8.10 Prospect-Refuge Theory** Visual sightlines, defensible seating (G-01), and DEM toilet visibility provisions (D-03) are grounded in prospect-refuge theory: the environmental conditions under which people experience psychological safety.
-
-**§1.8.11 Behaviour Settings and Behavioural Economics** Signage, wayfinding, and kitchen specification for DEM draw on behaviour setting theory: the relationship between physical settings and the behaviours they afford, support, or inhibit.
-
-### §1.11 Scope
+### §1.9 Scope
 
 This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part II. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs. *Next: Part II — Disability Categories* *Cross-reference: Part III (Multiple Categories); Part IV (Conflicting Requirements); Part VIII (Economics and DAR costs)*
 
-## Part II: Disability Categories
+## Part 2: Disability Categories
 
-*Accessible Built Environments — Utopian Best Practice Guidebook v8.0*
-
-*Volume 1*
-
-Nine disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part III for multiple disability category design guidance and Part IV for conflicting requirements.
+Eleven disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part III for multiple disability category design guidance and Part IV for conflicting requirements.
 
 ### Category Code Reference
 
-| Code | Category | Coverage |
-| --- | --- | --- |
-| MOB | Mobility \& Strength | Parts II, III, V, VI |
-| MOB/UPL | Upper Limb \& Amputation (sub-code of MOB) | Parts II, III, V |
-| VIS | Vision Impairment | Parts II, III, V, VI |
-| DEAF | Deaf / Hard of Hearing | Parts II, III, V, VI |
-| NEU | Neurological \& Acquired Brain Injury | Parts II, III, V, VI |
-| DEM | Dementia | Parts II, III, V, VI |
-| NDV | Neurodivergence | Parts II, III, V, VI |
-| NDV/MH | Mental Health / PTSD / Trauma (sub-code of NDV) | Parts II, IV |
-| PAIN | Chronic Pain / Fibromyalgia / Migraine | Parts II, IV |
-| BAR | Large Body Size (Relocated) | See Supplementary Volume "Designing for Different Body Sizes," Section IV |
-| DBL | DeafBlind | Parts II, IV |
-| OFS | Orthostatic \& Fatigue Spectrum | Parts II, III, IV |
-| PCS | Post-concussion / TBI / ABI (subset of NEU) | Parts II, IV |
-| SENS | Broader sensory processing differences (subset of NDV) | Parts II, IV |
-| ALL | All disability categories | Throughout |
+| Code | Category |
+| --- |
+| MOB | Mobility \& Strength |
+| UPL | Upper Limb \& Amputation |
+| VIS | Vision Impairment |
+| DEAF | Deaf / Hard of Hearing |
+| NEU | Neurological \& Acquired Brain Injury |
+| DEM | Dementia |
+| NDV | Neurodivergence |
+| NDV/MH | Mental Health / PTSD / Trauma (sub-code of NDV) |
+| PAIN | Chronic Pain / Fibromyalgia / Migraine |
+| DBL | DeafBlind |
+| OFS | Orthostatic \& Fatigue Spectrum |
+| ALL | All disability categories |
 
 ---
 
