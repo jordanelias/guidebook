@@ -1,0 +1,300 @@
+## CATEGORY B: LIGHTING
+
+All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF). CCT = Correlated Colour Temperature. EML measured per WELL v2 Feature L07. UGR = Unified Glare Rating (EN 12464-1). Lux values: horizontal illuminance at 850 mm AFF unless stated. Vertical illuminance at 1500 mm AFF (face level).
+
+### B-01 Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces)
+
+**Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU)
+
+**Description:** Lighting delivering ≥150 EML at seated eye level (1200 mm AFF) during daytime occupied hours (08:00--18:00). Evening (after 19:00): ≤10 EML with shift to warm 2700 K for sleep preparation.
+
+**Specifications:**
+
+EML: ≥150 at 1200 mm AFF during daytime hours
+
+CCT: ≥4000 K for electric light during daytime
+
+Evening: ≤10 EML; 2700 K; reduced intensity
+
+Natural light maximised; not substituted by electric light where achievable
+
+DEM environments: circadian lighting is a clinical requirement, not a comfort enhancement
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Circadian lighting requires tuneable-white luminaires with control wiring. At design stage the cost premium over standard LED is modest. Retrofit requires luminaire replacement and control circuit rewiring or smart system overlay. See Part VIII §8.4.2.
+
+**Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI.
+
+**Cross-reference:** B-09 (Natural Light); B-11 (Warm CCT Evening); B-06 (Individual Dimming)
+
+**Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model. Circadian-appropriate lighting (≥150 EML daytime, ≤10 EML evening) supports the occupation of time-structured daily activity by calibrating the environmental light signal to the neurological systems that regulate alertness and sleep; for DEM and NEU users this is a clinical requirement, not an enhancement.
+
+### B-02 Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination)
+
+**Applicable Groups:** VIS (Deaf/HoH users), DBL
+
+**Description:** In all spaces where Deaf users communicate: diffuse, shadow-free illumination of face and upper body from multiple directions. No strong directional downlight creating facial shadows. No backlit windows behind speakers.
+
+**Specifications:**
+
+Horizontal illuminance: ≥500 lux at table/work surface
+
+Vertical illuminance at face (1500 mm AFF, omnidirectional): ≥300 lux
+
+No backlit window positions for primary speaker/signer positions
+
+Multiple ceiling luminaire positions (no single high-intensity downlight)
+
+Preferred: indirect or semi-indirect luminaires supplemented by wall-wash
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Diffuse face illumination requires careful luminaire positioning at design stage
+
+— negligible cost premium. Retrofit requires repositioning existing luminaire points, which may involve ceiling works and circuit
+
+modification. See Part VIII §8.4.2.
+
+**Key citations:** DeafSpace Project, Gallaudet University. (2010).
+
+DeafSpace design guidelines. Gallaudet. British Standards Institution.
+
+(2018). BS 8300:2018. BSI.
+
+**Cross-reference:** A-11 (Hearing Loop); B-06 (Dimming Control); D-10 (Transparent Panels)
+
+**Evidence basis (OT):** Biomechanical FOR. The ≥300 lux vertical illuminance at face level (1500mm AFF) and shadow-free specification are derived from the minimum illuminance required for lip-reading at normal conversational distance (0.5--1.5m) given the visual acuity range of hard-of-hearing users who rely on lip reading as a primary communication supplement.
+
+### B-03 Elimination of Fluorescent Overhead Lighting
+
+**Applicable Groups:** PCS, AUT, PAIN, NDV
+
+**Description:** No fluorescent luminaires (T8, T5, compact fluorescent) installed anywhere in the building. Replaced with flicker-free LED throughout (B-04). Applies to all spaces.
+
+**Specifications:**
+
+Zero fluorescent luminaires anywhere in the building
+
+All luminaires: LED driver with high frequency switching (not mains-frequency ripple)
+
+Verified per B-04: IEEE 1789-2015 compliance required
+
+Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Fluorescent elimination is a luminaire swap. In retrofit, ballast removal and fixture replacement across a building carries moderate labour cost but no structural implications. At design stage, LED specification is standard. See Part VIII §8.4.1.
+
+**Key citations:** Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT. AOTA. (2023). OT practice guidelines for adults with TBI. AJOT, 77(4).
+
+**Cross-reference:** B-04 (Flicker-Free LED); B-07 (Indirect Lighting)
+
+**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Fluorescent luminaires (magnetic ballast 100Hz flicker; electronic 20--50kHz flicker at visible amplitudes) are documented triggers for migraine, photosensitive epilepsy, and PCS symptom exacerbation; this item implements a categorical prevent intervention by removing the trigger source entirely rather than attempting to mitigate it.
+
+### B-04 Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant)
+
+**Applicable Groups:** PCS, AUT, PAIN, DEM
+
+**Description:** All LED luminaires specified to IEEE 1789-2015 at low flicker risk. Flicker percentage <5% at all dimming levels. Flicker index <0.1 at full output. Minimum flicker frequency ≥1000 Hz.
+
+**Specifications:**
+
+Flicker percentage: <5% at all dimming levels (IEEE 1789-2015 low-risk threshold)
+
+Flicker index: <0.1 at full output
+
+Minimum flicker frequency: ≥1000 Hz if ripple present
+
+At all dimming levels including 20% output: within low-risk range
+
+Product specification: IEEE 1789 compliance certificate required before installation
+
+**Retrofit cost note:** Retrofit penalty: LOW. Flicker-free IEEE 1789-compliant LEDs are a standard specification item. Retrofit is simple luminaire replacement. See Part VIII §8.4.1.
+
+**Key citations:** IEEE. (2015). IEEE 1789-2015: Recommended practices for modulating current in high-brightness LEDs. IEEE. CAOT. (2018). Practice guidelines for acquired brain injury. CAOT.
+
+**Cross-reference:** B-03 (No Fluorescent); B-06 (Dimming Control)
+
+**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. IEEE 1789-2015 compliant LED luminaires eliminate the flicker frequencies that cause neurological distress in photosensitive users; the standard defines the safe modulation depth and frequency relationship that prevent flicker from entering the visual pathways as a trigger.
+
+### B-05 Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes)
+
+**Applicable Groups:** PCS, AUT, VIS, DEM
+
+**Description:** Transitional lighting zone 3--5 m deep at all entries and all transitions where illuminance changes >10:1. Illuminance
+
+ramps gradually from brighter to dimmer space.
+
+**Specifications:**
+
+Zone depth: 3 m minimum; 5 m preferred
+
+Illuminance gradient: ramp across zone depth (no step change)
+
+Applies where illuminance differential >10:1
+
+Entry: supplementary electric lighting in vestibule in dull weather
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Gradual lighting transition zones require zone circuit design at design stage. Retrofit
+
+requires circuit separation, dimmer installation, and possible luminaire addition in transition areas. See Part VIII §8.4.2.
+
+**Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. Invalidiliitto. (2022). Esteettömyysopas [Finnish\]. Invalidiliitto. CNIB Foundation. (2024). Clearing our path. CNIB.
+
+**Cross-reference:** B-06 (Dimming); B-09 (Natural Light); E-06 (Level Entry)
+
+**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Glare sources in the UGR >19 range constitute a visual trigger that activates threat-detection responses in sensory sensitive users and impairs visual contrast detection in low-vision users; this item prevents the trigger at luminaire-selection stage.
+
+### B-06 Individual Dimming Control (≥300 Lux Range)
+
+**Applicable Groups:** AUT, PCS, DEM, MH, PAIN, OFS
+
+**Description:** Occupant-controlled dimmer in all spaces where neurological or sensory populations spend significant time. Dimming range: 100% down to 10 lux minimum — not merely 30--300 lux. 10 lux is the clinically relevant minimum for PCS users in acute symptom periods.
+
+**Specifications:**
+
+Dimming range: 100% to 10 lux minimum
+
+Dimmer: trailing-edge electronic dimmer compatible with flicker-free
+
+LED (B-04)
+
+Control: accessible switch 800--1200 mm AFF; lever or rocker (UPL compatible)
+
+Sensory/consulting rooms: scene controller with preset 'minimum' (10 lux) scene
+
+Where residential occupancy: all bedroom and living room circuits minimum
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Individual dimming requires wiring and switch installation per zone. At design stage this is standard electrical specification. Retrofit requires cable runs, switch replacement, and possible smart lighting overlay. See Part VIII §8.4.2.
+
+**Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS 6463:2022. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0, Category 11. RHF.
+
+**Cross-reference:** B-04 (Flicker-Free LED); B-11 (Warm CCT); H-02 (Individual Environmental Control)
+
+**Evidence basis (OT):** EHP Framework (adapt strategy). Individual dimming control allows each occupant to adapt the environmental lighting to their current sensory capacity; for users whose photosensitivity varies with fatigue state (PCS, OFS/CFS), this adaptive capacity is the difference between being able to occupy the space on a high-sensitivity day and not being able to.
+
+### B-07 Indirect and Cove Lighting in Sensitive Spaces
+
+**Applicable Groups:** AUT, PCS, PAIN, DEM
+
+**Description:** Uplighting, cove lighting, or indirect luminaires (source not directly visible from occupant positions) as the primary lighting strategy in sensory rooms, ABI recovery spaces, and dementia bedrooms. UGR <10 in sensitive spaces; UGR <19 in general spaces.
+
+**Specifications:**
+
+Primary lighting: indirect/cove (source not in direct view from any seated/lying position)
+
+Glare: UGR <10 in sensitive spaces; UGR <19 in general spaces (EN 12464-1)
+
+Supplementary downlights: deep recessed, diffuse lens, minimum 30° cutoff
+
+Illuminance: 200--300 lux at task level achieved by indirect strategy
+
+**Retrofit cost note:** Retrofit penalty: MODERATE. Indirect and cove lighting requires physical cove construction at ceiling or wall level. At design stage the cove is integrated into the ceiling design at modest cost. Retrofit requires suspended ceiling modification or new cove construction plus additional circuit provision. See Part VIII §8.4.2.
+
+**Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS 6463:2022. BSI.
+
+**Cross-reference:** B-06 (Dimming); B-03 (No Fluorescent)
+
+**Evidence basis (OT):** Dunn's Sensory Processing Model. Indirect and cove lighting distributes illuminance across the ceiling and upper wall surfaces without creating the high-luminance point sources that trigger hyperarousal in sensory sensitive users; the absence of visible lamp surfaces removes the primary aversive stimulus in the visual field.
+
+### B-08 Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units)
+
+**Applicable Groups:** PCS, VIS, DEM, AUT
+
+**Description:** Floor finishes with gloss level ≤30 GU (60° gloss per ASTM D523) throughout occupied spaces and circulation. No polished concrete, high-gloss porcelain, or wet-look vinyl.
+
+**Specifications:**
+
+Maximum gloss: 30 GU (60° gloss per ASTM D523)
+
+Applies to all hard floor surfaces in occupied spaces and circulation
+
+Maintenance: high-traffic burnishing of LVT/vinyl can increase gloss above 30 GU; cleaning specification must maintain matte finish
+
+Wet rooms: matte, R10 slip resistance takes priority
+
+**Retrofit cost note:** Retrofit penalty: LOW. Matte, low-reflectance floor finishes are a procurement specification. Retrofit is floor
+
+covering replacement only. See Part VIII §8.4.1.
+
+**Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. CNIB Foundation. (2024). Clearing our path. CNIB.
+
+DSDC. (2022). EADDAT. University of Stirling.
+
+**Cross-reference:** C-06 (Plain Low-Contrast Flooring); E-07 (Slip Resistance)
+
+**Evidence basis (OT):** Biomechanical FOR. Floor gloss above 30 gloss units creates specularity that impairs the visual contrast detection ability of low-vision users and creates visual 'noise' that disorients VIS and DEM users navigating by floor-surface differentiation; PTV compatibility requirement ensures that matte specification does not reduce slip resistance below safe threshold.
+
+### B-09 Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)
+
+**Applicable Groups:** ALL (especially MH, DEM, PAIN, NEU, OFS)
+
+**Description:** Natural light maximised through building orientation, window-to-wall ratio, clerestory windows, light wells, and rooflights. All primary occupied spaces have direct natural light. Glare control required: solar shading on all south/west elevations.
+
+**Specifications:**
+
+Window-to-wall ratio: ≥40% on primary facades
+
+All primary occupied spaces: direct natural light (minimum 2% daylight factor)
+
+Circulation at decision points: natural light at minimum
+
+Solar shading: external or mid-pane preferred; internal as last resort
+
+Sill height: ≤750 mm AFF for seated and reclined views. Applicable where DEM, OFS, NEU, or BAR users are primary occupants (reclined or
+
+seated views essential).
+
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Maximising natural light through clerestories, light wells, and rooflights is a fundamental building form decision. Retrofit requires structural assessment, temporary propping, lintel installation, weatherproofing, and internal making-good. Retrofit cost of a single rooflight can exceed the design-stage cost by 10×. See Part VIII §8.4.2 C.1.3.
+
+**Key citations:** Ulrich, R.S. (1984). View through a window may influence recovery from surgery. Science, 224(4647). WELL Building Institute. (2024). WELL v2. IWBI.
+
+**Cross-reference:** B-01 (Circadian Lighting); BIO-01 (Nature Views); B-05 (Transition Zones)
+
+**Evidence basis (OT):** ART (Attention Restoration Theory); SRT (Stress Recovery Theory). Natural light from windows and skylights is the primary restorative element in the built environment per both ART and SRT; the ≥75% provision ensures that the majority of primary occupied time is spent with access to the visually restorative stimulus, reducing directed attention depletion for NEU, DEM, and OFS users.
+
+### B-10 Visual Fire Alarm (Strobe VAD Throughout Building)
+
+**Applicable Groups:** VIS (Deaf/HoH users), DBL
+
+**Description:** Visual Alarm Devices (VAD) installed in all areas where deaf or hard-of-hearing users may be present. Minimum 75 candela; 1--3 Hz flash rate; BS EN 54-23:2010 Category W compliant. Coverage: all sleeping areas, bathrooms, meeting rooms, assembly areas.
+
+**Specifications:**
+
+75 candela minimum; 1--3 Hz flash rate; BS EN 54-23:2010 Category W Coverage: all sleeping areas, bathrooms, meeting rooms, public assembly areas
+
+Independent circuit from audio alarm system
+
+Monthly test with visual confirmation logged
+
+Position: visible from any point in room (ceiling or high-wall mount)
+
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part VII; Part VIII, C.1.1.
+
+**Key citations:** British Standards Institution. (2010). BS EN 54-23:2010. BSI. British Standards Institution. (2017). BS 9999:2017. BSI.
+
+**Cross-reference:** VI-EVAC-04 (Fire Alarm — VAD); A-11 (Hearing Loop); H-03 (Visual Paging)
+
+**Evidence basis (OT):** Compensatory FOR. The visual fire alarm compensates for the absence of auditory fire alarm detection in Deaf/HoH and DBL users; the 110 cd output specification is derived from the minimum luminous intensity required to achieve reliable detection across the visual field at the maximum coverage distances specified in EN 54-23.
+
+### B-11 Warm Colour Temperature for Evening (≤2700 K After 19:00)
+
+**Applicable Groups:** DEM, NDV/MH, NEU
+
+**Description:** Evening lighting (after 19:00) shifts to ≤2700 K CCT and reduced intensity to support circadian wind-down. This is particularly critical in dementia care where sundowning is driven by circadian disruption. Paired with B-01 (daytime 4000--5500 K) for full circadian lighting strategy.
+
+**Specifications:**
+
+Evening CCT: ≤2700 K from 19:00
+
+Evening intensity: ≤10 EML at eye level
+
+DEM: automated shift at 19:00 via BMS (occupants cannot always be relied upon to initiate)
+
+Where residential occupancy: manual override available for non-standard sleep schedules
+
+**Retrofit cost note:** Retrofit penalty: LOW. Warm colour temperature (2700 K) is a lamp or luminaire specification change. Retrofit is lamp replacement in compatible luminaires, or luminaire swap. See Part VIII §8.4.1.
+
+**Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI.
+
+**Cross-reference:** B-01 (Circadian Lighting daytime); B-06 (Dimming)
+
+**Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model.
+
+Evening shift to ≤10 EML and 2700K CCT removes the alerting light wavelengths that inhibit melatonin production; for DEM users this is the primary circadian regulation intervention; for NEU/MH users it supports the occupation of restorative sleep — an occupation that environmental lighting directly enables or impairs.
+**Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level or ≤1:50 gradient beneath canopy. Drainage to perimeter. For BAR users: canopy height ≥2500 mm to accommodate bariatric scooters/powerchairs.
