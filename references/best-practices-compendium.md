@@ -2397,3 +2397,91 @@ REF-RAP-17: SBi-anvisning 218 — DA school acoustics
 **Early-close:** no  **Thin/No-data:** ZH, JA, KO (dementia-specific floor pattern guidance not found)
 **Citation mining:** PubMed 8716494 floor patterns wandering Alzheimer's added from DSDC literature
 **Key sources:** REF-20 (Lukman et al. 2020 HERD OT study); REF-21 (Arditi PMC 2017 LRV evidence base analysis); REF-22 (DIN 32975); REF-24 (BS 8300/Part M); REF-25 (DSDC dementia flooring); REF-26 (PubMed 8716494); REF-28 (DBSV Fachbroschüre DE)
+
+# BPC Entries — Append to references/best-practices-compendium.md
+# Produced: 2026-03-19 11:00
+
+---
+
+## assistive-listening-systems|DEAF
+**Updated:** 2026-03-19 11:00
+**Evidence tier:** 4 (IEC 60118-4 international standard); 2 (HLAA, RNID, Zennancho advocacy); 5 (Auracast emerging)
+**Status:** COMPLETE (9 core languages + NL extended)
+
+**Consensus finding:** Induction hearing loops compliant with IEC 60118-4:2014+AMD1:2017 remain the mandatory primary assistive listening standard in all reviewed jurisdictions except Japan; Auracast (Bluetooth LE Audio) is a future-state supplement requiring concurrent loop deployment throughout a 7–10 year transition period.
+
+**Best-practice provision:**
+- Counter loop (A-10): all staffed service counters; field strength 100 mA/m ±3 dB per IEC 60118-4
+- Room loop (A-11): all assembly spaces ≥25 capacity (UK/ISO baseline); all ERP cat. 1–4 and spaces ≥50 seats (FR CEREMA — stricter best practice)
+- Auracast readiness (A-12): 25 mm conduit + power provision as DAR; does not substitute A-11; IEC 60118-17 standard expected December 2027; ADA compliance status unconfirmed (HLAA, December 2025)
+
+**Key divergences:**
+- Trigger threshold: guidebook ≥25 capacity vs FR CEREMA ≥50 seats + all ERP cat. 1–4. CEREMA is more comprehensive; flag as cross-jurisdictional best practice in A-11.
+- Mandatory vs voluntary: UK/DE/NO/SE/FR mandatory in building regulations. Japan: no mandatory provision — voluntary municipal programmes only (Zennancho governance). This is a critical jurisdiction gap not currently noted in the guidebook.
+- ZH (GB 50763): specifies FM/IR systems; induction loop not confirmed as primary — requires separate verification.
+
+**Jurisdictions confirmed:** UK, DE, FR, NO, SE, DA, FI, NL, EU (EN 17210), ISO
+**Jurisdictions thin/gap:** JA (no mandatory standard — CRITICAL), ZH (FM/IR primary — verify), ES/PT/KO/IT (not run — IEC compliance expected)
+
+**Key sources:**
+- IEC 60118-4:2014+AMD1:2017 — universal performance standard (Tier 4)
+- TEK17 §13-10 (Norway) — most prescriptive national standard: hearing loop or wireless speech transmission mandatory in assembly spaces and 1-in-10 meeting rooms (Tier 6)
+- Arrêté 20 avril 2017 (France) + CEREMA 2021 — mandatory BIM in all ERP cat. 1–4 and ≥50 seats (Tier 6/5)
+- DIN 18040-1 §5.2.2 (Germany) — Induktionsschleife; Zwei-Sinne-Prinzip framing (Tier 5)
+- HLAA (2025) — Auracast position statement; ADA compliance unconfirmed (Tier 2)
+- RNID (2024) — loops and Auracast must coexist; co-deployment confirmed (Tier 2)
+- IAHA (2025) — Auracast assistive listening technical assessment (Tier 2/5)
+- Zennancho/全難聴 (2014) — Japan hearing loop mark governance; voluntary only (Tier 2)
+
+**Thin flags:** JA (no mandatory standard), ZH (FM/IR primary unverified), DA, FI (follow IEC; no independent standard)
+**No-data flags:** none
+
+**Guidebook items affected:** A-10, A-11, A-12
+**New gaps raised:** GAP-ALS-01 (Japan), GAP-ALS-02 (CEREMA trigger)
+
+---
+
+## sensory-relief-space-design|NDV
+**Updated:** 2026-03-19 11:00
+**Evidence tier:** 3 (scoping reviews, controlled studies, OT practice research); 5 (PAS 6463:2022, NCC AU 2022); 2 (NAS, Amaze)
+**Status:** COMPLETE (9 core languages + NL extended)
+**Evidence note:** No Tier 1 RCTs exist for dedicated sensory room architectural design specifically. All evidence is Tier 3 or below. Guidebook specifications carry EMERGING evidence stratum for dimensional requirements; MODERATE for sensory control principle.
+
+**Consensus finding:** Dedicated sensory relief spaces improve self-regulation outcomes for NDV/AUT populations; individual occupant control of sensory inputs is the highest-confidence design variable, more important than static environmental parameters; location adjacent to primary circulation with transition zone and acoustic separation is confirmed best practice.
+
+**Best-practice provision (confirmed or upgraded from existing A-16):**
+- Minimum area: ≥8 m² (guidebook best practice confirmed; NCC AU 2022 statutory minimum is 3 m²)
+- Acoustic shell: STC ≥50 partition; RT60 ≤0.3 s; NC ≤25 HVAC — confirmed
+- Lighting: 100%–0 lux dimming; warm amber 2700 K; no fluorescent — confirmed
+- **Individual occupant control (UPGRADED — PRIMARY):** user control of lighting level, sound environment, and blackout is the single most important design variable per Unwin et al. (2022, 2023); H-02 cross-reference should be PRIMARY, not secondary, in A-16
+- Location: adjacent to primary circulation; accessible without passing through high-stimulation areas — confirmed
+- **Proximity to sanitary facilities (NEW):** Amaze/Architecture & Access (2025) identifies proximity to accessible toilet as a key location requirement not currently in A-16
+- **Transition zone (confirmed):** ≥3 m decompression space at exit — confirmed in PAS 6463, Boverket, Architecture & Access (2025)
+- Provision ratio: ≥1 per floor or per 500 m² GFA (general); ≥1 per 150 students (general education); ≥1 per 50 students (autism-specific) — confirmed
+
+**Key divergences:**
+- Area minimum: A-16 ≥8 m² (best practice) vs NCC AU 2022 3 m² (statutory). No conflict — guidebook is above-code. Add NCC as jurisdiction note.
+- Spatial configuration: Rashid et al. (2025) taxonomy identifies that most frameworks overemphasise interior elements relative to spatial configuration (adjacency, sequencing, approach). This is a gap in A-16's current specification scope; currently addresses finishes and fixtures but not spatial configuration requirements.
+- Population scope: PAS 6463 NDV-primary; Amaze (2025) explicitly extends to ADHD/OFS/PAIN comorbidities and trauma — confirms guidebook's multi-population framing of A-16.
+
+**Jurisdictions confirmed:** UK (PAS 6463:2022), AU (NCC 2022; Amaze/Deakin 2025), IE (NCSE 2025), CA (RHFAC v4), US (evidence base)
+**Jurisdictions thin:** SV, NO, DA, FI, FR, DE, ZH, JA, NL (follow EN practice; no independent standards for public buildings)
+**No-data flags:** none (all languages have some evidence; none have mandatory public building standards except AU)
+
+**Key sources:**
+- Unwin, Powell & Jones (2022). Use of Multi-Sensory Environments with autistic children: user control as primary factor. *Autism*, 26(6). PMC9340127. (Tier 3 — n=41, Cardiff)
+- Unwin, Powell & Jones (2023). Follow-up study — sensory room control findings replicated. *Autism*. (Tier 3)
+- Rashid et al. (2025). Taxonomy for sensory-informed architectural design qualities in autism. *Building Research & Information*. DOI:10.1080/09613218.2025.2459737. (Tier 3)
+- Architecture & Access / Amaze / Deakin University (2025). Reset Rooms / Sensory Rooms / Chill-Out Zones — Design Guide. amaze.org.au. February 2025. (Tier 3/5 — OT co-produced; AU)
+- NCSE Ireland (2025). Sensory Spaces in Schools. ncse.ie. (Tier 3 — OT authored; IE)
+- Petaccia et al. (2021). Built Environment Design and People with ASD: Scoping Review. *IJERPH* 18(6):3203. MDPI. (Tier 3)
+- Black, Sharma & Roberts (2022). Scoping review of environmental design for ASD. *Autism*. SAGE. (Tier 3)
+- PAS 6463:2022 (BSI/UK) — sensory zoning; quiet space; transition zone (Tier 5)
+- NCC 2022 — Livable Housing / accessible public building provisions (AU) (Tier 6)
+- RCOT / NAS — sensory environment guidance (Tier 2/5)
+
+**Thin flags:** ZH, JA, FR, DE, FI, SV, NO, DA (practice consistent with EN; no independent mandatory standards for public buildings)
+**No-data flags:** none
+
+**Guidebook items affected:** A-16 (primary); H-02 (cross-reference elevation); F-01, F-03 (confirmed)
+**New gaps raised:** GAP-SRS-01 (H-02 elevation in A-16)
