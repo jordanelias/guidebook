@@ -1,6 +1,6 @@
 # Guidebook for Accessible Design
 
-**Version:** 8.8 **Date:** March 12 2026 **Status:** Version 8.8
+**Version:** 8.10 **Date:** March 19 2026 **Status:** In Progress
 
 ---
 
@@ -12,21 +12,13 @@
 
 ---
 
-# Volume 1: Principles, Evidence and Population Guidance
-
-## Accessible Built Environments: Utopian Best Practice Guidebook
-
-### Version 8.8 Draft
-
-*A three-volume specification and evidence resource for the design of accessible, inclusive, and adaptable built environments.*
+# Guidebook for Accessible Design
 
 ## About This Guidebook
 
 This guidebook provides design specifications grounded in the best available evidence for making built environments accessible to the full range of human functional capacity. It covers new construction, major refurbishment, and post-occupancy adaptation across residential, commercial, healthcare, educational, hospitality, and cultural building types. It is written for architects, access consultants, interior designers, occupational therapists, project managers, developers, housing authorities, and anyone responsible for decisions about the built environment.
 
 **The central principle:** Building codes represent legal minimums. This guidebook operates above the code floor throughout, calibrated to Tier 1 occupational therapy clinical research and the best available multilingual evidence. Meeting code is a necessary but completely insufficient condition for producing an accessible environment.
-
-**Version 8.0 Draft supersedes:** v6.2 (Final Edition, Rev 6.1). Structural reorganisation only — no specifications were downgraded. New content: Part VIII (Economics) fully expanded; Appendix C (Thermal Comfort) formalised; Appendix A (Global Standards Catalogue) added.
 
 ### Three-Volume Structure
 
@@ -40,61 +32,45 @@ This guidebook is accompanied by supplementary resources that extend coverage be
 
 - **Designing for Different Body Sizes: Supplementary Volume** — Covers large body size (formerly BAR), short stature (LPA), children/adolescents (CHD), and extremely tall individuals (EXH). *Included in this document — see Supplementary Volume at end of Appendices.*
 
-## Reading paths
-
-**If you are designing for a known individual:** Start with Part II (their disability category), then Part III (if multiple categories), then Part VI (residential reference by room) or Part V (specific technique items). Obtain an OT assessment before specifying.
-
-**If you are designing for unknown occupancy (new build, housing):** Start with Part VIII §8.7 (economic timeline by design stage) to establish what must be decided at each stage. Then use Part V as your working specification reference.
-
-**If you are making the economic case to a client:** Go directly to Part VIII. The five client arguments are in §8.8.1; the cost intelligence tables are in §8.4.
-
-**If you need to resolve a conflict between two disability categories:** Go directly to Part IV. Nine documented conflicts with resolved specifications.
-
-**If you are specifying DAR provisions:** Part VII. Cross-reference to Part I §1.6 for the cost multiplier table.
-
 ## Part and Section Map
 
-## Volume 1: Foundations, Categories, Synthesis
+## Volume I: Foundations, Categories, Synthesis
 
-**Part I — Foundations of Accessible Design**
+**Part 1 — Foundations of Accessible Design**
 
-§1.1 Definitions · §1.2 Code-as-Floor Principle · §1.3 Designing for the Individual · §1.4 Universal vs Inclusive Design · §1.5 Evidence Hierarchy · §1.6 DAR Principle · §1.7 CRPD Alignment · §1.8 Evidence Frameworks · §1.11 Scope
+§1.1 Definitions · §1.2 Code-as-Floor Principle · §1.3 Designing for the Individual · §1.4 Universal vs Inclusive Design · §1.5 Evidence Hierarchy · §1.6 DAR Principle · §1.7 CRPD Alignment · §1.8 Evidence Frameworks · §1.9 Scope
 
-**Part II — Disability Categories**
+**Part 2 — Disability Categories**
 
 §2.1 MOB · §2.2 MOB/UPL · §2.3 VIS · §2.4 NEU · §2.5 DEM · §2.6 NDV · §2.7 NDV/MH · §2.8 PAIN · §2.9 BAR (→ Supp Vol IV) · §2.10 DBL · §2.11 OFS
 
-**Part III — Designing for Multiple Disability Categories**
+**Part 3 — Designing for Multiple Disability Categories**
 
-§III.1 Introduction · §III.2 Theoretical Framework · §III.3 Co-occurrence Matrix · §III.4 Key Co-occurrence Design Guidance
+§3.1 Introduction · §3.2 Theoretical Framework · §3.3 Co-occurrence Matrix · §3.4 Key Co-occurrence Design Guidance
 
-**Part IV — Resolving Conflicting Accessibility Requirements** *(Vol 1 stub — content in Volume 2, Part E)*
+## Volume II: Application Manual and Engineering
 
-§IV.1 Introduction · §IV.2 Priority Hierarchy → Full specifications: Volume 2, Part E §E.3.1–§E.3.9
-
-## Volume 2: Application Manual and Engineering
-
-**Part I — Synthesis and Sequencing**
+**Part 4 — Synthesis and Sequencing**
 
 Item sequencing framework; population-by-population reading paths; design stage decision matrix
 
-**Part II — Residential Application Matrices**
+**Part 5 — Residential Application Matrices**
 
 Room-by-room application of Part IV (Item Library) for residential building types; DAR provisions by room
 
-**Part III — Non-Residential Application Matrices**
+**Part 6 — Non-Residential Application Matrices**
 
 Building-type matrices for seven non-residential categories with population criticality coding
 
-**Part IV — Item Specification Library** *(76 items; A–J categories)*
+**Part 7 — Item Specification Library** *(76 items; A–J categories)*
 
 Category A: Acoustics (A-01–A-09) · Category B: Lighting (B-01–B-06) · Category C: Colour \& Surface (C-01–C-06) · Category D: Spatial Layout \& Wayfinding (D-01–D-07) · Category E: Entry \& Circulation (E-01–E-10) · Category F: Sensory Zoning (F-01–F-03) · Category G: Furniture \& Fittings (G-01–G-07) · Category H: Controls \& Technology (H-01–H-04) · Category I: Upper Limb (I-01–I-03) · Category J: Bariatric Provisions (J-01–J-06) · Biophilic Appendix (BIO-01–BIO-04) · Thermal Comfort (TC-01–TC-04)
 
-**Part E — Cross-Population Conflict Resolutions**
+**Part 8 — Cross-Population Conflict Resolutions**
 
 Nine documented conflicts with resolution specifications and priority hierarchy
 
-**Part V — Engineering and Coordination**
+**Part 9 — Engineering and Coordination**
 
 MEP brief templates; acoustic, mechanical, structural and electrical engineer coordination items (Part M)
 
