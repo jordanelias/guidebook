@@ -349,7 +349,7 @@ This guidebook applies to: new residential construction; major residential refur
 
 ## Part 2: Disability Categories
 
-Eleven disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part III for multiple disability category design guidance and Part IV for conflicting requirements.
+Twelve disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part III for multiple disability category design guidance and Part IV for conflicting requirements.
 
 ### Category Code Reference
 
@@ -366,6 +366,7 @@ Eleven disability categories are addressed in this document. These are not exhau
 | PAIN | Chronic Pain / Fibromyalgia / Migraine |
 | DBL | DeafBlind |
 | OFS | Orthostatic \& Fatigue Spectrum |
+| IntD | Intellectual Disability |
 | ALL | All disability categories |
 
 ---
@@ -401,7 +402,7 @@ Biomechanics: ramps above 1:12 require high-force shoulder technique unsustainab
 
 ---
 
-### §2.2 MOB/UPL — Upper Limb \& Amputation (Sub-code of MOB)
+### §2.2 UPL — Upper Limb \& Amputation
 
 UPL is consolidated as sub-code MOB/UPL in v7.0. Category K (Upper Limb Provisions, Part V) is retained as a dedicated item set.
 
@@ -682,27 +683,27 @@ Interim provisions until the full category is available:
 
 *Evidence Base: [PLACEHOLDER — IntD-specific built environment evidence review pending. Citation-verifier pass required before v9.0 publication.]*
 
-## Part III: Designing for Multiple Disability Categories
+## Part 3: Designing for Multiple Disability Categories
 
 *Accessible Built Environments — Utopian
 
 Best Practice Guidebook v8.0*
 
-### §III.1 Introduction and Rationale
+### §3.1 Introduction and Rationale
 
 Disability is not experienced in isolation. Epidemiological data consistently show that more than 55% of disabled adults have two or more disability types simultaneously (WHO Global Disability Report, 2011; Australian Institute of Health and Welfare, 2022). The Code-as-Floor Principle (§1.2) applies to single-category provisions --- but for persons with multiple disability categories, even beyond-code single-category provisions may be systematically inadequate. Three failure modes are documented where single-category provisions are applied to multiple-category users: - Provisions for one category create barriers for another (e.g., tactile flooring for VIS creating vibration pain triggers for PAIN users; see Part IV for conflict resolution). - Single-category specifications are calibrated to that category's OT evidence without accounting for the compound functional burden of co-occurring conditions. - Design briefs treat disability categories as discrete user groups, failing to design for the majority who present with multiple categories.
 
-### §III.2 Theoretical Framework
+### §3.2 Theoretical Framework
 
-#### §III.2.1 ICF and Intersectional Disability
+#### §3.2.1 ICF and Intersectional Disability
 
 The ICF (WHO, 2001) framework treats disability as arising from the interaction between health conditions, body functions and structures, and environmental and personal factors. Multiple co-occurring health conditions produce compounded environmental interaction — the same environmental barrier affects multiple functional domains simultaneously. A staircase is a mobility barrier for MOB; the effort of navigating around it is a fatigue trigger for CFS/ME; the cognitive demand of the reroute is an additional load for DEM. Single-category design addresses one of these interactions; multiple-category design addresses all three.
 
-#### §III.2.2 Competence-Press Model at Compound Strain
+#### §3.2.2 Competence-Press Model at Compound Strain
 
 Lawton \& Nahemow's (1973) Competence-Press Model holds that adaptive behaviour occurs in a zone of moderate environmental press relative to individual competence. For multiple-category users, the competence level relevant to environmental press is the lowest (most constrained) functional domain across all co-occurring categories. A person with MOB + CFS/ME has the physical mobility competence of the MOB category and the energy expenditure ceiling of the CFS/ME category. Environmental press that is appropriate for MOB alone may exceed the compound competence ceiling of MOB + CFS/ME. Design for multiple disability categories requires assessment of compound press against compound competence.
 
-### §III.3 Co-occurrence Matrix
+### §3.3 Co-occurrence Matrix
 
 The following matrix shows documented co-occurrence frequency between disability category pairs.
 
@@ -712,8 +713,7 @@ The following matrix shows documented co-occurrence frequency between disability
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **MOB** | — | MED | HIGH | HIGH | LOW | MED | HIGH | HIGH | HIGH | LOW | HIGH | | **VIS** | MED | — | MED | MED | MED | MED | LOW | LOW | LOW | HIGH | LOW | | **NEU** | HIGH | MED | — | MED | HIGH | HIGH | HIGH | MED | MED | LOW | HIGH | | **DEM** | HIGH | MED | MED | — | LOW | MED | MED | LOW | LOW | LOW | HIGH | | **NDV** | LOW | MED | HIGH | LOW | — | HIGH | MED | LOW | LOW | LOW | MED | | **MH** | MED | MED | HIGH | MED | HIGH | — | HIGH | MED | LOW | LOW | HIGH | | **PAIN** | HIGH | LOW | HIGH | MED | MED | HIGH | — | MED | MED | LOW | HIGH | | **BAR** | HIGH | LOW | MED | LOW | LOW | MED | MED | — | LOW | LOW | MED | | **UPL** | HIGH | LOW | MED | LOW | LOW | LOW | MED | LOW | — | LOW | LOW | | **DBL** | LOW | HIGH | LOW | LOW | LOW | LOW | LOW | LOW | LOW | — | LOW | | **OFS** | HIGH | LOW | HIGH | HIGH | MED | HIGH | HIGH | MED | LOW | LOW | — |  |
 
-### §III.4 Key Co-occurrence Design Guidance
-
+### §3.4 Key Co-occurrence Design Guidance
 #### MOB + OFS (including CFS/ME, POTS, MS)
 
 Rest seating every ≤20 m (E-10); lift provision even under 3 storeys; automatic doors (E-11); level entry. Energy expenditure budget governs all circulation decisions. MS-specific: thermal management (≤18°C, no humidity accumulation); temporal accessibility provision on high-fatigue days.
@@ -764,41 +764,13 @@ Common presentation: fibromyalgia with depression (PAIN + MH); chronic pain synd
 
 Common presentation: PTSD with ME/CFS; anxiety disorder with POTS (documented in post-COVID populations). Both categories require: low exertion access (E-10 rest seating, step-free throughout); individual environmental control (H-02); and access to retreat without navigating high-stimulation spaces. MH adds: visibility of exits; choice of open or enclosed seating; no overhead surveillance or enclosed approaches to spaces. OFS adds: no sustained standing requirements; no routes requiring aerobic exertion. The design intersection is a low-exertion, controllable environment with spatial choice.
 
-*Next: Part IV — Resolving Conflicting Accessibility Requirements* *Cross-reference: Part II (individual category definitions); Part IV (conflict resolutions referenced above); Part V (technique specifications)*
-
-## Part IV: Resolving Conflicting Accessibility Requirements
-
-**Relocated to Volume 2 (v8.0).** Part IV conflict resolutions are now integrated directly into the practitioner workflow in Volume 2, Part E. This placement reflects the nature of conflict resolution as a practitioner decision-making tool, most useful alongside specifications rather than as standalone theory.
-
-**Volume 2 Part E** — *Cross-Population Conflict Resolutions* — contains the complete conflict priority hierarchy (§IV.2) and all nine documented conflict specifications (§IV.4.1–§IV.4.9), updated with v8.0 item codes.
-
-**Summary for Volume 1 readers:** Where accessibility provisions for different disability categories conflict, apply the six-tier Conflict Priority Hierarchy (safety-critical → OT evidence → functional constraint → range specification → zoning → Tier X flag). Full specifications: Volume 2, Part E. —
-
-*Volume 2 of this guidebook was restructured in v8.0. The item specification library has been resequenced. Item codes cited throughout this volume (Volumes 1 and 3) use the v8.0 resequenced codes. See Volume 2 for the complete item specification library.*
-
-*Item code key: A–E unchanged; F = Sensory Zoning (formerly G); G = Furniture/Interiors (formerly I); H = Controls/Technology (formerly J); I = Upper Limb (formerly K); J = Bariatric (formerly L). Former Category F eliminated. BIO and TC are Supplementary Resources in Volume 2.*
-
 ---
 
-# Volume 2: Application Manual and Engineering
-
-*Accessible Built Environments: Utopian Best Practice Guidebook — v8.0*
-
-| March 2026 *This is Volume 2 — the practitioner-facing Application Manual and Engineering reference. It is intended for architects, OT practitioners, design teams, and commissioning bodies.* — |
+# Volume II: Application Manual and Engineering
 
 ## How to Use This Volume
 
 Volume 2 translates the 71-item technique library into application tools for design practice. It is organised in five parts, followed by supplementary resources.
-
-**Where to start:**
-
-- If you are at a **design stage** (schematic, technical, construction documents): go to **Entry Path I** below.
-- If you have a **population brief** (e.g., dementia care, neurodivergent workplace): go to **Entry Path II** below.
-- If you need guidance for a **specific room or building type**: go to **Entry Path III** below — then to **Part II** (residential) or **Part III** (non-residential).
-- If you need to **resolve a conflict** between two disability categories: go to **Part E** (conflict resolutions).
-- If you need the **technical specification** for a specific item: go to **Part IV** item library.
-
-**Cross-volume item code convention:** Within Volume 2, items are cited by short code (e.g., A-01, F-03). When cited from Volume 1 or Volume 3, the full code is V2-P4-[CAT][nn] (e.g., V2-P4-D03, V2-P4-F03). The short form is used throughout Volume 2. —
 
 ## Population Codes Reference
 
@@ -908,59 +880,11 @@ See E.10 in Part II for the full residential DAR register. The top priority item
 | Zero-threshold floor recess (wet room drainage) | R-BA | ×20–40 | CD |
 | Stair structural channel (stairlift) | R-STA | ×15–30 | CD | — |
 
-## Item Template Reference Card
-
-All items in Part IV use this canonical template. Items marked S1 (Categories A–E) are in process of retrofit to full S2 format; Stage/Document Matrix may be abbreviated in some A and B category items.
-
-```
-ITEM CODE — ITEM TITLE ├── Status
-
-
-
-| Design Stage | NOT-RETROFITTABLE flag (if applicable) |
-
-
-
-
-
-├── Applicable Groups: [population codes, primary ● secondary ○] ├── Description and rationale ├── Specifications (performance requirements) ├── Stage/Document Matrix: │ ├── SD: Required action
-
-
-
-| Document home | Notes |
-
-
-
-
-
-│ ├── DD: Required action
-
-
-
-| Document home | Notes |
-
-
-
-
-
-│ ├── CD: Required action
-
-
-
-| Document home | Notes |
-
-
-
-
-
-│ ├── SPEC/COMM: Testing/commissioning requirement │ └── OPS: FM protocol ├── Retrofit cost note: LOW / MEDIUM / HIGH / STRUCTURAL + multiplier ├── Key citations: [Author Year, Source, Evidence Tier] ├── Cross-reference: [related items] └── Evidence basis (OT): [framework + functional reasoning]
-```
-
 ---
 
-## Part I: Synthesis and Sequencing
+## Part 4: Synthesis and Sequencing
 
-### I.1 Why Synthesis Matters
+### 4.1 Why Synthesis Matters
 
 The Part V technique library contains 71 items. No building project requires all 71 simultaneously, and no project fails for lack of knowledge of individual items. Projects fail in accessible design because: 1.
 
@@ -972,7 +896,7 @@ The Part V technique library contains 71 items. No building project requires all
 
 **Checklist mentality:** Items are treated as a compliance list rather than as a design discipline. An item on a list is not the same as an item on a drawing. Synthesis is the practice of treating the entire library as a single integrated design system, applied through a staged process from brief to handover.
 
-### I.2 The Layered Environment
+### 4.2 The Layered Environment
 
 Every building produces a three-layer accessible environment:
 
@@ -984,7 +908,7 @@ Every building produces a three-layer accessible environment:
 
 A building that achieves Layer 1 but not Layers 2 and 3 is physically accessible but sensorially hostile and informationally inaccessible — this describes the majority of DDA-compliant buildings in the current stock.
 
-### I.3 The Four Synthesis Principles
+### 4.3 The Four Synthesis Principles
 
 **Principle 1 — Design Stage Primacy**
 
@@ -1002,7 +926,7 @@ Design for the realistic population, not isolated cases. A residential care buil
 
 An accessible building is not a collection of accessible rooms. It is a continuous journey from arrival to departure. A person in a wheelchair should be able to arrive at a parking space, enter the building, navigate to their destination, use all facilities, and depart without encountering a single inaccessible link in the chain. One inaccessible link — a step at the accessible toilet door, a control above reach height in the lift — breaks the chain for the entire journey. Synthesis maps the journey, not the individual rooms.
 
-### I.4 Stage-by-Stage Process
+### 4.4 Stage-by-Stage Process
 
 **Stage 0 — Brief**
 
@@ -1051,7 +975,7 @@ Deliverables:
 - PEEP (Personal Emergency Evacuation Plan) protocol drafted and provided to building manager
 - Post-Occupancy Evaluation (POE) schedule: minimum POE at 6 months and 12 months post-occupation; measure RT60 in key spaces, lux at task heights, temperature at peak summer, air quality (CO2, TVOC)
 
-### I.5 Synthesis by Building Strategy
+### 4.5 Synthesis by Building Strategy
 
 **Strategy A — Baseline-Plus**
 
@@ -1065,7 +989,7 @@ For public buildings, cultural buildings, and healthcare. Start from the assumpt
 
 For DEM care homes, autism-specific schools, MS neurology wards, and other single-population-focused buildings. Universal provisions plus the full sensory environment specification for the primary population. The sensory environment specification is the design driver — not physical access alone.
 
-### I.6 Decision Framework for Sequencing Techniques
+### 4.6 Decision Framework for Sequencing Techniques
 
 When faced with a specific design decision, the architect should ask four questions in sequence:
 
@@ -1085,7 +1009,7 @@ If yes: apply the resolution documented in Parts E/F before specifying the indiv
 
 If no drawing is identified: the item is not specified. An accessibility requirement that appears only in a narrative specification but not on a drawing will not be built.
 
-### I.7 Worked Examples —
+### 4.7 Worked Examples —
 
 #### Worked Example 1: Memory Care Residential Unit (DEM Primary; MOB Secondary)
 
@@ -1223,9 +1147,7 @@ If no drawing is identified: the item is not specified. An accessibility require
 
 ---
 
-
-
-### §I.8 From Approach to Application
+### 4.8 From Approach to Application
 
 *Accessible Built Environments: Utopian Best Practice Guidebook — v8.8*
 *Follows §I.7 (Worked Examples). Readers should be familiar with §I.1–§I.7 and Volume 1 §1.4a.*
