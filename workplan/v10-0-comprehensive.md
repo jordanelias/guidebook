@@ -15,6 +15,18 @@
 **GitHub path:** `parts/v10/{filename}.md`
 
 ---
+## AMENDMENT 2026-03-20 22:00
+
+**Phase 0 (Ecosystem) inserted before Phase 1.** All subsequent phases shifted +2 sessions.
+See `workplan/ecosystem-audit-phase0.md` for:
+- 4 new skills to build: github-io, file-splitter, evidence-marker, bulk-renumber
+- 2 additional skills to build: citation-miner, sensory-coherence-checker
+- 9 existing skills to update
+- Commit guarantee protocol
+- Revised session count: 25 (was 23)
+- Phase sequence: 0 (Ecosystem) → 1 (Research) → 2 (Structure) → 3 (Content) → 4 (QA)
+
+---
 
 ## 0. Directive Register
 
