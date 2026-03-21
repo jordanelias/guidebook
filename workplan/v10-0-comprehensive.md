@@ -1,3 +1,5 @@
+# SUPERSEDED by workplan/v10-0-integrated.md (2026-03-20 23:00)
+
 # Workplan: Guidebook v10.0 Comprehensive Revision
 
 **Created:** 2026-03-20 21:00
