@@ -432,3 +432,43 @@ CONDITION: Any session where a named workplan item (e.g. WS-1 Pre-session, BPC-1
 ACTION: List item as "{code}-DONE" in session YAML completed_items block. This is the canonical completion record — workplan files on GitHub are updated where they exist; /mnt/project/ workplan files are read-only and cannot be edited.
 DATE: 2026-03-19 20:00
 
+
+RULE: v10.0 Part Renumbering. Old Part 8 (Conflict Resolutions) absorbed into Part 4. Old Part 9 → Part 8. Old Part 10 → Part 9. Old Part 11 → Part 10. Old Part 12 → Part 11. Old Part 13 → Part 12. Section numbering follows Part number: Part N uses §N.x.
+CONDITION: All documents, cross-references, skill triggers, and workplan references from v10.0 onward.
+ACTION: Apply new Part numbering. Update all §-references. See workplan/v10-0-comprehensive.md §0.1 for full map.
+DATE: 2026-03-20 21:00
+
+RULE: No BAR in Volume I. Large body size provisions belong exclusively in the Supplementary Volume. BAR is not mentioned, referenced, or cross-referenced anywhere in Volume I (Parts 1–3).
+CONDITION: All Volume I content in v10.0 and subsequent.
+ACTION: Delete any BAR mention, redirect, or footnote in Parts 1–3. BAR row/column removed from co-occurrence matrix.
+DATE: 2026-03-20 21:00
+
+RULE: Evidence specification markers. ● (filled circle) = evidence-based specification (Tier 1–6 evidence exists). ○ (empty circle) = inferred from clinical reasoning or expert consensus (evidence gap disclosed). The distinction is noted at the beginning of each volume.
+CONDITION: All prescriptive specifications in Parts 2, 5, 6, 7, and Appendices B/C.
+ACTION: Every specification sentence carries either ● or ○. Unmarked specifications are errors.
+DATE: 2026-03-20 21:00
+
+RULE: Tier defaults for building types. Public building with unknown population = Tier 0. Public building with identified disabled populations = Tier 1. Residential home = Tier 2 (every person lives somewhere; every residence should tailor itself to the people who live there).
+CONDITION: §1.4.3, §4.8, and any tier-assignment guidance.
+ACTION: Apply residential = Tier 2 default throughout. Residential matrices operate at Tier 2 assumption unless stated otherwise.
+DATE: 2026-03-20 21:00
+
+RULE: Part 2 disability categories sorted alphabetically by code.
+CONDITION: Part 2 in v10.0 and subsequent.
+ACTION: Order: DBL, DEAF, DEM, IntD, MOB, NDV, NDV/MH, NEU, OFS, PAIN, UPL, VIS. Renumber §2.1–§2.12 accordingly.
+DATE: 2026-03-20 21:00
+
+RULE: CRPD Articles 3, 4.3, and 9 quoted in full in §1.7.
+CONDITION: Part 1 §1.7 CRPD Framework Alignment in v10.0 and subsequent.
+ACTION: Insert quoted blocks of CRPD Article 3 (General Principles), Article 4.3 (participation clause), and Article 9 (Accessibility).
+DATE: 2026-03-20 21:00
+
+RULE: All Part 7 items are designed to be accompanied by a technical diagram, drawing, or illustration. Where illustrations are not yet provided, add "[Illustration: to be provided]" note.
+CONDITION: All Part 7 item specifications including Appendix B and C items.
+ACTION: Add illustration note to each item. Remove note only when illustration is provided.
+DATE: 2026-03-20 21:00
+
+RULE: Each Part produces its own .md file. Each Item Specification Library Category produces its own .md file. Master document is assembled from parts.
+CONDITION: v10.0 file architecture.
+ACTION: Files stored at parts/v10/{filename}.md on GitHub. Assembly via chunk-assembler.
+DATE: 2026-03-20 21:00
