@@ -35,6 +35,34 @@ description: >
 
 ---
 
+## v10.1 Numbering Expectations
+
+Section numbering follows Part number. Part N uses §N.x subsections.
+
+| Part | Expected H2 pattern | Expected H3 pattern | Notes |
+|---|---|---|---|
+| 1 | §1.1–§1.x | §1.1.1–§1.x.x | Foundations |
+| 2 | §2.1–§2.12 | §2.x.x | Disability categories; alphabetical by code |
+| 3 | §3.1–§3.x | §3.x.x | Multiple categories |
+| 4 | §4.1–§4.x | §4.x.x | Synthesis and sequencing |
+| 5 | §5.1–§5.x | §5.x.x | Residential matrices |
+| 6 | §6.1–§6.x | §6.x.x | Non-residential matrices |
+| 7 | Category A–K | Item codes A-01, B-01, ..., K-01 | Item Specification Library |
+| 8 | §8.1–§8.8 | §8.x.x | Cross-Population Resolution (NEW) |
+| 9 | §9.1–§9.x | §9.x.x | Engineering and Coordination |
+| 10 | §10.1–§10.5 | §10.x.x | Interdisciplinary Design Team |
+| 11 | §11.1–§11.x | §11.x.x | DAR |
+| 12 | §12.1–§12.x | §12.x.x | Economics |
+| 13 | §13.1–§13.x | §13.x.x | Case Studies |
+| Apps | Appendix A–E | — | Back matter |
+| Supp | Supp. §1–§4 | — | Supplementary Volume |
+
+Flag as 🔴 HIGH any section where the §-prefix does not match its Part number (e.g., §6.x appearing in Part 5 content).
+
+When operating on per-Part files (`parts/v10/*.md`): validate numbering within the Part file scope. Cross-Part numbering conflicts are detected only on the assembled master document.
+
+---
+
 ## Steps
 
 **Stage 1 — Build Structural Map (Haiku)**
