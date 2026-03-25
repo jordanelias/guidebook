@@ -16,7 +16,7 @@ description: >
 
 ## Flag Categories
 | Code | Flag | Examples |
-|------|------|---------|
+|------|------|---------| 
 | MEDICAL_MODEL | Diagnosis as design rationale | "blind people need...", "persons with dementia require..." |
 | COMPLIANCE_COST | Disability as cost | "accommodation expense", "cost of providing access" |
 | PASSIVE_CENTERING | Disability as problem | "inaccessible to wheelchair users" (→ "design excludes...") |
@@ -24,11 +24,32 @@ description: >
 | CAPABILITY_DEFICIT | Deficit language | "suffers from", "wheelchair-bound", "confined to" |
 | CRPD_INCONSISTENT | Rights framing absent | access as charity/accommodation, not right (CRPD Art.9/19) |
 | UNIVERSAL_EROSION | Universal design undermined | "disabled-friendly features", "special accessible route" |
+| BAR_IN_VOLUME_I | BAR reference in Volumes 1–3 | Any mention of BAR, bariatric, or large body size provisions outside Supplementary Volume. BAR is not a main-taxonomy code. |
+| MARKER_FRAMING | Evidence marker misuse | ● on a sentence with no citation; ○ without gap disclosure; marker on non-prescriptive text |
 
 Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf)
 
+## BAR-in-Vol-I Check (v10.1 addition)
+
+Scan all input text for:
+- The string "BAR" used as a population code or category label
+- "bariatric" as a design category reference (not as a clinical descriptor in evidence citations)
+- "large body size" in specification or matrix contexts (acceptable in Supplementary Volume only)
+- BAR row/column in any co-occurrence matrix, application matrix, or population table
+- Cross-references to "Category J" or "J-01" through "J-05" in Volumes 1–3
+
+Any match in Volume I, II, or III content → flag as BAR_IN_VOLUME_I with 🔴 HIGH severity.
+
+## Evidence Marker Awareness (v10.1 addition)
+
+When scanning text that contains ● or ○ markers:
+- Check that ● sentences have a corresponding citation in the evidence table or inline
+- Check that ○ sentences include a gap disclosure or `[Expert consensus]` note
+- Flag markers on non-prescriptive text (definitions, rationale, cross-references) as MARKER_FRAMING
+- Do not flag the markers themselves as framing issues — they are an evidence system, not a framing choice
+
 ## Steps
-1. Scan for instances of each flag category. List: exact quote · location · proposed code.
+1. Scan for instances of each flag category (including BAR_IN_VOLUME_I and MARKER_FRAMING). List: exact quote · location · proposed code.
 2. Confirm/reject each. Assign severity: 🔴 HIGH (published; credibility risk) · 🟡 MED (ambiguous) · 🟢 LOW (editorial). Draft reframe.
 3. Pass 2: re-read CRPD Art.9 + social model definition. Confirm/upgrade/downgrade each Pass 1 flag.
 4. Output:
