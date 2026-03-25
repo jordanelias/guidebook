@@ -10,7 +10,7 @@ description: >
 ---
 
 **Model:** Sonnet 4.6
-**GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
+**GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
 **All timestamps: `YYYY-MM-DD HH:MM`**
 
 ## Steps
@@ -25,7 +25,9 @@ Compile from conversation history:
 - `multilingual-research` LOG calls completed or missed
 
 ### 1b. Reconcile state files against session work
-Run immediately after Step 1. For each file: GET from GitHub, check against session work, fix inline, PUT back. Cannot fix → BLOCKER.
+Run immediately after Step 1 — before extracting patterns or writing rules.
+
+For each file below: GET current content from GitHub. Check against session work compiled in Step 1. Fix any discrepancy inline (update the file, PUT back). If a fix cannot be completed inline, flag as BLOCKER — do not silently skip.
 
 **gap_register.md**
 - Every gap described as raised this session → entry exists with correct ID, priority, status OPEN, and today's timestamp.
@@ -53,6 +55,15 @@ Run immediately after Step 1. For each file: GET from GitHub, check against sess
 - No prior session's `next_action` is being skipped without explanation in the current session YAML.
 - No duplicate filename for the current session timestamp.
 - Fix: add explanation to `next_action` field; suffix `-b` if collision.
+
+**parts/v10/ directory** (v10.1 addition)
+- If any per-Part files were edited this session: verify manifest line/heading counts still match. Deviation → 🟡 WARNING (manifest needs update).
+- If new Part files were created: verify manifest includes them.
+- If file-splitter ran: verify manifest exists and is complete.
+
+**workplan/ directory** (v10.1 addition)
+- If Decision Register was updated this session: verify `workplan/v10-1-decision-register.md` reflects changes.
+- If Change Orders were issued: verify `references/change-orders/` contains the CO file.
 
 **Reconciliation output** — compact table, reported to user and included in session YAML:
 
@@ -128,4 +139,6 @@ next_action:
 - Next action
 - GitHub write status (✓ / ⚠ fallback)
 
-**Fallback:** PUT fails after one retry → output as fenced code block with manual paste instructions. Never drop state.
+---
+
+**Fallback:** if any PUT fails after one retry — output the relevant content as a fenced code block with manual paste instructions. Never silently drop state.
