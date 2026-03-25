@@ -36,3 +36,50 @@ Status codes: CONFIRMED · MISMATCH · UNNUMBERED · UNRESOLVABLE · UNVERIFIED 
 
 ## Connectors
 PubMed, Consensus, Scholar Gateway — activate for verification only.
+
+---
+
+## HARVEST Mode (v10.1 addition)
+
+When triggered with "HARVEST" or "bibliography assembly": extract every unique citation from the document scope and produce a structured bibliography.
+
+**Procedure:**
+1. Scan all inline citations, evidence tables, and Key Citations fields across scope.
+2. Deduplicate by author-year-title (fuzzy match on title to catch minor variations).
+3. For each unique citation:
+   - Verify existence via PubMed/Scholar Gateway/Consensus
+   - Standardise format: `Author(s). (Year). Title. *Journal/Publisher*, Volume(Issue), Pages. DOI/URL`
+   - Classify by evidence tier (1–6, Co-1, Co-2)
+   - Record all item codes that cite this source
+4. Produce bibliography in two formats:
+   - **Alphabetical** (for Appendix: Bibliography)
+   - **By evidence tier** (for internal reference)
+
+**Output:**
+```markdown
+## Bibliography — HARVEST
+**Date:** YYYY-MM-DD HH:MM
+**Scope:** [document/volume/part]
+**Total unique citations:** [N]
+**Verified:** [N] · **Unverified:** [N] · **Not found:** [N]
+
+### Alphabetical
+[Standard bibliography entries]
+
+### By tier
+#### Tier 1 / Co-1
+[entries]
+#### Tier 2 / Co-2
+[entries]
+...
+
+### Citation-to-item map
+| Citation | Items citing | Tier |
+|---|---|---|
+
+### Unverified citations
+| Citation | Items citing | Issue |
+|---|---|---|
+```
+
+HARVEST mode resolves GAP-CR-01 (empty bibliography). Run on assembled document during Phase 5.
