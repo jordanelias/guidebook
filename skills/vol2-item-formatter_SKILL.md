@@ -85,6 +85,10 @@ section as applicable.]
 ### Specifications
 - Bulleted list.
 - One claim per bullet. ≤25 words per bullet.
+- **Evidence markers (mandatory):** Every specification bullet carries exactly one marker prefix.
+  - `● ` (filled circle + space) = evidence-based — Tier 1–6 source directly supports this value
+  - `○ ` (empty circle + space) = inferred — clinical reasoning, expert consensus, or extrapolation; gap disclosed
+  - See `evidence-marker` skill for classification criteria.
 - Dimensions in mm. Loads in kN. Contrast as LRV delta (≥30 LRV).
 - Include unit on every numeric value.
 - Where a spec references another item, include the item code in parentheses: `(VI-03)`.
@@ -100,7 +104,7 @@ section as applicable.]
 - One of three penalty levels: `HIGH` · `MODERATE` · `LOW`
 - Use the compound form: `**Retrofit:** HIGH penalty` or `**Retrofit:** LOW–MODERATE penalty`
 - Follow with one to three sentences explaining the structural or technical driver of the penalty.
-- Always cross-reference to Part VII (DAR provisions) or Part VIII §8.4 (retrofit case studies) as applicable.
+- Always cross-reference to Part 11 (DAR provisions) or Part 13 §13.x (case studies) as applicable.
 - Do not estimate costs in dollar figures unless a verified citation supports the figure.
 
 ### Key Citations
@@ -129,9 +133,10 @@ Run before finalising any item output:
 | Applicable Groups | Canonical codes only; no BAR; no UPL standalone |
 | Description length | ≤80 words |
 | Description register | Soft imperative subjunctive throughout |
-| Specifications | One claim per bullet; ≤25 words; units on all numeric values |
+| Specifications | One claim per bullet; ≤25 words; units on all numeric values; ● or ○ marker on every bullet |
+| Evidence markers | Every spec bullet has exactly one ● or ○ prefix; no unmarked bullets |
 | Design Stage | One of five permitted values |
-| Retrofit | Penalty level stated; structural driver explained; cross-ref to Part VII or VIII |
+| Retrofit | Penalty level stated; structural driver explained; cross-ref to Part 11 or Part 13 |
 | Key Citations | ≥2 verified citations; unverified flagged |
 | Cross-reference | Semicolon-separated; no BAR main-volume codes |
 
