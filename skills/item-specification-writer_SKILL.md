@@ -64,13 +64,19 @@ Every item block follows this structure, in this order:
 
 #### Specification
 
-[Ideal provision — state the best achievable outcome first]
+● or ○ [Ideal provision — state the best achievable outcome first]
 
-[Best practice — what this guidebook targets for new build]
+● or ○ [Best practice — what this guidebook targets for new build]
 
-[Acceptable — where spatial or structural constraint exists; always specify what constraint justifies it]
+● or ○ [Acceptable — where spatial or structural constraint exists; always specify what constraint justifies it]
 
-[Minimum — only where a hard floor is needed; note that this is a floor, not a target]
+● or ○ [Minimum — only where a hard floor is needed; note that this is a floor, not a target]
+
+**Evidence markers (mandatory):** Every prescriptive sentence carries exactly one marker.
+- **●** (filled circle) = evidence-based — at least one Tier 1–6 source directly supports this value
+- **○** (empty circle) = inferred — derived from clinical reasoning, expert consensus, or extrapolation; gap disclosed
+- Non-prescriptive sentences (rationale, context, cross-references) carry no marker.
+- See `evidence-marker` skill for classification criteria and upgrade protocol.
 
 #### Evidence basis
 
@@ -86,7 +92,40 @@ Every item block follows this structure, in this order:
 
 #### Retrofit note
 **Retrofit:** [HIGH / MODERATE / LOW penalty] — see §8.4.[X]
+
+#### Illustration
+**[Illustration: to be provided]**
+Remove this note only when an actual illustration is supplied. Every Part 7 item (including Appendix B and C items) is designed to be accompanied by a technical diagram, drawing, or illustration.
 ```
+
+---
+
+## K-Category Template (v10.1 addition — Sensory Environment)
+
+Category K items address sensory environment specifications (lighting, acoustics, thermal, olfactory). K-items follow the standard item format above with these additions:
+
+```markdown
+### K-[NN] [Title — Descriptive Only]
+
+**Population codes:** [code list — K-items typically affect NDV/SENS, NDV/AUT, DEM, VIS, DEAF, NEU]
+**Typology:** Residential · Non-Residential · Both
+**Design stage:** [SD / DD / TA / Construction / Post-occupancy]
+**Sensory domain:** Acoustic · Visual · Thermal · Olfactory · Tactile · Multi-sensory
+
+#### Specification
+[Standard ●/○ marked specification sentences]
+
+#### Sensory interaction notes
+[Where this item's provision interacts with other sensory domains — e.g., acoustic treatment affecting thermal mass, lighting affecting NDV/SENS overstimulation. Cross-reference Part 8 §8.4 conflict resolutions where applicable.]
+
+#### Evidence basis
+[Standard evidence table]
+
+#### Cross-population conflicts
+[K-items frequently produce cross-population conflicts. Identify all known conflicts and cross-reference Part 8 §8.4 resolution entries. Flag unresolved conflicts for Part 8 development.]
+```
+
+K-category codes: K-01 through K-[NN]. Numbering is sequential within the category.
 
 ---
 
