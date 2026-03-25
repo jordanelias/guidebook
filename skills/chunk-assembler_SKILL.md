@@ -21,6 +21,31 @@ description: >
 
 ## 0. Pre-Assembly Requirements
 
+**Two assembly modes exist. Select based on input architecture:**
+
+| Mode | Input | When |
+|---|---|---|
+| **Legacy (single-doc)** | Section map + working chunk files | Pre-v10.1 documents; single master file |
+| **Manifest (multi-file)** | `parts/v10/manifest.md` + per-Part files on GitHub | v10.1 and subsequent; per-Part file architecture |
+
+### Manifest Mode (v10.1 — default from v10.1 onward)
+
+1. GET `parts/v10/manifest.md` from GitHub using github-io.
+2. Parse manifest table to extract ordered file list with expected line/heading counts.
+3. GET each file in manifest order using github-io.
+4. Concatenate in manifest order with no separator between files (each file already contains its own headings).
+5. Remove per-file header comments (`<!-- Part NN: ... -->`) during assembly.
+6. Proceed to Cross-Reference Integrity Check (§2) on assembled output.
+
+**Part 7 sub-assembly:** Part 7 category files (`part-07/cat-A.md` through `cat-K.md`) are assembled in alphabetical order within Part 7's position in the manifest. The manifest lists Part 7 as a single entry; category files are sub-entries.
+
+**Validation in manifest mode:**
+- Each file in manifest must exist on GitHub — missing file → 🔴 STOP
+- Line count of each file must be within ±5% of manifest's recorded count — deviation → 🟡 WARNING (file may have been edited since split)
+- Heading count per file checked against manifest — mismatch → 🟡 WARNING
+
+### Legacy Mode (pre-v10.1)
+
 Confirm all four before starting:
 
 | Requirement | Check |
@@ -38,7 +63,20 @@ If any check fails, stop and report to user.
 
 **Assembly order is derived entirely from the current section map — never hardcoded.**
 
-Read the section map to determine volume, part, and section sequence. If the section map and a chunk's internal heading conflict, flag — do not silently resolve.
+Read the section map to determine:
+- Volume sequence (H1 headings)
+- Part sequence within each volume (H2 headings)
+- Section sequence within each part (H3 headings)
+
+Assemble in the order the section map specifies. If the section map and a chunk's internal heading conflict, flag the conflict — do not silently resolve it.
+
+**Standard document zones** (derive positions from section map; do not assume fixed positions):
+1. Front matter (title, version block, contents, section map, quick reference, reading paths)
+2. Volume 1 parts in section-map order
+3. Volume 2 parts in section-map order
+4. Volume 3 parts in section-map order
+5. Supplementary volumes in section-map order
+6. Back matter (bibliography, glossary, index, appendices)
 
 ---
 
