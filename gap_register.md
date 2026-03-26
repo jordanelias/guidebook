@@ -178,6 +178,8 @@ GAP-CR-07 | P2 | OPEN | critique-report-writer | Appendix B/C | 7x 'Part 11I §8
 GAP-CR-08 | P2 | OPEN | critique-report-writer | Entry Path I | 'Developed Design' should be 'Design Development' | 2026-03-20 21:00
 GAP-CR-09 | P2 | OPEN | critique-report-writer | §4.4 | 'Commissioning' should be 'Ready for Occupancy' | 2026-03-20 21:00
 GAP-CR-10 | P2 | OPEN | critique-report-writer | §12.3 | Subsection ordering (§12.3.4 before §12.3.1) | 2026-03-20 21:00
-GAP-CR-11 | P1 | OPEN | critique-report-writer | §2.12 IntD | Evidence base is PLACEHOLDER | 2026-03-20 21:00
+GAP-CR-11 | P1 | CLOSED-ELIMINATED | critique-report-writer | §2.12 IntD | Evidence base is PLACEHOLDER — IntD eliminated as standalone category per CO-0002; provisions proxied through DEM/NDV | 2026-03-25 19:35
 GAP-CR-14 | P2 | OPEN | critique-report-writer | §1.5 | Co-2 tier defined but empty — no sources listed | 2026-03-20 21:00
 GAP-CR-16 | P2 | OPEN | critique-report-writer | §4.3 | Sensory coherence described but not operationalised — needs practitioner tool | 2026-03-20 21:00
+
+GAP-CO02-01 | P2 | OPEN | find-and-replace | All Parts | CO-0002 execution pending: delete IntD column from 8 matrices, delete §2.12, convert 7 NR typology blocks to DEM/NDV proxy notes, update front matter. See CO-0002-2026-03-25-1935.md | 2026-03-25 19:35
