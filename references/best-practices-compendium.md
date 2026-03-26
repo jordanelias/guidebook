@@ -5,7 +5,7 @@
 ---
 
 ## pain-ofs-built-environment-design
-**Updated:** 2026-03-26 16:50  **Evidence tier range:** 1–5 (THIN BASE — GAP-029 P2 OPEN)  **Opus synthesis:** NO
+**Updated:** 2026-03-26 23:00  **Evidence tier range:** 1–5 (THIN BASE — GAP-029 P2 OPEN)  **Opus synthesis:** NO
 **Status:** PROVISIONAL — 10/24 jurisdictions NOT-RUN; 7/14 languages Co-1 not attempted. Structural evidence gap: zero built-environment spatial parameters exist for PAIN/OFS in any jurisdiction or language.
 
 ### Concept boundary notes
@@ -69,9 +69,9 @@ NICE-NG206-2021, BatemanHorne-CCG-2025, PMC6260403-2019, Strassheim-2018, CDC-ME
 
 
 ### Bottom-up findings (functional deficit pass)
-**Status:** PARTIAL — 6/12 scenarios searched (bathroom×2, kitchen, circulation, bedroom, service point)
-**Last run:** 2026-03-26 17:05
-**Scenarios searched:** 6 | **Novel:** 5 | **Refines:** 3 | **Contradicts:** 0 | **Tier 0 candidates:** 2
+**Status:** COMPLETE — 12/12 scenarios searched
+**Last run:** 2026-03-26 23:00
+**Scenarios searched:** 12 | **Novel:** 18 | **Refines:** 8 | **Contradicts:** 0 | **Tier 0 candidates:** 4
 
 | Scenario | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
 |---|---|---|---|---|---|---|---|
@@ -92,4 +92,27 @@ NICE-NG206-2021, BatemanHorne-CCG-2025, PMC6260403-2019, Strassheim-2018, CDC-ME
 1. Storage zone 380–1220 mm — serves ALL populations (MOB, PAIN, OFS, aging, UPL)
 2. Rest seating on circulation routes — serves MOB, OFS, PAIN, DEM, aging (universal benefit; only interval differs by population)
 
-**Environments remaining:** retreat space, utility/laundry, outdoor, workplace (6 scenarios deferred to next session)
+| d240+PEM/overload→retreat | Retreat/reset room | Mandatory in public buildings >500 m²; recline seating; dimmable lighting; acoustic panels; user-controllable temp; adjacent WC | PEM crash; overload; PAIN flare | Arch&Access/Deakin OT/Amaze 2025 | Co-1 | NOVEL | OFS,PAIN,NDV,NEU,DEM,MH (T0) |
+| d640+fatigue→laundry | Washer pedestal height | ~300 mm pedestal; opening 380–915 mm | Reduces bending PAIN/OFS | US Access Board; OT energy consv. | 4-6 | NOVEL | MOB |
+| d640+fatigue→laundry | Seated folding surface | 813–864 mm; roll-under knee clearance | Seated sorting energy consv. | OT energy conservation; UD guides | Co-2 | NOVEL | MOB,aging |
+| d450+OI→outdoor | Shade mandate | Mandatory shade at outdoor rest points; continuous on primary routes | Heat→vasodilation→OI | Bateman Horne 2025; CDC 2024 | Co-2/3 | NOVEL | MOB,DEM,aging |
+| d450+OI→outdoor | Outdoor seating interval | 15–20 m exposed; 25–30 m shaded; recline | Heat compounds OFS fatigue | Strassheim 2018; Bateman Horne 2025 | 3 | NOVEL | MOB,DEM |
+| d450+OI→outdoor | Surface thermal properties | Non-heat-retaining; light pavement | Radiant heat worsens OI | Inferential from OI evidence | 4 | NOVEL (LOW) | — |
+| d620+OI/pain→workplace | Lie-down room | Dedicated recline surface; accessible from work area | PEM crash→supine | JAN POTS; Dysautonomia Support 2022 | 2/5 | NOVEL | NDV,NEU |
+| d620+OI/pain→workplace | Break room seating | Backed/armed; no bar-height-only counters | OFS cannot stand at bar | POTS UK; JAN POTS | 2 | NOVEL | MOB |
+| d620+OI/pain→workplace | Thermal zoning | Individual zone; desk fan; ≤21°C | Heat intolerance OFS | Strassheim 2018; POTS UK | Co-2 | NOVEL | — |
+| d410+OI→bedroom | Head-up tilt capacity | Frame: 100–300 mm head elevation | Reduces nocturnal OI | Raj 2020 CCS; PMC11521494 | 3 | NOVEL | — |
+| d410+OI→bedroom | Emergency call reach | Hard-wired/wireless; reachable supine | Syncope; severe PEM | OT home mod; Bateman Horne 2025 | Co-2 | NOVEL | MOB,DEM |
+| d410+OI→bedroom | Night lighting bed→WC | Motion-sensor low-level path | OI fall risk; DEM wayfinding | OT home mod guides | Co-2 | REFINES | DEM,aging |
+| d410+OI→bedroom | Bed height adjustable | 450–550 mm; knee ~90° seated | Gradual supine→upright OFS | OT home mod; aging-in-place | Co-2 | REFINES | MOB,aging |
+| d465+OFS→entrance | Entrance recline seating | Within 5 m main entrance; in+out | Recovery on arrival OFS | Strassheim 2018; energy consv. | Co-2 | NOVEL | PAIN,MOB,DEM (T0) |
+| d465+OFS→entrance | Vestibule cooling | Climate-controlled transition zone | Temp change triggers OI | Inferential from OI evidence | 4 | NOVEL | — |
+| d465+OFS→entrance | Auto doors primary entrance | Power-assisted | Energy depletion from door force | ADA; OT energy conservation | 5-6 | REFINES | MOB |
+
+**Tier 0 candidates (cumulative):**
+1. Storage zone 380–1220 mm — serves ALL populations
+2. Rest seating on circulation routes — serves MOB, OFS, PAIN, DEM, aging
+3. Retreat/reset room in public buildings >500 m² — serves OFS, PAIN, NDV, NEU, DEM, NDV/MH (6+ codes)
+4. Entrance rest seating (recline-capable) within 5 m — serves OFS, PAIN, MOB, DEM, aging
+
+**Environments remaining:** NONE — 12/12 scenarios complete
