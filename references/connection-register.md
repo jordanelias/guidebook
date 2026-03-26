@@ -1,7 +1,7 @@
 # Connection Register
 
 **Created:** 2026-03-26 18:10  
-**Last updated:** 2026-03-26 18:30
+**Last updated:** 2026-03-26 19:00
 
 ---
 
@@ -565,4 +565,182 @@ Document as a conflict requiring resolution. Possible mitigations: anti-reflecti
 - [ ] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
 - [x] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+
+---
+
+## CON-0021 [2026-03-26 19:00]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** ALL
+**Items involved:** Part III (design hierarchy), Tier 0 doctrine
+**Gap register items:** NONE (new theoretical framework connection)
+
+### Connection description
+UD2024 (Oslo, November 2024) proposed "Reduction of Fear" as an 8th Universal Design principle, arguing that Ron Mace's Principle 5 ("Tolerance for Error") places blame on the user ("error") rather than the environment. The paper documents fear of falling (DEM, MOB, NEU), fear of not finding a toilet (DEM, OFS), fear of forgetting procedures (DEM, NEU), and fear of being made to feel incapable (NDV/MH, all populations) as design-relevant concerns that current UD principles do not address. This maps directly onto the guidebook's Tier 0 provisions: the environmental refuge (CON-0019), essential facility sightline (CON-0018), and rest seating intervals (CON-0014) all reduce fear as their primary mechanism of action, but the guidebook does not frame them this way. Naming "fear reduction" as a design principle would unify multiple Tier 0 provisions under a single theoretical justification from environmental psychology.
+
+### Evidence basis
+| Source | Tier | Field | Not yet in guidebook? |
+|---|---|---|---|
+| UD2024 Proceedings (IOS Press 2024) — "Reduction of Fear" paper (Ireland cross-disciplinary group) | Tier 5 (conference proceedings, peer-reviewed) | Universal design theory | YES — not cited |
+| Norway Declaration on UD 2024 | Policy | Universal design | YES — not cited |
+| NDA Ireland research on fall detection technologies | Tier 5 | Gerontology/UD | YES — not cited |
+
+### Proposed synthesis direction
+Cite the "Reduction of Fear" proposal in Part III as theoretical support for the guidebook's Tier 0 provisions. Frame environmental refuge, facility sightline, rest seating, and consistent spatial layout as fear-reduction provisions, not merely functional accommodations. This shifts the framing from "compensating for deficit" to "designing environments that do not generate fear" — which aligns with the social model.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0022 [2026-03-26 19:00]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** NDV/MH, DEM, NEU, NDV/AUT
+**Items involved:** NDV/MH BPC (TID), environmental refuge (CON-0019)
+**Gap register items:** NONE (new evidence connection)
+
+### Connection description
+Trauma-informed design (TID) has emerged as a distinct field with its own evidence base, primarily targeting housing for people experiencing homelessness and domestic violence. A scoping review through the lens of neuroscience (Vickery et al. 2022, PMC9658651) identifies three design domains: safety/security, control, and enriched environments. These map directly onto the guidebook's provisions but from a completely different research tradition. "Safety/security" = consistent layout + no dead ends + sightlines (DEM/NEU/NDV provisions). "Control" = user environmental control H-02 (CON-0017). "Enriched environments" = biophilic elements + nature connection (CON-0010/CON-0015). The NDV/MH BPC mentions TID but does not cite the neuroscience evidence (amygdala hyperactivation, cortisol response to environmental unpredictability) that provides biological mechanism for why these provisions work. The convergence is significant: TID research independently validates the same spatial principles the guidebook derives from disability-specific evidence.
+
+Additionally, Shopworks Architecture published "Designing for Dignity: Elements of Practice" (2025) with 22 elements of dignified design — and a 2025 empirical study (MDPI Soc. Sci. 14(7):417) provides quasi-experimental evidence from 5 permanent supportive housing sites, finding that TID features improved relationships and self-awareness but showed complex patterns for safety, suggesting design alone is insufficient without programmatic support.
+
+### Evidence basis
+| Source | Tier | Field | Not yet in guidebook? |
+|---|---|---|---|
+| Vickery et al. 2022 (PMC9658651) — TID scoping review with neuroscience lens | Tier 3 | Architecture + neuroscience | YES — not cited |
+| Shopworks "Designing for Dignity" (2025) — 22 elements | Tier 2/5 | Architecture practice | YES — not cited |
+| MDPI Soc. Sci. 2025 — quasi-experimental TID PSH study | Tier 1 (quasi-experimental) | Housing/social work | YES — not cited |
+| Perkins&Will TID healthcare guidelines (2024) | Tier 5 | Healthcare design | YES — not cited |
+
+### Proposed synthesis direction
+Cross-reference TID neuroscience evidence as mechanistic support for the guidebook's spatial provisions. The amygdala-mediated stress response to environmental unpredictability explains WHY consistent layout works for DEM/NEU/NDV — it is not just cognitive convenience but biological stress reduction. Add TID sources to NDV/MH BPC and to the environmental refuge specification (CON-0019). Note the 2025 empirical finding that design alone is insufficient — supports the guidebook's Tier 2 co-design doctrine.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0023 [2026-03-26 19:00]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** NDV/AUT, NDV/ADHD, NDV/SENS
+**Items involved:** A-16 (Sensory Room), NDV BPC
+**Gap register items:** NONE (new evidence)
+
+### Connection description
+Al-Harasis, Jabi & Sharmin (2025, Building Research & Information) published a taxonomy of 83 sensory-informed architectural design qualities for autism, based on review of 76 sources. Critical finding: current autism design frameworks (including ASPECTSS) rely on "intuition sensory zoning as the main driver for spatial topology without quantifying the sensory drivers" and emphasise "interior design elements over spatial configuration." This is a direct critique of how the guidebook specifies A-16 and NDV provisions — qualitative parameters without quantified sensory driver hierarchy. The taxonomy provides a structured classification that could inform the guidebook's item specification approach for NDV spaces. Additionally, the taxonomy identifies 83 distinct design qualities — significantly more granular than the guidebook's current NDV coverage.
+
+### Evidence basis
+| Source | Tier | Field | Not yet in guidebook? |
+|---|---|---|---|
+| Al-Harasis et al. 2025 (Building Research & Information 53(4):532-551) | Tier 3 | Architecture + sensory science | YES — published Feb 2025 |
+| Caniato et al. 2022a/b (Energy Reports) — sensitivity drivers for ASD indoor comfort | Tier 3 | Indoor environment | YES — not cited |
+| SENSHOME/BeSENSHome project (Austria/Italy) — smart home for autism | Tier 3 | Assistive technology + architecture | YES — not cited |
+
+### Proposed synthesis direction
+Use the Al-Harasis taxonomy to audit the guidebook's NDV item specifications for coverage gaps against the 83 identified design qualities. Prioritise the taxonomy's finding that spatial configuration (layout topology, not just finish materials) is under-specified. This would feed into a future item-specification-writer run for NDV items. Add to NDV BPC as a structural reference.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0024 [2026-03-26 19:00]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** ALL
+**Items involved:** Environmental refuge (CON-0019), biophilic outdoor (CON-0015), NDV/MH retreat
+**Gap register items:** NONE (new theoretical connection)
+
+### Connection description
+Prospect-refuge theory (Appleton 1975; Hildebrand 1991) — the human need for environments providing both clear outward views (prospect) and sheltered protected spaces (refuge) — provides theoretical grounding from environmental psychology for several of the guidebook's cross-population provisions. The "environmental refuge" room (CON-0019) is literally a refuge space. The facility sightline principle (CON-0018) is a prospect provision. The biophilic outdoor space with looped path and seating (CON-0015) combines prospect (garden views) and refuge (sheltered seating). The guidebook currently derives these provisions from disability-specific clinical evidence but does not cite the environmental psychology framework that explains why they work for ALL populations — including non-disabled occupants. Connecting to prospect-refuge theory strengthens the Tier 0 argument: these are not disability accommodations but fundamental human spatial needs that disability populations make visible.
+
+### Evidence basis
+| Source | Tier | Field | Not yet in guidebook? |
+|---|---|---|---|
+| Appleton 1975 "The Experience of Landscape" | Foundational theory | Environmental psychology | YES — not cited |
+| Dosen & Ostwald 2016 — meta-analysis of 34 prospect-refuge studies | Tier 3 | Architecture + psychology | YES — not cited |
+| UD2024 Carpe Diem dementia village presentation (Bærum, Norway) — prospect-refuge in dementia care | Tier 5 / Co-1 | Architecture + dementia care | YES — not cited |
+| Frontiers in Psychology 2025 — healing landscape prospect-refuge balance | Tier 3 | Environmental psychology | YES — not cited |
+
+### Proposed synthesis direction
+Cite prospect-refuge theory in Part III (design hierarchy) as theoretical support for the guidebook's Tier 0 provisions. The theory provides a non-disability-specific explanation for why environmental refuge, facility sightline, and biophilic outdoor spaces are universal human needs — not disability-specific accommodations. This strengthens the social model framing: disability populations do not need "special" spaces; they need spaces that fulfil fundamental human needs which conventional design has neglected.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0025 [2026-03-26 19:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Populations involved:** NDV/AUT, NDV/ADHD, NDV/SENS, VIS
+**Items involved:** Outdoor provisions, biophilic BPC
+**Gap register items:** NONE (new evidence domain)
+
+### Connection description
+Finnigan 2024 (Land 13(5):636) introduces the Sensory Responsive Environments Framework (SREF) based on 31 interviews with people with autism, ADHD, and dyslexia about their experiences in outdoor built environments. Key finding: outdoor landscape design for neurodivergent users is almost entirely unaddressed — existing frameworks (ASPECTSS, PAS 6463) focus on indoor environments. The guidebook's outdoor provisions (biophilic outdoor space, secure garden for DEM) do not address sensory-responsive outdoor design for NDV populations. SREF identifies: ambient environmental factors (wind, temperature, sun exposure), materiality (surface textures, visual complexity of materials), spatial design (openness vs enclosure gradient), and navigation (predictability of outdoor routes) as design domains. Additionally, a 2024 ScienceDirect study on park environments for visually impaired individuals in Guangzhou documents the sensory compensation mechanism — VIS users amplify auditory and tactile channels in outdoor environments, requiring different landscape design than sighted users.
+
+### Evidence basis
+| Source | Tier | Field | Not yet in guidebook? |
+|---|---|---|---|
+| Finnigan 2024 (Land 13(5):636) — SREF framework | Tier 3 (Co-1 qualitative) | Landscape architecture + NDV | YES |
+| Guangzhou VIS park study 2024 (Landscape and Urban Planning) | Tier 3 | Environmental psychology + VIS | YES |
+| Mostafa 2023 Venice Biennale — "sensory decolonization" concept | Co-1 | Architecture + NDV | YES |
+
+### Proposed synthesis direction
+Extend the guidebook's outdoor design provisions beyond biophilic and DEM secure garden to include sensory-responsive outdoor landscape design for NDV and VIS populations. The SREF framework provides a structured approach. Mostafa's "sensory decolonization" concept reframes outdoor sensory provision from accommodation to equity — sensory overstimulation in public space is as disabling as a flight of stairs.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0026 [2026-03-26 19:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Populations involved:** ALL
+**Items involved:** Part III (evidence hierarchy), methodology
+**Gap register items:** NONE (methodological connection)
+
+### Connection description
+Van Doorn et al. 2024 (Research in Autism Spectrum Disorders 113:102350) — scoping review of sensory adaptive environments (SAEs) for autistic children — finds "mixed evidence" and a critical methodological gap: "sensory adaptive environments are not tailored to the sensory needs of each child." This finding independently validates the guidebook's three-tier hierarchy: Tier 0/1 specifications are population-informed defaults that must be resolved through Tier 2 co-design for individual users. The SAE review confirms that generic sensory rooms (equivalent to Tier 1) have limited evidence; individualised sensory environments (equivalent to Tier 2) are more effective but under-researched. Piller et al. 2025 (Frontiers in Pediatrics 13:1720179) systematic review of sensory-based interventions confirms: "targeting a variety of sensory systems is more effective than targeting only one system" — supporting the guidebook's multi-sensory approach. Both reviews note "a lack of evidence on the impact of sensory environmental modifications" — confirming the guidebook's THIN-BASE flags on sensory room specifications are appropriate.
+
+### Evidence basis
+| Source | Tier | Field | Not yet in guidebook? |
+|---|---|---|---|
+| Van Doorn et al. 2024 (RASD 113:102350) — SAE scoping review | Tier 3 | OT + autism research | YES |
+| Piller et al. 2025 (Frontiers in Pediatrics 13:1720179) — SBI systematic review | Tier 3 | OT + paediatrics | YES |
+
+### Proposed synthesis direction
+Cite both reviews in the sensory room (A-16) evidence base as methodological support for the three-tier approach. The evidence confirms that generic sensory environments have mixed evidence (supporting Tier 1 as a starting point only) while individualised approaches show more promise (supporting Tier 2 as the resolution). Add to the NDV BPC evidence-auditor notes.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
 - [ ] Superseded by existing content — CLOSED
