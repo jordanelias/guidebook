@@ -125,6 +125,16 @@
 | Keall 2015 HIPI RCT | Forward | Keall 2021 MHIPI |
 | GoldingDay 2018 BATH-OUT | Both | 2 |
 
+### Bottom-up findings (functional deficit pass)
+| Scenario | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|---|
+| d420 + hemiplegia → WC | Paralysis-side vertical support bar position | 5cm from WC side edge, 15cm from front; 70-140cm height | Hemiplegic WC user — bar on affected side supports trunk, frees unaffected hand for clothing | Nakamura et al. 2009 (JA) | 1 | NOVEL | NEU→MOB/UPL |
+| d420 + hemiplegia → WC | Min lateral clearance from WC centerline | 45-50cm each side | Both front and lateral transfer; prioritize transfer side if constrained | Yamashita OT (JA) | Co-2 | NOVEL | NEU→MOB |
+| d420 + hemiplegia → WC | Grab bar height seat-relative | 28cm above seat surface; bilateral spacing 65-70cm clear | Auto-adapts to seat height variation | DIN 18040-1/-2 (DE) | 5-6 | REFINES | MOB→NEU |
+| d420 + hemiplegia → WC | Preferred grab bar orientation | Two vertical bars — smallest COP deviation (stroke/hip/healthy) | Ambulatory users with balance impairment | Kennedy et al. 2015 (CA) | 1 | REFINES | NEU→MOB |
+| d510 + seated → shower | All spatial parameters | Match existing BPC | PubMed THIN for shower spatial in OT intervention lit | Multiple (DE/EN) | 5-6 | CONFIRMS | — |
+| d530 + bilateral UPL → toileting | Bidet/wash-dry spatial envelope | Water supply ≤200mm, electrical ≤600mm from WC; wall reinforcement | Limited ROM users needing hands-free hygiene | Vasilakopoulou & Bridge 2019 (AU) | Co-2 | GAP FLAG | MOB/UPL→ALL |
+
 ### Key sources
 Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Sekiguchi2017 · Keall2015-Lancet · GoldingDay2018-BATH-OUT · DIN18040-2 · BS8300-2018 · GB50763-2012 · DL163-2006-PT · DM236-89-IT · 편의증진법-KR · Inter-BE · IWA-IE · CEUD-IE
 
