@@ -65,7 +65,7 @@ GAP-IMPL-03 | P2 | OPEN | multilingual-research | H-05 | Real-time captioned tra
 GAP-IMPL-04 | P2 | OPEN | citation-verifier | A-09 | Desmeules et al. (2003) incomplete citation — no volume/page/DOI. Confirm before publication. | 2026-03-18 20:00
 GAP-IMPL-05 | P2 | OPEN | citation-verifier | A-09 | Staud (2011) — verify PMID or DOI before publication. | 2026-03-18 20:00
 GAP-IMPL-06 | P3 | OPEN | multilingual-research | I-02 | Kitchen one-handed operation: single grey literature source only (ILCWA). Citation floor failure. | 2026-03-18 20:00
-GAP-STEP5-01 | P1 | OPEN | item-specification-writer | B-10 | SAFETY: seizure risk for photosensitive populations from VAD flash rate not disclosed. Required before publication. | 2026-03-18 20:00
+GAP-STEP5-01 | P1 | RESOLVED | item-specification-writer | B-10 | SAFETY: seizure risk for photosensitive populations from VAD flash rate not disclosed. Required before publication. | 2026-03-18 20:00
 GAP-STEP5-02 | P1 | CLOSED-RESOLVED | item-specification-writer | D-08 | Population conflation: IntD conflated with DEM/NDV under "cognitive difficulties". Clinically incorrect. Required before publication. | 2026-03-18 20:00
 GAP-STEP6-01 | P2 | CLOSED-RESOLVED | item-specification-writer | C-04 | Split required: C-04a (≥30 LRV general) + C-04b (≥40 LRV critical navigation). CONFLICTED per Dain 2022. | 2026-03-18 20:00
 GAP-STEP6-02 | P2 | CLOSED-RESOLVED | item-specification-writer | C-04/C-05 | Conflict resolution note required in Part IV. | 2026-03-18 20:00
