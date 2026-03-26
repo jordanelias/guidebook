@@ -105,12 +105,13 @@ opus_synthesis_triggered: false
 opus_synthesis_ref: "NONE"
 
 functional_deficit_pass:
-  status: NOT-RUN
-  last_run: null
-  scenarios_searched: 0
-  novel_findings: 0
-  refines_findings: 0
+  status: PARTIAL
+  last_run: 2026-03-26 17:05
+  scenarios_searched: 6
+  novel_findings: 5
+  refines_findings: 3
   contradicts_findings: 0
-  tier0_candidates: 0
-  environments_covered: []
-  environments_remaining: [bathroom, kitchen, bedroom, circulation, entrance, workplace, outdoor]
+  tier0_candidates: 2
+  environments_covered: [bathroom, kitchen, circulation, service-point]
+  environments_remaining: [retreat-space, utility-laundry, outdoor, workplace, bedroom-detailed, entrance]
+
