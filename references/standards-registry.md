@@ -282,4 +282,36 @@ source_url: "https://www.ohchr.org/en/instruments-mechanisms/instruments/convent
 ```
 
 
-<!-- Total entries: 26 -->
+
+```yaml
+jurisdiction: "SG"
+standard_cited: "BCA Accessibility Code 2019"
+current_version: "BCA Accessibility Code 2025 (effective 1 January 2025)"
+status: "SUPERSEDED"
+key_changes: "2025 edition supersedes 2019. Key changes: updated wheelchair space dimensions (760×1300mm → 900×1500mm in new builds); expanded provisions for ambulant disabled persons; new chapter on inclusive design beyond code minimum; revised toilet compartment layouts; tactile guidance system updates. 2019 edition no longer current for new applications."
+last_checked: "2026-03-26 16:30"
+source_url: "https://www1.bca.gov.sg/regulatory-info/accessibility/accessibility-code"
+```
+
+```yaml
+jurisdiction: "NL"
+standard_cited: "NEN 9120:2024"
+current_version: "NEN 9120:2025 (published January 2025)"
+status: "SUPERSEDED"
+key_changes: "NEN 9120:2025 replaces NEN 9120:2024 (and all prior editions). Aligns with EN 17210:2021 functional requirements framework. Expanded provisions: continuous accessible routes (doorgaande toegankelijke route); updated reach range tables; revised contrast requirements for visual impairment; new annex on cognitive accessibility aligned with Dutch NDV guidance. Companion guide at toegankelijkbouwen.nl updated to 2025 edition."
+last_checked: "2026-03-26 16:30"
+source_url: "https://www.nen.nl/nen-9120-2025-nl-334706"
+```
+
+```yaml
+jurisdiction: "SE"
+standard_cited: "BBR (BFS 2011:6 and amendments)"
+current_version: "BFS 2024:12 — ALM 2 (Boverkets allmänna råd 2024:12) in force from 1 September 2024"
+status: "SUPERSEDED"
+key_changes: "BFS 2024:12 (ALM 2) replaces ALM 1 (BFS 2013:9 with amendments). Significant restructure: new chapter on usability (Avsnitt 3 Användbarhet) separating accessibility requirements from other building requirements; updated reach range dimensions; revised ramp gradients (max 1:12 retained; preferred 1:20 in new language); new provisions for orientation and wayfinding (VIS, DEM populations); explicit neurodiversity accommodation language introduced. BBR (BFS 2011:6 building regulations) remains the statutory parent — ALM 2 is the accessibility general advice document under BBR Chapter 3:5."
+last_checked: "2026-03-26 16:30"
+source_url: "https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/alm---bfs-20241/"
+```
+
+<!-- Total entries: 29 -->
+
