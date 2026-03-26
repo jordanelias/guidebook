@@ -500,3 +500,13 @@ RULE: All working documents must be committed to GitHub before session close. No
 CONDITION: Any session that produces working documents, research outputs, backfill logs, draft specifications, or intermediate analysis files.
 ACTION: Before session-consolidator runs, commit all working documents to `research/` or `misc/` on GitHub. Filename convention: `{task-descriptor}_{YYYY-MM-DD-HHMM}.md`. session-consolidator must verify no uncommitted working documents remain.
 DATE: 2026-03-26 21:00
+
+RULE: research-log-manager uses per-slug topic-directory architecture. Flat files `references/search-log.md` and `references/best-practices-compendium.md` are retired frozen archives — do not read or write.
+CONDITION: Every research-log-manager CHECK, LOG, or RETRIEVE operation.
+ACTION: Resolve slug to file path via `references/slug-registry.md`. Search log file at `references/search-log/{topic}/{slug}.md`. BPC file at `references/bpc/{topic}/{slug}.md`. For new slugs: assign topic dir, create both files, update slug-registry.md. Topic directories: entrances-and-circulation, health-and-symptom-management, bathrooms-and-wet-areas, kitchens-and-workspaces, wayfinding-and-signage, seating-and-rest, sensory-environment, communication-and-alerts.
+DATE: 2026-03-26 16:30
+
+RULE: Standards registry entries for SG (BCA 2025), NL (NEN 9120:2025), SE (BFS 2024:12) are SUPERSEDED relative to previously cited versions.
+CONDITION: Any multilingual-research, jurisdiction-tracker, or item-specification-writer run referencing SG, NL, or SE statutory standards.
+ACTION: Cite BCA Accessibility Code 2025 (SG), NEN 9120:2025 (NL), BFS 2024:12 / ALM 2 (SE) as current. Flag any guidebook text citing prior editions as requiring update.
+DATE: 2026-03-26 16:30
