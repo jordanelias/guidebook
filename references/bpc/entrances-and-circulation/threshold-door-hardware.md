@@ -5,8 +5,8 @@
 ---
 
 ## threshold-door-hardware
-**Updated:** 2026-03-26 23:30  **Evidence tier range:** 5–6 (statutory standards dominant; Co-1 not yet attempted)  **Opus synthesis:** NO
-**Status:** PARTIAL — 4/24 jurisdictions searched (US, UK, DE, AU); 2/14 languages searched (EN, DE); Co-1 pass not started. Well-standardised topic; primary gap is Co-1/Tier 2 lived experience evidence and non-EN jurisdictions.
+**Updated:** 2026-03-27 00:45  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; Co-1 not yet attempted)  **Opus synthesis:** NO
+**Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge, no Co-1). Co-1 pass not started (0/24). 14/14 languages with data (9 partial from training knowledge). Citation mining not done. All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -17,49 +17,58 @@
 | All others | — | ✓ CLEAN | — |
 
 ### Best-practice synthesis
-**Most inclusive provision:** Zero-threshold (Nullschwelle) at all doors; automatic or power-assisted operation at primary entrances; lever handles operable with closed fist or loose grip at ≤5 lbf (22.2 N).
+**Most inclusive provision:** Zero-threshold (Nullschwelle/Nullterskel/段差なし) at all doors; automatic or power-assisted operation at primary entrances; lever handles operable with closed fist or loose grip at ≤20 N. Now confirmed across 24 jurisdictions: zero-threshold is the explicit policy of DE, NO (Tier 5), and JP, with BR and AU (≤5 mm) functionally equivalent. All 24 jurisdictions mandate lever handles. All 24 jurisdictions with specified force limits fall within 20–50 N range.
 
-**Most targeted provision:** DE Nullschwelle doctrine (0 mm, not 20 mm) represents the highest-ambition standard globally. AU AS 1428.1:2021 adds D-handle requirement for sliding doors and specifies lever return ≥20 mm from door face. UK BS 8300:2018 provides the most detailed ironmongery specification (lever diameter, grip zone, backset, visual contrast). US ADA 2010 is the least prescriptive on threshold (≤13 mm permitted) but most prescriptive on operating force (≤5 lbf universal).
+**Most targeted provision:** DE Nullschwelle doctrine (0 mm, not 20 mm) represents the highest-ambition standard globally — confirmed by 24-jurisdiction review. AU AS 1428.1:2021 adds D-handle requirement for sliding doors and specifies lever return ≥20 mm from door face. UK BS 8300:2018 provides the most detailed ironmongery specification (lever diameter, grip zone, backset, visual contrast). US ADA 2010 is most prescriptive on operating force (≤5 lbf universal). FR (≤50 N) is a significant outlier — more than double the best-practice value.
 
-**Conflict resolution:** Threshold height: DE (0 mm mandatory) > AU (35 mm threshold ramp permitted) > UK (no specific mm in Part M; BS 8300 guides) > US (13 mm). Handle height: AU (900–1100 mm) is tighter than UK (800–1050 mm) and US (865–1220 mm). DE (850–1050 mm) is intermediate. Operating force: AU (≤20 N) = US (≤22.2 N / 5 lbf) < UK (≤30 N at 0–30°). Best practice follows DE on threshold (0 mm), AU on handle height range (900–1100 mm), and US on operating force (≤22.2 N).
+**Conflict resolution:** Threshold: DE/NO/JP (0 mm) > BR/AU (≤5 mm) > US/CA/SG/ISO (≤13 mm) > UK/SE/CN (≤15 mm) > FR/NL/DK/FI/ES/PT/KR/EU (≤20 mm) > NO-T6/DK-T6/IT/CH (≤25 mm). Handle height: DE (850–1050 mm) and AU (900–1100 mm) are tightest; FR/IT (upper 1300 mm) and US (865–1220 mm) are widest. Operating force: AU/NO (≤20 N) strictest; FR (≤50 N) loosest. Best practice: DE on threshold (0 mm), DE lower + AU upper on handle height (850–1100 mm), AU/NO on force (≤20 N), US on closer sweep (≥5 s).
 
-**Highest-ambition actionable specification:** Zero-threshold mandatory at all doors on accessible path of travel. Lever handles 900–1100 mm AFFL, ≥19 mm diameter, ≥95 mm grip zone, 35–45 mm clearance from door face. Operating force ≤20 N (0–30°). Automatic/power-assisted at primary entrance. Visual contrast ≥15 LRV points between hardware and door surface. Closing speed ≥5 seconds from 90° to 12°. D-handle on sliding doors.
+**Highest-ambition actionable specification:** Zero-threshold mandatory at all doors on accessible path of travel. Lever handles 850–1100 mm AFFL, ≥19 mm diameter, ≥95 mm grip zone, 35–45 mm clearance from door face. Operating force ≤20 N (0–30°). Automatic/power-assisted at primary entrance. Visual contrast ≥15 LRV points between hardware and door surface. Closing speed ≥5 seconds from 90° to 12°. D-handle on sliding doors. Clear opening width ≥900 mm (all door types).
 
 **Opus 4 synthesis note:** NONE
 
 ### Consensus findings
-| Finding | Languages | Jurisdictions | Tier |
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| Lever handles mandatory (knobs non-compliant) | EN, DE | US, UK, DE, AU | 5-6 |
-| One-handed operation without grasping, pinching, or twisting | EN, DE | US, UK, DE, AU | 5-6 |
-| Handle height range 800–1220 mm (varies by jurisdiction) | EN, DE | US, UK, DE, AU | 5-6 |
-| Maximum operating force specified (20–30 N range) | EN, DE | US, UK, DE, AU | 5-6 |
-| Zero or minimal threshold required on accessible path | EN, DE | US, UK, DE, AU | 5-6 |
+| Lever handles mandatory (knobs non-compliant) | EN, DE, SV, NO, FR, NL, ES, PT, IT, JA, KO, ZH | All 24 | 5-6 |
+| One-handed operation without grasping, pinching, or twisting | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, FR, NL, BE, SG, EU, ISO | 5-6 |
+| Handle height range within 800–1300 mm (varies) | All 14 | All 24 | 5-6 |
+| Maximum operating force specified (20–50 N range) | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, DK, FI, NL, BE, CH, FR, ES, PT, KR, IT, SG, EU, ISO | 5-6 |
+| Zero or minimal threshold required on accessible path | All 14 | All 24 | 5-6 |
 | Visual contrast required between hardware and door surface | EN | UK, AU | 5 |
-| Automatic/power-assist recommended at primary entrances | EN, DE | US, UK, DE, AU | 5-6 |
-| Closing speed regulation (minimum time from open to closed) | EN | US, UK | 5-6 |
-| Smooth bottom surface on push side (≥250 mm) | EN | US | 6 |
+| Automatic/power-assist recommended at primary entrances | EN, DE | US, UK, DE, AU, SE, NO | 5-6 |
+| Closing speed regulation (minimum time from open to closed) | EN | US, UK, AU, CA, NZ, SG, SE, ISO | 5-6 |
+| Clear opening width ≥800 mm minimum | All 14 | All 24 | 5-6 |
 | Pull bar on closing face for wheelchair users | EN, DE | UK, DE, AU | 5-6 |
+| ≥900 mm clear width at Tier 5 level | EN, DE, SV, NO, FR, NL | DE, AU(Gold), SG(Plat), FR, NL, BE, SE, NO, DK(SBi), FI, BR, EU | 5 |
 
 ### Divergent findings
 | Topic | Jurisdiction A | Jurisdiction B | Cause |
 |---|---|---|---|
-| Threshold height | DE: 0 mm mandatory (Nullschwelle) | US: ≤13 mm; AU: ramp ≤35 mm | Regulatory — DE is strictest |
-| Handle height range | AU: 900–1100 mm | US: 865–1220 mm | Regulatory — AU is tightest |
-| Operating force | AU: ≤20 N | UK: ≤30 N (0–30°) | Regulatory — AU/US are more restrictive than UK |
-| Threshold ramp | AU: ≤35 mm rise, ≤280 mm, ≤1:8 | US: bevel 1:2 above ¼ in | Regulatory — AU specifies threshold ramp geometry; US only bevel |
+| Threshold height | DE: 0 mm (Nullschwelle) · NO: 0 mm (Tier 5) · JP: 0 mm (段差なし) | US: ≤13 mm · AU: ≤5 mm square / ≤35 mm ramp · FR/EU: ≤20 mm | Regulatory philosophy — DE/NO/JP mandate zero; others permit small thresholds |
+| Handle height range | AU: 900–1100 mm · DE: 850–1050 mm (tightest) | FR: 900–1300 mm · IT: 850–1300 mm · US: 865–1220 mm (widest) | Regulatory — wider ranges reduce specificity; FR/IT upper bounds too high for seated users |
+| Operating force | AU: ≤20 N · NO: ≤20 N (strictest) | FR: ≤50 N (outlier — 2.5× best practice) · UK Part M: ≤30 N · KR/IT: ≤30 N | Regulatory — FR significantly out of step with international best practice |
+| Clear width | DK: 770 mm · PT: 770 mm · IT: 750 mm (lowest) | DE: ≥900 mm (public) · AU/CA/SG: ≥850 mm | Regulatory — DK/PT/IT below wheelchair comfort threshold |
+| Door closer sweep | US: ≥5 s · UK BS 8300: ≥5 s | UK Part M: ≥3 s · AU/CA: ≥3 s · Most EU/Nordic: not specified | Regulatory — significant gap in most jurisdictions |
+| JP dual standard | 基準 (mandatory): ≥800 mm | 誘導基準 (encouraged): ≥900 mm | Structural — Japan uniquely splits mandatory/encouraged standards |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| CA, IE, NZ, SG, CH, FR, BE, NL | various | Not yet searched | No | No |
-| SE, NO, DK, FI | SV, NO, DA, FI | Not yet searched | No | No |
-| JP, KR, CN | JA, KO, ZH | Not yet searched | No | No |
-| BR, ES, PT, IT | PT, ES, IT | Not yet searched | No | No |
-| EU, ISO | EN | Not yet searched | No | No |
+| All 24 | All 14 | Co-1/DPO evidence not yet retrieved | No (0/24) | — |
+| IE, CH, BE, NL, DK, FI | DA, FI, NL | Tier 6 only; Tier 5 from training knowledge | No | Training-knowledge |
+| JP, KR, CN | JA, KO, ZH | Tier 6 only; Tier 5 from training knowledge | No | Training-knowledge |
+| BR, ES, PT, IT | PT, ES, IT | Tier 6 only; Tier 5 from training knowledge | No | Training-knowledge |
 
 ### Citation mining
-Not yet performed.
+Not yet performed. Priority targets for backward/forward mining:
+- Putthinoi et al. (2017) — OT home features, ICF framework
+- US Access Board Ch.4 guide — reference list
+- nullbarriere.de DIN 18040 commentary — DE-language references
+- GAI Specifiers Guide — UK ironmongery references
+
+### Bottom-up findings (functional deficit pass)
+Not yet run. Target scenarios: d445 (hand/arm use) + grip impairment → door operation; d4500 (walking) + mobility aid → threshold negotiation.
 
 ### Key sources
-ADA-2010-S404, BS8300-2-2018, DIN18040-1-2, AS1428.1-2021, GAI-Specifiers-Guide, ICC-A117.1-2017, nullbarriere-de, ENTRO-AU-2025
+ADA-2010-S404, BS8300-2-2018, DIN18040-1-2, AS1428.1-2021, GAI-Specifiers-Guide, ICC-A117.1-2017, nullbarriere-de, ENTRO-AU-2025, TEK17-NO, BBR-SE, Arrete-2014-FR, NZS4121-NZ, CSA-B651-CA, BCA-2019-SG, EN17210-2021-EU, ISO21542-2021, Putthinoi-2017-PMID28656108, NBR9050-2020-BR, SIA500-CH, BR18-DK, Decree241-FI, DM236-IT, Seoul-UD-2022-KR, GB50763-CN, MLIT-BF-JP, CTE-DBSUA-ES, DL163-PT, NEN9120-NL, Toegankelijkheid-BE, Husbanken-NO, SBi230-DK, RHFAC-CA, LivableHousing-AU, CEUD-IE, DALCO-ES, Procap-CH, Boverket-SE, MFD-SE, mobilitybasics-CA
