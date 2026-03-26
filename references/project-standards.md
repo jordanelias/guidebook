@@ -477,3 +477,12 @@ RULE: IntD (Intellectual Disability) is not a standalone population code or cate
 CONDITION: All volumes, all matrices, population code tables, ToC.
 ACTION: Delete any standalone IntD reference. Preserve substance as proxy notes within DEM and NDV sections. See CO-0002-2026-03-25-1935.md.
 DATE: 2026-03-25 19:35
+RULE: The guidebook is a starting framework for professional judgment, not a substitute for it. Population-level specifications (Tier 0 and Tier 1) are necessary but insufficient. Individual function is unique — even within the same disability population, two individuals' functional capacities and required accommodations may differ radically. The guidebook cannot solve accessible design through catch-all procedures for single or multiple disability populations. Part 1 must state this explicitly as a foundational principle.
+CONDITION: Part 1 foundational principles (§1.2 or equivalent); any section that could be read as implying population-level specs are complete solutions.
+ACTION: Include explicit framing statement in Part 1. Audit prescriptive language throughout to ensure it does not imply sufficiency without Tier 2 co-design.
+DATE: 2026-03-26 16:00
+
+RULE: The guidebook's conflict resolution protocol (§IV.2 and cross-synthesis escalation) operates at Tier 1 only. At Tier 2, conflict resolution is the domain of the OT and the individual through co-design — the guidebook has no authority to prescribe person-specific outcomes. The guidebook's Tier 2 role is to equip non-OT professionals (architects, builders, project managers) with decision frameworks, the right questions, and structured approaches for co-design — not to prescribe answers.
+CONDITION: §IV.2 conflict priority rules; any Tier 2 guidance; any cross-synthesis or conflict resolution text.
+ACTION: State explicitly that §IV.2 governs Tier 1 only. Tier 2 conflict resolution sections provide frameworks and questions for co-design, not prescriptive outcomes.
+DATE: 2026-03-26 16:00
