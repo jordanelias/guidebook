@@ -486,3 +486,7 @@ RULE: The guidebook's conflict resolution protocol (§IV.2 and cross-synthesis e
 CONDITION: §IV.2 conflict priority rules; any Tier 2 guidance; any cross-synthesis or conflict resolution text.
 ACTION: State explicitly that §IV.2 governs Tier 1 only. Tier 2 conflict resolution sections provide frameworks and questions for co-design, not prescriptive outcomes.
 DATE: 2026-03-26 16:00
+RULE: Bottom-up functional deficit research is a standing complementary methodology. The skill `functional-deficit-researcher` searches OT intervention literature by ICF activity code + functional constraint + environment context, then categorizes findings into the guidebook's population framework. It runs after `multilingual-research` top-down pass is COMPLETE for target slugs. Findings classified as NOVEL or REFINES feed to `item-specification-writer`. Findings serving ≥3 population codes are flagged as TIER-0-CANDIDATE for potential universal design migration. Search-log entries carry a `functional_deficit_pass` block; BPC entries carry a `### Bottom-up findings` subsection.
+CONDITION: Any slug with ≥2 THIN flags, any item-specification-writer evidence gap, any connection-scout cross-population gap unresolved by top-down search, or explicit user request.
+ACTION: Run `functional-deficit-researcher` on the relevant environment context batch. ≤12 scenarios per session. Results merge into existing BPC.
+DATE: 2026-03-26 16:15
