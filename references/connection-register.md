@@ -1,7 +1,7 @@
 # Connection Register
 
 **Created:** 2026-03-26 18:10  
-**Last updated:** 2026-03-26 19:00
+**Last updated:** 2026-03-26 20:20
 
 ---
 
@@ -744,3 +744,194 @@ Cite both reviews in the sensory room (A-16) evidence base as methodological sup
 - [x] MODERATE → P2 gap item
 - [ ] SPECULATIVE → P3 gap item
 - [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0027 [2026-03-26 20:20]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** ALL
+**Items involved:** Part 1 (theoretical framework), Part 3 (economics)
+**Gap register items:** NONE
+
+### Connection description
+The Housing Enabler instrument (Iwarsson & Slaug, Lund University CASE) is the most widely validated OT research tool for quantifying person-environment fit in housing. It operationalises Lawton's competence-press model through a two-component assessment: personal (functional limitations) and environmental (physical barriers), combined to produce an accessibility problem score. The Housing Experiment 2021 (Slaug, Granbom & Iwarsson 2024, citizen science, N=large Swedish housing stock sample) found that environmental barriers remain prevalent despite 30 years of public health evidence, and that P-E fit predicts falls better than environmental hazards alone (cf. Iwarsson et al. 2009). Parkinson's-specific Housing Enabler research (Nilsson & Iwarsson 2021) demonstrates population-specific barrier ranking.
+
+The guidebook references the competence-press model but does not name the Housing Enabler as a Tier 2 assessment instrument. This is a gap: the HE is the direct OT operationalisation of the theoretical framework the guidebook already uses. Explicitly citing it as the recommended person-environment fit assessment method for Tier 2 co-design would give practitioners a concrete, validated tool for resolving individual specifications within Tier 1 ranges.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Iwarsson & Slaug 2001/2010 Housing Enabler | 1 | Older adults (gerontology) | ALL (Tier 2 assessment) |
+| Slaug, Granbom & Iwarsson 2024 (Housing Experiment 2021) | 1 | Older adults (Swedish housing stock) | ALL (P-E fit validation) |
+| Nilsson & Iwarsson 2021 (Parkinson's HE) | 1 | NEU (Parkinson's) | NEU, MOB |
+| Heller et al. 2024 SR (housing characteristics + health) | 3 | Older adults | ALL |
+
+### Proposed synthesis direction
+Part 1 theoretical framework: cite Housing Enabler as the recommended Tier 2 assessment instrument for operationalising competence-press / DAR. Part 4 OT practice guidance: reference HE methodology for resolving person-specific values within Tier 1 ranges. Practice note potential: HE-based Tier 2 assessment checklist for OT practitioners.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+
+---
+
+## CON-0028 [2026-03-26 20:20]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** ALL
+**Items involved:** Part 1 (theoretical framework — three-tier hierarchy)
+**Gap register items:** NONE
+
+### Connection description
+Lawton (1989, 1990) distinguished environmental docility from environmental proactivity. Docility: declining personal competence → behaviour increasingly dictated by environment. Proactivity: higher competence → person actively shapes environment to match needs. A 2024 P-E fit scoping review (Journal of Asian Architecture and Building Engineering, 10.1080/13467581.2024.2373824) confirms these concepts remain foundational but identifies a knowledge gap: the lack of proactive and dynamic views in current P-E fit research.
+
+The guidebook's three-tier hierarchy maps directly onto this continuum but does not name it:
+- Tier 0 = reducing environmental press universally (docility mitigation — ensures environment does not overwhelm any user's competence)
+- Tier 1 = population-informed press calibration (intermediate — reduces press for identified population groups)
+- Tier 2 = person-specific co-design (proactivity — individual actively shapes environment with OT support)
+
+This mapping is not stated in the guidebook. Making it explicit provides non-disability-specific theoretical grounding from the gerontology tradition — strengthening the argument that the three-tier approach is not a disability accommodation framework but a universal human-environment optimisation model.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Lawton 1989/1990 (environmental proactivity) | Foundational theory | Older adults | ALL (three-tier grounding) |
+| P-E fit scoping review 2024 | 3 | Built environment (general) | ALL |
+| Struckmeyer & Rice 2025 (Routledge chapter: EP-CM in OT) | Co-2 | OT practice | ALL |
+
+### Proposed synthesis direction
+Part 1 theoretical framework: add explicit mapping of three-tier hierarchy to Lawton's docility-proactivity continuum. Frame: Tier 0 = anti-docility floor; Tier 1 = population-calibrated press reduction; Tier 2 = proactive P-E optimisation through co-design. This reframes the entire hierarchy from accessibility levels to universal person-environment fit optimisation — non-disability-specific.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+
+---
+
+## CON-0029 [2026-03-26 20:20]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** ALL
+**Items involved:** NONE (new specification area: RFO-stage POE)
+**Gap register items:** NONE
+
+### Connection description
+Two independent research programmes have developed inclusive-design-specific POE tools that the guidebook does not reference:
+
+1. IDEA Audit (Zallio & Clarkson, Cambridge, Building and Environment 217:109058, 2022; case study in Buildings 14(9):3018, 2024): Four-component framework — physical accessibility (17%), sensory enhancement (15%), neurodivergent comfort, people-space engagement. Mixed-method occupant feedback. Survey validated with 114 building industry experts. 2024 case study showed before/after inclusive design implementation at corporate HQ using IDEA findings to inform redesign.
+
+2. A.U.D.I.T. (Mosca & Capolongo, Acta Biomedica 94(S3):e2023124, 2023): Assessment Universal Design & Inclusion Tool for healthcare facilities — evaluates physical, sensory-cognitive, and social quality dimensions.
+
+Zallio & Clarkson (2023, Architectural Science Review 67:268-279) found that only 10.6% of architectural practitioners reported clients seeking sensory and cognitive inclusion beyond physical accessibility, and that POE tools for inclusive design are almost nonexistent in practice. The guidebook covers design stages up to RFO but has no specification for post-occupancy evaluation. This is a gap: without POE, there is no feedback loop between design intent (Tier 0/1 specifications) and actual occupant experience.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Zallio & Clarkson 2022 (IDEA Audit) | 3 | ALL (built environment POE) | ALL (RFO-stage specification) |
+| Zallio & Clarkson 2024 (case study) | 3 | ALL (workplace) | ALL |
+| Mosca & Capolongo 2023 (A.U.D.I.T.) | 3 | ALL (healthcare) | ALL |
+| Zallio & Clarkson 2023 (practitioner survey, n=114) | 3 | Building industry professionals | ALL |
+
+### Proposed synthesis direction
+Add RFO-stage POE specification to Part 5 (or equivalent practice guidance): recommend IDEA Audit framework (or adaptation) as post-occupancy feedback instrument. Components: physical accessibility audit, sensory environment assessment, neurodivergent comfort evaluation, people-space engagement survey. Link POE findings back to Tier 0/1 specifications for iterative improvement. This closes the design-occupy-evaluate loop currently missing from the guidebook.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+
+---
+
+## CON-0030 [2026-03-26 20:20]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Populations involved:** DEM, IntD, NDV/AUT, VIS, NEU
+**Items involved:** CON-0001 items (circulation legibility); cognitive wayfinding items
+**Gap register items:** NONE
+
+### Connection description
+Cognitive ergonomics research on wayfinding quantifies the decision-point mechanism that the guidebook specifies qualitatively (CON-0001: three or fewer decision points per segment for IntD):
+
+1. Wayfinding uncertainty model (bioRxiv 2023, validated Study 1 n=28, Study 2 n=11): Wayfinding uncertainty correlates with time elapsed since last helpful sign. The model predicts human-reported uncertainty levels under different signage conditions (ROC-AUC 0.70). Implication: signage spacing is a quantifiable parameter — the guidebook could specify maximum distance between wayfinding cues.
+
+2. Intersection-based decision points (Bruyne et al. 2018, Cognitive Research: Principles and Implications 3:13): Intersections are the primary driver of navigation difficulty. Route complexity is contingent upon intersection count (Lupien et al. 1998). Spatial decisions are made before entering an intersection, not within it. Implication: validates the decision-point rule and suggests that advance warning of approaching decision points (sightlines, gradual opening of corridor junctions) reduces cognitive load.
+
+3. Hospital wayfinding MCDM (Morag et al., Applied Ergonomics 2024): Multi-criteria decision-making approach rates route difficulty by impairment type — separate ease-of-use scores for mobility, vision, and cognitive impairment.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| bioRxiv 2023 wayfinding uncertainty model | 3 | General (neuroscience) | DEM, IntD, NDV/AUT |
+| Bruyne et al. 2018 (intersection decision dynamics) | 3 | General (cognitive science) | DEM, IntD, VIS |
+| Morag et al. 2024 (hospital wayfinding MCDM) | 3 | MOB, VIS, cognitive impairment | ALL |
+| Lupien et al. 1998 (route complexity = decision point count) | 3 | General (neuroscience) | DEM, IntD |
+
+### Proposed synthesis direction
+Strengthen CON-0001 circulation legibility specification with quantified parameters from cognitive ergonomics: (a) maximum distance between wayfinding cues (derivable from uncertainty-decay model); (b) advance visual warning before decision points (glazed junctions per CON-0020 + sightline per CON-0018); (c) route complexity rating by population code. MODERATE confidence because the bioRxiv model is a preprint and sample sizes are small.
+
+### Disposition
+- [ ] MODERATE → P2 gap item
+
+---
+
+## CON-0031 [2026-03-26 20:20]
+
+**Mode:** External
+**Confidence:** HIGH
+**Populations involved:** ALL
+**Items involved:** Part 3 (economics)
+**Gap register items:** NONE
+
+### Connection description
+Three recent meta-level sources converge on OT home modification cost-effectiveness — stronger than evidence currently cited in the guidebook's economics section:
+
+1. Clemson et al. 2023 Cochrane SR (CD013258, 22 RCTs, 8,463 participants): Environmental interventions reduce fall rate by 38% among older community-dwelling adults. OT-delivered home modifications are the most effective single intervention type. Already cited in CON-0003 for grab bars; the economics implication is not drawn.
+
+2. 2023 quasi-experimental (cited in OT practice literature, 2025): Mean home modification cost $10,397 versus annual healthcare costs of $22,763 to $154,478 for unmodified homes. Cost ratio: 1:2.2 to 1:14.9.
+
+3. An et al. 2025 SR (fall prevention interventions): Exercise + home modification combined reduces fall rates by 30-40%. Two-visit OT home modification model demonstrates statistically significant improvement in occupational performance and satisfaction.
+
+4. Lektip et al. 2023 meta-analysis (PeerJ 11:e15699, 10 RCTs, n=1,960): Home modification shows clinically meaningful 7% reduction in falls (RR=0.93). Long-term models project cost savings within 10-year horizon.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Clemson et al. 2023 Cochrane | 3 | MOB (fall prevention) | ALL (economics case) |
+| 2023 quasi-experimental (cost comparison) | 3 | Older adults | ALL (economics) |
+| An et al. 2025 SR | 3 | Older adults | ALL (economics) |
+| Lektip et al. 2023 meta-analysis | 3 | Older adults | ALL (economics) |
+
+### Proposed synthesis direction
+Part 3 economics section: update cost-effectiveness evidence with 2023-2025 meta-level sources. Key framing: every dollar spent on OT-informed home modification saves $2.20 to $14.90 in healthcare costs. Clemson 2023 Cochrane provides the strongest single evidence statement for environmental intervention effectiveness. This strengthens the guidebook's business case for specification compliance.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+
+---
+
+## CON-0032 [2026-03-26 20:20]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Populations involved:** ALL
+**Items involved:** Part 1 (structure validation)
+**Gap register items:** NONE
+
+### Connection description
+A 2025 scoping review in Humanities and Social Sciences Communications (Nature, accepted July 2025) analysed 64 empirical studies (2005-2024) on interior design and older adult health. Identified seven key interior design principles affecting physical, physiological, and mental health: (1) lighting, (2) thermal environment and air quality, (3) spatial layout, (4) barrier-free design, (5) space size, (6) furniture, (7) relaxation design.
+
+These seven principles map directly onto the guidebook's existing item categories: (1) circadian lighting; (2) air quality/thermal items; (3) circulation/layout items; (4) threshold/grab bar items; (5) room dimension items; (6) furniture/workstation items; (7) sensory relief/rest items. The alignment is close but not exact — the review identifies relaxation design as a distinct category whereas the guidebook distributes relaxation across sensory relief (A-16), biophilic (BIO-xx), and rest seating (CON-0004). The review also notes a shift from institutional to home-based research focus post-2020, aligning with the guidebook's residential emphasis.
+
+This is external validation of the guidebook's structural organisation from an independent gerontology evidence synthesis — not a novel connection per se, but confirmation that the category structure is evidence-aligned.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Interior design scoping review 2025 (64 studies) | 3 | Older adults (interior design) | ALL (structural validation) |
+
+### Proposed synthesis direction
+Note as structural validation in Part 1 methodology section. No specification change required. The relaxation design category consolidation question should be tracked — consider whether CON-0002 (sensory relief unification), CON-0004 (adjustable posture seating), and CON-0010 (therapeutic outdoor) should be formally grouped under a restorative environment umbrella category.
+
+### Disposition
+- [ ] MODERATE → P2 gap item
