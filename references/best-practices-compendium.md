@@ -2597,3 +2597,75 @@ REF-RAP-17: SBi-anvisning 218 — DA school acoustics
 - RHFAC v4.2 detailed criteria (CA): framework confirmed, criteria detail not retrieved
 - JP Housing Performance Indication System Elderly Care Grades 1-5: requires JA-language J-STAGE search
 - No standalone SR on corridor width functional adequacy for power wheelchair users (NO-DATA)
+
+
+## visual-fire-alarm-seizure-safety
+**Updated:** 2026-03-26 05:30  **Evidence tier range:** 3–4  **Status:** TARGETED RETRIEVAL (not full v4 run)
+
+### Best-practice synthesis
+**Most inclusive provision:** All VADs synchronised; flash rate 0.5–1 Hz (minimum effective); supplementary vibrotactile + voice alarm for NEU/NDV/AUT populations
+**Most targeted provision:** Where photosensitive populations are primary occupants, voice alarm system as primary notification with VAD as supplementary only
+**Conflict resolution:** DEAF/DBL require visual notification; NEU/NDV at seizure risk from same. Resolution: synchronisation + minimum flash rate + supplementary channels. Zoning not required if synchronisation is implemented.
+**Highest-ambition actionable specification:** Synchronised VADs at 0.5–1 Hz + voice alarm + vibrotactile in sleeping areas; safety disclosure on all B-10 specifications
+
+### Key sources
+- Jordan, J.B. & Vanderheiden, G.C. (2024). International Guidelines for Photosensitive Epilepsy: Gap Analysis and Recommendations. *ACM TACCESS*, 17(3), 1–35. DOI: 10.1145/3694790. PMC11872230.
+- BS EN 54-23:2010. Fire detection and fire alarm systems — Visual alarm devices. BSI.
+- NFPA 72-2022. National Fire Alarm and Signaling Code. NFPA.
+- Epilepsy Foundation Professional Advisory Board recommendations.
+- Martins da Silva, A. & Leal, B. (2017). Photosensitivity and epilepsy. *Seizure*, 50, 209–218. PMID: 28532712.
+
+## deaf-classroom-reverberation-time
+**Updated:** 2026-03-26 05:30  **Evidence tier range:** 1–4  **Status:** TARGETED RETRIEVAL
+
+### Best-practice synthesis
+**Most inclusive provision:** RT60 ≤0.3s in all learning spaces ≤283 m³ where DEAF learners are present
+**Most targeted provision:** Design spaces to be readily adaptable to 0.3s RT — does not require fixed installation; adaptability suffices per ANSI/ASA S12.60-2010
+**Conflict resolution:** N/A — no population conflict with shorter RT
+**Highest-ambition actionable specification:** RT60 ≤0.3s in core learning spaces ≤283 m³ with DEAF learners; background noise ≤35 dBA; +15 dB SNR maintained
+
+### Key sources
+- Iglehart, F. (2020). Speech Perception in Classroom Acoustics by Children With Hearing Loss and Wearing Hearing Aids. *AJA*, 29(1), 6–17. DOI: 10.1044/2019_AJA-19-0010. PMID: 31835909. PMC7229780.
+- ANSI/ASA S12.60-2010/Part 1. Acoustical Performance Criteria, Design Requirements, and Guidelines for Schools. ASA.
+- Finitzo-Hieber, T. & Tillman, T.W. (1978). Room acoustics effects on monosyllabic word discrimination ability for normal and hearing-impaired children. *JSHD*, 43(4), 440–458.
+
+## sensory-room-user-control
+**Updated:** 2026-03-26 05:30  **Evidence tier range:** 2–3  **Status:** TARGETED RETRIEVAL
+
+### Best-practice synthesis
+**Most inclusive provision:** Occupant-controlled dimming, sound management, and blackout as primary design requirements; static parameters (STC, RT60, NC) as enabling context
+**Most targeted provision:** 1:1 adult-child interaction with child in control of all sensory equipment; equipment selection matched to individual sensory profile
+**Conflict resolution:** N/A within sensory room (single-user space by design)
+**Highest-ambition actionable specification:** H-02 (Individual Environmental Control) as PRIMARY cross-reference in A-16; location adjacent to accessible WC; accessible without passing through high-stimulation area
+
+### Key sources
+- Unwin, K.L., Powell, G. & Jones, C.R.G. (2022). The use of Multi-Sensory Environments with autistic children. *Autism*, 26(6), 1379–1394. DOI: 10.1177/13623613211050176. PMID: 34693744. PMC9340127.
+- Unwin, K.L., Powell, G. & Jones, C.R.G. (2021). A sequential mixed-methods approach. *Res Dev Disabil*, 118, 104061.
+- Unwin, K.L., Powell, G., Price, A. & Jones, C.R.G. (2024). Patterns of equipment use. *Autism*, 28, 644–655.
+- Architecture & Access / Amaze (2025). Neuroinclusive design guidance.
+
+## circadian-lighting-melanopic-edi
+**Updated:** 2026-03-26 05:30  **Evidence tier range:** 3–5  **Status:** TARGETED RETRIEVAL
+
+### Best-practice synthesis
+**Most inclusive provision:** melanopic EDI ≥250 lux daytime at the eye (vertical plane, 1.2m AFF); ≤10 lux evening (≥3h before bedtime); <1 lux sleep environment
+**Most targeted provision:** For DEM/NEU populations, circadian lighting is therapeutic, not merely amenity — specify as clinical-grade environmental intervention. For older adults, specification must account for reduced crystalline lens melanopic transmittance.
+**Conflict resolution:** NDV/AUT photosensitivity vs. circadian need → resolve via individual dimming control (B-06, H-02); daytime circadian stimulus delivered via diffuse/indirect lighting (B-07) to avoid glare triggers
+**Highest-ambition actionable specification:** ≥250 melanopic EDI daytime; ≤10 melanopic EDI evening; <1 melanopic EDI sleep; metric conversion note (EML = 1.104 × melanopic EDI); DIN/TS 67600:2022 alignment
+
+### Consensus findings
+| Finding | Sources confirming | Tier |
+|---|---|---|
+| melanopic EDI ≥250 lux daytime threshold | Brown et al. 2022; DIN/TS 67600:2022; WELL v6 | 3–5 |
+| melanopic EDI ≤10 lux evening threshold | Brown et al. 2022; WELL v2 (≤50 EML = less strict) | 3 |
+| melanopic EDI <1 lux sleep threshold | Brown et al. 2022 | 3 |
+| MSF as reliable predictor of human circadian responses | Brown (2020); validated across 1–1000 melanopic EDI | 3 |
+| No national building code mandates circadian metric | All 24 jurisdictions surveyed | Confirmed |
+
+### Key sources
+- Brown, T.M. et al. (2022). Recommendations for daytime, evening, and nighttime indoor light exposure. *PLOS Biology*, 20(3), e3001571. DOI: 10.1371/journal.pbio.3001571. PMC8929548.
+- CIE S 026/E:2018. CIE System for Metrology of Optical Radiation for ipRGC-Influenced Responses to Light. CIE.
+- DIN/TS 67600:2022. Biologically effective illumination — Design guidelines. DIN.
+- Lucas, R.J. et al. (2014). Measuring and using light in the melanopsin age. *Trends in Neurosciences*, 37(1), 1–9.
+- WELL Building Standard v2 and v6. Feature L07: Circadian Lighting Design. IWBI.
+- Ticleanu, C. et al. (2025). Assessing melanopic equivalent daylight illuminance in office spaces. *Lighting Research & Technology*. DOI: 10.1177/14771535251317740.
