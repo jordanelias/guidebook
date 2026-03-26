@@ -495,3 +495,8 @@ RULE: Session Start Protocol runs once per conversation. If it has already compl
 CONDITION: Any message containing "resume," "continue," "carry on," "pick up where we left off," or equivalent in a conversation where Session Start Protocol has already run.
 ACTION: Skip Session Start Protocol; proceed directly to the referenced task.
 DATE: 2026-03-26 18:30
+
+RULE: All working documents must be committed to GitHub before session close. No work product may exist only in /mnt/user-data/outputs/ at session end — that directory does not persist across sessions.
+CONDITION: Any session that produces working documents, research outputs, backfill logs, draft specifications, or intermediate analysis files.
+ACTION: Before session-consolidator runs, commit all working documents to `research/` or `misc/` on GitHub. Filename convention: `{task-descriptor}_{YYYY-MM-DD-HHMM}.md`. session-consolidator must verify no uncommitted working documents remain.
+DATE: 2026-03-26 21:00
