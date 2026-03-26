@@ -210,3 +210,5 @@ GAP-CON-12 | P2 | OPEN | connection-scout | DAR items | CON-0012: Italian adatta
 GAP-CON-13 | P2 | OPEN | connection-scout | Kitchen items | CON-0013: OFS and PAIN as co-populations for kitchen adjustable worktop. Energy conservation + joint-loading reduction. | 2026-03-26 18:15
 GAP-CON-15 | P2 | OPEN | connection-scout | F-02/F-04 | CON-0015: MH as co-population for air quality / fragrance-free items. TID framework: chemical stimuli as PTSD triggers. | 2026-03-26 18:15
 GAP-CON-16 | P3 | OPEN | connection-scout | C-04/D-02 | CON-0016: Luminance contrast (VIS) + floor pattern (DEM) + TWSI (VIS/DBL) spatial interaction. Coordination cross-reference note needed. SPECULATIVE. | 2026-03-26 18:15
+
+GAP-CON-0020 | P3 | OPEN | connection-scout | DEAF/VIS/DEM/NDV | DEAF glazed corridor junctions (DeafSpace) may conflict with VIS glare, DEM reflective confusion, NDV visual complexity. Four-way conflict unassessed. Possible mitigations: anti-reflective coating, frosted lower band, matte adjacent floor. Flag for §IV.2 or Opus 4. | 2026-03-26 18:30
