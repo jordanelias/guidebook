@@ -202,3 +202,11 @@ GAP-CON-04 | P2 | OPEN | connection-scout | BIO-series | CON-0012: Biophilic out
 GAP-CON-05 | P2 | OPEN | connection-scout | Part E | CON-0014: Formalise three conflict resolution mechanisms as named methodology. Addresses GAP-054. | 2026-03-26 18:30
 GAP-CON-06 | P2 | OPEN | connection-scout | Part IV | CON-0015: Empirical-derivation-from-user principle. State as methodological standard. | 2026-03-26 18:30
 GAP-CON-07 | P3 | OPEN | connection-scout | DBL+NDV/MH | CON-0016: Protactile distantism parallels TID. Research question only. | 2026-03-26 18:30
+GAP-CON-05 | P2 | OPEN | connection-scout | A-09 | CON-0005: PAIN as co-population for resilient flooring (MOB WBV evidence extends to PAIN joint-loading reduction). THIN for PAIN-specific evidence. | 2026-03-26 18:15
+GAP-CON-06 | P2 | OPEN | connection-scout | B-01 | CON-0006: MH and OFS as co-populations for circadian lighting. Sleep disruption core symptom for both; circadian entrainment mechanism identical to DEM/NEU. | 2026-03-26 18:15
+GAP-CON-08 | P2 | OPEN | connection-scout | A-02/A-08/A-13 | CON-0008: PAIN (fibromyalgia hyperacusis) and OFS (MCAS sensory sensitivity) as co-populations for acoustic items. THIN-POPULATION-SPEC. | 2026-03-26 18:15
+GAP-CON-09 | P2 | OPEN | connection-scout | Entry/threshold items | CON-0009: OFS (energy conservation — steps trigger PEM) and PAIN (joint loading) as co-populations for level access specifications. | 2026-03-26 18:15
+GAP-CON-12 | P2 | OPEN | connection-scout | DAR items | CON-0012: Italian adattabilità (DM 236/89) as statutory DAR precedent. Cross-reference in Part 1 DAR doctrine. | 2026-03-26 18:15
+GAP-CON-13 | P2 | OPEN | connection-scout | Kitchen items | CON-0013: OFS and PAIN as co-populations for kitchen adjustable worktop. Energy conservation + joint-loading reduction. | 2026-03-26 18:15
+GAP-CON-15 | P2 | OPEN | connection-scout | F-02/F-04 | CON-0015: MH as co-population for air quality / fragrance-free items. TID framework: chemical stimuli as PTSD triggers. | 2026-03-26 18:15
+GAP-CON-16 | P3 | OPEN | connection-scout | C-04/D-02 | CON-0016: Luminance contrast (VIS) + floor pattern (DEM) + TWSI (VIS/DBL) spatial interaction. Coordination cross-reference note needed. SPECULATIVE. | 2026-03-26 18:15
