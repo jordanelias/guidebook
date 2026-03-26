@@ -121,9 +121,9 @@ GAP-074 | P2 | CLOSED-RESOLVED | multilingual-research | mobility-built-environm
 
 GAP-075 | P3 | OPEN | multilingual-research | mobility-built-environment | ES THIN: CERMI and CTE/SUA retrieved; no OT-specific or Co-1 research found in Spanish for MOB built environment; CERMI advocacy publications need direct retrieval | 2026-03-19 22:30
 
-GAP-075 | P2 | OPEN | multilingual-research | accessible-bathroom-and-grab-bar | 16 jurisdictions NOT-RUN: IE/SG/SE/FR/BE/NL/CH/DK/FI/KR/CN/BR/ES/PT/IT/EU/ISO — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:22
+GAP-075 | P2 | CLOSED | multilingual-research | accessible-bathroom-and-grab-bar | RESOLVED: 24/24 jurisdictions searched. BPC COMPLETE. Search-log and BPC updated 2026-03-26 16:50. | 2026-03-26 16:50
 
-GAP-076 | P2 | OPEN | multilingual-research | residential-kitchen-and-task-surfaces | 14 jurisdictions NOT-RUN: NO/IE/SG/SE/BE/CH/DK/FI/KR/CN/BR/PT/IT/EU; NZ/JP THIN — Co-1 and Tier 5 outstanding; slug PROVISIONAL | 2026-03-19 20:47
+GAP-076 | P2 | OPEN | multilingual-research | residential-kitchen-and-task-surfaces | PARTIAL: 19/24 jurisdictions searched (6 NOT-RUN: NO/SE/DK/FI/SG/BR — likely NO-DATA). BPC PROVISIONAL — tier5 structural gap (8/16). Accepted. | 2026-03-26 16:50
 
 GAP-RAP-01 | P2 | OPEN | multilingual-research | A-01/A-02/A-08 | NDV/AUT acoustic provisions: no jurisdiction has a quantified RT60 target specific to autistic users. Bettarello et al. (2021) and Caniato et al. (2024) are the strongest available evidence but do not produce a normative standard. Guidebook's current NDV acoustic targets (NC-25, RT60 ≤ 0.6 s) are derived from general standards and are confirmed insufficient for this population. Recommend flagging all Category A items with NDV population coding as THIN-POPULATION-SPEC pending new research. | 2026-03-19
 
