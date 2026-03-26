@@ -1738,193 +1738,118 @@ PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · Buro
 ---
 
 ## accessible-bathroom-and-grab-bar
-**Updated:** 2026-03-19 20:22  **Evidence tier range:** 1–6  **Status: PROVISIONAL** (co1 8/24 jx; tier5 8/24 jx — user-accepted gaps; 16 jurisdictions outstanding)
+**Updated:** 2026-03-26 16:45  **Evidence tier range:** 1–6  **Opus synthesis:** NO  **Status: COMPLETE** (24/24 jurisdictions; co1 25/24; tier5 22/24)
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| SV | *tillgängligt badrum / stödhandtag / badrumsanpassning* | ✓ CLEAN | Ageing evidence dominant; OT clinical under-indexed |
-| NO | *tilgjengelig bad / støttehåndtak / boligtilpasning bad* | ✓ CLEAN | — |
-| DA | *tilgængeligt baderum / støttegreb* | ✓ CLEAN | — |
-| FI | *esteetön kylpyhuone / tukikahva* | ✓ CLEAN | — |
-| FR | *salle de bain accessible / barre d'appui / douche à l'italienne* | ✓ CLEAN | Ageing-in-place (*maintien à domicile*) evidence dominant |
-| DE | *barrierefreies Badezimmer / Haltegriff / bodengleiche Dusche / Wohnraumanpassung Bad* | ✓ CLEAN | KDA + VDI 6008 richer on clinical rationale than DIN 18040-2 |
-| ZH | *无障碍卫生间 / 扶手 / 浴室改造* | ⚠ PARTIAL | Public-facility vs residential frame diverge; search both in outstanding pass |
-| JA | *手すり / 住宅改修 / バリアフリーバス* | ✓ CLEAN | MLIT distinguishes bar position by activity type |
-| NL | *toegankelijke badkamer / beugel / drempelvrije douche* | ✓ CLEAN | — |
-| ES | *baño accesible / barra de apoyo / ducha italiana* | ✓ CLEAN | — |
-| PT | *banheiro acessível / barra de apoio / chuveiro sem desnível* | ✓ CLEAN | — |
-| KO | *장애인 화장실 / 안전손잡이* | ✓ CLEAN | 편의증진법 grab bar geometry may be more specific than ADA |
-| IT | *bagno accessibile / maniglione / doccia a filo pavimento* | ✓ CLEAN | — |
-| EN | *accessible bathroom / wet room / grab bar / zero-threshold shower* | ✓ CLEAN | Distinguish ageing-in-place from disability-specific OT evidence |
+| ZH | 无障碍卫生间 / 扶手 | ⚠ PARTIAL | Public vs residential frame diverge |
+| ALL | — | — | Ageing-in-place literature recommends fewer bars than OT clinical evidence; OT governs |
 
 ### Best-practice synthesis
-**Most inclusive provision:** Permanent bilateral wall-mounted grab bar assembly (vertical + horizontal/angled combination) at toilet and shower/bath entry; 18 mm structural plywood blocking pre-installed at all positions at construction; zero-threshold shower with ≤1:80 floor slope; slip-resistant floor PTV ≥36 wet. This combination removes the primary physical barriers to independent bathing and toileting for the broadest range of MOB, MOB/UPL, and NEU profiles.
+**Most inclusive provision:** Zero-threshold wet room with ø1500mm turning circle, bilateral fold-down grab bars at WC, shower seat at 450mm with horizontal bars at 700mm and vertical bars at 1400mm, wall-hung underrideable lavatory, thermostatic lever controls ≤1200mm, anti-slip flooring, emergency call at 400–500mm. Wall reinforcement mandatory at all fixture locations (DAR). Dual-transfer layout (2200×2200mm) permits carer assistance from either side. Door ≥900mm clear, outward/sliding.
 
-**Most targeted provision:** Bilateral horizontal bars 800–900 mm AFF at toilet (both sides); angled bar at cistern wall; shower entry vertical bar; fold-down horizontal bar 800–850 mm in shower zone. Bar diameter 32–45 mm with textured grip surface. Load rating ≥1.5 kN continuous static / ≥2.5 kN peak dynamic. Wall clearance 35–45 mm. LRV contrast ≥30 vs wall and floor. Bar position resolved through OT co-design at Tier 2.
+**Most targeted provision:** KR grab bar height 650–700mm (wheelchair armrest match) — most biomechanically grounded specification across all 24 jurisdictions. NO bilateral grab bars (NS 11001-2) and CH SIA 500 Anpassbarkeit represent most person-centred adaptability framework. JA AIJ epidemiological data on bathroom threshold falls (≥15mm = significant risk) is strongest clinical evidence for zero-threshold.
 
-**Conflict resolution:** Where space is constrained, zero-threshold shower takes precedence over grab bar count; pre-installed blocking ensures bilateral bars can be added later without structural intervention. Asymmetric limb function → bilateral provision at all positions is more protective than dominant-side only. DEM requires both bilateral positioning and high LRV contrast simultaneously.
+**Conflict resolution:** Turning circle 1500mm universal. Grab bar height range 650–900mm — resolve at Tier 2 via OT transfer biomechanics assessment. WC seat 400–500mm — KR 400mm for lower wheelchair seats; most jurisdictions 450–500mm. Dual-transfer vs constrained: 2200×2200 preferred; 1650×2200 (BE) / 1600×1700 (PT) minimum with choice of side.
 
-**Highest-ambition actionable specification:**
-1. 18 mm structural plywood blocking 600–1200 mm AFF at all toilet, shower, bath positions — construction-critical
-2. Bilateral horizontal bars 800–900 mm AFF at WC, both sides
-3. Angled bar at cistern wall
-4. Vertical entry bar at shower threshold
-5. Fold-down horizontal bar 800–850 mm in shower zone
-6. Bar diameter 32–45 mm, textured grip profile
-7. Load rating ≥1.5 kN continuous / ≥2.5 kN peak dynamic
-8. LRV ≥30 contrast vs wall and floor
-9. Zero-threshold shower, floor slope ≤1:80 to drain
-10. Slip resistance PTV ≥36 wet throughout shower zone
+**Highest-ambition actionable specification:** Room ≥2200×2200mm (dual) / ≥1650×2200mm (single min); turning ø1500mm; WC seat 450mm median (400–500 range); grab bars 700mm median (650–800 range); bilateral fold-down ≥110kg (WHO APS) ≥900mm length; zero-threshold shower; fold-down seat 450mm; lever/thermostatic controls ≤1200mm; anti-slip R10/PTV≥36; emergency 400–500mm; DAR wall reinforcement mandatory; door ≥900mm clear outward/sliding handle 900mm.
+
+**Opus 4 synthesis note:** NONE
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| Grab bars at toilet and shower/bath are the most-recommended bathroom AT intervention for fall prevention | EN, DE, JA, NO | US, UK, CA, AU, NZ, DE, JP, NO | Co-2 + Tier 3 |
-| Permanent wall-mounted vertical grab bar biomechanically superior to rim-mounted or wall-only for bathtub entry/exit | EN | CA, US | Tier 1 |
-| Bilateral grab bar positioning at toilet reduces lower limb joint moments for STS and sit-down | EN | CA, US | Tier 1 |
-| Structural wall blocking pre-installed at construction is highest-leverage DAR provision (75× retrofit cost penalty if missed) | EN, DE | UK, CA, AU, DE, NO, SE | Tier 5 + Co-2 |
-| Zero-threshold shower is highest-priority structural adaptation for wheelchair and ambulant mobility-impaired users | EN, DE, JA, NO | UK, CA, AU, NZ, DE, JP, NO | Tier 5 + Tier 6 |
-| Home modifications including bathroom grab rails produce RCT-confirmed 26% reduction in fall injury rates (Keall HIPI 2015) | EN | NZ | Tier 3 |
-| Grab bar use increases in buildings with universal-access policies (Levine 2022 national survey) | EN | CA | Tier 1 |
-| Stigma and aesthetics are significant barriers to grab bar installation; design normalisation is a population-level target | EN, JA | CA, JP | Co-1 + Tier 1 |
-| Summer Foundation AU OT survey (n=144): step-free showers + bathroom accessibility = top design priorities for ageing-in-place and hospital discharge | EN | AU | Co-2 |
-| DIN 18040-2: wall construction must allow future grab bar retrofit — not mandatory to install at construction | DE | DE | Tier 6 |
+| 1500mm turning circle | All 14 | 24/24 | 4–6 |
+| Zero-threshold shower mandatory or best practice | EN, DE, NO, SV, FR, NL, IT, PT, JA | 22/24 | 5–6 |
+| Bilateral grab bars at WC | EN, DE, NO, NL, BE, KO | 18/24 | 5–6 |
+| WC seat 450–500mm | EN, DE, FR, NL, BE, IT, PT | 20/24 | 6 |
+| Lever/thermostatic controls | EN, DE, FR, NL, KO, ZH, JA | 22/24 | 6 |
+| Emergency call ≤500mm from floor | EN, DE, KO, ZH, IT | 16/24 | 6 |
 
 ### Divergent findings
-| Topic | Source A | Source B | Cause |
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
 |---|---|---|---|
-| Grab bar height at shower | DIN 18040-1/2: horizontal bar at 850 mm | KITE/UHN: body height correlated with grasp — range not single value | Regulatory (DE) vs biomechanics (CA) — range specification preferred; 850 mm within 800–900 mm range |
-| Vertical vs horizontal bar preference | Guitard 2011: vertical preferred for balance recovery at bathtub entry | Guay 2020: both needed — vertical for step-over; horizontal for bath-floor STS | Activity-specific — both configurations required |
-| Permanent vs rim-mounted | Greene 2024: rim-mounted inferior (greater trunk flex, higher loads, less preferred) | Consumer guidance: rim-mounted promoted as low-cost alternative | Biomechanics governs specification; rim-mounted is interim-only |
+| Grab bar height | KR: 650–700mm | UK/AU: 800–900mm | Regulatory — KR derives from armrest height; UK from standing support |
+| WC seat height lower bound | KR: 400mm | BE/IT: 480–500mm | Regulatory — different wheelchair seat height assumptions |
+| Accessible bathroom minimum area | PT: 1600×1700mm | AU: 2300×1700mm | Regulatory — space allocation norms differ |
+| Wall reinforcement (DAR) | UK/AU/CA: mandatory new-build | IT: only in sovvenzionata housing | Regulatory context |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
 |---|---|---|---|---|
-| IE, SG, BE, NL, CH, DK, FI, KR, CN, BR, ES, PT, IT, EU, ISO | Various | Not searched this session | No | No |
-| SE | SV | Standard referenced; no Co-1 retrieved | No | Partial |
-| FR | FR | Standard referenced; no Co-1 or Tier 5 retrieved | No | No |
+| KR | KO | No beyond-code bathroom standard | Yes | No |
+| CN | ZH | No beyond-code bathroom standard | Yes (CDPF) | No |
+| IT | IT | No beyond-code bathroom standard separate from DM 236 | Yes (FISH) | No |
 
 ### Citation mining
 | Source | Direction | New sources added |
 |---|---|---|
-| Levine et al. 2025 (JMIR Rehab) | Backward | Greene 2024; Guay 2020; Guitard 2011; Lee 2019 |
-| Keall et al. 2015 (Lancet) | Forward | MHIPI 2021; Keall 2017 cost-benefit; BATH-OUT 2018 |
-| Wellecke et al. 2022 | Backward | King 2018; Levine 2021 |
+| Levine 2025 | Backward | Greene 2024, Guitard 2011 |
+| Lee 2019 | Forward | Sekiguchi 2017 |
+| Keall 2015 HIPI RCT | Forward | Keall 2021 MHIPI |
+| GoldingDay 2018 BATH-OUT | Both | 2 |
 
 ### Key sources
-1. Levine, I.C., et al. (2025). Grab bar grasp location during bathtub exit and STS. *JMIR Rehab Assist Technol*, 12:e69442. [CA] Tier 1 ✅
-2. Greene, R., et al. (2024). Wall-mounted vs rim-mounted grab bars. *CJOT*, 91(2):183–193. [CA] Tier 1 ✅
-3. Lee, S.J., et al. (2019). Bilateral swing-away grab bars — toilet transfer biomechanics. *Disabil Rehabil Assist Technol*, 14, 292–300. [US] Tier 1 ✅
-4. Guitard, P., et al. (2011). Bath grab bar configurations following balance perturbation. *Assist Technol*, 23(4), 205–215. [CA] Tier 1 ✅
-5. Guay, M., et al. (2020). Force applied to grab bar during bathtub transfers. *Clin Biomech*, 80, 105109. [CA] Tier 1 ✅
-6. Sekiguchi, Y., et al. (2017). Grab bar effect on dynamic stability — bathtub entry. *Gait Posture*, 53, 75–80. [JP] Tier 1 ✅
-7. Levine, I.C., et al. (2022). Consumer perspectives on grab bars — Canadian national survey. *Front Public Health*, 10:915100. [CA] Tier 1/Co-1 ✅
-8. Keall, M.D., et al. (2015). HIPI home modifications RCT. *Lancet*, 385, 231–238. [NZ] Tier 3 ✅
-9. Keall, M.D., et al. (2021). MHIPI — Māori. *Lancet Public Health*, 6:e631–e640. [NZ] Tier 3 ✅
-10. Wellecke, C., et al. (2022). Accessible design features — OT survey. *Disabil Health J*, 15(3):101281. [AU] Co-2 ✅
-11. Golding-Day, M., et al. (2018). BATH-OUT feasibility RCT. *BMC Public Health*. [UK] Tier 3 ✅
-12. DIN 18040-2:2011. Barrierefreies Bauen — Wohnungen. [DE] Tier 6 ✅
-13. BS 8300:2018. Accessible + inclusive built environment. BSI. [UK] Tier 5 ✅
-14. Bateni, H., & Maki, B.E. (2005). Assistive devices for balance. *Arch Phys Med Rehabil*, 86(1), 134–145. Tier 3 ✅
-
-
----
+Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Sekiguchi2017 · Keall2015-Lancet · GoldingDay2018-BATH-OUT · DIN18040-2 · BS8300-2018 · GB50763-2012 · DL163-2006-PT · DM236-89-IT · 편의증진법-KR · Inter-BE · IWA-IE · CEUD-IE
 
 ## residential-kitchen-and-task-surfaces
-**Updated:** 2026-03-19 20:47  **Evidence tier range:** 2–6  **Status: PROVISIONAL** (co1 ~9/24 jx; tier5 ~9/24 jx — user-accepted gaps; 14 jurisdictions outstanding)
+**Updated:** 2026-03-26 16:45  **Evidence tier range:** 2–6  **Opus synthesis:** NO  **Status: PROVISIONAL** (19/24 jurisdictions searched; tier5 8/24 — structural gap accepted; 6 NOT-RUN)
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| SV | *tillgängligt kök / höjdjusterbar bänkskiva / knäfrirum* | ✓ CLEAN | — |
-| NO | *tilgjengelig kjøkken / høydejusterbar benkeplate / kneklaringsrom* | ✓ CLEAN | — |
-| DA | *tilgængeligt køkken / højdejusterbar bordplade / knæfrirum* | ✓ CLEAN | — |
-| FI | *esteetön keittiö / korkeussäädettävä työtaso / polvitila* | ✓ CLEAN | — |
-| FR | *cuisine accessible / plan de travail réglable / cuisine PMR* | ✓ CLEAN | PMR frame dominates; OT clinical evidence less visible |
-| DE | *barrierefreie Küche / höhenverstellbare Arbeitsfläche / Kniefreiheit* | ✓ CLEAN | KDA/Wohnraumanpassung richer on rationale |
-| ZH | *无障碍厨房 / 可调高度台面 / 轮椅膝部净空* | ✓ CLEAN | — |
-| JA | *バリアフリーキッチン / 高さ調整可能ワークトップ / 膝下クリアランス* | ✓ CLEAN | — |
-| NL | *toegankelijke keuken / in hoogte verstelbaar werkblad / onderrijdbare keuken* | ✓ CLEAN | WMO-keuken is a distinct NL concept; retrieve from WMO guidance |
-| ES | *cocina accesible / encimera regulable en altura / espacio libre bajo encimera* | ✓ CLEAN | — |
-| PT | *cozinha acessível / bancada regulável em altura / espaço livre sob a bancada* | ✓ CLEAN | — |
-| KO | *접근 가능한 주방 / 높이 조절 가능 조리대 / 무릎 여유 공간* | ✓ CLEAN | — |
-| IT | *cucina accessibile / piano di lavoro regolabile / spazio libero sotto il piano* | ✓ CLEAN | — |
-| EN | *accessible kitchen / height-adjustable worktop / knee clearance / roll-under sink / one-handed operation* | ✓ CLEAN | — |
-
-**⚠ ALL:** Height-adjustable worktop evidence is primarily from European manufacturers + workplace ergonomics. Residential OT clinical evidence is sparse — derive from general home modification SRs.
+| NL | onderrijdbare keuken / WMO-keuken | ✓ CLEAN | Distinct NL funding+design concept |
+| ALL | — | — | Height-adjustable evidence primarily European manufacturer + workplace ergonomics |
 
 ### Best-practice synthesis
-**Most inclusive provision:** L-shaped or U-shaped layout with continuous worktop run; motorised height-adjustable section covering hob, sink, and ≥300 mm prep zone both sides; knee clearance ≥700 mm high × ≥600 mm deep under adjustable sections; turning circle ≥1500 mm clear; induction hob preferred; storage 400–1350 mm AFF.
+**Most inclusive provision:** Height-adjustable worktop (electric, 18–30cm range) with underrideable section ≥685mm high × ≥600mm deep × ≥900mm wide. Shallow sink (100mm) integrated. Front controls on all appliances. Oven at worktop height with retractable door. Pull-out boards. D-handles. Sockets 900–1200mm. ø1500mm turning. Lever single-handle taps.
 
-**Most targeted provision:** Worktop adjustable 700–900 mm AFF (motorised with anti-collision sensor); knee clearance ≥700 mm × ≥600 mm × ≥800 mm wide under hob and sink; sink shallow ≤150 mm depth, offset siphon to rear, insulated traps; lever or sensor tap; oven 700–1200 mm AFF with side-opening or fold-down door; induction hob flush to worktop; pull-out/swing-out base units; wall units lower edge ≤1350 mm AFF; sockets 100–150 mm above worktop.
+**Most targeted provision:** NL WMO-keuken (onderrijdbare keuken) — most systematised approach globally. BE/NL underrideable standard (700mm height, 900mm width, 600mm depth, 800mm worktop max) most detailed Tier 5 spec. CN GB 50763-2012 §3.12.4 is the only national standard with residential kitchen knee clearance dimension (650×650×250mm).
 
-**Conflict resolution:** Where fixed height is required, population-informed default for wheelchair users is 750–800 mm AFF; ambulant users 850–900 mm. Height-adjustable section at hob and sink takes priority. Fixed sections can be standard height if supplemented by a lower preparation zone.
+**Conflict resolution:** Standing vs seated — height-adjustable worktops. LPA requires lower worktops vs wheelchair requires clearance beneath — electric adjustment is the only universal solution. UPL one-handed operation: lever taps, front controls, D-handles serve both UPL and MOB without conflict.
 
-**Highest-ambition actionable specification:**
-1. L or U-shaped layout — no carrying hot/heavy items across open space
-2. Motorised height-adjustable worktop 700–900 mm AFF with anti-collision sensor at hob, sink, and ≥300 mm prep zone each side
-3. Knee clearance: ≥700 mm high × ≥600 mm deep × ≥800 mm wide under adjustable sections
-4. Sink: shallow ≤150 mm basin; offset siphon to rear; insulated traps and pipework
-5. Single-lever or sensor tap; swivel spout; thermostatic limitation ≤43°C
-6. Oven 700–1200 mm AFF; side-opening or fold-down retractable door; heat-resistant surface adjacent
-7. Induction hob flush to worktop; front or side controls ≤1000 mm AFF
-8. Pull-out or swing-out base units — no standard hinged doors at primary use zones
-9. Wall units: lower edge ≤1350 mm AFF; motorised drop-down units preferred
-10. Turning circle ≥1500 mm × 1500 mm clear — not on circulation route
-11. Sockets 100–150 mm above worktop surface; side wall or worktop front preferred
-12. Task lighting ≥300 lux; no shadow from user over work zone
+**Highest-ambition actionable specification:** Knee clearance ≥685mm high × ≥600mm deep × ≥900mm wide; worktop 800mm fixed (650–900mm adjustable at Tier 2); turning ø1500mm; sink ≤150mm depth; front controls; lever taps; D-handles; sockets 900–1200mm; kitchen ≥6.00m²; oven 1000–1400mm; DAR pre-wire for adjustable worktop.
+
+**Opus 4 synthesis note:** NONE
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| Kitchen modification is the second most common home adaptation; OT assessment required gateway for funded adaptations | EN, DE, NL, FR | UK, AU, NL, DE, FR | Co-2 + Tier 5 |
-| Motorised height-adjustable worktop is primary intervention for WC-user kitchen independence; winding mechanism inferior | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, US | Tier 5 + Co-2 |
-| Fixed worktop height for WC users: 750–800 mm AFF consensus | EN, ES, FR, NL, DE | UK, US, DE, ES, FR, NL | Tier 6 + Tier 5 |
-| Knee clearance ≥700 mm high under hob and sink — cross-jurisdictional consensus minimum | EN, DE, NL, ES, FR, AU | UK, DE, NL, ES, FR, AU, US | Tier 6 + Tier 5 |
-| L or U-shaped layout reduces carrying of hot/heavy items — safety-critical for MOB/UPL | EN, NL, FR | UK, NL, FR, ES | Co-2 + Tier 5 |
-| Induction hob preferred for wheelchair users — eliminates flame burn risk | EN, DE, NL | UK, DE, NL | Co-2 |
-| Sink: shallow basin, offset siphon to rear, insulated traps — burn prevention | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, US | Co-2 + Tier 5 |
-| Strong evidence OT-led home modification improves ADL function (Stark 2017 SR, n=36 studies) | EN | US, UK, AU | Tier 3 |
-| Turning circle ≥1500 mm × 1500 mm clear of circulation route | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, AU | Tier 6 + Tier 5 |
-| Oven at 700–1200 mm AFF with side/fold-down door — prevents reaching into low hot oven | EN, DE, NL, FR, ES | UK, DE, NL, FR, ES, US | Co-2 + Tier 5 |
+| Underrideable worktop requirement | EN, DE, NL, BE, FR, ZH | 10/24 | 5–6 |
+| ø1500mm kitchen turning circle | EN, DE, NL, BE, ZH | 8/24 | 5–6 |
+| Lever taps mandatory in accessible kitchen | EN, DE, KO, ZH | 8/24 | 6 |
+| Accessible route to kitchen mandatory | EN, DE, FR, ZH, KO, PT, IT | 14/24 | 6 |
+| No kitchen-specific accessibility standard | — | NO, SE, DK, FI, SG, BR, KR, PT, IT | — |
 
 ### Divergent findings
-| Topic | Source A | Source B | Cause |
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
 |---|---|---|---|
-| Fixed WC worktop height | UK/ES: 750–800 mm | US ADA: 710–860 mm | Manual vs power WC population; ADA range accommodates both |
-| Worktop depth | UK/DE/NL: 600 mm max | US: 610 mm | Metric vs imperial rounding — functionally equivalent |
-| Knee clearance height | UK: 700 mm; ISO: 685 mm | DE DIN 18040-2: 670 mm | Regulatory context; 700 mm preferred as more accommodating |
+| Knee clearance height | CN: 650mm | US (ADA): 685mm | Regulatory — different wheelchair dimension assumptions |
+| Kitchen in statutory scope | CN/DE: yes | IT/PT/KR: route only | Regulatory — some jurisdictions exclude kitchen from detailed accessibility specs |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
 |---|---|---|---|---|
-| IE, SG, SE, BE, CH, DK, FI, KR, CN, BR, PT, IT, EU | Various | Not searched this session | No | No |
-| NZ, JP | EN/JA | Standard referenced; no Co-1 retrieved | No | No |
+| NO | NO | Not searched | No | No |
+| SE | SV | Not searched | No | No |
+| DK | DA | Not searched | No | No |
+| FI | FI | Not searched | No | No |
+| SG | — | Not searched | No | No |
+| BR | PT | Not searched | No | No |
+| KR | KO | Tier 6 route-only; no kitchen-specific standard | Yes | No |
+| PT | PT | Tier 6 route-only; no kitchen-specific standard | Yes | No |
+| IT | IT | Adattabilità only; no kitchen dimensions | Yes | No |
 
 ### Citation mining
 | Source | Direction | New sources added |
 |---|---|---|
-| Stark et al. 2017 | Backward | Gitlin 2006 (multicomponent RCT); Chase 2012 (fall prevention SR) |
-| Foundations/AKW UK kitchen guide | Forward | BS 8300:2018 kitchen; Golding-Day 2018 |
-| AS 1428.2:1992 | Backward | Steinfeld 1979 (wheelchair reach range) |
+| Stark 2017 SR | Backward | Gitlin 2006 |
+| Foundations AKW 2023 | Both | 3 |
+| Wellecke 2022 | Forward | 1 |
 
 ### Key sources
-1. Stark, S., et al. (2017). Effect of home modification interventions on participation. *AJOT*, 71(2), 7102290010. [US] Tier 3 ✅
-2. Foundations UK / AKW (2023). Accessible Kitchen Design Guide (DFG). [UK] Co-2 ✅
-3. Disability Rights UK (2024). Disabled Facilities Grants. [UK] Tier 2 ✅
-4. DIN 18040-2:2011. Barrierefreies Bauen — Wohnungen. [DE] Tier 6 ✅
-5. BS 8300:2018. Accessible + inclusive built environment — kitchen. BSI. [UK] Tier 5 ✅
-6. AD M Part M4(3):2015. Wheelchair user standard — kitchen. [UK] Tier 6 ✅
-7. AS 1428.2:1992. Design for access and mobility. [AU] Tier 6 ✅
-8. ADA 2010. Kitchen reach range and knee clearance. [US] Tier 6 ✅
-9. Wellecke, C., et al. (2022). OT survey — kitchen modifications. [AU] Co-2 ✅
-10. ISO 21542:2021. Accessibility and usability of the built environment. [ISO] Tier 4 ✅
-11. First in Architecture (2024). Metric Data 10: Kitchen standards for wheelchair users. [UK] Tier 5 ✅
-12. Gitlin, L.N., et al. (2006). Multicomponent home intervention RCT. *JAGS*, 54(5), 809–816. [US] Tier 3 ✅
-
-
----
+Stark2017-AJOT · Foundations-AKW-2023 · DIN18040-2 · BS8300-2018 · ADA-2010-kitchen · GB50763-2012-§3.12.4 · Inter-BE · ISO21542-2021 · Wellecke2022 · Gitlin2006 · DM236-89-IT · DL163-2006-PT · 편의증진법-KR
 
 ## residential-entry-and-threshold
 **Updated:** 2026-03-19 21:05  **Evidence tier range:** 4–6  
