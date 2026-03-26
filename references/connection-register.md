@@ -1,7 +1,7 @@
 # Connection Register
 
 **Created:** 2026-03-26 18:10  
-**Last updated:** 2026-03-26 18:10
+**Last updated:** 2026-03-26 18:30
 
 ---
 
@@ -439,3 +439,130 @@ Cross-reference note in C-04: DEM floor treatment and VIS TWSI contrast are comp
 
 ### Disposition
 - [ ] SPECULATIVE → P3 gap item
+
+
+---
+
+## CON-0017 [2026-03-26 18:30]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Populations involved:** NDV/AUT, NDV/MH, OFS, DEM, NEU, DEAF, VIS
+**Items involved:** H-02 (Individual Environmental Control), A-16, B-06, B-07
+**Gap register items:** NONE (new Tier 0 candidate)
+
+### Connection description
+"User control over environment" is documented as the single highest-impact provision across NDV subtypes (NDV BPC), the primary design requirement for sensory rooms (sensory-room-user-control BPC), a core requirement for NDV/MH retreat rooms, and essential for OFS temperature/lighting management. DEM benefits from consistent but adjustable environments. DEAF users benefit from lighting control for sign language visibility. The pattern repeats in 5+ population BPCs but is never synthesized into a cross-population design principle. No specification currently states that occupant environmental control is a Tier 0 universal provision. It is siloed as population-specific within each category. This is arguably the strongest Tier 0 candidate in the guidebook — evidenced across more populations than any other single provision.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| NDV BPC — "single highest-impact provision" | Co-1, Tier 4 | NDV/AUT, NDV/ADHD, NDV/SENS | ALL — Tier 0 candidate |
+| Sensory room user control BPC — H-02 PRIMARY | Co-1 | NDV/AUT | ALL |
+| OFS BPC — adjustable seating/temperature/lighting | Co-1/Tier 3 | OFS | ALL |
+| NDV/MH BPC — user-adjustable lighting/acoustics | Tier 2–4 | NDV/MH | ALL |
+| PAS 6463:2022 | Tier 5 | NDV, DEM | ALL |
+| DeafSpace — lighting control for signing | Co-1/Tier 2 | DEAF | ALL |
+
+### Proposed synthesis direction
+Elevate H-02 (Individual Environmental Control) to Tier 0 universal design. Specification: all primary occupied spaces to provide occupant-adjustable lighting (level and CCT), acoustic management (operable panels or zones), and local thermal control. Population-specific overlays at Tier 1 define parameter ranges. This does not increase cost significantly — dimmer switches and local thermostats are standard building components. The specification change is from "optional upgrade" to "baseline provision."
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0018 [2026-03-26 18:30]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Populations involved:** DEM, NEU, NDV/AUT, OFS
+**Items involved:** Cognitive wayfinding BPC, DEM BPC, NEU BPC
+**Gap register items:** NONE (new Tier 0 candidate)
+
+### Connection description
+"Toilet visible from primary occupied space" is independently evidenced for DEM (Marquardt 2011 — reduces distress and incontinence; Davis & Weisbeck 2016), confirmed in cognitive wayfinding BPC for DEM and NDV, and functionally relevant for NEU (landmark-based navigation is the most effective compensatory strategy — Claessen & van der Ham 2017). OFS benefits from reduced navigation distance when symptomatic. The principle generalises: "essential facility visibility from primary occupation point" is a spatial planning principle serving DEM, NEU, NDV, and OFS simultaneously. It is currently documented only as a DEM-specific wayfinding provision in care settings. In residential settings, it would mean every dwelling's primary living area has direct sightline to the bathroom door — a provision that constitutes good spatial design for all occupants.
+
+Note: CON-0001 covers loop circulation and legible layout; this connection is specifically about sightline to essential facilities, which is a distinct spatial planning principle.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Marquardt 2011 | Tier 3 | DEM | NEU, NDV/AUT, OFS |
+| Davis & Weisbeck 2016 | Tier 3 | DEM | NEU |
+| Claessen & van der Ham 2017 | Tier 1 | NEU | DEM confirmation |
+| DSDC EADDAT 2022 | Tier 5 | DEM | Cross-population |
+| Cognitive wayfinding BPC | Synthesis | DEM, NDV | NEU, OFS |
+
+### Proposed synthesis direction
+Elevate "essential facility sightline" to a Tier 0 residential design principle: WC/bathroom door visible from main living area without navigational decision points. In care settings, this is already standard for DEM; in residential design, it is not specified. The evidence supports it as a universal benefit.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0019 [2026-03-26 18:30]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Populations involved:** NDV/AUT, NDV/MH, OFS, PAIN
+**Items involved:** A-16 (Sensory Room), NDV/MH retreat room, OFS rest space
+**Gap register items:** GAP-NEW-11, GAP-B4-08
+
+### Connection description
+Extends CON-0002 (sensory/MH overlap) and CON-0004 (seated/reclined provision). Four populations independently require a low-stimulation refuge space: NDV/AUT (sensory quiet room A-16), NDV/MH (de-escalation/safe retreat ≥9 m²), OFS (low-stimulation rest space), PAIN (energy conservation rest point). These share overlapping functional requirements: low acoustic load (RT60 ≤0.4 s), user-controlled lighting, no through-traffic, accessible location. Currently specified as four distinct room types across four BPC entries. The synthesis: a single "environmental refuge" at Tier 0 — every occupied floor plate includes one refuge room — with population-specific overlays at Tier 1 (NDV/AUT: sensory equipment + blackout; NDV/MH: de-escalation furnishing; OFS: reclined seating + semi-recumbent positioning; PAIN: cushioned seating + thermal control). This resolves GAP-NEW-11 and GAP-B4-08 simultaneously within a unified spatial provision.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| PAS 6463:2022 | Tier 5 | NDV/AUT, DEM | OFS, PAIN, NDV/MH |
+| OFS BPC rest space provision | Co-1/Tier 3 | OFS | NDV/AUT, NDV/MH, PAIN |
+| NDV/MH BPC retreat room | Tier 2–4 | NDV/MH | OFS, PAIN |
+| Sensory room user control BPC | Co-1 | NDV/AUT | All four |
+| ASPECTSS escape space (Mostafa 2014) | Tier 1 | NDV/AUT | Cross-population |
+
+### Proposed synthesis direction
+Specify "environmental refuge space" as Tier 0 universal provision: one per occupied floor plate; user-controlled lighting (2700–5000 K dimmable); RT60 ≤0.4 s; no through-traffic; accessible without passing through high-stimulation zones. Population overlays added at Tier 1 per OT assessment.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
+
+---
+
+## CON-0020 [2026-03-26 18:30]
+
+**Mode:** Internal
+**Confidence:** SPECULATIVE
+**Populations involved:** DEAF, VIS, DEM, NDV/AUT
+**Items involved:** DEAF corridor glazing (DeafSpace), DEM glare provisions, VIS glare control, NDV visual noise
+**Gap register items:** NONE (new conflict identification)
+
+### Connection description
+DEAF BPC specifies glazed corridor junctions for visual advance warning — a DeafSpace principle replacing opaque corners with transparent ones. DEM BPC identifies reflective/high-gloss surfaces as problematic (perceived as wet/holes). VIS BPC identifies glare as a barrier. NDV/AUT BPC requires reduced visual noise. Glazed junctions serve DEAF but may create: glare for VIS users; reflective confusion for DEM users; visual complexity for NDV/AUT users. This is a potential four-way conflict not documented in any BPC or in the conflict resolution BPC. The DeafSpace literature documents the curved-corner collision problem (Gallaudet) but the glazing solution's interaction with VIS/DEM/NDV is unassessed.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| DeafSpace Guidelines 2010 | Co-1 | DEAF | Conflict assessment needed |
+| DSDC glare guidance | Tier 3–5 | DEM | Conflict with DEAF glazing |
+| PAS 6463 visual noise | Tier 5 | NDV | Conflict with DEAF glazing |
+| BS 8300 / DIN 32975 glare guidance | Tier 5 | VIS | Conflict with DEAF glazing |
+
+### Proposed synthesis direction
+Document as a conflict requiring resolution. Possible mitigations: anti-reflective coating on glazing; etched/frosted lower band maintaining upper sightline for signing; matte floor adjacent to glazed junction to eliminate floor reflections. Flag for §IV.2 conflict resolution or Opus 4 cross-synthesis if standard resolution fails.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [x] SPECULATIVE → P3 gap item
+- [ ] Superseded by existing content — CLOSED
