@@ -102,12 +102,13 @@
 | Keep all existing 14 | Verified, cross-referenced, high quality | 14 |
 | Mine existing for evidence upgrades | Systematically extract outcome data → cite in Part 7 items → upgrade ○ to ● where justified | ~10–15 item upgrades |
 | Source new: PAIN/OFS | Zero current case studies for these populations | Target: 2–3 |
-| Source new: IntD | Zero current case studies | Target: 1–2 |
 | Source new: NDV/MH | Only ASPECTSS school retrofit currently | Target: 1–2 |
-| Source new: Residential (mixed) | BC HAFI is only residential case study | Target: 2–3 |
-| Source new: Cross-disciplinary | Case studies showing successful multi-specialist collaboration | Target: 1–2 |
-| **Total target** | | **22–28 case studies** |
-
+| Source new: Residential (mixed-needs) | BC HAFI is only residential case study | Target: 2–3 |
+| Source new: Cross-disciplinary collaboration | Projects documenting multi-specialist process | Target: 1–2 |
+| Source new: Cross-population conflict resolution | Built environments where competing population needs were explicitly resolved — documented trade-offs and outcomes | Target: 2–3 |
+| Source new: Co-occurring/compound disability | Multi-population environments designed for compound functional demand — synergistic provisions serving ≥2 populations simultaneously | Target: 2–3 |
+| Source new: Evidence-gap deep dives | Single-population case studies targeting populations where Phase 2B research yields THIN or NO-DATA evidence — population(s) selected after Session 8–9 results | Target: 2–4 |
+| **Total target** | | **25–35 case studies** |
 **Case study evidence mining protocol** (new — Session 6):
 1. For each of the 14 existing case studies: extract all quantified outcome data
 2. Map each outcome to the Part 7 item(s) it supports
@@ -161,7 +162,7 @@ For CONSUME and SUPPLEMENT slugs:
 | Priority | Slugs | Rationale |
 |---|---|---|
 | **P0 — Critical** | `pain-built-environment`, `ofs-built-environment`, `intellectual-disability-built-environment-design`, `cross-population-conflict-resolution` (NEW) | Weakest evidence × highest content value; Part 8 requires new slug |
-| **P1 — High** | `mental-health-built-environment`, `neurological-built-environment` (supplement), `residential-home-modification`, `economics-accessible-construction` (NEW) | Moderate evidence gaps; strategic importance |
+| **P1 — High** | `mental-health-built-environment`, `neurological-built-environment` (supplement), `residential-home-modification`, `economics-accessible-construction` (NEW), `co-occurring-disability-design` (NEW) | Moderate evidence gaps; strategic importance; co-occurring slug feeds Part 8 §8.8 + Part 13 |
 | **P2 — Upgrade** | All 13 PROVISIONAL BPC entries | Sufficient for specification but need jurisdiction gaps closed |
 | **P3 — Backfill** | All remaining pre-v4 slugs triaged as CONSUME | Metadata only; no new search |
 
@@ -192,6 +193,7 @@ For CONSUME and SUPPLEMENT slugs:
 | Economics intensification research | 0.5 (within Phase 2) |
 | Economics intensification writing | 0.5 (within Phase 3) |
 | Case study sourcing | 0.5 (within Phase 2) |
+| Co-occurring slug research + expanded case study categories | 0.5 (within existing Session 10 + 11) |
 | Part 10 reconceptualisation | 0 (absorbed into existing Part 10 writing) |
 | **Net new session cost** | **~1 session** (absorbed into existing sessions where possible) |
 
@@ -368,7 +370,7 @@ Part 3 — Multiple Categories:
 
 **Part 13 (Case Studies — expanded):**
 - DEC-09: Keep all 14 existing.
-- DEC-19 (NEW): Target populations for new case studies (PAIN, OFS, IntD, NDV/MH, residential).
+- DEC-19 (NEW): Target populations for new case studies (PAIN/OFS, NDV/MH, residential, conflict resolution, co-occurring/compound, evidence-gap deep dives). IntD case studies removed per directive.
 - DEC-20 (NEW): Case study template — add "Evidence Contribution" field mapping outcomes to Part 7 items?
 
 **Appendices:** Per v10.0 plan. Appendix E from §1.8.
@@ -487,6 +489,17 @@ With Decision Register approved:
   - Post-occupancy evaluation data on resolved vs unresolved conflicts
 - This slug uses all 14 languages and 24 jurisdictions but with a narrow topic focus.
 
+**NEW slug: `co-occurring-disability-design`** (P1 priority)
+- Evidence for compound/synergistic design. Distinct from conflict resolution: this slug asks "what design techniques serve ≥2 populations simultaneously?" rather than "how do you resolve when populations conflict?"
+- Search targets:
+  - Aged care facility design for compound populations (MOB+DEM+VIS+DEAF)
+  - SDA/supported living for co-occurring conditions
+  - OT home modification for clients with ≥2 disability categories
+  - POE data from multi-population settings
+  - Rehabilitation facility design for compound functional demand
+- Companion nodes: Summer Foundation, Habinteg, IDeA Center, UNSW HMC, KDA, Vilans
+- 14 languages × 24 jurisdictions, narrow topic focus.
+
 **Economics intensification research:**
 - Cost study data by building type (residential, office, healthcare)
 - Pro forma/development cost data: US (RSMeans), UK (BCIS), DE (TERRAGON), AU (QS databases)
@@ -500,10 +513,12 @@ With Decision Register approved:
 
 **New case studies — targeted search:**
 - PAIN/OFS: built environment adaptations with outcome data (target: 2–3)
-- IntD: purpose-built or adapted environments for people with intellectual disabilities (target: 1–2)
 - NDV/MH: therapeutic or trauma-informed design with outcomes (target: 1–2)
 - Residential mixed-needs: home modification programmes with longitudinal data (target: 2–3)
 - Cross-disciplinary collaboration: projects documenting multi-specialist process (target: 1–2)
+- Cross-population conflict resolution: built projects where competing population needs were explicitly resolved — documented trade-offs, zoning decisions, outcome data (target: 2–3)
+- Co-occurring/compound disability: multi-population environments designed for compound functional demand — aged care, SDA, rehabilitation — with synergistic design provisions serving ≥2 populations (target: 2–3)
+- Evidence-gap deep dives: single-population case studies for populations where Sessions 8–9 research yielded THIN or NO-DATA — specific populations selected at Session 10 checkpoint (target: 2–4)
 
 **Remaining SUPPLEMENT slugs:**
 - Complete any SUPPLEMENT batch slugs not finished in Session 9.
@@ -664,7 +679,7 @@ Content revision within the *current* structure (old numbering). Phase 4 renumbe
 
 **Part 13 (Case Studies — expanded):**
 - Keep all 14 existing.
-- Integrate 8–12 new case studies from Session 11 sourcing.
+- Integrate 11–19 new case studies from Session 11 sourcing (PAIN/OFS, NDV/MH, residential, cross-disciplinary, conflict resolution, co-occurring/compound, evidence-gap deep dives).
 - Add "Evidence Contribution" field to each case study: which Part 7 items this study's outcomes support.
 - Add cross-references back to Part 7 item specifications.
 
@@ -827,6 +842,9 @@ Content revision within the *current* structure (old numbering). Phase 4 renumbe
 | Case study sourcing for PAIN/OFS yields <3 studies | High | Medium | PAIN/OFS are genuinely under-documented in built environment literature; accept THIN-BASE with honest disclosure |
 | Pre-v4 triage takes longer than allocated | Low | Low | Triage is classification, not research; 51 slugs × ~3 min each = ~2.5 hours; fits within session |
 | Context limit reached mid-Part 8 writing | Medium | Medium | Part 8 §8.4 (consolidated resolutions) is the longest section; if context limit approaches, split §8.4 acoustic+thermal into one session and visual+spatial+sensory into next |
+| Co-occurring/compound case study sourcing yields thin results | Medium | Medium | Co-occurring design is often documented as universal design without explicit multi-population framing; search strategy includes POE literature and aged care facility evaluations where compound populations are implicit |
+| Conflict resolution case studies lack documented trade-off data | High | Medium | Most built projects don't publish conflict resolution process; target SDA, aged care, and healthcare facility evaluations where regulatory requirements forced explicit documentation |
+| Evidence-gap deep dives depend on Sessions 8–9 completing first | Low | Low | If Sessions 8–9 incomplete at Session 11, defer deep dives to PROVISIONAL and note in gap register |
 
 ---
 
