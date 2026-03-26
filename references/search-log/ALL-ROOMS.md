@@ -147,6 +147,18 @@ opus_synthesis_ref: "NONE"
 ```
 
 ```yaml
+
+functional_deficit_pass:
+  status: PARTIAL
+  last_run: 2026-03-26 18:30
+  scenarios_searched: 5
+  novel_findings: 2
+  refines_findings: 2
+  contradicts_findings: 0
+  tier0_candidates: 0
+  environments_covered: [bathroom]
+  environments_remaining: [bedroom, entrance, general]
+
 slug: residential-kitchen-and-task-surfaces
 query: "accessible kitchen disability wheelchair worktop height knee clearance one-handed operation OT home modification"
 last_searched: 2026-03-26 16:30
@@ -264,6 +276,18 @@ ACCEPTED_GAPS: [6 jurisdictions NOT-RUN (NO, SE, DK, FI, SG, BR); tier5 8/24; st
 ```
 
 ```yaml
+
+functional_deficit_pass:
+  status: PARTIAL
+  last_run: 2026-03-26 18:30
+  scenarios_searched: 2
+  novel_findings: 0
+  refines_findings: 0
+  contradicts_findings: 0
+  tier0_candidates: 0
+  environments_covered: [kitchen]
+  environments_remaining: []
+
 slug: residential-entry-and-threshold
 query: "accessible residential entry threshold level access ramp gradient entrance approach"
 last_searched: 2026-03-19 21:00
