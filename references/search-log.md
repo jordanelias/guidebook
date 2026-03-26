@@ -1,0 +1,116 @@
+# Search Log
+**Managed by:** research-log-manager
+**Purpose:** Per-slug search coverage index. Tracks languages, jurisdictions, Co-1 attempts, and completeness.
+
+---
+
+slug: pain-ofs-built-environment-design
+query: "chronic pain fibromyalgia ME/CFS POTS orthostatic intolerance built environment design housing adaptation occupational therapy"
+last_searched: 2026-03-26 16:45
+early_close_triggered: false
+
+native_aliases:
+  SV: "kroniskt trötthetssyndrom / fibromyalgi / bostadsanpassning" [CLEAN]
+  NO: "kronisk utmattelsessyndrom / fibromyalgi / boligtilpasning" [CLEAN]
+  DA: "kronisk træthedssyndrom / fibromyalgi" [PARTIAL]
+  FI: "krooninen väsymysoireyhtymä / fibromyalgia" [PARTIAL]
+  FR: "syndrome de fatigue chronique / fibromyalgie / aménagement du logement" [CLEAN]
+  DE: "Chronisches Erschöpfungssyndrom / Fibromyalgie / Arbeitsplatzanpassung" [CLEAN]
+  ZH: "慢性疲劳综合征 / 纤维肌痛" [PARTIAL]
+  JA: "慢性疲労症候群 / 線維筋痛症" [PARTIAL]
+  NL: "ME/CVS / fibromyalgie" [PARTIAL]
+  ES: "SFC / fibromialgia" [PARTIAL]
+  PT: "SFC / fibromialgia" [PARTIAL]
+  KO: "만성피로증후군 / 섬유근육통" [PARTIAL]
+  IT: "SFC / fibromialgia" [PARTIAL]
+concept_boundary_warnings:
+  - ALL: "No built-environment design vocabulary exists for PAIN/OFS in any language. All search terms derive from clinical/medical terminology. Built-environment implications are inferred from clinical symptoms, not from design literature."
+  - FR: "PCH 'aménagement du logement' is a funding mechanism, not a design standard. Search deviates to MDPH/PCH funding criteria."
+  - SV: "bostadsanpassningsbidrag (housing adaptation grant) is a funding mechanism under Boverket. Court precedent allows fibromyalgia bath adaptation."
+
+languages:
+  EN: {status: SEARCHED, results: 14, db: [PubMed, web, JAN, NICE], co1_pass: complete, native_standards_pass: complete}
+  SV: {status: SEARCHED, results: 6, db: [web], co1_pass: partial, native_standards_pass: complete, note: "Boverket bostadsanpassning court precedent for FM; Swedish NICE translation for ME/CFS environment guidance"}
+  NO: {status: SEARCHED, results: 4, db: [web], co1_pass: partial, native_standards_pass: complete, note: "Husbanken boligtilpasning exists; no ME/CFS-specific design guidance"}
+  DA: {status: THIN, results: 1, db: [web], co1_pass: partial, native_standards_pass: not-run}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: partial, native_standards_pass: not-run}
+  FR: {status: SEARCHED, results: 5, db: [web], co1_pass: partial, native_standards_pass: complete, note: "PCH housing adaptation funding for FM via MDPH; French Senate debate on FM ALD recognition mentions logement"}
+  DE: {status: SEARCHED, results: 3, db: [web, REHADAT], co1_pass: partial, native_standards_pass: complete, note: "REHADAT covers workplace adaptation; no housing design specs for CFS/FM"}
+  ZH: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+  JA: {status: NO-DATA, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+  NL: {status: THIN, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+  ES: {status: THIN, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: THIN, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+  KO: {status: THIN, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: THIN, results: 0, db: [web], co1_pass: not-run, native_standards_pass: not-run}
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  AU: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  DK: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+
+jurisdiction_coverage_summary:
+  searched: [US, UK, CA, DE, FR, SE, NO, EU, ISO]
+  thin: [AU, DK, FI]
+  no_data: [JP, KR, CN]
+  not_run: [IE, NZ, SG, CH, BE, NL, BR, ES, PT, IT]
+  co1_complete: [US, UK]
+  co1_not_attempted: [IE, NZ, SG, CH, BE, NL, JP, KR, CN, BR, ES, PT, IT, ISO]
+  tier5_complete: [US, UK, SE]
+  tier5_not_attempted: [AU, IE, NZ, SG, CH, BE, NL, DK, FI, JP, KR, CN, BR, ES, PT, IT]
+
+co1_pass_summary: {complete: [EN], partial: [SV, NO, DA, FI, FR, DE], not-run: [ZH, JA, NL, ES, PT, KO, IT]}
+native_standards_pass_summary: {complete: [EN, SV, NO, FR, DE], partial: [], not-run: [DA, FI, ZH, JA, NL, ES, PT, KO, IT]}
+companion_networks: {loaded: [Network-C-OFS], scholar_targets: 3, retrieved: 3}
+citation_mining: {backward: 5, forward: 3, sources_added: 2}
+at_database_pass: not-run
+
+top_sources:
+  - "NICE NG206 (2021) — ME/CFS low-stimulus environment; aids/adaptations; environmental factors (lighting, sound, heating, smells)"
+  - "Bateman Horne Center Clinical Care Guide (2025) — OI environmental triggers; built environment implications"
+  - "Strassheim et al. 2018 — Newcastle POTS fatigue management approach"
+  - "PMC6260403 — OT chronic pain scoping review (52 sources): ergonomics 30.8%, environmental modification 21.2%"
+  - "Dysautonomia Support Network — energy conservation and environmental modifications"
+  - "Boverket (SE) — bostadsanpassningsbidrag court precedent: fibromyalgia bath adaptation"
+  - "MDPH/PCH (FR) — housing adaptation funding for fibromyalgia"
+  - "JAN (US) — POTS workplace accommodation list"
+  - "CDC ME/CFS clinical overview — environmental triggers (heat, prolonged standing)"
+
+bpc_ref: "pain-ofs-built-environment-design"
+thin_flags: [AU, DK, FI, NL, ES, PT, KO, IT]
+no_data_flags: [JP, KR, CN]
+opus_synthesis_triggered: false
+opus_synthesis_ref: "NONE"
+
+functional_deficit_pass:
+  status: NOT-RUN
+  last_run: null
+  scenarios_searched: 0
+  novel_findings: 0
+  refines_findings: 0
+  contradicts_findings: 0
+  tier0_candidates: 0
+  environments_covered: []
+  environments_remaining: [bathroom, kitchen, bedroom, circulation, entrance, workplace, outdoor]
