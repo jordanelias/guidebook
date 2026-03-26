@@ -490,3 +490,8 @@ RULE: Bottom-up functional deficit research is a standing complementary methodol
 CONDITION: Any slug with ≥2 THIN flags, any item-specification-writer evidence gap, any connection-scout cross-population gap unresolved by top-down search, or explicit user request.
 ACTION: Run `functional-deficit-researcher` on the relevant environment context batch. ≤12 scenarios per session. Results merge into existing BPC.
 DATE: 2026-03-26 16:15
+
+RULE: Session Start Protocol runs once per conversation. If it has already completed in the current conversation, "resume," "continue," or equivalent directives do not re-trigger it.
+CONDITION: Any message containing "resume," "continue," "carry on," "pick up where we left off," or equivalent in a conversation where Session Start Protocol has already run.
+ACTION: Skip Session Start Protocol; proceed directly to the referenced task.
+DATE: 2026-03-26 18:30
