@@ -161,7 +161,7 @@ functional_deficit_pass:
 
 slug: residential-kitchen-and-task-surfaces
 query: "accessible kitchen disability wheelchair worktop height knee clearance one-handed operation OT home modification"
-last_searched: 2026-03-26 16:30
+last_searched: 2026-03-26 21:45
 early_close_triggered: false
 status: PROVISIONAL
 provisional: true
@@ -290,7 +290,7 @@ functional_deficit_pass:
 
 slug: residential-entry-and-threshold
 query: "accessible residential entry threshold level access ramp gradient entrance approach"
-last_searched: 2026-03-19 21:00
+last_searched: 2026-03-26 21:45
 early_close_triggered: false
 
 native_aliases:
@@ -397,7 +397,7 @@ ACCEPTED_GAPS: [10 jurisdictions NOT-RUN (IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES
 ```yaml
 slug: threshold-and-level-access
 query: "accessible threshold level access door sill step-free built environment"
-last_searched: 2026-03-19 21:00
+last_searched: 2026-03-26 21:45
 early_close_triggered: false
 
 native_aliases:
@@ -499,7 +499,7 @@ ACCEPTED_GAPS: [10 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 6/24; native aliases
 ```yaml
 slug: reach-range-and-accessible-controls
 query: "reach range accessible controls switches sockets door handles wheelchair upper limb"
-last_searched: 2026-03-19 21:00
+last_searched: 2026-03-26 21:45
 early_close_triggered: false
 
 native_aliases:
@@ -790,3 +790,43 @@ no_data_flags: [rest-seating-interval — confirmed NO-DATA across all 14 langua
 PROVISIONAL: true
 ACCEPTED_GAPS: [Co-1 not run — DPO orgs do not produce separate lift dimension guidance; rest seating NO-DATA accepted — no building standard exists in any jurisdiction; 16 jurisdictions THIN for specific lift/corridor standards — EN 81-70 universal applicability accepted as proxy]
 ```
+
+---
+
+## Backfill Annotation — 2026-03-26 21:45
+
+**Session:** Jurisdiction backfill for PROVISIONAL slugs
+**Working document:** `research/all-rooms-backfill-2026-03-26.md`
+**Jurisdictions searched this session:** IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT (all 4 slugs) + FR, NL, SE, NO, PT (reach-range only)
+
+**Status changes pending inline update (next session):**
+- `residential-entry-and-threshold`: IE/NZ/SG/CH/BE/DK/FI/KR/CN/ES/IT → SEARCHED (Tier 6 confirmed for all; Co-1 partial; Tier 5 partial). PT remains THIN.
+- `threshold-and-level-access`: same as above
+- `reach-range-and-accessible-controls`: IE/NZ/SG/CH/BE/DK/FI/KR/CN/ES/IT/FR/NL/SE/NO/PT → SEARCHED. JP remains THIN.
+- `residential-kitchen-and-task-surfaces`: NO/SE/DK/FI/SG → SEARCHED (mostly THIN/NO-DATA for kitchen-specific). BR remains NOT-RUN.
+
+**Key new sources:**
+- BCA Accessibility Code 2025 (SG) — major update from 2019; adds anthropometric data, reach ranges, control device requirements
+- NEN 9120:2025 (NL) — new Dutch accessibility standard
+- BFS 2024:12 (SE) — recent Swedish update
+- TGD M 2022 (IE) — updated from 2010 with rationale statements
+- IWA Best Practice Access Guidelines (IE) — strong Co-1 source with values exceeding Part M
+- BRANZ Issue Bulletin 662 (NZ) — residential level entry detailing guide
+- DALCO Aprehensión criterion (ES) — operable force framework directly relevant to reach-range
+
+**Cross-jurisdiction convergence (threshold/entry):**
+- Ramp max: 1:12 universal; preferred: 1:20 (IE IWA, AU, UK BS 8300, ISO 21542)
+- Threshold: zero preferred universal; max 13mm (US) / 20mm (NZ, EU) / 25mm with ramp (CH)
+- Landing: 1500–1800mm (varies by jurisdiction)
+
+**Cross-jurisdiction convergence (reach-range/controls):**
+- US ADA: 380–1220mm
+- EN 17210 / most EU: 400–1100mm
+- DIN 18040 (DE): 400–1200mm
+- AS 1428.1 (AU): 900–1200mm operating devices
+- NZ NZS 4121: 1400–1700mm (signs only — higher than all others)
+
+**Cross-jurisdiction convergence (kitchen):**
+- Kitchen counter accessibility: no statutory specification in most jurisdictions
+- DIN 18040-2 (DE) adjustable 680–1040mm is the only statutory range
+- Kitchen is primarily a Tier 5/OT guidance domain
