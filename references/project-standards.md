@@ -472,3 +472,8 @@ RULE: Each Part produces its own .md file. Each Item Specification Library Categ
 CONDITION: v10.0 file architecture.
 ACTION: Files stored at parts/v10/{filename}.md on GitHub. Assembly via chunk-assembler.
 DATE: 2026-03-20 21:00
+
+RULE: IntD (Intellectual Disability) is not a standalone population code or category. IntD provisions are proxied through DEM (wayfinding, cognitive simplicity) and NDV (sensory environment, Easy Read signage). No §2.12, no IntD matrix column, no IntD population code table entry.
+CONDITION: All volumes, all matrices, population code tables, ToC.
+ACTION: Delete any standalone IntD reference. Preserve substance as proxy notes within DEM and NDV sections. See CO-0002-2026-03-25-1935.md.
+DATE: 2026-03-25 19:35
