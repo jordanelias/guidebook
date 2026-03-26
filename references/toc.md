@@ -1,6 +1,6 @@
 # Guidebook for Accessible Design — Table of Contents
-**Version:** 8.9 **Date:** 2026-03-18 19:00
-**Change Order:** CO-0001-2026-03-18-1900
+**Version:** 8.9.1 **Date:** 2026-03-25 19:35
+**Change Order:** CO-0002-2026-03-25-1935
 
 ---
 
@@ -42,6 +42,7 @@
 ## Part 2: Disability Categories
 
 - Category Code Reference
+- *Note: Intellectual disability provisions are proxied through DEM and NDV categories.*
 - §2.1 MOB — Mobility & Strength
 - §2.2 MOB/UPL — Upper Limb & Amputation
 - §2.3 VIS — Vision Impairment
@@ -53,7 +54,6 @@
 - §2.9 PAIN — Chronic Pain and Fibromyalgia
 - §2.10 DBL — DeafBlind
 - §2.11 OFS — Orthostatic & Fatigue Spectrum
-- §2.12 IntD — Intellectual Disability
 
 ## Part 3: Designing for Multiple Disability Categories
 
