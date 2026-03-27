@@ -561,14 +561,116 @@ Per-entry fields:
 
 ---
 
-## Progress Notes
+---
 
-**Session 4 (2026-03-27):**
+### CS-19 — Il Paese Ritrovato
+
+| Field | Data |
+|---|---|
+| id | CS-19 |
+| name | Il Paese Ritrovato (The Rediscovered Country) |
+| location | Monza, Lombardy, Italy |
+| year | 2018 (opened February) |
+| populations_served | DEM (mild-to-moderate Alzheimer's and dementia; 64 residents; age 56–93) |
+| design_intent | Alzheimer's village; normalised community living; non-pharmacological approach; social engagement preservation |
+| building_type | Residential (care facility; 14,000m²; 2 buildings × 8 apartments × 8 residents) |
+| outcome_data | Mazzola et al. (2024, J Alzheimers Dis 97(2):741-752, PMID 38143344, DOI 10.3233/JAD-230229): Comprehensive Geriatric Assessment (CGA) at T0, T6, T12, T18. n=64. Pre-pandemic: "satisfactory performance during the first 18 months." Pandemic disruption documented: +11.7% antidepressants, MMSE decline (not statistically significant), activity engagement dropped. Pre-pandemic model "confirmed as beneficial." Cognitive decline rate: −3 points/year on MMSE (expected rate for Alzheimer's). Alongside, "improvement in well-being" (geriatrics specialist Zanetti, 18 months post-opening). [Tier 2 — prospective cohort with standardised CGA instruments; PubMed-confirmed] |
+| conflict_documented | NO cross-population conflict (single DEM). |
+| failure_notes | COVID pandemic significantly disrupted model. +11.7% antidepressant use during pandemic. Admission criteria: mild-to-moderate dementia only; not suitable for severe dementia. Cost (~€93/day) comparable to Italian nursing homes but not universally accessible. |
+| construction_cost | ~€10M construction; raised through private donations from wealthy families and organisations [PROVISIONAL] |
+| accessible_design_premium | Not isolated |
+| funding_sources | La Meridiana Cooperative; private donations; regional healthcare funding |
+| operational_cost_change | ~€93/day comparable to traditional nursing homes [PROVISIONAL] |
+| remediation_cost | Not documented |
+| roi_data | Cost-comparable to traditional nursing homes; no premium for village model [PROVISIONAL] |
+| financial_evidence_tier | Tier 5 (organisational/press) |
+| financial_data_quality | PROVISIONAL |
+| evidence_contribution | Highest-tier peer-reviewed outcome study for Italian dementia village design. CGA instruments are standardised. Pre-pandemic data demonstrates cognitive trajectory + wellbeing improvement at 18 months. Adds IT jurisdiction (non-English). Part 13 candidate. |
+| part13_status | CANDIDATE |
+| sources | Mazzola P et al. (2024). J Alzheimers Dis 97(2):741-752. PMID 38143344. DOI: 10.3233/JAD-230229. Based on articles retrieved from PubMed. Alzheimer Europe (2018). Worldcrunch (2020). Visualeyed. |
+
+---
+
+### CS-20 — Verbeek et al. Small-Scale Dementia Facilities, NL
+
+| Field | Data |
+|---|---|
+| id | CS-20 |
+| name | Small-Scale Dementia Living Facilities (Verbeek et al. quasi-experimental study) |
+| location | Netherlands (multiple sites) |
+| year | 2014 (study published) |
+| populations_served | DEM (long-term care; n=259; matched on cognitive and functional status) |
+| design_intent | Small-scale homelike care environments as alternative to traditional psychogeriatric wards |
+| building_type | Residential (care facility; multiple small-scale facilities) |
+| outcome_data | Verbeek et al. (2014, Int Psychogeriatr 26(4):657-668, PMID 24411467, DOI 10.1017/S1041610213002512): n=259 (124 small-scale, 135 controls); 3 time points (baseline, 6mo, 12mo). Findings: significantly fewer physical restraints (p<0.05), significantly fewer psychotropic drugs (p<0.05), significantly more social engagement at baseline and 6 months (p<0.05), more physically non-aggressive behavior at 12 months (p<0.05). Mixed results for other behavioural outcomes. [Tier 2 — quasi-experimental comparator study; PubMed-confirmed] |
+| conflict_documented | NO |
+| failure_notes | Behavioural results mixed; not all neuropsychiatric outcomes improved. Authors note "more research is needed." |
+| construction_cost | Not isolated [GREY] |
+| accessible_design_premium | Not isolated |
+| funding_sources | Research support (non-US government, NL) |
+| operational_cost_change | Not documented |
+| remediation_cost | N/A |
+| roi_data | Not documented |
+| financial_evidence_tier | GREY |
+| financial_data_quality | GREY |
+| evidence_contribution | Strongest comparator study for small-scale dementia environment design (quasi-experimental, n=259, NL). Documents physical restraint and medication reduction with comparator group — more rigorous than De Hogeweyk data. Adds NL academic jurisdiction. Supports §12.x (economics: care cost implications). |
+| part13_status | CANDIDATE |
+| sources | Verbeek H et al. (2014). Int Psychogeriatr 26(4):657-668. PMID 24411467. DOI: 10.1017/S1041610213002512. Based on articles retrieved from PubMed. |
+
+---
+
+### CS-21 — Mostafa ASPECTSS Post-Intervention Study, Els Center (US, 2024)
+
+| Field | Data |
+|---|---|
+| id | CS-21 |
+| name | ASPECTSS Design Intervention — Els Center of Excellence, Jupiter FL |
+| location | Jupiter, Florida, USA |
+| year | 2024 (study published); intervention post-2018 POE |
+| populations_served | NDV/AUT (K-12 charter school for autism spectrum; pre-K–21) |
+| design_intent | ASPECTSS-informed retrofit of existing school environment; autism-specific sensory design |
+| building_type | Education (K-12 charter school) |
+| outcome_data | Mostafa M et al. (2024, Archnet-IJAR 18(2):318-339, DOI 10.1108/ARCH-11-2022-0258): Post-intervention staff surveys + classroom observations + interviews. Design interventions: colour-coded navigation, acoustic treatments in circulation spaces, transition alcoves, compartmentalisation in classrooms. Findings: improvements in "overall learning experience of students with autism." Els for Autism confirms "ASPECTSS-based designs impact on autism school environments." [Tier 2 — pre/post design study with multiple evaluation methods] |
+| conflict_documented | NO |
+| failure_notes | 2018 POE identified ASPECTSS compliance issues; retrofit proposed and subsequently implemented. Demonstrates iterative POE → retrofit cycle. |
+| construction_cost | Not isolated [GREY] |
+| accessible_design_premium | Not isolated |
+| funding_sources | American University in Cairo; Els for Autism Foundation |
+| operational_cost_change | Not documented |
+| remediation_cost | Retrofit cost not documented |
+| roi_data | Not documented |
+| financial_evidence_tier | GREY |
+| financial_data_quality | GREY |
+| evidence_contribution | Most recent and rigorous ASPECTSS evidence. Demonstrates full POE → retrofit → post-intervention evaluation cycle. Confirms ASPECTSS Index as valid framework for NDV/AUT built environment assessment. Adds US jurisdiction for autism-specific design. Supersedes/supplements CS-11 (earlier ASPECTSS POE). |
+| part13_status | CANDIDATE |
+| sources | Mostafa M et al. (2024). Archnet-IJAR 18(2):318-339. DOI: 10.1108/ARCH-11-2022-0258. Els for Autism (2024) research summary. AUC (2024). |
+
+---
+
+## Progress Notes (Updated)
+
+**Session 4 research pass complete (2026-03-27 21:30):**
 - All 14 existing case studies entered (CS-01–CS-14)
-- 4 new candidates identified (CS-15–CS-18)
-- AtkinsRéalis HQ (CS-05) and Lyngby-Taarbæk School (CS-06) require targeted research in Sessions 5/6/7
-- Financial fields: majority GREY for existing cases; CS-03 (Kelsey) VERIFIED; CS-14 (BC HAFI) VERIFIED; CS-09/CS-12 PROVISIONAL
-- CS-16 (Summer Foundation) is the highest-tier outcome evidence in the corpus (Tier 1, PubMed-confirmed)
-- CS-17 (NHS CAMHS) is the paradigm §8.5 failure case
-- Sessions 7 & 8 targets: AtkinsRéalis, Lyngby-Taarbæk, PAIN/OFS cases, IntD cases, NDV/MH cases, residential mixed-needs, cross-disciplinary collaboration, failure cases with remediation costs
+- 7 new candidates identified and documented (CS-15–CS-21)
+- Gallaudet duplicate audit: CS-02 (campus programme) and CS-08 (SLCC building) are DISTINCT — two separate v9.0 ToC entries for legitimately different things. No change required.
+- Village Landais duplicate audit: CS-12 = Village Landais Alzheimer. No other Village Landais entry exists in compendium. No duplicate.
+- New case study CS-19 (Il Paese Ritrovato, IT) adds first Italian jurisdiction with peer-reviewed clinical outcomes
+- New case study CS-20 (Verbeek et al., NL) adds strongest comparator study for DEM small-scale environments
+- New case study CS-21 (ASPECTSS 2024, US) provides most recent ASPECTSS evidence; supplements CS-11
 
+**Evidence gaps confirmed after full pass:**
+- VIS: no purpose-built or home-modified environment case study with outcome data exists globally (CONFIRMED THIN)
+- PAIN/OFS: no purpose-built environment case study found (CONFIRMED NOT FOUND — PAIN/OFS new evidence category with no documented case studies)
+- NEU/PCS: no building-level case study beyond Douglas et al. found
+- DEAF beyond Gallaudet: no new buildings found
+- DE/SE/DK/FI/JP/KR/ZH/ES/PT/IT: all produced regulatory/policy content only; Il Paese Ritrovato = only IT case study with outcomes
+- Cross-population with outcomes for both populations: CONFIRMED NOT FOUND globally
+
+**Sessions 7 & 8 remaining targets:**
+- AtkinsRéalis HQ (CS-05): targeted search required
+- Lyngby-Taarbæk School (CS-06): Danish-language targeted search required
+- PAIN/OFS built environment cases (3 new target): likely THIN BASE, accept with disclosure
+- NDV/MH built environment cases (2 new target)
+- Residential mixed-needs longitudinal programmes (2-3 new target)
+- Cross-disciplinary collaboration process case studies (1-2 new target)
+- Failure cases with documented remediation costs (Session 8 slug)
