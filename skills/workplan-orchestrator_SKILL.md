@@ -30,11 +30,12 @@ GET `gap_register.md`. Extract OPEN P1 items. Surface to user if any; otherwise 
 ### 3 — Load project standards
 GET `references/project-standards.md`. Load rules into active context.
 
-### 4 — File stale workplans
-GET `workplan/` directory listing.
-Count non-directory files not in `workplan/deprecated/`.
+### 4 — File stale versioned files
+For each watched directory (`workplan/`, `versions/current/`):
+- GET directory listing.
+- Count non-directory files not already in a `deprecated/` subdirectory.
 - **Count = 1:** proceed silently.
-- **Count > 1:** invoke `github-filing` on `workplan/` before continuing. Active file = highest version number by filename. Do not prompt user — file automatically and report result inline.
+- **Count > 1:** invoke `github-filing` on that directory before continuing. Do not prompt user — file automatically and report result inline.
 
 ### 5 — Confirm PAT
 If PAT not yet provided: prompt user. Do not proceed without it.
