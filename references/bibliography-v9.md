@@ -239,7 +239,7 @@
 
 ✅ LEIA (2016). Lifts in dwellings: guidance for Approved Document M 2015. Lift & Escalator Industry Association.
 
-⚠ Levine, S., et al. (2023). [Grab bar positioning and functional outcomes in post-acute rehabilitation]. KITE Research Institute / University Health Network, Toronto. ⚠ [Vol 2B: unverified — full citation required. CIT-02 correction applied. Reclassify to Tier 2 if grey literature confirmed.]
+✅ Levine, I. C., Nirmalanathan, K., Montgomery, R. E., & Novak, A. C. (2025). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12, e69442. DOI: 10.2196/69442 [Corrected from 2023 grey literature citation — now published]
 
 ✅ McAllister, K., & McBeth, C. (2022). Autism Spectrum Condition and the Built Environment. *Cities & Health*. [EN, Co-1]
 
@@ -365,7 +365,7 @@
 
 ✅ Lucas, R.J. et al. (2014). Measuring and using light in the melanopsin age. *Trends in Neurosciences*, 37(1), 1–9.
 
-⚠ Maisel, J. (2006). *Toward inclusive housing and neighbourhood design*. [Vol 2B: full citation to be confirmed]. ⚠
+✅ Maisel, J. (2006). Toward inclusive housing and neighborhood design: A look at visitability. *Community Development*, 37(3), 26–34. DOI: 10.1080/15575330609490190
 
 ✅ Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture: environments that facilitate wayfinding in nursing homes. *American Journal of Alzheimer's Disease and Other Dementias.*
 
@@ -373,7 +373,7 @@
 
 ✅ Marquardt, G. et al. (2014). Impact of built environment on people with dementia. HERD, 8(1), 127–157. DOI:10.1177/193758671400800111
 
-⚠ MDPI. (2026). *Buildings*, 16(3), 489. IntD home design. [EN, Tier 3]
+⚠ MDPI Buildings. (2026). Intellectual disability and home design [forthcoming]. *Buildings*, 16(3), 489. [Publication date post-search; verify on publication]
 
 ✅ Misch, A., et al. (2022). Whole-body vibration and wheelchair users. *JRATE*. [EN, Tier 3]
 
@@ -384,13 +384,13 @@
 
 ✅ NFPA 72-2022. National Fire Alarm and Signaling Code. NFPA.
 
-⚠ NIHR. (2023). [Bariatric facilities design evidence]. ⚠ [Vol 2B: full citation required]
+⚠ National Institute for Health and Care Research. (2023). [Bariatric facilities design evidence — specific publication not identified]. NIHR. [UNVERIFIED — searched NIHR Evidence database; no standalone bariatric facilities design publication found. May be embedded in NIHR surgical/rehabilitation evidence summaries. Delete if not locatable by publication.]
 
 ✅ Omura, K.M. et al. (2022). Energy conservation, minimum steps, and adaptations: A scoping review. Hong Kong J Occup Ther, 35(2), 125–136. DOI:10.1177/15691861221137223
 
 ✅ Petaccia, A., et al. (2021). Lighting conditions and falls in older adults. *International Journal of Environmental Research and Public Health*, 18(6), 3262. ✅
 
-⚠ PMC. (2025). IntD home design scoping review. [EN, Tier 3]
+⚠ PMC. (2025). [Intellectual disability home design scoping review — PMC ID not recorded]. [UNVERIFIED — search PMC for 2024–2025 IntD housing scoping reviews to resolve. Delete if not locatable.]
 
 ✅ PMC10621028 (2023). Housing accessibility and rehabilitation outcomes after stroke. *OTJR.* [Tier 3 SV]
 
@@ -400,7 +400,7 @@
 
 ✅ Ringaert L et al. (2001). *Determination of new dimensions for universal design*. Manitoba: UDI. [EN, Tier 1, CA]
 
-⚠ Rodosky, M.W., et al. (1989). The influence of floor reaction force on daily ambulatory activity. *Journal of Biomechanics*. ⚠ [Vol 2B: full citation to be confirmed]
+✅ Rodosky, M. W., Andriacchi, T. P., & Andersson, G. B. J. (1989). The influence of chair height on lower limb mechanics during rising. *Journal of Orthopaedic Research*, 7(2), 266–271. DOI: 10.1002/jor.1100070215
 
 ✅ Royal College of Occupational Therapists. (2019). *Home adaptations without delay*. RCOT. ✅
 
