@@ -1,3 +1,5 @@
+<!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
+
 ---
 name: item-specification-writer
 description: >
@@ -197,3 +199,33 @@ Stop and confirm with user:
 
 **Preceded by:** `item-consolidation-analyzer` · `citation-verifier` (parallel)
 **Feeds into:** `framing-checker` + `evidence-auditor` (after each pass) · `prose-style-checker` (before packaging) · `volii-validator` (after category complete)
+
+---
+
+## Source Citation Protocol (endnote system)
+
+**Pre-step:** `research-log-manager RETRIEVE` for each relevant slug before writing. BPC `Key sources` list provides the REF-ID index.
+
+**REF-ID markers:** Every prescriptive claim citing evidence carries `[REF:{slug}:{NN}]` inline. `{slug}` = BPC slug; `{NN}` = 01-indexed position in BPC Key sources. Multiple markers at one point for multi-source claims.
+
+**Placement:**
+- After claim, before punctuation.
+- Every bullet with dimensional value, material requirement, or performance threshold needs ≥1 REF-ID. No source → `[UNSUPPORTED — citation required]`.
+
+**Sources-cited table:** `#### Sources cited` after each item block:
+
+```markdown
+#### Sources cited
+
+| REF-ID | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdiction |
+|---|---|---|---|---|---|---|---|---|
+```
+
+Min 2, max 12 sources per item. Every REF-ID ↔ sources-cited row bidirectional. Real sources only. Source not in BPC Key sources → flag `[NOT IN BPC — verify via citation-verifier]`. <2 verified → `[CITATION GAP — evidence-auditor referral required]`.
+
+**Replaces Key citations** for new/revised items. Do not emit both. Legacy items retain `Key citations` until revised.
+
+**Downstream:** `vol2-item-formatter` validates REF-ID ↔ sources-cited. `bibliography-compiler` compiles volume-end endnotes. `cross-reference-resolver` validates superscripts.
+
+**Preceded by:** `item-consolidation-analyzer` · `research-log-manager RETRIEVE`
+**Feeds into:** `vol2-item-formatter` → `framing-checker` + `evidence-auditor` → `prose-style-checker` → `volii-validator`
