@@ -607,20 +607,20 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 | DEC-05 | IntD: full review or condensed proxy? | P1-D1 | Yes | RESOLVED (D1-17: condensed proxy) |
 | DEC-06 | BIO/TC: promote to Part 7 or keep in appendix? | P1-D2 | No | RESOLVED (BIO stays Appendix B; TC split: F-06/F-07/F-04/Part 9; Appendix C retired) |
 | DEC-07 | Room matrix sub-tables: keep 6 or condense to 3? | P1-D2 | No | RESOLVED (D2-10: keep 5-part final structure) |
-| DEC-08 | §12.4 Cost tables: restructure? | P1-D3 | No | PENDING — Session 3 |
-| DEC-09 | Case studies: keep all 14 + expand | P1-D3 | No | PENDING — Session 3 |
-| DEC-10 | Appendix E: separate appendix or glossary expansion? | P1-D3 | No | PENDING — Session 3 |
+| DEC-08 | §12.4 Cost tables: restructure? | P1-D3 | No | RESOLVED (D3-19: keep structure; reference updates only) |
+| DEC-09 | Case studies: keep all 14 + expand | P1-D3 | No | RESOLVED (D3-24: keep 14 + up to 6 new; target 17–20) |
+| DEC-10 | Appendix E: separate appendix or glossary expansion? | P1-D3 | No | RESOLVED (D3-33: Appendix F; not merged into glossary) |
 | DEC-11 | Worked examples: keep 5 or reduce to 3? | P1-D2 | No | RESOLVED (MODIFIED: 18 total — 4 residential by disability profile; 14 NR by typology × 2) |
 | DEC-12 | F-02 (Fragrance-Free): keep or cut? | P1-D2 | No | RESOLVED (MODIFIED: relocate to Appendix D as policy note; remove from Part 7) |
 | DEC-13 | A-17 (Upholstered Seating): keep or cut? | P1-D2 | No | RESOLVED (D2-24: absorb into G-02) |
-| DEC-14 | Part 8 §8.8: how many worked resolution examples? | P1-D3 | No | PRELIMINARY (3 — D1-34) |
-| DEC-15 | Part 10 §10.5 OT-Architect Interface: detail level? | P1-D3 | No | PENDING — Session 3 |
-| DEC-16 | Pro forma templates: which building types? | P1-D3 | No | PENDING — Session 3 |
-| DEC-17 | ROI model: practitioner-facing or developer-facing? | P1-D3 | No | PENDING — Session 3 |
-| DEC-18 | Grant programmes: all 24 jurisdictions or top 8? | P1-D3 | No | PENDING — Session 3 |
-| DEC-19 | Target populations for new case studies | P1-D3 | No | PENDING — Session 3 |
-| DEC-20 | Case study template: add "Evidence Contribution" field? | P1-D3 | No | PENDING — Session 3 |
-| DEC-21 | Worked examples placement: Part 4 §4.5 or Appendix F? | P1-D3 | No | PENDING — Session 3 |
+| DEC-14 | Part 8 §8.8: how many worked resolution examples? | P1-D3 | No | RESOLVED (D3-05: 3 confirmed) |
+| DEC-15 | Part 10 §10.5 OT-Architect Interface: detail level? | P1-D3 | No | RESOLVED (D3-14: moderate; retain brief format + co-design protocol) |
+| DEC-16 | Pro forma templates: which building types? | P1-D3 | No | RESOLVED (D3-20: 5 types — residential, supported/care, healthcare, education, office) |
+| DEC-17 | ROI model: practitioner-facing or developer-facing? | P1-D3 | No | RESOLVED (D3-21: dual-audience with explicit labelling) |
+| DEC-18 | Grant programmes: all 24 jurisdictions or top 8? | P1-D3 | No | RESOLVED (D3-22: top 10 jurisdictions) |
+| DEC-19 | Target populations for new case studies | P1-D3 | No | RESOLVED (D3-25: PAIN/OFS · NDV/MH · NEU/ABI priority) |
+| DEC-20 | Case study template: add "Evidence Contribution" field? | P1-D3 | No | RESOLVED (D3-26: YES) |
+| DEC-21 | Worked examples placement: Part 4 §4.5 or Appendix F? | P1-D3 | No | RESOLVED: Part 4 §4.5 |
 
 ---
 
