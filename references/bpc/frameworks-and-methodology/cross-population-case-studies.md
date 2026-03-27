@@ -188,3 +188,30 @@ ZA: {status: NOT-RUN}
 
 SL: references/search-log/frameworks-and-methodology/cross-population-case-studies.md
 
+---
+
+## Session 4 Research Addendum (2026-03-27 21:30)
+
+### Additional New Case Studies Found
+
+**CS-19 — Il Paese Ritrovato (Italy, DEM, Tier 2)**
+Mazzola et al. (2024, J Alzheimers Dis, PMID 38143344, DOI 10.3233/JAD-230229): CGA longitudinal study n=64, T0-T18, Italian dementia village Monza. Pre-pandemic: satisfactory wellbeing performance. Adds IT jurisdiction with peer-reviewed clinical outcomes.
+
+**CS-20 — Verbeek et al. Small-Scale Dementia Facilities (NL, DEM, Tier 2)**
+Verbeek H et al. (2014, Int Psychogeriatr, PMID 24411467, DOI 10.1017/S1041610213002512): Quasi-experimental comparator n=259 (124 small-scale vs 135 traditional). Significantly fewer physical restraints, fewer psychotropic drugs, more social engagement. Strongest NL comparator study for DEM environment design.
+
+**CS-21 — Mostafa ASPECTSS 2024 (US, NDV/AUT, Tier 2)**
+Mostafa et al. (2024, Archnet-IJAR, DOI 10.1108/ARCH-11-2022-0258): Post-intervention assessment of ASPECTSS-informed retrofit at Els Center of Excellence, Jupiter FL. Full POE → retrofit → post-intervention evaluation cycle.
+
+### Confirmed Evidence Gaps After Full Multilingual Pass
+
+- **VIS**: No purpose-built or adapted environment case study with outcome data found globally
+- **PAIN/OFS**: No purpose-built or adapted environment case study found globally — CONFIRMED NOT FOUND
+- **DEAF beyond Gallaudet**: No new building-level cases found
+- **NEU beyond Douglas et al.**: No new building-level cases found
+- **KR, JP, ZH, SE, DK, FI, ES, PT**: Regulatory/policy content only; no case study data
+- **Cross-population with outcomes for both populations**: CONFIRMED NOT FOUND globally
+
+### OT Home Modification Programme Evidence (not case study; systematic review)
+
+OT-delivered home modification programmes with clinical outcomes exist (Stark et al. RCT, AJOT 2016/2018; systematic reviews by Lektip et al. 2023; Hutchinson et al. 2025). These are programme-level evidence, not building case studies. Relevant to Part 12 economics and BC HAFI evaluation context. Do not enter as case studies; reference in BPC under evidence base for residential design.
