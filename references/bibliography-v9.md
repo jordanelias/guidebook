@@ -534,3 +534,52 @@
 | Whitelaw (2021) | Trauma-informed or NDV | OPEN |
 
 **Note:** Orphan citations are sources cited in the guidebook body but not yet in this bibliography. Each needs full APA citation lookup and addition to the appropriate section. These are P2 priority — the guidebook text references them, so they must be present before publication.
+
+---
+
+## Orphan Citations — Resolved (18 entries added)
+
+**Added:** 2026-03-27 15:15 | **Source:** Guidebook body orphan audit
+
+### Added to Section B — DPO and Advocacy Sources
+
+⚠ National Institute of Neurological Disorders and Stroke. (2024). *Postural orthostatic tachycardia syndrome (POTS) fact sheet*. NINDS/NIH. https://www.ninds.nih.gov/
+
+### Added to Section C — Research
+
+✅ Blitshteyn, S., & Whitelaw, S. (2021). Postural orthostatic tachycardia syndrome (POTS) and other autonomic disorders after COVID-19 infection: A case series of 20 patients. *Immunologic Research*, 69(2), 205–211. DOI: 10.1007/s12026-021-09185-5
+
+✅ Champagne, T. (2011). *Sensory modulation and environment: Essential elements of occupation* (3rd ed. rev.). Sydney: Pearson.
+
+✅ Cicerone, K. D., Goldin, Y., Ganci, K., Rosenbaum, A., Wethe, J. V., Langenbahn, D. M., ... & Harley, J. P. (2019). Evidence-based cognitive rehabilitation: Systematic review of the literature from 2009 through 2014. *Archives of Physical Medicine and Rehabilitation*, 100(8), 1515–1533. DOI: 10.1016/j.apmr.2019.02.011
+
+⚠ Hamraie, A. (2017). *Building access: Universal design and the politics of disability*. University of Minnesota Press.
+
+✅ Huckshorn, K. A. (2004). Reducing seclusion and restraint use in mental health settings: Core strategies for prevention. *Journal of Psychosocial Nursing and Mental Health Services*, 42(9), 22–33. DOI: 10.3928/02793695-20040901-05
+
+⚠ Imrie, R. (2012). Universalism, universal design and equitable access to the built environment. *Disability and Rehabilitation*, 34(10), 873–882. DOI: 10.3109/09638288.2011.624250
+
+✅ Kaplan, R., & Kaplan, S. (1989). *The experience of nature: A psychological perspective*. Cambridge University Press.
+
+✅ Lawton, M. P., & Nahemow, L. (1973). Ecology and the aging process. In C. Eisdorfer & M. P. Lawton (Eds.), *The psychology of adult development and aging* (pp. 619–674). American Psychological Association.
+
+⚠ Lee, S., O'Neill, D., & Forgues, A. (2019). Grab bar positioning and functional outcomes in bathtub and toilet transfers. [Specific citation to be confirmed from guidebook context — line 4156]
+
+✅ National Institute for Health and Care Excellence. (2013). *Falls in older people: Assessing risk and prevention* (CG161). NICE. https://www.nice.org.uk/guidance/cg161
+
+⚠ National Institute for Occupational Safety and Health. (2021). *Stairway falls prevention*. NIOSH/CDC. https://www.cdc.gov/niosh/
+
+⚠ Personal Social Services Research Unit. (2012). *Unit costs of health and social care*. PSSRU, University of Kent.
+
+✅ Rasminsky, M. (1973). The effects of temperature on conduction in demyelinated single nerve fibers. *Archives of Neurology*, 28(5), 287–292.
+
+⚠ Stannah. (2024). *Stairlift installation guide and constraints*. Stannah Stairlifts. [Industry reference — not academic standard]
+
+✅ Verrillo, R. T. (1993). The effects of aging on the sense of touch. In R. T. Verrillo (Ed.), *Sensory research: Multimodal perspectives* (pp. 285–298). Lawrence Erlbaum Associates.
+
+✅ Waters, R. L., Lunsford, B. R., Perry, J., & Byrd, R. (1988). Energy–speed relationship of walking: Standard tables. *Journal of Orthopaedic Research*, 6(2), 215–222. DOI: 10.1002/jor.1100060208
+
+### Added to Section D — OT Frameworks
+
+⚠ Japanese Association of Occupational Therapists. (2022). *JOTA practice guidelines* [translated from Japanese]. JOTA.
+
