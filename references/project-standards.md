@@ -510,3 +510,13 @@ RULE: Standards registry entries for SG (BCA 2025), NL (NEN 9120:2025), SE (BFS 
 CONDITION: Any multilingual-research, jurisdiction-tracker, or item-specification-writer run referencing SG, NL, or SE statutory standards.
 ACTION: Cite BCA Accessibility Code 2025 (SG), NEN 9120:2025 (NL), BFS 2024:12 / ALM 2 (SE) as current. Flag any guidebook text citing prior editions as requiring update.
 DATE: 2026-03-26 16:30
+
+RULE: Skills not in /mnt/project/ must be read from GitHub skills/{name}_SKILL.md via GET before execution. Currently affected: bulk-renumber, citation-miner, sensory-coherence-checker, connection-scout.
+CONDITION: Any session requiring execution of a skill whose _SKILL.md file is absent from /mnt/project/.
+ACTION: GET the skill file from GitHub before execution. PI definition governs for PI-governed skills.
+DATE: 2026-03-26 19:15
+
+RULE: keyword-lookup is DEPRECATED. Functionality subsumed by multilingual-research Rule 16 (view Keyword Compendium Part 3 directly).
+CONDITION: Any reference to keyword-lookup or native-language keyword lookup.
+ACTION: Use multilingual-research Rule 16 protocol instead. Do not invoke keyword-lookup.
+DATE: 2026-03-26 19:15
