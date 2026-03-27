@@ -116,3 +116,87 @@ PubMed, OTseeker, Consensus, Scholar Gateway, CINAHL, REHADAT, J-STAGE, CNKI, RI
 - **ZH/JA:** Hearing loss built environment evidence is primarily in rehabilitation medicine journals, not architecture/building science. Search strategy must cross disciplines.
 - **NO:** TEK17 *universell utforming* bundles spatial + acoustic provisions — search as whole, log under both deaf-acoustic and hearing-impairment slugs.
 
+
+---
+
+## Session 2 Additions (2026-03-27 continued)
+
+### Co-1 / Tier 2 — Additional Jurisdictions
+
+| # | Source | Jurisdiction | Tier | Key findings |
+|---|---|---|---|---|
+| 8 | Deafness Forum Australia — national peak body | AU | Tier 2 | Partners with National Acoustic Laboratories (NAL); advocacy for hearing augmentation in BCA/NCC; hearing loop provision; DDA Disability Standard on premises; Senate inquiry evidence: "Universal design and built environment accessibility often needs to go beyond access for people with physical impairments" |
+| 9 | HLF — Hørselshemmedes Landsforbund (Norway) | NO | Tier 2 | Norway's largest disability organisation (60,000 members); workplace hearing loss + participation research (Tandfonline 2018); TEK17 universell utforming advocacy |
+| 10 | Høreforeningen — Danish Association of the Hard of Hearing | DK | Tier 2 | 8,000 members; advocacy for accessible communication environments; Earbalance app; built environment access campaigns |
+| 11 | Kuuloliitto — Finnish Federation of the Hard of Hearing | FI | Tier 2 | National peak body; accessibility advocacy; Accessibility Decree 241/2017 input |
+| 12 | HRF — Hörselskadades Riksförbund (Sweden) | SE | Tier 2 | Swedish hard of hearing peak body; BBR/BFS advocacy |
+| 13 | EFHOH — European Federation of Hard of Hearing People | EU | Tier 2 | Pan-European coordination; 25+ member organisations; built environment accessibility policy |
+| 14 | DSB — Deutscher Schwerhörigenbund | DE | Tier 2 | hörkomm.de platform for workplace accessibility; DIN 18041 advocacy; barrierefreie Raumakustik guidance |
+| 15 | Bucodes SurdiFrance | FR | Tier 2 | French hard of hearing federation; accessibility advocacy |
+| 16 | NVVS — Nederlandse Vereniging voor Slechthorenden | NL | Tier 2 | Dutch hard of hearing association |
+| 17 | FIAPAS — Confederación Española de Familias de Personas Sordas | ES | Tier 2 | Spanish hearing loss federation |
+| 18 | FIADDA — Famiglie Italiane Associate per la Difesa dei Diritti degli Audiolesi | IT | Tier 2 | Italian hearing-impaired rights federation |
+
+### Tier 6 (Statutory) — Additional Jurisdictions
+
+| # | Source | Jurisdiction | Tier | Key findings |
+|---|---|---|---|---|
+| 5 | NCC 2022 D4D8 / AS 1428.5:2021 | AU | Tier 6 | Hearing augmentation mandatory in any room with in-built amplification or public interface; AS 1428.5 defines hearing augmentation as "communication of information for people who are deaf or hearing impaired by using a combination of audio, visual, and tactile means"; induction loop deemed-to-satisfy but <1/3 of AU hearing aid users have T-coil — performance-based solutions now preferred; Roger/Auracast emerging |
+| 6 | DIN 18040-1 + DIN 18041:2016 | DE | Tier 6 | DIN 18040-1 (accessible public buildings) references DIN 18041 for acoustic requirements; RT60 20% reduced for hearing-impaired users; Nutzungsart A3/A4 targets; background noise 30-45 dB max; VDI 2569 for office acoustics |
+
+### Academic / OT (PubMed)
+
+| # | Authors | Year | Title | Journal | Tier | DOI | Key finding |
+|---|---|---|---|---|---|---|---|
+| 1 | Yang & Hodgson | 2006 | Optimal RT for speech intelligibility in classrooms — normal and hearing-impaired | J Acoust Soc Am | Tier 1 | 10.1121/1.2216768 | Optimal RT60=0 when speech source closer than noise source; non-zero optimal RT when noise closer; hearing-impaired adults need shorter RT than normal-hearing; UBC School of Occupational & Environmental Hygiene |
+| 2 | Kressner, Westermann & Buchholz | 2018 | Reverberation impact on CI speech intelligibility | J Acoust Soc Am | Tier 1 | 10.1121/1.5051640 | CI recipients' reverberation sensitivity is smaller than previously suggested, especially at short source-receiver distances; early reflections may not be detrimental (contradicts prior literature); DTU/Macquarie |
+| 3 | Hazan et al. | 2018 | Aging and hearing loss: communicating in challenging conditions | Hearing Research | Tier 1 | 10.1016/j.heares.2018.06.009 | Older adults' speech less intelligible in noise; presbycusis affects speech adaptation strategies; 1-3 kHz energy predicts intelligibility; even mild presbycusis in healthy-aged adults impacts communication |
+| 4 | Kates et al. | 2025 | Binaural speech intelligibility — noise, reverberation, hearing-aid processing | PLoS ONE | Tier 1 | 10.1371/journal.pone.0317266 | Both NH and HI listeners show reduced intelligibility in reverberation vs anechoic; no significant benefit from advanced HA processing in reverberation; room acoustic treatment more effective than HA algorithm |
+| 5 | Reinten et al. | 2015 | Speech intelligibility in common rooms for older adults — towards acoustical guidelines | Stud Health Technol Inform | Tier 1 | — | NL study at Utrecht/Eindhoven: measured RT and speech intelligibility in care home common rooms; first step toward acoustical guidelines for elderly care facilities — directly relevant to ageing-in-place housing design |
+| 6 | Zhao et al. | 2018 | Deep learning speech segregation for HI listeners in reverberant-noisy conditions | J Acoust Soc Am | Tier 3 | 10.1121/1.5055562 | Algorithm improved HI speech intelligibility to near-NH levels in RT60=0.6s + noise; relevant to AT-environment interface (future hearing aid processing) |
+
+### Key New Findings
+
+1. **AU technology transition crisis:** <1/3 of Australian hearing aid users have T-coil activated; no children under 26 have T-switch aids. NCC 2022 D4D8 "deemed-to-satisfy" induction loop provision is compliance-on-paper only. Performance-based multi-technology approach (Roger + Auracast + induction) is emerging best practice. **Design implication:** DAR provision must include conduit/infrastructure for multiple assistive listening technologies, not just induction loop wiring.
+
+2. **Room acoustics > hearing aid processing** (Kates et al. 2025): Advanced HA signal processing provides no significant intelligibility benefit over linear amplification in reverberant rooms. This directly supports the guidebook position that architectural acoustic treatment is the primary intervention, not technology compensation.
+
+3. **Ageing-in-place acoustic gap** (Reinten et al. 2015): No published acoustical guidelines exist specifically for elderly care facilities, despite hearing loss affecting 70% of over-70s (AU data). The Utrecht/Eindhoven study is the first step. **Design implication:** residential common rooms in aged care need RT targets equivalent to DIN 18041 Group A3/A4, not general residential standards.
+
+4. **CI reverberation sensitivity reassessed** (Kressner et al. 2018): Previous CI research overstated reverberation harm; at realistic source-receiver distances, CI recipients tolerate reverberation better than expected. Early reflections are not detrimental (contradicts older literature). **Design implication:** moderate absorption treatment focused on late reflections, not aggressive anechoic treatment.
+
+### Jurisdiction Coverage Update
+
+| Jurisdiction | Co-1 | Tier 5 | Tier 6 | Status |
+|---|---|---|---|---|
+| US | ✓ HLAA, NDC | — | ✓ ADA/ADAAG | PARTIAL |
+| UK | ✓ RNID, Scope | ✓ BS 8300-2:2018 | ✓ Part M, Scotland 4.7 | SEARCHED |
+| CA | ✓ CHHA | — | ✓ AODA/OBC | PARTIAL |
+| AU | ✓ Deafness Forum | — | ✓ NCC 2022 D4D8 / AS 1428.5 | PARTIAL |
+| IE | — | — | — | NOT-RUN |
+| NZ | — | — | — | NOT-RUN |
+| SG | — | — | — | NOT-RUN |
+| DE | ✓ DSB/hörkomm | ✓ DIN 18041:2016 | ✓ DIN 18040-1 | SEARCHED |
+| CH | — | — | — | NOT-RUN |
+| FR | ✓ Bucodes | — | — | THIN |
+| BE | — | — | — | NOT-RUN |
+| NL | ✓ NVVS | — | — | THIN |
+| SE | ✓ HRF | — | — | THIN |
+| NO | ✓ HLF | — | — | THIN |
+| DK | ✓ Høreforeningen | — | — | THIN |
+| FI | ✓ Kuuloliitto | — | — | THIN |
+| JP | — | — | — | NOT-RUN |
+| KR | — | — | — | NOT-RUN |
+| CN | — | — | — | NOT-RUN |
+| BR | — | — | — | NOT-RUN |
+| ES | ✓ FIAPAS | — | — | THIN |
+| PT | — | — | — | NOT-RUN |
+| IT | ✓ FIADDA | — | — | THIN |
+| EU | ✓ EFHOH | — | — | THIN |
+| ISO | — | — | — | NOT-RUN |
+
+**Searched:** 2 (UK, DE)
+**Partial:** 3 (US, CA, AU)
+**Thin:** 8 (FR, NL, SE, NO, DK, FI, ES, IT, EU)
+**Not-run:** 12 (IE, NZ, SG, CH, BE, JP, KR, CN, BR, PT, ISO)
+
