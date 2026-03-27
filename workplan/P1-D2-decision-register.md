@@ -201,7 +201,7 @@ Engineering spec exists (Part 9 line 4880). Referenced 7 times. Safety-critical 
 |---|---|---|
 | **TC-01** Ambient Temperature Management | **→ F-06 Thermal Zoning** | Thermal equivalent of F-01 (sensory gradient by modality). MS/PAIN conflict resolved through zone-level temperature control. Design zoning decision. |
 | **TC-02** High-Performance Thermal Envelope | **→ Part 9 Mechanical Engineering** | Building physics specification (U-values, glazing, thermal bridges). Engineering enabler, not design zoning decision. Relocate to Part 9 §9.1.4 (Mechanical Engineering Items). |
-| **TC-03** Thermal Mass | **→ Remains in Appendix C** (sole remaining item) | Passive engineering strategy. Cross-referenced from F-06 as enabling infrastructure. |
+| **TC-03** Thermal Mass | **→ Part 9 Mechanical Engineering — combine with TC-02** | Passive thermal engineering strategy. Both TC-02 and TC-03 are building physics enablers for thermal zoning (F-06). Combined Part 9 item: "Thermal Envelope and Mass — Passive Thermal Performance." Appendix C retired (empty). |
 | **TC-04** Ventilation and Air Change Rate | **→ ABSORB into F-04** | 80% content overlap with F-04 (MERV 13, VOC, thermal stability). TC-04 adds ventilation rate (10 L/s), CO₂ monitoring (800 ppm), recirculation prohibition for OFS. Single comprehensive air quality + ventilation item. |
 | **TC-05** Heated Bathroom Floor | **→ F-07 Thermal Transition — Heat Shock Prevention** | Zone transition spec analogous to F-03 (graduated re-entry). Strongest single epidemiological dataset in guidebook (~17,000 deaths/year, Japanese MOH). Design zoning decision at room boundary. |
 
@@ -271,7 +271,7 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 | K | DeafBlind | 4 | K-01 expanded |
 | ~~J~~ | ~~BAR~~ | ~~0~~ | Deleted → Supp Vol |
 | — | Appendix B (BIO) | 5 | Stays in appendix; reformatted |
-| — | Appendix C (TC-03 only) | 1 | TC-01→F-06; TC-02→Part 9; TC-04→F-04; TC-05→F-07 |
+| — | ~~Appendix C~~ | ~~0~~ | **RETIRED.** TC-02+TC-03→Part 9 combined; TC-01→F-06; TC-04→F-04; TC-05→F-07 |
 | — | Part 9 (TC-02) | 1 | Relocated to mechanical engineering |
 | **Total Part 7** | | **85** | Was ~90; −3 merged, −5 J deleted, +2 created, +2 TC absorbed into F |
 
@@ -281,7 +281,7 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 
 | CO | Change | Trigger | Session |
 |---|---|---|---|
-| CO-0003 | Expand Category F (add F-06, F-07; absorb TC-04 into F-04); relocate TC-02 to Part 9; reduce Appendix C to TC-03 only; reformat Appendix B | DEC-06 revised | Phase 3 S16 |
+| CO-0003 | Expand Category F (add F-06, F-07; absorb TC-04 into F-04); relocate TC-02+TC-03 combined to Part 9 Mechanical Engineering; retire Appendix C; reformat Appendix B | DEC-06 revised | Phase 3 S16 |
 | CO-0004 | Delete Category J; update all J-refs → Supp Vol | GAP-STRUCT-01 | Phase 3 S16 |
 | CO-0005 | Renumber Part 5 → §5.x, Part 6 → §6.x | GAP-CR-02 | Phase 4 S19 |
 
@@ -296,7 +296,7 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 | **CRITICAL** | D2-30 | Approve I-04 Ceiling Hoist creation from phantom I-05? |
 | **CRITICAL** | D2-31 | Approve H-05 Nurse Call creation? |
 | **HIGH** | D2-24 | Approve A-17 → G-02 absorption? |
-| **HIGH** | DEC-06 | Approve: BIO stays Appendix B; TC-01→F-06, TC-04→F-04, TC-05→F-07, TC-02→Part 9, TC-03 stays Appendix C? |
+| **HIGH** | DEC-06 | Approve: BIO stays Appendix B; TC-01→F-06, TC-04→F-04, TC-05→F-07, TC-02+TC-03→Part 9 combined, Appendix C retired? |
 | **HIGH** | DEC-12 | Confirm F-02 keep? |
 | **HIGH** | DEC-11 | Confirm 5 worked examples? |
 | MODERATE | D2-37 | Confirm reclining rest deferral? |
@@ -316,7 +316,7 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 | Categories added | 0 |
 | Categories deleted | 1 (J BAR) |
 | Category F expanded | 5 → 7 items (sensory zoning now covers all modalities) |
-| Appendix changes | B: BIO stays, reformatted. C: reduced to TC-03 only. |
+| Appendix changes | B: BIO stays, reformatted. C: **RETIRED** (TC-02+TC-03 → Part 9 combined). |
 | Change Orders | 4 (CO-0002–CO-0005; CO-0003 scope revised) |
 | Pending: P1-D3 | Parts 8–13 + Appendices (DEC-08 through DEC-20) |
 
