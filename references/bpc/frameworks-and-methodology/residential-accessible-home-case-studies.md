@@ -1,8 +1,8 @@
 # BPC: residential-accessible-home-case-studies
 **Topic:** frameworks-and-methodology
 **Population codes:** MOB / OFS / PAIN / NDV/MH / ALL
-**Status:** PARTIAL — research in progress (sessions 2026-03-27 to 2026-03-28; continuation required)
-**Last updated:** 2026-03-28 00:45
+**Status:** PARTIAL — academic pass complete; Opus synthesis PENDING
+**Last updated:** 2026-03-28 09:30
 
 ## Scope
 Purpose-built accessible homes, home modification programmes with documented disability outcomes, OT-assessed residential adaptation studies, wheelchair standard housing, specialist disability accommodation (SDA), adaptable housing programmes. Residential settings only.
@@ -62,6 +62,15 @@ Outcomes: Being a pioneer — qualitative study of moving into SDA from perspect
 Key finding: "Quality of support provided in the home is a greater determinant of tenant quality of life than the built environment." — direct OT evidence for Part 5 Tier 1 primacy of support over specification.
 Evidence quality: Tier 1 qualitative (BMJ Open peer-reviewed). Evidence marker: ●
 
+**Carey, Minter, D'Cruz, Douglas, Winkler, Mulherin (2025)**
+Source: Disability and Rehabilitation 47(22):5829–5838. DOI: 10.1080/09638288.2025.2469767. [Co-1]
+[PubMed PMID: 41175339]
+Populations: NEU / MOB / ALL (neurological disability, complex needs)
+Design: Constructivist grounded theory. N=12 family members supporting 12 people with neurological disability transitioning into SDA apartments from group homes/RAC/family.
+Outcomes: Benefits for disabled people and families confirmed. Two key themes: adjusting care role; changing relationship. Adjustment challenges and stresses real. Planning and transition support essential.
+Key finding: SDA move is beneficial but requires considered planning and support for family members — not just built environment specification.
+Evidence quality: Co-1 (family/carer lived experience). Evidence marker: ●○
+
 **Summer Foundation / Winkler et al. (2024) — NCC Implementation**
 Source: Winkler D., Liddicoat S., D'Cruz K., Wellecke C., Mulherin P., Douglas J. (2024). Supporting the design and construction sector to transition to minimum accessible standards: A qualitative study. Summer Foundation. [Tier 2]
 Populations: ALL (universal design / residential sector)
@@ -73,20 +82,55 @@ Source: Winkler D., Rathbone A. (2022). Budgetary impact of timely SDA payment a
 Key data: Projected government budget cost of timely SDA approval: +$338M in 2026, -$121M savings by 2031. Only 39% of those eligible for SDA are living in it.
 Evidence quality: Tier 2 economic modelling (grey). Evidence marker: ○ [PROVISIONAL]
 
+**Ainsworth, Aplin, de Jonge, Bennett (2022)**
+Source: Disability and Rehabilitation 45(24):4101–4110. DOI: 10.1080/09638288.2022.2146765. [Tier 1 qualitative]
+[PubMed PMID: 36394257]
+Populations: MOB / ALL (older adults and people with disability)
+Design: Interpretive description. N=20 participants aged 24–93 who received major home modifications. AU.
+Outcomes: Two major themes: "it was all hard" and "to have a life." Valued outcomes: emotional/physical health and safety; doing what they want; maintaining home image; planning for the future. Experience ranged from supportive to disruptive depending on process quality and pre-modification planning.
+Key finding: Outcomes are co-produced by environment AND OT process quality — not environment alone. Therapists must deeply understand clients' experience of home and life as initial step.
+Evidence quality: Tier 1 qualitative. Evidence marker: ●
+
 ---
 
-### United States [Co-1 / Tier 2 — STRONG (new)]
+### United States [Co-1 / Tier 1–2 — STRONG]
 
 **The Kelsey Ayer Station (San Jose, CA — opened April 2024)**
 Source: The Kelsey (2024). Case Study: The Kelsey Ayer Station. thekelsey.org. [Co-1 / Tier 2]
 Source: Enterprise Community Partners (2024). Co-Designed, Community-Led: A New Vision for Disability-Forward Housing. enterprisecommunity.org. [Tier 2]
 Populations: MOB / IntD / NDV / ALL
 Design intent: 115 mixed-income (20–80% AMI) apartments; 25% reserved for people with disabilities. Inclusive Design Standards (300+ elements). Sensory garden, Inclusion Concierge, transit-oriented. LEED Gold. First project funded from Google's affordable housing fund. Co-designed with disability community advisory group.
-Outcomes documented (Co-1 qualitative): Resident testimony of first-time independent living, first-time wheelchair-accessible cooking facilities, reduced isolation, sense of belonging. Preference for San Andreas Regional Center (SARC) clients with intellectual/developmental disabilities.
+Outcomes documented (Co-1 qualitative): Resident testimony of first-time independent living, first-time wheelchair-accessible cooking facilities, reduced isolation, sense of belonging. Preference for SARC clients with intellectual/developmental disabilities.
 Cost: Predevelopment $6.9M (Google); permanent funding from City of San Jose, CA HCD, HUD, Capital One, Enterprise ($25.4M LIHTC equity). Total development ~6 years from site to occupancy.
-Partnerships: Sares Regis Group, Devine & Gong, Mikiten Architecture, Inclusive Design Council.
 Key finding: Disability-forward design as housing development model — co-development, mixed-ability, mixed-income, with inclusion staffing model. Replicable: SF (112 units, 2025) and Birmingham, AL (2027). TA across 11 states.
 Evidence quality: Co-1 lived experience + Tier 2 programme. Evidence marker: ●○
+
+**Liu, Xue, Gitlin et al. (2020) — CAPABLE RCT**
+Source: Journal of the American Geriatrics Society 69(1):85–90. DOI: 10.1111/jgs.16808. [Tier 1 RCT]
+[PubMed PMID: 32951215]
+Populations: MOB / ALL (low-income older adults; 86% Black, 85% female)
+Design: Single-blind two-arm RCT. N=194–233. OT home visits + RN + handyman ($1,300 modifications). 4 months.
+Outcomes: Improved life-space: bathroom (OR 3.95), stairs (OR 4.09), leaving house for non-healthcare reasons (OR 2.40), overall (OR 2.15). 11% improvement in falls efficacy.
+Key finding: Multicomponent OT+HA intervention improves life-space and falls efficacy. Equity dimension: programme specifically benefits low-income Black older adults — underserved population.
+Evidence quality: Tier 1 RCT. Evidence marker: ●
+
+**Washington, Edwards, Stiles, West Bruce (2023) — CAPABLE implementation**
+Source: OTJR 43(4):683–690. DOI: 10.1177/15394492231151885. [Tier 1 implementation]
+[PubMed PMID: 36748717]
+Populations: MOB / ALL (older adults, St. Louis)
+Design: Descriptive + paired test + correlational. CAPABLE implemented during COVID-19.
+Outcomes: Significant improvement in IADL independence, readiness to change, self-reported health, depressive symptoms. 11 significant correlations age/expenses/outcomes.
+Key finding: Confirms real-world CAPABLE delivery effectiveness outside RCT conditions.
+Evidence quality: Tier 1 implementation. Evidence marker: ●
+
+**Sheffield, Smith, Becker (2013) — Agency-based OT RCT**
+Source: The Gerontologist 53(6):907–918. DOI: 10.1093/geront/gns145. [Tier 1 RCT]
+[PubMed PMID: 23213082]
+Populations: MOB / ALL (community-dwelling older adults)
+Design: RCT. N=60. Restorative OT (person-environment perspective + adaptive equipment + home modifications) vs usual care. 3 months.
+Outcomes: Home safety improvement (p<.0005), HRQoL improvement (p=.03), reduced fear of falling (p<.05). 39% reduction in recommended personal care hours.
+Key finding: OT-led person-environment assessment + home modification reduces personal care hours by 39% — direct cost-offset evidence.
+Evidence quality: Tier 1 RCT. Evidence marker: ●
 
 **US prevalence data (The Kelsey, 2024)**
 4 million adults with disabilities on SSI would need 142% of income for basic housing.
@@ -94,190 +138,187 @@ Evidence quality: Tier 2 advocacy. Evidence marker: ●
 
 ---
 
-### France [Co-1 / Tier 2 / Tier 5 — MODERATE-STRONG (new)]
+### France [Co-1 / Tier 2 / Tier 5 — MODERATE-STRONG]
 
 **Association hapi — Social Impact Study of Habitat API (2024)**
 Source: Association hapi (2025). Mesure d'impact social de l'habitat accompagné, partagé et inséré: Résultats de l'expérimentation collective 2024. monhabitatinclusif.fr. [Co-1 / Tier 2]
 Populations: NDV/MH / MOB / ALL (disability + ageing)
-Design intent: First sectoral social impact study of habitat accompagné, partagé et inséré (habitat API). 28 projects participated. Mixed qualitative/quantitative methodology measuring impact on residents, families, and professionals.
-Outcomes documented: Well-being, serenity, autonomy (including for high-support needs), reduced isolation, improved carer well-being, recovery of social participation. Autonomy contribution confirmed even for residents with very high support needs. Professional satisfaction and sense of purpose.
-Key finding: First sectoral impact measurement — confirms habitat API outcomes across disability and ageing populations. Report published 2025.
+Design intent: First sectoral social impact study of habitat API. 28 projects. Mixed qualitative/quantitative.
+Outcomes documented: Well-being, serenity, autonomy (including high-support needs), reduced isolation, carer well-being, social participation recovery.
+Key finding: First sectoral impact measurement — confirms habitat API outcomes across disability and ageing populations.
 Evidence quality: Co-1 + Tier 2 programme evaluation. Evidence marker: ●○
 
-**Unaf national survey on habitat inclusif (2021–2024)**
+**Unaf national survey on habitat inclusif (2025)**
 Source: Unaf (2025). Synthèse des résultats: Enquête nationale habitat inclusif. unaf.fr. [Co-1 / Tier 2]
 Populations: NDV/MH (psychosocial disability primary) / ALL
 Design: Qualitative (40 residents, 48 professionals, 25 sites) + quantitative (97 Udaf, 267 professional respondents). Famille-Gouvernante model dominant for psychosocial disability.
-Outcomes: Feeling of being "at home", freedom of choice, well-being, confidence, restored autonomy, reduced isolation, recovered social participation. Economic model: 6 residents each contributing 1 hour PCH/day funds 5–7 hours professional presence weekly.
+Outcomes: Feeling "at home", freedom of choice, well-being, confidence, restored autonomy, reduced isolation, recovered social participation.
+Economic model: 6 residents each contributing 1 hr PCH/day funds 5–7 hrs professional presence weekly.
 Evidence quality: Co-1 + Tier 2. Evidence marker: ●○
 
 **APF France Handicap — Housing accessibility data (2025)**
 Source: APF France Handicap / Unaf (2025). Rencontre: Le logement au cœur d'une société inclusiverselle. unaf.fr. [Tier 2]
-Key data: Only 1.3M homes truly accessible in France; 2.4M need adaptation; 37% accessibility unknown.
-Programmes: Epop peer methodology (with Vilogia); MaPrimeAdapt' (2024, €350M national, 70,000 homes/year target); Handi Cap Logement platform.
+Key data: Only 1.3M homes truly accessible; 2.4M need adaptation; 37% accessibility unknown.
+Programmes: MaPrimeAdapt' (2024, €350M, 70,000 homes/year target); Handi Cap Logement platform.
 Evidence quality: Tier 2 advocacy. Evidence marker: ●
 
-**CNSA — Conférence des financeurs de l'habitat inclusif (2022 data, published 2024)**
-Source: CNSA (2024). Synthèse des rapports d'activité 2022: Conférence des financeurs de l'habitat inclusif. cnsa.fr. [Tier 5]
-Key data: 1,885 habitat inclusif projects deployed nationally; serving 18,070 people. 16% growth in new habitats in 2022; 43% growth in residents (+1,705). Average annual cost: €14,040 for disability habitats. AVP (Aide à la vie partagée) funding trajectory: >€70M/year by 2025.
+**CNSA — Conférence des financeurs de l'habitat inclusif (2024)**
+Source: CNSA (2024). Synthèse des rapports d'activité 2022. cnsa.fr. [Tier 5]
+Key data: 1,885 habitat inclusif projects; 18,070 people. AVP funding >€70M/year by 2025.
 Evidence quality: Tier 5 national programme. Evidence marker: ●
 
 ---
 
-### Netherlands [Co-1 / Tier 2 / Tier 5 — MODERATE (new)]
+### Netherlands [Co-1 / Tier 2 / Tier 5 — MODERATE]
 
 **Ieder(in) / Woonbond — Housing accessibility survey (2021)**
-Source: Ieder(in) (2021). Toegankelijke woningen: een verborgen wooncrisis. Rapportage woononderzoek 2021. inclusievooriedereen.nl. [Co-1 / Tier 2]
-Populations: MOB / ALL chronic illness/disability
-Design: National survey, 622 respondents (Ieder(in)) + 423 (Woonbond). Lived experience of accessible housing search and adaptation.
-Key data: Over 1/3 of disabled respondents rate their home as inadequate. 25% need adaptations they cannot obtain. Only 2% find accessible homes affordable. Only 9% find adequate choice. 62% of adaptations involve WMO (municipal). Young people and families worst-affected — excluded from 55+ housing stock.
-Recommendation: "Design for all" as building standard; NEN 9120 as mandatory norm. OT (ergotherapeut) expertise in adaptation recommended.
-Evidence quality: Co-1 lived experience + Tier 2 advocacy. Evidence marker: ●
+Source: Ieder(in) (2021). Toegankelijke woningen: een verborgen wooncrisis. inclusievooriedereen.nl. [Co-1 / Tier 2]
+Populations: MOB / ALL
+Key data: Over 1/3 rate home inadequate. 25% need adaptations they cannot obtain. 2% find accessible homes affordable. 62% of adaptations involve WMO.
+Recommendation: "Design for all" as mandatory building standard; NEN 9120 as mandatory norm.
+Evidence quality: Co-1 + Tier 2. Evidence marker: ●
 
-**Movisie / Verwey-Jonker Instituut — Housing market discrimination (2023)**
-Source: Movisie / Verwey-Jonker Instituut (2023). Verkenning discriminatie en racisme op de woningmarkt. Commissioned by Staatscommissie. [Tier 2]
-Key findings: Disabled people refused housing; inaccessible stock; adaptation failures. Recommends "design for all" as standard + mandatory accessibility in architect training.
-Evidence quality: Tier 2 research. Evidence marker: ●
+**Movisie / Verwey-Jonker Instituut (2023)**
+Source: Verkenning discriminatie en racisme op de woningmarkt. [Tier 2]
+Key findings: Disabled people refused housing; inaccessible stock; adaptation failures. Recommends mandatory accessibility in architect training.
+Evidence quality: Tier 2. Evidence marker: ●
 
 **NEN 9120 / Pointer investigation (2025)**
-Netherlands has no monitoring of accessible housing stock, no targets. 290,000 planned homes lack accessibility requirements. NEN 9120 not yet mandatory. CBS monitoring (2025): 67% of "zero-step" dwellings validated as fully accessible.
-Evidence quality: Tier 5 standard (not yet mandatory). Evidence marker: ◐
+No monitoring of accessible stock; no targets. 290,000 planned homes lack accessibility requirements. NEN 9120 not yet mandatory.
+Evidence quality: Tier 5 (not mandatory). Evidence marker: ◐
 
 ---
 
-### Belgium [Co-1 / Tier 2 — THIN (new)]
+### Belgium [Co-1 / Tier 2 — THIN]
 
-**GRIP vzw — Inclusiespiegel Vlaanderen (2016) + Housing barriers analysis**
-Source: GRIP vzw (2016). Inclusiespiegel Vlaanderen 2016. gripvzw.be. [Co-1 / Tier 2]
-Source: GRIP vzw (2024). Het recht om te wonen in de maatschappij. gripvzw.be. [Tier 2]
-Populations: ALL
-Key data: Home ownership for disabled people dropped 74%→67% (vs 81→83% general pop). 61% in lowest 2 income classes. Financial hardship 23% vs 9%. 45% private rental stock poor quality. Discrimination via practice tests confirmed. VN-Verdrag Handicap framing.
+**GRIP vzw (2016/2024)**
+Key data: Home ownership for disabled people dropped 74→67% vs 81→83% general pop. 61% in lowest 2 income classes. 45% private rental poor quality.
 No building-level case study with disability outcome data.
-Evidence quality: Co-1 + Tier 2 advocacy/statistical. Evidence marker: ○ [THIN-BASE]
-
-**Inter (Flemish accessibility expertise centre)**
-Provides building accessibility advice, research, and training in Flanders. Universal Design focus.
-Evidence quality: Tier 2 expert body. Evidence marker: ○
+Evidence quality: Co-1 + Tier 2. Evidence marker: ○ [THIN-BASE]
 
 ---
 
-### Sweden [Tier 5–6 — REGULATORY ONLY (new)]
+### Sweden [Tier 1 / Tier 5–6]
+
+**Malmgren Fänge, Carlsson, Axmon et al. (2019)**
+Source: BMC Public Health 19:1446. DOI: 10.1186/s12889-019-7815-9. [Tier 1 quasi-experimental]
+[PubMed PMID: 31684916]
+Populations: MOB / ALL (older adults, community-dwelling)
+Design: Cluster design. SE/NO municipalities. Intervention (standardised HA protocol, n=112) vs control (ordinary practice, n=129). Outcomes at 1, 3, 6, 12 months.
+Outcomes: Significant differences: toileting (OR 3.14), dressing (OR 2.89), cooking (OR 3.14 at T1–T4), wheelchair use at home (OR 9.50 at T1–T2/T3), picking up mail (OR 4.06), helping others (OR 2.33–3.36). Limited broader effect.
+Key finding: Standardised OT-led assessment protocol improves specific ADL outcomes — supports structured practice over informal. Especially strong for wheelchair home mobility (OR 9.50).
+Evidence quality: Tier 1 quasi-experimental. Evidence marker: ●
 
 **Boverket (BBR / PBL) — Accessibility regulations**
-Source: Boverket (2025). Tillgänglighet. boverket.se. [Tier 6]
-PBL (Plan- och bygglagen 2010:900): All new buildings must be accessible. BBR 31 (new rules July 2025).
-Only ~25% of Swedish housing stock accessible (step-free or ground-floor).
-Miljonprogrammet (1965–1975) housing stock requires major accessibility upgrades.
-TIBB: Web-based accessibility inventory tool for public housing companies.
-MFD (Myndigheten för delaktighet): National disability policy agency.
-No building-level case study with disability outcome data found.
-Evidence quality: Tier 5–6 regulatory. Evidence marker: ◐ [NO CASE STUDY]
+Source: Boverket (2025). [Tier 6]
+Only ~25% of Swedish housing stock accessible. BBR 31 (July 2025).
+No building-level case study with disability outcome data.
 
 ---
 
-### Norway [Tier 2 / Tier 5–6 — RESEARCH INFRASTRUCTURE (new)]
+### Norway [Tier 2 / Tier 5–6 — RESEARCH INFRASTRUCTURE]
 
 **SINTEF REBO programme (2009–2013)**
-Source: SINTEF Byggforsk (2015). Synergier mellom energieffektivitet og universell utforming. biblioteket.husbanken.no. [Tier 2]
-4-year Husbanken-funded programme. 7 case studies of apartment block upgrades across Norway/Sweden/Denmark. Energy + universal design synergy. Interviews with 4 major housing cooperatives. Finding: Universal design secondary to energy efficiency in practice — rarely the primary upgrade goal.
-Livsløpsboligen (lifetime home) concept well-established.
-TEK10/TEK17: Building regulations include universal design requirements.
-No disability-specific residential outcome data found.
-Evidence quality: Tier 2 research. Evidence marker: ○ [NO DISABILITY OUTCOME DATA]
+Source: SINTEF Byggforsk (2015). biblioteket.husbanken.no. [Tier 2]
+7 case studies, Norway/Sweden/Denmark. Energy + UD synergy. Finding: UD secondary to energy efficiency in practice.
+No disability-specific residential outcome data.
+Evidence quality: Tier 2. Evidence marker: ○ [NO DISABILITY OUTCOME DATA]
 
 ---
 
-### Japan [Tier 1 / Tier 5–6 — MODERATE (new)]
+### Japan [Tier 1 / Tier 3 / Tier 5–6 — MODERATE]
 
-**BMC Health Services Research (2023) — Housing adaptations and care needs prevention**
-Source: (2023). Association of housing adaptation services with the prevention of care needs level deterioration for older adults with frailty in Japan. BMC Health Serv Res. [Tier 1]
-Populations: MOB (frail older adults)
-Design: Retrospective cohort (N=municipality near Tokyo, care support levels 2015–2016). Cox proportional hazards model.
-Outcomes: Housing adaptations associated with prevention of care needs level deterioration in frail older adults.
-Evidence quality: Tier 1 peer-reviewed. Evidence marker: ● [NOTE: ageing-focused, not disability-specific]
+**BMC Health Services Research (2023)**
+Source: BMC Health Serv Res. [Tier 1]
+Housing adaptations associated with prevention of care needs level deterioration in frail older adults. Retrospective cohort.
+Evidence quality: Tier 1. Evidence marker: ● [ageing-focused]
 
-**BMC Geriatrics (2022) — Housing adaptation implementation and costs**
-Source: (2022). Implementation and costs of housing adaptations among older adults with different functional limitations in Japan. BMC Geriatr. [Tier 1]
-Populations: MOB / VIS (older adults with functional limitations)
-Design: Retrospective cohort (N=10,372, suburban Tokyo, 2010–2018).
-Key data: Only 42.4% of elder households at "standard" barrier-free; 8.8% at "high level". LTC insurance delivers 6 types of housing adaptation.
-Evidence quality: Tier 1 peer-reviewed. Evidence marker: ●
+**BMC Geriatrics (2022)**
+Source: BMC Geriatr. [Tier 1]
+N=10,372. Only 42.4% of elder households at "standard" barrier-free; 8.8% at "high level".
+Evidence quality: Tier 1. Evidence marker: ●
 
-**SHOPs (Serviced Housing for Older People, 2011–present)**
-Source: (2024). Social participation among residents of SHOP vs community-dwelling older people. J Public Health. [Tier 1]
-Key data: 280,000 SHOP units by 2022 (up from 70,000 in 2012). Barrier-free apartments with support services. Some evidence of social participation outcomes.
-Evidence quality: Tier 1 peer-reviewed. Evidence marker: ●
+**Saito, Kikuchi, Sawada, Tomori (2025)**
+Source: American Journal of Occupational Therapy 79(6). DOI: 10.5014/ajot.2025.051190. [Tier 3 scoping review]
+[PubMed PMID: 41056091]
+54 studies; home-based OT positively affects activity, participation, QoL. 126 unique outcome tools. CAPABLE and Reablement covered. Databases: PubMed + J-Stage + Ichushi Web.
+Key finding: Home-based OT can positively affect older adults' activity, participation, and QoL. Standardised evaluation tools and culturally tailored programmes needed.
+Evidence quality: Tier 3. Evidence marker: ●
 
-**Wheelchair-accessible group homes study (2021)**
-Source: Ozu (2021). Wheelchair-accessible group homes for people with disabilities. Japan Architectural Review. [Tier 2]
-Key data: WAGHs require larger floor space. Questionnaire + interview surveys. Architectural planning evidence.
-Evidence quality: Tier 2 grey. Evidence marker: ○
+**SHOPs (Serviced Housing for Older People)**
+Source: J Public Health (2024). [Tier 1]
+280,000 units by 2022. Some social participation outcome evidence.
+Evidence quality: Tier 1. Evidence marker: ●
+
+**Ozu (2021) — Wheelchair-accessible group homes**
+Source: Japan Architectural Review. [Tier 2]
+Architectural planning evidence. WAGHs require larger floor space.
+Evidence quality: Tier 2. Evidence marker: ○
 
 ---
 
 ### Canada [Tier 5–6 / Co-2 — STANDARDS ONLY]
 
-**CSA/ASC B652 — Accessible Dwellings Standard (2022)**
-Source: CSA Group / Accessibility Standards Canada (2022). CSA/ASC B652, Accessible Dwellings. [Tier 5/6]
-Populations: MOB / VIS / DEAF
-Scope: Design and construction of new homes and renovations. RHFAC v4.0 residential module aligned.
-Key data: $190,000 CMHC-funded standard development. Covers: design for disability across home types.
-Evidence quality: Tier 5 national standard. Evidence marker: ◐
+**CSA/ASC B652 (2022)**
+Source: CSA Group / Accessibility Standards Canada. [Tier 5/6]
+Accessible dwellings standard. $190,000 CMHC-funded. Covers design for disability.
+Evidence quality: Tier 5. Evidence marker: ◐
 
-**CMHC — Case Studies of Sector Initiatives (grey)**
-Source: CMHC (n.d.). Research insight: Case studies of sector initiatives to meet accessible housing needs. cmhc-schl.gc.ca. [Tier 5 grey]
-Content: Multi-unit residential buildings with innovative design features. Non-profit sector identified as most active agent. No disability outcome data extracted in this search pass.
-Evidence quality: Tier 5 grey. Evidence marker: ○ [THIN-BASE — outcome data not confirmed]
+**CMHC Case Studies (grey)**
+Multi-unit residential with innovative design features. Non-profit sector most active. No disability outcome data confirmed.
+Evidence quality: Tier 5 grey. Evidence marker: ○ [THIN-BASE]
 
 ---
 
 ### Germany / Austria [Tier 6 / statistical — THIN]
 
-**Statistisches Bundesamt — Mikrozensus 2018 / 2022**
-Source: Statistisches Bundesamt (2019/2024). Mikrozensus-Zusatzprogramm Wohnen. destatis.de. [Tier 6 statistical]
-Key data: Only 2% of German housing stock fully barrier-free (2018). 80% of new builds 2011–2015 not fully accessible. 85% of senior households have no step-free access. 2022 update confirms minimal improvement.
-Evidence quality: Tier 6 national statistical. Evidence marker: ◐
+**Statistisches Bundesamt — Mikrozensus 2018/2022**
+Only 2% of German housing stock fully barrier-free. 80% of new builds 2011–2015 not fully accessible.
+Evidence quality: Tier 6 statistical. Evidence marker: ◐
 
 **Statistik Austria (2024)**
-Source: Statistik Austria (2024). Menschen mit Behinderungen in Österreich I. BMSGPK. [Tier 6]
-Key data: 46% of disabled people cannot perform IADL independently; 28.7% live alone; housing tenure disparities documented.
-Evidence quality: Tier 6 national statistical. Evidence marker: ◐
-
-**Bundesfachstelle Barrierefreiheit — Good Practice Conference (2024)**
-Source: Bundesfachstelle Barrierefreiheit (2024). Fachkonferenz Mehr barrierefreien Wohnraum schaffen! bundesfachstelle-barrierefreiheit.de. [Tier 5 grey]
-Content: Good practice examples from across Bundesländer. Full examples NOT EXTRACTED — conference documentation referenced but not retrieved.
-[GAP: Bundesfachstelle good practice examples require targeted retrieval — flagged for continuation session]
-Evidence quality: Tier 5 grey. Evidence marker: ○
+46% of disabled people cannot perform IADL independently; housing tenure disparities documented.
+Evidence quality: Tier 6. Evidence marker: ◐
 
 ---
 
+### Ireland [Co-1 / Tier 2 — THIN]
 
-### Ireland [Co-1 / Tier 2 — THIN (new)]
-
-**ILMI / Inclusion Ireland — "Our Housing Rights" (2021)**
-Source: ILMI / Inclusion Ireland (2021). Our Housing Rights: Tackling the Housing Crisis Disabled People Face. ilmi.ie. [Co-1 / Tier 2]
-Populations: ALL (cross-impairment)
-Design: 6 focus groups with disabled people and family members. Cross-impairment consultation.
-Key findings: "It's not just about the house and four walls" — support packages needed alongside accessible housing. Catch-22 between housing and supports. No formal application process for independent living supports. No consistency between HSE areas. 2,000 people still in congregated settings (Disability Capacity Review 2021).
-Evidence quality: Co-1 lived experience + Tier 2 advocacy. Evidence marker: ○
+**ILMI / Inclusion Ireland (2021)**
+Source: ILMI (2021). Our Housing Rights. ilmi.ie. [Co-1 / Tier 2]
+Key findings: "It's not just about the house and four walls." Support alongside housing essential. 2,000 people still in congregated settings.
+Evidence quality: Co-1 + Tier 2. Evidence marker: ○
 
 **CIB/DFI — "The Right Home" (2022)**
-Source: CIB / DFI (2022). The Right Home: the Housing Needs of People with Disabilities. disability-federation.ie. [Tier 2]
-Key data: Part M Building Regulations provide only "visitable" not "liveable" standard. Inadequate Housing Adaptation Grants. "Crisis within a crisis." Recommendations: rights-based perspective, stronger inter-agency collaboration, involvement of advocacy supports.
-Evidence quality: Tier 2 policy research. Evidence marker: ○
+Part M Building Regulations provide only "visitable" not "liveable" standard.
+Evidence quality: Tier 2. Evidence marker: ○
 
-**Housing Strategy for Disabled People 2022-2027**
-Source: Government of Ireland (2022). National Housing Strategy for Disabled People 2022-2027. [Tier 5]
-Themes: Accessible housing and communities; interagency collaboration; affordability; communication; knowledge/capacity; strategy alignment.
-Housing and Disability Steering Groups (HDSGs) at local authority level. ILMI engaged in HDSG structures.
-Evidence quality: Tier 5 national strategy. Evidence marker: ◐
+---
 
-**IN-HABIT EU Project (2025–ongoing)**
-Source: DFI (2025). IN-HABIT: EU Housing Project. disability-federation.ie. [Tier 2]
-EU-wide inclusive housing project (5 countries). Skills gap identification, good practice collection, digital orientation hub (MyService), MOOC, local piloting in Ireland.
-Evidence quality: Tier 2 EU programme. Evidence marker: ○
+### Multi-jurisdiction systematic review [Tier 3]
 
-No building-level case study with disability outcome data found for Ireland.
+**Kehrer, Barkocy, Downs, Rice, Chen, Stark (2021)**
+Source: Disability and Rehabilitation 44(25):7739–7750. DOI: 10.1080/09638288.2021.1998668. [Tier 3 systematic review]
+[PubMed PMID: 34757870]
+14 articles. Community-dwelling middle-aged adults with long-term physical disability.
+Key finding: Home modifications/assistive technology = moderate evidence for mobility-impaired individuals. Wheelchair skills training = strongest evidence. Multicomponent interventions = moderate evidence for MS.
+Evidence quality: Tier 3. Evidence marker: ●
+
+---
+
+## Citation Mining
+
+**Seeds used:** Winkler/Summer Foundation group; BMC JP studies; Malmgren Fänge 2019; Sheffield 2013; CAPABLE RCT literature.
+
+| Source | Direction | New sources added |
+|---|---|---|
+| Winkler/D'Cruz group (AU) | Forward | Carey et al. 2025 (PMID 41175339) — SDA family experience |
+| CAPABLE programme (US) | Forward | Washington et al. 2023 (PMID 36748717); Liu et al. 2020 (PMID 32951215) |
+| Home modification OT outcomes | Lateral | Ainsworth et al. 2022 (PMID 36394257); Sheffield 2013 (PMID 23213082) |
+| Malmgren Fänge 2019 (SE) | Lateral | Kehrer et al. 2021 (PMID 34757870) |
+| JP home OT literature | Forward | Saito et al. 2025 (PMID 41056091) — scoping review |
+
+Backward mining from confirmed sources: not executed (Petersson 2008/2009 not found in PubMed). Flag for manual retrieval.
 
 ---
 
@@ -285,39 +326,38 @@ No building-level case study with disability outcome data found for Ireland.
 
 | Gap | Severity | Note |
 |---|---|---|
-| DK / FI: not searched | MODERATE | Nordic cluster — regulatory data likely; case studies unlikely |
-| CH / IE / NZ: not searched | MODERATE | Regulatory/standards pass needed |
-| ES / PT / IT: not searched | LOW | Romance language cluster not started |
-| KR / CN / SG / BR: not searched | LOW | Asian/Latam cluster not started |
-| EU / ISO: not searched | MODERATE | Supranational standards pass needed |
-| Academic pass | HIGH | NOT STARTED — citation mining from Habinteg CASEreport 147, Summer Foundation Winkler 2024, Petersson 2008/2009, BMC JP studies |
+| DK / FI / CH / NZ / ES / PT / IT / KR / CN / SG / BR / EU / ISO | MODERATE | Not searched — accepted as low-yield for case studies per session decision |
+| Petersson 2008/2009 | LOW | Not found in PubMed; may be grey or Swedish-only; flag for manual retrieval |
 | Opus best-practice synthesis | BLOCKER | NOT RUN — required before LOG completion |
-| VIS / PAIN/OFS: confirmed global gap | KNOWN-LIMITATION | No purpose-built residential case study with outcomes found in any jurisdiction |
-| DE/AT/CH: no building-level case study | MODERATE | Statistical/regulatory data only |
+| VIS / PAIN/OFS residential case studies | KNOWN-LIMITATION | No purpose-built residential case study with outcomes in any jurisdiction |
+| DE/AT/CH: no building-level case study | MODERATE | Statistical/regulatory only |
 | CA: no OT-outcome residential case study | MODERATE | Standards and programme data only |
-
----
-
-## Continuation Requirements
-
-1. Remaining jurisdictions: DK / FI / CH / IE / NZ / ES / PT / IT / KR / CN / SG / BR / EU / ISO
-2. Academic pass: citation mining from confirmed sources
-3. Opus synthesis of all findings
-4. research-log-manager LOG (PARTIAL accepted given scope)
+| Backward citation mining from Habinteg CASEreport 147 | MODERATE | Not retrieved — manual access required |
 
 ---
 
 ## Best Practice Synthesis
-PENDING — Opus synthesis not yet run.
+**PENDING — Opus synthesis not yet run.**
+**BLOCKER: Required before research-log-manager LOG can be completed.**
 
-Key inputs for Opus when synthesis runs:
-- AU finding: support quality > built environment for QoL (Summer Foundation, Tier 1) — tension with built environment determinism in guidebook
-- UK finding: M4(1) to M4(2) adaptation cost ~£27,000 per household — supports prevention-over-remediation economic argument
-- UK finding: only 12.6% of English housing stock has basic access features — prevalence baseline
-- DE finding: only 2% of German housing stock barrier-free — jurisdiction-transferable prevalence data
-- FR finding: First sectoral impact study of habitat API confirms outcomes across disability/ageing populations (hapi 2024); Famille-Gouvernante model for psychosocial disability proven effective (Unaf 2024)
-- NL finding: Over 1/3 of disabled people rate their home inadequate; NEN 9120 not yet mandatory; design-for-all recommended by Ieder(in) and Staatscommissie
-- US finding: The Kelsey Ayer Station as replicable mixed-income/mixed-ability model with Inclusive Design Standards (300+ elements); co-design methodology; Inclusion Concierge model
-- JP finding: Tier 1 peer-reviewed evidence that housing adaptations prevent care needs deterioration in frail older adults (BMC 2023); only 8.8% of elder households at "high level" barrier-free
-- Programme-vs-building distinction: CAPABLE (programme, CS-22), Summer Foundation SDA (programme), Habinteg (buildings), Kelsey (buildings), hapi (programme) — different evidence types for different guidebook uses
-- Cross-jurisdiction prevalence convergence: UK 12.6% / DE 2% / FR 1.3M of total stock / NL unmeasured / JP 8.8% "high level" — consistently low accessible stock globally
+Key inputs for Opus when synthesis runs (prepared by Sonnet):
+
+**Tension 1 — Support quality vs built environment:**
+AU Tier 1 (Douglas et al. 2024): "Support quality is a greater determinant of QoL than the built environment." IE Co-1 (ILMI 2021): "It's not just about the house and four walls." Both converge. Built environment is necessary but not sufficient — guidebook must specify both environment and transition/support frameworks.
+
+**Tension 2 — Programme vs building evidence:**
+CAPABLE (US Tier 1 RCT): programme outcomes. SDA/Habinteg/Kelsey: building outcomes. hapi/Unaf (FR): programme outcomes in specified buildings. These are not equivalent — guidebook must distinguish which evidence applies to which specification level.
+
+**Tension 3 — Ageing vs disability evidence base:**
+JP Tier 1 evidence (BMC 2022/2023) is ageing-focused. Malmgren Fänge 2019 (SE/NO) covers older adults. Sheffield 2013 (US) is older adults. CAPABLE RCT is older adults. Summer Foundation (AU) and Kelsey (US) are working-age disability. Transfer of ageing evidence to working-age disability is plausible but not confirmed.
+
+**Tension 4 — Co-design vs specification:**
+Kelsey (300+ Inclusive Design Standards) is co-designed and beyond-code. Cannot be directly transposed to a jurisdiction-neutral guidebook. Opus must determine what principles are transferable.
+
+**Convergent findings requiring synthesis:**
+- Cross-jurisdiction stock inadequacy (2–12.6%) = baseline condition; specifying above-code is essential
+- OT-led structured assessment protocol + HA = consistent ADL outcome improvements (Tier 1, SE; Tier 1 RCT, US; Tier 1 qualitative, AU)
+- Co-design as design methodology = confirmed via UK (Habinteg), US (Kelsey), FR (hapi) — different scales, same principle
+- Mixed-income/mixed-ability integration = no segregation; supported by Kelsey; implicit in Habinteg mainstream integration
+- Economic case for purpose-built over retrofit: £27,000 per household retrofit cost (UK Tier 2); JP Tier 1 prevention of care needs deterioration; Sheffield 39% reduction in personal care hours
+
