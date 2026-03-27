@@ -600,19 +600,19 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 
 | ID | Question | Phase | Blocking | Status |
 |---|---|---|---|---|
-| DEC-01 | Per-item consolidation: approve/reject each merger | P1-D2 | Yes | PENDING — Session 2 |
+| DEC-01 | Per-item consolidation: approve/reject each merger | P1-D2 | Yes | RESOLVED (D2-22–D2-24: 3 mergers approved; see P1-D2 register) |
 | DEC-02 | Entry Path I table: absorb into §4.4 or cut? | P1-D1 | No | RESOLVED (D1-24: condense + move to §4.4) |
-| DEC-03 | I-04/I-05/I-06: create, merge, or delete? | P1-D2 | Yes | PENDING — Session 2 |
-| DEC-04 | H-05 (Nurse Call): create or redirect? | P1-D2 | No | PENDING — Session 2 |
+| DEC-03 | I-04/I-05/I-06: create, merge, or delete? | P1-D2 | Yes | RESOLVED (D2-30: I-05→I-04 new item; I-04→G-04; I-06→I-02) |
+| DEC-04 | H-05 (Nurse Call): create or redirect? | P1-D2 | No | RESOLVED (D2-31: CREATE H-05) |
 | DEC-05 | IntD: full review or condensed proxy? | P1-D1 | Yes | RESOLVED (D1-17: condensed proxy) |
-| DEC-06 | BIO/TC: promote to Part 7 or keep in appendix? | P1-D2 | No | PENDING — Session 2 |
-| DEC-07 | Room matrix sub-tables: keep 6 or condense to 3? | P1-D2 | No | PENDING — Session 2 |
+| DEC-06 | BIO/TC: promote to Part 7 or keep in appendix? | P1-D2 | No | RESOLVED (BIO stays Appendix B; TC split: F-06/F-07/F-04/Part 9; Appendix C retired) |
+| DEC-07 | Room matrix sub-tables: keep 6 or condense to 3? | P1-D2 | No | RESOLVED (D2-10: keep 5-part final structure) |
 | DEC-08 | §12.4 Cost tables: restructure? | P1-D3 | No | PENDING — Session 3 |
 | DEC-09 | Case studies: keep all 14 + expand | P1-D3 | No | PENDING — Session 3 |
 | DEC-10 | Appendix E: separate appendix or glossary expansion? | P1-D3 | No | PENDING — Session 3 |
-| DEC-11 | Worked examples: keep 5 or reduce to 3? | P1-D2 | No | PENDING — Session 2 |
-| DEC-12 | F-02 (Fragrance-Free): keep or cut? | P1-D2 | No | PENDING — Session 2 |
-| DEC-13 | A-17 (Upholstered Seating): keep or cut? | P1-D2 | No | PENDING — Session 2 |
+| DEC-11 | Worked examples: keep 5 or reduce to 3? | P1-D2 | No | RESOLVED (MODIFIED: 18 total — 4 residential by disability profile; 14 NR by typology × 2) |
+| DEC-12 | F-02 (Fragrance-Free): keep or cut? | P1-D2 | No | RESOLVED (MODIFIED: relocate to Appendix D as policy note; remove from Part 7) |
+| DEC-13 | A-17 (Upholstered Seating): keep or cut? | P1-D2 | No | RESOLVED (D2-24: absorb into G-02) |
 | DEC-14 | Part 8 §8.8: how many worked resolution examples? | P1-D3 | No | PRELIMINARY (3 — D1-34) |
 | DEC-15 | Part 10 §10.5 OT-Architect Interface: detail level? | P1-D3 | No | PENDING — Session 3 |
 | DEC-16 | Pro forma templates: which building types? | P1-D3 | No | PENDING — Session 3 |
@@ -620,6 +620,7 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 | DEC-18 | Grant programmes: all 24 jurisdictions or top 8? | P1-D3 | No | PENDING — Session 3 |
 | DEC-19 | Target populations for new case studies | P1-D3 | No | PENDING — Session 3 |
 | DEC-20 | Case study template: add "Evidence Contribution" field? | P1-D3 | No | PENDING — Session 3 |
+| DEC-21 | Worked examples placement: Part 4 §4.5 or Appendix F? | P1-D3 | No | PENDING — Session 3 |
 
 ---
 
