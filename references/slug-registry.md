@@ -96,6 +96,7 @@
 
 ---
 
+| `cross-population-case-studies` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/cross-population-case-studies.md` | `references/bpc/frameworks-and-methodology/cross-population-case-studies.md` | ACTIVE |
 ## Instructions for research-log-manager
 
 **CHECK:** Normalise slug → look up in table above → GET path from SL path column → parse status.
