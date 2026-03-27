@@ -579,3 +579,28 @@ RULE: Keyword Compendium file identity — the Keyword Compendium referenced in 
 CONDITION: All multilingual-research runs.
 ACTION: view multilingual-research-protocol-v4-2026-03-18-1.md Part 3 before research.
 DATE: 2026-03-27 15:45
+
+RULE: All skills live on GitHub at skills/{name}_SKILL.md. No project file reads for skills. GET from GitHub before execution. All skill edits committed directly to GitHub.
+CONDITION: All skill operations.
+ACTION: GET skill file from GitHub. Never read /mnt/project/ for skills.
+DATE: 2026-03-27 17:30
+
+RULE: Session start loads only workplan-orchestrator, session-consolidator, and github-io. All other skills loaded only when identified in workplan AND user approves proceeding.
+CONDITION: Session start protocol.
+ACTION: GET only 3 skills at start. Present workplan for approval before loading others.
+DATE: 2026-03-27 17:30
+
+RULE: Model role separation — Sonnet assembles, writes, formats, organises, collates. Opus judges, synthesises, determines best practice, arbitrates evidence. Sonnet never determines what constitutes best practice. Workflow: Sonnet retrieves → Sonnet collates → Opus judges → Sonnet writes from Opus output.
+CONDITION: All tasks involving evidence judgment or best-practice determination.
+ACTION: Route judgment/synthesis to Opus. Sonnet handles retrieval, collation, writing from Opus output.
+DATE: 2026-03-27 17:30
+
+RULE: All citations in Parts and Categories use numbered endnotes (superscript in body). Each volume ends with full endnote list in sequential order organised under Part/Category headings. bibliography-compiler generates these.
+CONDITION: All citation formatting in guidebook Parts and Categories.
+ACTION: Use [REF:] markers → bibliography-compiler converts to superscripts and generates heading-organised endnote sections.
+DATE: 2026-03-27 17:30
+
+RULE: SUPERSEDED — Rule 90 (skills not in /mnt/project/ GET from GitHub) is superseded. ALL skills are now GitHub-only. Rule 48 (GitHub skills/ inventory only) is superseded. Skills on GitHub are now canonical execution copies, not inventory.
+CONDITION: All prior rules about skill file locations.
+ACTION: Ignore Rules 37, 48, 49, 90. GitHub is the single source for all skills.
+DATE: 2026-03-27 17:30
