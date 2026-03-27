@@ -1,10 +1,10 @@
 slug: residential-accessible-home-case-studies
 query: "accessible residential home case studies disability outcome"
-last_searched: 2026-03-28 00:45
+last_searched: 2026-03-28 09:30
 status: PARTIAL
 early_close_triggered: false
 
-note: "[KEYWORD-COMPENDIUM-GAP] Native aliases derived from existing search-log entries. Flagged workaround."
+note: "Step 3 academic pass complete 2026-03-28. 7 new PubMed sources added. Opus synthesis PENDING — required before LOG completion. 13 remaining jurisdictions accepted as NOT-RUN per session decision (low yield confirmed). Petersson 2008/2009 not found in PubMed — flag for manual retrieval."
 
 native_aliases:
   EN: accessible home case studies / residential disability design outcomes / home modification programme [CLEAN]
@@ -78,44 +78,44 @@ tier5_attempted:
   EU: false
   ISO: false
 
-citation_mining_attempted: false
-co1_pass_summary: "UK (Habinteg Co-1 + SCIE CLEAN); AU (Summer Foundation Co-1 CLEAN); FR (hapi impact study + Unaf survey CLEAN); NL (Ieder(in)/Woonbond survey CLEAN); BE (GRIP Inclusiespiegel PARTIAL); US (Kelsey Ayer Station Co-1 CLEAN); JP (BMC ageing studies PARTIAL); SE/NO (regulatory only, no Co-1 case study); IE (ILMI/DFI advocacy, no case study)"
-best_practice_synthesis: PENDING — Opus synthesis not yet run
+citation_mining_attempted: true
+citation_mining_note: "Forward mining from Summer Foundation group yielded Carey et al. 2025. CAPABLE forward mining yielded Washington 2023 and Liu 2020. Lateral mining yielded Ainsworth 2022, Sheffield 2013, Kehrer 2021, Saito 2025. Backward mining from Habinteg CASEreport 147 not executed — manual access required. Petersson 2008/2009 not found in PubMed."
+
+co1_pass_summary: "UK (Habinteg Co-1 + SCIE CLEAN); AU (Summer Foundation Co-1 CLEAN + Carey 2025 family Co-1); FR (hapi impact study + Unaf survey CLEAN); NL (Ieder(in)/Woonbond survey CLEAN); BE (GRIP Inclusiespiegel PARTIAL); US (Kelsey Ayer Station Co-1 CLEAN); JP (BMC ageing studies PARTIAL); SE/NO (regulatory only, no Co-1 case study); IE (ILMI/DFI advocacy, no case study)"
+
+best_practice_synthesis: PENDING — Opus synthesis not yet run. BLOCKER for LOG completion.
 
 jurisdiction_coverage:
-  CA: SEARCHED — CSA/ASC B652 (Tier 5/6); CMHC case study series (grey); RHFAC v4.0 residential module. No OT-outcome case study found — standards and programme evidence only. [THIN-BASE]
-  US: SEARCHED — The Kelsey Ayer Station (San Jose, 115 units, opened April 2024; 25% disability-reserved; Inclusive Design Standards 300+ elements; Co-1 resident testimony; first Google affordable housing fund project). Second community in SF (112 units, 2025). Birmingham, AL (2027). TA across 11 states. Prevalence: 4M adults on SSI priced out at 142% of income. [STRONG Co-1 / Tier 2]
-  UK: SEARCHED — Habinteg Co-1 + SCIE case study (Leeds wheelchair bungalow, outcomes documented); Upper Butts/Hounslow (M4(3) scheme, 2024-25); Habinteg Forecast 2025 (311 plans); Habinteg/RIBA Inclusive Housing Design Guide (2024, authored by specialist housing OTs); Habinteg M4(1)→M4(2) cost data (£27,000 per household). Strong Co-1 + Co-2 + Tier 2. [COMPLETE for Co-1/Tier 2]
-  AU: SEARCHED — Summer Foundation SDA/NDIS programme (>2,000 SDA apartments); Winkler, D'Cruz, Douglas et al. (2024, BMJ Open) qualitative outcomes; Tenant Outcomes Framework validated; NCC 2022 LHA Silver standard advocacy; Winkler et al. (2024) design/construction sector qualitative study. Strong Co-1 + Tier 1/2. Key finding: support quality > built environment quality for tenant QoL. [COMPLETE for Co-1/Tier 1-2]
-  NZ: NOT STARTED
-  IE: SEARCHED — ILMI/Inclusion Ireland 'Our Housing Rights' (2021, 6 focus groups); DFI/CIB 'The Right Home' (2022, social policy report); Housing Strategy for Disabled People 2022-2027; Part M Building Regulations (visitable only). 2,000 people in congregated settings. IN-HABIT EU project (DFI partner). No building-level case study. [THIN-BASE — advocacy/policy only]
-  DE: SEARCHED — Statistisches Bundesamt Mikrozensus 2018/2022 (only 2% of housing stock barrier-free); bpb.de Sozialbericht 2024; Bundesfachstelle conference Feb 2024 (good practice examples, not extracted); bfb-Trendstudie 2019. No single building case study with disability outcome data found. [THIN-BASE — statistical/policy only]
-  AT: PARTIAL — Statistik Austria 2024 (46% of disabled people cannot perform IADL independently; housing tenure data). No case study. [THIN-BASE]
-  CH: NOT STARTED
-  BE: SEARCHED — GRIP Inclusiespiegel Vlaanderen 2016 (home ownership 74→67% for disabled; 61% in lowest 2 income classes); GRIP 2024 brochure on right to housing; Inter (Flemish UD expertise centre). No building-level case study. [THIN-BASE — advocacy/statistical only]
-  NL: SEARCHED — Ieder(in)/Woonbond survey 2021 (622 respondents; 1/3 rate home inadequate; 25% can't get adaptations; 2% find affordable; 62% involve WMO); Movisie/Verwey-Jonker discrimination study 2023; NEN 9120 not yet mandatory; CBS monitoring 2025 (67% of zero-step dwellings validated). Pointer investigation 2025: no monitoring, no targets. [MODERATE Co-1/Tier 2/Tier 5]
-  SE: SEARCHED — PBL/BBR regulatory framework; ~25% housing stock accessible; Miljonprogrammet needs upgrade; TIBB tool; MFD. No case study. [THIN-BASE — regulatory only]
-  NO: SEARCHED — SINTEF REBO programme (7 case studies, energy+UD synergy, 2009-2013); TEK10/TEK17; Husbanken; livsloopsboligen concept. UD secondary to energy in practice. No disability-specific residential outcome data. [THIN-BASE — research infrastructure only]
-  DK: NOT STARTED
-  FI: NOT STARTED
-  FR: SEARCHED — Association hapi social impact study 2024 (28 projects, first sectoral impact measurement, outcomes confirmed); Unaf national survey 2021-2024 (40 residents, 48 professionals, 25 sites; Famille-Gouvernante model); APF France Handicap housing data (1.3M accessible, 2.4M need adaptation, 37% unknown); CNSA CFHI 2022 (1,885 projects, 18,070 people, €70M+/year AVP); MaPrimeAdapt' 2024 (€350M, 70K homes/year). Loi ELAN 2018. [STRONG Co-1/Tier 2/Tier 5]
-  ES: NOT STARTED
-  PT: NOT STARTED
-  IT: NOT STARTED
-  JP: SEARCHED — BMC Health Services Research 2023 (housing adaptations prevent care needs deterioration, retrospective cohort); BMC Geriatrics 2022 (N=10,372; 42.4% standard barrier-free, 8.8% high level); SHOPs (280,000 units by 2022); Ozu 2021 (wheelchair-accessible group homes, Japan Architectural Review). LTC insurance housing adaptation system. [MODERATE Tier 1/Tier 5 — ageing-focused]
-  KR: NOT STARTED
-  CN: NOT STARTED
-  SG: NOT STARTED
-  BR: NOT STARTED
-  EU: NOT STARTED
-  ISO: NOT STARTED
+  CA: SEARCHED — CSA/ASC B652 (Tier 5/6); CMHC case study series (grey); RHFAC v4.0. No OT-outcome case study. [THIN-BASE]
+  US: SEARCHED — Kelsey Ayer Station (Co-1/Tier 2); Liu et al. 2020 CAPABLE RCT (Tier 1); Washington et al. 2023 CAPABLE implementation (Tier 1); Sheffield et al. 2013 agency OT RCT (Tier 1). [STRONG Co-1/Tier 1-2]
+  UK: SEARCHED — Habinteg Co-1/SCIE/RIBA/cost data. Strong Co-1+Co-2+Tier 2. Ainsworth 2022 (AU-based but OT outcome framing applies). [COMPLETE]
+  AU: SEARCHED — Summer Foundation SDA (Tier 1); Carey et al. 2025 (Co-1); Ainsworth et al. 2022 (Tier 1); Winkler 2024 (Tier 2). [COMPLETE Co-1/Tier 1-2]
+  NZ: NOT-RUN — accepted low-yield per session decision
+  IE: SEARCHED — ILMI/DFI advocacy/policy. No building-level case study. [THIN-BASE]
+  DE: SEARCHED — Mikrozensus statistical. No case study. [THIN-BASE]
+  AT: PARTIAL — Statistik Austria 2024. No case study. [THIN-BASE]
+  CH: NOT-RUN — accepted low-yield
+  BE: SEARCHED — GRIP advocacy/statistical. No case study. [THIN-BASE]
+  NL: SEARCHED — Ieder(in)/Woonbond Co-1; Movisie Tier 2; NEN 9120 Tier 5. [MODERATE]
+  SE: SEARCHED — Malmgren Fänge 2019 (Tier 1 quasi-experimental); BBR regulatory. [MODERATE Tier 1]
+  NO: SEARCHED — SINTEF REBO (Tier 2); TEK17 regulatory. No disability outcome data. [THIN-BASE]
+  DK: NOT-RUN — accepted low-yield
+  FI: NOT-RUN — accepted low-yield
+  FR: SEARCHED — hapi (Co-1/Tier 2); Unaf (Co-1/Tier 2); APF (Tier 2); CNSA (Tier 5). [STRONG]
+  ES: NOT-RUN — accepted low-yield
+  PT: NOT-RUN — accepted low-yield
+  IT: NOT-RUN — accepted low-yield
+  JP: SEARCHED — BMC 2022/2023 (Tier 1); Saito 2025 scoping review (Tier 3); SHOPs (Tier 1); Ozu 2021 (Tier 2). [MODERATE Tier 1/3]
+  KR: NOT-RUN — accepted low-yield
+  CN: NOT-RUN — accepted low-yield
+  SG: NOT-RUN — accepted low-yield
+  BR: NOT-RUN — accepted low-yield
+  EU: NOT-RUN — accepted low-yield
+  ISO: NOT-RUN — accepted low-yield
 
 gaps_identified:
-  - DE/AT/CH: No residential case study with building-level disability outcome data found — statutory and statistical data only
-  - CA: No OT-outcome residential case study found — standards and programme data only
-  - DK/FI/CH/IE/NZ/ES/PT/IT/KR/CN/SG/BR: NOT STARTED
-  - EU/ISO: NOT STARTED — supranational standards pass needed
-  - Academic pass: NOT STARTED — citation mining from Habinteg CASEreport 147, Summer Foundation, Petersson 2008/2009, BMC JP studies not run
-  - Opus synthesis: NOT RUN
-  - VIS: KNOWN-LIMITATION — no purpose-built residential case study with outcomes in any jurisdiction
-  - PAIN/OFS: KNOWN-LIMITATION — no purpose-built residential case study with outcomes in any jurisdiction
+  - 13 jurisdictions NOT-RUN: accepted as low-yield per 2026-03-28 session decision
+  - Petersson 2008/2009 not found in PubMed — manual retrieval required
+  - Habinteg CASEreport 147 backward mining not executed
+  - Opus synthesis PENDING — BLOCKER for LOG completion
+  - VIS/PAIN/OFS: KNOWN-LIMITATION — no purpose-built residential case study with outcomes in any jurisdiction
