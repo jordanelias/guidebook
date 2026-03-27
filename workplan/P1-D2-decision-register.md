@@ -191,25 +191,23 @@ Engineering spec exists (Part 9 line 4880). Referenced 7 times. Safety-critical 
 - Stage: CD
 - Cross-refs: B-10, K-04, G-03
 
-#### E — DEC-06: BIO/TC Promotion to Part 7
+#### E — DEC-06: BIO and TC Disposition (REVISED per author directive)
 
-**Decision: PROMOTE.**
+**BIO-01–BIO-05: REMAIN IN APPENDIX B.** No Category L. Reformat to Part 7 template for visual consistency; fix all "Part 11I §8.4" stale references; retain appendix location. Cross-references from Part 7 items and matrices continue to use BIO-xx codes pointing to Appendix B.
 
-| Argument | Weight |
-|---|---|
-| Already cross-referenced from Part 7 using Part 7 item codes | HIGH — they function as Part 7 items already |
-| Formatting inconsistency (compressed paragraph vs structured template) | MODERATE — Critique Report finding |
-| CON-0010/CON-0024: BIO serves multiple populations with cross-population convergence | HIGH — appendix burial understates importance |
-| TC-05 carries strongest single epidemiological dataset in entire guidebook | HIGH — appendix is wrong location for strongest evidence |
-| GAP-STRUCT-02 flags BIO/TC presence in Vol 2 body as error | HIGH — need canonical home |
+**TC items: SPLIT by function.**
 
-**Implementation:**
-- BIO-01–BIO-05 → **Category L: Biophilic Design**
-- TC-01–TC-05 → **Category M: Thermal Comfort**
-- Reformat all 10 to standard Part 7 template
-- Appendix B/C become pointers: "See Part 7 Category L/M"
-- Fix all "Part 11I §8.4" stale references
-- **Structural change → requires CO-0003 + toc-editor**
+| TC item | Disposition | Rationale |
+|---|---|---|
+| **TC-01** Ambient Temperature Management | **→ F-06 Thermal Zoning** | Thermal equivalent of F-01 (sensory gradient by modality). MS/PAIN conflict resolved through zone-level temperature control. Design zoning decision. |
+| **TC-02** High-Performance Thermal Envelope | **→ Part 9 Mechanical Engineering** | Building physics specification (U-values, glazing, thermal bridges). Engineering enabler, not design zoning decision. Relocate to Part 9 §9.1.4 (Mechanical Engineering Items). |
+| **TC-03** Thermal Mass | **→ Remains in Appendix C** (sole remaining item) | Passive engineering strategy. Cross-referenced from F-06 as enabling infrastructure. |
+| **TC-04** Ventilation and Air Change Rate | **→ ABSORB into F-04** | 80% content overlap with F-04 (MERV 13, VOC, thermal stability). TC-04 adds ventilation rate (10 L/s), CO₂ monitoring (800 ppm), recirculation prohibition for OFS. Single comprehensive air quality + ventilation item. |
+| **TC-05** Heated Bathroom Floor | **→ F-07 Thermal Transition — Heat Shock Prevention** | Zone transition spec analogous to F-03 (graduated re-entry). Strongest single epidemiological dataset in guidebook (~17,000 deaths/year, Japanese MOH). Design zoning decision at room boundary. |
+
+**Category F post-revision (7 items):** F-01 Sensory Gradient · F-02 Olfactory Control · F-03 Graduated Re-entry · F-04 Air Quality + Ventilation (expanded) · F-05 Seated-Task Design · **F-06 Thermal Zoning** (new from TC-01) · **F-07 Thermal Transition** (new from TC-05). Coherent scope: all sensory environment zoning decisions across all modalities.
+
+**No new categories created.** No CO-0003 for category creation. CO-0003 scope reduced to: F-category expansion + TC-02 relocation to Part 9 + Appendix B reformat + Appendix C reduction.
 
 #### F — DEC-12: F-02 (Fragrance-Free)
 
@@ -266,15 +264,16 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 | C | Colour / Surface | 5 | −1 (C-06 → C-03) |
 | D | Spatial / Wayfinding | 11 | — |
 | E | Entry / Circulation | 11 | Duplicates removed |
-| F | Sensory Zoning | 5 | — |
+| F | Sensory Zoning | **7** | +2 (F-06 from TC-01; F-07 from TC-05); F-04 absorbs TC-04 |
 | G | Furniture / Fixtures | 7 | +A-17 spec absorbed |
 | H | Controls / Technology | 5 | +1 (H-05) |
 | I | Upper Limb | 4 | +1 (I-04 Hoist); I-06 → I-02 |
 | K | DeafBlind | 4 | K-01 expanded |
 | ~~J~~ | ~~BAR~~ | ~~0~~ | Deleted → Supp Vol |
-| **L** | **Biophilic** (new) | **5** | From Appendix B |
-| **M** | **Thermal** (new) | **5** | From Appendix C |
-| **Total** | | **88** | Was ~90 unique; −3 merged, −5 J deleted, +2 created |
+| — | Appendix B (BIO) | 5 | Stays in appendix; reformatted |
+| — | Appendix C (TC-03 only) | 1 | TC-01→F-06; TC-02→Part 9; TC-04→F-04; TC-05→F-07 |
+| — | Part 9 (TC-02) | 1 | Relocated to mechanical engineering |
+| **Total Part 7** | | **85** | Was ~90; −3 merged, −5 J deleted, +2 created, +2 TC absorbed into F |
 
 ---
 
@@ -282,7 +281,7 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 
 | CO | Change | Trigger | Session |
 |---|---|---|---|
-| CO-0003 | Create Categories L + M; retire Appendix B/C as repositories | DEC-06 | Phase 3 S16 |
+| CO-0003 | Expand Category F (add F-06, F-07; absorb TC-04 into F-04); relocate TC-02 to Part 9; reduce Appendix C to TC-03 only; reformat Appendix B | DEC-06 revised | Phase 3 S16 |
 | CO-0004 | Delete Category J; update all J-refs → Supp Vol | GAP-STRUCT-01 | Phase 3 S16 |
 | CO-0005 | Renumber Part 5 → §5.x, Part 6 → §6.x | GAP-CR-02 | Phase 4 S19 |
 
@@ -297,7 +296,7 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 | **CRITICAL** | D2-30 | Approve I-04 Ceiling Hoist creation from phantom I-05? |
 | **CRITICAL** | D2-31 | Approve H-05 Nurse Call creation? |
 | **HIGH** | D2-24 | Approve A-17 → G-02 absorption? |
-| **HIGH** | DEC-06 | Approve BIO/TC → Categories L/M? |
+| **HIGH** | DEC-06 | Approve: BIO stays Appendix B; TC-01→F-06, TC-04→F-04, TC-05→F-07, TC-02→Part 9, TC-03 stays Appendix C? |
 | **HIGH** | DEC-12 | Confirm F-02 keep? |
 | **HIGH** | DEC-11 | Confirm 5 worked examples? |
 | MODERATE | D2-37 | Confirm reclining rest deferral? |
@@ -312,11 +311,13 @@ No conflict — different sections. Add "Notation Guide" to §5.0 and §7.0 intr
 |---|---|
 | Decisions resolved | 74 (D1: 34 + D2: 40) |
 | Content removed | ~184 lines |
-| Items merged | 3 (C-06→C-03; B-04→B-03; A-17→G-02) |
-| Items created | 2 (I-04 Ceiling Hoist; H-05 Nurse Call) |
-| Categories added | 2 (L Biophilic; M Thermal) |
+| Items merged/absorbed | 3 mergers (C-06→C-03; B-04→B-03; A-17→G-02) + 1 absorption (TC-04→F-04) |
+| Items created/relocated | 2 new (I-04 Ceiling Hoist; H-05 Nurse Call) + 2 relocated into F (TC-01→F-06; TC-05→F-07) + 1 relocated to Part 9 (TC-02) |
+| Categories added | 0 |
 | Categories deleted | 1 (J BAR) |
-| Change Orders | 4 (CO-0002–CO-0005) |
+| Category F expanded | 5 → 7 items (sensory zoning now covers all modalities) |
+| Appendix changes | B: BIO stays, reformatted. C: reduced to TC-03 only. |
+| Change Orders | 4 (CO-0002–CO-0005; CO-0003 scope revised) |
 | Pending: P1-D3 | Parts 8–13 + Appendices (DEC-08 through DEC-20) |
 
 *End of P1-D2 Decision Register Draft*
