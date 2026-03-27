@@ -504,3 +504,33 @@
 | AIHW (2022) | C | Year/URL confirmation required | OPEN |
 | KDA Wohnkonzepte | B | PROVISIONAL — specific title not locatable | OPEN |
 
+
+
+## Orphan Audit — Citations in Guidebook Body Not in Bibliography
+
+**Audit date:** 2026-03-27 14:45
+**Guidebook version:** v9.0 (2026-03-20)
+**Inline citations found:** 98 | **Matched:** 70 | **Orphans:** 18 | **False positives filtered:** 10
+
+| Citation | Probable topic | Status |
+|---|---|---|
+| Champagne (2011) | Sensory modulation / trauma-informed | OPEN |
+| Cicerone et al. (2019) | Cognitive rehabilitation systematic review | OPEN |
+| Hamraie (2017) | Building Access — disability studies | OPEN |
+| Huckshorn (2004) | Seclusion reduction — trauma-informed | OPEN |
+| Imrie (2012) | Disability / universal design critique | OPEN |
+| JOTA (2022) | Japanese Occupational Therapy Association | OPEN |
+| Kaplan (1989) | Attention Restoration Theory | OPEN |
+| Lee et al. (2019) | Dementia or MOB research | OPEN |
+| Lawton & Nahemow (1973) | Competence-Press Model | OPEN |
+| NICE (2013) | NICE clinical guidelines | OPEN |
+| NINDS (2024) | NIH neurological conditions | OPEN |
+| NIOSH (2021) | Occupational health / ergonomics | OPEN |
+| PSSRU (2012) | Health economics unit | OPEN |
+| Rasminsky (1973) | Neural conduction / demyelination | OPEN |
+| STANNAH (2024) | Lift manufacturer guidelines | OPEN |
+| Verrillo (1993) | Vibrotactile perception thresholds | OPEN |
+| Waters et al. (1988) | Wheelchair ramp biomechanics | OPEN |
+| Whitelaw (2021) | Trauma-informed or NDV | OPEN |
+
+**Note:** Orphan citations are sources cited in the guidebook body but not yet in this bibliography. Each needs full APA citation lookup and addition to the appropriate section. These are P2 priority — the guidebook text references them, so they must be present before publication.
