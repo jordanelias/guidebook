@@ -142,3 +142,14 @@ next_action:
 ---
 
 **Fallback:** if any PUT fails after one retry — output the relevant content as a fenced code block with manual paste instructions. Never silently drop state.
+
+
+### Pre-Close: Uncommitted Working Document Check
+
+Before writing the session YAML, verify no working documents are uncommitted:
+
+1. Check for any files created during the session in `/home/claude` or referenced as working documents.
+2. If any working document has content not yet committed to GitHub: commit it now, or log it explicitly in `blockers:` with the filename.
+3. The `reconciliation.sessions` block must include `{checked: true}` only if this check passes.
+
+**Rule:** No session closes with uncommitted working documents. Data loss prevention.
