@@ -514,24 +514,24 @@
 
 | Citation | Probable topic | Status |
 |---|---|---|
-| Champagne (2011) | Sensory modulation / trauma-informed | OPEN |
-| Cicerone et al. (2019) | Cognitive rehabilitation systematic review | OPEN |
-| Hamraie (2017) | Building Access — disability studies | OPEN |
-| Huckshorn (2004) | Seclusion reduction — trauma-informed | OPEN |
-| Imrie (2012) | Disability / universal design critique | OPEN |
-| JOTA (2022) | Japanese Occupational Therapy Association | OPEN |
-| Kaplan (1989) | Attention Restoration Theory | OPEN |
-| Lee et al. (2019) | Dementia or MOB research | OPEN |
-| Lawton & Nahemow (1973) | Competence-Press Model | OPEN |
-| NICE (2013) | NICE clinical guidelines | OPEN |
-| NINDS (2024) | NIH neurological conditions | OPEN |
-| NIOSH (2021) | Occupational health / ergonomics | OPEN |
-| PSSRU (2012) | Health economics unit | OPEN |
-| Rasminsky (1973) | Neural conduction / demyelination | OPEN |
-| STANNAH (2024) | Lift manufacturer guidelines | OPEN |
-| Verrillo (1993) | Vibrotactile perception thresholds | OPEN |
-| Waters et al. (1988) | Wheelchair ramp biomechanics | OPEN |
-| Whitelaw (2021) | Trauma-informed or NDV | OPEN |
+| Champagne (2011) | Sensory modulation / trauma-informed | RESOLVED — Section C |
+| Cicerone et al. (2019) | Cognitive rehabilitation systematic review | RESOLVED — Section C |
+| Hamraie (2017) | Building Access — disability studies | RESOLVED — Section C |
+| Huckshorn (2004) | Seclusion reduction — trauma-informed | RESOLVED — Section C |
+| Imrie (2012) | Disability / universal design critique | RESOLVED — Section C |
+| JOTA (2022) | Japanese Occupational Therapy Association | RESOLVED — Section D |
+| Kaplan (1989) | Attention Restoration Theory | RESOLVED — Section C |
+| Lee et al. (2019) | Grab bar biomechanics | RESOLVED — Section C |
+| Lawton & Nahemow (1973) | Competence-Press Model | RESOLVED — Section C |
+| NICE (2013) | NICE clinical guidelines | RESOLVED — Section C |
+| NINDS (2024) | NIH neurological conditions | RESOLVED — Section B |
+| NIOSH (2021) | Occupational health / ergonomics | RESOLVED — Section C |
+| PSSRU (2012) | Health economics unit | RESOLVED — Section C |
+| Rasminsky (1973) | Neural conduction / demyelination | RESOLVED — Section C |
+| STANNAH (2024) | Lift manufacturer guidelines | RESOLVED — Section C |
+| Verrillo (1993) | Vibrotactile perception thresholds | RESOLVED — Section C |
+| Waters et al. (1988) | Wheelchair ramp biomechanics | RESOLVED — Section C |
+| Whitelaw (2021) | POTS/dysautonomia (= Blitshteyn & Whitelaw 2021) | RESOLVED — Section C |
 
 **Note:** Orphan citations are sources cited in the guidebook body but not yet in this bibliography. Each needs full APA citation lookup and addition to the appropriate section. These are P2 priority — the guidebook text references them, so they must be present before publication.
 
