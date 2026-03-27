@@ -525,3 +525,57 @@ RULE: Evidence Priority and Source Propagation. (a) When any writing or specific
 CONDITION: All writing, specification, and assembly workflows. All item-specification-writer, chunk-assembler, and bibliography-compiler runs.
 ACTION: (a) Prefer BPC synthesis; flag contradictions. (b) item-specification-writer emits REF-ID markers and sources-cited blocks. bibliography-compiler runs at assembly to compile volume-end endnotes. Endnote numbering resets at each volume boundary. Endnote list ordered by first appearance in text.
 DATE: 2026-03-27 14:00
+
+---
+
+## Audit-Derived Rules (2026-03-27 15:45)
+
+RULE: Endnote Source Citation Protocol — every prescriptive claim in a specification carries [REF:{slug}:{NN}] marker. item-specification-writer must RETRIEVE BPC before writing. Sources-cited table replaces Key citations for new/revised items. BPC Key sources ordering is frozen once REF-IDs are emitted.
+CONDITION: All new and revised item specifications from Phase 3 onward.
+ACTION: Emit REF-IDs inline; emit sources-cited table per item; vol2-item-formatter validates; bibliography-compiler compiles endnotes.
+DATE: 2026-03-27 15:45
+
+RULE: Gap register ID uniqueness — every GAP ID must be unique. Before appending, verify proposed ID does not exist. If collision: suffix -b, -c, etc. Duplicate IDs are an error.
+CONDITION: All gap register writes.
+ACTION: workplan-orchestrator checks uniqueness before PUT. session-consolidator deduplicates on sight.
+DATE: 2026-03-27 15:45
+
+RULE: Versioning policy — Major (X.0) = structural change (new Parts, renaming, volume reorg). Minor (X.Y) = content revision (new items, revised specs, new populations). Patch (X.Y.Z) = editorial/formatting. ToC version tracks independently.
+CONDITION: All version increments.
+ACTION: Apply appropriate increment based on change type.
+DATE: 2026-03-27 15:45
+
+RULE: Flat BPC/SL files frozen — 15 population-level flat files (references/bpc/{POPULATION}.md) are frozen archives. Do not write. New population-level research creates per-slug directory entries. Flat files retained for reference only; not in slug-registry; not returned by CHECK/RETRIEVE.
+CONDITION: All BPC/SL operations.
+ACTION: Never write to flat files. Create new slugs in topic directories for new research.
+DATE: 2026-03-27 15:45
+
+RULE: Connection register disposition lifecycle — PENDING (identified, not consumed) → CONSUMED (incorporated into item spec, record session ref) → DEFERRED (valid but deferred, record reason) → SUPERSEDED → CLOSED. item-specification-writer updates PENDING→CONSUMED. session-consolidator verifies no HIGH/PENDING orphaned at close.
+CONDITION: All connection register entries.
+ACTION: Track disposition. Update on consumption. Verify at session close.
+DATE: 2026-03-27 15:45
+
+RULE: citation-miner is built (skills/citation-miner_SKILL.md on GitHub). Inline citation mining within multilingual-research is fallback only, not default. Call citation-miner skill for systematic backward+forward mining.
+CONDITION: All citation mining operations.
+ACTION: Use citation-miner skill. Inline only if mid-research flow switch would be disruptive.
+DATE: 2026-03-27 15:45
+
+RULE: FDR CONTRADICTS resolution — do not delete original BPC claim. Append [CONTRADICTED BY FDR: {scenario} — {source}]. Route to evidence-auditor for adjudication: (a) original stands with reduced confidence; (b) original replaced; (c) both retained as context-dependent.
+CONDITION: Any functional-deficit-researcher finding that contradicts existing BPC consensus.
+ACTION: Annotate, route to evidence-auditor, record adjudication in BPC bottom-up findings.
+DATE: 2026-03-27 15:45
+
+RULE: Bibliography reconciliation required at assembly — after bibliography-compiler runs, diff output against references/bibliography-v9.md. Flag: NEW-SOURCE (in compiler, not in bibliography-v9), ORPHAN-LEGACY (in bibliography-v9, not in compiler), DOI-MISMATCH. bibliography-compiler output is canonical for Phase 3+ items; bibliography-v9.md is verification reference.
+CONDITION: Every Document Assembly workflow execution.
+ACTION: Run bibliography-reconciliation workflow after bibliography-compiler, before cross-reference-resolver.
+DATE: 2026-03-27 15:45
+
+RULE: Endnote pipeline dry run before Phase 3 — single-item end-to-end test (item-specification-writer → vol2-item-formatter → chunk-assembler → bibliography-compiler → cross-reference-resolver) must pass before any Phase 3 writing session begins.
+CONDITION: Phase 3 gate.
+ACTION: Run dry run. If failure: resolve before proceeding.
+DATE: 2026-03-27 15:45
+
+RULE: Keyword Compendium file identity — the Keyword Compendium referenced in Rule 16 is multilingual-research-protocol-v4-2026-03-18-1.md in project files.
+CONDITION: All multilingual-research runs.
+ACTION: view multilingual-research-protocol-v4-2026-03-18-1.md Part 3 before research.
+DATE: 2026-03-27 15:45
