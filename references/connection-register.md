@@ -1,7 +1,19 @@
 # Connection Register
 
 **Created:** 2026-03-26 18:10  
-**Last updated:** 2026-03-26 20:20
+**Last updated:** 2026-03-27 15:50
+
+**Disposition lifecycle (per project-standards Rule 2026-03-27):**
+
+| Status | Meaning |
+|---|---|
+| PENDING | Identified; not yet consumed by any skill |
+| CONSUMED | Incorporated into item specification (session ref recorded) |
+| DEFERRED | Valid but deferred to future phase (reason recorded) |
+| SUPERSEDED | Overtaken by subsequent research or decision |
+| CLOSED | No action required |
+
+All existing entries: **PENDING** (disposition tracking added 2026-03-27).
 
 ---
 
