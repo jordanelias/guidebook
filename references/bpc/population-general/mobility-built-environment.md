@@ -109,3 +109,34 @@
 **Key finding — SG addendum:** BCA Code 2025 (eff. Nov 2025) incorporates anthropometric data for power WC users and other persons with disabilities — explicit recognition that prior code insufficient for contemporary device footprints. Aligns with IDeA Center 1700-1800mm best-practice tier.
 
 **BE gap:** Tier 5 (Inter Handboek Toegankelijkheid / CAWaB) not retrieved this pass. Co-1 (GRIP) attempted. Tier 5 deferred; GAP-074 remains open for BE Tier 5 only.
+
+---
+## Merged from flat MOB.md — 2026-03-27 (Phase 0R-1)
+*Source: references/bpc/MOB.md § mobility-built-environment Tier 5 & Tier 3 Targeted Retrieval (2026-03-25). Appended here as supplementary retrieval pass.*
+
+**Updated:** 2026-03-25 20:00  **Status:** PROVISIONAL (partial retrieval — GAP-071/073 P2)
+
+### Tier 5 Beyond-Code Sources Retrieved
+
+| Source | Jurisdiction | Tier | Year | Key Content |
+|---|---|---|---|---|
+| Habinteg Inclusive Housing Design Guide | UK | 5 | 2024 | OT-authored (Runnalls/Walker). M4(2)/M4(3). Sensory, cognitive, NDV. DOI:10.4324/9781003564164 |
+| RCOT Adaptations Without Delay | UK | Co-2 | 2019 | OT-driven adaptation framework. 50pp. Being updated as Housing Without Delay (2025+) |
+| Kelsey Inclusive Design Standards | US | 5 | 2023 | 300+ elements, cross-disability, design+operations. Referenced in QAPs |
+| CMHC Universal Design Guide | CA | 5 | 2023 | MURBs. References CSA/ASC B651, B652:23. Complements CAN-ASC-2.8:2025 |
+| LHA Livable Housing Design Guidelines 4th ed. | AU | 5→6 | 2017 | Silver level mandated via ABCB LHDS 2022 under NCC 2022. Gold voluntary |
+
+### Tier 3 Systematic Reviews Retrieved
+
+| Source | Tier | Year | Key Finding |
+|---|---|---|---|
+| Clemson et al. Cochrane CD013258 | 3 | 2023 | Environmental interventions for falls prevention. 22 RCTs, 8463 participants. OT-delivered home hazard reduction: 38% fall reduction (high-risk) |
+| Gillespie et al. Cochrane CD007146 | 3 | 2012 | Broad falls prevention. Home safety: RR 0.81 (rate), RR 0.88 (risk) |
+| Lektip et al. PeerJ 11:e15699 | 3 | 2023 | Home modification SR+MA. 12 RCTs, n=1960. RR 0.93 |
+| Chase et al. AJOT | 1 | 2012 | OT SR on home modification + falls for community-dwelling older adults |
+| Steinfeld/IDeA Center (RESNA) | 4 | 2006 | Wheelchair space requirements international comparison. 180° turn: 2400mm needed (vs 1525mm current standard) |
+
+### Remaining Gaps
+- RHFAC v4.2 detailed criteria (CA): framework confirmed, criteria detail not retrieved
+- JP Housing Performance Indication System Elderly Care Grades 1-5: requires JA-language J-STAGE search
+- No standalone SR on corridor width functional adequacy for power wheelchair users (NO-DATA)
