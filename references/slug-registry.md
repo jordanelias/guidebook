@@ -76,6 +76,8 @@
 
 ---
 
+| `residential-accessible-home-case-studies` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/residential-accessible-home-case-studies.md` | `references/bpc/frameworks-and-methodology/residential-accessible-home-case-studies.md` | ACTIVE |
+
 ## Topic Directory Index
 
 | Directory | Slug count |
