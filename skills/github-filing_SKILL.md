@@ -1,37 +1,56 @@
 ---
 name: github-filing
 description: >
-  Move stale or superseded files to a designated deprecated/ subdirectory within the same
-  GitHub directory. Trigger on: "file into deprecated", "move to deprecated", "archive workplan",
-  "outdated workplan", "clean up workplan folder", "file stale files", or any instruction to
-  deprecate/archive GitHub files within this project. Operates on any directory; workplan/
-  is the primary use case. Determines the current active file, moves all others to deprecated/.
+  Move stale or superseded files to a deprecated/ subdirectory within the same GitHub directory.
+  Applies to any watched directory when a new file is committed that supersedes prior versions.
+  Trigger on: "file into deprecated", "move to deprecated", "archive stale files", "clean up
+  [directory]", any instruction to deprecate/archive GitHub files, or automatically when
+  workplan-orchestrator or session-consolidator detect >1 active file in a watched directory.
 ---
 
-**Model:** Haiku (mechanical file operations, no judgment required)
-**Pattern:** GET source → PUT to target path (sha=None for new) → DELETE source → repeat
+**Model:** Haiku (mechanical file operations; no judgment required)
+**Pattern:** GET source → PUT to target deprecated/ path → DELETE source → repeat
+
+---
+
+## Watched Directories
+
+These directories are subject to automatic filing when >1 non-deprecated file is present:
+
+| Directory | Active file rule |
+|---|---|
+| `workplan/` | Highest version number by filename |
+| `versions/current/` | Most recent by filename date |
+| `skills/` | All current `_SKILL.md` files are active; deprecated skills are explicitly named by the committer |
+
+**Not watched** (accumulative — all files are permanent records):
+- `sessions/` · `references/change-orders/` · `references/search-log/` · `references/bpc/`
+
+**Trigger condition:** a new file was committed to a watched directory this session, OR >1 non-deprecated file is detected at session open/close.
 
 ---
 
 ## Protocol
 
 ### 1. Identify files to file
-- List the target directory (e.g. `workplan/`).
-- Identify the current active file (highest version number, latest date, or as directed).
-- All other non-directory files → move to `deprecated/` subdirectory.
-- Never touch files already in `deprecated/`.
-- Never move directories.
+- List the target directory.
+- Identify the active file per the directory's active file rule (above), or as directed by the caller.
+- All other non-directory files → candidates for `deprecated/` subdirectory.
+- Skip files already in `deprecated/`.
+- Skip directory entries.
+- Skip files explicitly marked as permanent by the caller.
 
-### 2. For each file to move:
+### 2. For each candidate file:
 
 **Step A — GET source**
 ```python
 content, sha = github_get(source_path, PAT)
+# e.g. source_path = "workplan/v10-2-integrated.md"
 ```
 
 **Step B — PUT to deprecated/**
 ```python
-# Check if target already exists first; skip if so.
+# target_path e.g. "workplan/deprecated/v10-2-integrated.md"
 existing, _ = github_get(target_path, PAT)
 if existing is None:
     github_put(
@@ -41,6 +60,7 @@ if existing is None:
         commit_message=f"github-filing: archive {filename} [YYYY-MM-DD HH:MM]",
         pat=PAT
     )
+# If existing is not None: already archived — skip to Step C (still delete source).
 ```
 
 **Step C — DELETE source**
@@ -62,16 +82,17 @@ def github_delete(path, sha, commit_message, pat):
 ```
 
 ### 3. Output
-After all moves, list:
-- **Kept:** [filename] — active version
+Report inline after completion:
+- **Kept:** [filename] — reason (active version / permanent)
 - **Archived:** [filename list]
-- **Skipped:** [filename list] — already in deprecated or is a directory
+- **Skipped:** [filename list] — reason
 
 ### Commit message format
 `github-filing: archive {filename} [YYYY-MM-DD HH:MM]`
 
 ### Error handling
-- 409 on PUT: re-GET sha, retry once.
-- File already in deprecated: skip silently, list under Skipped.
+- 409 on PUT: re-GET SHA, retry once.
+- File already in deprecated: skip PUT, still DELETE source if present there.
 - Directory entries: skip silently.
-- Any failure: report file name + HTTP status; continue with remaining files.
+- Any failure: report filename + HTTP status; continue with remaining files.
+- Never abort mid-run — process all candidates before reporting errors.
