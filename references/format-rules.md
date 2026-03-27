@@ -99,6 +99,14 @@ Every prescriptive claim must carry one of:
 - `[THIN BASE — <3 studies]` — insufficient evidence
 - `[SYSTEMIC GAP — {description}]` — gap across all jurisdictions searched
 
+### 4.2 Evidence Quality Markers
+Inline markers appended to prescriptive claims to indicate evidence quality at a glance:
+- `●` — confirmed evidence base (Tiers 1–4, Co-1, Co-2/CPG)
+- `◐` — policy or standards basis only, not primary evidence (Tiers 5–6)
+- `○` — grey literature, expert consensus only, thin base, or unconfirmed (Tier 7, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`)
+
+Usage: append after the closing punctuation of the claim — e.g. `The corridor to be 1200 mm minimum.●`
+
 ### 4.2 Population-Specific Disclosure Requirements
 - PAIN and OFS items: mandatory expert consensus disclosure note (full text per project-standards.md)
 - DBL room matrix additions: `[EXPERT CONSENSUS — no standard; March 2026]`
