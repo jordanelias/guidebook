@@ -2,7 +2,7 @@
 **Topic:** frameworks-and-methodology
 **Population codes:** MOB / OFS / PAIN / NDV/MH / ALL
 **Status:** PARTIAL — research in progress (sessions 2026-03-27 to 2026-03-28; continuation required)
-**Last updated:** 2026-03-28 00:30
+**Last updated:** 2026-03-28 00:45
 
 ## Scope
 Purpose-built accessible homes, home modification programmes with documented disability outcomes, OT-assessed residential adaptation studies, wheelchair standard housing, specialist disability accommodation (SDA), adaptable housing programmes. Residential settings only.
@@ -248,6 +248,36 @@ Source: Bundesfachstelle Barrierefreiheit (2024). Fachkonferenz Mehr barrierefre
 Content: Good practice examples from across Bundesländer. Full examples NOT EXTRACTED — conference documentation referenced but not retrieved.
 [GAP: Bundesfachstelle good practice examples require targeted retrieval — flagged for continuation session]
 Evidence quality: Tier 5 grey. Evidence marker: ○
+
+---
+
+
+### Ireland [Co-1 / Tier 2 — THIN (new)]
+
+**ILMI / Inclusion Ireland — "Our Housing Rights" (2021)**
+Source: ILMI / Inclusion Ireland (2021). Our Housing Rights: Tackling the Housing Crisis Disabled People Face. ilmi.ie. [Co-1 / Tier 2]
+Populations: ALL (cross-impairment)
+Design: 6 focus groups with disabled people and family members. Cross-impairment consultation.
+Key findings: "It's not just about the house and four walls" — support packages needed alongside accessible housing. Catch-22 between housing and supports. No formal application process for independent living supports. No consistency between HSE areas. 2,000 people still in congregated settings (Disability Capacity Review 2021).
+Evidence quality: Co-1 lived experience + Tier 2 advocacy. Evidence marker: ○
+
+**CIB/DFI — "The Right Home" (2022)**
+Source: CIB / DFI (2022). The Right Home: the Housing Needs of People with Disabilities. disability-federation.ie. [Tier 2]
+Key data: Part M Building Regulations provide only "visitable" not "liveable" standard. Inadequate Housing Adaptation Grants. "Crisis within a crisis." Recommendations: rights-based perspective, stronger inter-agency collaboration, involvement of advocacy supports.
+Evidence quality: Tier 2 policy research. Evidence marker: ○
+
+**Housing Strategy for Disabled People 2022-2027**
+Source: Government of Ireland (2022). National Housing Strategy for Disabled People 2022-2027. [Tier 5]
+Themes: Accessible housing and communities; interagency collaboration; affordability; communication; knowledge/capacity; strategy alignment.
+Housing and Disability Steering Groups (HDSGs) at local authority level. ILMI engaged in HDSG structures.
+Evidence quality: Tier 5 national strategy. Evidence marker: ◐
+
+**IN-HABIT EU Project (2025–ongoing)**
+Source: DFI (2025). IN-HABIT: EU Housing Project. disability-federation.ie. [Tier 2]
+EU-wide inclusive housing project (5 countries). Skills gap identification, good practice collection, digital orientation hub (MyService), MOOC, local piloting in Ireland.
+Evidence quality: Tier 2 EU programme. Evidence marker: ○
+
+No building-level case study with disability outcome data found for Ireland.
 
 ---
 
