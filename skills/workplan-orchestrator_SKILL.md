@@ -30,7 +30,13 @@ GET `gap_register.md`. Extract OPEN P1 items. Surface to user if any; otherwise 
 ### 3 — Load project standards
 GET `references/project-standards.md`. Load rules into active context.
 
-### 4 — Confirm PAT
+### 4 — File stale workplans
+GET `workplan/` directory listing.
+Count non-directory files not in `workplan/deprecated/`.
+- **Count = 1:** proceed silently.
+- **Count > 1:** invoke `github-filing` on `workplan/` before continuing. Active file = highest version number by filename. Do not prompt user — file automatically and report result inline.
+
+### 5 — Confirm PAT
 If PAT not yet provided: prompt user. Do not proceed without it.
 
 **Skip condition:** "fast-track" or "go" skips user confirmation at Task Intake only. Protocol still runs.
