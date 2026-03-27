@@ -614,3 +614,24 @@ RULE: Model gating and handoff — Haiku tasks in a Sonnet session.
 CONDITION: Any task assigned to Haiku in the skill registry (chunking, renumbering, formatting checks, evidence-tier markers, table repair, line-level extraction).
 ACTION: Call claude-haiku-4-5-20251001 via inline Artifact API call. Do not switch conversations. NEVER silently run Haiku-designated tasks in Sonnet when the task volume justifies the efficiency gain.
 DATE: 2026-03-27 17:30
+
+
+RULE: Single-population case studies are in scope for the case-study-compendium.md
+CONDITION: When identifying or entering case studies for the compendium.
+ACTION: Do not exclude a case study solely because it serves a single population. Single-population cases that document design intent, built environment features, and outcomes are valid compendium entries and may inform best practice across populations.
+DATE: 2026-03-27 22:10
+
+RULE: Case study deduplication requires checking name variants, date variants, and building vs programme level before declaring a duplicate.
+CONDITION: When auditing the compendium for duplicates.
+ACTION: (1) Check if two entries reference the same physical building OR the same campus-wide programme — these may legitimately be distinct (e.g. Gallaudet DeafSpace Campus vs SLCC). (2) Check if date differences reflect study publication year vs building opening year — these are the same case study. (3) Check if name variants are translations or shortened forms of the same project (e.g. Village Landais = Village Landais Alzheimer). Only flag as duplicate if they are the same physical space and same study. Record audit outcome in compendium progress notes.
+DATE: 2026-03-27 22:10
+
+RULE: Residential-scale programme evidence (e.g. CAPABLE, DFG, BATH-OUT) enters the compendium using programme-level entries, not building-level entries.
+CONDITION: When entering residential case studies that are multi-site programmes rather than single buildings.
+ACTION: Use `building_type = Residential (existing homes; programme analysis)` or similar. Set `outcome_data` to the published programme results. Note that financial data and ROI is programme-level, not single-unit. These entries are still valid for Part 12 economics and Part 5 residential design matrices.
+DATE: 2026-03-27 22:10
+
+RULE: VIS and PAIN/OFS purpose-built/adapted environment case studies are a confirmed global evidence gap as of 2026-03-27.
+CONDITION: When claiming or searching for case studies in these populations.
+ACTION: No purpose-built or home-modified environment case study with published outcome data has been found for VIS or PAIN/OFS populations after a full 9-jurisdiction multilingual research pass. Log as KNOWN-LIMITATION in any section that would cite such evidence. Do not speculate or extrapolate from institutional DEM or MOB cases.
+DATE: 2026-03-27 22:10
