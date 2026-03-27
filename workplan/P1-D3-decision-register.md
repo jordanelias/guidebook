@@ -3,7 +3,7 @@
 
 **Session:** Phase 1 Session 3
 **Date:** 2026-03-27
-**Status:** DRAFT — requires author approval before any Phase 2 work begins.
+**Status:** APPROVED — author approved all decisions 2026-03-27.
 **Basis:** v9.0 parts 7–14 · D1-29–D1-34 (Part 8 scope) · DEC-08–DEC-21 · Connection Register · Gap Register · Workplan v10.2 · Critique Report v9.0
 
 ---
