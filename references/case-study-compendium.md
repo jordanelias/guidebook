@@ -647,6 +647,154 @@ Per-entry fields:
 
 ---
 
+
+
+---
+
+## Residential-Scale Case Studies (Session 4 Research Pass — 2026-03-27 22:00)
+
+*Note: these are programme-level and research-study residential cases, not single-building institutional settings. Single-family homes, home adaptations, purpose-built accessible housing.*
+
+---
+
+### CS-22 — CAPABLE Programme (US, Multi-Site)
+
+| Field | Data |
+|---|---|
+| id | CS-22 |
+| name | CAPABLE — Community Aging in Place, Advancing Better Living for Elders |
+| location | Baltimore, Maryland, USA (original); replicated across 12 US sites |
+| year | 2011 (pilot); 2019 (definitive RCT); 2021 (multi-site synthesis) |
+| populations_served | MOB · OFS · PAIN · ALL (low-income older adults with disability; primarily Black, female, urban) |
+| design_intent | OT + nurse + handyperson interdisciplinary residential programme. Environmental modifications + clinical support to reduce disability and support independent living in own home. |
+| building_type | Residential (individual existing homes; adapted in situ) |
+| outcome_data | **Definitive RCT (Szanton et al. 2019, JAMA Intern Med 179(2):204-211, PMID 30615024, DOI 10.1001/jamainternmed.2018.6026):** n=300. 30% reduction in ADL disability at 5 months (RR 0.70, 95% CI 0.54-0.93, p=0.01). **Multi-site synthesis (Szanton et al. 2021, J Am Geriatr Soc, PMID 34314516):** 6 trials, 1,087 participants, 12 US sites. All six studies: improved ADL and IADL limitations, effect sizes 0.41–1.47 (moderate to very strong). Falls efficacy improved in 4/4 studies reporting it. Depression improved in 3 studies. Pain results mixed. **Medicaid dissemination study (PMID 30548594):** ADL improvement p=0.01; IADL improvement p<0.01; falls reduced 14% (p<0.01); hospitalizations reduced (p=0.03). [Tier 1 — multiple RCTs; PubMed-confirmed] |
+| conflict_documented | NO — single-programme residential modification. |
+| failure_notes | Shorter doses of CAPABLE (reduced visits) showed smaller effects. ADL measurement inconsistent across sites. |
+| construction_cost | Per-participant cost: ~$2,825 (2019 RCT); average home modifications ~$700–$1,400 per participant. [VERIFIED — published cost data] |
+| accessible_design_premium | ~$700–$1,400 per home for modifications |
+| funding_sources | CMMI Center for Medicare and Medicaid Services Innovation; NCHH National Center for Healthy Housing; Medicaid waiver programmes; Johns Hopkins |
+| operational_cost_change | Medicaid study: hospitalizations reduced (0.43 → 0.23/year, p=0.03) = direct cost saving |
+| remediation_cost | N/A |
+| roi_data | Published cost modelling: programme cost ~$2,825 produces ~$10,000–$22,000 savings to Medicare/Medicaid [PROVISIONAL — modelled estimate] |
+| financial_evidence_tier | Tier 1 (published in peer-reviewed trial with cost data) |
+| financial_data_quality | VERIFIED (trial cost data) / PROVISIONAL (ROI modelling) |
+| evidence_contribution | Strongest residential-scale OT-delivered home modification programme with clinical outcomes. Definitive RCT + 5 replications. Directly supports Part 5 (residential application matrices), Part 12 (economics of accessible construction), and BC HAFI comparator for CS-14. MOB, PAIN, OFS populations. |
+| part13_status | CANDIDATE |
+| sources | Szanton SL et al. (2019). JAMA Intern Med 179(2):204-211. PMID 30615024. DOI 10.1001/jamainternmed.2018.6026. Szanton SL et al. (2021). J Am Geriatr Soc. PMID 34314516. Breysse et al. (2019). J Am Geriatr Soc. PMID 30548594. Based on articles retrieved from PubMed. |
+
+---
+
+### CS-23 — LSE/Habinteg Wheelchair User Homes Cost-Benefit Study (UK, 2023)
+
+| Field | Data |
+|---|---|
+| id | CS-23 |
+| name | Living Not Existing: The Social and Economic Value of Wheelchair User Homes |
+| location | UK (national cost-benefit analysis; 17 qualitative interviews with wheelchair users) |
+| year | 2023 |
+| populations_served | MOB (wheelchair users — working age, older age, households with disabled children) |
+| design_intent | Cost-benefit modelling of new-build wheelchair user homes (M4(3) standard) vs accessible and adaptable standard (M4(2)) |
+| building_type | Residential (new build; programme analysis not single building) |
+| outcome_data | LSE Housing and Communities / Habinteg (2023). CASEreport 147. Cost-benefit analysis based on published evidence. Key findings: working-age wheelchair user benefit ~£94,000 over 10 years vs ~£22,000 additional build cost = 4:1 benefit-cost ratio. Annual local authority savings: ~£4,800 (working age) to ~£9,200 (later years) per wheelchair user household. Qualitative: 17 interviews — improved independence, ADL capacity, employment, family cohesion, mental wellbeing, community engagement documented. [Tier 2 — published cost-benefit model; Co-1 interview evidence] |
+| conflict_documented | NO |
+| failure_notes | ~400,000 wheelchair users in UK estimated to live in unsuitable accommodation. 20,000 on waiting lists for wheelchair user homes. |
+| construction_cost | M4(3) wheelchair user standard: ~£22,000 additional build cost vs M4(2) standard (2021-22 prices) [VERIFIED — from Ministry of Housing data cited in report] |
+| accessible_design_premium | ~£22,000 per unit above M4(2) baseline [VERIFIED] |
+| funding_sources | Habinteg Housing Association (commissioned); LSE |
+| operational_cost_change | Local authority savings: £4,800–£9,200/year per household [PROVISIONAL — modelled] |
+| remediation_cost | N/A (preventative cost-benefit; remediation cost of inaccessible housing documented qualitatively) |
+| roi_data | 2.5–5× return on additional build cost within 10 years [PROVISIONAL — modelled from published evidence base] |
+| financial_evidence_tier | Tier 2 (published cost-benefit model with named evidence sources) |
+| financial_data_quality | VERIFIED (build cost) / PROVISIONAL (savings modelling) |
+| evidence_contribution | Best available UK cost-benefit evidence for wheelchair accessible residential design. Provides £22,000 premium figure and £94,000 benefit figure for Part 12 economics. Co-1 qualitative evidence from 17 wheelchair users. Supports economic case for M4(3) residential standard. |
+| part13_status | CANDIDATE |
+| sources | Provan B, Lane L, Horne Rowan J (2023). CASEreport 147. LSE Housing and Communities / Habinteg. eprints.lse.ac.uk/121508. Habinteg (2023). Living Not Existing summary report. |
+
+---
+
+### CS-24 — BATH-OUT Bathing Adaptation RCT (UK, 2016–2024)
+
+| Field | Data |
+|---|---|
+| id | CS-24 |
+| name | BATH-OUT: Bathing Adaptations in the Homes of Older Adults |
+| location | England, UK (multi-centre) |
+| year | 2016 (BATH-OUT-1 feasibility); 2024 (BATH-OUT-2 RCT protocol published) |
+| populations_served | MOB · OFS (older adults with bathing disability; 60+) |
+| design_intent | OT-assessed provision of accessible level-access shower in existing homes (local authority DFG-delivered) vs usual care waiting list |
+| building_type | Residential (existing homes; single accessible bathroom adaptation) |
+| outcome_data | BATH-OUT-2 RCT protocol published (PMID 38254164, DOI 10.1186/s13063-023-07677-3, 2024). Primary outcome: SF-36 Physical Component Summary 4 weeks post-shower installation. Secondary: SF-36 Mental Component Summary, falls, health and social care resource use, QoL. BATH-OUT-1 feasibility RCT (Whitehead et al. 2018): feasibility confirmed; accessible shower provision improved bathroom safety and QoL in qualitative analysis. [Tier 1 RCT protocol — results pending full publication] |
+| conflict_documented | NO |
+| failure_notes | Feasibility study documented: long waiting times for DFG provision in usual care — waiting is itself a harmful outcome. |
+| construction_cost | Level-access shower installation: typically £1,000–£8,000 in DFG context [PROVISIONAL — DFG data] |
+| accessible_design_premium | £1,000–£8,000 for single bathroom adaptation [PROVISIONAL] |
+| funding_sources | UK NIHR (National Institute for Health Research) |
+| operational_cost_change | Not yet documented from full RCT |
+| remediation_cost | Waiting time harm quantified as secondary objective of BATH-OUT-2 |
+| roi_data | Not yet documented |
+| financial_evidence_tier | Tier 5 (DFG programme data for cost reference) |
+| financial_data_quality | PROVISIONAL |
+| evidence_contribution | Only RCT of a specific single-room residential adaptation (bathroom/shower) with physical wellbeing as primary outcome. OT-assessed and delivered. Directly supports Part 5 (residential room matrices: bathroom) and Part 12 (economics: single adaptation cost). |
+| part13_status | CANDIDATE |
+| sources | Whitehead PJ et al. (2024). Trials. PMID 38254164. DOI: 10.1186/s13063-023-07677-3. Based on articles retrieved from PubMed. Whitehead P, Golding-Day M (2019). BATH-OUT-1 qualitative. Disabil Rehabil. |
+
+---
+
+### CS-25 — UK Disabled Facilities Grant (DFG) Programme
+
+| Field | Data |
+|---|---|
+| id | CS-25 |
+| name | UK Disabled Facilities Grant (DFG) / Better Care Fund Home Adaptations Programme |
+| location | England, Wales, Northern Ireland, UK |
+| year | 1996 (statutory origin); current budget £573M (2023/24) |
+| populations_served | MOB · DEM · VIS · ALL (any disabled person in own home; OT-assessed) |
+| design_intent | Statutory residential adaptation grant; OT-assessed; £30,000 maximum; mandatory if eligible |
+| building_type | Residential (existing homes; all adaptation types: ramps, wet rooms, stair lifts, grab bars, widened doorways, kitchen adaptations) |
+| outcome_data | Independent DFG Review (2018, UK DHSC): "robust research beginning to show adaptations improve physical and mental wellbeing and reduce fear of falling." BRE cost-benefit modelling: adaptations produce savings through delayed residential care. Age UK (2023): walk-in shower installation documented "went way beyond ability to wash easily — gave autonomy and confidence with wider implications for participation." 53% of UK households needing adaptations do not have all they need (English Housing Survey 2019-20). [Tier 5 — government programme review; Tier 2 for individual outcome studies cited within] |
+| conflict_documented | NO (single-occupant adaptations; no cross-population conflict documented) |
+| failure_notes | Long waiting times documented nationally; 2018 review found 53% increase in unmet need. Administration described as "clunky" by Parliamentary committee. Means test creates access barriers. Private tenants systematically disadvantaged. |
+| construction_cost | £1–£30,000 per adaptation (max grant £30,000 England, £36,000 Wales); £573M national budget 2023/24 [VERIFIED — statutory] |
+| accessible_design_premium | Not applicable (existing housing modification) |
+| funding_sources | Better Care Fund (pooled NHS England + local authority); central government |
+| operational_cost_change | DFG avoids/delays residential care: £39,520/year residential care cost vs £13,200/year home care avoided [PROVISIONAL — BRE modelling cited in review] |
+| remediation_cost | N/A |
+| roi_data | Home adaptations produce "strong improvements" across cost-benefit metrics (Foundations, 2015). DFG produces savings even evaluating only subset of benefit types. [PROVISIONAL — modelled] |
+| financial_evidence_tier | Tier 6 (statutory programme); Tier 2 for modelled economics |
+| financial_data_quality | VERIFIED (statutory budget figures) / PROVISIONAL (cost-benefit models) |
+| evidence_contribution | Largest residential adaptation programme in scope. £573M/year, £30,000 max grant, OT-assessed. UK comparator for BC HAFI (CS-14, Canada). Provides DFG cost benchmarks for Part 12. Documents programme-level failure/waiting time evidence for §8.5 or Part 13 methodology note. |
+| part13_status | CANDIDATE |
+| sources | DHSC (2018). Independent DFG Review. Foundations / DFG Evidence library. Age UK (2023). DFG Step Change report. House of Commons Library (2024, SN03011). UK DFG Guidance (2022). |
+
+---
+
+### CS-26 — Petersson et al. Swedish Housing Adaptation OT Outcome Study
+
+| Field | Data |
+|---|---|
+| id | CS-26 |
+| name | Swedish OT Housing Adaptation Outcome Study (Petersson et al.) |
+| location | Sweden (multiple municipalities) |
+| year | 2008 (primary study); 2009 (follow-up) |
+| populations_served | MOB · OFS (older adults and adults with functional limitations; municipal housing adaptation programme) |
+| design_intent | OT-assessed and delivered housing adaptations in existing homes; compared to wait-list control |
+| building_type | Residential (existing homes; OT-prescribed modifications) |
+| outcome_data | Petersson, Lilja, Hammel, and Kottorp (2008, Level II): significant improvement in self-rated daily activity performance compared with wait-list control. Petersson, Kottorp, Bergström and Lilja (2009): participants who received home modifications experienced fewer difficulties performing daily activities. Swedish Housing Enabler (Iwarsson & Slaug 2001): validated OT assessment tool; inter-rater reliability confirmed across Nordic countries (Helle et al. 2010, Scandinavian Journal of OT). Slaug et al. (2025, PMC): citizen science housing study — substantial accessibility barriers confirmed in Swedish housing stock. [Tier 2 — quasi-experimental with wait-list control] |
+| conflict_documented | NO |
+| failure_notes | Swedish government investigation (2015) found no evidence that recommended accessibility upgrade measures had come into effect. Slaug et al. 2025: accessibility problems persist 30 years after being first documented. |
+| construction_cost | Municipal programme; individual adaptation costs not isolated [GREY] |
+| accessible_design_premium | Not isolated |
+| funding_sources | Swedish municipalities; research grants |
+| operational_cost_change | Not documented |
+| remediation_cost | Not documented |
+| roi_data | Not documented |
+| financial_evidence_tier | GREY |
+| financial_data_quality | GREY |
+| evidence_contribution | Nordic jurisdiction OT housing adaptation evidence. Tier 2 with wait-list control. Introduces SE jurisdiction. Housing Enabler is a key assessment tool for residential accessibility. |
+| part13_status | CANDIDATE |
+| sources | Petersson I et al. (2008). OTJR. Level II. Petersson I et al. (2009). Disabil Rehabil. Iwarsson S, Slaug B (2001). Housing Enabler. Slaug B et al. (2025). SAGE Open Med. PMC article. |
+
 ## Progress Notes (Updated)
 
 **Session 4 research pass complete (2026-03-27 21:30):**
