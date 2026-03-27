@@ -1,6 +1,6 @@
 slug: residential-accessible-home-case-studies
 query: "accessible residential home case studies disability outcome"
-last_searched: 2026-03-28 00:30
+last_searched: 2026-03-28 00:45
 status: PARTIAL
 early_close_triggered: false
 
@@ -37,7 +37,7 @@ co1_attempted:
   AT: false
   CH: false
   BE: true
-  IE: false
+  IE: true
   NZ: false
   SG: false
   JP: partial
@@ -79,7 +79,7 @@ tier5_attempted:
   ISO: false
 
 citation_mining_attempted: false
-co1_pass_summary: "UK (Habinteg Co-1 + SCIE CLEAN); AU (Summer Foundation Co-1 CLEAN); FR (hapi impact study + Unaf survey CLEAN); NL (Ieder(in)/Woonbond survey CLEAN); BE (GRIP Inclusiespiegel PARTIAL); US (Kelsey Ayer Station Co-1 CLEAN); JP (BMC ageing studies PARTIAL); SE/NO (regulatory only, no Co-1 case study)"
+co1_pass_summary: "UK (Habinteg Co-1 + SCIE CLEAN); AU (Summer Foundation Co-1 CLEAN); FR (hapi impact study + Unaf survey CLEAN); NL (Ieder(in)/Woonbond survey CLEAN); BE (GRIP Inclusiespiegel PARTIAL); US (Kelsey Ayer Station Co-1 CLEAN); JP (BMC ageing studies PARTIAL); SE/NO (regulatory only, no Co-1 case study); IE (ILMI/DFI advocacy, no case study)"
 best_practice_synthesis: PENDING — Opus synthesis not yet run
 
 jurisdiction_coverage:
@@ -88,7 +88,7 @@ jurisdiction_coverage:
   UK: SEARCHED — Habinteg Co-1 + SCIE case study (Leeds wheelchair bungalow, outcomes documented); Upper Butts/Hounslow (M4(3) scheme, 2024-25); Habinteg Forecast 2025 (311 plans); Habinteg/RIBA Inclusive Housing Design Guide (2024, authored by specialist housing OTs); Habinteg M4(1)→M4(2) cost data (£27,000 per household). Strong Co-1 + Co-2 + Tier 2. [COMPLETE for Co-1/Tier 2]
   AU: SEARCHED — Summer Foundation SDA/NDIS programme (>2,000 SDA apartments); Winkler, D'Cruz, Douglas et al. (2024, BMJ Open) qualitative outcomes; Tenant Outcomes Framework validated; NCC 2022 LHA Silver standard advocacy; Winkler et al. (2024) design/construction sector qualitative study. Strong Co-1 + Tier 1/2. Key finding: support quality > built environment quality for tenant QoL. [COMPLETE for Co-1/Tier 1-2]
   NZ: NOT STARTED
-  IE: NOT STARTED
+  IE: SEARCHED — ILMI/Inclusion Ireland 'Our Housing Rights' (2021, 6 focus groups); DFI/CIB 'The Right Home' (2022, social policy report); Housing Strategy for Disabled People 2022-2027; Part M Building Regulations (visitable only). 2,000 people in congregated settings. IN-HABIT EU project (DFI partner). No building-level case study. [THIN-BASE — advocacy/policy only]
   DE: SEARCHED — Statistisches Bundesamt Mikrozensus 2018/2022 (only 2% of housing stock barrier-free); bpb.de Sozialbericht 2024; Bundesfachstelle conference Feb 2024 (good practice examples, not extracted); bfb-Trendstudie 2019. No single building case study with disability outcome data found. [THIN-BASE — statistical/policy only]
   AT: PARTIAL — Statistik Austria 2024 (46% of disabled people cannot perform IADL independently; housing tenure data). No case study. [THIN-BASE]
   CH: NOT STARTED
