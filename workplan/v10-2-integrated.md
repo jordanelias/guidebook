@@ -627,7 +627,7 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 
 | Session | Phase | Work |
 |---|---|---|
-| 1 | 0R | Reconciliation: slug migration, skill inventory, gap triage, github-io verification |
+| ~~1~~ | ~~0R~~ | ~~Reconciliation: slug migration, skill inventory, gap triage, github-io verification~~ |
 | 2 | P1 | Editorial: Parts 4–7 — **item consolidation gate** |
 | 3 | P1 | Editorial: Parts 8–13 + Appendices — **Decision Register complete** |
 | 4 | P2A | Pre-v4 slug triage (51 slugs) + case study evidence mining (14 studies) + post-decision gap triage |
@@ -658,7 +658,7 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 
 | Audit rec. | ID | Implementation | Session | Status |
 |---|---|---|---|---|
-| Reconcile skill inventory | §1.1a–c | Phase 0R reconciliation | 1 | PENDING |
+| Reconcile skill inventory | §1.1a–c | Phase 0R reconciliation | 1 | ~~DONE 0R~~ |
 | Build 6 missing skills | §1.2a | Phase 0 | — | **DONE** (all 6 built) |
 | Update 10 skills | §1.3a | Phase 0 + Phase 0R verification | 1 | PARTIAL — verify in 0R |
 | Add P1 gap for Co-2 | §4.1a | Phase 0R gap triage | 1 | PENDING |
@@ -666,16 +666,16 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 | Protect cross-population content | §5.2 | Part 8 dedicated part | 3, 17 | Part 8 scope confirmed (D1-29–34) |
 | Resolve ●/○ ambiguity | §4.2a | P1-D2 notation guide decision | 2 | PENDING |
 | Pre-v4 slug triage | §5.1 | Phase 2A | 4 | PENDING |
-| Fix duplicate slugs | §2.2a | Phase 0R slug migration | 1 | PENDING |
-| Enforce slug naming | §2.2b | Phase 0R slug migration | 1 | PENDING |
+| Fix duplicate slugs | §2.2a | Phase 0R slug migration | 1 | ~~DONE 0R~~ |
+| Enforce slug naming | §2.2b | Phase 0R slug migration | 1 | ~~DONE 0R~~ |
 | Mine case studies for evidence | §5.4 | Phase 2A evidence mining | 4 | PENDING |
 | BPC↔Item mapping | §5.5 | Phase 3 item writing | 15–16 | PENDING |
 | Backfill pre-v4 slugs | §2.1 | Phase 0R migration + Phase 2B CONSUME | 1, 5 | PARTIAL (migration Phase 0R; metadata Phase 2B) |
 | Strengthen residential primacy | §5.6 | Phase 3 Part 1 writing | 10 | PENDING |
-| Migrate BPC/SL storage | (new) | Phase 0R | 1 | PENDING |
-| Build connection-scout SKILL.md | (new) | Phase 0R | 1 | PENDING |
-| Dispose keyword-lookup | (new) | Phase 0R | 1 | PENDING |
-| Verify working doc persistence | (new) | Phase 0R | 1 | Rule exists; verify enforcement |
+| Migrate BPC/SL storage | (new) | Phase 0R | 1 | ~~DONE 0R~~ |
+| Build connection-scout SKILL.md | (new) | Phase 0R | 1 | ~~DONE 0R~~ |
+| Dispose keyword-lookup | (new) | Phase 0R | 1 | ~~DONE 0R~~ |
+| Verify working doc persistence | (new) | Phase 0R | 1 | ~~DONE 0R — rule confirmed~~ |
 
 ---
 
