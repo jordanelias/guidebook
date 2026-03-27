@@ -520,3 +520,8 @@ RULE: keyword-lookup is DEPRECATED. Functionality subsumed by multilingual-resea
 CONDITION: Any reference to keyword-lookup or native-language keyword lookup.
 ACTION: Use multilingual-research Rule 16 protocol instead. Do not invoke keyword-lookup.
 DATE: 2026-03-26 19:15
+
+RULE: Evidence Priority and Source Propagation. (a) When any writing or specification skill receives both curated BPC content and raw search/session outputs, the BPC best_practice_synthesis field governs as the primary evidence basis. Raw search results may supplement but never override BPC synthesis. If raw results contradict BPC synthesis, flag as CONTRADICTION and route to evidence-auditor — do not silently prefer the raw result. (b) Every source cited in a specification, practice note, or guidebook section must propagate to: (i) an in-text superscript endnote marker, and (ii) a corresponding entry in the volume-end endnote list. item-specification-writer outputs a sources-cited block per item using REF-ID markers. bibliography-compiler collects, deduplicates, assigns sequential endnote numbers per volume, replaces REF-ID markers with superscripts, and generates the endnote list. No source may appear in text without an endnote entry; no endnote entry may exist without an in-text citation.
+CONDITION: All writing, specification, and assembly workflows. All item-specification-writer, chunk-assembler, and bibliography-compiler runs.
+ACTION: (a) Prefer BPC synthesis; flag contradictions. (b) item-specification-writer emits REF-ID markers and sources-cited blocks. bibliography-compiler runs at assembly to compile volume-end endnotes. Endnote numbering resets at each volume boundary. Endnote list ordered by first appearance in text.
+DATE: 2026-03-27 14:00
