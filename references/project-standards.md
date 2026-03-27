@@ -604,3 +604,13 @@ RULE: SUPERSEDED — Rule 90 (skills not in /mnt/project/ GET from GitHub) is su
 CONDITION: All prior rules about skill file locations.
 ACTION: Ignore Rules 37, 48, 49, 90. GitHub is the single source for all skills.
 DATE: 2026-03-27 17:30
+
+RULE: Model gating and handoff — Opus tasks in a Sonnet session.
+CONDITION: Any task assigned to Opus in the skill registry or model role table (best-practice determination, evidence synthesis, evidence arbitration, connection-scout judgment, FDR synthesis).
+ACTION: Two mechanisms based on task scope. (A) BOUNDED OPUS TASK — single synthesis, one best-practice determination, one evidence arbitration: call claude-opus-4-6 via inline Artifact API call. Do not switch conversations. (B) EXTENDED OPUS SESSION — multi-topic adjudication, full connection-scout run, complex FDR synthesis requiring iterative reasoning: checkpoint state to GitHub, invoke session-consolidator, instruct user to open new conversation with Opus model, pass handoff brief. NEVER silently degrade an Opus task to Sonnet. If scope is ambiguous, flag to user before proceeding.
+DATE: 2026-03-27 17:30
+
+RULE: Model gating and handoff — Haiku tasks in a Sonnet session.
+CONDITION: Any task assigned to Haiku in the skill registry (chunking, renumbering, formatting checks, evidence-tier markers, table repair, line-level extraction).
+ACTION: Call claude-haiku-4-5-20251001 via inline Artifact API call. Do not switch conversations. NEVER silently run Haiku-designated tasks in Sonnet when the task volume justifies the efficiency gain.
+DATE: 2026-03-27 17:30
