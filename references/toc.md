@@ -1,13 +1,13 @@
 # Guidebook for Accessible Design — Table of Contents
-**Version:** 8.9.2 **Date:** 2026-03-28 21:30
-**Change Order:** CO-0003-2026-03-28-2130
+**Version:** 8.9.3 **Date:** 2026-03-29 00:00
+**Change Order:** CO-0004-2026-03-29-0000
 
 ---
 
 ## Front Matter
 
 - About This Guidebook
-- Three-Volume Structure
+- Two-Volume Structure
 - Companion Volumes
 - Reading Paths
 - Part and Section Map
@@ -16,7 +16,7 @@
 
 ---
 
-# Volume I: Principles, Evidence and Population Guidance
+# Volume I: Accessible Design — Principles, Specifications and Application
 
 ## Part 1: Foundations of Accessible Design
 
@@ -55,14 +55,21 @@
 - §2.10 DBL — DeafBlind
 - §2.11 OFS — Orthostatic & Fatigue Spectrum
 
-## Part 3: Designing for Co-Occurring Disabilities
+## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
 
-- §3.1 Introduction and Rationale
+- §3.1 Introduction: Why Synthesis Matters and Co-Occurrence as the Design Norm
 - §3.2 Theoretical Framework
   - §3.2.1 ICF and Intersectional Disability
   - §3.2.2 Competence-Press Model at Compound Strain
-- §3.3 Co-occurrence Matrix
-- §3.4 Key Co-occurrence Design Guidance
+  - §3.2.3 Co-Occurrence as Norm, Not Exception
+- §3.3 Co-Occurrence Matrix
+- §3.4 The Layered Environment and Synthesis Principles
+- §3.5 Stage-by-Stage Process
+- §3.6 Synthesis by Building Strategy
+- §3.7 Decision Framework for Sequencing Techniques
+- §3.8 Resolution Decision Tree
+- §3.9 Resolution Strategies Menu
+- §3.10 Co-Occurrence Design Guidance
   - MOB + OFS
   - MOB + DEM
   - NEU + PAIN
@@ -75,87 +82,22 @@
   - NEU + OFS
   - MH + PAIN
   - MH + OFS
-
----
-
-# Volume II: Application Manual and Engineering
-
-## Prefatory Material
-
-- How to Use This Volume
-- Population Codes Reference
-- Entry Path I: By Design Stage
-- Entry Path II: By Population
-- Entry Path III: By Building or Room Type
-- NOT-RETROFITTABLE Items — Consolidated Table
-- DAR Register — Consolidated
-- Item Template Reference Card
-
-## Part 4: Synthesis and Sequencing
-
-- §4.1 Why Synthesis Matters
-- §4.2 The Layered Environment
-- §4.3 The Four Synthesis Principles
-- §4.4 Stage-by-Stage Process
-- §4.5 Synthesis by Building Strategy
-- §4.6 Decision Framework for Sequencing Techniques
-- §4.7 Worked Examples
+- §3.11 Worked Examples
   - Worked Example 1: Memory Care Residential Unit (DEM/MOB)
   - Worked Example 2: NDV/OFS Co-working Office
   - Worked Example 3: Accessible Primary School (NDV/MOB/DEAF)
   - Worked Example 4: Hospital Ward — Older Adults Orthopaedic (MOB/DEM)
   - Worked Example 5: Supported Housing — Mixed Needs (MOB/DEM/NDV)
-- §4.8 From Approach to Application
-  - §4.8.1 The Prior Question
-  - §4.8.2 Before the Entry Paths: Four Decisions
-  - §4.8.3 Using the Entry Paths and Matrices with the Approach Brief
-  - §4.8.4 When No Matrix Exists
-  - §4.8.5 What the Approach Changes in How This Volume Is Used
+- §3.12 From Approach to Application
+  - §3.12.1 The Prior Question
+  - §3.12.2 Before the Entry Paths: Four Decisions
+  - §3.12.3 Using the Entry Paths and Matrices with the Approach Brief
+  - §3.12.4 When No Matrix Exists
+  - §3.12.5 What the Approach Changes in How This Volume Is Used
 
-## Part 5: Residential Application Matrices
+## Part 4: Item Specification Library
 
-- §5.0 How to Read the Residential Matrices
-- §5.0a Universal Residential Provisions
-- §5.1 R-ENT: Entry
-- §5.2 R-GAR: Garage and Vehicle Space
-- §5.3 R-LAU: Laundry
-- §5.4 R-BED: Bedroom
-- §5.5 R-BA: Bathroom
-- §5.6 R-LIV: Living Room
-- §5.7 R-KIT: Kitchen
-- §5.8 R-HAL: Hallway and Internal Circulation
-- §5.9 R-STA: Staircase
-- §5.10 Residential Matrix: Consolidated DAR Priority Register
-
-## Part 6: Non-Residential Application Matrices
-
-- §6.0 Universal Non-Residential Provisions
-- §6.1 NR-EDU: Education (Schools, Universities, Training Facilities)
-- §6.2 NR-HLT: Healthcare (Hospitals, Clinics, Primary Care, Mental Health)
-- §6.3 NR-WRK: Workplace (Offices, Co-Working, Studios)
-- §6.4 NR-RET: Retail and Commercial
-- §6.5 NR-CUL: Cultural (Museums, Libraries, Theatres, Galleries, Places of Worship)
-- §6.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
-- §6.7 NR-TRP: Transport (Stations, Airports, Terminals, Interchanges)
-
-## Part 7: Co-Occurring and Multi-Population Conflict Resolutions
-
-- §7.1 Introduction
-- §7.2 Conflict Priority Hierarchy
-- §7.3 Documented Conflicts and Resolutions
-  - §7.3.1 Visual Contrast: NDV vs VIS
-  - §7.3.2 Hearing Loop vs NDV Quiet Space
-  - §7.3.3 Grab Bar Diameter: UPL vs General Specification
-  - §7.3.4 Temperature: NEU Uhthoff's vs PAIN Warmth
-  - §7.3.5 Tactile Floor Indicators: VIS Navigation vs PAIN Vibration
-  - §7.3.6 Acoustic Differentiation: VIS Navigation vs DEM Sensory Calm
-  - §7.3.7 Automatic vs Manual Doors: NDV/MH vs MOB
-  - §7.3.8 Nature Views and Biophilic Elements: VIS vs DEM/MH
-  - §7.3.9 Floor Pattern: DEM Plain vs VIS Contrast
-
-## Part 8: Item Specification Library
-
-*(Item codes use category prefix + item number. Cross-volume form: V2-P8-A01 etc. Category and item codes are not affected by part renumbering.)*
+*(Item codes use category prefix + item number. Category and item codes are not affected by part renumbering.)*
 
 ### Category A: Acoustics
 - A-01 Acoustic Buffer Zones at Noisy Adjacencies
@@ -256,150 +198,185 @@
 - I-02 Kitchen (One-Handed Operation Throughout)
 - I-03 Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)
 
-## Part 9: Engineering and Coordination
+## Part 5: Building-Level Co-Occurrence Resolution
 
-- §9.0 Overview and Operating Principle
-  - §9.0.1 Purpose
-  - §9.0.2 Engineering Coordination Doctrine
-  - §9.0.3 Engineering Disciplines in This Part
-- §9.1 Engineering Coordination Register
-  - §9.1.1 How to Read This Register
-  - §9.1.2 Acoustic Engineering Items
-  - §9.1.3 Electrical Engineering Items
-  - §9.1.4 Mechanical Engineering Items
-- §9.2 Engineering Brief Templates
-  - §9.2.1 Acoustic Engineer
-  - §9.2.2 Electrical Engineer
+- §5.1 Scope: What This Part Covers
+- §5.2 Building-Wide System Conflicts
+- §5.3 Unresolvable Conflicts and Mitigation
+- §5.4 Worked Building-Scale Examples
+
+## Part 6: Residential Application Matrices
+
+- §6.0 How to Read the Residential Matrices
+- §6.0a Universal Residential Provisions
+- §6.1 R-ENT: Entry
+- §6.2 R-GAR: Garage and Vehicle Space
+- §6.3 R-LAU: Laundry
+- §6.4 R-BED: Bedroom
+- §6.5 R-BA: Bathroom
+- §6.6 R-LIV: Living Room
+- §6.7 R-KIT: Kitchen
+- §6.8 R-HAL: Hallway and Internal Circulation
+- §6.9 R-STA: Staircase
+- §6.10 Residential Matrix: Consolidated DAR Priority Register
+
+## Part 7: Non-Residential Application Matrices
+
+- §7.0 Universal Non-Residential Provisions
+- §7.1 NR-EDU: Education (Schools, Universities, Training Facilities)
+- §7.2 NR-HLT: Healthcare (Hospitals, Clinics, Primary Care, Mental Health)
+- §7.3 NR-WRK: Workplace (Offices, Co-Working, Studios)
+- §7.4 NR-RET: Retail and Commercial
+- §7.5 NR-CUL: Cultural (Museums, Libraries, Theatres, Galleries, Places of Worship)
+- §7.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
+- §7.7 NR-TRP: Transport (Stations, Airports, Terminals, Interchanges)
+
+## Part 8: Engineering and Coordination
+
+- §8.0 Overview and Operating Principle
+  - §8.0.1 Purpose
+  - §8.0.2 Engineering Coordination Doctrine
+  - §8.0.3 Engineering Disciplines in This Part
+- §8.1 Engineering Coordination Register
+  - §8.1.1 How to Read This Register
+  - §8.1.2 Acoustic Engineering Items
+  - §8.1.3 Electrical Engineering Items
+  - §8.1.4 Mechanical Engineering Items
+- §8.2 Engineering Brief Templates
+  - §8.2.1 Acoustic Engineer
+  - §8.2.2 Electrical Engineer
     - Lighting
     - Controls, BMS, and Assistive Technology
     - Fire and Life Safety
-  - §9.2.3 Mechanical Engineer
-- §9.3 Stage-Gated Coordination Protocol
-  - §9.3.1 Schematic Design Gate
-  - §9.3.2 Technical Design Gate — Brief Issue
-  - §9.3.3 VE Protection Register
-- §9.4 O&M Manual — Engineering Accessibility Systems
-- §9.5 Structural Engineer Coordination
+  - §8.2.3 Mechanical Engineer
+- §8.3 Stage-Gated Coordination Protocol
+  - §8.3.1 Schematic Design Gate
+  - §8.3.2 Technical Design Gate — Brief Issue
+  - §8.3.3 VE Protection Register
+- §8.4 O&M Manual — Engineering Accessibility Systems
+- §8.5 Structural Engineer Coordination
 
-## Part 10: Working with Specialist Consultants
+## Part 9: Working with Specialist Consultants
 
-- §10.0 Overview
-- §10.1 The Three-Tier Hierarchy and Specialist Consultant Appointment
-- §10.2 Occupational Therapist
-  - §10.2.1 Role and Scope
-  - §10.2.2 Appointment Triggers
-  - §10.2.3 Scope of Services by Design Stage
-  - §10.2.4 OT Assessment Report — Architectural Brief Format
-  - §10.2.5 Co-Design and CRPD Article 4.3
-  - §10.2.6 Relationship to This Guidebook
-- §10.3 Dementia Design Specialist
-  - §10.3.1 Role
-  - §10.3.2 Appointment Triggers
-  - §10.3.3 Scope
-- §10.4 DeafSpace / Deaf Design Consultant
-  - §10.4.1 Role
-  - §10.4.2 Appointment Triggers
-  - §10.4.3 Scope
-- §10.5 Sensory Design Consultant
-  - §10.5.1 Role
-  - §10.5.2 Appointment Triggers
-  - §10.5.3 Scope
-- §10.6 Accessibility Auditor
-  - §10.6.1 Role
-  - §10.6.2 Appointment Triggers
-  - §10.6.3 Relationship to This Guidebook
-- §10.7 Coordination Protocol Across All Specialist Consultants
-  - §10.7.1 Sequencing
-  - §10.7.2 The Architect's Coordination Responsibility
-  - §10.7.3 Documentation
-  - §10.7.4 VE Protection — Specialist Consultant Scope
-- §10.8 Disability Organisations and Lived Experience Input
+- §9.0 Overview
+- §9.1 The Three-Tier Hierarchy and Specialist Consultant Appointment
+- §9.2 Occupational Therapist
+  - §9.2.1 Role and Scope
+  - §9.2.2 Appointment Triggers
+  - §9.2.3 Scope of Services by Design Stage
+  - §9.2.4 OT Assessment Report — Architectural Brief Format
+  - §9.2.5 Co-Design and CRPD Article 4.3
+  - §9.2.6 Relationship to This Guidebook
+- §9.3 Dementia Design Specialist
+  - §9.3.1 Role
+  - §9.3.2 Appointment Triggers
+  - §9.3.3 Scope
+- §9.4 DeafSpace / Deaf Design Consultant
+  - §9.4.1 Role
+  - §9.4.2 Appointment Triggers
+  - §9.4.3 Scope
+- §9.5 Sensory Design Consultant
+  - §9.5.1 Role
+  - §9.5.2 Appointment Triggers
+  - §9.5.3 Scope
+- §9.6 Accessibility Auditor
+  - §9.6.1 Role
+  - §9.6.2 Appointment Triggers
+  - §9.6.3 Relationship to This Guidebook
+- §9.7 Coordination Protocol Across All Specialist Consultants
+  - §9.7.1 Sequencing
+  - §9.7.2 The Architect's Coordination Responsibility
+  - §9.7.3 Documentation
+  - §9.7.4 VE Protection — Specialist Consultant Scope
+- §9.8 Disability Organisations and Lived Experience Input
+- §9.9 Co-Occurrence Collaboration Protocol
+- §9.10 The Architect's Threshold: When to Appoint an OT for Co-Occurring Disabilities
 
 ---
 
-# Volume III: DAR, Economics, Evidence and Case Studies
+# Volume II: Evidence, Economics and Case Studies
 
-## Part 11: Design for Adaptable Readiness (DAR)
+## Part 10: Design for Adaptable Readiness (DAR)
 
-- §11.0 Scope
-- §11.1 The DAR Cost Multiplier Framework
-- §11.2 CAN/ASC 2.8:2025 — DAR Core Provisions
-- §11.3 Lifetime Homes 16 Criteria (UK, Habinteg 2010)
-- §11.4 Visitability: The 3-Criterion Baseline (USA, Concrete Change)
-- §11.5 Aging in Place: OT Evidence Summary
-- §11.6 Nordic Models
-  - §11.6.1 Sweden — BFS 2024:12 (Boverket)
-  - §11.6.2 Norway — NS 11001-2:2018 (Standard Norge)
-- §11.7 Case Study Evidence for DAR
+- §10.0 Scope
+- §10.1 The DAR Cost Multiplier Framework
+- §10.2 CAN/ASC 2.8:2025 — DAR Core Provisions
+- §10.3 Lifetime Homes 16 Criteria (UK, Habinteg 2010)
+- §10.4 Visitability: The 3-Criterion Baseline (USA, Concrete Change)
+- §10.5 Aging in Place: OT Evidence Summary
+- §10.6 Nordic Models
+  - §10.6.1 Sweden — BFS 2024:12 (Boverket)
+  - §10.6.2 Norway — NS 11001-2:2018 (Standard Norge)
+- §10.7 Case Study Evidence for DAR
 
-## Part 12: The Economics of Accessible Construction
+## Part 11: The Economics of Accessible Construction
 
-- §12.0 Scope and Purpose
-- §12.1 The Cost Myth and What the Evidence Shows
-  - §12.1.1 The Assumed Burden
-  - §12.1.2 What the Evidence Actually Shows
-  - §12.1.3 When Costs Appear, and Why
-- §12.2 The Core Ratio: New Construction vs Retrofit
-  - §12.2.1 New Construction Premium
-  - §12.2.2 Retrofit Cost
-  - §12.2.3 The Core Ratio
-- §12.3 How to Think About Value
-  - §12.3.1 Functional Value: What the Building Can Do
-  - §12.3.2 Lifecycle Value: What the Building Costs to Own and Operate
-  - §12.3.3 Market and Institutional Value
-  - §12.3.4 Social and Systemic Value
-- §12.4 Construction Cost Intelligence Tables
-  - §12.4.1 Circulation & Entry
-  - §12.4.2 Toilet and Bathroom Facilities
-  - §12.4.3 Acoustic Design
-  - §12.4.4 Visual Environment & Lighting
-  - §12.4.5 Cognitive Accessibility & Wayfinding
-  - §12.4.6 Thermal Comfort & Indoor Environment
-  - §12.4.7 Smart & Assistive Technology
-  - §12.4.8 Site & Outdoor
-  - §12.4.9 The Cost Curve: Summary Table
-- §12.5 The Principle of Integrated Design Value
-  - §12.5.1 The Accessibility-Sustainability Synergy
-  - §12.5.2 Value Engineering and the Risk of Disaggregation
-- §12.6 The Evidence Landscape
-  - §12.6.1 Where Evidence Is Strong
-  - §12.6.2 Where Evidence Is Moderate
-  - §12.6.3 Where Evidence Is Absent or Weak
-- §12.7 Accessibility in the Design Process: An Economic Timeline
-  - §12.7.1 Pre-Design and Brief Stage
-  - §12.7.2 Schematic Design Stage
-  - §12.7.3 Technical Design Stage
-  - §12.7.4 Construction Stage
-  - §12.7.5 Post-Occupancy
-- §12.8 Making the Economic Case: Practical Guidance
-  - §12.8.1 In Client Conversations
-  - §12.8.2 In Procurement and Specification
-  - §12.8.3 Jurisdiction-Specific Notes
-- §12.9 Cross-Reference Index: Economics and Part 8
-- §12.10 Limitations and Appeal for Collective Evidence
-  - §12.10.1 What This Part Cannot Provide
-  - §12.10.2 Where More Evidence Is Needed
-  - §12.10.3 How to Contribute
-  - §12.10.4 Editorial Note: Part 8 Items Requiring Evidence Updates
+- §11.0 Scope and Purpose
+- §11.1 The Cost Myth and What the Evidence Shows
+  - §11.1.1 The Assumed Burden
+  - §11.1.2 What the Evidence Actually Shows
+  - §11.1.3 When Costs Appear, and Why
+- §11.2 The Core Ratio: New Construction vs Retrofit
+  - §11.2.1 New Construction Premium
+  - §11.2.2 Retrofit Cost
+  - §11.2.3 The Core Ratio
+- §11.3 How to Think About Value
+  - §11.3.1 Functional Value: What the Building Can Do
+  - §11.3.2 Lifecycle Value: What the Building Costs to Own and Operate
+  - §11.3.3 Market and Institutional Value
+  - §11.3.4 Social and Systemic Value
+- §11.4 Construction Cost Intelligence Tables
+  - §11.4.1 Circulation & Entry
+  - §11.4.2 Toilet and Bathroom Facilities
+  - §11.4.3 Acoustic Design
+  - §11.4.4 Visual Environment & Lighting
+  - §11.4.5 Cognitive Accessibility & Wayfinding
+  - §11.4.6 Thermal Comfort & Indoor Environment
+  - §11.4.7 Smart & Assistive Technology
+  - §11.4.8 Site & Outdoor
+  - §11.4.9 The Cost Curve: Summary Table
+- §11.5 The Principle of Integrated Design Value
+  - §11.5.1 The Accessibility-Sustainability Synergy
+  - §11.5.2 Value Engineering and the Risk of Disaggregation
+- §11.6 The Evidence Landscape
+  - §11.6.1 Where Evidence Is Strong
+  - §11.6.2 Where Evidence Is Moderate
+  - §11.6.3 Where Evidence Is Absent or Weak
+- §11.7 Accessibility in the Design Process: An Economic Timeline
+  - §11.7.1 Pre-Design and Brief Stage
+  - §11.7.2 Schematic Design Stage
+  - §11.7.3 Technical Design Stage
+  - §11.7.4 Construction Stage
+  - §11.7.5 Post-Occupancy
+- §11.8 Making the Economic Case: Practical Guidance
+  - §11.8.1 In Client Conversations
+  - §11.8.2 In Procurement and Specification
+  - §11.8.3 Jurisdiction-Specific Notes
+- §11.9 Cross-Reference Index: Economics and Part 4
+- §11.10 Limitations and Appeal for Collective Evidence
+  - §11.10.1 What This Part Cannot Provide
+  - §11.10.2 Where More Evidence Is Needed
+  - §11.10.3 How to Contribute
+  - §11.10.4 Editorial Note: Part 4 Items Requiring Evidence Updates
 - References (German-Language · Scandinavian · Dutch and Belgian · French · Japanese · Spanish and Portuguese · English-Language)
 
-## Part 13: Case Studies — Documented Accessible Built Environments
+## Part 12: Case Studies — Documented Accessible Built Environments
 
-- §13.0 Note on Methodology
-- §13.01 Maggie's Centre, Inverness (Snøhetta / NHS Highland, 2021)
-- §13.02 Gallaudet University DeafSpace Campus (Washington DC, USA, ongoing from 2006)
-- §13.03 The Kelsey Civic Commons, San Jose (USA, 2020–2024)
-- §13.04 DSDC Iris Murdoch Building, University of Stirling (UK, 2023)
-- §13.05 AtkinsRéalis Headquarters Refurbishment (UK/Canada, 2023–2024)
-- §13.06 Lyngby-Taarbæk Specialist School Acoustic Retrofit (Denmark, c. 2019–2020)
-- §13.07 Singapore HDB Universal Design Flats Programme (Singapore, 2006–ongoing)
-- §13.08 Gallaudet University SLCC, Washington DC (USA, 2006–ongoing)
-- §13.09 De Hogeweyk Dementia Village, Weesp, Netherlands (BuroKade / Vivium Care Group, 2009)
-- §13.10 DSDC Dementia Care Home Audit Programme (UK, 2020–2024)
-- §13.11 ASPECTSS-Based Autism School Retrofit, USA (Mostafa, Honsberger, Shanok et al., 2024)
-- §13.12 Village Landais Alzheimer, Dax (NORD Architects / Département des Landes, France, 2020)
-- §13.13 Carpe Diem Dementia Village, Bærum, Norway (Nordic Office of Architecture, 2021)
-- §13.14 BC Housing Home Adaptations for Independence (HAFI) Programme (Canada, 2012–ongoing)
+- §12.0 Note on Methodology
+- §12.01 Maggie's Centre, Inverness (Snøhetta / NHS Highland, 2021)
+- §12.02 Gallaudet University DeafSpace Campus (Washington DC, USA, ongoing from 2006)
+- §12.03 The Kelsey Civic Commons, San Jose (USA, 2020–2024)
+- §12.04 DSDC Iris Murdoch Building, University of Stirling (UK, 2023)
+- §12.05 AtkinsRéalis Headquarters Refurbishment (UK/Canada, 2023–2024)
+- §12.06 Lyngby-Taarbæk Specialist School Acoustic Retrofit (Denmark, c. 2019–2020)
+- §12.07 Singapore HDB Universal Design Flats Programme (Singapore, 2006–ongoing)
+- §12.08 Gallaudet University SLCC, Washington DC (USA, 2006–ongoing)
+- §12.09 De Hogeweyk Dementia Village, Weesp, Netherlands (BuroKade / Vivium Care Group, 2009)
+- §12.10 DSDC Dementia Care Home Audit Programme (UK, 2020–2024)
+- §12.11 ASPECTSS-Based Autism School Retrofit, USA (Mostafa, Honsberger, Shanok et al., 2024)
+- §12.12 Village Landais Alzheimer, Dax (NORD Architects / Département des Landes, France, 2020)
+- §12.13 Carpe Diem Dementia Village, Bærum, Norway (Nordic Office of Architecture, 2021)
+- §12.14 BC Housing Home Adaptations for Independence (HAFI) Programme (Canada, 2012–ongoing)
 
 ## Back Matter
 
@@ -425,7 +402,7 @@
 - §A.5 Standards Bibliography Cross-Reference
 
 ## Appendix B: Biophilic Design — Specifications
-*(Moved from Part 8 Item Specification Library)*
+*(Moved from Item Specification Library)*
 - BIO-01 Views of Nature from Primary Occupied Spaces (≥75%)
 - BIO-02 Interior Planting Throughout Occupied Spaces
 - BIO-03 Tactile Texture Variety on Accessible Surfaces
@@ -433,7 +410,7 @@
 - BIO-05 Restorative Corridor (Biophilic Elements on Primary Circulation Routes; ≤20 m Interval)
 
 ## Appendix C: Thermal Comfort — Specifications
-*(Moved from Part 8 Item Specification Library)*
+*(Moved from Item Specification Library)*
 - TC-01 Ambient Temperature Management
 - TC-02 High-Performance Thermal Envelope
 - TC-03 Thermal Mass
