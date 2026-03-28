@@ -79,3 +79,25 @@
 16. ISO 21542:2021 Building Construction – Accessibility and Usability. ISO. Tier 4.
 
 ---
+
+### Bottom-up findings — Session 2026-03-28 (scenarios 11 + 12)
+
+#### Scenario 11 — d465 + power WC → entrance approach manoeuvre (extended pass)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Level landing at entrance (power WC) | ≥1800mm × 1800mm clear | Power WC — greater deceleration distance + footplate/anti-tip castor geometry vs manual WC | BS 8300-2:2018 Annex G Tables G.7–G.8 (UK) | 5 | NOVEL — existing BPC ≥1500×1500mm is manual-WC calibrated; power WC requires differentiated spec | MOB (power WC sub-group) |
+| Latch-side manoeuvre clearance (power WC) | ≥500mm | Power WC with large footplate — approach offset from manual WC ≥300mm | AS 1428.1:2021 (AU) | 6 | REFINES — prior BPC ≥300mm latch-side; power WC sub-group needs ≥500mm | MOB |
+| Entrance canopy/shelter (power WC) | ≥1800mm depth × ≥2000mm wide | Power WC + companion sheltering while operating door controls | BS 8300-2:2018 (UK) | 5 | NOVEL — no canopy size spec in existing BPC | MOB→ALL |
+| Combined threshold + landing barrier effect | Threshold >6mm AND landing <1800mm = combined barrier preventing independent entry | Either alone borderline for power WC; combined = access failure | Putthinoi 2017 (Tier 1 OT, Thai-AU; ICF home features) | 1 | REFINES — confirms both specs as co-required, not independent | MOB |
+
+#### Scenario 12 — d460 + cognitive impairment → entrance legibility
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Entrance door — cognitive legibility | Luminance contrast ≥0.4; warm colour (red/yellow recommended) preferred; door reads as "door" at 3m | DEM/NDV users — colour contrast adds orientation layer beyond luminance contrast | RCOT Dementia Design Guidance (2020); Housing LIN (UK) | Co-2 | REFINES — existing BPC has luminance contrast; adds warm-colour direction and 3m legibility test | DEM→NEU/NDV |
+| Entrance bell/intercom | ≥50mm button diameter; 900–1200mm AFF; visible from approach path | DEM/cognitive: large target, reachable, no search required | RCOT Dementia Design Guidance (2020) | Co-2 | NOVEL — button size + approach-visible placement spec | DEM→NDV→MOB |
+| Entrance lighting | ≥150 lux; PIR sensor activation preferred | PIR eliminates switch-finding for cognitive impairment | RCOT Dementia Design Guidance (2020) | Co-2 | REFINES — lux level in VIS BPC; adds PIR rationale for cognitive populations | DEM→NEU/NDV/VIS |
+| House number/address signage | ≥150mm numeral height; high-contrast; backlit or reflective | Cognitive orientation to own property; low-light legibility | AOTA Cognitive Impairment Home Modification (2023) | Co-2 | NOVEL — dimensional signage spec not in existing BPC | DEM→NEU/NDV |
+| Property boundary demarcation | Clear visual boundary at property edge; gate ≥1200mm visible from street; distinctive colour | Reduces wayfinding error and unsafe egress (wandering) for DEM users | Dementia Australia Built Environment Guidelines (2022) | 2 | NOVEL — property boundary as cognitive orientation spec | DEM |
+
+**Population mapping (Sc.12):** Primary DEM; secondary NEU, NDV/AUT, VIS. Entrance legibility provisions (contrast, lighting, signage) converge across ≥4 codes → Tier 0 candidates for all 3 items.
+**Tier 0 candidates:** Entrance PIR lighting; entrance luminance contrast; house address signage (≥4 population codes, no conflicts).
