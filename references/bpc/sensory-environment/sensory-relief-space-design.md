@@ -1,6 +1,7 @@
 ## sensory-relief-space-design|NDV
 
 **Updated:** 2026-03-19 11:00
+**Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Evidence tier:** 3 (scoping reviews, controlled studies, OT practice research); 5 (PAS 6463:2022, NCC AU 2022); 2 (NAS, Amaze)
 **Status:** COMPLETE (9 core languages + NL extended)
 **Evidence note:** No Tier 1 RCTs exist for dedicated sensory room architectural design specifically. All evidence is Tier 3 or below. Guidebook specifications carry EMERGING evidence stratum for dimensional requirements; MODERATE for sensory control principle.
@@ -25,6 +26,23 @@
 **Jurisdictions confirmed:** UK (PAS 6463:2022), AU (NCC 2022; Amaze/Deakin 2025), IE (NCSE 2025), CA (RHFAC v4), US (evidence base)
 **Jurisdictions thin:** SV, NO, DA, FI, FR, DE, ZH, JA, NL (follow EN practice; no independent standards for public buildings)
 **No-data flags:** none (all languages have some evidence; none have mandatory public building standards except AU)
+
+### best_practice_synthesis
+**Opus synthesis:** YES [OPUS-SYNTHESIS] — 2026-03-28
+
+**Most inclusive provision:** Dedicated sensory relief space with full individual occupant control of lighting (100–0 lux continuous dimming, 2700 K warm amber, no fluorescent sources), acoustic environment (STC 50 shell, RT60 ≤ 0.3 s, NC 25 max HVAC), and visual blackout; minimum 8 m² usable floor area; 3 m transition/decompression zone at exit; adjacent to accessible toilet. Provision ratio: 1 per floor or per 500 m² GFA (general); 1 per 150 students (general education); 1 per 50 students (autism-specific education).
+
+**Most targeted provision:** Autistic individuals experiencing acute sensory overload in public/institutional environments. Individual occupant control is the primary design variable — more predictive of self-regulation outcomes than any static environmental parameter. The space must support complete sensory withdrawal (blackout + silence + solitude) because partial attenuation is insufficient during crisis episodes.
+
+**Conflict resolution:** N/A — sensory relief spaces serve NDV/AUT, NDV/ADHD, OFS, PAIN, and NDV/MH populations without inter-population conflict. Extending population scope (per Amaze 2025 and Vetter et al. 2025) increases inclusion without trade-offs.
+
+**Highest-ambition actionable specification:** Minimum 8 m² clear floor area (NCC AU 3 m² statutory minimum is inadequate for occupant plus companion plus mobility device); STC 50 wall/door assembly; RT60 ≤ 0.3 s; NC 25 max mechanical noise; continuous dimming 100–0 lux, 2700 K, zero-flicker driver; operable blackout covering all glazing; no overhead fluorescent or high-frequency ballast sources; 3 m decompression corridor at entry/exit threshold; located adjacent to (not more than 20 m from) an accessible toilet; lockable from inside with emergency override. Provision: 1 per floor or 500 m² GFA; 1 per 150 students general education; 1 per 50 students autism-specific. Tier 3 (Unwin et al. 2022, 2023 replication) governs individual control as primary variable; Tier 5 (PAS 6463:2022, NCC AU 2022) governs spatial parameters; Tier 2 (NAS, Amaze 2025) governs population scope and adjacency requirements.
+
+**Evidence confidence:** MODERATE — individual occupant control as primary variable has Tier 3 replication (Unwin 2022, 2023); spatial parameters (8 m², STC 50, transition zone) are Tier 5 guidance consensus without intervention-level validation; population scope extension to ADHD/OFS/PAIN is Tier 2 advocacy evidence with clinical plausibility but no controlled comparison.
+
+**Opus note:** Rashid et al. 2025 finding that most frameworks overemphasise interior elements relative to spatial configuration (adjacency, sequencing, approach) is underclaimed in the current BPC. The guidebook should specify adjacency and approach-sequence requirements with equal prominence to interior fitout specifications — a sensory room that requires traversing a noisy atrium to reach fails the user before they enter it. Proximity to accessible toilet (Amaze 2025) should be elevated from a location note to a mandatory adjacency requirement.
+
+**Guidebook items affected:** A-16 (primary); H-02 (cross-reference elevation); F-01, F-03 (confirmed); any item referencing quiet rooms, retreat spaces, or sensory environments.
 
 **Key sources:**
 - Unwin, Powell & Jones (2022). Use of Multi-Sensory Environments with autistic children: user control as primary factor. *Autism*, 26(6). PMC9340127. (Tier 3 — n=41, Cardiff)
