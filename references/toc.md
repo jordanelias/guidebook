@@ -189,6 +189,7 @@
 - B-09 Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)
 - B-10 Visual Fire Alarm (Strobe VAD Throughout Building)
 - B-11 Warm Colour Temperature for Evening (≤2700 K After 19:00)
+- B-12 Sensor-Activated Overnight Pathway Lighting
 
 ### Category C: Colour and Surface Finish
 - C-01 Colour Palette (Muted, Low-Chroma, Non-Institutional)
@@ -221,8 +222,10 @@
 - E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)
 - E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)
 - E-09 Tactile Walking Surface Indicators (ISO 23599:2019)
-- E-10 Rest Seating on Circulation Routes (≤20m Interval)
+- E-10 Rest Seating on Circulation Routes (Revised — interval, alcove geometry, seat height)
 - E-11 Automatic Sliding Entry and Internal Doors
+- E-12 Entrance Landing and Manoeuvring Space for Power Wheelchair Users
+- E-13 Entrance Cognitive Legibility Provisions
 
 ### Category F: Sensory Zoning
 - F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
@@ -239,6 +242,8 @@
 - G-05 Adjustable-Height Work Surfaces and Desks (650–870 mm AFF Range)
 - G-06 Reception Counter (Accessible Height Section — 760–860 mm AFF)
 - G-07 Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)
+- G-08 Bedroom Wardrobe and Storage Reach Configuration
+- G-09 Bedroom Emergency Call Provision and Overnight Lighting
 
 ### Category H: Controls, Technology and Individual Environmental Control
 - H-01 All Controls at Accessible Height (400–1100 mm AFF, One-Fist Operable)
