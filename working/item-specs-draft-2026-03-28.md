@@ -13,11 +13,11 @@
 
 #### Specification
 
-● Wardrobe hanging rods shall be positioned at no greater than 1050 mm AFF to permit forward reach from a seated position without trunk forward-lean exceeding 30° [REF:accessible-bathroom-and-grab-bar:18]. A dual-rod configuration — upper rod at 1000–1100 mm AFF and lower rod at 600 mm AFF — shall be provided where wardrobe depth permits, to serve both seated users and those with a restricted upper reach range [REF:accessible-bathroom-and-grab-bar:18].
+● Wardrobe hanging rods shall be positioned at no greater than 1050 mm AFF to permit forward reach from a seated position without trunk forward-lean exceeding 30° [REF:accessible-bathroom-and-grab-bar:18]. A dual-rod configuration — upper rod at 1000–1100 mm AFF and lower rod at 600 mm AFF — shall be provided where wardrobe depth permits, to serve the full reach envelope required across the seated and standing user population [REF:accessible-bathroom-and-grab-bar:18].
 
-● Fixed shelf depth shall not exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18]. Where storage at depths greater than 380 mm is required, full-extension pull-out drawers shall be provided, with drawer depth not exceeding 600 mm [REF:accessible-bathroom-and-grab-bar:18]. Shelf units shall be arranged in a U-shape or L-shape configuration where practicable, to reduce travel distance and provide incidental bracing surfaces at shelf edges [REF:residential-kitchen-and-task-surfaces:14].
+● Fixed shelf depth shall not exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18]. Where storage at depths greater than 380 mm is required, full-extension pull-out drawers shall be provided, with drawer depth not exceeding 600 mm [REF:accessible-bathroom-and-grab-bar:18]. ● Shelf units shall be arranged in a U-shape or L-shape configuration where practicable, to reduce travel distance and provide incidental bracing surfaces at shelf edges [REF:residential-kitchen-and-task-surfaces:14].
 
-● No fixed storage shall be provided below 500 mm AFF without a pull-out mechanism [REF:accessible-bathroom-and-grab-bar:18]. Retrieval of items below 500 mm AFF from a seated position requires trunk forward-lean exceeding the 30° fall-risk threshold for users with trunk instability.
+● No fixed storage shall be provided below 500 mm AFF without a pull-out mechanism [REF:accessible-bathroom-and-grab-bar:18]. Storage below 500 mm AFF without a pull-out mechanism creates a fall risk: retrieval requires trunk forward-lean exceeding the 30° biomechanical threshold at which fall risk increases significantly.
 
 ○ Wardrobe doors shall be sliding or bi-fold. Outward-swing doors shall only be used where a clear floor space of at least door-width plus 600 mm manoeuvre depth is available adjacent to the door arc [REF:accessible-bathroom-and-grab-bar:18].
 
@@ -74,7 +74,7 @@
 
 ● Continuous low-level pathway lighting at 300–400 mm AFF shall be installed on the bed-to-bathroom route, providing a minimum of 5 lux at floor level. Colour temperature shall not exceed 3000 K to avoid circadian disruption [REF:accessible-bathroom-and-grab-bar:20].
 
-○ Bedroom doors shall be distinguishable from other internal doors by colour contrast or texture at the door leaf. A name, number, or personalisation plate shall be provided at 1200 mm AFF for resident identification [REF:accessible-bathroom-and-grab-bar:20]. This provision applies in all residential settings where more than one bedroom door is visible from a common circulation route.
+○ Bedroom doors shall be distinguishable from other internal doors by colour contrast or texture at the door leaf. A name, number, or personalisation plate shall be provided at 1200 mm AFF to support orientation to the resident's room [REF:accessible-bathroom-and-grab-bar:20]. This provision applies in all residential settings where more than one bedroom door is visible from a common circulation route.
 
 ● Medication storage, where provided, shall be lockable, at no greater than 1200 mm AFF, and within 500 mm horizontal reach of a seated bed-edge position [REF:accessible-bathroom-and-grab-bar:21].
 
@@ -165,7 +165,7 @@ This item specifies a lighting provision in the ≤3000 K warm range specificall
 
 ● A canopy or weather protection shall be provided at all accessible entrances to a minimum depth of 1800 mm and a minimum width of 2000 mm [REF:residential-entry-and-threshold:04]. This provides sheltered space for a power wheelchair user and a companion simultaneously while operating door controls.
 
-● Where threshold height and landing size cannot both meet power wheelchair requirements, threshold height governs: a zero threshold with adequate deceleration approach takes priority over any reduced landing at a raised threshold [REF:residential-entry-and-threshold:05]. Threshold >6 mm combined with landing <1800 mm constitutes a combined access failure for power wheelchair users.
+● Where threshold height and landing size cannot both meet power wheelchair requirements, threshold height governs: a zero threshold with adequate deceleration approach takes priority over any reduced landing at a raised threshold [REF:residential-entry-and-threshold:05]. Threshold >6 mm combined with landing <1800 mm constitutes a design that excludes independent access by power wheelchair users.
 
 **Evidence markers:** All ● (evidence-based from Tier 1 OT study + Tier 5–6 standards).
 
@@ -210,15 +210,15 @@ E-12 produces a higher specification than E-06 (Level Entry) for power wheelchai
 
 #### Specification
 
-● The entrance door leaf shall provide a luminance contrast of no less than 0.4 against the adjacent wall surface, assessed at 3 m from the approach path [REF:residential-entry-and-threshold:03]. For buildings with a predominant dementia population, warm-spectrum colour (red, amber, or yellow) shall be preferred where it does not conflict with the building's colour and surface finish strategy [REF:residential-entry-and-threshold:03].
+● The entrance door leaf shall provide a luminance contrast of no less than 0.4 against the adjacent wall surface, assessed at 3 m from the approach path [REF:residential-entry-and-threshold:03]. Where DEM is the identified population, warm-spectrum colour (red, amber, or yellow) shall be preferred where it does not conflict with the building's colour and surface finish strategy [REF:residential-entry-and-threshold:03].
 
-● Entry activation controls (bell, intercom, door release) shall have a minimum button diameter of 50 mm, positioned at 900–1200 mm AFF, and shall be visible from the entrance approach path without requiring the user to be at the door [REF:residential-entry-and-threshold:03].
+● Entry activation controls (bell, intercom, door release) shall have a minimum button diameter of 50 mm, positioned at 900–1200 mm AFF, and shall be visible from the entrance approach path before the user reaches the door [REF:residential-entry-and-threshold:03].
 
 ● A PIR sensor-activated luminaire providing no less than 150 lux at threshold level shall be installed at all accessible entrances [REF:residential-entry-and-threshold:03]. This provision does not remove the requirement for a manual luminaire control.
 
 ● Address numerals and building identification shall be provided at no less than 150 mm character height, in high-contrast, and shall be backlit or retro-reflective to maintain legibility in low-light conditions [REF:residential-entry-and-threshold:06]. Characters shall be positioned at 1200–1600 mm AFF.
 
-○ Where the entrance is set back from the street boundary, the property boundary shall be demarcated by a continuous visual feature (fence, wall, planting, or change in surface material) visible from the public footpath. For buildings with a predominant dementia population, the boundary feature shall be distinctive in colour [REF:residential-entry-and-threshold:06].
+○ Where the entrance is set back from the street boundary, the property boundary shall be demarcated by a continuous visual feature (fence, wall, planting, or change in surface material) visible from the public footpath. Where DEM is the identified population, the boundary feature shall be distinctive in colour [REF:residential-entry-and-threshold:06].
 
 **Evidence markers:** ○ = property boundary demarcation — expert consensus from DEM design guidelines; no RCT evidence.
 
@@ -265,17 +265,17 @@ E-13 PIR entrance lighting (≥150 lux) interacts with B-01 (Circadian Lighting)
 
 #### Specification
 
-● Rest seating shall be provided at intervals not exceeding 25 m on all primary accessible circulation routes [REF:accessible-circulation-geometry:09]. The 25 m threshold represents the exertion boundary for ambulant users with fatigue-spectrum conditions and many ambulant disabled users; intervals beyond 25 m on primary routes are not supported by OT clinical evidence.
+● Rest seating shall be provided at intervals not exceeding 25 m on all primary accessible circulation routes [REF:accessible-circulation-geometry:09]. Circulation routes without seating within 25 m create a barrier for OFS, MOB/AMB, and PAIN populations; intervals beyond 25 m on primary routes are not supported by OT clinical evidence.
 
 ○ Where 25 m intervals cannot be achieved due to spatial constraints, a maximum interval of 30 m is acceptable on secondary routes only [REF:accessible-circulation-geometry:09]. No building code in any jurisdiction specifies a maximum seating interval; this range derives from OT clinical evidence only.
 
 ● Rest seating shall be recessed a minimum of 200 mm from the clear circulation path, in alcoves or bays of no less than 900 mm width per seat and 450 mm seat depth [REF:accessible-circulation-geometry:new]. Seating shall not project into or reduce the minimum clear circulation width.
 
-● Seat height shall be no less than 480 mm AFF [REF:accessible-circulation-geometry:new]. Standard bench height of 420 mm promotes a hip-flexion angle that exacerbates venous pooling in postural tachycardia syndrome (OFS/POTS); 480 mm AFF is the minimum that avoids this effect.
+● Seat height shall be no less than 480 mm AFF [REF:accessible-circulation-geometry:new]. Seat height below 480 mm AFF creates a postural barrier for OFS/POTS users; 480 mm AFF removes this barrier. [Clinical mechanism detail in evidence annex]
 
 ● Arms shall be provided on both sides of each seat, extending at least 200 mm beyond the front edge of the seat to enable lever-up from seated [REF:accessible-circulation-geometry:02].
 
-○ A minimum of one seating position per alcove shall accommodate a tilt or recline angle of no less than 15° from vertical [REF:accessible-circulation-geometry:09]. Full horizontal capability shall be provided at a rate of one per floor in buildings likely to accommodate users with OFS/ME severe presentations.
+○ A minimum of one seating position per alcove shall accommodate a tilt or recline angle of no less than 15° from vertical [REF:accessible-circulation-geometry:09]. Full horizontal capability shall be provided at a rate of one per floor in buildings where OFS/ME is the identified population and full recline is required for symptom management.
 
 **Evidence markers:** ○ = secondary interval (30 m on secondary routes) — extrapolated from primary evidence; ○ = tilt/recline provision — expert OT consensus; no controlled study.
 
