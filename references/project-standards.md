@@ -702,3 +702,44 @@ RULE: Slug names are frozen path identifiers and are NOT renamed by CO-0003. Slu
 CONDITION: Any operation that might rename a slug file path.
 ACTION: Do not rename. Update content terminology only. Add note to slug registry if not already present.
 DATE: 2026-03-28 21:30
+
+RULE: CO-0004 Volume Merge. Old Volumes I + II → Volume I. Old Volume III → Volume II. Volume I title: "Accessible Design: Principles, Specifications and Application". Volume II title: "Evidence, Economics and Case Studies". Supplementary Volume unchanged.
+CONDITION: Any reference to volume numbers or volume titles.
+ACTION: Use 2-volume structure. Volume I = Parts 1–9. Volume II = Parts 10–12. Remove "Three-Volume Structure" references; replace with "Two-Volume Structure".
+DATE: 2026-03-29 00:00
+
+RULE: CO-0004 Part Renumbering Map. Old Part 3 + Old Part 4 → New Part 3 (Synthesis, Sequencing and the Co-Occurrence Framework). Old Part 5 (Residential Matrices) → New Part 6. Old Part 6 (Non-Residential Matrices) → New Part 7. Old Part 7 Item Specification Library → New Part 4. Old Part 7 Conflict Resolutions + proposed Part 8 → New Part 5 (Building-Level Co-Occurrence Resolution). Old Part 9 → New Part 8. Old Part 10 → New Part 9. Old Part 11 → New Part 10. Old Part 12 → New Part 11. Old Part 13 → New Part 12. Section numbering follows Part number: Part N uses §N.x.
+CONDITION: Any reference to Part numbers 3–13 or section numbers §3.x–§13.x.
+ACTION: Apply renumbering map. Old references must be updated to new Part numbers. Phase 4 find-and-replace will execute bulk substitution.
+DATE: 2026-03-29 00:00
+
+RULE: CO-0004 supersedes CO-0003 structural provisions for Part 3 title, Part 7 title, and Part 8 title/split. CO-0003 terminology changes (co-occurring disability, multi-population, intra-individual, inter-group, + vs / notation) remain in full effect. CO-0003 INTRA/INTER/BOTH tagging remains in full effect and applies to new Part 5.
+CONDITION: Any reference to CO-0003 structural changes.
+ACTION: Apply CO-0004 structure. Apply CO-0003 terminology.
+DATE: 2026-03-29 00:00
+
+RULE: Item codes use bare category prefix (A-01, B-06, etc.) everywhere. No volume-part prefix (V2-P8-, V1-P4-, etc.). Item codes are Part-independent and do not change with renumbering.
+CONDITION: Any item code reference.
+ACTION: Use bare item codes only. Delete any V2-P8- or similar prefix. Never create new volume-part prefixed codes.
+DATE: 2026-03-29 00:00
+
+RULE: Part 5 (Building-Level Co-Occurrence Resolution) owns building-wide and system-level co-occurrence conflicts that span multiple rooms or whole-building systems. Room-level conflicts are resolved inline in Parts 6/7 matrix annotations. Part 5 does not contain room-level conflicts, methodology (→ Part 3), item specifications (→ Part 4), engineering coordination (→ Part 8), or consultant appointment (→ Part 9).
+CONDITION: Any conflict resolution content.
+ACTION: Route building-wide system conflicts to Part 5. Route room-level conflicts to Parts 6/7 inline annotations. Route methodology to Part 3 §3.8–§3.9.
+DATE: 2026-03-29 00:00
+
+RULE: Parts 6/7 matrices include inline conflict notes where items in the same room/building type conflict for co-occurring or multi-population scenarios. Format: "Conflict note — [Room/building code]: Items [X-NN] and [Y-NN] conflict for [POPULATION+POPULATION]: [description]. Resolution: Part 3 §3.9.N [strategy]. See Part 5 §5.2-NN if building-wide."
+CONDITION: Any matrix entry in Parts 6/7 where items conflict.
+ACTION: Add inline conflict note. Cross-reference Part 3 strategy. Cross-reference Part 5 if building-wide.
+DATE: 2026-03-29 00:00
+
+RULE: Part 9 §9.9 and §9.10 contain co-occurrence collaboration protocol and OT appointment threshold for co-occurring disabilities. These sections are new additions per CO-0004.
+CONDITION: Cross-disciplinary collaboration for co-occurrence scenarios; OT appointment threshold for compound disability profiles.
+ACTION: Route to Part 9 §9.9/§9.10, not Part 5.
+DATE: 2026-03-29 00:00
+
+RULE: Old Part 8 (Item Specification Library in current guidebook v9.0) = New Part 4. Old Part 7 §7.3 (Conflict Resolutions in current guidebook v9.0) items tagged INTRA/INTER/BOTH per CO-0003, then routed: building-wide conflicts → New Part 5 §5.2; room-level conflicts → New Parts 6/7 inline. Old Part 7 §7.2 (Conflict Priority Hierarchy) migrates to Part 3 §3.8 (incorporated into Resolution Decision Tree).
+CONDITION: Any reference to "Part 8 items" or "Part 7 conflicts" in current guidebook or ecosystem files.
+ACTION: Map to new Part numbers per CO-0004. "Part 8 items" = Part 4 items. "Part 7 conflicts" = Part 5 (building-wide) or Parts 6/7 (room-level).
+DATE: 2026-03-29 00:00
+
