@@ -43,7 +43,7 @@
 
 ---
 
-## Current State Summary (as of 2026-03-27 01:00)
+## Current State Summary (as of 2026-03-28 17:30)
 
 ### Completed Since v10.2
 
@@ -64,12 +64,14 @@
 | P1-D2 Decision Register (49 decisions) | **DONE** |
 | CO-0002 (IntD elimination) | Issued. Execution Phase 3. |
 | Bathroom slug | COMPLETE |
-| Kitchen slug | PROVISIONAL (19/24) |
+| Kitchen slug | PROVISIONAL (19/24 jurisdictions) |
 | Threshold slug | PARTIAL (24/24 Tier 6; Co-1 0/24) |
+| residential-accessible-home-case-studies slug | PARTIAL (13 jurisdictions; Opus synthesis done; LOG PARTIAL) |
 | PAIN/OFS FDR | COMPLETE (12/12 scenarios) |
 | 8 targeted gap resolutions | RESOLVED |
-| 32 connections (CON-0001–0032) | Logged. Dispositions pending D2 approval. |
+| 35 connections (CON-0001–0035) | Logged. Dispositions pending D2 approval. |
 | 89 project-standards rules | Accumulated. |
+| case-study-compendium.md skeleton | CREATED |
 
 ### Not Yet Done
 
