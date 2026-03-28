@@ -1,6 +1,6 @@
 ## deaf-acoustic-built-environment
 
-**Updated:** 2026-03-19 01:45  **Evidence tier range:** Tier 1–Tier 4
+**Updated:** 2026-03-28 (supplement)  **Original search:** 2026-03-19 01:45  **Evidence tier range:** Tier 1–Tier 4
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -22,7 +22,7 @@
 
 ### Best-practice synthesis
 
-**Most inclusive provision:** Hearing loop systems compliant with IEC 60118-4:2014+AMD1:2017 (field strength ±3 dB across listening plane, SNR ≥47 dB(A) above magnetic noise floor) to be installed in all assembly, reception, service counter, and primary communication spaces. RT60 in speech communication spaces not to exceed 0.4 s at 500 Hz–4 kHz (DIN 18041:2016 Nutzungsart A3/A4; BS 8300-2:2018 §11). Background noise criterion NC-25 or below in hearing-critical spaces. STI ≥ 0.60 in all looped spaces. Auracast (Bluetooth LE Audio) infrastructure provision to be included in all new assembly spaces as a DAR provision for technology transition.
+**Most inclusive provision:** Hearing loop systems compliant with IEC 60118-4:2014+AMD1:2017 (field strength ±3 dB across listening plane, SNR ≥47 dB(A) above magnetic noise floor) to be installed in all assembly, reception, service counter, and primary communication spaces. RT60 in speech communication spaces not to exceed 0.4 s at 500 Hz–4 kHz (DIN 18041:2016 Nutzungsart A3/A4; BS 8300-2:2018 §11). Background noise criterion NC-25 or below in hearing-critical spaces. STI ≥ 0.60 in all looped spaces. Auracast (Bluetooth LE Audio) infrastructure provision to be included in all new assembly spaces as a DAR provision for technology transition. [IEC 60118-17 expected late 2027 — confirmed March 2026; dual provision best practice during transition.]
 
 **Most targeted provision:** For cochlear implant users: source-to-listener distance to be not more than 3 m without assistive listening augmentation; reverberation to be treated as a primary design variable, not a secondary adjustment. CI users are more sensitive to reverberation than hearing aid users and benefit from dense early reflection patterns rather than long decay tails — design implication is sound-absorbing treatment concentrated at rear and side walls, with early reflection preserved at ceiling. FM/DM remote microphone infrastructure to be provided in all classrooms and meeting rooms serving hearing device users.
 
@@ -77,3 +77,13 @@ Hearing loop systems in all assembly and service counter spaces are to comply wi
 10. Center for Hearing Access. (2025). Auracast Streamed Assistive Listening System. URL: https://centerforhearingaccess.org/auracast/ — Tier 2
 
 ---
+
+### Standard currency (verified 2026-03-28)
+| Jurisdiction | Standard | Currency |
+|---|---|---|
+| NL | NEN 9120:2025 | CURRENT (supersedes NEN 1814:2001; published February 2025) |
+| SE | BFS 2024:12 / ALM 2 | CURRENT (in force 1 September 2024; supersedes BFS 2013:9) |
+| IEC loop | IEC 60118-4:2014+AMD1:2017 | CURRENT |
+| DE | DIN 18041:2016 | CURRENT (no revision found March 2026) |
+| UK | BS 8300-2:2018 | CURRENT (no revision found March 2026) |
+| Auracast | IEC 60118-17 | NOT YET PUBLISHED — expected late 2027 |
