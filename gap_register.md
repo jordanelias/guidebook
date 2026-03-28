@@ -241,3 +241,12 @@ GAP-OPS-03 | P2 | OPEN | item-specification-writer | sensory-relief-space-design
 | GAP-P8-02 | Part 3 §3.9 strategies menu: no peer-reviewed taxonomy exists — guidebook contribution | P2 | OPEN | 3 | Session 12 | Original contribution |
 | GAP-CO03-08 | SUPERSEDED by CO-0004. Old: "Part 8 title + §8.4 split when Part 8 created". New: Part 5 §5.2 building-wide conflicts per CO-0004 structure. | P2 | CLOSED-SUPERSEDED | 2026-03-29 00:00 |
 
+## Cross-Population Conflict Mapping [2026-03-28 23:45]
+
+| ID | Description | Priority | Status | Phase | Session | Notes |
+|---|---|---|---|---|---|---|
+| GAP-CONF-01 | Cross-population conflict evidence synthesis: population-specific design literatures (DEM, DEAF, NDV/AUT, MOB, VIS, OFS, PAIN) developed independently without cross-referencing conflict points. No published synthesis framework maps where guidelines produce opposing specs. Evidence exists fragmented in aged care POEs, dementia village evaluations, single-population design guidelines. New skill cross-population-conflict-mapper created to address. | P1 | OPEN | 2B | 8+ | Skill committed 2026-03-28. 12 conflict domains identified. Only SURFACE-TEXT (VIS↔MOB) has fully evidence-based resolution. |
+| GAP-CONF-02 | Part 5 §5.2 conflict resolution content: requires conflict matrix output from cross-population-conflict-mapper for each building-wide domain (LIGHT-INT, ACOUSTIC-LVL, SPATIAL-OPEN, TEMP-RANGE, VIS-COMPLEX minimum). Part 3 §3.8 decision tree also dependent. | P1 | OPEN | 3 | 12 | Depends on GAP-CONF-01 resolution evidence |
+| GAP-CONF-03 | Dementia village literature synthesis: Hogeweyk, Village Landais Alzheimer, and derivatives as cross-population case studies (DEM+MOB 40%+VIS+DEAF). Freedom-of-movement vs fall-prevention tension documented but not synthesised into design specifications. | P2 | OPEN | 2B | 8+ | Richest evidence vein for cross-population conflicts |
+| GAP-CONF-04 | DEAF↔NDV/AUT spatial conflict: DeafSpace open/transparent design vs ASPECTSS compartmentalised design. Gallaudet campus itself documents the tension (sensory room request). No built-project resolution protocol published. | P2 | OPEN | 2B | 8+ | Theoretical only; no POE |
+| GAP-CONF-05 | sensory-coherence-checker known conflict patterns table (6 entries) needs expansion to 12 domains from cross-population-conflict-mapper output. Phase 5 dependency. | P2 | OPEN | 5 | 20+ | Blocked until GAP-CONF-01 progressed |
