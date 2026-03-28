@@ -15,13 +15,13 @@
 
 ● Wardrobe hanging rods shall be positioned at no greater than 1050 mm AFF to permit forward reach from a seated position without trunk forward-lean exceeding 30° [REF:accessible-bathroom-and-grab-bar:18]. A dual-rod configuration — upper rod at 1000–1100 mm AFF and lower rod at 600 mm AFF — shall be provided where wardrobe depth permits, to serve the full reach envelope required across the seated and standing user population [REF:accessible-bathroom-and-grab-bar:18].
 
-● Fixed shelf depth shall not exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18]. Where storage at depths greater than 380 mm is required, full-extension pull-out drawers shall be provided, with drawer depth not exceeding 600 mm [REF:accessible-bathroom-and-grab-bar:18]. ● Shelf units shall be arranged in a U-shape or L-shape configuration where practicable, to reduce travel distance and provide incidental bracing surfaces at shelf edges [REF:residential-kitchen-and-task-surfaces:14].
+● Fixed shelf depth shall not exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18] [SINGLE SOURCE — Co-2]. Where storage at depths greater than 380 mm is required, full-extension pull-out drawers shall be provided, with drawer depth not exceeding 600 mm [REF:accessible-bathroom-and-grab-bar:18]. ● Shelf units shall be arranged in a U-shape or L-shape configuration where practicable, to reduce travel distance and provide incidental bracing surfaces at shelf edges [REF:residential-kitchen-and-task-surfaces:14].
 
 ● No fixed storage shall be provided below 500 mm AFF without a pull-out mechanism [REF:accessible-bathroom-and-grab-bar:18]. Storage below 500 mm AFF without a pull-out mechanism creates a fall risk: retrieval requires trunk forward-lean exceeding the 30° biomechanical threshold at which fall risk increases significantly.
 
 ○ Wardrobe doors shall be sliding or bi-fold. Outward-swing doors shall only be used where a clear floor space of at least door-width plus 600 mm manoeuvre depth is available adjacent to the door arc [REF:accessible-bathroom-and-grab-bar:18].
 
-● A turning and manoeuvre space of no less than 1500 mm × 1500 mm shall be maintained clear of any fixed furniture throughout the dressing area [REF:accessible-bathroom-and-grab-bar:18]. This space is in addition to the transfer clearance alongside the bed specified at G-04 [UNSUPPORTED — cross-reference to G-04 required].
+● A turning and manoeuvre space of no less than 1500 mm × 1500 mm shall be maintained clear of any fixed furniture throughout the dressing area [REF:accessible-bathroom-and-grab-bar:18]. This space is in addition to the transfer clearance alongside the bed specified at G-04.
 
 **Evidence markers:** ● = evidence-based; ○ = expert consensus (sliding door type — no RCT evidence; OT practice consensus only).
 
@@ -66,19 +66,19 @@
 
 #### Specification
 
-● Two emergency call positions shall be provided in every accessible bedroom: one positioned to be operable from the floor (cord end at 100–150 mm AFF) in accordance with the primary fall-recovery function, and one at no greater than 500 mm AFF from the head of the bed, accessible without rising from a lying or semi-reclined position [REF:accessible-bathroom-and-grab-bar:19].
+● Two emergency call positions shall be provided in every accessible bedroom: one positioned to be operable from the floor (cord end at 100–150 mm AFF) in accordance with the primary fall-recovery function, and one at no greater than 500 mm AFF from the head of the bed, accessible without rising from a lying or semi-reclined position [REF:accessible-bathroom-and-grab-bar:19] [SINGLE SOURCE — Co-2].
 
-● A luminaire switch or control shall be positioned within 900 mm of the pillow position, operable without sitting upright [REF:accessible-bathroom-and-grab-bar:19].
+● A luminaire switch or control shall be positioned within 900 mm of the pillow position, operable without sitting upright [REF:accessible-bathroom-and-grab-bar:19] [SINGLE SOURCE — Co-2].
 
-● An automatic night-lighting system activated by a bed-exit sensor shall be provided, covering the route between the bed and the bathroom [REF:accessible-bathroom-and-grab-bar:19]. Manual switch provision does not meet this requirement. The sensor-activated system operates independently of manual switching.
+● An automatic night-lighting system activated by a bed-exit sensor shall be provided, covering the route between the bed and the bathroom [REF:accessible-bathroom-and-grab-bar:19] [SINGLE SOURCE — Co-2]. Manual switch provision does not meet this requirement. The sensor-activated system operates independently of manual switching.
 
 ● Continuous low-level pathway lighting at 300–400 mm AFF shall be installed on the bed-to-bathroom route, providing a minimum of 5 lux at floor level. Colour temperature shall not exceed 3000 K to avoid circadian disruption [REF:accessible-bathroom-and-grab-bar:20].
 
 ○ Bedroom doors shall be distinguishable from other internal doors by colour contrast or texture at the door leaf. A name, number, or personalisation plate shall be provided at 1200 mm AFF to support orientation to the resident's room [REF:accessible-bathroom-and-grab-bar:20]. This provision applies in all residential settings where more than one bedroom door is visible from a common circulation route.
 
-● Medication storage, where provided, shall be lockable, at no greater than 1200 mm AFF, and within 500 mm horizontal reach of a seated bed-edge position [REF:accessible-bathroom-and-grab-bar:21].
+● Medication storage, where provided, shall be lockable, at no greater than 1200 mm AFF, and within 500 mm horizontal reach of a seated bed-edge position [REF:accessible-bathroom-and-grab-bar:21] [SINGLE SOURCE — Co-2].
 
-● A clear floor space of no less than 1000 mm shall be maintained at the foot of the bed as an emergency responder access path [REF:accessible-bathroom-and-grab-bar:21]. This is in addition to the 760 mm clearance on each accessible side.
+● A clear floor space of no less than 1000 mm shall be maintained at the foot of the bed as an emergency responder access path [REF:accessible-bathroom-and-grab-bar:21] [SINGLE SOURCE — Co-2]. This is in addition to the 760 mm clearance on each accessible side.
 
 **Evidence markers:** ○ = door personalisation plate — no RCT evidence; DEM design guideline consensus only.
 
@@ -119,11 +119,11 @@
 
 #### Specification
 
-● Sensor-activated low-level lighting shall be provided on any circulation route between the bedroom and bathroom in residential buildings [REF:accessible-bathroom-and-grab-bar:19]. Activation shall be by infrared bed-exit sensor, not requiring manual switch operation.
+● Sensor-activated low-level lighting shall be provided on any circulation route between the bedroom and bathroom in residential buildings [REF:accessible-bathroom-and-grab-bar:19] [SINGLE SOURCE — Co-2]. Activation shall be by infrared bed-exit sensor, not requiring manual switch operation.
 
 ● Luminaires shall be positioned at 300–400 mm AFF, oriented to illuminate the floor surface, not directed into the eye line of a person lying in the adjacent bed [REF:accessible-bathroom-and-grab-bar:20]. Illuminance at floor level shall be no less than 5 lux throughout the route.
 
-● Colour temperature shall not exceed 3000 K [REF:accessible-bathroom-and-grab-bar:20]. Warm-spectrum light (2700–3000 K) preserves melatonin production during nocturnal movement.
+● Colour temperature shall not exceed 3000 K [REF:accessible-bathroom-and-grab-bar:20] [SINGLE SOURCE — Tier 2]. Warm-spectrum light (2700–3000 K) preserves melatonin production during nocturnal movement.
 
 ○ Where the bedroom-to-bathroom route passes through a shared circulation area, low-level lighting shall be maintained throughout, not only within the bedroom. The pathway lighting system shall be independent of the general room lighting circuit.
 
@@ -159,11 +159,11 @@ This item specifies a lighting provision in the ≤3000 K warm range specificall
 
 #### Specification
 
-● A level landing of no less than 1800 mm × 1800 mm shall be provided outside every accessible entrance door, clear of the door swing arc [REF:residential-entry-and-threshold:04]. This supersedes the 1500 × 1500 mm provision at E-06 where a power wheelchair is identified as the primary mobility aid. The larger dimension is required by the deceleration geometry and anti-tip castor configuration of electrically propelled wheelchairs.
+● A level landing of no less than 1800 mm × 1800 mm shall be provided outside every accessible entrance door, clear of the door swing arc [REF:residential-entry-and-threshold:04] [SINGLE SOURCE — Tier 5]. This supersedes the 1500 × 1500 mm provision at E-06 where a power wheelchair is identified as the primary mobility aid. The larger dimension is required by the deceleration geometry and anti-tip castor configuration of electrically propelled wheelchairs.
 
-● A clear manoeuvring space of no less than 500 mm shall be provided on the latch side of every accessible entrance door for power wheelchair users [REF:residential-entry-and-threshold:04]. This supersedes the 300 mm latch-side clearance where a power wheelchair population is identified.
+● A clear manoeuvring space of no less than 500 mm shall be provided on the latch side of every accessible entrance door for power wheelchair users [REF:residential-entry-and-threshold:04] [SINGLE SOURCE — Tier 6]. This supersedes the 300 mm latch-side clearance where a power wheelchair population is identified.
 
-● A canopy or weather protection shall be provided at all accessible entrances to a minimum depth of 1800 mm and a minimum width of 2000 mm [REF:residential-entry-and-threshold:04]. This provides sheltered space for a power wheelchair user and a companion simultaneously while operating door controls.
+● A canopy or weather protection shall be provided at all accessible entrances to a minimum depth of 1800 mm and a minimum width of 2000 mm [REF:residential-entry-and-threshold:04] [SINGLE SOURCE — Tier 5]. This provides sheltered space for a power wheelchair user and a companion simultaneously while operating door controls.
 
 ● Where threshold height and landing size cannot both meet power wheelchair requirements, threshold height governs: a zero threshold with adequate deceleration approach takes priority over any reduced landing at a raised threshold [REF:residential-entry-and-threshold:05]. Threshold >6 mm combined with landing <1800 mm constitutes a design that excludes independent access by power wheelchair users.
 
@@ -210,13 +210,13 @@ E-12 produces a higher specification than E-06 (Level Entry) for power wheelchai
 
 #### Specification
 
-● The entrance door leaf shall provide a luminance contrast of no less than 0.4 against the adjacent wall surface, assessed at 3 m from the approach path [REF:residential-entry-and-threshold:03]. Where DEM is the identified population, warm-spectrum colour (red, amber, or yellow) shall be preferred where it does not conflict with the building's colour and surface finish strategy [REF:residential-entry-and-threshold:03].
+● The entrance door leaf shall provide a luminance contrast of no less than 0.4 against the adjacent wall surface, assessed at 3 m from the approach path [REF:residential-entry-and-threshold:03] [SINGLE SOURCE — Co-2]. Where DEM is the identified population, warm-spectrum colour (red, amber, or yellow) shall be preferred where it does not conflict with the building's colour and surface finish strategy [REF:residential-entry-and-threshold:03].
 
-● Entry activation controls (bell, intercom, door release) shall have a minimum button diameter of 50 mm, positioned at 900–1200 mm AFF, and shall be visible from the entrance approach path before the user reaches the door [REF:residential-entry-and-threshold:03].
+● Entry activation controls (bell, intercom, door release) shall have a minimum button diameter of 50 mm, positioned at 900–1200 mm AFF, and shall be visible from the entrance approach path before the user reaches the door [REF:residential-entry-and-threshold:03] [SINGLE SOURCE — Co-2].
 
-● A PIR sensor-activated luminaire providing no less than 150 lux at threshold level shall be installed at all accessible entrances [REF:residential-entry-and-threshold:03]. This provision does not remove the requirement for a manual luminaire control.
+● A PIR sensor-activated luminaire providing no less than 150 lux at threshold level shall be installed at all accessible entrances [REF:residential-entry-and-threshold:03] [SINGLE SOURCE — Co-2]. This provision does not remove the requirement for a manual luminaire control.
 
-● Address numerals and building identification shall be provided at no less than 150 mm character height, in high-contrast, and shall be backlit or retro-reflective to maintain legibility in low-light conditions [REF:residential-entry-and-threshold:06]. Characters shall be positioned at 1200–1600 mm AFF.
+● Address numerals and building identification shall be provided at no less than 150 mm character height, in high-contrast, and shall be backlit or retro-reflective to maintain legibility in low-light conditions [REF:residential-entry-and-threshold:06] [SINGLE SOURCE — Co-2]. Characters shall be positioned at 1200–1600 mm AFF.
 
 ○ Where the entrance is set back from the street boundary, the property boundary shall be demarcated by a continuous visual feature (fence, wall, planting, or change in surface material) visible from the public footpath. Where DEM is the identified population, the boundary feature shall be distinctive in colour [REF:residential-entry-and-threshold:06].
 
@@ -269,11 +269,11 @@ E-13 PIR entrance lighting (≥150 lux) interacts with B-01 (Circadian Lighting)
 
 ○ Where 25 m intervals cannot be achieved due to spatial constraints, a maximum interval of 30 m is acceptable on secondary routes only [REF:accessible-circulation-geometry:09]. No building code in any jurisdiction specifies a maximum seating interval; this range derives from OT clinical evidence only.
 
-● Rest seating shall be recessed a minimum of 200 mm from the clear circulation path, in alcoves or bays of no less than 900 mm width per seat and 450 mm seat depth [REF:accessible-circulation-geometry:new]. Seating shall not project into or reduce the minimum clear circulation width.
+● Rest seating shall be recessed a minimum of 200 mm from the clear circulation path, in alcoves or bays of no less than 900 mm width per seat and 450 mm seat depth [REF:accessible-circulation-geometry:new] [SINGLE SOURCE — Co-2]. Seating shall not project into or reduce the minimum clear circulation width.
 
 ● Seat height shall be no less than 480 mm AFF [REF:accessible-circulation-geometry:new]. Seat height below 480 mm AFF creates a postural barrier for OFS/POTS users; 480 mm AFF removes this barrier. [Clinical mechanism detail in evidence annex]
 
-● Arms shall be provided on both sides of each seat, extending at least 200 mm beyond the front edge of the seat to enable lever-up from seated [REF:accessible-circulation-geometry:02].
+● Arms shall be provided on both sides of each seat, extending at least 200 mm beyond the front edge of the seat to enable lever-up from seated [REF:accessible-circulation-geometry:02] [SINGLE SOURCE — Tier 5 proxy].
 
 ○ A minimum of one seating position per alcove shall accommodate a tilt or recline angle of no less than 15° from vertical [REF:accessible-circulation-geometry:09]. Full horizontal capability shall be provided at a rate of one per floor in buildings where OFS/ME is the identified population and full recline is required for symptom management.
 
