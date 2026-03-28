@@ -126,3 +126,13 @@ functional_deficit_pass:
   tier0_candidates: 0
   environments_covered: [bathroom]
   environments_remaining: [bedroom, entrance, general]
+
+## functional_deficit_pass
+status: COMPLETE
+session: 2026-03-28
+scenarios_run: 9 (d540+trunk instability, d570+emergency; prior session d530+bidet, d420+hemiplegic WC, d510+shower)
+novel_findings: 6
+refines: 4
+contradicts: 0
+tier0_candidates: 2
+note: Scenarios 6+7+8 prior session 2026-03-27; scenarios 9+14 this session. Bedroom FDR complete.
