@@ -64,3 +64,33 @@
 
 ### Key sources
 Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Sekiguchi2017 · Keall2015-Lancet · GoldingDay2018-BATH-OUT · DIN18040-2 · BS8300-2018 · GB50763-2012 · DL163-2006-PT · DM236-89-IT · 편의증진법-KR · Inter-BE · IWA-IE · CEUD-IE
+
+### Bottom-up findings — Session 2026-03-27 (scenarios 3–8)
+
+#### Scenario 3 — d530 + bilateral UPL → toileting (bidet spatial requirements)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Electrical outlet for bidet | ≤1500mm from WC; GFCI/RCD; side wall preferred | Electronic bidet seat with heater/dryer | UNSW Home Mod Clearinghouse — OT Guidelines for Bidet Prescription (AU) | Co-2 | REFINES [corrects prior GAP FLAG: 600mm was water supply, not electrical] | MOB/UPL→NEU/OFS/PAIN |
+| Water supply for bidet seat | T-valve on existing cold supply line; no additional plumbing envelope required | Bidet seat attachment (not standalone unit) | UNSW Home Mod Clearinghouse (AU) | Co-2 | REFINES [resolves prior GAP FLAG] | MOB/UPL→ALL |
+| Wall-mount remote zone | Side wall; 800–1100mm AFF; reachable from seated position | Users where body habitus impedes reach to side-panel controls | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB/UPL→BAR [Supp. Part 4 only] |
+
+**DAR provision:** Electrical outlet ≤1500mm from WC rough-in, GFCI/RCD, accessible-height side wall. No separate water point required for seat attachment type. Prior GAP FLAG (Vasilakopoulou & Bridge 2019) resolved.
+
+#### Scenario 6 — d540 + trunk instability → dressing (bedroom)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Closet rod height (seated reach) | ≤1200mm AFF | Wheelchair user or seated dressing | AOTA Home Modification Guidelines; RCOT Housing Adaptations Without Delay | Co-2 | CONFIRMS | MOB→NEU/OFS |
+
+No novel spatial specifications. Dressing bench height = popliteal height (Tier 2 OT assessment only). Clear floor space beside bed = ≥760mm × 1200mm alongside long edge.
+
+#### Scenario 7 — d465 + powered wheelchair → entrance threshold
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Powered WC turning space (90°) | ≥1800mm × 1800mm | Electrically propelled wheelchair at entrance/door approach | BS 8300-2:2018 Annex G Tables G.7–G.8 (UK) | 5 | NOVEL — existing BPC ø1500mm is manual-chair calibrated; insufficient for power WC | MOB (power WC sub-group) |
+| Threshold height — power WC | Zero preferred; ≤6mm absolute maximum without ramp; ramp ≤1:12 retro-fit | Anti-tip castor and footplate geometry of power WC | BS 8300-2:2018; AS 1428.1:2021 | 5–6 | CONFIRMS zero-threshold; adds power WC rationale | MOB |
+
+**Specification gap:** ø1500mm turning circle in existing BPC inadequate for power WC. Route to item-specification-writer for entrance/corridor items.
+
+#### Scenarios 4–5 (kitchen) and Scenario 8 (rest points)
+Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FDR-K-01). Scenario 8: diminishing-return gate triggered; CONFIRMS only; no novel extraction.
+
