@@ -153,3 +153,50 @@ citation_mining:
       ref_id: REF-RAP-29
       note: "DNR HA processing cannot substitute for low-RT room design"
 ```
+
+---
+## Citation mining addendum — 2026-03-28
+
+**Date:** 2026-03-28
+**Seed sources mined:** Iglehart 2020 (PMID 31835909) · Murgia 2022 (PMID 36260411) · Devos 2019 (PMID 31817300)
+**Method:** PubMed related-articles (forward) + Iglehart series backward
+**Screened:** 20 related articles
+**New sources confirmed:** 8
+**Sources already known:** REF-RAP-11 (Iglehart 2020) · REF-RAP-12 (Murgia 2022) · REF-RAP-13 (Devos 2019)
+**Mining gaps:** NDV/AUT acoustic evidence thin on PubMed; cross-population-case-studies, sensory-relief-space-design, threshold-door-hardware seed sources not indexed in PubMed — mining not productive for those slugs
+
+### New sources
+
+| Ref | Authors | Year | Title | Journal | PMID | DOI | Tier | Population |
+|---|---|---|---|---|---|---|---|---|
+| RAP-18 | Iglehart F | 2016 | Speech Perception in Classroom Acoustics by Children With Cochlear Implants and With Typical Hearing | Am J Audiol | 27244568 | 10.1044/2016_AJA-15-0064 | Tier 1 | DEAF (CI) |
+| RAP-19 | Iglehart F | 2004 | Speech perception by students with cochlear implants using sound-field systems in classrooms | Am J Audiol | 15248805 | 10.1044/1059-0889(2004/009) | Tier 1 | DEAF (CI) |
+| RAP-20 | McGarrigle R et al. | 2019 | Behavioral Measures of Listening Effort in School-Age Children: SNR, Hearing Loss, Amplification | Ear Hear | 29905670 | 10.1097/AUD.0000000000000623 | Tier 1 | DEAF |
+| RAP-21 | Prodi N, Visentin C | 2022 | A Slight Increase in Reverberation Time in the Classroom Affects Performance and Behavioral Listening Effort | Ear Hear | 34369418 | 10.1097/AUD.0000000000001110 | Tier 3 | ALL (children) |
+| RAP-22 | Vickers DA et al. | 2013 | Sound field amplification in classrooms: speech perception and vocabulary age | Ear Hear | 23340455 | 10.1097/AUD.0b013e31827ad76f | Tier 3 | DEAF / ALL |
+| RAP-23 | Black MH et al. | 2022 | Considerations of the built environment for autistic individuals: review of the literature | Autism | 35695710 | 10.1177/13623613221102753 | Tier 3 | NDV/AUT |
+| RAP-24 | Amlani AM, Russo TA | 2016 | Negative Effect of Acoustic Panels on Listening Effort in a Classroom Environment | J Am Acad Audiol | 27885976 | 10.3766/jaaa.15096 | Tier 3 | ALL |
+| RAP-25 | Neuman AC et al. | 2010 | Combined effects of noise and reverberation on speech recognition: normal-hearing children and adults | Ear Hear | 20215967 | 10.1097/AUD.0b013e3181d3d514 | Tier 3 | ALL (developmental) |
+
+### Key findings
+
+**RAP-18 (Iglehart 2016, Tier 1):** Companion to Iglehart 2020. CI children in classrooms at RT 0.3, 0.6, 0.9 s. Reducing RT 0.9→0.6 s benefited both CI and typical hearing. Further reduction to 0.3 s provided additional benefit to CI children only, no harm to typical hearing. Directly corroborates ANSI/ASA S12.60 RT ≤0.3 s footnote for hearing device users. **Strengthens RAP-11 specification floor.**
+
+**RAP-19 (Iglehart 2004, Tier 1):** Earlier Iglehart work. CI children benefited more from desktop sound field system than wall-mounted in high-reverberation noisy classroom. In low-reverberation quiet room both systems equivalent. Design implication: room acoustic treatment and sound field are complementary, not substitutes; high-reverberation spaces need both.
+
+**RAP-20 (McGarrigle 2019, Tier 1):** n=82 (37 NH, 45 CHL). CHL showed significantly slower verbal RT than NH — greater processing speed deficit even when words were accurately recognised. No amplification effect found on listening effort measures. Confirms acoustic demand on CHL beyond mere accuracy; supports argument for lower RT targets even where CI children perform adequately on word recognition.
+
+**RAP-21 (Prodi & Visentin 2022, Tier 3):** n=302 Italian children aged 11–13. Small RT increase (0.57→0.69 s) combined with classroom noise produced statistically significant listening effort increase and accuracy drop for speech perception task (grade 6 most affected). Confirms even sub-threshold RT changes have measurable consequences. Supports precision of RT targets in BPC.
+
+**RAP-22 (Vickers 2013, Tier 3):** n=44 UK children. SFA improved performance; vocabulary age was primary predictor of performance in poor acoustics. SFA had larger effect for poorer performers. UK Tier 3 evidence for sound field systems. Design implication: acoustic treatment + SFA together; children with language delays especially vulnerable to poor room acoustics.
+
+**RAP-23 (Black 2022, Tier 3):** Systematic review, built environment + autism. Acoustic recommendations: soundproofing, sound absorbent materials to reduce background noise and sound levels. Confirms NDV/AUT acoustic provisions. Already partially captured via Bettarello/Caniato but adds AU/Curtin authorship; aligns with PAS 6463 recommendations.
+
+**RAP-24 (Amlani & Russo 2016, Tier 3):** Acoustic panels installed in non-compliant classroom improved STI to meet ANSI, but **paradoxically increased listening effort for children beyond the critical distance**. Word recognition and digit recall both decreased with panels. Counterintuitive finding: compliance with STI metric does not guarantee reduction in listening effort. Design implication: STI measurement alone insufficient; seating layout and critical distance must be co-designed with acoustic treatment.
+
+**RAP-25 (Neuman 2010, Tier 3):** n=63 NH children aged 6–12. SNR-50 increased with reverberation and decreased with age. Youngest children (6–8 yr) required SNR ≥15 dB in 0.8 s condition for 95% accuracy. Developmental evidence: younger children require markedly better acoustic conditions. Supports tighter RT targets in educational settings for all ages, especially early childhood.
+
+### Escalation flags
+- 🟡 RAP-24 (Amlani & Russo 2016): finding that acoustic panel installation increased listening effort despite meeting STI threshold warrants escalation to **evidence-auditor** — may affect specification language for A-13 acoustic treatment items (caveat required on STI compliance ≠ adequate listening conditions)
+- No contradictions found with existing BPC specifications
+
