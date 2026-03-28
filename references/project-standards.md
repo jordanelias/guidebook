@@ -635,3 +635,14 @@ RULE: VIS and PAIN/OFS purpose-built/adapted environment case studies are a conf
 CONDITION: When claiming or searching for case studies in these populations.
 ACTION: No purpose-built or home-modified environment case study with published outcome data has been found for VIS or PAIN/OFS populations after a full 9-jurisdiction multilingual research pass. Log as KNOWN-LIMITATION in any section that would cite such evidence. Do not speculate or extrapolate from institutional DEM or MOB cases.
 DATE: 2026-03-27 22:10
+
+
+RULE: For sensory environment and autism-architecture slugs (sensory-relief-space-design, NDV/AUT, sensory-room-user-control), use Scholar Gateway or Consensus connector rather than PubMed as primary mining tool. PubMed does not reliably index HERD, Building Research & Information, or IJERPH for these topics.
+CONDITION: citation-miner slug targets NDV/AUT sensory design, autism-architecture, or sensory room specification
+ACTION: prioritise Scholar Gateway search before PubMed; note PubMed limitation in citation_mining metadata block
+DATE: 2026-03-27 12:20
+
+RULE: Acoustic panel NRC ratings are not a valid standalone performance criterion for built environment specification. STI (Speech Transmission Index) is the correct performance criterion. Panel NRC ≥ 0.85 is a means; STI ≥ 0.60 (general) / STI ≥ 0.75 (DEAF/CI) is the end. Any specification that cites NRC as a performance target must also verify spectral balance of absorption to avoid high-frequency attenuation.
+CONDITION: any specification or BPC entry that uses panel NRC rating as a primary acoustic performance criterion
+ACTION: reframe as STI target; retain NRC as means; add spectral balance verification note
+DATE: 2026-03-27 12:20
