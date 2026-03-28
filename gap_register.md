@@ -229,6 +229,8 @@ GAP-CON-0090 | P2 | OPEN | connection-scout | K-01, bathroom items | MOB: Carnem
 GAP-CON-0091 | P2 | OPEN | connection-scout | Part 1, workplace items | NDV: Sargent 2025 "cognitive well-being" framing + day-in-the-life assessment methodology for neuroinclusive workplaces. Source: CON-0091 (MODERATE, External). | 2026-03-28 23:00
 GAP-CON-0092 | P2 | OPEN | connection-scout | Part 1 jurisdiction matrix | ALL: Andersson & Grundström 2025 (Malmö) 12-country residential accessibility comparison. Swedish-language; needs translation review. Source: CON-0092 (MODERATE, External). | 2026-03-28 23:00
 
+GAP-CIT-E14-01 | P1 | CLOSED-DELETED | citation-verifier | E-14 | REF:seating-entrance:02 (Roxburgh & Mackay 2024 BJOT) — 3 independent web searches returned no evidence of this publication. Source likely hallucinated during Opus E-14 synthesis (session 2026-03-28 21:30). REMOVE from E-14 item specification and BPC. Other E-14 sources (CDC ME/CFS, Amaze/Architecture & Access 2025, Newcastle POTS 2018) remain valid. | 2026-03-28 23:10
+
 ### CO-0003 Execution Tracking (appended 2026-03-28 21:30)
 
 | ID | Description | Priority | Status | Phase | Session | Notes |
