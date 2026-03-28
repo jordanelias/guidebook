@@ -63,7 +63,15 @@
 | d530 + bilateral UPL → toileting | Bidet/wash-dry spatial envelope | Water supply ≤200mm, electrical ≤600mm from WC; wall reinforcement | Limited ROM users needing hands-free hygiene | Vasilakopoulou & Bridge 2019 (AU) | Co-2 | GAP FLAG | MOB/UPL→ALL |
 
 ### Key sources
-Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Sekiguchi2017 · Keall2015-Lancet · GoldingDay2018-BATH-OUT · DIN18040-2 · BS8300-2018 · GB50763-2012 · DL163-2006-PT · DM236-89-IT · 편의증진법-KR · Inter-BE · IWA-IE · CEUD-IE
+Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Sekiguchi2017 · Keall2015-Lancet · GoldingDay2018-BATH-OUT · DIN18040-2 · BS8300-2018 · GB50763-2012 · DL163-2006-PT · DM236-89-IT · 편의증진법-KR · Inter-BE · IWA-IE · CEUD-IE · RCOT-HAwD-2019 · AOTA-HomeModGuidelines-2023 · CAOT-HomeAssessment-2024 · UNSW-HMC-OTGuidelines-2023 · DementiaAustralia-BEGuidelines-2022 · AOTA-FallPrevBedroom-2023
+
+*Key sources index (FDR additions 2026-03-28):*
+*18: RCOT-HAwD-2019 — Royal College of Occupational Therapists (2019). Housing Adaptations Without Delay. RCOT/Housing LIN. UK. Tier Co-2.*
+*19: AOTA-HomeModGuidelines-2023 — American Occupational Therapy Association (2023). Home Modification Practice Guidelines. AOTA. US. Tier Co-2.*
+*20: CAOT-HomeAssessment-2024 — Canadian Association of Occupational Therapists (2024). Home Assessment and Modifications. CAOT. CA. Tier Co-2.*
+*21: UNSW-HMC-OTGuidelines-2023 — UNSW Home Modification Clearinghouse (2023). OT Home Modification Guidelines. UNSW/HMC. AU. Tier Co-2.*
+*22: DementiaAustralia-BEGuidelines-2022 — Dementia Australia (2022). Built Environment Guidelines. Dementia Australia. AU. Tier 2.*
+*23: AOTA-FallPrevBedroom-2023 — American Occupational Therapy Association (2023). Fall Prevention in Bedroom. AOTA. US. Tier Co-2.*
 
 ### Bottom-up findings — Session 2026-03-27 (scenarios 3–8)
 
