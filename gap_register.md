@@ -220,6 +220,15 @@ GAP-CON-0081 | P2 | OPEN | connection-scout | B-10, visual-alerting-and-wayfindi
 GAP-CON-0083 | P2 | OPEN | connection-scout | A-02, A-08, A-13 | DEAF, VIS, DBL, NDV: Flag English-language evidence limitation in acoustic items. Note stronger evidence base exists in DE/ZH/FR for DEAF/NDV provisions.. Source: CON-0083 (MODERATE). | 2026-03-28 22:30
 GAP-CON-0084 | P3 | OPEN | connection-scout | Part 8 | ALL: Flag cross-population conflict resolution as under-researched domain. Note guidebook provides nine case-based resolutions but lacks theoretical. Source: CON-0084 (SPECULATIVE). | 2026-03-28 22:30 [Related: GAP-054]
 
+GAP-CON-0085 | P2 | OPEN | connection-scout | Part 1 framework | ALL: Salutogenic Sense of Coherence (comprehensibility, manageability, meaningfulness) maps to three-tier hierarchy. Rakhshani & Khakzand 2025 systematic review. Source: CON-0085 (MODERATE, External). | 2026-03-28 23:00
+GAP-CON-0086 | P2 | OPEN | connection-scout | A-16, Part 5 | NDV/MH, MH: TID empirical study (Holtzinger 2025) shows mixed results — design features alone insufficient without programme-level support. Caveat for MH provisions. Source: CON-0086 (MODERATE, External). | 2026-03-28 23:00
+GAP-CON-0087 | P3 | OPEN | connection-scout | A-02, A-08, A-16 | NDV/ADHD, NDV/SENS: Misophonia as emerging NDV/SENS subpopulation for acoustic items. Conceptual paper only; no empirical validation. Source: CON-0087 (SPECULATIVE, External). | 2026-03-28 23:00
+GAP-CON-0088 | P2 | OPEN | connection-scout | Part 1 framework | NDV/AUT, DEM: Prospect-refuge-context theory validated for NDV museum visitors (Granland 2025). Extends CON-0024. Source: CON-0088 (MODERATE, External). | 2026-03-28 23:00
+GAP-CON-0089 | P2 | OPEN | connection-scout | Part 4 POE | ALL: isUD certification (500+ UD solutions) as complementary POE tool alongside IDEA Audit. Source: CON-0089 (MODERATE, External). | 2026-03-28 23:00
+GAP-CON-0090 | P2 | OPEN | connection-scout | K-01, bathroom items | MOB: Carnemolla 2025 embodied wheelchair toilet inquiry — Co-1 evidence showing regulatory compliance ≠ usability. Source: CON-0090 (MODERATE, External). | 2026-03-28 23:00
+GAP-CON-0091 | P2 | OPEN | connection-scout | Part 1, workplace items | NDV: Sargent 2025 "cognitive well-being" framing + day-in-the-life assessment methodology for neuroinclusive workplaces. Source: CON-0091 (MODERATE, External). | 2026-03-28 23:00
+GAP-CON-0092 | P2 | OPEN | connection-scout | Part 1 jurisdiction matrix | ALL: Andersson & Grundström 2025 (Malmö) 12-country residential accessibility comparison. Swedish-language; needs translation review. Source: CON-0092 (MODERATE, External). | 2026-03-28 23:00
+
 ### CO-0003 Execution Tracking (appended 2026-03-28 21:30)
 
 | ID | Description | Priority | Status | Phase | Session | Notes |
