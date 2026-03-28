@@ -43,7 +43,7 @@
 
 ---
 
-## Current State Summary (as of 2026-03-28 17:30)
+## Current State Summary (as of 2026-03-28 17:45)
 
 ### Completed Since v10.2
 
@@ -61,7 +61,8 @@
 | Phase 0 skill builds (6/6) | **DONE** |
 | Phase 0R reconciliation | **DONE** (Session 1) |
 | P1-D1 Decision Register (34 decisions) | **DONE** |
-| P1-D2 Decision Register (49 decisions) | **DONE** |
+| P1-D2 Decision Register (49 decisions) | **DONE (approved 2026-03-27)** |
+| P1-D3 Decision Register (33 decisions) | **DONE (approved 2026-03-27)** |
 | CO-0002 (IntD elimination) | Issued. Execution Phase 3. |
 | Bathroom slug | COMPLETE |
 | Kitchen slug | PROVISIONAL (19/24 jurisdictions) |
@@ -77,8 +78,9 @@
 
 | Item | Workplan ref | Blocking? |
 |---|---|---|
-| P1-D3 (Parts 8–13, Appendices) | Phase 1 Session 3 | **YES — gates Phase 2B scope** |
+| P1-D3 (Parts 8–13, Appendices) | Phase 1 Session 3 | **DONE (approved 2026-03-27)** |
 | Pre-v4 slug triage (51 slugs) | Phase 2A | No |
+| Register `case-study-economics-financial-data` + `accessible-design-failures-poor-performance` slugs | Phase 2A Session 4 | No |
 | Connection register disposition update | Post-D2 approval | No — housekeeping |
 | Gap register deduplication (GAP-CON-05, GAP-FDR-01) | Housekeeping | No |
 | Remaining research (threshold completion, NDV/MH, etc.) | Phase 2B | No |
@@ -182,7 +184,7 @@
 
 ```
 Phase 0R  Reconciliation           ✅ DONE (Session 1)
-Phase 1   Editorial Decisions      Session 2 ✅ DONE · Session 3 NEXT
+Phase 1   Editorial Decisions      Sessions 2–3 ✅ DONE
 Phase 2A  Triage & Mining          (1 session)
 Phase 2B  Research                 (4 sessions) — scope refined by D2
 Phase 2C  Connection + Bottom-Up   (1 session)
@@ -497,8 +499,8 @@ Articulate in Part 1 or Part 8: H-02 (Individual Environmental Control) is the g
 |---|---|---|---|
 | ~~1~~ | ~~0R~~ | ~~Reconciliation~~ | **DONE** |
 | ~~2~~ | ~~P1~~ | ~~Editorial: Parts 4–7 — item consolidation gate~~ | **DONE (49 decisions)** |
-| 3 | P1 | Editorial: Parts 8–13 + Appendices — **Decision Register complete** | NEXT |
-| 4 | P2A | Pre-v4 slug triage (51 slugs) + **`cross-population-case-studies` slug (new, full run)** + compendium skeleton (existing 14 entered) + post-decision gap triage | |
+| ~~3~~ | ~~P1~~ | ~~Editorial: Parts 8–13 + Appendices — Decision Register complete~~ | **DONE (approved 2026-03-27)** |
+| 4 | P2A | Pre-v4 slug triage (51 slugs) + **`cross-population-case-studies` slug (new, full run)** + compendium skeleton (existing 14 entered) + post-decision gap triage | **NEXT** |
 | 5 | P2B | Foundations: Co-2 + CRPD + CONSUME backfill + threshold completion + retreat/reset evidence | |
 | 6 | P2B | Population: NDV/MH + NEU supplement + residential + SUPPLEMENT batch | |
 | 7 | P2B | Cross-population conflict evidence + economics deep-dive + **`case-study-economics-financial-data` slug (new)** — financial fields populated in compendium for all case studies | |
@@ -565,7 +567,7 @@ v10.2: 22 sessions. v10.3: 22 sessions. No session count change. Efficiency gain
 |---|---|---|
 | Full bibliography | NOT AVAILABLE | citation-verifier provisional mode; resolved Phase 3 Session 18 HARVEST |
 | Application volume full text | NOT AVAILABLE | volii-validator provisional mode |
-| D2 author approval | PENDING | 20 decisions awaiting approval (4 CRITICAL, 7 HIGH, 5 MODERATE, 4 LOW) |
+| D2 author approval | **APPROVED 2026-03-27** | All decisions approved. |
 
 ## Deferred Production Items (Updated)
 
