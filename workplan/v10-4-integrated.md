@@ -581,3 +581,10 @@ v10.2: 22 sessions. v10.3: 22 sessions. No session count change. Efficiency gain
 ---
 
 *End of Workplan v10.3*
+
+---
+
+## Supersession Note
+
+**Superseded by `workplan/v10-5_2026-03-29.md`** [2026-03-29]
+All Part numbers updated to CO-0004 structure in v10.5.
