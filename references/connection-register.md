@@ -27,7 +27,8 @@ Tagging of existing entries (CON-0001–0038) is scheduled for Phase 2C Session 
 ## CON-0001 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** INTER-GROUP  
 **Populations involved:** DEM, VIS, DBL, IntD, NDV/AUT  
 **Items involved:** D-02, D-06, D-08, D-09, C-04  
 **Gap register items:** GAP-S4-R03, GAP-S4-R04, GAP-S4-R05, GAP-S4-R07, GAP-S4-N01, GAP-S4-N02, GAP-S4-N04, GAP-S4-N06, GAP-NEW-05  
@@ -65,7 +66,8 @@ Create Tier 0 universal circulation legibility specification: all buildings to p
 ## CON-0002 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** BOTH  
 **Populations involved:** NDV, MH, OFS, PAIN  
 **Items involved:** A-16, H-02  
 **Gap register items:** GAP-SRS-01, GAP-B4-07, GAP-NEW-11  
@@ -94,7 +96,8 @@ Expand A-16 to carry NDV, MH, OFS, PAIN as co-primary populations. Retire separa
 ## CON-0003 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** BOTH  
 **Populations involved:** MOB, PAIN, OFS, DEM, NEU  
 **Items involved:** G-03, G-04, G-05  
 **Gap register items:** GAP-B4-05, GAP-B4-07  
@@ -128,7 +131,8 @@ Add PAIN, OFS, DEM, NEU as co-populations for G-03/G-04. No specification change
 ## CON-0004 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** BOTH  
 **Populations involved:** OFS, PAIN, MOB  
 **Items involved:** F-05, G-05, NEW (reclining seating)  
 **Gap register items:** GAP-B4-03, GAP-B4-07, GAP-B4-08, GAP-NEW-11  
@@ -154,7 +158,8 @@ Create single new item: Adjustable Posture Seating Provision. Spec: ≥1 recline
 ## CON-0005 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** BOTH  
 **Populations involved:** MOB, PAIN, OFS  
 **Items involved:** A-09, G-08 (proposed)  
 **Gap register items:** GAP-B4-09, GAP-IMPL-02  
@@ -179,7 +184,8 @@ Add PAIN as co-population for A-09 resilient flooring. THIN flag for PAIN-specif
 ## CON-0006 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** BOTH  
 **Populations involved:** DEM, NEU, NDV, MH, OFS  
 **Items involved:** B-01 (circadian lighting)  
 **Gap register items:** GAP-034  
@@ -204,7 +210,8 @@ Add MH and OFS as explicit co-populations for B-01.
 ## CON-0007 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** INTER-GROUP  
 **Populations involved:** DEAF, DBL, MH, DEM  
 **Items involved:** E-01, E-06, E-08  
 **Gap register items:** GAP-STEP6-03, GAP-S4-R07  
@@ -237,7 +244,8 @@ Create Tier 0 companion-width specification: primary routes ≥1500mm clear (bes
 ## CON-0008 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** BOTH  
 **Populations involved:** PAIN, OFS, NEU  
 **Items involved:** A-02, A-08, A-13  
 **Gap register items:** GAP-RAP-01  
@@ -263,7 +271,8 @@ Add PAIN and OFS as co-populations for A-02/A-08/A-13 with THIN-POPULATION-SPEC 
 ## CON-0009 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** BOTH  
 **Populations involved:** MOB, OFS, PAIN  
 **Items involved:** Threshold items (residential-entry-and-threshold)  
 **Gap register items:** NONE  
@@ -288,7 +297,8 @@ Add OFS and PAIN as co-populations for entry/threshold items.
 ## CON-0010 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** INTER-GROUP  
 **Populations involved:** DEM, OFS, NDV, MH  
 **Items involved:** BIO-01–BIO-05, A-16  
 **Gap register items:** NONE  
@@ -314,7 +324,8 @@ Cross-reference biophilic outdoor items with DEM garden loop, OFS rest provision
 ## CON-0011 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** INTER-GROUP  
 **Populations involved:** DBL, IntD  
 **Items involved:** All room matrix items  
 **Gap register items:** GAP-S4-R01 through GAP-S4-N07, REVIEW-S4-01  
@@ -341,7 +352,8 @@ Single systematic item-specification-writer pass inserting DBL and IntD into all
 ## CON-0012 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** INTER-GROUP  
 **Populations involved:** ALL  
 **Items involved:** DAR items  
 **Gap register items:** NONE  
@@ -365,7 +377,8 @@ Add Italian adattabilità as statutory precedent in DAR specification. Cross-ref
 ## CON-0013 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** BOTH  
 **Populations involved:** MOB, OFS, PAIN, LPA  
 **Items involved:** Kitchen items  
 **Gap register items:** GAP-B4-07, GAP-076  
@@ -390,7 +403,8 @@ Add OFS and PAIN as co-populations for kitchen adjustable worktop. Partially res
 ## CON-0014 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** HIGH  
+**Confidence:** HIGH
+**Type:** INTER-GROUP  
 **Populations involved:** DEAF, DBL, NEU, NDV  
 **Items involved:** B-10, visual-fire-alarm items  
 **Gap register items:** GAP-035  
@@ -414,7 +428,8 @@ New item: Vibrotactile Alerting Device (sleeping areas) — minimum vibration in
 ## CON-0015 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** MODERATE  
+**Confidence:** MODERATE
+**Type:** BOTH  
 **Populations involved:** NDV, OFS, PAIN, MH  
 **Items involved:** F-04, F-02  
 **Gap register items:** NONE  
@@ -439,7 +454,8 @@ Add MH as co-population for F-02/F-04.
 ## CON-0016 [2026-03-26 18:10]
 
 **Mode:** Internal  
-**Confidence:** SPECULATIVE  
+**Confidence:** SPECULATIVE
+**Type:** INTER-GROUP  
 **Populations involved:** DEM, VIS, NDV/AUT  
 **Items involved:** C-04, D-02  
 **Gap register items:** GAP-032, GAP-033  
@@ -466,6 +482,7 @@ Cross-reference note in C-04: DEM floor treatment and VIS TWSI contrast are comp
 
 **Mode:** Internal
 **Confidence:** HIGH
+**Type:** BOTH
 **Populations involved:** NDV/AUT, NDV/MH, OFS, DEM, NEU, DEAF, VIS
 **Items involved:** H-02 (Individual Environmental Control), A-16, B-06, B-07
 **Gap register items:** NONE (new Tier 0 candidate)
@@ -498,6 +515,7 @@ Elevate H-02 (Individual Environmental Control) to Tier 0 universal design. Spec
 
 **Mode:** Internal
 **Confidence:** HIGH
+**Type:** BOTH
 **Populations involved:** DEM, NEU, NDV/AUT, OFS
 **Items involved:** Cognitive wayfinding BPC, DEM BPC, NEU BPC
 **Gap register items:** NONE (new Tier 0 candidate)
@@ -531,6 +549,7 @@ Elevate "essential facility sightline" to a Tier 0 residential design principle:
 
 **Mode:** Internal
 **Confidence:** HIGH
+**Type:** BOTH
 **Populations involved:** NDV/AUT, NDV/MH, OFS, PAIN
 **Items involved:** A-16 (Sensory Room), NDV/MH retreat room, OFS rest space
 **Gap register items:** GAP-NEW-11, GAP-B4-08
@@ -562,6 +581,7 @@ Specify "environmental refuge space" as Tier 0 universal provision: one per occu
 
 **Mode:** Internal
 **Confidence:** SPECULATIVE
+**Type:** INTER-GROUP
 **Populations involved:** DEAF, VIS, DEM, NDV/AUT
 **Items involved:** DEAF corridor glazing (DeafSpace), DEM glare provisions, VIS glare control, NDV visual noise
 **Gap register items:** NONE (new conflict identification)
@@ -593,6 +613,7 @@ Document as a conflict requiring resolution. Possible mitigations: anti-reflecti
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Part III (design hierarchy), Tier 0 doctrine
 **Gap register items:** NONE (new theoretical framework connection)
@@ -622,6 +643,7 @@ Cite the "Reduction of Fear" proposal in Part III as theoretical support for the
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** BOTH
 **Populations involved:** NDV/MH, DEM, NEU, NDV/AUT
 **Items involved:** NDV/MH BPC (TID), environmental refuge (CON-0019)
 **Gap register items:** NONE (new evidence connection)
@@ -654,6 +676,7 @@ Cross-reference TID neuroscience evidence as mechanistic support for the guidebo
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTRA-INDIVIDUAL
 **Populations involved:** NDV/AUT, NDV/ADHD, NDV/SENS
 **Items involved:** A-16 (Sensory Room), NDV BPC
 **Gap register items:** NONE (new evidence)
@@ -683,6 +706,7 @@ Use the Al-Harasis taxonomy to audit the guidebook's NDV item specifications for
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Environmental refuge (CON-0019), biophilic outdoor (CON-0015), NDV/MH retreat
 **Gap register items:** NONE (new theoretical connection)
@@ -713,6 +737,7 @@ Cite prospect-refuge theory in Part III (design hierarchy) as theoretical suppor
 
 **Mode:** External
 **Confidence:** MODERATE
+**Type:** INTER-GROUP
 **Populations involved:** NDV/AUT, NDV/ADHD, NDV/SENS, VIS
 **Items involved:** Outdoor provisions, biophilic BPC
 **Gap register items:** NONE (new evidence domain)
@@ -742,6 +767,7 @@ Extend the guidebook's outdoor design provisions beyond biophilic and DEM secure
 
 **Mode:** External
 **Confidence:** MODERATE
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Part III (evidence hierarchy), methodology
 **Gap register items:** NONE (methodological connection)
@@ -770,6 +796,7 @@ Cite both reviews in the sensory room (A-16) evidence base as methodological sup
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Part 1 (theoretical framework), Part 3 (economics)
 **Gap register items:** NONE
@@ -799,6 +826,7 @@ Part 1 theoretical framework: cite Housing Enabler as the recommended Tier 2 ass
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Part 1 (theoretical framework — three-tier hierarchy)
 **Gap register items:** NONE
@@ -832,6 +860,7 @@ Part 1 theoretical framework: add explicit mapping of three-tier hierarchy to La
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** NONE (new specification area: RFO-stage POE)
 **Gap register items:** NONE
@@ -865,6 +894,7 @@ Add RFO-stage POE specification to Part 5 (or equivalent practice guidance): rec
 
 **Mode:** External
 **Confidence:** MODERATE
+**Type:** INTER-GROUP
 **Populations involved:** DEM, IntD, NDV/AUT, VIS, NEU
 **Items involved:** CON-0001 items (circulation legibility); cognitive wayfinding items
 **Gap register items:** NONE
@@ -898,6 +928,7 @@ Strengthen CON-0001 circulation legibility specification with quantified paramet
 
 **Mode:** External
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Part 3 (economics)
 **Gap register items:** NONE
@@ -933,6 +964,7 @@ Part 3 economics section: update cost-effectiveness evidence with 2023-2025 meta
 
 **Mode:** External
 **Confidence:** MODERATE
+**Type:** INTER-GROUP
 **Populations involved:** ALL
 **Items involved:** Part 1 (structure validation)
 **Gap register items:** NONE
@@ -961,6 +993,7 @@ Note as structural validation in Part 1 methodology section. No specification ch
 **Status:** PENDING
 **Discovered:** 2026-03-27 (residential-accessible-home-case-studies Opus synthesis)
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Mode:** Internal (BPC → Part 5/7 specification)
 
 ### Connection
@@ -986,6 +1019,7 @@ Write Part 5 residential assessment specification using CAPABLE as governing mod
 **Status:** PENDING
 **Discovered:** 2026-03-27 (residential-accessible-home-case-studies Opus synthesis)
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Mode:** Internal (BPC → Part 7 MOB specification)
 
 ### Connection
@@ -1008,6 +1042,7 @@ Cross-reference to bathroom-design, kitchen-design, entrance-and-threshold, and 
 **Status:** PENDING
 **Discovered:** 2026-03-27 (residential-accessible-home-case-studies Opus synthesis)
 **Confidence:** HIGH
+**Type:** INTER-GROUP
 **Mode:** Internal (BPC → Part 5 specification)
 
 ### Connection
@@ -1030,6 +1065,7 @@ Part 5 residential matrices must include support framework items — not just bu
 ## CON-0036 [2026-03-28 17:00]
 **Mode:** Internal
 **Confidence:** MODERATE
+**Type:** BOTH
 **Disposition:** CONSUMED
 **Populations involved:** OFS, PAIN, NDV/AUT, NDV/SENS, NEU, DEM, NDV/MH, DEAF
 **Items involved:** D-05
@@ -1055,6 +1091,7 @@ Maintain D-05 as Tier 1. Annotate: where retreat/reset spaces serve DEAF populat
 ## CON-0037 [2026-03-28 17:00]
 **Mode:** Internal
 **Confidence:** MODERATE
+**Type:** INTER-GROUP
 **Disposition:** CONSUMED (E-14 drafted 2026-03-28)
 **Populations involved:** OFS, PAIN, MOB/AMB, DEM
 **Items involved:** E-05, E-10
@@ -1082,6 +1119,7 @@ Create new Tier 0 item **E-14 Entrance Rest Seating** — reclinable or tilt-cap
 ## CON-0038 [2026-03-28 17:00]
 **Mode:** Internal
 **Confidence:** MODERATE
+**Type:** BOTH
 **Disposition:** CONSUMED
 **Populations involved:** MOB, NEU, PAIN
 **Items involved:** G-08
