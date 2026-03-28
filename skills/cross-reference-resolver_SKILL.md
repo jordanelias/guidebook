@@ -191,6 +191,31 @@ This pass runs after Phase 3 writing (when both BPC and items are populated) and
 
 ---
 
+
+## 4. Endnote Superscript Validation
+
+Run this check **only if** `bibliography-compiler` has already run on this volume.
+
+### Pre-run mode detection
+
+Before running, detect the volume's endnote state:
+
+| Condition | State | Action |
+|---|---|---|
+| `## Endnotes` section present | bibliography-compiler HAS run | Validate superscripts against endnote list |
+| `## Endnotes` absent + `[REF:` markers present | bibliography-compiler has NOT run | Skip endnote validation; flag `[BIBLIOGRAPHY-COMPILER NOT YET RUN — REF markers pending]` |
+| Neither present | Legacy volume | Skip |
+
+### Superscript validation
+
+| Resolution class | Condition | Action |
+|---|---|---|
+| **VALID** | Superscript number has matching entry in `## Endnotes` | No action |
+| **ABSENT** | Superscript number has no matching endnote entry | Flag BROKEN — bibliography-compiler error |
+| **UNPROCESSED** | `[REF:{slug}:{NN}]` marker still present | Flag UNPROCESSED-REF — route to bibliography-compiler |
+
+**Note:** Endnote superscripts (`¹`, `²`, etc.) are NOT broken section or part cross-references. Do not flag them as broken refs in Stage 2 general validation.
+
 ## Escalation Triggers
 
 Stop and confirm with user:
