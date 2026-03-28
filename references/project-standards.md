@@ -652,3 +652,28 @@ RULE: PubMed MeSH term expansion for "dressing" expands to "bandages" — this s
 CONDITION: functional-deficit-researcher runs ICF d540 or any dressing/ADL scenario targeting residential bedroom environment.
 ACTION: Skip PubMed Step 1 for these scenarios. Go directly to Step 2 (OT practice guidelines: RCOT, CAOT, Home Mod Clearinghouse, BS8300 Annex residential sections). Log PubMed as SKIP-MESH-CONFLICT in scenario metadata.
 DATE: 2026-03-28 09:00
+
+RULE: item-specification-writer draft format uses 'shall be' constructions; always run prose-style-checker before vol2-item-formatter — the conversion pass is mandatory, not optional
+CONDITION: Any item drafted via item-specification-writer
+ACTION: Run prose-style-checker before vol2-item-formatter; 29 IMPERATIVE flags per 6-item batch is typical volume
+DATE: 2026-03-28 18:25
+
+RULE: FDR Step 2 direct (OT practice guidelines before PubMed) is the correct approach for dressing/wardrobe/bedroom scenarios — PubMed has near-zero yield for spatial storage specs
+CONDITION: FDR scenarios involving d540 (dressing), d640 (household storage), d570 (bedroom emergency) — environment context = bedroom
+ACTION: Skip Step 1 (PubMed), go direct to Step 2 (RCOT HAwD, AOTA, CAOT, UNSW HMC)
+DATE: 2026-03-28 18:25
+
+RULE: PROVISIONAL-REF pattern — assign REF-ID positions only after BPC Key sources lists are updated; never emit final item text with provisional positions
+CONDITION: Any item that cites sources from an FDR pass not yet in BPC Key sources
+ACTION: Update BPC Key sources → assign positions → replace PROVISIONAL-REF markers → then commit final item
+DATE: 2026-03-28 18:25
+
+RULE: Tier 0 rejection test — sound attenuation provisions that create emergency communication isolation are incompatible with Tier 0 status for DEAF population
+CONDITION: Any proposed Tier 0 provision that specifies acoustic isolation, sound attenuation, or enclosed quiet rooms
+ACTION: Check DEAF population: does the provision isolate from emergency communication? If yes → reject Tier 0; annotate with DEAF visual alert requirement; route to D-05 or equivalent
+DATE: 2026-03-28 18:25
+
+RULE: AOTA Home Modification Practice Guidelines: confirmed published edition is Siebert, Smallfield & Stark (2014) — not 2023. Verify if 2023 revision exists before citing as 2023
+CONDITION: Any citation to 'AOTA Home Modification Practice Guidelines 2023'
+ACTION: Flag YEAR MISMATCH; use Siebert et al. (2014) as confirmed citation until 2023 edition verified at library.aota.org
+DATE: 2026-03-28 18:25
