@@ -80,3 +80,15 @@ Stark2017-AJOT · Foundations-AKW-2023 · DIN18040-2 · BS8300-2018 · ADA-2010-
 | Tap/faucet type | Single-lever or sensor/touch; long lever; no separate H/C controls | Unilateral UPL — cannot hold-and-turn simultaneously | AOTA / Neurolutions (US); RCOT (UK) | Co-2 | CONFIRMS single-lever; adds sensor/touch as best practice | MOB/UPL→NEU/PAIN/DEM |
 | Sink-wall suction brush zone | Inner sink wall or rim accessible from dominant-hand side; no projecting fittings within zone | One-handed fruit/vegetable scrubbing | Arm Dynamics OT team (US) | Co-2 | NOVEL — spatial zone for AT mount | MOB/UPL |
 
+### Bottom-up findings — Session 2026-03-28 (scenario 10 — laundry/household storage)
+
+#### Scenario 10 — d640 + limited bilateral reach → laundry/household storage
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Washer/dryer pedestal height | 300–400mm raise (drum opening at 700–800mm AFF) | Seated user — drum opening at comfortable reach height without trunk lean | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — pedestal height as spatial specification not in existing BPC | MOB→NEU/OFS/PAIN |
+| Accessible shelf height range | 380–1200mm AFF (seated); 380–1370mm (ambulant reduced reach) | Lower bound 380mm: below this requires trunk forward lean >30° | AOTA Home Modification Practice Guidelines (2023) | Co-2 | REFINES — lower bound (380mm) not previously specified; consistent with scenario 9 trunk-lean threshold | MOB→NEU/PAIN |
+| Storage organisation configuration | U-shape or L-shape where possible | Reduces travel distance; shelf edges provide incidental bracing surface for trunk instability | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL — layout type as fall-risk mitigation spec | MOB→NEU/PAIN |
+| Fold-down ironing board (wall-mounted) | Surface height 760mm; fold clearance ≥450mm when folded | WC user — ironing at seated height; fold clearance to avoid obstruction when not in use | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB→OFS |
+
+**Population mapping:** Primary MOB/UPL; secondary NEU, OFS, PAIN. Storage layout (U/L bracing) extends scenario 9 Tier 0 candidate — confirms ≥3 population codes.
+**DAR provision:** Laundry appliance pedestal provision (300–400mm raise, structural support) should be specified as DAR rough-in; pedestal retrofittable without structural work.
