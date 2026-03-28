@@ -1,6 +1,6 @@
 # Project Instructions — Technical Guidebook Review System
-**Last revised:** 2026-03-28
-**Supersedes:** 2026-03-27 17:30
+**Last revised:** 2026-03-28 17:45
+**Supersedes:** 2026-03-28
 
 ---
 
@@ -344,7 +344,8 @@ next_action:
 | Phase 0 skill builds (6/6) | DONE |
 | Phase 0R reconciliation | DONE |
 | P1-D1 Decision Register (34 decisions) | DONE |
-| P1-D2 Decision Register (49 decisions) | DONE (pending author approval of 4 CRITICAL + 7 HIGH + 9 other items) |
+| P1-D2 Decision Register (49 decisions) | DONE (approved 2026-03-27) |
+| P1-D3 Decision Register (33 decisions, DEC-08–DEC-21 + D3-01–D3-27) | DONE (approved 2026-03-27) |
 | P1-D2 Systematic Audit | DONE (2 incoherencies, 7 MODERATE connections, 6 gaps, 3 synergies resolved) |
 | TC restructuring (CO-0003) | Issued. Execution Phase 3 Session 16. |
 | CO-0002 (IntD elimination) | Issued. Execution Phase 3. |
@@ -362,12 +363,12 @@ next_action:
 | case-study-compendium.md skeleton | CREATED at references/case-study-compendium.md |
 
 ### Next Action
-**Session 3 — Phase 1:** P1-D3 Decision Register (Parts 8–13 + Appendices + Supplementary). Resolves DEC-08 through DEC-20. **Blocking: gates Phase 2B scope.**
+**Session 4 — Phase 2A:** Pre-v4 slug triage (51 slugs) + `cross-population-case-studies` slug (full multilingual-research run) + `case-study-compendium.md` skeleton with existing 14 case studies + post-decision gap triage. Register 2 new slugs: `case-study-economics-financial-data` · `accessible-design-failures-poor-performance`.
 
 ### Not Yet Done
 | Item | Workplan ref | Blocking? |
 |---|---|---|
-| P1-D3 (Parts 8–13, Appendices) | Phase 1 Session 3 | YES — gates Phase 2B scope |
+| P1-D3 (Parts 8–13, Appendices — D3-01–D3-33) | Phase 1 Session 3 | DONE (approved 2026-03-27) |
 | D2 author approval (4 CRITICAL, 7 HIGH, 9 other) | Before Phase 3 Session 16 | YES — gates CO-0003/CO-0004 execution |
 | Connection register disposition update | Post-D2 approval | No |
 | Gap register deduplication (GAP-CON-05, GAP-FDR-01) | Housekeeping | No |
@@ -383,7 +384,6 @@ next_action:
 | Application volume full text | NOT AVAILABLE — volii-validator provisional |
 | Endnote pipeline dry run | NOT DONE — must pass before Phase 3 |
 | Body ↔ bibliography cross-reference audit | NOT DONE |
-| D2 author approval (20 decisions) | PENDING — must complete before Phase 3 Session 16 |
 
 ---
 
