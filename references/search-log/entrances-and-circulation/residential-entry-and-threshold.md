@@ -105,3 +105,13 @@ ACCEPTED_GAPS: [10 jurisdictions NOT-RUN (IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES
 ```
 
 ```yaml
+
+## functional_deficit_pass
+status: COMPLETE
+session: 2026-03-28
+scenarios_run: 4 (d465+power WC threshold [prior], d465+power WC approach [extended], d460+cognitive legibility)
+novel_findings: 7
+refines: 4
+contradicts: 0
+tier0_candidates: 3
+note: Power WC turning spec (>=1800mm) prior session. This session adds canopy, latch-side, landing differentiation, cognitive legibility. Three Tier 0 candidates: PIR lighting, luminance contrast, address signage.
