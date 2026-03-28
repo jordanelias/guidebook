@@ -85,9 +85,9 @@
 | `bathrooms-and-wet-areas` | 2 |
 | `communication-and-alerts` | 4 |
 | `controls-and-hardware` | 1 |
-| `economics` | 2 |
+| `economics` | 3 |
 | `entrances-and-circulation` | 6 |
-| `frameworks-and-methodology` | 12 |
+| `frameworks-and-methodology` | 13 |
 | `health-and-symptom-management` | 6 |
 | `kitchens-and-workspaces` | 1 |
 | `population-general` | 11 |
@@ -98,6 +98,8 @@
 
 ---
 
+| `case-study-economics-financial-data` | `economics` | `references/search-log/economics/case-study-economics-financial-data.md` | `references/bpc/economics/case-study-economics-financial-data.md` | STUB — Phase 2B Session 7 |
+| `accessible-design-failures-poor-performance` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/accessible-design-failures-poor-performance.md` | `references/bpc/frameworks-and-methodology/accessible-design-failures-poor-performance.md` | STUB — Phase 2B Session 8 |
 | `cross-population-case-studies` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/cross-population-case-studies.md` | `references/bpc/frameworks-and-methodology/cross-population-case-studies.md` | ACTIVE |
 ## Instructions for research-log-manager
 
