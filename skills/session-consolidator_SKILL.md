@@ -47,6 +47,12 @@ For each file below: GET current content from GitHub. Check against session work
 - Every slug confirmed in search-log → BPC entry `## {slug}` present.
 - Fix: cannot reconstruct BPC content post-hoc → flag as BLOCKER.
 
+**references/connection-register.md**
+- Every connection described as CONSUMED this session → status updated from PENDING to CONSUMED with today's timestamp and item reference.
+- Every new connection identified this session by `connection-scout` → PENDING entry present with correct priority and population codes.
+- Every connection described as DEFERRED or SUPERSEDED → status field reflects that state.
+- Fix: update status inline; append missing entries. Cannot reconstruct scout output post-hoc → flag as BLOCKER.
+
 **Project Instructions**
 - Compare session decisions (new rules, structural changes, skill updates, population code changes) against PI content.
 - If PI is stale → flag as BLOCKER with specific section(s) requiring update. Do not auto-edit PI — flag for author action.
@@ -74,6 +80,7 @@ For each file below: GET current content from GitHub. Check against session work
 | project_standards | ✓ | N | N | N |
 | search_log | ✓ | N | N | N |
 | bpc | ✓ | N | N | N |
+| connection_register | ✓ | N | N | N |
 | sessions | ✓ | N | N | N |
 
 ### 2. Extract patterns
@@ -124,6 +131,7 @@ reconciliation:
   project_standards:   {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
   search_log:          {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
   bpc:                 {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
+  connection_register: {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
   sessions:            {checked: true, discrepancies: 0, fixed: 0, blockers: 0}
   project_instructions: {checked: true, stale_sections: 0, blockers: 0}
 next_action:
@@ -154,3 +162,4 @@ Before writing the session YAML, verify no working documents are uncommitted:
 3. The `reconciliation.sessions` block must include `{checked: true}` only if this check passes.
 
 **Rule:** No session closes with uncommitted working documents. Data loss prevention.
+
