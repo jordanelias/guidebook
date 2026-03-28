@@ -1048,7 +1048,7 @@ Maintain D-05 as Tier 1. Annotate: where retreat/reset spaces serve DEAF populat
 ## CON-0037 [2026-03-28 17:00]
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** CONSUMED (E-14 drafted 2026-03-28)
 **Populations involved:** OFS, PAIN, MOB/AMB, DEM
 **Items involved:** E-05, E-10
 **Gap register items:** GAP-FDR-T0-04
@@ -1066,9 +1066,9 @@ Entrance recline seating within 5 m of all accessible entrances serves OFS, PAIN
 Create new Tier 0 item **E-14 Entrance Rest Seating** — reclinable or tilt-capable seating within 5 m of threshold, seat height ≥480 mm AFF, arms both sides, alcove ≥900 mm wide, ≥200 mm recess from circulation path. Cross-reference E-05 and E-10. Evidence tier: THIN pending empirical validation.
 
 ### Disposition
-- [ ] Draft E-14 as new Tier 0 item
-- [ ] Cross-reference E-05 and E-10
-- [ ] Update GAP-FDR-T0-04 → CONSUMED on E-14 integration
+- [x] Draft E-14 as new Tier 0 item — parts/v10/e14-entrance-rest-seating.md
+- [x] Cross-reference E-05 and E-10
+- [x] Update GAP-FDR-T0-04 → CONSUMED (gap_register.md updated 2026-03-28)
 
 ---
 
