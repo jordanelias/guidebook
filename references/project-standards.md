@@ -677,3 +677,8 @@ RULE: AOTA Home Modification Practice Guidelines: confirmed published edition is
 CONDITION: Any citation to 'AOTA Home Modification Practice Guidelines 2023'
 ACTION: Flag YEAR MISMATCH; use Siebert et al. (2014) as confirmed citation until 2023 edition verified at library.aota.org
 DATE: 2026-03-28 18:25
+
+RULE: Opus/Haiku passthrough artifacts must use array.join() string construction, not template literals. Template literals break silently when evidence text contains backtick characters. Always build USER and SYSTEM strings as arrays of strings joined with "\n".
+CONDITION: Any artifact calling the Anthropic API with multi-line evidence or BPC content as input.
+ACTION: Use const USER = ["line1", "line2", ...].join("\n") pattern. Never use backtick template literals for strings that embed research evidence or BPC content.
+DATE: 2026-03-28
