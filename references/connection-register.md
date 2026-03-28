@@ -2555,3 +2555,231 @@ Flag cross-population conflict resolution as under-researched domain. Note guide
 - [ ] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
 - [x] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0085 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** Part 1 framework
+**Gap register items:** NONE
+
+### Connection description
+Salutogenic architecture systematic review (Rakhshani & Khakzand 2025, SAGE HERD) identifies architectural elements in non-therapeutic settings that promote health for elderly populations. Sense of Coherence framework (comprehensibility, manageability, meaningfulness) maps to guidebook's three-tier hierarchy: comprehensibility = Tier 0 legibility; manageability = Tier 1 population-adjusted; meaningfulness = Tier 2 co-designed. Not currently in guidebook theoretical framework.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Rakhshani & Khakzand 2025 (SAGE HERD systematic review) | 3 | elderly/DEM | Part 1 theoretical framework |
+| Pleyer et al. 2024 (Frontiers Public Health) | 3 | ALL | salutogenic environmental model |
+
+### Proposed synthesis direction
+Add salutogenic Sense of Coherence as supplementary theoretical lens in Part 1. Three SoC components map to three-tier hierarchy.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0086 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV/MH, MH
+**Items involved:** A-16, Part 5 residential
+**Gap register items:** NONE
+
+### Connection description
+First quasi-experimental TID study (Holtzinger et al. 2025, Social Sciences MDPI, 5 PSH sites, Colorado) found mixed results: TID sites improved relationship quality and self-awareness but decreased psychological safety scores; conflict and aggression increased over study period. Cautions against assuming TID features automatically improve outcomes without programme-level support. Relevant to guidebook MH provisions and A-16 sensory relief room specification.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Holtzinger et al. 2025 (Social Sciences, MDPI) | 1 | NDV/MH (homelessness) | MH item caveats |
+| Owen & Crane 2022 (IJERPH scoping review) | 3 | NDV/MH | TID neuroscience lens |
+
+### Proposed synthesis direction
+Add TID evidence caveat to MH provisions: design features alone are necessary but insufficient; programme-level trauma-informed care must accompany physical design. First empirical evidence for this caution.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0087 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** SPECULATIVE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV/ADHD, NDV/SENS
+**Items involved:** A-02, A-08, A-16
+**Gap register items:** NONE
+
+### Connection description
+First architectural design paper targeting misophonia (MDPI Architecture 2025) proposes spatial design as therapeutic approach for ADHD and misophonia. Identifies architectural spatial triggers (acoustic, visual) and proposes minimal design + VR/AR overlay as intervention. Misophonia not currently in guidebook population taxonomy; overlaps NDV/SENS and acoustic items. Evidence base extremely thin (conceptual paper, no empirical validation).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| MDPI Architecture 2025 (misophonia/ADHD) | 5 | NDV/ADHD, NDV/SENS | acoustic items |
+
+### Proposed synthesis direction
+Flag misophonia as emerging NDV/SENS subpopulation for acoustic specification. Monitor for empirical evidence before adding to population taxonomy.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [x] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0088 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV/AUT, NDV/ADHD, DEM
+**Items involved:** Part 1 framework, wayfinding items
+**Gap register items:** CON-0024
+
+### Connection description
+Prospect-refuge-context theory validated for neurodivergent museum visitors (Granland, Sadia & Cooper 2025, Buro Happold). Study found prospect-refuge and context theory were successful predictors of design preferences for NDV populations in museums/galleries. Extends prospect-refuge application from DEM (CON-0024) to NDV; adds "context" (familiarity/cultural resonance) as third dimension not currently in guidebook.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Granland et al. 2025 (Buro Happold) | 2 | NDV/AUT | Part 1 prospect-refuge-context |
+| Appleton 1975 / Hildebrand 1991 | 1 | ALL | theoretical extension |
+
+### Proposed synthesis direction
+Extend prospect-refuge theory in Part 1 to prospect-refuge-context; add NDV as validated population alongside DEM. Context = familiarity and cultural resonance of spatial experience.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0089 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** Part 4 POE
+**Gap register items:** CON-0029
+
+### Connection description
+isUD (innovative solutions for Universal Design) certification programme offers 500+ UD solutions for commercial buildings with independent assessment framework. Extends beyond IDEA Audit (CON-0029) as a quantified evaluation tool. Developed by multidisciplinary UD experts; available at thisisUD.com. Not currently referenced in guidebook Part 4 or POE methodology.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| isUD certification (WBDG 2024) | 5 | ALL | Part 4 evaluation |
+| CON-0029 (IDEA Audit) | 2 | ALL | complementary POE tool |
+
+### Proposed synthesis direction
+Reference isUD alongside IDEA Audit as POE evaluation tool in Part 4. isUD offers commercial building focus; IDEA Audit offers residential.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0090 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** MOB, ALL
+**Items involved:** K-01, bathroom items
+**Gap register items:** NONE
+
+### Connection description
+Carnemolla, Mackinnon, Darcy & Almond (2025, Smart and Sustainable Built Environment) conducted embodied inquiry with 12 powered/manual wheelchair users on public bathroom design. Findings organised around safety, hygiene, planning/avoidance, and privacy/dignity themes. Co-1 evidence revealing gap between regulatory compliance and actual user experience — compliant bathrooms still fail wheelchair users. First study of its kind examining how wheelchair users actually use accessible bathrooms versus how standards assume they do.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Carnemolla et al. 2025 (SSBE) | Co-1 | MOB | bathroom item revision |
+
+### Proposed synthesis direction
+Add Carnemolla 2025 to bathroom BPC as Co-1 evidence. Key finding: regulatory compliance ≠ usability. Supports guidebook's beyond-code approach.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0091 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV, ALL
+**Items involved:** Part 1 framework, workplace items
+**Gap register items:** NONE
+
+### Connection description
+Sargent (2025) "Designing Neuroinclusive Workplaces: Advancing Sensory Processing and Cognitive Well-Being in the Built Environment" (book, HoK) introduces "cognitive well-being" as design framing — shifting from "accessibility" to cognitive/sensory performance. Day-in-the-life scenario methodology for design assessment. Not in guidebook; extends NDV workplace provisions and introduces sensory wellness assessment methodology.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Sargent 2025 (book) | 3 | NDV | workplace methodology |
+
+### Proposed synthesis direction
+Add "cognitive well-being" framing to Part 1 alongside sensory processing model. Reference Sargent day-in-the-life methodology for Part 4 assessment process.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0092 [2026-03-28 23:00]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** Part 1 jurisdiction matrix
+**Gap register items:** NONE
+
+### Connection description
+Andersson & Grundström (2025, Malmö University) comparative study of housing accessibility requirements across 12 countries (Diva: 2030-talets boende med plats för livets alla skeden). Swedish-language publication examining accessibility and usability requirements in residential design across jurisdictions. May contain jurisdiction-specific data not captured in guidebook's 24-jurisdiction matrix. Source requires translation review.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Andersson & Grundström 2025 (Malmö University) | 4 | ALL | jurisdiction matrix |
+
+### Proposed synthesis direction
+Review for jurisdiction-specific residential accessibility data. Potential update to jurisdiction matrix if contains provisions not currently captured.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
