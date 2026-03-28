@@ -93,6 +93,7 @@
 9. Roxburgh, R., Hughes, J., & Milgate, W. (2024). Using time diaries to inform OT practice for people with ME/CFS. British Journal of Occupational Therapy. DOI:10.1177/03080226241249279 [OFS rest seating — OT clinical evidence]
 10. Omura, K.M. et al. (2022). Energy conservation, minimum steps, and adaptations: A scoping review. Hong Kong J Occup Ther, 35(2), 125–136. DOI:10.1177/15691861221137223
 11. LEIA (2016). Lifts in dwellings: guidance for Approved Document M 2015. Lift & Escalator Industry Association.
+12. RCOT / Housing LIN (2019) Housing Adaptations Without Delay. Royal College of Occupational Therapists. UK. Tier Co-2. [E-10 rev: alcove geometry, seat height]
 
 ### Bottom-up findings — Session 2026-03-28 (scenario 13 — rest seating alcove geometry)
 
