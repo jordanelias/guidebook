@@ -216,3 +216,10 @@ GAP-OPS-03 | P2 | OPEN | item-specification-writer | sensory-relief-space-design
 | GAP-CO03-12 | Population code `+` notation documented in glossary | P3 | OPEN | 3 | 18 | Back matter session |
 | GAP-CO03-13 | Slug registry: add CO-0003 terminology notes for frozen slug names | P3 | OPEN | 2C | 9 | Bundled with slug registry maintenance |
 
+
+### Parallel Session Note (2026-03-28 21:45)
+
+| ID | Description | Priority | Status | Notes |
+|---|---|---|---|---|
+| GAP-CON-SCOUT-01 | Full-corpus connection-scout running in parallel session 2026-03-28. This session (Opus) produced CON-0039–0049 from partial scan (~8 of ~60 BPCs). Parallel session to scan remaining ~50 BPC entries. Deconflict: parallel session should start from CON-0050. | P1 | OPEN | Coordinate CON-ID numbering between sessions |
+
