@@ -1,6 +1,7 @@
 ## cross-population-conflict-resolutions
 
 **Updated:** 2026-03-19 01:00  **Evidence tier:** 1–4 (OT clinical + standards; conflict resolutions are expert consensus)
+**Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Nine documented conflicts between accessibility provisions for different disability categories have explicit architectural resolutions. Conflicts arise because single-category specifications calibrated correctly for one population create barriers or hazards for another. The resolution principle is: safety-critical provisions take Tier 1 priority; OT clinical evidence governs equal-priority conflicts; the most constrained user governs where evidence is equal; range or zoning resolves irreconcilable point conflicts.
 **Priority hierarchy (Part IIB §B.2):**
   1. Safety-critical (fire evacuation, scalding, fall prevention) always overrides
@@ -24,4 +25,21 @@
   - B-05: 5 m lighting transition zone — PCS photophobia mechanism solid; 5 m distance not derived from evidence [UNSUPPORTED]
   - A-09: 0.1 m/s RMS vibration isolation — engineering convention; no disability-specific validation [THIN BASE]
 **Source:** v1.6 Part IIB (Resolving Conflicting Accessibility Requirements); v8.9 Part E conflict register
+### best_practice_synthesis
+**Opus synthesis:** YES [OPUS-SYNTHESIS] — 2026-03-28
+
+**Most inclusive provision:** Explicit resolution protocol for all nine documented conflicts, applied at DD stage, using the five-tier priority hierarchy: (1) safety-critical overrides all; (2) Tier 1 OT clinical evidence governs equal-priority conflicts; (3) most constrained user governs where evidence quality is equal; (4) range specifications preferred over point specifications to accommodate multiple populations simultaneously; (5) spatial zoning separates irreconcilable point conflicts.
+
+**Most targeted provision:** The most constrained user in each conflict pair. Specifically: Uhthoff's-threshold MS users in the temperature conflict (ambient ≤ 18 °C is safety-critical — heat-induced neurological deficit is irreversible within the exposure period, while cold discomfort for PAIN users is remediable by supplemental individual heating); DEM users in the floor-pattern conflict (plain floors on primary routes — patterned floors associated with 15% increase in falls, DSDC 2024, safety-critical); VIS users on primary accessible routes for tactile indicators (ISO 23599, safety-critical wayfinding).
+
+**Conflict resolution:** All nine conflicts resolved. Resolution principle: where one population faces a safety-critical risk and the other faces a comfort/preference impact, safety-critical governs the shared environment and individual accommodation addresses the comfort impact. Where neither is safety-critical, range specification or spatial zoning resolves without compromise to either population.
+
+**Highest-ambition actionable specification:** (1) Visual contrast: LRV 30+ primary accessible routes (Zone 1, safety-critical VIS); LRV 20–30 secondary circulation (Zone 2); LRV ≤ 20 sensory retreat (Zone 3). (2) Hearing loop: independent audio input — amplifies direct speech, does not broadcast ambient audio into NDV quiet zones. (3) Grab bars: 32–45 mm diameter; oval cross-section permitted where grip perimeter equivalence demonstrated; no knurled finish. (4) Temperature: ambient ≤ 18 °C (Uhthoff's safety-critical floor); individual supplemental heating at each seat/workstation for PAIN users. (5) Tactile indicators: ISO 23599 profiles on primary routes (safety-critical VIS); high-contrast flush strips on secondary routes (PAIN accommodation). (6) Acoustic wayfinding vs DEM calm: 200–300 mm hard-floor strip at junctions for VIS orientation cues; NRC ≥ 0.70 absorptive panels within 2 m for DEM acoustic calm. (7) Automatic doors: ≥ 3 m motion sensor detection zone, auditory chime, glazed leaf, ≥ 3 s opening travel. (8) Interior planting: ≥ 600 mm from circulation edge; LRV 30+ contrast base band. (9) Floor pattern: plain on all primary routes (DEM Tier 1 — +15% falls DSDC 2024); VIS orientation via wall contrast, signage, architectural landmarks. Tiers 1–4 across resolutions; individual resolutions cite governing tier.
+
+**Evidence confidence:** MODERATE — the nine conflict resolutions are individually well-supported (Tier 1–3 evidence for the governing provision in each pair), but the resolution framework itself (priority hierarchy, zoning protocol) is expert consensus, not empirically validated as a system. Three flagged unsupported values (A-04 20 m restorative interval, B-05 5 m lighting transition, A-09 0.1 m/s RMS vibration) remain without evidence derivation.
+
+**Opus note:** The three unsupported values (A-04, B-05, A-09) should be marked [UNSUPPORTED — concept evidence-based, threshold not evidence-derived] in the guidebook and must not carry evidence-tier markers. The resolution framework should be presented as a decision protocol for practitioners, not as a fixed matrix — novel conflicts will arise as guidebook population coverage expands (e.g., OFS/MCAS chemical sensitivity vs standard cleaning/finishing materials is not yet addressed).
+
+**Guidebook items affected:** Part 7 items A-04, A-09, B-05; all cross-population specification items; conflict-resolution protocol section (Part 8 §8.4); any item where two population codes appear with divergent specifications.
+
 **Key sources:** PAS6463:2022 · ISO23599:2019 · IEC60118-4 · DSDC2024 · Marquardt2011 · MSIF-Atlas2023
