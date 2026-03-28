@@ -43,3 +43,31 @@
 
 **Guidebook items affected:** A-16 (primary); H-02 (cross-reference elevation); F-01, F-03 (confirmed)
 **New gaps raised:** GAP-SRS-01 (H-02 elevation in A-16)
+
+
+### Citation mining — sensory-relief-space-design
+**Date:** 2026-03-27  
+**Method:** PubMed author search (Unwin PMC9340127 — no PMID; Petaccia 2021 — not indexed) + keyword search (autism sensory environment architectural design self-regulation)  
+**Limitation:** Primary BPC sources (Unwin 2022/2023, Petaccia 2021, Rashid 2025, Architecture & Access 2025) are not indexed in PubMed with retrievable PMIDs. PubMed coverage of this evidence domain is sparse.  
+**PubMed results reviewed:** 2 · **Relevant (new):** 1 · **Excluded:** 1 (conference proceedings)
+
+#### New source added
+
+Vetter, M.J., et al. (2025). The impact of pediatric outpatient waiting room design on the experiences of autistic children: a pilot study. *HERD: Health Environments Research & Design Journal*. PMID: 40660932 DOI: [10.1177/19375867251353735](https://doi.org/10.1177/19375867251353735)  
+Tier 1 (qualitative, small n=3 families; pilot). PEO model. Outpatient healthcare waiting room context. Three themes: waiting room triggers, facilitating regulation, supported inclusion. KEY FINDING: unpredictable, uncontrollable, intense stimuli in waiting rooms are barriers for autistic children; design of healthcare waiting spaces should support sensory regulation. Extends the slug to healthcare waiting room context (currently A-16 primarily covers dedicated sensory rooms; waiting rooms and transition spaces in healthcare settings are adjacent provision). NOTE: Very small n; pilot status; treat as emerging evidence only.
+
+#### Citation mining metadata
+```yaml
+citation_mining:
+  date: 2026-03-27
+  seeds_attempted:
+    - PMC9340127 (Unwin 2022): no PMID — not in PubMed
+    - Petaccia 2021 IJERPH: not indexed in PubMed
+  pubmed_keyword_search: true
+  results_reviewed: 2
+  relevant_new: 1
+  excluded: 1
+  sources_added: 1
+  note: PubMed coverage of autism-architecture evidence domain is sparse; HERD, Building Research & Information, and MDPI IJERPH are the primary publication venues and have inconsistent PubMed indexing
+  recommendation: Scholar Gateway or Consensus connector more appropriate for future mining of this slug
+```
