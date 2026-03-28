@@ -253,3 +253,4 @@ GAP-OPS-03 | P2 | OPEN | item-specification-writer | sensory-relief-space-design
 
 
 | GAP-CO04-04 | Gap register Part number references | P1 | CLOSED-RESOLVED | Annotations appended to all affected entries 2026-03-29. Entries with old Part numbers (GAP-DBL-BE-01/02, GAP-CR-02/03/09/16, GAP-XREF-01/02, GAP-064, GAP-CO03-04/05/06, GAP-CO04-03) annotated with CO-0004 mapping notes. |
+| GAP-CO04-05 | CO-0001 and CO-0002 cross-reference notes for CO-0004 Part renumbering | P1 | CLOSED-RESOLVED | CO-0004 cross-reference notes appended to both Change Orders 2026-03-29. CO-0001: item code prefix, Vol II, Part 4 execution scope. CO-0002: matrix Part numbers (6→7 NR; 6 residential), session assignments. |
