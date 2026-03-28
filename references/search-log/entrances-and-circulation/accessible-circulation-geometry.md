@@ -134,3 +134,13 @@ ACCEPTED_GAPS: [Co-1 not run — DPO orgs do not produce separate lift dimension
 - Kitchen counter accessibility: no statutory specification in most jurisdictions
 - DIN 18040-2 (DE) adjustable 680–1040mm is the only statutory range
 - Kitchen is primarily a Tier 5/OT guidance domain
+
+## functional_deficit_pass
+status: COMPLETE
+session: 2026-03-28
+scenarios_run: 2 (d450+fatigue interval [prior session], d450+fatigue alcove geometry [this session])
+novel_findings: 3
+refines: 0
+contradicts: 0
+tier0_candidates: 1
+note: Interval finding already in BPC. Alcove geometry added this session. Diminishing-return gate fired for interval; did NOT fire for alcove geometry. Tier 0 candidate: rest seating alcove recess geometry.
