@@ -215,3 +215,30 @@ Mostafa et al. (2024, Archnet-IJAR, DOI 10.1108/ARCH-11-2022-0258): Post-interve
 ### OT Home Modification Programme Evidence (not case study; systematic review)
 
 OT-delivered home modification programmes with clinical outcomes exist (Stark et al. RCT, AJOT 2016/2018; systematic reviews by Lektip et al. 2023; Hutchinson et al. 2025). These are programme-level evidence, not building case studies. Relevant to Part 12 economics and BC HAFI evaluation context. Do not enter as case studies; reference in BPC under evidence base for residential design.
+
+
+### Citation mining — cross-population-case-studies
+**Date:** 2026-03-27  
+**Method:** PubMed metadata retrieval on 3 seed PMIDs + related-article forward mining (8 articles reviewed)  
+**Seeds:** Douglas et al. 2022 (35476612), Verbeek et al. 2014 (24411467), Mazzola et al. 2024 (38143344) — all already in BPC as CS-19/CS-20/Il Paese Ritrovato  
+**Related articles reviewed:** 8 · **Relevant (new):** 1 · **Excluded:** 7 (clinical nursing/pharmacological focus)
+
+#### New source added
+
+**CS-22 — Harrison et al. (2022) Cochrane SR — Physical Environment Designs in Residential Care (AU, ALL, Tier 3)**  
+Harrison SL, Dyer SM, Laver KE, Milte RK, Fleming R, Crotty M. (2022). Physical environmental designs in residential care to improve quality of life of older people. *Cochrane Database of Systematic Reviews*, (3), CD012892. PMID: 35253911 PMC: 8900466 DOI: [10.1002/14651858.CD012892.pub2](https://doi.org/10.1002/14651858.CD012892.pub2)  
+Tier 3 systematic review. 20 studies, 77,265 participants. Compares home-like models (small living units, person-centred, domestic participation) vs traditional institutional designs. KEY FINDING: very low certainty evidence across all outcomes (quality of life, behaviour, mood, function, physical restraints); one study found slight reduction in physical restraint use (MD -0.3%, n=74,449); evidence insufficient to draw firm conclusions. SIGNIFICANCE: most comprehensive Cochrane SR on built environment design in residential care globally; null/inconclusive finding itself is specification-significant — no single environmental design feature has been shown via RCT to reliably improve QoL. Consistent with BPC synthesis that cross-population outcome evidence is thin.
+
+#### Citation mining metadata
+```yaml
+citation_mining:
+  date: 2026-03-27
+  seed_pmids: [35476612, 24411467, 38143344]
+  seeds_already_in_bpc: true
+  related_articles_reviewed: 8
+  relevant_new: 1
+  excluded: 7
+  sources_added: 1
+  new_case_study: CS-22
+  note: Related article network dominated by DEM nursing home pharmacology studies; built environment evidence sparse in PubMed network from these seeds
+```
