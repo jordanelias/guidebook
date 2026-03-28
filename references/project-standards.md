@@ -742,4 +742,17 @@ RULE: Old Part 8 (Item Specification Library in current guidebook v9.0) = New Pa
 CONDITION: Any reference to "Part 8 items" or "Part 7 conflicts" in current guidebook or ecosystem files.
 ACTION: Map to new Part numbers per CO-0004. "Part 8 items" = Part 4 items. "Part 7 conflicts" = Part 5 (building-wide) or Parts 6/7 (room-level).
 DATE: 2026-03-29 00:00
+RULE: Cross-population accommodation conflicts are searched by CONFLICT DOMAIN (environmental parameter), not by population pair. 12 conflict domains defined in cross-population-conflict-mapper skill. Never search 55 population pairs — search 12 environmental parameter conflicts instead. Aged care / dementia facility POEs are the richest evidence source because residents co-occur DEM + MOB + VIS + DEAF by default.
+CONDITION: Any research task involving cross-population design conflicts, competing access needs, or accommodation tensions.
+ACTION: Use cross-population-conflict-mapper. Search by domain. Prioritise aged care POEs.
+DATE: 2026-03-28 23:45
 
+RULE: "Adjustable" is not a universal conflict resolution. It fails when: (a) user cannot operate controls (DEM late stage, IntD without support); (b) parameter is shared ambient (cannot dim lights for one person in open room); (c) adjustment requires disclosure of disability. Every "adjustable" specification must document which populations can and cannot operate the adjustment.
+CONDITION: Any item specification using "adjustable", "user-controlled", "zoned", or "configurable" as a conflict resolution.
+ACTION: Document operability per population. Flag populations who cannot self-adjust. Route to Tier 2 co-design if ambient parameter is irreconcilable.
+DATE: 2026-03-28 23:45
+
+RULE: Population-specific design guideline sets (DeafSpace, ASPECTSS, dementia-friendly design, etc.) developed independently and do not cross-reference conflict points. When citing any population-specific guideline, check cross-population-conflict-mapper §1 Conflict Domains table for opposing specifications from other populations sharing the same space. Unchecked single-population specifications in shared spaces are incomplete.
+CONDITION: Any item specification citing a single-population guideline for a space serving multiple populations.
+ACTION: Run cross-population-conflict-mapper on the item before finalising. Add conflict note if opposition found.
+DATE: 2026-03-28 23:45
