@@ -646,3 +646,9 @@ RULE: Acoustic panel NRC ratings are not a valid standalone performance criterio
 CONDITION: any specification or BPC entry that uses panel NRC rating as a primary acoustic performance criterion
 ACTION: reframe as STI target; retain NRC as means; add spectral balance verification note
 DATE: 2026-03-27 12:20
+
+
+RULE: PubMed MeSH term expansion for "dressing" expands to "bandages" — this systematically blocks all FDR scenarios involving d540 (dressing activity) and adjacent ADL codes in residential/bedroom contexts.
+CONDITION: functional-deficit-researcher runs ICF d540 or any dressing/ADL scenario targeting residential bedroom environment.
+ACTION: Skip PubMed Step 1 for these scenarios. Go directly to Step 2 (OT practice guidelines: RCOT, CAOT, Home Mod Clearinghouse, BS8300 Annex residential sections). Log PubMed as SKIP-MESH-CONFLICT in scenario metadata.
+DATE: 2026-03-28 09:00
