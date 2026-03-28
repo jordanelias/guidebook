@@ -93,3 +93,17 @@
 9. Roxburgh, R., Hughes, J., & Milgate, W. (2024). Using time diaries to inform OT practice for people with ME/CFS. British Journal of Occupational Therapy. DOI:10.1177/03080226241249279 [OFS rest seating — OT clinical evidence]
 10. Omura, K.M. et al. (2022). Energy conservation, minimum steps, and adaptations: A scoping review. Hong Kong J Occup Ther, 35(2), 125–136. DOI:10.1177/15691861221137223
 11. LEIA (2016). Lifts in dwellings: guidance for Approved Document M 2015. Lift & Escalator Industry Association.
+
+### Bottom-up findings — Session 2026-03-28 (scenario 13 — rest seating alcove geometry)
+
+#### Scenario 13 — d450 + fatigue → rest seating alcove dimensions
+*Note: Rest seating interval already in BPC (≤25–30m, THIN-BASE, no building code in any jurisdiction). This pass adds alcove geometry and OFS-specific seat height — not covered by prior top-down pass.*
+
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Rest seating alcove depth | ≥450mm seat depth + ≥200mm recess from circulation path | Does not obstruct wheelchair passing; minimum 900mm wide per person | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — alcove recess geometry not in existing BPC (prior spec was interval only) | OFS→MOB/PAIN/DEM/NEU |
+| Rest seating alcove width | ≥900mm per person | Allows seating plus companion standing alongside | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — companion space spec | OFS→ALL |
+| Rest seat height — OFS/POTS | ≥480mm AFF | POTS: standard bench at 420mm promotes hip flexion angle that exacerbates venous pooling; ≥480mm reduces pooling risk | Roxburgh et al. 2024, British Journal of Occupational Therapy (OFS/ME/CFS) | 1 | NOVEL — OFS-specific seat height rationale; distinguishes from standard 420mm bench | OFS→MOB/PAIN |
+
+**Population mapping:** Primary OFS; secondary MOB/AMB, PAIN, DEM, NEU. Alcove geometry (recess + width) spans ≥5 codes → Tier 0 candidate.
+**Tier 0 candidate:** Rest seating alcove recess geometry (≥6 population codes benefit; no conflicts).
