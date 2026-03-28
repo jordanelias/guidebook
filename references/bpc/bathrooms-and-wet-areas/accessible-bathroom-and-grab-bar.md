@@ -94,3 +94,31 @@ No novel spatial specifications. Dressing bench height = popliteal height (Tier 
 #### Scenarios 4–5 (kitchen) and Scenario 8 (rest points)
 Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FDR-K-01). Scenario 8: diminishing-return gate triggered; CONFIRMS only; no novel extraction.
 
+### Bottom-up findings — Session 2026-03-28 (scenarios 9 + 14)
+
+#### Scenario 9 — d540 + trunk instability → dressing (bedroom — extended pass)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Closet rod height (forward reach, seated) | ≤1050mm AFF | Wheelchair user with trunk instability — forward reach only; no lateral lean | RCOT Housing Adaptations Without Delay (2019) | Co-2 | REFINES — tighter than prior ≤1200mm (AOTA); RCOT forward-reach constraint | MOB→NEU/OFS |
+| Shelf depth (with trunk instability) | ≤380mm | Prevents forward trunk lean >30° (fall risk for trunk-unstable users) | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL | MOB→NEU/PAIN |
+| Pull-out drawer depth | ≤600mm with full-extension hardware | Seated access to rear of storage without forward lean | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL | MOB→NEU/OFS/PAIN |
+| Dual-rod closet configuration | Upper rod 1000–1100mm AFF; lower rod ~600mm AFF | Seated user — lower rod for everyday items; upper for long items at maximum reach | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL | MOB→NEU |
+| Dressing area clear floor space | ≥1500×1500mm | WC user requiring turning during dressing activity | CAOT Home Assessment and Modifications (2024) | Co-2 | REFINES — extends prior 760×1200mm (transfer only) to full dressing turning circle | MOB |
+| Wardrobe door type | Sliding or bi-fold preferred; swing door requires clear floor space ≥door width + manoeuvre | Eliminates door arc intrusion into limited dressing space | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB→NEU/OFS |
+| Low storage base fitting | ≤500mm AFF | Trunk instability: items below 500mm require >30° lean — fall risk threshold | UNSW Home Mod Clearinghouse (AU) | Co-2 | REFINES — adds trunk-instability biomechanical rationale to existing reach-range guidance | MOB→NEU/PAIN |
+
+**Population mapping:** Primary MOB (trunk instability); secondary NEU, OFS, PAIN (shared trunk instability profile). Storage layout (U/L-shape bracing) = Tier 0 candidate (≥3 populations, no conflicts).
+
+#### Scenario 14 — d570 + emergency/medication → bedroom emergency alert + overnight lighting
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Bedroom emergency pull cord — secondary position | ≤500mm AFF from bed head (in addition to floor-level cord) | Users falling in bed-transfer zone; bed head activation without reaching to floor | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — prior BPC has floor-level only; bed-head secondary is additive | MOB→NEU/DEM/OFS |
+| Bedside light switch position | ≤900mm from pillow position | Operated without stretching from lying position | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL | MOB→NEU/DEM/OFS/PAIN |
+| Bed-exit sensor activated night lighting | Auto-on; covers bed-to-bathroom route | Eliminates need to locate switch; prevents falls on dark route | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — sensor activation, not just presence of lighting | MOB→NEU/DEM |
+| Overnight wayfinding path lighting | Continuous 300–400mm AFF; ≥5 lux; 2700–3000K | Bed-to-bathroom route; warm CCT avoids sleep disruption | Dementia Australia Built Environment Guidelines (2022) | 2 | NOVEL | DEM→MOB/NEU/OFS |
+| Bedroom door personalisation | Distinguishable from other doors by colour/texture; name/symbol plate ≥1200mm AFF | DEM wayfinding — room identification | Dementia Australia Built Environment Guidelines (2022) | 2 | NOVEL — spatial/material spec, not just signage advisory | DEM→NDV |
+| Bedside medication storage | Lockable; ≤1200mm AFF; ≤500mm horizontal reach from bed-seated position | Overnight medication access without standing | AOTA Fall Prevention in Bedroom (2023) | Co-2 | NOVEL | MOB→NEU/DEM/OFS/PAIN |
+| Bed clearance — foot | ≥1000mm at foot of bed | Emergency responder access path; paramedic equipment approach | AOTA Fall Prevention in Bedroom (2023) | Co-2 | REFINES — prior 760mm each side retained; adds 1000mm foot dimension | MOB→ALL |
+
+**Population mapping:** Primary MOB, DEM; secondary NEU, OFS, PAIN, NDV. Overnight path lighting = Tier 0 candidate (applies ≥6 codes, no population conflicts).
+**Tier 0 candidates:** (1) storage layout as bracing surface (≥3 codes); (2) overnight path lighting (≥6 codes) → append to gap register.
