@@ -245,3 +245,9 @@ GAP-CON-0084 | P3 | OPEN | connection-scout | Part 8 | ALL: Flag cross-populatio
 |---|---|---|---|---|
 | GAP-CON-SCOUT-01 | Full-corpus connection-scout running in parallel session 2026-03-28. This session (Opus) produced CON-0039–0049 from partial scan (~8 of ~60 BPCs). Parallel session to scan remaining ~50 BPC entries. Deconflict: parallel session should start from CON-0050. | P1 | OPEN | Coordinate CON-ID numbering between sessions |
 
+
+### Authority-Implying Language (2026-03-28)
+
+| ID | Description | Priority | Status | Phase | Est. Effort (min) | Notes |
+|---|---|---|---|---|---|---|
+| GAP-LANG-001 | Authority-implying language throughout V9.0 (~35 instances across 7 categories: self-governing, protocol/framework, mandatory/non-negotiable, authoritative claims, instruments, design discipline). Requires systematic replacement with consequence-based framing before external distribution. | P1 | OPEN | 2C | 45 | See working/authority-language-audit-2026-03-28.md |
