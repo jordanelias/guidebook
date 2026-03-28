@@ -93,3 +93,63 @@ REF-RAP-17: SBi-anvisning 218 — DA school acoustics
 - IT (UNI 11532-2) is the most advanced standard for NDV-equivalent provisions: explicitly names students with hearing deficits or attention/concentration disorders as a distinct category (categoria A3.1/A4) with more stringent RT60 and STI requirements
 - ANSI/ASA S12.60-2010 is the only standard with a mandatory RT60 ≤ 0.3 s for DEAF users — no equivalent in DIN 18041, BB93, or any other reviewed standard
 - DIN 18041:2016 introduced disability/inclusion as a driver for its 2016 revision (explicitly citing BGG, Behindertengleichstellungsgesetz, UN-CRPD) — the only standard that explicitly frames its requirements within a disability rights framework
+
+### Citation mining — room-acoustic-performance
+**Date:** 2026-03-27  
+**Method:** PubMed metadata retrieval on 16 PMIDs discovered via related-article search from confirmed sources (Iglehart 31835909, Murgia 36260411, Devos 31817300)  
+**Articles retrieved:** 16 · **Relevant:** 11 (core) + 2 (borderline) · **Excluded:** 3 (HA technology only)  
+
+**Already in BPC:** Iglehart 2020 (REF-RAP-11), Murgia 2022 (REF-RAP-12), Devos 2019 (REF-RAP-13)
+
+#### New sources added (REF-RAP-18 to REF-RAP-29)
+
+REF-RAP-18: Wroblewski, M., Lewis, D.E., Valente, D.L., & Stelmachowicz, P.G. (2012). Effects of reverberation on speech recognition in stationary and modulated noise by school-aged children and young adults. *Ear and Hearing*, 33(6), 731–744. PMID: 22732772 PMC: 3474865 DOI: [10.1097/AUD.0b013e31825aecad](https://doi.org/10.1097/AUD.0b013e31825aecad) — Tier 1. Children age 6–18 + adults; speech recognition in RT (reverberant 2 m and 6 m) + stationary and modulated noise; developmental data showing younger children need better acoustic conditions. KEY FINDING: release from masking in modulated noise is reduced by reverberation; this is the first study to document this.
+
+REF-RAP-19: Neuman, A.C., Wroblewski, M., Hajicek, J., & Rubinstein, A. (2010). Combined effects of noise and reverberation on speech recognition performance of normal-hearing children and adults. *Ear and Hearing*, 31(3), 336–344. PMID: 20215967 DOI: [10.1097/AUD.0b013e3181d3d514](https://doi.org/10.1097/AUD.0b013e3181d3d514) — Tier 1. Children 6–12 (normal hearing); RT 0.3/0.6/0.8 s; SNR-50 thresholds. KEY FINDING: to achieve 95% recognition at back of classroom, children require SNR ≥ 10 dB at RT 0.3 s and SNR ≥ 15 dB at RT 0.8 s.
+
+REF-RAP-20: Iglehart, F. (2016). Speech perception in classroom acoustics by children with cochlear implants and with typical hearing. *American Journal of Audiology*, 25(2), 100–109. PMID: 27244568 DOI: [10.1044/2016_AJA-15-0064](https://doi.org/10.1044/2016_AJA-15-0064) — Tier 1. CI + typical hearing children; RT 0.3/0.6/0.9 s; confirms ANSI S12.60 RT ≤ 0.3 s for CI users; precursor to REF-RAP-11. KEY FINDING: reduction RT 0.9→0.6 s benefits both groups; further reduction 0.6→0.3 s gives additional benefit to CI users but not typical hearing.
+
+REF-RAP-21: Anderson, K.L., & Goldstein, H. (2004). Speech perception benefits of FM and infrared devices to children with hearing aids in a typical classroom. *Language, Speech, and Hearing Services in Schools*, 35(2), 169–184. PMID: 15191328 DOI: [10.1044/0161-1461(2004/017)](https://doi.org/10.1044/0161-1461(2004/017)) — Tier 1. HH children 9–12, mild–severe HL; classroom RT 1.1 s, SNR +10 dB; FM vs infrared vs desktop SFA. KEY FINDING: ceiling sound field (infrared) provides no benefit over HA alone at RT 1.1 s; personal FM and desktop FM provide substantial improvement.
+
+REF-RAP-22: Amlani, A.M., & Russo, T.A. (2016). Negative effect of acoustic panels on listening effort in a classroom environment. *Journal of the American Academy of Audiology*, 27(10), 805–815. PMID: 27885976 DOI: [10.3766/jaaa.15096](https://doi.org/10.3766/jaaa.15096) — Tier 1. Normal-hearing Grade 3 children; acoustic panels installed in public school; dual-task paradigm; STI measured. KEY FINDING: [CONTRADICTED BY FDR — see escalation] Acoustic panels reduced high-frequency energy, decreased STI, and increased listening effort relative to unmodified room. Effect worst at seats beyond critical distance. NOTE: panels brought room into ANSI compliance but simultaneously degraded intelligibility.
+
+REF-RAP-23: Prodi, N., & Visentin, C. (2022). A slight increase in reverberation time in the classroom affects performance and behavioral listening effort. *Ear and Hearing*, 43(2), 460–476. PMID: 34369418 DOI: [10.1097/AUD.0000000000001110](https://doi.org/10.1097/AUD.0000000000001110) — Tier 1. 302 normal-hearing children 11–13; real classrooms; RT 0.57 vs 0.69 s; three academic tasks. KEY FINDING: small RT increase (0.12 s) with noise significantly increases listening effort proxy and reduces accuracy for speech perception in younger children; no significant effect in quiet.
+
+REF-RAP-24: Spratford, M., Walker, E.A., & McCreery, R.W. (2019). Use of an application to verify classroom acoustic recommendations for children who are hard of hearing in a general education setting. *American Journal of Audiology*, 28(4), 927–934. PMID: 31682768 PMC: 7210436 DOI: [10.1044/2019_AJA-19-0041](https://doi.org/10.1044/2019_AJA-19-0041) — Tier 1. 164 classrooms for CHH; app-based acoustic measurement. KEY FINDING: classrooms exceeded ANSI noise level recommendations; RT goals met; grade, HVAC status, and room volume predict acoustic outcomes. Practical implication: HVAC and volume are modifiable design parameters.
+
+REF-RAP-25: McGarrigle, R., Gustafson, S.J., Hornsby, B.W.Y., & Bess, F.H. (2019). Behavioral measures of listening effort in school-age children: examining the effects of signal-to-noise ratio, hearing loss, and amplification. *Ear and Hearing*, 40(2), 381–392. PMID: 29905670 DOI: [10.1097/AUD.0000000000000623](https://doi.org/10.1097/AUD.0000000000000623) — Tier 1. 45 CHL + 37 CNH age 6–13; dual-task + verbal RT; SNR Easy/Moderate/Hard. KEY FINDING: CHL show significantly slower verbal RT than CNH even at accurately recognised words, indicating processing speed decrement with hearing loss that classroom acoustic design should address.
+
+REF-RAP-26: Vickers, D.A., Backus, B.C., Macdonald, N.K., et al. (2013). Using personal response systems to assess speech perception within the classroom. *Ear and Hearing*, 34(4), 491–502. PMID: 23340455 DOI: [10.1097/AUD.0b013e31827ad76f](https://doi.org/10.1097/AUD.0b013e31827ad76f) — Tier 1. 44 children Year 2–3; London 19th-century school; SFA vs no SFA; vocabulary age as predictor. KEY FINDING: SFA significantly improves group speech perception; greatest benefit for lower vocabulary-age children.
+
+REF-RAP-27: Saravanan, G., Selvarajan, H.G., & McPherson, B. (2019). Profiling Indian classroom listening conditions in schools for children with hearing impairment. *Noise & Health*, 21(99), 83–95. PMID: 32174643 PMC: 7158895 DOI: [10.4103/nah.NAH_15_19](https://doi.org/10.4103/nah.NAH_15_19) — Tier 1 (observational survey). 37 classrooms, 4 schools, Chennai, India; DEAF/HH children. KEY FINDING: all 37 classrooms exceeded recommended RT and noise levels; acoustic treatment wholly inadequate. Jurisdiction: India.
+
+REF-RAP-28: Wu, Y.H., & Bentler, R.A. (2012). The influence of audiovisual ceiling performance on the relationship between reverberation and directional benefit. *Ear and Hearing*, 33(5), 604–614. PMID: 22677815 DOI: [10.1097/AUD.0b013e31825641e4](https://doi.org/10.1097/AUD.0b013e31825641e4) — Tier 1. SNHL adults; HA directional microphone; RT 0.2 vs 0.7 s. KEY FINDING: very low RT may paradoxically reduce directional HA utility in AV communication by suppressing ceiling performance variation.
+
+REF-RAP-29: Reinhart, P., Zahorik, P., & Souza, P. (2019). Interactions between digital noise reduction and reverberation: acoustic and behavioral effects. *Journal of the American Academy of Audiology*, 31(1), 17–29. PMID: 31267958 PMC: 7416503 DOI: [10.3766/jaaa.18048](https://doi.org/10.3766/jaaa.18048) — Tier 1. 26 adults, mild–moderate SNHL; DNR processing × reverberant conditions. KEY FINDING: DNR processing in reverberant environments decreases speech intelligibility; room design cannot rely on HA DNR to compensate for high RT.
+
+#### Escalation flags
+
+🔴 **REF-RAP-22 [CONTRADICTED BY FDR] — consensus finding row 6** (NRC ≥ 0.85 panels as primary treatment): Amlani & Russo (2016) demonstrate that high-frequency-absorbing acoustic panels can reduce STI and increase listening effort. Route to evidence-auditor (Opus adjudicates). Proposed resolution: specify STI ≥ 0.60/≥ 0.75 (DEAF/CI) as the performance criterion; panel NRC is a means not an end; spectral balance of absorption must be verified.
+
+🟡 **REF-RAP-29** reinforces that low-RT room design is non-negotiable; HA processing cannot compensate for reverberant environments.
+
+#### Citation mining metadata
+```yaml
+citation_mining:
+  date: 2026-03-27
+  seed_pmids: [31835909, 36260411, 31817300]
+  pmids_evaluated: 16
+  relevant_included: 11
+  borderline_included: 2
+  excluded: 3
+  sources_added: 12
+  ref_ids_assigned: REF-RAP-18 to REF-RAP-29
+  escalations:
+    - type: CONTRADICTS
+      ref_id: REF-RAP-22
+      target_finding: "NRC ≥ 0.85 panels as primary acoustic treatment"
+      route: evidence-auditor (Opus)
+    - type: REINFORCEMENT
+      ref_id: REF-RAP-29
+      note: "DNR HA processing cannot substitute for low-RT room design"
+```
