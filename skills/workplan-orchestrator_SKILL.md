@@ -44,27 +44,30 @@ If PAT not yet provided: prompt user. Do not proceed without it.
 
 ---
 
-## v10.1 Part Numbering Map (canonical)
+## CO-0004 Part Numbering Map (canonical — supersedes v10.1)
+
+**CO-0004 date:** 2026-03-29. 13 Parts → 12 Parts. 3 Volumes → 2 Volumes.
 
 | Part | Title | Volume |
 |---|---|---|
 | 1 | Foundations of Accessible Design | I |
 | 2 | Disability Categories | I |
-| 3 | Designing for Multiple Disability Categories | I |
-| 4 | Synthesis and Sequencing | II |
-| 5 | Residential Application Matrices | II |
-| 6 | Non-Residential Application Matrices | II |
-| 7 | Item Specification Library (Categories A–K) | II |
-| 8 | Cross-Population Resolution & Cross-Disciplinary Collaboration | II (NEW) |
-| 9 | Engineering and Coordination | II |
-| 10 | Interdisciplinary Design Team | II (reconceived) |
-| 11 | Design for Adaptable Readiness — DAR | III |
-| 12 | The Economics of Accessible Construction | III (intensified) |
-| 13 | Case Studies and Built Evidence | III (expanded) |
-| Apps | Appendices A–E, Bibliography, Glossary | III |
+| 3 | Synthesis, Sequencing and the Co-Occurrence Framework | I |
+| 4 | Item Specification Library (Categories A–K) | I |
+| 5 | Building-Level Co-Occurrence Resolution | I |
+| 6 | Residential Application Matrices | I |
+| 7 | Non-Residential Application Matrices | I |
+| 8 | Engineering and Coordination | I |
+| 9 | Working with Specialist Consultants | I |
+| 10 | Design for Adaptable Readiness — DAR | II |
+| 11 | The Economics of Accessible Construction | II |
+| 12 | Case Studies — Documented Accessible Built Environments | II |
+| Apps | Appendices A, B, D, E, Bibliography, Glossary | II |
 | Supp | Supplementary Volume: Body Sizes | — |
 
-Section numbering follows Part number: Part N uses §N.x. Item codes in Part 7 use letter-prefix: A-01 through K-NN.
+Section numbering follows Part number: Part N uses §N.x. Item codes in Part 4 use letter-prefix: A-01 through K-NN. **Bare codes only — no volume-part prefix.**
+
+Full old→new mapping: `workplan/P1-D2-D3-co0004-remapping.md`.
 
 ---
 
