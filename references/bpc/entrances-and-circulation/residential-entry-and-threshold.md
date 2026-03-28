@@ -64,6 +64,11 @@
 1. Habinteg/CAE, Runnalls J. & Walker M. (2024) Inclusive Housing Design Guide. RIBA/Habinteg. UK. Tier 5.
 2. Habinteg (2018) Wheelchair Housing Design Guide, 3rd ed. RIBA/Habinteg/RCOTSS-H. UK. Tier 5.
 3. RCOT / Housing LIN (2019) Adaptations Without Delay. Royal College of Occupational Therapists. UK. Tier Co-2.
+4. BSI (2018) BS 8300-2:2018, Annex G, Tables G.7–G.8. Design of an accessible and inclusive built environment — Part 2: Buildings. BSI. UK. Tier 5. [E-12: power WC turning geometry]
+5. Putthinoi, S. et al. (2017) ICF-based home modification outcomes in OT practice. American Journal of Occupational Therapy. TH/AU. Tier 1. [E-12: combined threshold+landing barrier]
+6. RCOT / Housing LIN (2020) Dementia Design Guidance. Royal College of Occupational Therapists. UK. Tier Co-2. [E-13: entrance legibility]
+7. American Occupational Therapy Association (2023) Cognitive Impairment Home Modification. AOTA. US. Tier Co-2. [E-13: address signage]
+8. Dementia Australia (2022) Built Environment Guidelines. Dementia Australia. AU. Tier 2. [E-13: boundary demarcation]
 4. US Access Board (2010) ADA Standards §§302–405 Accessible Routes, Entrances, Ramps. US. Tier 6.
 5. Rick Hansen Foundation (2024) RHFAC Rating Survey v4.0 §2 Exterior Approach and Entrance. CA. Tier 5.
 6. Direktoratet for byggkvalitet (2017, updated) TEK17 §12-4 Inngangsparti; §12-16 Rampe; §1-3(m) Trinnfri. NO. Tier 6.
