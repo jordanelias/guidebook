@@ -46,9 +46,26 @@ Construction Documents / Post-Occupancy]
 is penalised at this level. One to three sentences. Cross-reference to Part VII or Part VIII
 section as applicable.]
 
-**Key citations:**
+**Key citations:** *(legacy items only — not yet revised)*
 [Author/Organisation. (Year). Title. Publisher/URL.]
 [One citation per line. Minimum 2, maximum 6 per item.]
+
+*For new and revised items, use `#### Sources cited` table (see §Sources cited field below).*
+
+#### Sources cited *(new and revised items)*
+
+| REF-ID | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdiction |
+|---|---|---|---|---|---|---|---|---|
+| REF:{slug}:{NN} | [Author] | [Year] | [Title] | [Publisher] | [DOI] | [1–6] | [EN] | [AU/US/…] |
+
+**Field rules:**
+- Minimum 2, maximum 12 sources per item.
+- Every `[REF:{slug}:{NN}]` marker in Specifications must have a matching row. Mismatch → validation failure (ORPHAN-REF).
+- Every row must have a body REF-ID. Rows without body citations → UNUSED-SOURCE warning.
+- Authors, Year, Title, Tier, and Jurisdiction are mandatory. DOI/URL recommended; if absent, flag `[DOI required]`.
+- Real sources only. Unverified: append `[UNVERIFIED — DOI required]`.
+- If fewer than 2 verified sources: append `[CITATION GAP — evidence-auditor referral required]`.
+- Do not emit both `**Key citations:**` and `#### Sources cited` on the same item.
 
 **Cross-reference:** [CODE (Label); CODE (Label); ...]
 ```
@@ -139,6 +156,11 @@ Run before finalising any item output:
 | Retrofit | Penalty level stated; structural driver explained; cross-ref to Part 11 or Part 13 |
 | Key Citations | ≥2 verified citations; unverified flagged |
 | Cross-reference | Semicolon-separated; no BAR main-volume codes |
+| REF-ID format | All markers match `[REF:{slug}:{NN}]` pattern |
+| REF-ID ↔ sources-cited | Every body REF-ID has a sources-cited row; every row has ≥1 body REF-ID (bidirectional) |
+| Sources-cited completeness | ≥2 rows; Tier and Jurisdiction populated on all rows |
+| No legacy+new coexistence | Item does not have both `**Key citations:**` AND `#### Sources cited` |
+| Legacy compatibility | If item uses `**Key citations:**` and is not being revised: pass with INFO flag `[LEGACY-CITATION — conversion on next revision]` |
 
 ---
 
@@ -152,6 +174,10 @@ Run before finalising any item output:
 6. **Sub-codes collapsed** — e.g., `MOB` where `MOB/AMB` or `MOB/UPL` is the correct level of specificity.
 7. **Missing Design Stage** — required on every item; infer from structural commitment point if not supplied.
 8. **Duplicate content between Description and Specifications** — Description = prose summary; Specifications = enumerated values. They should complement, not repeat.
+9. **REF-ID without sources-cited row** — ORPHAN-REF. Add row or remove marker.
+10. **Sources-cited row without body REF-ID** — UNUSED-SOURCE. Add inline reference or remove row.
+11. **Both Key citations and Sources cited present** — remove Key citations (sources-cited is authoritative for revised items).
+12. **REF-ID slug mismatch** — slug in marker does not match any known BPC slug. Route to research-log-manager CHECK.
 
 ---
 
@@ -176,5 +202,5 @@ Stop and flag to user if:
 ---
 
 **Preceded by:** `item-specification-writer` (drafts content) · `citation-verifier` (verifies citations)  
-**Feeds into:** `framing-checker` · `prose-style-checker` · `volii-validator`  
+**Feeds into:** `bibliography-compiler` · `framing-checker` · `prose-style-checker` · `volii-validator`  
 **Parallel:** `evidence-auditor` (may run on same item concurrently)
