@@ -947,3 +947,75 @@ Note as structural validation in Part 1 methodology section. No specification ch
 
 ### Disposition
 - [ ] MODERATE → P2 gap item
+
+---
+
+## CON-0033: CAPABLE multicomponent model → OT assessment specification
+**Status:** PENDING
+**Discovered:** 2026-03-27 (residential-accessible-home-case-studies Opus synthesis)
+**Confidence:** HIGH
+**Mode:** Internal (BPC → Part 5/7 specification)
+
+### Connection
+The CAPABLE programme (Liu 2020 Tier 1 RCT; Washington 2023 Tier 1 implementation; Sheffield 2013 Tier 1 RCT) establishes that OT-led structured assessment + home modification + nursing/handyman produces superior ADL outcomes. This multicomponent model should govern the OT assessment specification in Part 5 (residential process) and Part 7 (item specifications for assessment protocols). Three independent Tier 1 studies confirm standardised protocol > informal practice.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Liu/CAPABLE 2020 (PMID 32951215) | 1 RCT | MOB/ALL (older adults) | Part 5 residential assessment protocol |
+| Washington/CAPABLE 2023 (PMID 36748717) | 1 implementation | MOB/ALL | Part 5 real-world delivery model |
+| Sheffield 2013 (PMID 23213082) | 1 RCT | MOB/ALL | Part 7 OT assessment item |
+| Malmgren Fänge 2019 (PMID 31684916) | 1 quasi-experimental | MOB/ALL | Part 5/7 — OR 9.50 wheelchair mobility anchors specification |
+
+### Proposed synthesis direction
+Write Part 5 residential assessment specification using CAPABLE as governing model. Malmgren Fänge OR 9.50 anchors wheelchair-specific provisions. Sheffield 39% personal care hour reduction provides economic justification.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for Part 5 + Part 7 assessment items
+
+---
+
+## CON-0034: Malmgren Fänge OR 9.50 → wheelchair home mobility specification
+**Status:** PENDING
+**Discovered:** 2026-03-27 (residential-accessible-home-case-studies Opus synthesis)
+**Confidence:** HIGH
+**Mode:** Internal (BPC → Part 7 MOB specification)
+
+### Connection
+Malmgren Fänge 2019 (SE/NO, Tier 1 quasi-experimental, PMID 31684916) found OR 9.50 for wheelchair use at home when standardised OT assessment protocol was used vs ordinary practice. This is the strongest single-outcome effect size in the residential evidence dataset. It should anchor wheelchair-accessible home layout and dimensional specifications in Part 7 MOB items.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Malmgren Fänge 2019 (PMID 31684916) | 1 quasi-experimental | MOB/ALL (older adults, SE/NO) | Part 7 MOB wheelchair home items — dimensional provisions |
+
+### Proposed synthesis direction
+Cross-reference to bathroom-design, kitchen-design, entrance-and-threshold, and corridor/circulation MOB items. Effect size justifies above-code spatial provisions for wheelchair users.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for MOB wheelchair items
+
+---
+
+## CON-0035: Douglas 2024 support > environment → Part 5 support framework specification
+**Status:** PENDING
+**Discovered:** 2026-03-27 (residential-accessible-home-case-studies Opus synthesis)
+**Confidence:** HIGH
+**Mode:** Internal (BPC → Part 5 specification)
+
+### Connection
+Douglas et al. 2024 (AU, Tier 1 qualitative, BMJ Open) found that support quality is a greater determinant of tenant QoL than the built environment in SDA housing. Converges with ILMI 2021 (IE, Co-1) and Carey et al. 2025 (AU, Co-1). The guidebook must specify transition planning and ongoing support frameworks alongside built environment provisions. Built environment is necessary but not sufficient.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Douglas et al. 2024 (BMJ Open) | 1 qualitative | NEU/MOB/ALL (SDA tenants) | Part 5 support framework specification |
+| Carey et al. 2025 (PMID 41175339) | Co-1 | NEU/MOB families | Part 5 transition planning specification |
+| ILMI 2021 | Co-1 | ALL (IE advocacy) | Part 5 support alongside housing |
+| Ainsworth 2022 (PMID 36394257) | 1 qualitative | MOB/ALL (AU home mod) | Part 5 OT process quality specification |
+
+### Proposed synthesis direction
+Part 5 residential matrices must include support framework items — not just built environment specification. Transition planning, family/carer support, and ongoing support quality are co-primary with physical design. This is the most significant cross-cutting finding from the residential case studies synthesis.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for Part 5 support framework items
