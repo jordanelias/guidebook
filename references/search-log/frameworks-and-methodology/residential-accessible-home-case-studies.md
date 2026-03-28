@@ -1,7 +1,7 @@
 slug: residential-accessible-home-case-studies
 query: "accessible residential home case studies disability outcome"
 last_searched: 2026-03-27
-status: PARTIAL — Opus synthesis complete; 13 jurisdictions NOT-RUN (accepted low-yield)
+status: PARTIAL — Opus synthesis complete; 13 jurisdictions cursory-checked 2026-03-27 (all NO-DATA confirmed)
 early_close_triggered: false
 
 note: "Step 3 academic pass complete 2026-03-28. 7 new PubMed sources added. Opus 4.6 synthesis completed 2026-03-27. LOG closed as PARTIAL (13 NOT-RUN jurisdictions accepted low-yield; Tier 5 coverage 12/16). Petersson 2008/2009 not found in PubMed — flag for manual retrieval."
