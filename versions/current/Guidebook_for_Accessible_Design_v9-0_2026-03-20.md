@@ -3174,7 +3174,7 @@ without structural intervention. See Part 12 §12.4.1.
 
 ### D-05 Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)
 
-**Applicable Groups:** NDV, PCS, MH, OFS
+**Applicable Groups:** NDV, NEU/PCS, NDV/MH, OFS, DEAF
 
 **Description:** Enclosed focus rooms (minimum 6 m²) for individual or paired concentration work. STC ≥35 partition. RT60 ≤0.4s. Full dimming. No visual connection to open-plan area. Bookable or first come-first-served. Minimum 1 per 20 open-plan desks.
 
@@ -3201,6 +3201,14 @@ F-01 (Sensory Gradient)
 **Evidence basis (OT):** EHP Framework (create strategy); Dunn's
 
 Sensory Processing Model. Focus rooms create an environmental context that enables sustained cognitive occupation (concentrated work, private communication) that is impossible in open-plan environments for sensory-sensitive and PCS users; the STC ≥35 partition and NC-25 HVAC specification define the minimum acoustic context required for this occupation.
+
+**DEAF cross-population note (CON-0036):** Sound-attenuated retreat and focus spaces create emergency communication isolation risk for DEAF and hard-of-hearing users. Where D-05 spaces serve a DEAF population:
+
+- ○ Visual emergency alert (strobe VAD or equivalent) to be installed in all enclosed D-05 spaces, independent of the building-wide B-10 VAD installation
+- ○ Transparent sidelight or glazed panel (minimum 300 mm wide × 600 mm high) to be incorporated in at least one wall, permitting visual contact with the adjacent occupied area without acoustic compromise
+- ○ Visual notification system or communication pass-through to be provided where the space is bookable or used for extended periods
+
+*Required by CON-0036 (connection-scout, 2026-03-28). These provisions remove the emergency communication isolation barrier created by sound attenuation.*
 
 ### D-06 Memory Boxes at Private Office and Residential Room Entrances
 
