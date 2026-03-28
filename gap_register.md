@@ -195,3 +195,24 @@ GAP-XREF-03 | P3 | OPEN | cross-reference-resolver | Parts 1-6 | D-18 cited as r
 GAP-OPS-01 | P2 | OPEN | evidence-auditor | A-04, B-05, A-09 | Opus synthesis (2026-03-28): three unsupported threshold values must be marked [UNSUPPORTED — concept evidence-based, threshold not evidence-derived] in guidebook body. A-04 20 m restorative interval; B-05 5 m lighting transition zone; A-09 0.1 m/s RMS vibration isolation. Must not carry evidence-tier markers. Action: item-specification-writer Phase 3 Sessions 15-16. | 2026-03-28
 GAP-OPS-02 | P2 | OPEN | evidence-auditor | WHO APS-15:2022 | Opus synthesis (2026-03-28): WHO APS-15:2022 grab bar rating of 110 kg (242 lbs) is inadequate given KITE Research 1.3 kN peak force finding. Guidebook must flag WHO specification as inadequate and note 200 kg SWL as minimum defensible value. WHO standard should not be cited as a compliant reference. | 2026-03-28
 GAP-OPS-03 | P2 | OPEN | item-specification-writer | sensory-relief-space-design / A-16 | Opus synthesis (2026-03-28): proximity to accessible toilet must be elevated from location note to mandatory adjacency requirement in A-16. Not currently in guidebook spec. Amaze/Architecture and Access 2025 source. Action: Phase 3 Session 15. | 2026-03-28
+
+---
+
+### CO-0003 Execution Tracking (appended 2026-03-28 21:30)
+
+| ID | Description | Priority | Status | Phase | Session | Notes |
+|---|---|---|---|---|---|---|
+| GAP-CO03-01 | Part 2 introduction: add methodology note on co-occurring disability as norm | P2 | OPEN | 3 | 11 | Part 2 writing session |
+| GAP-CO03-02 | Part 3 title change applied in guidebook body | P2 | OPEN | 3 | 12 | Parts 3+4 writing session |
+| GAP-CO03-03 | Part 3 §3.2.3 "Co-Occurrence as Norm, Not Exception" added | P2 | OPEN | 3 | 12 | New subsection |
+| GAP-CO03-04 | Part 7 title change applied in guidebook body | P2 | OPEN | 3 | 15 | Part 7 writing session |
+| GAP-CO03-05 | Part 7 §7.1 rewrite: distinguish intra-individual from inter-group | P2 | OPEN | 3 | 15 | §7.1 + §7.2 revision |
+| GAP-CO03-06 | Part 7 §7.3 entries tagged [INTRA-INDIVIDUAL] / [INTER-GROUP] / [BOTH] | P2 | OPEN | 3 | 15–16 | Per-entry tagging |
+| GAP-CO03-07 | Part 1 §1.4 framework addition: three-tier as co-occurrence resolution | P2 | OPEN | 3 | 10 | Part 1 writing session |
+| GAP-CO03-08 | Part 8 title + §8.4 split (intra vs inter) when Part 8 created | P2 | OPEN | 3 | 17 | Part 8 new content session |
+| GAP-CO03-09 | Connection register: tag all 38 entries INTRA/INTER/BOTH | P3 | OPEN | 2C | 9 | Bundled with connection-scout re-scan |
+| GAP-CO03-10 | find-and-replace: "cross-population" → context-dependent in guidebook body | P2 | OPEN | 4 | 19 | Bundled with CO-0001 find-and-replace |
+| GAP-CO03-11 | BPC content terminology update (ongoing as BPCs touched) | P3 | OPEN | 2B–3 | ongoing | No separate pass; applied when each BPC is edited |
+| GAP-CO03-12 | Population code `+` notation documented in glossary | P3 | OPEN | 3 | 18 | Back matter session |
+| GAP-CO03-13 | Slug registry: add CO-0003 terminology notes for frozen slug names | P3 | OPEN | 2C | 9 | Bundled with slug registry maintenance |
+
