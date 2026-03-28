@@ -198,39 +198,6 @@ GAP-OPS-03 | P2 | OPEN | item-specification-writer | sensory-relief-space-design
 
 ---
 
-GAP-CON-0053 | P2 | OPEN | connection-scout | D-09, residential-entry-and-threshold, cognitive-wayfinding-design | VIS, DEAF, DBL, DEM, IntD: Recode D-09 as multi-population provision (DEM, VIS, DBL, IntD). Mechanism: spatial predictability reduces orientation barriers across four. Source: CON-0053 (MODERATE). | 2026-03-28 22:30 [Related: GAP-S4-R03, GAP-S4-R04, GAP-S4-R05, GAP-S4-R06]
-GAP-CON-0055 | P2 | OPEN | connection-scout | A-09 | NEU, PAIN, OFS, MOB: Extend A-09 resilient flooring to PAIN and NEU as co-populations. Flag PAIN application as thin-evidenced (expert consensus only); NEU fall-impact. Source: CON-0055 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-04]
-GAP-CON-0058 | P2 | OPEN | connection-scout | NONE | OFS, PAIN, MOB/AMB: Create new DAR item: bedroom-bathroom adjacency ≤5 m for OFS, PAIN, MOB/AMB populations. Evidence: OT energy conservation + residential case study. Source: CON-0058 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-02]
-GAP-CON-0059 | P2 | OPEN | connection-scout | B-06, B-07 | DEM, NEU, MH, OFS: Add MH and OFS as co-populations for B-06/B-07 circadian lighting items. Mechanism: sleep-wake disruption common across DEM/NEU/MH/OFS; circadian. Source: CON-0059 (MODERATE). | 2026-03-28 22:30 [Related: GAP-CON-06-b, GAP-034-b]
-GAP-CON-0062 | P2 | OPEN | connection-scout | I-02, residential-kitchen-and-task-surfaces | LPA, MOB, OFS, PAIN, VIS: Add LPA, OFS, PAIN, VIS as co-populations for height-adjustable kitchen worktop specification. Mechanism: adjustability serves five populations via. Source: CON-0062 (MODERATE). | 2026-03-28 22:30
-GAP-CON-0063 | P2 | OPEN | connection-scout | F-02, F-04 | NDV, OFS, PAIN, MH: Add MH as co-population for F-02/F-04 air quality items. Mechanism: chemical stimuli reduction serves OFS/NDV physiological + MH trauma-trigger. Source: CON-0063 (MODERATE). | 2026-03-28 22:30 [Related: GAP-CON-15]
-GAP-CON-0064 | P2 | OPEN | connection-scout | G-06 | OFS, PAIN, MOB/AMB: Create new item: seated service counter option (≥1 per facility) for OFS, PAIN, MOB/AMB. Specification: counter height 760-850 mm, knee clearance per. Source: CON-0064 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-03]
-GAP-CON-0065 | P2 | OPEN | connection-scout | NONE | OFS, PAIN, NEU: Create new item: continuous shade on primary outdoor routes (natural or built) for OFS, PAIN, NEU thermal management. Evidence: heat intolerance. Source: CON-0065 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-05]
-GAP-CON-0066 | P2 | OPEN | connection-scout | NONE | OFS, PAIN: Create DAR item: bedroom electrical provision for adjustable bed (future provision). Not mandatory bed installation; enables future adaptation for. Source: CON-0066 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-06]
-GAP-CON-0069 | P2 | OPEN | connection-scout | bariatric-turning-radius-built-environment, accessible-circulation-geometry | BAR, MOB: Flag standard MOB turning space (1500-1525 mm) as inadequate for BAR populations. Specify 1900 mm where BAR provision required; 1800 mm minimum. Source: CON-0069 (MODERATE). | 2026-03-28 22:30
-GAP-CON-0071 | P2 | OPEN | connection-scout | BIO-series | NDV, MH, DEM, NEU: Consolidate biophilic/nature provisions as multi-population (NDV, MH, DEM, NEU). Create unified BIO-series items with population-specific mechanisms. Source: CON-0071 (MODERATE). | 2026-03-28 22:30 [Related: GAP-CON-04]
-GAP-CON-0072 | P2 | OPEN | connection-scout | NONE | OFS, PAIN: Create new workplace item: supine rest space (quiet room with reclining surface) for OFS/PAIN populations. Evidence: horizontal rest documented for. Source: CON-0072 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-07]
-GAP-CON-0073 | P2 | OPEN | connection-scout | NONE | OFS, NEU: Create new item: entrance thermal transition zone (vestibule with cooling) for OFS/NEU populations. Evidence: heat intolerance documented for both. Source: CON-0073 (MODERATE). | 2026-03-28 22:30 [Related: GAP-FDR-08]
-GAP-CON-0075 | P2 | OPEN | connection-scout | NONE | NDV/AUT, VIS: Create outdoor landscape design guidance integrating NDV sensory-responsive elements + VIS tactile/auditory wayfinding. Evidence: both populations. Source: CON-0075 (MODERATE). | 2026-03-28 22:30 [Related: GAP-CON-0025]
-GAP-CON-0076 | P2 | OPEN | connection-scout | A-16, sensory-room-user-control | NDV/AUT, NEU, DEM: Elevate user control principle to cross-population doctrine (NDV, NEU, DEM). Mechanism: individual sensory preferences vary within populations;. Source: CON-0076 (MODERATE). | 2026-03-28 22:30 [Related: GAP-CON-0026]
-GAP-CON-0078 | P2 | OPEN | connection-scout | Part 1 structure | ALL: Note 2025 scoping review validation of guidebook item category structure. Flag sensory environment (acoustics, air quality, thermal) as. Source: CON-0078 (MODERATE). | 2026-03-28 22:30 [Related: GAP-CON-0032]
-GAP-CON-0079 | P2 | OPEN | connection-scout | R-LAU | MOB, OFS, PAIN: Add OFS and PAIN as co-populations for laundry appliance riser specification. Mechanism: raised drum height serves MOB reach + OFS/PAIN bending. Source: CON-0079 (MODERATE). | 2026-03-28 22:30 [Related: GAP-LAU-01, GAP-LAU-02]
-GAP-CON-0080 | P2 | OPEN | connection-scout | All room matrices | DBL, IntD: Systematically add DBL and IntD provisions to all room matrices. DBL: tactile consistency, haptic communication space. IntD: visual simplicity,. Source: CON-0080 (MODERATE). | 2026-03-28 22:30 [Related: GAP-S4-R01 through GAP-S4-N07]
-GAP-CON-0081 | P2 | OPEN | connection-scout | B-10, visual-alerting-and-wayfinding-light | VIS, DEAF, DBL: Create integrated visual alerting specification serving DEAF/VIS/DBL. Coordinate VAD placement, contrast requirements, and vibrotactile. Source: CON-0081 (MODERATE). | 2026-03-28 22:30
-GAP-CON-0083 | P2 | OPEN | connection-scout | A-02, A-08, A-13 | DEAF, VIS, DBL, NDV: Flag English-language evidence limitation in acoustic items. Note stronger evidence base exists in DE/ZH/FR for DEAF/NDV provisions.. Source: CON-0083 (MODERATE). | 2026-03-28 22:30
-GAP-CON-0084 | P3 | OPEN | connection-scout | Part 8 | ALL: Flag cross-population conflict resolution as under-researched domain. Note guidebook provides nine case-based resolutions but lacks theoretical. Source: CON-0084 (SPECULATIVE). | 2026-03-28 22:30 [Related: GAP-054]
-
-GAP-CON-0085 | P2 | OPEN | connection-scout | Part 1 framework | ALL: Salutogenic Sense of Coherence (comprehensibility, manageability, meaningfulness) maps to three-tier hierarchy. Rakhshani & Khakzand 2025 systematic review. Source: CON-0085 (MODERATE, External). | 2026-03-28 23:00
-GAP-CON-0086 | P2 | OPEN | connection-scout | A-16, Part 5 | NDV/MH, MH: TID empirical study (Holtzinger 2025) shows mixed results — design features alone insufficient without programme-level support. Caveat for MH provisions. Source: CON-0086 (MODERATE, External). | 2026-03-28 23:00
-GAP-CON-0087 | P3 | OPEN | connection-scout | A-02, A-08, A-16 | NDV/ADHD, NDV/SENS: Misophonia as emerging NDV/SENS subpopulation for acoustic items. Conceptual paper only; no empirical validation. Source: CON-0087 (SPECULATIVE, External). | 2026-03-28 23:00
-GAP-CON-0088 | P2 | OPEN | connection-scout | Part 1 framework | NDV/AUT, DEM: Prospect-refuge-context theory validated for NDV museum visitors (Granland 2025). Extends CON-0024. Source: CON-0088 (MODERATE, External). | 2026-03-28 23:00
-GAP-CON-0089 | P2 | OPEN | connection-scout | Part 4 POE | ALL: isUD certification (500+ UD solutions) as complementary POE tool alongside IDEA Audit. Source: CON-0089 (MODERATE, External). | 2026-03-28 23:00
-GAP-CON-0090 | P2 | OPEN | connection-scout | K-01, bathroom items | MOB: Carnemolla 2025 embodied wheelchair toilet inquiry — Co-1 evidence showing regulatory compliance ≠ usability. Source: CON-0090 (MODERATE, External). | 2026-03-28 23:00
-GAP-CON-0091 | P2 | OPEN | connection-scout | Part 1, workplace items | NDV: Sargent 2025 "cognitive well-being" framing + day-in-the-life assessment methodology for neuroinclusive workplaces. Source: CON-0091 (MODERATE, External). | 2026-03-28 23:00
-GAP-CON-0092 | P2 | OPEN | connection-scout | Part 1 jurisdiction matrix | ALL: Andersson & Grundström 2025 (Malmö) 12-country residential accessibility comparison. Swedish-language; needs translation review. Source: CON-0092 (MODERATE, External). | 2026-03-28 23:00
-
-GAP-CIT-E14-01 | P1 | CLOSED-DELETED | citation-verifier | E-14 | REF:seating-entrance:02 (Roxburgh & Mackay 2024 BJOT) — 3 independent web searches returned no evidence of this publication. Source likely hallucinated during Opus E-14 synthesis (session 2026-03-28 21:30). REMOVE from E-14 item specification and BPC. Other E-14 sources (CDC ME/CFS, Amaze/Architecture & Access 2025, Newcastle POTS 2018) remain valid. | 2026-03-28 23:10
-
 ### CO-0003 Execution Tracking (appended 2026-03-28 21:30)
 
 | ID | Description | Priority | Status | Phase | Session | Notes |
@@ -257,8 +224,20 @@ GAP-CIT-E14-01 | P1 | CLOSED-DELETED | citation-verifier | E-14 | REF:seating-en
 | GAP-CON-SCOUT-01 | Full-corpus connection-scout running in parallel session 2026-03-28. This session (Opus) produced CON-0039–0049 from partial scan (~8 of ~60 BPCs). Parallel session to scan remaining ~50 BPC entries. Deconflict: parallel session should start from CON-0050. | P1 | OPEN | Coordinate CON-ID numbering between sessions |
 
 
-### Authority-Implying Language (2026-03-28)
 
-| ID | Description | Priority | Status | Phase | Est. Effort (min) | Notes |
-|---|---|---|---|---|---|---|
-| GAP-LANG-001 | Authority-implying language throughout V9.0 (~35 instances across 7 categories: self-governing, protocol/framework, mandatory/non-negotiable, authoritative claims, instruments, design discipline). Requires systematic replacement with consequence-based framing before external distribution. | P1 | OPEN | 2C | 45 | See working/authority-language-audit-2026-03-28.md |
+## CO-0004 Gap Entries [2026-03-29 00:00]
+
+| GAP-CO04-01 | ToC full rewrite for 12-Part 2-volume structure | P1 | CLOSED-RESOLVED | toc.md rewritten and committed 2026-03-29 00:00 |
+| GAP-CO04-02 | project-standards.md rules for Part renumbering, volume merge, scope routing | P1 | CLOSED-RESOLVED | 8 rules appended 2026-03-29 00:00 |
+| GAP-CO04-03 | Workplan Part number and session plan updates | P1 | OPEN | 0R | Next session | Workplan v10.3 required |
+| GAP-CO04-04 | gap_register.md entries referencing old Part numbers need updating | P2 | OPEN | 0R | Next session | ~20 entries |
+| GAP-CO04-05 | CO-0001, CO-0002, CO-0003 cross-reference notes for CO-0004 | P2 | OPEN | 0R | Next session | Add supersession/compatibility notes |
+| GAP-CO04-06 | Parts 6/7 matrices: add inline room-level conflict notes (new scope per CO-0004) | P2 | OPEN | 3 | Sessions 13–14 | New writing requirement |
+| GAP-CO04-07 | Part 9 §9.9/§9.10: add co-occurrence collaboration protocol + OT threshold | P2 | OPEN | 3 | Session 18 | New sections |
+| GAP-CO04-08 | Full find-and-replace: all Part number references in guidebook body text | P2 | OPEN | 4 | Session 19 | Bundled with CO-0001/CO-0003 replacements |
+| GAP-CO04-09 | Connection register Part number references in disposition notes need updating | P2 | OPEN | 2C or 3 | As touched | Inline |
+| GAP-CO04-10 | BPC entries referencing old Part numbers in synthesis directions need updating | P2 | OPEN | 2C or 3 | As touched | Inline |
+| GAP-P8-01 | Part 3 §3.8 resolution decision tree: original practitioner methodology — flag per GAP-054 | P2 | OPEN | 3 | Session 12 | Original contribution |
+| GAP-P8-02 | Part 3 §3.9 strategies menu: no peer-reviewed taxonomy exists — guidebook contribution | P2 | OPEN | 3 | Session 12 | Original contribution |
+| GAP-CO03-08 | SUPERSEDED by CO-0004. Old: "Part 8 title + §8.4 split when Part 8 created". New: Part 5 §5.2 building-wide conflicts per CO-0004 structure. | P2 | CLOSED-SUPERSEDED | 2026-03-29 00:00 |
+
