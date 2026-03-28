@@ -1023,7 +1023,7 @@ Part 5 residential matrices must include support framework items — not just bu
 ## CON-0036 [2026-03-28 17:00]
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** CONSUMED
 **Populations involved:** OFS, PAIN, NDV/AUT, NDV/SENS, NEU, DEM, NDV/MH, DEAF
 **Items involved:** D-05
 **Gap register items:** GAP-FDR-T0-03
@@ -1040,8 +1040,8 @@ Retreat/reset room overlaps substantively with D-05 (Enclosed Low-Stimulation Sp
 Maintain D-05 as Tier 1. Annotate: where retreat/reset spaces serve DEAF population, specify visual emergency alerts, transparent sidelights, or communication pass-through to mitigate isolation risk. Do not elevate to Tier 0.
 
 ### Disposition
-- [ ] Annotate D-05 with DEAF accommodation requirement for sound-attenuated spaces
-- [ ] Reject GAP-FDR-T0-03 for Tier 0 status — update gap register
+- [x] Annotate D-05 with DEAF accommodation requirement for sound-attenuated spaces — DONE 2026-03-28 18:00
+- [x] Reject GAP-FDR-T0-03 for Tier 0 status — DONE 2026-03-28 17:00
 
 ---
 
