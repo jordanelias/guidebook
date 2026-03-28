@@ -76,7 +76,7 @@ Assemble in the order the section map specifies. If the section map and a chunk'
 3. Volume 2 parts in section-map order
 4. Volume 3 parts in section-map order
 5. Supplementary volumes in section-map order
-6. Back matter (bibliography, glossary, index, appendices)
+6. Back matter (endnotes [per volume — placed by bibliography-compiler], bibliography [if separate from endnotes], glossary, index, appendices)
 
 ---
 
@@ -142,4 +142,12 @@ Stop and confirm with user before proceeding:
 ---
 
 **Preceded by:** `haiku-chunker` (section map required)
-**Feeds into:** `cross-reference-resolver` · `table-formatter` · `guidebook-auditor` Mode A
+
+### REF-ID Marker Handling
+
+`[REF:{slug}:{NN}]` markers are endnote source markers emitted by `item-specification-writer`. **Do NOT flag these as broken cross-references.**
+
+- If `bibliography-compiler` has NOT yet run: markers are expected and valid — pass through unchanged.
+- If `bibliography-compiler` HAS run and markers remain: flag as `UNPROCESSED-REF` — route back to bibliography-compiler.
+
+**Feeds into:** `bibliography-compiler` · `cross-reference-resolver` (after bibliography-compiler) · `table-formatter` · `guidebook-auditor` Mode A
