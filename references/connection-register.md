@@ -1,7 +1,7 @@
 # Connection Register
 
 **Created:** 2026-03-26 18:10  
-**Last updated:** 2026-03-28 21:30
+**Last updated:** 2026-03-28 21:45
 
 **Disposition lifecycle (per project-standards Rule 2026-03-27):**
 
@@ -1101,4 +1101,391 @@ Elevate the U/L-shape shelf configuration bullet in G-08 from population-tagged 
 ### Disposition
 - [x] Elevate G-08 U/L-shape storage bullet to Tier 0 scope — DONE 2026-03-28 17:05
 - [x] GAP-FDR-T0-05 CLOSED 2026-03-28 17:00
+
+
+---
+
+## CON-0039 [2026-03-28 21:45]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [BOTH] — intra-individual (one person benefits from RT60 ≤0.3 s for multiple co-occurring conditions) and inter-group (building serves DEAF + NDV/AUT + DEM occupants)
+**Populations involved:** DEAF, NDV/AUT, DEM, NEU/PCS
+**Items involved:** A-02, A-08, A-13, all Category A items
+**Gap register items:** NONE (new Tier 0 candidate)
+
+### Connection description
+Four independent evidence streams converge on RT60 ≤0.3 s as the specification ceiling for speech-critical rooms:
+
+- **DEAF/hearing device users:** Iglehart 2020 (Tier 1 AJA), ANSI/ASA S12.60 Footnote e — 0.3 s for classrooms ≤283 m³. Speech perception scores significantly better at 0.3 s than 0.6 s for hearing aid/CI users.
+- **NDV/AUT:** Bettarello 2021, Caniato 2024 (Tier 1) — existing standards calibrated to neurotypical populations are insufficient; sub-0.3 s indicated. Autistic users significantly more affected by modest background noise increases (52→55 dBA).
+- **DEM:** Devos 2019 POE (Belgian nursing homes); Lyngby-Taarbæk case study (40% agitation reduction from acoustic ceiling installation). Acoustic calm as primary therapeutic intervention.
+- **NEU/PCS:** Clinical guidance for low-background-noise environments; no contradicting evidence at 0.3 s.
+
+The 0.3 s ceiling is a strict subset of the 0.6 s general-population ceiling — no population is disadvantaged. The Opus synthesis on `acoustics-speech-intelligibility-disability` established that 0.6 s is a failure boundary, not a compliant specification — a framing error repeated across ADA, BS 8300, and NCC.
+
+**Additional conflict:** Sound masking (A-13) is contraindicated for NDV/AUT (PAS 6463, Bettarello evidence) but potentially useful in open-plan DEAF/hearing-loop settings. Genuine inter-group conflict requiring documentation in §8.6 (unresolvable without spatial zoning).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Iglehart 2020 (AJA) | 1 | DEAF (hearing device users) | ALL — Tier 0 acoustic ceiling |
+| ANSI/ASA S12.60-2010 Footnote e | 4 | DEAF | ALL |
+| Bettarello et al. 2021 (Applied Sciences) | 1 | NDV/AUT | ALL |
+| Caniato et al. 2024 | 1 | NDV/AUT | ALL |
+| Devos et al. 2019 (PMC) | 2 | DEM | ALL |
+| Murgia et al. 2023 (systematic review) | 1 | DEAF | ALL |
+
+### Proposed synthesis direction
+Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for all Category A items
+
+---
+
+## CON-0040 [2026-03-28 21:45]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [BOTH] — serves individuals with co-occurring sensory conditions and buildings with multiple disability populations
+**Populations involved:** NDV/AUT, NDV/ADHD, NDV/SENS, DEM, NEU, DEAF, OFS, PAIN, VIS
+**Items involved:** A-02, A-08, A-13, B-01, B-06, F-01, D-05, A-16
+**Gap register items:** NONE (structural synthesis)
+
+### Connection description
+Four unreferenced BPC slugs describe four facets of a single sensory environment design system with no internal cross-references:
+
+1. **`sensory-processing-model-design-application`** — Dunn's four sensory profiles → design requirement matrix
+2. **`detectable-gradient-protocol-sensory-zones`** — Three spatial zones → boundary thresholds (≥0.2 s RT60 change, ≥50 lux, ≥30 LRV)
+3. **`room-acoustic-performance`** — RT60/NC targets per population
+4. **`therapeutic-lighting-design`** — Melanopic EDI/CCT targets per time of day
+
+The unmade synthesis is the within-zone parameter assignment:
+
+| Parameter | Zone 1 (High activation) | Zone 2 (Moderate) | Zone 3 (Low activation) |
+|---|---|---|---|
+| RT60 | ≤0.6 s | ≤0.4 s | ≤0.3 s |
+| Background noise | ≤40 dBA | ≤35 dBA | ≤30 dBA |
+| Daytime illuminance | ≥300 lux / ≥200 EML | 150–300 lux | User-controlled 0–150 lux |
+| CCT daytime | ≥4000 K | 3000–4000 K | ≤3000 K dimmable |
+| Evening CCT (all) | ≤2700 K / ≤10 EML | ≤2700 K | ≤2700 K |
+
+Zone 3 RT60 ≤0.3 s aligns with CON-0039. Individual user control (CON-0017/H-02) is the resolution mechanism across all zones.
+
+### Evidence basis
+| Source | Tier | Slug | Proposed extension to |
+|---|---|---|---|
+| Dunn 1997 sensory model | Foundational | sensory-processing-model | Zone assignment framework |
+| PAS 6463:2022 §6.4 | 5 | detectable-gradient-protocol | Zone boundary thresholds |
+| Mostafa ASPECTSS 2.0 (2021) | 2 | detectable-gradient-protocol | Zone transition design |
+| Iglehart 2020 / Murgia 2023 | 1 | room-acoustic-performance | Zone 3 RT60 target |
+| Brown et al. 2022 / WELL v2 | 3/5 | therapeutic-lighting-design | Zone 1–3 CCT/EML targets |
+
+### Proposed synthesis direction
+Create unified sensory environment specification matrix linking Dunn's profiles to spatial zones to quantified parameters. Mark as ○ (expert synthesis) — zone boundaries empirically grounded, within-zone targets synthesised from population-specific evidence. No single study validates the complete matrix.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for F-01, A-16, B-01, B-06, all Category A
+
+---
+
+## CON-0041 [2026-03-28 21:45]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — a person with DEM+MOB+PAIN in a residential setting experiences the thermal differential as a single hazard
+**Populations involved:** DEM, MOB (older adults), NEU/MS, PAIN, OFS
+**Items involved:** TC-01, TC-02, TC-03, TC-05, H-04, all residential bathroom matrix entries
+**Gap register items:** NONE (safety-critical propagation)
+
+### Connection description
+Japan heat shock data (6,073 bathtub drowning deaths/year, MHLW 2023) is the most consequential mortality statistic in the BPC corpus. Root cause: 5–15°C differential between unheated bathrooms and heated living areas. Resolution: inter-room differential ≤5–7°C (Nakayama 1981).
+
+This finding is siloed in `thermal-comfort-older-adults-care-settings` and not propagated to:
+- Part 5 residential bathroom matrices (where it is a P1 safety specification)
+- TC-01/TC-02/TC-03 items (which specify envelope performance but not inter-room differential)
+- The `ms-thermal-temperature-conflict-resolution` BPC (which addresses population thermal preference conflicts but not the mortality mechanism)
+- CON-0019 environmental refuge (which does not specify thermal zone assignment)
+
+The thermal conflict resolution (ambient ≤18–21°C + individual supplemental heating) also affects refuge rooms: OFS populations need individual heating controls in refuge spaces; NDV/sensory-avoiding need cool baseline. Both require individual control — compatible but unstated.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| MHLW Japan 2023 (6,073 deaths) | 3 | DEM/older adults (JP) | ALL residential bathroom specification |
+| Nakayama 1981 (≤5–7°C differential) | 3 | DEM/older adults (JP) | ALL residential inter-room thermal spec |
+| Baquero et al. 2023 (n=1,065) | 3 | DEM/older adults | Thermal comfort targets |
+| ms-thermal BPC (Uhthoff/PAIN/OFS conflict) | 2–4 | NEU/MS, PAIN, OFS | Resolution methodology |
+| TC-05 (heated bathroom floor) | 5 | ALL | Direct prevention of heat shock mechanism |
+
+### Proposed synthesis direction
+Propagate inter-room thermal differential ≤5°C to all residential bathroom matrix entries as P1 safety specification. Cross-reference TC-05 (heated bathroom floor) as the primary prevention mechanism. Link to ms-thermal conflict resolution for multi-condition thermal management. Specify refuge room thermal zone assignment (individual control required).
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for Part 5 bathroom matrices + TC items
+
+---
+
+## CON-0042 [2026-03-28 21:45]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — different occupants need different alerting channels; also [INTRA-INDIVIDUAL] for DEAF+NEU co-occurrence
+**Populations involved:** DEAF, DBL, NEU (seizure), NDV/AUT (photosensitive)
+**Items involved:** B-10, visual alerting items, H-04, CON-0014 items
+**Gap register items:** GAP-035
+
+### Connection description
+CON-0014 proposes vibrotactile alerting for sleeping areas where DEAF/DBL and photosensitive populations co-occur. The `visual-fire-alarm-seizure-safety` BPC specifies synchronised VADs at 0.5–1 Hz + voice alarm + vibrotactile. The `visual-alerting-and-wayfinding-light` BPC covers non-emergency alerting (doorbells, call systems).
+
+The unmade synthesis: the alerting system is a single integrated domain. A person who needs vibrotactile fire alerts also needs vibrotactile doorbell, telephone, and intruder alerts. Specifying vibrotactile for fire only leaves the same person without notification for all other alert types.
+
+The seizure/photosensitivity conflict applies to all visual alerting, not just fire — doorbell VADs at a photosensitive user's desk carry the same seizure risk. CON-0014's vibrotactile resolution must extend to non-emergency alerting.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Jordan & Vanderheiden 2024 (ACM TACCESS) | 3 | NEU (photosensitive epilepsy) | All visual alerting items |
+| BS EN 54-23:2010 | 5 | DEAF (fire VAD) | Multi-channel specification |
+| NFPA 72-2022 | 5 | DEAF | Multi-channel specification |
+| RNID / HLAA / Bufdir | Co-1/2 | DEAF (vibrotactile) | All alerting channels |
+
+### Proposed synthesis direction
+Specify unified multi-channel alerting: every alert event (fire, intrusion, doorbell, telephone, intercom) available through all three channels (visual + auditory + vibrotactile) simultaneously. Consistent channel specifications across alert types to enable pattern recognition. Extends CON-0014 from sleeping-area fire alarm to all alerting.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for B-10 + all alerting items
+
+---
+
+## CON-0043 [2026-03-28 21:45]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [BOTH] — serves individuals with VIS+DEM co-occurrence and buildings with VIS/DEM/NDV populations
+**Populations involved:** VIS, DEM, NDV/AUT, IntD, DBL
+**Items involved:** All C-items, D-02, D-06, F-01 zone boundaries
+**Gap register items:** NONE (internal consistency correction)
+
+### Connection description
+The `luminance-contrast-lrv-evidence-base` BPC documents that the universal 30% LRV threshold has no empirical basis — it is a regulatory floor adopted from UK DDA guidance without validation. Severe VI needs ≥65% Michelson contrast (2.5× the standard). The guidebook recommends ≥50% LRV as best practice for C-items.
+
+The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifies ≥30 LRV change at zone boundaries — inheriting the unvalidated threshold. Cognitive wayfinding items depend on contrast-based landmarks for DEM, IntD, NDV. The guidebook's own ≥50% best-practice target is not propagated to zone boundaries or wayfinding items.
+
+### Evidence basis
+| Source | Tier | Currently cited for | Gap |
+|---|---|---|---|
+| Harper et al. 2022 (Ergonomics) | 3 | Stair contrast enhancement | Supports enhancement; doesn't validate 30% |
+| Brown et al. 2023 (Ergonomics) | 3 | VIS nosing contrast | Confirms benefit; no threshold validation |
+| Dain et al. (cited in Manandhar 2022) | 3 | Severe VI | ≥65% Michelson needed; 2.5× current standard |
+| CNIB 2024 | Co-1 | VIS | 30% is minimum regulatory floor, not functional optimum |
+
+### Proposed synthesis direction
+Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions — C-items, zone boundaries, wayfinding items. At critical junctions (platform edges, stair nosings, kerb lines): ≥65% Michelson. The 30% value remains as code-compliance minimum only. Internal consistency correction — the guidebook already established the right position in the LRV BPC.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for all C-items + F-01 zone boundaries
+
+---
+
+## CON-0044 [2026-03-28 21:45]
+**Mode:** Internal
+**Confidence:** MODERATE (theoretical) / HIGH (haptic continuity)
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — a person with VIS+MOB co-occurrence relies on haptic pathway for both navigation and postural support
+**Populations involved:** ALL (theoretical); VIS, DBL, MOB (haptic continuity)
+**Items involved:** Part 1 (§1.4 theoretical framework), all G-items, C-04
+**Gap register items:** NONE
+
+### Connection description
+The `ecological-psychology-haptic-affordances-built-environment` BPC provides the most fundamental theoretical basis for the guidebook's specification logic: specifications are affordance thresholds — the point at which the environment switches from enabling to disabling action. This BPC is unreferenced in the connection register despite providing the meta-framework that unifies prospect-refuge (CON-0024), Lawton docility-proactivity (CON-0028), and Housing Enabler (CON-0027).
+
+Two specific actionable findings:
+
+1. **Misaffordance concept:** Environments signalling an action that doesn't exist. High-gloss floor appearing wet to DEM user = misaffordance. Glazed junction (CON-0020) creating reflection = misaffordance for DEM. Names the mechanism behind several existing conflicts.
+
+2. **Haptic pathway continuity:** Handrail/grab bar interruptions at doorways break the tactile route for VIS and DBL users. Continuous handrail = continuous haptic pathway. Not connected to CON-0003 (grab bars) or CON-0001 (circulation legibility). Actionable: specify continuous haptic pathway as Tier 0 circulation requirement.
+
+### Evidence basis
+| Source | Tier | Framework | Application |
+|---|---|---|---|
+| Gibson 1979 (affordances) | Foundational | Affordance theory | Specification = affordance threshold |
+| Heft 2001 (nested hierarchies) | Foundational | Environmental psychology | Wayfinding = affordance assemblage |
+| Turvey & Carello 1995 (haptic) | Foundational | Haptic psychology | Handrail = haptic navigation structure |
+
+### Proposed synthesis direction
+Part 1 §1.4: cite ecological affordance framework as theoretical foundation. Specification = threshold at which affordance becomes available/unavailable. Misaffordance = actively harmful design (not just absence of accessibility). Haptic continuity: specify continuous handrail as Tier 0 on primary circulation routes — interruption at doors, corners, or landings is a haptic pathway break.
+
+### Disposition
+- [ ] MODERATE → P2 gap item for theoretical framing
+- [ ] HIGH → item-specification-writer briefing for G-item haptic continuity
+
+---
+
+## CON-0045 [2026-03-28 21:45]
+**Mode:** Internal (case study evidence)
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** N/A — methodological finding, not a specification connection
+**Populations involved:** VIS, PAIN, OFS (absence); DEM, NDV/AUT, MOB (presence)
+**Items involved:** Part 1 (evidence methodology), Part 13 (case studies)
+**Gap register items:** NONE
+
+### Connection description
+The case study corpus reveals a stark evidence asymmetry: VIS, PAIN/OFS, and DEAF (beyond Gallaudet) have zero purpose-built or home-modified environment case studies with outcome data globally. Confirmed not-found after full multilingual research pass.
+
+DEM has 5 outcome studies; NDV/AUT has 3; MOB has the entire OT home modification corpus (CAPABLE, Sheffield, Malmgren Fänge, BATH-OUT, Petersson, DFG). Every PAIN/OFS and VIS item specification rests on clinical evidence transferred from non-built-environment settings — zero POE validation confirms these specifications work in situ.
+
+The guidebook's evidence hierarchy does not weight "never tested in a built environment" differently from "tested and confirmed." It should. This connects to CON-0029 (POE tools): without POE tools applied to VIS/PAIN/OFS populations, the specification-to-outcome feedback loop is broken for these populations.
+
+### Evidence basis
+| Source | Status | Note |
+|---|---|---|
+| Cross-population case studies BPC Opus synthesis | COMPLETE | "CONFIRMED NOT FOUND globally" for VIS, PAIN/OFS case studies |
+| Residential case studies BPC Opus synthesis | COMPLETE | Same finding confirmed for residential contexts |
+| Case study compendium (26 entries) | COMPLETE | Zero VIS or PAIN/OFS entries with outcome data |
+
+### Proposed synthesis direction
+Part 1 evidence methodology: add evidence confidence weighting — provisions validated by built environment POE carry higher confidence than provisions derived from clinical transfer only. Part 13 §13.0 methodology note: explicit disclosure of VIS/PAIN/OFS evidence gap. Gap register: commission VIS and PAIN/OFS POE studies as v11 research priority.
+
+### Disposition
+- [ ] HIGH → Part 1 methodology note + Part 13 evidence gap disclosure
+
+---
+
+## CON-0046 [2026-03-28 21:45]
+**Mode:** Internal (case study evidence)
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — NDV/AUT and NDV/MH are different diagnostic groups co-occupying the same inpatient ward
+**Populations involved:** NDV/AUT, NDV/MH
+**Items involved:** A-16, F-01, D-05, CON-0019 items
+**Gap register items:** NONE
+
+### Connection description
+CS-17 (NHS CAMHS inpatient review, NDTi/NHS England 2022) documents systematic harm: NHS inpatient mental health wards designed for NDV/MH are actively harmful to co-occurring NDV/AUT patients. Sensory environments "present sometimes extreme challenges" and "at best hinder wellbeing, at worst exacerbate mental health problems; instigate cycle of progression to more restrictive settings."
+
+This is the only case study documenting design-caused escalation of disability — not failure to accommodate, but active worsening. The absence of sensory zoning (CON-0040 three-zone model) and environmental refuge (CON-0019) is the proximate cause. The sensory zoning system is not an optional enhancement — it is the minimum provision required to prevent documented harm in any setting where NDV/AUT and NDV/MH co-occur.
+
+This is a more consequential conflict than CON-0020 (DEAF glazed junctions) because it produces documented patient harm at scale in an existing building class.
+
+### Evidence basis
+| Source | Tier | Finding |
+|---|---|---|
+| NDTi / NHS England 2022 (Tandfonline DOI 10.1080/13575279.2022.2126437) | 1 (Co-1 autistic-led, peer-reviewed) | Systematic sensory design failure for NDV/AUT in NDV/MH wards |
+| PAS 6463:2022 | 5 | Sensory zoning as design principle — not implemented in NHS wards |
+| CON-0019 (environmental refuge) | Internal | Refuge provision would mitigate harm |
+| CON-0040 (sensory zone system) | Internal | Three-zone model prevents one-size-fits-all ward design |
+
+### Proposed synthesis direction
+Part 7/8: document as mandatory provision — Zone 3 + environmental refuge specified as required (not recommended) in healthcare, education, and any building type where NDV/AUT + NDV/MH co-occurrence is foreseeable. Shifts zone provision from best practice to harm prevention mandate. Reference NHS CAMHS as paradigm failure case in Part 13.
+
+### Disposition
+- [ ] HIGH → Part 7/8 mandatory zoning + Part 13 failure case
+
+---
+
+## CON-0047 [2026-03-28 21:45]
+**Mode:** Internal (case study evidence)
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** N/A — methodological limitation
+**Populations involved:** ALL
+**Items involved:** Part 7/8 methodology (§7.1 / §8.2)
+**Gap register items:** NONE
+
+### Connection description
+The cross-population case study Opus synthesis confirms: "Cross-population with outcomes for both populations: CONFIRMED NOT FOUND globally." No built environment study exists where a multi-population conflict resolution was implemented and both populations' outcomes were measured.
+
+The closest cases document failures and corrections (DeafSpace rounded corners, Tenji blocks, NHS CAMHS), not pre-planned resolutions with dual-population outcomes. Part 7/8 conflict resolutions are principled syntheses from single-population evidence, not empirically validated multi-population outcomes.
+
+Every resolution entry should carry a disclosure: "No built environment study has confirmed this resolution produces positive outcomes for both populations simultaneously." The IDEA Audit (CON-0029) could provide this validation — recommend dual-population POE as priority research agenda.
+
+### Evidence basis
+| Source | Status | Finding |
+|---|---|---|
+| Cross-population case studies BPC | COMPLETE Opus synthesis | Dual-population outcome studies: CONFIRMED NOT FOUND |
+| Harrison et al. 2022 Cochrane (CS-22) | Tier 3 | 20 studies, 77,265 participants — very low certainty across all environmental design outcomes |
+| DeafSpace SLCC (CS-08) | Co-1 | Documents failure + correction, not validated resolution |
+| Kapsalis et al. 2024 (tenji blocks) | Tier 3 | Documents conflict, not resolution with dual outcome data |
+
+### Proposed synthesis direction
+Part 7/8 §7.1/§8.2 methodology note: explicit epistemic disclosure that conflict resolutions are evidence-informed syntheses, not empirically validated. Recommend dual-population POE as v11 research priority. Does not weaken Part 7/8 — strengthens it through honest epistemic framing.
+
+### Disposition
+- [ ] HIGH → Part 7/8 methodology note
+
+---
+
+## CON-0048 [2026-03-28 21:45]
+**Mode:** Internal (case study evidence)
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — a person with MOB+DEM+PAIN benefits from home modification programme addressing all conditions
+**Populations involved:** MOB, DEM, PAIN, OFS, ALL
+**Items involved:** Part 12 (Economics)
+**Gap register items:** NONE
+
+### Connection description
+Four evidence sources form a single economic argument at different scales:
+
+- **CAPABLE** (CS-22, Tier 1 RCT, 6 trials, 1,087 participants): Programme cost ~$2,825 (including ~$700–$1,400 modifications). Hospitalisation 0.43→0.23/year (p=0.03). Modelled ROI: $10,000–$22,000 savings per participant.
+- **LSE/Habinteg** (CS-23, Tier 2): M4(3) wheelchair standard costs ~£22,000 additional; produces ~£94,000 benefit over 10 years (4:1 ratio). Local authority savings £4,800–£9,200/year per household.
+- **Sheffield** (Tier 1 RCT): 39% reduction in personal care hours from OT+modification.
+- **Clemson Cochrane** (CON-0031/0032, Tier 3): 38% fall rate reduction; cost ratio 1:2.2 to 1:14.9.
+
+These are not separate data points — they are a single economic continuum. $1,400 (single-room) → $2,825 (whole-home OT programme) → £22,000 (new-build wheelchair standard) all produce positive ROI. No source contradicts this. The economics section should present them as a unified case, not scattered citations.
+
+### Evidence basis
+| Source | Tier | Scale | ROI |
+|---|---|---|---|
+| CAPABLE RCT (Szanton 2019, PMID 30615024) | 1 | Single home (~$2,825) | $10,000–$22,000 modelled savings |
+| LSE/Habinteg CASEreport 147 (2023) | 2 | New build (~£22,000 premium) | £94,000 benefit / 10 years |
+| Sheffield RCT (2013, PMID 23213082) | 1 | Single home | 39% personal care hour reduction |
+| Clemson Cochrane (2023, CD013258) | 3 | Environmental intervention | 38% fall rate reduction; 1:2.2–1:14.9 cost ratio |
+
+### Proposed synthesis direction
+Part 12: present as unified economic continuum — intervention at any scale is cost-effective. Anchor figures: CAPABLE ($2,825 → $10–22K savings), Habinteg (£22K → £94K benefit, 4:1), Sheffield (39% care hour reduction), Clemson (38% fall reduction, up to 1:14.9). Strongest economic argument in the guidebook — stronger than any single specification's clinical evidence.
+
+### Disposition
+- [ ] HIGH → Part 12 economics anchor evidence
+
+---
+
+## CON-0049 [2026-03-28 21:45]
+**Mode:** Internal (case study evidence)
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — a person with co-occurring disabilities needs both environment AND support/assessment framework
+**Populations involved:** ALL (MOB, NEU, DEM, OFS, PAIN primary evidence populations)
+**Items involved:** Part 5 (residential process specification), Part 7/8 items
+**Gap register items:** NONE (scope expansion)
+
+### Connection description
+Two Tier 1 studies converge on the most consequential finding for the guidebook's scope:
+
+- **Douglas et al. 2024** (BMJ Open, Tier 1 qualitative): Support quality is a greater determinant of tenant QoL than the built environment in SDA housing.
+- **Ainsworth et al. 2022** (Disabil Rehabil, Tier 1 qualitative): Outcomes are co-produced by environment AND OT process quality — therapists must understand clients' experience of home as initial step.
+
+The broader implication: the guidebook specifies built environment provisions but does not specify the support, transition, and assessment framework that governs whether those provisions produce outcomes. The evidence says the framework matters more.
+
+Connections: CON-0033 (CAPABLE) provides the specific validated framework (OT + nurse + handyman). CON-0027 (Housing Enabler) provides the Tier 2 assessment instrument. CON-0028 (Lawton docility-proactivity) provides theoretical grounding: Tier 2 is the proactivity stage — person actively shaping environment with professional support.
+
+Together: the guidebook must expand scope from "what to build" to "what to build + how to assess + how to support + how to transition." Part 5 requires a process specification section co-primary with room matrices.
+
+### Evidence basis
+| Source | Tier | Key finding |
+|---|---|---|
+| Douglas et al. 2024 (BMJ Open) | 1 qualitative | Support quality > built environment for QoL |
+| Ainsworth et al. 2022 (Disabil Rehabil, PMID 36394257) | 1 qualitative | Outcomes co-produced by environment + OT process quality |
+| CAPABLE (Liu 2020, PMID 32951215) | 1 RCT | OT+nurse+handyman model: validated multicomponent framework |
+| Carey et al. 2025 (PMID 41175339) | Co-1 | Family/carer transition support essential |
+| Malmgren Fänge 2019 (PMID 31684916) | 1 quasi-experimental | Standardised OT assessment: OR 9.50 wheelchair mobility |
+
+### Proposed synthesis direction
+Part 5: add process specification section — structured OT assessment as prerequisite, multicomponent intervention model (CAPABLE), transition planning, ongoing support frameworks. Co-primary with room matrices. This is the single most important scope decision outstanding for the guidebook.
+
+### Disposition
+- [ ] HIGH → Part 5 structural expansion — process specification co-primary with room matrices
 
