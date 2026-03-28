@@ -1,8 +1,8 @@
 # BPC: residential-accessible-home-case-studies
 **Topic:** frameworks-and-methodology
 **Population codes:** MOB / OFS / PAIN / NDV/MH / ALL
-**Status:** PARTIAL — academic pass complete; Opus synthesis PENDING
-**Last updated:** 2026-03-28 09:30
+**Status:** COMPLETE — Opus synthesis done 2026-03-27
+**Last updated:** 2026-03-27
 
 ## Scope
 Purpose-built accessible homes, home modification programmes with documented disability outcomes, OT-assessed residential adaptation studies, wheelchair standard housing, specialist disability accommodation (SDA), adaptable housing programmes. Residential settings only.
@@ -328,7 +328,7 @@ Backward mining from confirmed sources: not executed (Petersson 2008/2009 not fo
 |---|---|---|
 | DK / FI / CH / NZ / ES / PT / IT / KR / CN / SG / BR / EU / ISO | MODERATE | Not searched — accepted as low-yield for case studies per session decision |
 | Petersson 2008/2009 | LOW | Not found in PubMed; may be grey or Swedish-only; flag for manual retrieval |
-| Opus best-practice synthesis | BLOCKER | NOT RUN — required before LOG completion |
+| Opus best-practice synthesis | RESOLVED | Completed 2026-03-27 by Opus 4.6 |
 | VIS / PAIN/OFS residential case studies | KNOWN-LIMITATION | No purpose-built residential case study with outcomes in any jurisdiction |
 | DE/AT/CH: no building-level case study | MODERATE | Statistical/regulatory only |
 | CA: no OT-outcome residential case study | MODERATE | Standards and programme data only |
@@ -337,27 +337,73 @@ Backward mining from confirmed sources: not executed (Petersson 2008/2009 not fo
 ---
 
 ## Best Practice Synthesis
-**PENDING — Opus synthesis not yet run.**
-**BLOCKER: Required before research-log-manager LOG can be completed.**
 
-Key inputs for Opus when synthesis runs (prepared by Sonnet):
+### best_practice_synthesis
 
-**Tension 1 — Support quality vs built environment:**
-AU Tier 1 (Douglas et al. 2024): "Support quality is a greater determinant of QoL than the built environment." IE Co-1 (ILMI 2021): "It's not just about the house and four walls." Both converge. Built environment is necessary but not sufficient — guidebook must specify both environment and transition/support frameworks.
+**Determination date:** 2026-03-27
+**Synthesised by:** Opus 4.6
 
-**Tension 2 — Programme vs building evidence:**
-CAPABLE (US Tier 1 RCT): programme outcomes. SDA/Habinteg/Kelsey: building outcomes. hapi/Unaf (FR): programme outcomes in specified buildings. These are not equivalent — guidebook must distinguish which evidence applies to which specification level.
+**Governing principles:**
 
-**Tension 3 — Ageing vs disability evidence base:**
-JP Tier 1 evidence (BMC 2022/2023) is ageing-focused. Malmgren Fänge 2019 (SE/NO) covers older adults. Sheffield 2013 (US) is older adults. CAPABLE RCT is older adults. Summer Foundation (AU) and Kelsey (US) are working-age disability. Transfer of ageing evidence to working-age disability is plausible but not confirmed.
+1. **Built environment is necessary but not sufficient.** Specification of the physical dwelling must be paired with specification of transition support, ongoing support quality, and OT-led assessment. Support quality is a greater determinant of tenant QoL than built environment alone (Douglas et al. 2024, Tier 1; ILMI 2021, Co-1; Carey et al. 2025, Co-1). The guidebook must specify both.
 
-**Tension 4 — Co-design vs specification:**
-Kelsey (300+ Inclusive Design Standards) is co-designed and beyond-code. Cannot be directly transposed to a jurisdiction-neutral guidebook. Opus must determine what principles are transferable.
+2. **OT-led structured assessment governs home adaptation outcomes.** Three independent Tier 1 studies across three jurisdictions confirm that standardised OT assessment protocol + home adaptation produces significant ADL improvement: Malmgren Fänge 2019 (SE/NO, OR 9.50 wheelchair mobility), Liu/CAPABLE 2020 (US, OR 3.95 bathroom life-space), Sheffield 2013 (US, 39% reduction in personal care hours). Informal or unstandardised practice produces inferior outcomes. The guidebook should specify structured OT assessment as prerequisite, not optional adjunct.
 
-**Convergent findings requiring synthesis:**
-- Cross-jurisdiction stock inadequacy (2–12.6%) = baseline condition; specifying above-code is essential
-- OT-led structured assessment protocol + HA = consistent ADL outcome improvements (Tier 1, SE; Tier 1 RCT, US; Tier 1 qualitative, AU)
-- Co-design as design methodology = confirmed via UK (Habinteg), US (Kelsey), FR (hapi) — different scales, same principle
-- Mixed-income/mixed-ability integration = no segregation; supported by Kelsey; implicit in Habinteg mainstream integration
-- Economic case for purpose-built over retrofit: £27,000 per household retrofit cost (UK Tier 2); JP Tier 1 prevention of care needs deterioration; Sheffield 39% reduction in personal care hours
+3. **Above-code specification is essential.** Cross-jurisdiction stock inadequacy (2% DE to 12.6% UK) establishes that statutory minimums fail to produce accessible housing stock at population level. Every jurisdiction surveyed confirms this. Statutory codes are reference baseline only (Tier 6); the guidebook specifies above-code as default.
+
+4. **Co-design is a validated methodology at multiple scales.** Co-design with disabled people is confirmed as effective design methodology across UK (Habinteg/RIBA, Co-2), US (Kelsey 300+ standards, Co-1), and FR (hapi 28 projects, Co-1). The principle transfers; the specific standards do not transfer jurisdiction-neutrally.
+
+5. **Mixed-income, mixed-ability integration is the governing settlement model.** Segregated disability-only housing is contradicted by the evidence. Kelsey (US) and Habinteg (UK) both demonstrate mainstream integration. The guidebook should specify integration as default.
+
+6. **Purpose-built is economically superior to retrofit.** Retrofit cost £27,000/household (UK Tier 2). Sheffield 2013 documents 39% reduction in personal care hours from OT+modification. JP Tier 1 evidence confirms prevention of care needs deterioration. The economic case for purpose-built accessible specification is established.
+
+7. **Outcomes are co-produced by environment and process.** Ainsworth et al. 2022 (AU, Tier 1 qualitative) confirms that outcomes depend on both the modification and the quality of the OT process — including understanding the client's experience of home. This is not environment-only evidence.
+
+8. **Ageing evidence is transferable to working-age disability with stated limitations.** The strongest Tier 1 RCT evidence (CAPABLE, Sheffield, Malmgren Fänge) is drawn from older adult populations. Transfer to working-age disability is supported by convergent findings from working-age sources (Douglas 2024, Kelsey, Carey 2025) but is not directly confirmed by RCT. The guidebook must state this transfer limitation where applicable.
+
+**Tension resolutions:**
+
+**T1 — Support quality vs built environment:** Both are required. Douglas 2024 (Tier 1) establishes that support quality is the greater determinant, but this does not diminish the need for built environment specification — it elevates support specification to co-primary status. The guidebook must specify transition planning, ongoing support frameworks, and OT assessment alongside physical design. Governing sources: Douglas et al. 2024; ILMI 2021; Carey et al. 2025; Ainsworth et al. 2022.
+
+**T2 — Programme vs building evidence:** These are distinct evidence types and must not be conflated. Programme evidence (CAPABLE, hapi) governs specification of delivery frameworks — who does what, in what sequence, with what assessment. Building evidence (SDA, Habinteg, Kelsey) governs specification of physical design features. The guidebook should maintain this distinction: Part 5 (or equivalent process specification) draws on programme evidence; Parts specifying physical elements draw on building evidence. Where programme evidence documents outcomes that depend on building features (e.g., CAPABLE's home modifications component), the building features are extractable but the outcome is attributable to the programme, not the feature alone.
+
+**T3 — Ageing vs disability evidence base:** The ageing evidence base is the stronger Tier 1 source for OT+home adaptation outcomes. Working-age disability evidence (SDA, Kelsey) is predominantly Co-1 and Tier 2 — strong for lived experience, weaker for controlled outcomes. The guidebook should: (a) apply ageing-derived Tier 1 findings as governing evidence for ADL-related provisions with an explicit transfer note; (b) apply working-age Co-1 evidence as governing for provisions relating to autonomy, integration, and housing model; (c) flag where working-age RCT confirmation is absent. This is not a hierarchy — it is a scope delineation.
+
+**T4 — Co-design vs specification:** Co-design is a transferable principle; specific co-designed standards are not. The Kelsey's 300+ elements are jurisdiction-specific (US zoning, ADA, CA HCD) and cannot be transposed. What transfers: (a) co-design with disabled people as mandatory design methodology; (b) disability advisory group as governance structure; (c) inclusion staffing model (Inclusion Concierge); (d) mixed-income/mixed-ability as settlement typology. The guidebook should specify the methodology, not replicate the elements. Governing sources: Kelsey 2024 (Co-1); Enterprise Community Partners 2024 (Tier 2).
+
+**Best practice provisions:**
+
+1. ● **Structured OT-led person-environment assessment shall be specified as prerequisite to all home adaptation and purpose-built accessible housing design** [MOB / ALL]. Three Tier 1 studies confirm superiority of standardised protocol over informal practice (Malmgren Fänge 2019; Liu/CAPABLE 2020; Sheffield 2013). Ainsworth 2022 confirms that therapists must understand clients' experience of home as initial step.
+
+2. ● **Purpose-built accessible housing shall be specified as the primary provision; retrofit as secondary** [ALL]. Economic evidence: retrofit £27,000/household (Habinteg 2024); 39% reduction in personal care hours from OT+modification (Sheffield 2013); prevention of care needs deterioration (JP BMC 2023). Stock inadequacy across all surveyed jurisdictions confirms retrofit alone cannot close the gap.
+
+3. ● **Transition planning and ongoing support frameworks shall be specified alongside built environment provisions** [NEU / MOB / ALL]. Support quality governs QoL outcomes (Douglas et al. 2024, Tier 1). Family/carer transition support is required (Carey et al. 2025, Co-1). Absence of support planning undermines built environment investment.
+
+4. ●○ **Co-design with disabled people shall be specified as mandatory design methodology for purpose-built accessible housing** [ALL]. Confirmed across three jurisdictions and scales: Habinteg/RIBA (UK, Co-2), Kelsey (US, Co-1), hapi (FR, Co-1). Disability advisory governance structure should be specified.
+
+5. ●○ **Mixed-income, mixed-ability, community-integrated housing shall be specified as the default settlement model** [ALL]. Kelsey (US, Co-1) and Habinteg (UK, Co-1/Tier 2) both demonstrate mainstream integration with disability-forward design. Segregated models are not supported by the evidence base.
+
+6. ● **Multicomponent intervention (OT + home modification + nursing/handyman where indicated) shall be specified as the governing service delivery model for home adaptation** [MOB / ALL]. CAPABLE RCT (Liu 2020, Tier 1): OT+RN+handyman at $1,300 modification cost. Washington 2023 (Tier 1) confirms real-world implementation. Sheffield 2013 (Tier 1): OT+adaptive equipment+home modifications.
+
+7. ●○ **Wheelchair home mobility shall be specified with reference to the Malmgren Fänge OR 9.50 finding** [MOB]. Standardised OT assessment protocol produced OR 9.50 for wheelchair use at home (Malmgren Fänge 2019, Tier 1 quasi-experimental). This is the strongest single-outcome effect size in the dataset and should anchor wheelchair-accessible home specification.
+
+8. ○ **Inclusion staffing models (e.g., Inclusion Concierge, Famille-Gouvernante, AVP) shall be referenced as emerging practice for community-integrated accessible housing** [NDV/MH / IntD / ALL]. Kelsey (US), Unaf/hapi (FR), CNSA (FR Tier 5). Not yet Tier 1 confirmed. Evidence marker ○ (expert consensus / programme).
+
+**Transfer limitations:**
+
+- **Ageing → working-age disability:** The three strongest Tier 1 studies (CAPABLE, Sheffield, Malmgren Fänge) enrolled older adult populations. ADL-related findings (toileting, dressing, cooking, wheelchair mobility, falls) are plausibly transferable to working-age populations with similar functional profiles, but no working-age RCT confirms this. The guidebook must state: "Evidence derived from older adult populations; transfer to working-age disability is supported by convergent qualitative evidence but not confirmed by controlled trial."
+- **Jurisdiction-specific elements:** Kelsey Inclusive Design Standards (US), M4(2)/M4(3) (UK), NCC LHA Silver (AU), BBR (SE), CSA B652 (CA) are jurisdiction-bound. Principles transfer; dimensional specifications do not without local validation.
+- **Working-age disability RCT gap:** No RCT of purpose-built accessible housing for working-age disabled adults exists in the dataset. SDA (AU) and Kelsey (US) provide Co-1 and Tier 2 evidence only.
+- **VIS / PAIN / OFS residential case studies:** No purpose-built residential case study with disability-specific outcomes was found for these populations. Provisions for these groups must draw on general provisions + population-specific evidence from other slugs.
+- **Petersson 2008/2009:** Not confirmed in PubMed. Do not cite.
+- **Unsearched jurisdictions (DK/FI/CH/NZ/ES/PT/IT/KR/CN/SG/BR/EU/ISO):** Accepted as low-yield for residential case studies; may contain relevant evidence not captured.
+
+**Specification implications for the guidebook:**
+
+- **Part 5 (or equivalent process specification):** Requires new or revised items specifying OT-led structured assessment as prerequisite, multicomponent intervention model, transition planning, and ongoing support frameworks. CAPABLE programme structure is the strongest model.
+- **Wheelchair-accessible home specification items:** Malmgren Fänge OR 9.50 should anchor dimensional and layout provisions. Cross-reference to MOB/AMB slug.
+- **Housing model provisions:** New items specifying mixed-income/mixed-ability integration, co-design methodology, and disability advisory governance. These are framework-level provisions, not dimensional.
+- **Economic justification items:** Purpose-built vs retrofit cost data should be incorporated into guidebook preamble or Part 1 rationale. Sheffield 39% care hour reduction and UK £27,000 retrofit cost are the anchor figures.
+- **Cross-references:** This synthesis connects to bathroom-design, kitchen-design, entrance-and-threshold, and any MOB/wheelchair specification slugs. Connection register entries should be created for: (a) CAPABLE → any OT assessment specification; (b) Malmgren Fänge wheelchair OR → wheelchair home specification; (c) Douglas 2024 support > environment → Part 5 support specification.
+
 
