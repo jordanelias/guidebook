@@ -1,6 +1,6 @@
 # Guidebook for Accessible Design — Table of Contents
-**Version:** 8.9.1 **Date:** 2026-03-25 19:35
-**Change Order:** CO-0002-2026-03-25-1935
+**Version:** 8.9.2 **Date:** 2026-03-28 21:30
+**Change Order:** CO-0003-2026-03-28-2130
 
 ---
 
@@ -55,7 +55,7 @@
 - §2.10 DBL — DeafBlind
 - §2.11 OFS — Orthostatic & Fatigue Spectrum
 
-## Part 3: Designing for Multiple Disability Categories
+## Part 3: Designing for Co-Occurring Disabilities
 
 - §3.1 Introduction and Rationale
 - §3.2 Theoretical Framework
@@ -138,7 +138,7 @@
 - §6.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
 - §6.7 NR-TRP: Transport (Stations, Airports, Terminals, Interchanges)
 
-## Part 7: Cross-Population Conflict Resolutions
+## Part 7: Co-Occurring and Multi-Population Conflict Resolutions
 
 - §7.1 Introduction
 - §7.2 Conflict Priority Hierarchy
