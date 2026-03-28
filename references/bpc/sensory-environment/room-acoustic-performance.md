@@ -200,3 +200,30 @@ citation_mining:
 - 🟡 RAP-24 (Amlani & Russo 2016): finding that acoustic panel installation increased listening effort despite meeting STI threshold warrants escalation to **evidence-auditor** — may affect specification language for A-13 acoustic treatment items (caveat required on STI compliance ≠ adequate listening conditions)
 - No contradictions found with existing BPC specifications
 
+
+---
+## Evidence-auditor adjudication — 2026-03-27
+
+**GAP-RAP-01 | Opus adjudication | NRC vs STI conflict**
+
+**Conflict:** BPC consensus finding row 6 (NRC ≥ 0.85 panels as primary treatment) vs REF-RAP-22 (Amlani & Russo 2016: panels degraded listening effort despite STI compliance).
+
+**Adjudication:**
+- RAP-C1 (NRC ≥ 0.85): 🟡 UNDERCLAIMED — correct but incomplete. NRC alone is insufficient specification. Spectral balance of absorption must be specified across 250 Hz–4 kHz octave bands.
+- RAP-C2 (STI ≥ 0.60): 🟡 UNDERCLAIMED — necessary threshold but insufficient as sole criterion. Must be verified at furthest occupied seat, not room average.
+- RAP-C3 (STI ≥ 0.75 DEAF/CI): ✅ CONFIRMED — Tier 1 evidence, not contradicted.
+
+**Mechanism:** High-NRC broadband panels preferentially absorb high frequencies where consonant energy concentrates. Aggregate STI improves but consonant-vowel contrast degrades at distance. Single-number metrics (NRC, room-average STI) mask spatial and spectral degradation.
+
+**Corroborating:** REF-RAP-28 (Wu & Bentler 2012: low RT reduces directional HA utility — non-linear treatment effects), REF-RAP-29 (Reinhart 2019: DNR + reverberation interaction).
+
+**Specification caveats drafted (for item-specification-writer):**
+1. NRC ≥ 0.85 necessary but insufficient. Panels shall have balanced spectral absorption (250 Hz–4 kHz verified). High-frequency-dominant profiles contraindicated (Amlani & Russo, 2016).
+2. STI ≥ 0.60 / ≥ 0.75 (DEAF/CI) verified at furthest occupied seat from speech source. Compliance at room average does not guarantee adequate listening beyond critical distance. Supplementary SFA or seating redesign required where seats exceed critical distance.
+
+**BPC row 6 annotation:** [CONTRADICTED BY FDR: REF-RAP-22 (Amlani & Russo 2016) demonstrates NRC-compliant panels can increase listening effort beyond critical distance. NRC ≥ 0.85 necessary but insufficient; spectral balance and position-specific STI verification required.]
+
+**Evidence markers:** Both caveats ● (evidence-based) — Tier 1/3 peer-reviewed sources with coherent mechanism.
+
+**Status:** Caveats EXEC-READY for item-specification-writer. Gap register: GAP-RAP-01 OPEN P1.
+
