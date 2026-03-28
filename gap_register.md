@@ -171,7 +171,7 @@ GAP-FDR-05 | P2 | OPEN | functional-deficit-researcher | Outdoor circulation | N
 GAP-FDR-06 | P2 | OPEN | functional-deficit-researcher | Bedroom / residential | No residential standard specifies adjustable bed head elevation capacity for OFS head-up tilt sleeping | 2026-03-26 23:00
 GAP-FDR-07 | P2 | OPEN | functional-deficit-researcher | Workplace | No standard requires supine recovery space (lie-down room) in workplaces for OFS/PEM | 2026-03-26 23:00
 GAP-FDR-08 | P2 | OPEN | functional-deficit-researcher | Entrance | No standard specifies thermal transition zone (vestibule cooling) at entrance for OFS | 2026-03-26 23:00
-GAP-FDR-T0-03 | P2 | OPEN | functional-deficit-researcher | All public buildings >500 m² | Retreat/reset room — Tier 0 candidate serving 6+ population codes (OFS, PAIN, NDV, NEU, DEM, NDV/MH) | 2026-03-26 23:00
+GAP-FDR-T0-03 | P2 | CLOSED | connection-scout (Opus) | All public buildings >500 m² | Retreat/reset room — Tier 0 REJECTED. DEAF conflict: sound attenuation creates emergency isolation risk. Remains Tier 1 (D-05). CON-0036 raised for D-05 annotation. | 2026-03-28 17:00
 GAP-FDR-T0-04 | P2 | OPEN | connection-scout (Opus) | All building entrances | Entrance recline seating within 5 m — PARTIAL Tier 0 confirmed (OFS, PAIN, MOB/AMB, DEM; neutral others). Route to item-specification-writer: new E-14 Entrance Rest Seating. CON-0037 raised. | 2026-03-28 17:00
 GAP-CO2-TIER | P1 | OPEN | multilingual-research | §1.5 Evidence Hierarchy | Co-2 tier (OT Clinical Practice Guidelines) defined but unpopulated. No sources listed. Per audit §4.1a and D1-07. Requires evidence retrieval in Phase 2B Session 5. | 2026-03-26 19:30
 
