@@ -502,7 +502,7 @@ Articulate in Part 1 or Part 8: H-02 (Individual Environmental Control) is the g
 | ~~2~~ | ~~P1~~ | ~~Editorial: Parts 4–7 — item consolidation gate~~ | **DONE (49 decisions)** |
 | ~~3~~ | ~~P1~~ | ~~Editorial: Parts 8–13 + Appendices — Decision Register complete~~ | **DONE (approved 2026-03-27)** |
 | ~~4~~ | ~~P2A~~ | ~~Pre-v4 slug triage + cross-population-case-studies + compendium skeleton + gap triage~~ | **DONE (2026-03-28)** |
-| 5 | P2B | Foundations: Co-2 + CRPD + CONSUME backfill + threshold completion + retreat/reset evidence | **NEXT** |
+| 5 | P2B | Foundations: Co-2 + CRPD + CONSUME backfill + threshold completion + retreat/reset evidence | **IN PROGRESS** (Opus synthesis batch done; Co-2/threshold/retreat-reset/PAIN-OFS-acoustic remaining) |
 | 6 | P2B | Population: NDV/MH + NEU supplement + residential + SUPPLEMENT batch | |
 | 7 | P2B | Cross-population conflict evidence + economics deep-dive + **`case-study-economics-financial-data` slug (new)** — financial fields populated in compendium for all case studies | |
 | 8 | P2B | Case study sourcing + **`accessible-design-failures-poor-performance` slug (new, full run)** + failure cases + remediation costs → compendium + remaining SUPPLEMENT/RE-RUN slugs | |
