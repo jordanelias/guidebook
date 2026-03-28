@@ -29,11 +29,11 @@
 
 | REF-ID | Authors | Year | Title | Journal/Publisher | Tier | Lang | Jurisdiction |
 |---|---|---|---|---|---|---|---|
-| REF:accessible-bathroom-and-grab-bar:18 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
+| REF:accessible-bathroom-and-grab-bar:18 | Russell, R., Walker, M., Copeman, I., & Porteus, J. | 2019 | Adaptations Without Delay | Royal College of Occupational Therapists / Housing LIN | Co-2 | EN | UK | https://www.rcot.co.uk/explore-resources/rcot-publications/adaptations-without-delay |
 | REF:accessible-bathroom-and-grab-bar:18 | AOTA | 2023 | Home Modification Practice Guidelines | AOTA | Co-2 | EN | US |
 | REF:accessible-bathroom-and-grab-bar:18 | CAOT | 2024 | Home Assessment and Modifications | CAOT | Co-2 | EN | CA |
 | REF:accessible-bathroom-and-grab-bar:18 | UNSW Home Mod Clearinghouse | 2023 | OT Home Modification Guidelines | UNSW/HMC | Co-2 | EN | AU |
-| REF:accessible-bathroom-and-grab-bar:19 | AOTA | 2023 | Home Modification Practice Guidelines | AOTA | Co-2 | EN | US |
+| REF:accessible-bathroom-and-grab-bar:19 | Siebert, C., Smallfield, S., & Stark, S. | 2014 | Occupational Therapy Practice Guidelines for Home Modifications | AOTA Press | Co-2 | EN | US | https://library.aota.org/OT_Practice_Guidelines_Home_Modification/ [YEAR MISMATCH: cited as 2023; confirmed edition is 2014. AOTA library updated — verify if 2023 edition exists] |
 
 
 **Cross-reference:** G-04 (Accessible Bathroom — transfer clearance); G-05 (Adjustable-height work surfaces); Part 11 (DAR provisions)
@@ -66,9 +66,9 @@
 
 | REF-ID | Authors | Year | Title | Journal/Publisher | Tier | Lang | Jurisdiction |
 |---|---|---|---|---|---|---|---|
-| REF:accessible-bathroom-and-grab-bar:18 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
-| REF:accessible-bathroom-and-grab-bar:22 | Dementia Australia | 2022 | Built Environment Guidelines | Dementia Australia | 2 | EN | AU |
-| REF:accessible-bathroom-and-grab-bar:23 | AOTA | 2023 | Fall Prevention in Bedroom | AOTA | Co-2 | EN | US |
+| REF:accessible-bathroom-and-grab-bar:18 | Russell, R., Walker, M., Copeman, I., & Porteus, J. | 2019 | Adaptations Without Delay | Royal College of Occupational Therapists / Housing LIN | Co-2 | EN | UK | https://www.rcot.co.uk/explore-resources/rcot-publications/adaptations-without-delay |
+| REF:accessible-bathroom-and-grab-bar:22 | Dementia Australia | 2022 | Designing Dementia-Friendly Care Environments | Dementia Australia | 2 | EN | AU | https://www.dementia.org.au/professionals/designing-dementia-friendly-care-environments [TITLE MISMATCH: cited as Built Environment Guidelines; confirmed title is Designing Dementia-Friendly Care Environments. Year 2022 plausible but not confirmed exact — verify at dementia.org.au] |
+| REF:accessible-bathroom-and-grab-bar:23 | American Occupational Therapy Association | 2023 | Fall Prevention in the Home | AOTA | Co-2 | EN | US | [UNVERIFIED — AOTA publishes fall prevention tip sheets and practice resources but specific standalone 'Fall Prevention in Bedroom 2023' not confirmed. May be from AOTA Practice Advisory or OT Practice article. Verify at aota.org] |
 
 **Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); B-12 (Sensor-activated overnight pathway lighting); H-01 (Controls at accessible height); D-06 (Memory boxes at residential room entrances)
 
@@ -98,8 +98,8 @@
 
 | REF-ID | Authors | Year | Title | Journal/Publisher | Tier | Lang | Jurisdiction |
 |---|---|---|---|---|---|---|---|
-| REF:accessible-bathroom-and-grab-bar:18 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
-| REF:accessible-bathroom-and-grab-bar:22 | Dementia Australia | 2022 | Built Environment Guidelines | Dementia Australia | 2 | EN | AU |
+| REF:accessible-bathroom-and-grab-bar:18 | Russell, R., Walker, M., Copeman, I., & Porteus, J. | 2019 | Adaptations Without Delay | Royal College of Occupational Therapists / Housing LIN | Co-2 | EN | UK | https://www.rcot.co.uk/explore-resources/rcot-publications/adaptations-without-delay |
+| REF:accessible-bathroom-and-grab-bar:22 | Dementia Australia | 2022 | Designing Dementia-Friendly Care Environments | Dementia Australia | 2 | EN | AU | https://www.dementia.org.au/professionals/designing-dementia-friendly-care-environments [TITLE MISMATCH: cited as Built Environment Guidelines; confirmed title is Designing Dementia-Friendly Care Environments. Year 2022 plausible but not confirmed exact — verify at dementia.org.au] |
 
 **Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); G-09 (Bedroom emergency call and overnight lighting)
 
