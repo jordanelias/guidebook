@@ -1075,7 +1075,7 @@ Create new Tier 0 item **E-14 Entrance Rest Seating** — reclinable or tilt-cap
 ## CON-0038 [2026-03-28 17:00]
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** CONSUMED
 **Populations involved:** MOB, NEU, PAIN
 **Items involved:** G-08
 **Gap register items:** GAP-FDR-T0-05
@@ -1092,6 +1092,6 @@ Storage layout as incidental bracing surface (U-shape or L-shape, shelf edges at
 Elevate the U/L-shape shelf configuration bullet in G-08 from population-tagged to Tier 0 specification. Add explicit Tier 0 label within G-08. Flag for empirical validation (single Co-2 source). No separate item required — G-08 already covers the provision.
 
 ### Disposition
-- [ ] Elevate G-08 U/L-shape storage bullet to Tier 0 scope within item
-- [ ] Update GAP-FDR-T0-05 → CONSUMED on G-08 revision
+- [x] Elevate G-08 U/L-shape storage bullet to Tier 0 scope — DONE 2026-03-28 17:05
+- [x] GAP-FDR-T0-05 CLOSED 2026-03-28 17:00
 
