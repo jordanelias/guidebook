@@ -1489,3 +1489,1031 @@ Part 5: add process specification section — structured OT assessment as prereq
 ### Disposition
 - [ ] HIGH → Part 5 structural expansion — process specification co-primary with room matrices
 
+---
+
+## CON-0050 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** BAR, MOB, MOB/UPL
+**Items involved:** K-01, fold-down-grab-bar-specification
+**Gap register items:** NONE
+
+### Connection description
+Fold-down grab bar load specification (200 kg SWL minimum per fold-down-grab-bar-specification BPC) conflicts with bariatric requirement documented in body-sizes-supplementary-populations BPC (300 kg user weight, WC + user). Bariatric WC users require ≥300 kg rated fold-down bars; standard MOB specification is structurally insufficient. Not currently cross-referenced in guidebook.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| fold-down-grab-bar-specification BPC | 3 | MOB | BAR load requirement |
+| body-sizes-supplementary-populations BPC | 3 | BAR | grab bar loading |
+
+### Proposed synthesis direction
+Specify bariatric-rated fold-down grab bars (≥300 kg SWL) where BAR provision required; flag standard 200 kg bars as inadequate for BAR populations. Cross-reference K-01 with BAR body-sizes profile.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0051 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEAF, VIS, DBL, DEM, IntD
+**Items involved:** D-05, wayfinding-dementia-spatial-design, cognitive-wayfinding-design
+**Gap register items:** GAP-CON-02
+
+### Connection description
+Loop/linear circulation with no dead-ends serves five populations from independent clinical rationales: DEAF (visual field scan), VIS (tactile route memorisation), DBL (tactile navigation without choice points), DEM (prevents disorientation), IntD (reduces cognitive load). All five BPCs specify this geometry; currently siloed. This is a Tier 0 universal candidate.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| deaf-spatial-design BPC | 2 | DEAF | Tier 0 universal |
+| visual-impairment-built-environment BPC | 2 | VIS | Tier 0 universal |
+| wayfinding-dementia-spatial-design BPC | 2 | DEM | Tier 0 universal |
+| deafblind-built-environment-design BPC | 4-5 | DBL | Tier 0 universal |
+| intellectual-disability-built-environment-design BPC | 4-5 | IntD | Tier 0 universal |
+
+### Proposed synthesis direction
+Elevate loop/linear circulation to Tier 0 universal provision (D-02 revision). Mechanism: reduces wayfinding cognitive load for all users; essential for DEAF/VIS/DBL/DEM/IntD; neutral for others.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0052 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEAF, DBL
+**Items involved:** A-10, A-11, assistive-listening-systems, deafblind-built-environment-design
+**Gap register items:** GAP-CON-03, GAP-ALS-01
+
+### Connection description
+Hearing loop systems (IEC 60118-4) specified for DEAF populations serve DBL residual hearing users identically — not currently noted in DBL item specifications. DBL-specific guidance omits this provision despite documented DBL residual hearing prevalence (Edwards & Brentari 2020 per deafblind-built-environment-design BPC).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| assistive-listening-systems BPC (IEC 60118-4) | 4 | DEAF | DBL residual hearing |
+| deafblind-built-environment-design BPC (Edwards & Brentari 2020) | 2 | DBL | hearing loop applicability |
+
+### Proposed synthesis direction
+Add DBL as co-population for A-10/A-11 hearing loop items. Mechanism: residual hearing common in DBL; loop provision serves both DEAF and DBL without modification.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0053 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** VIS, DEAF, DBL, DEM, IntD
+**Items involved:** D-09, residential-entry-and-threshold, cognitive-wayfinding-design
+**Gap register items:** GAP-S4-R03, GAP-S4-R04, GAP-S4-R05, GAP-S4-R06
+
+### Connection description
+Consistent furniture layout (D-09) specified for DEM spatial memory serves VIS/DBL tactile navigation and IntD cognitive load reduction through identical mechanism — spatial predictability. Currently coded DEM-primary only; VIS/DBL/IntD applications documented in respective BPCs but not cross-referenced.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| dementia-built-environment BPC | 2 | DEM | VIS/DBL/IntD |
+| deafblind-built-environment-design BPC | 4-5 | DBL | D-09 cross-ref |
+| intellectual-disability-built-environment-design BPC | 4-5 | IntD | D-09 cross-ref |
+| visual-impairment-built-environment BPC | 2 | VIS | D-09 cross-ref |
+
+### Proposed synthesis direction
+Recode D-09 as multi-population provision (DEM, VIS, DBL, IntD). Mechanism: spatial predictability reduces orientation barriers across four populations.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0054 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN, MOB/AMB, DEM
+**Items involved:** E-14
+**Gap register items:** GAP-FDR-T0-04
+
+### Connection description
+Entrance recline seating within 5 m of all accessible entrances (GAP-FDR-T0-04) serves four populations: OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause point). Documented as Tier 0 candidate in gap register; not yet in guidebook item specifications.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 2 | OFS, PAIN | Tier 0 universal |
+| mobility-built-environment BPC | 2 | MOB/AMB | entrance seating |
+| dementia-built-environment BPC | 2 | DEM | entrance seating |
+
+### Proposed synthesis direction
+Create new item: entrance recline seating ≤5 m from accessible entrance (E-14). Specify as Tier 0 universal provision — essential for OFS/PAIN/MOB/AMB/DEM; beneficial for all.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0055 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NEU, PAIN, OFS, MOB
+**Items involved:** A-09
+**Gap register items:** GAP-FDR-04
+
+### Connection description
+Cushioned/resilient flooring serves three populations via different mechanisms: MOB (WBV reduction per floor-vibration-wheelchair-disability BPC), PAIN (joint impact reduction per GAP-B4-09), NEU (fall impact mitigation per neurological-built-environment BPC). Currently only MOB provision documented in guidebook; PAIN and NEU applications thin-evidenced but mechanistically supported.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| floor-vibration-wheelchair-disability BPC (Misch 2022) | 2 | MOB | cross-population mechanism |
+| GAP-B4-09 (expert consensus) | 5 | PAIN | thin evidence flag |
+| neurological-built-environment BPC | 3-4 | NEU | fall impact |
+
+### Proposed synthesis direction
+Extend A-09 resilient flooring to PAIN and NEU as co-populations. Flag PAIN application as thin-evidenced (expert consensus only); NEU fall-impact application supported by fall injury literature.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0056 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN, MOB
+**Items involved:** threshold-and-level-access, residential-entry-and-threshold
+**Gap register items:** NONE
+
+### Connection description
+Zero-threshold entry (13-15 mm max) specified for MOB wheelchair caster wheels serves OFS and PAIN populations via step-elimination mechanism — steps trigger post-exertional malaise (PEM) in OFS and joint loading pain in PAIN. Currently coded MOB-only; OFS/PAIN clinical rationale documented in respective BPCs but not cross-referenced to threshold items.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| threshold-and-level-access BPC | 4 | MOB | OFS, PAIN |
+| pain-ofs-built-environment-design BPC | 3 | OFS, PAIN | threshold items |
+
+### Proposed synthesis direction
+Add OFS and PAIN as co-populations for all threshold items (E-12, E-13). Mechanism: step elimination prevents PEM/pain triggers; same physical provision serves three populations.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0057 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEM, NEU, OFS, PAIN
+**Items involved:** I-03
+**Gap register items:** GAP-FDR-01-b
+
+### Connection description
+Thermostatic shower valve ≤37°C specified for OFS heat intolerance (pain-ofs-built-environment-design BPC) also prevents scalding risk for DEM and NEU populations documented in thermal-comfort-older-adults-care-settings BPC. Single specification serves four populations through two mechanisms: therapeutic temperature control (OFS) and safety (DEM/NEU).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | DEM, NEU safety |
+| thermal-comfort-older-adults-care-settings BPC | 2 | DEM, older adults | thermostatic valve cross-ref |
+
+### Proposed synthesis direction
+Add DEM and NEU as co-populations for thermostatic shower valve specification. Dual mechanism: OFS therapeutic + DEM/NEU/PAIN safety.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0058 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN, MOB/AMB
+**Items involved:** NONE
+**Gap register items:** GAP-FDR-02
+
+### Connection description
+Bedroom-bathroom adjacency ≤5 m for OFS energy conservation (per pain-ofs-built-environment-design BPC) serves PAIN and MOB/AMB populations identically — reduces walking distance for populations with mobility/energy constraints. No standard currently specifies maximum bedroom-bathroom distance; OT energy conservation principle documented but not quantified in built environment codes.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | PAIN, MOB/AMB |
+| residential-accessible-home-case-studies BPC | 2 | MOB | bedroom-bathroom adjacency |
+
+### Proposed synthesis direction
+Create new DAR item: bedroom-bathroom adjacency ≤5 m for OFS, PAIN, MOB/AMB populations. Evidence: OT energy conservation + residential case study practice.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0059 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** BOTH
+**Disposition:** PENDING
+**Populations involved:** DEM, NEU, MH, OFS
+**Items involved:** B-06, B-07
+**Gap register items:** GAP-CON-06-b, GAP-034-b
+
+### Connection description
+Circadian lighting (≥250 melanopic EDI daytime) specified for DEM/NEU sleep-wake regulation serves MH and OFS populations via identical mechanism — circadian entrainment improves sleep outcomes across all four populations. MH and OFS BPCs document sleep disruption as core symptom but do not cross-reference circadian lighting specification.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| circadian-lighting-melanopic-edi BPC (Brown 2020) | 1 | DEM, NEU | MH, OFS |
+| mental-health-built-environment BPC | 2 | MH | circadian lighting |
+| pain-ofs-built-environment-design BPC | 3 | OFS | circadian lighting |
+
+### Proposed synthesis direction
+Add MH and OFS as co-populations for B-06/B-07 circadian lighting items. Mechanism: sleep-wake disruption common across DEM/NEU/MH/OFS; circadian lighting serves all four.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0060 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** VIS, DBL, DEM
+**Items involved:** C-04, D-02
+**Gap register items:** GAP-CON-01
+
+### Connection description
+Tactile walking surface indicators (TWSI, ISO 23599:2019) specified for VIS/DBL navigation serve DEM spatial orientation via identical physical mechanism — continuous tactile guide reduces disorientation. DEM application not currently cross-referenced despite wayfinding-dementia-spatial-design BPC documenting tactile landmark effectiveness.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| visual-impairment-built-environment BPC (ISO 23599:2019) | 4 | VIS, DBL | DEM |
+| wayfinding-dementia-spatial-design BPC | 2 | DEM | TWSI cross-ref |
+
+### Proposed synthesis direction
+Add DEM as co-population for TWSI items. Mechanism: continuous tactile route serves VIS/DBL navigation + DEM orientation memory support.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0061 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEAF, VIS, DBL, DEM, IntD
+**Items involved:** E-08, accessible-circulation-geometry
+**Gap register items:** GAP-CO03-07
+
+### Connection description
+Corridor width ≥1500 mm for two-person side-by-side walking specified for DEAF signing conversation (deaf-spatial-design BPC) also accommodates VIS sighted guide, DBL intervenor, DEM support person, and IntD care companion — all requiring side-by-side width. Five populations, single dimensional requirement, currently siloed.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| deaf-spatial-design BPC (Gallaudet 2010) | 2 | DEAF | VIS, DBL, DEM, IntD |
+| accessible-circulation-geometry BPC | 4 | MOB | DEAF, VIS, DBL, DEM, IntD |
+| deafblind-built-environment-design BPC | 4-5 | DBL | corridor width |
+
+### Proposed synthesis direction
+Consolidate 1500+ mm corridor width as multi-population provision (DEAF, VIS, DBL, DEM, IntD, MOB). Mechanism: side-by-side communication/support width universal across populations.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0062 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** LPA, MOB, OFS, PAIN, VIS
+**Items involved:** I-02, residential-kitchen-and-task-surfaces
+**Gap register items:** NONE
+
+### Connection description
+Height-adjustable kitchen worktop (685-900 mm, per residential-kitchen-and-task-surfaces BPC) specified for MOB wheelchair users also serves LPA (lower reach range), OFS/PAIN (seated work), and VIS (tactile work surface at consistent height). Currently coded MOB-primary; other populations documented in respective BPCs but not cross-referenced.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| residential-kitchen-and-task-surfaces BPC | 2 | MOB | LPA, OFS, PAIN, VIS |
+| reach-range-and-accessible-controls BPC | 4 | MOB, LPA | kitchen items |
+| body-sizes-supplementary-populations BPC | 3 | LPA | kitchen worktop |
+
+### Proposed synthesis direction
+Add LPA, OFS, PAIN, VIS as co-populations for height-adjustable kitchen worktop specification. Mechanism: adjustability serves five populations via different reach/work-position requirements.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0063 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV, OFS, PAIN, MH
+**Items involved:** F-02, F-04
+**Gap register items:** GAP-CON-15
+
+### Connection description
+Fragrance-free policy + MERV 13+ filtration (F-02, F-04) specified for OFS/MCAS and NDV chemical sensitivity serves MH/PTSD populations via identical mechanism — chemical stimuli as trauma triggers. Trauma-informed design framework (mental-health-built-environment BPC) emphasises environmental predictability but does not cross-reference air quality specifications.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| air-quality-voc-chemical-sensitivity-built-environment BPC | 3 | OFS, NDV | MH |
+| mental-health-built-environment BPC | 2 | MH | F-02, F-04 cross-ref |
+
+### Proposed synthesis direction
+Add MH as co-population for F-02/F-04 air quality items. Mechanism: chemical stimuli reduction serves OFS/NDV physiological + MH trauma-trigger avoidance.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0064 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN, MOB/AMB
+**Items involved:** G-06
+**Gap register items:** GAP-FDR-03
+
+### Connection description
+Seated service counter option for OFS orthostatic intolerance (pain-ofs-built-environment-design BPC) also serves PAIN (reduces standing load) and MOB/AMB (eliminates standing barrier). No standard currently requires seated service counter provision; OT practice documents need but not quantified specification.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | PAIN, MOB/AMB |
+| mobility-built-environment BPC | 2 | MOB | seated service counter |
+
+### Proposed synthesis direction
+Create new item: seated service counter option (≥1 per facility) for OFS, PAIN, MOB/AMB. Specification: counter height 760-850 mm, knee clearance per reach-range standards.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0065 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN, NEU
+**Items involved:** NONE
+**Gap register items:** GAP-FDR-05
+
+### Connection description
+Mandatory shade on outdoor circulation routes for OFS heat intolerance (pain-ofs-built-environment-design BPC) also serves PAIN (reduces inflammatory triggers) and NEU (prevents heat-exacerbated symptoms). No standard currently specifies outdoor shade provision; OT practice documents need but not architectural specification.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | PAIN, NEU |
+| ms-thermal-temperature-conflict-resolution BPC | 2 | NEU | outdoor shade |
+
+### Proposed synthesis direction
+Create new item: continuous shade on primary outdoor routes (natural or built) for OFS, PAIN, NEU thermal management. Evidence: heat intolerance documented across three populations.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0066 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN
+**Items involved:** NONE
+**Gap register items:** GAP-FDR-06
+
+### Connection description
+Adjustable bed head elevation for OFS head-up tilt sleeping (pain-ofs-built-environment-design BPC) also serves PAIN populations requiring positional pain management. No residential standard specifies bed adjustability; OT assistive technology practice documents need but not as built environment specification.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | PAIN |
+
+### Proposed synthesis direction
+Create DAR item: bedroom electrical provision for adjustable bed (future provision). Not mandatory bed installation; enables future adaptation for OFS/PAIN populations.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0067 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEM, IntD, NEU, NDV/AUT
+**Items involved:** D-02, cognitive-wayfinding-design
+**Gap register items:** GAP-CON-0030
+
+### Connection description
+Cognitive wayfinding research (Brunyé 2018 per GAP-CON-0030) quantifies decision-point mechanism: uncertainty peaks at 3+ route choices. DEM, IntD, NEU, and NDV/AUT populations share identical cognitive load threshold — ≤2 choices per decision point reduces disorientation. Currently qualitative in guidebook; quantitative threshold available.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| cognitive-wayfinding-design BPC (Marquardt 2011) | 2 | DEM | IntD, NEU, NDV |
+| wayfinding-cognitive-science-spatial-design BPC | 2 | DEM | quantified threshold |
+| GAP-CON-0030 (Brunyé 2018) | 2 | DEM | ≤2-choice specification |
+
+### Proposed synthesis direction
+Specify ≤2 route choices per decision point for DEM, IntD, NEU, NDV/AUT populations. Mechanism: reduces cognitive load at wayfinding decision nodes across four populations.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0068 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEM, NEU, NDV/AUT, OFS
+**Items involved:** NONE
+**Gap register items:** NONE
+
+### Connection description
+"Toilet visible from primary occupied space" specified for DEM (Marquardt 2011, reduces incontinence) also serves NEU/NDV/AUT (reduces anxiety/overload from searching) and OFS (reduces energy expenditure). Four populations, single design principle, currently siloed in DEM BPC only.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| dementia-built-environment BPC (Marquardt 2011) | 2 | DEM | NEU, NDV, OFS |
+| neurodivergent-built-environment BPC | 2 | NDV | toilet visibility |
+| pain-ofs-built-environment-design BPC | 3 | OFS | toilet proximity |
+
+### Proposed synthesis direction
+Elevate toilet visibility to multi-population provision (DEM, NEU, NDV/AUT, OFS). Mechanism: eliminates search burden for four populations via different clinical rationales.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0069 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** BAR, MOB
+**Items involved:** bariatric-turning-radius-built-environment, accessible-circulation-geometry
+**Gap register items:** NONE
+
+### Connection description
+Bariatric turning radius (≥1900 mm per bariatric-turning-radius-built-environment BPC) exceeds standard MOB turning space (1500-1525 mm per accessible-circulation-geometry BPC) by 375-400 mm. Single BAR user population requires larger dimension than all MOB specifications accommodate; currently documented as separate provision.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| bariatric-turning-radius-built-environment BPC (Steinfeld 2006) | 2 | BAR | MOB turning space revision |
+| accessible-circulation-geometry BPC | 4 | MOB | BAR inadequacy |
+
+### Proposed synthesis direction
+Flag standard MOB turning space (1500-1525 mm) as inadequate for BAR populations. Specify 1900 mm where BAR provision required; 1800 mm minimum adaptation threshold.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0070 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** CHD, LPA, MOB
+**Items involved:** H-01, reach-range-and-accessible-controls
+**Gap register items:** NONE
+
+### Connection description
+Children's reach range (lower than adult wheelchair users per body-sizes-supplementary-populations BPC) overlaps with LPA and seated adult reach zones. Controls at 400-600 mm serve CHD standing + LPA/MOB seated; single height band serves three populations. Not currently cross-referenced.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| body-sizes-supplementary-populations BPC | 3 | CHD, LPA | MOB reach overlap |
+| reach-range-and-accessible-controls BPC | 4 | MOB, LPA | CHD cross-ref |
+
+### Proposed synthesis direction
+Note 400-600 mm control zone serves CHD, LPA, and seated MOB populations. Mechanism: lower reach range common across three populations for different anthropometric reasons.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0071 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV, MH, DEM, NEU
+**Items involved:** BIO-series
+**Gap register items:** GAP-CON-04
+
+### Connection description
+Biophilic outdoor/nature spaces documented independently in three BPCs: biophilic-design (NDV, reduces stress), mental-health-built-environment (MH trauma recovery), dementia-built-environment (DEM reduces agitation). All three cite nature exposure as therapeutic without cross-reference. Extends CON-0010 with NEU addition.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| biophilic-design-healthcare-workplace BPC (Ulrich 1984) | 1 | all | NDV, MH, DEM, NEU |
+| mental-health-built-environment BPC | 2 | MH | biophilic cross-ref |
+| dementia-built-environment BPC | 2 | DEM | biophilic cross-ref |
+
+### Proposed synthesis direction
+Consolidate biophilic/nature provisions as multi-population (NDV, MH, DEM, NEU). Create unified BIO-series items with population-specific mechanisms documented.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0072 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, PAIN
+**Items involved:** NONE
+**Gap register items:** GAP-FDR-07
+
+### Connection description
+Workplace lie-down/supine recovery space for OFS PEM management (pain-ofs-built-environment-design BPC) also serves PAIN populations requiring horizontal rest for pain relief. No workplace standard specifies supine rest provision; OT occupational health practice documents need but not architectural specification.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | PAIN |
+| ofs-built-environment BPC | 3 | OFS, PAIN | workplace supine rest |
+
+### Proposed synthesis direction
+Create new workplace item: supine rest space (quiet room with reclining surface) for OFS/PAIN populations. Evidence: horizontal rest documented for both populations.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0073 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** OFS, NEU
+**Items involved:** NONE
+**Gap register items:** GAP-FDR-08
+
+### Connection description
+Thermal transition zone (vestibule cooling) at entrance for OFS heat intolerance (pain-ofs-built-environment-design BPC) also serves NEU/MS populations with Uhthoff's phenomenon (heat-exacerbated symptoms per ms-thermal-temperature-conflict-resolution BPC). No standard specifies entrance thermal transition; climate adaptation practice emerging.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| pain-ofs-built-environment-design BPC | 3 | OFS | NEU thermal transition |
+| ms-thermal-temperature-conflict-resolution BPC | 2 | NEU | entrance vestibule |
+
+### Proposed synthesis direction
+Create new item: entrance thermal transition zone (vestibule with cooling) for OFS/NEU populations. Evidence: heat intolerance documented for both populations.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0074 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEAF, VIS, DEM, NDV/AUT
+**Items involved:** deaf-spatial-design
+**Gap register items:** GAP-CON-0020
+
+### Connection description
+DEAF glazed corridor junctions (DeafSpace visual advance warning per deaf-spatial-design BPC) potentially conflict with VIS glare, DEM reflective surface confusion, and NDV visual noise. Spatial conflict documented in GAP-CON-0020 but resolution not specified. Requires matte glazing + strategic placement to serve DEAF without compromising other populations.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| deaf-spatial-design BPC (Gallaudet 2010) | 2 | DEAF | conflict resolution |
+| dementia-built-environment BPC | 2 | DEM | glazing confusion |
+| sensory-processing-model-design-application BPC | 3 | NDV | visual noise |
+
+### Proposed synthesis direction
+Specify matte/low-reflectance glazing at DEAF corridor junctions; position to avoid VIS glare paths. Zone-specific application where populations identified.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0075 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV/AUT, VIS
+**Items involved:** NONE
+**Gap register items:** GAP-CON-0025
+
+### Connection description
+Sensory-responsive outdoor landscape (Finnigan 2024 SREF per GAP-CON-0025) for NDV populations overlaps with VIS tactile/auditory navigation landscape design. Outdoor spaces serve both populations through different sensory mechanisms — NDV sensory modulation + VIS non-visual wayfinding. Not currently cross-referenced.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| GAP-CON-0025 (Finnigan 2024) | 2 | NDV | VIS |
+| visual-impairment-built-environment BPC | 2 | VIS | outdoor landscape |
+
+### Proposed synthesis direction
+Create outdoor landscape design guidance integrating NDV sensory-responsive elements + VIS tactile/auditory wayfinding. Evidence: both populations benefit from sensory-rich outdoor design.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0076 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** NDV/AUT, NEU, DEM
+**Items involved:** A-16, sensory-room-user-control
+**Gap register items:** GAP-CON-0026
+
+### Connection description
+Van Doorn et al. 2024 scoping review (GAP-CON-0026) finds mixed evidence for static sensory adaptive environments (SAEs) — individual control more important than fixed parameters. This principle extends from NDV/AUT to NEU/DEM populations: user-controlled sensory environment outperforms standardised design across all three populations.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| GAP-CON-0026 (Van Doorn 2024) | 2 | NDV/AUT | NEU, DEM |
+| sensory-room-user-control BPC | 3 | NDV | NEU, DEM cross-ref |
+
+### Proposed synthesis direction
+Elevate user control principle to cross-population doctrine (NDV, NEU, DEM). Mechanism: individual sensory preferences vary within populations; control > fixed environment.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0077 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** Part 4 POE
+**Gap register items:** NONE
+
+### Connection description
+Two independent POE tool development programmes (IDEA Audit, Zallio & Langford per CON-0029) have created inclusive-design-specific post-occupancy evaluation instruments. Guidebook does not reference either; no POE methodology currently specified for accessibility compliance verification at ready-for-occupancy stage.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| CON-0029 (IDEA Audit, Zallio) | 2 | all | Part 4 POE specification |
+| residential-accessible-home-case-studies BPC | 2 | all | POE requirement |
+
+### Proposed synthesis direction
+Specify IDEA Audit or equivalent as POE tool for accessibility verification. Evidence: validated instruments exist; guidebook lacks POE methodology.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0078 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** Part 1 structure
+**Gap register items:** GAP-CON-0032
+
+### Connection description
+2025 scoping review (64 studies, Nature HSSC per CON-0032) identifies seven interior design principles for older adult health. These align with guidebook item categories; validates current structure but identifies sensory environment as under-addressed.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| CON-0032 (Nature HSSC 2025) | 2 | all | Part 1 structure validation |
+| design-framework-evidence-audit BPC | 3 | all | item category alignment |
+
+### Proposed synthesis direction
+Note 2025 scoping review validation of guidebook item category structure. Flag sensory environment (acoustics, air quality, thermal) as under-addressed relative to evidence base.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0079 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** MOB, OFS, PAIN
+**Items involved:** R-LAU
+**Gap register items:** GAP-LAU-01, GAP-LAU-02
+
+### Connection description
+Front-loading appliances on risers (380-430 mm drum centre per accessible-laundry-room-design BPC) specified for MOB seated reach also serve OFS/PAIN populations avoiding floor-level bending. Single specification serves three populations through different clinical mechanisms — MOB reach range + OFS/PAIN exertion reduction.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| accessible-laundry-room-design BPC | 2 | MOB | OFS, PAIN |
+| GAP-LAU-01 | — | MOB | multi-population |
+
+### Proposed synthesis direction
+Add OFS and PAIN as co-populations for laundry appliance riser specification. Mechanism: raised drum height serves MOB reach + OFS/PAIN bending avoidance.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0080 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DBL, IntD
+**Items involved:** All room matrices
+**Gap register items:** GAP-S4-R01 through GAP-S4-N07
+
+### Connection description
+DBL and IntD populations absent from 15/16 room matrices (GAP-S4 series) despite documented requirements in respective BPCs. Both populations require provisions not currently specified: DBL tactile navigation consistency, IntD cognitive load reduction. Room matrix gap items document systematic omission across residential and non-residential typologies.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| deafblind-built-environment-design BPC | 4-5 | DBL | all room matrices |
+| intellectual-disability-built-environment-design BPC | 4-5 | IntD | all room matrices |
+| GAP-S4-series | — | DBL, IntD | room specifications |
+
+### Proposed synthesis direction
+Systematically add DBL and IntD provisions to all room matrices. DBL: tactile consistency, haptic communication space. IntD: visual simplicity, intuitive layout, pictogram signage.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0081 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** VIS, DEAF, DBL
+**Items involved:** B-10, visual-alerting-and-wayfinding-light
+**Gap register items:** NONE
+
+### Connection description
+Visual alerting systems serve DEAF/VIS/DBL through different mechanisms: DEAF strobes for visual alert, VIS high-contrast wayfinding light, DBL vibrotactile + residual vision. Three populations require coordinated visual alerting strategy; currently specified separately without integration.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| visual-alerting-and-wayfinding-light BPC | 2 | VIS, DEAF, DBL | integrated strategy |
+| assistive-listening-systems BPC | 4 | DEAF | DBL cross-ref |
+
+### Proposed synthesis direction
+Create integrated visual alerting specification serving DEAF/VIS/DBL. Coordinate VAD placement, contrast requirements, and vibrotactile supplementation.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0082 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** DAR items, residential-dar-provisions-priority-register
+**Gap register items:** GAP-CON-12, GAP-NEW-12
+
+### Connection description
+Italian DM 236/89 adattabilità (design for adaptable readiness) + visitability (three core requirements) represent two models for minimum residential accessibility. Both require DAR provisions physically embedded in construction drawings; both prevent future adaptation cost multipliers. Not currently cross-referenced as complementary strategies.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| residential-dar-provisions-priority-register BPC | 4 | all | adattabilità comparison |
+| visitability-residential-accessibility-minimum-standards BPC | 2 | MOB | DAR integration |
+
+### Proposed synthesis direction
+Present adattabilità and visitability as complementary DAR models: adattabilità = structural readiness, visitability = basic access. Both prevent retrofit cost multipliers.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0083 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** DEAF, VIS, DBL, NDV
+**Items involved:** A-02, A-08, A-13
+**Gap register items:** NONE
+
+### Connection description
+Non-English language evidence (DE DIN 18041, ZH, FR CEREMA per multilingual-evidence-convergence-non-english BPC) provides stronger acoustic specification for disability populations than English-language sources. Seven provisions have stronger empirical evidence in non-English literature; this language-based evidence gap affects DEAF, NDV acoustic items.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| multilingual-evidence-convergence-non-english BPC | 4 | all | acoustic items |
+
+### Proposed synthesis direction
+Flag English-language evidence limitation in acoustic items. Note stronger evidence base exists in DE/ZH/FR for DEAF/NDV provisions.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [x] MODERATE → P2 gap item
+- [ ] SPECULATIVE → P3 gap item
+
+---
+
+## CON-0084 [2026-03-28 22:15]
+
+**Mode:** Internal
+**Confidence:** SPECULATIVE
+**Type:** INTER-GROUP
+**Disposition:** PENDING
+**Populations involved:** ALL
+**Items involved:** Part 8
+**Gap register items:** GAP-054
+
+### Connection description
+Cross-population conflict resolution has no peer-reviewed methodological framework in any language (GAP-054). Guidebook resolves nine documented conflicts (cross-population-conflict-resolutions BPC) but lacks systematic methodology. Prospect-refuge theory (CON-0024) + sensory processing model may provide theoretical framework, but research gap remains.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| cross-population-conflict-resolutions BPC | 3 | all | methodology framework |
+| GAP-054 | — | all | research gap |
+| CON-0024 (prospect-refuge) | 2 | all | potential framework |
+
+### Proposed synthesis direction
+Flag cross-population conflict resolution as under-researched domain. Note guidebook provides nine case-based resolutions but lacks theoretical framework.
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing
+- [ ] MODERATE → P2 gap item
+- [x] SPECULATIVE → P3 gap item
