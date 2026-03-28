@@ -3812,7 +3812,7 @@ works operation — tile removal, TWSI installation, and reinstatement. No struc
 | REF:accessible-circulation-geometry:12 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
 | REF:accessible-circulation-geometry:02 | BSI | 2018 | BS 8300-2:2018 | BSI | 5 | EN | UK |
 
-**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Tier 0 candidate — pending connection-scout)
+**Cross-reference:** E-01 (Accessible lift — primary circulation route); E-08 (Corridor clear width — clear width maintained past seating); D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Tier 0 confirmed — CON-0038 resolved)
 
 **Illustration:** [Illustration: to be provided] — Plan of alcove showing 900 mm width, 200 mm recess from circulation path, and 450 mm seat depth. Section showing 480 mm AFF seat height and arm projection.
 
