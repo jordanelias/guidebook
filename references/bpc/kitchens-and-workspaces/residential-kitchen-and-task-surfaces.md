@@ -56,3 +56,27 @@
 
 ### Key sources
 Stark2017-AJOT · Foundations-AKW-2023 · DIN18040-2 · BS8300-2018 · ADA-2010-kitchen · GB50763-2012-§3.12.4 · Inter-BE · ISO21542-2021 · Wellecke2022 · Gitlin2006 · DM236-89-IT · DL163-2006-PT · 편의증진법-KR
+
+### Bottom-up findings — Session 2026-03-27 (d630 + d440 FDR pass)
+
+#### Scenario 4 — d630 + seated wheelchair → meal prep
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Worktop height (fixed) | 760mm | Manual wheelchair user meal prep | Living Made Easy RCOT (UK); First in Architecture (UK) | Co-2 / 5 | CONFIRMS/REFINES | MOB→NEU/OFS/PAIN |
+| Worktop height (adjustable) | 760–900mm range | Dual-use household (seated + standing) | Living Made Easy RCOT (UK) | Co-2 | CONFIRMS | MOB |
+| Knee clearance (manual WC) | 700mm H × 600mm D × 800mm W | Roll-under access; insulation required below hob/sink | Living Made Easy RCOT (UK); First in Architecture (UK) | Co-2 / 5 | CONFIRMS/REFINES — power WC differs | MOB |
+| Knee clearance (power WC) | 710–810mm H × 460mm D | Anti-tip castor and footplate clearance | Blue Copper Design (US) | Co-2 | REFINES — existing guidance manual-chair calibrated | MOB (power WC) |
+| Toe recess at base units | 250mm H × 150mm D | Seated close approach to base units | Living Made Easy RCOT (UK) | Co-2 / 5 | CONFIRMS | MOB |
+| Preparation zone each side | ≥400mm each side of hob, sink, oven | Slide, not lift; hob flush to worktop surface | Living Made Easy RCOT (UK); First in Architecture (UK) | Co-2 / 5 | CONFIRMS | MOB/OFS/PAIN |
+| Oven door height | Door opens ≥760mm AFF; side-opening preferred | Prevent reach over hot surface from seated position | First in Architecture (UK) | Co-2 / 5 | CONFIRMS — adds side-opening rationale | MOB |
+| Minimum kitchen clear width | 1200mm between unit fronts and fixed obstruction | Single wheelchair L/U-shaped layout | RCOT / Approved Doc M (UK) | 5–6 | CONFIRMS | MOB |
+
+**Tier 0 candidates:** Worktop adjustability (760–900mm), toe recess, ≥400mm prep zone each side — universal benefit, no population conflict.
+
+#### Scenario 5 — d440 + unilateral UPL → food prep
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Worktop surface material | Smooth, non-porous, continuous ≥450mm wide | Suction-cup AT board anchoring (adaptive cutting board) | Arm Dynamics OT team (US); ETAC product literature | Co-2 | NOVEL — surface material spec not in existing BPC | MOB/UPL→NEU |
+| Tap/faucet type | Single-lever or sensor/touch; long lever; no separate H/C controls | Unilateral UPL — cannot hold-and-turn simultaneously | AOTA / Neurolutions (US); RCOT (UK) | Co-2 | CONFIRMS single-lever; adds sensor/touch as best practice | MOB/UPL→NEU/PAIN/DEM |
+| Sink-wall suction brush zone | Inner sink wall or rim accessible from dominant-hand side; no projecting fittings within zone | One-handed fruit/vegetable scrubbing | Arm Dynamics OT team (US) | Co-2 | NOVEL — spatial zone for AT mount | MOB/UPL |
+
