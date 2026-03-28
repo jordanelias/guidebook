@@ -126,3 +126,13 @@ functional_deficit_pass:
   tier0_candidates: 0
   environments_covered: [kitchen]
   environments_remaining: []
+
+## functional_deficit_pass
+status: COMPLETE-THIN-BASE
+session: 2026-03-28
+scenarios_run: 5 (d630+seated meal prep, d440+unilateral UPL, d640+limited reach laundry)
+novel_findings: 6
+refines: 2
+contradicts: 0
+tier0_candidates: 1
+note: Kitchen FDR gated COMPLETE THIN-BASE. Top-down pass PROVISIONAL. GAP-FDR-K-01 resolved. BPC written 2026-03-27 (sc4-5) and 2026-03-28 (sc10).
