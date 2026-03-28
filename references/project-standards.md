@@ -682,3 +682,23 @@ RULE: Opus/Haiku passthrough artifacts must use array.join() string construction
 CONDITION: Any artifact calling the Anthropic API with multi-line evidence or BPC content as input.
 ACTION: Use const USER = ["line1", "line2", ...].join("\n") pattern. Never use backtick template literals for strings that embed research evidence or BPC content.
 DATE: 2026-03-28
+
+RULE: "Cross-population" is retired as generic terminology per CO-0003. Use "co-occurring disability" for intra-individual cases (one person, multiple conditions) and "multi-population" for inter-group cases (different people, different primary conditions, same space). Default to "co-occurring disability" — most provisions in the guidebook address individuals with multiple conditions, not inter-group negotiation.
+CONDITION: Any text in guidebook body, BPC entries, connection register, workplan, or skill output that uses "cross-population."
+ACTION: Replace with context-appropriate term. If describing one person's competing needs → "co-occurring disability." If describing building-level design for different user groups → "multi-population." If both apply → use both terms explicitly. Never use "cross-population" in new text.
+DATE: 2026-03-28 21:30
+
+RULE: Population code notation distinguishes co-occurrence from co-occupation. Use `+` to denote co-occurring disabilities in one individual (e.g., DEM+MOB+PAIN). Use `/` to denote different populations occupying the same space (e.g., DEAF / NDV/AUT). The `+` codes describe one person; the `/` codes describe different people.
+CONDITION: Any population coding in item specifications, BPC entries, connection register entries, or matrix cells.
+ACTION: Apply `+` for intra-individual co-occurrence; `/` for inter-group co-occupation. Where a provision serves both cases, state both explicitly. Existing `/` notation in legacy text is not automatically wrong — many provisions genuinely serve different people — but verify whether the clinical rationale is individual-level or building-level.
+DATE: 2026-03-28 21:30
+
+RULE: Part 7 (conflict resolutions) entries must be tagged [INTRA-INDIVIDUAL], [INTER-GROUP], or [BOTH] per CO-0003. Intra-individual conflicts are resolved at Tier 2 (OT assessment within Tier 1 ranges). Inter-group conflicts are resolved at Tier 0/1 (architectural — spatial zoning, individual controls, DAR). Conflicts that are both require both resolution pathways stated.
+CONDITION: Any conflict resolution entry in Part 7 or Part 8 §8.4/§8.5.
+ACTION: Tag with resolution type. If intra-individual: specify that OT assessment resolves the individual's competing needs within specification ranges. If inter-group: specify the architectural resolution (zoning, controls, separation). If both: state both pathways.
+DATE: 2026-03-28 21:30
+
+RULE: Slug names are frozen path identifiers and are NOT renamed by CO-0003. Slugs containing "cross-population" (cross-population-conflict-resolutions, cross-population-case-studies) retain their slug names for path stability. Content within them adopts the new terminology. Slug registry notes the terminology change.
+CONDITION: Any operation that might rename a slug file path.
+ACTION: Do not rename. Update content terminology only. Add note to slug registry if not already present.
+DATE: 2026-03-28 21:30
