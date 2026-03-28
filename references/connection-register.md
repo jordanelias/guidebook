@@ -1,7 +1,7 @@
 # Connection Register
 
 **Created:** 2026-03-26 18:10  
-**Last updated:** 2026-03-28 17:00
+**Last updated:** 2026-03-28 21:30
 
 **Disposition lifecycle (per project-standards Rule 2026-03-27):**
 
@@ -14,6 +14,13 @@
 | CLOSED | No action required |
 
 All existing entries: **PENDING** (disposition tracking added 2026-03-27).
+
+**CO-0003 terminology (2026-03-28 21:30):** "Cross-population" is retired. Each connection entry describes one of:
+- **[INTRA-INDIVIDUAL]** — co-occurring disabilities in one person (e.g., DEM+MOB+PAIN). Resolution: Tier 2 OT assessment within Tier 1 ranges.
+- **[INTER-GROUP]** — different people with different primary conditions in the same space. Resolution: Tier 0/1 architectural (zoning, individual controls, spatial separation).
+- **[BOTH]** — provision serves both cases.
+
+Tagging of existing entries (CON-0001–0038) is scheduled for Phase 2C Session 9 (GAP-CO03-09). New entries use the tagging from creation.
 
 ---
 
