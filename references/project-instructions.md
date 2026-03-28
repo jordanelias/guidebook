@@ -1,22 +1,21 @@
 # Project Instructions — Technical Guidebook Review System
-**Last revised:** 2026-03-27 17:30
-**Supersedes:** 2026-03-27 16:30
+**Last revised:** 2026-03-28
+**Supersedes:** 2026-03-27 17:30
 
 ---
 
 ## Overview
 
-This project produces, audits, and critiques **technical guidebooks** for OT practitioners, architects, and policy makers. Primary lens: occupational therapy evidence. Best practice = most amenable, inclusive, forgiving, caring, accommodating, dignified, specific, and targeted provision the evidence supports.
+Produces, audits, and critiques technical guidebooks for OT practitioners, architects, and policy makers. Primary lens: occupational therapy evidence. Best practice = most amenable, inclusive, forgiving, caring, accommodating, dignified, specific, and targeted provision the evidence supports.
 
-**Active version:** V9.0 2026-03-20
-**Primary file:** `Guidebook_for_Accessible_Design_v9-0_2026-03-20.md`
+**Active version:** V9.0 2026-03-20 · **Primary file:** `Guidebook_for_Accessible_Design_v9-0_2026-03-20.md`
 
 ---
 
 ## GitHub API
 
 **Repo:** `jordanelias/guidebook` · branch `main`
-**PAT:** {PAT — provided at session start}
+**PAT:** `{PAT — provided at session start}`
 
 **Read:** `GET .../contents/{path}` — `content` is base64. Capture `sha` for writes.
 **Write:** `PUT .../contents/{path}` with `{"message","content","sha"}`. GET before PUT. On 409: re-GET, retry once. Failure → fenced code block + manual paste instructions.
@@ -39,6 +38,7 @@ This project produces, audits, and critiques **technical guidebooks** for OT pra
 | `references/connection-register.md` | Unmade connections (PENDING→CONSUMED→DEFERRED→SUPERSEDED→CLOSED) |
 | `references/change-orders/CO-{NNNN}-{YYYY-MM-DD-HHMM}.md` | Structural Change Orders |
 | `references/bibliography-v9.md` | Bibliography verification reference |
+| `references/case-study-compendium.md` | Case study register — per-entry schema with financial fields |
 
 **Retired (frozen):** `references/search-log.md` · `references/best-practices-compendium.md` · 15 flat `references/bpc/{POPULATION}.md` · 15 flat `references/search-log/{POPULATION}.md`
 
@@ -46,11 +46,13 @@ This project produces, audits, and critiques **technical guidebooks** for OT pra
 
 ## Skill Architecture
 
-**All skills live on GitHub at `skills/{skill-name}_SKILL.md`.** No project files are used for skill storage. At runtime: GET the skill file from GitHub before execution.
+All skills live on GitHub at `skills/{skill-name}_SKILL.md`. GET before execution. No `/mnt/project/` reads for skills.
 
-**Session start loads only:** `workplan-orchestrator` · `session-consolidator` · `github-io`. All other skills are loaded only when (1) identified in the workplan AND (2) user approves proceeding.
+**Session start loads only:** `workplan-orchestrator` · `session-consolidator` · `github-io`. All other skills loaded only when (1) identified in workplan AND (2) user approves.
 
-**Skill updates:** All skill edits are committed directly to GitHub. Commit: `{skill-name}: {description} [{YYYY-MM-DD HH:MM}]`.
+For PI-governed skills with no GitHub file: the PI text is the execution document. The instruction to "view the file first" is satisfied by reading the PI section directly.
+
+PI definition governs where file and PI conflict. Where a GitHub skill file has been updated more recently than the PI, the GitHub file governs for execution details; PI governs for model assignment and trigger conditions.
 
 ---
 
@@ -58,32 +60,27 @@ This project produces, audits, and critiques **technical guidebooks** for OT pra
 
 | Role | Model | Scope |
 |---|---|---|
-| **Assembly, collation, writing, formatting, extraction, organisation** | Sonnet 4.6 | Collate data. Present findings. Write from curated plans/directions/evidence/instructions. Format. Organise. Pattern match. Structural extraction. |
-| **Judgment, synthesis, best-practice determination, evidence arbitration** | Opus 4 | Determine what constitutes best practice. Analyse and synthesise evidence. Resolve conflicting evidence. Arbitrate between competing provisions. Evaluate what is most inclusive/dignified/targeted. All `best_practice_synthesis` content. |
-| **Mechanical tasks** | Haiku 4.5 | Chunking, line-level extraction, renumbering, formatting checks |
+| **Assembly, collation, writing, formatting, extraction, organisation** | Sonnet 4.6 | Collate data. Present findings. Write from curated plans/directions/evidence/instructions. |
+| **Judgment, synthesis, cross-referential or comparative analysis, best-practice determination, evidence arbitration** | Opus 4.6 | Determine best practice. Synthesise/resolve evidence. All `best_practice_synthesis` content. |
+| **Mechanical tasks** | Haiku 4.5 | Chunking, extraction, renumbering, formatting checks. |
 
-**Sonnet never determines best practice.** Sonnet collates evidence and presents it to Opus for judgment. Opus returns the synthesis. Sonnet then writes the specification from Opus's determination.
-
-**Workflow:** Sonnet retrieves → Sonnet collates → Opus judges → Sonnet writes from Opus output.
+**Workflow:** Sonnet retrieves → Sonnet collates → Opus judges → Sonnet writes from Opus output. Sonnet never determines best practice.
 
 ---
 
 ## Session Protocol
 
 ### Start (every conversation)
-
-1. GET `github-io`, `workplan-orchestrator`, `session-consolidator` from GitHub skills/.
+1. GET `github-io`, `workplan-orchestrator`, `session-consolidator` from `skills/`.
 2. GET most recent `sessions/` file. Report `session_close` + `next_action`.
 3. GET `gap_register.md` — surface OPEN P1 items.
 4. GET `references/project-standards.md` — load rules.
 5. Present workplan for user approval before proceeding.
 
 ### Checkpointing
-
 After each skill stage: `CHECKPOINT [YYYY-MM-DD HH:MM] — task · stage · status` (1–2 lines).
 
 ### Close (~85% usage OR natural conclusion)
-
 1. Complete current stage.
 2. Write all findings to GitHub.
 3. Invoke `session-consolidator`.
@@ -110,7 +107,7 @@ After each skill stage: `CHECKPOINT [YYYY-MM-DD HH:MM] — task · stage · stat
 
 VIS, DEAF, DBL: three distinct codes. VIS/DEAF invalid. DBL ≠ VIS + DEAF.
 BAR: NOT main taxonomy. Large body size → Supp. Part 4 only. BAR in Volumes 1–3 = error; delete.
-Supplementary (not main): CHD · LPA · EXH · BAR → Supp. Parts 1–4.
+Supplementary only (not main taxonomy): CHD · LPA · EXH · BAR → Supp. Parts 1–4.
 
 ---
 
@@ -152,10 +149,12 @@ Co-1/Tier 2 searched first (most under-retrieved). Evidence markers: ● = evide
 All citations in Parts and Categories use **numbered endnotes** (superscript ¹²³ in body text). Each volume ends with a full endnote list in sequential order, organised under headings matching the Part/Category structure.
 
 **Production chain:**
-1. `item-specification-writer` (Sonnet) emits `[REF:{slug}:{NN}]` markers inline.
-2. `vol2-item-formatter` (Sonnet) validates marker ↔ sources-cited integrity.
-3. `bibliography-compiler` (Haiku) replaces markers with sequential superscripts, generates per-volume `## Endnotes` section organised by Part/Category headings.
+1. `item-specification-writer` (Sonnet) emits `[REF:{slug}:{NN}]` markers inline. Pre-step: `research-log-manager RETRIEVE`. BPC `Key sources` list provides the REF-ID index.
+2. `vol2-item-formatter` (Sonnet) validates REF-ID ↔ sources-cited integrity.
+3. `bibliography-compiler` (Haiku) replaces markers with sequential superscripts; generates per-volume `## Endnotes` section organised by Part/Category headings.
 4. `cross-reference-resolver` validates superscripts against endnote entries.
+
+**Sources-cited table** (new/revised items): `#### Sources cited` section after each item block. Replaces `**Key citations:**`. Legacy items retain `Key citations` until revised. Do not emit both.
 
 BPC Key sources ordering is frozen once REF-IDs are emitted. New sources append only.
 
@@ -172,7 +171,7 @@ BPC Key sources ordering is frozen once REF-IDs are emitted. New sources append 
 ### Research
 5. `research-log-manager CHECK` before any research; `LOG` after. Skipping = error.
 6. Pre-LOG completeness gate: 7 conditions in skill file. Blocked until pass or explicit acceptance.
-7. View Keyword Compendium (`multilingual-research-protocol-v4-2026-03-18-1.md` Part 3) before research.
+7. View Keyword Compendium before research.
 8. Co-1/Tier 2 first. Citation mining mandatory for Tier 1–2 sources via `citation-miner`.
 9. Best-practice synthesis mandatory before LOG. **Opus determines best practice; Sonnet collates evidence for Opus.**
 10. Language (14) and jurisdiction (24 + ISO) are distinct axes; both independently satisfied.
@@ -197,7 +196,10 @@ BPC Key sources ordering is frozen once REF-IDs are emitted. New sources append 
 23. Working documents committed to GitHub before session close.
 24. Connection register: update PENDING→CONSUMED on incorporation. Verify at close.
 25. Connectors (PubMed, Consensus, Scholar Gateway) only when task requires research.
-26. All skills on GitHub. GET before execution. No project file reads for skills.
+26. All skills on GitHub. GET before execution.
+
+### Evidence
+27. FDR CONTRADICTS: do not delete original BPC claim. Append `[CONTRADICTED BY FDR]`. Route to evidence-auditor (Sonnet collates; Opus adjudicates).
 
 ### Prose Register
 - Voice: soft imperative subjunctive
@@ -209,14 +211,9 @@ BPC Key sources ordering is frozen once REF-IDs are emitted. New sources append 
 ### Versioning
 Major (X.0) = structural. Minor (X.Y) = content. Patch (X.Y.Z) = editorial.
 
-### FDR CONTRADICTS
-Do not delete original BPC claim. Append `[CONTRADICTED BY FDR]`. Route to evidence-auditor (Sonnet collates; Opus adjudicates).
-
 ---
 
 ## Skill Registry
-
-All skills stored at `skills/{name}_SKILL.md` on GitHub. GET before execution.
 
 ### Orchestration
 | Skill | Model | Trigger |
@@ -255,7 +252,7 @@ All skills stored at `skills/{name}_SKILL.md` on GitHub. GET before execution.
 | Skill | Model | Trigger |
 |---|---|---|
 | `prose-style-checker` | Sonnet | Style; voice; concision |
-| `item-specification-writer` | Sonnet (drafting from Opus synthesis) · Opus (best-practice determination) | Specs with REF-ID + sources-cited |
+| `item-specification-writer` | Sonnet (drafting) · Opus (best-practice determination) | Specs with REF-ID + sources-cited |
 | `practice-note-generator` | Sonnet | OT practitioner field tools |
 
 ### Research and Verification
@@ -285,7 +282,8 @@ All skills stored at `skills/{name}_SKILL.md` on GitHub. GET before execution.
 ### Utility
 | Skill | Model | Trigger |
 |---|---|---|
-| `github-io` | — | GitHub API helper |
+| `github-io` | — | GitHub API helper — all GitHub operations go through this |
+| `github-filing` | — | File stale versioned documents into deprecated/ |
 | `evidence-marker` | Haiku | Evidence-tier markers |
 | `file-splitter` | Haiku | Split into per-Part chunks |
 
@@ -298,8 +296,8 @@ All skills stored at `skills/{name}_SKILL.md` on GitHub. GET before execution.
 | Workflow | Sequence |
 |---|---|
 | **Full Section Review** | haiku-chunker → [structure-auditor · guidebook-auditor · content-gap-analyzer · framing-checker · evidence-auditor] → [research-log-manager CHECK · multilingual-research · citation-verifier · research-log-manager LOG] → prose-style-checker → critique-report-writer |
-| **Item Specification** | item-consolidation-analyzer → research-log-manager RETRIEVE → Opus best-practice synthesis → item-specification-writer (Sonnet writes from Opus output) → vol2-item-formatter → [framing-checker · evidence-auditor] → prose-style-checker → volii-validator |
-| **Document Assembly** | chunk-assembler → bibliography-compiler (generates per-volume endnotes) → bibliography-reconciliation → cross-reference-resolver → guidebook-auditor A |
+| **Item Specification** | item-consolidation-analyzer → research-log-manager RETRIEVE → Opus best-practice synthesis → item-specification-writer → vol2-item-formatter → [framing-checker · evidence-auditor] → prose-style-checker → volii-validator |
+| **Document Assembly** | chunk-assembler → bibliography-compiler → bibliography-reconciliation → cross-reference-resolver → guidebook-auditor A |
 | **Multilingual Research** | research-log-manager CHECK → Sonnet retrieves (Co-1 → statutory → beyond-code → academic → citation mining) → Opus synthesises best practice → research-log-manager LOG |
 | **Connection Discovery** | connection-scout (Opus: internal then external) → connection-register → HIGH→item-spec briefing · SPECULATIVE→gap_register |
 | **Bottom-Up FDR** | research-log-manager CHECK → functional-deficit-researcher (Sonnet retrieves; Opus synthesises) → research-log-manager LOG |
@@ -338,13 +336,54 @@ next_action:
 
 ---
 
+## Current State (as of 2026-03-28)
+
+### Completed
+| Item | Status |
+|---|---|
+| Phase 0 skill builds (6/6) | DONE |
+| Phase 0R reconciliation | DONE |
+| P1-D1 Decision Register (34 decisions) | DONE |
+| P1-D2 Decision Register (49 decisions) | DONE (pending author approval of 4 CRITICAL + 7 HIGH + 9 other items) |
+| P1-D2 Systematic Audit | DONE (2 incoherencies, 7 MODERATE connections, 6 gaps, 3 synergies resolved) |
+| TC restructuring (CO-0003) | Issued. Execution Phase 3 Session 16. |
+| CO-0002 (IntD elimination) | Issued. Execution Phase 3. |
+| CO-0004 (Category J deletion) | Issued. Execution Phase 3 Session 16. |
+| CO-0005 (Part 5/6 renumbering) | Issued. Execution Phase 4 Session 19. |
+| Bathroom slug | COMPLETE |
+| Kitchen slug | PROVISIONAL (19/24 jurisdictions) |
+| Threshold slug | PARTIAL (Tier 6 complete; Co-1 0/24) |
+| residential-accessible-home-case-studies slug | PARTIAL (13 jurisdictions complete; Opus synthesis done; LOG PARTIAL) |
+| PAIN/OFS FDR | COMPLETE (12/12 scenarios, 18 NOVEL findings, 4 Tier 0 candidates) |
+| 8 targeted gap resolutions | RESOLVED |
+| 35 connections (CON-0001–0035) | Logged. Dispositions pending D2 approval. |
+| Slug storage migration (0R-1) | DONE. Flat files frozen. Per-slug directory canonical. |
+| 89 project-standards rules | Accumulated. |
+| case-study-compendium.md skeleton | CREATED at references/case-study-compendium.md |
+
+### Next Action
+**Session 3 — Phase 1:** P1-D3 Decision Register (Parts 8–13 + Appendices + Supplementary). Resolves DEC-08 through DEC-20. **Blocking: gates Phase 2B scope.**
+
+### Not Yet Done
+| Item | Workplan ref | Blocking? |
+|---|---|---|
+| P1-D3 (Parts 8–13, Appendices) | Phase 1 Session 3 | YES — gates Phase 2B scope |
+| D2 author approval (4 CRITICAL, 7 HIGH, 9 other) | Before Phase 3 Session 16 | YES — gates CO-0003/CO-0004 execution |
+| Connection register disposition update | Post-D2 approval | No |
+| Gap register deduplication (GAP-CON-05, GAP-FDR-01) | Housekeeping | No |
+| Pre-v4 slug triage (51 slugs) | Phase 2A Session 4 | No |
+| Remaining research | Phase 2B | No |
+
+---
+
 ## Unresolved Blockers
 
 | Blocker | Status |
 |---|---|
 | Application volume full text | NOT AVAILABLE — volii-validator provisional |
-| Endnote pipeline integration test | NOT DONE — must pass before Phase 3 |
+| Endnote pipeline dry run | NOT DONE — must pass before Phase 3 |
 | Body ↔ bibliography cross-reference audit | NOT DONE |
+| D2 author approval (20 decisions) | PENDING — must complete before Phase 3 Session 16 |
 
 ---
 
