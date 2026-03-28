@@ -1,10 +1,10 @@
 slug: residential-accessible-home-case-studies
 query: "accessible residential home case studies disability outcome"
-last_searched: 2026-03-28 09:30
-status: PARTIAL
+last_searched: 2026-03-27
+status: PARTIAL — Opus synthesis complete; 13 jurisdictions NOT-RUN (accepted low-yield)
 early_close_triggered: false
 
-note: "Step 3 academic pass complete 2026-03-28. 7 new PubMed sources added. Opus synthesis PENDING — required before LOG completion. 13 remaining jurisdictions accepted as NOT-RUN per session decision (low yield confirmed). Petersson 2008/2009 not found in PubMed — flag for manual retrieval."
+note: "Step 3 academic pass complete 2026-03-28. 7 new PubMed sources added. Opus 4.6 synthesis completed 2026-03-27. LOG closed as PARTIAL (13 NOT-RUN jurisdictions accepted low-yield; Tier 5 coverage 12/16). Petersson 2008/2009 not found in PubMed — flag for manual retrieval."
 
 native_aliases:
   EN: accessible home case studies / residential disability design outcomes / home modification programme [CLEAN]
@@ -83,7 +83,7 @@ citation_mining_note: "Forward mining from Summer Foundation group yielded Carey
 
 co1_pass_summary: "UK (Habinteg Co-1 + SCIE CLEAN); AU (Summer Foundation Co-1 CLEAN + Carey 2025 family Co-1); FR (hapi impact study + Unaf survey CLEAN); NL (Ieder(in)/Woonbond survey CLEAN); BE (GRIP Inclusiespiegel PARTIAL); US (Kelsey Ayer Station Co-1 CLEAN); JP (BMC ageing studies PARTIAL); SE/NO (regulatory only, no Co-1 case study); IE (ILMI/DFI advocacy, no case study)"
 
-best_practice_synthesis: PENDING — Opus synthesis not yet run. BLOCKER for LOG completion.
+best_practice_synthesis: COMPLETE — Opus 4.6 synthesis 2026-03-27. 8 governing principles, 4 tension resolutions, 8 best practice provisions. Written to BPC.
 
 jurisdiction_coverage:
   CA: SEARCHED — CSA/ASC B652 (Tier 5/6); CMHC case study series (grey); RHFAC v4.0. No OT-outcome case study. [THIN-BASE]
@@ -117,5 +117,5 @@ gaps_identified:
   - 13 jurisdictions NOT-RUN: accepted as low-yield per 2026-03-28 session decision
   - Petersson 2008/2009 not found in PubMed — manual retrieval required
   - Habinteg CASEreport 147 backward mining not executed
-  - Opus synthesis PENDING — BLOCKER for LOG completion
+  - Opus synthesis COMPLETE 2026-03-27
   - VIS/PAIN/OFS: KNOWN-LIMITATION — no purpose-built residential case study with outcomes in any jurisdiction
