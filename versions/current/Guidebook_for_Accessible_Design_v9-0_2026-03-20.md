@@ -7,8 +7,8 @@
 **Contents**
 
 * Volume 1: Principles, Evidence and Population Guidance
-* Volume 2: Application Manual
-* Volume 3: DAR, Economics, Evidence and Appendices
+* Volume I: Application Manual
+* Volume I: DAR, Economics, Evidence and Appendices
 
 ---
 
@@ -107,7 +107,7 @@ A (Acoustics) · B (Lighting) · C (Colour/Surface) · D (Spatial Layout/Wayfind
 
 #### Item Code Convention
 
-Short form (within Volume 2): A-01, D-03, G-03
+Short form (within Volume I): A-01, D-03, G-03
 
 Cross-volume form: P7-A01, P7-D03, P7-I03
 
@@ -255,7 +255,7 @@ The individual's own functional capacity is the answer. The range is the envelop
 
 #### §1.4.4 The Specification Range as Design Mechanism
 
-The ranges appearing throughout Part 7 of this guidebook are not expressions of uncertainty or imprecision. They are the designed-in mechanism that allows a single specification item to serve both Tier 1 and Tier 2 practice simultaneously.
+The ranges appearing throughout Part 4 of this guidebook are not expressions of uncertainty or imprecision. They are the designed-in mechanism that allows a single specification item to serve both Tier 1 and Tier 2 practice simultaneously.
 
 **At Tier 1: ​**use the median of the stated range as the population-informed default. The median represents the best-evidence value for the identified population in the absence of individual assessment data.
 
@@ -263,7 +263,7 @@ The ranges appearing throughout Part 7 of this guidebook are not expressions of 
 
 **The range boundary: ​**values outside the stated range fall outside the evidence base for the identified population. Departures from the range require documented clinical justification.
 
-Wherever a range appears in Part 7, the following framing applies: the range is the Tier 1 population envelope; the median is the Tier 1 default; the specific value within the range is determined by Tier 2 OT assessment. This framing should be treated as implicit throughout the guidebook and is made explicit in Part 7 items where the clinical stakes are highest.
+Wherever a range appears in Part 4, the following framing applies: the range is the Tier 1 population envelope; the median is the Tier 1 default; the specific value within the range is determined by Tier 2 OT assessment. This framing should be treated as implicit throughout the guidebook and is made explicit in Part 4 items where the clinical stakes are highest.
 
 #### §1.4.5 Why Universal Design Alone Is Insufficient
 
@@ -283,7 +283,7 @@ Universal design was developed primarily against a physical disability and agein
 
 **Irresolvable multi-population specification conflicts. ​**
 
-Some optimal values for one population are contraindicated for another. High-contrast visual environments support VIS/vis users; they can trigger sensory overload for some NDV/SENS users. UD offers no principled resolution. This guidebook addresses these conflicts through explicit conflict notation in Part 7 items, with evidence-based guidance for each.
+Some optimal values for one population are contraindicated for another. High-contrast visual environments support VIS/vis users; they can trigger sensory overload for some NDV/SENS users. UD offers no principled resolution. This guidebook addresses these conflicts through explicit conflict notation in Part 4 items, with evidence-based guidance for each.
 
 The aspiration of universality — that environments should work for everyone — is achieved through rigorous population-specific inclusive design, not through adherence to a design philosophy calibrated to an averaged user.
 
@@ -345,11 +345,11 @@ All provisions in this guidebook operate within the framework of Article
 
 The following theoretical frameworks underpin the evidence basis for design specifications throughout this document. Understanding these frameworks allows readers to assess the strength and scope of each specification.
 
-**§1.8.1 Biomechanical Frame of Reference** Specifications derived from this framework address physical capacity, joint range of motion, muscle strength, grip, reach, balance, and gait. Grab bar diameters, handrail heights, turning radii, and threshold heights are biomechanically derived. All Part 7 specifications grounded in this framework are calibrated to the functional range of the relevant disability category, not to code averages.
+**§1.8.1 Biomechanical Frame of Reference** Specifications derived from this framework address physical capacity, joint range of motion, muscle strength, grip, reach, balance, and gait. Grab bar diameters, handrail heights, turning radii, and threshold heights are biomechanically derived. All Part 4 specifications grounded in this framework are calibrated to the functional range of the relevant disability category, not to code averages.
 
 **§1.8.2 Dunn's Sensory Processing Model** Sensory processing differences produce four profiles: sensory seeking, sensory avoiding, sensory sensitivity, and low registration. Design must accommodate all four. Acoustic specifications (Category A), lighting specifications (Category B), and colour/surface specifications (Category C) are calibrated across all four profiles.
 
-**§1.8.3 Ecology of Human Performance (EHP) Framework** EHP defines four intervention strategies: establish, alter, adapt, prevent. Accessible design interventions in Part 7 are classified by EHP strategy: most interventions alter the context (environment) rather than the person; some prevent barrier formation at source.
+**§1.8.3 Ecology of Human Performance (EHP) Framework** EHP defines four intervention strategies: establish, alter, adapt, prevent. Accessible design interventions in Part 4 are classified by EHP strategy: most interventions alter the context (environment) rather than the person; some prevent barrier formation at source.
 
 **§1.8.4 Compensatory Frame of Reference** Where functional capacity cannot be restored, the environment compensates. Lever hardware, automatic doors, and grab bars are compensatory provisions.
 
@@ -365,7 +365,7 @@ The following theoretical frameworks underpin the evidence basis for design spec
 
 ### §1.9 Scope
 
-This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part II. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs. *Next: Part 2 — Disability Categories* *Cross-reference: Part 3 (Multiple Categories); Part 8 (Conflict Resolutions); Part 12 (Economics and DAR costs)*
+This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part II. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs. *Next: Part 2 — Disability Categories* *Cross-reference: Part 3 (Multiple Categories); Part 8 (Conflict Resolutions); Part 11 (Economics and DAR costs)*
 ## Part 2: Disability Categories
 
 Thirteen disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part 3 for multiple disability category design guidance and Part 8 for conflict resolutions.
@@ -423,7 +423,7 @@ Biomechanics: ramps above 1:12 require high-force shoulder technique unsustainab
 
 ### §2.2 UPL — Upper Limb \& Amputation
 
-UPL is consolidated as sub-code MOB/UPL in an earlier edition. Category K (Upper Limb Provisions, Part 7) is retained as a dedicated item set.
+UPL is consolidated as sub-code MOB/UPL in an earlier edition. Category K (Upper Limb Provisions, Part 4) is retained as a dedicated item set.
 
 **Definition**
 
@@ -575,7 +575,7 @@ Innate neurological variation affecting sensory processing, attention, learning,
 
 ### §2.8 NDV/MH — Mental Health, PTSD, and Trauma (Sub-code of NDV)
 
-MH is consolidated as sub-code NDV/MH in an earlier edition. MH provisions are retained in full and are cross-coded throughout Part 7 as NDV/MH. Mental health categories include anxiety disorders, PTSD, depression, psychosis, and trauma-related conditions. These users are present in all building types, not only specialist mental health facilities.
+MH is consolidated as sub-code NDV/MH in an earlier edition. MH provisions are retained in full and are cross-coded throughout Part 4 as NDV/MH. Mental health categories include anxiety disorders, PTSD, depression, psychosis, and trauma-related conditions. These users are present in all building types, not only specialist mental health facilities.
 
 **Definition**
 
@@ -701,9 +701,9 @@ The following matrix shows documented co-occurrence frequency between disability
 
 **Ratings:** HIGH = frequently documented co-occurrence with direct design implications; MEDIUM = moderately documented; LOW = less common or indirect. *BAR provisions relocated: see Supplementary Volume "Designing for Different Body Sizes," Section IV. BAR column retained for cross-reference continuity (Option B interim).*
 
-|  | MOB | VIS | NEU | DEM | NDV | MH | PAIN | BAR | UPL | DBL | OFS |
+|  | MOB | VIS | NEU | DEM | NDV | MH | PAIN | UPL | DBL | OFS |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **MOB** | — | MED | HIGH | HIGH | LOW | MED | HIGH | HIGH | HIGH | LOW | HIGH | | **VIS** | MED | — | MED | MED | MED | MED | LOW | LOW | LOW | HIGH | LOW | | **NEU** | HIGH | MED | — | MED | HIGH | HIGH | HIGH | MED | MED | LOW | HIGH | | **DEM** | HIGH | MED | MED | — | LOW | MED | MED | LOW | LOW | LOW | HIGH | | **NDV** | LOW | MED | HIGH | LOW | — | HIGH | MED | LOW | LOW | LOW | MED | | **MH** | MED | MED | HIGH | MED | HIGH | — | HIGH | MED | LOW | LOW | HIGH | | **PAIN** | HIGH | LOW | HIGH | MED | MED | HIGH | — | MED | MED | LOW | HIGH | | **BAR** | HIGH | LOW | MED | LOW | LOW | MED | MED | — | LOW | LOW | MED | | **UPL** | HIGH | LOW | MED | LOW | LOW | LOW | MED | LOW | — | LOW | LOW | | **DBL** | LOW | HIGH | LOW | LOW | LOW | LOW | LOW | LOW | LOW | — | LOW | | **OFS** | HIGH | LOW | HIGH | HIGH | MED | HIGH | HIGH | MED | LOW | LOW | — |  |
+| **MOB** | — | MED | HIGH | HIGH | LOW | MED | HIGH | HIGH | HIGH | LOW | HIGH | | **VIS** | MED | — | MED | MED | MED | MED | LOW | LOW | LOW | HIGH | LOW | | **NEU** | HIGH | MED | — | MED | HIGH | HIGH | HIGH | MED | MED | LOW | HIGH | | **DEM** | HIGH | MED | MED | — | LOW | MED | MED | LOW | LOW | LOW | HIGH | | **NDV** | LOW | MED | HIGH | LOW | — | HIGH | MED | LOW | LOW | LOW | MED | | **MH** | MED | MED | HIGH | MED | HIGH | — | HIGH | MED | LOW | LOW | HIGH | | **PAIN** | HIGH | LOW | HIGH | MED | MED | HIGH | — | MED | MED | LOW | HIGH | | | **UPL** | HIGH | LOW | MED | LOW | LOW | LOW | MED | LOW | — | LOW | LOW | | **DBL** | LOW | HIGH | LOW | LOW | LOW | LOW | LOW | LOW | LOW | — | LOW | | **OFS** | HIGH | LOW | HIGH | HIGH | MED | HIGH | HIGH | MED | LOW | LOW | — |  |
 
 ### §3.4 Key Co-occurrence Design Guidance
 #### MOB + OFS (including CFS/ME, POTS, MS)
@@ -757,7 +757,7 @@ Common presentation: fibromyalgia with depression (PAIN + MH); chronic pain synd
 Common presentation: PTSD with ME/CFS; anxiety disorder with POTS (documented in post-COVID populations). Both categories require: low exertion access (E-10 rest seating, step-free throughout); individual environmental control (H-02); and access to retreat without navigating high-stimulation spaces. MH adds: visibility of exits; choice of open or enclosed seating; no overhead surveillance or enclosed approaches to spaces. OFS adds: no sustained standing requirements; no routes requiring aerobic exertion. The design intersection is a low-exertion, controllable environment with spatial choice.
 ## How to Use This Volume
 
-Volume 2 translates the 71-item technique library into application tools for design practice. It is organised in five parts, followed by supplementary resources.
+Volume I translates the 71-item technique library into application tools for design practice. It is organised in five parts, followed by supplementary resources.
 
 ## Population Codes Reference
 
@@ -822,21 +822,21 @@ Consolidated item list for each population code. Items marked ● are primary pr
 
 | Item | A | B | C | D | E | F | G | H | I | J |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **MOB** | — | — | — | D-01 ● | E-01 ● E-06 ● E-08 ● | — | G-05 ● | I-04 ● I-05 ● | I-01 ● | | | **VIS** | A-15 ● | B-03 ● B-08 ● | C-01 ● C-04 ● | D-04 ● D-08 ● D-09 ● | E-07 ● E-09 ● | — | — | H-03 ● | — | — | | **DEAF** | A-10 ● A-11 ● | — | — | — | — | — | — | H-03 ● H-04 ● | — | — | | **NEU** | A-02 ● A-03 ○ | B-01 ● B-09 ○ | — | — | — | F-04 ● | G-04 ● | H-02 ● | — | — | | **DEM** | A-01 ● A-04 ● | B-05 ● | C-02 ● C-05 ● | D-01 ● D-03 ● D-04 ● | E-09 ○ | F-03 ● | — | — | — | — | | **NDV** | A-01 ● A-13 ● A-16 ● | B-01 ○ B-09 ● | C-03 ● | — | — | F-01 ● F-02 ● F-03 ● | G-01 ● | H-02 ● | — | — | | **NDV/MH** | A-03 ● A-16 ● | B-09 ● | — | — | — | F-01 ● F-03 ● | G-01 ● G-02 ● | H-02 ● | — | — | | **PAIN** | A-05 ● | B-03 ○ | — | — | E-10 ● | — | G-04 ● | H-02 ● | I-03 ● | — | *BAR provisions relocated to Supplementary Volume "Designing for Different Body Sizes," Section IV. BAR entries retained for cross-reference continuity (Option B interim).* | **BAR** | — | — | — | — | E-01 ● E-04 ○ E-08 ● | — | G-04 ○ | I-04 ● I-06 ● | | — | | **OFS** | — | — | — | — | E-05 ● E-10 ● | F-04 ● | G-04 ● G-05 ● | H-02 ● | — | — | | **DBL** | A-10 ● | — | C-04 ● | D-09 ● | E-09 ● | — | — | H-03 ● H-04 ● | — | — | | **UPL** | — | — | — | — | — | — | — | H-01 ● | I-01 ● I-02 ● I-03 ● | — | *Full population cross-reference tables are in Volume 2 Part I.* — |
+| **MOB** | — | — | — | D-01 ● | E-01 ● E-06 ● E-08 ● | — | G-05 ● | I-04 ● I-05 ● | I-01 ● | | | **VIS** | A-15 ● | B-03 ● B-08 ● | C-01 ● C-04 ● | D-04 ● D-08 ● D-09 ● | E-07 ● E-09 ● | — | — | H-03 ● | — | — | | **DEAF** | A-10 ● A-11 ● | — | — | — | — | — | — | H-03 ● H-04 ● | — | — | | **NEU** | A-02 ● A-03 ○ | B-01 ● B-09 ○ | — | — | — | F-04 ● | G-04 ● | H-02 ● | — | — | | **DEM** | A-01 ● A-04 ● | B-05 ● | C-02 ● C-05 ● | D-01 ● D-03 ● D-04 ● | E-09 ○ | F-03 ● | — | — | — | — | | **NDV** | A-01 ● A-13 ● A-16 ● | B-01 ○ B-09 ● | C-03 ● | — | — | F-01 ● F-02 ● F-03 ● | G-01 ● | H-02 ● | — | — | | **NDV/MH** | A-03 ● A-16 ● | B-09 ● | — | — | — | F-01 ● F-03 ● | G-01 ● G-02 ● | H-02 ● | — | — | | **PAIN** | A-05 ● | B-03 ○ | — | — | E-10 ● | — | G-04 ● | H-02 ● | I-03 ● | — | | — | | **OFS** | — | — | — | — | E-05 ● E-10 ● | F-04 ● | G-04 ● G-05 ● | H-02 ● | — | — | | **DBL** | A-10 ● | — | C-04 ● | D-09 ● | E-09 ● | — | — | H-03 ● H-04 ● | — | — | | **UPL** | — | — | — | — | — | — | — | H-01 ● | I-01 ● I-02 ● I-03 ● | — | *Full population cross-reference tables are in Volume I Part I.* — |
 
 ## Entry Path III: By Building or Room Type
 
 | Type | Go to |
 | --- | --- |
 | Residential — any room | Part II (this volume) |
-| Residential — entry, garage, laundry, bedroom, bathroom, living, kitchen, hallway, staircase | Part 5 §§5.1–5.9 |
-| Education (schools, universities) | Part 6 §6.1 |
-| Healthcare (hospitals, clinics, mental health) | Part 6 §6.2 |
-| Workplace (offices, co-working) | Part 6 §6.3 |
-| Retail and commercial | Part 6 §6.4 |
-| Cultural (museums, libraries, theatres) | Part 6 §6.5 |
-| Hospitality (hotels, restaurants, conference) | Part 6 §6.6 |
-| Transport (stations, airports, terminals) | Part 6 §6.7 | — |
+| Residential — entry, garage, laundry, bedroom, bathroom, living, kitchen, hallway, staircase | Part 6 §§6.1–6.9 |
+| Education (schools, universities) | Part 7 §7.1 |
+| Healthcare (hospitals, clinics, mental health) | Part 7 §7.2 |
+| Workplace (offices, co-working) | Part 7 §7.3 |
+| Retail and commercial | Part 7 §7.4 |
+| Cultural (museums, libraries, theatres) | Part 7 §7.5 |
+| Hospitality (hotels, restaurants, conference) | Part 7 §7.6 |
+| Transport (stations, airports, terminals) | Part 7 §7.7 | — |
 
 ## NOT-RETROFITTABLE Items — Consolidated Table
 
@@ -871,7 +871,7 @@ See E.10 in Part II for the full residential DAR register. The top priority item
 
 ### §3.5 Why Synthesis Matters
 
-The Part 7 item specification library contains 71 items. No building project requires all 71 simultaneously, and no project fails for lack of knowledge of individual items. Projects fail in accessible design because: 1.
+The Part 4 item specification library contains 71 items. No building project requires all 71 simultaneously, and no project fails for lack of knowledge of individual items. Projects fail in accessible design because: 1.
 
 **Stage failure:** Structural items (E-01 lift shaft, G-03 grab bar blocking, D-01 loop floor plan) are not decided at schematic stage and cannot be incorporated later without structural intervention.
 
@@ -897,7 +897,7 @@ A building that achieves Layer 1 but not Layers 2 and 3 is physically accessible
 
 **Principle 1 — Design Stage Primacy**
 
-Every Part 7 item has a design stage at which it must be decided. Items not decided at the correct stage are deferred into a risk register. The risk is not just cost — it is physical impossibility. A lift shaft not placed at schematic design cannot be added at technical design. A grab bar blocking specification not on a structural drawing at construction stage will not be installed. The design stage column in Part 7 is not a suggested timeline — it is a constraint.
+Every Part 4 item has a design stage at which it must be decided. Items not decided at the correct stage are deferred into a risk register. The risk is not just cost — it is physical impossibility. A lift shaft not placed at schematic design cannot be added at technical design. A grab bar blocking specification not on a structural drawing at construction stage will not be installed. The design stage column in Part 4 is not a suggested timeline — it is a constraint.
 
 **Principle 2 — Sensory Coherence**
 
@@ -964,7 +964,7 @@ Deliverables:
 
 **Strategy A — Baseline-Plus**
 
-For most commercial and workplace buildings. Start from the Universal Non-Residential Provisions (Part F §6.0). Then identify the primary disability categories for the building's user population and apply the relevant building-type matrix from Part 6. Conflict resolutions from Part F §NR.3 apply as standard.
+For most commercial and workplace buildings. Start from the Universal Non-Residential Provisions (Part 7 §7.0). Then identify the primary disability categories for the building's user population and apply the relevant building-type matrix from Part 7. Conflict resolutions from Part 7 §NR.3 apply as standard.
 
 **Strategy B — Universal Design**
 
@@ -1135,11 +1135,11 @@ If no drawing is identified: the item is not specified. An accessibility require
 ### §3.12 From Approach to Application
 
 *Accessible Built Environments: Utopian Best Practice Guidebook — v9.0*
-*Follows §4.7 (Worked Examples). Readers should be familiar with §4.1–§4.7 and Volume 1 §1.4a.*
+*Follows §3.11 (Worked Examples). Readers should be familiar with §3.5–§3.11 and Volume 1 §1.4a.*
 
 ---
 
-The four synthesis principles in §4.3 — design stage primacy, sensory coherence, population co-occurrence, temporal continuity — describe how to work with this volume correctly. They do not describe how to arrive at the project brief that makes that work meaningful. The Volume 1 approach (§1.4a) is the prior step: it establishes who the building must serve, what they need to do, and what the environment must therefore be. Without it, §4.1–§4.7 is applied to the wrong questions.
+The four synthesis principles in §3.7 — design stage primacy, sensory coherence, population co-occurrence, temporal continuity — describe how to work with this volume correctly. They do not describe how to arrive at the project brief that makes that work meaningful. The Volume 1 approach (§1.4a) is the prior step: it establishes who the building must serve, what they need to do, and what the environment must therefore be. Without it, §3.5–§3.11 is applied to the wrong questions.
 
 This section states the connection explicitly and gives the practitioner the minimal set of decisions that must be made before the entry paths, matrices, and item library are consulted.
 
@@ -1149,7 +1149,7 @@ This section states the connection explicitly and gives the practitioner the min
 
 The entry paths (Entry Paths I–III, preceding Part I) and the room matrices (Parts II–III) answer specification questions: which items, at which stage, for which population. They assume the designer already knows which populations the building serves, what activities it must support, and which tier applies. [Vol 1 §1.4.3]
 
-These assumptions are not always warranted. The most common failure mode documented across the guidebook's worked examples (§4.7) is not incorrect specification — it is correct specification of the wrong problem: a bathroom that passes all matrix checks but cannot be used by the occupant because the co-occurring conditions were not identified at brief stage; an office with excellent acoustic treatment and no quiet room because NDV was not in the population brief; a dementia care unit with every D-category item specified and toilet visibility omitted because D-03's NOT-RETROFITTABLE status was not read before the floor plan was fixed.
+These assumptions are not always warranted. The most common failure mode documented across the guidebook's worked examples (§3.11) is not incorrect specification — it is correct specification of the wrong problem: a bathroom that passes all matrix checks but cannot be used by the occupant because the co-occurring conditions were not identified at brief stage; an office with excellent acoustic treatment and no quiet room because NDV was not in the population brief; a dementia care unit with every D-category item specified and toilet visibility omitted because D-03's NOT-RETROFITTABLE status was not read before the floor plan was fixed.
 
 The approach does not add new content to the brief. It disciplines the questions that produce the brief.
 
@@ -1163,13 +1163,13 @@ These are to be made in writing, held in the project file, and reviewed at each 
 Name every disability population the building has an obligation to serve. For each, state their primary functional need in this building type in one sentence. Work through the full population code list explicitly: MOB, MOB/UPL, VIS, DEAF, NEU, DEM, NDV, NDV/MH, PAIN, OFS, DBL. [Vol 1 Part II; Vol 2 Entry Path II] Absence without stated reason is a gap, not a decision. The most commonly omitted populations — NDV, OFS, PAIN, DBL — are precisely those for whom Layer 2 (sensory environment) is the primary barrier, and Layer 2 decisions are made at schematic and technical design stages where the opportunity to correct omissions is limited.
 
 **Decision 2 — Journey map.**
-For each population in the brief, write the sequence: arrival → approach → entry → orient → move → use → secondary facilities (toilet, rest) → depart → emergency egress. The purpose is not to produce a document — it is to force the question of which transitions carry the highest failure risk before the floor plan constrains the answer. The four highest-risk transitions in most building types are: public realm to entry; entry to vertical circulation; vertical circulation to destination; destination to sanitary facilities. If any of these cannot yet be traced on the proposed layout, that is a design problem, not a documentation gap. [Vol 1 §1.4a; Synthesis Principle 4, §4.3]
+For each population in the brief, write the sequence: arrival → approach → entry → orient → move → use → secondary facilities (toilet, rest) → depart → emergency egress. The purpose is not to produce a document — it is to force the question of which transitions carry the highest failure risk before the floor plan constrains the answer. The four highest-risk transitions in most building types are: public realm to entry; entry to vertical circulation; vertical circulation to destination; destination to sanitary facilities. If any of these cannot yet be traced on the proposed layout, that is a design problem, not a documentation gap. [Vol 1 §1.4a; Synthesis Principle 4, §3.7]
 
 **Decision 3 — Tier.**
 Confirm whether this project operates at Tier 0 (unknown occupancy — apply maximum DAR, use matrices as population coverage check), Tier 1 (identified population — matrix medians as working specification), or Tier 2 (named individual — OT assessment governs, matrices used for cross-check). Different parts of the same project may operate at different tiers. Commission OT assessment before technical design begins if Tier 2. [Vol 1 §1.4.3, §1.3]
 
 **Decision 4 — NOT-RETROFITTABLE commitment.**
-Before schematic design is fixed, every applicable NOT-RETROFITTABLE item [Vol 2 NOT-RETROFITTABLE table] must be committed to the structural and spatial brief. This is Synthesis Principle 1 (§4.3) applied at the earliest possible stage. The minimum commitment before schematic: E-01 (lift shaft), D-01 (loop floor plan, DEM buildings), D-03 (toilet visibility, DEM buildings), E-06 (level entry), A-08/A-09 (HVAC plant location), I-03/I-04 (grab bar blocking and wet room drainage). If the client brief makes any item impossible, escalate before schematic design — not after. An item identified as impossible after schematic is a cost and programme risk; before schematic it is a brief negotiation.
+Before schematic design is fixed, every applicable NOT-RETROFITTABLE item [Vol 2 NOT-RETROFITTABLE table] must be committed to the structural and spatial brief. This is Synthesis Principle 1 (§3.7) applied at the earliest possible stage. The minimum commitment before schematic: E-01 (lift shaft), D-01 (loop floor plan, DEM buildings), D-03 (toilet visibility, DEM buildings), E-06 (level entry), A-08/A-09 (HVAC plant location), I-03/I-04 (grab bar blocking and wet room drainage). If the client brief makes any item impossible, escalate before schematic design — not after. An item identified as impossible after schematic is a cost and programme risk; before schematic it is a brief negotiation.
 
 ---
 
@@ -1177,19 +1177,19 @@ Before schematic design is fixed, every applicable NOT-RETROFITTABLE item [Vol 2
 
 Once the four decisions are recorded, open the entry paths in the order appropriate to this project: Entry Path I if the stage is the organising question; Entry Path II if the population is the primary concern; Entry Path III if a room or building type is the starting point. The entry paths assume the approach brief exists. Where it does not, the entry paths produce a specification without a governing question — items will be correctly specified and the wrong items will be omitted.
 
-**Reading the room matrices.** Each matrix opens with a criticality note. Read it before the item table — it names the populations for whom this room is highest-risk and states what failure in this room costs functionally. The item table is a derivation from that note, not an independent list. An item in the table that does not map to a population in the project brief does not apply. A population in the brief that does not map to an item in the table is a specification gap requiring escalation to the item library (Part 7) or to OT advice.
+**Reading the room matrices.** Each matrix opens with a criticality note. Read it before the item table — it names the populations for whom this room is highest-risk and states what failure in this room costs functionally. The item table is a derivation from that note, not an independent list. An item in the table that does not map to a population in the project brief does not apply. A population in the brief that does not map to an item in the table is a specification gap requiring escalation to the item library (Part 4) or to OT advice.
 
-**Transitions between rooms are not in any matrix.** The matrices specify rooms. The approach brief maps journeys. At the end of each room specification, the transition into and out of that room must be verified against the journey map: does the corridor width maintain what the room achieved? Does the lighting strategy continue across the threshold? Does the acoustic zone change abruptly? The entry and circulation matrices [Part 5 R-ENT] and the sensory gradient item [F-01] are the primary instruments for transitions; both require the journey map to be used correctly.
+**Transitions between rooms are not in any matrix.** The matrices specify rooms. The approach brief maps journeys. At the end of each room specification, the transition into and out of that room must be verified against the journey map: does the corridor width maintain what the room achieved? Does the lighting strategy continue across the threshold? Does the acoustic zone change abruptly? The entry and circulation matrices [Part 6 R-ENT] and the sensory gradient item [F-01] are the primary instruments for transitions; both require the journey map to be used correctly.
 
-**Co-occurrences and the conflict register.** Population co-occurrences identified in Decision 1 map directly to the conflict register in Part E. Pre-populate the project conflict register from Part E before technical design begins. Common co-occurrences by building type are documented in §4.5 (Building Strategies) and §4.7 (Worked Examples). A conflict encountered at construction documents stage requires design team sign-off and specification revision; the same conflict identified at brief stage is a brief annotation.
+**Co-occurrences and the conflict register.** Population co-occurrences identified in Decision 1 map directly to the conflict register in Part E. Pre-populate the project conflict register from Part E before technical design begins. Common co-occurrences by building type are documented in §3.9 (Building Strategies) and §3.11 (Worked Examples). A conflict encountered at construction documents stage requires design team sign-off and specification revision; the same conflict identified at brief stage is a brief annotation.
 
-**The sensory coherence check.** At the end of technical design, list every Layer 2 item and review each pair for conflict [§4.3, Principle 2]. The check is grounded in the approach brief: it is only possible to evaluate coherence against a population brief that names whose sensory environment is being protected. A sensory coherence check without a population brief is a cross-referencing exercise without a governing criterion.
+**The sensory coherence check.** At the end of technical design, list every Layer 2 item and review each pair for conflict [§3.7, Principle 2]. The check is grounded in the approach brief: it is only possible to evaluate coherence against a population brief that names whose sensory environment is being protected. A sensory coherence check without a population brief is a cross-referencing exercise without a governing criterion.
 
 ---
 
 ### When no matrix exists
 
-The matrices cover the most common building types and rooms. For spaces not covered — specialist clinical rooms, reception desks, prayer rooms, rooftop terraces, specialist educational spaces — apply the four decisions above to the specific space and cross-reference Part 7 directly by population code. Identify the applicable items, confirm their design stages, apply the sensory coherence principle, and verify the transitions. This is the matrix method without a pre-built template. When this process produces a coherent specification for a novel space, the output should be submitted to the editorial register. Post-occupancy evidence from novel spaces is how the matrix coverage expands.
+The matrices cover the most common building types and rooms. For spaces not covered — specialist clinical rooms, reception desks, prayer rooms, rooftop terraces, specialist educational spaces — apply the four decisions above to the specific space and cross-reference Part 4 directly by population code. Identify the applicable items, confirm their design stages, apply the sensory coherence principle, and verify the transitions. This is the matrix method without a pre-built template. When this process produces a coherent specification for a novel space, the output should be submitted to the editorial register. Post-occupancy evidence from novel spaces is how the matrix coverage expands.
 
 ---
 
@@ -1230,7 +1230,7 @@ Conflict domains pending evidence synthesis: LIGHT-INT · ACOUSTIC-LVL · SPATIA
 
 ## Part 6: Residential Application Matrices
 
-** Neufert Residential and Non-Residential OT Analysis dimensional data is not yet integrated into Part II room matrices. Dimensional specifications from Neufert sources should be added to relevant room matrices when the source file is confirmed readable. This does not affect item specifications or population guidance — only dimensional annotations marked [NEUFERT: pending] in the working draft. See Part 7 for status.
+** Neufert Residential and Non-Residential OT Analysis dimensional data is not yet integrated into Part II room matrices. Dimensional specifications from Neufert sources should be added to relevant room matrices when the source file is confirmed readable. This does not affect item specifications or population guidance — only dimensional annotations marked [NEUFERT: pending] in the working draft. See Part 4 for status.
 
 ### 6.0 How to Read the Residential Matrices
 
@@ -1238,7 +1238,7 @@ Each room matrix is structured as: 1.
 
 **Room criticality note** — why this room is significant and which populations face the greatest barriers
 
-**Item application table** — all applicable Part 7 items, coded by population and design stage 3.
+**Item application table** — all applicable Part 4 items, coded by population and design stage 3.
 
 **DAR provisions** — Design-for-Adaptability-and-Repair provisions: what must be built in now to enable future adaptation without structural intervention 4.
 
@@ -1377,7 +1377,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 ### 6.3 R-LAU: Laundry
 
-**Room criticality:** The laundry is the most poorly specified residential room in the current Part 7 library — zero citations existed in an earlier edition. It is disproportionately significant for UPL users (overhead reach to top-loader); MOB users (front-loader access, turning circle); PAIN users (bending, sustained posture). The laundry is also the primary source of fragrant detergent exposure for OFS users. A laundry with a top-loading washing machine, high shelf storage, and narrow doorway is inaccessible to a majority of disabled users.
+**Room criticality:** The laundry is the most poorly specified residential room in the current Part 4 library — zero citations existed in an earlier edition. It is disproportionately significant for UPL users (overhead reach to top-loader); MOB users (front-loader access, turning circle); PAIN users (bending, sustained posture). The laundry is also the primary source of fragrant detergent exposure for OFS users. A laundry with a top-loading washing machine, high shelf storage, and narrow doorway is inaccessible to a majority of disabled users.
 
 **Item application table — R-LAU:**
 
@@ -1968,13 +1968,13 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 ### 7.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
 
-**Primary populations:** Hotel accessible rooms are the most poorly specified non-residential accessible space in international standards. Most standards address physical access only. The hotel room is a temporary residential environment and must be assessed against Part 5 residential specifications, not NR specifications alone.
+**Primary populations:** Hotel accessible rooms are the most poorly specified non-residential accessible space in international standards. Most standards address physical access only. The hotel room is a temporary residential environment and must be assessed against Part 6 residential specifications, not NR specifications alone.
 
 **Space criticality (hospitality-specific):**
 
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
-| Accessible hotel room | ALL | **Part 5 residential spec applies**: G-03, G-04, I-03, TC-05, B-01, B-06, H-04 (bedside control), TC-01, G-01 |
+| Accessible hotel room | ALL | **Part 6 residential spec applies**: G-03, G-04, I-03, TC-05, B-01, B-06, H-04 (bedside control), TC-01, G-01 |
 | Hotel bathroom | MOB, BAR, DEM | R-BA item suite; G-04 (wet room), G-03 (bilateral grab bars), I-03 (TMV ≤43°C) |
 | Restaurant / dining | MOB, BAR, NDV, DEAF | G-01 (table turning circle), G-06 (service counter), A-02, B-03/04, F-04 |
 | Conference / meeting | DEAF, MOB, NDV | A-11, H-03 (CART), B-02, G-01, F-03 (quiet area) |
@@ -1983,7 +1983,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 **Hospitality-specific enhancements:**
 
-- Accessible hotel room: specify to Part 5 residential standard (R-BA, R-BED) as minimum. Additions: visual fire alarm in room (B-10); vibrating wake-up alarm for DEAF guests; hearing loop hook-up at bedside; accessible safe at ≤1100 mm AFF; accessible wardrobe rail at 900 mm AFF with adjustable option.
+- Accessible hotel room: specify to Part 6 residential standard (R-BA, R-BED) as minimum. Additions: visual fire alarm in room (B-10); vibrating wake-up alarm for DEAF guests; hearing loop hook-up at bedside; accessible safe at ≤1100 mm AFF; accessible wardrobe rail at 900 mm AFF with adjustable option.
 - Restaurant accessibility: ≥20% of dining tables with ≥1500 mm turning circle at both ends (not only one end); no fixed bench seating only — fixed benches exclude MOB and BAR users entirely if no removable alternative provided; menu in large print (≥14 pt, B-09 equivalent visual standard)
 - Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blocking, BAR wet room equivalent for pool changing)
 - Guest room controls: all controls at 400–1200 mm AFF (H-01); bedside panel controls all room services (H-04)
@@ -1992,7 +1992,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 **Hospitality schematic checklist:**
 
-- [ ] Accessible hotel room(s) specified to Part 5 residential standard in brief
+- [ ] Accessible hotel room(s) specified to Part 6 residential standard in brief
 - [ ] Wet room/zero-threshold shower in accessible hotel rooms on bathroom drawings
 - [ ] Grab bar blocking in accessible hotel bathrooms on structural drawings
 - [ ] ≥20% dining tables with turning circle on restaurant layout plan
@@ -2080,11 +2080,11 @@ Post-installation RT60 measurement at 500 Hz required
 
 ● Post-installation speech intelligibility verification: STI ≥ 0.60 (general) and STI ≥ 0.75 (where DEAF or cochlear implant users are anticipated) shall be measured at the furthest occupied seat from the primary speech source, not as a room average. Where STI at the furthest seat falls below threshold despite compliant room-average STI, supplementary speech-frequency absorption (SFA) treatment or seating redesign is required to bring all occupied positions within threshold. [REF:room-acoustic-performance:22] [REF:room-acoustic-performance:24]
 
-**Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part 11 §11.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
-**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room); Part 5 §5.2 (ACOUSTIC-LVL conflict domain)
+**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room); Part 6 §5.2 (ACOUSTIC-LVL conflict domain)
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. RT60 reduction via ceiling treatment directly lowers the cumulative acoustic load experienced by sensory-avoiding and sensory-sensitive users, reducing the neurological effort cost of occupying the space and preserving cognitive and physical energy for the primary occupation.
 
@@ -2109,7 +2109,7 @@ No letterbox penetrations; no undercuts ≥ 3mm
 Closer: hydraulic door closer specified
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic door replacement is a moderate retrofit; achieving STC ≥35 requires 
-full frame and threshold sealing which may require opening up surrounding construction. At design stage, specification cost is near-zero. See Part 12 §12.4.3.
+full frame and threshold sealing which may require opening up surrounding construction. At design stage, specification cost is near-zero. See Part 11 §11.4.3.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. ISO 10140-2:2010. Acoustics Laboratory measurement of sound insulation. ISO.
 
@@ -2138,7 +2138,7 @@ NC-10 change
 
 Restorative intervals: at least one acoustic low-point per 20m of primary journey
 
-**Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic zoning through graduated material and layout planning is zero-cost at design stage. Retrofit requires redecoration, material replacement, and possible spatial reconfiguration. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic zoning through graduated material and layout planning is zero-cost at design stage. Retrofit requires redecoration, material replacement, and possible spatial reconfiguration. See Part 11 §11.4.1.
 
 **Key citations:** Kaplan, R., \& Kaplan, S. (1989). The experience of nature. Cambridge University Press. British Standards Institution.
 
@@ -2204,7 +2204,7 @@ Fabric: low-VOC, class 1 fire rating
 
 **Retrofit cost note:** Retrofit penalty: LOW. Fabric wall panels are surface-applied and can be retrofitted without structural work using
 
-standard fixing. See Part 12 §12.4.1.
+standard fixing. See Part 11 §11.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences,
 
@@ -2230,7 +2230,7 @@ Corridor end walls: acoustic panel or splayed geometry
 
 Specular reflection check: acoustic consultant review at design stage
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Flutter echo elimination through non-parallel surface treatment is zero-cost at design stage. Retrofit requires material addition or surface modification; physical parallel wall removal is a structural intervention. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Flutter echo elimination through non-parallel surface treatment is zero-cost at design stage. Retrofit requires material addition or surface modification; physical parallel wall removal is a structural intervention. See Part 11 §11.4.2.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -2258,7 +2258,7 @@ Acoustic lining: rectangular supply ducts lined for ≥10 m from AHU
 
 All mechanical plant: mounted on vibration isolation pads
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. HVAC noise control (NC-25) at design stage requires correct plant selection and ductwork specification. Retrofit requires silencer insertion, ductwork modification, or plant replacement — significant mechanical works. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. HVAC noise control (NC-25) at design stage requires correct plant selection and ductwork specification. Retrofit requires silencer insertion, ductwork modification, or plant replacement — significant mechanical works. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. ANSI/ASA S12.60:2010. Acoustical performance criteria for schools. ASA.
 
@@ -2286,7 +2286,7 @@ Pipe connections: flexible connections at all mechanical plant
 
 Post-installation: vibration measurement at sensitive space floors (target: <0.1 m/s RMS)
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Floating plant room specification cannot be retrofitted without rebuilding the plant room. Anti-vibration mounts and structural decoupling must be incorporated at construction stage. Among the highest-penalty items when deferred. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Floating plant room specification cannot be retrofitted without rebuilding the plant room. Anti-vibration mounts and structural decoupling must be incorporated at construction stage. Among the highest-penalty items when deferred. See Part 11 §11.4.
 
 **Key citations:** Desmeules, J., et al. (2003). Arthritis \& Rheumatism. [Vibration as fibromyalgia trigger.\] Staud, R. (2011). Curr Pain Headache Rep, 15(5), 338--343.
 
@@ -2318,7 +2318,7 @@ All staffed service points: counter loop required
 
 **Retrofit cost note:** Retrofit penalty: LOW. Counter hearing loop is a low-cost surface or under-counter cable installation. Retrofit
 
-penalty is minimal; power supply proximity is the principal constraint. See Part 12 §12.4.
+penalty is minimal; power supply proximity is the principal constraint. See Part 11 §11.4.
 
 **Key citations:** International Electrotechnical Commission. (2017). IEC 60118-4:2014+AMD1:2017 [BS EN IEC 60118-4:2015+A1:2018 for UK/EU\]. IEC. Hearing Loss Association of America. (2023). Hearing loop technology. HLAA.
 
@@ -2342,7 +2342,7 @@ All absorption products: moisture resistant rating confirmed
 
 Post-installation: RT60 measurement at commissioning
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Pool/hydrotherapy acoustic treatment involves wet environment panels and surface specification. Retrofit without facility closure requires a full tile/substrate replacement programme. At design stage, specification is the only cost. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Pool/hydrotherapy acoustic treatment involves wet environment panels and surface specification. Retrofit without facility closure requires a full tile/substrate replacement programme. At design stage, specification is the only cost. See Part 11 §11.4.2.
 
 **Key citations:** ISO 3382-2:2008. Measurement of room acoustic parameters. ISO. Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942.
 
@@ -2376,7 +2376,7 @@ Signage: IFHOH symbol at all entrances to looped space
 
 Required: all assembly spaces ≥25 capacity; all consultation/interview rooms
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Room perimeter hearing loop requires a cable run in floor or wall chase. In a finished building, chase-cutting and reinstatement adds moderate cost. Design stage conduit provision eliminates this entirely. See Part 11 for DAR conduit provisions; Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Room perimeter hearing loop requires a cable run in floor or wall chase. In a finished building, chase-cutting and reinstatement adds moderate cost. Design stage conduit provision eliminates this entirely. See Part 10 for DAR conduit provisions; Part 11 §11.4.
 
 **Key citations:** International Electrotechnical Commission. (2017). IEC 60118-4:2014+AMD1:2017 [BS EN IEC 60118-4:2015+A1:2018 for UK/EU\]. IEC. Hearing Loss Association of America. (2023). Hearing loop technology and Auracast. HLAA. HLF. (2023). Teleslynge i alle offentlige bygg [Norwegian\]. HLF.
 
@@ -2404,7 +2404,7 @@ Loop installation (A-11) remains required; Auracast does not substitute
 
 **Retrofit cost note:** Retrofit penalty: LOW. Auracast infrastructure readiness requires conduit provision and power access points — a
 
-design-stage specification only. Retrofit requires surface-run conduit or chase cutting. See Part 11; Part 12 §12.4.
+design-stage specification only. Retrofit requires surface-run conduit or chase cutting. See Part 10; Part 11 §11.4.
 
 **Key citations:** Hearing Loss Association of America. (2023).
 
@@ -2434,7 +2434,7 @@ Open offices: acoustic zoning (A-04), focus rooms (D-05)
 
 **Key evidence (non-English):** De Hogeweyk post-occupancy evaluation (BuroKade/Vivium, Dutch-language reports, 2012--2019): 94% of residents with moderate dementia navigated independently to the village square and back within 6 months of admission, compared to 34% in conventional dementia units — the strongest empirical wayfinding evidence available for consistent environment provisions (D-09) in combination with loop plan (D-01).
 
-**Retrofit cost note:** Retrofit penalty: ZERO — NET SAVING. This item is a specification exclusion. Omitting sound masking systems costs less than installing them. Retrofit action is removal of existing masking systems at minor cost. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: ZERO — NET SAVING. This item is a specification exclusion. Omitting sound masking systems costs less than installing them. Retrofit action is removal of existing masking systems at minor cost. See Part 11 §11.4.1.
 
 **Key citations:** Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT.
 
@@ -2462,7 +2462,7 @@ Flanking: sealed at all ceiling/floor junctions
 
 Target: STC ≥50 laboratory; Field STC ≥45
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Double-leaf STC ≥50 partitions require structural provision at wall head and floor --- major interventions in an existing building. At design stage, the specification premium over a standard partition is modest. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Double-leaf STC ≥50 partitions require structural provision at wall head and floor --- major interventions in an existing building. At design stage, the specification premium over a standard partition is modest. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS
 
@@ -2490,7 +2490,7 @@ Do not apply full acoustic treatment to primary circulation if it removes all ac
 
 Resolve tension with A-05: carpet reduces acoustic cues — provide hard floor strips at key junctions
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic differentiation between spaces is a material and finish specification at zero cost at design stage. Retrofit requires finish replacement and potentially structural element modification at room junctions. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic differentiation between spaces is a material and finish specification at zero cost at design stage. Retrofit requires finish replacement and potentially structural element modification at room junctions. See Part 11 §11.4.1.
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -2517,7 +2517,7 @@ HVAC: NC-25 maximum; individual control
 Blackout: 100% blackout blinds or no windows
 Location: adjacent to primary circulation; not via another occupied space
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Sensory room provision requires dedicated floor area — a planning decision at design stage. Retrofit requires spatial reorganisation within a finished building. Minimum 8 m² cannot be created from circulation space. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Sensory room provision requires dedicated floor area — a planning decision at design stage. Retrofit requires spatial reorganisation within a finished building. Minimum 8 m² cannot be created from circulation space. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0, Category 11. RHF. National Autistic Society. (2023). Creating autism-friendly environments. NAS.
 
@@ -2541,7 +2541,7 @@ Hygiene contexts: wipe clean upholstery (vinyl, antimicrobial fabric) is acousti
 
 **Retrofit cost note:** Retrofit penalty: LOW. Upholstered seating is a procurement specification with no structural or services
 
-implications. Retrofit is furniture replacement, phaseable without building disruption. See Part 12 §12.4.1.
+implications. Retrofit is furniture replacement, phaseable without building disruption. See Part 11 §11.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -2570,7 +2570,7 @@ Natural light maximised; not substituted by electric light where achievable
 
 DEM environments: circadian lighting is a clinical requirement, not a comfort enhancement
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Circadian lighting requires tuneable-white luminaires with control wiring. At design stage the cost premium over standard LED is modest. Retrofit requires luminaire replacement and control circuit rewiring or smart system overlay. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Circadian lighting requires tuneable-white luminaires with control wiring. At design stage the cost premium over standard LED is modest. Retrofit requires luminaire replacement and control circuit rewiring or smart system overlay. See Part 11 §11.4.2.
 
 **Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI.
 
@@ -2600,7 +2600,7 @@ Preferred: indirect or semi-indirect luminaires supplemented by wall-wash
 
 — negligible cost premium. Retrofit requires repositioning existing luminaire points, which may involve ceiling works and circuit
 
-modification. See Part 12 §12.4.2.
+modification. See Part 11 §11.4.2.
 
 **Key citations:** DeafSpace Project, Gallaudet University. (2010).
 
@@ -2630,7 +2630,7 @@ Verified per B-04: IEEE 1789-2015 compliance required
 
 Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Fluorescent elimination is a luminaire swap. In retrofit, ballast removal and fixture replacement across a building carries moderate labour cost but no structural implications. At design stage, LED specification is standard. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Fluorescent elimination is a luminaire swap. In retrofit, ballast removal and fixture replacement across a building carries moderate labour cost but no structural implications. At design stage, LED specification is standard. See Part 11 §11.4.1.
 
 **Key citations:** Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT. AOTA. (2023). OT practice guidelines for adults with TBI. AJOT, 77(4).
 
@@ -2656,7 +2656,7 @@ At all dimming levels including 20% output: within low-risk range
 
 Product specification: IEEE 1789 compliance certificate required before installation
 
-**Retrofit cost note:** Retrofit penalty: LOW. Flicker-free IEEE 1789-compliant LEDs are a standard specification item. Retrofit is simple luminaire replacement. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Flicker-free IEEE 1789-compliant LEDs are a standard specification item. Retrofit is simple luminaire replacement. See Part 11 §11.4.1.
 
 **Key citations:** IEEE. (2015). IEEE 1789-2015: Recommended practices for modulating current in high-brightness LEDs. IEEE. CAOT. (2018). Practice guidelines for acquired brain injury. CAOT.
 
@@ -2684,7 +2684,7 @@ Entry: supplementary electric lighting in vestibule in dull weather
 
 **Retrofit cost note:** Retrofit penalty: MODERATE. Gradual lighting transition zones require zone circuit design at design stage. Retrofit
 
-requires circuit separation, dimmer installation, and possible luminaire addition in transition areas. See Part 12 §12.4.2.
+requires circuit separation, dimmer installation, and possible luminaire addition in transition areas. See Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. Invalidiliitto. (2022). Esteettömyysopas [Finnish\]. Invalidiliitto. CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -2712,7 +2712,7 @@ Sensory/consulting rooms: scene controller with preset 'minimum' (10 lux) scene
 
 Where residential occupancy: all bedroom and living room circuits minimum
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Individual dimming requires wiring and switch installation per zone. At design stage this is standard electrical specification. Retrofit requires cable runs, switch replacement, and possible smart lighting overlay. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Individual dimming requires wiring and switch installation per zone. At design stage this is standard electrical specification. Retrofit requires cable runs, switch replacement, and possible smart lighting overlay. See Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS 6463:2022. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0, Category 11. RHF.
 
@@ -2736,7 +2736,7 @@ Supplementary downlights: deep recessed, diffuse lens, minimum 30° cutoff
 
 Illuminance: 200--300 lux at task level achieved by indirect strategy
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Indirect and cove lighting requires physical cove construction at ceiling or wall level. At design stage the cove is integrated into the ceiling design at modest cost. Retrofit requires suspended ceiling modification or new cove construction plus additional circuit provision. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Indirect and cove lighting requires physical cove construction at ceiling or wall level. At design stage the cove is integrated into the ceiling design at modest cost. Retrofit requires suspended ceiling modification or new cove construction plus additional circuit provision. See Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -2762,7 +2762,7 @@ Wet rooms: matte, R10 slip resistance takes priority
 
 **Retrofit cost note:** Retrofit penalty: LOW. Matte, low-reflectance floor finishes are a procurement specification. Retrofit is floor
 
-covering replacement only. See Part 12 §12.4.1.
+covering replacement only. See Part 11 §11.4.1.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -2792,7 +2792,7 @@ Sill height: ≤750 mm AFF for seated and reclined views. Applicable where DEM, 
 
 seated views essential).
 
-**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Maximising natural light through clerestories, light wells, and rooflights is a fundamental building form decision. Retrofit requires structural assessment, temporary propping, lintel installation, weatherproofing, and internal making-good. Retrofit cost of a single rooflight can exceed the design-stage cost by 10×. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Maximising natural light through clerestories, light wells, and rooflights is a fundamental building form decision. Retrofit requires structural assessment, temporary propping, lintel installation, weatherproofing, and internal making-good. Retrofit cost of a single rooflight can exceed the design-stage cost by 10×. See Part 11 §11.4.
 
 **Key citations:** Ulrich, R.S. (1984). View through a window may influence recovery from surgery. Science, 224(4647). WELL Building Institute. (2024). WELL v2. IWBI.
 
@@ -2816,7 +2816,7 @@ Monthly test with visual confirmation logged
 
 Position: visible from any point in room (ceiling or high-wall mount)
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 11; Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 10; Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2010). BS EN 54-23:2010. BSI. British Standards Institution. (2017). BS 9999:2017. BSI.
 
@@ -2842,7 +2842,7 @@ DEM: automated shift at 19:00 via BMS (occupants cannot always be relied upon to
 
 Where residential occupancy: manual override available for non-standard sleep schedules
 
-**Retrofit cost note:** Retrofit penalty: LOW. Warm colour temperature (2700 K) is a lamp or luminaire specification change. Retrofit is lamp replacement in compatible luminaires, or luminaire swap. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Warm colour temperature (2700 K) is a lamp or luminaire specification change. Retrofit is lamp replacement in compatible luminaires, or luminaire swap. See Part 11 §11.4.1.
 
 **Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI.
 
@@ -2868,7 +2868,7 @@ Evening shift to ≤10 EML and 2700K CCT removes the alerting light wavelengths 
 
 **Design Stage:** Design Development · Technical Architecture · Post-Occupancy
 
-**Retrofit:** MODERATE penalty — new circuit and sensor required. Floor-level conduit chase is moderate cost. Plug-in sensor-activated nightlights (≥5 lux) are an acceptable interim post-occupancy solution. See Part 11 §DAR.
+**Retrofit:** MODERATE penalty — new circuit and sensor required. Floor-level conduit chase is moderate cost. Plug-in sensor-activated nightlights (≥5 lux) are an acceptable interim post-occupancy solution. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -2903,7 +2903,7 @@ Ceiling: white or very pale (LRV ≥85) to reflect natural light
 
 Floor: plain, low-chroma (C-06)
 
-**Retrofit cost note:** Retrofit penalty: LOW. Colour palette specification is a decoration decision. Retrofit is redecoration --- the lowest-penalty category of change in any building. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Colour palette specification is a decoration decision. Retrofit is redecoration --- the lowest-penalty category of change in any building. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.
 
@@ -2933,7 +2933,7 @@ Floor accent: zone colour strip at corridor centre or edge
 
 No more than 5 distinct zone colours per building
 
-**Retrofit cost note:** Retrofit penalty: LOW. Colour-coded wayfinding is a redecoration and signage programme without structural implications. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Colour-coded wayfinding is a redecoration and signage programme without structural implications. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. Marquardt, G. (2011). HERD, 4(2), 75--90. Grey, T., et al. (2015). Universal design guidelines: Dementia friendly dwellings. NDA Ireland.
 
@@ -2965,7 +2965,7 @@ LBD (Lewy Body Dementia): plain matte uniform flooring mandatory (see
 
 **Retrofit cost note:** Retrofit penalty: LOW. Pattern avoidance is a floor and wall covering specification. Retrofit is covering
 
-replacement without structural works. See Part 12 §12.4.1.
+replacement without structural works. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. National Autistic Society. (2023). Creating autism-friendly environments. NAS.
 
@@ -2995,7 +2995,7 @@ Grab bars: LRV vs wall AND vs floor (JOTA, 2022)
 
 Door frames: ≥30 LRV vs adjacent wall throughout building
 
-**Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CNIB Foundation. (2024). Clearing our path. CNIB. JOTA. (2022). Grab bar colour contrast. [Translated from Japanese.\]
 
@@ -3023,7 +3023,7 @@ Tactile transition strip (≤3 mm height): permitted; colour must meet
 
 ≤10 LRV rule
 
-**Retrofit cost note:** Retrofit penalty: LOW. Low LRV differential at adjacent floor materials is a flooring specification decision. Retrofit is flooring replacement at junctions. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Low LRV differential at adjacent floor materials is a flooring specification decision. Retrofit is flooring replacement at junctions. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling.
 
@@ -3053,7 +3053,7 @@ LBD environments: plain matte uniform mandatory (see §2.5)
 
 **Retrofit cost note:** Retrofit penalty: LOW. Plain, low-contrast flooring is a floor covering specification. Retrofit is full floor
 
-covering replacement without structural works. See Part 12 §12.4.1.
+covering replacement without structural works. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling.
 
@@ -3085,7 +3085,7 @@ Dead end terminations: treated as destination landmarks with return signage
 
 Toilet access: visible from all primary loop positions (D-03)
 
-**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Loop floor plan with no dead-end corridors is a fundamental plan organisation decision. Achieving a loop plan through retrofit requires removing or adding walls — potentially structural — and fundamentally reorganising internal layouts. In many existing buildings this is practically impossible without near-total internal reconstruction. At design stage it is zero-cost planning. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Loop floor plan with no dead-end corridors is a fundamental plan organisation decision. Achieving a loop plan through retrofit requires removing or adding walls — potentially structural — and fundamentally reorganising internal layouts. In many existing buildings this is practically impossible without near-total internal reconstruction. At design stage it is zero-cost planning. See Part 11 §11.4.
 
 **Key citations:** Marquardt, G. (2011). HERD, 4(2), 75--90. DSDC. (2022). EADDAT. University of Stirling.
 
@@ -3113,7 +3113,7 @@ Primary route: shortest + most direct (not hidden accessible route)
 
 Decision point legibility: destination visible from decision point where possible
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Cognitive simplicity through a single primary route requires spatial reorganisation of circulation. Retrofit involves partition removal, route reconfiguration, and wayfinding redesign — significant works in complex existing buildings. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Cognitive simplicity through a single primary route requires spatial reorganisation of circulation. Retrofit involves partition removal, route reconfiguration, and wayfinding redesign — significant works in complex existing buildings. See Part 11 §11.4.2.
 
 **Key citations:** Passini, R. (1984). Wayfinding in architecture. Van
 
@@ -3141,7 +3141,7 @@ Toilet door: ≥30 LRV contrast against corridor wall (C-04)
 
 Maximum 20 m from any primary occupied space to nearest toilet (MS bladder urgency)
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Toilet visibility from primary occupied spaces requires sight-line planning. Retrofit requires spatial reorganisation or transparent partition introduction; where structural walls are involved the intervention is major. At design stage, toilet positioning is a zero-cost planning decision. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Toilet visibility from primary occupied spaces requires sight-line planning. Retrofit requires spatial reorganisation or transparent partition introduction; where structural walls are involved the intervention is major. At design stage, toilet positioning is a zero-cost planning decision. See Part 11 §11.4.2.
 
 **Key citations:** Marquardt, G. (2011). Wayfinding for people with dementia: A review of the role of architectural design. HERD, 4(2), 75--90. [Landmark German-language OT research: 32-facility study documenting 47% reduction in incontinence events where toilet is directly visible from primary living space. Strongest single empirical finding for any spatial provision in this Guidebook.\] Kirch, M., \& Marquardt, G. (2023). HERD, 16(1). doi:10.1177/19375867221119540 Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF.
 
@@ -3169,7 +3169,7 @@ VIS: acoustic landmark (distinct floor material or water feature) preferred
 
 **Retrofit cost note:** Retrofit penalty: LOW. Landmark installation at decision points is implementable through surface-applied works
 
-without structural intervention. See Part 12 §12.4.1.
+without structural intervention. See Part 11 §11.4.1.
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB. DSDC. (2022). EADDAT. University of Stirling. Siegel, A.W., \& White, S.H. (1975). Advances in child development and behavior (Vol. 10). Academic Press.
 
@@ -3195,7 +3195,7 @@ Full dimming: 100%--10 lux
 No transparent panels to open-plan area (visual privacy)
 Minimum: 1 per 20 open-plan workstations
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Enclosed low-stimulation spaces require dedicated floor area and acoustic separation. Retrofit within an occupied building requires partition installation, acoustic treatment, and area allocation. Cost depends on whether structural works are needed. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Enclosed low-stimulation spaces require dedicated floor area and acoustic separation. Retrofit within an occupied building requires partition installation, acoustic treatment, and area allocation. Cost depends on whether structural works are needed. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3. AtkinsRéalis.
 
@@ -3235,7 +3235,7 @@ Glass: non-reflective
 
 **Retrofit cost note:** Retrofit penalty: LOW. Memory boxes are surface-mounted shallow fixtures. Retrofit is a fixing and decoration
 
-operation without structural implication. See Part 12 §12.4.1.
+operation without structural implication. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. Alzheimer's Society UK. (2023). Design for dementia guidance.
 
@@ -3257,7 +3257,7 @@ Treatment: 45° splay, convex mirror ≥300 mm, or vision-panel corner
 Mirror: positioned for sightline from 2 m approach on each leg
 Vision-panel glass: safety glazing (Class 2 or better); obscure if privacy required
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Curved or mirrored junctions at blind corners require finish and joinery modification. Retrofit is a decoration and joinery programme; structural corner modification is more significant. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Curved or mirrored junctions at blind corners require finish and joinery modification. Retrofit is a decoration and joinery programme; structural corner modification is more significant. See Part 11 §11.4.1.
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB. DeafSpace Project, Gallaudet University. (2010). DeafSpace design guidelines.
 
@@ -3288,7 +3288,7 @@ Tactile lettering: raised 0.8 mm; at 1400--1600 mm AFF
 
 **Retrofit cost note:** Retrofit penalty: LOW. Pictogram and signage installation is a surface-mounted programme. Retrofit is signage
 
-replacement and mounting without structural works. See Part 12 §12.4.
+replacement and mounting without structural works. See Part 11 §11.4.
 
 §8.4.1.
 
@@ -3320,7 +3320,7 @@ No ad-hoc event furniture in primary wayfinding corridors
 
 **Retrofit cost note:** Retrofit penalty: ZERO. Consistent furniture layout is a management and procurement decision with zero build cost
 
-at any stage. See Part 12 §12.4.1.
+at any stage. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -3346,7 +3346,7 @@ Obscure glass: where privacy required (e.g., consulting rooms)
 
 Sightlines: occupant inside room can see corridor approach from seated position
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Transparent glazed panels require cutting an opening into an existing partition and installing a glazed panel — a moderate joinery and glazing operation; structural partition involvement increases cost significantly. At design stage, specification is the only cost. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Transparent glazed panels require cutting an opening into an existing partition and installing a glazed panel — a moderate joinery and glazing operation; structural partition involvement increases cost significantly. At design stage, specification is the only cost. See Part 11 §11.4.2.
 
 **Key citations:** DeafSpace Project, Gallaudet University. (2010). DeafSpace design guidelines. British Standards Institution. (2018). BS 8300:2018. BSI.
 
@@ -3376,7 +3376,7 @@ Seating: every 20 m; 450 mm seat height; armrests; covered option
 Planting: within reach of path; non-toxic species (DEM); no thorns
 Accessible entry: level or ramp ≤1:20
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Safe accessible garden with loop path and secured perimeter requires new hard landscaping, path construction, perimeter enclosure, planting, and drainage — significant external works in an existing outdoor space. At design stage it is a landscape brief decision. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Safe accessible garden with loop path and secured perimeter requires new hard landscaping, path construction, perimeter enclosure, planting, and drainage — significant external works in an existing outdoor space. At design stage it is a landscape brief decision. See Part 11 §11.4.2.
 
 **Key evidence (non-English):** Nationalt Videnscenter for Demens / Danish landscape architecture research: empirical data showing that sensory garden loop paths with seating at ≤20 m intervals reduce agitation episodes in dementia care settings. Danish care village research from the 1990s (Midgaard, Fredericia; Dagmarsminde, Frederikssund) established the normalised outdoor environment concept that underpins both D-09 and D-11.
 
@@ -3411,7 +3411,7 @@ Audible floor announcements; visual floor display
 
 Floor indicator: visual external to lift on all floors
 
-**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Accessible lift provision requires a lift shaft. In an existing building without a shaft, provision requires a major structural intervention: forming the shaft, structural openings at each floor, and machine configuration. Cost multipliers of 20× versus design-stage provision are well documented. See Part 12 §12.4; Part 11 for DAR shaft provisions.
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Accessible lift provision requires a lift shaft. In an existing building without a shaft, provision requires a major structural intervention: forming the shaft, structural openings at each floor, and machine configuration. Cost multipliers of 20× versus design-stage provision are well documented. See Part 11 §11.4; Part 10 for DAR shaft provisions.
 
 **Key citations:** Building and Construction Authority. (2025). BCA Code on Accessibility 2025. BCA. British Standards Institution. (2018). BS 8300:2018. BSI. CSA Group. (2023). CSA B651:2023. CSA.
 
@@ -3441,7 +3441,7 @@ Safety enclosure: required
 
 Usage: retrofit/heritage only where E-01 is not achievable
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Platform lift requires a structural pit or above-floor enclosure, structural fixing, and electrical supply. In a finished building, forming the pit requires opening up the floor structure. At design stage, pit provision is a minor structural item. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Platform lift requires a structural pit or above-floor enclosure, structural fixing, and electrical supply. In a finished building, forming the pit requires opening up the floor structure. At design stage, pit provision is a minor structural item. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. ISO 9386-1:2000. Power-operated lifting platforms. ISO.
 
@@ -3471,7 +3471,7 @@ Handrail both sides: continuous; 865--1000 mm AFF; 300 mm horizontal extension e
 
 Surface: PTV ≥36 wet; non-slip aggregate or profiled surface
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Ramp provision at ≤1:20 requires both horizontal run and vertical rise to be correct. In an existing building with a stepped approach, achieving ≤1:20 requires significant groundworks, structural underpinning at entry thresholds, and drainage modification. Internal ramping in a finished building may be structurally impractical. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Ramp provision at ≤1:20 requires both horizontal run and vertical rise to be correct. In an existing building with a stepped approach, achieving ≤1:20 requires significant groundworks, structural underpinning at entry thresholds, and drainage modification. Internal ramping in a finished building may be structurally impractical. See Part 11 §11.4.
 
 **Key citations:** Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF. Koontz, A.M., et al. (2012). Wheelchair propulsion and ramp gradients. [Tier 3.\] Building and Construction Authority. (2025). BCA Code 2025. BCA.
 
@@ -3505,7 +3505,7 @@ Cover: weather protection preferred
 
 Quantity: minimum 5% of total parking, or per local code where greater
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Covered accessible parking at 3600 mm width requires planning and layout decisions at design stage. Retrofit may require resurfacing, line-marking, canopy installation, drainage, and legal agreement. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Covered accessible parking at 3600 mm width requires planning and layout decisions at design stage. Retrofit may require resurfacing, line-marking, canopy installation, drainage, and legal agreement. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS
 
@@ -3539,7 +3539,7 @@ Canopy height: ≥2500 mm (BAR powerchair clearance)
 
 Lighting: ≥100 lux at entry surface level; night-activated
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
@@ -3567,7 +3567,7 @@ Level surface maintained for 1500 × 1500 mm clear inside entry
 
 DAR: all new residential — design for future level approach even if not constructed initially (CAN/ASC 2.8:2025)
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Level entry (zero step) is a site-level and threshold decision. Retrofit of a stepped entry requires ramp construction, threshold lowering, drainage provision, and potentially structural work at the door opening. Threshold lowering in masonry construction requires structural assessment. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Level entry (zero step) is a site-level and threshold decision. Retrofit of a stepped entry requires ramp construction, threshold lowering, drainage provision, and potentially structural work at the door opening. Threshold lowering in masonry construction requires structural assessment. See Part 11 §11.4.
 
 **Key citations:** CSA Group. (2023). CSA B651:2023. CSA. Standard Norge. (2018). NS 11001-1:2018 [Norwegian\]. Standard Norge. CAN/ASC 2.8:2025. ASC.
 
@@ -3601,7 +3601,7 @@ Post-occupancy: re-test at 12 months if floor condition changes
 
 **Retrofit cost note:** Retrofit penalty: LOW. Slip resistance PTV ≥36 wet is a floor finish specification. Retrofit is floor covering
 
-replacement or surface treatment application. Anti-slip coating can be applied to existing surfaces at modest cost. See Part 12 §12.4.1.
+replacement or surface treatment application. Anti-slip coating can be applied to existing surfaces at modest cost. See Part 11 §11.4.1.
 
 **Key citations:** HSE. (2014). Slips and trips: Guidance for the catering industry. [PTV ≥36 reference.\] British Standards Institution. (2018). BS 8300:2018. BSI.
 
@@ -3625,7 +3625,7 @@ No furniture, equipment, or signage projecting into corridor
 
 Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
 
@@ -3661,7 +3661,7 @@ DEM environments: domed TWSI maximum 3 mm profile; same-colour as adjacent floor
 
 **Retrofit cost note:** Retrofit penalty: LOW. Tactile walking surface indicators are surface-applied or recessed tiles. Retrofit is a floor
 
-works operation — tile removal, TWSI installation, and reinstatement. No structural implications. See Part 12 §12.4.1.
+works operation — tile removal, TWSI installation, and reinstatement. No structural implications. See Part 11 §11.4.1.
 
 **Key citations:** ISO. (2019). ISO 23599:2019 — Assistive products — Tactile walking surface indicators. ISO. CNIB Foundation. (2024). Clearing our path. CNIB. Japan Blind People's Association. (2022). [Japanese.\] JBPA.
 
@@ -3682,7 +3682,7 @@ Canopy height: ≥2500 mm (BAR powerchair clearance)
 
 Lighting: ≥100 lux at entry surface level; night-activated
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
@@ -3705,7 +3705,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 **Design Stage:** Schematic Design · Design Development
 
-**Retrofit:** HIGH penalty — landing enlargement requires external works; canopy addition requires structural fixing. Both to be planned at initial design stage. See Part 11 §DAR.
+**Retrofit:** HIGH penalty — landing enlargement requires external works; canopy addition requires structural fixing. Both to be planned at initial design stage. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -3735,7 +3735,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 **Design Stage:** Schematic Design · Design Development · Technical Architecture
 
-**Retrofit:** LOW penalty — address signage, button replacement, and PIR luminaire are non-structural. Luminance contrast at door leaf requires repainting or cladding where existing finish does not meet the 0.4 threshold. See Part 11 §DAR.
+**Retrofit:** LOW penalty — address signage, button replacement, and PIR luminaire are non-structural. Luminance contrast at door leaf requires repainting or cladding where existing finish does not meet the 0.4 threshold. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -3775,7 +3775,7 @@ Restorative element at each transition (BIO-01, BIO-02)
 
 material-specification decision at zero additional cost at design stage. Retrofit requires redecoration, material replacement, and
 
-possibly layout modification. See Part 12 §12.4.1.
+possibly layout modification. See Part 11 §11.4.1.
 
 **Key citations:** Kaplan, R., \& Kaplan, S. (1989). The experience of nature. Cambridge University Press. British Standards Institution.
 
@@ -3807,7 +3807,7 @@ Maintenance: regular audit of compliance
 
 HVAC specification decision. Retrofit may require zoned ventilation modifications but primarily involves policy and signage changes. See
 
-Part 12 §12.4.1.
+Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Patient Led Research Collaborative. (2024). ME/CFS management guide.
 
@@ -3837,7 +3837,7 @@ No high contrast or high-stimulation elements within 5 m of sensory room exit
 
 space. At design stage this is a planning decision. Retrofit requires area allocation and acoustic/visual treatment as a partition or alcove
 
-intervention. See Part 12 §12.4.2.
+intervention. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Kaplan, S. (1995). Journal of Environmental Psychology, 15(3), 169--182.
 
@@ -3889,7 +3889,7 @@ on OFS-occupied floors
 
 selection and finish specification at design stage. Retrofit requires filter upgrade (plant modification) and full finish replacement
 
-programme (significant disruption and cost). See Part 12 §12.4.
+programme (significant disruption and cost). See Part 11 §11.4.
 
 **Key citations:** Mast Cell Action. (2023). Environmental triggers: guidance for building design. Mast Cell Action. Afrin, L.B., et al. (2020). Mast cell activation disease: An underappreciated cause of neurological and psychiatric symptoms. Brain, Behavior, and Immunity, 89, 218--225. CIBSE. (2015). CIBSE Guide A: Environmental Design (8th ed.). CIBSE. British Standards Institution. (2022). PAS 6463:2022. BSI. EN ISO 16000-9:2006. Indoor air — Part 9: Determination of emission of volatile organic compounds. ISO.
 
@@ -3937,7 +3937,7 @@ Visual design: seated task provisions should not be visually distinct from stand
 
 principle and MH non-clinical aesthetics principle)
 
-**Retrofit cost note:** Retrofit penalty: LOW. Seated-task design is primarily a furniture and fixture height specification. Retrofit is furniture/fixture replacement and counter height modification. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Seated-task design is primarily a furniture and fixture height specification. Retrofit is furniture/fixture replacement and counter height modification. See Part 11 §11.4.1.
 
 **Key citations:** Benarroch, E.E. (2012). Postural tachycardia syndrome. Mayo Clinic Proceedings, 87(12), 1214--1225. Blitshteyn, S.,
 
@@ -3990,7 +3990,7 @@ Co-located with general seating — not segregated 'accessible' area
 
 **Retrofit cost note:** Retrofit penalty: LOW. Defensible seating configuration is a furniture procurement and placement decision.
 
-Retrofit is furniture repositioning and procurement without structural implications. See Part 12 §12.4.
+Retrofit is furniture repositioning and procurement without structural implications. See Part 11 §11.4.
 
 **Key citations:** Dignified Design. (2024). 22 design elements for permanent supportive housing. DeafSpace Project, Gallaudet University.
 
@@ -4026,7 +4026,7 @@ No 'disabled seating' label — variety for all
 
 **Retrofit cost note:** Retrofit penalty: LOW. Variety of seating types at three heights is a procurement decision. Retrofit is
 
-furniture replacement and procurement. See Part 12 §12.4.1.
+furniture replacement and procurement. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. The Kelsey. (2023). Inclusive design standards.
 
@@ -4058,7 +4058,7 @@ LRV: ≥30 vs wall AND floor (JOTA, 2022)
 
 Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 11 for DAR blocking provisions; Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 10 for DAR blocking provisions; Part 11 §11.4.
 
 **Key citations:** Levine, I.C., Nirmalanathan, K., Montgomery, R.E., \& Novak, A.C. (2024). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12. doi:10.2196/jmir.2024. ✅ [Verified: JMIR Rehab Assist Technol; KITE/UHN Toronto team; n=65; motion capture; body height correlated with optimal grasp position — informs height range specification.] Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., \& Prilutsky, B. (2019). Effects of bilateral swing-away grab bars on the biomechanics of stand-to-sit and sit-to-stand toilet transfers. *Disability and Rehabilitation: Assistive Technology*, 14, 292–300. ✅ [Verified: bilateral grab bar placement reduces lower limb joint moments — direct biomechanical basis for bilateral specification.] Bateni, H., \& Maki, B.E. (2005). Assistive devices for balance and mobility. *Archives of Physical Medicine and Rehabilitation*, 86(1), 134–145. ✅ British Standards Institution. (2018). BS 8300:2018. BSI.
 
@@ -4090,7 +4090,7 @@ Large body size (BAR): ≥1500×1500 mm clear shower area (see Supplementary Vol
 
 Slip resistance: PTV ≥36 wet throughout shower area
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. DIN. (2011). DIN 18040-2:2011 [German\]. DIN.
 
@@ -4118,7 +4118,7 @@ Electric mechanism preferred (manual height adjustment excludes UPL users)
 
 Reception counters: accessible height section per G-06
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Adjustable-height work surfaces require purpose-built adjustable units or height-adjustable mechanisms. Retrofit is furniture/fixture replacement; fixed counter modification involves joinery and services relocation. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Adjustable-height work surfaces require purpose-built adjustable units or height-adjustable mechanisms. Retrofit is furniture/fixture replacement; fixed counter modification involves joinery and services relocation. See Part 11 §11.4.1.
 
 **Key citations:** The Kelsey. (2023). Inclusive design standards. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. CSA Group. (2023). CSA B651:2023. CSA.
 
@@ -4144,7 +4144,7 @@ Staff eye contact at wheelchair eye level (seated behind lower section)
 
 LRV ≥30 at counter edge vs floor
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
 
@@ -4176,7 +4176,7 @@ Accessible toilet: within 20 m of waiting area
 
 **Retrofit cost note:** Retrofit penalty: LOW. Waiting area seating configuration is a procurement and layout decision. Retrofit is
 
-furniture repositioning and procurement. See Part 12 §12.4.1.
+furniture repositioning and procurement. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2018). BS
 
@@ -4210,7 +4210,7 @@ within the primary waiting area (not a segregated accessible area) implements th
 
 **Design Stage:** Design Development · Technical Architecture
 
-**Retrofit:** LOW penalty — no structural change required. Pull-out hardware and dual-rod installation are non-structural adaptations. DAR provision: blocking behind wardrobes for future bracket and rod-height adjustment to be specified at construction stage. See Part 11 §DAR.
+**Retrofit:** LOW penalty — no structural change required. Pull-out hardware and dual-rod installation are non-structural adaptations. DAR provision: blocking behind wardrobes for future bracket and rod-height adjustment to be specified at construction stage. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4223,7 +4223,7 @@ within the primary waiting area (not a segregated accessible area) implements th
 | REF:accessible-bathroom-and-grab-bar:19 | AOTA | 2023 | Home Modification Practice Guidelines | AOTA | Co-2 | EN | US |
 
 
-**Cross-reference:** G-04 (Accessible Bathroom — transfer clearance); G-05 (Adjustable-height work surfaces); Part 11 (DAR provisions)
+**Cross-reference:** G-04 (Accessible Bathroom — transfer clearance); G-05 (Adjustable-height work surfaces); Part 10 (DAR provisions)
 
 **Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dressing turning circle.
 
@@ -4245,7 +4245,7 @@ within the primary waiting area (not a segregated accessible area) implements th
 
 **Design Stage:** Design Development · Technical Architecture
 
-**Retrofit:** MODERATE penalty — bed-exit sensor wiring and low-level pathway lighting require electrical work. DAR provision: conduit from bed-head to ceiling rose; floor-level lighting circuit rough-in to be specified at construction stage. See Part 11 §DAR.
+**Retrofit:** MODERATE penalty — bed-exit sensor wiring and low-level pathway lighting require electrical work. DAR provision: conduit from bed-head to ceiling rose; floor-level lighting circuit rough-in to be specified at construction stage. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4295,7 +4295,7 @@ Norwegian, or Swedish jurisdictions should apply the local standard.
 
 For powered wheelchair users, 1200 mm is supportable from available evidence.
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Controls at accessible height (400--1100 mm AFF) is a specification decision at design stage. Retrofit of controls at incorrect heights requires electrical chase extension, box repositioning, and redecoration — a moderate electrical works programme across a whole building. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Controls at accessible height (400--1100 mm AFF) is a specification decision at design stage. Retrofit of controls at incorrect heights requires electrical chase extension, box repositioning, and redecoration — a moderate electrical works programme across a whole building. See Part 11 §11.4.2.
 
 **Key citations:** CSA Group. (2023). CSA B651:2023. CSA. British
 
@@ -4329,7 +4329,7 @@ CAOT principle: adjustability without staff mediation
 
 control infrastructure. Retrofit requires wiring extension, device installation, and integration with existing building controls. See
 
-Part 12 §12.4.2.
+Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS
 
@@ -4355,7 +4355,7 @@ Emergency integration: visual alert linked to fire alarm panel (confirmed at com
 
 Screen position: caption screen visible while occupants watch speaker/presentation
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Visual paging and real-time captioning systems require display hardware, AV infrastructure, and network provision. Retrofit in a finished building requires surface-run cables or conduit chasing. Design-stage conduit provision eliminates visible surface runs. See Part 11; Part 12, C.1.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Visual paging and real-time captioning systems require display hardware, AV infrastructure, and network provision. Retrofit in a finished building requires surface-run cables or conduit chasing. Design-stage conduit provision eliminates visible surface runs. See Part 10; Part 11, C.1.2.
 
 **Key citations:** World Federation of the Deaf. (2022). Built environment access for Deaf users. WFD. Hearing Loss Association of
 
@@ -4393,7 +4393,7 @@ Height: 900--1100 mm AFF
 
 BMS integration: indoor remote release accessible from primary habitable room
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Accessible video door entry requires intercom replacement and wiring. Retrofit is primarily electrical and joinery; structural works are minor. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Accessible video door entry requires intercom replacement and wiring. Retrofit is primarily electrical and joinery; structural works are minor. See Part 11 §11.4.1.
 
 **Key citations:** DeafSpace Project, Gallaudet University. (2010).
 
@@ -4439,7 +4439,7 @@ Push-pads: ≥50 mm diameter at all access control points
 
 **Retrofit cost note:** Retrofit penalty: LOW. Lever and D-pull hardware is a specification and procurement decision. Retrofit is
 
-hardware replacement across all door and window ironmongery — a low-cost trade operation. See Part 12 §12.4.1.
+hardware replacement across all door and window ironmongery — a low-cost trade operation. See Part 11 §11.4.1.
 
 **Key citations:** ISO. (2021). ISO 21542:2021. ISO. CSA Group.
 
@@ -4475,7 +4475,7 @@ Refrigerator: side-by-side or French door style; under-counter drawer alternativ
 
 Countertop: non-slip surface; raised lip ≥15 mm at perimeter; suction mount points
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Kitchen one-handed operation throughout requires purpose specified kitchen furniture, appliances, and controls. Full retrofit requires complete kitchen replacement including appliances, cabinetry, and services connections. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Kitchen one-handed operation throughout requires purpose specified kitchen furniture, appliances, and controls. Full retrofit requires complete kitchen replacement including appliances, cabinetry, and services connections. See Part 11 §11.4.
 
 **Key citations:** Independent Living Centre Western
 
@@ -4505,7 +4505,7 @@ Towel hooks: bilateral positions at 1100--1400 mm AFF
 
 Soap/shampoo dispensers: wall-mounted at 900--1100 mm AFF (one-hand pump)
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Bathroom UPL provisions require hardware replacement, thermostatic valve installation, and structural blocking for grab bars. In an existing bathroom without pre-installed blocking, grab bar installation requires wall opening and blocking insertion. Full retrofit in a non-compliant bathroom approaches full bathroom refurbishment cost. See Part 12 §12.4; G-03 for grab bar blocking note.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Bathroom UPL provisions require hardware replacement, thermostatic valve installation, and structural blocking for grab bars. In an existing bathroom without pre-installed blocking, grab bar installation requires wall opening and blocking insertion. Full retrofit in a non-compliant bathroom approaches full bathroom refurbishment cost. See Part 11 §11.4; G-03 for grab bar blocking note.
 
 **Key citations:** Multiple Sclerosis International
 
@@ -4548,7 +4548,7 @@ Counter surface: clear of displays, screens, or items that obstruct the interven
 
 Staff awareness: service design briefing to confirm that staff speak to the DeafBlind user directly, not to the intervenor on behalf of the user
 
-**Retrofit cost note:** Retrofit penalty: LOW. Counter approach zone is a furniture and layout decision. Achieving the 1200 mm lowered section width may require joinery modification if counter is narrower. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. Counter approach zone is a furniture and layout decision. Achieving the 1200 mm lowered section width may require joinery modification if counter is narrower. See Part 11 §11.4.
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. Sense UK. (2022). *Building and Communicating: Designing environments for people with deafblindness*. Sense. [EXPERT CONSENSUS — no standard in any jurisdiction mandates intervenor adjacency dimensions at service counters.]
 
@@ -4584,7 +4584,7 @@ Durability: thermoform or stainless-steel embossed construction; UV-stable; non-
 
 Approach: TWSI directional bar route (E-09) from entrance to map station; tactile approach confirmed before other routes diverge
 
-**Retrofit cost note:** Retrofit penalty: LOW. Tactile map station is a free-standing or wall-mounted fixture; no structural works required. Principal cost is production of map at correct specification and ongoing currency maintenance. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. Tactile map station is a free-standing or wall-mounted fixture; no structural works required. Principal cost is production of map at correct specification and ongoing currency maintenance. See Part 11 §11.4.
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. ISO. (2019). *ISO 23599:2019 — Assistive products for persons with vision impairment: Tactile walking surface indicators*. ISO. RNIB. (2022). *Tactile maps and models: guidelines for design and production*. RNIB. [EXPERT CONSENSUS — no building standard in any jurisdiction mandates a tactile building map station.]
 
@@ -4614,7 +4614,7 @@ Floor surface: firm, level, non-slip within haptic communication zones; no scatt
 
 Zone adjacency: haptic communication zones are within the primary circulation route, not in alcoves or recessed bays requiring additional navigation
 
-**Retrofit cost note:** Retrofit penalty: LOW. Clear floor zone provision is a furniture layout and seating placement decision. In fixed-seating venues (auditoria, theatres), achieving the 1200 × 1200 mm aisle-end clear zone may require removal of one seat per row at aisle positions — a low-cost trade operation. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. Clear floor zone provision is a furniture layout and seating placement decision. In fixed-seating venues (auditoria, theatres), achieving the 1200 × 1200 mm aisle-end clear zone may require removal of one seat per row at aisle positions — a low-cost trade operation. See Part 11 §11.4.
 
 **Key citations:** Clark, J.L. (2024). *Touch the Future: The Lives and Language of Protactile DeafBlind People*. University of Minnesota Press. [Co-1 evidence — lived experience of Protactile communication in built environments.] Nuccio, J., & granda, r. [Protactile documentation — Co-1 evidence.] DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. [EXPERT CONSENSUS — no building standard in any jurisdiction mandates haptic communication clear floor zone dimensions.]
 
@@ -4644,7 +4644,7 @@ Communication alerting: where a DBL user occupies a space without staff continuo
 
 In residential settings: vibrating wake-up alarm integrated with bedroom services (bedside control H-04) at any bedroom designated for a DBL occupant
 
-**Retrofit cost note:** Retrofit penalty: LOW–MODERATE. Personal pager BMS integration (dry contact relay) is an electrical specification addition at low cost in new construction. Floor panel installation requires floor surface opening and connection — moderate retrofit. Charging station is a power outlet at accessible height. In all cases, the principal cost is the personal pager system hardware, not the building infrastructure. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW–MODERATE. Personal pager BMS integration (dry contact relay) is an electrical specification addition at low cost in new construction. Floor panel installation requires floor surface opening and connection — moderate retrofit. Charging station is a power outlet at accessible height. In all cases, the principal cost is the personal pager system hardware, not the building infrastructure. See Part 11 §11.4.
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. Sense UK. (2022). *Building and Communicating*. Sense. Bellman & Symfon. (2024). *Vibrotactile alerting systems for persons with combined hearing and vision loss*. [Tier 5 — manufacturer technical reference; no independent clinical study.] [EXPERT CONSENSUS — no building standard in any jurisdiction mandates vibrotactile alert provision in the built environment.]
 
@@ -4659,14 +4659,14 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 ### 8.0.1 Purpose
 
-Part 9 provides the coordination interface between the architect and the engineering consultancy team for accessibility provisions in the design library. It performs two functions:
+Part 8 provides the coordination interface between the architect and the engineering consultancy team for accessibility provisions in the design library. It performs two functions:
 
 1. **Engineering Coordination Register** — a cross-reference identifying every design library item whose delivery depends on input from at least one engineering discipline, with the discipline, delivery stage, and document home.
 2. **Consultant Brief Templates** — minimum specification language for insertion into each engineering consultant's scope of services, structured by discipline and design stage.
 
-**Scope boundary.** Part 9 covers four engineering disciplines — Acoustic (AC), Mechanical (ME), Electrical (EE), and Structural (SE). Plumbing is addressed within the ME scope. Items that are purely spatial, material, or product-selection decisions — delivered solely through the architect's construction specification or finishes schedule — are excluded from this Part. Their absence does not reduce their importance; it means the architect holds sole responsibility for their delivery without engineering coordination.
+**Scope boundary.** Part 8 covers four engineering disciplines — Acoustic (AC), Mechanical (ME), Electrical (EE), and Structural (SE). Plumbing is addressed within the ME scope. Items that are purely spatial, material, or product-selection decisions — delivered solely through the architect's construction specification or finishes schedule — are excluded from this Part. Their absence does not reduce their importance; it means the architect holds sole responsibility for their delivery without engineering coordination.
 
-Part 9 is not a substitute for engineering design. It is the architect's instrument for ensuring that accessibility requirements are activated within each consultant's scope at the right stage. An accessibility provision that appears only in the architect's specification but is absent from the relevant consultant's brief is not specified — it is a wish.
+Part 8 is not a substitute for engineering design. It is the architect's instrument for ensuring that accessibility requirements are activated within each consultant's scope at the right stage. An accessibility provision that appears only in the architect's specification but is absent from the relevant consultant's brief is not specified — it is a wish.
 
 ### 8.0.2 Engineering Coordination Doctrine
 
@@ -4691,13 +4691,13 @@ Part 9 is not a substitute for engineering design. It is the architect's instrum
 
 ### 8.1.1 How to Read This Register
 
-The register identifies design library items (Part 7, Categories A–J) that require a brief instruction to at least one engineering consultant. Items with no such dependency are excluded.
+The register identifies design library items (Part 4, Categories A–J) that require a brief instruction to at least one engineering consultant. Items with no such dependency are excluded.
 
 **An item is engineering-dependent only if its performance cannot be achieved without a brief instruction to at least one engineering consultant.** Spatial, material, and product-selection items remain the architect's sole responsibility and are excluded even if they carry structural or cost implications.
 
 **Column definitions:**
 
-- **Item** — Part 7 item code and short title
+- **Item** — Part 4 item code and short title
 - **Discipline(s)** — consultants requiring a brief instruction; multiple entries mean the item must appear in multiple briefs
 - **Earliest Brief Stage** — when this item must enter the consultant's brief; later issue means the provision is lost or retrofit cost multiplies
 - **NOT-RETROFITTABLE** — item cannot be incorporated after this stage without major engineering works
@@ -4980,13 +4980,13 @@ Structural engineering operates under a distinct scope from acoustic, mechanical
 
 ## 9.0 Overview
 
-Part 10 addresses the architect's coordination role with specialist consultants whose input is required for accessible design that cannot be delivered through engineering briefs alone. The engineering disciplines covered in Part 9 — acoustic, mechanical, electrical, and structural — operate on measurable physical systems. The consultants addressed here operate on the relationship between people and environments: a different domain, requiring a different coordination logic.
+Part 9 addresses the architect's coordination role with specialist consultants whose input is required for accessible design that cannot be delivered through engineering briefs alone. The engineering disciplines covered in Part 8 — acoustic, mechanical, electrical, and structural — operate on measurable physical systems. The consultants addressed here operate on the relationship between people and environments: a different domain, requiring a different coordination logic.
 
 The central specialist is the occupational therapist. OT practice is the primary evidence base for this entire guidebook (Volume 1, §1.4 Evidence Hierarchy — Tier 1). An architect working with this guidebook is, in effect, working from a distillation of OT evidence. When the individual client or user population is known, that distillation must be supplemented by direct OT involvement.
 
 Other specialist consultants addressed in this Part — dementia design specialists, DeafSpace consultants, sensory design specialists, and accessibility auditors — each operate on an evidence base with a specific population scope. The appointment triggers and scope of services for each are defined below.
 
-**What this Part does not cover.** Hearing loop specialists and audiologists are addressed in Part 9 §9.1 as acoustic engineering sub-specialists. Post-occupancy evaluation protocols are addressed in Part 13. Legal compliance review by access consultants operating under code frameworks is addressed in Appendix A (Global Standards Catalogue). Fire engineers' involvement in emergency evacuation for disabled occupants is addressed in Appendix D.
+**What this Part does not cover.** Hearing loop specialists and audiologists are addressed in Part 8 §8.1 as acoustic engineering sub-specialists. Post-occupancy evaluation protocols are addressed in Part 12. Legal compliance review by access consultants operating under code frameworks is addressed in Appendix A (Global Standards Catalogue). Fire engineers' involvement in emergency evacuation for disabled occupants is addressed in Appendix D.
 
 ---
 
@@ -5000,7 +5000,7 @@ The Three-Tier Design Hierarchy (Volume 1, §1.6.3) governs when specialist cons
 | Tier 1 | Population-Informed Inclusive Design | Identified population (not individual) | Required where the building's primary population includes NDV, DEM, NEU, OFS, or DBL, or where two or more primary populations are present. Required where co-occurrence patterns produce conflicts that population-level medians cannot resolve. Recommended for all other Tier 1 projects. |
 | Tier 2 | Person-Specific Inclusive Design | Named individual | OT assessment mandatory. Design cannot proceed to Tier 2 specification without a completed functional capacity assessment for the named person. Co-design process required. |
 
-DAR (Design for Adaptable Readiness) is mandatory at all three tiers regardless of specialist involvement. DAR provisions, once confirmed in the structural and engineering briefs, do not require specialist sign-off — they are standard construction-stage provisions documented in Part 10.
+DAR (Design for Adaptable Readiness) is mandatory at all three tiers regardless of specialist involvement. DAR provisions, once confirmed in the structural and engineering briefs, do not require specialist sign-off — they are standard construction-stage provisions documented in Part 9.
 
 The boundary between tiers is a project decision, not an option. A residential commission for a named client with a known disability is Tier 2 by definition. A dementia care facility serving an identified population is Tier 1. A speculative apartment building where no user population can be characterised is Tier 0. Misclassifying a project at a lower tier than the evidence warrants is a design failure, not a cost saving.
 
@@ -5024,7 +5024,7 @@ Appoint an OT when any of the following conditions apply:
 - **Residential adaptations to an occupied dwelling** — where a current occupant has a disability and the design brief is to improve that person's independence in their own home. OT referral may precede architectural involvement; the OT assessment report is the primary brief document.
 - **Tier 1 project with NDV, DEM, NEU, OFS, or DBL as a primary population** — these populations require environmental calibration beyond the standard design library medians. Sensory zoning (F-01 through F-07), acoustic environment, and individual control provisions (H-01, H-02) require OT review of the proposed environment against population-specific functional profiles before technical design is finalised.
 - **Healthcare, supported housing, or specialist education environments** — where the gap between code compliance and genuine occupational independence is at its greatest, and where OT involvement is standard professional practice in most jurisdictions.
-- **Post-occupancy evaluation** — where the building has been completed and occupied, and the design team or building owner requires evidence of whether the environment is meeting its accessibility intent. See Part 13.
+- **Post-occupancy evaluation** — where the building has been completed and occupied, and the design team or building owner requires evidence of whether the environment is meeting its accessibility intent. See Part 12.
 
 ### 9.2.3 Scope of Services by Design Stage
 
@@ -5063,11 +5063,11 @@ Lived experience of the relevant condition(s) is also a form of evidence. Where 
 
 ### 9.2.6 Relationship to this Guidebook
 
-This guidebook is a distillation of OT evidence into architectural specification form. Its design library items (Part 7) are derived from Tier 1 sources — primarily OT clinical research and lived experience evidence — and expressed as population-informed ranges calibrated to functional capacity distributions.
+This guidebook is a distillation of OT evidence into architectural specification form. Its design library items (Part 4) are derived from Tier 1 sources — primarily OT clinical research and lived experience evidence — and expressed as population-informed ranges calibrated to functional capacity distributions.
 
 An architect using this guidebook without OT involvement is working at Tier 1 using population medians. This is appropriate for straightforward Tier 1 projects — a single primary population, low co-occurrence complexity, and building types where the standard library medians are well-calibrated to the anticipated user profile. It is not appropriate where multiple primary populations are present, where co-occurrence patterns produce irresolvable conflicts under the standard library alone, or where the populations involved (NDV, DEM, NEU, OFS, DBL) require environmental calibration beyond what population-level medians can reliably deliver. In those circumstances, OT or specialist consultant involvement at Tier 1 is the appropriate standard, not an elective enhancement. It is never appropriate for Tier 2 projects, and it does not replace OT involvement where the appointment triggers in §10.2.2 are met.
 
-Where OT assessment findings conflict with the specification ranges in Part 7 of this guidebook, the OT assessment governs for the individual concerned. The ranges in Part 7 define the population evidence envelope; the individual's functional capacity determines where within that envelope the design should land. Departures from the stated range require documented clinical justification from the OT.
+Where OT assessment findings conflict with the specification ranges in Part 4 of this guidebook, the OT assessment governs for the individual concerned. The ranges in Part 4 define the population evidence envelope; the individual's functional capacity determines where within that envelope the design should land. Departures from the stated range require documented clinical justification from the OT.
 
 ---
 
@@ -5089,9 +5089,9 @@ Appoint a dementia design specialist where:
 
 ### 9.3.3 Scope
 
-The dementia design specialist reviews the design against the DSDC EADDAT framework and the DEM-specific items in Part 7 of this guidebook (Category C, D, and F items where DEM is a primary population). The specialist's primary contribution is at schematic design stage — confirming the spatial topology and adjacency decisions that are NOT-RETROFITTABLE. At developed design stage, the specialist reviews colour strategy, signage system, and sensory environment against the DEM evidence base.
+The dementia design specialist reviews the design against the DSDC EADDAT framework and the DEM-specific items in Part 4 of this guidebook (Category C, D, and F items where DEM is a primary population). The specialist's primary contribution is at schematic design stage — confirming the spatial topology and adjacency decisions that are NOT-RETROFITTABLE. At developed design stage, the specialist reviews colour strategy, signage system, and sensory environment against the DEM evidence base.
 
-**Relationship to this guidebook:** DEM item specifications in Part 7 (D-01, D-03, D-04, C-02, C-05) are derived from DSDC evidence. A dementia design specialist using the DSDC framework will be working from the same evidence base. Where findings diverge, the specific DSDC EADDAT assessment for the project environment governs over the guidebook's general population-level specifications.
+**Relationship to this guidebook:** DEM item specifications in Part 4 (D-01, D-03, D-04, C-02, C-05) are derived from DSDC evidence. A dementia design specialist using the DSDC framework will be working from the same evidence base. Where findings diverge, the specific DSDC EADDAT assessment for the project environment governs over the guidebook's general population-level specifications.
 
 ---
 
@@ -5115,7 +5115,7 @@ Appoint a DeafSpace or Deaf design consultant where:
 
 The DeafSpace consultant reviews sightline strategy, spatial sequence, lighting quality for visual communication, and the design library items most relevant to DEAF users (A-10, A-11, H-03, H-04, B-10). The consultant's primary contribution is at schematic design stage — confirming that the spatial topology supports visual communication — and at developed design stage, for lighting and surface finish decisions.
 
-**Relationship to this guidebook:** The DEAF items in Part 7 address hearing loop infrastructure (A-10, A-11), visual fire alarm (B-10), and accessible intercom (H-04). These are the engineering-deliverable provisions. The spatial and proxemic provisions of DeafSpace design fall largely outside the Part 7 library and are the specialist's primary contribution.
+**Relationship to this guidebook:** The DEAF items in Part 4 address hearing loop infrastructure (A-10, A-11), visual fire alarm (B-10), and accessible intercom (H-04). These are the engineering-deliverable provisions. The spatial and proxemic provisions of DeafSpace design fall largely outside the Part 4 library and are the specialist's primary contribution.
 
 ---
 
@@ -5137,7 +5137,7 @@ Appoint a sensory design consultant where:
 
 The sensory design consultant reviews the sensory gradient strategy (F-01), sensory room specification (A-16), acoustic specification (Categories A), lighting specification (Category B), and material/finish choices (Category C) against the NDV/NEU population evidence base. The consultant's primary contribution is at schematic design stage — confirming zone placement and adjacency — and at developed design stage, for material and finish specification.
 
-**Relationship to this guidebook:** The F-category items in Part 7 provide population-level specifications for sensory zoning. The sensory design consultant applies these to the specific building layout and user population, confirms calibration, and identifies where project-specific conditions require deviation from standard medians.
+**Relationship to this guidebook:** The F-category items in Part 4 provide population-level specifications for sensory zoning. The sensory design consultant applies these to the specific building layout and user population, confirms calibration, and identifies where project-specific conditions require deviation from standard medians.
 
 ---
 
@@ -5159,7 +5159,7 @@ Commission an accessibility audit where:
 
 ### 9.6.3 Relationship to this Guidebook
 
-An accessibility audit verifying compliance with this guidebook's provisions should reference the item specification library (Part 7) as the specification baseline, not only the statutory code. The audit checklist maps directly to the Part 7 item library. Where items are found to be non-compliant, findings are to be recorded against the item code for gap register entry.
+An accessibility audit verifying compliance with this guidebook's provisions should reference the item specification library (Part 4) as the specification baseline, not only the statutory code. The audit checklist maps directly to the Part 4 item library. Where items are found to be non-compliant, findings are to be recorded against the item code for gap register entry.
 
 The Rick Hansen Foundation Accessibility Certification (RHFAC) programme and the WELL Accessibility Rating provide structured audit frameworks aligned with above-code accessible design practice; see the 17-Jurisdiction Research Compendium §A3 (Canada) and §A1 (USA) respectively.
 
@@ -5173,7 +5173,7 @@ Specialist consultant inputs must feed the design process in the right sequence.
 
 1. **OT assessment** (Tier 2) or **population brief confirmation** (Tier 1) — completed before schematic design commences. This is the input that calibrates all subsequent design decisions.
 2. **Dementia design specialist / DeafSpace consultant / sensory design consultant** — engaged at schematic design stage. Their review of the spatial topology must occur before the schematic floor plan is signed off, since their primary concerns (toilet visibility, sightline geometry, zone placement) are NOT-RETROFITTABLE.
-3. **Engineering consultants** (Part 9) — brief issued after specialist consultant schematic-stage inputs have been incorporated. The engineering brief reflects the spatial and performance decisions confirmed by specialist consultant review.
+3. **Engineering consultants** (Part 8) — brief issued after specialist consultant schematic-stage inputs have been incorporated. The engineering brief reflects the spatial and performance decisions confirmed by specialist consultant review.
 4. **OT developed design review** (Tier 2) — after engineering brief is issued and item specifications are drafted. The OT confirms that the technical specifications match the individual's functional requirements.
 5. **Accessibility auditor** — commissioned at ready for occupancy or post-occupancy.
 
@@ -5225,26 +5225,26 @@ For Tier 2 projects, the named individual and their chosen support network are t
 
 ---
 
-*Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Three-Tier Hierarchy) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 13 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
+*Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Three-Tier Hierarchy) · Part 8 (Engineering coordination) · Part 10 (DAR provisions) · Part 12 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
 # Volume II: Evidence, Economics and Case Studies
 
-All Part 7 item codes cited in Volume III use the v9.0 item codes: Category F = Sensory Zoning; Category G = Furniture/Interiors; Category H = Controls/Technology; Category I = Upper Limb; Category K = DeafBlind Environment Provisions. Bariatric provisions (formerly Category J) are in the Supplementary Volume, Supp. Part 4. See Part 7 for the full item specification library.
+All Part 4 item codes cited in Volume I use the v9.0 item codes: Category F = Sensory Zoning; Category G = Furniture/Interiors; Category H = Controls/Technology; Category I = Upper Limb; Category K = DeafBlind Environment Provisions. Bariatric provisions (formerly Category J) are in the Supplementary Volume, Supp. Part 4. See Part 4 for the full item specification library.
 
 ## Part 10: Design for Adaptable Readiness (DAR)
 
 *Accessible Built Environments — Utopian Best Practice Guidebook v9.0*
 
-*Volume 3*
+*Volume I*
 
 ### §10.0 Scope
 
-Part 11 addresses homes and buildings that can adapt to changing functional needs without full reconstruction. The core argument is asymmetric and economic: the cost of not designing for adaptability is not zero. The most expensive accessible features are prohibitively expensive as retrofits but negligible at construction when planned at schematic design stage.
+Part 10 addresses homes and buildings that can adapt to changing functional needs without full reconstruction. The core argument is asymmetric and economic: the cost of not designing for adaptability is not zero. The most expensive accessible features are prohibitively expensive as retrofits but negligible at construction when planned at schematic design stage.
 
-For the full international evidence base on new-build versus retrofit cost economics, including the macro cost ratio (0.5--1.3% new construction vs 10--40× retrofit), see Part 12. The table in §11.1 below provides the item-level cost multipliers; Part 12 §12.2 provides the macro context, and Part 12 §12.4 provides technique-level cost intelligence for all Part 7 items.
+For the full international evidence base on new-build versus retrofit cost economics, including the macro cost ratio (0.5--1.3% new construction vs 10--40× retrofit), see Part 11. The table in §11.1 below provides the item-level cost multipliers; Part 11 §11.2 provides the macro context, and Part 11 §11.4 provides technique-level cost intelligence for all Part 4 items.
 
 ### §10.1 The DAR Cost Multiplier Framework
 
-The following table presents the cost case for DAR provisions. All figures are approximate; see Part 12 §8.2 for the full international evidence base.
+The following table presents the cost case for DAR provisions. All figures are approximate; see Part 11 §8.2 for the full international evidence base.
 
 | Provision | At Construction | Retrofit Cost | Multiplier |
 | --- | --- | --- | --- |
@@ -5322,13 +5322,13 @@ All new dwellings: accessible-ready specification. Multi-dwelling buildings: lif
 
 ### §10.7 Case Study Evidence for DAR
 
-For DAR provisions in practice, see the following case studies in Part 13:
+For DAR provisions in practice, see the following case studies in Part 12:
 
-- **Part 13 §13.03** (The Kelsey Civic Commons): all units built with DAR provisions; ceiling hoist blocking, bilateral grab bar blocking, and 950 mm structural door openings specified universally. Resident-reported care attendant hour reduction: 62% of respondents.
-- **Part 13 §13.07** (Singapore HDB): grab bar blocking in all bathrooms; flat-to-care-home transfer rate significantly lower in UD-specified blocks vs standard blocks (longitudinal, n>5,000).
-- **Part 13 §13.14** (BC Housing HAFI): programme evaluation of retrofit outcomes provides the converse evidence — average CAD 7,500 modification cost per home represents \~30--40% of what would have been required without DAR provisions.
+- **Part 12 §12.03** (The Kelsey Civic Commons): all units built with DAR provisions; ceiling hoist blocking, bilateral grab bar blocking, and 950 mm structural door openings specified universally. Resident-reported care attendant hour reduction: 62% of respondents.
+- **Part 12 §12.07** (Singapore HDB): grab bar blocking in all bathrooms; flat-to-care-home transfer rate significantly lower in UD-specified blocks vs standard blocks (longitudinal, n>5,000).
+- **Part 12 §12.14** (BC Housing HAFI): programme evaluation of retrofit outcomes provides the converse evidence — average CAD 7,500 modification cost per home represents \~30--40% of what would have been required without DAR provisions.
 
-*Next: Part 12 — The Economics of Accessible Construction* *Cross-reference: Part 1 §1.6 (DAR cost multiplier table, also in this Part §11.1); Part 12 §12.2 (macro cost ratio); Part 12 §12.4 (technique-level retrofit cost intelligence); Part 13 (case study evidence for DAR provisions in practice)*
+*Next: Part 11 — The Economics of Accessible Construction* *Cross-reference: Part 1 §1.6 (DAR cost multiplier table, also in this Part §11.1); Part 11 §11.2 (macro cost ratio); Part 11 §11.4 (technique-level retrofit cost intelligence); Part 12 (case study evidence for DAR provisions in practice)*
 ## Part 11: The Economics of Accessible Construction
 
 ### Scope and Purpose
@@ -5339,7 +5339,7 @@ This part's purpose is to equip the design professional with the right questions
 
 The central argument is structural and asymmetric: accessibility built into a building is a specification decision, not a physical intervention. The same outcome achieved through retrofit requires physical intervention into finished structures — opening walls, cutting floors, relocating services, reinforcing structure — each multiplying cost by factors of 5 to 50 depending on the technique. The question facing every designer is therefore not whether accessibility has a cost premium, but when it is paid.
 
-Read this part alongside Volume II (Parts 7 and 9), which describes specific design interventions. The economic principles articulated here are most clearly seen through examples drawn from the Part 7 item library; those examples are cross-referenced throughout. For DAR (Design for Adaptable Readiness) cost provisions, see Part 11.
+Read this part alongside Volume I (Parts 4 and 8), which describes specific design interventions. The economic principles articulated here are most clearly seen through examples drawn from the Part 4 item library; those examples are cross-referenced throughout. For DAR (Design for Adaptable Readiness) cost provisions, see Part 10.
 
 **Key Arguments at a Glance — For Client Conversations**
 
@@ -5382,7 +5382,7 @@ Cost is not intrinsic to accessibility. It is the consequence of late decision-m
 
 **The Client Conversation:** The most persuasive economic argument is not 'this investment has a positive NPV.' It is: 'If we decide this now, it costs almost nothing. If we decide it in eighteen months, it will cost many times more.' This argument requires no financial modelling --- only clarity about where in the decision timeline the client is standing.
 
-*Part 7 cross-reference: Item A-04 (Acoustic Zoning): 'Acoustic performance begins with adjacency decisions, not materials. Once adjacencies are fixed, all subsequent acoustic interventions work under constraints and at cost.' Item A-09 (HVAC Structural Isolation): 'Correct structural isolation at construction costs approximately 3--5% of mechanical plant cost. Retrofit isolation after construction can equal or exceed the original plant cost.'*
+*Part 4 cross-reference: Item A-04 (Acoustic Zoning): 'Acoustic performance begins with adjacency decisions, not materials. Once adjacencies are fixed, all subsequent acoustic interventions work under constraints and at cost.' Item A-09 (HVAC Structural Isolation): 'Correct structural isolation at construction costs approximately 3--5% of mechanical plant cost. Retrofit isolation after construction can equal or exceed the original plant cost.'*
 
 ### §11.2 The Core Ratio: New Construction vs Retrofit
 
@@ -5420,7 +5420,7 @@ US unit-level data (Angi/HomeAdvisor, 2025--26) provides the operational picture
 
 *Sources: TERRAGON/DStGB (2017); Prognos/KfW; Ielegems \& Vanrie (2024); ADA National Network; Rick Hansen Foundation (2023).*
 
-For DAR (Design for Adaptable Readiness) construction-stage provision costs and retrofit multipliers at the individual technique level, see Part 12 §12.5 and §12.4 below
+For DAR (Design for Adaptable Readiness) construction-stage provision costs and retrofit multipliers at the individual technique level, see Part 11 §11.5 and §11.4 below
 
 ### §11.3 How to Think About Value
 
@@ -5432,7 +5432,7 @@ life, culture, and daily commerce. Research across 40 countries (Tibble 2005; Za
 
 This figure has two uses in practice: as a benefit metric (accessible design that reduces the need for specialist equipment and personal assistance directly reduces these costs) and as a framing tool (inaccessible environments impose costs on disabled people; accessible design removes them). This is not primarily a financial argument. It is an ethical argument about whose needs count in the design of shared space — one codified in the CRPD, the EU Web Accessibility Directive, the Accessible Canada Act, and equivalent instruments across more than 180 countries. The economic evidence supports the ethical argument; it does not substitute for it.
 
-*Part 7 cross-reference: Category F (Sensory Zoning — formerly Category G; see Volume 2 v8.0 resequencing note) provisions — graduated stimulation gradients, re-entry protocols, sensory rooms — are not individually expensive. Their cumulative effect is to make a building habitable for people who would otherwise be unable to remain in it. The cost of their absence is not a reduction in profit; it is an absence of access.*
+*Part 4 cross-reference: Category F (Sensory Zoning — formerly Category G; see Volume I v8.0 resequencing note) provisions — graduated stimulation gradients, re-entry protocols, sensory rooms — are not individually expensive. Their cumulative effect is to make a building habitable for people who would otherwise be unable to remain in it. The cost of their absence is not a reduction in profit; it is an absence of access.*
 
 #### §11.3.1 Functional Value: What the Building Can Do
 
@@ -5476,7 +5476,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.1 Circulation \& Entry
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Level entry / no-step threshold | E-06 | \*\*0%\*\* | 8–15× | Brief |** 
 **| Corridor width ≥1200mm | E-08 | \*\*0–0.3%\*\* | 4–10× | Schematic | | Corridor width ≥1500mm (passing space) | E-08 | \*\*0.1–0.5%\*\* | 5–12× | Schematic |** 
@@ -5492,7 +5492,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.2 Toilet and Bathroom Facilities
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Ambulant accessible WC (enlarged cubicle) | G-01 | \*\*0.1–0.3%\*\* | 3–6× | Schematic |** 
 **| Wheelchair accessible unisex WC | G-02 | \*\*0.3–0.8%\*\* | 6–15× | Schematic | | Grab bar blocking in walls (residential) | G-03 | \*\*0%\*\* | 4–8× | Construction |** 
@@ -5506,7 +5506,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.3 Acoustic Design
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Acoustic zoning (plan layout) | A-04 | \*\*0%\*\* | 3–8× | Schematic | | Airborne sound insulation (Rw ≥50dB party walls) | A-14 | \*\*0.3–0.8%\*\* | 4–10× | Technical design |** 
 **| Impact sound insulation (floating floor) | A-03 | \*\*0.2–0.6%\*\* | 5–12× | Construction |** 
@@ -5515,11 +5515,11 @@ The following tables provide design-stage cost intelligence for accessible desig
 **| Hearing loop — counter | A-10 | \*\*0–0.1%\*\* | 1.5–2.5× | Construction | | Background noise ≤35dB(A) (HVAC spec) | A-08/A-09 | \*\*0.2–0.5%\*\* | 2–4× | Technical design |** 
 | Sensory room (RT ≤0.3s; individual control) | A-16 | **0.5–1.2%** | 3–5× | Schematic |
 
-**System integrity note:** Acoustic accessibility provisions function as systems. Removing a single item from an integrated acoustic system (e.g. removing ceiling treatment while retaining hearing loop) often destroys more value than the cost saved. Brief acoustic accessibility as an outcome system, not as independent line items. See §12.5.2.
+**System integrity note:** Acoustic accessibility provisions function as systems. Removing a single item from an integrated acoustic system (e.g. removing ceiling treatment while retaining hearing loop) often destroys more value than the cost saved. Brief acoustic accessibility as an outcome system, not as independent line items. See §11.5.2.
 
 #### §11.4.4 Visual Environment \& Lighting
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Tonal contrast at circulation edges (LRV ≥30 diff.) | C-04 | \*\*0%\*\* | 0.5–1× | Construction |** 
 **| High-CRI lighting (CRI ≥90) | B-02 | \*\*0.1–0.3%\*\* | 1–2× | Technical design |** 
@@ -5532,7 +5532,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.5 Cognitive Accessibility \& Wayfinding
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 | Loop floor plan (dementia / orientation) | D-01 | **0%** | 8–20× | **Brief** |
 | Toilet visible from primary living space | D-03 | **0%** | Not retrofittable | **Schematic** |
@@ -5547,7 +5547,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.6 Thermal Comfort \& Indoor Environment
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Individual zone thermal control | H-02/TC-01 | \*\*0.3–0.8%\*\* | 2–4× | Technical design |** 
 **| High-performance envelope (U ≤0.15 W/m²K) | TC-02 | \*\*1–3%\*\* | 4–10× | Brief/Schematic |** 
@@ -5556,7 +5556,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.7 Smart \& Assistive Technology
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Conduit / power provision for future assistive tech | H-03 | \*\*0–0.1%\*\* | 3–8× | Technical design |** 
 **| Smart home base infrastructure (hub + wiring) | H-02 | \*\*0.2–0.6%\*\* | 2–4× | Technical design |** 
@@ -5565,7 +5565,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 #### §11.4.8 Site \& Outdoor
 
-| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| Technique | Part 4 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
 **| Level or ramped site access route | E-06/E-03 | \*\*0%\*\* | 5–20× | Brief |** 
 **| Accessible parking — proximity to entry | E-04 | \*\*0%\*\* | 2–5× | Schematic |** 
@@ -5598,7 +5598,7 @@ Many interventions aimed at improving energy efficiency inherently improve acces
 | LED lighting with smart controls | Reduced glare and flicker; customisable colour temperature; circadian support for DEM (Item B-01) | Demand-based operation; energy reduction |
 | High-efficiency HVAC (acoustically specified) | Improved air quality for respiratory/cognitive conditions; acoustic quietness for hearing device users (Item A-08) | Heat recovery; lower operating costs |
 | Automated door operators | Independent access for mobility impairments | Reduced air infiltration; energy savings |
-| Enhanced ventilation | Better indoor air quality for respiratory/cognitive needs | Heat recovery; improved indoor environmental quality | *Part 7 cross-reference: Items B-01 (Circadian Lighting), B-04 (Light |
+| Enhanced ventilation | Better indoor air quality for respiratory/cognitive needs | Heat recovery; improved indoor environmental quality | *Part 4 cross-reference: Items B-01 (Circadian Lighting), B-04 (Light |
 
 Level Management), A-08 (HVAC Noise Control), E-05 (Covered Entrance Canopy), and H-02 (Individual Environmental Control) all carry direct sustainability co-benefits alongside accessibility benefits. The WELL v2 (2024) certification framework explicitly credits several of these provisions.*
 
@@ -5608,7 +5608,7 @@ Accessibility provisions are disproportionately vulnerable to value engineering 
 
 The practical implication: accessible design elements should be specified and costed as integrated systems, not as individual items subject to independent value engineering. A cost reduction exercise that removes a single item from an integrated system often destroys more value than the cost it saves.
 
-*Part 7 cross-reference: Items A-02, A-05, A-06, A-16, and B-06 document system interdependencies in acoustic and lighting accessibility. Item A-11 (Room Hearing Loop) notes that the hearing loop fails without the acoustic conditions that make the audio signal intelligible.*
+*Part 4 cross-reference: Items A-02, A-05, A-06, A-16, and B-06 document system interdependencies in acoustic and lighting accessibility. Item A-11 (Room Hearing Loop) notes that the hearing loop fails without the acoustic conditions that make the audio signal intelligible.*
 
 ### §11.6 The Evidence Landscape
 
@@ -5645,7 +5645,7 @@ Understanding where evidence is strong, moderate, and absent is essential for ma
 
 ### §11.7 Accessibility in the Design Process: An Economic Timeline
 
-The following maps accessible design decisions to the stage at which they are most economically made, the cost of deferral, and the Part 7 provisions most dependent on early decision-making.
+The following maps accessible design decisions to the stage at which they are most economically made, the cost of deferral, and the Part 4 provisions most dependent on early decision-making.
 
 #### §11.7.1 Pre-Design and Brief Stage — Cost: Near Zero
 
@@ -5653,7 +5653,7 @@ Decisions made at this stage carry effectively zero marginal cost. They are matt
 
 **What must be decided here:** Building form, orientation, programme adjacency, storey count, vertical circulation strategy, site entry.
 
-**Key Part 7 items:** A-04 (Acoustic Zoning), D-01 (Loop Floor Plan), E-06 (Level Entry), B-05 (HVAC Noise — structural isolation must be brief stage), A-09 (HVAC Structural Isolation). If these decisions are not made at brief stage, the cost of incorporating them rises at every subsequent stage. The loop floor plan for a dementia care building cannot be added to a scheme already configured on a corridor plan without redesign.
+**Key Part 4 items:** A-04 (Acoustic Zoning), D-01 (Loop Floor Plan), E-06 (Level Entry), B-05 (HVAC Noise — structural isolation must be brief stage), A-09 (HVAC Structural Isolation). If these decisions are not made at brief stage, the cost of incorporating them rises at every subsequent stage. The loop floor plan for a dementia care building cannot be added to a scheme already configured on a corridor plan without redesign.
 
 #### §11.7.2 Schematic Design Stage — Cost: Negligible
 
@@ -5661,7 +5661,7 @@ Most spatial accessibility provisions cost nothing at schematic stage if the flo
 
 **Critical schematic decision:** Toilet visibility from the primary living space in a dementia care unit reduces incontinence rates by 47% (Marquardt 2011). This is a schematic design decision — it determines the relationship between room positions. It cannot be retrofitted.
 
-**Key Part 7 items:** D-03 (Toilet Visibility), E-03 (Ramp Gradient --- plan geometry), G-04 (Zero-Threshold Wet Room — drainage strategy), A-11 (Room Hearing Loop — floor cavity routing).
+**Key Part 4 items:** D-03 (Toilet Visibility), E-03 (Ramp Gradient --- plan geometry), G-04 (Zero-Threshold Wet Room — drainage strategy), A-11 (Room Hearing Loop — floor cavity routing).
 
 #### §11.7.3 Technical Design Stage — Cost: Quantifiable
 
@@ -5669,7 +5669,7 @@ At this stage, accessible design provisions are specific line items with real co
 
 **Critical technical decision — grab bar blocking:** Structural blocking for future grab bar installation (Item G-03) costs approximately 1--3% of the grab bar cost itself if installed during original construction. Retrofit without blocking: wall removal and reinstatement typically costs 10--40× as much. Japan's bathroom fall and heat shock epidemiological data provides the strongest mortality-level justification for this provision.
 
-**Key Part 7 items:** A-02 (Acoustic Ceiling Treatment), A-03 (Acoustic Door), B-01 (Circadian Lighting), C-04 (LRV Contrast), G-03 (Grab Bar Blocking), E-07 (Slip Resistance), E-09 (Tactile Walking Surface Indicators).
+**Key Part 4 items:** A-02 (Acoustic Ceiling Treatment), A-03 (Acoustic Door), B-01 (Circadian Lighting), C-04 (LRV Contrast), G-03 (Grab Bar Blocking), E-07 (Slip Resistance), E-09 (Tactile Walking Surface Indicators).
 
 #### §11.7.4 Construction Stage — Cost: Change Order Premium
 
@@ -5709,9 +5709,9 @@ The most effective economic argument for accessibility does not depend on financ
 
 #### §11.8.2 In Procurement and Specification
 
-**Name provisions explicitly.** A brief that says 'the building shall be accessible' is not a brief. Accessible design provisions must be specified with the same precision as any other design requirement --- dimensions, ratings, standards references, Part 7 item codes.
+**Name provisions explicitly.** A brief that says 'the building shall be accessible' is not a brief. Accessible design provisions must be specified with the same precision as any other design requirement --- dimensions, ratings, standards references, Part 4 item codes.
 
-**Specify systems, not items.** Accessible design provisions function as systems. Brief the outcome (acoustic accessibility for hearing device users; step-free travel throughout; orientation support for dementia) and specify the Part 7 items that constitute that system. Do not value-engineer individual items independently.
+**Specify systems, not items.** Accessible design provisions function as systems. Brief the outcome (acoustic accessibility for hearing device users; step-free travel throughout; orientation support for dementia) and specify the Part 4 items that constitute that system. Do not value-engineer individual items independently.
 
 **Reference applicable standards.** Name the applicable standards in the brief: ISO 21542:2021 (global); DIN 18040-2:2011 (Germany); NS 11001 (Norway); BS 8300-1/-2:2018 (UK); NBC 2020 (Canada); ADA Standards (USA); JIS A 9201 (Japan); ABNT NBR 9050:2020 (Brazil); GB 50763-2012 (China).
 
@@ -5733,9 +5733,9 @@ The most effective economic argument for accessibility does not depend on financ
 
 ### §11.9 Cross-Reference Index: Economics and Part 7
 
-This index maps the economic principles in this part to the specific Part 7 provisions they support, and identifies the evidence source for the economic relationship.
+This index maps the economic principles in this part to the specific Part 4 provisions they support, and identifies the evidence source for the economic relationship.
 
-| Economic Principle | Part 7 Items | Evidence Source |
+| Economic Principle | Part 4 Items | Evidence Source |
 | --- | --- | --- |
 | Early decision = near-zero cost | A-04, A-07, A-09, B-05, D-01, E-06 | TERRAGON/DStGB 2017; SINTEF Byggforsk; Marquardt 2011 |
 | Retrofit = 10–40× design-stage cost | A-11, B-03, A-08, D-05, F-03, F-04 | Rick Hansen Foundation 2023; KfW/Prognos |
@@ -5745,7 +5745,7 @@ This index maps the economic principles in this part to the specific Part 7 prov
 | Loop floor plan — 94% vs. 34% wayfinding | D-01 | BuroKade/Vivium, De Hogeweyk POE 2012–2019 [Dutch\] |
 | Normalised environment — 31% medication reduction | D-09 | Village Landais Alzheimer, NORD Architects 2020 [French\] |
 | Sensory garden loop — agitation reduction | D-11 | Nationalt Videnscenter for Demens [Danish\] |
-| Accessibility-sustainability synergy | B-01, B-04, A-08, E-05, H-02 | Multiple; see §12.5.1 |
+| Accessibility-sustainability synergy | B-01, B-04, A-08, E-05, H-02 | Multiple; see §11.5.1 |
 | Value engineering risk to integrated systems | A-02, A-05, A-06, A-16, B-06, A-11 | PAS 6463:2022; CEREMA 2021 |
 | Covered entry — Nordic climate functional necessity | E-05 | Boverket 2022 [Swedish\] |
 | Reach zone upper limit 1,200–1,300mm AFF | H-01 | DIN 18040-2 (1,200mm); NS 11001/SINTEF (1,300mm forward reach) |
@@ -5761,7 +5761,7 @@ This index maps the economic principles in this part to the specific Part 7 prov
 
 This part does not provide unit cost tables, multiplier calculators, or investment appraisal templates. The absence of a standardised, centrally available cost database for accessible design interventions makes any published cost figure unreliable without local calibration. Published figures that appear precise often reflect context-specific conditions that do not generalise.
 
-The cost intelligence tables in §12.4 use percentage differentials and retrofit multipliers precisely because these are jurisdiction-stable; the underlying construction cost base handles local calibration automatically.
+The cost intelligence tables in §11.4 use percentage differentials and retrofit multipliers precisely because these are jurisdiction-stable; the underlying construction cost base handles local calibration automatically.
 
 For project-specific cost estimation, obtain data from:
 
@@ -5785,9 +5785,9 @@ Practitioners are invited to submit anonymised project cost data interventions, 
 
 #### §11.10.4 Editorial Note: Part 7 Items Requiring Evidence Updates
 
-The following Part 7 items should have their evidence bases updated in the next revision, based on findings of the Multilingual Systematic Review (March 2026):
+The following Part 4 items should have their evidence bases updated in the next revision, based on findings of the Multilingual Systematic Review (March 2026):
 
-| Part 7 Item | Required Update |
+| Part 4 Item | Required Update |
 | --- | --- |
 | D-03 (Toilet Visibility) | Add Marquardt (2011) citation: 47% reduction in incontinence. TU Dresden doctoral monograph; HERD 4(2), 75–90. |
 | G-04 (Zero-Threshold Wet Room) | Add AIJ Japanese bathroom fall threshold data: threshold ≥15mm = statistically significant fall risk increase. |
@@ -5857,12 +5857,12 @@ The following Part 7 items should have their evidence bases updated in the next 
 - BS 8300-1:2018 / BS 8300-2:2018. *Design of an accessible and inclusive built environment*. BSI.
 - CAN/ASC 2.8:2025 (current as of January 2026). *Accessible design for the built environment*. Standards Council of Canada.
 - Habinteg (2010). *Lifetime Homes: Standards and guidance*. London.
-- RCOT (2023). *Living Well by Design*. Royal College of Occupational Therapists. *End of Part 11 — Next: Part 13: Case Studies*
+- RCOT (2023). *Living Well by Design*. Royal College of Occupational Therapists. *End of Part 10 — Next: Part 12: Case Studies*
 ## Part 12: Case Studies — Documented Accessible Built Environments
 
 ### Note on Methodology
 
-Case studies are selected for documented, independently verified outcomes — not promotional material. Each entry includes: building type; primary population; key design strategies with Part 7 item references; verified outcomes with metric, source, and sample size; evidence quality tier; cost data where available; and limitations. Where outcomes are self-reported, this is noted explicitly.
+Case studies are selected for documented, independently verified outcomes — not promotional material. Each entry includes: building type; primary population; key design strategies with Part 4 item references; verified outcomes with metric, source, and sample size; evidence quality tier; cost data where available; and limitations. Where outcomes are self-reported, this is noted explicitly.
 
 **Evidence quality tiers:**
 
@@ -5970,7 +5970,7 @@ Case studies are selected for documented, independently verified outcomes — no
 
 *This is the lowest cost-per-outcome of any case study in this collection:* cost-per-percentage-point reduction in agitation episodes ≈ £500 (CAD $850).
 
-**Limitations:** Small sample (n=28); no control group; pre/post design is vulnerable to regression to mean. Single building typology. Agitation measurement method not detailed in available sources. BUILD/Aalborg verification has not been published as a full academic paper. **Generalisability:** The finding that acoustic intervention in an existing building produces measurable behavioural outcomes is consistent with the DSDC multi-site audit data (§12.10) and provides the strongest available evidence for the cost-effectiveness of acoustic retrofit as an accessibility intervention.
+**Limitations:** Small sample (n=28); no control group; pre/post design is vulnerable to regression to mean. Single building typology. Agitation measurement method not detailed in available sources. BUILD/Aalborg verification has not been published as a full academic paper. **Generalisability:** The finding that acoustic intervention in an existing building produces measurable behavioural outcomes is consistent with the DSDC multi-site audit data (§11.10) and provides the strongest available evidence for the cost-effectiveness of acoustic retrofit as an accessibility intervention.
 
 ### §12.07 — Singapore HDB Universal Design Flats Programme (Singapore, 2006–ongoing)
 
@@ -6010,7 +6010,7 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Key design strategies:** - 27 small-scale houses (6--7 residents each) with four lifestyle types calibrated to pre-diagnosis lifestyle familiarity - Community amenities integrated: supermarket, pub, restaurant, theatre, hair salon, garden — all accessible step-free throughout - Loop circulation paths; no dead ends; outdoor garden accessible to all residents (D-01, D-11) - Residential-scale rooms and furnishings; no institutional elements - Same staff in each house consistently; care delivered as household activity rather than clinical procedure - All spaces designed for DEM orientation: visual access to outdoors, plain flooring, muted palette, landmark objects (C-06, D-04, BIO-01)
 
-**Verified outcomes:** - Antipsychotic medication usage significantly reduced compared to traditional nursing home baseline; approximately 50% lower antipsychotic prescription rates (multiple clinical reviews, including Godwin 2015) - Dutch-language post-occupancy evaluation (BuroKade/Vivium, 2012--2019): 94% of residents with moderate dementia navigated independently to the village square and return within 6 months of admission, vs 34% in conventional dementia care units — strongest available wayfinding evidence for loop plan (D-01) and consistent environment (D-09) - Staffing ratio: De Hogeweyk operates at lower per-resident staffing ratio than conventional Dutch dementia care facilities despite higher quality-of-life scores, providing direct economic evidence that accessible environment design reduces care dependency (see Part 12 §12.1) - Residents reported as eating better, sleeping better, and being more active than in prior institutional care (qualitative programme evaluation — Tier 3) - Residents ambulatory in the community without elopement incidents; "unlocked but safe" design confirmed functional by longitudinal operation since 2009 - Replicated internationally in 15+ projects across Netherlands, France (Village Landais Alzheimer, Dax, 2020), Norway (Carpe Diem, Bærum, 2021), USA, Canada, South Korea, Australia
+**Verified outcomes:** - Antipsychotic medication usage significantly reduced compared to traditional nursing home baseline; approximately 50% lower antipsychotic prescription rates (multiple clinical reviews, including Godwin 2015) - Dutch-language post-occupancy evaluation (BuroKade/Vivium, 2012--2019): 94% of residents with moderate dementia navigated independently to the village square and return within 6 months of admission, vs 34% in conventional dementia care units — strongest available wayfinding evidence for loop plan (D-01) and consistent environment (D-09) - Staffing ratio: De Hogeweyk operates at lower per-resident staffing ratio than conventional Dutch dementia care facilities despite higher quality-of-life scores, providing direct economic evidence that accessible environment design reduces care dependency (see Part 11 §11.1) - Residents reported as eating better, sleeping better, and being more active than in prior institutional care (qualitative programme evaluation — Tier 3) - Residents ambulatory in the community without elopement incidents; "unlocked but safe" design confirmed functional by longitudinal operation since 2009 - Replicated internationally in 15+ projects across Netherlands, France (Village Landais Alzheimer, Dax, 2020), Norway (Carpe Diem, Bærum, 2021), USA, Canada, South Korea, Australia
 
 **Cost data:** De Hogeweyk operates within standard Dutch nursing home reimbursement (same AWBZ/WLZ per-resident budget as conventional care homes) — demonstrating cost neutrality of the design model at operational scale. Construction cost: approximately €30 million for the full village (188 residents, full community amenities) --- c. €160,000/resident, comparable to high-spec nursing home construction.
 
@@ -6100,7 +6100,7 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Limitations:** Self-report outcomes; no randomised control. Programme recipients are self-selected (application required). Cost data reflects funded modifications only; some recipients reported additional self-funded modifications.
 
-**Cross-reference to Part 12:** HAFI programme data provides the best available Canadian evidence for the cost-effectiveness of accessibility modifications at the residential retrofit scale. The average CAD $7,500 modification cost represents approximately 30--40% of the retrofit cost that would have been required if no DAR provisions had been incorporated at construction (Part 12 §12.2: the 12:1 built-in to retrofit cost ratio). *End of Part 13 — Case Studies* *Cross-reference: Part 12 §12.1 (cost myth); Part 12 §12.4 (cost intelligence tables for items cited in each case study); Part 11 §11.7 (DAR evidence from §13.03, §13.07, §13.14)*
+**Cross-reference to Part 11:** HAFI programme data provides the best available Canadian evidence for the cost-effectiveness of accessibility modifications at the residential retrofit scale. The average CAD $7,500 modification cost represents approximately 30--40% of the retrofit cost that would have been required if no DAR provisions had been incorporated at construction (Part 11 §11.2: the 12:1 built-in to retrofit cost ratio). *End of Part 12 — Case Studies* *Cross-reference: Part 11 §11.1 (cost myth); Part 11 §11.4 (cost intelligence tables for items cited in each case study); Part 10 §10.7 (DAR evidence from §12.03, §12.07, §12.14)*
 ## Master Bibliography
 
 This is the authoritative bibliography for the Guidebook. It consolidates sources from all three volumes and the Supplementary Volume. Additional entries specific to the Supplementary Volume (CHD, LPA, EXH, BAR sections) are in the Supplementary Volume Bibliography Addenda at the end of this document.
@@ -6457,7 +6457,7 @@ Standards with version-date sensitivity (DIN 18040, AS 1428.1, CAN/ASC 2.8, Appr
 
 ## Appendix B: Biophilic Design — Summary Specifications
 
-*Evidence base: Attention Restoration Theory (Kaplan \& Kaplan, 1989) and Stress Recovery Theory (Ulrich, 1984)* Biophilic design incorporates natural elements, materials, and processes into the built environment. Items BIO-01 through BIO-05 are cross-referenced throughout Parts 7 and 9. All biophilic items carry the item codes used in Part 7 cross-references.
+*Evidence base: Attention Restoration Theory (Kaplan \& Kaplan, 1989) and Stress Recovery Theory (Ulrich, 1984)* Biophilic design incorporates natural elements, materials, and processes into the built environment. Items BIO-01 through BIO-05 are cross-referenced throughout Parts 7 and 9. All biophilic items carry the item codes used in Part 4 cross-references.
 
 ### BIO-01 — Views of Nature from Primary Occupied Spaces (≥75%)
 
@@ -6485,7 +6485,7 @@ Standards with version-date sensitivity (DIN 18040, AS 1428.1, CAN/ASC 2.8, Appr
 
 ## Appendix C: Thermal Comfort — Summary Specifications
 
-*Items TC-01 through TC-05. Referenced throughout Parts 7 and 9 room matrices.* *Evidence note: See Part 12 §12.10.4 for TC-05 evidence update requirement (Japanese heat shock epidemiological data).*
+*Items TC-01 through TC-05. Referenced throughout Parts 7 and 9 room matrices.* *Evidence note: See Part 11 §11.10.4 for TC-05 evidence update requirement (Japanese heat shock epidemiological data).*
 
 ### TC-01 — Ambient Temperature Management
 
@@ -6515,6 +6515,6 @@ Emergency evacuation procedures for disabled building occupants are the responsi
 
 Practitioners must consult their applicable jurisdiction code and their organisation's fire safety advisor. Key instruments include: BS 9999:2017 (United Kingdom); IBC Chapter 10 / Section 1009 (North America); AS 3745:2010 (Australia). For other jurisdictions, refer to the national codes listed in Appendix A.
 
-Cross-references within this Guidebook: refuge area dimensions — Part 7 items B-10 and E-12; vibrotactile alarm — B-10; evacuation lift coordination — E-01/E-12.
+Cross-references within this Guidebook: refuge area dimensions — Part 4 items B-10 and E-12; vibrotactile alarm — B-10; evacuation lift coordination — E-01/E-12.
 
 *End of Appendix D*
