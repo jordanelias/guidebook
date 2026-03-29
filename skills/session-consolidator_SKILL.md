@@ -107,13 +107,13 @@ For each specific, actionable, recurring pattern identified in Steps 1–2:
 If `multilingual-research` ran and LOG was not called → flag as BLOCKER in session YAML.
 
 ### 5. Write session close to GitHub
-- **Canonical timestamp:** Run `date -u +%Y-%m-%d\ %H:%M` via bash_tool to get the UTC timestamp. Use this value for all `YYYY-MM-DD HH:MM` fields in the YAML and for the filename. Do not use the system prompt date — it does not advance past midnight.
-- Determine filename: `sessions/session_{YYYY-MM-DD-HHMM}.md` from the UTC timestamp (no spaces; HHMM format).
-- Check for collision: GET filename. If 404: proceed. If exists: append `-b` suffix.
+- **Filename:** GET `sessions/LATEST`. Parse the number from the current value (e.g. `session_083.md` → 83). Next file = zero-padded three-digit increment: `session_084.md`. If LATEST contains a legacy timestamp filename, treat the count of all `session_` files in the directory as N; next = N+1.
+- Check for collision: GET the new filename. If 404: proceed. If exists: increment again.
+- Timestamps in the YAML `session_close:` field: use `YYYY-MM-DD` date from system prompt + `HH:MM` best estimate, or omit time component. GitHub commit timestamp is the authoritative record — do not use `date -u` or bash for this.
 - This is always a NEW file — never append to an existing session file.
 - PUT (no SHA required for new files).
 - Commit: `session-consolidator: session close [YYYY-MM-DD HH:MM]`
-- **Update LATEST pointer:** After writing the session file, GET `sessions/LATEST`, PUT back with content = this session's filename (no trailing newline). Commit: `session-consolidator: update LATEST [YYYY-MM-DD HH:MM]`. This replaces directory-scan at session start.
+- **Update LATEST pointer:** After writing the session file, GET `sessions/LATEST`, PUT back with content = this session's filename (e.g. `session_084.md`, no trailing newline). Commit: `session-consolidator: update LATEST [session_NNN]`.
 
 **YAML schema:**
 ```yaml
