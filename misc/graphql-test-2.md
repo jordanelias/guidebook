@@ -1,0 +1,1 @@
+Multi-file commit test — file 2
