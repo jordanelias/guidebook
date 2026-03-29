@@ -70,35 +70,9 @@ DATE: 2026-03-28 18:25
 
 ---
 
-## Specification Upgrades
-
-RULE: E-08 corridor primary route ≥1500 mm (DIN 18040-1 + TEK17 §8-6). 1200 mm acceptable for secondary residential corridors only.
-DATE: 2026-03-17 21:30
-
-RULE: C-04 LRV contrast is a split tiered table. Row 1: general ≥30 LRV. Row 2: critical navigation ≥40 LRV. Severe VIS note: ≥65% Michelson at critical junctions (Dain 2022; DIN 32975 K≥0.7). Conflict note for C-04 vs C-05 in Part 5.
-DATE: 2026-03-17 21:30; updated 2026-03-18 20:20
-
-RULE: Ramp gradient: ADA 1:12 is Tier 0 floor. 6% (DIN 18040; TEK17) is Tier 1 evidence maximum for independent propulsion. 8.3% acceptable only for short assisted rises ≤0.30 m.
-DATE: 2026-03-18 10:00
-
-RULE: Turning circle: 1700 mm minimum (RHFAC/BS8300 best practice). ADA 1524 mm rejected as design baseline (1970s data). Tier 1 range: 1300 mm (indoor manual, minimum) → 2100 mm (power chair). 2489 mm for scooter-inclusive. Cite D'Souza 2011 + CSA B651:23.
-DATE: 2026-03-18 10:00; updated 2026-03-19 22:45
-
-RULE: E-10 rest seating interval 25–30 m (median 27.5 m). OFS populations: reclining/tilt seating option at each station.
-DATE: 2026-03-18 20:20
-
-RULE: H-04 does not include temperature specification. Temperature for OFS/PAIN → Appendix C only.
-DATE: 2026-03-18 20:20
-
----
-
 ## Structural Decisions
 
-RULE: All PAIN and OFS item specifications must carry expert consensus disclosure: [EXPERT CONSENSUS — March 2026].
-DATE: 2026-03-18 18:30
 
-RULE: DBL room matrix additions carry: [EXPERT CONSENSUS — no standard; March 2026]. IntD carries: [TIER 4-5; March 2026].
-DATE: 2026-03-18 18:30
 
 RULE: references/toc.md on GitHub is canonical structural record. Structural changes → toc-editor → Change Order → find-and-replace + cross-reference-resolver.
 DATE: 2026-03-18 19:00
@@ -106,6 +80,7 @@ DATE: 2026-03-18 19:00
 ---
 
 ## CO-0003 + CO-0004 Structural Rules
+<!-- TRANSITIONAL — remove after CO-0004 propagation pass is complete -->
 
 RULE: CO-0004 Volume Merge and Part renumbering. 2 Volumes: Volume I (Parts 1–9), Volume II (Parts 10–12). Supplementary unchanged. See workplan-orchestrator §CO-0004 for Part Map. CO-0004 supersedes CO-0003 structural provisions; CO-0003 terminology changes remain in full effect.
 DATE: 2026-03-29 00:00
