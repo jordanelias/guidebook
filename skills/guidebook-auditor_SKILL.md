@@ -9,7 +9,7 @@ description: >
 ---
 
 **Intake:** ≤20 sections per run. Full document → haiku-chunker first.
-**Model:** Haiku 4.5 (Modes A/C/E extraction) · Sonnet 4.6 (Mode B/D judgment)
+**Model:** Sonnet 4.6
 **Section map:** save to `references/section-map.md` after first scan; reuse until version changes.
 **Mode A requires:** `references/format-rules.md` — stop and flag if missing.
 
