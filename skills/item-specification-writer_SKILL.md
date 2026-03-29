@@ -24,6 +24,14 @@ description: >
 
 ---
 
+
+## Pre-Step: BPC Opus-Synthesis Check
+
+Before writing any item specification, check the BPC entry for the target slug:
+- If `opus_synthesis: false` → emit: `[BPC NOT OPUS-REVIEWED — synthesis may be incomplete. Proceed with Sonnet-level synthesis at reduced confidence.]`
+- This warning propagates to all downstream outputs (item spec, formatted item, critique).
+- Do not block execution — proceed after emitting warning.
+
 ## Governing Principles
 
 ### Social Model (non-negotiable)

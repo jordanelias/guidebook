@@ -10,7 +10,8 @@ description: >
 ---
 
 **Intake:** ≤500 lines only. Full document → haiku-chunker first.
-**Model:** Sonnet 4.6
+**Model:** Sonnet 4.6 (inventory, coverage mapping) · Opus 4.6 (gap significance judgment)
+**Opus routing:** Sonnet produces coverage inventory → Opus determines which gaps are consequential.
 **Population codes:** → `references/project-standards.md` (do not substitute or collapse)
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
 

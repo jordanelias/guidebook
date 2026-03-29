@@ -12,7 +12,9 @@ description: >
   every run. Runs AFTER multilingual-research top-down pass is COMPLETE for target slugs.
 ---
 
-**Model:** Sonnet 4.6 + web  
+**Model:** Sonnet 4.6 (search, scenario execution) · Opus 4.6 (synthesis, NOVEL/REFINES classification)
+**Opus routing:** Sonnet runs scenarios → Opus synthesizes findings into BPC.
+**Practical constraint:** No programmatic Opus path from claude.ai artifact proxy. Opus requires model picker set to Opus.  
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
 **Methodology:** `/mnt/user-data/outputs/methodology-functional-deficit-research-2026-03-26.md`  
 **Every source confirmed real. Flag grey literature. Flag thin base (<3 studies). "I don't know" → gap list.**

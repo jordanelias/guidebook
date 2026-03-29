@@ -20,6 +20,10 @@ description: >
 **SelfCheck:** STRONG-stratum claims and ABSENT claims on contested topics → assess twice; divergence = UNCERTAIN_REVIEW
 
 ## Evidence Strata
+
+**Model:** Sonnet 4.6 (extraction, marker counting) · Opus 4.6 (overclaiming judgment, evidence sufficiency)
+**Opus routing:** Sonnet extracts markers and evidence tiers → Opus determines whether evidence supports claims.
+
 Per §1.5 (Volume 1) — canonical hierarchy. Strata map to §1.5 tiers as follows:
 
 | Stratum | Definition | §1.5 Tier(s) |

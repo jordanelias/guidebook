@@ -10,7 +10,8 @@ description: >
   CHECK before / LOG after every run.
 ---
 
-**Model:** Sonnet 4.6 + web  
+**Model:** Sonnet 4.6 (search, extraction, Steps 1–4) · Opus 4.6 (best_practice_synthesis)
+**Opus routing:** Sonnet completes search → checkpoints to GitHub → flags synthesis for Opus session. Sonnet NEVER writes best_practice_synthesis.  
 
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
 
