@@ -2,194 +2,266 @@
 name: github-io
 description: >
   Standardised GitHub read/write/list infrastructure for the guidebook project. ALL skills
-  that commit to GitHub MUST call github-io instead of inline curl/python. Eliminates
-  duplicate commit boilerplate, provides consistent retry logic, SHA conflict resolution,
-  and commit logging. ALWAYS use this skill when any other skill needs to: GET a file from
-  GitHub, PUT/update a file on GitHub, list a directory on GitHub, or create a new file on
-  GitHub. Trigger on: any GitHub operation from any skill, "commit", "push to GitHub",
-  "save to GitHub", "update state file", "write session log", "append to gap register".
-  Every GitHub operation in the project goes through this skill — no exceptions.
+  that commit to GitHub MUST use github-io patterns. Primary API: GitHub GraphQL v4 for
+  batch reads (aliased queries) and atomic multi-file commits (createCommitOnBranch mutation).
+  REST fallback for directory listings and large-file filtered reads. Trigger on: any GitHub
+  operation from any skill.
 ---
 
-**Model:** Any — no judgment required; pure I/O.
+**Model:** Sonnet 4.6 — pure I/O, no judgment required.
 **Repo:** `jordanelias/guidebook` · branch `main`
-**PAT:** Provided in Project Instructions §GitHub API. Never hardcode.
+**PAT:** Provided in Project Instructions. Never hardcode. GraphQL uses `bearer` auth; REST uses `token` auth.
+**API priority:** GraphQL first. REST only for LIST, APPEND, and files >1 MB.
 
 ---
 
-## Operations
+## 1. BATCH READ — GraphQL (primary)
 
-### GET (read file)
+Read 1–20 files in a single API call using GraphQL aliases. Each alias maps to one file path.
 
 ```python
 import urllib.request, json, base64
 
-def github_get(path, pat):
-    """Returns (content_string, sha) or (None, None) on 404."""
-    url = f"https://api.github.com/repos/jordanelias/guidebook/contents/{path}"
-    req = urllib.request.Request(url, headers={
-        "Authorization": f"token {pat}",
-        "Accept": "application/vnd.github.v3+json"
-    })
-    try:
-        resp = urllib.request.urlopen(req)
-        # Handle redirects (GitHub returns 302 for some paths)
-        data = json.loads(resp.read().decode())
-        content = base64.b64decode(data["content"]).decode("utf-8")
-        return content, data["sha"]
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            return None, None
-        raise
+def graphql(query, variables, pat):
+    """Execute a GraphQL query. Returns data dict or raises."""
+    payload = json.dumps({"query": query, "variables": variables}).encode()
+    req = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=payload, method="POST",
+        headers={"Authorization": f"bearer {pat}", "Content-Type": "application/json"}
+    )
+    resp = urllib.request.urlopen(req)
+    result = json.loads(resp.read())
+    if "errors" in result:
+        raise RuntimeError(f"GraphQL errors: {result['errors']}")
+    return result["data"]
+
+def batch_read(paths, pat):
+    """Read multiple files in one call. Returns {path: content_string} dict.
+    Missing files return None for that path."""
+    fragments = []
+    alias_map = {}
+    for i, p in enumerate(paths):
+        alias = f"f{i}"
+        alias_map[alias] = p
+        fragments.append(f'{alias}: object(expression:"main:{p}") {{ ... on Blob {{ text byteSize }} }}')
+
+    query = "{ repository(owner:\"jordanelias\", name:\"guidebook\") {\n"
+    query += "  head: defaultBranchRef { target { oid } }\n"
+    query += "  " + "\n  ".join(fragments)
+    query += "\n} }"
+
+    data = graphql(query, {}, pat)
+    repo = data["repository"]
+    result = {}
+    for alias, path in alias_map.items():
+        obj = repo.get(alias)
+        result[path] = obj["text"] if obj else None
+    result["_head_oid"] = repo["head"]["target"]["oid"]
+    return result
 ```
 
-**Redirects:** Always use `urlopen` which follows redirects, or `curl -sL`. Raw `curl -s` without `-L` fails on this repo.
+**Usage:** `batch_read(["skills/X.md", "skills/Y.md", "sessions/LATEST"], pat)`
+**Limits:** ~20 files per call (GraphQL query complexity). Split into multiple calls if >20.
+**Cost:** 1 API call + 1 rate-limit point regardless of file count.
 
-### PUT (write/update file)
+---
+
+## 2. BATCH COMMIT — GraphQL (primary)
+
+Commit 1–50 file additions/deletions atomically in a single API call. No SHA management required — uses `expectedHeadOid` for optimistic concurrency.
 
 ```python
-def github_put(path, content_string, sha, commit_message, pat):
+def batch_commit(additions, deletions, message, pat, head_oid=None):
+    """Atomic multi-file commit.
+    additions: list of {"path": str, "content": str}  (content = raw string, not base64)
+    deletions: list of {"path": str}
+    message: commit message string
+    head_oid: from batch_read _head_oid, or None to auto-fetch
+    Returns: commit OID string.
     """
-    Write file to GitHub. sha=None for new files.
-    Returns True on success, raises on failure.
-    """
-    url = f"https://api.github.com/repos/jordanelias/guidebook/contents/{path}"
-    payload = {
-        "message": commit_message,
-        "content": base64.b64encode(content_string.encode("utf-8")).decode("ascii")
-    }
-    if sha:
-        payload["sha"] = sha
-    data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(url, data=data, method="PUT", headers={
-        "Authorization": f"token {pat}",
-        "Content-Type": "application/json",
-        "Accept": "application/vnd.github.v3+json"
-    })
+    if head_oid is None:
+        head_oid = _get_head_oid(pat)
+
+    file_additions = [
+        {"path": a["path"], "contents": base64.b64encode(a["content"].encode()).decode()}
+        for a in additions
+    ]
+
+    mutation = """mutation($input: CreateCommitOnBranchInput!) {
+      createCommitOnBranch(input: $input) {
+        commit { oid changedFilesIfAvailable }
+      }
+    }"""
+
+    variables = {"input": {
+        "branch": {
+            "repositoryNameWithOwner": "jordanelias/guidebook",
+            "branchName": "main"
+        },
+        "message": {"headline": message},
+        "fileChanges": {
+            "additions": file_additions,
+            "deletions": deletions or []
+        },
+        "expectedHeadOid": head_oid
+    }}
+
     try:
-        urllib.request.urlopen(req)
-        return True
-    except urllib.error.HTTPError as e:
-        if e.code == 409:
-            # SHA conflict — re-GET and retry once
-            return None  # Signal caller to retry
+        data = graphql(mutation, variables, pat)
+        commit = data["createCommitOnBranch"]["commit"]
+        return commit["oid"]
+    except RuntimeError as e:
+        if "Could not update" in str(e) or "expectedHeadOid" in str(e):
+            # Head moved — retry once with fresh OID
+            head_oid = _get_head_oid(pat)
+            variables["input"]["expectedHeadOid"] = head_oid
+            data = graphql(mutation, variables, pat)
+            return data["createCommitOnBranch"]["commit"]["oid"]
         raise
+
+def _get_head_oid(pat):
+    data = graphql(
+        '{ repository(owner:"jordanelias", name:"guidebook") { defaultBranchRef { target { oid } } } }',
+        {}, pat
+    )
+    return data["repository"]["defaultBranchRef"]["target"]["oid"]
 ```
 
-### PUT with Retry (standard wrapper — use this, not raw PUT)
-
+**Usage:**
 ```python
-def github_write(path, content_string, commit_message, pat):
-    """
-    Full write cycle: GET → PUT → retry on 409 → fallback.
-    Returns: "success" | "fallback"
-    """
-    existing, sha = github_get(path, pat)
-    result = github_put(path, content_string, sha, commit_message, pat)
-    if result is None:
-        # 409 SHA conflict — re-GET and retry once
-        _, sha = github_get(path, pat)
-        result = github_put(path, content_string, sha, commit_message, pat)
-    if result is None:
-        # Second failure — fallback
-        return "fallback"
-    return "success"
+# Single file
+batch_commit(
+    additions=[{"path": "sessions/session_001.md", "content": yaml_content}],
+    deletions=[],
+    message="session-consolidator: session close [2026-03-29 03:00]",
+    pat=PAT, head_oid=files["_head_oid"]
+)
+
+# Multi-file (16 skill updates in one commit)
+batch_commit(
+    additions=[{"path": f"skills/{s}_SKILL.md", "content": updated[s]} for s in skills],
+    deletions=[],
+    message="workplan-orchestrator: batch model assignment update [2026-03-29 03:00]",
+    pat=PAT
+)
 ```
 
-**Fallback protocol:** On `"fallback"` return, output content as fenced code block with manual paste instructions. Never silently drop state.
+**Limits:** GitHub's `createCommitOnBranch` handles up to ~100 files per commit. File contents must be UTF-8 and base64-encoded. Total payload <50 MB.
+**Cost:** 1 API call. Atomic — all files commit or none do.
 
-### LIST (directory contents)
+---
+
+## 3. Optimal Workflow Pattern
+
+```
+1. Plan all changes in memory (/home/claude/)
+2. batch_read() all files needed — single call
+3. Edit locally — no API calls
+4. batch_commit() all changes — single call
+5. Report: "N files committed in 1 atomic commit: {oid}"
+```
+
+**Before (REST, 16 files):** 32 API calls, 16 commits, ~6,400 tokens of tool I/O overhead.
+**After (GraphQL, 16 files):** 2 API calls, 1 commit, ~800 tokens of tool I/O overhead.
+
+---
+
+## 4. LIST — REST (no GraphQL equivalent needed)
 
 ```python
 def github_list(path, pat):
     """Returns list of {name, type, path} dicts."""
     url = f"https://api.github.com/repos/jordanelias/guidebook/contents/{path}"
     req = urllib.request.Request(url, headers={
-        "Authorization": f"token {pat}",
-        "Accept": "application/vnd.github.v3+json"
+        "Authorization": f"token {pat}", "Accept": "application/vnd.github.v3+json"
     })
     resp = urllib.request.urlopen(req)
-    items = json.loads(resp.read().decode())
+    items = json.loads(resp.read())
     return [{"name": i["name"], "type": i["type"], "path": i["path"]} for i in items]
 ```
 
-### APPEND (append to existing file — gap register, project-standards, etc.)
+---
+
+## 5. FILTERED READ — bash (large files)
+
+For files >50 KB where only a subset of lines is needed. Avoids loading full content into context.
+
+```bash
+# Gap register — OPEN P1 items only
+curl -sL -H "Authorization: token ${PAT}" \
+  "https://api.github.com/repos/jordanelias/guidebook/contents/gap_register.md" \
+  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); [print(l) for l in c.split('\n') if '| OPEN |' in l or '| P1 |' in l]"
+
+# Connection register — PENDING HIGH only
+curl -sL -H "Authorization: token ${PAT}" \
+  "https://api.github.com/repos/jordanelias/guidebook/contents/references/connection-register-active.md" \
+  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); [print(l) for l in c.split('\n') if 'HIGH' in l and 'PENDING' in l]"
+```
+
+---
+
+## 6. APPEND — REST + retry (gap register, project-standards)
+
+For files that must be read-modify-written (appending to an existing file). Uses REST because the operation requires the current SHA for optimistic locking.
 
 ```python
 def github_append(path, new_content, commit_message, pat):
-    """GET existing content, append new_content, PUT back."""
-    existing, sha = github_get(path, pat)
-    if existing is None:
-        # File doesn't exist — create with new_content only
-        return github_write(path, new_content, commit_message, pat)
+    """GET existing content via REST, append, PUT back."""
+    url = f"https://api.github.com/repos/jordanelias/guidebook/contents/{path}"
+    req = urllib.request.Request(url, headers={
+        "Authorization": f"token {pat}", "Accept": "application/vnd.github.v3+json"
+    })
+    resp = urllib.request.urlopen(req)
+    data = json.loads(resp.read())
+    existing = base64.b64decode(data["content"]).decode()
+    sha = data["sha"]
+
     updated = existing.rstrip("\n") + "\n" + new_content + "\n"
-    result = github_put(path, updated, sha, commit_message, pat)
-    if result is None:
-        _, sha = github_get(path, pat)
-        existing, sha = github_get(path, pat)
-        updated = existing.rstrip("\n") + "\n" + new_content + "\n"
-        result = github_put(path, updated, sha, commit_message, pat)
-    if result is None:
-        return "fallback"
-    return "success"
+    encoded = base64.b64encode(updated.encode()).decode()
+    payload = json.dumps({"message": commit_message, "content": encoded, "sha": sha}).encode()
+    req = urllib.request.Request(url, data=payload, method="PUT", headers={
+        "Authorization": f"token {pat}", "Content-Type": "application/json"
+    })
+    try:
+        urllib.request.urlopen(req)
+        return "success"
+    except urllib.error.HTTPError as e:
+        if e.code == 409:
+            return "conflict"  # Caller should retry or use batch_commit
+        raise
 ```
+
+**Note:** Where possible, prefer batch_read → modify in memory → batch_commit over APPEND. APPEND exists for single-file incremental updates during a session (e.g., gap register entries between skill runs).
 
 ---
 
-## Commit Convention
+## 7. Commit Convention
 
-All commits follow: `{skill-name}: {action} [{YYYY-MM-DD HH:MM}]`
+All commits: `{skill-name}: {action} [{YYYY-MM-DD HH:MM}]`
 
-Examples:
-- `session-consolidator: session close [2026-03-25 14:30]`
-- `workplan-orchestrator: append GAP-CR-17 [2026-03-25 14:30]`
-- `research-log-manager: log slug mobility-grab-bars [2026-03-25 14:30]`
+Timestamp source: `date -u +"%Y-%m-%d %H:%M"`
 
 ---
 
-## Collision Prevention
+## 8. Decision Matrix
 
-When two skills write to the same file in one session (e.g., `workplan-orchestrator` and `session-consolidator` both writing `gap_register.md`):
-
-1. Always GET immediately before PUT — never cache SHA across operations.
-2. If a skill performs multiple writes to the same file within a session, each write must GET fresh SHA.
-3. Never batch multiple file changes into one PUT — one file per PUT operation.
-
----
-
-## Bash Shorthand
-
-For inline bash calls (where Python overhead is excessive):
-
-```bash
-# GET
-curl -sL -H "Authorization: token ${PAT}" \
-  "https://api.github.com/repos/jordanelias/guidebook/contents/${PATH}" \
-  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); print(base64.b64decode(d['content']).decode())"
-
-# Note: always use -sL (follow redirects). Plain -s fails on this repo.
-```
+| Scenario | Operation | Why |
+|---|---|---|
+| Read 1–20 files | `batch_read()` | 1 API call vs N |
+| Read >20 files | Multiple `batch_read()` calls of 20 | GraphQL complexity limit |
+| Read + filter large file | Filtered bash | Avoid loading full content into context |
+| Write 1–50 files | `batch_commit()` | Atomic, 1 API call, 1 commit |
+| Append to gap register mid-session | `github_append()` | Needs current SHA for read-modify-write |
+| List directory contents | `github_list()` | REST is simpler for this |
+| Delete files | `batch_commit(deletions=[...])` | Atomic with other changes |
 
 ---
 
-## Error Reporting
+## 9. Error Reporting
 
-On any GitHub operation failure, report to calling skill:
 ```
-GITHUB-IO: {operation} {path} — {status_code} {error_message}
-```
-
-On fallback: output full content as fenced code block + instructions:
-```
-⚠ GITHUB WRITE FAILED after retry. Manual action required:
-File: {path}
-Content follows — paste manually into GitHub.
+GITHUB-IO: {operation} — {error}
 ```
 
----
-
-## Calling Convention
-
-All skills that previously performed inline GitHub operations must instead describe the operation and execute using the patterns above. Skills do not import `github-io` — they execute the same Python/bash patterns documented here. The skill serves as the single source of truth for how GitHub operations are performed.
-
-**Skills that write to GitHub:** session-consolidator, research-log-manager, workplan-orchestrator, toc-editor, jurisdiction-tracker, and any ad-hoc session work.
+On unrecoverable failure: output full content as fenced code block + manual instructions. Never silently drop state.
