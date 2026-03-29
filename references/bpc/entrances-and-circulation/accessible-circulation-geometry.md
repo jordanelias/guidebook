@@ -1,6 +1,7 @@
 ## accessible-circulation-geometry
 
-**Updated:** 2026-03-19 23:00  **Evidence tier range:** Tier 3–Tier 6  **Status:** PARTIAL (PROVISIONAL)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 23:00  **Evidence tier range:** Tier 3–Tier 6  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PARTIAL-RETAINED
+**Status:** PARTIAL (PROVISIONAL)
 **Note:** Turning circle evidence deferred to `mobility-built-environment` BPC (COMPLETE, 24 jurisdictions). This entry covers: lift/elevator car dimensions, corridor clear widths, rest seating intervals, automatic door provision. Accepted gaps: Co-1 pass partial; OFS rest-seating evidence is OT clinical only — no built environment standard exists in any jurisdiction.
 
 ### Concept boundary notes

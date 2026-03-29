@@ -1,6 +1,6 @@
 ## residential-entry-and-threshold
 
-**Updated:** 2026-03-19 21:05  **Evidence tier range:** 4–6  
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 21:05  **Evidence tier range:** 4–6  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PROVISIONAL-RETAINED
 **STATUS: PROVISIONAL — 11 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 7/24. Do not use as sole basis for specification writing.**
 
 ### Concept boundary notes

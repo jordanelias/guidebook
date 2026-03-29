@@ -1,6 +1,6 @@
 ## floor-vibration-wheelchair-disability
 
-**Updated:** 2026-03-19 22:00  **Evidence tier range:** 3–4
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** 3–4  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PARTIAL-RETAINED
 **STATUS: PARTIAL** — 0 Co-1 jurisdictions; UNVERIFIED flag on A-09 threshold must remain. No disability-specific floor vibration standard exists in any jurisdiction.
 
 ### Concept boundary notes
