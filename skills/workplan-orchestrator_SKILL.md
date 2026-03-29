@@ -112,7 +112,7 @@ Resumed task: confirm next action from YAML → execute from that stage.
 |---|---|
 | **DOCX Conversion Prep** | fix-linebreaks → haiku-chunker → [analysis skills] |
 | **Full Section Review** | haiku-chunker → [structure-auditor · markdown-formatter · guidebook-auditor · content-gap-analyzer · framing-checker · evidence-auditor] → [research-log-manager CHECK · multilingual-research · citation-verifier · research-log-manager LOG] → [guidebook-auditor C · volii-validator · cross-reference-resolver] → prose-style-checker → critique-report-writer |
-| **Item Specification** | item-consolidation-analyzer → item-specification-writer → [framing-checker · evidence-auditor] → evidence-marker → prose-style-checker → vol2-item-formatter → volii-validator |
+| **Item Specification** | item-consolidation-analyzer → research-log-manager RETRIEVE → item-specification-writer (REF-IDs + sources-cited) → vol2-item-formatter (REF-ID validation) → [framing-checker · evidence-auditor] → prose-style-checker → volii-validator |
 | **Structural Change** | structure-auditor → markdown-formatter → cross-reference-resolver → find-and-replace → guidebook-auditor A |
 | **Structural Nomenclature Change** | toc-editor → find-and-replace (per Change Order) → cross-reference-resolver → guidebook-auditor A |
 | **Bulk Text Change** | find-and-replace (all stages) |
@@ -122,11 +122,11 @@ Resumed task: confirm next action from YAML → execute from that stage.
 | **Framing + Style** | framing-checker → prose-style-checker |
 | **New Chapter** | content-gap-analyzer → research-log-manager CHECK → multilingual-research → research-log-manager LOG → citation-verifier → item-specification-writer → evidence-marker → evidence brief |
 | **Research Retrieval** | research-log-manager CHECK → if COMPLETE: RETRIEVE BPC · if PARTIAL/STALE/NOT FOUND: multilingual-research → research-log-manager LOG |
-| **Multilingual Research (full)** | research-log-manager CHECK → [view Keyword Compendium + view Protocol v4 Networks] → multilingual-research (Step 1–4) → citation-miner → pre-LOG completeness check → research-log-manager LOG |
+| **Multilingual Research (full)** | research-log-manager CHECK → [view Keyword Compendium Part 3 + view Protocol v4 Networks] → multilingual-research (Step 1–4) → citation-miner → pre-LOG completeness check → research-log-manager LOG |
 | **Citation Mining** | citation-miner (backward) → citation-miner (forward) → research-log-manager LOG |
 | **Version Comparison** | version-diff on two aligned chunks |
 | **Supplementary Volume** | supplemental-integrator → [find-and-replace · volii-validator · cross-reference-resolver] → guidebook-auditor A |
-| **Document Assembly** | chunk-assembler (manifest mode) → cross-reference-resolver → guidebook-auditor A |
+| **Document Assembly** | chunk-assembler → bibliography-compiler → cross-reference-resolver → guidebook-auditor A |
 | **Renumbering** | bulk-renumber (from Change Order map) → cross-reference-resolver → structure-auditor |
 | **File Decomposition** | file-splitter → manifest verification |
 | **Evidence Marker Pass** | evidence-marker (classification) → evidence-auditor (marker verification) |
@@ -191,7 +191,8 @@ Never overwrite CLOSED items.
 |---|---|---|
 | `prose-style-checker` | Sonnet 4.6 | Register; concision; voice |
 | `item-specification-writer` | Sonnet 4.6 | Draft/revise specs; ●/○ template; K-category; illustration note |
-| `vol2-item-formatter` | Haiku/Sonnet | Format and validate item blocks; ●/○ system |
+| `vol2-item-formatter` | Haiku/Sonnet | Format and validate item blocks; ●/○ system; REF-ID validation |
+| `bibliography-compiler` | Sonnet 4.6 | Endnote compilation; REF-ID→superscript conversion; volume-end endnote lists |
 | `practice-note-generator` | Sonnet 4.6 | OT practitioner field tools |
 
 ### Research and Verification
