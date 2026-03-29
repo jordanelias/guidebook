@@ -1,6 +1,7 @@
 ## visual-fire-alarm-seizure-safety
 
-**Updated:** 2026-03-26 05:30  **Evidence tier range:** 3–4  **Status:** TARGETED RETRIEVAL (not full v4 run)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 3–4  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
+**Status:** TARGETED RETRIEVAL (not full v4 run). 0.5–1 Hz flash rate provides adequate safety margin below the 3 Hz lower bound of photosensitive epilepsy risk (Harding test range 3–60 Hz).
 
 ### Best-practice synthesis
 **Most inclusive provision:** All VADs synchronised; flash rate 0.5–1 Hz (minimum effective); supplementary vibrotactile + voice alarm for NEU/NDV/AUT populations
