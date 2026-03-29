@@ -109,6 +109,32 @@ For each specific, actionable, recurring pattern identified in Steps 1–2:
 If `multilingual-research` ran and LOG was not called → flag as BLOCKER in session YAML.
 
 ### 5. Write session close to GitHub
+
+#### 5a. Concurrent session check (pre-write — always runs first)
+
+Concurrent sessions write to the same LATEST pointer and sessions/ directory. This step detects and surfaces conflicts before committing.
+
+1. **Fresh read:** GET `sessions/LATEST` from GitHub now — do not use the value cached at session start.
+2. **Compare:** note the LATEST value read at session-start (from Session Protocol Step 1a). Call it `start_latest`.
+3. **If LATEST has changed since session start** (i.e., another session closed after this one began):
+   a. GET the session file named in the current LATEST.
+   b. Extract its `next_action` block.
+   c. Report to user:
+      ```
+      ⚠ CONCURRENT SESSION DETECTED
+      Session written while this session ran: {filename}
+      Their next_action: {their_next_action}
+      Your next_action: {your_next_action}
+      ```
+   d. **PAUSE.** Do not write until user confirms one of:
+      - **Keep yours** — overwrite their next_action with yours.
+      - **Keep theirs** — discard your next_action; log a note in your session YAML.
+      - **Merge** — user specifies merged next_action text.
+   e. Use the `_head_oid` from the fresh GET in (1) as `expectedHeadOid` for the commit. Do not reuse the session-start OID.
+4. **If LATEST is unchanged:** proceed with session-start `_head_oid`. No conflict.
+
+**Note:** `batch_commit` will reject the write if head has moved between the fresh read and the commit (GitHub returns a conflict error). On that error: re-run the fresh read and retry once. If the second retry fails: output session YAML as fenced code block with manual paste instructions — never drop state.
+
 - **Filename:** GET `sessions/LATEST`. Parse the number from the current value (e.g. `session_083.md` → 83). Next file = zero-padded three-digit increment: `session_084.md`. If LATEST contains a legacy timestamp filename, treat the count of all `session_` files in the directory as N; next = N+1.
 - Check for collision: GET the new filename. If 404: proceed. If exists: increment again.
 - Timestamps in the YAML `session_close:` field: use `date -u +"%Y-%m-%d %H:%M"` as canonical source. This is the single timestamp authority for all session operations.
