@@ -24,8 +24,16 @@ Session logs are stored at `sessions/session_YYYY-MM-DD-HHMM.md` (one file per s
 - **Found:** Report last session datetime, last skill run, next action, open P1 gap count, blockers. Confirm with user before resuming. Do not auto-resume.
 - **Empty/not found:** "No prior session. Starting fresh."
 
-### 2 — Load gap register
-GET `gap_register.md`. Extract OPEN P1 items. Surface to user if any; otherwise proceed silently.
+### 2 — Load gap register (filtered)
+Extract OPEN P1 items from `gap_register.md` via filtered fetch — do not load the full file:
+
+```bash
+curl -sL -H "Authorization: token ${PAT}" \
+  "https://api.github.com/repos/jordanelias/guidebook/contents/gap_register.md" \
+  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); [print(l) for l in c.split('\n') if '| OPEN |' in l or '| P1 |' in l]"
+```
+
+Surface OPEN P1 items to user if any; otherwise proceed silently.
 
 ### 3 — Load project standards
 GET `references/project-standards.md`. Load rules into active context.
@@ -70,6 +78,27 @@ Section numbering follows Part number: Part N uses §N.x. Item codes in Part 4 u
 Full old→new mapping: `workplan/P1-D2-D3-co0004-remapping.md`.
 
 ---
+## Population Codes (canonical)
+
+| Code | Label |
+|---|---|
+| MOB | Mobility & Strength (MOB/AMB, MOB/UPL) |
+| VIS | Visual impairment |
+| DEAF | Deaf / hard of hearing / hearing device users |
+| NEU | Neurological / ABI (NEU/PCS) |
+| DEM | Dementia |
+| NDV | Neurodivergence (NDV/AUT, NDV/ADHD, NDV/SENS) |
+| NDV/MH | Mental health / PTSD / trauma |
+| PAIN | Chronic pain / fibromyalgia |
+| DBL | DeafBlind |
+| OFS | Orthostatic & fatigue spectrum (OFS/ME, OFS/POTS, OFS/MCAS) |
+| IntD | Intellectual disability |
+| ALL | All disability categories |
+
+VIS, DEAF, DBL: three distinct codes. VIS/DEAF is invalid. DBL ≠ VIS + DEAF.
+BAR is NOT main taxonomy. Large body size → Supp. Part 4 only. BAR in Volumes I–II = error.
+Supplementary only (not main taxonomy): CHD · LPA · EXH · BAR.
+
 
 ## Task Intake
 New task: identify scope + goal → select workflow → confirm in ≤3 lines → execute.
