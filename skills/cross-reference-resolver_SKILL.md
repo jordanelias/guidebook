@@ -17,7 +17,7 @@ description: >
   This skill handles discovery and classification; find-and-replace handles execution.
 ---
 
-**Model:** Haiku 4.5 for discovery passes · Sonnet 4.6 for ambiguity resolution  
+**Model:** Sonnet 4.6
 **Input:** assembled document (or section map + chunks) · scope (full doc / specific volumes)  
 **Output:** cross-reference register (YAML) + resolution table + find-and-replace handoff spec  
 **Chunk ceiling:** 500 lines per pass. Always use section map to guide scope.
