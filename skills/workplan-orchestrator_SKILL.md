@@ -113,23 +113,23 @@ Resumed task: confirm next action from YAML → execute from that stage.
 | **DOCX Conversion Prep** | fix-linebreaks → haiku-chunker → [analysis skills] |
 | **Full Section Review** | haiku-chunker → [structure-auditor · markdown-formatter · guidebook-auditor · content-gap-analyzer · framing-checker · evidence-auditor] → [research-log-manager CHECK · multilingual-research · citation-verifier · research-log-manager LOG] → [guidebook-auditor C · volii-validator · cross-reference-resolver] → prose-style-checker → critique-report-writer |
 | **Item Specification** | item-consolidation-analyzer → research-log-manager RETRIEVE → item-specification-writer (REF-IDs + sources-cited) → vol2-item-formatter (REF-ID validation) → [framing-checker · evidence-auditor] → prose-style-checker → volii-validator |
-| **Structural Change** | structure-auditor → markdown-formatter → cross-reference-resolver → find-and-replace → guidebook-auditor A |
+| **Structural Change** | [structure-auditor · markdown-formatter (parallel)] → cross-reference-resolver → find-and-replace → guidebook-auditor A |
 | **Structural Nomenclature Change** | toc-editor → find-and-replace (per Change Order) → cross-reference-resolver → guidebook-auditor A |
 | **Bulk Text Change** | find-and-replace (all stages) |
 | **Citation Audit** | citation-verifier → critique-report-writer §7 |
 | **Evidence Gap** | content-gap-analyzer → research-log-manager CHECK → multilingual-research → research-log-manager LOG → gap list |
 | **Format Check** | structure-auditor → markdown-formatter → guidebook-auditor A+B |
 | **Framing + Style** | framing-checker → prose-style-checker |
-| **New Chapter** | content-gap-analyzer → research-log-manager CHECK → multilingual-research → research-log-manager LOG → citation-verifier → item-specification-writer → evidence-marker → evidence brief |
+| **New Chapter** | Compose: Evidence Gap → Item Specification workflows. Not a standalone workflow. evidence-marker not used inline with item-specification-writer (audit mode only, post-assembly). |
 | **Research Retrieval** | research-log-manager CHECK → if COMPLETE: RETRIEVE BPC · if PARTIAL/STALE/NOT FOUND: multilingual-research → research-log-manager LOG |
 | **Multilingual Research (full)** | research-log-manager CHECK → [view Keyword Compendium Part 3 + view Protocol v4 Networks] → multilingual-research (Step 1–4) → citation-miner → pre-LOG completeness check → research-log-manager LOG |
 | **Citation Mining** | citation-miner (backward) → citation-miner (forward) → research-log-manager LOG |
 | **Version Comparison** | version-diff on two aligned chunks |
 | **Supplementary Volume** | supplemental-integrator → [find-and-replace · volii-validator · cross-reference-resolver] → guidebook-auditor A |
-| **Document Assembly** | chunk-assembler → bibliography-compiler → cross-reference-resolver → guidebook-auditor A |
+| **Document Assembly** | chunk-assembler → [bibliography-compiler · table-formatter (parallel)] → cross-reference-resolver → guidebook-auditor A |
 | **Renumbering** | bulk-renumber (from Change Order map) → cross-reference-resolver → structure-auditor |
 | **File Decomposition** | file-splitter → manifest verification |
-| **Evidence Marker Pass** | evidence-marker (classification) → evidence-auditor (marker verification) |
+| **Evidence Marker Pass** | evidence-marker (classification) → evidence-auditor (marker verification) Audit mode only — runs on assembled volumes post-chunk-assembler. Not used inline with item-specification-writer. |
 | **Sensory QA** | sensory-coherence-checker → gap register updates → Part 5 development |
 | **Session Wrap** | session-consolidator |
 
@@ -147,82 +147,21 @@ Never overwrite CLOSED items.
 
 ---
 
-## Skill Registry
+## Skill Index
 
-### Orchestration
-| Skill | Model | Role |
-|---|---|---|
-| `workplan-orchestrator` | — | This skill |
-| `session-consolidator` | Sonnet 4.6 | Session end; YAML handoff to GitHub |
+All skills Sonnet 4.6 unless noted. GET `skills/{name}_SKILL.md` before execution.
 
-### Infrastructure
-| Skill | Model | Role |
-|---|---|---|
-| `github-io` | Sonnet 4.6 | GraphQL batch read/write; atomic multi-file commits; all skills use this |
+**Orchestration:** workplan-orchestrator · session-consolidator · github-io
+**Document Processing:** haiku-chunker · structure-auditor · markdown-formatter · chunk-assembler · find-and-replace · fix-linebreaks · table-formatter · toc-editor · file-splitter · bulk-renumber
+**Content Analysis:** guidebook-auditor · content-gap-analyzer · framing-checker · evidence-auditor · evidence-marker · item-consolidation-analyzer · version-diff · sensory-coherence-checker
+**Writing:** prose-style-checker · item-specification-writer · vol2-item-formatter · bibliography-compiler · practice-note-generator
+**Research:** citation-verifier · multilingual-research (Opus 4.6 for synthesis) · research-log-manager · literature-review-planner · economics-researcher · jurisdiction-tracker · citation-miner · functional-deficit-researcher (Opus 4.6 for synthesis) · connection-scout (Opus 4.6)
+**Reference:** cross-reference-resolver · volii-validator · supplemental-integrator · cross-population-conflict-mapper (Opus 4.6 for synthesis)
+**Reporting:** critique-report-writer
 
-### Document Processing
-| Skill | Model | Role |
-|---|---|---|
-| `haiku-chunker` | Sonnet 4.6 | Chunk docs >500 lines; build section map |
-| `structure-auditor` | Sonnet 4.6 | Heading hierarchy; structural violations; v10.1 numbering |
-| `markdown-formatter` | Sonnet 4.6 | Heading levels; markdown consistency |
-| `chunk-assembler` | Sonnet 4.6 | Reassemble from manifest (v10.1) or section map |
-| `find-and-replace` | Sonnet 4.6 | Bulk text substitution with classification |
-| `fix-linebreaks` | Sonnet 4.6 | Join hard-wrapped prose lines from DOCX conversion |
-| `table-formatter` | Sonnet 4.6 | Table repair and standardisation |
-| `toc-editor` | Sonnet 4.6 | Structural changes; Change Orders; always requires pre-flight |
-| `file-splitter` | Sonnet 4.6 | Decompose master to per-Part files (Phase 4) |
-| `bulk-renumber` | Sonnet 4.6 | Context-aware §-reference rewriting (Phase 4) |
+**Retired:** vol1-corrections-writer · vol2-revision · plain-language-synthesizer · neufert-image-analyzer · keyword-lookup
+**To build (P2):** poe-assessor · intersectionality-checker · index-generator · glossary-manager · figure-numbering · docx-exporter · accessibility-checker
 
-### Content Analysis
-| Skill | Model | Role |
-|---|---|---|
-| `guidebook-auditor` | Sonnet 4.6 | Format, consistency, structure |
-| `content-gap-analyzer` | Sonnet 4.6 | Population and topic coverage gaps |
-| `framing-checker` | Sonnet 4.6 | Social model; CRPD; BAR-in-Vol-I; marker framing |
-| `evidence-auditor` | Sonnet 4.6 | Evidence stratification; overclaiming; ●/○ verification |
-| `evidence-marker` | Sonnet 4.6 | ●/○ classification, audit, and upgrade |
-| `item-consolidation-analyzer` | Sonnet 4.6 | Merge/split/scope items |
-| `version-diff` | Sonnet 4.6 | Semantic diff between versions |
-| `sensory-coherence-checker` | Sonnet 4.6 | Sensory consistency across room matrices (Phase 5) |
-
-### Writing and Specification
-| Skill | Model | Role |
-|---|---|---|
-| `prose-style-checker` | Sonnet 4.6 | Register; concision; voice |
-| `item-specification-writer` | Sonnet 4.6 | Draft/revise specs; ●/○ template; K-category; illustration note |
-| `vol2-item-formatter` | Sonnet 4.6 | Format and validate item blocks; ●/○ system; REF-ID validation |
-| `bibliography-compiler` | Sonnet 4.6 | Endnote compilation; REF-ID→superscript conversion; volume-end endnote lists |
-| `practice-note-generator` | Sonnet 4.6 | OT practitioner field tools |
-
-### Research and Verification
-| Skill | Model | Role |
-|---|---|---|
-| `citation-verifier` | Sonnet 4.6 | Citation audit; hallucination screen; HARVEST mode |
-| `multilingual-research` | Sonnet 4.6 + web | 14-language × 24-jurisdiction search per v4 protocol |
-| `research-log-manager` | Sonnet 4.6 | GitHub-backed search log and BPC |
-| `literature-review-planner` | Sonnet 4.6 + web | Systematic review protocol |
-| `economics-researcher` | Sonnet 4.6 + web | Economics evidence; funding programmes |
-| `jurisdiction-tracker` | Sonnet 4.6 + web | Standards currency by jurisdiction |
-| `citation-miner` | Sonnet 4.6 + web | Backward + forward citation mining |
-
-### Reference Management
-| Skill | Model | Role |
-|---|---|---|
-| `cross-reference-resolver` | Sonnet 4.6 | Audit/repair refs; BPC↔Item traceability; per-Part file aware |
-| `volii-validator` | Sonnet 4.6 | Item code validation |
-| `supplemental-integrator` | Sonnet 4.6 | Integrate supplementary volumes |
-
-### Reporting
-| Skill | Model | Role |
-|---|---|---|
-| `critique-report-writer` | Sonnet 4.6 | Formal critique and review reports |
-
-**Retired:** `vol1-corrections-writer` · `vol2-revision` · `plain-language-synthesizer` · `neufert-image-analyzer` · `keyword-lookup`
-
-**To build (P2):** `poe-assessor` · `intersectionality-checker`
-
----
 
 ## Risk Escalation
 After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → append REVIEW item to `gap_register.md` via github-io.
