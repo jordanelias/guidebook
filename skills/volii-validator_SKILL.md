@@ -12,7 +12,7 @@ description: >
   Operates in PROVISIONAL mode until the application volume full text is available; FULL mode when available.
 ---
 
-**Model:** Haiku 4.5 (extraction) · Sonnet 4.6 (mismatch judgment)
+**Model:** Sonnet 4.6
 **Intake:** pre-chunked section or item code list. Full document → `haiku-chunker` Mode D first.
 **Storage:** `guidebook:volii:{item-code}`
 
