@@ -1,6 +1,6 @@
 ## deaf-acoustic-built-environment
 
-**Updated:** 2026-03-28 (supplement)  **Original search:** 2026-03-19 01:45  **Evidence tier range:** Tier 1–Tier 4
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 01:45  **Evidence tier range:** Tier 1–Tier 4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -32,6 +32,8 @@
 
 **Highest-ambition actionable specification:**
 Hearing loop systems in all assembly and service counter spaces are to comply with IEC 60118-4:2014+AMD1:2017. Reverberation time in speech communication spaces is to not exceed 0.4 s at mid-frequencies. Background noise is to be controlled to NC-25 or below. STI at the listening position is to achieve not less than 0.60. Auracast-ready infrastructure is to be included in new-build assembly spaces as a DAR provision. Remote microphone assistive listening infrastructure is to be provided in all classrooms and meeting rooms. Visual fire alarm strobes (≥110 cd) are to be installed throughout all occupied spaces; audible alarm alone is not adequate where Deaf or deaf-blind occupants are anticipated.
+
+**Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed. Three additions: (1) STI measurement must be at furthest occupied seat, not room average — cross-reference RAP BPC Opus adjudication (GAP-RAP-01-b, closed 2026-03-29). Compliant room-average STI does not guarantee adequate listening beyond critical distance (Amlani & Russo 2016). (2) Acoustic panel spectral balance must be verified across 250 Hz–4 kHz — high-frequency-dominant panels degrade consonant-vowel contrast for CI users specifically (RAP BPC caveat 1). (3) The 2440 mm corridor width from deaf-spatial-design BPC creates a potential conflict with NDV compartmentalisation preferences (narrower, enclosed spaces) in mixed-population settings — route to cross-population-conflict-mapper SPATIAL-OPEN domain. Evidence confidence: HIGH for core provisions (IEC 60118-4, RT60 ≤ 0.4 s — Tier 4–5 across 12+ jurisdictions with Tier 1 CI-specific support); MODERATE for Auracast provisions (technology transition, no IEC standard until 2027).
 
 ### Consensus findings
 | Finding | Languages confirming | Tier |

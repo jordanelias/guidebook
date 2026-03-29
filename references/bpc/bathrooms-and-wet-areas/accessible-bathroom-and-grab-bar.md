@@ -1,6 +1,6 @@
 ## accessible-bathroom-and-grab-bar
 
-**Updated:** 2026-03-26 16:45  **Evidence tier range:** 1–6  **Opus synthesis:** NO  **Status: COMPLETE** (24/24 jurisdictions; co1 25/24; tier5 22/24)
+**Updated:** 2026-03-26 16:45  **Evidence tier range:** 1–6  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Status: COMPLETE** (24/24 jurisdictions; co1 25/24; tier5 22/24)
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -9,15 +9,21 @@
 | ALL | — | — | Ageing-in-place literature recommends fewer bars than OT clinical evidence; OT governs |
 
 ### Best-practice synthesis
-**Most inclusive provision:** Zero-threshold wet room with ø1500mm turning circle, bilateral fold-down grab bars at WC, shower seat at 450mm with horizontal bars at 700mm and vertical bars at 1400mm, wall-hung underrideable lavatory, thermostatic lever controls ≤1200mm, anti-slip flooring, emergency call at 400–500mm. Wall reinforcement mandatory at all fixture locations (DAR). Dual-transfer layout (2200×2200mm) permits carer assistance from either side. Door ≥900mm clear, outward/sliding.
+**Most inclusive provision:** Zero-threshold wet room ≥2200×2200mm (dual-transfer) with ø1500mm turning circle (manual WC) or ≥1800×1800mm (powered WC). Bilateral fold-down grab bars at WC rated ≥200 kg SWL, height range 650–900mm AFF (median 700mm; Tier 2: 280mm above seat surface per OT assessment). Two vertical bars required additionally where NEU/hemiplegic population anticipated (70–140cm height, ≤5cm from WC side edge). Horizontal shower bar at 700–850mm AFF; vertical shower entry bar. Wall-hung underrideable lavatory. Thermostatic lever controls ≤1200mm AFF. Anti-slip R10/PTV≥36 throughout. Emergency call at 400–500mm AFF. Continuous structural blocking at all fixture wall locations — full wall length behind WC and shower (DAR mandatory). Door ≥900mm clear, outward or sliding. DAR: electrical outlet ≤1500mm from WC (GFCI/RCD) for future bidet provision.
 
-**Most targeted provision:** KR grab bar height 650–700mm (wheelchair armrest match) — most biomechanically grounded specification across all 24 jurisdictions. NO bilateral grab bars (NS 11001-2) and CH SIA 500 Anpassbarkeit represent most person-centred adaptability framework. JA AIJ epidemiological data on bathroom threshold falls (≥15mm = significant risk) is strongest clinical evidence for zero-threshold.
+**Most targeted provision (by population):**
+- KR/JA: grab bar height 650–700mm (wheelchair armrest-height match, biomechanically grounded) — Tier 1
+- NEU/hemiplegic: vertical bars 70–140cm height on paralysis side, 5cm from WC edge — Tier 1 (Nakamura 2009)
+- Power WC users: 1800×1800mm turning, 1500×1500mm shower clear area — Tier 5 (BS 8300-2 Annex G)
+- UPL bilateral: Kennedy et al. 2015 vertical bar preference (smallest COP deviation) — Tier 1
 
-**Conflict resolution:** Turning circle 1500mm universal. Grab bar height range 650–900mm — resolve at Tier 2 via OT transfer biomechanics assessment. WC seat 400–500mm — KR 400mm for lower wheelchair seats; most jurisdictions 450–500mm. Dual-transfer vs constrained: 2200×2200 preferred; 1650×2200 (BE) / 1600×1700 (PT) minimum with choice of side.
+**Conflict resolution:** Grab bar height range 650–900mm — wide range is not uncertainty; it reflects jurisdictional anthropometric calibration (KR 650mm seated transfer; UK/AU 900mm standing support). At Tier 1, 700mm median. At Tier 2, OT determines via transfer biomechanics assessment. Seat-relative formulation (280mm above seat surface) is the Tier 2 standard. Turning circle: 1500mm is Tier 0 (code); 1800mm is Tier 1 (where powered WC anticipated). WC seat height: 450mm median (400–500mm range per jurisdiction). Dual-transfer vs constrained: 2200×2200 preferred; 1650×2200 (BE) / 1600×1700 (PT) minimum with choice of side.
 
-**Highest-ambition actionable specification:** Room ≥2200×2200mm (dual) / ≥1650×2200mm (single min); turning ø1500mm; WC seat 450mm median (400–500 range); grab bars 700mm median (650–800 range); bilateral fold-down ≥110kg (WHO APS) ≥900mm length; zero-threshold shower; fold-down seat 450mm; lever/thermostatic controls ≤1200mm; anti-slip R10/PTV≥36; emergency 400–500mm; DAR wall reinforcement mandatory; door ≥900mm clear outward/sliding handle 900mm.
+**Highest-ambition actionable specification:** Room ≥2200×2200mm (dual-transfer) / ≥1650×2200mm (single, absolute minimum); turning ø1500mm standard / ≥1800mm powered WC; WC seat 450mm (400–500 range); bilateral fold-down grab bars ≥200 kg SWL, height 650–900mm (700mm Tier 1 median; 280mm above seat at Tier 2); bar cross-section ø32–45mm oval/circular; vertical bars additionally for NEU/hemiplegic (70–140cm, ≤5cm from WC edge); shower fold-down seat 450mm; horizontal shower bar 700–850mm; vertical shower entry bar; zero-threshold wet room; linear drain within 1200mm; floor slope ≤1:80; anti-slip PTV≥36 throughout; lever/thermostatic controls ≤1200mm; emergency call 400–500mm; LRV contrast ≥30 (bar vs wall AND floor); continuous structural blocking full toilet wall length both sides; DAR electrical rough-in ≤1500mm from WC (GFCI/RCD) for future bidet; door ≥900mm clear outward/sliding.
 
-**Opus 4 synthesis note:** NONE
+**Evidence confidence:** MODERATE-HIGH. Core specifications (turning circle, grab bar bilateral, zero-threshold, thermostatic controls) supported by Tier 4–6 across 22–24 jurisdictions. Grab bar height range has Tier 1 biomechanical evidence (Levine 2025, Kennedy 2015, Nakamura 2009). Power WC turning circle upgrade is Tier 5 (BS 8300-2 Annex G). Bidet DAR provision is Co-2 only (UNSW). NEU/hemiplegic vertical bar specification is Tier 1 (Nakamura 2009, Kennedy 2015 — small samples but converging findings).
+
+**Opus 4.6 synthesis note (2026-03-29):** Five refinements over Sonnet draft: (1) Grab bar height widened to 650–900mm with seat-relative Tier 2 formulation; (2) NEU/hemiplegic vertical bar sub-specification added (Nakamura 2009, Kennedy 2015); (3) Power WC turning circle 1800mm added as Tier 1 sub-spec; (4) Grab bar load rating corrected from WHO 110 kg to guidebook ≥200 kg SWL (per fold-down-grab-bar-specification Opus synthesis — WHO rating inadequate given KITE 1.3 kN peak force); (5) DAR bidet electrical rough-in added.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
