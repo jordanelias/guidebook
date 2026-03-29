@@ -1,6 +1,6 @@
 ## biophilic-design-healthcare-workplace
 
-**Updated:** 2026-03-19 22:00  **Evidence tier range:** 3 (systematic reviews); Co-1 (lived experience)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** 3 (systematic reviews); Co-1 (lived experience)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |

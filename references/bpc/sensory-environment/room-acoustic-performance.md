@@ -1,6 +1,6 @@
 ## room-acoustic-performance|ALL
 
-**Updated:** 2026-03-19  **Evidence tier:** Tier 1–2 (mixed; see population notes)  **Early-close:** no  **Status:** PARTIAL (NL, KO, SV/FI thin; 18/24 jurisdictions covered)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19  **Evidence tier:** Tier 1–2 (mixed; see population notes)  **Early-close:** no  **Status:** PARTIAL (NL, KO, SV/FI thin; 18/24 jurisdictions covered)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 
 ### Concept boundary notes
 | Language | Alias | Map quality | Warning |
@@ -45,6 +45,14 @@ No room acoustic standard in any jurisdiction addresses these populations acoust
 | STI ≥ 0.75 target for hearing-impaired / CI users | EN | US | Tier 1 |
 | No sound masking in NDV/NEU/DEM spaces | EN (PAS 6463:2022, this guidebook A-13) | UK | Tier 5 |
 | Sound masking controversial for ADHD; may help some, contraindicated for others | EN | US UK | Tier 1 (Bettarello / NDV evidence) |
+
+**Opus synthesis note:** Strongest acoustic evidence base in the compendium. Key judgments:
+(1) DEAF RT60 ≤0.3 s is now Tier 1 evidence (Iglehart 2020) — strongest population-specific acoustic specification in any jurisdiction. Should be treated as mandatory specification floor for hearing device users.
+(2) NDV/AUT: no quantified RT target exists. Existing standards (ANSI, BB93, UNI 11532-2) confirmed insufficient. The guidebook's contribution here is in specifying lower background noise targets (≤30 dB(A)) and contraindication of sound masking — both evidence-supported.
+(3) REF-RAP-22 escalation (Amlani & Russo 2016) is the most significant finding from citation mining: NRC compliance alone does not guarantee adequate listening conditions. Evidence-auditor adjudication (GAP-RAP-01) correctly resolves this — STI is the performance criterion, NRC is means. Spectral balance verification required.
+(4) DEM acoustic evidence is English-language-dominated. Devos 2019 (Belgium) is the sole non-Anglophone Tier 1/2 source. The 40% agitation reduction finding (Lyngby-Taarbæk) is compelling but single-site.
+(5) Citation mining addendum (2026-03-28) has numbering overlap with first mining pass. REF-RAP-18 through RAP-25 assigned twice with different content. Reconcile before bibliography compilation.
+(6) UNI 11532-2:2020 (IT) is a genuine jurisdictional advance — the only non-EN standard explicitly naming neurodivergent-equivalent populations for acoustic provision.
 
 ### Language-divergent findings
 

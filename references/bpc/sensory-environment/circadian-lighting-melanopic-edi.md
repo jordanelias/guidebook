@@ -1,6 +1,7 @@
 ## circadian-lighting-melanopic-edi
 
-**Updated:** 2026-03-26 05:30  **Evidence tier range:** 3–5  **Status:** TARGETED RETRIEVAL
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 3–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
+**Status:** TARGETED RETRIEVAL — full multilingual research not conducted. No divergent findings, NO-DATA, or citation mining sections present. Synthesis is sound within its scope but not comprehensive.
 
 ### Best-practice synthesis
 **Most inclusive provision:** melanopic EDI ≥250 lux daytime at the eye (vertical plane, 1.2m AFF); ≤10 lux evening (≥3h before bedtime); <1 lux sleep environment
