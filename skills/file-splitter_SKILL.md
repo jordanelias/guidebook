@@ -11,7 +11,7 @@ description: >
   after content is final, before cross-reference resolution.
 ---
 
-**Model:** Haiku 4.5 for splitting · Sonnet 4.6 for validation
+**Model:** Sonnet 4.6
 **Input:** Assembled master document + section map (from haiku-chunker Mode A)
 **Output:** Per-Part .md files + per-Category .md files + manifest file + split log
 **Prerequisite:** Content must be final. Do not split a document that will undergo further content edits.
