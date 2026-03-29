@@ -8,7 +8,7 @@ description: >
   refuses a full-document input and requests chunking first.
 ---
 
-**Model:** Haiku 4.5. Chain of Draft: max 5 words per reasoning step. Structural extraction only — no content judgment.
+**Model:** Sonnet 4.6. Structural extraction only.
 **Requires:** document version label for section map naming.
 
 ## Modes
