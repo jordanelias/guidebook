@@ -97,7 +97,7 @@ Every item block follows this structure, in this order:
 
 #### Illustration
 **[Illustration: to be provided]**
-Remove this note only when an actual illustration is supplied. Every Part 7 item (including Appendix B and C items) is designed to be accompanied by a technical diagram, drawing, or illustration.
+Remove this note only when an actual illustration is supplied. Every Part 4 item (including Appendix B and C items) is designed to be accompanied by a technical diagram, drawing, or illustration.
 ```
 
 ---
@@ -118,13 +118,13 @@ Category K items address sensory environment specifications (lighting, acoustics
 [Standard ●/○ marked specification sentences]
 
 #### Sensory interaction notes
-[Where this item's provision interacts with other sensory domains — e.g., acoustic treatment affecting thermal mass, lighting affecting NDV/SENS overstimulation. Cross-reference Part 8 §8.4 conflict resolutions where applicable.]
+[Where this item's provision interacts with other sensory domains — e.g., acoustic treatment affecting thermal mass, lighting affecting NDV/SENS overstimulation. Cross-reference Part 5 §5.2 conflict resolutions where applicable.]
 
 #### Evidence basis
 [Standard evidence table]
 
 #### Cross-population conflicts
-[K-items frequently produce cross-population conflicts. Identify all known conflicts and cross-reference Part 8 §8.4 resolution entries. Flag unresolved conflicts for Part 8 development.]
+[K-items frequently produce cross-population conflicts. Identify all known conflicts and cross-reference Part 5 §5.2 resolution entries. Flag unresolved conflicts for Part 8 development.]
 ```
 
 K-category codes: K-01 through K-[NN]. Numbering is sequential within the category.
@@ -197,8 +197,6 @@ Stop and confirm with user:
 
 ---
 
-**Preceded by:** `item-consolidation-analyzer` · `citation-verifier` (parallel)
-**Feeds into:** `framing-checker` + `evidence-auditor` (after each pass) · `prose-style-checker` (before packaging) · `volii-validator` (after category complete)
 
 ---
 
@@ -227,5 +225,3 @@ Min 2, max 12 sources per item. Every REF-ID ↔ sources-cited row bidirectional
 
 **Downstream:** `vol2-item-formatter` validates REF-ID ↔ sources-cited. `bibliography-compiler` compiles volume-end endnotes. `cross-reference-resolver` validates superscripts.
 
-**Preceded by:** `item-consolidation-analyzer` · `research-log-manager RETRIEVE`
-**Feeds into:** `vol2-item-formatter` → `framing-checker` + `evidence-auditor` → `prose-style-checker` → `volii-validator`

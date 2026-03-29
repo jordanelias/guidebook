@@ -248,5 +248,3 @@ Commit assembly report to GitHub: `bibliography-compiler: assembly report {volum
 
 ---
 
-**Preceded by:** `chunk-assembler` (assembled volume required)
-**Feeds into:** `cross-reference-resolver` (endnote-aware mode) · `guidebook-auditor` Mode A

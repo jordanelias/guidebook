@@ -125,5 +125,3 @@ After mining:
 
 ---
 
-**Preceded by:** `multilingual-research` (provides initial source list)
-**Feeds into:** `research-log-manager LOG` · `evidence-auditor` (if new evidence changes strata) · `item-specification-writer` (if new evidence supports upgrades)

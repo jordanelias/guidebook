@@ -151,9 +151,9 @@ Pass this specification to find-and-replace skill for execution. Do not execute 
 
 When operating on the v10.1 multi-file architecture (`parts/v10/*.md`):
 
-- **Cross-file references:** A reference in `part-02.md` to `§7.3` targets content in `part-07.md`. Cross-file references are valid — they resolve against the assembled document, not individual files.
+- **Cross-file references:** A reference in `part-02.md` to `§7.3` targets content in `part-04.md`. Cross-file references are valid — they resolve against the assembled document, not individual files.
 - **Scope:** When auditing a single Part file, still verify targets exist. Use the manifest (`parts/v10/manifest.md`) to locate target files. If target file is unavailable: flag as UNVERIFIABLE with note `[target in {filename} — not loaded]`.
-- **Category files:** Part 7 category files (`part-07/cat-A.md` through `cat-K.md`) may reference items in other categories. These cross-category references are valid and expected.
+- **Category files:** Part 4 category files (`part-04/cat-A.md` through `cat-K.md`) may reference items in other categories. These cross-category references are valid and expected.
 - **Assembly prerequisite:** Full cross-reference audit should run on the assembled master document (post-`chunk-assembler`), not on individual Part files. Per-Part audits are preliminary only.
 
 ---
@@ -163,13 +163,13 @@ When operating on the v10.1 multi-file architecture (`parts/v10/*.md`):
 Bidirectional traceability between BPC entries and item specifications:
 
 **Direction 1: BPC → Items**
-For each slug in `references/best-practices-compendium.md`:
+For each slug in `references/bpc/{topic}/{slug}.md (per-slug architecture)`:
 - Check: does the BPC entry have a `part7_items` field listing the item codes it informs?
 - If missing: flag as `UNMAPPED-BPC — slug {slug} has no part7_items field`
-- If present: verify each listed item code exists in Part 7
+- If present: verify each listed item code exists in Part 4
 
 **Direction 2: Items → BPC**
-For each item specification in Part 7:
+For each item specification in Part 4:
 - Check: does the item's evidence table cite any BPC slug?
 - Identify the BPC slug(s) the item's evidence derives from
 - Check: does the item carry a `bpc_slugs` field?
@@ -227,5 +227,3 @@ Stop and confirm with user:
 
 ---
 
-**Preceded by:** `structure-auditor` (map new structure before resolving refs)
-**Feeds into:** `find-and-replace` (execution) · `volii-validator` (item code validation)

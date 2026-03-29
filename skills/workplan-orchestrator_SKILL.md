@@ -130,7 +130,7 @@ Resumed task: confirm next action from YAML → execute from that stage.
 | **Renumbering** | bulk-renumber (from Change Order map) → cross-reference-resolver → structure-auditor |
 | **File Decomposition** | file-splitter → manifest verification |
 | **Evidence Marker Pass** | evidence-marker (classification) → evidence-auditor (marker verification) |
-| **Sensory QA** | sensory-coherence-checker → gap register updates → Part 8 development |
+| **Sensory QA** | sensory-coherence-checker → gap register updates → Part 5 development |
 | **Session Wrap** | session-consolidator |
 
 **Parallel rule:** L2 and L4 agents in Full Section Review run independently. No L2/L4 agent takes another's output as input within the same level.

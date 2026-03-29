@@ -106,5 +106,4 @@ Severity:
 
 **Scope boundary:** Structural extraction and violation flagging only — no rewrites. Content/framing/citations → separate skills. Heading wording → `prose-style-checker`. Table/figure numbering → `guidebook-auditor` Mode A.
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
-**Preceded by:** `haiku-chunker` Mode A  ·  **Feeds into:** `guidebook-auditor` · `workplan-orchestrator`
 **Escalation:** ≥3 🔴 violations → GET `gap_register.md` + SHA, append REVIEW item, PUT back (Project Instructions §GitHub API)

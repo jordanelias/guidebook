@@ -37,7 +37,7 @@ description: >
 5. Remove per-file header comments (`<!-- Part NN: ... -->`) during assembly.
 6. Proceed to Cross-Reference Integrity Check (§2) on assembled output.
 
-**Part 7 sub-assembly:** Part 7 category files (`part-07/cat-A.md` through `cat-K.md`) are assembled in alphabetical order within Part 7's position in the manifest. The manifest lists Part 7 as a single entry; category files are sub-entries.
+**Part 4 sub-assembly:** Part 4 category files (`part-04/cat-A.md` through `cat-K.md`) are assembled in alphabetical order within Part 4's position in the manifest. The manifest lists Part 4 as a single entry; category files are sub-entries.
 
 **Validation in manifest mode:**
 - Each file in manifest must exist on GitHub — missing file → 🔴 STOP
@@ -141,7 +141,6 @@ Stop and confirm with user before proceeding:
 
 ---
 
-**Preceded by:** `haiku-chunker` (section map required)
 
 ### REF-ID Marker Handling
 
@@ -150,4 +149,3 @@ Stop and confirm with user before proceeding:
 - If `bibliography-compiler` has NOT yet run: markers are expected and valid — pass through unchanged.
 - If `bibliography-compiler` HAS run and markers remain: flag as `UNPROCESSED-REF` — route back to bibliography-compiler.
 
-**Feeds into:** `bibliography-compiler` · `cross-reference-resolver` (after bibliography-compiler) · `table-formatter` · `guidebook-auditor` Mode A

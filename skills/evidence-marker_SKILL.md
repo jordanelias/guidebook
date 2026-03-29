@@ -122,5 +122,3 @@ When new evidence is found (e.g., case study mining, new multilingual-research r
 
 ---
 
-**Preceded by:** `item-specification-writer` (classification) · `chunk-assembler` (audit)
-**Feeds into:** `evidence-auditor` (marker accuracy cross-check) · `gap_register.md` (thin categories)

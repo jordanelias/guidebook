@@ -201,6 +201,4 @@ Stop and flag to user if:
 
 ---
 
-**Preceded by:** `item-specification-writer` (drafts content) · `citation-verifier` (verifies citations)  
-**Feeds into:** `bibliography-compiler` · `framing-checker` · `prose-style-checker` · `volii-validator`  
 **Parallel:** `evidence-auditor` (may run on same item concurrently)
