@@ -28,7 +28,7 @@ This guidebook is accompanied by supplementary resources that extend coverage be
 
 ## Part and Section Map
 
-## Volume I: Foundations, Categories, Synthesis
+## Volume I: Accessible Design — Principles, Specifications and Application
 
 **Part 1 — Foundations of Accessible Design**
 
@@ -36,51 +36,50 @@ This guidebook is accompanied by supplementary resources that extend coverage be
 
 **Part 2 — Disability Categories**
 
-§2.1 MOB · §2.2 MOB/UPL · §2.3 VIS · §2.4 NEU · §2.5 DEM · §2.6 NDV · §2.7 NDV/MH · §2.8 PAIN · §2.9 BAR (→ Supp Vol IV) · §2.10 DBL · §2.11 OFS
+§2.1 MOB · §2.2 MOB/UPL · §2.3 VIS · §2.4 DEAF · §2.5 NEU · §2.6 DEM · §2.7 NDV · §2.8 NDV/MH · §2.9 PAIN · §2.10 DBL · §2.11 OFS
+*Note: Intellectual disability provisions are proxied through DEM and NDV categories.*
 
-**Part 3 — Designing for Multiple Disability Categories**
+**Part 3 — Synthesis, Sequencing and the Co-Occurrence Framework**
 
-§3.1 Introduction · §3.2 Theoretical Framework · §3.3 Co-occurrence Matrix · §3.4 Key Co-occurrence Design Guidance
+§3.1 Introduction and Rationale · §3.2 Theoretical Framework · §3.3 Co-Occurrence Matrix · §3.4 The Layered Environment and Synthesis Principles · §3.5 Stage-by-Stage Process · §3.6 Synthesis by Building Strategy · §3.7 Decision Framework for Sequencing Techniques · §3.8 Resolution Decision Tree · §3.9 Resolution Strategies Menu · §3.10 Co-Occurrence Design Guidance · §3.11 Worked Examples · §3.12 From Approach to Application
 
-## Volume II: Application Manual and Engineering
+**Part 4 — Item Specification Library** *(Categories A–K)*
 
-**Part 4 — Synthesis and Sequencing**
+Category A: Acoustics (A-01–A-16) · Category B: Lighting (B-01–B-12) · Category C: Colour & Surface (C-01–C-06) · Category D: Spatial Layout & Wayfinding (D-01–D-09) · Category E: Entry & Circulation (E-01–E-14) · Category F: Sensory Zoning (F-01–F-06) · Category G: Furniture & Fittings (G-01–G-09) · Category H: Controls & Technology (H-01–H-05) · Category I: Upper Limb (I-01–I-04) · Category K: DeafBlind Environment Provisions (K-01–K-04)
 
-Item sequencing framework; population-by-population reading paths; design stage decision matrix
+**Part 5 — Building-Level Co-Occurrence Resolution** *(stub — content pending GAP-CONF-01/02)*
 
-**Part 5 — Residential Application Matrices**
+§5.1 Scope · §5.2 Conflict Domain Matrix · §5.3 Resolution Protocols by Domain · §5.4 Application to Design Stages
 
-Room-by-room application of Part 7 (Item Specification Library) for residential building types; DAR provisions by room
+**Part 6 — Residential Application Matrices**
 
-**Part 6 — Non-Residential Application Matrices**
+Room-by-room application of Part 4 (Item Specification Library) for residential building types; DAR provisions by room
+
+**Part 7 — Non-Residential Application Matrices**
 
 Building-type matrices for seven non-residential categories with population criticality coding
 
-**Part 7 — Item Specification Library** *(76 items; A–J categories)*
+**Part 8 — Engineering and Coordination**
 
-Category A: Acoustics (A-01–A-09) · Category B: Lighting (B-01–B-06) · Category C: Colour \& Surface (C-01–C-06) · Category D: Spatial Layout \& Wayfinding (D-01–D-07) · Category E: Entry \& Circulation (E-01–E-10) · Category F: Sensory Zoning (F-01–F-05) · Category G: Furniture \& Fittings (G-01–G-07) · Category H: Controls \& Technology (H-01–H-05) · Category I: Upper Limb (I-01–I-03) · Category K: DeafBlind Environment Provisions (K-01–K-04) · Biophilic Design: Appendix B (BIO-01–BIO-05) · Thermal Comfort: Appendix C (TC-01–TC-05)
+MEP brief templates; acoustic, mechanical, structural and electrical engineer coordination items
 
-**Part 8 — Cross-Population Conflict Resolutions** *(Deferred to v10.0 — see §3.4 for interim co-occurrence guidance)*
+**Part 9 — Working with Specialist Consultants**
 
-**Part 9 — Engineering and Coordination**
+OT appointment triggers; scope of services by design stage; co-design protocols
 
-MEP brief templates; acoustic, mechanical, structural and electrical engineer coordination items (Part M)
+## Volume II: Evidence, Economics and Case Studies
 
-**Part 10 - Occupational Therapists and Specialty Consultants**
+**Part 10 — Design for Adaptable Readiness (DAR)**
 
-## Volume III: DAR, Economics, Evidence
+§10.1 Cost Multiplier Table · §10.2 CAN/ASC 2.8:2025 · §10.3 Lifetime Homes · §10.4 Visitability · §10.5 Aging in Place · §10.6 Nordic Models · §10.7 Case Study Evidence
 
-**Part 11 — Design for Adaptable Readiness (DAR)**
+**Part 11 — The Economics of Accessible Construction**
 
-§11.1 Cost Multiplier Table · §11.2 CAN/ASC 2.8:2025 (current as of January 2026) · §11.3 Lifetime Homes · §11.4 Visitability · §11.5 Aging in Place · §11.6 Nordic Models · §11.7 Case Study Evidence
+§11.0 Scope · §11.1 Cost Myth · §11.2 Core Ratio · §11.3 Four Value Dimensions · §11.4 Cost Intelligence Tables · §11.5 Integrated Design Value · §11.6 Evidence Landscape · §11.7 Economic Timeline · §11.8 Client Arguments & Procurement · §11.9 Cross-Reference Index · §11.10 Limitations & Evidence Appeal
 
-**Part 12 — The Economics of Accessible Construction**
+**Part 12 — Case Studies**
 
-§12.0 Scope · §12.1 Cost Myth · §12.2 Core Ratio · §12.3 Four Value Dimensions · §12.4 Cost Intelligence Tables · §12.5 Integrated Design Value · §12.6 Evidence Landscape · §12.7 Economic Timeline · §12.8 Client Arguments \& Procurement · §12.9 Cross-Reference Index · §12.10 Limitations \& Evidence Appeal
-
-**Part 13 — Case Studies***
-
-§13.01 Maggie's Centre Inverness · §13.02 Gallaudet DeafSpace Campus · §13.03 The Kelsey Civic Commons · §13.04 DSDC Iris Murdoch Building · §13.05 AtkinsRéalis HQ · §13.06 Lyngby-Taarbæk School · §13.07 Singapore HDB UD Flats · §13.08 Gallaudet SLCC · §13.09 De Hogeweyk · §13.10 DSDC Audit Programme · §13.11 ASPECTSS Autism School · §13.12 Village Landais Alzheimer · §13.13 Carpe Diem Bærum · §13.14 BC HAFI Programme
+§12.01 Maggie's Centre Inverness · §12.02 Gallaudet DeafSpace Campus · §12.03 The Kelsey Civic Commons · §12.04 DSDC Iris Murdoch Building · §12.05 AtkinsRéalis HQ · §12.06 Lyngby-Taarbæk School · §12.07 Singapore HDB UD Flats · §12.08 Gallaudet SLCC · §12.09 De Hogeweyk · §12.10 DSDC Audit Programme · §12.11 ASPECTSS Autism School · §12.12 Village Landais Alzheimer · §12.13 Carpe Diem Bærum · §12.14 BC HAFI Programme
 
 ## Appendices
 
@@ -141,7 +140,7 @@ The following amendments were applied during v9.0 production (2026-03-20):
 
 ---
 
-# Volume I: Foundations, Categories, Synthesis
+# Volume I: Accessible Design — Principles, Specifications and Application
 
 ## Part 1: Foundations of Accessible Design
 
@@ -676,33 +675,7 @@ Prevalence: ME/CFS approximately 17 million globally (NIHR, 2023), substantially
 
 ---
 
-### §2.12 IntD — Intellectual Disability
-
-*(Category under development)*
-
-**Definition**
-
-Intellectual disability (IntD) is characterised by significant limitations in intellectual functioning and adaptive behaviour, originating during the developmental period. It encompasses a wide range of presentations, from mild to profound, and frequently co-occurs with other disability categories (MOB, NDV, NEU, DEM).
-
-**Special Considerations — IntD**
-
-This category is a recognised gap in v9.0. A full Part II category with OT evidence basis, environmental design specifications, and Part III co-occurrence guidance is under development for v9.0.
-
-**Core environmental needs**
-
-Interim provisions until the full category is available:
-
-- Wayfinding and navigation: apply DEM wayfinding provisions (D-01 loop plan; D-03 toilet visibility; D-04 wayfinding continuity; D-07 no blind corners) as the strongest available evidence base for cognitive accessibility
-- Signage: apply pictogram + word signage (D-08) throughout; add Easy Read format for all public-facing written information
-- Sensory environment: apply NDV sensory gradient provisions (F-01, F-02, F-03) where sensory processing differences are present
-- Support worker access: ensure all spaces are accessible for two people side-by-side (MOB turning circle provisions; 1500 mm corridor minimum) to support users who require physical assistance
-
-**Known evidence gaps:** Dedicated OT intervention research in built environments for intellectual disability is limited in the English-language literature. Multilingual research (German: Bundesvereinigung Lebenshilfe; Dutch: Vilans; Spanish: Plena inclusión) is in progress for the next edition. Practitioners should treat DEM and NDV provisions as the strongest available proxies until IntD-specific evidence is incorporated.
-
-*OT Framework: pending IntD-specific evidence review. See Part 8 §8.4 for conflict resolutions applicable to IntD co-occurring with DEM and NDV populations.*
-
-*Evidence Base: [PLACEHOLDER — IntD-specific built environment evidence review pending. Citation-verifier pass required before v9.0 publication.]*
-## Part 3: Designing for Multiple Disability Categories
+## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
 
 *Accessible Built Environments — Utopian
 
@@ -782,8 +755,6 @@ Common presentation: fibromyalgia with depression (PAIN + MH); chronic pain synd
 #### MH + OFS (Mental Health/PTSD and Orthostatic/Fatigue Spectrum)
 
 Common presentation: PTSD with ME/CFS; anxiety disorder with POTS (documented in post-COVID populations). Both categories require: low exertion access (E-10 rest seating, step-free throughout); individual environmental control (H-02); and access to retreat without navigating high-stimulation spaces. MH adds: visibility of exits; choice of open or enclosed seating; no overhead surveillance or enclosed approaches to spaces. OFS adds: no sustained standing requirements; no routes requiring aerobic exertion. The design intersection is a low-exertion, controllable environment with spatial choice.
-# Volume II: Application Manual and Engineering
-
 ## How to Use This Volume
 
 Volume 2 translates the 71-item technique library into application tools for design practice. It is organised in five parts, followed by supplementary resources.
@@ -820,8 +791,8 @@ What must I do at each stage that cannot be undone later?
 |  | Toilet visibility from living/bedroom (DEM) | D-03 ⚠ NOT-RETROFITTABLE |
 |  | Acoustic buffer zone planning (adjacencies) | A-01 |
 |  | HVAC plant room location (vibration isolation) | A-08, A-09 |
-|  | large body size structural (BAR → Supp Vol IV) floor zone for wet room | J-04 |
-|  | Changing Places facility footprint | J-04 |
+| | large body size structural (BAR → Supp Vol IV) floor zone for wet room | |
+| | Changing Places facility footprint | |
 |  | Through-floor lift structural zone | R-STA-02 |
 |  | Grab bar blocking structural provision | I-03 |
 | **DD — Developed Design** | Automatic door specification | E-11 |
@@ -851,7 +822,7 @@ Consolidated item list for each population code. Items marked ● are primary pr
 
 | Item | A | B | C | D | E | F | G | H | I | J |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **MOB** | — | — | — | D-01 ● | E-01 ● E-06 ● E-08 ● | — | G-05 ● | I-04 ● I-05 ● | I-01 ● | J-01 ● J-04 ● | | **VIS** | A-15 ● | B-03 ● B-08 ● | C-01 ● C-04 ● | D-04 ● D-08 ● D-09 ● | E-07 ● E-09 ● | — | — | H-03 ● | — | — | | **DEAF** | A-10 ● A-11 ● | — | — | — | — | — | — | H-03 ● H-04 ● | — | — | | **NEU** | A-02 ● A-03 ○ | B-01 ● B-09 ○ | — | — | — | F-04 ● | G-04 ● | H-02 ● | — | — | | **DEM** | A-01 ● A-04 ● | B-05 ● | C-02 ● C-05 ● | D-01 ● D-03 ● D-04 ● | E-09 ○ | F-03 ● | — | — | — | — | | **NDV** | A-01 ● A-13 ● A-16 ● | B-01 ○ B-09 ● | C-03 ● | — | — | F-01 ● F-02 ● F-03 ● | G-01 ● | H-02 ● | — | — | | **NDV/MH** | A-03 ● A-16 ● | B-09 ● | — | — | — | F-01 ● F-03 ● | G-01 ● G-02 ● | H-02 ● | — | — | | **PAIN** | A-05 ● | B-03 ○ | — | — | E-10 ● | — | G-04 ● | H-02 ● | I-03 ● | — | *BAR provisions relocated to Supplementary Volume "Designing for Different Body Sizes," Section IV. BAR entries retained for cross-reference continuity (Option B interim).* | **BAR** | — | — | — | — | E-01 ● E-04 ○ E-08 ● | — | G-04 ○ | I-04 ● I-06 ● | J-01 ● J-02 ● J-04 ● J-05 ● | — | | **OFS** | — | — | — | — | E-05 ● E-10 ● | F-04 ● | G-04 ● G-05 ● | H-02 ● | — | — | | **DBL** | A-10 ● | — | C-04 ● | D-09 ● | E-09 ● | — | — | H-03 ● H-04 ● | — | — | | **UPL** | — | — | — | — | — | — | — | H-01 ● | I-01 ● I-02 ● I-03 ● | — | *Full population cross-reference tables are in Volume 2 Part I.* — |
+| **MOB** | — | — | — | D-01 ● | E-01 ● E-06 ● E-08 ● | — | G-05 ● | I-04 ● I-05 ● | I-01 ● | | | **VIS** | A-15 ● | B-03 ● B-08 ● | C-01 ● C-04 ● | D-04 ● D-08 ● D-09 ● | E-07 ● E-09 ● | — | — | H-03 ● | — | — | | **DEAF** | A-10 ● A-11 ● | — | — | — | — | — | — | H-03 ● H-04 ● | — | — | | **NEU** | A-02 ● A-03 ○ | B-01 ● B-09 ○ | — | — | — | F-04 ● | G-04 ● | H-02 ● | — | — | | **DEM** | A-01 ● A-04 ● | B-05 ● | C-02 ● C-05 ● | D-01 ● D-03 ● D-04 ● | E-09 ○ | F-03 ● | — | — | — | — | | **NDV** | A-01 ● A-13 ● A-16 ● | B-01 ○ B-09 ● | C-03 ● | — | — | F-01 ● F-02 ● F-03 ● | G-01 ● | H-02 ● | — | — | | **NDV/MH** | A-03 ● A-16 ● | B-09 ● | — | — | — | F-01 ● F-03 ● | G-01 ● G-02 ● | H-02 ● | — | — | | **PAIN** | A-05 ● | B-03 ○ | — | — | E-10 ● | — | G-04 ● | H-02 ● | I-03 ● | — | *BAR provisions relocated to Supplementary Volume "Designing for Different Body Sizes," Section IV. BAR entries retained for cross-reference continuity (Option B interim).* | **BAR** | — | — | — | — | E-01 ● E-04 ○ E-08 ● | — | G-04 ○ | I-04 ● I-06 ● | | — | | **OFS** | — | — | — | — | E-05 ● E-10 ● | F-04 ● | G-04 ● G-05 ● | H-02 ● | — | — | | **DBL** | A-10 ● | — | C-04 ● | D-09 ● | E-09 ● | — | — | H-03 ● H-04 ● | — | — | | **UPL** | — | — | — | — | — | — | — | H-01 ● | I-01 ● I-02 ● I-03 ● | — | *Full population cross-reference tables are in Volume 2 Part I.* — |
 
 ## Entry Path III: By Building or Room Type
 
@@ -880,7 +851,6 @@ The following items cannot be incorporated after structural design is complete w
 | I-04 | Accessible bathroom (zero-threshold shower, drainage) | SD | Permanent drainage and floor structural barrier | Section; structural drawings |
 | A-08 | HVAC noise control (plant room location) | SD | Permanent mechanical noise intrusion | Mechanical plans; acoustic strategy |
 | A-09 | HVAC vibration isolation (floating plant room) | SD | Permanent vibration transmission | Structural/mechanical drawings |
-| J-04 (BAR → Supp Vol IV) | large body size wet room structural floor (BAR → Supp Vol IV) | SD | Permanent structural inadequacy | Structural drawings (SE confirmation) |
 | I-03 | Grab bar blocking (structural) | CD | Retrofit cost ×75 | Structural/blocking drawings |
 | R-STA-02 | Stair structural channel for future stairlift | CD | Retrofit cost ×15–30 | Structural drawings | — |
 
@@ -898,9 +868,8 @@ See E.10 in Part II for the full residential DAR register. The top priority item
 
 ---
 
-## Part 4: Synthesis and Sequencing
 
-### 4.1 Why Synthesis Matters
+### §3.5 Why Synthesis Matters
 
 The Part 7 item specification library contains 71 items. No building project requires all 71 simultaneously, and no project fails for lack of knowledge of individual items. Projects fail in accessible design because: 1.
 
@@ -912,11 +881,11 @@ The Part 7 item specification library contains 71 items. No building project req
 
 **Checklist mentality:** Items are treated as a compliance list rather than as a design discipline. An item on a list is not the same as an item on a drawing. Synthesis is the practice of treating the entire library as a single integrated design system, applied through a staged process from brief to handover.
 
-### 4.2 The Layered Environment
+### §3.6 The Layered Environment
 
 Every building produces a three-layer accessible environment:
 
-**Layer 1 — Physical access layer:** Route, entry, level change, turning space. Items: E-01 through E-12, G-01, J-01/J-02. Stage: schematic and structural design. Cannot be added later.
+**Layer 1 — Physical access layer:** Route, entry, level change, turning space. Items: E-01 through E-12, G-01, /. Stage: schematic and structural design. Cannot be added later.
 
 **Layer 2 — Sensory environment layer:** Acoustic, visual, thermal, olfactory, tactile. Items: A-01 through A-17 (merged), B-01 through B-11 (merged), C-01 through C-05 (merged), F-01 through F-07, TC-01 through TC-05. Stage: technical design (finishes, MEP, lighting). Can be partially retrofitted but at significant cost.
 
@@ -924,7 +893,7 @@ Every building produces a three-layer accessible environment:
 
 A building that achieves Layer 1 but not Layers 2 and 3 is physically accessible but sensorially hostile and informationally inaccessible — this describes the majority of DDA-compliant buildings in the current stock.
 
-### 4.3 The Four Synthesis Principles
+### §3.7 The Four Synthesis Principles
 
 **Principle 1 — Design Stage Primacy**
 
@@ -942,7 +911,7 @@ Design for the realistic population, not isolated cases. A residential care buil
 
 An accessible building is not a collection of accessible rooms. It is a continuous journey from arrival to departure. A person in a wheelchair should be able to arrive at a parking space, enter the building, navigate to their destination, use all facilities, and depart without encountering a single inaccessible link in the chain. One inaccessible link — a step at the accessible toilet door, a control above reach height in the lift — breaks the chain for the entire journey. Synthesis maps the journey, not the individual rooms.
 
-### 4.4 Stage-by-Stage Process
+### §3.8 Stage-by-Stage Process
 
 **Stage 0 — Brief**
 
@@ -991,7 +960,7 @@ Deliverables:
 - PEEP (Personal Emergency Evacuation Plan) protocol drafted and provided to building manager
 - Post-Occupancy Evaluation (POE) schedule: minimum POE at 6 months and 12 months post-occupation; measure RT60 in key spaces, lux at task heights, temperature at peak summer, air quality (CO2, TVOC)
 
-### 4.5 Synthesis by Building Strategy
+### §3.9 Synthesis by Building Strategy
 
 **Strategy A — Baseline-Plus**
 
@@ -1005,7 +974,7 @@ For public buildings, cultural buildings, and healthcare. Start from the assumpt
 
 For DEM care homes, autism-specific schools, MS neurology wards, and other single-population-focused buildings. Universal provisions plus the full sensory environment specification for the primary population. The sensory environment specification is the design driver — not physical access alone.
 
-### 4.6 Decision Framework for Sequencing Techniques
+### §3.10 Decision Framework for Sequencing Techniques
 
 When faced with a specific design decision, the architect should ask four questions in sequence:
 
@@ -1025,7 +994,7 @@ If yes: apply the resolution documented in Part 8 before specifying the individu
 
 If no drawing is identified: the item is not specified. An accessibility requirement that appears only in a narrative specification but not on a drawing will not be built.
 
-### 4.7 Worked Examples —
+### §3.11 Worked Examples —
 
 #### Worked Example 1: Memory Care Residential Unit (DEM Primary; MOB Secondary)
 
@@ -1127,14 +1096,14 @@ If no drawing is identified: the item is not specified. An accessibility require
 **Stage 0 priorities:**
 
 - D-03 toilet visibility from bed: STRUCTURAL — confirmed on schematic floor plan (most safety-critical single item on ward)
-- J-01/J-02 large body size spatial provisions (BAR → Supp Vol IV): STRUCTURAL — large body size patients (BAR → Supp Vol IV) require 1800 mm turning circle in all bathrooms
+- /large body size spatial provisions (BAR → Supp Vol IV): STRUCTURAL — large body size patients (BAR → Supp Vol IV) require 1800 mm turning circle in all bathrooms
 - A-09 HVAC plant location: STRUCTURAL
 - Ceiling hoist tracking: STRUCTURAL in designated bay(s)
 
 **Critical synthesis decisions:**
 
 1. Toilet visibility (D-03): Marquardt (2011) documents 47% incontinence reduction across 32 facilities — the highest single-item evidence impact in the entire library. Toilet door must be in direct visual line from bed. Confirmed on schematic floor plan before any partition layout is fixed.
-2. large body size provisions (BAR → Supp Vol IV): ≥3 of 24 beds designated for large body size use (BAR → Supp Vol IV) (12.5%): J-01 wider doors (≥950 mm clear), J-02 turning circle ≥1800 mm in bathrooms, J-03 300 kg rated grab bars, J-04 2000×2000 mm large body size wet room (BAR → Supp Vol IV). Structural engineer confirmation at schematic for floor loading and grab bar blocking.
+2. large body size provisions (BAR → Supp Vol IV): ≥3 of 24 beds designated for large body size use (BAR → Supp Vol IV) (12.5%): wider doors (≥950 mm clear), turning circle ≥1800 mm in bathrooms, 300 kg rated grab bars, 2000×2000 mm large body size wet room (BAR → Supp Vol IV). Structural engineer confirmation at schematic for floor loading and grab bar blocking.
 3. DEM provisions: D-04 landmarks at corridor junctions; C-06 plain flooring; B-11 warm CCT ≤3000 K throughout ward; sensory room (A-16 or F-03) adjacent to main corridor — for agitation management and post-operative disorientation.
 4. Acoustic: NC-25 in all patient areas; A-14 STC ≥50 at partition between patient bay and corridor (speech privacy); A-08 HVAC noise NC-25 in patient sleeping areas.
 5. Heating: TC-01 18–22°C in all clinical areas; TC-05 heated bathroom floors (fall prevention + MS patient provision); I-03 TMV ≤38°C (all patient bathrooms), TMV ≤35°C (neurology patients if ward includes any).
@@ -1163,7 +1132,7 @@ If no drawing is identified: the item is not specified. An accessibility require
 
 ---
 
-### 4.8 From Approach to Application
+### §3.12 From Approach to Application
 
 *Accessible Built Environments: Utopian Best Practice Guidebook — v9.0*
 *Follows §4.7 (Worked Examples). Readers should be familiar with §4.1–§4.7 and Volume 1 §1.4a.*
@@ -1233,7 +1202,33 @@ Without the approach: a designer consults the entry paths and matrices and produ
 With the approach: a designer arrives at the entry paths and matrices knowing who the building must serve, what journeys must work, at what tier, and which structural decisions are already irrevocable. The matrices confirm and complete the specification. The approach determines whether the right specification has been produced for the right people.
 
 The distinction is between producing an accessible building and producing a building that is accessible for the people who will use it. The second is harder and more specific. It is what this guidebook is for.
-## Part 5: Residential Application Matrices
+## Part 5: Building-Level Co-Occurrence Resolution
+
+*Accessible Built Environments — Utopian Best Practice Guidebook v9.0*
+
+*(Stub — full content pending GAP-CONF-01/02 evidence synthesis. See Part 3 §3.8–§3.9 for interim co-occurrence guidance.)*
+
+### §5.1 Scope
+
+This Part addresses co-occurrence conflicts that operate at building-wide level — environmental decisions (lighting intensity, acoustic level, spatial openness, temperature range) that cannot be resolved for individual rooms without a building-level design position.
+
+### §5.2 Conflict Domain Matrix
+
+*[To be populated from cross-population-conflict-mapper output — GAP-CONF-01]*
+
+Conflict domains pending evidence synthesis: LIGHT-INT · ACOUSTIC-LVL · SPATIAL-OPEN · TEMP-RANGE · VIS-COMPLEX
+
+### §5.3 Resolution Protocols by Domain
+
+*[To be drafted — GAP-CONF-02]*
+
+### §5.4 Application to Design Stages
+
+*[To be drafted — GAP-CONF-02]*
+
+---
+
+## Part 6: Residential Application Matrices
 
 ** Neufert Residential and Non-Residential OT Analysis dimensional data is not yet integrated into Part II room matrices. Dimensional specifications from Neufert sources should be added to relevant room matrices when the source file is confirmed readable. This does not affect item specifications or population guidance — only dimensional annotations marked [NEUFERT: pending] in the working draft. See Part 7 for status.
 
@@ -1482,7 +1477,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 | Item | Title | MOB | BAR | DEM | NEU | PAIN | VIS | DEAF | DBL | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-**| \*\*R-BA-05\*\* G-01/J-02 | Turning circle ≥1500 mm (BAR: ≥1800 mm) | ● | ● | — | — | — | — | — | — | \*\*SD\*\* |** 
+**| \*\*R-BA-05\*\* G-01/| Turning circle ≥1500 mm (BAR: ≥1800 mm) | ● | ● | — | — | — | — | — | — | \*\*SD\*\* |** 
 **| \*\*R-BA-01\*\* G-04 | Wet room / zero-threshold shower | ● | ● | ● | ● | ● | — | — | — | DD |** 
 **| \*\*R-BA-02\*\* G-03 | Grab bar blocking (bilateral, all positions) | ● | ● | ● | ● | ● | — | — | — | \*\*CD-CRITICAL\*\* |** 
 **| \*\*R-BA-03\*\* I-03 | Anti-scald TMV3 (≤43°C; ≤38°C DEM/MS) | ● | — | ● | ● | ● | — | — | — | CD |** 
@@ -1766,7 +1761,7 @@ The following table summarises all DAR provisions across the residential matrix,
 | EV charger conduit | R-GAR | ×5 | Electrical drawings | CD |
 | Accessible entry door framing (≥950 mm) | R-ENT | ×5–15 | Floor plan / door schedule | SD |
 | large body size structural (BAR → Supp Vol IV) floor provision | R-BA | Structural cost | Structural drawings (SE) | SD | — |
-## Part 6: Non-Residential Application Matrices
+## Part 7: Non-Residential Application Matrices
 
 ### 7.0 Universal Non-Residential Provisions (Revised)
 
@@ -1778,7 +1773,6 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | E-11 | Automatic doors (primary entrance; motion ≥3 m) | DD | Floor plan; electrical | OFS/POTS: sustained push effort is disabling; 10-second hold-open |
 | E-08 | Corridor clear width ≥1500 mm (≥1800 mm HLT/TRP) | SD | Floor plan | MOB/large body size/BAR (→ Supp. Part 4) primary circulation requirement |
 | G-04 / G-03 | Accessible WC on each public floor (turning circle, bilateral grab bars, TMV38°C) | DD | Floor plan | Legal minimum in all jurisdictions |
-| J-03 / J-04 | Changing Places facility (≥500 m² GIA with public function) | DD | Floor plan | TS 22600:2019 (UK); NDIA (AU); jurisdiction-confirm |
 | G-06 | Dual-height counter (760 mm + 900 mm sections, ≥1500 mm each) | DD | Floor plan; section | Physical access at service point; most-failed provision in DDA audit |
 | A-10 | Hearing loop at all service counters | DD | Electrical drawings | Communication access for DEAF users |
 | A-11 | Room hearing loop in all assembly spaces | DD | Electrical drawings | Communication access; IEC 60118-4 |
@@ -1804,7 +1798,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Sensory room | NDV/AUT | A-16 (RT60 ≤0.3 s; NC ≤20), F-01, F-03 (≥1 per 150 students) |
 | Science / specialist rooms | NDV, PAIN, UPL | F-04 (chemical fume extraction), I-02 (lab tap controls), G-05 |
 | Corridors | MOB, NDV, DEM | E-08 (≥1500 mm), D-04 (landmark at junctions), F-01 (sensory buffer zones) |
-| Accessible WC | MOB, BAR | G-03, G-04, J-03/J-04, I-03 |
+| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
 | Library / study | VIS, NDV, OFS, DBL | B-03/04, A-02, F-03 (quiet zone), F-04, K-02 (tactile map at library entrance) |
 
 **Education-specific enhancements:**
@@ -1839,11 +1833,11 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Entry / reception | ALL | E-06, E-11, A-10, G-06, F-01, B-05, K-01 (DBL intervenor adjacency), K-02 (tactile map) |
 | Consulting room | DEAF, MOB, DEM | A-11 (≥15 m²), B-02 (200 lux face), NC-25 (A-08), F-04 (6 ACH fresh air) |
 | Patient ward / bed space | MOB, DEM, NDV, BAR, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01 (circadian), TC-01 (≤24°C general; ≤18°C MS ward), A-16, K-04 (vibrotactile alert) |
-| Accessible WC / bathroom | MOB, BAR, DEM, DBL | G-03, G-04, J-03, J-04, I-03, TC-05, K-04 (vibrotactile) |
+| Accessible WC / bathroom | MOB, BAR, DEM, DBL | G-03, G-04, , , I-03, TC-05, K-04 (vibrotactile) |
 | Changing Places | MOB, BAR | TS 22600:2019 spec |
 | Sensory room (MH / paediatric) | NDV, DEM, PAIN | A-16, F-01, F-03 (≥1 per ward; mandatory MH inpatient/CAMHS/paediatric) |
 | Pharmacy / counter | MOB, VIS, DEAF, DBL | G-06, A-10, H-01, C-04, K-01 (DBL intervenor adjacency) |
-| Imaging / treatment rooms | MOB, BAR | J-01, J-02, G-03 (transfer grab bars); BAR imaging table provisions |
+| Imaging / treatment rooms | MOB, BAR | , , G-03 (transfer grab bars); BAR imaging table provisions |
 
 **Healthcare-specific enhancements:**
 
@@ -1853,7 +1847,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - Circadian lighting (B-01) in all inpatient and care home settings: ≥150 EML at task height daytime; warm CCT ≤2700 K evening
 - Dementia-friendly environment: D-04 landmarks at all corridor junctions and room entries (DSDC 2024 audit requirement); C-06 plain flooring throughout dementia wards; B-11 warm CCT ≤3000 K
 - Sensory room provision: ≥1 per ward; mandatory in all MH inpatient, CAMHS, and paediatric settings; RT60 ≤0.3 s; NC ≤20
-- Grab bar provisions: G-03 bilateral in all accessible patient bathrooms; J-03 (300 kg rated) in all bariatric-designated rooms
+- Grab bar provisions: G-03 bilateral in all accessible patient bathrooms; (300 kg rated) in all bariatric-designated rooms
 - MS neurology ward: ambient ≤18°C (TC-01); TMV ≤35°C (I-03); personal cooling provision (TC-03)
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at principal entrance; vibrotactile BMS relay at all bed spaces and accessible bathrooms for DBL inpatients (K-04); intervenor adjacency space (K-01) at reception, pharmacy, and all consultation counters — minimum 1500 × 1500 mm clear floor zone; haptic communication clear floor zone (K-03) at all waiting positions designated for DBL patients
 
@@ -1882,7 +1876,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Focus / quiet room | NDV, OFS, PAIN | F-03 (≥1 per 20 staff, mandatory), RT60 ≤0.4 s, NC-25 |
 | Meeting room | DEAF, MOB, DBL | A-11, H-03 (CART), B-02, G-01 (turning circle at table), K-03 (DBL haptic zone at table end) |
 | Break room / kitchen | ALL | I-02, F-02, F-04, G-05, TC-01 |
-| Accessible WC | MOB, BAR | G-03, G-04, J-03/J-04, I-03 |
+| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
 | Accessible desk workstation | MOB, UPL, NDV | G-05 (≥20% height-adjustable), H-01, B-06, F-01 sensory-reduced workstation |
 
 **Workplace-specific enhancements:**
@@ -1916,7 +1910,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Entry / car park to entry | MOB, BAR, OFS | E-06, E-11, B-05 (transition), accessible parking (BS 8300 dimensions) |
 | Main retail floor | MOB, BAR, DEM, NDV | G-01 (clear routes ≥1500 mm between displays), C-04, B-03/04, F-04 |
 | Service counter / till | MOB, DEAF, BAR | G-06 (dual height), A-10 (loop), H-01 (controls), I-01 |
-| Accessible WC | MOB, BAR | G-03, G-04, J-03/J-04, I-03 |
+| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
 | Fitting rooms | MOB, BAR | Turning circle ≥1500 mm, ≥950 mm door clear, grab bar, fold-down seat |
 | Café/food service | ALL | G-06 (counter), F-04, B-03/04, G-02 (accessible seating) |
 
@@ -1950,7 +1944,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Auditorium / theatre | DEAF, NDV, MOB, DBL | A-11, H-03 (CART), B-10, wheelchair positions (≥1% of capacity at multiple locations), K-03 (haptic zone at aisle-end DBL positions) |
 | Library / reading room | NDV, OFS, VIS | F-03 (quiet zone), B-03/04, A-02, F-04 |
 | Sensory room | NDV, DEM, PAIN | A-16 (≥1 per building; mandatory) |
-| Accessible WC | MOB, BAR | G-03, G-04, J-03/J-04, I-03 |
+| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
 | Place of worship | ALL + DBL | A-11, H-03, K-03 (interpreter seating — DBL haptic zone ≥1200 × 1200 mm per position), B-02, G-02 (variety of seating) |
 
 **Cultural-specific enhancements:**
@@ -1991,7 +1985,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 - Accessible hotel room: specify to Part 5 residential standard (R-BA, R-BED) as minimum. Additions: visual fire alarm in room (B-10); vibrating wake-up alarm for DEAF guests; hearing loop hook-up at bedside; accessible safe at ≤1100 mm AFF; accessible wardrobe rail at 900 mm AFF with adjustable option.
 - Restaurant accessibility: ≥20% of dining tables with ≥1500 mm turning circle at both ends (not only one end); no fixed bench seating only — fixed benches exclude MOB and BAR users entirely if no removable alternative provided; menu in large print (≥14 pt, B-09 equivalent visual standard)
-- Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blocking, J-04 BAR wet room equivalent for pool changing)
+- Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blocking, BAR wet room equivalent for pool changing)
 - Guest room controls: all controls at 400–1200 mm AFF (H-01); bedside panel controls all room services (H-04)
 
 **IntD provisions — NR-HOS:** [TIER 4–5; interim; March 2026] Hospitality: (1) pictogram menus and Easy Read hotel information on request; (2) consistent room layout in accessible hotel rooms — avoid furniture rearrangement between stays for regular guests; (3) DEM wayfinding proxies apply (D-04 landmarks in corridors; D-08 pictogram room identification); (4) support worker accommodation — all accessible rooms sized for two occupants where IntD guest requires overnight support.
@@ -2016,7 +2010,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Platform / boarding area | MOB, VIS, DEAF, DEM | E-09 (TWSI at platform edge), A-10/A-12 (loop + Auracast), H-03 (visual display), B-10, D-04 |
 | Lifts / escalators | MOB, BAR | E-01 (lift dimensions), H-02 (tactile + audible lift controls), EN 81-70:2021 |
 | Sensory room / quiet area | NDV, DEM, PAIN, OFS | F-03 or A-16 (≥1 per interchange ≥1000 pax/hr), position per F-01 gradient |
-| Accessible WC | MOB, BAR | G-03, G-04, J-03/J-04, I-03 |
+| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
 | Information / wayfinding | VIS, DEM, DBL | D-01 (loop layout), D-04 (landmarks), D-08 (pictogram + Braille), H-03, H-05 (BLE navigation), K-02 (tactile building map at all major interchange entries) |
 | PA and announcements | DEAF, NDV, DBL | A-12 (Auracast), H-03 (visual display + captioning), K-04 (vibrotactile alert at all waiting zones), SPL ≥65 dBA above ambient at platform | **Transport-specific enhancements:** |
 
@@ -2039,7 +2033,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Accessible route (≥1800 mm clear) bypassing crowd zones on floor plan
 - [ ] Auracast (A-12) infrastructure in MEP brief for all platforms and waiting areas
 - [ ] Emergency evacuation: PEEP + refuge + evacuation lift strategy on fire strategy —
-## Part 7: Item Specification Library
+## Part 4: Item Specification Library
 
 ## CATEGORY A: ACOUSTICS
 
@@ -2858,11 +2852,6 @@ Where residential occupancy: manual override available for non-standard sleep sc
 
 Evening shift to ≤10 EML and 2700K CCT removes the alerting light wavelengths that inhibit melatonin production; for DEM users this is the primary circadian regulation intervention; for NEU/MH users it supports the occupation of restorative sleep — an occupation that environmental lighting directly enables or impairs.
 **Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level or ≤1:50 gradient beneath canopy. Drainage to perimeter. For BAR users: canopy height ≥2500 mm to accommodate bariatric scooters/powerchairs.
-## CATEGORY C: COLOUR AND SURFACE FINISH
-
-LRV = Light Reflectance Value (0 = black; 100 = white). All contrast specifications: LRV difference between adjacent surfaces unless stated. NCS = Natural Colour System. Gloss: measured at 60° per ASTM D523.
-
-
 ### B-12 Sensor-Activated Overnight Pathway Lighting
 
 **Applicable Groups:** MOB, DEM, NEU, OFS, PAIN, VIS, NDV/MH, DBL
@@ -2891,6 +2880,11 @@ LRV = Light Reflectance Value (0 = black; 100 = white). All contrast specificati
 **Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); G-09 (Bedroom emergency call and overnight lighting)
 
 **Illustration:** [Illustration: to be provided] — Section through bedroom showing 300–400 mm AFF luminaire position and sensor activation zone.
+## CATEGORY C: COLOUR AND SURFACE FINISH
+
+LRV = Light Reflectance Value (0 = black; 100 = white). All contrast specifications: LRV difference between adjacent surfaces unless stated. NCS = Natural Colour System. Gloss: measured at 60° per ASTM D523.
+
+
 ### C-01 Colour Palette (Muted, Low-Chroma, Non-Institutional)
 
 **Applicable Groups:** AUT, PCS, DEM, MH, NDV, OFS
@@ -3401,11 +3395,11 @@ All entry and circulation provisions address the complete journey from arrival a
 
 **Applicable Groups:** MOB, BAR, VIS, DEM
 
-**Description:** Passenger lift serving all occupied floors. Minimum car 1400 mm deep × 1100 mm wide. Door clear width ≥900 mm. Controls: 800--1200 mm AFF; Braille and tactile numerals; audible floor announcements. For bariatric-accessible routes: see J-07 (Bariatric Lift).
+**Description:** Passenger lift serving all occupied floors. Minimum car 1400 mm deep × 1100 mm wide. Door clear width ≥900 mm. Controls: 800--1200 mm AFF; Braille and tactile numerals; audible floor announcements. For bariatric-accessible routes: see (Bariatric Lift).
 
 **Specifications:**
 
-Car: ≥1400 mm deep × 1100 mm wide (≥1600×1400 mm for BAR-accessible routes — J-07)
+Car: ≥1400 mm deep × 1100 mm wide (≥1600×1400 mm for BAR-accessible routes — )
 
 Door: ≥900 mm clear width
 
@@ -3421,7 +3415,7 @@ Floor indicator: visual external to lift on all floors
 
 **Key citations:** Building and Construction Authority. (2025). BCA Code on Accessibility 2025. BCA. British Standards Institution. (2018). BS 8300:2018. BSI. CSA Group. (2023). CSA B651:2023. CSA.
 
-**Cross-reference:** J-07 (Bariatric Lift); E-02 (Platform Lift); E-06 (Level Entry); VI-03 (Temporal Accessibility)
+**Cross-reference:** (Bariatric Lift); E-02 (Platform Lift); E-06 (Level Entry); VI-03 (Temporal Accessibility)
 
 **Evidence basis (OT):** Compensatory FOR; Biomechanical FOR. The lift is the primary environmental compensation for vertical mobility
 
@@ -3433,7 +3427,7 @@ The 5--15 second adjustable door open time addresses the temporal performance ra
 
 **Applicable Groups:** MOB, BAR
 
-**Description:** Where a full passenger lift cannot be provided (listed building, structural constraint): platform lift with car minimum 900×1400 mm; maximum travel 2 m; maximum speed 0.15 m/s; safety enclosure. Not preferred over E-01 for BAR users — 900×1400 mm is insufficient for bariatric wheelchairs; see J-07.
+**Description:** Where a full passenger lift cannot be provided (listed building, structural constraint): platform lift with car minimum 900×1400 mm; maximum travel 2 m; maximum speed 0.15 m/s; safety enclosure. Not preferred over E-01 for BAR users — 900×1400 mm is insufficient for bariatric wheelchairs; see .
 
 **Specifications:**
 
@@ -3451,7 +3445,7 @@ Usage: retrofit/heritage only where E-01 is not achievable
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. ISO 9386-1:2000. Power-operated lifting platforms. ISO.
 
-**Cross-reference:** E-01 (Passenger Lift); J-07 (Bariatric Lift)
+**Cross-reference:** E-01 (Passenger Lift); (Bariatric Lift)
 
 **Evidence basis (OT):** Compensatory FOR. The platform lift is a compensatory fallback provision where the preferred compensation
 
@@ -3495,13 +3489,13 @@ upper limb endurance.
 
 **Applicable Groups:** MOB, BAR, VIS, PAIN, OFS
 
-**Description:** Accessible parking bays: 3600 mm width (standard accessible) minimum; 4500 mm width for BAR/adapted vehicle users (J-08). Located closest to accessible entry. Covered where possible. Surface: level (≤1:50 cross-fall); PTV ≥36 wet. Marked: International Symbol of Access + Braille equivalent tactile indicator at bay boundary.
+**Description:** Accessible parking bays: 3600 mm width (standard accessible) minimum; 4500 mm width for BAR/adapted vehicle users (). Located closest to accessible entry. Covered where possible. Surface: level (≤1:50 cross-fall); PTV ≥36 wet. Marked: International Symbol of Access + Braille equivalent tactile indicator at bay boundary.
 
 **Specifications:**
 
 Standard accessible bay: 3600 mm width
 
-BAR/adapted vehicle bay: 4500 mm width (J-08)
+BAR/adapted vehicle bay: 4500 mm width ()
 
 Location: closest accessible bay to entry; ≤50 m to entry
 
@@ -3519,7 +3513,7 @@ Quantity: minimum 5% of total parking, or per local code where greater
 
 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
 
-**Cross-reference:** E-06 (Level Entry route from parking); J-08 (BAR
+**Cross-reference:** E-06 (Level Entry route from parking); (BAR
 
 Parking)
 
@@ -3549,7 +3543,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
-**Cross-reference:** E-06 (Level Entry); J-08 (BAR Parking)
+**Cross-reference:** E-06 (Level Entry); (BAR Parking)
 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
 
@@ -3692,182 +3686,9 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
-**Cross-reference:** E-06 (Level Entry); J-08 (BAR Parking)
+**Cross-reference:** E-06 (Level Entry); (BAR Parking)
 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
-
-### E-06 Level Entry (Zero Step at All Accessible Entrances)
-
-**Applicable Groups:** MOB, BAR, VIS, DEM, OFS
-
-**Description:** Zero step (≤4 mm threshold) at all accessible entrances. Where site topography requires raised threshold: ramped approach ≤1:20 (E-03). No stepped entry at any accessible entrance.
-
-Single level entry flush with finish floor level.
-
-**Specifications:**
-
-Threshold: ≤4 mm at accessible entry (preferred); ≤10 mm permitted where drainage constraints make zero threshold impractical (DIN 18040-2 reduced-barrier variant — imperceptible to most wheelchair users in daily use per Bundesfachstelle Barrierefreiheit, 2022)
-
-Ramped approach where required: ≤1:20 (E-03)
-
-Door mat: flush with floor level; recessed mat well preferred
-
-Level surface maintained for 1500 × 1500 mm clear inside entry
-
-DAR: all new residential — design for future level approach even if not constructed initially (CAN/ASC 2.8:2025)
-
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Level entry (zero step) is a site-level and threshold decision. Retrofit of a stepped entry requires ramp construction, threshold lowering, drainage provision, and potentially structural work at the door opening. Threshold lowering in masonry construction requires structural assessment. See Part 12 §12.4.
-
-**Key citations:** CSA Group. (2023). CSA B651:2023. CSA. Standard Norge. (2018). NS 11001-1:2018 [Norwegian\]. Standard Norge. CAN/ASC 2.8:2025. ASC.
-
-**Cross-reference:** E-03 (Ramp Gradient); E-05 (Canopy); E-07 (Slip Resistance)
-
-**Evidence basis (OT):** EHP Framework (alter strategy). Level entry is the canonical 'alter' intervention: the environmental context is changed (threshold eliminated) to directly expand the performance range, enabling the occupation of independent building entry for any user whose mobility impairment or energy limitation makes threshold negotiation a barrier.
-
-### E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)
-
-**Applicable Groups:** MOB, DEM, VIS, BAR (fall prevention)
-
-**Description:** All floor surfaces on accessible routes achieve PTV (Pendulum Test Value) ≥36 in wet condition. External approaches, entry vestibules, bathrooms, and kitchens: PTV ≥36 wet (HSE guidance).
-
-Dry-only internal circulation: PTV ≥36 dry.
-
-**Specifications:**
-
-PTV ≥36 wet: external approaches, entry vestibules, bathrooms, kitchens, ramps
-
-PTV ≥36 dry: all internal circulation
-
-Test: BS 7976-2 pendulum test
-
-Maintenance: cleaning regime must not reduce PTV below threshold; specify in cleaning contract
-
-Post-occupancy: re-test at 12 months if floor condition changes
-
-**Retrofit cost note:** Retrofit penalty: LOW. Slip resistance PTV ≥36 wet is a floor finish specification. Retrofit is floor covering
-
-replacement or surface treatment application. Anti-slip coating can be applied to existing surfaces at modest cost. See Part 12 §12.4.1.
-
-**Key citations:** HSE. (2014). Slips and trips: Guidance for the catering industry. [PTV ≥36 reference.\] British Standards Institution. (2018). BS 8300:2018. BSI.
-
-**Cross-reference:** B-08 (Matte Floor — gloss and PTV compatibility); G-04 (Wet Room); E-06 (Level Entry)
-
-**Evidence basis (OT):** Biomechanical FOR. PTV ≥36 wet is derived from biomechanical research on the coefficient of friction required to prevent slip initiation under ambulant and mobility-device loads on wet surfaces; below PTV 36 wet, the risk of slip-initiated fall exceeds clinically acceptable thresholds for populations with reduced balance and reaction time.
-
-### E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)
-
-**Applicable Groups:** MOB, BAR, VIS, DEM
-
-**Description:** All primary accessible routes: 1200 mm clear width minimum (code minimum 1000 mm in most jurisdictions — E-08 exceeds code). Where 1200 mm continuous not achievable: passing bay ≥1500×1500 mm at maximum 10 m intervals. Large body size (BAR) routes: 1500 mm clear width (see Supplementary Volume, Supp. Part 4).
-
-**Specifications:**
-Primary routes: 1200 mm clear width minimum; large body size (BAR) primary routes: 1500 mm clear width (see Supplementary Volume, Supp. Part 4)
-Where <1200 mm continuous: passing bay ≥1500×1500 mm at ≤10 m intervals
-No furniture, equipment, or signage projecting into corridor
-Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
-
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 12 §12.4.
-
-**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
-
-**Cross-reference:** Large body size corridor width (BAR → Supp. Part 4); E-01 (Lift Car Width)
-
-**Evidence basis (OT):** Biomechanical FOR. The 1200mm clear width (exceeding 1000mm code minimum) is grounded in wheelchair propulsion biomechanics: corridors narrower than 1200mm force compensatory manoeuvres that increase shoulder joint loading and reduce propulsion efficiency, directly restricting the performance range of manual wheelchair users.
-
-### E-09 Tactile Walking Surface Indicators (ISO 23599:2019)
-
-**Applicable Groups:** VIS, DBL
-
-**Description:** TWSI (Tactile Walking Surface Indicators) installed at all hazard points and on primary accessible routes for VIS users.
-
-Domed (warning) profiles at hazards; bar (directional) profiles for guidance routes. Per ISO 23599:2019.
-
-**Specifications:**
-Domed profile: at stair heads, platform edges, road crossings, escalator heads
-Bar profile: directional guidance on primary accessible routes only
-Colour: maximum tonal contrast with adjacent surface; minimum 30 LRV
-Profile height: 5 mm ±1 mm (ISO 23599:2019)
-Material: durable, slip-resistant; confirmed for climate zone
-DEM environments: domed TWSI maximum 3 mm profile; same-colour as adjacent floor (B.4.6 conflict resolution)
-
-**Retrofit cost note:** Retrofit penalty: LOW. Tactile walking surface indicators are surface-applied or recessed tiles. Retrofit is a floor
-
-works operation — tile removal, TWSI installation, and reinstatement. No structural implications. See Part 12 §12.4.1.
-
-**Key citations:** ISO. (2019). ISO 23599:2019 — Assistive products — Tactile walking surface indicators. ISO. CNIB Foundation. (2024). Clearing our path. CNIB. Japan Blind People's Association. (2022). [Japanese.\] JBPA.
-
-**DBL evidence note:** [THIN BASE — Tier 2+4 only; no Tier 1 OT clinical research on DeafBlind built environments in any jurisdiction; March 2026]
-
-**Cross-reference:** Part 8 §8.4.6 (TWSI vs DEM --- resolution specified)
-
-**Evidence basis (OT):** Compensatory FOR. TWSI are environmental compensation devices that substitute tactile (proprioceptive/plantar) information for absent visual information during navigation; the ISO 23599:2019 profile specifications are derived from the sensory detection thresholds required for the compensation to be reliably perceptible under normal ambulant conditions.
-
-### E-10 Rest Seating on Circulation Routes
-
-**Applicable Groups:** OFS, MOB/AMB, PAIN, DEM, NEU, NDV
-
-*Revision note: Prior E-10 specified interval only (≤20 m). Interval revised to ≤25 m (Tier 1 evidence). Alcove geometry and OFS-specific seat height added. ≤20 m interval was an overclaim.*
-
-**Description:** Rest seating to be provided at intervals not exceeding 25 m on all primary accessible circulation routes, recessed into alcoves that do not reduce clear circulation width. Seating to be dimensioned to serve the postural requirements of OFS/POTS users, ambulant disabled users, and others for whom sustained standing or walking without rest creates a barrier. Arms to be provided on all seats to enable lever-up from seated.
-
-**Specifications:**
-- ● Rest seating to be provided at intervals not exceeding 25 m on all primary accessible circulation routes [REF:accessible-circulation-geometry:09]
-- ○ Where 25 m intervals cannot be achieved, a maximum interval of 30 m is acceptable on secondary routes only [REF:accessible-circulation-geometry:09]
-- ● Rest seating to be recessed a minimum of 200 mm from the clear circulation path, in alcoves of no less than 900 mm width per seat and 450 mm seat depth [REF:accessible-circulation-geometry:12] *(single Co-2 source)*
-- ● Seat height to be no less than 480 mm AFF; seat height below this threshold creates a postural barrier for OFS/POTS users [REF:accessible-circulation-geometry:12]
-- ● Arms to be provided on both sides of each seat, extending at least 200 mm beyond the front seat edge [REF:accessible-circulation-geometry:02] *(single Tier 5 proxy)*
-- ○ A minimum of one seating position per alcove to accommodate a tilt or recline angle of no less than 15° from vertical [REF:accessible-circulation-geometry:09]
-- ○ Full horizontal capability to be provided at a rate of one per floor in buildings where OFS/ME is the identified population and full recline is required for symptom management
-
-**Design Stage:** Schematic Design · Design Development
-
-**Retrofit:** MODERATE penalty — alcove integration requires spatial planning at design stage. Individual seating units at 480 mm seat height with arms are LOW penalty retrofit where alcove provision has been made. See Part 11 §DAR.
-
-#### Sources cited
-
-| REF-ID | Authors | Year | Title | Journal/Publisher | Tier | Lang | Jurisdiction |
-|---|---|---|---|---|---|---|---|
-| REF:accessible-circulation-geometry:09 | Roxburgh, R., Hughes, J., & Milgate, W. | 2024 | Using time diaries to inform OT practice for people with ME/CFS | British Journal of Occupational Therapy | 1 | EN | UK |
-| REF:accessible-circulation-geometry:12 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
-| REF:accessible-circulation-geometry:02 | BSI | 2018 | BS 8300-2:2018 | BSI | 5 | EN | UK |
-
-**Cross-reference:** E-01 (Accessible lift — primary circulation route); E-08 (Corridor clear width — clear width maintained past seating); D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Tier 0 confirmed — CON-0038 resolved)
-
-**Illustration:** [Illustration: to be provided] — Plan of alcove showing 900 mm width, 200 mm recess from circulation path, and 450 mm seat depth. Section showing 480 mm AFF seat height and arm projection.
-
-
-### E-11 Automatic Sliding Entry and Internal Doors
-
-**Applicable Groups:** MOB, BAR, UPL, OFS
-
-**Description:** Automatic sliding or swing doors (not heavy manually-operated) on all primary accessible routes. Maximum opening force: 22 N (ISO 21542:2021). Door hold-open time: adjustable 5--15 seconds from accessible control.
-
-**Specifications:**
-Automatic operation on all primary route doors
-Maximum opening force: 22 N (manual operation if automatic not installed)
-Hold-open time: adjustable 5--15 seconds (temporal accessibility)
-Slow-open profile: 0--100% over 2--3 seconds (not <1 second — Part 8 §8.4.8)
-Presence detection: both sides of door
-
-**Retrofit cost note:** Retrofit penalty: MODERATE. Automatic sliding door installation requires door leaf replacement, overhead track/motor
-
-installation, and sensor provision. In a finished building, the door opening is typically already present; the retrofit is primarily
-
-mechanical and electrical. See Part 12 §12.4.2.
-
-**Key citations:** ISO. (2021). ISO 21542:2021. ISO. British Standards
-
-Institution. (2018). BS 8300:2018. BSI.
-
-**Cross-reference:** E-06 (Level Entry); H-01 (Controls); Large body size door width (BAR → Supp. Part 4)
-
-**Evidence basis (OT):** EHP Framework (adapt strategy); Compensatory FOR. Automatic doors adapt the entry context to eliminate the manual force and coordination demands of door operation; for MOB, UPL, BAR, and OFS users the elimination of door-opening force is both a direct compensation (no action required) and a performance range expansion (users who cannot open manual doors can now enter independently).
-
-**Coverage gap note (v9.0):** Visual intercom and visual doorbell provisions for DEAF users are not yet fully specified in this category. NDV users require predictable, low-stimulus entry sequences; this is partially addressed in F-01 (sensory gradient) and D-01 (wayfinding). Full specifications deferred to v9.0.
-## CATEGORY F: SENSORY ZONING
-
-Sensory zoning is the deliberate organisation of a building's sensory environment so that stimulation level varies predictably, decreasing from public/entry zones to primary occupied/private zones.
-
 
 ### E-12 Entrance Landing and Manoeuvring Space for Power Wheelchair Users
 
@@ -3927,6 +3748,11 @@ Sensory zoning is the deliberate organisation of a building's sensory environmen
 **Cross-reference:** C-01 (Colour and surface finish — luminance contrast); D-02 (Cognitive simplicity); D-04 (Landmarks at every decision point); B-01 (Circadian lighting)
 
 **Illustration:** [Illustration: to be provided] — Elevation of entrance door showing luminance contrast zones, intercom position at 900–1200 mm AFF, and address numeral placement.
+## CATEGORY F: SENSORY ZONING
+
+Sensory zoning is the deliberate organisation of a building's sensory environment so that stimulation level varies predictably, decreasing from public/entry zones to primary occupied/private zones.
+
+
 ### F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
 
 **Applicable Groups:** NDV, PCS, AUT, MH, DEM, OFS
@@ -4366,9 +4192,6 @@ service with the same comfort, privacy, and dignity as a non-disabled person is 
 
 within the primary waiting area (not a segregated accessible area) implements this principle.
 
-## CATEGORY H: CONTROLS, TECHNOLOGY AND INDIVIDUAL ENVIRONMENTAL CONTROL
-
-
 ### G-08 Bedroom Wardrobe and Storage Reach Configuration
 
 **Applicable Groups:** MOB, MOB/UPL, NEU, OFS, PAIN
@@ -4435,6 +4258,9 @@ within the primary waiting area (not a segregated accessible area) implements th
 **Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); B-12 (Sensor-activated overnight pathway lighting); H-01 (Controls at accessible height); D-06 (Memory boxes at residential room entrances)
 
 **Illustration:** [Illustration: to be provided] — Bedroom plan showing dual cord positions, pillow-proximity switch zone, bed-exit sensor coverage arc, and 1000 mm foot clearance.
+## CATEGORY H: CONTROLS, TECHNOLOGY AND INDIVIDUAL ENVIRONMENTAL CONTROL
+
+
 ### H-01 All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)
 
 **Applicable Groups:** MOB, PAIN, DEM, UPL
@@ -4825,13 +4651,13 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Cross-reference:** B-10 (Visual Fire Alarm — simultaneous activation required); H-04 (Accessible Intercom — personal pager integration); H-05 (Nurse Call / Emergency Pull Cord — supplementary for DBL occupants in residential care)
 
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (prevent strategy). Vibrotactile alerting compensates for the absence of both auditory and visual emergency notification by providing a tactile alert channel; for DeafBlind occupants this is not an enhancement but the sole reliable mechanism for life-safety alerting. The EHP 'prevent' strategy grounds the provision: the environment is modified to prevent the life-safety failure that results from no accessible alert channel. The 20–200 Hz vibration frequency range is derived from the perceptible vibrotactile frequency range for individuals with intact tactile sensitivity (Verrillo, 1993); no architectural standard specifies this range for built environment applications.
-## Part 9: Engineering and Coordination
+## Part 8: Engineering and Coordination
 
 ---
 
-## 9.0 Overview and Operating Principle
+## 8.0 Overview and Operating Principle
 
-### 9.0.1 Purpose
+### 8.0.1 Purpose
 
 Part 9 provides the coordination interface between the architect and the engineering consultancy team for accessibility provisions in the design library. It performs two functions:
 
@@ -4842,7 +4668,7 @@ Part 9 provides the coordination interface between the architect and the enginee
 
 Part 9 is not a substitute for engineering design. It is the architect's instrument for ensuring that accessibility requirements are activated within each consultant's scope at the right stage. An accessibility provision that appears only in the architect's specification but is absent from the relevant consultant's brief is not specified — it is a wish.
 
-### 9.0.2 Engineering Coordination Doctrine
+### 8.0.2 Engineering Coordination Doctrine
 
 **Parallel specification is mandatory.** Every engineering-dependent accessibility item must appear in two documents simultaneously: the architect's construction specification or room data sheet, and the relevant consultant's brief at the appropriate design stage. Failure at either location is a coordination failure.
 
@@ -4850,7 +4676,7 @@ Part 9 is not a substitute for engineering design. It is the architect's instrum
 
 **Ready for Occupancy is specification.** A specification without a commissioning test is aspirational. Every engineering item with a measurable performance target carries a commissioning requirement, to be included in the commissioning schedule issued at technical design stage.
 
-### 9.0.3 Engineering Disciplines in This Part
+### 8.0.3 Engineering Disciplines in This Part
 
 | Code | Discipline | Scope in this Part |
 |---|---|---|
@@ -4861,9 +4687,9 @@ Part 9 is not a substitute for engineering design. It is the architect's instrum
 
 ---
 
-## 9.1 Engineering Coordination Register
+## 8.1 Engineering Coordination Register
 
-### 9.1.1 How to Read This Register
+### 8.1.1 How to Read This Register
 
 The register identifies design library items (Part 7, Categories A–J) that require a brief instruction to at least one engineering consultant. Items with no such dependency are excluded.
 
@@ -4882,7 +4708,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-### 9.1.2 Acoustic Engineering Items
+### 8.1.2 Acoustic Engineering Items
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
@@ -4907,7 +4733,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-### 9.1.3 Electrical Engineering Items
+### 8.1.3 Electrical Engineering Items
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
@@ -4948,7 +4774,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-### 9.1.4 Mechanical Engineering Items
+### 8.1.4 Mechanical Engineering Items
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
@@ -4972,11 +4798,11 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-## 9.2 Engineering Brief Templates
+## 8.2 Engineering Brief Templates
 
 *Quick-reference: use when drafting or reviewing each consultant's brief.*
 
-### 9.2.1 Acoustic Engineer
+### 8.2.1 Acoustic Engineer
 
 The acoustic brief must be issued before ME ductwork design and EE ceiling/lighting design are finalised. Both affect acoustic outcomes and cannot be adjusted once committed.
 
@@ -4999,7 +4825,7 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 ---
 
-### 9.2.2 Electrical Engineer
+### 8.2.2 Electrical Engineer
 
 #### Lighting
 
@@ -5046,7 +4872,7 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 ---
 
-### 9.2.3 Mechanical Engineer
+### 8.2.3 Mechanical Engineer
 
 | Item | Core Requirement | Stage | Performance Target | Ready for Occupancy |
 |---|---|---|---|---|
@@ -5070,9 +4896,9 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 ---
 
-## 9.3 Stage-Gated Coordination Protocol
+## 8.3 Stage-Gated Coordination Protocol
 
-### 9.3.1 Schematic Design Gate
+### 8.3.1 Schematic Design Gate
 
 The following items must be confirmed — in writing and on named drawings — before schematic design is signed off. Items not confirmed at SD are to be recorded in the project risk register with the retrofit cost multiplier stated.
 
@@ -5089,7 +4915,7 @@ The following items must be confirmed — in writing and on named drawings — b
 | F-04 | High-stimulation zone containment strategy confirmed | AC; ME | ×3–6 |
 | I-04 | Floor drainage channel route confirmed; slab recess initiated with SE | ME | ×20–40 |
 
-### 9.3.2 Technical Design Gate — Brief Issue
+### 8.3.2 Technical Design Gate — Brief Issue
 
 At technical design commencement, the architect is to issue updated consultant briefs incorporating all items from §9.2. The gate is not complete until:
 
@@ -5098,7 +4924,7 @@ At technical design commencement, the architect is to issue updated consultant b
 - EE brief issued covering: all B-category items, D-09, D-11, E-01, E-04, E-11, E-12, G-04/G-05, all H-category items, I-05, I-06
 - SE brief issued covering: all items in §9.5
 
-### 9.3.3 VE Protection Register
+### 8.3.3 VE Protection Register
 
 The following specifications are not to be value-engineered without written agreement of the lead architect. Issue to the contractor at Stage 3.
 
@@ -5114,7 +4940,7 @@ The following specifications are not to be value-engineered without written agre
 
 ---
 
-## 9.4 O&M Manual — Engineering Accessibility Systems
+## 8.4 O&M Manual — Engineering Accessibility Systems
 
 Include the following in the Operations and Maintenance manual in addition to standard engineering maintenance schedules.
 
@@ -5133,7 +4959,7 @@ Include the following in the Operations and Maintenance manual in addition to st
 
 ---
 
-## 9.5 Structural Engineer Coordination
+## 8.5 Structural Engineer Coordination
 
 Structural engineering operates under a distinct scope from acoustic, mechanical, and electrical engineering. The items below are collected separately because structural accessibility provisions are among the highest-cost items to retrofit, are frequently missing from SE briefs, and must be confirmed on structural drawings — not only in the specification text. Structural drawings are the confirmation document; a specification entry without a corresponding structural drawing is not a structural commitment.
 
@@ -5150,9 +4976,9 @@ Structural engineering operates under a distinct scope from acoustic, mechanical
 
 **SE brief standard clause:**
 > *All structural provisions for accessibility are primary structural design requirements, not secondary modifications. DAR (Design for Adaptable Readiness) provisions are to be incorporated at the earliest stage. Published retrofit cost multipliers for structural accessibility provisions: grab bar blocking ×75; ceiling hoist tracking ×20–40; lift shaft ×50+ (Rick Hansen Foundation 2023; TERRAGON/DStGB 2017). These figures are to be cited in any value engineering discussion where structural accessibility provisions are challenged. No structural accessibility provision is to be removed from the design without the written agreement of the lead architect.*
-## Part 10: Working with Specialist Consultants
+## Part 9: Working with Specialist Consultants
 
-## 10.0 Overview
+## 9.0 Overview
 
 Part 10 addresses the architect's coordination role with specialist consultants whose input is required for accessible design that cannot be delivered through engineering briefs alone. The engineering disciplines covered in Part 9 — acoustic, mechanical, electrical, and structural — operate on measurable physical systems. The consultants addressed here operate on the relationship between people and environments: a different domain, requiring a different coordination logic.
 
@@ -5400,23 +5226,23 @@ For Tier 2 projects, the named individual and their chosen support network are t
 ---
 
 *Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Three-Tier Hierarchy) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 13 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
-# Volume III: DAR, Economics, Evidence and Appendices
+# Volume II: Evidence, Economics and Case Studies
 
 All Part 7 item codes cited in Volume III use the v9.0 item codes: Category F = Sensory Zoning; Category G = Furniture/Interiors; Category H = Controls/Technology; Category I = Upper Limb; Category K = DeafBlind Environment Provisions. Bariatric provisions (formerly Category J) are in the Supplementary Volume, Supp. Part 4. See Part 7 for the full item specification library.
 
-## Part 11: Design for Adaptable Readiness (DAR)
+## Part 10: Design for Adaptable Readiness (DAR)
 
 *Accessible Built Environments — Utopian Best Practice Guidebook v9.0*
 
 *Volume 3*
 
-### §11.0 Scope
+### §10.0 Scope
 
 Part 11 addresses homes and buildings that can adapt to changing functional needs without full reconstruction. The core argument is asymmetric and economic: the cost of not designing for adaptability is not zero. The most expensive accessible features are prohibitively expensive as retrofits but negligible at construction when planned at schematic design stage.
 
 For the full international evidence base on new-build versus retrofit cost economics, including the macro cost ratio (0.5--1.3% new construction vs 10--40× retrofit), see Part 12. The table in §11.1 below provides the item-level cost multipliers; Part 12 §12.2 provides the macro context, and Part 12 §12.4 provides technique-level cost intelligence for all Part 7 items.
 
-### §11.1 The DAR Cost Multiplier Framework
+### §10.1 The DAR Cost Multiplier Framework
 
 The following table presents the cost case for DAR provisions. All figures are approximate; see Part 12 §8.2 for the full international evidence base.
 
@@ -5433,7 +5259,7 @@ The following table presents the cost case for DAR provisions. All figures are a
 
 **Policy implication:** DAR provision in new construction is the highest-return accessible design investment available. Building codes that do not require DAR provisions impose these multiplied costs on ageing homeowners and disability communities.
 
-### §11.2 CAN/ASC 2.8:2025 (current as of January 2026) DAR Core Provisions
+### §10.2 CAN/ASC 2.8:2025 (current as of January 2026) DAR Core Provisions
 
 Canada's CAN/ASC 2.8:2025 (current as of January 2026) specifies the following minimum DAR provisions for all new accessible-ready housing. Each provision is a 'rough-in' at construction enabling future accessible modification without structural demolition.
 
@@ -5446,7 +5272,7 @@ Canada's CAN/ASC 2.8:2025 (current as of January 2026) specifies the following m
 | VII-DAR-05 | Stairlift: stair clear width ≥850 mm; electrical conduit from bottom to top landing; structural blocking at head and foot | Clause 7.7 |
 | VII-DAR-06 | Controls/technology: conduit to all major control points; smart home hub provision; voice-activated device electrical provision; WiFi AP conduit | Clause 7.8 |  |
 
-### §11.3 Lifetime Homes 16 Criteria (UK, Habinteg 2010)
+### §10.3 Lifetime Homes 16 Criteria (UK, Habinteg 2010)
 
 The UK Lifetime Homes standard specifies 16 design criteria. Key criteria with greatest accessibility impact:
 
@@ -5460,7 +5286,7 @@ The UK Lifetime Homes standard specifies 16 design criteria. Key criteria with g
 | 11 | Bathroom: structural support for future grab bars | 10× retrofit |
 | 12 | Bathroom: future wet room conversion provision | 10× retrofit |  |
 
-### §11.4 Visitability: The 3-Criterion Baseline (USA, Concrete Change)
+### §10.4 Visitability: The 3-Criterion Baseline (USA, Concrete Change)
 
 Visitability proposes a minimum 3-criterion standard for all new single-family and low-rise residential construction:
 
@@ -5470,7 +5296,7 @@ Visitability proposes a minimum 3-criterion standard for all new single-family a
 
 Visitability adds <0.5% to construction cost (Maisel, 2006). It enables any person to visit the dwelling with dignity — without it, a wheelchair user cannot attend a social event in the home of a friend.
 
-### §11.5 Aging in Place: OT Evidence Summary The systematic review of home modifications for aging in place (PMC,
+### §10.5 Aging in Place: OT Evidence Summary The systematic review of home modifications for aging in place (PMC,
 
 2024; literature 2010--2024) identified the following highest-evidence home modifications, in order of evidence strength:
 
@@ -5482,7 +5308,7 @@ Visitability adds <0.5% to construction cost (Maisel, 2006). It enables any pers
 
 *Source: Systematic Review of Home Modifications for Aging in Place in Older Adults (2024). PMC.*
 
-### §11.6 Nordic Models
+### §10.6 Nordic Models
 
 #### Sweden — BFS 2024:12 (Boverket)
 
@@ -5494,7 +5320,7 @@ All new dwellings: accessible-ready specification. Multi-dwelling buildings: lif
 
 **Significance:** Both countries report significantly lower retrofit costs and higher aging-in-place rates in the decades after mandatory adaptable housing standards were adopted. The Nordic evidence provides the strongest available national-scale data for the policy value of mandatory DAR standards.
 
-### §11.7 Case Study Evidence for DAR
+### §10.7 Case Study Evidence for DAR
 
 For DAR provisions in practice, see the following case studies in Part 13:
 
@@ -5503,7 +5329,7 @@ For DAR provisions in practice, see the following case studies in Part 13:
 - **Part 13 §13.14** (BC Housing HAFI): programme evaluation of retrofit outcomes provides the converse evidence — average CAD 7,500 modification cost per home represents \~30--40% of what would have been required without DAR provisions.
 
 *Next: Part 12 — The Economics of Accessible Construction* *Cross-reference: Part 1 §1.6 (DAR cost multiplier table, also in this Part §11.1); Part 12 §12.2 (macro cost ratio); Part 12 §12.4 (technique-level retrofit cost intelligence); Part 13 (case study evidence for DAR provisions in practice)*
-## Part 12: The Economics of Accessible Construction
+## Part 11: The Economics of Accessible Construction
 
 ### Scope and Purpose
 
@@ -5523,13 +5349,13 @@ Read this part alongside Volume II (Parts 7 and 9), which describes specific des
 - The strongest economic argument is not financial modelling — it is the cost curve. State it clearly, cite the evidence, and the client has the information they need.
 - Accessibility is not a premium. An inaccessible building is an incomplete product.
 
-### §12.1 The Cost Myth and What the Evidence Shows
+### §11.1 The Cost Myth and What the Evidence Shows
 
-#### §12.1.1 The Assumed Burden
+#### §11.1.1 The Assumed Burden
 
 The dominant assumption in building procurement — across most jurisdictions and building types — is that accessibility costs money: that to make a building more accessible is to spend more. This assumption is so pervasive that it rarely surfaces as a claim to be examined. It is simply taken as given, shaping every project brief, every value-engineering session, and every conversation about what must be cut when budgets tighten. The evidence does not support this assumption, at least not in the form in which it is usually held.
 
-#### §12.1.2 What the Evidence Actually Shows
+#### §11.1.2 What the Evidence Actually Shows
 
 Studies conducted across multiple languages, jurisdictions, and building types consistently reach the same finding: when accessibility is integrated from the earliest design stages, its cost in new construction is very small relative to total project value, and in many cases negligible.
 
@@ -5542,7 +5368,7 @@ Studies conducted across multiple languages, jurisdictions, and building types c
 | Swiss Federal Office (multiple years) | Findings consistent with German and Belgian evidence. Accessibility in new construction is a planning question, not primarily a cost question. |
 *"Barrierefreiheit im Neubau ist keine Kostenfrage, sondern eine Frage | der Planung" — Bundesfachstelle Barrierefreiheit (2019). Accessibility in new construction is not a cost question; it is a planning question.*
 
-#### §12.1.3 When Costs Appear, and Why
+#### §11.1.3 When Costs Appear, and Why
 
 Cost is not intrinsic to accessibility. It is the consequence of late decision-making, inadequate brief preparation, and the separation of accessibility from mainstream design thinking. The following pattern is documented consistently across the German, Canadian, Norwegian, and French literature:
 
@@ -5558,9 +5384,9 @@ Cost is not intrinsic to accessibility. It is the consequence of late decision-m
 
 *Part 7 cross-reference: Item A-04 (Acoustic Zoning): 'Acoustic performance begins with adjacency decisions, not materials. Once adjacencies are fixed, all subsequent acoustic interventions work under constraints and at cost.' Item A-09 (HVAC Structural Isolation): 'Correct structural isolation at construction costs approximately 3--5% of mechanical plant cost. Retrofit isolation after construction can equal or exceed the original plant cost.'*
 
-### §12.2 The Core Ratio: New Construction vs Retrofit
+### §11.2 The Core Ratio: New Construction vs Retrofit
 
-#### §12.2.1 New Construction Premium
+#### §11.2.1 New Construction Premium
 
 The most rigorous study available is the 2017 TERRAGON/Deutscher Städte- und Gemeindebund (DStGB) study conducted using a model five-storey residential building in Berlin with 20 dwellings and 1,500 m² of floor area.
 
@@ -5573,7 +5399,7 @@ Analysing all 140 criteria of DIN 18040-2 (the German standard for barrier-free 
 
 Earlier Nordic/North American evidence is consistent: the ADA National Network (US) confirmed that accessibility features in new construction add less than 1% to project cost. The independent living advocacy literature (Ratzka, CIB W84 proceedings) cites studies from the 1970s onward reaching the same conclusion with cost premiums typically below 0.5% in planned multi-family projects.
 
-#### §12.2.2 Retrofit Cost
+#### §11.2.2 Retrofit Cost
 
 The contrast with retrofit is stark. A Prognos study commissioned by KfW (Germany) found that barrier-reduction retrofits carried out under the KfW "Altersgerecht Umbauen" programme averaged €19,100 per dwelling and this figure achieved reduction of barriers, not full DIN 18040-2 compliance. Full compliance retrofit was assessed as significantly higher and often structurally impractical.
 
@@ -5583,7 +5409,7 @@ The Rick Hansen Foundation (Canada, 2023) concluded that "even modest retrofits 
 
 US unit-level data (Angi/HomeAdvisor, 2025--26) provides the operational picture: average basic accessibility retrofit is $4,500; comprehensive home wheelchair-accessibility renovation ranges from $18,000 to $75,000. ADA-compliant bathroom and kitchen renovations alone: $9,000--$40,000.
 
-#### §12.2.3 The Core Ratio
+#### §11.2.3 The Core Ratio
 
 | Condition | Cost Premium | Per-Dwelling Example |
 | --- | --- | --- |
@@ -5596,11 +5422,11 @@ US unit-level data (Angi/HomeAdvisor, 2025--26) provides the operational picture
 
 For DAR (Design for Adaptable Readiness) construction-stage provision costs and retrofit multipliers at the individual technique level, see Part 12 §12.5 and §12.4 below
 
-### §12.3 How to Think About Value
+### §11.3 How to Think About Value
 
 Capital cost is only one dimension of the economic case for accessible design, and in most circumstances it is the weakest dimension --- because capital cost is a one-time event, while the benefits of accessible design accumulate over the life of the building. Design professionals should be equipped to identify and communicate at least four dimensions of value.
 
-#### §12.3.4 Social and Systemic Value Accessible design enables participation in employment, education, civic
+#### §11.3.4 Social and Systemic Value Accessible design enables participation in employment, education, civic
 
 life, culture, and daily commerce. Research across 40 countries (Tibble 2005; Zaidi and Burchardt 2005; Mitra and Jones 2017; Estrada-Mejia et al. 2023) estimated the extra costs imposed on households with a disabled member at approximately 5.7% of total household expenditure additional expenditures on transport, assistance, specialist equipment, and healthcare attributable to environments not designed for the full range of human bodies.
 
@@ -5608,7 +5434,7 @@ This figure has two uses in practice: as a benefit metric (accessible design tha
 
 *Part 7 cross-reference: Category F (Sensory Zoning — formerly Category G; see Volume 2 v8.0 resequencing note) provisions — graduated stimulation gradients, re-entry protocols, sensory rooms — are not individually expensive. Their cumulative effect is to make a building habitable for people who would otherwise be unable to remain in it. The cost of their absence is not a reduction in profit; it is an absence of access.*
 
-#### §12.3.1 Functional Value: What the Building Can Do
+#### §11.3.1 Functional Value: What the Building Can Do
 
 An accessible building can be used by more people. This is not a peripheral benefit; it is the building's core function. A building that cannot be used by a wheelchair user, a person with low vision, a Deaf person, or a person with a cognitive disability is a building that is failing a proportion of its intended users.
 
@@ -5616,7 +5442,7 @@ The reframing matters. The question is not 'does accessibility cost too much?' I
 
 The empirical evidence for functional value is strongest in dementia design research. Post-occupancy evaluation of De Hogeweyk Dementia Village (BuroKade Architects / Vivium Care Group, Dutch-language POE reports, 2012--2019) found that 94% of residents with moderate dementia could independently navigate to the village square and back within six months of admission, compared with 34% in conventional dementia care units. De Hogeweyk also operated at a lower per-resident staffing ratio than conventional Dutch facilities despite higher measured quality-of-life scores — providing economic evidence that environmental quality reduces care dependency.
 
-#### §12.3.2 Lifecycle Value: What the Building Costs to Own and Operate
+#### §11.3.2 Lifecycle Value: What the Building Costs to Own and Operate
 
 Buildings are occupied, maintained, adapted, and replaced over periods of twenty to a hundred years. Accessible design contributes to lifecycle value through three mechanisms:
 
@@ -5626,7 +5452,7 @@ Buildings are occupied, maintained, adapted, and replaced over periods of twenty
 
 **Regulatory durability:** Accessibility standards are generally moving towards greater coverage and higher performance requirements. Buildings designed to best practice today will require less adaptation to meet tomorrow's standards. The German KfW/Prognos evaluation of the Altersgerecht Umbauen programme — which subsidised over 700,000 dwelling retrofits between 2009 and 2022 — found an average retrofit cost of €19,100 per dwelling for barrier-reduction measures that did not achieve full DIN 18040-2 compliance. This is the cost of the regulatory-durability gap.
 
-#### §12.3.3 Market and Institutional Value
+#### §11.3.3 Market and Institutional Value
 
 In commercial and institutional markets, accessible design increasingly functions as a competitive differentiator:
 
@@ -5635,7 +5461,7 @@ In commercial and institutional markets, accessible design increasingly function
 - The population of disabled people and older adults who benefit from accessible design constitutes 15--20% of the population in developed economies — a substantial and historically underserved consumer segment with material spending power.
 - Non-compliance with accessibility legislation creates financial exposures: ADA Title III litigation costs, UK Equality Act Section 20 remediation orders, and CRPD complaint mechanisms are all real financial risks that design-stage accessible provision avoids.
 
-### §12.4 Construction Cost Intelligence Tables
+### §11.4 Construction Cost Intelligence Tables
 
 The following tables provide design-stage cost intelligence for accessible design techniques, expressed as percentage of project cost (new construction premium) and retrofit multiplier (× new construction cost). This format is used in place of absolute unit costs, which vary by a factor of 4× or more across target jurisdictions and provide false precision without local calibration.
 
@@ -5648,7 +5474,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 | Decision Stage | Latest stage at which NC cost still applies. After this, retrofit pricing begins. |
 *Calibration sources: TERRAGON/DStGB (2017); Ielegems \& Vanrie (2024); |Rick Hansen Foundation (2023); KfW/Prognos (2022); CEREMA (2023); Fuglerud et al. (2015); Part I §1.6 DAR cost data (CAN/ASC 2.8:2025 (current as of January 2026); Habinteg 2010).*
 
-#### §12.4.1 Circulation \& Entry
+#### §11.4.1 Circulation \& Entry
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5664,7 +5490,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 | Covered entrance canopy ≥3000×2000mm | E-05 | **0.1–0.3%** | 3–6× | Schematic |
 **Critical note — lift shaft:** Omission of lift shaft from the | structural design is the single highest-consequence accessibility deferral documented in the evidence base. Specify structural provision at brief stage regardless of immediate fit-out budget.
 
-#### §12.4.2 Toilet and Bathroom Facilities
+#### §11.4.2 Toilet and Bathroom Facilities
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5678,7 +5504,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 **Evidence note:** The bathroom is the highest-risk location in domestic environments for both falls and cardiovascular events. Japanese epidemiological data documents ≈17,000 cardiovascular deaths per year attributable to bathroom temperature differential >10°C. Threshold height ≥15mm is documented as statistically significant fall risk increase (AIJ). Both provisions are zero-additional-cost at design stage.
 
-#### §12.4.3 Acoustic Design
+#### §11.4.3 Acoustic Design
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5691,7 +5517,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 **System integrity note:** Acoustic accessibility provisions function as systems. Removing a single item from an integrated acoustic system (e.g. removing ceiling treatment while retaining hearing loop) often destroys more value than the cost saved. Brief acoustic accessibility as an outcome system, not as independent line items. See §12.5.2.
 
-#### §12.4.4 Visual Environment \& Lighting
+#### §11.4.4 Visual Environment \& Lighting
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5704,7 +5530,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 **| Visual fire alarm throughout | B-10 | \*\*0.1–0.2%\*\* | 1.5–3× | Technical design |** 
 | Colour-coded zones | C-02 | **0%** | 0.5–1× | Construction |  |
 
-#### §12.4.5 Cognitive Accessibility \& Wayfinding
+#### §11.4.5 Cognitive Accessibility \& Wayfinding
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5719,7 +5545,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 
 **Critical note — toilet visibility:** Toilet visibility from the primary living space in a dementia care unit is a schematic design decision — it determines the relationship between room positions. It cannot be retrofitted. Marquardt (2011, 32-facility study): 47% reduction in incontinence events. This is among the strongest single empirical findings for any spatial provision in this Guidebook.
 
-#### §12.4.6 Thermal Comfort \& Indoor Environment
+#### §11.4.6 Thermal Comfort \& Indoor Environment
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5728,7 +5554,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 **| Thermal mass | TC-03 | \*\*0%\*\* | N/A | Brief |** 
 | Air quality monitoring and ventilation | A-08/TC-04 | **0.2–0.5%** | 2–3× | Technical design |  |
 
-#### §12.4.7 Smart \& Assistive Technology
+#### §11.4.7 Smart \& Assistive Technology
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5737,7 +5563,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 **| Voice-activated environmental control | H-02 | \*\*0.3–0.8%\*\* | 1.5–2.5× | Technical design |** 
 | Nurse call / emergency pull cord | H-04/H-05 | **0.1–0.3%** | 2–4× | Technical design |  |
 
-#### §12.4.8 Site \& Outdoor
+#### §11.4.8 Site \& Outdoor
 
 | Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
 | --- | --- | --- | --- | --- |
@@ -5746,7 +5572,7 @@ The following tables provide design-stage cost intelligence for accessible desig
 **| Accessible outdoor seating / rest points | E-10 | \*\*0–0.1%\*\* | 1.5–3× | Construction |** 
 | Sensory garden with loop path | D-11/BIO-01 | **0.1–0.3%** | 2–4× | Construction |  |
 
-#### §12.4.9 The Cost Curve: Summary Table
+#### §11.4.9 The Cost Curve: Summary Table
 
 The cheapest moment for any accessibility provision is the brief stage. Every stage of deferral multiplies cost.
 
@@ -5760,9 +5586,9 @@ The cheapest moment for any accessibility provision is the brief stage. Every st
 
 *Sources: Rick Hansen Foundation (2023); TERRAGON/DStGB (2017); KfW/Prognos (2022); Ielegems \& Vanrie (2024)*
 
-### §12.5 The Principle of Integrated Design Value
+### §11.5 The Principle of Integrated Design Value
 
-#### §12.5.1 The Accessibility-Sustainability Synergy
+#### §11.5.1 The Accessibility-Sustainability Synergy
 
 Many interventions aimed at improving energy efficiency inherently improve accessibility, and vice versa. This convergence reflects shared design principles: durability, adaptability, and occupant wellbeing. When these interventions are bundled, the combined economic case is stronger than either alone. Large-scale retrofit programmes that bundle energy efficiency and accessibility improvements can achieve operating cost reductions of 21--48% at whole-building scale, with documented payback periods under 20 months.
 
@@ -5776,7 +5602,7 @@ Many interventions aimed at improving energy efficiency inherently improve acces
 
 Level Management), A-08 (HVAC Noise Control), E-05 (Covered Entrance Canopy), and H-02 (Individual Environmental Control) all carry direct sustainability co-benefits alongside accessibility benefits. The WELL v2 (2024) certification framework explicitly credits several of these provisions.*
 
-#### §12.5.2 Value Engineering and the Risk of Disaggregation
+#### §11.5.2 Value Engineering and the Risk of Disaggregation
 
 Accessibility provisions are disproportionately vulnerable to value engineering because their individual costs are visible and their individual benefits are diffuse. A hearing loop serving 3% of users may appear to be a low-priority cost reduction, until evaluated alongside the acoustic ceiling that enables intelligibility (Item A-02), the reverberation-controlled room geometry (Item A-07), and the counter loop (Item A-10) — at which point the entire acoustic accessibility provision becomes visible as a system whose elements cannot be independently removed.
 
@@ -5784,11 +5610,11 @@ The practical implication: accessible design elements should be specified and co
 
 *Part 7 cross-reference: Items A-02, A-05, A-06, A-16, and B-06 document system interdependencies in acoustic and lighting accessibility. Item A-11 (Room Hearing Loop) notes that the hearing loop fails without the acoustic conditions that make the audio signal intelligible.*
 
-### §12.6 The Evidence Landscape
+### §11.6 The Evidence Landscape
 
 Understanding where evidence is strong, moderate, and absent is essential for making credible evidence-based claims. Overclaiming is as damaging to professional credibility as ignorance.
 
-#### §12.6.1 Where Evidence Is Strong
+#### §11.6.1 Where Evidence Is Strong
 
 | Provision | Evidence | Source(s) |
 | --- | --- | --- |
@@ -5803,7 +5629,7 @@ Understanding where evidence is strong, moderate, and absent is essential for ma
 | 1:20 ramp gradient — functional OT maximum for manual wheelchair self-propulsion (Item E-03) | Largest OT propulsion study sample available | Boverket 2022 [Swedish\]; SINTEF Byggforsk [Norwegian\]; Scandinavian Journal of OT |
 | Zero-threshold wet room (Item G-04) | Consistent across six language bodies | German, Japanese, Swedish, Norwegian, British, North American, Australian standards and research |  |
 
-#### §12.6.2 Where Evidence Is Moderate
+#### §11.6.2 Where Evidence Is Moderate
 
 **Property value premiums:** Direction consistent (accessible and ESG-compliant buildings outperform on market metrics), magnitude highly variable by market and asset class. The 5.53% elevator retrofit premium reflects a Hangzhou residential study, not a universal benchmark.
 
@@ -5813,15 +5639,15 @@ Understanding where evidence is strong, moderate, and absent is essential for ma
 
 **Sensory garden loop — agitation reduction (Item D-11):** Nationalt Videnscenter for Demens (Danish). Direction consistent; sample sizes moderate.
 
-#### §12.6.3 Where Evidence Is Absent or Weak
+#### §11.6.3 Where Evidence Is Absent or Weak
 
 - Specific cost data for digital and ICT accessibility interventions: no standardised benchmark database exists. - DeafBlind-specific design provisions: no non-English-language empirical literature identified. - ASPECTSS autism design at scale: limited parallel evidence in non-English literature. - Quantified economic returns from neurodivergent design provisions: strong clinical outcome evidence but few quantified economic returns. - Post-occupancy cost data across building types: rarely collected, rarely published, rarely available to design teams on subsequent projects.
 
-### §12.7 Accessibility in the Design Process: An Economic Timeline
+### §11.7 Accessibility in the Design Process: An Economic Timeline
 
 The following maps accessible design decisions to the stage at which they are most economically made, the cost of deferral, and the Part 7 provisions most dependent on early decision-making.
 
-#### §12.7.1 Pre-Design and Brief Stage — Cost: Near Zero
+#### §11.7.1 Pre-Design and Brief Stage — Cost: Near Zero
 
 Decisions made at this stage carry effectively zero marginal cost. They are matters of design intent, not additional specification.
 
@@ -5829,7 +5655,7 @@ Decisions made at this stage carry effectively zero marginal cost. They are matt
 
 **Key Part 7 items:** A-04 (Acoustic Zoning), D-01 (Loop Floor Plan), E-06 (Level Entry), B-05 (HVAC Noise — structural isolation must be brief stage), A-09 (HVAC Structural Isolation). If these decisions are not made at brief stage, the cost of incorporating them rises at every subsequent stage. The loop floor plan for a dementia care building cannot be added to a scheme already configured on a corridor plan without redesign.
 
-#### §12.7.2 Schematic Design Stage — Cost: Negligible
+#### §11.7.2 Schematic Design Stage — Cost: Negligible
 
 Most spatial accessibility provisions cost nothing at schematic stage if the floor plan already embeds them. An accessible toilet adjacent to circulation is a plan decision; a wheelchair turning radius is a dimension; the loop floor plan is a configuration.
 
@@ -5837,7 +5663,7 @@ Most spatial accessibility provisions cost nothing at schematic stage if the flo
 
 **Key Part 7 items:** D-03 (Toilet Visibility), E-03 (Ramp Gradient --- plan geometry), G-04 (Zero-Threshold Wet Room — drainage strategy), A-11 (Room Hearing Loop — floor cavity routing).
 
-#### §12.7.3 Technical Design Stage — Cost: Quantifiable
+#### §11.7.3 Technical Design Stage — Cost: Quantifiable
 
 At this stage, accessible design provisions are specific line items with real costs. They are typically modest relative to total project value, but they must be budgeted.
 
@@ -5845,19 +5671,19 @@ At this stage, accessible design provisions are specific line items with real co
 
 **Key Part 7 items:** A-02 (Acoustic Ceiling Treatment), A-03 (Acoustic Door), B-01 (Circadian Lighting), C-04 (LRV Contrast), G-03 (Grab Bar Blocking), E-07 (Slip Resistance), E-09 (Tactile Walking Surface Indicators).
 
-#### §12.7.4 Construction Stage — Cost: Change Order Premium
+#### §11.7.4 Construction Stage — Cost: Change Order Premium
 
 The construction stage is the last point at which accessible provisions can be added without the full cost of disruption. Even here, adding provisions not in the brief requires change orders with contractor overhead, programme disruption, and revisiting completed work.
 
 **What cannot be added without disproportionate cost:** Lift shaft provision (if not in structural design); loop floor plan adjustments (structural work); acoustic partition upgrades (if flanking paths have not been addressed at design stage); zero-threshold bathroom configuration (drainage position is fixed at slab pour).
 
-#### §12.7.5 Post-Occupancy — Cost: 10--40× Design-Stage
+#### §11.7.5 Post-Occupancy — Cost: 10--40× Design-Stage
 
 The Rick Hansen Foundation (2023) documents the average cost of post-occupancy accessible retrofit in Canadian housing stock as ten to forty times the equivalent design-stage provision. The German KfW/Prognos data confirms this: average €19,100 per dwelling for barrier-reduction measures not achieving full DIN 18040-2 compliance. Assistive technology overlays, portable ramps, signage improvements, and minor hardware changes can be added post-occupancy at reasonable cost. Vertical access, acoustic remediation, level entry, and bathroom reconfiguration cannot.
 
-### §12.8 Making the Economic Case: Practical Guidance
+### §11.8 Making the Economic Case: Practical Guidance
 
-#### §12.8.1 In Client Conversations
+#### §11.8.1 In Client Conversations
 
 The most effective economic argument for accessibility does not depend on financial modelling. The following arguments are evidence-grounded and require no financial expertise to deploy:
 
@@ -5881,7 +5707,7 @@ The most effective economic argument for accessibility does not depend on financ
 
 "A building that excludes people is not fulfilling its public purpose. Fifteen to twenty percent of the population has a disability affecting use of built environments. Accessible design is a question of whether a public building serves the public."
 
-#### §12.8.2 In Procurement and Specification
+#### §11.8.2 In Procurement and Specification
 
 **Name provisions explicitly.** A brief that says 'the building shall be accessible' is not a brief. Accessible design provisions must be specified with the same precision as any other design requirement --- dimensions, ratings, standards references, Part 7 item codes.
 
@@ -5893,7 +5719,7 @@ The most effective economic argument for accessibility does not depend on financ
 
 **Brief the QS.** Instruct the quantity surveyor to flag any accessibility item proposed for value engineering with a note of the likely reinstatement cost at retrofit stage.
 
-#### §12.8.3 Jurisdiction-Specific Notes
+#### §11.8.3 Jurisdiction-Specific Notes
 
 | Jurisdiction | Key Notes for Design Teams |
 | --- | --- |
@@ -5905,7 +5731,7 @@ The most effective economic argument for accessibility does not depend on financ
 | Belgium / Netherlands | Ielegems \& Vanrie (2024): building-type cost differentiation (0.94%--3.92%) is the most granular published dataset available. Use when presenting cost evidence by building sector. |
 | Brazil | ABNT NBR 9050:2020 broadly consistent with this Guidebook. PTV ≥40 wet appropriate in tropical/high-humidity conditions. Brazilian epidemiological data supports increasing emphasis on bariatric provisions (Category L). |  |
 
-### §12.9 Cross-Reference Index: Economics and Part 7
+### §11.9 Cross-Reference Index: Economics and Part 7
 
 This index maps the economic principles in this part to the specific Part 7 provisions they support, and identifies the evidence source for the economic relationship.
 
@@ -5929,9 +5755,9 @@ This index maps the economic principles in this part to the specific Part 7 prov
 | Slip resistance PTV ≥40 wet (high-rainfall / tropical) | E-07 | MLIT Japan; ABNT NBR 9050:2020 |
 | Hearing loop — French comprehensive coverage standard | A-10, A-11 | CEREMA 2021 [French\] |  |
 
-### §12.10 Limitations and Appeal for Collective Evidence
+### §11.10 Limitations and Appeal for Collective Evidence
 
-#### §12.10.1 What This Part Cannot Provide
+#### §11.10.1 What This Part Cannot Provide
 
 This part does not provide unit cost tables, multiplier calculators, or investment appraisal templates. The absence of a standardised, centrally available cost database for accessible design interventions makes any published cost figure unreliable without local calibration. Published figures that appear precise often reflect context-specific conditions that do not generalise.
 
@@ -5944,20 +5770,20 @@ For project-specific cost estimation, obtain data from:
 - Accessibility rating system assessors (RHFAC in Canada, BREEAM Access in the UK, Japanese Barrier-Free Act assessors).
 - RSMeans (North America) and national equivalents, used as starting points with explicit local adjustment.
 
-#### §12.10.2 Where More Evidence Is Needed
+#### §11.10.2 Where More Evidence Is Needed
 
 - **Standardised cost database for accessible retrofit:** The most significant gap. The field needs a centralised, anonymised repository of real project cost data for specific interventions, stratified by building type, region, condition, and scale
 - **Quantified returns from neurodivergent provisions:** Strong clinical outcome evidence but limited quantified economic evidence for Category G, Acoustic-for-ASD, and related provisions.
 - **DeafBlind design provisions:** Predominantly English-language evidence base. Non-English clinical and OT literature may exist and has not been systematically reviewed.
 - **ASPECTSS at scale:** Limited parallel evidence in non-English literature. German-language ASD environment research exists and should be reviewed.
 
-#### §12.10.3 How to Contribute
+#### §11.10.3 How to Contribute
 
 Practitioners are invited to submit anonymised project cost data interventions, costs, building type, jurisdiction, condition, and programme scale — to the Guidebook editorial process. This data will be reviewed for incorporation into future revisions.
 
 **The Guidebook's Position** The absence of good cost data is not a reason to defer accessible design decisions. It is a reason to make those decisions at the stage where cost uncertainty matters least — the brief and schematic design stage. The cost of a good decision made early is predictably small. The cost of a good decision made late is large and unpredictable.
 
-#### §12.10.4 Editorial Note: Part 7 Items Requiring Evidence Updates
+#### §11.10.4 Editorial Note: Part 7 Items Requiring Evidence Updates
 
 The following Part 7 items should have their evidence bases updated in the next revision, based on findings of the Multilingual Systematic Review (March 2026):
 
@@ -6032,7 +5858,7 @@ The following Part 7 items should have their evidence bases updated in the next 
 - CAN/ASC 2.8:2025 (current as of January 2026). *Accessible design for the built environment*. Standards Council of Canada.
 - Habinteg (2010). *Lifetime Homes: Standards and guidance*. London.
 - RCOT (2023). *Living Well by Design*. Royal College of Occupational Therapists. *End of Part 11 — Next: Part 13: Case Studies*
-## Part 13: Case Studies — Documented Accessible Built Environments
+## Part 12: Case Studies — Documented Accessible Built Environments
 
 ### Note on Methodology
 
