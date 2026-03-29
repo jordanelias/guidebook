@@ -13,7 +13,7 @@ description: >
   transformation defined by a mapping table.
 ---
 
-**Model:** Haiku 4.5 for pattern extraction · Sonnet 4.6 for ambiguity resolution
+**Model:** Sonnet 4.6
 **Input:** Document (or per-Part files) + renumbering map + section map
 **Output:** Renumbered document + renumber log
 **Prerequisite:** Content must be final. Renumbering is Phase 4 — never run before content editing is complete.
