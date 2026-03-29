@@ -11,7 +11,7 @@ description: >
   is being added to the guidebook suite.
 ---
 
-**Model:** Sonnet 4.6 for all stages with framing judgment. Haiku 4.5 for extraction-only passes (Stage 3 chunking).
+**Model:** Sonnet 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
 **Intake:** confirm before starting — supplemental volume file · list of codes to relocate · Option A or B · target volumes in scope.
 **Output:** amended .md files per volume + integration log (`supp_integration_log_[VOL-ID]_[DATE].md`)
