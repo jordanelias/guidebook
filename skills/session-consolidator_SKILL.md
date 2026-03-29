@@ -107,11 +107,13 @@ For each specific, actionable, recurring pattern identified in Steps 1–2:
 If `multilingual-research` ran and LOG was not called → flag as BLOCKER in session YAML.
 
 ### 5. Write session close to GitHub
-- Determine filename: `sessions/session_{YYYY-MM-DD-HHMM}.md` using the session-close timestamp (not wall-clock if different).
+- **Canonical timestamp:** Run `date -u +%Y-%m-%d\ %H:%M` via bash_tool to get the UTC timestamp. Use this value for all `YYYY-MM-DD HH:MM` fields in the YAML and for the filename. Do not use the system prompt date — it does not advance past midnight.
+- Determine filename: `sessions/session_{YYYY-MM-DD-HHMM}.md` from the UTC timestamp (no spaces; HHMM format).
 - Check for collision: GET filename. If 404: proceed. If exists: append `-b` suffix.
 - This is always a NEW file — never append to an existing session file.
 - PUT (no SHA required for new files).
 - Commit: `session-consolidator: session close [YYYY-MM-DD HH:MM]`
+- **Update LATEST pointer:** After writing the session file, GET `sessions/LATEST`, PUT back with content = this session's filename (no trailing newline). Commit: `session-consolidator: update LATEST [YYYY-MM-DD HH:MM]`. This replaces directory-scan at session start.
 
 **YAML schema:**
 ```yaml
@@ -162,4 +164,15 @@ Before writing the session YAML, verify no working documents are uncommitted:
 3. The `reconciliation.sessions` block must include `{checked: true}` only if this check passes.
 
 **Rule:** No session closes with uncommitted working documents. Data loss prevention.
+
+### Pre-Close: YAML Blocker Validation
+
+Before writing the session YAML, validate the `blockers:` list against the gap register:
+
+1. GET `gap_register.md`.
+2. For each item in the *prior* session's `blockers:` list: check if its associated gap ID is now CLOSED in the register. If CLOSED: do not carry forward to this session's YAML. If still OPEN: carry forward with updated context if relevant.
+3. If a blocker is listed in the current session's YAML without a corresponding OPEN gap register entry: either create the gap entry or remove the blocker — never let a blocker float without a gap ID.
+4. Write the validated `blockers:` list only.
+
+**Rule:** Stale blockers cause workplan drift. Validate every close.
 
