@@ -4673,7 +4673,7 @@ Part 8 is not a substitute for engineering design. It is the architect's instrum
 | **AC** | Acoustic Engineer | Noise criteria, RT60, STI, partition STC, hearing loop layout and performance |
 | **EE** | Electrical Engineer | Lighting circuits, fire alarm, hearing loop wiring, power for controls and assistive technology, BMS |
 | **ME** | Mechanical Engineer | HVAC, ventilation, vibration isolation, thermal zone control, TMV, underfloor heating, plumbing drainage infrastructure |
-| **SE** | Structural Engineer | Lift shaft, grab bar blocking, hoist track, floating plant room, floor recess, refuge enclosure — §9.5 |
+| **SE** | Structural Engineer | Lift shaft, grab bar blocking, hoist track, floating plant room, floor recess, refuge enclosure — §8.5 |
 
 ---
 
@@ -4708,7 +4708,7 @@ The register identifies design library items (Part 4, Categories A–J) that req
 | A-05 | Acoustic Wall Panels and Bass Trapping | AC | DD | No | RT60 post-installation | Finishes specification |
 | A-06 | Acoustic Wall Panels — Mid-Frequency Treatment | AC | DD | No | RT60 at 500 Hz | Finishes specification |
 | A-08 | HVAC Noise Control (NC-25 in Sensitive Spaces) | AC, ME | SD | ⚠ YES — plant room location and duct routing are schematic decisions; cannot be resolved by ductwork modification at later stages | NC-25 at all air terminals in sensitive spaces; NC-30 in general occupied spaces | Acoustic strategy; ME brief |
-| A-09 | HVAC Vibration Isolation (Floating Plant Room) | AC, ME, SE | SD | ⚠ YES — floating slab and isolation specification are schematic decisions. SE scope: §9.5. | Vibration at sensitive space floors <0.1 m/s RMS | Acoustic strategy; ME brief |
+| A-09 | HVAC Vibration Isolation (Floating Plant Room) | AC, ME, SE | SD | ⚠ YES — floating slab and isolation specification are schematic decisions. SE scope: §8.5. | Vibration at sensitive space floors <0.1 m/s RMS | Acoustic strategy; ME brief |
 | A-10 | Counter Hearing Loop | AC, EE | DD | No | IEC 60118-4 field strength throughout counter loop area | EE brief; loop layout drawing |
 | A-11 | Room Hearing Loop | AC, EE | DD | No | IEC 60118-4 field strength across full room area | EE brief; loop layout drawing |
 | A-12 | Sound Field System (Classroom / Assembly) | AC, EE | DD | No | STI ≥0.7; coverage uniformity | EE brief; AV schedule |
@@ -4741,10 +4741,10 @@ The register identifies design library items (Part 4, Categories A–J) that req
 | B-11 | Warm Colour Temperature for Evening (≤2700 K after 19:00) | EE | DD | No | Automated CCT shift at 19:00 confirmed; manual override function | BMS brief; lighting specification |
 | D-09 | Multi-Modal Wayfinding — Audio Beacon Power Provision | EE | DD | No | Power at each declared beacon node | EE brief; signage schedule |
 | D-11 | Secured Outdoor Loop Path — Gate Operation and Lighting | EE | SD | No | Gate operation; external lighting ≥50 lux on path | Site plan; EE brief |
-| E-01 | Accessible Lift — Power, Controls, Announcement System | EE | SD | ⚠ YES — shaft location is schematic. SE scope: §9.5. | Load test; door force ≤22 N; travel time; floor announcement audible and visible | EE brief |
+| E-01 | Accessible Lift — Power, Controls, Announcement System | EE | SD | ⚠ YES — shaft location is schematic. SE scope: §8.5. | Load test; door force ≤22 N; travel time; floor announcement audible and visible | EE brief |
 | E-04 | Accessible Parking — External Lighting | EE | SD | No | Illuminance ≥50 lux at bay surface | Site plan; EE brief |
 | E-11 | Automatic Door (Low-Energy Operator, ≤22 N) | EE | DD | No | Door force ≤22 N; activation zone function test | EE brief; door schedule |
-| E-12 | Emergency Evacuation — Evacuation Lift Power, Intercom, UPS | EE | SD | ⚠ YES — refuge locations are schematic decisions. SE scope: §9.5. | UPS 2-hour endurance test; refuge intercom function | EE brief |
+| E-12 | Emergency Evacuation — Evacuation Lift Power, Intercom, UPS | EE | SD | ⚠ YES — refuge locations are schematic decisions. SE scope: §8.5. | UPS 2-hour endurance test; refuge intercom function | EE brief |
 | G-04 | Height-Adjustable Worksurface *(electric models only)* | EE | DD | No | Full adjustment range; power at each unit confirmed | Furniture schedule; EE brief |
 | G-05 | Height-Adjustable Seating and Desks *(electric models only)* | EE | DD | No | Adjustment range; power confirmed | Furniture schedule; EE brief |
 | H-01 | Accessible Controls (400–1100 mm AFF, All Operated Surfaces) | EE | CD | No | Height measurement at all electrical devices | EE brief; electrical schedule |
@@ -4753,10 +4753,10 @@ The register identifies design library items (Part 4, Categories A–J) that req
 | H-04 | Accessible Intercom and Video Door Entry | EE | DD | No | Full intercom function; BMS remote door release confirmed | EE brief; door schedule |
 | H-05 | Nurse Call / Emergency Pull Cord | EE | DD | No | Response within 3 s from all cord positions; audible and visual confirmation | EE brief; electrical schedule |
 | H-06 | Assistive Technology Infrastructure (Conduit + Power Provision) | EE | DD | No | Continuity on all conduit runs; power at each provision point | EE brief; DAR register |
-| I-05 | Hoist and Ceiling Track — Motor Power | EE | CD | ⚠ YES — structural track provision: ×20–40 retrofit. SE scope: §9.5. | Power at each track point; motor function | EE brief |
+| I-05 | Hoist and Ceiling Track — Motor Power | EE | CD | ⚠ YES — structural track provision: ×20–40 retrofit. SE scope: §8.5. | Power at each track point; motor function | EE brief |
 | I-06 | Kitchen for UPL Users — Power at Accessible Height *(assisted living / residential care)* | EE | DD | No | Power at accessible height; knee clearance under hob confirmed | EE brief; room data sheet |
 
-*Note on B-09:* Structural openings for clerestories and rooflights are SE items — §9.5. The EE scope here is limited to supplementary electric lighting in daylit transition zones.
+*Note on B-09:* Structural openings for clerestories and rooflights are SE items — §8.5. The EE scope here is limited to supplementary electric lighting in daylit transition zones.
 
 *Note on B-10:* Visual fire alarms must be on an independent circuit from the audio alarm system. State this explicitly in the EE brief. The common failure mode is a single circuit that defaults to audio-only when the VAD is isolated.
 
@@ -4768,12 +4768,12 @@ The register identifies design library items (Part 4, Categories A–J) that req
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
-| A-08 | HVAC Noise Control (NC-25 in Sensitive Spaces) | ME, AC | SD | ⚠ YES — see §9.1.2 | NC-25 at all air terminals; NC-30 general | Acoustic strategy; ME brief |
-| A-09 | HVAC Vibration Isolation (Floating Plant Room) | ME, AC, SE | SD | ⚠ YES — see §9.1.2 | Vibration <0.1 m/s RMS at sensitive space floors | ME brief |
-| A-16 | Sensory Room — HVAC Supply | ME, AC, EE | SD | ⚠ YES — see §9.1.2 | NC-25 in sensory room | Room data sheet |
+| A-08 | HVAC Noise Control (NC-25 in Sensitive Spaces) | ME, AC | SD | ⚠ YES — see §8.1.2 | NC-25 at all air terminals; NC-30 general | Acoustic strategy; ME brief |
+| A-09 | HVAC Vibration Isolation (Floating Plant Room) | ME, AC, SE | SD | ⚠ YES — see §8.1.2 | Vibration <0.1 m/s RMS at sensitive space floors | ME brief |
+| A-16 | Sensory Room — HVAC Supply | ME, AC, EE | SD | ⚠ YES — see §8.1.2 | NC-25 in sensory room | Room data sheet |
 | A-17 | Background Noise Control (Open-Plan Office, NC-30) | ME, AC | DD | No | NC-30 at workstations | ME brief |
-| E-06 | Level Entry (Zero Step Threshold) — Threshold Drainage | ME | SD | ⚠ YES — floor levels and drainage route are schematic decisions. SE structural threshold detail: §9.5. | No ponding at threshold under 50 mm/hr rainfall simulation | ME brief |
-| E-12 | Emergency Evacuation — Stairwell Pressurisation | ME | SD | ⚠ YES — see §9.1.3 | Pressure differential per fire engineer's brief | ME brief |
+| E-06 | Level Entry (Zero Step Threshold) — Threshold Drainage | ME | SD | ⚠ YES — floor levels and drainage route are schematic decisions. SE structural threshold detail: §8.5. | No ponding at threshold under 50 mm/hr rainfall simulation | ME brief |
+| E-12 | Emergency Evacuation — Stairwell Pressurisation | ME | SD | ⚠ YES — see §8.1.3 | Pressure differential per fire engineer's brief | ME brief |
 | F-01 | Sensory Gradient Strategy — Zone Ventilation | ME, AC | SD | ⚠ YES — zone locations must be confirmed at SD; ventilation design follows from zone arrangement | NC-25 in low-stimulation zones | Room adjacency plan; ME brief |
 | F-02 | Fragrance-Free Zone — Dedicated Ventilation | ME | DD | No | VOC <0.1 mg/m³; no shared recirculation confirmed | ME brief; FM brief |
 | F-03 | Sensory Retreat — Mechanical Supply | ME, AC, EE | SD | ⚠ YES — location is schematic | NC-25; RT60 ≤0.4 s; lighting 50–200 lux achievable | Room data sheet |
@@ -4782,7 +4782,7 @@ The register identifies design library items (Part 4, Categories A–J) that req
 | F-07 | Acoustic Zone Separation — HVAC Duct Cross-Talk | ME, AC | DD | No | NC-25 maintained in sensitive zone; no duct cross-talk between zones | ME brief; acoustic strategy |
 | H-02 | Individual Environmental Control — HVAC Zone | ME, EE | DD | No | 18–22°C range independently achievable per zone; accessible control confirmed | ME brief |
 | I-03 | TMV (Thermostatic Mixing Valve, ≤38°C at Outlet) | ME | DD | No | ≤38°C at all outlets under all flow conditions; annual service in FM brief | ME brief |
-| I-04 | Accessible Bathroom — Drainage Channel and Floor Drain | ME | SD | ⚠ YES — drainage route and slab recess are schematic. SE floor recess: §9.5. | No pooling at threshold; drainage test | ME brief |
+| I-04 | Accessible Bathroom — Drainage Channel and Floor Drain | ME | SD | ⚠ YES — drainage route and slab recess are schematic. SE floor recess: §8.5. | No pooling at threshold; drainage test | ME brief |
 
 *Items F-06 (tactile flooring zoning — product specification) and the spatial aspects of F-01/F-03/F-04 are architect-specified; only the mechanical ventilation and acoustic requirements are addressed here.*
 
@@ -4867,10 +4867,10 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 | Item | Core Requirement | Stage | Performance Target | Ready for Occupancy |
 |---|---|---|---|---|
 | A-08 | HVAC to achieve NC-25 in sensitive spaces; NC-30 in all other occupied spaces. Duct velocity ≤3 m/s at primary distribution. Acoustic lining to supply ducts ≥10 m from AHU | SD/DD | NC-25 sensitive; NC-30 general | NC at all air terminals post-commissioning |
-| A-09 | Rotating plant on vibration isolation pads ≥20 dB insertion loss at 16–250 Hz. Floating plant room where adjacent to sensitive spaces (SE co-ordination per §9.5). Flexible connections at all pipe and duct connections to mechanical plant | SD | <0.1 m/s RMS at sensitive space floors | Vibration measurement |
+| A-09 | Rotating plant on vibration isolation pads ≥20 dB insertion loss at 16–250 Hz. Floating plant room where adjacent to sensitive spaces (SE co-ordination per §8.5). Flexible connections at all pipe and duct connections to mechanical plant | SD | <0.1 m/s RMS at sensitive space floors | Vibration measurement |
 | A-16 | HVAC supply to sensory room to achieve NC-25; no shared return air with noisy adjacencies | SD | NC-25 | NC measurement |
 | A-17 | HVAC to achieve NC-30 in open-plan office spaces | DD | NC-30 | NC measurement |
-| E-06 | Drainage at level threshold: channel design to prevent ponding; coordinate with structural slab recess (§9.5) | SD | Zero ponding at threshold | Water test |
+| E-06 | Drainage at level threshold: channel design to prevent ponding; coordinate with structural slab recess (§8.5) | SD | Zero ponding at threshold | Water test |
 | E-12 | Stairwell pressurisation at evacuation lift lobbies and refuge enclosures per fire engineer's strategy | SD | Pressure differential per fire strategy | Pressurisation test |
 | F-01 | Sensory zone ventilation: NC-25 in low-stimulation zones; independently controllable ventilation per zone | SD | NC-25 in low-stimulation zones | NC measurement per zone |
 | F-02 | Dedicated ventilation supply to fragrance-free zones; no shared recirculation with zones where scented products are used | DD | VOC <0.1 mg/m³; ACH confirmed | Air sampling |
@@ -4879,7 +4879,7 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 | F-07 | No HVAC duct cross-talk between sensory zones; dampers at zone boundaries | DD | NC-25 maintained in sensitive zones | NC measurement |
 | H-02 | Individual HVAC zone control accessible from 900–1100 mm AFF; each zone independently operable | DD | 18–22°C range per zone | Temperature test per zone |
 | I-03 | TMV at all patient/resident bathrooms and WCs: ≤38°C at outlet. ≤35°C where NEU users are primary occupants. Annual service to be in FM brief | DD | ≤38°C at all outlets under all flow conditions | Temperature test at all outlets |
-| I-04 | Floor drain and drainage channel for zero-threshold shower; slab recess coordination with SE (§9.5) | SD | No pooling at threshold | Drainage test |
+| I-04 | Floor drain and drainage channel for zero-threshold shower; slab recess coordination with SE (§8.5) | SD | No pooling at threshold | Drainage test |
 
 **ME brief standard clause:**
 > *Mechanical systems in this project are to be designed with the following accessibility constraints as primary performance requirements. HVAC acoustic targets — NC-25 in sensitive spaces, NC-30 in general occupied spaces — are plant selection and ductwork design constraints, not commissioning adjustment targets. These criteria must be met by design. Vibration isolation to sensitive spaces is to be resolved jointly with the structural engineer at schematic design stage before the structural slab is finalised.*
@@ -4894,8 +4894,8 @@ The following items must be confirmed — in writing and on named drawings — b
 
 | Item | Confirmation Required at SD | Discipline | If Missed |
 |---|---|---|---|
-| E-01 | Lift power supply strategy confirmed; shaft location fixed | EE (power); SE (shaft — §9.5) | ×50+ |
-| E-06 | Threshold drainage design initiated; slab level confirmed | ME; SE (§9.5) | Not retrofittable |
+| E-01 | Lift power supply strategy confirmed; shaft location fixed | EE (power); SE (shaft — §8.5) | ×50+ |
+| E-06 | Threshold drainage design initiated; slab level confirmed | ME; SE (§8.5) | Not retrofittable |
 | E-12 | Evacuation lift power and pressurisation strategy confirmed | EE; ME | Significant structural/engineering intervention |
 | A-08 | Plant room location confirmed; NC-25 path modelled by AC | ME; AC | ×5–10 ductwork retrofit |
 | A-09 | Vibration isolation specification issued to SE | ME; AC | Not retrofittable |
@@ -4907,12 +4907,12 @@ The following items must be confirmed — in writing and on named drawings — b
 
 ### 8.3.2 Technical Design Gate — Brief Issue
 
-At technical design commencement, the architect is to issue updated consultant briefs incorporating all items from §9.2. The gate is not complete until:
+At technical design commencement, the architect is to issue updated consultant briefs incorporating all items from §8.2. The gate is not complete until:
 
 - AC brief issued covering: A-01 through A-17 as applicable, F-01, F-04, F-07
 - ME brief issued covering: A-08, A-09, A-16, A-17, E-06, E-12, F-01 through F-05, F-07, H-02, I-03, I-04
 - EE brief issued covering: all B-category items, D-09, D-11, E-01, E-04, E-11, E-12, G-04/G-05, all H-category items, I-05, I-06
-- SE brief issued covering: all items in §9.5
+- SE brief issued covering: all items in §8.5
 
 ### 8.3.3 VE Protection Register
 
@@ -5055,7 +5055,7 @@ Lived experience of the relevant condition(s) is also a form of evidence. Where 
 
 This guidebook is a distillation of OT evidence into architectural specification form. Its design library items (Part 4) are derived from Tier 1 sources — primarily OT clinical research and lived experience evidence — and expressed as population-informed ranges calibrated to functional capacity distributions.
 
-An architect using this guidebook without OT involvement is working at Tier 1 using population medians. This is appropriate for straightforward Tier 1 projects — a single primary population, low co-occurrence complexity, and building types where the standard library medians are well-calibrated to the anticipated user profile. It is not appropriate where multiple primary populations are present, where co-occurrence patterns produce irresolvable conflicts under the standard library alone, or where the populations involved (NDV, DEM, NEU, OFS, DBL) require environmental calibration beyond what population-level medians can reliably deliver. In those circumstances, OT or specialist consultant involvement at Tier 1 is the appropriate standard, not an elective enhancement. It is never appropriate for Tier 2 projects, and it does not replace OT involvement where the appointment triggers in §10.2.2 are met.
+An architect using this guidebook without OT involvement is working at Tier 1 using population medians. This is appropriate for straightforward Tier 1 projects — a single primary population, low co-occurrence complexity, and building types where the standard library medians are well-calibrated to the anticipated user profile. It is not appropriate where multiple primary populations are present, where co-occurrence patterns produce irresolvable conflicts under the standard library alone, or where the populations involved (NDV, DEM, NEU, OFS, DBL) require environmental calibration beyond what population-level medians can reliably deliver. In those circumstances, OT or specialist consultant involvement at Tier 1 is the appropriate standard, not an elective enhancement. It is never appropriate for Tier 2 projects, and it does not replace OT involvement where the appointment triggers in §9.2.2 are met.
 
 Where OT assessment findings conflict with the specification ranges in Part 4 of this guidebook, the OT assessment governs for the individual concerned. The ranges in Part 4 define the population evidence envelope; the individual's functional capacity determines where within that envelope the design should land. Departures from the stated range require documented clinical justification from the OT.
 
@@ -5211,7 +5211,7 @@ Disability organisations — advocacy groups, community organisations, peer supp
 
 For Tier 1 projects, engagement with the relevant disability community organisations is recommended at schematic design stage. For building types where disabled people are the primary user population (dementia care, Deaf schools, supported housing, neuroinclusive workplaces), this engagement should be structured and documented. The organisations listed in the 17-Jurisdiction Research Compendium §A1–A17 (jurisdiction-specific disability organisations) provide appropriate contact points by country.
 
-For Tier 2 projects, the named individual and their chosen support network are the primary lived experience input. The co-design process described in §10.2.5 applies.
+For Tier 2 projects, the named individual and their chosen support network are the primary lived experience input. The co-design process described in §9.2.5 applies.
 
 ---
 
