@@ -1,6 +1,6 @@
 ## body-sizes-supplementary-populations
 
-**Updated:** 2026-03-18 23:59  **Evidence tier:** 3–5 (anthropometric data, standards, limited OT evidence)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:59  **Evidence tier:** 3–5 (anthropometric data, standards, limited OT evidence)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** All four supplementary populations (children, short stature/dwarfism, extreme height, large body size) are entirely absent from all reviewed international accessibility standards (ADA, BS 8300, ISO 21542, DIN 18040, NS 11001, BCA 2025, CSA B651). Design provisions must be derived from anthropometric databases and expert consensus in the absence of dedicated standards.
 **CHD — Children (age-staged):**
   - All mainstream guidebook items are specified against adult anthropometric norms — systematic design failures wherever children are primary users

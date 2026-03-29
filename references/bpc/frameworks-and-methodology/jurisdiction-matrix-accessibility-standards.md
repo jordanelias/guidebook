@@ -1,6 +1,6 @@
 ## jurisdiction-matrix-accessibility-standards
 
-**Updated:** 2026-03-18 22:00  **Evidence tier:** 4–5 (standards and regulatory documents)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 4–5 (standards and regulatory documents)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Mandatory residential accessibility requirements exist in Australia (NCC 2022, Class 1a+2), India (MoHUA 2021/RPwD 2023), Norway (TEK17), and Sweden (BBR). UK, Canada, and USA rely on voluntary/sector-adopted standards. Major gap: individual residential unit accessibility is not mandated in Brazil (NBR 9050 covers common areas only).
 **Key facts by jurisdiction:**
   - ISO 21542:2021 (Ed. 2): current international standard; wheelchair dims 800×1300 mm; 1524 mm turning — gap with ANSI A117.1-2017 (1702 mm for powered chairs)

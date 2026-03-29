@@ -1,6 +1,6 @@
 ## accessible-design-economics-cost-premium
 
-**Updated:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** When accessibility is integrated from brief/schematic stage, its cost in new construction is 0.94%–3.92% of project cost by building type — or zero for provisions that are planning decisions rather than materials. The same provisions as post-occupancy retrofit cost 10–40× more. The strongest economic argument is not a financial model; it is the cost curve.
 **Construction cost premium by building type (new build):**
   - Residential: 0.94% (Ielegems & Vanrie, Belgium 2024)

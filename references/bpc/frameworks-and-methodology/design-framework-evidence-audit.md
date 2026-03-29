@@ -1,6 +1,6 @@
 ## design-framework-evidence-audit
 
-**Updated:** 2026-03-18 23:45  **Evidence tier:** 1–5 (by framework)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:45  **Evidence tier:** 1–5 (by framework)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Design frameworks in accessibility practice span a wide evidence spectrum. ICF is gold standard (WHO, 191 states). Competence-Press and ART/SRT are evidence-based. ASPECTSS, DeafSpace, and trauma-informed design are practice-based with emerging evidence. No validated design framework exists for fatigue-spectrum (OFS/PAIN) populations — this is the most critical cross-cutting evidence gap.
 **Evidence classification by framework:**
   | Framework | Classification | Evidence basis |

@@ -1,6 +1,6 @@
 ## multilingual-evidence-convergence-non-english
 
-**Updated:** 2026-03-19 01:00  **Evidence tier:** 3–5 (systematic review; non-English sources)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 01:00  **Evidence tier:** 3–5 (systematic review; non-English sources)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Seven provisions have stronger empirical evidence in non-English language literature than in English-language sources. Five provisions have cross-linguistic consensus (≥5 language bodies). Three provisions lack any non-English evidence base and rest entirely on English-language sources.
 **Stronger in non-English literature:**
   | Provision | Strongest evidence language | Key finding |

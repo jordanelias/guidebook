@@ -1,6 +1,6 @@
 ## european-accessibility-act-scope-clarification
 
-**Updated:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** The European Accessibility Act (Directive EU 2019/882) applies to digital products and services ONLY. It does not mandate physical built environment accessibility requirements in any EU member state. Any reference to EAA in the context of physical building standards is a misattribution and must be corrected.
 **Key facts:**
   - EAA transposition deadline: 28 June 2022 (all 27 EU member states — transposed by mid-2025)

@@ -1,6 +1,6 @@
 ## government-grant-programmes-home-adaptation
 
-**Updated:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory/programme data)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory/programme data)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Government-funded home adaptation grant programmes exist in all major English-speaking and Northern European jurisdictions. UK Disabled Facilities Grant is the largest per-household grant programme by volume (£711m/year, £30,000 max per household). All programmes require OT assessment or equivalent disability certification. No programme covers full design-stage accessible construction — all address retrofit.
 **Grant programme matrix (verified as at 2024–25 budget year):**
   | Jurisdiction | Programme | Max Grant | Eligibility | FY Budget |

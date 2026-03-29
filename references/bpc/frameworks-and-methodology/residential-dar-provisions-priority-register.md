@@ -1,6 +1,6 @@
 ## residential-dar-provisions-priority-register
 
-**Updated:** 2026-03-18 22:30  **Evidence tier:** 4–5 (cost data, regulatory, OT practice)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 4–5 (cost data, regulatory, OT practice)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** DAR (Design for Adaptable Readiness) provisions must be physically embedded in construction drawings — not in specification text alone. An accessibility requirement absent from a named drawing will not be built. Cost multipliers for missed DAR provisions range from ×5 to ×75+; structural provisions are effectively irreversible without major intervention.
 **DAR provisions by cost multiplier (retrofit vs. construction):**
   | Provision | Room | Cost multiplier | Drawing required |

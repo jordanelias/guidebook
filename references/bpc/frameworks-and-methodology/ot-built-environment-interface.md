@@ -1,6 +1,6 @@
 ## OT-built-environment-interface|ALL
 
-**Updated:** 2026-03-19 14:30  **Evidence tier:** 1–3 (Co-2 primary)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 14:30  **Evidence tier:** 1–3 (Co-2 primary)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** OT brings unique person-environment-occupation competence to built environment design, but formal integration at design stage (vs post-occupancy adaptation) remains under-evidenced and under-practised.
 **Key specifications from evidence:**
 - Step-free external access + zero-threshold shower + ground-floor bedroom/bathroom = the three highest-priority OT-specified features (Wellecke et al. 2022, n=144 Australian OTs, Tier 1)
