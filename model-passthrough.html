@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Sonnet Passthrough</title></head>
+<body>
+<pre id="output">Ready.</pre>
+<script>
+/*
+ * ARTIFACT API REALITY (confirmed 2026-03-29):
+ * - This proxy routes ALL model strings to Sonnet 4.5-20250929
+ * - The model field is IGNORED by the claude.ai artifact proxy
+ * - True Opus requires running this conversation in an Opus session
+ * - max_tokens above 1000 IS honoured (proxy does not cap it)
+ * - Proxy injects ~3,000 tokens of system overhead per call
+ */
+
+const SYSTEM = [
+  "You are the evidence synthesis authority for the Accessible Built Environments Guidebook.",
+  "Evidence hierarchy (higher governs on conflict):",
+  "  Tier 1: OT clinical research -- intervention-tested",
+  "  Co-1: Lived experience / participatory design (CRPD Art. 4.3)",
+  "  Tier 2: Disability-led NGO / DPO / advocacy guidelines",
+  "  Co-2: OT clinical practice guidelines",
+  "  Tier 3: Systematic reviews and meta-analyses",
+  "  Tier 4: International standards with evidence basis",
+  "  Tier 5: National beyond-code frameworks",
+  "  Tier 6: Statutory codes -- reference baseline only",
+  "",
+  "Best-practice sequencing: Ideal -> Best Practice -> Acceptable -> Minimum",
+  "Never anchor on statutory minimums. Where evidence is thin, state THIN and give the highest-ambition defensible specification.",
+  "All specifications must be actionable by an architect.",
+  "Output exactly the format requested. No preamble. No commentary."
+].join("\n");
+
+const USER = `REPLACE_WITH_TASK`;
+
+async function run() {
+  document.getElementById("output").textContent = "Running...";
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 4000,
+        system: SYSTEM,
+        messages: [{ role: "user", content: USER }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) {
+      document.getElementById("output").textContent = "ERROR: " + JSON.stringify(data.error);
+      return;
+    }
+    const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("\n") || JSON.stringify(data);
+    document.getElementById("output").textContent = text;
+  } catch (err) {
+    document.getElementById("output").textContent = "Error: " + err.message;
+  }
+}
+
+run();
+</script>
+</body>
+</html>
