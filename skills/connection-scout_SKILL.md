@@ -1,7 +1,7 @@
 <!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
 # connection-scout
 
-**Model:** Opus 4
+**Model:** Opus 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main`
 **Output file:** `references/connection-register.md`
 **Called by:** workplan-orchestrator (edition boundary); literature-review-planner (on demand); user (explicit request)
