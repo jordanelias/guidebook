@@ -158,7 +158,7 @@ Never overwrite CLOSED items.
 ### Infrastructure
 | Skill | Model | Role |
 |---|---|---|
-| `github-io` | Any | Standardised GitHub read/write/list; all skills use this |
+| `github-io` | Sonnet 4.6 | GraphQL batch read/write; atomic multi-file commits; all skills use this |
 
 ### Document Processing
 | Skill | Model | Role |
