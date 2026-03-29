@@ -2783,3 +2783,16 @@ Review for jurisdiction-specific residential accessibility data. Potential updat
 - [ ] HIGH → item-specification-writer briefing
 - [x] MODERATE → P2 gap item
 - [ ] SPECULATIVE → P3 gap item
+
+
+---
+## Connection Register Updates — 2026-03-29 01:50
+**Source:** cross-population-conflict-mapper first execution
+
+| Connection | Status update | Consumed by |
+|---|---|---|
+| CON-0005 (H-02 user control as Tier 0) | Referenced | LIGHT-INT matrix Resolution 2; ACOUSTIC-LVL aligned parameters |
+| CON-0016 (zone-parameter model) | CONSUMED | LIGHT-INT matrix Resolution 1 (three-zone illuminance values) |
+| CON-0030 (glazed junction four-way conflict) | CONSUMED | SPATIAL-OPEN matrix Resolution 2 |
+| CON-0037 (prospect-refuge theory) | CONSUMED | SPATIAL-OPEN matrix Resolution 1 |
+| CON-0038 (circadian multi-population) | Referenced | LIGHT-INT opposition map (NEU/MH/OFS on both sides) |
