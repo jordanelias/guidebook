@@ -29,10 +29,10 @@ SL placeholder status is administrative only; no new research needed.
 | `ms-thermal-temperature-conflict-resolution` | health-and-symptom-management | 419 | F-06/F-07 input; adequate |
 | `thermal-comfort-older-adults-care-settings` | health-and-symptom-management | 315 | F-06 input; adequate |
 | `intellectual-disability-built-environment-design` | population-general | 769 | Has Opus synthesis; COMPLETE for use |
-| `mental-health-built-environment` | population-general | 1189 | Has Opus synthesis (2026-03-27); recent |
+| `mental-health-built-environment` | population-general | 1189 | ⚠ INCORRECT + PROVISIONAL: Triage claimed Opus synthesis 2026-03-27 but BPC field pre-stamp reads 'Opus synthesis: NO — pending Co-1 web pass completion'. Stamp applied 2026-03-29 without synthesis (GAP-OPUS-RESYNTH-01). Do not treat as synthesis-complete. |
 | `neurodivergent-built-environment` | population-general | 1058 | ⚠ PROVISIONAL: Opus stamp present but detailed synthesis not committed to BPC file — session log overwrite (GAP-OPUS-RESYNTH-01). Do not treat as synthesis-complete for Phase 3. |
 | `upper-limb-impairment-built-environment` | population-general | 482 | Cat I source; no Opus synthesis |
-| `visual-impairment-built-environment` | population-general | 737 | Has Opus synthesis; adequate |
+| `visual-impairment-built-environment` | population-general | 737 | ⚠ PROVISIONAL: Opus stamp present but no synthesis committed to BPC file — stamp-only (GAP-OPUS-RESYNTH-01). Do not treat as synthesis-complete for Phase 3. |
 | `accessible-laundry-room-design` | room-types | 868 | Has Opus synthesis; adequate |
 | `air-quality-voc-chemical-sensitivity-built-environment` | sensory-environment | 439 | F-04 input; adequate |
 | `biophilic-design-healthcare-workplace` | sensory-environment | 859 | Appendix B input; has Opus synthesis |
