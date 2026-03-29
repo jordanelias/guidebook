@@ -16,41 +16,34 @@ description: >
 
 ## Session Start Protocol (mandatory — every new conversation)
 
-### 1 — Load session state
-Session logs are stored at `sessions/session_YYYY-MM-DD-HHMM.md` (one file per session).
-1. GET `sessions/` directory listing via github-io.
-2. Sort by filename descending. GET the most recent file.
-3. Find the `session_close` YAML block within it.
-- **Found:** Report last session datetime, last skill run, next action, open P1 gap count, blockers. Confirm with user before resuming. Do not auto-resume.
-- **Empty/not found:** "No prior session. Starting fresh."
+### 1a — Load core state (GraphQL batch_read — call 1)
 
-### 2 — Load gap register (filtered)
-Extract OPEN P1 items from `gap_register.md` via filtered fetch — do not load the full file:
+Fetch in one call via github-io batch_read:
+- `sessions/LATEST`
+- `references/project-standards.md`
+- `skills/workplan-orchestrator_SKILL.md`
 
-```bash
-curl -sL -H "Authorization: token ${PAT}" \
-  "https://api.github.com/repos/jordanelias/guidebook/contents/gap_register.md" \
-  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); [print(l) for l in c.split('\n') if '| OPEN |' in l or '| P1 |' in l]"
-```
+Parse LATEST to get session filename.
 
-Surface OPEN P1 items to user if any; otherwise proceed silently.
+### 1b — Load session file (GraphQL batch_read — call 2)
 
-### 3 — Load project standards
-GET `references/project-standards.md`. Load rules into active context.
+Fetch the session file identified in LATEST.
+Report: session_close, next_action, blockers. Confirm with user before resuming. Do not auto-resume.
 
-### 4 — File stale versioned files
-For each watched directory (`workplan/`, `versions/current/`):
-- GET directory listing.
-- Count non-directory files not already in a `deprecated/` subdirectory.
-- **Count = 1:** proceed silently.
-- **Count > 1:** invoke `github-filing` on that directory before continuing. Do not prompt user — file automatically and report result inline.
+### 2 — Load gap register (filtered bash)
 
-### 5 — Confirm PAT
-If PAT not yet provided: prompt user. Do not proceed without it.
+Extract OPEN P1 items only from `gap_register.md`. Do not load full file.
 
-**Skip condition:** "fast-track" or "go" skips user confirmation at Task Intake only. Protocol still runs.
+### 3 — Confirm PAT
 
----
+If PAT not present in Project Instructions: prompt user.
+
+### 4 — Task Intake
+
+Select workflow → load required skills via batch_read (see §Workflow-Gated Loading below).
+No skill outside the workflow list may execute without explicit user approval.
+
+**Total startup:** 2 GraphQL calls + 1 filtered bash read. ~8K tokens.
 
 ## CO-0004 Part Numbering Map (canonical — supersedes v10.1)
 
