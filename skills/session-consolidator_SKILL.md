@@ -110,30 +110,22 @@ If `multilingual-research` ran and LOG was not called → flag as BLOCKER in ses
 
 ### 5. Write session close to GitHub
 
-#### 5a. Concurrent session check (pre-write — always runs first)
+#### 5a. Concurrent session isolation (pre-write — always runs first)
 
-Concurrent sessions write to the same LATEST pointer and sessions/ directory. This step detects and surfaces conflicts before committing.
+Each session is an independent record. Session files are never merged, shared, or overwritten.
 
 1. **Fresh read:** GET `sessions/LATEST` from GitHub now — do not use the value cached at session start.
-2. **Compare:** note the LATEST value read at session-start (from Session Protocol Step 1a). Call it `start_latest`.
-3. **If LATEST has changed since session start** (i.e., another session closed after this one began):
-   a. GET the session file named in the current LATEST.
-   b. Extract its `next_action` block.
-   c. Report to user:
-      ```
-      ⚠ CONCURRENT SESSION DETECTED
-      Session written while this session ran: {filename}
-      Their next_action: {their_next_action}
-      Your next_action: {your_next_action}
-      ```
-   d. **PAUSE.** Do not write until user confirms one of:
-      - **Keep yours** — overwrite their next_action with yours.
-      - **Keep theirs** — discard your next_action; log a note in your session YAML.
-      - **Merge** — user specifies merged next_action text.
-   e. Use the `_head_oid` from the fresh GET in (1) as `expectedHeadOid` for the commit. Do not reuse the session-start OID.
-4. **If LATEST is unchanged:** proceed with session-start `_head_oid`. No conflict.
+2. **Capture fresh `_head_oid`** from this read. Use it as `expectedHeadOid` for all subsequent commits. Discard the session-start OID.
+3. **If LATEST has changed since session start** (another session closed while this one ran):
+   a. Note the concurrent session filename — log it in this session's YAML under `concurrent_sessions`.
+   b. Do **not** attempt to read, merge, or reconcile the concurrent session's content.
+   c. Proceed to write this session's file unconditionally. Session records are independent.
+   d. **LATEST update:** attempt to update `sessions/LATEST` to this session's filename. If `expectedHeadOid` conflict on that commit (another session also updating LATEST): leave LATEST as-is. Log `latest_updated: false` in this session's YAML. Session file is still written and valid.
+4. **If LATEST is unchanged:** proceed normally. Update LATEST after writing session file.
 
-**Note:** `batch_commit` will reject the write if head has moved between the fresh read and the commit (GitHub returns a conflict error). On that error: re-run the fresh read and retry once. If the second retry fails: output session YAML as fenced code block with manual paste instructions — never drop state.
+**At next session open:** Session Protocol Step 1b reads LATEST. If `latest_updated: false` appears in that session's YAML, or if the LATEST file predates the most recent session file by timestamp: read the last 3 session files to surface all active threads and report them to the user before task intake.
+
+**On `expectedHeadOid` conflict on the session file write itself:** re-fetch head OID and retry once. If second attempt fails: output session YAML as fenced code block with manual paste instructions — never drop state.
 
 - **Filename:** GET `sessions/LATEST`. Parse the number from the current value (e.g. `session_083.md` → 83). Next file = zero-padded three-digit increment: `session_084.md`. If LATEST contains a legacy timestamp filename, treat the count of all `session_` files in the directory as N; next = N+1.
 - Check for collision: GET the new filename. If 404: proceed. If exists: increment again.
