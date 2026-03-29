@@ -1,6 +1,6 @@
 ## bariatric-turning-radius-built-environment
 
-**Updated:** 2026-03-18 22:00  **Evidence tier:** 3–5 (empirical + standards)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 3–5 (empirical + standards)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Standard accessible turning circles (1500–1525 mm) are insufficient for bariatric wheelchairs; ≥1900 mm clear diameter is the evidence-informed recommendation for bariatric-specific turning space in new build. 1800 mm is the minimum where 1900 mm is unachievable.
 **Key evidence:**
   - Empirical: Steinfeld et al. (2006, RESNA) — 1925 mm required to accommodate full UDI sample for 180° turn (peer-reviewed; most directly relevant)

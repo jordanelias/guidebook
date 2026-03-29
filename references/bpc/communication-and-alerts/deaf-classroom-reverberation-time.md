@@ -1,6 +1,7 @@
 ## deaf-classroom-reverberation-time
 
-**Updated:** 2026-03-26 05:30  **Evidence tier range:** 1–4  **Status:** TARGETED RETRIEVAL
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
+**Status:** TARGETED RETRIEVAL — focused subset of room-acoustic-performance BPC; Iglehart 2020 is Tier 1.
 
 ### Best-practice synthesis
 **Most inclusive provision:** RT60 ≤0.3s in all learning spaces ≤283 m³ where DEAF learners are present

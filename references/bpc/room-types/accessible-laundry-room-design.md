@@ -1,6 +1,6 @@
 ## accessible-laundry-room-design
 
-**Updated:** 2026-03-19 22:00  **Evidence tier range:** 4–5
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** 4–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PARTIAL-RETAINED
 **STATUS: PARTIAL** — 4 jurisdictions searched; Co-1 pass: 0 jurisdictions; ADA S611 is the sole source with quantified appliance-height specifications.
 
 ### Concept boundary notes

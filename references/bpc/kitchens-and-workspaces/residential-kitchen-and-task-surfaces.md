@@ -1,6 +1,6 @@
 ## residential-kitchen-and-task-surfaces
 
-**Updated:** 2026-03-26 16:45  **Evidence tier range:** 2–6  **Opus synthesis:** NO  **Status: PROVISIONAL** (19/24 jurisdictions searched; tier5 8/24 — structural gap accepted; 6 NOT-RUN)
+**Updated:** 2026-03-26 16:45  **Evidence tier range:** 2–6  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PROVISIONAL-RETAINED  **Status: PROVISIONAL** (19/24 jurisdictions searched; tier5 8/24 — structural gap accepted; 6 NOT-RUN)
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -17,7 +17,7 @@
 
 **Highest-ambition actionable specification:** Knee clearance ≥685mm high × ≥600mm deep × ≥900mm wide; worktop 800mm fixed (650–900mm adjustable at Tier 2); turning ø1500mm; sink ≤150mm depth; front controls; lever taps; D-handles; sockets 900–1200mm; kitchen ≥6.00m²; oven 1000–1400mm; DAR pre-wire for adjustable worktop.
 
-**Opus 4 synthesis note:** NONE
+**Opus synthesis note:** NL WMO-keuken is the most systematised residential kitchen accessibility approach globally. CN GB 50763 is the sole national standard specifying residential kitchen knee clearance dimensions. Height-adjustable worktop (electric, 18–30 cm range) is the only universal resolution for standing/seated/LPA conflicts — correctly identified. 6/24 jurisdictions NOT-RUN; evidence base is European-dominated. PROVISIONAL status retained.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
