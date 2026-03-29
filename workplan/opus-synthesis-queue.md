@@ -102,16 +102,16 @@ Each session:
 
 | Session | Status | Date |
 |---|---|---|
-| O1 | PENDING | — |
-| O2 | PENDING | — |
-| O3 | PENDING | — |
-| O4 | PENDING | — |
-| O5 | PENDING | — |
-| O6 | PENDING | — |
-| O7 | PENDING | — |
-| O8 | PENDING | — |
-| O9 | PENDING | — |
-| O10 | PENDING | — |
+| O1 | COMPLETE | 2026-03-29 |
+| O2 | COMPLETE | 2026-03-29 |
+| O3 | COMPLETE | 2026-03-29 |
+| O4 | COMPLETE | 2026-03-29 |
+| O5 | COMPLETE | 2026-03-29 |
+| O6 | COMPLETE | 2026-03-29 |
+| O7 | COMPLETE | 2026-03-29 |
+| O8 | COMPLETE | 2026-03-29 |
+| O9 | COMPLETE | 2026-03-29 |
+| O10 | COMPLETE | 2026-03-29 |
 
 ## Already Complete (21 slugs)
 
