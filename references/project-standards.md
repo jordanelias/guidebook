@@ -756,3 +756,35 @@ RULE: Population-specific design guideline sets (DeafSpace, ASPECTSS, dementia-f
 CONDITION: Any item specification citing a single-population guideline for a space serving multiple populations.
 ACTION: Run cross-population-conflict-mapper on the item before finalising. Add conflict note if opposition found.
 DATE: 2026-03-28 23:45
+
+---
+## Rules added 2026-03-29 — Artifact API audit
+
+RULE: The claude.ai artifact proxy routes ALL model strings to Sonnet 4.5-20250929. The model field in artifact fetch calls is ignored by the proxy. Confirmed by direct test 2026-03-29.
+CONDITION: Any artifact calling api.anthropic.com/v1/messages.
+ACTION: Do not specify Opus or Haiku model strings expecting those models to respond. The proxy delivers Sonnet 4.5 regardless.
+DATE: 2026-03-29
+
+RULE: True Opus requires running the conversation itself in an Opus session. No programmatic Sonnet→Opus escalation path exists via the claude.ai artifact proxy.
+CONDITION: Any task requiring Opus-tier judgment (best-practice synthesis, evidence arbitration, cross-referential analysis).
+ACTION: Flag the task, complete surrounding Sonnet work, hand off to a new Opus conversation session.
+DATE: 2026-03-29
+
+RULE: max_tokens above 1000 is accepted and honoured by the artifact proxy. The instruction to "always set 1000" is a default recommendation, not a proxy-enforced cap.
+CONDITION: Artifact API calls requiring longer outputs (BPC synthesis, item specifications).
+ACTION: Set max_tokens: 4000 for synthesis tasks.
+DATE: 2026-03-29
+
+RULE: show_widget does not have artifact API proxy access. Only create_file + present_files HTML artifacts can call api.anthropic.com. Failed fetch confirmed 2026-03-29.
+CONDITION: Any task requiring a sub-model call from within claude.ai.
+ACTION: Always use create_file + present_files HTML artifact path. Never use show_widget for model calls.
+DATE: 2026-03-29
+
+RULE: The artifact proxy injects approximately 3,000-3,300 input tokens of system overhead per call. This overhead is not controllable or visible and must be factored into context and cost estimates.
+CONDITION: All artifact API calls.
+DATE: 2026-03-29
+
+RULE: The passthrough template (opus-passthrough.html) is misleading and must be replaced with model-passthrough.html per ecosystem-update-plan-2026-03-29.md FIX-01 before any further synthesis calls.
+CONDITION: Next session using passthrough.
+ACTION: Execute FIX-01 before any passthrough use.
+DATE: 2026-03-29
