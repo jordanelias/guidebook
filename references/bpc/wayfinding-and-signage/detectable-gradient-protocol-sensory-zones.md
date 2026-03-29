@@ -1,6 +1,6 @@
 ## detectable-gradient-protocol-sensory-zones
 
-**Updated:** 2026-03-18 22:30  **Evidence tier:** 3–4 (synthesized across 5+ sources)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 3–4 (synthesized across 5+ sources)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Multi-sensory zone boundaries — simultaneous visual, acoustic, spatial, and luminance signals at zone transitions — are well-supported by PAS 6463:2022, ISO 21542:2021, Mostafa ASPECTSS 2.0, and Williams et al. (2024). The "Detectable Gradient Protocol" specifies minimum perceptually detectable thresholds at each zone boundary.
 **Evidence base:**
   - Multi-sensory redundancy at hazardous transitions: ISO 21542:2021 §9 (tactile + visual, verified)

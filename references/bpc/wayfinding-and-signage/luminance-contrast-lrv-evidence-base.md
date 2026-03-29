@@ -1,6 +1,6 @@
 ## luminance-contrast-lrv-evidence-base
 
-**Updated:** 2026-03-18 23:30  **Evidence tier:** 3–4
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:30  **Evidence tier:** 3–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** The 30% LRV (Light Reflectance Value) contrast threshold adopted by six national standards (UK BS 8300, DIN 18040-2, CEREMA France, Swedish BFS, Norwegian TEK17, Japanese MLIT) derives from UK Disability Discrimination Act final-stage regulatory guidance, not from peer-reviewed empirical evidence of sufficiency for people with low vision. It is a regulatory floor, not an evidence-derived optimum.
 **Key evidence:**
   - Regulatory origin confirmed: 30% threshold adopted from UK DDA guidance; directly carried into AS 1428.1:2009 and AS 1428.1:2021 without independent empirical validation (GAP-007 research, 2026)
@@ -19,6 +19,7 @@
 **Standards confirmed:** BS 8300 · AS 1428.1:2021 · DIN 18040-2 · TEK17 · BFS 2024:12 · MLIT Japan — all adopt ≥30% LRV without citing an original empirical study
 **Jurisdictions confirmed:** UK · Australia/NZ · Germany · Norway · Sweden · Japan · France (CEREMA)
 **Early-close:** Yes  **Thin/No-data:** None (confirmed absence of evidence for threshold is itself the finding)
+**Opus synthesis note:** The finding that 30% LRV is a regulatory floor with unknown empirical basis is one of the most consequential in the compendium. Six national standards adopted this threshold from UK DDA guidance without independent validation. The guidebook's recommendation to target ≥50% (general) and ≥65% Michelson (severe VI) is evidence-supported and represents a genuine advance over current regulatory practice. All C-items in Volume I Part 4 should carry this annotation.
 **Key sources:** Harper2022 · Brown2023 · Thompson2022 · Dain-cited-Manandhar2022 · CNIB2024 · AS1428.1:2021 · BS8300:2018
 **Divergent findings:** —
 **Notes:** Decision D-03 confirmed: all C-items must carry the regulatory-floor caveat. This is one of the most significant evidence-standards gaps in the entire guidebook. DO NOT cite 30% as an evidence-based optimum. Cite it as a regulatory minimum and recommend highest achievable contrast as design intent.

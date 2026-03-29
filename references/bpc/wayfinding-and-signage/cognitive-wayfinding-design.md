@@ -1,6 +1,7 @@
 ## cognitive-wayfinding-design
 
-**Updated:** 2026-03-19 22:00  **Evidence tier range:** Co-1–Tier 5  **Status:** COMPLETE
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** Co-1–Tier 5  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Status:** COMPLETE
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -27,6 +28,8 @@
 **Most targeted provision (NDV/AUT):** Sequenced single-route flow; transition alcoves at zone boundaries; compartmentalised activity zones; minimal visual clutter in circulation.
 
 **Conflict resolution:** DEM requires high-contrast landmark objects; NDV/AUT requires minimal visual clutter. Resolution: landmarks placed only at navigationally relevant decision points using 3D objects rather than wall graphics, satisfying both populations simultaneously.
+
+**Opus synthesis note:** This conflict resolution is one of the strongest in the compendium — both populations are served without compromise. The 3D object (not 2D graphic) distinction is clinically meaningful: DEM users process three-dimensional landmarks more reliably than flat images; NDV/AUT users are not triggered by isolated 3D objects the way they are by complex wall surfaces.
 
 **Highest-ambition actionable specification:**
 - Loop circulation; no dead ends; single clear route per destination
