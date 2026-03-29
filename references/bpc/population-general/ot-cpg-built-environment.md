@@ -1,6 +1,6 @@
 ## ot-cpg-built-environment
 
-**Created:** 2026-03-28  **Evidence tier:** Co-2 (OT Clinical Practice Guidelines)  
+**Created:** 2026-03-28  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Evidence tier:** Co-2 (OT Clinical Practice Guidelines)  
 **Status:** COMPLETE — Co-2 source inventory for §1.5 Evidence Hierarchy
 
 ### Purpose
@@ -28,6 +28,8 @@ This entry documents all confirmed OT professional body publications relevant to
 | JAOT (Japan) | No built-environment CPG identified. JAOT produces clinical practice guidelines; built environment provision is via MLIT (Tier 5/6). |
 | Ergoterapeutene (Norway) | No built-environment CPG. Norwegian built environment is governed by TEK17 (Tier 5/6). |
 | COTEC | Position statements only; no dimensional CPG. |
+
+**Opus 4.6 synthesis note (2026-03-29):** This is a reference BPC for the Co-2 evidence tier, not a specification BPC. Opus review confirms it as the governing source list for OT clinical practice guideline evidence. One finding: the RCOT Housing Adaptations Without Delay (2019) is cited across 6+ other BPCs as the primary UK Co-2 source. The AOTA Home Modification Practice Guidelines (2023) and CAOT Home Assessment and Modifications (2024) are the US and CA equivalents. These three sources together form the Co-2 evidence spine for residential item specifications. The guidebook’s §1.5 Evidence Hierarchy should cite all three explicitly as the Co-2 exemplars. WFOT (2019) position statement on home modifications provides the international professional framework. Evidence confidence: HIGH (these are verified professional body publications with known authorship, publication dates, and institutional backing).
 
 ### Best-practice synthesis for §1.5 Co-2 tier
 

@@ -1,6 +1,6 @@
 ## visual-impairment-built-environment
 
-**Updated:** 2026-03-19 19:18  **Evidence tier range:** 4–6
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 19:18  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Evidence tier range:** 4–6
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -16,6 +16,8 @@
 **Conflict resolution:** TWSI colour (yellow/mid-yellow is the consensus standard) may conflict with dementia design requirements for plain, low-pattern flooring. Resolution: use detectable profile rather than relying on colour alone; yellow TWSI is acceptable where dementia colour provisions apply if profiling is the primary detection mechanism.
 
 **Highest-ambition actionable specification:** Continuous ISO 23599:2019 TWSI (ribbed directional + domed attention) on all primary routes. ≥4 mm raised profile. Minimum ≥70% LRV contrast to adjacent surface. Audio beaconing at building entries. Luminance contrast ≥30 LRV points at all level changes and critical junctions. Consistent ≥300 lux circulation lighting without glare. Braille and tactile text on all fixed signage at 1400–1600 mm AFF. Contrasting door frames and hardware at all circulation entries.
+
+**Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed. Three findings. (1) The TWSI/DEM conflict (yellow tactile paving vs plain flooring) is correctly identified and correctly resolved (profile-based detection over colour-based). This should be explicit in E-09 conflict notes. (2) LRV ≥30 contrast at critical junctions is the most cross-jurisdictionally converged VIS specification (present in virtually all national standards). This is a Tier 0 provision — no population conflicts. (3) The low-vision majority point is critical: most VIS users have partial sight, not total blindness. Design that optimises only for cane users (tactile) underserves the larger low-vision population (luminance contrast, consistent lighting, glare control). The guidebook should lead with luminance/lighting provisions and follow with tactile provisions, not the reverse. Evidence confidence: HIGH for TWSI and LRV contrast (Tier 4–6, universal adoption); MODERATE for lighting specifications (≥300 lux, no sudden transitions — Tier 5, fewer jurisdictions specify quantified values).
 
 ### Consensus findings
 | Finding | Languages confirming | Tier |

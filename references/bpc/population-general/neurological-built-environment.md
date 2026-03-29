@@ -1,6 +1,6 @@
 ## neurological-built-environment
 
-**Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 1–5 (wayfinding strong; architectural standards partial)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 00:25  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Evidence tier range:** Tier 1–5 (wayfinding strong; architectural standards partial)
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -27,6 +27,8 @@
 **Conflict resolution:** Where floor plan simplicity conflicts with spatial differentiation (variety vs. uniformity): prioritise linear layouts with diverse visual cues at decision points — this provides structure without disorienting repetition.
 
 **Highest-ambition actionable specification:** Corridor layouts with ≤2 directional changes per route segment; distinctive visual landmark at each decision point; luminance contrast ≥30 LRV at floor/wall junctions; pictographic + colour-coded signage; adequate circulation width for mobility device use post-stroke (minimum 1200mm clear width; preferred 1500mm).
+
+**Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed. Two findings. (1) The NEU population is the most heterogeneous in the guidebook — it encompasses ABI, stroke, MS, Parkinson’s, epilepsy, and PCS. The synthesis correctly identifies navigation impairment sub-typing (egocentric/topographic/landmark agnosia) as the Tier 2 assessment framework. However, the unilateral neglect provision (high-contrast cues on neglected side) is clinically sound but architecturally challenging — buildings cannot reliably determine which side a user neglects. Resolution: bilateral redundancy (cues on both sides) is the Tier 1 provision; unilateral-specific placement is Tier 2 only (OT assessment of individual user). (2) The NEU→MOB co-occurrence is the most common in clinical practice. The bathroom BPC Opus synthesis adds NEU-specific provisions (hemiplegic vertical bars, Nakamura 2009). Wayfinding provisions (D-02, D-04, D-08) should cross-reference NEU explicitly, not only DEM. Evidence confidence: MODERATE (directional principles well-supported; quantified thresholds thin; population heterogeneity limits specification precision).
 
 ### Consensus findings
 | Finding | Languages confirming | Tier |
