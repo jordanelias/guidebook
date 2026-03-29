@@ -30,13 +30,13 @@ SL placeholder status is administrative only; no new research needed.
 | `thermal-comfort-older-adults-care-settings` | health-and-symptom-management | 315 | F-06 input; adequate |
 | `intellectual-disability-built-environment-design` | population-general | 769 | Has Opus synthesis; COMPLETE for use |
 | `mental-health-built-environment` | population-general | 1189 | Has Opus synthesis (2026-03-27); recent |
-| `neurodivergent-built-environment` | population-general | 1058 | Has Opus synthesis; adequate |
+| `neurodivergent-built-environment` | population-general | 1058 | ⚠ PROVISIONAL: Opus stamp present but detailed synthesis not committed to BPC file — session log overwrite (GAP-OPUS-RESYNTH-01). Do not treat as synthesis-complete for Phase 3. |
 | `upper-limb-impairment-built-environment` | population-general | 482 | Cat I source; no Opus synthesis |
 | `visual-impairment-built-environment` | population-general | 737 | Has Opus synthesis; adequate |
 | `accessible-laundry-room-design` | room-types | 868 | Has Opus synthesis; adequate |
 | `air-quality-voc-chemical-sensitivity-built-environment` | sensory-environment | 439 | F-04 input; adequate |
 | `biophilic-design-healthcare-workplace` | sensory-environment | 859 | Appendix B input; has Opus synthesis |
-| `sensory-processing-model-design-application` | sensory-environment | 473 | Part 2/NDV input; adequate |
+| `sensory-processing-model-design-application` | sensory-environment | 473 | Part 2/NDV input. ⚠ PROVISIONAL: Opus stamp present but detailed synthesis not committed to BPC file — session log overwrite (GAP-OPUS-RESYNTH-01). Do not treat as synthesis-complete for Phase 3. |
 | `sensory-relief-space-design` | sensory-environment | 928 | A-16 input; large; no Opus synthesis |
 | `detectable-gradient-protocol-sensory-zones` | wayfinding-and-signage | 402 | Part 7 D-cat input; adequate |
 | `wayfinding-cognitive-science-spatial-design` | wayfinding-and-signage | 446 | Part 7 D-cat input; adequate |
@@ -50,7 +50,7 @@ Supplement actions noted per slug.
 | Slug | Topic dir | Words | Supplement needed |
 |---|---|---|---|
 | `fold-down-grab-bar-specification` | bathrooms-and-wet-areas | 322 | Opus synthesis; Part 7 I-cat + bathroom item input |
-| `assistive-listening-systems` | communication-and-alerts | 406 | Opus synthesis; DEAF Cat A + H items |
+| `assistive-listening-systems` | communication-and-alerts | 406 | ⚠ PROVISIONAL: Opus stamp present but detailed synthesis not committed to BPC file — session log overwrite (GAP-OPUS-RESYNTH-01). Supplement action still required: DEAF Cat A + H items. |
 | `deaf-classroom-reverberation-time` | communication-and-alerts | 152 | Has synthesis; v4 schema wrap only — NEAR-CONSUME |
 | `floor-vibration-wheelchair-disability` | entrances-and-circulation | 911 | Has Opus synthesis; v4 schema wrap only — NEAR-CONSUME |
 | `ot-built-environment-interface` | frameworks-and-methodology | 169 | Thin; extend with Co-2 CPG sources before Part 10 writing |
