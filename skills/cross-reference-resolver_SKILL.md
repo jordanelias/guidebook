@@ -36,6 +36,7 @@ This skill resolves these reference types. Add new patterns to `references/ref-p
 | Supplementary volume | `Supplementary Volume IV, Section II` | Verify section exists in supp vol |
 | Item code narrative | `see item G-03`, `refer to A-11`, `see K-04` | Verify item heading exists; valid categories A–K. Hand off unresolved to volii-validator |
 | "See above" / "See below" | Positional references | Flag as AMBIGUOUS — positional refs are not stable across formats |
+| Endnote superscript | `¹`, `²`, `[1]`, `[REF:{slug}:{NN}]` | Post-bibliography-compiler: validate against endnote list. Pre-bibliography-compiler: pass through REF markers unchanged. See §4. |
 
 ---
 
