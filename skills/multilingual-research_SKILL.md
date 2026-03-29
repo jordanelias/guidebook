@@ -1,98 +1,58 @@
-\---
-
+---
 name: multilingual-research
-
 description: >
+  Conduct accessibility research across 14 languages AND 24 jurisdictions using native-language
+  conceptual vocabulary, Co-1/Tier 2 sources first, and companion network retrieval. Synthesises
+  findings in English with best-practice judgment for each population. ALWAYS use when: researching
+  accessibility topics, finding international evidence, conducting literature reviews, gathering
+  evidence for guidebook sections. Trigger on: "research", "find evidence", "what does the
+  literature say", "international standards", "review the evidence", "find studies on".
+  CHECK before / LOG after every run.
+---
 
-&#x20; Conduct accessibility research across 14 languages AND 24 jurisdictions using native-language
+**Model:** Sonnet 4.6 + web  
 
-&#x20; conceptual vocabulary, Co-1/Tier 2 sources first, and companion network retrieval. Synthesises
+**GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
 
-&#x20; findings in English with best-practice judgment for each population. ALWAYS use when: researching
+**Governing protocol:** Multilingual Research Protocol v4 (structural role: multilingual research protocol document in project files) — read it before executing any run.  
 
-&#x20; accessibility topics, finding international evidence, conducting literature reviews, gathering
+**Every source confirmed real before inclusion. Flag grey literature. Flag thin base (<3 studies). "I don't know" → gap list.**
 
-&#x20; evidence for guidebook sections. Trigger on: "research", "find evidence", "what does the
+---
 
-&#x20; literature say", "international standards", "review the evidence", "find studies on".
-
-&#x20; CHECK before / LOG after every run.
-
-\---
-
-
-
-\*\*Model:\*\* Sonnet 4.6 + web  
-
-\*\*GitHub backend:\*\* `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
-
-\*\*Governing protocol:\*\* Multilingual Research Protocol v4 (structural role: multilingual research protocol document in project files) — read it before executing any run.  
-
-\*\*Every source confirmed real before inclusion. Flag grey literature. Flag thin base (<3 studies). "I don't know" → gap list.\*\*
-
-
-
-\---
-
-
-
-\## Coverage axes — both must be satisfied independently
-
-
+## Coverage axes — both must be satisfied independently
 
 This skill operates on two axes that are NOT equivalent and cannot substitute for each other:
 
+**Axis 1 — Language (14):** SV · NO · DA · FI · FR · DE · ZH · JA · NL · ES · PT · KO · IT · EN  
 
-
-\*\*Axis 1 — Language (14):\*\* SV · NO · DA · FI · FR · DE · ZH · JA · NL · ES · PT · KO · IT · EN  
-
-\*\*Axis 2 — Jurisdiction (24):\*\* DE · BE · NO · FR · BR · JP · CA · CH · AU · UK · US · EU · ISO · SG · SE · DK · FI · CN · IE · NZ · KR · ES · NL · IT
-
-
+**Axis 2 — Jurisdiction (24):** DE · BE · NO · FR · BR · JP · CA · CH · AU · UK · US · EU · ISO · SG · SE · DK · FI · CN · IE · NZ · KR · ES · NL · IT
 
 A completed language pass does not satisfy jurisdiction coverage. EN covers USA, UK, Canada, Australia, Ireland, New Zealand, Singapore — each must be tracked separately. FR covers France, Belgium (FR), Switzerland (FR). DE covers Germany, Switzerland (DE). NL covers Netherlands, Belgium (NL). PT covers Brazil and Portugal. Each jurisdiction must have its own recorded status in the search-log.
 
+---
 
+## Pre-Run (mandatory — every run)
 
-\---
+1\. **`research-log-manager CHECK`** — normalise slug; if COMPLETE <90 days: load BPC inline and stop. If PARTIAL: identify unsearched languages AND unsearched jurisdictions; run both. If STALE/NOT FOUND: proceed.
 
+2\. **Load native terms** — `view` the Keyword Compendium (multilingual keyword reference document in project files), Part 3, for the target slug's concept group. Extract terms for all 14 languages. Do not generate translated terms from memory.
 
+3\. **Load companion networks** — `view` the Multilingual Research Protocol v4, §COMPANION NETWORKS, for the slug's population code(s). Identify organisation and scholar nodes as direct retrieval targets.
 
-\## Pre-Run (mandatory — every run)
+4\. **Load concept boundary warnings** — from the slug's existing search-log entry or Keyword Compendium. Deviations are mandatory.
 
-
-
-1\. \*\*`research-log-manager CHECK`\*\* — normalise slug; if COMPLETE <90 days: load BPC inline and stop. If PARTIAL: identify unsearched languages AND unsearched jurisdictions; run both. If STALE/NOT FOUND: proceed.
-
-2\. \*\*Load native terms\*\* — `view` the Keyword Compendium (multilingual keyword reference document in project files), Part 3, for the target slug's concept group. Extract terms for all 14 languages. Do not generate translated terms from memory.
-
-3\. \*\*Load companion networks\*\* — `view` the Multilingual Research Protocol v4, §COMPANION NETWORKS, for the slug's population code(s). Identify organisation and scholar nodes as direct retrieval targets.
-
-4\. \*\*Load concept boundary warnings\*\* — from the slug's existing search-log entry or Keyword Compendium. Deviations are mandatory.
-
-5\. \*\*Build jurisdiction work list\*\* — list all 24 jurisdictions. For each, note: primary language, Co-1 organisations to target (Step 1), Tier 5 beyond-code sources to target (Step 2b), statutory standard to target (Step 2a). This list governs Steps 1–3 — not the language list alone.
-
-
+5\. **Build jurisdiction work list** — list all 24 jurisdictions. For each, note: primary language, Co-1 organisations to target (Step 1), Tier 5 beyond-code sources to target (Step 2b), statutory standard to target (Step 2a). This list governs Steps 1–3 — not the language list alone.
 
 > Steps 2–5 are `view` calls or internal planning within this skill. No separate skill call required.
 
+---
 
+## Search Sequence (all 14 languages AND all 24 jurisdictions must complete)
 
-\---
+**Step 1 — Co-1 / Tier 2 / Co-2 pass (first; no exceptions)**
 
-
-
-\## Search Sequence (all 14 languages AND all 24 jurisdictions must complete)
-
-
-
-\*\*Step 1 — Co-1 / Tier 2 / Co-2 pass (first; no exceptions)\*\*
-
-
-
-For each jurisdiction: retrieve directly from publication pages using native-language terms — Co-1 (DPO/lived experience), Tier 2 (disability-led NGO/advocacy), and Co-2 (OT professional body CPGs). Do not use general search. Record co1\_attempted: true/false per jurisdiction.
-
-
+For each jurisdiction: retrieve directly from publication pages using native-language terms — Co-1 (DPO/lived experience), Tier 2 (disability-led NGO/advocacy), and Co-2 (OT professional body CPGs). Do not use general search. Record co1_attempted: true/false per jurisdiction.
 
 Co-2 OT CPG targets by jurisdiction (minimum):
 
@@ -148,11 +108,7 @@ Co-2 OT CPG targets by jurisdiction (minimum):
 
 | EU/ISO | COTEC · WFOT |
 
-
-
 Co-1 / Tier 2 targets by jurisdiction (minimum — add population-specific orgs from companion networks):
-
-
 
 | Jurisdiction | Primary Co-1 / Tier 2 targets |
 
@@ -206,19 +162,11 @@ Co-1 / Tier 2 targets by jurisdiction (minimum — add population-specific orgs 
 
 | EU/ISO | Disability Europe / EDF · European Disability Forum (as Tier 2 supranational) |
 
-
-
 If a jurisdiction's organisations publish nothing on this slug domain: flag THIN with reason. Do not skip — the attempt must be recorded.
 
+**Step 2a — Statutory standards pass (Tier 6)**
 
-
-\*\*Step 2a — Statutory standards pass (Tier 6)\*\*
-
-
-
-For each jurisdiction, retrieve the primary statutory code. Record tier6\_attempted: true per jurisdiction.
-
-
+For each jurisdiction, retrieve the primary statutory code. Record tier6_attempted: true per jurisdiction.
 
 | Jurisdiction | Primary statutory standard |
 
@@ -274,15 +222,9 @@ For each jurisdiction, retrieve the primary statutory code. Record tier6\_attemp
 
 | ISO | ISO 21542:2021; ISO 23599:2019 (tactile); ISO 9386 (lifts) |
 
+**Step 2b — Beyond-code / Tier 5 pass**
 
-
-\*\*Step 2b — Beyond-code / Tier 5 pass\*\*
-
-
-
-For each jurisdiction, retrieve the primary beyond-code framework if one exists. Record tier5\_attempted: true per jurisdiction.
-
-
+For each jurisdiction, retrieve the primary beyond-code framework if one exists. Record tier5_attempted: true per jurisdiction.
 
 | Jurisdiction | Primary Tier 5 source |
 
@@ -338,11 +280,7 @@ For each jurisdiction, retrieve the primary beyond-code framework if one exists.
 
 | ISO | ISO TC 173 (assistive products); ISO 21542:2021 commentary |
 
-
-
-\*\*Step 3 — Academic and specialist databases\*\*
-
-
+**Step 3 — Academic and specialist databases**
 
 | Database | Languages | Priority |
 
@@ -366,47 +304,33 @@ For each jurisdiction, retrieve the primary beyond-code framework if one exists.
 
 | BASE | multi | Multi-language synthesis |
 
+**Step 4 — Citation mining (mandatory for every confirmed Tier 1–2 source)**  
 
+Backward: mine reference list. Forward: Google Scholar "cited by". Log counts in BPC `citation_mining` block. Until `citation-miner` skill is built: perform inline.
 
-\*\*Step 4 — Citation mining (mandatory for every confirmed Tier 1–2 source)\*\*  
-
-Backward: mine reference list. Forward: Google Scholar "cited by". Log counts in BPC `citation\_mining` block. Until `citation-miner` skill is built: perform inline.
-
-
-
-\*\*Step 5 — `research-log-manager LOG`\*\*  
+**Step 5 — `research-log-manager LOG`**  
 
 Mandatory. Skipping is an error. LOG is blocked until pre-LOG completeness check passes (see below).
 
+---
 
-
-\---
-
-
-
-\## Pre-LOG Completeness Check (mandatory — executes before every LOG write)
-
-
+## Pre-LOG Completeness Check (mandatory — executes before every LOG write)
 
 `research-log-manager LOG` must verify all of the following before writing to GitHub. Any failure is a named BLOCKER — do not write; surface the specific failing condition; user must resolve or explicitly accept the gap.
 
+1\. **Jurisdiction coverage complete** — all 24 jurisdictions present in `jurisdiction_coverage` block with a recorded status (SEARCHED · THIN · NO-DATA · NOT-RUN). Missing jurisdiction = BLOCKER.
 
+2\. **Co-1 attempted** — `co1_attempted: true` for at least 12 of 24 jurisdictions. Fewer than 12 = BLOCKER. The 12 minimum is a floor; full coverage is the target.
 
-1\. \*\*Jurisdiction coverage complete\*\* — all 24 jurisdictions present in `jurisdiction\_coverage` block with a recorded status (SEARCHED · THIN · NO-DATA · NOT-RUN). Missing jurisdiction = BLOCKER.
+3\. **Tier 5 attempted** — `tier5_attempted: true` for at least 16 of 24 jurisdictions. Fewer than 16 = BLOCKER.
 
-2\. \*\*Co-1 attempted\*\* — `co1\_attempted: true` for at least 12 of 24 jurisdictions. Fewer than 12 = BLOCKER. The 12 minimum is a floor; full coverage is the target.
+4\. **`best_practice_synthesis` populated** — non-empty `best_practice_synthesis` field in BPC entry. Empty = BLOCKER.
 
-3\. \*\*Tier 5 attempted\*\* — `tier5\_attempted: true` for at least 16 of 24 jurisdictions. Fewer than 16 = BLOCKER.
+5\. **`native_aliases` populated** — all 14 languages present. Any missing = BLOCKER.
 
-4\. \*\*`best\_practice\_synthesis` populated\*\* — non-empty `best\_practice\_synthesis` field in BPC entry. Empty = BLOCKER.
+6\. **`citation_mining` recorded** — backward and forward counts present. May be 0 if no Tier 1/2 sources found, but the field must be present with an explanation if 0.
 
-5\. \*\*`native\_aliases` populated\*\* — all 14 languages present. Any missing = BLOCKER.
-
-6\. \*\*`citation\_mining` recorded\*\* — backward and forward counts present. May be 0 if no Tier 1/2 sources found, but the field must be present with an explanation if 0.
-
-7\. \*\*`co1\_pass\_summary` populated\*\* — at least one language listed as complete. All `not-run` = BLOCKER.
-
-
+7\. **`co1_pass_summary` populated** — at least one language listed as complete. All `not-run` = BLOCKER.
 
 If all checks pass → write LOG entry with status determined by coverage:
 
@@ -416,27 +340,15 @@ If all checks pass → write LOG entry with status determined by coverage:
 
 \- Explicitly mark BPC as PROVISIONAL if any P1 gaps remain unresolved.
 
+---
 
-
-\---
-
-
-
-\## PICO Framing
-
-
+## PICO Framing
 
 Begin with population need and functional outcome (optimal provision first) — not standard values. Standards appear at Step 2 as minimum baseline only. Never anchor on a standard value then seek confirming evidence.
 
+---
 
-
-\---
-
-
-
-\## Mid-Session Checkpointing
-
-
+## Mid-Session Checkpointing
 
 After each completed step:
 
@@ -446,21 +358,13 @@ CHECKPOINT \[YYYY-MM-DD HH:MM] — slug: {slug} — step: {step} — languages c
 
 ```
 
+---
 
-
-\---
-
-
-
-\## Synthesis
-
-
+## Synthesis
 
 Group findings by concept cluster, not by language or jurisdiction. For each cluster:
 
-
-
-\*\*Best-practice judgment (mandatory — complete before LOG):\*\*
+**Best-practice judgment (mandatory — complete before LOG):**
 
 \- Most inclusive provision: what most fully removes the barrier for this population?
 
@@ -468,43 +372,29 @@ Group findings by concept cluster, not by language or jurisdiction. For each clu
 
 \- Conflict resolution: what maximises inclusion for the most constrained user?
 
-\- Record in BPC `best\_practice\_synthesis`.
+\- Record in BPC `best_practice_synthesis`.
 
+**Concept boundary handling:** Where a warning applies, synthesis for that language opens with the boundary note before findings. Distinguish: (a) genuine empirical divergence; (b) boundary mismatch; (c) regulatory context difference.
 
+**Untranslatable concepts:** Name in native language; explain; do not flatten to English.
 
-\*\*Concept boundary handling:\*\* Where a warning applies, synthesis for that language opens with the boundary note before findings. Distinguish: (a) genuine empirical divergence; (b) boundary mismatch; (c) regulatory context difference.
+**Output format:**
 
+**Consensus findings:** `Finding | Languages confirming | Jurisdictions confirming | Tier`  
 
+**Divergent findings:** `Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause`  
 
-\*\*Untranslatable concepts:\*\* Name in native language; explain; do not flatten to English.
+**NO-DATA / THIN:** `Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted?`  
 
+**Citation mining:** `Source | Direction | New sources added`  
 
+**Source list:** `# | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI`
 
-\*\*Output format:\*\*
+---
 
-
-
-\*\*Consensus findings:\*\* `Finding | Languages confirming | Jurisdictions confirming | Tier`  
-
-\*\*Divergent findings:\*\* `Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause`  
-
-\*\*NO-DATA / THIN:\*\* `Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted?`  
-
-\*\*Citation mining:\*\* `Source | Direction | New sources added`  
-
-\*\*Source list:\*\* `# | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI`
-
-
-
-\---
-
-
-
-\## Evidence Hierarchy
+## Evidence Hierarchy
 
 Per §1.5 (Volume 1) — canonical; governs all skills and documents.
-
-
 
 | Tier | Type |
 
@@ -526,17 +416,11 @@ Per §1.5 (Volume 1) — canonical; governs all skills and documents.
 
 | 6 | Statutory codes — reference baseline only |
 
-
-
 Co-1 and Tier 1 are co-primary in authority. Search order: Co-1/Tier 2/Co-2 first (Step 1), then Tier 5 (Step 2b), then Tier 6 (Step 2a), then Tier 3/1 (Step 3). This order is non-negotiable.
 
+---
 
-
-\---
-
-
-
-\## Token Rules
+## Token Rules
 
 \- Batch web searches by language family (Batch A: SV/NO/DA/FI · Batch B: FR/DE/NL · Batch C: ES/PT/IT · Batch D: ZH/JA/KO).
 
@@ -547,4 +431,3 @@ Co-1 and Tier 1 are co-primary in authority. Search order: Co-1/Tier 2/Co-2 firs
 \- NO-DATA or THIN after one genuine attempt per jurisdiction: log and move on.
 
 \- Checkpoints: 1–2 lines, naming both language and jurisdiction counts.
-
