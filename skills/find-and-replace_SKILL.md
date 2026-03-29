@@ -15,7 +15,7 @@ description: >
   belong to prose-style-checker, framing-checker, or evidence-auditor respectively.
 ---
 
-**Model:** Haiku 4.5 for instance discovery · Sonnet 4.6 for classification and validation  
+**Model:** Sonnet 4.6
 **Input:** target document (chunked if >500 lines) + replacement specification  
 **Output:** instance register (YAML) + validated replacement set + downstream impact table
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
