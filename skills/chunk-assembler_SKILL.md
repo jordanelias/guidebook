@@ -12,7 +12,7 @@ description: >
   handles file assembly and integrity only.
 ---
 
-**Model:** Haiku 4.5 for ordering and cross-ref extraction · Sonnet 4.6 for conflict resolution  
+**Model:** Sonnet 4.6
 **Input:** section map (from haiku-chunker) + working chunk files + version record  
 **Output:** single assembled .md file + assembly log + unresolved cross-ref list  
 **Chunk ceiling:** Do not load all chunks simultaneously. Process in volume order; validate after each volume.
