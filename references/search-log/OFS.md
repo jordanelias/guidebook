@@ -1,3 +1,5 @@
+<!-- FROZEN — Do not read or write. Per-slug files at references/{bpc|search-log}/{topic}/{slug}.md are canonical. This file is a historical archive only. Any skill reading this file is in error. -->
+
 # Search Log — OFS
 <!-- Managed by research-log-manager. Do not edit manually. -->
 <!-- Population partition: OFS -->
