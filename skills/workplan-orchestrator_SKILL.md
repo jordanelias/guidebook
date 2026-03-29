@@ -163,21 +163,21 @@ Never overwrite CLOSED items.
 ### Document Processing
 | Skill | Model | Role |
 |---|---|---|
-| `haiku-chunker` | Haiku 4.5 | Chunk docs >500 lines; build section map |
-| `structure-auditor` | Haiku 4.5 | Heading hierarchy; structural violations; v10.1 numbering |
-| `markdown-formatter` | Haiku 4.5 | Heading levels; markdown consistency |
-| `chunk-assembler` | Haiku/Sonnet | Reassemble from manifest (v10.1) or section map |
-| `find-and-replace` | Haiku/Sonnet | Bulk text substitution with classification |
-| `fix-linebreaks` | Haiku 4.5 | Join hard-wrapped prose lines from DOCX conversion |
-| `table-formatter` | Haiku 4.5 | Table repair and standardisation |
+| `haiku-chunker` | Sonnet 4.6 | Chunk docs >500 lines; build section map |
+| `structure-auditor` | Sonnet 4.6 | Heading hierarchy; structural violations; v10.1 numbering |
+| `markdown-formatter` | Sonnet 4.6 | Heading levels; markdown consistency |
+| `chunk-assembler` | Sonnet 4.6 | Reassemble from manifest (v10.1) or section map |
+| `find-and-replace` | Sonnet 4.6 | Bulk text substitution with classification |
+| `fix-linebreaks` | Sonnet 4.6 | Join hard-wrapped prose lines from DOCX conversion |
+| `table-formatter` | Sonnet 4.6 | Table repair and standardisation |
 | `toc-editor` | Sonnet 4.6 | Structural changes; Change Orders; always requires pre-flight |
-| `file-splitter` | Haiku 4.5 | Decompose master to per-Part files (Phase 4) |
-| `bulk-renumber` | Haiku/Sonnet | Context-aware §-reference rewriting (Phase 4) |
+| `file-splitter` | Sonnet 4.6 | Decompose master to per-Part files (Phase 4) |
+| `bulk-renumber` | Sonnet 4.6 | Context-aware §-reference rewriting (Phase 4) |
 
 ### Content Analysis
 | Skill | Model | Role |
 |---|---|---|
-| `guidebook-auditor` | Haiku (A/C/E) · Sonnet (B/D) | Format, consistency, structure |
+| `guidebook-auditor` | Sonnet 4.6 | Format, consistency, structure |
 | `content-gap-analyzer` | Sonnet 4.6 | Population and topic coverage gaps |
 | `framing-checker` | Sonnet 4.6 | Social model; CRPD; BAR-in-Vol-I; marker framing |
 | `evidence-auditor` | Sonnet 4.6 | Evidence stratification; overclaiming; ●/○ verification |
@@ -191,7 +191,7 @@ Never overwrite CLOSED items.
 |---|---|---|
 | `prose-style-checker` | Sonnet 4.6 | Register; concision; voice |
 | `item-specification-writer` | Sonnet 4.6 | Draft/revise specs; ●/○ template; K-category; illustration note |
-| `vol2-item-formatter` | Haiku/Sonnet | Format and validate item blocks; ●/○ system; REF-ID validation |
+| `vol2-item-formatter` | Sonnet 4.6 | Format and validate item blocks; ●/○ system; REF-ID validation |
 | `bibliography-compiler` | Sonnet 4.6 | Endnote compilation; REF-ID→superscript conversion; volume-end endnote lists |
 | `practice-note-generator` | Sonnet 4.6 | OT practitioner field tools |
 
@@ -209,9 +209,9 @@ Never overwrite CLOSED items.
 ### Reference Management
 | Skill | Model | Role |
 |---|---|---|
-| `cross-reference-resolver` | Haiku/Sonnet | Audit/repair refs; BPC↔Item traceability; per-Part file aware |
-| `volii-validator` | Haiku/Sonnet | Item code validation |
-| `supplemental-integrator` | Haiku/Sonnet | Integrate supplementary volumes |
+| `cross-reference-resolver` | Sonnet 4.6 | Audit/repair refs; BPC↔Item traceability; per-Part file aware |
+| `volii-validator` | Sonnet 4.6 | Item code validation |
+| `supplemental-integrator` | Sonnet 4.6 | Integrate supplementary volumes |
 
 ### Reporting
 | Skill | Model | Role |
