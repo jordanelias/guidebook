@@ -109,7 +109,7 @@ REF-RAP-17: SBi-anvisning 218 — DA school acoustics
 
 **Already in BPC:** Iglehart 2020 (REF-RAP-11), Murgia 2022 (REF-RAP-12), Devos 2019 (REF-RAP-13)
 
-#### New sources added (REF-RAP-18 to REF-RAP-29)
+#### New sources added (REF-RAP-18 to REF-RAP-29; REF-RAP-30–31 added from addendum 2026-03-28)
 
 REF-RAP-18: Wroblewski, M., Lewis, D.E., Valente, D.L., & Stelmachowicz, P.G. (2012). Effects of reverberation on speech recognition in stationary and modulated noise by school-aged children and young adults. *Ear and Hearing*, 33(6), 731–744. PMID: 22732772 PMC: 3474865 DOI: [10.1097/AUD.0b013e31825aecad](https://doi.org/10.1097/AUD.0b013e31825aecad) — Tier 1. Children age 6–18 + adults; speech recognition in RT (reverberant 2 m and 6 m) + stationary and modulated noise; developmental data showing younger children need better acoustic conditions. KEY FINDING: release from masking in modulated noise is reduced by reverberation; this is the first study to document this.
 
@@ -135,6 +135,10 @@ REF-RAP-28: Wu, Y.H., & Bentler, R.A. (2012). The influence of audiovisual ceili
 
 REF-RAP-29: Reinhart, P., Zahorik, P., & Souza, P. (2019). Interactions between digital noise reduction and reverberation: acoustic and behavioral effects. *Journal of the American Academy of Audiology*, 31(1), 17–29. PMID: 31267958 PMC: 7416503 DOI: [10.3766/jaaa.18048](https://doi.org/10.3766/jaaa.18048) — Tier 1. 26 adults, mild–moderate SNHL; DNR processing × reverberant conditions. KEY FINDING: DNR processing in reverberant environments decreases speech intelligibility; room design cannot rely on HA DNR to compensate for high RT.
 
+REF-RAP-30: Iglehart, F. (2004). Speech perception by students with cochlear implants using sound-field systems in classrooms. *American Journal of Audiology*, 13(1), 62–72. PMID: 15248805 DOI: [10.1044/1059-0889(2004/009)](https://doi.org/10.1044/1059-0889(2004/009)) — Tier 1. CI children; desktop vs ceiling-mounted SFA in high- and low-reverberation/noise classrooms. KEY FINDING: in high-RT noisy room, desktop SFA provided significantly greater benefit than wall-mounted; in low-RT quiet room both equivalent. Design implication: room acoustic treatment and SFA are complementary, not substitutes. [Added from addendum 2026-03-28]
+
+REF-RAP-31: Black, M.H., et al. (2022). Considerations of the built environment for autistic individuals: a systematic review. *Autism*, 26(4), 1014–1034. PMID: 35695710 DOI: [10.1177/13623613221102753](https://doi.org/10.1177/13623613221102753) — Tier 3. Systematic review, built environment + autism. Acoustic recommendations: soundproofing, sound-absorbent materials to reduce background noise and sound levels; confirms NDV/AUT acoustic provisions; aligns with PAS 6463. [Added from addendum 2026-03-28]
+
 #### Escalation flags
 
 🔴 **REF-RAP-22 [CONTRADICTED BY FDR] — consensus finding row 6** (NRC ≥ 0.85 panels as primary treatment): Amlani & Russo (2016) demonstrate that high-frequency-absorbing acoustic panels can reduce STI and increase listening effort. Route to evidence-auditor (Opus adjudicates). Proposed resolution: specify STI ≥ 0.60/≥ 0.75 (DEAF/CI) as the performance criterion; panel NRC is a means not an end; spectral balance of absorption must be verified.
@@ -151,7 +155,7 @@ citation_mining:
   borderline_included: 2
   excluded: 3
   sources_added: 12
-  ref_ids_assigned: REF-RAP-18 to REF-RAP-29
+  ref_ids_assigned: REF-RAP-18 to REF-RAP-31 (RAP-30–31 from addendum 2026-03-28)
   escalations:
     - type: CONTRADICTS
       ref_id: REF-RAP-22
@@ -165,6 +169,8 @@ citation_mining:
 ---
 ## Citation mining addendum — 2026-03-28
 
+> **RAP-ID RECONCILIATION (2026-03-29):** This addendum originally assigned informal IDs RAP-18–25 that collide with first-pass REF-RAP-18–29. All IDs below have been updated to canonical REF-RAP numbering. Unique sources from this addendum: REF-RAP-30 (Iglehart 2004) and REF-RAP-31 (Black 2022). Six sources were already assigned REF-RAP-19–26 in the first pass.
+
 **Date:** 2026-03-28
 **Seed sources mined:** Iglehart 2020 (PMID 31835909) · Murgia 2022 (PMID 36260411) · Devos 2019 (PMID 31817300)
 **Method:** PubMed related-articles (forward) + Iglehart series backward
@@ -177,35 +183,35 @@ citation_mining:
 
 | Ref | Authors | Year | Title | Journal | PMID | DOI | Tier | Population |
 |---|---|---|---|---|---|---|---|---|
-| RAP-18 | Iglehart F | 2016 | Speech Perception in Classroom Acoustics by Children With Cochlear Implants and With Typical Hearing | Am J Audiol | 27244568 | 10.1044/2016_AJA-15-0064 | Tier 1 | DEAF (CI) |
-| RAP-19 | Iglehart F | 2004 | Speech perception by students with cochlear implants using sound-field systems in classrooms | Am J Audiol | 15248805 | 10.1044/1059-0889(2004/009) | Tier 1 | DEAF (CI) |
-| RAP-20 | McGarrigle R et al. | 2019 | Behavioral Measures of Listening Effort in School-Age Children: SNR, Hearing Loss, Amplification | Ear Hear | 29905670 | 10.1097/AUD.0000000000000623 | Tier 1 | DEAF |
-| RAP-21 | Prodi N, Visentin C | 2022 | A Slight Increase in Reverberation Time in the Classroom Affects Performance and Behavioral Listening Effort | Ear Hear | 34369418 | 10.1097/AUD.0000000000001110 | Tier 3 | ALL (children) |
-| RAP-22 | Vickers DA et al. | 2013 | Sound field amplification in classrooms: speech perception and vocabulary age | Ear Hear | 23340455 | 10.1097/AUD.0b013e31827ad76f | Tier 3 | DEAF / ALL |
-| RAP-23 | Black MH et al. | 2022 | Considerations of the built environment for autistic individuals: review of the literature | Autism | 35695710 | 10.1177/13623613221102753 | Tier 3 | NDV/AUT |
-| RAP-24 | Amlani AM, Russo TA | 2016 | Negative Effect of Acoustic Panels on Listening Effort in a Classroom Environment | J Am Acad Audiol | 27885976 | 10.3766/jaaa.15096 | Tier 3 | ALL |
-| RAP-25 | Neuman AC et al. | 2010 | Combined effects of noise and reverberation on speech recognition: normal-hearing children and adults | Ear Hear | 20215967 | 10.1097/AUD.0b013e3181d3d514 | Tier 3 | ALL (developmental) |
+| REF-RAP-20 | Iglehart F | 2016 | Speech Perception in Classroom Acoustics by Children With Cochlear Implants and With Typical Hearing | Am J Audiol | 27244568 | 10.1044/2016_AJA-15-0064 | Tier 1 | DEAF (CI) |
+| REF-RAP-30 | Iglehart F | 2004 | Speech perception by students with cochlear implants using sound-field systems in classrooms | Am J Audiol | 15248805 | 10.1044/1059-0889(2004/009) | Tier 1 | DEAF (CI) |
+| REF-RAP-25 | McGarrigle R et al. | 2019 | Behavioral Measures of Listening Effort in School-Age Children: SNR, Hearing Loss, Amplification | Ear Hear | 29905670 | 10.1097/AUD.0000000000000623 | Tier 1 | DEAF |
+| REF-RAP-23 | Prodi N, Visentin C | 2022 | A Slight Increase in Reverberation Time in the Classroom Affects Performance and Behavioral Listening Effort | Ear Hear | 34369418 | 10.1097/AUD.0000000000001110 | Tier 3 | ALL (children) |
+| REF-RAP-26 | Vickers DA et al. | 2013 | Sound field amplification in classrooms: speech perception and vocabulary age | Ear Hear | 23340455 | 10.1097/AUD.0b013e31827ad76f | Tier 3 | DEAF / ALL |
+| REF-RAP-31 | Black MH et al. | 2022 | Considerations of the built environment for autistic individuals: review of the literature | Autism | 35695710 | 10.1177/13623613221102753 | Tier 3 | NDV/AUT |
+| REF-RAP-22 | Amlani AM, Russo TA | 2016 | Negative Effect of Acoustic Panels on Listening Effort in a Classroom Environment | J Am Acad Audiol | 27885976 | 10.3766/jaaa.15096 | Tier 3 | ALL |
+| REF-RAP-19 | Neuman AC et al. | 2010 | Combined effects of noise and reverberation on speech recognition: normal-hearing children and adults | Ear Hear | 20215967 | 10.1097/AUD.0b013e3181d3d514 | Tier 3 | ALL (developmental) |
 
 ### Key findings
 
-**RAP-18 (Iglehart 2016, Tier 1):** Companion to Iglehart 2020. CI children in classrooms at RT 0.3, 0.6, 0.9 s. Reducing RT 0.9→0.6 s benefited both CI and typical hearing. Further reduction to 0.3 s provided additional benefit to CI children only, no harm to typical hearing. Directly corroborates ANSI/ASA S12.60 RT ≤0.3 s footnote for hearing device users. **Strengthens RAP-11 specification floor.**
+**REF-RAP-20 (Iglehart 2016, Tier 1):** Companion to Iglehart 2020. CI children in classrooms at RT 0.3, 0.6, 0.9 s. Reducing RT 0.9→0.6 s benefited both CI and typical hearing. Further reduction to 0.3 s provided additional benefit to CI children only, no harm to typical hearing. Directly corroborates ANSI/ASA S12.60 RT ≤0.3 s footnote for hearing device users. **Strengthens RAP-11 specification floor.**
 
-**RAP-19 (Iglehart 2004, Tier 1):** Earlier Iglehart work. CI children benefited more from desktop sound field system than wall-mounted in high-reverberation noisy classroom. In low-reverberation quiet room both systems equivalent. Design implication: room acoustic treatment and sound field are complementary, not substitutes; high-reverberation spaces need both.
+**REF-RAP-30 (Iglehart 2004, Tier 1):** Earlier Iglehart work. CI children benefited more from desktop sound field system than wall-mounted in high-reverberation noisy classroom. In low-reverberation quiet room both systems equivalent. Design implication: room acoustic treatment and sound field are complementary, not substitutes; high-reverberation spaces need both.
 
-**RAP-20 (McGarrigle 2019, Tier 1):** n=82 (37 NH, 45 CHL). CHL showed significantly slower verbal RT than NH — greater processing speed deficit even when words were accurately recognised. No amplification effect found on listening effort measures. Confirms acoustic demand on CHL beyond mere accuracy; supports argument for lower RT targets even where CI children perform adequately on word recognition.
+**REF-RAP-25 (McGarrigle 2019, Tier 1):** n=82 (37 NH, 45 CHL). CHL showed significantly slower verbal RT than NH — greater processing speed deficit even when words were accurately recognised. No amplification effect found on listening effort measures. Confirms acoustic demand on CHL beyond mere accuracy; supports argument for lower RT targets even where CI children perform adequately on word recognition.
 
-**RAP-21 (Prodi & Visentin 2022, Tier 3):** n=302 Italian children aged 11–13. Small RT increase (0.57→0.69 s) combined with classroom noise produced statistically significant listening effort increase and accuracy drop for speech perception task (grade 6 most affected). Confirms even sub-threshold RT changes have measurable consequences. Supports precision of RT targets in BPC.
+**REF-RAP-23 (Prodi & Visentin 2022, Tier 3):** n=302 Italian children aged 11–13. Small RT increase (0.57→0.69 s) combined with classroom noise produced statistically significant listening effort increase and accuracy drop for speech perception task (grade 6 most affected). Confirms even sub-threshold RT changes have measurable consequences. Supports precision of RT targets in BPC.
 
-**RAP-22 (Vickers 2013, Tier 3):** n=44 UK children. SFA improved performance; vocabulary age was primary predictor of performance in poor acoustics. SFA had larger effect for poorer performers. UK Tier 3 evidence for sound field systems. Design implication: acoustic treatment + SFA together; children with language delays especially vulnerable to poor room acoustics.
+**REF-RAP-26 (Vickers 2013, Tier 3):** n=44 UK children. SFA improved performance; vocabulary age was primary predictor of performance in poor acoustics. SFA had larger effect for poorer performers. UK Tier 3 evidence for sound field systems. Design implication: acoustic treatment + SFA together; children with language delays especially vulnerable to poor room acoustics.
 
-**RAP-23 (Black 2022, Tier 3):** Systematic review, built environment + autism. Acoustic recommendations: soundproofing, sound absorbent materials to reduce background noise and sound levels. Confirms NDV/AUT acoustic provisions. Already partially captured via Bettarello/Caniato but adds AU/Curtin authorship; aligns with PAS 6463 recommendations.
+**REF-RAP-31 (Black 2022, Tier 3):** Systematic review, built environment + autism. Acoustic recommendations: soundproofing, sound absorbent materials to reduce background noise and sound levels. Confirms NDV/AUT acoustic provisions. Already partially captured via Bettarello/Caniato but adds AU/Curtin authorship; aligns with PAS 6463 recommendations.
 
-**RAP-24 (Amlani & Russo 2016, Tier 3):** Acoustic panels installed in non-compliant classroom improved STI to meet ANSI, but **paradoxically increased listening effort for children beyond the critical distance**. Word recognition and digit recall both decreased with panels. Counterintuitive finding: compliance with STI metric does not guarantee reduction in listening effort. Design implication: STI measurement alone insufficient; seating layout and critical distance must be co-designed with acoustic treatment.
+**REF-RAP-22 (Amlani & Russo 2016, Tier 3):** Acoustic panels installed in non-compliant classroom improved STI to meet ANSI, but **paradoxically increased listening effort for children beyond the critical distance**. Word recognition and digit recall both decreased with panels. Counterintuitive finding: compliance with STI metric does not guarantee reduction in listening effort. Design implication: STI measurement alone insufficient; seating layout and critical distance must be co-designed with acoustic treatment.
 
-**RAP-25 (Neuman 2010, Tier 3):** n=63 NH children aged 6–12. SNR-50 increased with reverberation and decreased with age. Youngest children (6–8 yr) required SNR ≥15 dB in 0.8 s condition for 95% accuracy. Developmental evidence: younger children require markedly better acoustic conditions. Supports tighter RT targets in educational settings for all ages, especially early childhood.
+**REF-RAP-19 (Neuman 2010, Tier 3):** n=63 NH children aged 6–12. SNR-50 increased with reverberation and decreased with age. Youngest children (6–8 yr) required SNR ≥15 dB in 0.8 s condition for 95% accuracy. Developmental evidence: younger children require markedly better acoustic conditions. Supports tighter RT targets in educational settings for all ages, especially early childhood.
 
 ### Escalation flags
-- 🟡 RAP-24 (Amlani & Russo 2016): finding that acoustic panel installation increased listening effort despite meeting STI threshold warrants escalation to **evidence-auditor** — may affect specification language for A-13 acoustic treatment items (caveat required on STI compliance ≠ adequate listening conditions)
+- 🟡 REF-RAP-22 (Amlani & Russo 2016): finding that acoustic panel installation increased listening effort despite meeting STI threshold warrants escalation to **evidence-auditor** — may affect specification language for A-13 acoustic treatment items (caveat required on STI compliance ≠ adequate listening conditions)
 - No contradictions found with existing BPC specifications
 
 
