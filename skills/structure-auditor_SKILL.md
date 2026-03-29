@@ -14,7 +14,7 @@ description: >
   content or format rules.
 ---
 
-**Model:** Haiku 4.5 — structural extraction only, no content judgment.
+**Model:** Sonnet 4.6 — structural extraction and validation.
 **Intake:** ≤500 lines. Full document → haiku-chunker Mode A first; feed section map to this skill.
 **Output:** structural map + violation table. No content changes. No rewrites.
 
