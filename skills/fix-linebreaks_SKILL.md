@@ -14,7 +14,7 @@ description: >
   intentional line breaks within specification items or code blocks.
 ---
 
-**Model:** Haiku 4.5 — mechanical transform, no judgment required
+**Model:** Sonnet 4.6 — mechanical transform.
 **Input:** any `.md` file with hard-wrapped prose
 **Output:** `.md` file with broken lines joined; structural elements untouched
 **Script:** Python script `fix_linebreaks.py` in the project scripts directory (confirm path from session context before running)
