@@ -27,7 +27,9 @@ Compile from conversation history:
 ### 1b. Reconcile state files against session work
 Run immediately after Step 1 — before extracting patterns or writing rules.
 
-For each file below: GET current content from GitHub. Check against session work compiled in Step 1. Fix any discrepancy inline (update the file, PUT back). If a fix cannot be completed inline, flag as BLOCKER — do not silently skip.
+**Scope: session-local change log only.** Check only files touched or referenced in THIS session (skills run, gaps added/resolved, rules added, connections consumed). Do not re-read all state files from scratch — that is a periodic dedicated activity, not a per-session task.
+
+For each file below that was modified or referenced this session: GET current content from GitHub. Check against session work compiled in Step 1. Fix any discrepancy inline (update the file, PUT back). If a fix cannot be completed inline, flag as BLOCKER — do not silently skip.
 
 **gap_register.md**
 - Every gap described as raised this session → entry exists with correct ID, priority, status OPEN, and today's timestamp.
@@ -39,15 +41,15 @@ For each file below: GET current content from GitHub. Check against session work
 - Every rule described as added this session → RULE block present with matching DATE.
 - Fix: append missing rule.
 
-**references/search-log.md**
-- Every `multilingual-research` run described this session → slug entry present, `last_searched` matches session date, all searched language statuses recorded.
+**references/search-log/{topic}/{slug}.md** (per-slug files)
+- Every `multilingual-research` run described this session → per-slug search-log file present, `last_searched` matches session date.
 - Fix: cannot reconstruct search results post-hoc → flag as BLOCKER.
 
-**references/best-practices-compendium.md**
-- Every slug confirmed in search-log → BPC entry `## {slug}` present.
+**references/bpc/{topic}/{slug}.md** (per-slug files)
+- Every slug confirmed in search-log → BPC entry present.
 - Fix: cannot reconstruct BPC content post-hoc → flag as BLOCKER.
 
-**references/connection-register.md**
+**references/connection-register-active.md**
 - Every connection described as CONSUMED this session → status updated from PENDING to CONSUMED with today's timestamp and item reference.
 - Every new connection identified this session by `connection-scout` → PENDING entry present with correct priority and population codes.
 - Every connection described as DEFERRED or SUPERSEDED → status field reflects that state.
@@ -109,7 +111,7 @@ If `multilingual-research` ran and LOG was not called → flag as BLOCKER in ses
 ### 5. Write session close to GitHub
 - **Filename:** GET `sessions/LATEST`. Parse the number from the current value (e.g. `session_083.md` → 83). Next file = zero-padded three-digit increment: `session_084.md`. If LATEST contains a legacy timestamp filename, treat the count of all `session_` files in the directory as N; next = N+1.
 - Check for collision: GET the new filename. If 404: proceed. If exists: increment again.
-- Timestamps in the YAML `session_close:` field: use `YYYY-MM-DD` date from system prompt + `HH:MM` best estimate, or omit time component. GitHub commit timestamp is the authoritative record — do not use `date -u` or bash for this.
+- Timestamps in the YAML `session_close:` field: use `date -u +"%Y-%m-%d %H:%M"` as canonical source. This is the single timestamp authority for all session operations.
 - This is always a NEW file — never append to an existing session file.
 - PUT (no SHA required for new files).
 - Commit: `session-consolidator: session close [YYYY-MM-DD HH:MM]`
