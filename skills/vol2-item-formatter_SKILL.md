@@ -13,7 +13,7 @@ description: >
   drafts content; this skill formats and validates output structure.
 ---
 
-**Model:** Haiku 4.5 for structure validation; Sonnet 4.6 for content judgment (framing, heading rule, population code completeness)  
+**Model:** Sonnet 4.6
 **Input:** Draft item content in any form (prose, structured notes, partial item block, completed item)  
 **Output:** Publication-ready item block in canonical Volume 2 markdown format  
 **Chunk ceiling:** ≤50 items per run. Larger batches → haiku-chunker first.
