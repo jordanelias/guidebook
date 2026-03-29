@@ -139,7 +139,7 @@ K-category codes: K-01 through K-[NN]. Numbering is sequential within the catego
 - `—` = not applicable (no meaningful interaction)
 - Where a population code produces a conflicting requirement: flag with `⚠ CONFLICT` and apply §IV.2 conflict priority rules.
 
-**Canonical codes:** MOB (MOB/AMB, MOB/UPL) · VIS/vis · VIS/DEAF · NEU (NEU/PCS) · DEM · NDV (NDV/AUT, NDV/ADHD, NDV/SENS) · NDV/MH · PAIN · DBL · OFS (OFS/ME, OFS/POTS, OFS/MCAS)
+**Canonical codes:** MOB (MOB/AMB, MOB/UPL) · VIS · DEAF · NEU (NEU/PCS) · DEM · NDV (NDV/AUT, NDV/ADHD, NDV/SENS) · NDV/MH · PAIN · DBL · OFS (OFS/ME, OFS/POTS, OFS/MCAS)
 
 BAR is not a main-taxonomy code. Large body size provisions belong in the supplementary volume. Do not add BAR items to the main specification library.
 
