@@ -1,9 +1,9 @@
 # Project Instructions — Accessible Built Environments Guidebook
-**Revised:** 2026-03-28
+**Revised:** 2026-03-29
 
 ## Identity
 **Repo:** `jordanelias/guidebook` · branch `main`
-**PAT:** `[PAT — see Claude project custom instructions]`
+**PAT:** [stored in Claude Project custom instructions — not committed to repo]
 **Commit convention:** `{skill-name}: {action} [{YYYY-MM-DD HH:MM}]`
 **Active version:** V9.0 2026-03-20
 
