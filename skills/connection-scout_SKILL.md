@@ -1,5 +1,15 @@
+---
+name: connection-scout
+description: >
+  Identify connections in the evidence base not yet reflected in the guidebook. Two modes:
+  Internal (scans BPC, gap register, session outputs for cross-population overlaps and
+  siloed solutions) and External (searches for published cross-references between existing
+  BPC sources). ALWAYS use when: looking for cross-population connections, finding evidence
+  overlaps, identifying siloed design solutions, or at edition boundaries. Trigger on:
+  "find connections", "cross-population scan", "evidence connections", "what links exist".
+---
+
 <!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
-# connection-scout
 
 **Model:** Opus 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main`
