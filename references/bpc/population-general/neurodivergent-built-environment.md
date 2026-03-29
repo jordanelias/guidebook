@@ -1,6 +1,6 @@
 ## neurodivergent-built-environment
 
-**Updated:** 2026-03-19 22:00  **Evidence tier range:** Co-1, 1–4
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** Co-1, 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -25,6 +25,8 @@
 **Most targeted provision:** Zone-differentiated sensory environments (low-stimulation → standard → stimulating) with clear visual demarcation and user wayfinding to preferred zone — responds to the full NDV spectrum rather than a single-profile default.
 **Conflict resolution:** NDV/AUT muted, low-chroma palette conflicts with NDV/MH evidence favouring warm, saturated, biophilic colour environments. Resolution: apply muted palette as default in shared spaces; provide warm-colour, biophilic breakout zones; do not apply high-contrast safety marking in primary circulation of autism-designated environments without NDV/MH provision analysis.
 **Highest-ambition actionable specification:** All occupied buildings to provide at least one sensory-quiet room (A-16) per floor plate, with user-controlled lighting (2700–5000 K, 10–500 lux dimmable), acoustic attenuation ≤30 dBA, and no fluorescent or stroboscopic lighting anywhere in the building.
+
+**Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed with three additions. (1) The NDV/AUT vs NDV/MH colour palette divergence (muted vs warm/biophilic) is correctly identified as irreconcilable in a single space. The synthesis correctly resolves via zoning. However, the guidebook items (C-01, C-03) currently specify a single palette without subtype conditioning. Item revision required: C-01 should specify the muted default for shared spaces with a cross-reference to NDV/MH warm-palette breakout zones. (2) RT60 ≤0.3 s for NDV-designated spaces is stricter than the general ≤0.4 s (DEAF/DEM). This creates a beneficial rather than conflicting relationship — the NDV target is a subset of the DEAF target. No cross-population conflict. However, where NDV and DEAF share the same space, the stricter NDV target governs — this should be explicit in A-02 conflict notes. (3) User control is correctly identified as the highest-impact single provision. This aligns with the Tier 2 resolution framework: at Tier 1 (population-informed), specify conservative environmental defaults (low stimulation, muted, quiet); at Tier 2 (person-specific), provide adjustment range. The sensory quiet room (A-16) is a Tier 0 provision (benefits all NDV subtypes, no population conflicts). Evidence confidence: MODERATE for acoustic provisions (Tier 3–4, converging evidence); LOW for lighting and colour thresholds (Tier 4–5, no validated quantified values); MODERATE-HIGH for spatial/process provisions (ASPECTSS, PAS 6463).
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
