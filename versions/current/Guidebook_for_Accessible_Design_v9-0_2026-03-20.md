@@ -245,7 +245,7 @@ This guidebook applies a three-tier design hierarchy. DAR (Design for Adaptable 
 
 **Tier 0 — Universal Design / Code Compliance ​**is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Tier 0, DAR is mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
 
-**Tier 1 — Population-Informed Inclusive Design ​**is the primary domain of this guidebook. It applies wherever an identifiable disability population can be reasonably anticipated among the building's regular users. The overwhelming majority of buildings fall into this tier: every public institution, workplace, health facility, transit hub, educational building, housing development, and civic space will serve people across the MOB, VIS, NEU, DEM, NDV, BAR, OFS and related population categories.
+**Tier 1 — Population-Informed Inclusive Design ​**is the primary domain of this guidebook. It applies wherever an identifiable disability population can be reasonably anticipated among the building's regular users. The overwhelming majority of buildings fall into this tier: every public institution, workplace, health facility, transit hub, educational building, housing development, and civic space will serve people across the MOB, VIS, NEU, DEM, NDV, OFS and related population categories.
 
 *At Tier 1, specifications are expressed as ranges.* The range is derived from the functional capacity distribution across the identified population. The median of the range is the population-informed default — the best single value for a designer or practitioner working without a specific individual's assessment. The full range exists because the population is not homogeneous: functional capacity varies within every disability category, and the specification must accommodate that variation.
 
@@ -279,7 +279,7 @@ Many populations in this guidebook — OFS/ME, OFS/POTS, NDV/ADHD, PAIN, NEU/PCS
 
 **Populations absent from UD's historical base.​**
 
-Universal design was developed primarily against a physical disability and ageing population. The BAR, DBL, and OFS categories in this guidebook have no adequate provision in standard UD frameworks. Population-specific evidence overrides UD assumptions for these categories.
+Universal design was developed primarily against a physical disability and ageing population. The DBL, and OFS categories in this guidebook have no adequate provision in standard UD frameworks. Population-specific evidence overrides UD assumptions for these categories.
 
 **Irresolvable multi-population specification conflicts. ​**
 
@@ -411,7 +411,7 @@ Physical access, ambulation, and postural needs arising from lower limb impairme
 
 Biomechanics: ramps above 1:12 require high-force shoulder technique unsustainable by many wheelchair users (Waters et al., 1988). Corridors below 900 mm width increase metabolic cost of wheelchair propulsion 30–45% (Koontz et al., 2012). Seat height of 380 mm increases hip extensor moment \~40% compared to 450 mm (Rodosky et al., 1989). ICF (WHO, 2001): environmental factors (e1) constitute either barriers or facilitators.
 
-**Distinct from BAR:** MOB addresses the mechanics of mobility device use and ambulant access. Large body size design provisions (BAR) address structural load-bearing requirements and dignity provisions and have been relocated to the Supplementary Volume, Section IV. MOB specifications apply independently; where BAR provisions are also required, see Supplementary Volume.
+**Large body size:** Large body size design provisions have been relocated to the Supplementary Volume, Section IV. MOB specifications apply independently.
 
 **Distinct from OFS:** MOB provisions eliminate physical barriers to movement; OFS provisions eliminate exertion load on barrier-free routes. Rest seating (≤20 m, E-10) is the primary OFS-specific provision that MOB does not require as a universal minimum.
 
@@ -699,7 +699,7 @@ Lawton \& Nahemow's (1973) Competence-Press Model holds that adaptive behaviour 
 
 The following matrix shows documented co-occurrence frequency between disability category pairs.
 
-**Ratings:** HIGH = frequently documented co-occurrence with direct design implications; MEDIUM = moderately documented; LOW = less common or indirect. *BAR provisions relocated: see Supplementary Volume "Designing for Different Body Sizes," Section IV. BAR column retained for cross-reference continuity (Option B interim).*
+**Ratings:** HIGH = frequently documented co-occurrence with direct design implications; MEDIUM = moderately documented; LOW = less common or indirect. * provisions relocated: see Supplementary Volume "Designing for Different Body Sizes," Section IV. column retained for cross-reference continuity (Option B interim).*
 
 |  | MOB | VIS | NEU | DEM | NDV | MH | PAIN | UPL | DBL | OFS |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -772,7 +772,6 @@ Volume I translates the 71-item technique library into application tools for des
 | NDV | Neurodivergent (autism, ADHD, sensory processing difference) | Acoustic and sensory control, predictability, choice |
 | NDV/MH | Mental health, PTSD, trauma | Safety, control, enclosure options, sensory de-escalation |
 | PAIN | Chronic pain and fibromyalgia | Thermal stability, vibration, touch sensitivity, rest |
-| BAR | Large Body Size (Relocated → Supp Vol IV) | Structural capacity, turning circles, furniture ratings |
 | OFS | Orthostatic and fatigue spectrum (POTS, CFS/ME, MS fatigue) | Seating, thermal stability, exertion management |
 | DBL | DeafBlind | Tactile communication, route predictability, combined VIS+DEAF provisions |
 | UPL | Upper limb and amputation (sub-code of MOB) | Hardware operability, reach, grip-free operation |
@@ -791,7 +790,7 @@ What must I do at each stage that cannot be undone later?
 |  | Toilet visibility from living/bedroom (DEM) | D-03 ⚠ NOT-RETROFITTABLE |
 |  | Acoustic buffer zone planning (adjacencies) | A-01 |
 |  | HVAC plant room location (vibration isolation) | A-08, A-09 |
-| | large body size structural (BAR → Supp Vol IV) floor zone for wet room | |
+| | large body size structural floor zone for wet room | |
 | | Changing Places facility footprint | |
 |  | Through-floor lift structural zone | R-STA-02 |
 |  | Grab bar blocking structural provision | I-03 |
@@ -1091,19 +1090,19 @@ If no drawing is identified: the item is not specified. An accessibility require
 
 **Building:** 24-bed orthopaedic ward, older adults, urban hospital. All patients post-surgical or awaiting surgery.
 
-**Population brief:** MOB primary (all patients; post-surgical mobility limitation); DEM secondary (estimated 30–40% of older adults on ward have concurrent dementia diagnosis, NICE NG97 2018); large body size/BAR (→ Supp Vol IV) tertiary (estimated 15% of patients require large body size provision (BAR → Supp Vol IV)s, NHS NHSE 2023).
+**Population brief:** MOB primary (all patients; post-surgical mobility limitation); DEM secondary (estimated 30–40% of older adults on ward have concurrent dementia diagnosis, NICE NG97 2018); large body size/ tertiary (estimated 15% of patients require large body size provision s, NHS NHSE 2023).
 
 **Stage 0 priorities:**
 
 - D-03 toilet visibility from bed: STRUCTURAL — confirmed on schematic floor plan (most safety-critical single item on ward)
-- /large body size spatial provisions (BAR → Supp Vol IV): STRUCTURAL — large body size patients (BAR → Supp Vol IV) require 1800 mm turning circle in all bathrooms
+- /large body size spatial provisions : STRUCTURAL — large body size patients require 1800 mm turning circle in all bathrooms
 - A-09 HVAC plant location: STRUCTURAL
 - Ceiling hoist tracking: STRUCTURAL in designated bay(s)
 
 **Critical synthesis decisions:**
 
 1. Toilet visibility (D-03): Marquardt (2011) documents 47% incontinence reduction across 32 facilities — the highest single-item evidence impact in the entire library. Toilet door must be in direct visual line from bed. Confirmed on schematic floor plan before any partition layout is fixed.
-2. large body size provisions (BAR → Supp Vol IV): ≥3 of 24 beds designated for large body size use (BAR → Supp Vol IV) (12.5%): wider doors (≥950 mm clear), turning circle ≥1800 mm in bathrooms, 300 kg rated grab bars, 2000×2000 mm large body size wet room (BAR → Supp Vol IV). Structural engineer confirmation at schematic for floor loading and grab bar blocking.
+2. large body size provisions : ≥3 of 24 beds designated for large body size use (12.5%): wider doors (≥950 mm clear), turning circle ≥1800 mm in bathrooms, 300 kg rated grab bars, 2000×2000 mm large body size wet room . Structural engineer confirmation at schematic for floor loading and grab bar blocking.
 3. DEM provisions: D-04 landmarks at corridor junctions; C-06 plain flooring; B-11 warm CCT ≤3000 K throughout ward; sensory room (A-16 or F-03) adjacent to main corridor — for agitation management and post-operative disorientation.
 4. Acoustic: NC-25 in all patient areas; A-14 STC ≥50 at partition between patient bay and corridor (speech privacy); A-08 HVAC noise NC-25 in patient sleeping areas.
 5. Heating: TC-01 18–22°C in all clinical areas; TC-05 heated bathroom floors (fall prevention + MS patient provision); I-03 TMV ≤38°C (all patient bathrooms), TMV ≤35°C (neurology patients if ward includes any).
@@ -1248,7 +1247,7 @@ Each room matrix is structured as: 1.
 
 **Schematic checklist** — binary checklist for this room at end of schematic design stage
 
-**Population code key for tables:** MOB=mobility, VIS=visual (vis=low vision), DEAF=deaf/hearing, DEM=dementia, NDV=neurodivergent, NEU=neurological/PCS, PAIN=chronic pain, BAR=large body size (→ Supp Vol IV), OFS=environmental sensitivity, DBL=DeafBlind, UPL=upper limb, IntD=intellectual disability [THIN BASE — interim provisions; Tier 4–5 only; March 2026] **Design stage codes:** SD=schematic design
+**Population code key for tables:** MOB=mobility, VIS=visual (vis=low vision), DEAF=deaf/hearing, DEM=dementia, NDV=neurodivergent, NEU=neurological/PCS, PAIN=chronic pain, OFS=environmental sensitivity, DBL=DeafBlind, UPL=upper limb, IntD=intellectual disability [THIN BASE — interim provisions; Tier 4–5 only; March 2026] **Design stage codes:** SD=schematic design
 
 | DD=developed design | CD=construction documents | SPEC=specification | COMM=commissioning | OPS=operation — |
 
@@ -1276,13 +1275,13 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 ### 6.1 R-ENT: Entry
 
-**Room criticality:** The entry is the most consequential zone in the residence. It is the point of access and return, the location of the primary security system, the threshold between external and internal environments, and the first sensory transition zone. Failure here blocks all other provisions. Primary populations: MOB (step-free), BAR (wide clear opening — → Supp Vol IV), VIS/vis (approach wayfinding), DEAF (visual intercom), DBL (tactile approach), OFS/POTS (automatic door, canopy weather protection).
+**Room criticality:** The entry is the most consequential zone in the residence. It is the point of access and return, the location of the primary security system, the threshold between external and internal environments, and the first sensory transition zone. Failure here blocks all other provisions. Primary populations: MOB (step-free), VIS/vis (approach wayfinding), DEAF (visual intercom), DBL (tactile approach), OFS/POTS (automatic door, canopy weather protection).
 
 **Note on H-04 (intercom) placement:** Per the residential analysis, H-04 is an interior control (R-ENT-02 provision). Remove H-04 from R-ENT-01 technique index. External keypad height specification is an R-ENT-01 annotation only.
 
 **Item application table — R-ENT:**
 
-| Item | Title | MOB | BAR | VIS | DEAF | DEM | NDV | OFS | DBL | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | OFS | DBL | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | E-06 | Step-free threshold | ● | ● | ○ | — | ● | — | ● | ● | ○ | SD |
 | E-11 | Automatic door | ● | ● | — | ○ | ● | — | ● | ● | — | DD |
@@ -1307,7 +1306,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | Visual alarm provision | Electrical provision (conduit + junction box) for strobe at entry | Future visual fire alarm installation | Construction |
 | Vibrotactile BMS relay | Dry-contact relay output from fire alarm panel at entry electrical intake | Future personal pager base-station integration for DBL occupants; K-04 | Construction |
 | Canopy structure | Full-width canopy structure over door entry with side weather protection | Weather protection for OFS/POTS users; prevents assisted standing in rain | Schematic |
-| Entry door width | Minimum 950 mm clear opening framed at construction | large body size-accessible entry (BAR → Supp Vol IV); future power-chair width | Framing stage |
+| Entry door width | Minimum 950 mm clear opening framed at construction | large body size-accessible entry ; future power-chair width | Framing stage |
 | Lobby acoustic buffer | ≥1.5 m depth lobby with STC ≥30 inner door | Sensory transition for NDV users; decompression before interior | Schematic |
 
 **Conflict register — R-ENT:**
@@ -1316,7 +1315,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | --- | --- | --- |
 | Automatic door vs. acoustic privacy | NDV (lobby buffer) vs. all | Automatic door required; acoustic vestibule achieves both. Specify A-03 acoustic door at inner lobby boundary |
 | Level threshold vs. water ingress | E-06 (zero threshold) vs. waterproofing | Specify recessed drainage channel ≥50 mm wide at zero-threshold point; confirm with structural engineer |
-| External keypad height vs. BAR reach | MOB (400–1100 mm AFF) vs. BAR (max 1050 mm reach forward) | Specify 400–1050 mm AFF for any external keypad serving large body size-identified users (BAR → Supp Vol IV) |
+| External keypad height vs. reach | MOB (400–1100 mm AFF) vs. | Specify 400–1050 mm AFF for any external keypad serving large body size-identified users |
 
 **Citation additions per residential analysis:**
 
@@ -1329,7 +1328,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 **Schematic checklist — R-ENT:**
 
 - [ ] Step-free approach from street/parking to entry door confirmed on site plan
-- [ ] Entry door clear opening ≥950 mm (BAR ≥1000 mm) on floor plan
+- [ ] Entry door clear opening ≥950 mm on floor plan
 - [ ] Automatic door with ≥3 m motion detection approach shown on floor plan and electrical drawings
 - [ ] Canopy with side weather protection shown on site plan and section
 - [ ] Lobby depth ≥1.5 m confirmed on floor plan
@@ -1339,11 +1338,11 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 ### 6.2 R-GAR: Garage and Vehicle Space
 
-**Room criticality:** The garage is the primary access point for adapted vehicle users (modified vehicles, hand controls, tail lifts). It is also the primary internal entry point in many dwellings — the path from garage to interior must be step-free and lever-operated. Primary populations: MOB (vehicle transfer space, step-free to interior), BAR (larger vehicle space — → Supp Vol IV), UPL (lever hardware on all garage doors and interior connections).
+**Room criticality:** The garage is the primary access point for adapted vehicle users (modified vehicles, hand controls, tail lifts). It is also the primary internal entry point in many dwellings — the path from garage to interior must be step-free and lever-operated. Primary populations: MOB (vehicle transfer space, step-free to interior), UPL (lever hardware on all garage doors and interior connections).
 
 **Item application table — R-GAR:**
 
-| Item | Title | MOB | BAR | UPL | VIS | IntD | Design Stage |
+| Item | Title | MOB | UPL | VIS | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | E-06 | Step-free from garage to interior | ● | ● | ○ | — | — | SD |
 | E-11 | Automatic garage door | ● | ● | ● | — | — | DD |
@@ -1356,7 +1355,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | Provision | What to install now | What it enables later |
 | --- | --- | --- |
 | EV charger conduit | 20 mm conduit + 32 A circuit to accessible vehicle bay | Future EV charger at 400–1100 mm AFF (standard EV charge point height inaccessible from wheelchair) |
-| Wider bay marking | Bay width ≥3600 mm + 1200 mm transfer zone (or ≥4500 mm for BAR) marked at construction | No future re-lining needed |
+| Wider bay marking | Bay width ≥3600 mm + 1200 mm transfer zone (or ≥4500 mm for) marked at construction | No future re-lining needed |
 | Step-free door frame | Interior garage-to-dwelling door framed at ≥900 mm clear; no step, no sill | Direct accessible entry; future automatic door installation |
 
 **Citation additions per residential analysis:**
@@ -1369,7 +1368,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Schematic checklist — R-GAR:**
 
-- [ ] Accessible bay dimensions (3600 mm + 1200 mm, or 4500 mm BAR) on site plan
+- [ ] Accessible bay dimensions (3600 mm + 1200 mm) on site plan
 - [ ] Step-free path from accessible bay to interior entry confirmed on floor plan and section
 - [ ] Interior garage door: ≥900 mm clear, lever hardware, no step/sill on floor plan
 - [ ] EV conduit provision on electrical drawings
@@ -1381,7 +1380,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-LAU:**
 
-| Item | Title | MOB | UPL | PAIN | OFS | BAR | IntD | Design Stage |
+| Item | Title | MOB | UPL | PAIN | OFS | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | I-02 | Lever taps (if laundry sink) | ● | ● | ○ | — | — | — | CD |
 | G-05 | Height-adjustable surface (if laundry bench) | ● | ● | ● | — | — | — | DD |
@@ -1421,7 +1420,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-BED:**
 
-| Item | Title | MOB | VIS | DEAF | DEM | NDV | NEU | PAIN | BAR | OFS | DBL | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | NEU | PAIN | OFS | DBL | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | B-01 | Circadian lighting (tunable white) | ● | — | — | ● | ● | ● | ○ | — | ○ | — | — | DD |
 | B-06 | Individual dimming control | ● | — | — | ● | ● | ● | ● | — | ● | — | — | CD |
@@ -1444,7 +1443,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | --- | --- | --- | --- |
 | Ceiling hoist tracking blocking | Structural blocking in ceiling (continuous run, 3600 mm minimum, centred on bed zone + transfer zones) | Enables ceiling hoist installation without ceiling demolition | ×20–40 retrofit cost |
 | Bedside control conduit | 20 mm conduit from bedside position to consumer unit | Smart bedside control, nurse-call, assisted technology future-proofing | ×8 retrofit |
-| Bedroom door ≥900 mm clear | Framed at ≥900 mm clear opening (BAR: ≥1000 mm) | Future power chair access | ×5–15 retrofit |
+| Bedroom door ≥900 mm clear | Framed at ≥900 mm clear opening | Future power chair access | ×5–15 retrofit |
 | Structural wall provision (future through-floor lift) | In multi-storey dwellings: structural zone ≥900×1200 mm on each floor at same position | Future through-floor lift installation | ×50+ retrofit without pre-planning |
 
 **Conflict register — R-BED:**
@@ -1471,14 +1470,13 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **NOTE on sequence:** Per the residential analysis, R-BA-05 (turning circle) is a prerequisite for all other bathroom provisions. It is therefore presented first in the sequence.
 
-**Room criticality:** The bathroom is the highest-risk room in the residence for falls, scalding, and mobility-related injury. IntD users may require visual prompts and simplified controls; standard accessible provisions generally serve IntD users without separate specification. It is the room with the highest-leverage DAR provisions (grab bar blocking) and the highest cost multiplier for retrofitting missed provisions (75× for grab bar blocking). Primary populations: MOB (turning circle, wet room, grab bars), DEM (fall prevention, grab bar colour contrast, heated floor), MS/NEU (anti-scald, thermal stability), BAR (300 kg rated fittings). ALL populations encounter the bathroom daily.
+**Room criticality:** The bathroom is the highest-risk room in the residence for falls, scalding, and mobility-related injury. IntD users may require visual prompts and simplified controls; standard accessible provisions generally serve IntD users without separate specification. It is the room with the highest-leverage DAR provisions (grab bar blocking) and the highest cost multiplier for retrofitting missed provisions (75× for grab bar blocking). Primary populations: MOB (turning circle, wet room, grab bars), DEM (fall prevention, grab bar colour contrast, heated floor), MS/NEU (anti-scald, thermal stability). ALL populations encounter the bathroom daily.
 
 **Item application table — R-BA:**
 
-| Item | Title | MOB | BAR | DEM | NEU | PAIN | VIS | DEAF | DBL | Design Stage |
+| Item | Title | MOB | DEM | NEU | PAIN | VIS | DEAF | DBL | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-**| \*\*R-BA-05\*\* G-01/| Turning circle ≥1500 mm (BAR: ≥1800 mm) | ● | ● | — | — | — | — | — | — | \*\*SD\*\* |** 
-**| \*\*R-BA-01\*\* G-04 | Wet room / zero-threshold shower | ● | ● | ● | ● | ● | — | — | — | DD |** 
+**| \*\*R-BA-05\*\* G-01/| Turning circle ≥1500 mm | ● | ● | — | — | — | — | — | — | \*\*SD\*\* |** **| \*\*R-BA-01\*\* G-04 | Wet room / zero-threshold shower | ● | ● | ● | ● | ● | — | — | — | DD |** 
 **| \*\*R-BA-02\*\* G-03 | Grab bar blocking (bilateral, all positions) | ● | ● | ● | ● | ● | — | — | — | \*\*CD-CRITICAL\*\* |** 
 **| \*\*R-BA-03\*\* I-03 | Anti-scald TMV3 (≤43°C; ≤38°C DEM/MS) | ● | — | ● | ● | ● | — | — | — | CD |** 
 **| \*\*R-BA-04a\*\* B-02/B-06 | Bathroom lighting (200 lux face; dimmable) | — | — | ● | ● | ● | ● | — | — | CD |** 
@@ -1525,7 +1523,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Schematic checklist — R-BA:**
 
-- [ ] Turning circle ≥1500 mm (BAR ≥1800 mm) confirmed on furniture layout plan (not floor plan alone)
+- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan (not floor plan alone)
 - [ ] Grab bar blocking zones shown on structural/blocking drawings — NOT deferred to specification only
 - [ ] Zero-threshold shower (or floor recess for future conversion) confirmed on bathroom section
 - [ ] TMV3 on M\&E drawings at all outlets (shower, bath, basin)
@@ -1541,7 +1539,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-LIV:**
 
-| Item | Title | MOB | DEM | NDV | OFS | PAIN | VIS | DEAF | DBL | BAR | IntD | Design Stage |
+| Item | Title | MOB | DEM | NDV | OFS | PAIN | VIS | DEAF | DBL | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | G-01 | Furniture layout + turning circle | ● | ● | — | — | — | ● | — | ○ | ● | — | DD |
 | G-02 | Seating specification (ergonomic + acoustic) | ● | ● | ● | — | ● | — | — | — | ● | — | DD |
@@ -1566,7 +1564,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **R-LIV-02 consolidated biophilic sub-section (formerly R-LIV-03):**
 
-- Window sill height ≤750 mm AFF for seated natural view access (MOB, BAR users); preferred ≤600 mm AFF in residential care settings for bed-users
+- Window sill height ≤750 mm AFF for seated natural view access (MOB users); preferred ≤600 mm AFF in residential care settings for bed-users
 - Interior planting: low-pollen species (pothos, ferns, spider plant); not latex-producing (no ficus); in OFS dwellings: no flowering or fragrant plants (F-06 plant selection)
 - Citations added: Kaplan \& Kaplan (1989) ART; Ulrich (1984, 1991); DSDC (2020); van den Berg (2010)
 
@@ -1606,7 +1604,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-KIT:**
 
-| Item | Title | MOB | UPL | PAIN | BAR | DEM | NDV | DEAF | IntD | Design Stage |
+| Item | Title | MOB | UPL | PAIN | DEM | NDV | DEAF | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | R-KIT-01 G-05/G-06 | Multi-level countertops + knee clearance | ● | ● | ● | ● | ○ | — | — | — | DD |
 | R-KIT-01 storage | Pull-out drawers; D-pull hardware; visual storage | ● | ● | ● | ● | ● | ● | — | ○ | CD |
@@ -1661,7 +1659,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-HAL:**
 
-| Item | Title | MOB | VIS | DEAF | DEM | NDV | DBL | BAR | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | DBL | IntD | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | E-08 | Corridor clear width ≥1000 mm | ● | — | — | ○ | — | ● | ● | — | **SD** |
 | E-10 | Rest seating at ≤20 m | ● | — | — | ○ | — | — | ● | — | DD |
@@ -1688,7 +1686,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Schematic checklist — R-HAL:**
 
-- [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred; ≥1500 mm BAR) confirmed on floor plan
+- [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred) confirmed on floor plan
 - [ ] All internal door frames ≥900 mm clear on floor plan
 - [ ] Night-light path (motion sensor + low-level LED) on electrical drawings
 - [ ] LRV ≥30 door frame contrast confirmed on finish schedule —
@@ -1760,7 +1758,7 @@ The following table summarises all DAR provisions across the residential matrix,
 | Bedside control conduit | R-BED | ×8 | Electrical drawings | CD |
 | EV charger conduit | R-GAR | ×5 | Electrical drawings | CD |
 | Accessible entry door framing (≥950 mm) | R-ENT | ×5–15 | Floor plan / door schedule | SD |
-| large body size structural (BAR → Supp Vol IV) floor provision | R-BA | Structural cost | Structural drawings (SE) | SD | — |
+| large body size structural floor provision | R-BA | Structural cost | Structural drawings (SE) | SD | — |
 ## Part 7: Non-Residential Application Matrices
 
 ### 7.0 Universal Non-Residential Provisions (Revised)
@@ -1771,7 +1769,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | --- | --- | --- | --- | --- |
 | E-06 | Step-free entry (all access points) | SD | Site plan; floor plan | Physical access prerequisite; legal requirement in all DDA/ADA-equivalent jurisdictions |
 | E-11 | Automatic doors (primary entrance; motion ≥3 m) | DD | Floor plan; electrical | OFS/POTS: sustained push effort is disabling; 10-second hold-open |
-| E-08 | Corridor clear width ≥1500 mm (≥1800 mm HLT/TRP) | SD | Floor plan | MOB/large body size/BAR (→ Supp. Part 4) primary circulation requirement |
+| E-08 | Corridor clear width ≥1500 mm (≥1800 mm HLT/TRP) | SD | Floor plan | MOB/large body size/ primary circulation requirement |
 | G-04 / G-03 | Accessible WC on each public floor (turning circle, bilateral grab bars, TMV38°C) | DD | Floor plan | Legal minimum in all jurisdictions |
 | G-06 | Dual-height counter (760 mm + 900 mm sections, ≥1500 mm each) | DD | Floor plan; section | Physical access at service point; most-failed provision in DDA audit |
 | A-10 | Hearing loop at all service counters | DD | Electrical drawings | Communication access for DEAF users |
@@ -1779,7 +1777,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | B-03/04 | Flicker-free LED throughout (no fluorescent) | DD | RCP; electrical | NDV/epilepsy safety: fluorescent and flickering LED are clinical triggers |
 | C-04 | LRV ≥30 at all step edges, door frames, platform edges, counter edges | CD | Finish schedule | VIS/vis fall prevention; DEM wayfinding |
 | I-01 | Lever hardware on all internal doors | CD | Door hardware schedule | UPL universal requirement; no round knobs |
-| H-01 | All controls at 400–1200 mm AFF | CD | Electrical drawings | MOB/UPL/BAR access to all building services |
+| H-01 | All controls at 400–1200 mm AFF | CD | Electrical drawings | MOB/UPL/ access to all building services |
 | D-08/D-09 | Pictogram + word + Braille signage at all room entries | CD | Signage schedule | VIS/DBL cognitive access |
 | E-12 | Emergency evacuation (PEEP; refuge areas; evacuation lift strategy) | SD | Floor plan; fire strategy | Life safety for all disabled users; fire engineer coordination required |
 | F-04 | MERV 13 air filtration | SD | MEP brief | OFS/NDV health; baseline indoor air quality standard |
@@ -1798,7 +1796,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Sensory room | NDV/AUT | A-16 (RT60 ≤0.3 s; NC ≤20), F-01, F-03 (≥1 per 150 students) |
 | Science / specialist rooms | NDV, PAIN, UPL | F-04 (chemical fume extraction), I-02 (lab tap controls), G-05 |
 | Corridors | MOB, NDV, DEM | E-08 (≥1500 mm), D-04 (landmark at junctions), F-01 (sensory buffer zones) |
-| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
+| Accessible WC | MOB| G-03, G-04, /, I-03 |
 | Library / study | VIS, NDV, OFS, DBL | B-03/04, A-02, F-03 (quiet zone), F-04, K-02 (tactile map at library entrance) |
 
 **Education-specific enhancements:**
@@ -1832,12 +1830,12 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | --- | --- | --- |
 | Entry / reception | ALL | E-06, E-11, A-10, G-06, F-01, B-05, K-01 (DBL intervenor adjacency), K-02 (tactile map) |
 | Consulting room | DEAF, MOB, DEM | A-11 (≥15 m²), B-02 (200 lux face), NC-25 (A-08), F-04 (6 ACH fresh air) |
-| Patient ward / bed space | MOB, DEM, NDV, BAR, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01 (circadian), TC-01 (≤24°C general; ≤18°C MS ward), A-16, K-04 (vibrotactile alert) |
-| Accessible WC / bathroom | MOB, BAR, DEM, DBL | G-03, G-04, , , I-03, TC-05, K-04 (vibrotactile) |
-| Changing Places | MOB, BAR | TS 22600:2019 spec |
+| Patient ward / bed space | MOB, DEM, NDV, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01 (circadian), TC-01 (≤24°C general; ≤18°C MS ward), A-16, K-04 (vibrotactile alert) |
+| Accessible WC / bathroom | MOB, DEM, DBL | G-03, G-04, , I-03, TC-05, K-04 (vibrotactile) |
+| Changing Places | MOB| TS 22600:2019 spec |
 | Sensory room (MH / paediatric) | NDV, DEM, PAIN | A-16, F-01, F-03 (≥1 per ward; mandatory MH inpatient/CAMHS/paediatric) |
 | Pharmacy / counter | MOB, VIS, DEAF, DBL | G-06, A-10, H-01, C-04, K-01 (DBL intervenor adjacency) |
-| Imaging / treatment rooms | MOB, BAR | , , G-03 (transfer grab bars); BAR imaging table provisions |
+| Imaging / treatment rooms | MOB| , G-03 (transfer grab bars); imaging table provisions |
 
 **Healthcare-specific enhancements:**
 
@@ -1871,12 +1869,12 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
-| Arrival / reception | MOB, DEAF, BAR | E-06, E-11, G-06, A-10, F-01 |
+| Arrival / reception | MOB, DEAF| E-06, E-11, G-06, A-10, F-01 |
 | Open-plan office | NDV, OFS, PAIN, MOB | A-01 (acoustic pods ≥1 per 20 staff), A-02, A-08, B-03/04, B-06, F-01, F-04, TC-01 |
 | Focus / quiet room | NDV, OFS, PAIN | F-03 (≥1 per 20 staff, mandatory), RT60 ≤0.4 s, NC-25 |
 | Meeting room | DEAF, MOB, DBL | A-11, H-03 (CART), B-02, G-01 (turning circle at table), K-03 (DBL haptic zone at table end) |
 | Break room / kitchen | ALL | I-02, F-02, F-04, G-05, TC-01 |
-| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
+| Accessible WC | MOB| G-03, G-04, /, I-03 |
 | Accessible desk workstation | MOB, UPL, NDV | G-05 (≥20% height-adjustable), H-01, B-06, F-01 sensory-reduced workstation |
 
 **Workplace-specific enhancements:**
@@ -1907,11 +1905,11 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
-| Entry / car park to entry | MOB, BAR, OFS | E-06, E-11, B-05 (transition), accessible parking (BS 8300 dimensions) |
-| Main retail floor | MOB, BAR, DEM, NDV | G-01 (clear routes ≥1500 mm between displays), C-04, B-03/04, F-04 |
-| Service counter / till | MOB, DEAF, BAR | G-06 (dual height), A-10 (loop), H-01 (controls), I-01 |
-| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
-| Fitting rooms | MOB, BAR | Turning circle ≥1500 mm, ≥950 mm door clear, grab bar, fold-down seat |
+| Entry / car park to entry | MOB, OFS | E-06, E-11, B-05 (transition), accessible parking (BS 8300 dimensions) |
+| Main retail floor | MOB, DEM, NDV | G-01 (clear routes ≥1500 mm between displays), C-04, B-03/04, F-04 |
+| Service counter / till | MOB, DEAF| G-06 (dual height), A-10 (loop), H-01 (controls), I-01 |
+| Accessible WC | MOB| G-03, G-04, /, I-03 |
+| Fitting rooms | MOB| Turning circle ≥1500 mm, ≥950 mm door clear, grab bar, fold-down seat |
 | Café/food service | ALL | G-06 (counter), F-04, B-03/04, G-02 (accessible seating) |
 
 **Retail-specific enhancements:**
@@ -1925,7 +1923,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 **Retail schematic checklist:**
 
-- [ ] Accessible parking (3600 + 1200 mm, or 4500 mm BAR) on site plan
+- [ ] Accessible parking (3600 + 1200 mm) on site plan
 - [ ] Step-free entry from accessible parking confirmed on site plan
 - [ ] Aisle widths ≥1500 mm confirmed on retail layout plan
 - [ ] Dual-height counter (760 mm + 900 mm) on floor plan
@@ -1944,7 +1942,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Auditorium / theatre | DEAF, NDV, MOB, DBL | A-11, H-03 (CART), B-10, wheelchair positions (≥1% of capacity at multiple locations), K-03 (haptic zone at aisle-end DBL positions) |
 | Library / reading room | NDV, OFS, VIS | F-03 (quiet zone), B-03/04, A-02, F-04 |
 | Sensory room | NDV, DEM, PAIN | A-16 (≥1 per building; mandatory) |
-| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
+| Accessible WC | MOB| G-03, G-04, /, I-03 |
 | Place of worship | ALL + DBL | A-11, H-03, K-03 (interpreter seating — DBL haptic zone ≥1200 × 1200 mm per position), B-02, G-02 (variety of seating) |
 
 **Cultural-specific enhancements:**
@@ -1975,17 +1973,17 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
 | Accessible hotel room | ALL | **Part 6 residential spec applies**: G-03, G-04, I-03, TC-05, B-01, B-06, H-04 (bedside control), TC-01, G-01 |
-| Hotel bathroom | MOB, BAR, DEM | R-BA item suite; G-04 (wet room), G-03 (bilateral grab bars), I-03 (TMV ≤43°C) |
-| Restaurant / dining | MOB, BAR, NDV, DEAF | G-01 (table turning circle), G-06 (service counter), A-02, B-03/04, F-04 |
+| Hotel bathroom | MOB, DEM | R-BA item suite; G-04 (wet room), G-03 (bilateral grab bars), I-03 (TMV ≤43°C) |
+| Restaurant / dining | MOB, NDV, DEAF | G-01 (table turning circle), G-06 (service counter), A-02, B-03/04, F-04 |
 | Conference / meeting | DEAF, MOB, NDV | A-11, H-03 (CART), B-02, G-01, F-03 (quiet area) |
 | Reception | ALL | E-06, E-11, G-06, A-10, F-01 |
-| Pool / leisure | MOB, BAR | A-10b (hydrotherapy RT60), E-07 (PTV ≥36 wet), G-03 (grab bars), I-03 (anti-scald) |
+| Pool / leisure | MOB| A-10b (hydrotherapy RT60), E-07 (PTV ≥36 wet), G-03 (grab bars), I-03 (anti-scald) |
 
 **Hospitality-specific enhancements:**
 
 - Accessible hotel room: specify to Part 6 residential standard (R-BA, R-BED) as minimum. Additions: visual fire alarm in room (B-10); vibrating wake-up alarm for DEAF guests; hearing loop hook-up at bedside; accessible safe at ≤1100 mm AFF; accessible wardrobe rail at 900 mm AFF with adjustable option.
-- Restaurant accessibility: ≥20% of dining tables with ≥1500 mm turning circle at both ends (not only one end); no fixed bench seating only — fixed benches exclude MOB and BAR users entirely if no removable alternative provided; menu in large print (≥14 pt, B-09 equivalent visual standard)
-- Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blocking, BAR wet room equivalent for pool changing)
+- Restaurant accessibility: ≥20% of dining tables with ≥1500 mm turning circle at both ends (not only one end); no fixed bench seating only — fixed benches exclude MOB and users entirely if no removable alternative provided; menu in large print (≥14 pt, B-09 equivalent visual standard)
+- Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blocking wet room equivalent for pool changing)
 - Guest room controls: all controls at 400–1200 mm AFF (H-01); bedside panel controls all room services (H-04)
 
 **IntD provisions — NR-HOS:** [TIER 4–5; interim; March 2026] Hospitality: (1) pictogram menus and Easy Read hotel information on request; (2) consistent room layout in accessible hotel rooms — avoid furniture rearrangement between stays for regular guests; (3) DEM wayfinding proxies apply (D-04 landmarks in corridors; D-08 pictogram room identification); (4) support worker accommodation — all accessible rooms sized for two occupants where IntD guest requires overnight support.
@@ -2008,9 +2006,9 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 | --- | --- | --- |
 | Entry / ticket hall | ALL | E-06, E-11, B-05 (exterior-to-interior transition over ≥5 m), F-01 (sensory buffer zone) |
 | Platform / boarding area | MOB, VIS, DEAF, DEM | E-09 (TWSI at platform edge), A-10/A-12 (loop + Auracast), H-03 (visual display), B-10, D-04 |
-| Lifts / escalators | MOB, BAR | E-01 (lift dimensions), H-02 (tactile + audible lift controls), EN 81-70:2021 |
+| Lifts / escalators | MOB| E-01 (lift dimensions), H-02 (tactile + audible lift controls), EN 81-70:2021 |
 | Sensory room / quiet area | NDV, DEM, PAIN, OFS | F-03 or A-16 (≥1 per interchange ≥1000 pax/hr), position per F-01 gradient |
-| Accessible WC | MOB, BAR | G-03, G-04, /, I-03 |
+| Accessible WC | MOB| G-03, G-04, /, I-03 |
 | Information / wayfinding | VIS, DEM, DBL | D-01 (loop layout), D-04 (landmarks), D-08 (pictogram + Braille), H-03, H-05 (BLE navigation), K-02 (tactile building map at all major interchange entries) |
 | PA and announcements | DEAF, NDV, DBL | A-12 (Auracast), H-03 (visual display + captioning), K-04 (vibrotactile alert at all waiting zones), SPL ≥65 dBA above ambient at platform | **Transport-specific enhancements:** |
 
@@ -2788,7 +2786,7 @@ Circulation at decision points: natural light at minimum
 
 Solar shading: external or mid-pane preferred; internal as last resort
 
-Sill height: ≤750 mm AFF for seated and reclined views. Applicable where DEM, OFS, NEU, or BAR users are primary occupants (reclined or
+Sill height: ≤750 mm AFF for seated and reclined views. Applicable where DEM, OFS, NEU, or users are primary occupants (reclined or
 
 seated views essential).
 
@@ -2851,7 +2849,7 @@ Where residential occupancy: manual override available for non-standard sleep sc
 **Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model.
 
 Evening shift to ≤10 EML and 2700K CCT removes the alerting light wavelengths that inhibit melatonin production; for DEM users this is the primary circadian regulation intervention; for NEU/MH users it supports the occupation of restorative sleep — an occupation that environmental lighting directly enables or impairs.
-**Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level or ≤1:50 gradient beneath canopy. Drainage to perimeter. For BAR users: canopy height ≥2500 mm to accommodate bariatric scooters/powerchairs.
+**Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level or ≤1:50 gradient beneath canopy. Drainage to perimeter. For users: canopy height ≥2500 mm to accommodate bariatric scooters/powerchairs.
 ### B-12 Sensor-Activated Overnight Pathway Lighting
 
 **Applicable Groups:** MOB, DEM, NEU, OFS, PAIN, VIS, NDV/MH, DBL
@@ -3393,13 +3391,13 @@ All entry and circulation provisions address the complete journey from arrival a
 
 ### E-01 Accessible Lift (1400×1100 mm Car, All Floors Served)
 
-**Applicable Groups:** MOB, BAR, VIS, DEM
+**Applicable Groups:** MOB, VIS, DEM
 
 **Description:** Passenger lift serving all occupied floors. Minimum car 1400 mm deep × 1100 mm wide. Door clear width ≥900 mm. Controls: 800--1200 mm AFF; Braille and tactile numerals; audible floor announcements. For bariatric-accessible routes: see (Bariatric Lift).
 
 **Specifications:**
 
-Car: ≥1400 mm deep × 1100 mm wide (≥1600×1400 mm for BAR-accessible routes — )
+Car: ≥1400 mm deep × 1100 mm wide (≥1600×1400 mm for-accessible routes — )
 
 Door: ≥900 mm clear width
 
@@ -3425,13 +3423,13 @@ The 5--15 second adjustable door open time addresses the temporal performance ra
 
 ### E-02 Platform Lift (Where Full Passenger Lift Not Achievable)
 
-**Applicable Groups:** MOB, BAR
+**Applicable Groups:** MOB
 
-**Description:** Where a full passenger lift cannot be provided (listed building, structural constraint): platform lift with car minimum 900×1400 mm; maximum travel 2 m; maximum speed 0.15 m/s; safety enclosure. Not preferred over E-01 for BAR users — 900×1400 mm is insufficient for bariatric wheelchairs; see .
+**Description:** Where a full passenger lift cannot be provided (listed building, structural constraint): platform lift with car minimum 900×1400 mm; maximum travel 2 m; maximum speed 0.15 m/s; safety enclosure. Not preferred over E-01 for users — 900×1400 mm is insufficient for bariatric wheelchairs; see .
 
 **Specifications:**
 
-Car: ≥900×1400 mm (minimum); note: insufficient for BAR mobility equipment
+Car: ≥900×1400 mm (minimum); note: insufficient for mobility equipment
 
 Maximum travel: 2 m
 
@@ -3451,7 +3449,7 @@ Usage: retrofit/heritage only where E-01 is not achievable
 
 (E-01) cannot be delivered; its specifications (900×1400mm minimum, 2m maximum travel) represent the minimum context modification that
 
-constitutes an effective compensation, with the explicit note that it is insufficient for BAR users.
+constitutes an effective compensation, with the explicit note that it is insufficient for users.
 
 ### E-03 Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility)
 
@@ -3487,15 +3485,15 @@ upper limb endurance.
 
 ### E-04 Accessible Parking (3600 mm Width, Covered, Closest to Entry)
 
-**Applicable Groups:** MOB, BAR, VIS, PAIN, OFS
+**Applicable Groups:** MOB, VIS, PAIN, OFS
 
-**Description:** Accessible parking bays: 3600 mm width (standard accessible) minimum; 4500 mm width for BAR/adapted vehicle users (). Located closest to accessible entry. Covered where possible. Surface: level (≤1:50 cross-fall); PTV ≥36 wet. Marked: International Symbol of Access + Braille equivalent tactile indicator at bay boundary.
+**Description:** Accessible parking bays: 3600 mm width (standard accessible) minimum; 4500 mm width for adapted vehicle users (). Located closest to accessible entry. Covered where possible. Surface: level (≤1:50 cross-fall); PTV ≥36 wet. Marked: International Symbol of Access + Braille equivalent tactile indicator at bay boundary.
 
 **Specifications:**
 
 Standard accessible bay: 3600 mm width
 
-BAR/adapted vehicle bay: 4500 mm width ()
+adapted vehicle bay: 4500 mm width ()
 
 Location: closest accessible bay to entry; ≤50 m to entry
 
@@ -3513,7 +3511,7 @@ Quantity: minimum 5% of total parking, or per local code where greater
 
 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
 
-**Cross-reference:** E-06 (Level Entry route from parking); (BAR
+**Cross-reference:** E-06 (Level Entry route from parking); (
 
 Parking)
 
@@ -3535,21 +3533,19 @@ Gradient: ≤1:50 beneath canopy
 
 Drainage: to perimeter (no central drain creating trip hazard)
 
-Canopy height: ≥2500 mm (BAR powerchair clearance)
-
+Canopy height: ≥2500 mm 
 Lighting: ≥100 lux at entry surface level; night-activated
 
 **Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
-**Cross-reference:** E-06 (Level Entry); (BAR Parking)
-
+**Cross-reference:** E-06 (Level Entry); 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
 
 ### E-06 Level Entry (Zero Step at All Accessible Entrances)
 
-**Applicable Groups:** MOB, BAR, VIS, DEM, OFS
+**Applicable Groups:** MOB, VIS, DEM, OFS
 
 **Description:** Zero step (≤4 mm threshold) at all accessible entrances. Where site topography requires raised threshold: ramped approach ≤1:20 (E-03). No stepped entry at any accessible entrance.
 
@@ -3581,7 +3577,7 @@ user whose mobility impairment or energy limitation makes threshold negotiation 
 
 ### E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)
 
-**Applicable Groups:** MOB, DEM, VIS, BAR (fall prevention)
+**Applicable Groups:** MOB, DEM, VIS
 
 **Description:** All floor surfaces on accessible routes achieve PTV (Pendulum Test Value) ≥36 in wet condition. External approaches, entry vestibules, bathrooms, and kitchens: PTV ≥36 wet (HSE guidance).
 
@@ -3615,9 +3611,9 @@ exceeds clinically acceptable thresholds for populations with reduced balance an
 
 ### E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)
 
-**Applicable Groups:** MOB, BAR, VIS, DEM
+**Applicable Groups:** MOB, VIS, DEM
 
-**Description:** All primary accessible routes: 1200 mm clear width minimum (code minimum 1000 mm in most jurisdictions — E-08 exceeds code). Where 1200 mm continuous not achievable: passing bay ≥1500×1500 mm at maximum 10 m intervals. Large body size (BAR) routes: 1500 mm clear width (see Supplementary Volume, Supp. Part 4).
+**Description:** All primary accessible routes: 1200 mm clear width minimum (code minimum 1000 mm in most jurisdictions — E-08 exceeds code). Where 1200 mm continuous not achievable: passing bay ≥1500×1500 mm at maximum 10 m intervals. Large body size routes: 1500 mm clear width (see Supplementary Volume, Supp. Part 4).
 
 Where <1200 mm continuous: passing bay ≥1500×1500 mm at ≤10 m intervals
 
@@ -3629,7 +3625,7 @@ Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
 
-**Cross-reference:** Large body size corridor width (BAR → Supp. Part 4); E-01 (Lift Car Width)
+**Cross-reference:** Large body size corridor width ; E-01 (Lift Car Width)
 
 **Evidence basis (OT):** Biomechanical FOR. The 1200mm clear width (exceeding 1000mm code minimum) is grounded in wheelchair propulsion
 
@@ -3678,16 +3674,14 @@ Gradient: ≤1:50 beneath canopy
 
 Drainage: to perimeter (no central drain creating trip hazard)
 
-Canopy height: ≥2500 mm (BAR powerchair clearance)
-
+Canopy height: ≥2500 mm 
 Lighting: ≥100 lux at entry surface level; night-activated
 
 **Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
-**Cross-reference:** E-06 (Level Entry); (BAR Parking)
-
+**Cross-reference:** E-06 (Level Entry); 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
 
 ### E-12 Entrance Landing and Manoeuvring Space for Power Wheelchair Users
@@ -3861,7 +3855,7 @@ OFS-occupied spaces
 
 Fresh air supply: ≥10 L/s per person in primary occupied spaces; ≥15
 
-L/s per person where OFS, BAR, or immunocompromised (DEM/NEU post-COVID) users are primary occupants
+L/s per person where OFS, or immunocompromised (DEM/NEU post-COVID) users are primary occupants
 
 VOC specification: all finishes, adhesives, sealants, flooring, ceilings, and furniture within OFS-occupied spaces: TVOC ≤0.5 mg/m³ at
 
@@ -3905,7 +3899,7 @@ Specifications are derived from MCAS trigger literature and HVAC engineering sta
 
 **Applicable Groups:** OFS/POTS, OFS/CFS, MOB (wheelchair users ---
 
-G-06 below), UPL, BAR; also benefits ALL users at service points
+G-06 below), UPL; also benefits ALL users at service points
 
 **Description:** New item added in v9.0 per OFS category review (Stage 3). Every primary occupational interaction in the building --- service counter transaction, kiosk use, workstation task, check-in, reception, triage, waiting — must be achievable without sustained standing (defined as standing for more than 2 continuous minutes without a seating option). F-05 requires that all task locations are provided with appropriate seating, and that the task can be completed from a seated position without a visible distinction from the standard standing transaction.
 
@@ -3933,7 +3927,7 @@ Waiting areas: seated waiting available within all waiting areas with no standin
 
 standard seats in any waiting area
 
-Visual design: seated task provisions should not be visually distinct from standard provisions where achievable (consistent with BAR dignity
+Visual design: seated task provisions should not be visually distinct from standard provisions where achievable (consistent with dignity
 
 principle and MH non-clinical aesthetics principle)
 
@@ -4020,7 +4014,7 @@ Type B: 550--600 mm seat height; footrest available
 
 Type C: 400 mm seat height; soft upholstery
 
-BAR seating: minimum 1 reinforced chair ≥250 kg per area (see Supplementary Volume, Supp. Part 4)
+ seating: minimum 1 reinforced chair ≥250 kg per area (see Supplementary Volume, Supp. Part 4)
 
 No 'disabled seating' label — variety for all
 
@@ -4030,8 +4024,7 @@ furniture replacement and procurement. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. The Kelsey. (2023). Inclusive design standards.
 
-**Cross-reference:** G-01 (Defensible Seating); G-03 (Armrests); Large body size seating (BAR → Supp. Part 4)
-
+**Cross-reference:** G-01 (Defensible Seating); G-03 (Armrests); Large body size seating 
 **Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions derives from biomechanical research on the muscle force requirements of sit-to-stand transfer: 450--500mm seat height reduces hip extensor moment by \~40% compared to 380mm (Rodosky et al. 1989); armrest availability reduces peak shoulder force during sit-to-stand by 15--25%.
 
 ### G-03 Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)
@@ -4046,7 +4039,7 @@ Toilet: bilateral horizontal bars at 800--900 mm AFF both sides
 
 Angled bar at cistern wall
 
-Bar diameter: 32--45 mm; large body size contexts (BAR): 45--50 mm (see Supplementary Volume, Supp. Part 4)
+Bar diameter: 32--45 mm; large body size contexts : 45--50 mm (see Supplementary Volume, Supp. Part 4)
 
 Load: ≥1.5 kN continuous static; ≥2.5 kN peak dynamic (fall-arrest)
 
@@ -4066,15 +4059,14 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 (2018). BS 8300:2018. BSI.
 
-**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); Large body size grab bars (BAR → Supp. Part 4)
-
+**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); Large body size grab bars 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5kN static/≥2.5kN dynamic load rating, bilateral provision) are derived from transfer biomechanics research; the EHP 'adapt' strategy frames the grab bar as a context modification that enables the occupation of bathing, toileting, and transfer independently — occupations that are impossible without the adapted context.
 
 ### G-04 Accessible Bathroom (Wet Room Configuration — Zero Threshold)
 
-**Applicable Groups:** MOB, DEM, PAIN, UPL, BAR
+**Applicable Groups:** MOB, DEM, PAIN, UPL
 
-**Description:** Shower area as continuous wet room: no shower tray, no threshold, no step. Continuous floor from bathroom to shower; linear drain at wall or tiled trench; floor slope ≤1:80 to drain. Shower area minimum 900×900 mm clear (1200×900 mm preferred). Large body size (BAR): minimum 1500×1500 mm clear (see Supplementary Volume, Supp. Part 4).
+**Description:** Shower area as continuous wet room: no shower tray, no threshold, no step. Continuous floor from bathroom to shower; linear drain at wall or tiled trench; floor slope ≤1:80 to drain. Shower area minimum 900×900 mm clear (1200×900 mm preferred). Large body size : minimum 1500×1500 mm clear (see Supplementary Volume, Supp. Part 4).
 
 **Specifications:**
 
@@ -4086,7 +4078,7 @@ Drain: within 1200 mm of all shower area points
 
 Shower clear area: ≥900 mm; ≥1200×900 mm preferred
 
-Large body size (BAR): ≥1500×1500 mm clear shower area (see Supplementary Volume, Supp. Part 4)
+Large body size : ≥1500×1500 mm clear shower area (see Supplementary Volume, Supp. Part 4)
 
 Slip resistance: PTV ≥36 wet throughout shower area
 
@@ -4094,8 +4086,7 @@ Slip resistance: PTV ≥36 wet throughout shower area
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. DIN. (2011). DIN 18040-2:2011 [German\]. DIN.
 
-**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance); Large body size wet room (BAR → Supp. Part 4)
-
+**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance); Large body size wet room 
 **Evidence basis (OT):** EHP Framework (create strategy); Biomechanical FOR. The wet room creates a new environmental context (zero-threshold wash space) that enables the occupation of showering/bathing for users who cannot step over a shower tray; the Biomechanical FOR grounds the fall-prevention specifications (PTV ≥36, fold-down seat, grab bar positions derived from transfer mechanics).
 
 ### G-05 Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range)
@@ -4128,7 +4119,7 @@ Reception counters: accessible height section per G-06
 
 ### G-06 Reception Counter (Accessible Height Section — 760--860 mm AFF)
 
-**Applicable Groups:** MOB, BAR, UPL, VIS
+**Applicable Groups:** MOB, UPL, VIS
 
 **Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below (≥690 mm height × 760 mm width × 480 mm depth). Full hearing loop at counter (A-10). LRV ≥30 contrast at counter edge vs floor.
 
@@ -4148,13 +4139,12 @@ LRV ≥30 at counter edge vs floor
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
 
-**Cross-reference:** A-10 (Counter Hearing Loop); G-05 (Adjustable-Height Desks); Large body size counter (BAR → Supp. Part 4)
-
+**Cross-reference:** A-10 (Counter Hearing Loop); G-05 (Adjustable-Height Desks); Large body size counter 
 **Evidence basis (OT):** Biomechanical FOR. Counter height 760--860mm AFF with ≥690mm knee clearance is derived from the biomechanical requirements of conducting a seated counter interaction: the height enables face-to-face communication at eye level between a seated user and a standing staff member, and the knee clearance allows the wheelchair user to approach flush to the counter without needing to reach across an obstruction.
 
 ### G-07 Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)
 
-**Applicable Groups:** MOB, BAR, DEM, OFS
+**Applicable Groups:** MOB, DEM, OFS
 
 **Description:** Accessible waiting seating within 10 m of reception.
 
@@ -4182,7 +4172,7 @@ furniture repositioning and procurement. See Part 11 §11.4.1.
 
 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF.
 
-**Cross-reference:** Large body size seating (BAR → Supp. Part 4); G-02 (Variety of Seating);
+**Cross-reference:** Large body size seating ; G-02 (Variety of Seating);
 
 G-01 (Defensible Seating)
 
@@ -5255,7 +5245,7 @@ The following table presents the cost case for DAR provisions. All figures are a
 | Level entry (no-step approach) | £2,000 (CAD $850–$3,400) | £5,000–£30,000 (CAD $8,500–$51,000) | 2.5–15× |
 | Electrical conduit for stairlift | £500 (CAD $340–$850) | £2,000 + unit (CAD $1,360–$3,400 + unit) | 4×+ |
 | DAR framing for wider door | £200/door (CAD $340/door) | £1,500–£5,000/door (CAD $2,550–$8,500/door) | 7–25× |
-| Large body size floor loading (BAR → Supp. Part 4) floor loading (4.0 kN/m²) | £500 (CAD $340–$850) $340–$850) | £5,000–£20,000 (CAD $8,500–$34,000) | 10–40× | *Sources: CAN/ASC 2.8:2025 (current as of January 2026) cost analysis; Habinteg (2010) Lifetime Homes; RCOT Living Well by Design |
+| Large body size floor loading floor loading (4.0 kN/m²) | £500 (CAD $340–$850) $340–$850) | £5,000–£20,000 (CAD $8,500–$34,000) | 10–40× | *Sources: CAN/ASC 2.8:2025 (current as of January 2026) cost analysis; Habinteg (2010) Lifetime Homes; RCOT Living Well by Design |
 
 **Policy implication:** DAR provision in new construction is the highest-return accessible design investment available. Building codes that do not require DAR provisions impose these multiplied costs on ageing homeowners and disability communities.
 
@@ -6103,7 +6093,7 @@ Case studies are selected for documented, independently verified outcomes — no
 **Cross-reference to Part 11:** HAFI programme data provides the best available Canadian evidence for the cost-effectiveness of accessibility modifications at the residential retrofit scale. The average CAD $7,500 modification cost represents approximately 30--40% of the retrofit cost that would have been required if no DAR provisions had been incorporated at construction (Part 11 §11.2: the 12:1 built-in to retrofit cost ratio). *End of Part 12 — Case Studies* *Cross-reference: Part 11 §11.1 (cost myth); Part 11 §11.4 (cost intelligence tables for items cited in each case study); Part 10 §10.7 (DAR evidence from §12.03, §12.07, §12.14)*
 ## Master Bibliography
 
-This is the authoritative bibliography for the Guidebook. It consolidates sources from all three volumes and the Supplementary Volume. Additional entries specific to the Supplementary Volume (CHD, LPA, EXH, BAR sections) are in the Supplementary Volume Bibliography Addenda at the end of this document.
+This is the authoritative bibliography for the Guidebook. It consolidates sources from all three volumes and the Supplementary Volume. Additional entries specific to the Supplementary Volume (CHD, LPA, EXH sections) are in the Supplementary Volume Bibliography Addenda at the end of this document.
 
 Key standards and frameworks are listed in Appendix A — Global Standards Catalogue, which provides jurisdiction-by-jurisdiction coverage with currency verification status.
 
@@ -6165,7 +6155,7 @@ Terms are defined as used in this Guidebook. Where a term has a specific technic
 | OFS/MCAS | Mast Cell Activation Syndrome | Sub-code of OFS |
 | ALL | All populations | Item applies across the full disability spectrum |
 
-*Note: BAR (large body size) provisions are in the Supplementary Volume "Designing for Different Body Sizes." Large body size is not classified as a disability under this taxonomy.*
+*Note: provisions are in the Supplementary Volume "Designing for Different Body Sizes." Large body size is not classified as a disability under this taxonomy.*
 
 ---
 
