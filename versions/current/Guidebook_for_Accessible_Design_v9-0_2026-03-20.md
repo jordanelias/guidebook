@@ -2082,13 +2082,24 @@ Corridor ceilings: NRC ≥0.75 minimum
 Where DEM or NEU/acquired brain injury is primary occupant group: NRC ≥0.90 (clinical requirement; ISO 3382-2)
 Post-installation RT60 measurement at 500 Hz required
 
+● Acoustic ceiling panels shall demonstrate balanced spectral absorption across 250 Hz–4 kHz octave bands. High-frequency-dominant absorption profiles (where absorption at 2 kHz–4 kHz exceeds absorption at 250 Hz–1 kHz by more than 0.15 NRC-equivalent) are contraindicated: preferential high-frequency absorption degrades consonant-vowel contrast and increases listening effort at distance despite aggregate STI improvement. [REF:room-acoustic-performance:22]
+
+● Post-installation speech intelligibility verification: STI ≥ 0.60 (general) and STI ≥ 0.75 (where DEAF or cochlear implant users are anticipated) shall be measured at the furthest occupied seat from the primary speech source, not as a room average. Where STI at the furthest seat falls below threshold despite compliant room-average STI, supplementary speech-frequency absorption (SFA) treatment or seating redesign is required to bring all occupied positions within threshold. [REF:room-acoustic-performance:22] [REF:room-acoustic-performance:24]
+
 **Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part 12 §12.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
-**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room)
+**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room); Part 5 §5.2 (ACOUSTIC-LVL conflict domain)
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. RT60 reduction via ceiling treatment directly lowers the cumulative acoustic load experienced by sensory-avoiding and sensory-sensitive users, reducing the neurological effort cost of occupying the space and preserving cognitive and physical energy for the primary occupation.
+
+**Additional evidence (spectral balance and STI verification):**
+
+| Tier | Source | Claim supported |
+|---|---|---|
+| 1 | Amlani, A.M., & Russo, T.A. (2016). JAAA 27(10), 805–815. doi:10.3766/jaaa.15096 | NRC-compliant panels increased listening effort beyond critical distance; spectral balance verification required |
+| 3 | Murgia, S., Webster, J., Cantor Cutiva, L.C., & Bottalico, P. (2022). LSHSS 53(4), 1028–1041 | Systematic review: STI measurement point affects intelligibility outcome in classroom acoustics |
 
 ### A-03 Acoustic Door (STC ≥35) at All Sensitive Space Boundaries
 
