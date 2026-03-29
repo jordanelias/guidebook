@@ -1,5 +1,15 @@
+---
+name: research-log-manager
+description: >
+  GitHub-backed search log and Best Practices Compendium (BPC) manager. Three actions:
+  CHECK (normalise slug, return search status and BPC), LOG (write search results and BPC
+  entry with full jurisdiction coverage), RETRIEVE (load BPC for item-specification-writer).
+  Uses per-slug topic-directory architecture. ALWAYS use before and after every
+  multilingual-research run. Trigger on: "CHECK slug", "LOG results", "RETRIEVE BPC",
+  "search status", "what do we know about", or any research workflow start/end.
+---
+
 <!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
-# research-log-manager
 
 **Model:** Sonnet 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main`
