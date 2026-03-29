@@ -11,7 +11,7 @@ description: >
   any bulk find-and-replace pass that touches table rows.
 ---
 
-**Model:** Haiku 4.5 (detection + extraction) · Sonnet 4.6 (judgment on ambiguous cases)
+**Model:** Sonnet 4.6
 
 ---
 
