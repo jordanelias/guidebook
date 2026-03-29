@@ -1,6 +1,6 @@
 ## OFS-built-environment
 
-**Updated:** 2026-03-19 00:25  **Evidence tier range:** Tier 5 (all provisions — extrapolated from clinical + general seating codes; no OFS-specific standard in any jurisdiction)
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 00:25  **Evidence tier range:** Tier 5  **Opus synthesis:** YES [OPUS-SYNTHESIS] (all provisions — extrapolated from clinical + general seating codes; no OFS-specific standard in any jurisdiction)
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -25,6 +25,8 @@
 **Most targeted provision (Tier 2):** Semi-reclined seating with footrest provision at OT-assessed intervals along individual's habitual routes; low-VOC, fragrance-free environment in healthcare and retail settings; accessible changing or rest facilities with space for fully recumbent positioning.
 
 **Conflict resolution:** Where OFS (reclined preference) conflicts with PAIN (upright seating preference), provide both option types within the same rest zone.
+
+**Opus synthesis note:** The 50m seating interval (VisitEngland/BS 8300) is a MOB-derived provision. The pain-ofs-built-environment-design BPC tightens this to 25–30 m for OFS users based on orthostatic intolerance onset timing (Strassheim 2018; CDC 2024). The OFS-specific interval (25–30 m) should govern where OFS users are the design population; 50 m remains adequate for MOB-only contexts.
 
 **Highest-ambition actionable specification:** Minimum one accessible rest space per 50m of public circulation; rest space to include at least one seat with adjustable back support (0–30°); queue systems to permit seated waiting; chemical/scent-free zones in all healthcare settings. `[TIER 5 — no OFS-specific architectural standard in any jurisdiction; March 2026]`
 

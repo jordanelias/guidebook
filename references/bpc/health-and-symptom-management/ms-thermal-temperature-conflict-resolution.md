@@ -1,6 +1,6 @@
 ## ms-thermal-temperature-conflict-resolution
 
-**Updated:** 2026-03-19 00:30  **Evidence tier:** 2–4
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** MS (Uhthoff's phenomenon), fibromyalgia, and OFS/MCAS thermal requirements are directly conflicting and irreconcilable in a shared space without individual controls. The only design resolution is ambient ≤18–21°C with individual supplemental heating at each seat/workstation. No single fixed ambient temperature serves all three populations.
 **Conflict table:**
   | Population | Thermal requirement | Clinical basis |
@@ -15,7 +15,7 @@
   - Individual zone control per desk/seat (BMS or portable); minimum: accessible thermostat within reach of each primary seat
   - No forced air heating as sole source in NEU/OFS spaces (acoustic + airborne trigger concern)
   - Personal cooling provision (desk fan, cooling vest storage) in all MS neurology ward/room settings
-**TC-02 high-performance envelope:** U-value ≤0.15 W/m²K external wall; triple glazing Uw ≤0.8 W/m²K; thermal bridges eliminated; internal surface temperature variation ≤2°C between floor and 1800 mm AFF
+**TC-02 high-performance envelope:** U-value ≤0.15 W/m²K external wall; triple glazing Uw ≤0.8 W/m²K; thermal bridges eliminated; internal surface temperature variation ≤2°C between floor and 1800 mm AFF `[Tier 5 — engineering best practice; these values are Passivhaus-grade targets linked to thermal stability, not directly from clinical disability evidence]`
 **TC-03 thermal mass:** ≤3°C diurnal internal temperature variation without active HVAC (passive thermal stability)
 **Jurisdictions confirmed:** No jurisdiction has a disability-specific thermal comfort standard for MS, fibromyalgia, or OFS. ISO 7730:2005 (PMV/PPD) is unreliable for these populations — standard comfort model developed for healthy adults. WELL v2 Thermal Comfort feature addresses general thermal comfort only.
 **Key sources:** MSIF-Atlas2023 · Staud2011 · Geisser2021 · Baquero2023 · CDC-MECFS · Newcastle-POTS-2018 · WELL-v2-Thermal · ISO-7730-2005

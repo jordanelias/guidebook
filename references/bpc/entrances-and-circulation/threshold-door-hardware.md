@@ -5,7 +5,7 @@
 ---
 
 ## threshold-door-hardware
-**Updated:** 2026-03-27 00:45  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; Co-1 not yet attempted)  **Opus synthesis:** NO
+**Updated:** 2026-03-27 00:45  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; Co-1 not yet attempted)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PARTIAL-RETAINED
 **Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge, no Co-1). Co-1 pass not started (0/24). 14/14 languages with data (9 partial from training knowledge). Citation mining not done. All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
 
 ### Concept boundary notes
@@ -25,7 +25,12 @@
 
 **Highest-ambition actionable specification:** Zero-threshold mandatory at all doors on accessible path of travel. Lever handles 850–1100 mm AFFL, ≥19 mm diameter, ≥95 mm grip zone, 35–45 mm clearance from door face. Operating force ≤20 N (0–30°). Automatic/power-assisted at primary entrance. Visual contrast ≥15 LRV points between hardware and door surface. Closing speed ≥5 seconds from 90° to 12°. D-handle on sliding doors. Clear opening width ≥900 mm (all door types).
 
-**Opus 4 synthesis note:** NONE
+**Opus synthesis note:** Strongest jurisdictional evidence base in this batch — 24/24 with Tier 6 data. Key judgments:
+(1) Zero-threshold hierarchy (DE/NO/JP 0 mm → BR/AU ≤5 mm → US/CA ≤13 mm → UK/SE ≤15 mm → FR/EU ≤20 mm) is well-documented and the DE Nullschwelle doctrine is correctly identified as global best practice.
+(2) Force range: AU/NO ≤20 N as best practice is sound. FR ≤50 N is a genuine outlier (2.5× best practice) and should be noted in any specification as below international best practice.
+(3) Handle height synthesis (850–1100 mm AFFL) correctly combines DE lower bound with AU upper bound — this is the tightest defensible range serving both standing and seated users.
+(4) Outstanding gaps: Co-1 not started (0/24 jurisdictions), citation mining not done, FDR not run. These are significant — PARTIAL status must be retained until at least Co-1 pass and citation mining are complete.
+(5) Closing speed ≥5 s specification is Tier 6 only (ADA, BS 8300) — no clinical evidence links specific closing speeds to population-specific outcomes. Flag for FDR pass.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |

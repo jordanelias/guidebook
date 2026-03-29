@@ -1,6 +1,7 @@
 ## intellectual-disability-built-environment-design
 
 **Updated:** 2026-03-19 22:00  **Evidence tier range:** 3–4
+**Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29
 **STATUS: PROVISIONAL** — all specifications carry `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`; v9.0 interim only; full evidence review deferred to v10.0.
 
 ### Concept boundary notes

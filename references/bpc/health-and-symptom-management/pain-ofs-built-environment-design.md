@@ -5,7 +5,7 @@
 ---
 
 ## pain-ofs-built-environment-design
-**Updated:** 2026-03-26 23:00  **Evidence tier range:** 1–5 (THIN BASE — GAP-029 P2 OPEN)  **Opus synthesis:** NO
+**Updated:** 2026-03-26 23:00  **Evidence tier range:** 1–5 (THIN BASE — GAP-029 P2 OPEN)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PROVISIONAL-RETAINED
 **Status:** PROVISIONAL — 10/24 jurisdictions NOT-RUN; 7/14 languages Co-1 not attempted. Structural evidence gap: zero built-environment spatial parameters exist for PAIN/OFS in any jurisdiction or language.
 
 ### Concept boundary notes
@@ -22,7 +22,11 @@
 
 **Highest-ambition actionable specification:** Rest seating every 25–30 m (recline-capable for OFS); all service counters provide seated option; thermostatic shower valves mandatory; storage 750–1050 mm; bedroom-bathroom adjacency ≤5 m; ambient temperature individually controllable 18–23°C; low-stimulus retreat room in public buildings >500 m²; cushioned flooring on primary routes.
 
-**Opus 4 synthesis note:** NONE
+**Opus synthesis note:** Evidence base is internally consistent despite PROVISIONAL status. Key judgments:
+(1) PAIN warmth vs OFS cool conflict resolution (default cool 18–21°C + individual supplemental heating) is the only viable approach — clinically sound.
+(2) Tier 0 candidates require qualification: storage zone 380–1220 mm and circulation rest seating are genuine Tier 0 (multi-population, evidence-supported). Retreat room 500 m² threshold and entrance seating 5 m distance are Co-1/Co-2 derived — mark as Tier 0 CANDIDATE pending higher-tier validation.
+(3) FDR pass produced 18 novel findings — notably OFS shower temperature (≤37°C), bathroom ventilation mandate, and head-up tilt bed capacity. These are clinically grounded and should proceed to item specification.
+(4) 10/24 jurisdictions NOT-RUN is a significant gap — complete before elevating from PROVISIONAL.
 
 ### Consensus findings
 | Finding | Languages | Jurisdictions | Tier |
