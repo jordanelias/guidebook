@@ -28,6 +28,58 @@
 
 ---
 
+### CRPD Evidence Log (2026-03-30)
+**Task:** Session 5 CRPD evidence retrieval — log foundational international human rights framework.
+
+**UN Convention on the Rights of Persons with Disabilities (CRPD)**
+- Adopted: 13 December 2006 (UNGA A/RES/61/106)
+- Entered into force: 3 May 2008
+- States parties: 191 (as of 2024)
+- Optional Protocol: 104 states parties
+- Monitoring body: Committee on the Rights of Persons with Disabilities (CRPD Committee)
+
+**Key articles for accessible built environment:**
+
+| Article | Title | Core obligation |
+|---|---|---|
+| Art. 9 | Accessibility | States parties shall take measures to ensure access to the physical environment, transportation, information/communications, and facilities/services open to the public. Requires minimum standards and guidelines; applies to private entities offering public services. |
+| Art. 19 | Living independently | Right to live in the community; adequate support services; access to mainstream community services on equal basis. Built environment obligation: housing and community facilities must not create institutional dependency. |
+| Art. 20 | Personal mobility | Facilitate personal mobility with maximum independence; access to quality mobility aids, devices, assistive technologies at affordable cost. |
+| Art. 24 | Education | Inclusive education requires accessible school buildings; reasonable accommodation for individual needs. |
+| Art. 27 | Work and employment | Accessible workplaces; reasonable accommodation obligation. |
+
+**CRPD Article 9 — key provisions relevant to this guidebook:**
+1. §9(1)(a): Access to buildings, roads, transportation, and facilities (indoor/outdoor), including schools, housing, medical facilities, and workplaces
+2. §9(1)(b): Access to information and communications technologies
+3. §9(2)(a): Develop, promulgate and monitor minimum standards for accessibility of facilities and services open to the public
+4. §9(2)(b): Private entities offering public facilities/services must take accessibility into account
+5. §9(2)(c)-(h): Training, signage, forms of live assistance, use of new technologies, promotion of universal design
+
+**CRPD General Comment No. 2 (2014) on Article 9 — Accessibility:**
+- UN CRPD Committee (2014). General Comment No. 2 on Article 9: Accessibility. CRPD/C/GC/2. Geneva: OHCHR.
+- Key: accessibility as precondition for other CRPD rights; universal design as the standard; reasonable accommodation as individual obligation (≠ accessibility which is systemic); duty to adopt accessibility standards
+- Distinguishes "accessibility" (systemic, proactive) from "reasonable accommodation" (reactive, individual)
+- Requires retroactive accessibility measures even for existing buildings
+
+**CRPD General Comment No. 5 (2017) on Article 19 — Living independently:**
+- UN CRPD Committee (2017). General Comment No. 5 on Article 19. CRPD/C/GC/5. Geneva: OHCHR.
+- Built environment relevance: accessible housing as a right; deinstitutionalisation requires accessible community infrastructure
+
+**Evidence tier:** Tier 3 (international treaty + authoritative committee interpretations) — binding on states parties; not a technical design standard
+**Guidebook relevance:**
+- Part 1 §1.1: CRPD as foundational human rights framework for accessible design
+- Part 1 §1.2: Universal design doctrine grounded in CRPD Art. 9 §9(2)(c)–(h)
+- Part 3/5: Reasonable accommodation (individual) vs. accessibility (systemic) distinction from CRPD GC No. 2
+- Appendix or Bibliography: CRPD UNGA A/RES/61/106 + CRPD/C/GC/2 + CRPD/C/GC/5 as primary references
+
+**Sources to add to bibliography:**
+- CRPD-UNGA-2006: United Nations (2006). Convention on the Rights of Persons with Disabilities. A/RES/61/106. New York: UNGA.
+- CRPD-GC2-2014: UN Committee on the Rights of Persons with Disabilities (2014). General Comment No. 2 on Article 9: Accessibility. CRPD/C/GC/2. Geneva: OHCHR.
+- CRPD-GC5-2017: UN Committee on the Rights of Persons with Disabilities (2017). General Comment No. 5 on Article 19: Living independently. CRPD/C/GC/5. Geneva: OHCHR.
+
+
+---
+
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
