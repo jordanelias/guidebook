@@ -125,7 +125,7 @@ The following amendments were applied during v9.0 production (2026-03-20):
 | Ref | Type | Description |
 | --- | --- | --- |
 | WS-1A | Structural | CO-0001: All Roman-numeral Part/Volume references → Arabic; item codes V2-P4-XX → P7-XX; §E.x conflict refs → §8.x |
-| WS-2A | Safety | MS/Uhthoff ambient temperature floor corrected: ≤22°C → ≤18°C (TC-01, cross-population conflict §8.4.4) |
+| WS-2A | Safety | MS/Uhthoff ambient temperature floor corrected: ≤22°C → ≤18°C (TC-01, cross-population conflict — now Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02]) |
 | WS-2A | Code | VIS/DEAF invalid code → DEAF throughout; A-10/A-11/A-12 Applicable Groups corrected |
 | WS-2A | Structure | §1.11 Scope renumbered to §1.9 |
 | WS-2A | Evidence | 7-tier evidence hierarchy (D-18 rule) applied throughout; Co-2 (OT CPGs) tier formalised |
@@ -134,9 +134,9 @@ The following amendments were applied during v9.0 production (2026-03-20):
 | WS-3B | Coverage | DBL provisions added to 8 residential room matrices (R-BED, R-BA, R-LIV, R-HAL added B-10 visual alert) |
 | WS-3C | Coverage | IntD column added to all residential room matrices and non-residential universal provisions; IntD notes added to NR-EDU, NR-HLT, NR-WRK |
 | WS-3D | Coverage | DEAF provisions added to 6 residential room matrices (R-BED, R-LIV, R-KIT, R-HAL, R-STA, R-BA) |
-| WS-3E | Content | Three new conflict resolutions added: §8.4.10 (DEM/PD floor pattern), §8.4.11 (NDV/AUT + NDV/MH colour), §8.4.12 (ramp gradient walker vs wheelchair) |
+| WS-3E | Content | Three new conflict resolutions added: §8.4.10 (DEM/PD floor pattern), §8.4.11 (NDV/AUT + NDV/MH colour), §8.4.12 (ramp gradient walker vs wheelchair) — now Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02] |
 
-**Deferred to v10.0:** Part 8 Cross-Population Conflict Resolutions (full standalone chapter); 82× "Chapter C" → Part 12 §12.4 (manual review per instance); 12× case study cross-refs; IntD full evidence chapter; `citation-miner` skill build.
+**Deferred to v10.0:** Part 5 §5.2–§5.4 full conflict resolution content (pending GAP-CONF-01/02); 82× "Chapter C" → Part 12 §12.4 (manual review per instance); 12× case study cross-refs; IntD full evidence chapter; `citation-miner` skill build.
 
 ---
 
@@ -365,10 +365,10 @@ The following theoretical frameworks underpin the evidence basis for design spec
 
 ### §1.9 Scope
 
-This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part II. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs. *Next: Part 2 — Disability Categories* *Cross-reference: Part 3 (Multiple Categories); Part 8 (Conflict Resolutions); Part 11 (Economics and DAR costs)*
+This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part II. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs. *Next: Part 2 — Disability Categories* *Cross-reference: Part 3 (Multiple Categories); Part 5 (Conflict Resolutions); Part 11 (Economics and DAR costs)*
 ## Part 2: Disability Categories
 
-Thirteen disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part 3 for multiple disability category design guidance and Part 8 for conflict resolutions.
+Thirteen disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part 3 for multiple disability category design guidance and Part 5 for conflict resolutions.
 
 ### Category Code Reference
 
@@ -511,7 +511,7 @@ Neurological conditions affecting cognition, movement, sensation, fatigue, or be
 
 MS is the most prevalent acquired neurological condition absent from existing accessibility standards. Approximately 2.9 million people worldwide live with MS (MSIF Atlas, 2023).
 
-- Uhthoff's phenomenon: temporary worsening of neurological symptoms when core body temperature rises by approximately 0.5°C above individual baseline. Design environments for MS should target ambient temperatures of 18°C. See Part 8, §8.4.4.
+- Uhthoff's phenomenon: temporary worsening of neurological symptoms when core body temperature rises by approximately 0.5°C above individual baseline. Design environments for MS should target ambient temperatures of 18°C. See Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02].
 - MS fatigue: disproportionate, not fully relieved by rest; fluctuates across the day. Design response: rest seating every 20–30 m; lifts ≤60 m from any point; even surfaces.
 - MS bladder urgency: up to 80% of people with MS experience bladder problems. Accessible toilet within 20 m of all primary occupied spaces is a clinical priority.
 
@@ -609,7 +609,7 @@ Chronic pain conditions including fibromyalgia, complex regional pain syndrome, 
 - Rest seating: cushioned surfaces throughout; avoid hard plastic, metal, or rigid seating; armrests essential for lowering to seat and rising
 - Cold floor surfaces: specify heated floor or seating with footrest at all primary seating areas
 
-**Distinct from NEU:** PAIN conditions produce environmental sensitivity without the cognitive, balance, or fatigue profile of neurological conditions. See Part 8, §8.4.4 for temperature conflict between NEU (Uhthoff's — cool environments) and PAIN (warmth preference).
+**Distinct from NEU:** PAIN conditions produce environmental sensitivity without the cognitive, balance, or fatigue profile of neurological conditions. See Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02] for temperature conflict between NEU (Uhthoff's — cool environments) and PAIN (warmth preference).
 
 *OT Framework: Person-Environment-Occupation (PEO) Model.*
 
@@ -683,7 +683,7 @@ Best Practice Guidebook v9.0*
 
 ### §3.1 Introduction and Rationale
 
-Disability is not experienced in isolation. Epidemiological data consistently show that more than 55% of disabled adults have two or more disability types simultaneously (WHO Global Disability Report, 2011; Australian Institute of Health and Welfare, 2022). The Code-as-Floor Principle (§1.2) applies to single-category provisions --- but for persons with multiple disability categories, even beyond-code single-category provisions may be systematically inadequate. Three failure modes are documented where single-category provisions are applied to multiple-category users: - Provisions for one category create barriers for another (e.g., tactile flooring for VIS creating vibration pain triggers for PAIN users; see Part 8 for conflict resolution). - Single-category specifications are calibrated to that category's OT evidence without accounting for the compound functional burden of co-occurring conditions. - Design briefs treat disability categories as discrete user groups, failing to design for the majority who present with multiple categories.
+Disability is not experienced in isolation. Epidemiological data consistently show that more than 55% of disabled adults have two or more disability types simultaneously (WHO Global Disability Report, 2011; Australian Institute of Health and Welfare, 2022). The Code-as-Floor Principle (§1.2) applies to single-category provisions --- but for persons with multiple disability categories, even beyond-code single-category provisions may be systematically inadequate. Three failure modes are documented where single-category provisions are applied to multiple-category users: - Provisions for one category create barriers for another (e.g., tactile flooring for VIS creating vibration pain triggers for PAIN users; see Part 5 for conflict resolution [XREF-PENDING: §5.x — GAP-CONF-01/02]). - Single-category specifications are calibrated to that category's OT evidence without accounting for the compound functional burden of co-occurring conditions. - Design briefs treat disability categories as discrete user groups, failing to design for the majority who present with multiple categories.
 
 ### §3.2 Theoretical Framework
 
@@ -716,7 +716,7 @@ Loop floor plan (D-01) is essential — dead-end corridors generate agitation an
 
 #### NEU + PAIN (MS + fibromyalgia)
 
-Thermal conflict: Uhthoff's (MS, NEU) requires cool temperature ≤18°C; fibromyalgia (PAIN) requires warmth. Resolution: zoned thermal management — primary activity spaces at ≤18°C with individual supplemental heating available (warm throw, portable radiant panel). See Part 8, §8.4.4.
+Thermal conflict: Uhthoff's (MS, NEU) requires cool temperature ≤18°C; fibromyalgia (PAIN) requires warmth. Resolution: zoned thermal management — primary activity spaces at ≤18°C with individual supplemental heating available (warm throw, portable radiant panel). See Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02].
 
 #### NDV + MH (AUT + PTSD)
 
@@ -736,7 +736,7 @@ Common presentation: MS (MOB + NEU); stroke (MOB + NEU + DEM); TBI (MOB + NEU). 
 
 #### MOB + PAIN (Mobility and Chronic Pain)
 
-Common presentation: MS with fibromyalgia; arthritis (MOB + PAIN); rheumatoid arthritis (MOB + PAIN + UPL). Physical access provisions (grab bars, turning space) must be specified without creating vibration or cold-contact triggers. Key conflicts: grab bar surface temperature (cold metal triggers PAIN allodynia — specify insulated or coated grab bars per G-03); flooring vibration from textured tactile indicators (E-09) may trigger PAIN — use recessed indicators or acoustic vinyl alternative where PAIN is the primary population. Thermal management critical: PAIN users require warmth; MS users may require cool (see Part 8 §8.4.4 for resolution protocol).
+Common presentation: MS with fibromyalgia; arthritis (MOB + PAIN); rheumatoid arthritis (MOB + PAIN + UPL). Physical access provisions (grab bars, turning space) must be specified without creating vibration or cold-contact triggers. Key conflicts: grab bar surface temperature (cold metal triggers PAIN allodynia — specify insulated or coated grab bars per G-03); flooring vibration from textured tactile indicators (E-09) may trigger PAIN — use recessed indicators or acoustic vinyl alternative where PAIN is the primary population. Thermal management critical: PAIN users require warmth; MS users may require cool (see Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02] for resolution protocol).
 
 #### NEU + MH (Neurological/ABI and Mental Health/PTSD)
 
@@ -904,7 +904,7 @@ The acoustic environment, visual environment, thermal environment, and olfactory
 
 **Principle 3 — Population Co-occurrence**
 
-Design for the realistic population, not isolated cases. A residential care building serves: DEM + MOB (concurrent at high prevalence), plus staff who are NDV + OFS (workplace prevalence data). An office serves NDV + PAIN + OFS as co-occurring conditions in the same building user. The conflict register in Part 8 identifies the standard co-occurrences and their resolutions. Apply the relevant conflict resolutions at the start of technical design, not when they are noticed.
+Design for the realistic population, not isolated cases. A residential care building serves: DEM + MOB (concurrent at high prevalence), plus staff who are NDV + OFS (workplace prevalence data). An office serves NDV + PAIN + OFS as co-occurring conditions in the same building user. The conflict register in Part 5 identifies the standard co-occurrences and their resolutions. Apply the relevant conflict resolutions at the start of technical design, not when they are noticed.
 
 **Principle 4 — Temporal Continuity**
 
@@ -918,7 +918,7 @@ Deliverables:
 
 - Population brief: identify which disability categories will use this building; estimate co-occurrence patterns
 - NOT-RETROFITTABLE register: flag D-01, D-02, D-03, D-07, E-01, F-01, A-09 as schematic-stage constraints
-- Conflict register: pre-populate with standard conflicts from Part 8 relevant to building type
+- Conflict register: pre-populate with standard conflicts from Part 5 relevant to building type
 - Consultant briefs: include disability population brief in initial brief to all consultants — not an afterthought Specific brief requirements:
 - HVAC brief: temperature maximum ≤24°C (TC-01); MERV 13 filtration (F-04); acoustic NC targets (A-08)
 - Structural brief: grab bar blocking provision (G-03); lift shaft (E-01); through-floor lift zone (R-STA DAR)
@@ -987,7 +987,7 @@ If yes (Part C/H items): issue the brief at the stage indicated in Part C. Do no
 
 **Q3: Does this item appear in the conflict register for this room or building type?**
 
-If yes: apply the resolution documented in Part 8 before specifying the individual item.
+If yes: apply the resolution documented in Part 5 before specifying the individual item.
 
 **Q4: What drawing does this item appear on?**
 
@@ -1340,9 +1340,7 @@ At VIS navigation junctions: hard floor strip 200--300 mm wide to maintain acous
 
 **Retrofit cost note:** Retrofit penalty: LOW. Carpet specification is a finish decision. Retrofit requires floor covering replacement.
 
-Principal retrofit consideration: accessibility compatibility — slip resistance, wheelchair rolling resistance, and LRV contrast. See Part
-
-VIII §8.4.1.
+Principal retrofit consideration: accessibility compatibility — slip resistance, wheelchair rolling resistance, and LRV contrast. See Part 5 [XREF-PENDING: §5.x — GAP-CONF-01/02].
 
 **Key citations:** British Standards Institution. (2022). PAS
 
@@ -2458,7 +2456,7 @@ Tactile lettering: raised 0.8 mm; at 1400--1600 mm AFF
 
 replacement and mounting without structural works. See Part 11 §11.4.
 
-§8.4.1.
+[XREF-PENDING: Part 5 §5.x cross-reference — GAP-CONF-01/02]
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB. DSDC. (2022). EADDAT. University of Stirling. UNAPEI. (2022). Facile à lire et à comprendre [French\]. UNAPEI. Plena Inclusión España. (2022). Lectura Fácil en entornos físicos [Spanish\].
 
@@ -2833,7 +2831,7 @@ works operation — tile removal, TWSI installation, and reinstatement. No struc
 
 **DBL evidence note:** [THIN BASE — Tier 2+4 only; no Tier 1 OT clinical research on DeafBlind built environments in any jurisdiction; March 2026]
 
-**Cross-reference:** Part 8 §8.4.6 (TWSI vs DEM --- resolution specified)
+**Cross-reference:** Part 5 §5.x [XREF-PENDING: §5.x — GAP-CONF-01/02] (TWSI vs DEM — resolution pending Part 5 content)
 
 **Evidence basis (OT):** Compensatory FOR. TWSI are environmental compensation devices that substitute tactile (proprioceptive/plantar) information for absent visual information during navigation; the ISO 23599:2019 profile specifications are derived from the sensory detection thresholds required for the compensation to be reliably perceptible under normal ambulant conditions.
 **Specifications:**
