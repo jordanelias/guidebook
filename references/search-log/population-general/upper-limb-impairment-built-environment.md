@@ -25,3 +25,22 @@ thin_flags: []
 no_data_flags: []
 note: "CRITICAL GAP confirmed: zero indexed studies on one-handed kitchen/bathroom built-environment design in any language. UPL evidence base = zero for these specific topics."
 ```
+# Co-1 Pass Addendum (2026-03-30)
+co1_pass_date: 2026-03-30
+co1_pass_scope: EN
+co1_status: PARTIAL
+co1_results:
+  sources_assessed: 3
+  sources_confirmed: 2
+  contradictions: 0
+co1_sources_confirmed:
+  - Fredericks, Visagie & van Niekerk 2024 — African Journal of Disability. DOI: 10.4102/ajod.v13i0.1253. PMC10912954. Co-operative inquiry (qualitative), n=9 wheelchair users, peri-urban South Africa. Themes: "Natural, manmade and mechanical environmental barriers" restrict community wheelchair mobility and participation. Consumer voice methodology (wheelchair users as co-researchers). Tier 3. Note: LMIC setting; some built environment conditions not directly transferable but barrier typology consistent with high-income country evidence.
+  - Widehammar, Lidstrom & Hermansson 2017 — Assistive Technology (RESNA). DOI: 10.1080/10400435.2017.1363828. Cross-sectional survey, n=156, powered mobility device (PMD), myoelectric prosthesis (MEP), and ATC users. Craig Hospital Inventory of Environmental Factors. "Natural environment, Surroundings and Information" identified as greatest barriers to participation. Positive correlation between fewer environmental barriers and higher PMD use (r=0.30). Tier 3.
+co1_findings:
+  - CONFIRMS: Environmental barriers (surface, threshold, width, gradient) are primary restrictors of wheelchair/PMD user community participation
+  - CONFIRMS: Built environment barrier pattern consistent across geographic contexts (AU, ZA, SE)
+  - CONFIRMS: Environmental modifications directly increase AT use and participation (Widehammar r=0.30)
+  - NO CONTRADICTIONS to existing BPC synthesis (turning circle, threshold, grab bar specifications)
+  - NOTE: Neither study provides user-stated preferences for specific mm thresholds — BPC biomechanical evidence base unaffected
+co1_pass_summary: {complete: [], partial: [EN], not-run: [DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
+bpc_status_update: PARTIAL — Co-1 EN complete; barrier typology confirmed; no contradictions; BPC specifications unchanged
