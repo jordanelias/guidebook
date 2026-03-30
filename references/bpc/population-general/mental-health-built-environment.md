@@ -1,16 +1,73 @@
 ## mental-health-built-environment
 
-**Updated:** 2026-03-27  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
-**Status:** PARTIAL — Co-1 pass 2026-03-30 (DiMHN, Wilson 2023, Rodríguez-Labajos 2024, VA guide); Opus re-synthesis required before Phase 3 use. PubMed pass complete 2026-03-27.
+**Updated:** 2026-03-30  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS 2026-03-30]
+**Status:** PARTIAL — Co-1 EN complete 2026-03-30; PubMed + citation mining complete 2026-03-27; Opus synthesis complete 2026-03-30. Phase 3 ready: YES. Remaining gaps: 5 languages unsearched (NL partial via citation mining); FDR not run; female-only area provision unitemised.
 
 ### Best-practice synthesis
-**PROVISIONAL (pre-Opus, from 2026-03-18 — will be superseded after Co-1 pass and Opus re-synthesis):**
-**Most inclusive provision:** Trauma-informed design (TID) throughout — safety, choice, collaboration, empowerment, and cultural humility as spatial principles; quiet retreat room provided in all multi-occupancy settings.
-**Most targeted provision:** De-escalation/safe retreat room (distinct from A-16 sensory room); predictable spatial sequence; no dead-end corridors; user control of lighting and acoustic conditions.
-**Conflict resolution:** NDV/AUT muted palette vs NDV/MH (PTSD) bright-colour preference — spatial separation required; adjustable multi-mode design preferred.
-**Highest-ambition actionable specification:** Dedicated quiet retreat room ≥9 m² with user-adjustable lighting (2700–6500 K), acoustic treatment (RT60 ≤0.4 s), and no through-traffic; all corridor routes loop or terminate at a named destination.
+**[OPUS-SYNTHESIS 2026-03-30 — supersedes PROVISIONAL 2026-03-18]**
 
-**Opus 4.6 synthesis note (2026-03-29):** Synthesis is marked PROVISIONAL (pre-Opus, 2026-03-18). The Co-1 pass was partially completed (2026-03-27 update). Opus assessment: the core TID framework is correct but the synthesis needs three refinements after full Co-1 completion. (1) The NDV/MH colour palette conflict (muted vs warm/saturated) is confirmed by both this BPC and the NDV BPC — spatial separation is the only resolution. This should be a formal conflict note in C-01. (2) The de-escalation/safe retreat room specification (≥9 m²) should be distinguished from A-16 sensory quiet room (≥8 m²): the MH room requires visual privacy and exit sightline; the NDV room requires acoustic isolation and user control. They serve different clinical functions and cannot be combined. (3) PTSD trauma-informed design requires predictable spatial sequences (no dead ends, no ambush points) — this aligns with DEM loop-plan and NDV compartmentalisation but conflicts with DEAF open sightline requirements. Route to cross-population-conflict-mapper. Evidence confidence: LOW-MODERATE (TID principles are Tier 2–4; quantified spatial specifications are Tier 5 only; Co-1 pass incomplete). STATUS: synthesis is provisional pending Co-1 web pass completion. Opus stamp applied to framework assessment only; specifications require re-synthesis after Co-1.
+**Organising framework:** Trauma-informed design (TID) — safety, choice, collaboration, empowerment, and cultural responsiveness as spatial principles. TID is validated at Tier 2–4 as a framework (SAMHSA; Holohan 2022 scoping review) and functionally confirmed by Tier 1 evidence demonstrating that ward-level environmental factors — not solely patient-level factors — govern coercive measure use (Husum 2010, n=1,016 across 32 wards; van der Schaaf 2013, n=23,868 across 199 wards; Weltens 2023, ESM design).
+
+**Most inclusive provision:** Environmental design as primary intervention, not amenity. The evidence establishes three mechanistic pathways by which the built environment reduces seclusion and restraint:
+1. Private space per patient (van der Schaaf 2013 ●: multivariate analysis, largest effect among 14 design variables)
+2. User control of sensory environment (Faerden 2022 ●: Cohen's d = 2.0 patient support, 1.7 staff support; Wilson 2023 Co-1: consumer confirmation)
+3. Capacity management — exceeding bed capacity OR 5.36 for aggression (Weltens 2023 ●)
+
+**Most targeted provision:** Dedicated de-escalation / safe retreat room, functionally distinct from A-16 sensory quiet room:
+
+| Parameter | MH de-escalation room | A-16 sensory quiet room (NDV) |
+|---|---|---|
+| Clinical function | Crisis de-escalation; voluntary retreat from acute distress | Sensory regulation; overstimulation recovery |
+| Minimum area | ≥9 m² (person + support worker + unobstructed exit path) | ≥8 m² |
+| Visual privacy | Required — no observation from common areas | Preferred, not required |
+| Exit sightline | FROM inside room TO exit — no entrapment perception (PTSD) | Not specified |
+| Staff access | Discrete monitoring (CCTV with consent or staff check-in protocol) | Not required |
+| Acoustic treatment | RT60 ≤ 0.4 s | RT60 ≤ 0.4 s |
+| Lighting | User-adjustable 2700–6500 K; warm default | User-adjustable; dim default |
+| Through-traffic | None | None |
+| Population | NDV/MH, PTSD, acute psychiatric | NDV/AUT, NDV/SENS, NDV/ADHD |
+
+These serve different clinical functions and cannot be combined. A single "quiet room" fails MH users (who need exit sightline and staff-accessible de-escalation) and NDV users (who need acoustic isolation without staff presence). Wilson 2023 (Co-1) documents failure mode: sensory rooms repurposed from storerooms with no windows, restricted access, and token equipment are clinically useless.
+
+**Specification hierarchy (by evidence strength):**
+
+1. **Private space per patient** ● — Tier 1 (van der Schaaf 2013: multivariate, n=23,868; Weltens 2023: OR 5.36 overcrowding→aggression). Most robustly evidenced environmental intervention. Design occupancy = maximum occupancy; no surge capacity without additional spatial provision.
+
+2. **Capacity limits** ● — Tier 1 (Weltens 2023). Single strongest environmental predictor of aggression. Ward design must include hard occupancy ceiling in brief.
+
+3. **Comfort level and visibility** ● — Tier 1 (van der Schaaf 2013). Comfort level and staff visibility of patients reduce seclusion risk. Nurse station sightlines to all common areas; no blind corridors. Co-1 preference for open nursing stations (Rodríguez-Labajos 2024) — less institutional, better interaction.
+
+4. **User control of sensory environment** ● — Tier 1 (Faerden 2022: pre-post with control) + Co-1 (Wilson 2023; Permanente 2020). H-02 individual environmental controls in all patient bedrooms and retreat spaces. User-adjustable lighting (2700–6500 K) and acoustic conditions.
+
+5. **Predictable spatial sequence** ● — Tier 2–4 (TID principles). No dead-end corridors; all routes loop or terminate at named destinations. Critical for PTSD (no ambush points, no blind corners, exit always visible). Aligns with DEM loop-plan and NDV compartmentalisation. CONFLICTS with DEAF open-sightline requirements — see conflict note 2 below.
+
+6. **Sensory/comfort rooms** ●○ — Tier 3 (Haig & Hallett 2022: 18 studies reduce distress; Oostermeijer 2021: 35 studies). Weak evidence for S&R reduction specifically — must not be specified as primary S&R intervention. Co-1 (Wilson 2023): consumers require multiple rooms with different stimulus levels (high AND low), not a single sensory room.
+
+7. **Nature connection** ● — Tier 1–3 (Faerden 2022: nature contact as design element with outcome data; Bodryzlova 2024: stress reduction pathway). Outdoor access paradox: van der Schaaf 2013 found outdoor space associated with increased seclusion (confound: outdoor space correlates with locked/higher-acuity wards). Specify nature connection through views and biophilic elements; outdoor access as therapeutic resource with clinical governance, not as architectural S&R intervention.
+
+8. **Open-door policy support** ● — Tier 1 (Schreiber 2022: quasi-experimental, DE). Feasible without increased adverse events; coercive measures decreased at one site. Architectural implication: graduated boundary zones rather than binary locked/unlocked design.
+
+9. **Homelike, non-institutional character** ● — Tier 3 + Co-1 (Rodríguez-Labajos 2024: 44 studies; BHFC 2024; Wilson 2023). Artwork, natural materials, domestic-scale furnishing. "Residential in character as possible" (BHFC). Confirms TID framing for Part 2 §2.x NDV/MH section.
+
+10. **Female-only areas in mixed-gender inpatient settings** ●○ — Co-1 + Tier 3 (Wilson 2023; Rodríguez-Labajos 2024). Essential for trauma history populations. No current Part 4 item — GAP for Phase 3. [GAP: NDV/MH female-only area provision — no item code assigned]
+
+**Conflict notes:**
+
+1. **C-01 colour palette (NDV/MH vs NDV/AUT)** — NDV/AUT requires muted, low-contrast palette. NDV/MH (PTSD) evidence shows warm, nature-derived colours benefit recovery (Faerden 2022: oak, Nordic colours, landscape imagery; Wilson 2023: natural light and colour therapeutic). Co-1 confirms conflict is real — both populations are correct about their needs. Resolution: spatial separation only. MH-designated spaces use warm, nature-derived palette; NDV/AUT spaces use muted palette. Do not attempt single compromise. Route to VIS-COMPLEX conflict domain if signage involved.
+
+2. **SPATIAL-OPEN conflict (NDV/MH vs DEAF)** — MH/PTSD requires predictable enclosed sequences (no ambush geometry, exit always visible) but permits compartmentalised layout. DEAF requires open, transparent partitions for 360° visual communication reach. Irreconcilable in the same space. Resolution: spatial zoning — MH-specific rooms use enclosed layout with exit sightlines; shared circulation uses transparent elements satisfying DEAF visual reach while maintaining MH sightline-to-exit. Route to SPATIAL-OPEN conflict matrix.
+
+3. **Outdoor access paradox** — van der Schaaf 2013 found outdoor space associated with increased seclusion. This is a confound (outdoor space correlates with locked ward design), not a causal finding. Do not cite as evidence against outdoor access. Specify outdoor access with therapeutic framing and clinical governance.
+
+**Evidence confidence:** MODERATE
+- Tier 1 evidence is strong for ward-level environmental factors (5 studies with multivariate or controlled designs)
+- Tier 1 evidence specifies environmental domains (private space, capacity, comfort) but not architectural dimensions
+- Quantified spatial specifications (room sizes, lux ranges) remain at Tier 4–5 only
+- Co-1 EN complete; confirms framework alignment; no contradictions
+- 5 languages unsearched (NL partially covered via citation mining: van der Schaaf 2013, Weltens 2023)
+- FR partially covered (Goulet 2022)
+
+**Highest-ambition actionable specification:** Dedicated quiet retreat room ≥9 m² with user-adjustable lighting (2700–6500 K), acoustic treatment (RT60 ≤ 0.4 s), no through-traffic, visual privacy from common areas, and unobstructed exit sightline from inside; all corridor routes loop or terminate at a named destination; design occupancy = maximum occupancy with no surge provision; H-02 individual environmental controls in all patient bedrooms.
 
 ### Consensus findings
 | Finding | Languages confirming | Tier |
@@ -28,17 +85,25 @@
 | Exceeding bed capacity increases aggression risk (OR 5.36) | NL | 1 |
 | Ward factors (not just patient factors) govern coercive measure use | NO, NL | 1 |
 | Architecturally positive designs + sensory rooms may reduce seclusion | EN | 3 |
+| Multiple sensory rooms needed (high + low stimulus), not single room | EN (Co-1) | Co-1 |
+| Open nursing stations preferred (less institutional) | EN | 3 |
+| Female-only areas for trauma populations | EN | 3/Co-1 |
+| Homelike, non-institutional character | EN | 3/Co-1 |
+| Open-door policy feasible without increased adverse events | DE | 1 |
+| Ecological model: physical environment = microsystem factor in S&R prevention | FR | 3 |
 
 ### Divergent findings
 | Topic | Lang A | Lang B | Cause |
 |---|---|---|---|
-| Colour preference | NDV/AUT — muted palette | NDV/MH/PTSD — some evidence for bright colour | Empirical |
+| Colour preference | NDV/AUT — muted palette | NDV/MH/PTSD — warm, nature-derived colours | Empirical (confirmed by Co-1) |
+| Outdoor space and seclusion | van der Schaaf 2013 — positive association | All other evidence — therapeutic benefit | Confound (locked ward correlation) |
 
 ### NO-DATA / THIN
 | Language | Reason | Predicted? |
 |---|---|---|
 | ZH | Chinese NDV/MH built-environment evidence thin | Yes — scope gate candidate |
-| NL, ES, PT, KR, IT | Not systematically searched (NL has van der Schaaf + Weltens via citation mining) | — |
+| NL | Partially covered via citation mining (van der Schaaf, Weltens) | — |
+| ES, PT, KO, IT | Not systematically searched | — |
 
 ### PubMed academic pass (2026-03-27)
 
@@ -133,25 +198,32 @@ Evidence quality: Tier 3. Evidence marker: ●
 | Oostermeijer 2021 (PMID 34233981) | Related articles | Quinn 2024; De Cuyper 2023; Goulet 2022 |
 
 ### Key sources
-PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022 · Oostermeijer2021-BMJOpen · Faerden2022-HERD · Haig2022-IJMHN · Price2024-EDITION · vanderSchaaf2013-BJP · Bodryzlova2024-JPsychRes · Schreiber2022-BMCHSR · Weltens2023-BMJOpen · Husum2010-BMCHSR · Askew2019-JPMHN · Quinn2024-IJMHN · DeCuyper2023-JPMHN · Goulet2022-SMQ
+PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022 · Oostermeijer2021-BMJOpen · Faerden2022-HERD · Haig2022-IJMHN · Price2024-EDITION · vanderSchaaf2013-BJP · Bodryzlova2024-JPsychRes · Schreiber2022-BMCHSR · Weltens2023-BMJOpen · Husum2010-BMCHSR · Askew2019-JPMHN · Quinn2024-IJMHN · DeCuyper2023-JPMHN · Goulet2022-SMQ · Wilson2023-IJMHN · RodriguezLabajos2024-HERD · DiMHN-UK · Permanente2020-KaiserSanJose · BHFC2024-DesignGuide · CenterForHealthDesign-EBD
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | mental health; psychiatric; behavioral health; trauma-informed | NDV/MH | US "behavioral health" includes substance use — exclude SUD-specific evidence |
+| DE | Psychiatrie; psychische Gesundheit; traumasensibel | NDV/MH | German psychiatric architecture literature substantial (Schreiber 2022) |
+| FR | santé mentale; psychiatrie; trauma | NDV/MH | Goulet 2022 uses "ecological model" framing — map to TID |
+| NO | psykisk helse; akuttpsykiatri | NDV/MH | Norwegian evidence strong (Husum 2010, Faerden 2022) |
+| NL | geestelijke gezondheidszorg; psychiatrie | NDV/MH | van der Schaaf 2013 + Weltens 2023 via citation mining only |
+| SV | psykisk hälsa; psykiatrisk vård | NDV/MH | Searched; 2 results |
+| JA | 精神保健; 精神科; トラウマインフォームド | NDV/MH | Searched; 2 results |
+| DA | psykisk sundhed; psykiatri | NDV/MH | Searched; 1 result |
+| FI | mielenterveys; psykiatria | NDV/MH | Searched; 2 results |
+| ZH | 精神卫生; 心理健康; 创伤知情 | NDV/MH | THIN — scope gate candidate |
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
-
 
 ---
 
 ### Co-1 Pass — 2026-03-30
 
-**Status update:** Co-1 pass executed. Sources found. BPC upgraded from PROVISIONAL to PARTIAL. Opus re-synthesis required before Phase 3 use (existing PROVISIONAL synthesis flagged for replacement).
+**Status update:** Co-1 pass executed. Sources found. BPC upgraded from PROVISIONAL to PARTIAL. Opus re-synthesis complete 2026-03-30.
 
 **Co-1 and Co-2 sources identified:**
 
@@ -179,14 +251,6 @@ Not yet run.
 | Homelike environment (artwork, materials, furnishing) | Rodríguez-Labajos 2024 | No specific item — Part 7/design note |
 
 **Co-1 conflict finding:**
-Rodríguez-Labajos 2024 documents preference for "homelike" environments with visual richness (artwork, colours). This CONFLICTS with NDV/AUT muted/minimal visual stimulation preference. Existing BPC PROVISIONAL note already flagged this. Co-1 evidence confirms the conflict is real (both populations are correct about their needs). Resolution: spatial separation + adjustable multi-mode design. Already noted in PROVISIONAL synthesis — confirmed by Co-1.
+Rodríguez-Labajos 2024 documents preference for "homelike" environments with visual richness (artwork, colours). This CONFLICTS with NDV/AUT muted/minimal visual stimulation preference. Co-1 evidence confirms the conflict is real (both populations are correct about their needs). Resolution: spatial separation + adjustable multi-mode design. Routed to conflict note C-01 in best-practice synthesis.
 
-**New gap raised:** NDV/MH requires female-only area provision in mixed-gender inpatient settings — no built environment item currently in Part 4 for this. Flag for Phase 3 Session 15/16.
-
-**Remaining for Opus re-synthesis:**
-1. Population-specific quantified specifications (lighting levels, acoustic targets for NDV/MH)
-2. Non-English jurisdictions (DiMHN notes "international design perspectives" — DE/NL/NO mental health design standards)
-3. Formal consensus/divergent findings tables
-4. Conflict resolution hierarchy (NDV/MH vs NDV/AUT sensory environment)
-
-**Status change:** PROVISIONAL → PARTIAL (Co-1 complete; Opus re-synthesis pending; GAP-TRIAGE-02)
+**New gap raised:** NDV/MH requires female-only area provision in mixed-gender inpatient settings — no built environment item currently in Part 4 for this. Flag for Phase 3.
