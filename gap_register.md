@@ -221,7 +221,7 @@ GAP-OPS-03 | P2 | OPEN | item-specification-writer | sensory-relief-space-design
 
 | ID | Description | Priority | Status | Notes |
 |---|---|---|---|---|
-| GAP-CON-SCOUT-01 | Full-corpus connection-scout running in parallel session 2026-03-28. This session (Opus) produced CON-0039–0049 from partial scan (~8 of ~60 BPCs). Parallel session to scan remaining ~50 BPC entries. Deconflict: parallel session should start from CON-0050. | P1 | OPEN | Coordinate CON-ID numbering between sessions |
+| GAP-CON-SCOUT-01 | Full-corpus connection-scout completed: CON-0001–0092 documented in connection-register-active.md. FDR pass deferred — connections to be consumed inline during Phase 3 writing sessions. | P1 | CLOSED-DEFERRED | 2026-03-30 23:00 |
 
 
 
