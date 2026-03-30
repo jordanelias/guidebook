@@ -19,3 +19,50 @@
 **Key sources:** PMC8545728 · VanBuuren2025-PMC11931140 · Jost2024 · IlegemsVanrie2025 · Marquardt2011 · Passini1984
 **Divergent findings:** —
 **Notes:** CRPD Article 9 accessibility obligation extends to wayfinding design. Bold floor contrast patterns contraindicated for DEM — misread as level changes (see VIS/DEAF BPC entry for VIS/DEM conflict). DO NOT CITE: van Buuren & Mohammadi 2023 (removed citation — use van Buuren et al. 2025, PMC11931140 instead).
+
+---
+
+<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+
+### Best-practice synthesis
+**Most inclusive provision:** [STUB — see synthesis content above]
+**Most targeted provision:** [STUB — see synthesis content above]
+**Conflict resolution:** [STUB — see synthesis content above]
+**Highest-ambition actionable specification:** [STUB — see synthesis content above]
+**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+
+### Citation mining
+Not yet performed.
+
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
+
+
+### Key sources
+[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]

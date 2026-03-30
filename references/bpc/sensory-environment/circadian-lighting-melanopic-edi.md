@@ -25,3 +25,32 @@
 - Lucas, R.J. et al. (2014). Measuring and using light in the melanopsin age. *Trends in Neurosciences*, 37(1), 1–9.
 - WELL Building Standard v2 and v6. Feature L07: Circadian Lighting Design. IWBI.
 - Ticleanu, C. et al. (2025). Assessing melanopic equivalent daylight illuminance in office spaces. *Lighting Research & Technology*. DOI: 10.1177/14771535251317740.
+
+---
+
+<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+
+### Citation mining
+Not yet performed.
+
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.

@@ -13,3 +13,38 @@
 - Iglehart, F. (2020). Speech Perception in Classroom Acoustics by Children With Hearing Loss and Wearing Hearing Aids. *AJA*, 29(1), 6–17. DOI: 10.1044/2019_AJA-19-0010. PMID: 31835909. PMC7229780.
 - ANSI/ASA S12.60-2010/Part 1. Acoustical Performance Criteria, Design Requirements, and Guidelines for Schools. ASA.
 - Finitzo-Hieber, T. & Tillman, T.W. (1978). Room acoustics effects on monosyllabic word discrimination ability for normal and hearing-impaired children. *JSHD*, 43(4), 440–458.
+
+---
+
+<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+
+### Citation mining
+Not yet performed.
+
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.

@@ -15,3 +15,38 @@
 - NFPA 72-2022. National Fire Alarm and Signaling Code. NFPA.
 - Epilepsy Foundation Professional Advisory Board recommendations.
 - Martins da Silva, A. & Leal, B. (2017). Photosensitivity and epilepsy. *Seizure*, 50, 209–218. PMID: 28532712.
+
+---
+
+<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+
+### Citation mining
+Not yet performed.
+
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.

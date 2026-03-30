@@ -62,3 +62,10 @@
 5. ISO 2631-1. (1997/2004). *Mechanical Vibration and Shock — Evaluation of Human Exposure to Whole-Body Vibration*. ISO. [Tier 4]
 6. ISO 10137:2007. *Bases for Design of Structures — Serviceability of Buildings*. ISO. [Tier 4]
 7. NHS HTM 08-01. *Acoustics — Hospital Floors (Vibration Criteria)*. NHS. [EN, UK, Tier 4]
+
+---
+
+<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
