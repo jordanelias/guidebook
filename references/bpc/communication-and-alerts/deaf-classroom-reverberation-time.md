@@ -1,6 +1,6 @@
 ## deaf-classroom-reverberation-time
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
 **Status:** TARGETED RETRIEVAL — focused subset of room-acoustic-performance BPC; Iglehart 2020 is Tier 1.
 
 ### Best-practice synthesis
@@ -16,35 +16,33 @@
 
 ---
 
-<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
-
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
-
+| EN | classroom acoustics, reverberation time, DEAF learning spaces | deaf-classroom-reverberation-time | Focused subset of room-acoustic-performance; education-specific |
+| DE | Nachhallzeit Klassenzimmer, Hörgeschädigte | — | DIN 18041 addresses classroom acoustics |
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
-|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
-
+| Finding | Sources confirming | Tier |
+|---|---|---|
+| RT60 ≤0.3s significantly improves speech perception for DEAF learners with hearing aids | Iglehart 2020 (Tier 1); Finitzo-Hieber & Tillman 1978 | 1 |
+| ANSI/ASA S12.60 specifies RT60 ≤0.6s for general classrooms ≤283 m³ | ANSI/ASA S12.60-2010 | 4 |
+| Background noise ≤35 dBA unoccupied is required for DEAF learning spaces | ANSI/ASA S12.60-2010 | 4 |
+| +15 dB SNR minimum for DEAF learners | Cross-jurisdictional acoustic evidence | 3 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
-
+| RT60 target | DEAF-specific: ≤0.3s | General classroom standard: ≤0.6s | Population-specific evidence supports stricter target |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
-
+| — | — | Targeted retrieval only; full multilingual research not conducted | — | — |
+| — | — | No jurisdiction mandates ≤0.3s RT60 specifically for DEAF classrooms | — | — |
 
 ### Citation mining
 Not yet performed.
-
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.

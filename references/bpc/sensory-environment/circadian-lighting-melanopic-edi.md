@@ -1,7 +1,7 @@
 ## circadian-lighting-melanopic-edi
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 3–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
-**Status:** TARGETED RETRIEVAL — full multilingual research not conducted. No divergent findings, NO-DATA, or citation mining sections present. Synthesis is sound within its scope but not comprehensive.
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 3–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
+**Status:** TARGETED RETRIEVAL — full multilingual research not conducted. Synthesis is sound within its scope but not comprehensive.
 
 ### Best-practice synthesis
 **Most inclusive provision:** melanopic EDI ≥250 lux daytime at the eye (vertical plane, 1.2m AFF); ≤10 lux evening (≥3h before bedtime); <1 lux sleep environment
@@ -20,37 +20,35 @@
 
 ### Key sources
 - Brown, T.M. et al. (2022). Recommendations for daytime, evening, and nighttime indoor light exposure. *PLOS Biology*, 20(3), e3001571. DOI: 10.1371/journal.pbio.3001571. PMC8929548.
-- CIE S 026/E:2018. CIE System for Metrology of Optical Radiation for ipRGC-Influenced Responses to Light. CIE.
-- DIN/TS 67600:2022. Biologically effective illumination — Design guidelines. DIN.
+- CIE S 026/E:2018. CIE System for Metrology of Optical Radiation for ipRGC-Influenced Responses to Light.
+- DIN/TS 67600:2022. Biologically effective illumination — Design guidelines.
 - Lucas, R.J. et al. (2014). Measuring and using light in the melanopsin age. *Trends in Neurosciences*, 37(1), 1–9.
 - WELL Building Standard v2 and v6. Feature L07: Circadian Lighting Design. IWBI.
 - Ticleanu, C. et al. (2025). Assessing melanopic equivalent daylight illuminance in office spaces. *Lighting Research & Technology*. DOI: 10.1177/14771535251317740.
 
 ---
 
-<!-- v4 schema stubs — SUPPLEMENT schema backfill 2026-03-30. -->
-
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
-
+| EN | circadian lighting, melanopic EDI, non-visual lighting | circadian-lighting-melanopic-edi | Distinct from therapeutic-lighting-design (broader scope); this is circadian metric-specific |
+| DE | biologisch wirksame Beleuchtung, melanopische Beleuchtungsstärke | — | DIN/TS 67600:2022 is German-origin standard |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
-
+| Evening threshold | Brown et al. 2022: ≤10 melanopic EDI | WELL v2: ≤50 EML (~45 melanopic EDI) | WELL is less strict; Brown et al. represents current research consensus |
+| NDV/AUT photosensitivity | Circadian need: ≥250 EDI daytime | NDV/AUT: bright light may trigger sensory overload | Resolve via diffuse/indirect delivery and individual dimming control |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
-
+| All 24 | All 14 | No national building code mandates circadian lighting metric | — | — |
+| — | — | Targeted retrieval only; full multilingual research not conducted | — | — |
+| — | — | Older adult crystalline lens melanopic transmittance correction not yet quantified for specification use | — | — |
 
 ### Citation mining
 Not yet performed.
-
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
