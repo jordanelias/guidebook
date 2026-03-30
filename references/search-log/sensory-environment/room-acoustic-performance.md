@@ -140,3 +140,23 @@ bpc_changes_logged:
     opus_synthesis: true
     gaps_raised: [GAP-RAP-01]
 ```
+
+### FDR Search — room-acoustic-performance
+fdr_date: 2026-03-30 22:36
+fdr_scenarios:
+  - scenario: "d310 + cochlear implant → classroom"
+    result: no-yield
+    note: "2 PubMed results — CI device technology. No spatial specs."
+  - scenario: "d310 + hearing aid → open-plan workplace"
+    result: no-yield
+    note: "69 PubMed results (top 10). Feenstra 2025 (doi:10.1080/14992027.2025.2486853) confirms effortful workplace communication. No spatial specs."
+  - scenario: "d710 + autism sensory hypersensitivity → shared living space"
+    result: no-yield
+    note: "38 PubMed results (top 5). Dwyer 2025 (doi:10.1177/10870547251361226) confirms auditory hyperreactivity ASD+ADHD. No architectural specs."
+  - scenario: "d310 + dementia → residential care common area"
+    result: no-yield
+    note: "36 PubMed results (top 5). Belojević 2024 (doi:10.4103/nah.nah_162_24) reviews sound/AD — concepts already in BPC. No novel spatial specs."
+fdr_step2_web: "No OT practice guidelines with room acoustic spatial specifications found."
+fdr_status: COMPLETE
+fdr_assessment: "No novel spatial findings across 4 scenarios. Standards-dominated domain, 31+ refs, Opus synthesis. OT lit device-oriented. BPC unchanged."
+diminishing_return_gate: "4 consecutive no-yield scenarios"

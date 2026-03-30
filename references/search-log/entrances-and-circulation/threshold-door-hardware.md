@@ -162,3 +162,20 @@ co1_pass_log:
       close — supported by Co-1 sources from user/advocacy perspective. EN Co-1 PARTIAL
       upgraded to COMPLETE. BPC status unchanged (PARTIAL — Co-1 for 13 non-EN languages
       still not run; citation mining and FDR still outstanding).
+
+### FDR Search — threshold-door-hardware
+fdr_date: 2026-03-30 22:36
+fdr_scenarios:
+  - scenario: "d445 + grip impairment → door hardware operation"
+    result: no-yield
+  - scenario: "d465 + powered wheelchair → threshold crossing"
+    result: no-yield
+  - scenario: "d440 + unilateral UPL → door operation"
+    result: no-yield
+  - scenario: "d450 + walking aid → threshold negotiation"
+    result: no-yield
+fdr_status: COMPLETE
+fdr_assessment: "No novel spatial findings. Standards-dominated domain; OT literature prescribes same solutions codes mandate. 4/4 scenarios no-yield. BPC unchanged."
+diminishing_return_gate: "4 consecutive no-yield scenarios"
+step1_pubmed: "Self-Help Devices[MeSH] AND Architectural Accessibility[MeSH] — 307 results, 0 relevant spatial findings"
+step2_practice_guidelines: "RCOT, UNSW HMInfo, AOTA, Christopher Reeve Foundation — confirm lever handles, threshold ramps. No novel spatial specs."

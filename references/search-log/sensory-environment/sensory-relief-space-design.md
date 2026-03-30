@@ -131,3 +131,17 @@ bpc_changes_logged:
     opus_synthesis: true
     gaps_raised: [GAP-SRS-01]
 ```
+
+### FDR Search — sensory-relief-space-design
+fdr_date: 2026-03-30 22:36
+fdr_spatial_filter:
+  - source: "Haig & Hallett 2022 (PMID 36082841, doi:10.1111/inm.13065)"
+    type: "Systematic review — 18 studies, psychiatric inpatient sensory rooms"
+    assessment: CONFIRMS
+    note: "Supports emotional regulation. Abstract states design question unanswered. No spatial specs. Population psychiatric/MH — outside guidebook scope."
+  - source: "Liddicoat 2020 (PMID 32054326, doi:10.1177/1937586720904805)"
+    type: "Qualitative phenomenological study — MH waiting areas"
+    assessment: CONFIRMS
+    note: "Sensory modulation theme relevant but no dimensional specs. Different spatial context (waiting rooms vs dedicated sensory relief)."
+fdr_status: COMPLETE
+fdr_assessment: "Both papers CONFIRMS. No novel spatial specs. BPC has Unwin 2022/2023, Rashid 2025, Amaze 2025, Vetter 2025, PAS 6463, NCC AU 2022. BPC unchanged."
