@@ -1,6 +1,6 @@
 ## accessible-design-economics-cost-premium
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (Oslo Economics / GAP-064 added)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** When accessibility is integrated from brief/schematic stage, its cost in new construction is 0.94%–3.92% of project cost by building type — or zero for provisions that are planning decisions rather than materials. The same provisions as post-occupancy retrofit cost 10–40× more. The strongest economic argument is not a financial model; it is the cost curve.
 **Construction cost premium by building type (new build):**
   - Residential: 0.94% (Ielegems & Vanrie, Belgium 2024)
@@ -43,6 +43,35 @@
 **Key sources:** Ielegems-Vanrie-2024 · TERRAGON-DStGB-2017 · KfW-Prognos-2022 · Fuglerud2015 · RHF-Cost-Study-2023 · Marquardt2011 · BuroKade-Hogeweyk-POE · VillageLandais-2020 · Tibble2005 · MitraJones2017
 **Divergent findings:** Property value premiums: Hangzhou elevator study 5.53% — single jurisdiction, not generalisable
 **Notes:** CAUTION — do not cite ESG rent premium of 25–50% without verified source (CIT-03 correction: claim deleted from v8). Hangzhou elevator study (CIT-04 correction): jurisdiction-specific only.
+
+---
+
+### Oslo Economics Entry (GAP-064 — Session 7 addition)
+
+**Oslo Economics (2018). Samfunnsøkonomisk analyse av universelt utformet grunnskole i 2030.**
+Report 2018-36. Oslo: Oslo Economics. https://osloeconomics.no/publication/samfunnsokonomisk-analyse-av-universelt-utformet-grunnskole-i-2030/
+[NO language — Norwegian Ministry of Children and Equality commission]
+
+**Type:** Socioeconomic cost-benefit analysis (CBA)
+**Scope:** Universal design of all Norwegian primary school buildings by 2030 (roadmap costing)
+**Tier:** Tier 3 (commissioned government analysis — Grey literature)
+**Language:** Norwegian (NO)
+
+**Key findings:**
+- Net present value of universal design roadmap for primary schools: **positive** — benefits exceed costs
+- Conclusion: Implementing the roadmap for universally designed primary schools is *samfunnsøkonomisk lønnsomt* (socioeconomically profitable)
+- The analysis served as evidence base for national advocacy for a binding action plan (referenced in parliamentary submissions from Barneombudet + LDO, April 2021)
+- Separate Oslo Economics report: "Universell utforming og tilgjengelighet i idrettsanlegg" (2023) — sports facilities UD barriers analysis; commissioned by Bufdir
+
+**Relevance to guidebook:**
+- Part 11 §11.6: Provides the only full-spectrum CBA of built-environment UD for a single building type (schools) at national scale
+- Confirms Norwegian evidence strand: UD produces positive social returns — consistent with Fuglerud et al. 2015 and Odeck et al. 2010 transport findings
+- Note: Exact cost/benefit magnitudes not reproduced here — verify from published report before citing in Part 11
+
+**Companion sources (Norwegian economics evidence strand):**
+- Fuglerud et al. (2015) — Norwegian ICT + built environment UD benefits (Sintef/Deltasenteret)
+- Odeck, Hagen & Fearnley (2010) — transport UD CBA, Research in Transportation Economics
+- Fearnley et al. (2018/2019) — public transport passengers' WTP for UD (NO valuation study)
 
 ---
 
