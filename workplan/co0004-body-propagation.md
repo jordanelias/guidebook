@@ -85,3 +85,41 @@ Delete all J-01–J-08 references from Vol I–II body per BAR project-standards
 - GAP-CONF-01 (cross-population conflict evidence) — blocks Part 5 full content
 - GAP-CONF-02 (Part 5 §5.2 conflict resolution) — blocks Part 5 full content
 - Part 5 stub can be created without these; full content is separate workstream
+
+---
+
+## Execution Log
+
+### 2026-03-30 05:15 — Phase 4 executed (GAP-CR-05 partial close)
+
+**Pre-execution audit finding:** Phases 1–3 and 5 were already complete in the document.
+- Phase 1 (Volume headings): already CO-0004 compliant
+- Phase 2 (Part renumbering): all 12 Parts correct
+- Phase 3 (content fixes): §2.12 deleted, duplicate E-items removed, all items in correct positions, Part 5 stub exists
+- Phase 5 (J-code purge): zero J-codes in document
+
+**Phase 4 executed — 15 corrections in 13 change operations:**
+
+| # | Location | Change |
+|---|---|---|
+| 1 | L128 change log | §8.4.4 → Part 5 XREF-PENDING annotation |
+| 2 | L137 change log | §8.4.10–12 → Part 5 XREF-PENDING annotation |
+| 3 | L139 deferred items | "Part 8 Cross-Population Conflict Resolutions" → "Part 5 §5.2–§5.4" |
+| 4–5 | L514, L719 | "See Part 8, §8.4.4." × 2 → Part 5 XREF-PENDING |
+| 6 | L612 | "See Part 8, §8.4.4 for temperature conflict" → Part 5 XREF-PENDING |
+| 7 | L686 | "see Part 8 for conflict resolution" → Part 5 XREF-PENDING |
+| 8 | L739 | "see Part 8 §8.4.4 for resolution protocol" → Part 5 XREF-PENDING |
+| 9 | L907 | "conflict register in Part 8" → Part 5 |
+| 10 | L921 | "standard conflicts from Part 8" → Part 5 |
+| 11 | L990 | "resolution documented in Part 8" → Part 5 |
+| 12 | L1343–1345 | Broken "See Part VIII §8.4.1." (line-break artefact) → Part 5 XREF-PENDING |
+| 13 | L2459–2461 | Orphaned "§8.4.1." → XREF-PENDING block |
+| 14 | L2836 | "Part 8 §8.4.6 (TWSI vs DEM)" → Part 5 XREF-PENDING |
+| 15 | L368 | Nav footer "Part 8 (Conflict Resolutions)" → Part 5 |
+| 16 | L371 | "Part 8 for conflict resolutions" → Part 5 |
+
+**XREF-PENDING tag:** All §8.4.x replacements carry `[XREF-PENDING: §5.x — GAP-CONF-01/02]`. These will be resolved when Part 5 §5.2–§5.4 are written (Sessions 17, blocked on GAP-CONF-01/02).
+
+**Commit:** aba32a3d0cd75a5084e045a06a114b864acdb4b3
+
+**Status:** GAP-CR-05 Phase 4 COMPLETE. No further mechanical propagation work remains. Remaining work on GAP-CR-05 is content-dependent (Part 5 full content — GAP-CONF-01/02 blocker).
