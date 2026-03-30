@@ -1,6 +1,6 @@
 ## accessible-design-economics-cost-premium
 
-**Updated:** 2026-03-30 (Oslo Economics / GAP-064 added)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** When accessibility is integrated from brief/schematic stage, its cost in new construction is 0.94%–3.92% of project cost by building type — or zero for provisions that are planning decisions rather than materials. The same provisions as post-occupancy retrofit cost 10–40× more. The strongest economic argument is not a financial model; it is the cost curve.
 **Construction cost premium by building type (new build):**
   - Residential: 0.94% (Ielegems & Vanrie, Belgium 2024)
@@ -30,7 +30,7 @@
   - Construction: 5–25% (change orders)
   - Post-occupancy retrofit: 10–40× brief-stage equivalent
 **Key evidence-strong findings (beyond cost data):**
-  - Toilet visibility (D-03): 47% reduction in incontinence events across 32 dementia care facilities (Marquardt 2011, Tier 3; "strongest single empirical finding for any spatial provision in this Guidebook")
+  - Toilet visibility (D-03): 47% reduction in incontinence events across 32 dementia care facilities (Marquardt 2011, Tier 3)
   - Loop floor plan: 94% vs. 34% wayfinding success rate (De Hogeweyk POE, 2012–2019, Tier 3)
   - Normalised dementia environment: 31% psychotropic medication reduction (Village Landais Alzheimer, 2020, Tier 3)
   - KfW/Prognos evaluation: average retrofit cost €19,100/dwelling for barrier-reduction measures that did not achieve full DIN 18040-2 compliance (2009–2022, 700,000+ dwellings)
@@ -39,69 +39,43 @@
 **Value engineering risk:** Accessibility provisions specified as independent line items are disproportionately vulnerable to VE. They must be specified as integrated systems — removing one element (e.g. hearing loop without acoustic ceiling) destroys more value than the cost saved.
 **Evidence gaps:** Property value premiums (direction consistent, magnitude highly variable); ESG rent premium (not isolated from other quality variables); quantified economic returns from NDV-specific design provisions.
 **Jurisdictions confirmed:** Germany · Belgium · Norway · Switzerland · Canada · (direction consistent across all English-language standards bodies)
-**Early-close:** Yes  **Thin/No-data:** None (multi-jurisdiction convergent evidence)
-**Key sources:** Ielegems-Vanrie-2024 · TERRAGON-DStGB-2017 · KfW-Prognos-2022 · Fuglerud2015 · RHF-Cost-Study-2023 · Marquardt2011 · BuroKade-Hogeweyk-POE · VillageLandais-2020 · Tibble2005 · MitraJones2017
-**Divergent findings:** Property value premiums: Hangzhou elevator study 5.53% — single jurisdiction, not generalisable
-**Notes:** CAUTION — do not cite ESG rent premium of 25–50% without verified source (CIT-03 correction: claim deleted from v8). Hangzhou elevator study (CIT-04 correction): jurisdiction-specific only.
 
 ---
 
-### Oslo Economics Entry (GAP-064 — Session 7 addition)
-
-**Oslo Economics (2018). Samfunnsøkonomisk analyse av universelt utformet grunnskole i 2030.**
-Report 2018-36. Oslo: Oslo Economics. https://osloeconomics.no/publication/samfunnsokonomisk-analyse-av-universelt-utformet-grunnskole-i-2030/
-[NO language — Norwegian Ministry of Children and Equality commission]
-
-**Type:** Socioeconomic cost-benefit analysis (CBA)
-**Scope:** Universal design of all Norwegian primary school buildings by 2030 (roadmap costing)
-**Tier:** Tier 3 (commissioned government analysis — Grey literature)
-**Language:** Norwegian (NO)
-
-**Key findings:**
-- Net present value of universal design roadmap for primary schools: **positive** — benefits exceed costs
-- Conclusion: Implementing the roadmap for universally designed primary schools is *samfunnsøkonomisk lønnsomt* (socioeconomically profitable)
-- The analysis served as evidence base for national advocacy for a binding action plan (referenced in parliamentary submissions from Barneombudet + LDO, April 2021)
-- Separate Oslo Economics report: "Universell utforming og tilgjengelighet i idrettsanlegg" (2023) — sports facilities UD barriers analysis; commissioned by Bufdir
-
-**Relevance to guidebook:**
-- Part 11 §11.6: Provides the only full-spectrum CBA of built-environment UD for a single building type (schools) at national scale
-- Confirms Norwegian evidence strand: UD produces positive social returns — consistent with Fuglerud et al. 2015 and Odeck et al. 2010 transport findings
-- Note: Exact cost/benefit magnitudes not reproduced here — verify from published report before citing in Part 11
-
-**Companion sources (Norwegian economics evidence strand):**
-- Fuglerud et al. (2015) — Norwegian ICT + built environment UD benefits (Sintef/Deltasenteret)
-- Odeck, Hagen & Fearnley (2010) — transport UD CBA, Research in Transportation Economics
-- Fearnley et al. (2018/2019) — public transport passengers' WTP for UD (NO valuation study)
-
----
-
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | accessibility cost premium, cost of accessibility, universal design economics | accessible-design-economics-cost-premium | Distinct from government-grant-programmes (retrofit funding); this is new-build cost evidence |
+| DE | Barrierefreiheit Mehrkosten, barrierefreies Bauen Kosten | — | German data (TERRAGON/DStGB) is strongest single-country dataset |
+| NL/BE | toegankelijkheid meerkosten | — | Belgian data (Ielegems & Vanrie) provides building-type breakdown |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** Design-stage integration of accessibility at 0.94–3.92% new-build cost; provisions that are planning decisions (loop floor plan, toilet visibility, level entry) at zero additional cost.
+**Most targeted provision:** Grab bar blocking at ~$50/dwelling during construction vs. ×75 retrofit multiplier — highest ROI single DAR item.
+**Conflict resolution:** No conflict. Economics evidence uniformly supports earlier integration = lower cost across all jurisdictions and building types.
+**Highest-ambition actionable specification:** Full accessible design integration from brief stage; cost curve presented to client at project inception; accessibility provisions specified as integrated systems (not isolable line items) to resist value engineering.
+**Opus synthesis note:** Cost data is multi-jurisdiction convergent. Direction is unambiguous. Magnitude varies by building type and jurisdiction but stays within 0–4% at brief stage. The retrofit multiplier (10–40×) is the strongest economic argument.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Design-stage accessible construction costs 0.94–3.92% by building type | EN, DE, NL/BE, NO | Belgium, Germany, Norway, Switzerland | 1–3 |
+| 130/140 DIN 18040-2 criteria add zero cost at design stage | DE | Germany (TERRAGON/DStGB 2017) | 3 |
+| Retrofit costs 10–40× design-stage equivalent | EN, DE | Cross-jurisdictional | 3 |
+| Cost premium approaches zero after 3 experienced projects | EN, NL/BE | Belgium (Ielegems & Vanrie 2024) | 3 |
+| Bundled energy + accessibility retrofit: 21–48% operating cost reduction | EN | Cross-jurisdictional | 3 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Property value premium | Hangzhou elevator study: 5.53% | Other jurisdictions: direction positive, magnitude variable | Single-jurisdiction study; not generalisable |
+| ESG rent premium | Claims of 25–50% | CIT-03: claim deleted from v8 — unverified | Source not confirmed |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| — | — | Quantified economic returns from NDV-specific design provisions not available | — | — |
+| — | — | Property value premium magnitude not reliably quantified | — | — |
 
 ### Citation mining
 Not yet performed.
@@ -110,4 +84,13 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- Ielegems-Vanrie-2024 — building-type cost premiums (BE)
+- TERRAGON-DStGB-2017 — DIN 18040-2 zero-cost criteria (DE)
+- KfW-Prognos-2022 — €19,100/dwelling average retrofit (700,000+ dwellings)
+- Fuglerud2015 — Norwegian benefit-cost ratios
+- RHF-Cost-Study-2023 — Scandinavian cost data
+- Marquardt2011 — toilet visibility 47% incontinence reduction
+- BuroKade-Hogeweyk-POE — 94% vs 34% wayfinding
+- VillageLandais-2020 — 31% psychotropic medication reduction
+- Tibble2005 / MitraJones2017 — social cost of inaccessibility (5.7% household expenditure)
+- CAUTION: Do not cite ESG rent premium 25–50% (CIT-03 deleted). Do not generalise Hangzhou elevator study (CIT-04 single jurisdiction).

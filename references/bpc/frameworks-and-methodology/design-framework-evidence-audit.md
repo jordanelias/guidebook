@@ -1,6 +1,6 @@
 ## design-framework-evidence-audit
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:45  **Evidence tier:** 1–5 (by framework)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 23:45  **Evidence tier:** 1–5 (by framework)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Design frameworks in accessibility practice span a wide evidence spectrum. ICF is gold standard (WHO, 191 states). Competence-Press and ART/SRT are evidence-based. ASPECTSS, DeafSpace, and trauma-informed design are practice-based with emerging evidence. No validated design framework exists for fatigue-spectrum (OFS/PAIN) populations — this is the most critical cross-cutting evidence gap.
 **Evidence classification by framework:**
   | Framework | Classification | Evidence basis |
@@ -17,44 +17,41 @@
   | OFS/Fatigue Design | Practice-based only | CRITICAL GAP — no validated framework exists |
   | Chronic Pain Design | Practice-based only | CRITICAL GAP — no validated framework exists |
   | Biophilic Design (disability-specific) | Emerging evidence | UNSW 2024 autism/nature; Hutson & Hutson 2023 neuroinclusive workplaces |
-**Key distinctions:**
-  - ICF supersedes EHP as primary OT framework — EHP has limited independent validation
-  - Competence-Press Model is NOT superseded by ICF — it is extended and operationalised by it
-  - DSDC EADDAT: single validation study (Marquardt 2011); independent psychometric replication not published
-  - ASPECTSS: 2014 and 2023 UIA awards; presented at NAS/UN CRPD/Harvard GSD; PAS 6463 incorporates concepts without naming ASPECTSS; no RIBA/AIA endorsement; no building code references
-  - PAS 6463:2022 is the only national standard for neurodiversity in the built environment globally
-**Jurisdictions confirmed:** Cross-jurisdictional (frameworks are discipline-level, not jurisdiction-specific)
-**Key sources:** ICF-WHO2001 · Lawton-Nahemow1973 · Ulrich1984 · DSDC-EADDAT2022 · Marquardt2011 · Mostafa2021-ASPECTSS · PAS6463:2022 · Holohan2022 · Iwarsson2005
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | design framework, evidence audit, accessibility frameworks | design-framework-evidence-audit | Meta-entry classifying frameworks by evidence level; not a specification source |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** ICF as universal framing (191 WHO member states); Competence-Press Model for environment-person interaction; ART/SRT for restorative environment design.
+**Most targeted provision:** DSDC/EADDAT for dementia (Cronbach α=0.82); ASPECTSS for autism (PAS 6463 incorporates concepts); Trauma-Informed Design for NDV/MH.
+**Conflict resolution:** Not applicable — framework classification, not design specification conflict.
+**Highest-ambition actionable specification:** ICF as primary framing; DSDC/EADDAT as validated assessment tool; PAS 6463:2022 as sole national neurodiversity standard.
+**Opus synthesis note:** Two CRITICAL GAPS identified — OFS/Fatigue Design and Chronic Pain Design have no validated frameworks. These gaps must be disclosed in Part 1 and any OFS/PAIN specifications must carry THIN-BASE.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| ICF is gold standard for disability classification | All | 191 WHO member states | 1 |
+| Competence-Press Model remains valid after 50+ years | EN, SE | Cross-jurisdictional | 1–3 |
+| No validated design framework exists for OFS/PAIN populations | EN | Universal gap | — |
+| PAS 6463:2022 is the only national neurodiversity built environment standard globally | EN | UK | 4 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| ASPECTSS evidence level | UIA awards; PAS 6463 incorporates concepts | No RCTs; no independent POE replication | Framework maturity vs. formal validation |
+| ICF vs. EHP | ICF supersedes EHP as primary OT framework | Some US OT curricula still teach EHP | EHP has limited independent validation |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| — | — | OFS/Fatigue Design: no validated framework exists | — | — |
+| — | — | Chronic Pain Design: no validated framework exists | — | — |
+| — | — | DSDC/EADDAT: single validation study; independent replication not published | — | — |
 
 ### Citation mining
 Not yet performed.
@@ -63,4 +60,12 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- ICF-WHO2001 — International Classification of Functioning
+- Lawton-Nahemow1973 — Competence-Press Model
+- Ulrich1984 — Stress Recovery Theory
+- DSDC-EADDAT2022 — Dementia Services Development Centre assessment tool
+- Marquardt2011 — EADDAT validation (30 care homes)
+- Mostafa2021-ASPECTSS — Autism ASPECTSS framework
+- PAS6463:2022 — UK neurodiversity built environment standard
+- Holohan2022 — trauma-informed design scoping review
+- Iwarsson2005 — Housing Enabler validation

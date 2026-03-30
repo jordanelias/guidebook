@@ -1,6 +1,6 @@
 ## government-grant-programmes-home-adaptation
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory/programme data)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 23:30  **Evidence tier:** 5 (regulatory/programme data)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Government-funded home adaptation grant programmes exist in all major English-speaking and Northern European jurisdictions. UK Disabled Facilities Grant is the largest per-household grant programme by volume (£711m/year, £30,000 max per household). All programmes require OT assessment or equivalent disability certification. No programme covers full design-stage accessible construction — all address retrofit.
 **Grant programme matrix (verified as at 2024–25 budget year):**
   | Jurisdiction | Programme | Max Grant | Eligibility | FY Budget |
@@ -14,46 +14,47 @@
   | Switzerland | IV (Invalidenversicherung) | Varies; federal/cantonal co-funding | Disability insurance beneficiaries | 2024 |
   | Germany | KfW 159 programme | Loan at reduced rate (grant element varies) | Residential barrier-reduction; note: KfW "Altersgerecht Umbauen" suspended December 2021 (oversubscribed); confirm current status before citing | ⚠ VERIFY |
 **Key notes:**
-  - All programmes address retrofit, not design-stage provision — confirming the economic primacy of design-stage accessible construction (see accessible-design-economics-cost-premium|ALL entry)
-  - UK DFG is the most-studied: Habinteg (2010) Lifetime Homes; RCOT Living Well by Design (2023); documented demand exceeds supply in most local authorities
-  - Australia NDIS: most flexible international model — individual funding allocation with OT assessment determining scope; no per-item cap
-  - Canada HATC: tax credit mechanism (non-refundable) — benefits only taxable households; less effective for low-income disabled people
-  - USA VA SAH/SHA: highest grant ceiling in any jurisdiction; limited to veterans with specific service-connected conditions
-  - BCIS gap note: UK construction cost data for accessible design provisions is not independently available via open-access sources. UK practitioners should refer to: DFG unit cost data (MHCLG); Habinteg accessible homes guidance; JRF housing economics publications; QS benchmarks from recent accessible housing schemes
-**Jurisdictions confirmed:** UK · Ireland · Australia · Canada · USA · Switzerland · Germany (verify KfW status)
-**Early-close:** Yes  **Thin/No-data:** Nordic jurisdictions — no dedicated home adaptation grant programmes identified; accessibility is funded through housing benefit and disability support systems rather than targeted adaptation grants
-**Key sources:** MHCLG-DFG-2024 · NDIS-2024 · CRA-HATC-2024 · VA-SAH-FY2024 · HUD-S504 · KfW-159
-**Notes:** ⚠ KfW "Altersgerecht Umbauen" grant programme suspended December 2021 — do not cite as current. Replacement is KfW loan 159 (barrier-free conversion) at reduced interest rate. Verify status with KfW before citing in Vol 3. All figures carry year and currency per project standing rules.
+  - All programmes address retrofit, not design-stage provision
+  - UK DFG is the most-studied programme
+  - Australia NDIS: most flexible international model — individual funding allocation with OT assessment
+  - Canada HATC: tax credit mechanism (non-refundable) — benefits only taxable households
+  - USA VA SAH/SHA: highest grant ceiling in any jurisdiction; limited to veterans
+  - BCIS gap note: UK construction cost data for accessible design provisions not independently available via open-access sources
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | disabled facilities grant, home modification funding, adaptation grant | government-grant-programmes-home-adaptation | Distinct from economics-cost-premium (new-build costs); this is retrofit funding |
+| DE | KfW Barrierereduzierung, Wohnungsanpassung | — | KfW 455-B grant suspended; KfW 159 loan continues |
+| FR | MaPrimeAdapt', aide à l'adaptation du logement | — | See jurisdiction-grant-programmes for France detail |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** Needs-based uncapped systems (Nordic model: Sweden, Norway, Denmark) — no fixed caps, no means testing, assessed on functional need. These are the strongest access-to-adaptation systems internationally.
+**Most targeted provision:** Australia NDIS: most flexible model with individual funding allocation; OT assessment determines scope with no per-item cap.
+**Conflict resolution:** Not applicable — programme comparison, not design conflict.
+**Highest-ambition actionable specification:** UK DFG at £30,000/household is the highest-volume English-language programme. VA SAH at $109,986 (FY2024) is the highest single-grant ceiling. Nordic uncapped models are the most equitable.
+**Opus synthesis note:** All programmes fund retrofit only. No programme funds design-stage accessible construction — confirming the economic primacy of design-stage integration (see economics-cost-premium).
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| All major jurisdictions operate home adaptation grant programmes | EN, DE, FR, NO, SE, DA | UK, IE, AU, CA, US, CH, DE, NO, SE, DK | 5 |
+| All programmes address retrofit, not design-stage provision | All | All | 5 |
+| OT assessment or equivalent required for all programmes | All | All | 5 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Funding model | UK/IE/US: capped grants (means-tested) | Nordic: uncapped needs-based | Policy philosophy difference |
+| Tax credit vs. grant | Canada HATC: non-refundable tax credit | UK DFG: direct grant | Less effective for low-income households |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| Nordic | NO, SE, DA | No dedicated home adaptation grant programmes — accessibility funded through housing benefit/disability support systems | — | — |
+| — | — | BCIS UK construction cost data not open-access | — | — |
 
 ### Citation mining
 Not yet performed.
@@ -62,4 +63,10 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- MHCLG-DFG-2024 — UK Disabled Facilities Grant
+- NDIS-2024 — Australia National Disability Insurance Scheme
+- CRA-HATC-2024 — Canada Home Accessibility Tax Credit
+- VA-SAH-FY2024 — US Veterans Affairs SAH/SHA grants
+- HUD-S504 — US HUD Section 504
+- KfW-159 — Germany barrier-reduction loan programme
+- ⚠ KfW "Altersgerecht Umbauen" grant programme suspended December 2021 — do not cite as current
