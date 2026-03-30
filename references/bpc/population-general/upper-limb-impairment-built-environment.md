@@ -1,7 +1,8 @@
 ## upper-limb-impairment-built-environment
 
-**Updated:** 2026-03-18 23:45  **Evidence tier:** 1–3
+**Updated:** 2026-03-30 (Co-1 EN pass)  **Evidence tier:** 1–3
 **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Co-1 status:** PARTIAL EN — Fredericks et al. 2024 (wheelchair user cooperative inquiry, ZA); Widehammar et al. 2017 (n=156 AT users, SE). Environmental barriers confirmed as primary participation restrictor. No contradictions to BPC specifications.
 **Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains with the largest evidence-practice conflicts across all major standards. UPL built environment evidence base is critically thin — zero indexed studies on one-handed kitchen/bathroom design.
 **Core evidence-practice conflicts:**
   - Turning circle: ADA/BS 8300 1525 mm serves only 50th percentile; 2108 mm needed for 95th-percentile power chairs; 2489 mm for scooters (D'Souza et al. 2011, n=339, Tier 3). Only CSA B651:23 (2100 mm) approaches the 95th percentile.
