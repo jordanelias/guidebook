@@ -1,6 +1,6 @@
 ## visual-impairment-built-environment
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 19:18  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Evidence tier range:** 4–6
+**Updated:** 2026-03-30 (Co-1 EN pass)  **Original search:** 2026-03-19 19:18  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Co-1 status:** PARTIAL EN — Town Planning Review 2022; PMC 12082883; RNIB HQ user trials; NITC 2022. All BPC provisions confirmed; shared space emphasis and VIS/NDV lighting tension (VIS=cooler, NDV=warmer; resolution=adjustability) added. No contradictions.  **Evidence tier range:** 4–6
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
