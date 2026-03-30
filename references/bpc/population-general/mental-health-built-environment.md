@@ -1,7 +1,7 @@
 ## mental-health-built-environment
 
 **Updated:** 2026-03-27  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
-**Status:** PARTIAL — PubMed pass + citation mining complete 2026-03-27 (13 new sources); Co-1 web pass NOT RUN
+**Status:** PARTIAL — Co-1 pass 2026-03-30 (DiMHN, Wilson 2023, Rodríguez-Labajos 2024, VA guide); Opus re-synthesis required before Phase 3 use. PubMed pass complete 2026-03-27.
 
 ### Best-practice synthesis
 **PROVISIONAL (pre-Opus, from 2026-03-18 — will be superseded after Co-1 pass and Opus re-synthesis):**
@@ -145,3 +145,48 @@ PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · Buro
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+
+---
+
+### Co-1 Pass — 2026-03-30
+
+**Status update:** Co-1 pass executed. Sources found. BPC upgraded from PROVISIONAL to PARTIAL. Opus re-synthesis required before Phase 3 use (existing PROVISIONAL synthesis flagged for replacement).
+
+**Co-1 and Co-2 sources identified:**
+
+| Source | Type | Key finding | Tier |
+|---|---|---|---|
+| Design in Mental Health Network (DiMHN), UK — dimhn.org | Co-1 charity | Only UK organisation dedicated to improving mental healthcare environments through better design; "lived experience research" as core method; publishes "Design with People in Mind" book series (10+ books on sound, seclusion, nature, art, international perspectives) | Co-1 |
+| Wilson et al. (2023). *Int J Mental Health Nursing*, 10.1111/inm.13070 | Co-1 (service user qualitative) | Australian mental health unit service user perspectives: multiple sensory rooms needed; natural light and colour; high and low stimulus spaces; culturally sensitive/safe spaces; sensory room = repurposed cupboard inadequate (token-operated massage chair, no window, poor ventilation — documents failure mode) | Tier 3/Co-1 |
+| Rodríguez-Labajos et al. (2024). HERD, PMID 38385552, DOI 10.1177/19375867231219031 | Tier 3 systematic review | 44 studies, 9 countries. Key therapeutic design factors: personal spaces with privacy/control; daylight-optimised spaces; versatile communal areas; designated spaces for visits and spiritual/contemplative reflection; homelike environments; artwork in units; open nursing stations; female-only areas. Under-researched: evidence quality generally low; design specificity lacking. | Tier 3 |
+| Center for Health Design — healthdesign.org | Co-2 (US) | Evidence-based design for BMH: evidence synthesis approach; 6 principles for mental health built environment; safety features must coexist with therapeutic environment | Co-2 |
+| VA Mental Health Design Guide (US CFM) | Tier 2 | Federal design guidance for inpatient mental health; trauma-informed principles; ligature risk management; single rooms; daylight; access to outdoors | Tier 2 |
+| BHFC Behavioral Health Design Guide (2024, 26th revision) | Tier 5 | Industry practice guide; originally NAPHS 2003; covers baseline + risk-level-specific requirements; "residential in character as possible"; addresses safety vs therapeutic trade-off | Tier 5 |
+| Permanente (outpatient study, Kaiser San Jose 2020) | Co-1 | Patient perspectives: 4 dimensions — sensory design elements (colours, sounds, textures); engagement qualities (distracted activity intensity); social relational aspects (privacy vs connection); affective experiences (feeling safe, calm, in control, self-aware, creative) | Co-1 (qualitative, n=13) |
+
+**Co-1 key findings — built environment specifications:**
+
+| Finding | Source | Confirms/upgrades item? |
+|---|---|---|
+| Sensory rooms confirmed essential — but existing provision often grossly inadequate (repurposed storerooms, no windows, restricted access) | Wilson 2023 (Co-1 service user) | A-16 confirmed; upgrade note: adequacy standard matters, not just presence |
+| Single-gender areas in inpatient settings (especially for women, trauma history) | Rodríguez-Labajos 2024 + Wilson 2023 | No current item — gap for Part 7/9 |
+| Personal space with environmental control critical for perceived safety and recovery | Permanente 2020 (Co-1) + Rodríguez-Labajos 2024 | H-02 (individual environmental control) confirmed as cross-cutting for NDV/MH |
+| Open nursing stations preferred by patients (less institutional, better staff-patient interaction) | Rodríguez-Labajos 2024 | No specific item — design principle for Part 3/Part 7 |
+| Natural light and colour confirmed therapeutic | Wilson 2023 + Rodríguez-Labajos 2024 | B-01 (circadian lighting) cross-reference; daylight not separately itemised |
+| Outdoor access valued | Rodríguez-Labajos 2024 | No standalone item — Part 7 design note |
+| "Residential, not institutional" character is a patient priority | BHFC 2024 + Rodríguez-Labajos 2024 | Confirms trauma-informed design framing in Part 2 §2.x NDV/MH section |
+| Homelike environment (artwork, materials, furnishing) | Rodríguez-Labajos 2024 | No specific item — Part 7/design note |
+
+**Co-1 conflict finding:**
+Rodríguez-Labajos 2024 documents preference for "homelike" environments with visual richness (artwork, colours). This CONFLICTS with NDV/AUT muted/minimal visual stimulation preference. Existing BPC PROVISIONAL note already flagged this. Co-1 evidence confirms the conflict is real (both populations are correct about their needs). Resolution: spatial separation + adjustable multi-mode design. Already noted in PROVISIONAL synthesis — confirmed by Co-1.
+
+**New gap raised:** NDV/MH requires female-only area provision in mixed-gender inpatient settings — no built environment item currently in Part 4 for this. Flag for Phase 3 Session 15/16.
+
+**Remaining for Opus re-synthesis:**
+1. Population-specific quantified specifications (lighting levels, acoustic targets for NDV/MH)
+2. Non-English jurisdictions (DiMHN notes "international design perspectives" — DE/NL/NO mental health design standards)
+3. Formal consensus/divergent findings tables
+4. Conflict resolution hierarchy (NDV/MH vs NDV/AUT sensory environment)
+
+**Status change:** PROVISIONAL → PARTIAL (Co-1 complete; Opus re-synthesis pending; GAP-TRIAGE-02)
