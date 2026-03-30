@@ -69,3 +69,10 @@ no_data_flags: []
 bpc_ref: "dementia-built-environment|DEM"
 note: "Strong EN/NL/DK evidence base. Extended pass complete: CEREMA 2022 Fiche 8 confirmed (UHR design); PMND 2021-2022 architecture provisions confirmed; KDA confirmed as programmatic framework org (not specification publisher) — KDA DEM design embedded in Pro Alter series; MHLW group home unit standard confirmed (5-9 persons/unit); Marquardt Bueter Motzek 2014 confirmed as anchor systematic review; Vilans NL confirmed as Co-1 knowledge centre; De Hogeweyk POE still PROVISIONAL."
 ```
+# Log Closure (2026-03-30)
+log_closed:
+  date: 2026-03-30
+  status: PARTIAL
+  reason: EN/NL/DK evidence strong; 10 languages thin; Co-1 partial (EN/NL/DK); Opus synthesis complete; non-EN languages accepted as low-yield per early-close gate
+  logged_by: Sonnet 4.6
+  phase3_ready: YES — with PROVISIONAL flags on De Hogeweyk POE and thin-language findings
