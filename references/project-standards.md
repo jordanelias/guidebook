@@ -193,3 +193,12 @@ DATE: 2026-03-30 03:42
 
 RULE: Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference) carries a Tier 2 handoff flag: "Tier 1 default: [median]. Tier 2: OT assessment resolves position within range based on [functional parameter]." Ranges are the designed-in bridge between Tier 1 and Tier 2 — restatement of existing project-standards rule with explicit format requirement.
 DATE: 2026-03-30 03:42
+
+RULE: Cross-population conflict analysis: check for variable conflation before asserting a conflict. Three domains (CORRIDOR-W, COLOUR-CONT, PREDICT) had apparent conflicts that dissolved because two independent variables were treated as one (width ≠ sensory load; LRV contrast ≠ chroma; adequate space ≠ reconfiguration). Step 0 in §3.8 decision tree: verify that opposing needs operate on the same physical variable.
+DATE: 2026-03-30 23:30
+
+RULE: Harm asymmetry governs divergent conflict domain defaults. Where no single specification serves all populations: (1) identify which population experiences greater harm from the wrong default; (2) set default to protect the higher-harm population; (3) provide individual supplemental provision for the lower-harm population. Examples: dim lighting default (NDV pain > DEM reduced benefit); cool temperature default (NEU/MS neurological deterioration > PAIN discomfort).
+DATE: 2026-03-30 23:30
+
+RULE: DEM olfactory wayfinding is NOT an evidence-based built environment specification. Aromatherapy is a clinical care intervention delivered by staff, not an architectural specification. No BPC, standard, or design guideline recommends embedding scented cues as a built environment wayfinding mechanism. Fragrance-free is the universal built environment specification.
+DATE: 2026-03-30 23:30
