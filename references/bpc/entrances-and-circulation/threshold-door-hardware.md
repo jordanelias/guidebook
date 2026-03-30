@@ -5,8 +5,8 @@
 ---
 
 ## threshold-door-hardware
-**Updated:** 2026-03-27 00:45  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; Co-1 not yet attempted)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PARTIAL-RETAINED
-**Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge, no Co-1). Co-1 pass not started (0/24). 14/14 languages with data (9 partial from training knowledge). Citation mining not done. All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
+**Updated:** 2026-03-30 19:10 (Co-1 EN pass)  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; EN Co-1 complete)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PARTIAL-RETAINED
+**Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge). EN Co-1 COMPLETE (mobilitybasics.ca CA Co-1 + ADA National Network US Co-1 — no contradictions). 13 non-EN languages Co-1 not run. Citation mining not done. FDR not run. All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
