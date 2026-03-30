@@ -120,3 +120,45 @@ NICE-NG206-2021, BatemanHorne-CCG-2025, PMC6260403-2019, Strassheim-2018, CDC-ME
 4. Entrance rest seating (recline-capable) within 5 m — serves OFS, PAIN, MOB, DEM, aging
 
 **Environments remaining:** NONE — 12/12 scenarios complete
+
+
+---
+
+### D2-47 Recumbent Rest Evidence Addendum (2026-03-30)
+**Task:** Retrieve OT/clinical evidence for recumbent rest configuration in A-16 revision.
+
+**Findings:**
+
+| Source | Type | Key finding | Tier |
+|---|---|---|---|
+| NICE NG206 §hospital-env (2024) | UK guideline | Hospital: "provision of a single room or consideration of environmental factors that could affect symptom burden" — recognises environmental accommodation for ME/CFS | Tier 2 |
+| CDC ME/CFS Clinical Overview (2024) | US clinical guidance | OI symptoms "may improve (though not necessarily fully resolve) when lying down or reclining" — lying down is primary management position | Tier 2 |
+| Bateman Horne Center OI guidance (2021) | US specialist clinic | OI = "symptoms relieved or partially relieved by reclining" — explicitly distinguishes lying from seated | Tier 2/Co-1 |
+| ME/CFS Australia OI guidance | Co-1 | "Whenever possible, tasks may need to be undertaken lying down" — explicit recumbent requirement for OI | Co-1 |
+| ME Association UK OI booklet (2025) | Co-1 | "Sitting up whilst lying on a settee or bed is often the most comfortable position" — confirms semi-recumbent to supine range | Co-1 |
+| Collin et al. — PMC workplace ME/CFS review | Tier 3 | "Creating a quiet area to rest without being disturbed" listed as workplace reasonable adjustment | Tier 3 |
+
+**Assessment:**
+- "Recline-capable seating" (from existing FDR): confirmed at Co-1/Tier 3
+- "Full recumbent/supine surface": Tier 2 clinical basis (CDC, NICE NG206, Bateman Horne); no architectural/OT source specifies dimensions or surface type → THIN-POPULATION-SPEC
+- Minimum duration: PEM crash recovery can require 30–120+ min; no design source specifies minimum duration → specify "accommodation for rest periods of 30 minutes minimum" with [UNSUPPORTED — clinically indicated, duration not evidence-derived from design literature]
+- PubMed search (7 queries, 2026-03-30): 0 results — confirms this evidence gap is real
+
+**Gap logged:** GAP-OFS-RECUMBENT-01
+
+**A-16 specification impact:**
+- Add: "Recline-capable seating or recumbent surface option" — Tier 2 clinical basis; THIN-POPULATION-SPEC disclosure
+- Add: "Space accommodates rest periods of 30 minutes minimum without displacement" [note: duration clinically indicated, not evidence-derived from design literature]
+- Population codes: PAIN ○ + OFS ○ confirmed per D2-41 (see below)
+
+### D2-41 Acoustic Items Assessment (2026-03-30)
+**Task:** Verify PAIN/OFS applicability for A-02, A-08, A-13.
+
+| Item | Assessment | Evidence | Disclosure |
+|---|---|---|---|
+| A-02 (Acoustic Ceiling Panels NRC ≥0.85) | APPLY PAIN ○ + OFS ○ | Central sensitization → auditory hyperalgesia; acoustic panels in retreat/reset rooms (this BPC FDR line 98, Co-1/Tier 3) | THIN-POPULATION-SPEC |
+| A-08 (HVAC NC-25) | APPLY PAIN ○ + OFS ○ | Same mechanism; NC-25 in retreat room spec (Co-1) | THIN-POPULATION-SPEC |
+| A-13 (RT60 ≤0.4 s) | APPLY PAIN ○ + OFS ○ | Same mechanism; RAP BPC: "PCS population absent from all reviewed standards" | THIN-POPULATION-SPEC |
+
+All three: ○ marker (emerging/provisional). Phase 3 Session 15 action: add codes to Part 4 item specifications.
+Gap logged: GAP-D241-01
