@@ -406,4 +406,41 @@ Backward mining from confirmed sources: not executed (Petersson 2008/2009 not fo
 - **Economic justification items:** Purpose-built vs retrofit cost data should be incorporated into guidebook preamble or Part 1 rationale. Sheffield 39% care hour reduction and UK £27,000 retrofit cost are the anchor figures.
 - **Cross-references:** This synthesis connects to bathroom-design, kitchen-design, entrance-and-threshold, and any MOB/wheelchair specification slugs. Connection register entries should be created for: (a) CAPABLE → any OT assessment specification; (b) Malmgren Fänge wheelchair OR → wheelchair home specification; (c) Douglas 2024 support > environment → Part 5 support specification.
 
+---
 
+<!-- v4 schema stubs — Session 6 schema backfill 2026-03-30. Opus synthesis required before Phase 3. -->
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+### Best-practice synthesis
+**Most inclusive provision:** [STUB — see synthesis content above]
+**Most targeted provision:** [STUB — see synthesis content above]
+**Conflict resolution:** [STUB — see synthesis content above]
+**Highest-ambition actionable specification:** [STUB — see synthesis content above]
+**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+### Citation mining
+Not yet performed.
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
+
+### Key sources
+[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
