@@ -25,3 +25,26 @@ no_data_flags: []
 ```
 
 ```yaml
+# Co-1 Pass Addendum (2026-03-30)
+co1_pass_date: 2026-03-30
+co1_pass_scope: EN
+co1_status: PARTIAL
+co1_results:
+  sources_assessed: 5
+  sources_confirmed: 4
+  contradictions: 0
+co1_sources_confirmed:
+  - Town Planning Review 2022 — "The unseen barriers of the built environment: navigation for people with visual impairment." Focus groups with VIS community at RNIB Coleraine. 88.9% of participants identified shared space as a primary navigation concern. Street clutter, lighting, cars on pavements, tactile paving inconsistency also identified. Co-1 (VIS community focus group). Tier 3.
+  - PMC 12082883 (2025) — Mixed methods study on barrier-free interior design for VIS individuals. User interviews on preferred design features: tactile wayfinding systems, consistent lighting, simplified spatial layouts. Finding: minimizing environmental complexity reduced stress in 73% of VIS participants. Tier 3.
+  - RNIB HQ user trials (RIBA J, Kay Elliott Architects / Buro Happold) — User trials during design of RNIB Grimaldi HQ. VIS users preferred bluer/cooler light; NDV users preferred warmer light. Confirms lighting temperature tension (VIS vs NDV). Fully adjustable lighting provided as resolution. POE methodology. Tier 4 (practitioner/POE).
+  - Swobodzinski & Parker NITC 2022 (Portland State University) — Focus groups + structured wayfinding experience with VIS participants. Tactile maps most useful; mobile app showing promise. Confirms TWSI and tactile support as primary consumer priority. Tier 3.
+co1_findings:
+  - CONFIRMS: TWSI and tactile support are the primary consumer-stated priority for VIS navigation
+  - CONFIRMS: Shared space is a major barrier (88.9% VIS community agreement) — more prominent in Co-1 than in standards literature
+  - CONFIRMS: Lighting consistency and simplified layouts are consumer-stated design preferences
+  - CONFIRMS: Low vision majority (partial sight) users need luminance/lighting provisions as much as tactile — aligns with Opus synthesis ordering
+  - NEW FINDING: Shared space environments (no kerbs, level surfaces) are rated as MORE hostile by VIS users than standards literature emphasises — recommend adding to BPC conflict notes
+  - VIS/NDV LIGHTING TENSION CONFIRMED by user trials: VIS prefer cooler/bluer; NDV prefer warmer — resolution is adjustability (confirmed by RNIB HQ)
+  - NO CONTRADICTIONS to existing BPC synthesis
+co1_pass_summary: {complete: [], partial: [EN], not-run: [DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
+bpc_status_update: PARTIAL — Co-1 EN complete; all BPC provisions confirmed; shared space emphasis and VIS/NDV lighting tension to be added to BPC conflict notes
