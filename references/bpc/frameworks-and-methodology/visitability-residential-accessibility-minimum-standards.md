@@ -20,3 +20,42 @@
 **Jurisdictions confirmed:** US (Fair Housing Act 7 features; Concrete Change standards); UK (Lifetime Homes; Part M4(1) mandatory; M4(2) optional); AU (NCC 2022 Livable Housing mandatory); Canada (CAN/ASC B652); Norway (TEK17)
 **Key sources:** Concrete-Change-1987 · CMHC-Universal-Design · ADA-Standards-2010 · FHA-Design-Manual · DIN-18040-2 · TEK17 · NCC-2022
 **Notes:** Cross-reference residential-dar-provisions-priority-register|MOB for the full DAR cost multiplier register. Visitability is the minimum; Lifetime Homes (UK), CAN/ASC B652 (Canada), and NS 11001-2 (Norway) represent progressive above-minimum standards.
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+### Best-practice synthesis
+**Most inclusive provision:** [STUB — see synthesis content above]
+**Most targeted provision:** [STUB — see synthesis content above]
+**Conflict resolution:** [STUB — see synthesis content above]
+**Highest-ambition actionable specification:** [STUB — see synthesis content above]
+**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+### Citation mining
+Not yet performed.
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
+
+### Key sources
+[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
