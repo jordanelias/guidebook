@@ -184,3 +184,12 @@ DATE: 2026-03-27 12:20
 RULE: Case study deduplication requires checking name variants, date variants, building vs programme level. Programme-level entries (CAPABLE, DFG, BATH-OUT) use programme-level format.
 DATE: 2026-03-27 22:10; consolidated 2026-03-29
 
+
+RULE: Part 4 / Part 8 single-source-of-truth for engineering performance values. Part 4 states population need, design intent, and evidence-derived target value. Part 8 states engineering means, system design, and commissioning test. No performance value (RT60, STI, NC, NRC, STC, melanopic EDI, MERV, VOC, etc.) appears as a specification in both locations — one is the specification, the other is a cross-reference. Contradictions between Part 4 and Part 8 values are specification errors.
+DATE: 2026-03-30 03:42
+
+RULE: Every Part 4 specification using "adjustable", "individual control", or "user-operated" must include a population operability note: (1) populations who can self-adjust, (2) populations requiring carer/staff operation, (3) default setting when no individual present with harm-asymmetry rationale. "Adjustable" is not a universal conflict resolution — per conflict-matrices SYNTHESIS.
+DATE: 2026-03-30 03:42
+
+RULE: Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference) carries a Tier 2 handoff flag: "Tier 1 default: [median]. Tier 2: OT assessment resolves position within range based on [functional parameter]." Ranges are the designed-in bridge between Tier 1 and Tier 2 — restatement of existing project-standards rule with explicit format requirement.
+DATE: 2026-03-30 03:42
