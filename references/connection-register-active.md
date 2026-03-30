@@ -1184,7 +1184,7 @@ Create unified sensory environment specification matrix linking Dunn's profiles 
 **Disposition:** PENDING
 **Type:** [INTRA-INDIVIDUAL] — a person with DEM+MOB+PAIN in a residential setting experiences the thermal differential as a single hazard
 **Populations involved:** DEM, MOB (older adults), NEU/MS, PAIN, OFS
-**Items involved:** TC-01, TC-02, TC-03, TC-05, H-04, all residential bathroom matrix entries
+**Items involved:** F-06, Part 9 §9.1.4 (envelope+mass), F-07, H-04, all residential bathroom matrix entries
 **Gap register items:** NONE (safety-critical propagation)
 
 ### Connection description
@@ -1192,7 +1192,7 @@ Japan heat shock data (6,073 bathtub drowning deaths/year, MHLW 2023) is the mos
 
 This finding is siloed in `thermal-comfort-older-adults-care-settings` and not propagated to:
 - Part 5 residential bathroom matrices (where it is a P1 safety specification)
-- TC-01/TC-02/TC-03 items (which specify envelope performance but not inter-room differential)
+- F-06/Part 9 §9.1.4 items (which specify envelope performance but not inter-room differential)
 - The `ms-thermal-temperature-conflict-resolution` BPC (which addresses population thermal preference conflicts but not the mortality mechanism)
 - CON-0019 environmental refuge (which does not specify thermal zone assignment)
 
@@ -1205,13 +1205,13 @@ The thermal conflict resolution (ambient ≤18–21°C + individual supplemental
 | Nakayama 1981 (≤5–7°C differential) | 3 | DEM/older adults (JP) | ALL residential inter-room thermal spec |
 | Baquero et al. 2023 (n=1,065) | 3 | DEM/older adults | Thermal comfort targets |
 | ms-thermal BPC (Uhthoff/PAIN/OFS conflict) | 2–4 | NEU/MS, PAIN, OFS | Resolution methodology |
-| TC-05 (heated bathroom floor) | 5 | ALL | Direct prevention of heat shock mechanism |
+| F-07 (heated bathroom floor, formerly TC-05) | 5 | ALL | Direct prevention of heat shock mechanism |
 
 ### Proposed synthesis direction
-Propagate inter-room thermal differential ≤5°C to all residential bathroom matrix entries as P1 safety specification. Cross-reference TC-05 (heated bathroom floor) as the primary prevention mechanism. Link to ms-thermal conflict resolution for multi-condition thermal management. Specify refuge room thermal zone assignment (individual control required).
+Propagate inter-room thermal differential ≤5°C to all residential bathroom matrix entries as P1 safety specification. Cross-reference F-07 (heated bathroom floor, formerly TC-05) as the primary prevention mechanism. Link to ms-thermal conflict resolution for multi-condition thermal management. Specify refuge room thermal zone assignment (individual control required).
 
 ### Disposition
-- [ ] HIGH → item-specification-writer briefing for Part 5 bathroom matrices + TC items
+- [ ] HIGH → item-specification-writer briefing for Part 5 bathroom matrices + F-06/F-07 items
 
 ---
 
