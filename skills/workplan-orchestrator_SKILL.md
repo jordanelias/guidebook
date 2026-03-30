@@ -63,7 +63,7 @@ No skill outside the workflow list may execute without explicit user approval.
 | 10 | Design for Adaptable Readiness — DAR | II |
 | 11 | The Economics of Accessible Construction | II |
 | 12 | Case Studies — Documented Accessible Built Environments | II |
-| Apps | Appendices A, B, D, E, Bibliography, Glossary | II |
+| Apps | Appendices A, B, D, E, Bibliography, Glossary | — (follows Vol II) |
 | Supp | Supplementary Volume: Body Sizes | — |
 
 Section numbering follows Part number: Part N uses §N.x. Item codes in Part 4 use letter-prefix: A-01 through K-NN. **Bare codes only — no volume-part prefix.**

@@ -82,8 +82,8 @@ DATE: 2026-03-18 19:00
 ## CO-0003 + CO-0004 Structural Rules
 <!-- TRANSITIONAL — remove after CO-0004 propagation pass is complete -->
 
-RULE: CO-0004 Volume Merge and Part renumbering. 2 Volumes: Volume I (Parts 1–9), Volume II (Parts 10–12). Supplementary unchanged. See workplan-orchestrator §CO-0004 for Part Map. CO-0004 supersedes CO-0003 structural provisions; CO-0003 terminology changes remain in full effect.
-DATE: 2026-03-29 00:00
+RULE: CO-0004 Volume Merge and Part renumbering. 2 Volumes: Volume I (Parts 1–9), Volume II (Parts 10–12). Appendices, Bibliography, and Glossary follow Volume II but are not part of it. Supplementary unchanged. See workplan-orchestrator §CO-0004 for Part Map. CO-0004 supersedes CO-0003 structural provisions; CO-0003 terminology changes remain in full effect. SIGNED OFF 2026-03-30.
+DATE: 2026-03-29 00:00; signed off 2026-03-30 23:30
 
 RULE: "Cross-population" retired per CO-0003. Use "co-occurring disability" (intra-individual) or "multi-population" (inter-group). Population code notation: `+` = co-occurring in one person; `/` = different people same space.
 DATE: 2026-03-28 21:30
