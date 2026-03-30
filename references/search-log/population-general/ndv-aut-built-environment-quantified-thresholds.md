@@ -44,3 +44,11 @@ co1_findings:
   - GAP NOTED: No Co-1 study provides user-stated preference for specific dB or lux values — threshold gap confirmed from consumer side
 co1_pass_summary: {complete: [], partial: [EN], not-run: [DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
 bpc_status_update: PARTIAL — Co-1 EN pass complete; acoustic sensory BPC confirmed; no Opus re-synthesis required; threshold gap confirmed consumer-side
+
+# Log Closure (2026-03-30)
+log_closed:
+  date: 2026-03-30
+  status: PARTIAL
+  reason: 9 core languages searched; early-close gate; Co-1 PARTIAL EN (Bagatell 2022, Sci Reports 2025); Opus synthesis complete; threshold gap confirmed consumer-side; NL/ES/PT/KO/IT not-run accepted
+  logged_by: Sonnet 4.6
+  phase3_ready: YES — with PROVISIONAL flags on all threshold specifications
