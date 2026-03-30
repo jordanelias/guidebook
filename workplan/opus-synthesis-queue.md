@@ -6,10 +6,10 @@
 
 | Category | Count |
 |---|---|
-| Opus synthesis complete | 21 |
+| Opus synthesis complete | 44 |
 | Merged (redirect stubs) | 4 |
 | Stubs (research blocked) | 2 |
-| **Ready for Opus synthesis** | **42** |
+| **Ready for Opus synthesis** | **19** |
 
 Tier A (population-specific): 1
 Tier B (topic-specific evidence): 26
@@ -136,3 +136,23 @@ Each session:
 - `sensory-environment/acoustics-speech-intelligibility-disability`
 - `sensory-environment/sensory-processing-model-design-application`
 - `sensory-environment/sensory-relief-space-design`
+
+## v4 Schema Synthesis Pass (2026-03-30)
+
+23 slugs had v4 schema stubs populated with synthesized content from existing Opus prose:
+
+**Batch 1 (7 slugs) — d1e7cba:**
+ms-thermal-temperature-conflict-resolution, thermal-comfort-older-adults-care-settings, air-quality-voc-chemical-sensitivity-built-environment, detectable-gradient-protocol-sensory-zones, wayfinding-cognitive-science-spatial-design, wayfinding-dementia-spatial-design, stair-ramp-threshold-biomechanics-accessibility
+
+**Batch 2 (6 slugs) — 3076477:**
+accessible-design-economics-cost-premium, government-grant-programmes-home-adaptation, body-sizes-supplementary-populations, design-framework-evidence-audit, ecological-psychology-haptic-affordances-built-environment, european-accessibility-act-scope-clarification
+
+**Batch 3 (7 slugs) — 33180e0:**
+jurisdiction-grant-programmes-comprehensive, jurisdiction-matrix-accessibility-standards, multilingual-evidence-convergence-non-english, ot-built-environment-interface, ot-frameworks-built-environment, residential-dar-provisions-priority-register, visitability-residential-accessibility-minimum-standards
+
+**Batch 4 (3 partial slugs) — 7435481:**
+circadian-lighting-melanopic-edi, visual-fire-alarm-seizure-safety, deaf-classroom-reverberation-time
+
+**Remaining 19 slugs with stubs=0** already had complete v4 schema content from O1–O10 sessions. No action required.
+
+**GAP-TRIAGE-02 status:** CLOSED-RESOLVED. All CONSUME slugs now have populated v4 schema sections.
