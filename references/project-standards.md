@@ -185,7 +185,7 @@ RULE: Case study deduplication requires checking name variants, date variants, b
 DATE: 2026-03-27 22:10; consolidated 2026-03-29
 
 
-RULE: Part 4 / Part 8 single-source-of-truth for engineering performance values. Part 4 states population need, design intent, and evidence-derived target value. Part 8 states engineering means, system design, and commissioning test. No performance value (RT60, STI, NC, NRC, STC, melanopic EDI, MERV, VOC, etc.) appears as a specification in both locations — one is the specification, the other is a cross-reference. Contradictions between Part 4 and Part 8 values are specification errors.
+RULE: Part 4 holds sole specification authority for all performance targets. Anything distinctly spatial is architectural; engineers support execution. Part 8 is a coordination register mapping architect-specified targets to engineering briefs for delivery — not a parallel specification. Where Part 8 currently restates Part 4 values, replace with cross-reference. Where values contradict, Part 4 governs. Performance targets (RT60, STI, NC, STC, melanopic EDI, MERV, etc.) are architect specifications derived from population evidence; engineers design systems to achieve them.
 DATE: 2026-03-30 03:42
 
 RULE: Every Part 4 specification using "adjustable", "individual control", or "user-operated" must include a population operability note: (1) populations who can self-adjust, (2) populations requiring carer/staff operation, (3) default setting when no individual present with harm-asymmetry rationale. "Adjustable" is not a universal conflict resolution — per conflict-matrices SYNTHESIS.

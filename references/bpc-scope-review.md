@@ -247,3 +247,47 @@ These values appear in current or proposed specifications but have no evidence d
 | 0.1 m/s RMS vibration isolation (A-09) | cross-population-conflict-resolutions | [THIN BASE — engineering convention; no disability-specific validation] |
 | 500 m² threshold for retreat room | pain-ofs-built-environment-design | Tier 0 CANDIDATE — Co-1/Co-2 derived; pending higher-tier validation |
 | 5 m entrance seating distance | pain-ofs-built-environment-design | Co-1/Co-2 derived; pending higher-tier validation |
+
+---
+
+## Correction: Architectural vs Engineering Authority (2026-03-30 03:55)
+
+### Error in original classification
+
+Section (a) incorrectly classified ~40 performance targets as "engineering holds primary specification authority." This conflated *execution dependency* with *specification authority*.
+
+**Corrected principle:** Anything that is distinctly spatial in provision is architectural. Engineers support the execution of those spaces. Grab bars are a design intervention that happens to need structure. Sensory relief spaces are a design intervention that happens to involve acoustics and lighting. The architect specifies the performance target (RT60 ≤0.3 s, melanopic EDI ≥250, STC ≥50, NC-25, grab bar at 700 mm bilateral). The engineer designs the system to deliver it.
+
+### What is genuinely engineering-determined
+
+Only items where the engineer determines the *how* — not the *what*:
+- Duct routing, velocity, lining selection (to achieve architect-specified NC-25)
+- Plant room configuration, vibration isolation system design (to achieve architect-specified <0.1 m/s RMS)
+- Hearing loop layout geometry, driver specification (to achieve architect-specified IEC 60118-4 field strength)
+- Structural load path for grab bar blocking (to achieve architect-specified ≥200 kg SWL)
+- Drainage fall calculations, channel design (to achieve architect-specified zero-threshold)
+- Luminaire selection, driver specification (to achieve architect-specified melanopic EDI, flicker %, CCT)
+- Filtration system selection (to achieve architect-specified MERV 13 / TVOC target)
+
+These are means, not ends. The architect specifies the end; the engineer specifies the means.
+
+### Corrected GAP-SCOPE-01
+
+**Original:** "Part 4/Part 8 engineering value duplication — ~40 measurable performance targets duplicated between item specs and engineering briefs."
+
+**Corrected:** Part 4 is the single specification source for all performance targets. Part 8 is a coordination register identifying which engineering briefs must carry the architect's specification for delivery. The deduplication direction is: Part 4 holds the value; Part 8 cross-references it with the discipline, stage, and commissioning test. Where Part 8 currently restates a Part 4 value, replace with a cross-reference. Where Part 4 and Part 8 values contradict (e.g., A-03 STC ≥35 in Part 4 vs STC ≥50 in Part 8), Part 4 governs; Part 8 is corrected to match.
+
+### Items removed from engineering column
+
+All grab bar specifications, sensory room specifications, bathroom layout specifications, lighting performance targets, acoustic performance targets, air quality targets, thermal targets — these are architectural specifications. They remain in Part 4 as the architect's specification. Part 8 maps them to engineering briefs for delivery coordination.
+
+### What remains in section (a) — correctly scoped
+
+Only genuine engineering *system design* decisions that the architect cannot specify:
+- Loop field geometry (AC + EE determine layout to achieve IEC 60118-4)
+- HVAC system configuration (ME determines ductwork, plant, dampers to achieve NC/VOC/thermal targets)
+- Structural detailing (SE determines blocking method, connection type, reinforcement for grab bar/hoist loads)
+- Fire alarm circuit design (EE determines circuit topology for independent VAD activation)
+- BMS programming (EE determines control logic for automated CCT shift, zone control)
+
+These are Part 8 scope — the engineer's design decisions in response to the architect's performance specification.
