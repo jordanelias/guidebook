@@ -65,3 +65,10 @@ no_data_flags: []
 bpc_ref: "neurological-built-environment|NEU"
 note: "EN evidence strong for wayfinding/ABI. DE extended pass complete: BAR is rehabilitation coordination body (not built env design org); DE built env NEU guidance embedded in Wohnraumanpassung practice (SGB XI 40) and DIN 18040 — no standalone document. JA extended pass complete: 高次脳機能障害 provisions in prefectural support centre guidance and MLIT 建築設計標準 (already in BPC). NL/Nordic pass still recommended for rehabilitation facility design literature."
 ```
+# Log Closure (2026-03-30)
+log_closed:
+  date: 2026-03-30
+  status: PARTIAL
+  reason: EN strong; other languages thin; Co-1 partial EN; Opus synthesis complete; NL/Nordic rehabilitation facility pass still recommended but accepted as low-yield for Phase 3 gate
+  logged_by: Sonnet 4.6
+  phase3_ready: YES — with thin-language caveats
