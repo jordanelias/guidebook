@@ -1,6 +1,6 @@
 ## wayfinding-cognitive-science-spatial-design
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** Spatial configuration outperforms signage density as the primary wayfinding mechanism. Architecture should be self-explanatory at the layout level, with signage as reinforcement. Wayfinding fails when it imposes excessive extraneous cognitive load — directly reducing functional capacity for users with TBI/ABI, dementia, ADHD, or PCS.
 **Key evidence:**
   - Spatial configuration vs. signage: floor plan configuration has a stronger effect on wayfinding accuracy than signage quantity — buildings should be designed for topological legibility first (O'Neill 1991, Tier 3; Passini 1984)
@@ -20,40 +20,40 @@
   - Tier 3 — Linguistic affordances: FALC/Easy Read text with symbol support
   - Tier 1 is the primary accessibility layer; Tiers 2 and 3 reinforce, not replace
 **Jurisdictions confirmed:** ISO 21542:2021 requires redundant wayfinding at key decision points; BS 8300:2018 specifies multi-format wayfinding; no jurisdiction quantifies ≤2 decision points
-**Early-close:** Yes  **Thin/No-data:** None
-**Key sources:** Passini1984 · ONeill1991 · Sweller1988 · PMC8545728 · SiegelWhite1975 · Grey2015 · Kahneman1973
-**Divergent findings:** —
-**Notes:** Cross-reference wayfinding-dementia-spatial-design|DEM entry for DEM-specific application. Three-tier wayfinding system is retained as a synthesized item across 6+ evidence sources. PCS/TBI evidence: cognitive fatigue makes text-based wayfinding unreliable for ABI patients (CAOT 2018).
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | wayfinding, spatial cognition, cognitive load, environmental legibility | wayfinding-cognitive-science-spatial-design | Distinct from wayfinding-dementia (DEM-specific application); this is the cognitive science foundation |
+| DE | Wegfindung, räumliche Kognition | — | German literature uses Orientierungssystem for wayfinding systems |
+| FR | orientation spatiale, charge cognitive | — | |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** Spatial configuration as primary wayfinding mechanism (Tier 1 architectural affordances): loop floor plans, visual access between spaces, landmarks at decision points, ≤2 decision points visible simultaneously.
+**Most targeted provision:** Three-tier wayfinding system: architectural affordances (most robust) → iconic (≤3 ISO 7010 symbols per sign) → linguistic (FALC/Easy Read). Each room with unique multi-modal visual identity for DEM/ABI.
+**Conflict resolution:** No inter-population conflict. Spatial legibility benefits all disability categories; signage reinforcement adds without conflicting.
+**Highest-ambition actionable specification:** ≤2 decision points visible simultaneously; continuous loop circulation; unique visual identity per room achievable through any surviving sensory channel; three-tier redundant wayfinding at all key decision points.
+**Opus synthesis note:** Cognitive load framework (Sweller 1988) provides the theoretical grounding. Cognitive map progression (Tolman → Siegel & White → PMC8545728) explains why landmark navigation is most preserved in dementia. Design implications are evidence-derived but not empirically validated as specifications.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Spatial configuration outperforms signage for wayfinding accuracy | EN | Cross-jurisdictional (O'Neill 1991; Passini 1984) | 3 |
+| Extraneous cognitive load reduces wayfinding capacity in impaired populations | EN | Cross-jurisdictional (Sweller 1988) | 3 |
+| Landmark navigation is most preserved in dementia | EN | Cross-jurisdictional (PMC8545728 2021) | 3 |
+| Redundant multi-format wayfinding required at key decision points | EN | ISO 21542:2021; BS 8300:2018 | 4 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| — | — | — | No divergent findings identified |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| All 24 | — | No jurisdiction quantifies ≤2 decision points or mandates cognitive load assessment | — | — |
 
 ### Citation mining
 Not yet performed.
@@ -62,4 +62,11 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- Passini1984 — three wayfinding stages; spatial decision-making theory
+- ONeill1991 — floor plan configuration vs. signage density
+- Sweller1988 — cognitive load theory
+- PMC8545728 — cognitive map progression and dementia reversal
+- SiegelWhite1975 — landmark → route → survey knowledge hierarchy
+- Grey2015 — schema scaffolding for DEM/ABI
+- Kahneman1973 — directed attention as finite resource
+- KaplanKaplan1989 — Attention Restoration Theory

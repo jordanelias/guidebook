@@ -1,6 +1,6 @@
 ## ms-thermal-temperature-conflict-resolution
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** MS (Uhthoff's phenomenon), fibromyalgia, and OFS/MCAS thermal requirements are directly conflicting and irreconcilable in a shared space without individual controls. The only design resolution is ambient ≤18–21°C with individual supplemental heating at each seat/workstation. No single fixed ambient temperature serves all three populations.
 **Conflict table:**
   | Population | Thermal requirement | Clinical basis |
@@ -18,39 +18,42 @@
 **TC-02 high-performance envelope:** U-value ≤0.15 W/m²K external wall; triple glazing Uw ≤0.8 W/m²K; thermal bridges eliminated; internal surface temperature variation ≤2°C between floor and 1800 mm AFF `[Tier 5 — engineering best practice; these values are Passivhaus-grade targets linked to thermal stability, not directly from clinical disability evidence]`
 **TC-03 thermal mass:** ≤3°C diurnal internal temperature variation without active HVAC (passive thermal stability)
 **Jurisdictions confirmed:** No jurisdiction has a disability-specific thermal comfort standard for MS, fibromyalgia, or OFS. ISO 7730:2005 (PMV/PPD) is unreliable for these populations — standard comfort model developed for healthy adults. WELL v2 Thermal Comfort feature addresses general thermal comfort only.
-**Key sources:** MSIF-Atlas2023 · Staud2011 · Geisser2021 · Baquero2023 · CDC-MECFS · Newcastle-POTS-2018 · WELL-v2-Thermal · ISO-7730-2005
-**Divergent findings:** MS ≤18°C floor conflicts directly with older adult 24.9°C neutral; fibromyalgia ≥20°C warmth need — spatial separation or individual controls are the only resolutions; no single ambient temperature satisfies all populations simultaneously
-**Notes:** Cross-reference thermal-comfort-older-adults-care-settings|TC entry for Baquero 2023 data. This entry addresses the inter-population conflict explicitly; the older adult entry addresses the evidence base for that specific population. The conflict resolution (individual controls) is the primary clinical and design conclusion.
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | thermal comfort, heat sensitivity | ms-thermal-temperature-conflict-resolution | Distinct from thermal-comfort-older-adults (age-specific); this entry is conflict-resolution focused |
+| DE | Wärmeverträglichkeit, Uhthoff-Phänomen | — | German MS literature uses Uhthoff-Phänomen directly |
+| JA | 温熱環境, ウートフ現象 | — | Japanese bathing heat shock literature overlaps but is distinct (see thermal-comfort-older-adults) |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** Ambient temperature ≤18–21°C with individual supplemental heating at each primary seating position; serves NEU/MS and OFS as floor while allowing PAIN/DEM occupants to warm locally.
+**Most targeted provision:** Personal cooling provision (desk fan, cooling vest storage) in MS neurology ward/room settings; no forced air heating as sole source in NEU/OFS spaces.
+**Conflict resolution:** No single ambient temperature satisfies all populations simultaneously. Resolution is architectural: low ambient + individual supplemental heating. Spatial separation or individual controls are the only viable approaches.
+**Highest-ambition actionable specification:** TC-01: ≤18°C ambient with individual zone control per desk/seat (BMS or portable); accessible thermostat within reach of each primary seat; TC-02 Passivhaus-grade envelope (U ≤0.15, Uw ≤0.8) for passive thermal stability.
+**Opus synthesis note:** Synthesis is conflict-resolution focused. No single-population best practice applies — the synthesis IS the conflict resolution protocol.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Uhthoff's phenomenon affects 60–80% of MS patients; ambient heat worsens neurological symptoms | EN, DE, FR, JA | Cross-jurisdictional (MSIF Atlas 2023) | 3 |
+| Standard PMV/PPD model unreliable for disability populations | EN, NL | ISO 7730 acknowledged limitation | 4 |
+| No jurisdiction has disability-specific thermal comfort standard | All 14 searched | 24 jurisdictions confirmed gap | — |
+| Individual zone control is the only viable multi-population resolution | EN, DE, NL, SE | PAS 6463:2022 (UK); no mandatory standard | 4–5 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Ambient temperature target | NEU/MS: ≤18°C | DEM/older adults: 24.9°C neutral | Physiological opposition — Uhthoff's vs. age-related thermoregulation decline |
+| Heating method | PAIN: warmth ≥20°C ambient preferred | OFS/MCAS: heat triggers symptoms | Individual variation in thermal sensitivity direction |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| All 24 | All 14 | No jurisdiction addresses disability-specific thermal comfort | Not applicable | Not applicable |
+| JA | JA | Standards-based only (bathing heat shock); no peer-reviewed OT thermal comfort evidence | No | No |
 
 ### Citation mining
 Not yet performed.
@@ -59,4 +62,11 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- MSIF-Atlas2023 — MS heat sensitivity prevalence (60–80%)
+- Staud2011 — fibromyalgia cold sensitivity
+- Geisser2021 — hyperacusis + temperature co-occurrence in fibromyalgia
+- Baquero2023 — older adult neutral temperature 24.9°C (n=1,065)
+- CDC-MECFS — OFS cool environment requirement
+- Newcastle-POTS-2018 — POTS thermal triggers
+- ISO-7730-2005 — PMV/PPD model limitations
+- WELL-v2-Thermal — voluntary framework (general thermal comfort only)

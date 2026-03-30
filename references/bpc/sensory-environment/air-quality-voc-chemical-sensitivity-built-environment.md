@@ -1,6 +1,6 @@
 ## air-quality-voc-chemical-sensitivity-built-environment
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 4–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] (clinical trigger literature + engineering standards; no RCT-level evidence for built-environment-specific thresholds)
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 4–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] (clinical trigger literature + engineering standards; no RCT-level evidence for built-environment-specific thresholds)
 **Consensus finding:** MCAS, multiple chemical sensitivity (MCS), PCS/TBI, and chemically sensitive NDV populations require both policy-level fragrance-free zones and built-in physical air quality specifications. MERV 13+ filtration and TVOC ≤0.5 mg/m³ are the primary built-environment interventions; all specifications are derived from MCAS trigger literature and HVAC engineering standards, not from built-environment RCTs.
 **Key specifications (F-04 item):**
   - Filtration: MERV 13 minimum in all AHUs serving OFS-occupied spaces; HEPA for OFS/MCAS primary spaces
@@ -17,37 +17,41 @@
 **Uhthoff's phenomenon and MS thermal conflict:** [XREF ONLY — canonical source: `references/bpc/health-and-symptom-management/ms-thermal-temperature-conflict-resolution.md`. Do not cite thermal conflict resolution content from this slug. Duplicate removed 2026-03-29.]
 **Jurisdictions confirmed:** No jurisdiction has a building standard for chemical sensitivity or MCS. WELL v2 (Air Quality feature) and LEED v4.1 (EQ credits) are the most widely applied voluntary frameworks. ISO 16000-9 governs VOC measurement. MERV ratings per ASHRAE 52.2.
 **Evidence gaps:** No RCT-level evidence linking MERV 13 specification to MCAS symptom reduction in built environments. All specifications are Tier X (expert consensus derived from clinical trigger literature). Evidence review recommended at next revision.
-**Key sources:** Afrin2020-Brain-Behavior-Immunity · MastCellAction2023 · CIBSE-Guide-A-2015 · PAS6463:2022 · EN-ISO-16000-9 · WELL-v2-Air · Steinemann2018 · MSIF-Atlas2023
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | air quality, VOC, chemical sensitivity, MCS, fragrance-free | air-quality-voc-chemical-sensitivity-built-environment | Distinct from biophilic-design (plant VOC overlap only) |
+| DE | Raumluftqualität, MCS, Duftstofffreiheit | — | German MCS literature uses Chemikaliensensitivität |
+| FR | qualité de l'air, sensibilité chimique | — | French term: sensibilité chimique multiple (SCM) |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** MERV 13 minimum filtration in all AHUs serving OFS-occupied spaces; TVOC ≤0.5 mg/m³ at 28 days post-installation for all finishes in OFS spaces; no fragrance diffusers.
+**Most targeted provision:** HEPA filtration + ≥15 L/s per person fresh air + no recirculated air without HEPA in OFS/MCAS primary spaces; documented fragrance-free policy embedded in FM brief.
+**Conflict resolution:** Air quality specifications do not conflict with other population requirements. Fragrance-free policy is an operational overlay, not an architectural conflict.
+**Highest-ambition actionable specification:** F-04: HEPA filtration, ≥15 L/s/person, TVOC ≤0.5 mg/m³, CO₂ alert at 800 ppm, no recirculated air without HEPA, no fragrance diffusers, low-VOC cleaning products, low-VOC/low-pollen biophilic planting.
+**Opus synthesis note:** All specifications derived from clinical trigger literature + engineering standards (Tier 4–5). No RCT-level evidence exists. THIN-BASE disclosure required on all items.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| MCAS/MCS populations require reduced chemical exposure in built environments | EN, DE, FR | Cross-jurisdictional | 4 |
+| TVOC ≤0.5 mg/m³ at 28 days is engineering best practice | EN, DE | ISO 16000-9 (international) | 4 |
+| MERV 13 minimum for sensitive populations | EN | ASHRAE 52.2; WELL v2 | 5 |
+| ~12.8% US adults report chemical sensitivity | EN | US (Steinemann 2018) | 3 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| Biophilic planting in OFS spaces | General: biophilic planting beneficial | OFS/MCAS: strongly scented/high-pollen species contraindicated | Population-specific trigger sensitivity |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| All 24 | All 14 | No jurisdiction has a building standard for MCS/chemical sensitivity | — | — |
+| — | — | No RCT linking MERV 13 to MCAS symptom reduction in built environments | — | — |
 
 ### Citation mining
 Not yet performed.
@@ -56,4 +60,11 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- Afrin2020-Brain-Behavior-Immunity — MCAS triggers and built environment
+- MastCellAction2023 — MCAS environmental management
+- CIBSE-Guide-A-2015 — ventilation and air quality engineering
+- PAS6463:2022 — neurodiversity design guidance (sensory environment)
+- EN-ISO-16000-9 — VOC measurement standard
+- WELL-v2-Air — voluntary air quality framework
+- Steinemann2018 — chemical sensitivity prevalence (12.8% US adults)
+- ASHRAE-52.2 — MERV filtration rating standard
