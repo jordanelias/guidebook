@@ -66,3 +66,9 @@
 4. Boverket (BBR 3:148). *Tillgänglighet i gemensamma tvättstugor*. [SV, SE, Tier 5]
 5. DIN 18040-2. (2011). *Barrierefreies Bauen — Wohnungen*. DIN. [DE, DE, Tier 4]
 6. SD State Extension. (2020). Accessible Laundry Room Design. [EN, US, Tier 5]
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Bottom-up findings (functional deficit pass)
+Not yet run.

@@ -62,3 +62,9 @@
 5. Liu, Y., et al. (2024). Attention Restoration Theory: 571-source review; HRV/cortisol measurement. [EN, Tier 3]
 6. Ulrich, R. S. (1984). View through a window may influence recovery from surgery. *Science*, 224, 420–421. [EN, historical reference only — Tier 3/single study]
 7. Latiff, A., et al. (2024). Biophilic outdoor transitional zones for NDV populations. [EN, Co-1]
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Bottom-up findings (functional deficit pass)
+Not yet run.

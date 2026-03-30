@@ -18,3 +18,42 @@
 **Jurisdictions confirmed:** No jurisdiction has a building standard for chemical sensitivity or MCS. WELL v2 (Air Quality feature) and LEED v4.1 (EQ credits) are the most widely applied voluntary frameworks. ISO 16000-9 governs VOC measurement. MERV ratings per ASHRAE 52.2.
 **Evidence gaps:** No RCT-level evidence linking MERV 13 specification to MCAS symptom reduction in built environments. All specifications are Tier X (expert consensus derived from clinical trigger literature). Evidence review recommended at next revision.
 **Key sources:** Afrin2020-Brain-Behavior-Immunity · MastCellAction2023 · CIBSE-Guide-A-2015 · PAS6463:2022 · EN-ISO-16000-9 · WELL-v2-Air · Steinemann2018 · MSIF-Atlas2023
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+### Best-practice synthesis
+**Most inclusive provision:** [STUB — see synthesis content above]
+**Most targeted provision:** [STUB — see synthesis content above]
+**Conflict resolution:** [STUB — see synthesis content above]
+**Highest-ambition actionable specification:** [STUB — see synthesis content above]
+**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+
+### Consensus findings
+| Finding | Languages confirming | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+### Citation mining
+Not yet performed.
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
+
+### Key sources
+[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]

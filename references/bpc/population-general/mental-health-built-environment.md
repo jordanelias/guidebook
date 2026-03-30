@@ -134,3 +134,14 @@ Evidence quality: Tier 3. Evidence marker: ●
 
 ### Key sources
 PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022 · Oostermeijer2021-BMJOpen · Faerden2022-HERD · Haig2022-IJMHN · Price2024-EDITION · vanderSchaaf2013-BJP · Bodryzlova2024-JPsychRes · Schreiber2022-BMCHSR · Weltens2023-BMJOpen · Husum2010-BMCHSR · Askew2019-JPMHN · Quinn2024-IJMHN · DeCuyper2023-JPMHN · Goulet2022-SMQ
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.

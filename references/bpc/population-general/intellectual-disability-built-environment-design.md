@@ -63,3 +63,9 @@
 3. NDIS SDA. (2019). Specialist Disability Accommodation Design Standard — Improved Liveability. NDIA. [EN, AU, Tier 4]
 4. Castell, S. (2008). *Designing for People with Dementia and Other Cognitive Disabilities*. [EN, Tier 4]
 5. CSA B651:23 s.4.7. (2023). Qualitative IntD provisions. [EN, CA, Tier 4]
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Bottom-up findings (functional deficit pass)
+Not yet run.

@@ -60,3 +60,9 @@
 
 8. RNIB (2023). *Building Sight: Design principles and practical recommendations for accessible buildings and environments*. London: RNIB. [EN, Tier 2, UK — primary community-developed VIS built environment guide]
 ---
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Bottom-up findings (functional deficit pass)
+Not yet run.

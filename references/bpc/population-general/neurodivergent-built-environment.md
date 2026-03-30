@@ -73,3 +73,9 @@
 8. Latiff, A., et al. (2024). Biophilic outdoor transitional spaces for NDV populations. [EN, Co-1]
 
 ---
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Bottom-up findings (functional deficit pass)
+Not yet run.
