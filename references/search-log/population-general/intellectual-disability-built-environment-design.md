@@ -38,3 +38,11 @@ co1_findings:
   - Gap: ID self-advocacy organizations (Inclusion International, NDIS SDA consumer groups) have not produced built environment design preference research
 co1_pass_summary: {complete: [], partial: [], not-run: [EN, DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
 bpc_status_update: PROVISIONAL maintained — Co-1 not-run; no consumer voice evidence found in any searched source; existing PROVISIONAL status confirmed appropriate
+
+# Log Closure (2026-03-30)
+log_closed:
+  date: 2026-03-30
+  status: PARTIAL
+  reason: Early-close gate; 4 languages searched; Co-1 NOT-RUN (no consumer source found); Opus synthesis complete; BPC PROVISIONAL — Tier 4-5 only, no quantified architectural standard in any jurisdiction
+  logged_by: Sonnet 4.6
+  phase3_ready: YES — with PROVISIONAL flags on all specifications; Tier 4-5 evidence only
