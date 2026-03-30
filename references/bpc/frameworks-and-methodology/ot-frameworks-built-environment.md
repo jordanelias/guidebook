@@ -1,46 +1,44 @@
 ## ot-frameworks-built-environment
 
-**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** All four major OT frameworks explicitly position the physical built environment as a primary enabler or barrier to occupational participation. PEOP is the most internationally validated across populations and settings. Kawa Model is most directly aligned with CRPD social model framing.
 **Frameworks:**
   - CMOP-E (Townsend & Polatajko 2007): Physical environment as outer ring; occupational engagement across self-care, productivity, leisure
-  - MOHO (Kielhofner 2008): Familiar built environments support habituation and routine; inaccessible environments disrupt both — strongest argument for consistency of design features
-  - PEOP (Baum et al. 2015): Scoping review of 109 articles confirms international applicability across populations and settings (Siu et al. 2024, Tier 1)
-  - Kawa Model (Iwama 2006): Barriers are external obstacles blocking life flow — not deficits in the person; developed in Japanese OT practice; most direct CRPD social model alignment; recommended as primary framing language for item writing
-**Jurisdictions confirmed:** All frameworks internationally applied (PEOP: confirmed Tier 1 systematic review evidence)
-**Early-close:** Yes  **Thin/No-data:** None
-**Key sources:** TownsendPolatajko2007 · Kielhofner2008 · BaumEtal2015 · Iwama2006 · Siu2024-PMC
-**Notes:** CRPD General Comment No. 2 (2014) provides the normative basis. Kawa Model is recommended as primary framing language for guidebook item writing — barriers are external, not intrinsic. All frameworks support the Three-Tier Design Hierarchy position that the built environment is the primary variable.
+  - MOHO (Kielhofner 2008): Familiar built environments support habituation and routine; inaccessible environments disrupt both
+  - PEOP (Baum et al. 2015): Scoping review of 109 articles confirms international applicability (Siu et al. 2024, Tier 1)
+  - Kawa Model (Iwama 2006): Barriers as external obstacles blocking life flow; developed in Japanese OT practice; most direct CRPD social model alignment
 
 ---
 
-<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
-| [STUB — populate in Opus synthesis pass] | | | |
+| EN | OT frameworks, CMOP-E, MOHO, PEOP, Kawa Model | ot-frameworks-built-environment | Theoretical models; distinct from ot-built-environment-interface (practice/process) |
+| JA | 川モデル, 作業療法理論 | — | Kawa Model developed in Japanese OT practice |
 
 ### Best-practice synthesis
-**Most inclusive provision:** [STUB — see synthesis content above]
-**Most targeted provision:** [STUB — see synthesis content above]
-**Conflict resolution:** [STUB — see synthesis content above]
-**Highest-ambition actionable specification:** [STUB — see synthesis content above]
-**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+**Most inclusive provision:** PEOP as most internationally validated framework (Siu et al. 2024, 109 articles, Tier 1). All four frameworks position built environment as primary variable.
+**Most targeted provision:** Kawa Model as recommended primary framing language for guidebook item writing — barriers are external, not intrinsic to the person.
+**Conflict resolution:** Not applicable — framework selection, not design conflict.
+**Highest-ambition actionable specification:** Kawa Model framing for all item specifications; PEOP for international evidence synthesis; MOHO for habituation/routine arguments; CMOP-E for occupational classification.
+**Opus synthesis note:** ICF supersedes EHP as primary OT framework. Competence-Press Model is NOT superseded by ICF — it is extended and operationalised by it. CRPD General Comment No. 2 (2014) provides the normative basis.
 
 ### Consensus findings
 | Finding | Languages confirming | Jurisdictions confirming | Tier |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| All four OT frameworks position built environment as primary enabler/barrier | EN, JA | Cross-jurisdictional | 1–4 |
+| PEOP is most internationally validated (109 articles) | EN | Cross-jurisdictional (Siu et al. 2024) | 1 |
+| Kawa Model is most CRPD-aligned | EN, JA | Cross-jurisdictional | 3 |
 
 ### Divergent findings
-| Topic | Jurisdiction A | Jurisdiction B | Cause |
+| Topic | Position A | Position B | Cause |
 |---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | |
+| — | — | — | No divergent findings among the four frameworks |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
-| [STUB — pending Opus synthesis pass] | | | | |
+| — | — | No thin data — theoretical frameworks are cross-jurisdictional | — | — |
 
 ### Citation mining
 Not yet performed.
@@ -49,4 +47,8 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+- TownsendPolatajko2007 — CMOP-E
+- Kielhofner2008 — MOHO
+- BaumEtal2015 — PEOP
+- Iwama2006 — Kawa Model
+- Siu2024-PMC — PEOP validation (109 articles)
