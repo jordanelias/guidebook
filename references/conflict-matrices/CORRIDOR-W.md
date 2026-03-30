@@ -1,28 +1,23 @@
 ## Conflict Domain: CORRIDOR-W
 **Parameter:** Corridor/path width
-**Status:** STUB — retrieval complete; Opus synthesis pending (Session 7)
+**Status:** RECLASSIFIED — NOT A CONFLICT DOMAIN [Opus 2026-03-30]
 **Date created:** 2026-03-30
-**Feeds:** Part 5 §5.2 conflict resolution table
+**Reclassified:** 2026-03-30
 
-### Opposition summary
-| Pop A need | Pop B need | Classification |
-|---|---|---|
-| DEAF: wide ≥2400mm for signing pairs | NDV/AUT: narrow (reduced sensory exposure) | Partial |
+### Opus Disposition
 
-### Primary evidence slugs
-- references/bpc/deaf-spatial-design.md (topic TBD)
-- references/bpc/neurodivergent-built-environment.md (topic TBD)
-- references/bpc/accessible-circulation-geometry.md (topic TBD)
+The apparent opposition between DEAF wide corridors (≥2440 mm for signing pairs) and NDV/AUT "narrow" preference is a mischaracterisation of the NDV/AUT need. The actual NDV/AUT spatial requirements are low visual complexity and predictability — not narrow width. These are independent variables:
 
-### Evidence retrieval status
-**Sonnet retrieval:** Opposing specifications documented above from skill domain table.
-**Opus synthesis:** NOT RUN — resolution evidence, conflict hierarchy, and specification language pending Opus session (GAP-TRIAGE-02 + GAP-CONF-01).
+- **Width** is a dimensional parameter governing physical passage and communication geometry.
+- **Sensory load** is a perceptual parameter governed by surface materials, lighting, visual clutter, acoustic properties, and sightline complexity.
 
-### Resolution evidence (Sonnet retrieval — confirm with Opus)
-[STUB — populate from BPC files listed above in Opus session]
+A wide corridor can have low sensory load (plain walls, even lighting, consistent materials, minimal signage). A narrow corridor can have high sensory load (complex patterns, varied surfaces, multiple doors, unpredictable junctions).
 
-### Proposed specification approach
-[STUB — Opus to determine based on retrieved evidence]
+DEAF ≥2440 mm width requirement and NDV/AUT low-sensory-load requirement are compatible in the same corridor. No zoning, no adjustment, no tier escalation needed.
 
-### Unresolved gaps
-[STUB — to be populated after Opus synthesis]
+**Resolution:** Remove from conflict domain table. Specify DEAF width (≥2440 mm) as Tier 0 with NDV/AUT sensory treatment (wall finish, lighting uniformity, signage density) as a complementary — not competing — specification layer. Both are served simultaneously.
+
+**Implication for Part 5 §5.2:** Do not list CORRIDOR-W as a conflict. If referenced elsewhere as a conflict example, correct to note that width and sensory load are independent parameters.
+
+### Gap register
+No gaps. Domain retired.
