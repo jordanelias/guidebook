@@ -25,3 +25,10 @@ no_data_flags: []
 ```
 
 ```yaml
+# Log Closure (2026-03-30)
+log_closed:
+  date: 2026-03-30
+  status: PARTIAL
+  reason: 9 core languages searched; early-close gate; Co-1 PARTIAL EN (DiMHN, Rodriguez-Labajos 2024, Wilson 2023 — per session 16 handoff); Opus synthesis complete; NL/ES/PT/KO/IT not-run accepted
+  logged_by: Sonnet 4.6
+  phase3_ready: YES — with NDV/MH colour palette conflict note
