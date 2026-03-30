@@ -67,3 +67,6 @@
 7b. Claessen, M.H.G. et al. (2017). A systematic investigation of navigation impairment in chronic stroke patients: Evidence for three distinct types. *Neuropsychologia* 103:154–161. DOI: 10.1016/j.neuropsychologia.2017.07.001 [Tier 3 — verified; PMID 28684296]
 
 ---
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
