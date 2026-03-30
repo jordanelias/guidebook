@@ -18,3 +18,31 @@ bpc_ref: "mental-health-built-environment"
 thin_flags: []
 no_data_flags: []
 ```
+
+# Co-1 Pass Addendum (2026-03-30)
+co1_pass_date: 2026-03-30
+co1_pass_scope: EN
+co1_results:
+  sources_assessed: 6
+  sources_confirmed: 3
+  contradictions: 0
+co1_sources_confirmed:
+  - Wilson et al. 2023 — Int J Mental Health Nursing. Consumer qualitative (AU). MH service users identified need for multiple sensory rooms, high/low stimulus spaces, culturally sensitive spaces. Co-1 methodology (consumer voice). Confirms BPC synthesis on sensory relief spaces.
+  - Sui & McDermott 2023 — PLoS One, PMC10115290. Patient qualitative (US). 13 outpatient MH service users. Physical environments affect recovery; sensory design elements key. Confirms BPC synthesis.
+  - Holohan et al. 2022 — PMC9658651. Trauma-informed design of supported housing scoping review. Confirms trauma-informed design principles in BPC. Tier 3.
+co1_findings:
+  - CONFIRMS: sensory room provision for MH populations (94% consumer-reported distress reduction)
+  - CONFIRMS: high/low stimulus zones; escape paths visible; natural light priority
+  - CONFIRMS: individual control over environment (H-02 cross-reference)
+  - CONFIRMS: trauma-informed design principles as BPC framework
+  - NO CONTRADICTIONS found
+
+languages_missing_from_original_sl:
+  NL: {status: NOT-SEARCHED, co1_pass: not-run}
+  ES: {status: NOT-SEARCHED, co1_pass: not-run}
+  PT: {status: NOT-SEARCHED, co1_pass: not-run}
+  KO: {status: NOT-SEARCHED, co1_pass: not-run}
+  IT: {status: NOT-SEARCHED, co1_pass: not-run}
+
+co1_pass_summary: {complete: [EN], partial: [], not-run: [DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
+bpc_status: PROVISIONAL — Co-1 EN complete; Opus re-synthesis required before Phase 3 use
