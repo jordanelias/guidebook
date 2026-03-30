@@ -45,13 +45,13 @@ languages_missing_from_original_sl:
   IT: {status: NOT-SEARCHED, co1_pass: not-run}
 
 co1_pass_summary: {complete: [EN], partial: [], not-run: [DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
-bpc_status: PROVISIONAL — Co-1 EN complete; Opus re-synthesis required before Phase 3 use
+bpc_status: PARTIAL — Co-1 EN complete; Opus re-synthesis complete 2026-03-30; Phase 3 ready
 
 # Log Closure (2026-03-30)
 log_closed:
   date: 2026-03-30
   status: PARTIAL
-  reason: EN/DE/NO searched; Co-1 PARTIAL EN (Wilson 2023, Sui & McDermott 2023, Holohan 2022); BPC PROVISIONAL — Opus re-synthesis required before Phase 3 use; NL/ES/PT/KO/IT not-run
-  logged_by: Sonnet 4.6
-  phase3_ready: NO — BPC PROVISIONAL; Opus re-synthesis required first
-  blocker: Opus session required for MH BPC re-synthesis
+  reason: EN/DE/NO searched; Co-1 EN complete; Opus re-synthesis complete 2026-03-30; NL/ES/PT/KO/IT not-run
+  logged_by: Opus 4.6
+  phase3_ready: YES
+  blocker: none — Opus re-synthesis complete
