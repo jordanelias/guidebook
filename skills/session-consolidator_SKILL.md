@@ -138,6 +138,8 @@ Each session is an independent record. Session files are never merged, shared, o
 **YAML schema:**
 ```yaml
 session_close: YYYY-MM-DD HH:MM
+github_writes: []  # list of files committed this session
+commit_oid: ""     # first 12 chars of batch_commit() OID — required if any GitHub writes occurred
 document: "[DOC-ID]"
 skills_run: []
 gaps_added: []
