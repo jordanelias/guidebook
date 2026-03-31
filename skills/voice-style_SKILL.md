@@ -1,12 +1,12 @@
-# Jordan Elias — Voice & Style Skill
-*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), Claude conversation history. Last updated: 2026-03-31 (rev 2).*
+# Writing & Framing Skill — Guidebook for Accessible Design
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-03-31.*
 
 ## Purpose
-This skill encodes the writing voice of Jordan Elias for use in drafting book-length or long-form non-fiction prose. It is built from: (1) formal and semi-formal email correspondence from 2019–2026, (2) the master's thesis *Expand/Contract: Studies in Medium- to High-Density Adaptable Housing Techniques* (UBC, 2022), and (3) Claude conversation history (2025–2026).
+This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, and appropriate epistemic authority.
 
-The skill is calibrated for **discursive non-fiction** — analytical, argument-driven writing that integrates theory, research, and design thinking. It is not calibrated for narrative memoir, fiction, or journalism.
+The skill is calibrated for **discursive technical non-fiction** — analytical, argument-driven writing that integrates clinical research, policy, and design thinking. Email-register patterns are excluded as inapplicable to the Guidebook.
 
-**Guidebook context:** All writing governed by this skill is for the *Guidebook for Accessible Design* — a long-form technical non-fiction work. Email-register patterns (greetings, closings, P.S. conventions, recipient-type calibration) are excluded from this skill as inapplicable to the Guidebook.
+**Model:** Sonnet 4.6. Input limit: ≤500 lines. Larger documents → haiku-chunker first.
 
 ---
 
@@ -18,8 +18,8 @@ State the central claim at the outset, plainly and without hedging the conclusio
 > ✓ "This project argues that purpose-built adaptable housing leads to greater well-being than non-adaptable housing on three levels."
 > ✗ "There are many ways to think about housing. This raises questions about…"
 
-### Three-part structure is a natural instinct
-Jordan organises major arguments into triads — community / household / individual; soft / hard / spectrum; etc. Don't force this, but recognise it as a default cognitive organiser. When an argument naturally breaks into components, three is the expected number.
+### X-part structure as a natural instinct
+Jordan organises major arguments into components — community / household / individual; soft / hard / spectrum; independence / safety / dignity; etc. Don't force a specific count, but recognise that arguments naturally resolve into discrete, parallel parts. Two-part (binary) structures are as natural as three-part ones. When an argument breaks into components, identify the real number rather than padding to three.
 
 ### Layered qualification without hedging the core
 Qualifications are introduced after the main claim, not before. Caveats and edge cases appear as subordinate clauses or follow-on sentences, never as lead-ins that delay the argument.
@@ -37,13 +37,12 @@ Section conclusions re-synthesise the argument rather than recapping it. They of
 ## 2. Paragraph Construction
 
 ### One idea per paragraph, fully developed
-Each paragraph carries one argument unit. It opens with a topic sentence, develops the idea with evidence or reasoning, and closes with a sentence that either completes the thought or pivots to the next. Paragraphs rarely exceed ~150 words in the thesis.
+Each paragraph carries one argument unit. It opens with a topic sentence, develops the idea with evidence or reasoning, and closes with a sentence that either completes the thought or pivots to the next. Paragraphs rarely exceed ~150 words.
 
 ### Opening sentence: declarative and direct
 Paragraph-opening sentences are typically short, active, and state rather than gesture.
 
 > ✓ "To make a room polyvalent is to make it capable of multiple functions or general use."
-> ✓ "A life course is defined as 'a sequence of socially defined events and roles that the individual enacts over time.'"
 > ✗ "When we consider the complex relationship between…"
 
 ### Closing sentence: conclusory or transitional
@@ -59,182 +58,240 @@ No sentence exists purely to fill space. Every sentence either introduces a clai
 ### Sentence length: varied, with a preference for medium length
 Most sentences run 20–40 words. Short sentences (under 15 words) are used deliberately for emphasis, usually as closers or pivots. Very long sentences (60+ words) appear when tracking a complex logical chain and are typically a single, well-controlled periodic sentence — not a run-on.
 
-> Short for emphasis: "Being with others is a fundamental part of being well."
-> Medium, tracking logic: "Since these affordances are understood in relation to an individual's ability to make use of them, three things must be the case: first, the individual must have the physical capability to use the affordance for it to be desirable…"
-
 ### Subordination pattern: main clause first
 The main clause typically comes first, with subordinate clauses following. Front-loaded subordinate clauses are used sparingly and only when the condition genuinely precedes the claim logically.
 
-> ✓ "We can infer that a good community requires positive interactions among residents within their neighbourhood, which in turn means…"
-> Occasional: "Given that an affordance is something offered by the environment to the individual, we can understand an affordance as a capability within the environment for achieving something."
-
 ### Colon and semicolon use
-Colons are used to introduce elaborations, lists, and quotations — and also single-word or short-phrase completions where the colon functions as an announcement: "The answer is this: precision." This is a structural habit, not decorative. Semicolons join closely related independent clauses and appear in list constructions (e.g. "first, …; second, …; and third, …"). Both are used correctly and deliberately, not avoided.
+Colons introduce elaborations, lists, quotations, and single-word completions where the colon functions as an announcement: "The answer is this: precision." Semicolons join closely related independent clauses and appear in list constructions (e.g. "first, …; second, …; and third, …"). Both are used correctly and deliberately, not avoided.
 
 ### Em-dash use
-Em-dashes set off strong qualifications or asides within a sentence. They appear in pairs for insertions and alone before a conclusory phrase. Never overused; typically one per paragraph at most. In the Guidebook, always use the proper em-dash character (—), not a double hyphen.
+Em-dashes set off strong qualifications or asides. They appear in pairs for insertions and alone before a conclusory phrase. Never overused; typically one per paragraph at most. Always use the proper em-dash character (—), not a double hyphen.
 
-> "A person's claim to well-being rarely—if ever—derives solely from their own personhood."
-> "This standard, however, comes with two caveats: first, the studied cohort was largely born in the 1950s; and second, the data is limited to France, Sweden and the United States."
-
-### Serial comma
-Used consistently throughout.
-
-### Oxford "and" in lists
-Lists of three or more use "and" before the final item with the serial comma: "the community, the household, and the individual."
+### Serial comma and Oxford "and"
+Used consistently throughout. Lists of three or more: "the community, the household, and the individual."
 
 ### Italicised emphasis
-Italics mark words doing genuine argumentative work — not decoration. The test: would the argument weaken if the emphasis were removed? If yes, italicise. If no, don't. In the thesis: *hard* and *soft* uses, *good* architecture. In the Guidebook: use sparingly, for the word that is the crux of the claim.
+Italics mark words doing genuine argumentative work — not decoration. The test: would the argument weaken if the emphasis were removed? If yes, italicise. If no, don't.
 
 ---
 
 ## 4. Vocabulary and Register
 
 ### Register: intellectual but accessible
-The writing operates at a university-educated general reader level, not a specialist journal level. Technical terms from philosophy, psychology, and architectural theory are introduced and briefly defined when first used, not assumed. Jargon is not avoided, but it is earned.
-
-> "The capability approach emerges from a simple question: what are people actually able to do and to be?"
+The writing operates at a university-educated general reader level. Technical terms are introduced and briefly defined when first used. Jargon is not avoided, but it is earned.
 
 ### No hedging vocabulary
-Avoid: "it could be argued," "perhaps," "seems to suggest," "in some ways," "relatively," "somewhat," "it is worth noting that." Jordan states claims. Uncertainty is marked by explicit epistemic qualifiers ("we can infer," "it follows that") rather than vague softeners.
+Avoid: "it could be argued," "perhaps," "seems to suggest," "in some ways," "relatively," "somewhat," "it is worth noting that." Uncertainty is marked by explicit epistemic qualifiers ("we can infer," "it follows that") rather than vague softeners.
 
 ### Preferred connective phrases
-- "From here we can argue / see / suggest…"
-- "It follows that…"
-- "This means that…"
-- "In turn…"
-- "By the same token…"
-- "Herein lies…"
-- "Put another way…"
+"From here we can argue / see / suggest…" · "It follows that…" · "This means that…" · "In turn…" · "By the same token…" · "Herein lies…" · "Put another way…"
 
 ### Avoided constructions
-- Passive voice as a way of avoiding agency (passive is used only when the agent is genuinely irrelevant)
-- Nominalizations where a verb would do: "the achievement of" → "achieving"; "an increase in" → "increases"
+- Passive voice as a way of avoiding agency
+- Nominalisations where a verb would do: "the achievement of" → "achieving"
 - Weak verbs: "there is," "it is," "this involves"
-- "utilize" → "use"
-- "leverage" as a verb
+- "utilize" → "use" · "leverage" as a verb
 
 ### Precision naming
-Name the specific thing, not the category. Not "the document" but "the program completion letter." Not "the provision" but "the grab bar diameter specification." This discipline is one of the strongest markers of the voice and is especially important in technical writing where vague references create ambiguity.
+Name the specific thing, not the category. Not "the provision" but "the grab bar diameter specification." Not "the document" but "the evidence table for A-03." Critical in technical writing where vague references create ambiguity.
 
 ### Canadian spelling
-Use throughout: centred, behaviour, neighbourhood, honour, colour, favour, recognise, realise, fulfil, programme (where applicable).
+centred, behaviour, neighbourhood, honour, colour, favour, recognise, realise, fulfil, programme.
 
 ### First person ("I")
 Used without apology for authorial claims and argumentative moves. Academic hedging via passive or "one" is not the default.
-
-> "I propose that we understand adaptable architecture as works of architecture that are particularly adept at accommodating future uses, needs or technologies."
-> "I would suggest that a person's negative experience with moving is tied to their degree of agency."
 
 ---
 
 ## 5. Quotation and Citation Handling
 
 ### Quotations are introduced, not dropped
-Every quotation is preceded by a phrase that tells the reader who is speaking and in what context. Quotations are not used as substitutes for argument — they support or illustrate a claim already made.
+Every quotation is preceded by a phrase that tells the reader who is speaking and in what context. Quotations support or illustrate a claim already made — they do not substitute for argument.
 
 ### Quotations are followed by analysis
-After a quotation, Jordan immediately unpacks it in his own words. He does not let quotations stand alone as self-evident.
+After a quotation, unpack it immediately in your own words. Do not let quotations stand alone as self-evident.
 
-> [Quotation] … "This means that our environment allows for the emergence of place as a location of experience."
+### Synthesis over quotation
+The mature voice spends more words analysing sources than presenting them. After any quotation, the analysis must be at least as long as the quoted material. A passage that strings quotations together with thin connective tissue is not this voice.
 
 ### Quotation length
 Long block quotations are used sparingly — only when the exact language of the source is essential to the argument. Most citations are short (one to three sentences) and tightly integrated into the prose.
 
-### Synthesis over quotation
-The mature voice spends more words analysing sources than presenting them. A passage that strings together quotations with thin connective tissue is not this voice. After any quotation, the analysis must be at least as long as the quoted material.
-
 ---
 
-## 6. Structural Conventions (Long-Form / Book Context)
+## 6. Structural Conventions
 
 ### Section headers: declarative nouns or noun phrases
 Not questions, not gerunds, not clever titles. The header names the concept.
 
-> ✓ "Community well-being." / "Defining well-being." / "Household well-being."
+> ✓ "Community well-being." / "Defining well-being."
 > ✗ "How Does Housing Affect Community?" / "Understanding the Concept of Well-Being"
 
 ### Preambles open with a concrete observation or scenario
-Section openings begin with a grounded, specific claim or observation before ascending to the abstract. They do not open with broad definitional statements or context-setting throat-clearing.
-
-> "A household's needs will change over time. The needs of a family of four, for example, will be dramatically different than a single senior with impaired mobility."
+Section openings begin with a grounded, specific claim before ascending to the abstract. They do not open with broad definitional statements or context-setting throat-clearing.
 
 ### Tension is named explicitly
-When the argument contains a genuine internal tension or contradiction, it is named and confronted rather than papered over.
-
-> "I would like to recognize an inherent tension to this work. In Section One, I argue that adaptability is an ethical good for architectural design because it allows for the home to respond to a household's unique needs. However, the more a home adapts to the specific needs of a particular household, the more defined it becomes in its use."
+When the argument contains a genuine internal tension or contradiction, name and confront it rather than paper over it.
 
 ---
 
 ## 7. Tone
 
 ### Confident without being aggressive
-Jordan asserts positions. He does not qualify assertions into oblivion, nor does he overstate them as absolute truths. The tone is that of someone who has done the work and stands behind the conclusions while remaining genuinely open to complexity.
+Assert positions. Do not qualify assertions into oblivion, nor overstate them as absolute truths.
 
 ### Morally serious without being preachy
-The thesis is deeply ethical in its orientation — it is explicitly about human dignity and well-being — but it does not lecture. The ethical stakes are stated clearly and then the argument does the work.
+The Guidebook is explicitly about human dignity and access rights — but it does not lecture. The ethical stakes are stated clearly, and then the argument does the work.
+
+### Soft imperative register
+Specifications and recommendations use consequence-based framing rather than authority-asserting mandates. The Guidebook is not a regulation or a standard; it does not command. It describes what evidence supports and what happens when provisions are omitted.
+
+> ✓ "Omitting this provision removes future adaptability at a cost multiplier of 5–20×."
+> ✓ "Where no individual assessment is available, the population-informed median is the appropriate starting point."
+> ✗ "This is mandatory." / "This document governs." / "This is non-negotiable."
 
 ### Intellectually generous
-Opposing views and tensions within the argument are acknowledged fairly. Jordan does not strawman or dismiss; he engages.
+Opposing views and tensions within the argument are acknowledged fairly. Do not strawman or dismiss; engage.
 
 ### Occasional humanity, tightly controlled
-In formal long-form writing, the personal voice surfaces occasionally — an observation like "It is difficult to find examples where the intended use of space cannot, by any manner of effort or display of human ingenuity, not be used for another purpose" shows a wry awareness of the argument's limits. These moments are brief, well-placed, and never cutesy.
+The personal voice surfaces occasionally — a wry observation at the limits of the argument, or an explicit acknowledgement of a tension. These moments are brief, well-placed, and never cutesy.
 
 ---
 
-## 8. What to Avoid
+## 8. Framing Standards
+
+This section governs how disability, access, and authority are framed throughout the Guidebook. Violations carry credibility and legal risk.
+
+### Social model alignment
+Disability is the mismatch between a person's impairment and an environment that has not been designed to accommodate it. It is not a property of the person. All Guidebook prose must reflect this.
+
+> ✓ "The design excludes wheelchair users." / "The environment creates a barrier for people with low vision."
+> ✗ "Wheelchair users cannot access the space." / "The building is inaccessible to people with dementia."
+
+### CRPD alignment
+Access is a right, not an accommodation or a favour. CRPD Article 9 (185 States Parties) establishes this. Language that frames accessible design as charitable provision, special treatment, or added cost is inconsistent with this framework.
+
+> ✓ "Accessible design fulfils the CRPD Article 9 obligation."
+> ✗ "Accommodating disabled users adds cost." / "Special provisions for wheelchair users."
+
+### Disability language
+- Identity-first language (autistic, Deaf) and person-first language (person with a disability) are both acceptable — follow the usage of the population being discussed.
+- Do not use: "wheelchair-bound," "confined to a wheelchair," "suffers from," "afflicted by," "special needs."
+- Population codes (MOB, VIS, DEM, NDV, etc.) are acceptable throughout.
+
+### Epistemic authority — do not overclaim
+The Guidebook recommends provisions above the code floor. It is not a regulation, a standard, or a clinically validated protocol. Language that implies otherwise creates liability and undermines credibility.
+
+Replace authority-asserting language with consequence-describing language:
+
+| Avoid | Replace with |
+|---|---|
+| "this document governs" (asserting authority over external instruments) | "this guidebook recommends" |
+| "mandatory" (where the Guidebook has no authority to mandate) | describe the consequence of omission |
+| "non-negotiable" | describe why the provision matters |
+| "resolution protocol" / "decision framework" (as self-description) | "reasoning guidance" / "reasoning sequence" |
+| "best-practice standard set by this guidebook" | "best-practice level recommended by this guidebook" |
+| "authoritative bibliography" | "consolidated bibliography" |
+| "operates above" (the code floor) | "recommends provisions above" |
+
+*Acceptable:* "mandatory" when citing an external mandate (statutory, standards body). "This document governs" when describing internal document hierarchy (e.g. Part 4 governs over Part 8 where they conflict). "Resolution protocol" when referencing an external protocol (PEEP, FM, Motionspot).
+
+---
+
+## 9. What to Avoid
 
 | Avoid | Reason |
 |---|---|
-| Throat-clearing openers | Jordan leads with substance |
+| Throat-clearing openers | Lead with substance |
 | Hedging adverbs (somewhat, relatively, perhaps) | Dilutes the voice |
 | Summary conclusions that merely recap | Synthesise upward or don't conclude |
-| Back-loaded sentences (subordinate clause first, main claim at end) | Not Jordan's natural order |
-| Bullet-point prose | Bullets appear in the thesis as callout boxes, not in the body text |
+| Back-loaded sentences | Main clause first |
+| Bullet-point prose in argumentative sections | Use paragraphs; bullets for reference lists only |
 | Rhetorical questions as section openers | Not in this register |
-| "It is important to note that…" / "It is worth noting…" | Filler; cut and make the point directly |
-| Passive constructions hiding agency | "It has been argued that" → name who argued it |
-| Dummy subjects ("it is…", "there is…") | Replace with a real subject doing real work |
-| Vague category nouns | Name the specific thing — see §4 Precision naming |
-| Prepositional throat-clearing | "In terms of my availability…" → "I am free Thursday." Cut context-setting phrases that delay the subject |
+| "It is important to note that…" | Cut and make the point directly |
+| Passive constructions hiding agency | Name who argued it |
+| Dummy subjects ("it is…", "there is…") | Replace with a real subject |
+| Vague category nouns | Name the specific thing |
+| Prepositional throat-clearing | Cut phrases that delay the subject |
+| Medical model framing | Disability is not a property of the person |
+| Authority-asserting mandates | The Guidebook recommends; it does not command |
 
 ---
 
-## 9. Quick Calibration Test
+## 10. Quick Calibration Test
 
-Before finalising a passage, check:
+Before finalising any passage, check:
 
 1. Does every paragraph open with a declarative topic sentence?
-2. Is the main clause of each sentence doing real work, or is it deferred to a subordinate?
+2. Is the main clause of each sentence doing real work?
 3. Are qualifications placed *after* the claim, not before?
 4. Does the section conclusion generalise upward rather than recap?
 5. Is there any hedging vocabulary that can be cut?
 6. Canadian spelling throughout?
-7. Does the first person appear where Jordan would take authorial ownership?
-8. Are dummy subjects ("it is," "there is") eliminated in favour of real subjects?
-9. Are specific things named precisely, not referred to by vague category nouns?
+7. Does the first person appear where authorial ownership is appropriate?
+8. Are dummy subjects eliminated in favour of real subjects?
+9. Are specific things named precisely?
+10. Does the framing locate disability in the environment, not the person?
+11. Does the language assert only the authority the Guidebook actually has?
 
 ---
 
-## 10. Micro-Level Sentence Grammar
+## 11. Micro-Level Sentence Grammar
 
 ### Subject–verb alignment
-Subjects are almost always explicitly named. Dummy subjects ("it," "there") are replaced with a real subject doing real work. Instead of "It is important that…" write "This matters because…" or restructure to get a real noun up front.
+Subjects are almost always explicitly named. Dummy subjects ("it," "there") are replaced with a real subject doing real work.
 
 ### Relative clauses
-Placed immediately after the noun they modify, never dangling. "That" for restrictive clauses; "which" for non-restrictive. Both used without anxiety but consistently.
+Placed immediately after the noun they modify, never dangling. "That" for restrictive; "which" for non-restrictive.
 
 ### Conditional constructions
-The conditional precedes the result only when it is genuinely a prerequisite. When the result is the main point, lead with it: "I will send the documents once the review is complete" rather than "Once the review is complete, I will send the documents."
+Lead with the result when the result is the main point: "The specification resolves to the individual's assessed value" rather than "Once the OT assessment is complete, the specification resolves…"
 
 ### Prepositional phrase placement
-Front-loaded prepositional phrases are used only when the context is necessary to parse the main clause. Cut phrases that delay the subject without adding meaning: "In terms of the evidence base, the specification is…" → "The specification is…"
+Front-loaded prepositional phrases only when the context is necessary to parse the main clause. Cut phrases that delay the subject.
 
 ### Pronoun reference
-Clear and unambiguous throughout. When multiple parties or concepts are involved, name them on first reference; use pronouns only when the referent is unambiguous.
+Clear and unambiguous. Name parties on first reference; use pronouns only when the referent is unambiguous.
 
 ### Enumerated constructions in prose
-When listing items that require elaboration, use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or more complex items — a bolded topic header followed by a paragraph of detail. Standalone bullet points are used only for genuinely parallel, non-argumentative content (reference lists, specification items). Bullet-point prose in argumentative sections is not this voice.
+Use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or more complex items — a bolded topic header followed by a paragraph of detail. Bullet-point prose in argumentative sections is not this voice.
+
+---
+
+## 12. Framing Audit Protocol
+
+*Use this section when called as a QA tool — i.e. when asked to check framing, audit language, or run a framing review. Not required for every drafting pass.*
+
+**Intake:** ≤500 lines. Full document → haiku-chunker first.
+**Passes:** 2. After Pass 1: ground in CRPD Article 9 + social model definition before Pass 2.
+
+### Flag categories
+
+| Code | Flag | Examples |
+|---|---|---|
+| MEDICAL_MODEL | Diagnosis as design rationale | "blind people need…", "persons with dementia require…" |
+| COMPLIANCE_COST | Disability as cost | "accommodation expense", "cost of providing access" |
+| PASSIVE_CENTERING | Disability as problem | "inaccessible to wheelchair users" → "design excludes…" |
+| ACCOMMODATION_BURDEN | Disability as add-on | "special needs", "accommodating disabled people" |
+| CAPABILITY_DEFICIT | Deficit language | "suffers from", "wheelchair-bound", "confined to" |
+| CRPD_INCONSISTENT | Rights framing absent | access as charity/accommodation, not right |
+| UNIVERSAL_EROSION | Universal design undermined | "disabled-friendly features", "special accessible route" |
+| BAR_IN_VOLUME_I | BAR reference outside Supplementary Volume | Any BAR, bariatric, or large body size reference in Parts 1–12 or core matrices |
+| MARKER_FRAMING | Evidence marker misuse | ● with no citation; ○ without gap disclosure; marker on non-prescriptive text |
+| AUTHORITY_CLAIM | Guidebook asserts authority it lacks | "mandatory", "non-negotiable", "this document governs", "resolution protocol" as self-description |
+
+Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf) · "mandatory" when citing external mandates · internal document hierarchy references.
+
+### Steps
+1. Scan for all flag categories. List: exact quote · location · proposed code.
+2. Assign severity: 🔴 HIGH (credibility or legal risk) · 🟡 MED (ambiguous) · 🟢 LOW (editorial). Draft reframe.
+3. Pass 2: re-read CRPD Art.9 + social model definition. Confirm/upgrade/downgrade each Pass 1 flag.
+4. Output:
+
+| ID | Location | Flag | Original Text | Severity | Suggested Reframe |
+
+Claim objects (YAML) — one per flagged item.
+Summary: X flags — Y 🔴 / Z 🟡 / W 🟢 · Regression risk: HIGH / MED / LOW / CLEAN
 
 ---
 
