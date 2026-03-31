@@ -1,9 +1,12 @@
 # Jordan Elias — Voice & Style Skill
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), Claude conversation history. Last updated: 2026-03-31.*
 
 ## Purpose
-This skill encodes the writing voice of Jordan Elias for use in drafting book-length or long-form non-fiction prose. It is built from two corpora: (1) formal and semi-formal email correspondence from 2019–2026, and (2) the master's thesis *Expand/Contract: Studies in Medium- to High-Density Adaptable Housing Techniques* (UBC, 2022).
+This skill encodes the writing voice of Jordan Elias for use in drafting book-length or long-form non-fiction prose. It is built from: (1) formal and semi-formal email correspondence from 2019–2026, (2) the master's thesis *Expand/Contract: Studies in Medium- to High-Density Adaptable Housing Techniques* (UBC, 2022), and (3) Claude conversation history (2025–2026).
 
 The skill is calibrated for **discursive non-fiction** — analytical, argument-driven writing that integrates theory, research, and design thinking. It is not calibrated for narrative memoir, fiction, or journalism.
+
+**Guidebook context:** All writing governed by this skill is for the *Guidebook for Accessible Design* — a long-form technical non-fiction work. Email-register patterns (greetings, closings, P.S. conventions, recipient-type calibration) are excluded from this skill as inapplicable to the Guidebook.
 
 ---
 
@@ -66,10 +69,10 @@ The main clause typically comes first, with subordinate clauses following. Front
 > Occasional: "Given that an affordance is something offered by the environment to the individual, we can understand an affordance as a capability within the environment for achieving something."
 
 ### Colon and semicolon use
-Colons are used to introduce elaborations, lists, and quotations. They appear frequently — this is a structural habit, not decorative. Semicolons join closely related independent clauses and appear in list constructions (e.g. "first, …; second, …; and third, …"). Both are used correctly and deliberately, not avoided.
+Colons are used to introduce elaborations, lists, and quotations — and also single-word or short-phrase completions where the colon functions as an announcement: "The answer is this: precision." This is a structural habit, not decorative. Semicolons join closely related independent clauses and appear in list constructions (e.g. "first, …; second, …; and third, …"). Both are used correctly and deliberately, not avoided.
 
 ### Em-dash use
-Em-dashes set off strong qualifications or asides within a sentence. They appear in pairs for insertions and alone before a conclusory phrase. Never overused; typically one per paragraph at most.
+Em-dashes set off strong qualifications or asides within a sentence. They appear in pairs for insertions and alone before a conclusory phrase. Never overused; typically one per paragraph at most. In the Guidebook, always use the proper em-dash character (—), not a double hyphen.
 
 > "A person's claim to well-being rarely—if ever—derives solely from their own personhood."
 > "This standard, however, comes with two caveats: first, the studied cohort was largely born in the 1950s; and second, the data is limited to France, Sweden and the United States."
@@ -105,12 +108,17 @@ Avoid: "it could be argued," "perhaps," "seems to suggest," "in some ways," "rel
 - Passive voice as a way of avoiding agency (passive is used only when the agent is genuinely irrelevant)
 - Nominalizations where a verb would do: "the achievement of" → "achieving"; "an increase in" → "increases"
 - Weak verbs: "there is," "it is," "this involves"
+- "utilize" → "use"
+- "leverage" as a verb
+
+### Precision naming
+Name the specific thing, not the category. Not "the document" but "the program completion letter." Not "the provision" but "the grab bar diameter specification." This discipline is one of the strongest markers of the voice and is especially important in technical writing where vague references create ambiguity.
 
 ### Canadian spelling
 Use throughout: centred, behaviour, neighbourhood, honour, colour, favour, recognise, realise, fulfil, programme (where applicable).
 
 ### First person ("I")
-Used in the thesis without apology for authorial claims and argumentative moves. Academic hedging via passive or "one" is not the default.
+Used without apology for authorial claims and argumentative moves. Academic hedging via passive or "one" is not the default.
 
 > "I propose that we understand adaptable architecture as works of architecture that are particularly adept at accommodating future uses, needs or technologies."
 > "I would suggest that a person's negative experience with moving is tied to their degree of agency."
@@ -180,6 +188,9 @@ In formal long-form writing, the personal voice surfaces occasionally — an obs
 | Rhetorical questions as section openers | Not in this register |
 | "It is important to note that…" / "It is worth noting…" | Filler; cut and make the point directly |
 | Passive constructions hiding agency | "It has been argued that" → name who argued it |
+| Dummy subjects ("it is…", "there is…") | Replace with a real subject doing real work |
+| Vague category nouns | Name the specific thing — see §4 Precision naming |
+| Prepositional throat-clearing | "In terms of my availability…" → "I am free Thursday." Cut context-setting phrases that delay the subject |
 
 ---
 
@@ -194,10 +205,35 @@ Before finalising a passage, check:
 5. Is there any hedging vocabulary that can be cut?
 6. Canadian spelling throughout?
 7. Does the first person appear where Jordan would take authorial ownership?
+8. Are dummy subjects ("it is," "there is") eliminated in favour of real subjects?
+9. Are specific things named precisely, not referred to by vague category nouns?
+
+---
+
+## 10. Micro-Level Sentence Grammar
+
+### Subject–verb alignment
+Subjects are almost always explicitly named. Dummy subjects ("it," "there") are replaced with a real subject doing real work. Instead of "It is important that…" write "This matters because…" or restructure to get a real noun up front.
+
+### Relative clauses
+Placed immediately after the noun they modify, never dangling. "That" for restrictive clauses; "which" for non-restrictive. Both used without anxiety but consistently.
+
+### Conditional constructions
+The conditional precedes the result only when it is genuinely a prerequisite. When the result is the main point, lead with it: "I will send the documents once the review is complete" rather than "Once the review is complete, I will send the documents."
+
+### Prepositional phrase placement
+Front-loaded prepositional phrases are used only when the context is necessary to parse the main clause. Cut phrases that delay the subject without adding meaning: "In terms of the evidence base, the specification is…" → "The specification is…"
+
+### Pronoun reference
+Clear and unambiguous throughout. When multiple parties or concepts are involved, name them on first reference; use pronouns only when the referent is unambiguous.
+
+### Enumerated constructions in prose
+When listing items that require elaboration, use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or more complex items — a bolded topic header followed by a paragraph of detail. Standalone bullet points are used only for genuinely parallel, non-argumentative content (reference lists, specification items). Bullet-point prose in argumentative sections is not this voice.
 
 ---
 
 ## Source Corpora
 
-- Email archive, Jordan Elias (2019–2026): formal correspondence with architectural firms, HR departments, professional associations, faculty, and institutional recipients
+- Email archive, Jordan Elias (2019–2026): 500+ sent emails across professional, institutional, medical, and personal-professional contexts
 - Elias, Jordan. *Expand/Contract: Studies in Medium- to High-Density Adaptable Housing Techniques*. MArch thesis, University of British Columbia, 2022.
+- Claude conversation history, Jordan Elias (2025–2026): workflow and project management communications showing consistent register in written instruction
