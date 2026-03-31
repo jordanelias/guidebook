@@ -207,8 +207,8 @@ DATE: 2026-03-30 23:30
 
 ## Writing Style
 
-RULE: voice-style_SKILL.md is MANDATORY for all prose writing in this project. Load skills/voice-style_SKILL.md before drafting, revising, or reviewing any guidebook prose. Apply the 9-point calibration test before finalising any passage. Scope: all body text in Parts 0–12, supplementary volumes, appendices, and front matter. Does not govern tables, reference lists, abbreviation registers, or amendment registers.
-DATE: 2026-03-31 00:23
+RULE: skills/voice-style_SKILL.md is MANDATORY for all prose writing and all framing/language review in this project. It supersedes and replaces both the former voice-style skill and the former framing-checker skill. Load before drafting, revising, reviewing, or auditing any guidebook prose. Apply the 11-point calibration test before finalising any passage. For framing audits, invoke §12 Framing Audit Protocol. Scope: all body text in Parts 0–12, supplementary volumes, appendices, and front matter. Does not govern tables, reference lists, abbreviation registers, or amendment registers.
+DATE: 2026-03-31 00:23 (updated: framing-checker consolidated into voice-style_SKILL.md 2026-03-31)
 
 RULE: Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements sentence references a list that does not follow — either append the 17-jurisdiction endorsement list or remove the sentence. (2) §1.5 Co-primary Tier 2 header has no body text — content drafted and committed 2026-03-31; verify on next Part 1 review pass.
 DATE: 2026-03-31 00:23
