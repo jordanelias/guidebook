@@ -33,7 +33,7 @@ True accessibility encompasses:
 
 **Disability:** the mismatch between a person's impairment and an environment that has not been designed to accommodate it. Disability is a characteristic of the person-environment interaction, not of the person alone.
 
-**Accessible design / inclusive design:** design that eliminates or reduces the mismatch between impairment and environment, restoring function, independence, and dignity.
+**Accessible design / inclusive design:** design that eliminates the mismatch between impairment and environment — or reduces it where elimination is not achievable — restoring function, independence, and dignity.
 
 **Universal design:** design that works for the widest possible range of users without adaptation or specialist provision.
 
@@ -43,9 +43,9 @@ True accessibility encompasses:
 
 ### §1.2 The Code-as-Floor Principle
 
-Building codes represent legal minimums — not design targets, not expressions of best practice, and not statements about what constitutes a good environment for disabled people. This document operates above the code floor throughout. Statutory requirements are referenced as baselines only (Evidence Tier 6). Where codes conflict with higher-tier evidence, higher-tier evidence governs. The following multilingual endorsements of the code-as-floor principle confirm that this position is not a minority view, but the unanimous position of every major national accessibility body and advocacy organisation reviewed across 17 jurisdictions:
+Building codes represent legal minimums — not design targets, not expressions of best practice, and not statements about what constitutes a good environment for disabled people. This document operates above the code floor throughout. Statutory requirements are referenced as baselines only (Evidence Tier 6). Where codes conflict with higher-tier evidence, higher-tier evidence governs. The multilingual endorsements of the code-as-floor principle confirm that this position is not a minority view, but the unanimous position of every major national accessibility body and advocacy organisation reviewed across 17 jurisdictions.
 
-The logical implication: meeting building code is a necessary but completely insufficient condition for producing an accessible environment. Every specification in this document is calibrated above code, based on the best available evidence, primarily Tier 1 occupational therapy clinical research.
+The logical implication: meeting building code is necessary and insufficient for producing an accessible environment. Every specification in this document is calibrated above code, based on the best available evidence, primarily Tier 1 occupational therapy clinical research.
 
 ### §1.3 Designing for the Individual: Functional Capacity Over Category Minimums
 
@@ -77,7 +77,7 @@ OT assessment alone does not fulfil the co-design obligation in CRPD Article 4.3
 
 Universal design (Mace, Hardie & Place, 1991) is the design philosophy that environments should work for the widest possible range of users without adaptation or specialist provision. Its seven principles — equitable use, flexibility, simple and intuitive use, perceptible information, tolerance for error, low physical effort, and size and space for approach and use — define the standard from which all design in the built environment begins.
 
-In Canada and across most jurisdictions represented in this guidebook, universal design principles are substantively integrated into statutory building codes. Universal design is therefore co-extensive with code compliance. A building that satisfies UD criteria has met the legal minimum. It has not achieved best practice, and it has not achieved inclusive design.
+In Canada and across most jurisdictions represented in this guidebook, universal design principles are substantially integrated into statutory building codes — to the degree that satisfying code requirements and satisfying UD criteria are, for most buildings, effectively the same threshold. Universal design is therefore co-extensive with code compliance. A building that satisfies UD criteria has met the legal minimum. It has not achieved best practice, and it has not achieved inclusive design.
 
 Universal design produces a single solution calibrated to an abstracted, averaged, anonymous user. It sets fixed values derived from population statistics rather than from the functional capacity of the people who will actually use the building. For buildings where no specific user population can be identified or anticipated, this is the appropriate and sufficient starting point. For every other building, it is only the floor.
 
@@ -85,7 +85,7 @@ Universal design produces a single solution calibrated to an abstracted, average
 
 Inclusive design (BS 7000-6:2005; RIBA, 2022) is the aspiration and method of this guidebook. It is not a fallback from universal design, and it is not a compromise. It is the positive commitment to designing as well as possible for the actual people who will use a building, informed by the best available evidence about their functional capacities.
 
-The core principle of inclusive design, as applied in this guidebook, is this: the more specifically you can identify who will use a building, the greater your obligation to move from population averages toward functional capacity design for those people. Specificity of knowledge creates specificity of obligation.
+The core principle of inclusive design, as applied in this guidebook, is this: the more specifically a designer can identify who will use a building, the greater the obligation to move from population averages toward functional capacity design for those people. Specificity of knowledge creates specificity of obligation.
 
 This guidebook is written for Tier 1 and Tier 2 practice. All specifications, evidence tables, and design guidance in this document are inclusive design instruments — tools for going beyond the code floor toward the best that evidence and design can offer.
 
@@ -115,7 +115,7 @@ The following specifications have convergent evidence support across five or mor
 
 **Tier 2 — Person-Specific Inclusive Design** applies where the individual occupant or primary user is known: a residential commission for a named person, a workplace adjustment for a specific employee, or a specialist care environment designed around a defined client. At Tier 2, the practitioner's task is not to select the median value but to determine where within the Tier 1 range the specification should land, based on that individual's functional capacity assessment, OT findings, and personal preferences.
 
-The individual's own functional capacity is the answer. The range is the envelope within which that answer sits. *Tier 2 does not require different specifications from Tier 1 — it resolves the Tier 1 range to a specific value for a specific person.*
+The individual's own functional capacity is the answer. The range is the envelope within which that answer sits. *Tier 2 uses the same specifications as Tier 1 — it resolves the Tier 1 range to a specific value for a specific person.*
 
 At Tier 2, the recommended assessment instrument for operationalising person-environment fit is the **Housing Enabler** (Iwarsson & Slaug, Lund University CASE). The Housing Enabler is the most extensively validated OT tool for quantifying the relationship between personal functional limitations and environmental barriers, producing an accessibility problem score that directly informs specification resolution within Tier 1 ranges. See §1.8.8 and Part 9 for OT assessment protocols. For individual user control of environmental parameters (lighting, acoustic, thermal), see H-02 and §1.4.4 below.
 
@@ -189,6 +189,8 @@ NGO and advocacy guidelines are developed by and for disabled communities. They 
 
 **Co-primary Tier 2 — Occupational Therapy Clinical Practice Guidelines**
 
+OT Clinical Practice Guidelines (CPGs) are distinguished from primary OT clinical research (Tier 1) by their synthesising function: CPGs aggregate and grade the clinical research base, translating findings into practice recommendations. They carry Tier 2 authority because they depend on the Tier 1 evidence they summarise, but their consensus-derived recommendations are the primary translation mechanism between research and specification. *Primary Co-Tier 2 sources:* CAOT CPGs; AOTA CPGs; RCOT CPGs; COTEC/WFOT joint practice guidelines.
+
 **Tier 3 — Systematic Reviews and Meta-Analyses**
 
 *Primary Tier 3 sources:* Bettarello et al. (2021); Marquardt (2011); Koontz et al. (2012); Ulrich (1984, 1991); Petaccia et al. (2021); Wellecke et al. (2022); Sherrington et al. (2019); Räty et al. (2021).
@@ -207,13 +209,13 @@ Legal minimum. Design that meets code only is not best practice and in many case
 
 ### §1.6 The DAR Principle — Design for Adaptable Readiness
 
-Design for Adaptable Readiness (DAR) is the principle that construction-stage decisions should preserve the building's ability to accommodate future accessibility modifications at minimal cost. The most expensive accessible features to retrofit are negligible to incorporate at the schematic design stage.
+Construction-stage decisions govern the cost of every future accessibility modification. Design for Adaptable Readiness (DAR) holds that provisions made at schematic design stage preserve that future capacity at negligible cost — whereas retrofit costs are multiplied significantly once a building is complete and occupied. See Part 10 for cost multiplier evidence.
 
 **Policy implication:** DAR provision in new construction is the highest-return accessible design investment available. Building codes that do not require DAR provisions impose these multiplied costs on ageing homeowners and disability communities.
 
 ### §1.7 CRPD Framework Alignment
 
-All provisions in this guidebook operate within the framework of Article 9 of the UN Convention on the Rights of Persons with Disabilities (CRPD, 2006). CRPD Article 9 establishes accessibility of the built environment as a legal obligation for 185 States Parties. The general principles of Article 3 (dignity, autonomy, non-discrimination, participation) provide the normative framework within which technical specifications are derived.
+This guidebook grounds all provisions in Article 9 of the UN Convention on the Rights of Persons with Disabilities (CRPD, 2006). CRPD Article 9 establishes accessibility of the built environment as a legal obligation for 185 States Parties. The general principles of Article 3 (dignity, autonomy, non-discrimination, participation) provide the normative framework within which technical specifications are derived.
 
 ### §1.8 Evidence Frameworks
 
