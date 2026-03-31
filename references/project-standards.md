@@ -212,3 +212,18 @@ DATE: 2026-03-31 00:23
 
 RULE: Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements sentence references a list that does not follow — either append the 17-jurisdiction endorsement list or remove the sentence. (2) §1.5 Co-primary Tier 2 header has no body text — content drafted and committed 2026-03-31; verify on next Part 1 review pass.
 DATE: 2026-03-31 00:23
+
+RULE: Never use jq in bash_tool. Container state does not persist between conversations; jq installed in session N is absent in session N+1. Use python3 json module exclusively for all JSON parsing in bash_tool calls. Never call jq, install jq, or pip/apt install jq.
+CONDITION: Every bash_tool call that needs to parse JSON output.
+ACTION: Use `python3 -c "import sys,json; d=json.load(sys.stdin); ..."` pattern without exception.
+DATE: 2026-03-31
+
+RULE: Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator, then session file, then gap register P1 filter) is mandatory before any GitHub write, regardless of how a conversation opened. Direct user questions and handoff messages are not exemptions.
+CONDITION: Any turn where a GitHub write operation (batch_commit, github_append, REST PUT) is planned.
+ACTION: If session start has not yet been run in the current conversation, run it before the first write. Applies even to single-question conversations that escalate to writing.
+DATE: 2026-03-31
+
+RULE: "Start a new conversation" in next_action YAML is reserved for context-boundary situations only. Do not write it when context remaining is ≥20% and the next task is a direct continuation of the current workflow.
+CONDITION: Writing next_action field during session close.
+ACTION: Omit "start a new conversation" unless (a) context is ≥85% consumed, OR (b) the next task requires a materially different workflow type (e.g., switching from Phase 2B research to Phase 3 writing). Simple phase continuations, sequential task execution, and status-check follow-ons do not qualify.
+DATE: 2026-03-31

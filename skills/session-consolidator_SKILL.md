@@ -170,6 +170,8 @@ next_action:
 - Next action
 - GitHub write status (✓ / ⚠ fallback)
 
+**"Start a new conversation" constraint:** Only include this instruction in next_action output if (a) context is ≥85% consumed OR (b) the next task requires a materially different workflow type. Never include it for simple phase continuations, sequential task execution, or status-check follow-ons. When in doubt, omit it — the user can always start a new conversation; the overhead cost of unnecessary conversation fragmentation is higher than the cost of a long context.
+
 ---
 
 **Fallback:** if any PUT fails after one retry — output the relevant content as a fenced code block with manual paste instructions. Never silently drop state.

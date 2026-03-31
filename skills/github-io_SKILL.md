@@ -265,3 +265,22 @@ GITHUB-IO: {operation} — {error}
 ```
 
 On unrecoverable failure: output full content as fenced code block + manual instructions. Never silently drop state.
+---
+
+## ANTI-PATTERNS — Never Use
+
+**❌ `branch: {id: ...}` — requires unnecessary extra call**
+
+Some session code fetches a branch node ID with a separate `ref(qualifiedName:...)` query, then passes it as `branch: {"id": branch_id}`. This is never necessary. `createCommitOnBranch` accepts `repositoryNameWithOwner` + `branchName` directly. The `batch_commit()` function above uses the correct pattern — copy it exactly. Never introduce the `id`-based branch form.
+
+**❌ jq in bash_tool**
+
+Container state does not persist between conversations. jq installed in session N is absent in session N+1. Use `python3 -c "import sys,json; ..."` exclusively. This rule is also in project-standards.md.
+
+**❌ Parallel GitHub API calls (`curl ... & curl ... & wait`)**
+
+Background processes with `&` in bash_tool create concurrent GitHub API calls. This risks 429 rate limiting on writes and silent SHA staleness. All GitHub calls must be sequential.
+
+**❌ `web_fetch` on claude.ai URLs**
+
+`https://claude.ai/chat/...` URLs always fail — they require authentication. Never call `web_fetch` on the `claude.ai` domain.
