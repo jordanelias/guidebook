@@ -227,3 +227,32 @@ RULE: "Start a new conversation" in next_action YAML is reserved for context-bou
 CONDITION: Writing next_action field during session close.
 ACTION: Omit "start a new conversation" unless (a) context is ≥85% consumed, OR (b) the next task requires a materially different workflow type (e.g., switching from Phase 2B research to Phase 3 writing). Simple phase continuations, sequential task execution, and status-check follow-ons do not qualify.
 DATE: 2026-03-31
+RULE: No & (background processes) in bash_tool for any GitHub API call. All GitHub reads and writes must be sequential.
+CONDITION: Every bash_tool call involving curl to api.github.com or api.github.com/graphql.
+ACTION: Write all curl calls sequentially. Concurrent calls risk 429 rate limits and silent SHA staleness on writes.
+DATE: 2026-03-31
+
+RULE: Stale blockers must not be carried forward in session YAML. Before writing next_action blockers, verify each blocker's gap ID is still OPEN in gap_register.md. If CLOSED: remove it. If no gap ID exists for a blocker: create one or drop the blocker.
+CONDITION: session-consolidator Pre-Close step — writing the blockers: field.
+ACTION: GET gap_register.md and cross-check every prior-session blocker before writing the new YAML.
+DATE: 2026-03-31
+
+RULE: Never use conversation_search or project_knowledge_search to answer questions about current project state (what phase are we in, what is next_action, what blockers exist, what has been completed). These tools return stale or partial snapshots. Use GitHub GET of the session file instead.
+CONDITION: Any question about current workplan position, session state, blocker status, or recent completion status.
+ACTION: Run session start protocol (GET LATEST → GET session file) to get accurate state. conversation_search is for retrieving past conversation context only, not current project state.
+DATE: 2026-03-31
+
+RULE: When reading more than 3 BPC or search-log files in a single session, use GraphQL multi-alias batch_read rather than sequential individual calls.
+CONDITION: Any loop or sequence of >3 BPC/SL file reads.
+ACTION: Batch up to 20 files per GraphQL call using aliased object() queries. See github-io batch_read() pattern. Sequential reads for >3 files waste ~600 tokens per extra call.
+DATE: 2026-03-31
+
+RULE: Read connection-register.md at most once per session. Cache the content in a local variable or file. Do not re-read it per synthesis batch or per skill invocation.
+CONDITION: Any session running connection-scout, item-specification-writer, or Opus synthesis batches.
+ACTION: Read connection-register.md once at the start of the relevant workflow. Reference the cached content for all subsequent operations in the same session.
+DATE: 2026-03-31
+
+RULE: Do not re-read workplan-orchestrator_SKILL.md mid-session. It is loaded at session start (Step 1a). A mid-session re-read is only justified if the skill file was updated during the current session.
+CONDITION: Any bash_tool call fetching workplan-orchestrator_SKILL.md after session start.
+ACTION: Reference the already-loaded skill content. If the skill was not updated this session, skip the re-read.
+DATE: 2026-03-31
