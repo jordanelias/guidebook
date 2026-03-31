@@ -1,5 +1,5 @@
 # Jordan Elias — Voice & Style Skill
-*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), Claude conversation history. Last updated: 2026-03-31.*
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), Claude conversation history. Last updated: 2026-03-31 (rev 2).*
 
 ## Purpose
 This skill encodes the writing voice of Jordan Elias for use in drafting book-length or long-form non-fiction prose. It is built from: (1) formal and semi-formal email correspondence from 2019–2026, (2) the master's thesis *Expand/Contract: Studies in Medium- to High-Density Adaptable Housing Techniques* (UBC, 2022), and (3) Claude conversation history (2025–2026).
@@ -83,6 +83,9 @@ Used consistently throughout.
 ### Oxford "and" in lists
 Lists of three or more use "and" before the final item with the serial comma: "the community, the household, and the individual."
 
+### Italicised emphasis
+Italics mark words doing genuine argumentative work — not decoration. The test: would the argument weaken if the emphasis were removed? If yes, italicise. If no, don't. In the thesis: *hard* and *soft* uses, *good* architecture. In the Guidebook: use sparingly, for the word that is the crux of the claim.
+
 ---
 
 ## 4. Vocabulary and Register
@@ -137,6 +140,9 @@ After a quotation, Jordan immediately unpacks it in his own words. He does not l
 
 ### Quotation length
 Long block quotations are used sparingly — only when the exact language of the source is essential to the argument. Most citations are short (one to three sentences) and tightly integrated into the prose.
+
+### Synthesis over quotation
+The mature voice spends more words analysing sources than presenting them. A passage that strings together quotations with thin connective tissue is not this voice. After any quotation, the analysis must be at least as long as the quoted material.
 
 ---
 
@@ -236,4 +242,6 @@ When listing items that require elaboration, use "(1)…(2)…(3)" in parentheti
 
 - Email archive, Jordan Elias (2019–2026): 500+ sent emails across professional, institutional, medical, and personal-professional contexts
 - Elias, Jordan. *Expand/Contract: Studies in Medium- to High-Density Adaptable Housing Techniques*. MArch thesis, University of British Columbia, 2022.
+- Elias, Jordan. "The Architecture of Domination in Palestine." ARCH 505C paper, University of British Columbia, December 2018.
+- Elias, Jordan. "Spectacularly Bereft Architecture." ARTH 480 paper, University of British Columbia, April 2019.
 - Claude conversation history, Jordan Elias (2025–2026): workflow and project management communications showing consistent register in written instruction
