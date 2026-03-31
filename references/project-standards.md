@@ -256,3 +256,7 @@ RULE: Do not re-read workplan-orchestrator_SKILL.md mid-session. It is loaded at
 CONDITION: Any bash_tool call fetching workplan-orchestrator_SKILL.md after session start.
 ACTION: Reference the already-loaded skill content. If the skill was not updated this session, skip the re-read.
 DATE: 2026-03-31
+RULE: session-consolidator must record the commit OID returned by batch_commit() in the github_writes field of the session YAML. Format: `commit_oid: {first 12 chars of OID}` as a field alongside github_writes.
+CONDITION: Writing session YAML after any batch_commit() call.
+ACTION: Capture the OID from the batch_commit() return value and include it. Without this, commit claim verification is impossible for that session.
+DATE: 2026-03-31
