@@ -7,13 +7,13 @@
 
 ## About This Guidebook
 
-This guidebook provides design specifications grounded in the best available evidence for making built environments accessible to the full range of human functional capacity. It covers new construction, major refurbishment, and post-occupancy adaptation across residential, commercial, healthcare, educational, hospitality, and cultural building types. It is written for architects, access consultants, interior designers, occupational therapists, project managers, developers, housing authorities, and anyone responsible for decisions about the built environment.
+Building codes produce legal minimums, not accessible environments. This guidebook operates above that floor throughout — grounded in Tier 1 occupational therapy research and the best available multilingual evidence — to give architects, access consultants, interior designers, occupational therapists, project managers, developers, and housing authorities the specifications needed to design for the full range of human functional capacity. It covers new construction, major refurbishment, and post-occupancy adaptation across residential, commercial, healthcare, educational, hospitality, and cultural building types.
 
-**The central principle:** Building codes represent legal minimums. This guidebook operates above the code floor throughout, calibrated to Tier 1 occupational therapy clinical research and the best available multilingual evidence. Meeting code is a necessary but completely insufficient condition for producing an accessible environment.
+**The central principle:** Building codes represent legal minimums. This guidebook operates above that floor throughout, calibrated to Tier 1 occupational therapy clinical research and the best available multilingual evidence. Meeting code is necessary; it is not sufficient.
 
 ## Companion Volumes
 
-This guidebook is accompanied by a supplementary volume that extends coverage beyond the core:
+One supplementary volume accompanies this guidebook:
 
 - **Designing for Different Body Sizes: Supplementary Volume** — Covers large body size (BAR), short stature (LPA), children/adolescents (CHD), and extremely tall individuals (EXH). *Included in this document — see Supplementary Volume at end of Appendices.*
 
@@ -135,5 +135,5 @@ AFF — Above Finished Floor · ART — Attention Restoration Theory · CCT — 
 
 | Ref | Type | Description |
 | --- | --- | --- |
-| CO-0003 | Structural | Cross-population conflict terminology: INTRA-INDIVIDUAL / INTER-GROUP / BOTH replaces \"cross-population\". F-06 Thermal Zoning, F-07 Thermal Transition written; F-04 expanded. |
+| CO-0003 | Structural | Cross-population conflict terminology: INTRA-INDIVIDUAL / INTER-GROUP / BOTH replaces "cross-population". F-06 Thermal Zoning, F-07 Thermal Transition written; F-04 expanded. |
 | CO-0004 | Structural | Three-volume structure merged to single volume. Part renumbering throughout: old Parts 1–14 → Parts 1–12. Volume II Part 7 (Item Specification Library) → Part 4. Part 8 (Conflicts) split: methodology → Part 3 §§3.8–3.9; building-level resolutions → Part 5. Category J (Bariatric) deleted; items relocated to Supplementary Volume Part 4. F-05 relocated to G-08. A-17 absorbed into G-02. New items: I-04 (Ceiling Hoist), H-05 (Nurse Call), F-06 (Thermal Zoning), F-07 (Thermal Transition). Appendix C retired. §2.12 (IntD) deleted — IntD proxied through DEM/NDV per project-standards. |
