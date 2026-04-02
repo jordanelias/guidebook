@@ -71,3 +71,77 @@ Glazed corridor junctions (DEAF visual advance warning provision — §5.2 SPATI
 ---
 
 **Cross-references to update:** Part 3 §3.4 references to "Part 8 §8.4" should be updated to "Part 5 §5.2" following this section's completion. See GAP-CONF-02 for tracking.
+
+
+---
+
+### §5.4 Application to Design Stages — Worked Examples
+
+The conflict resolution table in §5.2 operates at design stage: conflicts must be identified before schematic design closes, resolutions built into the brief, and parameter choices propagated into each consultant's scope. The three examples below trace the §5.2 entries through actual design decisions for three common building types. They are not exhaustive; they demonstrate the method.
+
+---
+
+#### §5.4.1 Worked Example A: Dementia Care Home (DEM Primary; MOB Secondary; NDV/SENS Tertiary — Staff)
+
+**Population brief.** 24 residents: DEM (all residents, by definition of facility type); MOB (20 of 24 — ambulant with walking aids or wheeled mobility); NDV/SENS (estimated 4 of 14 staff — UK CIPD 2023 prevalence data applied to care workforce).
+
+**Active conflict domains at schematic:**
+
+*COLOUR-CONT.* DEM requires high contrast at all threshold and step edges (DEM fall prevention — safety-critical). NDV/SENS staff require a muted palette in staff areas. Resolution: §5.2 zone-based — high-contrast provisions (C-04, ≥30 LRV) throughout resident circulation and all resident-occupied spaces. Staff workstation and staff rest room carry ≤20 LRV palette. The two populations occupy distinct spatial zones; the conflict is resolved spatially rather than by specification compromise.
+
+*LIGHT-INT.* DEM circadian lighting (≥300 lux daytime, ≥250 melanopic EDI) governs in all resident-occupied spaces. NDV/SENS staff require dimmable lower-intensity ambient in staff areas. Resolution: §5.2 three-zone model — Zone 1 (resident common rooms): ≥300 lux circadian; Zone 2 (corridors): 150–300 lux dimmable; Zone 3 (staff office, sensory room): user-controlled 0–150 lux. Individual dimming (B-06) at all staff workstations resolves the residual illuminance conflict without reducing circadian provision for residents.
+
+*MOVE-FREE.* DEM residents benefit from autonomous wandering within a legible loop. MOB residents require bilateral grab bars on all extended routes (G-05). Resolution: §5.2 — secure garden loop with continuous bilateral handrails satisfies both. Indoor loop circulation with grab bars on all corridors ≥15 m: DEM freedom maintained; MOB fall support provided throughout.
+
+*FRAGRANCE.* DEM olfactory orientation (cooking smells as spatial cues) vs NDV/SENS staff chemical sensitivity. Resolution: §5.2 partial — food smells from kitchen at corridor junction provide DEM olfactory cue without synthetic fragrance triggers. F-06 fragrance-free policy governs cleaning products and staff personal fragrance; natural food smells are not OFS/MCAS triggers. NDV/SENS staff protected; DEM orientation cues preserved via architectural adjacency.
+
+**Design stage actions generated:**
+- SD: loop floor plan (D-01), zone boundary positions on schematic, kitchen adjacency to main corridor, secure garden with loop path
+- DD: B-06 dimming circuits by zone; C-04 LRV schedule (≥30 in resident areas; ≤20 in staff areas); G-05 grab bars on all corridors ≥15 m; F-06 fragrance-free policy in FM brief
+- CD: lighting control commissioning; TWSI at all stair heads (E-09)
+
+---
+
+#### §5.4.2 Worked Example B: Neurodivergent Co-Working Office (NDV Primary; DEAF Secondary; OFS Tertiary)
+
+**Population brief.** 60-person co-working office; 25% NDV/AUT/ADHD (client disclosure); 2 DEAF staff (hearing aid users); 8% OFS (ME/CFS, POTS, MCS — self-disclosed).
+
+**Active conflict domains at schematic:**
+
+*ACOUSTIC-LVL.* DEAF staff require hearing loop (A-11) in all meeting rooms and the collaboration zone. NDV/AUT and NDV/ADHD staff require ≤35 dBA ambient in quiet zones; no sound masking (A-13). Resolution: §5.2 — hearing loop operates on direct microphone input, not broadcast audio; PA and background music muted in NDV-primary zones. RT60 ≤0.3 s universal (serves both DEAF speech clarity and NDV acoustic calm). Result: loop infrastructure throughout; audio input control at zone level; no masking anywhere.
+
+*SPATIAL-OPEN.* DEAF staff benefit from open-plan layouts with sightlines for signing pairs. NDV/AUT staff benefit from enclosed sub-zones with predictable approaches. Resolution: §5.2 graduated model — open-plan collaboration spine (≥1500 mm, signing-compatible) transitions to enclosed acoustic pods (NDV quiet zones, RT60 ≤0.3 s, NC ≤20). DEAF staff primary workstations on open-plan spine; NDV/AUT staff primary workstations in or adjacent to enclosed pods with open-plan access.
+
+*LIGHT-INT.* NDV/ADHD staff: individual dimming (≤200 lux ambient preferred in quiet zones). OFS/PCS staff: glare contraindicated; cool-white CCT triggers photophobia symptoms. Resolution: §5.2 — B-06 individual dimming at every desk; B-07 UGR <19 universal (eliminates glare for OFS without reducing task light for DEAF); B-04 flicker-free LED throughout (NDV and OFS both benefit); CCT ≥4000 K in collaboration zone (circadian and visual acuity); ≤3000 K in quiet zones and at OFS-designated workstations.
+
+*FRAGRANCE.* OFS/MCAS: fragrance-free building policy (F-06). NDV/SENS: same requirement via sensory sensitivity mechanism. No conflict — both populations require F-06. Result: single policy serves both; no resolution required.
+
+**Design stage actions generated:**
+- SD: open-plan spine vs pod layout ratio; pod locations on floor plan; AC and EE briefs at schematic (RT60 targets; loop wiring routes)
+- DD: hearing loop field strength diagram; B-04/B-06 specification; F-06 in FM brief and lease agreement
+- CD: per-desk dimming control; loop commissioning; fragrance-free signage
+
+---
+
+#### §5.4.3 Worked Example C: Mixed-Needs Supported Housing (DEM + MOB + NEU/MS + PAIN)
+
+**Population brief.** 12 apartments; 4 residents DEM (older adults); 8 residents MOB (4 manual wheelchair, 4 ambulant with walking aids); 3 residents NEU/MS (two with Uhthoff's phenomenon); 2 residents PAIN (fibromyalgia, diagnosed MS-fibromyalgia overlap).
+
+**Active conflict domains at design:**
+
+*TEMP-RANGE.* The MS population requires ≤18°C ambient (Uhthoff's — safety-critical). The PAIN population requires warmth (fibromyalgia — cold worsens allodynia). Populations share corridor circulation. Resolution: §5.2 — ≤18°C ambient in all common areas and corridors governs (safety-critical, MS). Individual apartments: individual thermostats (TC-02) allowing residents to set their own thermal environment. Communal spaces: individual radiant heating supplement at all fixed seating positions (portable or wall-mounted radiant panels at ≤22°C output). PAIN residents receive warmth at their own fixed positions; NEU/MS residents retain cool ambient. Insulated grab bar coatings (G-03) throughout — cold metal contact triggers allodynia.
+
+*DOOR-OPERATION.* MOB residents require automatic doors (E-11) at communal entries. DEM residents: §5.2 DOOR-OPERATION resolution applies (motion sensor ≥3 m advance warning; auditory chime; glazed leaf; ≥3 s travel). The automatic door design specified for MOB already incorporates the DEM resolution elements. No additional specification required — single specification serves both.
+
+*COLOUR-CONT.* DEM: plain floor (C-06) in communal areas; high contrast at door frames (≥30 LRV, C-04). MOB: no floor pattern preference; contrast at step edges. NEU: no specific contrast requirement beyond universal. Result: plain floor throughout communal areas satisfies DEM (no pattern-associated falls) and MOB (no trip texture). Perimeter contrast (C-04 at door frames and skirting) satisfies DEM orientation; no population requires floor pattern.
+
+*MOVE-FREE (Tier 2 conflict).* DEM wandering freedom vs MOB powered-wheelchair turning radius: a powered-wheelchair user executing a turn on a loop corridor may temporarily reduce circulation space. In a 12-apartment building on a single loop, the corridor specification (E-08 ≥1500 mm clear; preferred 1800 mm) accommodates both the DEM ambulant wandering user and the powered-wheelchair turning envelope. No architectural conflict at 1800 mm clear. Conflict is irresolvable only if corridor drops below 1500 mm — avoided at schematic.
+
+**Design stage actions generated:**
+- SD: corridor ≥1800 mm clear; loop floor plan (D-01); TC-02 individual thermostats in all apartments; supplement heating provision noted in FF&E brief
+- DD: G-03 insulated grab bar finish (cold-contact note in specification); E-11 automatic doors all communal entries; radiant panel positions at communal fixed seating
+- CD: B-05 gradual light transitions at building entry (OFS/MS photophobia); TC-01 ≤18°C controls confirmed for common-area HVAC
+
+---
+
+*End of Part 5. Cross-references: Part 3 §3.4 (Co-occurrence guidance by pair); Part 4 §4.5 (Population-specific worked examples); Part 7 (Non-residential population matrices); Part 9 §9.6 (DeafBlind specialist consultant).*
