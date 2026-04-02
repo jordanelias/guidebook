@@ -260,3 +260,28 @@ RULE: session-consolidator must record the commit OID returned by batch_commit()
 CONDITION: Writing session YAML after any batch_commit() call.
 ACTION: Capture the OID from the batch_commit() return value and include it. Without this, commit claim verification is impossible for that session.
 DATE: 2026-03-31
+
+RULE: Before adding an "item creation" task to any gap register entry or workplan item, verify the target item does not already exist in the relevant part05-* file. False "create" tasks waste session tokens and generate incorrect gap entries.
+CONDITION: Any gap_register entry with action "create item" or "write item specification" for a specific item code.
+ACTION: GET the relevant part05-* file and grep for the item heading (e.g. "### I-04") before raising the gap. If found, change action to "verify/update" and note pre-existence in the gap entry.
+DATE: 2026-04-02 23:17
+
+RULE: XREF-PENDING tags and Part stub content live in versions/current/Guidebook_for_Accessible_Design_v9-0_2026-03-20.md, NOT in individual part05-* files. When a gap item references XREF-PENDING resolution, always check the consolidated file first.
+CONDITION: Any gap item referencing "XREF-PENDING", "stub content", or cross-reference resolution tasks.
+ACTION: GET versions/current/ file and search for the tag pattern before checking individual part05 files. The consolidated file is the primary location for stub markers.
+DATE: 2026-04-02 23:17
+
+RULE: Connection register entry IDs use 4-digit zero-padded format: CON-0001 through CON-0099, then CON-0100+. Search patterns must match exactly: CON-0093 not CON-093.
+CONDITION: Any script, search, or verification that references connection register entry IDs.
+ACTION: Always format as CON-0NNN (4 digits, zero-padded). Verification scripts: use f"CON-0{i:03d}" for i in range(1,N+1).
+DATE: 2026-04-02 23:17
+
+RULE: After CO-0004, part file names (part00–part14 in 88_to_90/) do not correspond 1:1 to document part numbers. Mapping: part08=Part 9 Engineering; part03=Part 3 Multiple Categories; part04=Part 4 Synthesis Matrices; part05-a through k=Item Specifications (no single part number). Always verify document heading (## Part N:) before assuming file-part correspondence.
+CONDITION: Any task requiring navigation to a specific document Part (e.g. "edit Part 9").
+ACTION: Read the first heading line of the candidate file to confirm it is the correct Part before making edits.
+DATE: 2026-04-02 23:17
+
+RULE: When Part 5 content is added to parts/v10/part05_v10-0_draft.md, the corresponding stub in versions/current/ must also be updated within the same session. These are two separate stores of the same content. A commit to one without updating the other leaves the consolidated file stale.
+CONDITION: Any write to parts/v10/part05_v10-0_draft.md or any other part file in parts/v10/.
+ACTION: After committing to parts/v10/, also update versions/current/ consolidated file in the same session. Use targeted string replacement on the stub content.
+DATE: 2026-04-02 23:17
