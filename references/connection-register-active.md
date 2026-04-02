@@ -2797,3 +2797,265 @@ Review for jurisdiction-specific residential accessibility data. Potential updat
 | CON-0030 (glazed junction four-way conflict) | CONSUMED | SPATIAL-OPEN matrix Resolution 2 |
 | CON-0037 (prospect-refuge theory) | CONSUMED | SPATIAL-OPEN matrix Resolution 1 |
 | CON-0038 (circadian multi-population) | Referenced | LIGHT-INT opposition map (NEU/MH/OFS on both sides) |
+
+
+---
+## Connection Register — Phase 2C Session 9 Re-scan [2026-04-02 20:54]
+**Source:** connection-scout internal mode — re-scan of 23 slugs newly populated in Opus session 13 (2026-03-30)
+**Slugs scanned (unreferenced):** stair-ramp-threshold-biomechanics-accessibility, government-grant-programmes-home-adaptation, european-accessibility-act-scope-clarification, jurisdiction-grant-programmes-comprehensive, ot-built-environment-interface, ot-frameworks-built-environment
+**New CON entries:** CON-0093 through CON-0100
+
+---
+
+## CON-0093 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — manual wheelchair user develops PAIN (shoulder) from inadequate ramp gradient
+**Populations involved:** MOB, PAIN
+**Items involved:** Ramp items (E-series)
+**Gap register items:** NONE
+
+### Connection description
+The stair-ramp-threshold-biomechanics-accessibility BPC documents that ramp gradients above 1:12 force a high-force two-arm propulsion technique that increases long-term shoulder injury risk for manual wheelchair users (Waters et al. 1985, Tier 3; Kim et al. 2014). This is a pathway through which an inadequate ramp specification causes PAIN as a secondary condition in MOB populations.
+
+The guidebook specifies ramps as MOB provisions. PAIN is currently not listed as a co-population for ramp items, despite the documented mechanism: repeated shoulder overload at grades >1:12 → rotator cuff injury → chronic shoulder PAIN. The 1:20 recommended gradient is not only about propulsion effort — it is a PAIN prevention specification for long-term wheelchair users.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Waters et al. 1985 (shoulder injury, ramp gradient) | 3 | MOB | MOB, PAIN (shoulder PAIN prevention) |
+| Kim et al. 2014 (ramp propulsion effort) | 3 | MOB | MOB, PAIN |
+| stair-ramp-threshold-biomechanics-accessibility BPC | 2–4 | MOB | MOB, PAIN |
+
+### Proposed synthesis direction
+Add PAIN as co-population for ramp specifications. Frame 1:20 gradient as both ergonomic preference (MOB) and PAIN prevention (MOB users who develop shoulder pathology at inadequate gradients). Cross-reference pain-ofs-built-environment-design BPC.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing for ramp items
+
+---
+
+## CON-0094 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — stair descent is higher-risk event for multiple populations
+**Populations involved:** MOB, NEU, DEM, PAIN, VIS
+**Items involved:** Stair items, handrail items (G-series)
+**Gap register items:** NONE
+
+### Connection description
+The stair-ramp-threshold-biomechanics-accessibility BPC documents that stair descent fall risk is 3× stair ascent risk (Simoneau et al. 1991, Tier 3), and that each 6 mm riser irregularity increases misstep probability by ~18% (Templer 1992, Tier 4).
+
+These findings apply across MOB, NEU, DEM, PAIN, and VIS populations — each with different mechanisms, all resulting in elevated stair descent risk. Guidebook stair items are currently coded primarily for MOB and VIS. DEM, NEU, and PAIN are not systematically listed as co-populations despite documented fall risk.
+
+The riser irregularity finding (6 mm = 18% misstep) is particularly relevant to DEM (spatial perception), NEU (proprioception), and VIS (visual compensation for depth cues) populations. Consistency specification for stairs should carry all five populations.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Simoneau et al. 1991 (3× descent vs ascent risk) | 3 | MOB | MOB, NEU, DEM, PAIN, VIS |
+| Templer 1992 (6 mm irregularity = 18% misstep) | 4 | MOB | MOB, NEU, DEM, VIS |
+| stair-ramp-threshold-biomechanics-accessibility BPC | 2–4 | MOB | ALL five populations |
+
+### Proposed synthesis direction
+Add NEU, DEM, PAIN, VIS as co-populations for stair descent and riser consistency specifications. Stair handrails (G-series): add same five populations. The 3× descent risk justification strengthens the case for handrail continuity on descent side.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing for stair and handrail items
+
+---
+
+## CON-0095 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — EU building occupants interacting with digital interfaces at point of building entry/use
+**Populations involved:** DEAF, VIS, NDV (digital interface users in EU member states)
+**Items involved:** H-series items (self-service terminals, touchscreens, BLE beacons, building management interfaces)
+**Gap register items:** NONE
+
+### Connection description
+The european-accessibility-act-scope-clarification BPC confirms that the EAA (EU Directive 2019/882) applies to digital products and services — specifically including self-service terminals, touchscreens, BLE systems, and building management interfaces — with mandatory enforcement from June 2025.
+
+H-series guidebook items (digital controls, intercom, nurse call interfaces) that are installed in buildings in EU member states are therefore subject to EAA compliance, in addition to the guidebook's design recommendations. The guidebook does not currently reference EAA compliance obligations for H-series items. This is a statutory regulatory gap — not a design recommendation gap.
+
+The EAA specifies: perceivability, operability, understandability, and robustness for digital interfaces. These align with guidebook provisions for DEAF (visual interface), VIS (audio/tactile interface), and NDV (cognitive simplicity) populations.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| EU Directive 2019/882 (EAA, enforcement June 2025) | 6 (statutory) | Digital product/service providers | H-series items in EU member states |
+| european-accessibility-act-scope-clarification BPC | 6 (regulatory) | EU member states | H-series item specifications |
+
+### Proposed synthesis direction
+Add EAA compliance note to all H-series items: installations in EU member states are subject to EAA requirements from June 2025. Specify EAA perceived scope overlap with guidebook provisions. This is a jurisdiction-limited note (EU only), not a universal specification.
+
+### Disposition
+- [ ] MODERATE → P2 gap item (EAA compliance note for H-series in EU jurisdictions)
+
+---
+
+## CON-0096 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — all occupants benefit from reduced lifetime housing adaptation costs
+**Populations involved:** ALL
+**Items involved:** Part 12 (Economics)
+**Gap register items:** NONE
+
+### Connection description
+The government-grant-programmes-home-adaptation and jurisdiction-grant-programmes-comprehensive BPCs confirm that all major government home adaptation programmes (UK DFG £711m/year, AU NDIS, CA HATC, US VA SAH/SHA, Nordic schemes, France MaPrimeAdapt') fund retrofit only — not design-stage accessible construction.
+
+CON-0048 makes the cost-effectiveness case using healthcare savings (hospitalisation reduction, fall prevention). This adds a distinct complementary argument: government programme structures reveal that the entire public funding apparatus addresses the retrofit endpoint — confirming that design-stage provision would eliminate the most expensive public intervention. The retrofit-design cost differential is not currently stated in the guidebook economics section.
+
+Nordic model exception: Sweden/Norway/Denmark operate uncapped, needs-based models — the most equitable internationally — but still fund retrofit. France MaPrimeAdapt' (launched 2024) is the newest significant programme.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| UK DFG data (£711m/2024–25) | 5 (programme data) | MOB/ALL (retrofit) | ALL (design-stage argument) |
+| Nordic model data (SE/NO/DK, uncapped) | 5 (programme data) | ALL (retrofit) | ALL (policy benchmark) |
+| government-grant-programmes-home-adaptation BPC | 5 | Economics section | Design-stage prevention argument |
+| jurisdiction-grant-programmes-comprehensive BPC | 5 | Economics section | Policy equity benchmark |
+
+### Proposed synthesis direction
+Part 12 economics section: add argument — all major government programmes fund retrofit, confirming that the status quo directs public funds to the most expensive intervention point. Design-stage provision at marginal cost eliminates the retrofit endpoint. Nordic model (uncapped, needs-based) as policy best-practice benchmark. France MaPrimeAdapt' as newest major programme (2024).
+
+### Disposition
+- [ ] MODERATE → P2 gap item
+
+---
+
+## CON-0097 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — OTs across jurisdictions converge on three priority provisions
+**Populations involved:** MOB, OFS, PAIN (primary DAR populations)
+**Items involved:** DAR items, visitability items, E-series (threshold), I-series (bathroom/shower)
+**Gap register items:** NONE
+
+### Connection description
+The ot-built-environment-interface BPC documents Wellecke et al. 2022 (Tier 1, n=144 Australian OTs): the three highest-priority OT-specified built environment features are (1) step-free external access, (2) zero-threshold shower, (3) ground-floor bedroom/bathroom.
+
+These three exactly match the visitability/DAR minimum specification hierarchy documented in CON-0082 (adattabilità + visitability) and the residential-dar-provisions-priority-register BPC. CON-0082 derives the three priorities from regulatory precedent and universal design theory. Wellecke 2022 provides independent empirical confirmation from 144 OT practitioners — Tier 1 evidence for the priority ordering.
+
+This is a significant evidential upgrade for the visitability specification: the priority hierarchy is now supported by both regulatory precedent (Tier 5–6) and OT practitioner empirical consensus (Tier 1).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Wellecke et al. 2022 (n=144 AU OTs, Tier 1) | 1 | MOB/ALL (AU residential) | CON-0082 visitability hierarchy |
+| residential-dar-provisions-priority-register BPC | 4–5 | MOB/ALL | Confirmed priority order |
+| ot-built-environment-interface BPC | 1–3 | OT practice | Visitability evidence anchor |
+
+### Proposed synthesis direction
+Add Wellecke 2022 as Tier 1 OT empirical evidence for visitability priority ordering in CON-0082 and DAR items. Reframe three visitability minimums as OT-empirically confirmed, not merely regulatory-derived. This strengthens the case for mandatory visitability provisions beyond code minimums.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing for DAR and visitability items
+
+---
+
+## CON-0098 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Disposition:** PENDING
+**Type:** [BOTH] — framing principle affecting all item specifications
+**Populations involved:** ALL
+**Items involved:** Part 1 (framework), all item specifications
+**Gap register items:** NONE
+
+### Connection description
+The ot-frameworks-built-environment BPC documents that the Kawa Model (Iwama 2006) is the OT theoretical framework most directly aligned with CRPD social model framing: barriers are positioned as external obstacles blocking the flow of life — not as deficits in the person. The BPC recommends Kawa as the primary framing language for guidebook item writing.
+
+The guidebook's item specifications currently use mixed framing. Some describe barriers in environmental terms (consistent with Kawa/CRPD); others imply functional deficit framing. Establishing Kawa Model as the normative framing standard would produce consistent social model language across all items.
+
+Additionally, the BPC confirms that PEOP (Baum et al. 2015) is the most internationally validated OT framework (Siu et al. 2024, 109 articles, Tier 1), providing a Tier 1 foundation for the guidebook's OT-based approach across jurisdictions.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Iwama 2006 (Kawa Model) | 3 (Co-2) | OT practice (JA-origin) | All guidebook item framing |
+| Siu et al. 2024 (PEOP, 109 articles, Tier 1) | 1 | OT practice (international) | Part 1 theoretical foundation |
+| ot-frameworks-built-environment BPC | 1–4 | OT practice | Guidebook writing standard |
+
+### Proposed synthesis direction
+Part 1 §1.4 theoretical framework: establish Kawa Model as primary writing-language standard for item framing (barriers external, not person-deficit). Reference PEOP as the most internationally validated OT framework for evidence synthesis. Add Siu et al. 2024 as Tier 1 validation. Ensures CRPD-aligned language across all item specifications.
+
+### Disposition
+- [ ] MODERATE → P2 gap item (Part 1 framing standard)
+
+---
+
+## CON-0099 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** MODERATE
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — policy model comparison for design-stage economics argument
+**Populations involved:** ALL
+**Items involved:** Part 12 (Economics)
+**Gap register items:** NONE
+
+### Connection description
+The jurisdiction-grant-programmes-comprehensive BPC documents the Nordic model (Sweden, Norway, Denmark) as the most equitable grant programme internationally: uncapped, no means-test, assessed on functional need alone. Denmark §116 funds 100% of full necessary cost with no cap. Singapore EASE 2.0 (extended to private property February 2025) achieves 87.5–95% subsidy rates — the highest global subsidy rate by percentage.
+
+These programme models demonstrate that the highest-quality national systems still fund retrofit only — reinforcing the design-stage economic argument (CON-0096). Additionally, France MaPrimeAdapt' (January 2024) is the newest major Western programme, providing updated reference for EU jurisdictions. Quebec PAD suspended April 2025 — must not be cited as current.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Denmark §116 (100% uncapped) | 5 (statutory) | ALL (DK) | Nordic model benchmark |
+| Singapore EASE 2.0 (87.5–95% subsidy, 2025) | 5 (programme data) | ALL (SG) | Highest subsidy rate benchmark |
+| France MaPrimeAdapt' 2024 (€15,400 max) | 5 (programme data) | ALL (FR) | EU jurisdiction update |
+| jurisdiction-grant-programmes-comprehensive BPC | 5 | Economics | Programme comparison |
+
+### Proposed synthesis direction
+Part 12 economics: cite Nordic model as best-practice grant benchmark (uncapped, needs-based). Note Singapore EASE 2.0 as highest-subsidy-rate programme. Update France reference to MaPrimeAdapt'. Flag: Quebec PAD and KfW 455-B are suspended — remove from any current citations. Connect to CON-0096 design-stage argument.
+
+### Disposition
+- [ ] MODERATE → P2 gap item
+
+---
+
+## CON-0100 [2026-04-02 20:54]
+
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — multi-population stair descent specification
+**Populations involved:** MOB, NEU, DEM, PAIN, VIS, OFS
+**Items involved:** Stair items, corridor/seating height items
+**Gap register items:** NONE
+
+### Connection description
+The stair-ramp-threshold-biomechanics-accessibility BPC provides the biomechanical basis for seating height specification: 450–500 mm seat height reduces hip extensor moment by 40% compared to 380 mm (Rodosky et al. 1989, Tier 3). Reduced sit-to-stand capacity predicts falls in older adults (Lord et al. 1993). The 2 cm threshold defeats 45.8% of wheelchair users on first attempt (Al Lawati et al. 2017). Contrast sensitivity at 6 cycles/degree is reduced ~50% at age 70+ compared to young adults (Owsley et al. 2001).
+
+Taken together, these biomechanical findings from a single BPC span MOB, NEU, DEM, PAIN, VIS, and OFS populations but were synthesised primarily for the MOB clinical context. Each threshold, riser, and seating specification in the guidebook has a biomechanical evidence basis — and in each case, the populations affected extend beyond MOB.
+
+This is a consolidating connection: the biomechanics BPC provides the common evidence language for threshold, ramp, stair, and seating specifications across the full population set. Currently no Part 1 methodology section references biomechanical derivation as the evidence basis for dimensional specifications.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Rodosky et al. 1989 (seating height, hip moment) | 3 | MOB (older adults) | PAIN, OFS, DEM, NEU |
+| Al Lawati et al. 2017 (2 cm threshold, 45.8% defeat) | 3 | MOB | MOB, PAIN, OFS, NEU |
+| Owsley et al. 2001 (contrast sensitivity age 70+) | 3 | VIS | VIS, DEM, NEU |
+| Lord et al. 1993 (sit-to-stand predicts falls) | 3 | MOB (older adults) | DEM, NEU, PAIN, OFS |
+| stair-ramp-threshold-biomechanics-accessibility BPC | 2–4 | MOB | ALL affected populations |
+
+### Proposed synthesis direction
+Part 1 methodology: add explicit statement that dimensional specifications are biomechanically derived, not arbitrary — cite stair-ramp-threshold BPC as the primary evidence source for threshold (≤4–6 mm), ramp gradient (1:20), riser (≤175 mm), and seating height (450–500 mm) values. Each value corresponds to a documented functional threshold at which the environment switches from enabling to disabling. Connects to CON-0044 (affordance framework — specification = affordance threshold).
+
+### Disposition
+- [x] HIGH → Part 1 methodology note + item-specification-writer briefing
