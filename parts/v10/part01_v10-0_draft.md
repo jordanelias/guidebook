@@ -243,6 +243,14 @@ For Tier 2 practice, the Housing Enabler is the recommended assessment instrumen
 
 **§1.8.9 Attention Restoration Theory (ART) and Stress Recovery Theory (SRT)** ART and SRT provide the evidence basis for biophilic design provisions (Appendix B), natural lighting specifications (B-09), and sensory retreat provisions (A-16, F-01).
 
+
+
+### §1.9.1 Biomechanical Derivation of Dimensional Specifications
+
+Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating height, corridor width, riser height — is a biomechanical threshold, not an arbitrary convention. The specification value is the point at which the environment switches from enabling action to disabling it. Thresholds above 6 mm begin to intercept the gait trajectory of older adults (Pavol et al. 2001, Tier 3). Ramp gradients above 1:12 force propulsion techniques that accumulate shoulder injury risk over time for manual wheelchair users (Waters et al. 1985, Tier 3). Seating at 450–500 mm reduces hip extensor moment by 40% compared to standard 380 mm sofa height (Rodosky et al. 1989, Tier 3). Riser irregularities of 6 mm increase misstep probability by approximately 18% (Templer 1992, Tier 4).
+
+This derivation has two implications for practice. First, the values are not interchangeable — a 25 mm threshold is not "almost accessible." The threshold marks a functional discontinuity, not a position on a comfort gradient. Second, where a specification lacks a biomechanical basis, this guidebook marks it explicitly as expert consensus or inferred (○ marker) rather than evidence-derived (● marker). The stair-ramp-threshold-biomechanics-accessibility BPC provides the primary evidence base for dimensional specifications in this guidebook. See also CON-0100 (connection register) and the affordance framework in §1.4 — a specification is the threshold at which an affordance becomes available or is withdrawn.
+
 ### §1.9 Scope
 
 This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part 2. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs.
