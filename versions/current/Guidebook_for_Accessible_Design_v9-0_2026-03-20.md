@@ -47,9 +47,9 @@ This guidebook is accompanied by supplementary resources that extend coverage be
 
 Category A: Acoustics (A-01–A-16) · Category B: Lighting (B-01–B-12) · Category C: Colour & Surface (C-01–C-06) · Category D: Spatial Layout & Wayfinding (D-01–D-09) · Category E: Entry & Circulation (E-01–E-14) · Category F: Sensory Zoning (F-01–F-06) · Category G: Furniture & Fittings (G-01–G-09) · Category H: Controls & Technology (H-01–H-05) · Category I: Upper Limb (I-01–I-04) · Category K: DeafBlind Environment Provisions (K-01–K-04)
 
-**Part 5 — Building-Level Co-Occurrence Resolution** *(stub — content pending GAP-CONF-01/02)*
+**Part 5 — Building-Level Co-Occurrence Resolution**
 
-§5.1 Scope · §5.2 Conflict Domain Matrix · §5.3 Resolution Protocols by Domain · §5.4 Application to Design Stages
+§5.1 Scope and Operating Principle · §5.2 Conflict Resolution Table (11 domains) · §5.3 Unresolvable Conflicts Register · §5.4 Worked Examples (deferred Phase 3 Session 2)
 
 **Part 6 — Residential Application Matrices**
 
@@ -125,7 +125,7 @@ The following amendments were applied during v9.0 production (2026-03-20):
 | Ref | Type | Description |
 | --- | --- | --- |
 | WS-1A | Structural | CO-0001: All Roman-numeral Part/Volume references → Arabic; item codes V2-P4-XX → P7-XX; §E.x conflict refs → §8.x |
-| WS-2A | Safety | MS/Uhthoff ambient temperature floor corrected: ≤22°C → ≤18°C (TC-01, cross-population conflict §8.4.4) |
+| WS-2A | Safety | MS/Uhthoff ambient temperature floor corrected: ≤22°C → ≤18°C (TC-01, cross-population conflict — now Part 5 §5.2 TEMP-RANGE) |
 | WS-2A | Code | VIS/DEAF invalid code → DEAF throughout; A-10/A-11/A-12 Applicable Groups corrected |
 | WS-2A | Structure | §1.11 Scope renumbered to §1.9 |
 | WS-2A | Evidence | 7-tier evidence hierarchy (D-18 rule) applied throughout; Co-2 (OT CPGs) tier formalised |
@@ -136,7 +136,7 @@ The following amendments were applied during v9.0 production (2026-03-20):
 | WS-3D | Coverage | DEAF provisions added to 6 residential room matrices (R-BED, R-LIV, R-KIT, R-HAL, R-STA, R-BA) |
 | WS-3E | Content | Three new conflict resolutions added: §8.4.10 (DEM/PD floor pattern), §8.4.11 (NDV/AUT + NDV/MH colour), §8.4.12 (ramp gradient walker vs wheelchair) |
 
-**Deferred to v10.0:** Part 8 Cross-Population Conflict Resolutions (full standalone chapter); 82× "Chapter C" → Part 12 §12.4 (manual review per instance); 12× case study cross-refs; IntD full evidence chapter; `citation-miner` skill build.
+**Deferred to v10.0:** Part 5 §5.4 Application to Design Stages — worked examples (GAP-CONF-03); 82× "Chapter C" → Part 12 §12.4 (manual review per instance); 12× case study cross-refs; IntD full evidence chapter; `citation-miner` skill build.
 
 ---
 
@@ -1252,7 +1252,7 @@ Post-installation RT60 measurement at 500 Hz required
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
-**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room); Part 6 §5.2 (ACOUSTIC-LVL conflict domain)
+**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room); Part 5 §5.2 (ACOUSTIC-LVL conflict domain)
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. RT60 reduction via ceiling treatment directly lowers the cumulative acoustic load experienced by sensory-avoiding and sensory-sensitive users, reducing the neurological effort cost of occupying the space and preserving cognitive and physical energy for the primary occupation.
 
@@ -3824,25 +3824,67 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 *Accessible Built Environments — Utopian Best Practice Guidebook v9.0*
 
-*(Stub — full content pending GAP-CONF-01/02 evidence synthesis. See Part 3 §3.8–§3.9 for interim co-occurrence guidance.)*
+### §5.1 Scope and Operating Principle
 
-### §5.1 Scope
+Every population-specific accessibility specification in this guidebook is calibrated to its population's OT evidence base. When a building serves two or more populations simultaneously — the rule rather than the exception in any institutional, commercial, or multi-resident building — some specifications conflict directly. The high-contrast visual environment that orients a VIS user creates overstimulation for an NDV user in the same corridor. The acoustic amplification that enables a DEAF user to follow speech is a sensory assault for a NEU/PCS user in the same meeting room. A plain floor that prevents falls for a DEM user removes the tactile differentiation that a VIS user relies on for orientation. These are not design failures or specification errors. They are the inevitable result of applying population-specific evidence to shared space.
 
-This Part addresses co-occurrence conflicts that operate at building-wide level — environmental decisions (lighting intensity, acoustic level, spatial openness, temperature range) that cannot be resolved for individual rooms without a building-level design position.
+Part 5 exists because conflict resolution requires a different method from specification writing. Specification writing asks: what does the evidence say for this population? Conflict resolution asks: when two evidence-based provisions contradict each other in the same space, which governs, and how does the design reconcile them? The answer is not to split the difference. It is to apply the resolution hierarchy, document the rationale, and identify — explicitly — the conflicts that cannot be resolved without individual co-design.
 
-### §5.2 Conflict Domain Matrix
+**Resolution hierarchy:**
 
-*[To be populated from cross-population-conflict-mapper output — GAP-CONF-01]*
+1. **Safety-critical provisions take priority.** A provision that prevents a fall, prevents scalding, or enables fire evacuation governs over a provision that optimises sensory comfort. The Tier 1 OT clinical evidence for the safety outcome determines which provision takes precedence, not the frequency of the populations involved.
 
-Conflict domains pending evidence synthesis: LIGHT-INT · ACOUSTIC-LVL · SPATIAL-OPEN · TEMP-RANGE · VIS-COMPLEX
+2. **Tier 1 OT clinical evidence governs where safety provisions are equivalent.** Where both conflicting provisions have safety rationales of equivalent weight, the provision supported by higher-tier OT evidence takes Tier 1 priority.
 
-### §5.3 Resolution Protocols by Domain
+3. **The most constrained user's provision governs where OT evidence is equal.** Where evidence quality is equivalent, the provision serving the population with the more severe functional consequence of non-compliance governs.
 
-*[To be drafted — GAP-CONF-02]*
+4. **Range specifications are preferred over point specifications.** Where a parameter is contested, a range that falls within the acceptable zone for both populations avoids the need to choose.
 
-### §5.4 Application to Design Stages
+5. **Zoning separates irreconcilable conflicts.** Where no single parameter value serves all populations, spatial separation — assigning zones with distinct parameter sets — is the resolution mechanism.
 
-*[To be drafted — GAP-CONF-02]*
+6. **Irresolvable conflicts are documented, not hidden.** Where a conflict cannot be resolved at Tier 0 or Tier 1 for a shared ambient parameter, this section records it as a Tier 2 conflict — resolvable only through individual co-design.
+
+---
+
+### §5.2 Conflict Resolution Table
+
+Eleven environmental parameters produce direct conflicts between population-specific specifications. For each conflict: the opposing specifications are stated, the governing resolution is identified, and the guidebook item cross-references are given. Resolution evidence quality: ● = Tier 1–3 OT clinical or post-occupancy evidence; ◐ = Tier 3–5 consensus or standards; ○ = Tier 5–6 expert consensus with no outcome data.
+
+| Domain | Pop A | Pop B (and others) | Pop A specification | Pop B specification | Resolution | Status | Evidence |
+|---|---|---|---|---|---|---|---|
+| **COLOUR-CONT** | VIS, DEM | NDV/SENS, NDV/AUT | ≥30% LRV differential at all step edges, door frames, counter edges; ≥50% at critical junctions (C-04) | Muted palette; ≤20 LRV in sensory retreat zones | Zone-based: ≥30 LRV on primary routes (safety-critical); ≤20 LRV in sensory retreat (Zone 3); plain floor (C-06) primary routes satisfies both populations | RESOLVED-EVIDENCE | ● DSDC EADDAT 2022; ◐ CNIB 2024; ◐ PAS 6463:2022. Cross-ref: C-04, C-06, F-01 |
+| **ACOUSTIC-LVL** | DEAF, CI users | NDV/SENS, NDV/AUT, NEU/PCS | Hearing loop (IEC 60118-4); STI ≥0.75 for DEAF/CI | No amplification; ≤30 dBA ambient (Zone 3); no sound masking (A-13) | Loop amplifies direct speech without requiring broadcast audio. Audio sources independently controlled. RT60 ≤0.3 s universal. No masking where NDV is primary population | RESOLVED-CONSENSUS | ◐ IEC 60118-4:2022; ● Iglehart 2020 AJA; ◐ PAS 6463:2022. Cross-ref: A-10, A-11, A-13 |
+| **GRAB BAR DIAMETER** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular | 32–45 mm; oval permitted | Range 32–45 mm serves both. Circular preferred. Below 32 mm: inadequate. Above 45 mm: UPL grip degrades | RESOLVED-EVIDENCE | ● BS 8300:2018; ◐ ISO 21542:2021; ◐ Guay 2020. Cross-ref: G-03 |
+| **TEMP-RANGE** | NEU/MS (Uhthoff's) | PAIN (fibromyalgia) | ≤18°C ambient (safety-critical — heat causes neurological worsening) | 22–24°C preferred; cold metal triggers PAIN allodynia | Ambient ≤18°C governs (safety-critical). Individual heating: radiant panel at each seat; insulated grab bars; personal thermal options | RESOLVED-CONSENSUS | ● Uhthoff mechanism (Davis 2010 Neurology); ◐ Staud 2011; ◐ ms-thermal BPC. Cross-ref: TC-01, TC-02 |
+| **SURFACE-TEXT** | VIS, DBL | PAIN (vibration sensitivity), MOB/AMB | Full ISO 23599:2019 truncated dome on primary routes (safety-critical) | Smooth surface preferred; textured indicators create PAIN vibration trigger | Safety-critical: ISO 23599 governs on primary routes. Secondary routes: high-contrast flush edging (Tier 3 compromise for VIS). Residual gap: no product meets full ISO 23599 profile and vibration attenuation | PARTIAL | ◐ ISO 23599:2019; ◐ JIS T9251; ○ PAIN vibration sensitivity. Cross-ref: C-04, E-09 |
+| **SPATIAL-OPEN** | DEAF | NDV/AUT, NDV/SENS | Glazed corridor junctions (visual advance warning; matte/low-reflectance); ≥2400 mm primary corridor for signing | Compartmentalised zones; ≤sensory complexity | Graduated model: open spine (≥1500 mm, signing-compatible) → enclosed sub-zones. Glazed junctions: matte glazing; etched lower band. Prospect-refuge balance | RESOLVED-CONSENSUS | ◐ DeafSpace 2010; ◐ PAS 6463:2022; ○ Prospect-refuge theory (Appleton 1975). Cross-ref: E-08, F-01, D-05 |
+| **LIGHT-INT** | DEM, VIS | NDV/AUT, NEU/PCS, PAIN, OFS | ≥300 lux eye level daytime (DEM circadian); ≥250 melanopic EDI; ≥500 lux task (VIS) | ≤200 lux ambient preferred; dimmable to ≤50 lux (sensory retreat) | Three-zone: Zone 1 ≥300 lux/≥200 EML; Zone 2 150–300 lux dimmable; Zone 3 user-controlled 0–150 lux. Individual dimming (B-06) at every primary work position is the highest-impact single mitigation | RESOLVED-CONSENSUS | ● Brown 2022 (melanopic EDI); ◐ DSDC EADDAT 2022; ◐ PAS 6463:2022. Cross-ref: B-01, B-06, B-07, F-01 |
+| **VIS-COMPLEX** | DEM, IntD | NDV/SENS | High-redundancy signage: pictogram + word + Braille + colour coding (D-08, D-09) | Minimal visual clutter; ≤3 sign elements per decision point | Pictogram + word + Braille satisfies both: pictograms serve IntD; matte sign field serves NDV/SENS. Colour zone wayfinding: consistent, non-saturated, ≤5 zones per building | RESOLVED-CONSENSUS | ◐ DSDC EADDAT 2022; ◐ PAS 6463:2022; ○ IntD (NICE NG93). Cross-ref: D-04, D-08, D-09 |
+| **MOVE-FREE** | DEM (wandering) | MOB/fall risk | Unobstructed loop; freedom of circulation | Supervised, contained paths with support surfaces | Secure garden loop with bilateral handrails satisfies both. Irreconcilable in public buildings without OT assessment: TIER-2-ONLY (institutional) | RESOLVED-CONSENSUS (residential); TIER-2-ONLY (institutional) | ◐ DSDC EADDAT 2022; ◐ Clemson 2023 Cochrane. Cross-ref: D-01, D-11, G-05 |
+| **FRAGRANCE** | OFS/MCAS, NDV/SENS | DEM (olfactory orientation) | Zero fragrance: F-02/F-06 | Scented cues for DEM spatial orientation | Fragrance-free policy baseline; DEM olfactory cues via food smells (kitchen adjacency) and natural scents (low-fragrance planting) rather than synthetic fragrances | PARTIAL | ◐ Afrin 2020; ◐ DSDC EADDAT 2022; ○ natural vs synthetic distinction. Cross-ref: F-02, F-03, F-06 |
+| **DOOR-OPERATION** | MOB (force-free) | NDV/MH (predictability) | Automatic doors; no push force; 10-second hold-open | Predictable actuation; no unexpected movement; advance warning | Motion sensor ≥3 m; auditory chime ≤65 dBA; glazed leaf; ≥3 s travel; high-contrast floor activation zone. MOB: force-free. NDV/MH: predictable, pre-announced | RESOLVED-CONSENSUS | ◐ PAS 6463:2022; ◐ BS 8300:2018; ◐ DeafSpace 2010. Cross-ref: E-11, C-04 |
+
+---
+
+### §5.3 Unresolvable Conflicts Register
+
+Three conflict types remain unresolvable at Tier 0–1 for shared ambient environments.
+
+**CONF-UNRESOLV-01 — Ambient temperature (OFS/NEU/MS vs PAIN in non-zoned shared sleeping space)**
+
+Ambient ≤18°C governs (Uhthoff's mechanism, safety-critical). PAIN population's thermal need carried by: (1) insulated coated grab bars; (2) warm bedding specification; (3) individual heated throw or vest as FM provision. OT assessment is mandatory where a building simultaneously serves a person with MS-spectrum diagnosis and a person with fibromyalgia or cold-aggravated pain in a shared non-zoned sleeping space.
+
+**CONF-UNRESOLV-02 — Acoustic amplification and NDV/AUT in shared open-plan space without zone separation**
+
+A hearing loop operating at prescribed output in an open-plan space conflicts with NDV/AUT ≤35 dBA ambient requirement when physical zone separation is absent. Individual wireless receiver technology (A-12 Auracast) is the technical resolution but does not replace the ambient accessible environment right. Flag for OT assessment where both NDV/AUT and DEAF populations occupy a shared open-plan space without zone separation.
+
+**CONF-UNRESOLV-03 — DEAF glazed junctions vs DEM reflective surface confusion and NDV visual noise in DEAF-primary buildings**
+
+Clear glass maximised for DEAF signing vs matte/etched glass for DEM/NDV: dimensional compromise only. Clear glass upper band (>1400 mm AFF) + frosted/etched lower band (≤1400 mm AFF). Where DEAF is the primary population, DEAF signing requirements govern; DEM/NDV mitigation applied within that constraint.
+
+---
+
+*§5.4 Application to Design Stages: deferred to Phase 3 Session 2 (GAP-CONF-03). See part04 §4.5 worked examples for cross-population synthesis pending formal extraction.*
 
 ---
 
