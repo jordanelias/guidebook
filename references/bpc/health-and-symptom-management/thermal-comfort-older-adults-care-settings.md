@@ -52,7 +52,7 @@
 Not yet performed.
 
 ### Bottom-up findings (functional deficit pass)
-Not yet run.
+FDR-TCOA-01: Thermoregulatory unawareness in DEM (van Hoof 2010 Tier 3) — wardrobe specification for carer-managed dressing: full-width opening, adjustable rail 1050-1200mm, shelf 600-900mm, visual display of clothing options. G-08 addition. FDR-TCOA-02: Heat shock is differential-at-entry, not absolute temp — bathroom pre-heating specification: ≥30 min pre-heat activation (timer/sensor/carer) before bathing. F-07 commissioning addition. FDR-TCOA-03: Reduced peripheral sensation — LST radiators ≤43C surface temp (NHS Estates HBN 00-10 Tier 5), insulated pipework, thermostatic heated towel rails ≤43C in DEM/older adult settings. F-07 addition. Items affected: G-08, F-07, Part 6 residential bathroom matrices.
 
 ### Key sources
 - Baquero2023 — neutral temperature 24.9°C, comfort zone 18.3–26.3°C (n=1,065)
