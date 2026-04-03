@@ -303,7 +303,10 @@ Understanding where evidence is strong, moderate, and absent is essential for ma
 | Normalised environment — 31% psychotropic medication reduction (Item D-09) | Village Landais Alzheimer post-occupancy evaluation, 2020 | NORD Architects / Département des Landes [French, unpublished in English\] |
 | LRV contrast ≥30 at critical junctions (Item C-04) | Six independent national standards confirm this threshold | UK, German (DIN 18040-2), French (CEREMA), Swedish, Norwegian, Japanese |
 | 1:20 ramp gradient — functional OT maximum for manual wheelchair self-propulsion (Item E-03) | Largest OT propulsion study sample available | Boverket 2022 [Swedish\]; SINTEF Byggforsk [Norwegian\]; Scandinavian Journal of OT |
-| Zero-threshold wet room (Item G-04) | Consistent across six language bodies | German, Japanese, Swedish, Norwegian, British, North American, Australian standards and research |  |
+| Zero-threshold wet room (Item G-04) | Consistent across six language bodies | German, Japanese, Swedish, Norwegian, British, North American, Australian standards and research |
+| Universal design in schools — positive BCR (NOK 2.2 billion benefit) | Cost-benefit analysis of universally designed Norwegian primary school. Strongly positive benefit-cost ratio. | Oslo Economics (2018) Report 2018-36 [Norwegian] |
+
+| Social cost of inaccessibility — extra household expenditure ≈5.7% | Robust across 40-country studies; applicable at population level | Tibble 2005; Zaidi & Burchardt 2005; Mitra & Jones 2017; Estrada-Mejia et al. 2023 |
 
 #### §11.6.2 Where Evidence Is Moderate
 
@@ -379,6 +382,11 @@ The most effective economic argument for accessibility does not depend on financ
 
 "Post-occupancy research from De Hogeweyk and Village Landais Alzheimer demonstrates that design-stage accessible design — specifically loop floor plans, toilet visibility from primary rooms, and familiar environment normalisation — achieves outcomes that cannot be replicated by staffing: 94% independent wayfinding vs. 34% in conventional settings; 47% reduction in incontinence from toilet visibility alone (Marquardt 2011, 32-facility study); 31% reduction in psychotropic medication use (Village Landais Alzheimer 2020). These are design-stage decisions. They cost nothing at brief stage. They cannot be added after construction."
 
+
+**Argument 6 — The Grant Programme Paradox (Public-Sector Clients)**
+
+"Every major jurisdiction operates government-funded home adaptation grant programmes — UK DFG (£711m/year), Australia NDIS, Canada HATC, US VA SAH/SHA. Every programme funds retrofit only. No programme funds design-stage accessible construction. The entire public funding apparatus addresses the most expensive endpoint. If the same provisions were required at construction — at <4% of project cost — the retrofit grant programmes would be unnecessary for new housing stock. The current system spends public money at 10–40× the cost that design-stage provision would have required."
+
 **Argument 5 — Social Value (Public-Sector and Institutional Clients)**
 
 "A building that excludes people is not fulfilling its public purpose. Fifteen to twenty percent of the population has a disability affecting use of built environments. Accessible design is a question of whether a public building serves the public."
@@ -393,13 +401,15 @@ The most effective economic argument for accessibility does not depend on financ
 
 **Include accessibility in POE.** Post-occupancy evaluation should include accessibility performance assessment — occupant surveys, wayfinding studies, outcome measurements. This creates the evidence record the field needs.
 
+**Protect accessibility from value engineering.** Accessibility provisions specified as independent line items are disproportionately vulnerable to VE. They must be specified as integrated systems — removing one element (e.g. hearing loop without acoustic ceiling) destroys more value than the cost saved. The QS must understand that accessibility items are interdependent.
+
 **Brief the QS.** Instruct the quantity surveyor to flag any accessibility item proposed for value engineering with a note of the likely reinstatement cost at retrofit stage.
 
 #### §11.8.3 Jurisdiction-Specific Notes
 
 | Jurisdiction | Key Notes for Design Teams |
 | --- | --- |
-| Germany | KfW Altersgerecht Umbauen programme: subsidy for qualifying accessible retrofits. Bundesfachstelle Barrierefreiheit: annual guidance on DIN 18040-2. Threshold: ≤10mm DIN 18040-2 'reduced-barrier' variant available where zero-threshold is drainage-constrained (relevant to Item E-06). |
+| Germany | KfW programmes: KfW 455-B grant programme suspended January 2025 (oversubscribed); KfW 159 loan programme continues at reduced rate. Bundesfachstelle Barrierefreiheit: annual guidance on DIN 18040-2. Threshold: ≤10mm DIN 18040-2 'reduced-barrier' variant available where zero-threshold is drainage-constrained (relevant to Item E-06). |
 | Norway | NS 11001 (Universell utforming): most comprehensive national universal design standard globally. SINTEF Byggforsk reach zone research confirms upper reach at 1,300mm AFF for forward reach (powered wheelchair users) — relevant to Item H-01. |
 | Sweden | Boverket (2022): covered entrance canopies of ≥3,000 × 2,000mm (Item E-05) are functionally necessary for independent wheelchair operation in Nordic winter conditions. |
 | Japan | Barrier-Free Act (2006, rev. 2021). JIS T9251 TWSI standard predates ISO 23599:2012 and established the dot/bar convention used internationally. PTV ≥40 wet may be more appropriate than ≥36 in high-rainfall climates (Item E-07). |
