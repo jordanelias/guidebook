@@ -84,6 +84,8 @@ Post-installation RT60 measurement at 500 Hz required
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. RT60 reduction via ceiling treatment directly lowers the cumulative acoustic load experienced by sensory-avoiding and sensory-sensitive users, reducing the neurological effort cost of occupying the space and preserving cognitive and physical energy for the primary occupation.
 
+**FDR-IntD-02 [Tier 1–3]:** Hyperacusis is prevalent in IntD-associated syndromes — Down syndrome (Widen et al. 2013, *Int J Audiol* Tier 3), Williams syndrome (Levitin et al. 2005, *Nature Neuroscience* Tier 1), Fragile X syndrome (Castrén et al. 2003 Tier 3). ● IntD-occupied educational and residential spaces should apply the NDV acoustic specification (RT60 ≤0.4 s, NC-25 background noise — A-02, A-08) as the governing acoustic standard rather than the general occupancy standard. DEM/NDV[IntD-proxy] routing applies.
+
 ### A-03 Acoustic Door (STC ≥35) at All Sensitive Space Boundaries
 
 **Applicable Groups:** AUT, PCS, DEM, MH, SENS · OFS · PAIN · NDV
@@ -258,11 +260,11 @@ All mechanical plant: mounted on vibration isolation pads
 
 **Cross-reference:** A-01 (Buffer Zone); A-16 (Sensory Room); H-02 (Individual Environmental Control)
 
-**Evidence basis (OT):** Dunn's Sensory Processing Model. NC-25 is the noise criterion below which continuous background HVAC noise
+**FDR-IntD-02 [cross-ref]:** In IntD-occupied settings apply NC-25 target (this item) as governing acoustic specification — same basis as NDV. ○ Coordinate with F-07 HVAC system type: forced-air systems are the primary source of NC exceedance.
 
-ceases to function as a sensory trigger for the majority of sensory-avoiding and sensory-sensitive users; this specification
+**Evidence basis (OT):** Dunn's Sensory Processing Model. NC-25 is the noise criterion below which continuous background HVAC noise ceases to function as a sensory trigger for the majority of sensory-avoiding and sensory-sensitive users; this specification operationalises Dunn's model by translating 'reduce neurological threshold exceedance' into a measurable acoustic design parameter.
 
-operationalises Dunn's model by translating 'reduce neurological threshold exceedance' into a measurable acoustic design parameter.
+**CON-0101 [HIGH]:** HVAC system type is the primary determinant of achievable NC level. NC-25 constrains HVAC system selection — coordinate with F-07 thermal zoning strategy. ● Forced-air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC (acoustic and airborne trigger); radiant heating achieves NC-25 without forced-air noise contribution. Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 at ceiling — coordinate ceiling treatment zones with thermal mass zones.
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 
@@ -533,6 +535,8 @@ Location: adjacent to primary circulation; not via another occupied space
 **Cross-reference:** A-01; A-03; A-14; F-03 (Graduated Stimulation Re-entry)
 
 **Evidence basis (OT):** EHP Framework (create strategy). The sensory room implements EHP's 'create' strategy: an entirely new environmental context is constructed within which the occupation of sensory self-regulation becomes possible. The 8 m² minimum, STC ≥50 partition, and RT60 ≤0.3s specifications are the minimum context parameters required for this occupation to occur.
+
+**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure (Leavitt & Feinstein 2014, Davis 2010). NEU/MS users require a cooling-capacity retreat distinct from NDV sensory regulation — ambient ≤16°C preferred (vs NDV typical ≤20°C). ○ In facilities serving NEU/MS as a primary or significant secondary population: where A-16 serves both NDV and NEU/MS, specify individual HVAC control enabling ≤16°C setpoint. Alternatively, a separate cooling station (≤12 m², individually temperature-controlled to ≤16°C, adjacent to MS clinic or specialist facility area) may be provided as a dedicated NEU/MS provision. Extended occupancy capacity required (30–60 min recovery duration vs 10–15 min NDV reset). [THIN — architectural implication only; no design standard specifies]
 
 ### A-17 Upholstered Seating [ABSORBED INTO G-02 per CO-0003/D2-24]
 <!-- CO-0003: A-17 specification content absorbed into G-02 Variety of Seating Types. G-02 now includes: upholstered seating throughout occupied spaces as population-serving provision for OFS/PAIN acoustic absorption benefits. -->
@@ -1133,6 +1137,8 @@ Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. Direct, short routes compensate for the reduced working memory capacity at Allen's CDM cognitive levels 3--4 by minimising the number of spatial 'chunks' that must be held in memory between decision points; for VIS users route directness reduces the cognitive wayfinding load that accumulates over long non-direct routes.
 
+**FDR-NDV-02 [THIN — Tier 1 mechanism only]:** Interoceptive processing delay in NDV/AUT (Garfinkel et al. 2016, *Cortex* Tier 1 — mechanism; no built environment RCT) — delayed awareness of bladder urgency increases risk of incontinence incidents in NDV-occupied spaces. WC or water point to be within 20 m one-way of any primary NDV occupied space (classroom, workstation zone, sensory room). ○ [architectural implication — THIN-POPULATION-SPEC; no design standard specifies this distance]
+
 ### D-03 Toilet Visibility from Primary Occupied Spaces (No Navigation Required)
 
 **Applicable Groups:** DEM, PAIN (MS bladder urgency), MOB · OFS
@@ -1212,9 +1218,9 @@ Minimum: 1 per 20 open-plan workstations
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3. AtkinsRéalis.
 
-**Cross-reference:** A-16 (Sensory Room); G-01 (Defensible Seating);
+**Cross-reference:** A-16 (Sensory Room); G-01 (Defensible Seating); F-01 (Sensory Gradient)
 
-F-01 (Sensory Gradient)
+**FDR-NDV-01 [THIN — Tier 5]:** Proprioceptive underresponsivity (Dunn quadrant 1) — under-foot textured floor zone (300 mm border of tactile mat or textured vinyl) at focus room entry may support self-regulation for NDV/AUT low-registration users. Conflict: DEM visual floor uniformity (C-06) — limit texture to under-foot zone only, no surface pattern change visible in plan. ○ [THIN-POPULATION-SPEC]
 
 **Evidence basis (OT):** EHP Framework (create strategy); Dunn's
 
@@ -1308,11 +1314,9 @@ replacement and mounting without structural works. See Part 12 §12.4.
 
 D-04 (Landmarks)
 
-**Evidence basis (OT):** Allen's CDM. Pictogram + single-word signage is the most direct application of Allen's CDM level 4 design
+**Evidence basis (OT):** Allen's CDM. Pictogram + single-word signage is the most direct application of Allen's CDM level 4 design principle in the guidebook: level 4 users can process a familiar object image plus one concrete action word, but cannot reliably process multi-word directional sentences or abstract symbols.
 
-principle in the guidebook: level 4 users can process a familiar object image plus one concrete action word, but cannot reliably
-
-process multi-word directional sentences or abstract symbols.
+**FDR-IntD-01 [Tier 2 — Silverman 2010; Tier 4 — NDIS SDA]:** Reduced abstract reasoning in IntD — concrete landmark-based wayfinding is the primary system; alphanumeric signage is backup only. Mechanism differs from DEM (which is memory loss): IntD users may not decode abstract symbols or letter-number sequences reliably but can navigate via object landmarks. Concrete 3D landmark objects at every decision point (D-04) are co-primary with pictogram signage (D-08) in IntD-occupied settings. DEM wayfinding provisions (D-02, D-04, D-08) are the strongest available proxy.
 
 ### D-09 Consistent Furniture Layout (No Rearrangement Without User Consultation)
 
@@ -1431,7 +1435,7 @@ Floor indicator: visual external to lift on all floors
 
 **Key citations:** Building and Construction Authority. (2025). BCA Code on Accessibility 2025. BCA. British Standards Institution. (2018). BS 8300:2018. BSI. CSA Group. (2023). CSA B651:2023. CSA.
 
-**Cross-reference:** E-02 (Platform Lift); E-06 (Level Entry); [VI-03 — retired code] (Temporal Accessibility)
+**Cross-reference:** E-02 (Platform Lift); E-06 (Level Entry); [VI-03 — retired code] (Temporal Accessibility); F-08 (Thermal Vestibule — CON-0108: where F-08 thermal vestibule is specified, accessible door specification (E-01) applies to both inner and outer vestibule doors)
 
 **Evidence basis (OT):** Compensatory FOR; Biomechanical FOR. The lift is the primary environmental compensation for vertical mobility
 
@@ -2007,6 +2011,8 @@ programme (significant disruption and cost). See Part 12 §12.4.
 
 **Key citations:** Mast Cell Action. (2023). Environmental triggers: guidance for building design. Mast Cell Action. Afrin, L.B., et al. (2020). Mast cell activation disease: An underappreciated cause of neurological and psychiatric symptoms. Brain, Behavior, and Immunity, 89, 218--225. CIBSE. (2015). CIBSE Guide A: Environmental Design (8th ed.). CIBSE. British Standards Institution. (2022). PAS 6463:2022. BSI. EN ISO 16000-9:2006. Indoor air — Part 9: Determination of emission of volatile organic compounds. ISO.
 
+**FDR-OFS-03 [Tier 3 — Afrin 2020]:** MCAS co-occurrence with OFS (Afrin et al. 2020, *Brain, Behavior, and Immunity* — Tier 3). MCAS chemical triggers include post-installation VOC off-gassing. ● Add commissioning specification to F-04: OFS/MCAS-designated spaces to not be occupied until post-installation VOC test confirms TVOC ≤0.5 mg/m³ at 28-day clearance (consistent with existing F-04 TVOC specification). This is a commissioning stage gate — not an additional material requirement. Add to Design Stage: Commissioning (pre-occupation air quality gate for OFS/MCAS spaces).
+
 **Tier X:** No RCT-level evidence for MERV 13 specification in relation to MCAS symptom reduction identified as of March 2026.
 
 Specifications are derived from MCAS trigger literature and HVAC engineering standards. Evidence review recommended at next revision.
@@ -2112,14 +2118,20 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 **Population conflict:** PAIN warmth preference conflicts with NEU/MS ambient ≤18°C requirement. Resolution: ambient governs (safety-critical — Uhthoff's mechanism); PAIN warmth delivered individually. See Part 5 §5.2 TEMP-RANGE and §5.3 CONF-UNRESOLV-01.
 
+**CON-0107 [MEDIUM]:** In care bedrooms with ceiling hoist (I-04), supplemental radiant heating panels must clear the hoist track path. Coordinate wall-mounted panel positions with hoist track sweep zone at Detailed Design. Cross-ref: I-04.
+
+**CON-0101 [HIGH]:** HVAC system selection to achieve NC-25 (A-08) — radiant heating systems are preferred over forced air in NEU/OFS spaces (lower noise contribution and no airborne trigger). Coordinate with A-08 and F-08 thermal mass specification. Cross-ref: A-08, F-08.
+
 <!-- NEW ITEM — CO-0003. Derives from TC-01/TC-02/TC-03 (Appendix C, now integrated into Part 4).
      Evidence: ms-thermal-temperature-conflict-resolution BPC; thermal-comfort-older-adults-care-settings BPC.
      CON connections: CON-0003 (MS vs PAIN thermal conflict), CON-0004 (OFS thermal).
      DRAFT REQUIRED: item-specification-writer briefing pending. -->
 
-[PLACEHOLDER — F-07 Thermal Zoning: whole-building HVAC zoning strategy; ≤18°C ambient with individual supplemental heating.
-Populations: NEU/MS (Uhthoff's — safety-critical), OFS, PAIN, DEM, ALL.
-Evidence basis: ms-thermal-temperature-conflict-resolution BPC + thermal-comfort-older-adults-care-settings BPC.]
+**FDR-MST-02 [Tier 3 — Krupp 2003]:** MS fatigue follows a diurnal pattern with peak fatigue typically mid-afternoon (Krupp et al. 2003). ○ In NEU/MS-specialist facilities, BMS programming to reduce ambient temperature 1–2°C from morning setpoint during afternoon period (approx. 13:00–17:00) may reduce afternoon fatigue symptom load. BMS schedule to be configurable by occupant or care team. [THIN — clinical mechanism only; no built environment study; BMS programming is zero-cost at commissioning stage]
+
+**FDR-TCOA-02 [Tier 3 — MHLW Japan 2023]:** Bathroom heat shock is caused by inter-room temperature differential at entry, not absolute temperature. Japanese evidence: 6,073 bathtub deaths annually from heat shock in cold bathroom (MHLW 2023 Tier 3; Nakayama 1981 foundational study). ○ In DEM and older adult residential settings, bathroom pre-heating specification: timer or PIR sensor activates bathroom heating ≥30 min before scheduled bathing; bathroom reaches ≥20°C before occupant entry. Specification to be included in FM commissioning brief and BMS programming.
+
+**FDR-TCOA-03 [Tier 5 — NHS Estates HBN 00-10]:** Reduced peripheral sensation in DEM and older adult populations increases burns risk from hot surfaces. ● Low Surface Temperature (LST) radiators, surface temperature ≤43°C per NHS Estates HBN 00-10, to be specified in all DEM and older adult residential and care bedrooms and bathrooms. Insulated pipework throughout. Thermostatic heated towel rails ≤43°C surface temperature in DEM/older adult settings. These are not comfort specifications — they are burn prevention safety specifications.
 
 ### F-08 Thermal Transition — Heating and Cooling System Response
 
@@ -2137,6 +2149,8 @@ Evidence basis: ms-thermal-temperature-conflict-resolution BPC + thermal-comfort
 **Design Stage:** Schematic Design (envelope strategy) · Technical Design (HVAC system specification)
 
 **Retrofit:** HIGH penalty (envelope). LOW penalty (vestibule addition if structurally feasible). DAR: note thermal bridge locations for future insulation upgrade.
+
+**CON-0108 [MEDIUM — CON-0068; pain-ofs BPC]:** Where F-08 thermal vestibule is specified, spatial coordination with E-series entrance items is required: (a) both vestibule doors (outer and inner) to meet E-01 accessible door specification; (b) level entry (E-06) at both vestibule thresholds — no raised threshold at either door; (c) lighting (E-13) continuous through vestibule — no dark transition zone between outer and inner doors; (d) where E-14 entrance rest seating is specified, locate within or immediately after vestibule so that OFS users benefit from thermal protection while resting. These four coordination items must appear on the same drawing set at Schematic Design stage.
 
 <!-- NEW ITEM — CO-0003 (was listed as F-07 in CO-0003; renumbered F-08 as F-07 now = thermal zoning).
      CON connections: CON-0003 (thermal). DRAFT REQUIRED. -->
@@ -2360,6 +2374,8 @@ Staff eye contact at wheelchair eye level (seated behind lower section)
 
 LRV ≥30 at counter edge vs floor
 
+● Lowered counter section to be available at all times as the default service position — not on request only [FDR-OFS-01: orthostatic intolerance onset 2–10 min; Raj 2013 Tier 1]
+
 **Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part 12 §12.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
@@ -2367,6 +2383,8 @@ LRV ≥30 at counter edge vs floor
 **Cross-reference:** A-10 (Counter Hearing Loop); G-05 (Adjustable-Height Desks)
 
 **Evidence basis (OT):** Biomechanical FOR. Counter height 760--860mm AFF with ≥690mm knee clearance is derived from the biomechanical requirements of conducting a seated counter interaction: the height enables face-to-face communication at eye level between a seated user and a standing staff member, and the knee clearance allows the wheelchair user to approach flush to the counter without needing to reach across an obstruction.
+
+**FDR-OFS-01 [Tier 1 — Raj 2013; Tier 2 — Stewart 2012]:** Orthostatic intolerance onset time 2–10 minutes from prolonged standing (Raj et al. 2013, *Circulation* — Tier 1). Seated service must be **immediately available** (not on request, not from a separate queue). ● A specification that requires OFS/POTS users to request a chair creates a 2–10 minute standing exposure before accommodation is provided — sufficient to trigger symptom onset. G-06 lowered counter section with knee clearance is the architectural mechanism; the specification requires it to be the default service position, not an adjusted alternative. Add to Specifications: "Lowered counter section to be the default service position for all transactions — not available 'on request' only."
 
 ### G-07 Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)
 
@@ -2458,7 +2476,7 @@ Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
 **Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelope of a seated wheelchair user (ISO 26800:2011); the ≤22 N activation force is the UPL threshold from clinical grip strength research; the ≥50 mm dimension for push-pad controls derives from the minimum target size for reliable activation with reduced fine motor control.
 
 ### H-02 Individual Environmental Control — Tier 0 Universal Provision
-<!-- CON-0017: H-02 elevated to Tier 0. ALL primary occupied spaces to provide occupant-adjustable lighting (level + CCT) and local thermal control. Population-specific overlays at Tier 1. Governs B-06, F-07, F-08. Populations: NDV/AUT · NDV/MH · OFS · DEM · NEU · DEAF · VIS · ALL. -->
+<!-- CON-0017: H-02 elevated to Tier 0. ALL primary occupied spaces to provide occupant-adjustable lighting (level + CCT) and local thermal control. Acoustic management: (a) sound-absorbing treatment to achieve RT60 target without reliance on operable panel configuration; (b) operable partitions or doors allowing users to close off their space from adjacent noise sources. Operable acoustic panels are not the standard mechanism — partition/door closure is. Population-specific overlays at Tier 1. Governs B-06, F-07, F-08. Populations: NDV/AUT · NDV/MH · OFS · DEM · NEU · DEAF · VIS · ALL. -->
 
 <!-- CON-0002 [HIGH] + CON-0017 [HIGH]: Elevate H-02 to Tier 0 universal provision. All primary occupied spaces to provide occupant-adjustable lighting (level and CCT), local acoustic management, and local thermal control. This is the highest-impact single provision for NDV, MH, OFS, PAIN, DEM conflict resolution. Item-specification-writer pass required. --> (Lighting and Temperature Per Space)
 
@@ -2473,6 +2491,8 @@ In-room dimming control: accessible in every primary occupied space
 In-room shading control: motorised where manual access limited
 
 Thermostat/temperature adjustment: ≤1100 mm AFF; ≤22 N force
+
+Acoustic management: (a) sound-absorbing treatment sized to achieve the RT60 target for the space without reliance on operable panel position; (b) operable door or partition enabling user-initiated acoustic separation from adjacent noise — required at all workstations and personal spaces in NDV/OFS typologies
 
 DEM: BMS with override limits rather than fully individual control (overheating/hypothermia risk)
 
@@ -2677,7 +2697,7 @@ Federation. (2023). Atlas of MS. MSIF. Petajan, J.H., \& White, A.T.
 ### H-05 Nurse Call and Personal Emergency Response
 <!-- NOTE: H-05 position corrected — belongs in Category H, not after I-04. CO-0004 new item. -->
 
-**Applicable Groups:** MOB, PAIN, OFS, DEM, UPL, NEU
+**Applicable Groups:** MOB, PAIN, OFS, DEM, UPL, NEU, DBL
 
 **Description:** In all residential care, supported living, healthcare, and assisted-living typologies: a nurse call and personal emergency response system with full coverage in all occupied rooms, bathrooms, and en-suites. System provides two-way voice communication, a visual indicator outside each room, and a wireless pendant option for mobile users. Audio, visual, and tactile alert modalities are specified to ensure emergency communication is accessible regardless of sensory impairment.
 
@@ -2711,7 +2731,7 @@ Auditory alert: alert at nursing station ≥75 dB(A); alert signal distinguishab
 
 **BPC note:** [NO BPC ENTRY --- nurse call systems not covered in current BPC corpus. Item drafted from healthcare standards (HTM 08-03, CQC, BS 8300). Sonnet-level synthesis only. Flag for Opus review at next BPC consolidation.]
 
-**Cross-reference:** H-01 (Accessible Controls --- H-01 ergonomic requirements apply to all call button specifications); H-03 (Visual Paging --- H-03 serves information access in assembly spaces; H-05 serves emergency response in care environments: distinct scope); B-10 (Visual Fire Alarm --- H-05 specifies nurse call integration with fire alarm panel; B-10 specifies fire alarm visual alerting design)
+**Cross-reference:** H-01 (Accessible Controls --- H-01 ergonomic requirements apply to all call button specifications); H-03 (Visual Paging --- H-03 serves information access in assembly spaces; H-05 serves emergency response in care environments: distinct scope); B-10 (Visual Fire Alarm --- H-05 specifies nurse call integration with fire alarm panel; B-10 specifies fire alarm visual alerting design); K-04 (Vibrotactile Alert --- CON-0104: in DBL-designated care environments, nurse call activation must trigger vibrotactile alerting device (wearable pager or bed shaker) for DBL occupants; audio and visual channels alone are insufficient for this population. Vibrotactile integration is a life-safety specification, not an enhancement)
 
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (adapt strategy). Nurse call and personal emergency response systems compensate for the reduced mobility and communication capacity of MOB, PAIN, OFS, and DEM users in care environments, enabling the occupation of independent rest and personal care in private rooms without forfeiting access to emergency support; the multi-modality specification (audio, visual, tactile, wireless pendant) ensures the system remains accessible when any single sensory or motor channel is unavailable.
 
@@ -2731,7 +2751,13 @@ Auditory alert: alert at nursing station ≥75 dB(A); alert signal distinguishab
 
 **Design Stage:** Schematic Design (structural ceiling provision) · Ready for Occupancy (equipment specification)
 
+**CON-0105 [MEDIUM — RCOT 2019; NHS HTM 08-03]:** Emergency protocol specification (required alongside structural provision): ● Hoist motor to include manual emergency lowering mechanism operable by a single carer without tools. ● Nurse call point (H-05) to be accessible from the hoist sling position during all transfers — either wireless pendant (standard H-05 specification) carried during all transfers, or wall-mounted call point within reach of transfer path at bed-to-bathroom positions. Coverage of the hoist transfer path by H-05 wireless pendant is the preferred solution.
+
 **Retrofit:** HIGH penalty (structural ceiling). The structural provision is a DAR item — must be included at construction stage to avoid 5–10× cost multiplier at retrofit. DAR specification: H-beam or doubled joist at ceiling, rated to full hoist load, in all specialist residential and care bedrooms.
+
+**CON-0107 [MEDIUM — ms-thermal BPC; RCOT 2019]:** Spatial coordination with F-07 thermal zoning — where F-07 supplemental radiant heating is specified in bedrooms with ceiling hoist provision, radiant panels to be wall-mounted outside the hoist track sweep zone. Verify no thermal panel obstruction of hoist motor travel path at Detailed Design stage.
+
+**CON-0103 [MEDIUM — RCOT 2019; BS 8300:2018]:** Spatial coordination with G-03 and G-04 — ceiling hoist track path must align with G-03 grab bar positions and G-04 turning circle at WC and shower transfer positions. The track-end position over the WC is determined by G-04 turning circle geometry; verify at Schematic Design. G-03 wall blocking zones must not conflict with ceiling track mounting points.
 <!-- CO-0004/D2-30: I-04 = Ceiling Hoist (new item). Old I-04 "Bathroom Drainage" is retired — drainage covered in G-04. DRAFT REQUIRED from upper-limb-impairment-built-environment BPC. -->
 
 [PLACEHOLDER — I-04 Ceiling Hoist: overhead tracking hoist provision, structural blocking, clear floor zone.]
@@ -2911,7 +2937,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. Sense UK. (2022). *Building and Communicating*. Sense. Bellman & Symfon. (2024). *Vibrotactile alerting systems for persons with combined hearing and vision loss*. [Tier 5 — manufacturer technical reference; no independent clinical study.] [EXPERT CONSENSUS — no building standard in any jurisdiction mandates vibrotactile alert provision in the built environment.]
 
-**Cross-reference:** B-10 (Visual Fire Alarm — simultaneous activation required); H-04 (Accessible Intercom — personal pager integration); H-05 (Nurse Call / Emergency Pull Cord — supplementary for DBL occupants in residential care)
+**Cross-reference:** B-10 (Visual Fire Alarm — simultaneous activation required); H-04 (Accessible Intercom — personal pager integration); H-05 (Nurse Call / Emergency Pull Cord — CON-0104: K-04 vibrotactile devices must integrate with H-05 nurse call system in care environments; both directions of nurse call communication (outgoing alert from occupant; incoming staff notification) require vibrotactile confirmation for DBL occupants)
 
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (prevent strategy). Vibrotactile alerting compensates for the absence of both auditory and visual emergency notification by providing a tactile alert channel; for DeafBlind occupants this is not an enhancement but the sole reliable mechanism for life-safety alerting. The EHP 'prevent' strategy grounds the provision: the environment is modified to prevent the life-safety failure that results from no accessible alert channel. The 20–200 Hz vibration frequency range is derived from the perceptible vibrotactile frequency range for individuals with intact tactile sensitivity (Verrillo, 1993); no architectural standard specifies this range for built environment applications.
 
@@ -2955,8 +2981,12 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dressing turning circle.
 
+**FDR-TCOA-01 [Tier 3 — van Hoof 2010]:** Thermoregulatory unawareness in DEM — carer-managed dressing is a primary occupational need. In DEM-designated residential and care bedrooms, wardrobe to provide: full-width door opening (minimum 900 mm clear); adjustable hanging rail 1050–1200 mm AFF (suits carer-operated dressing from seated or standing position); shelf height 600–900 mm for carer-visible clothing display; visual display arrangement of clothing options (open shelving or glass front). ○ [THIN — Tier 3 clinical mechanism; no dedicated wardrobe design RCT]
+
 ---
 
+
+**FDR-NDV-03 [THIN — Tier 1 mechanism; Co-2 OT practice]:** Executive function deficits in NDV/AUT and NDV/ADHD (Pennington & Ozonoff 1996 — Tier 1 mechanism) impair location memory for stored items. Visible, labelled storage reduces cognitive overhead of retrieval. ○ In NDV-occupied residential and workplace settings: open shelving or glass-front cabinet doors preferred over solid doors at all primary storage; shelf items to be visible at eye level or above from standing position. Complements D-05 provision.
 
 **G-08 also covers: Seated-Task Design (relocated from F-05 per CO-0003/D2-48)**
 
