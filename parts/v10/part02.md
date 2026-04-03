@@ -29,7 +29,9 @@ Population categories are not mutually exclusive. Most buildings serve multiple 
 
 ---
 
-### §2.1 MOB — Mobility and Strength
+### §2.1 MOB
+> **[Co-1 EVIDENCE GAP]** KR and BR Co-1 sources not retrieved. Lived experience evidence for MOB built-environment provisions from Korean and Brazilian disability organisations not confirmed. See MOB BPC for retrieval status.
+ — Mobility and Strength
 
 **Functional profile.** MOB encompasses wheelchair users (manual and power), scooter users, ambulant users with walking aids (sticks, crutches, frames, rollators), and users with lower limb weakness, balance impairment, or reduced walking endurance. The category spans a wide functional range: a manual wheelchair user has fundamentally different manoeuvre requirements from a power wheelchair user, and the built environment must accommodate both.
 
@@ -77,7 +79,9 @@ Toilet transfer: 90% of older disabled users use stand-pivot transfer, not the l
 
 ---
 
-### §2.3 VIS — Vision Impairment
+### §2.3 VIS
+> **[Co-1 EVIDENCE GAP — PARTIAL]** Co-1 pass partial. RNIB HQ user trials confirmed (UK). Other jurisdiction-specific lived experience sources not systematically retrieved. See VIS BPC for retrieval status.
+ — Vision Impairment
 
 **Functional profile.** Vision impairment is a spectrum. The majority of VIS users have partial sight (low vision), not total blindness. Design that optimises only for cane users (tactile provisions) underserves the larger low-vision population. Both groups require specific but different provisions; both must be addressed simultaneously.
 
@@ -123,7 +127,9 @@ DeafSpace provisions: glazed corridor junctions for visual advance sightlines (m
 
 ---
 
-### §2.5 NEU — Neurological and Acquired Brain Injury
+### §2.5 NEU
+> **[Co-1 EVIDENCE GAP]** Co-1 pass not run for non-EN languages. Lived experience evidence for NEU built-environment provisions from non-English-speaking neurological communities not confirmed. See NEU BPC.
+ — Neurological and Acquired Brain Injury
 
 **Functional profile.** NEU is the most heterogeneous category in the guidebook. It encompasses: acquired brain injury (ABI); stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia); multiple sclerosis (MS); Parkinson's disease; epilepsy; and post-concussion syndrome (NEU/PCS). Approximately 25% of stroke survivors retain navigation impairment at 12 months (van der Ham et al. 2021, Tier 3). Co-occurrence with MOB is the most frequent in clinical practice.
 
@@ -145,7 +151,9 @@ Lighting: no flickering sources; eliminate fluorescent overhead lighting (B-03/B
 
 ---
 
-### §2.6 DEM — Dementia
+### §2.6 DEM
+> **[Co-1 EVIDENCE GAP]** Co-1 extended pass not run for 9 languages. Lived experience and carer evidence for DEM built-environment provisions from non-English dementia organisations not systematically retrieved. See DEM BPC.
+ — Dementia
 
 **Functional profile.** Dementia produces progressive impairment of cognitive mapping, spatial orientation, memory, recognition, and executive function. The most influential environmental factor is floor plan configuration — signage and colour provisions alone cannot compensate for poor layout (Marquardt and Schmieg 2009, Tier 3; Bowes, Dawson, Greasley-Adams and McCabe 2019 — Stirling systematic review of 429 items, Tier 3).
 
@@ -169,7 +177,9 @@ Stage-aware provisions: early-to-moderate dementia benefits from distinctive lan
 
 ---
 
-### §2.7 NDV — Neurodivergence
+### §2.7 NDV
+> **[Co-1 EVIDENCE GAP — PARTIAL]** ZH, NL, FI, IT: no Co-1 data. Lived experience evidence for NDV built-environment provisions from Chinese, Dutch, Finnish, and Italian neurodivergent communities not confirmed. See NDV BPC.
+ — Neurodivergence
 
 **Functional profile.** NDV encompasses autism spectrum (NDV/AUT), attention deficit hyperactivity disorder (NDV/ADHD), sensory processing differences (NDV/SENS), dyslexia, and dyspraxia. These are distinct conditions sharing a common design requirement: user control over the sensory environment, and protection from uncontrolled sensory input that impairs cognitive function and occupational performance.
 
@@ -225,7 +235,9 @@ Female-only areas in mixed-gender inpatient settings: essential for trauma histo
 
 ---
 
-### §2.9 PAIN — Chronic Pain and Fibromyalgia
+### §2.9 PAIN
+> **[Co-1 EVIDENCE GAP]** 7 of 14 languages not attempted for Co-1 retrieval. No design-specific Co-1 evidence identified in any jurisdiction — all PAIN built-environment provisions rest on clinical evidence extrapolated to architectural context. See PAIN BPC.
+ — Chronic Pain and Fibromyalgia
 
 **Functional profile.** Chronic pain conditions — fibromyalgia, complex regional pain syndrome, chronic widespread pain — produce pain amplification, allodynia (pain from normally non-painful stimuli), fatigue, and functional variability. No indexed built environment design research exists for PAIN in any jurisdiction (confirmed across 14 languages); all provisions derive from clinical symptom evidence and OT energy conservation principles. All PAIN provisions carry: `[EXPERT CONSENSUS — no built-environment spatial standard in any jurisdiction; March 2026]`.
 
@@ -251,7 +263,9 @@ Hydrotherapy: warm-water hydrotherapy has Tier 1 evidence for fibromyalgia pain 
 
 ---
 
-### §2.10 DBL — DeafBlind
+### §2.10 DBL
+> **[Co-1 EVIDENCE GAP — PARTIAL]** Protactile community only. Co-1 evidence limited to US English-speaking Protactile community (Clark, Nuccio). Lived experience from non-English DeafBlind communities not retrieved. See DBL BPC.
+ — DeafBlind
 
 **Functional profile.** DeafBlind users experience combined vision and hearing impairment. DBL is not VIS plus DEAF — it is a distinct category requiring tactile-first design in which visual and auditory provisions are redundancy layers, not primary channels. The DBL population uses diverse communication modes: tactile sign language, Protactile, hand-over-hand, residual vision-assisted close-range signing, and braille. No jurisdiction has DBL-specific built environment standards. All DBL provisions carry: `[THIN BASE — zero Tier 1–2 evidence; all provisions Tier 4–5 practitioner consensus; March 2026]`.
 
@@ -279,7 +293,9 @@ Consistent spatial layout: unfamiliar spatial rearrangement is high-risk — DBL
 
 ---
 
-### §2.11 OFS — Orthostatic and Fatigue Spectrum
+### §2.11 OFS
+> **[Co-1 STRUCTURAL GAP]** No design-specific Co-1 evidence exists in any jurisdiction. All OFS built-environment provisions are extrapolated from clinical evidence (CDC, IOM/NAM, Bateman Horne Center) without any documented OFS lived-experience input to design specifications. See OFS BPC.
+ — Orthostatic and Fatigue Spectrum
 
 **Functional profile.** OFS encompasses myalgic encephalomyelitis / chronic fatigue syndrome (OFS/ME), postural orthostatic tachycardia syndrome (OFS/POTS), and mast cell activation syndrome (OFS/MCAS). The defining characteristic is post-exertional malaise (PEM) — symptom worsening disproportionate to exertion that persists for 24 hours or more and is not relieved by rest. Prolonged standing is the primary environmental trigger for OFS/POTS orthostatic intolerance; hot environments worsen all OFS subtypes. OFS/MCAS co-occurs with chemical and fragrance sensitivity.
 
