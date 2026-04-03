@@ -131,13 +131,16 @@ When multiple population-specific specifications apply to the same parameter in 
 **Step 2: Is either provision safety-critical?**
 A provision is safety-critical if its absence creates a risk of injury, falls, fire evacuation failure, or medical deterioration (Uhthoff's mechanism, scald, choking). If one provision is safety-critical and the other is not: the safety-critical provision governs the shared ambient environment. The non-safety-critical population's need is met through individual supplemental provision (radiant panel, personal control, assistive device).
 
-**Step 3: Where both are evidence-equivalent, which population is most constrained?**
+**Step 3: Where both are safety-equivalent, which provision has stronger evidence?**
+A provision supported by Tier 1–2 OT clinical evidence governs over a provision supported by Tier 3–5 consensus or standards. If evidence quality is equivalent, proceed to Step 4.
+
+**Step 4: Where evidence is equivalent, which population is most constrained?**
 The most constrained population is the one for which non-compliance creates the greatest functional consequence with the fewest available compensatory strategies. Deaf users without a hearing loop have no alternative in a looped-room space. NDV/AUT users without hearing loop augmentation have earplugs, headphones, and withdrawal. The most constrained user's provision governs.
 
-**Step 4: Can a range specification serve both?**
+**Step 5: Can a range or zone specification serve both?**
 If the conflict is about a point value (a single fixed specification), test whether a range that falls within the acceptable zone for both populations exists. The grab bar diameter range (32–45 mm) resolves MOB/UPL simultaneously. Where a range resolves the conflict, specify the range and note both populations.
 
-**Step 5: Can zoning separate the conflict?**
+
 If specifications are irreconcilable in a single ambient environment, apply the sensory gradient model (F-01): assign each population's specification to a spatial zone. Zoning works for: illuminance (Zone 1: circadian DEM/VIS; Zone 3: low-stimulation NDV); acoustic level (Zone 1: loop/PA; Zone 3: quiet NDV); stimulation level generally.
 
 **Step 6: Is this an irresolvable conflict?**
@@ -243,6 +246,9 @@ Where a single plain/undecorated/unstructured specification serves the most cons
 
 **T0 — Tier 0 Universal Specification.**
 Where five or more populations require the same or compatible provisions from independent clinical rationales, designate the provision as a Tier 0 universal and specify it without population conditioning. This eliminates the need for conflict resolution because the convergence is genuine. Tier 0 candidates identified from the connection register: loop circulation geometry (CON-0001); sensory quiet room (CON-0002); fragrance-free policy (CON-0007); prospect-refuge spatial balance (CON-0024). See §1.4.3 for the three-tier hierarchy.
+
+**RS — Range Specification.**
+Specify a parameter range that falls within the acceptable zone for both populations, rather than selecting a point value that favours one. The range boundaries are set by the evidence-based limits of each population. Example: grab bar diameter 32–45 mm serves both MOB standard grip (minimum 32 mm) and UPL pathological grip (maximum 45 mm before grip degrades). Range specification eliminates the conflict without compromise to either population. Best applied where: both populations have empirically defined tolerance ranges that overlap. Items: G-03 (grab bar diameter), reach-range items.
 
 **OT-REF — OT Referral (Tier 2 escalation).**
 Where population-level resolution is not achievable (Steps 1–5 of §3.8 produce no resolution for a shared non-zoned parameter), refer to Tier 2: OT assessment of the specific individual(s) and OT-mediated co-design. OT-REF is not a fallback from design failure — it is the correct outcome for genuinely irresolvable conflicts where individual variation must govern. The design task at Tier 1 is to ensure OT referral is available, accessible, and actioned through the design brief (Part 9 §9.10 OT threshold).
