@@ -1123,7 +1123,7 @@ The 0.3 s ceiling is a strict subset of the 0.6 s general-population ceiling —
 | Murgia et al. 2023 (systematic review) | 1 | DEAF | ALL |
 
 ### Proposed synthesis direction
-Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
+Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI per Iglehart 2020). Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
 
 ### Disposition
 - [ ] HIGH → item-specification-writer briefing for all Category A items
