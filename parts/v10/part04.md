@@ -2293,7 +2293,7 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 (2018). BS 8300:2018. BSI.
 
-**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars)
+**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); I-04 (Ceiling Hoist — CON-0103: where ceiling hoist is specified, grab bar wall blocking zones must align with hoist transfer positions — coordinate at Schematic Design; G-04 ceiling height must be continuous across the full hoist transfer path)
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5kN static/≥2.5kN dynamic load rating, bilateral provision) are derived from transfer biomechanics research; the EHP 'adapt' strategy frames the grab bar as a context modification that enables the occupation of bathing, toileting, and transfer independently — occupations that are impossible without the adapted context.
 
