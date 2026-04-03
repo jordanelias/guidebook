@@ -68,4 +68,4 @@
 
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Bottom-up findings (functional deficit pass)
-Not yet run.
+FDR-IntD-01: Reduced abstract reasoning — concrete landmark wayfinding as primary system; alphanumeric backup only. NDIS SDA Tier 4; Silverman 2010 Tier 2. DEM wayfinding provisions partially transferable but mechanism differs (DEM=memory loss; IntD=abstract reasoning). FDR-IntD-02: Hyperacusis in Down syndrome (Widen 2013 Tier 3), Williams syndrome (Levitin 2005 Tier 1), Fragile X (Castren 2003 Tier 3) — IntD spaces should carry NDV acoustic spec (RT60 ≤0.4s, NC-25). Items affected: D-02, D-08, A-02, A-08.
