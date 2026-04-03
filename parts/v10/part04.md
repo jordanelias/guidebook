@@ -37,7 +37,8 @@ All RT60 specifications are for the 500 Hz octave band in the occupied condition
 
 <!-- CON-0039 [HIGH]: RT60 ≤0.3 s (mid-frequency 500–2000 Hz) to be elevated to Tier 0 universal specification for all speech-critical rooms. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Frame ≤0.6 s as outer failure boundary, not a compliant specification. Populations: ALL (DEAF speech intelligibility, NDV acoustic calm, DEM communication, NEU/PCS cognitive load). -->
 
-**Applicable Groups:** ALL (especially NDV, PCS, AUT, MIS, DEM)
+**Applicable Groups:** ALL (especially NDV, PCS, AUT, MIS, DEM) · OFS · PAIN
+<!-- CON-0069: acoustic buffer reduces noise load — OFS/PAIN energy conservation -->
 
 **Description:** 5 m deep acoustic buffer zone between any noise-generating adjacency (kitchen, plant room, reception desk, circulation corridor) and primary occupied spaces serving sensory sensitive users. Buffer zone finishes: high NRC (≥0.85) ceiling panels; carpeted floor; no parallel hard surfaces. Background noise in primary space: NC-25 maximum.
 
@@ -85,7 +86,8 @@ Post-installation RT60 measurement at 500 Hz required
 
 ### A-03 Acoustic Door (STC ≥35) at All Sensitive Space Boundaries
 
-**Applicable Groups:** AUT, PCS, DEM, MH, SENS
+**Applicable Groups:** AUT, PCS, DEM, MH, SENS · OFS · PAIN · NDV
+<!-- CON-0075: STC≥35 door reduces exertion from noise processing -->
 
 **Description:** Acoustic door with STC ≥35 at all boundaries between noise-generating and noise-sensitive spaces. Includes: solid-core door leaf; acoustic perimeter seal; acoustic threshold seal; no letter box or undercut that bypasses the acoustic seal.
 
@@ -107,7 +109,8 @@ full frame and threshold sealing which may require opening up surrounding constr
 
 ### A-04 Acoustic Zoning: Graduated from Arrival to Primary Occupation
 
-**Applicable Groups:** ALL
+**Applicable Groups:** ALL · OFS · PAIN
+<!-- CON-0076: graduated acoustic zones allow OFS/PAIN to self-select low-noise areas -->
 
 **Description:** The building journey from arrival to primary occupied space is designed with progressively decreasing acoustic load.
 
@@ -174,7 +177,8 @@ VIII §8.4.1.
 
 ### A-06 Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points
 
-**Applicable Groups:** NDV, DEM, PCS, MH
+**Applicable Groups:** NDV, DEM, PCS, MH · OFS · PAIN
+<!-- CON-0078: NRC≥0.70 panels reduce noise load for OFS/PAIN cognitive effort -->
 
 **Description:** Acoustic fabric wall panels (minimum 50 mm mineral wool core, fabric-wrapped) installed at primary acoustic reflection points: end walls of corridors; walls opposite windows; primary reception desk wall. Installed at 900--2400 mm height (within visual and acoustic influence zone).
 
@@ -204,7 +208,8 @@ standard fixing. See Part 12 §12.4.1.
 
 ### A-07 Flutter Echo Elimination (Parallel Hard Surface Avoidance)
 
-**Applicable Groups:** NDV, PCS, DEM
+**Applicable Groups:** NDV, PCS, DEM · OFS · PAIN
+<!-- CON-0079: flutter echo increases cognitive processing effort — OFS/PAIN energy cost -->
 
 **Description:** No two parallel hard surfaces facing each other within 6 m unless one or both are treated to NRC ≥0.70. Flutter echo between parallel hard walls produces a repetitive, non-decaying reflection series that is particularly aversive for AUT and PCS users.
 
@@ -380,7 +385,8 @@ Required: all assembly spaces ≥25 capacity; all consultation/interview rooms
 
 ### A-12 Auracast Infrastructure Readiness
 
-**Applicable Groups:** DEAF, DBL
+**Applicable Groups:** DEAF, DBL · OFS
+<!-- CON-0081: personal receiver system reduces OFS exertion from following speech in noisy environments -->
 
 **Description:** In new construction: conduit and power provision for future Auracast (Bluetooth LE Audio) transmitter at ceiling/high-wall positions in all assembly spaces ≥25 capacity. Future-readiness provision, not a current installation requirement. Does not replace A-11.
 
@@ -505,7 +511,8 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 <!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Tier 0 universal — one per occupied floor plate. -->
 <!-- CON-0023 [HIGH]: Audit against Al-Harasis taxonomy — spatial configuration (layout topology) is underspecified relative to finish materials. Add note on approach route (no high-stimulation zones on path to A-16). --> (≥8 m², one per floor or per 500 m² GFA)
 
-**Applicable Groups:** AUT, ADHD, PCS, DEM, MH, OFS · NDV/MH · PAIN
+**Applicable Groups:** AUT, ADHD, PCS, DEM, MH, OFS · NDV/MH · PAIN · NEU/PCS
+<!-- CON-0066: CON-0066: sensory room serves NEU/PCS alongside NDV — fatigue and overstimulation recovery -->
 <!-- CON-0002: CON-0002/CON-0019: A-16 is multi-population: NDV/AUT sensory regulation + NDV/MH de-escalation (separate rooms) + OFS reclined rest + PAIN cushioned seating. H-02 cross-ref mandatory. -->
 
 **Description:** Dedicated enclosed room, minimum 8 m², with acoustic specification STC ≥50 partition and RT60 ≤0.3s, individual HVAC at NC-25, full dimming (100% to 0 lux), no external windows or blackout blinds, and comfortable seating. Located adjacent to primary circulation.
@@ -622,7 +629,8 @@ DeafSpace design guidelines. Gallaudet. British Standards Institution.
 
 ### B-03 Elimination of Fluorescent Overhead Lighting
 
-**Applicable Groups:** PCS, AUT, PAIN, NDV
+**Applicable Groups:** PCS, AUT, PAIN, NDV · OFS · NEU
+<!-- CON-0071: fluorescent flicker is OFS/NEU/PAIN trigger -->
 
 **Description:** No fluorescent luminaires (T8, T5, compact fluorescent) installed anywhere in the building. Replaced with flicker-free LED throughout (B-04). Applies to all spaces.
 
@@ -647,7 +655,8 @@ Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 complianc
 ### B-04 Flicker-Free LED Luminaires [MERGED INTO B-03 per CO-0003/D2-23]
 <!-- CO-0003: B-04 content absorbed into B-03. B-03 now covers: elimination of fluorescent + flicker-free LED specification (IEEE 1789-2015 / IEC TR 61547-1). Applicable Groups: NDV · NEU/PCS · OFS · DEM · VIS · ALL. -->
 
-**Applicable Groups:** PCS, AUT, PAIN, DEM
+**Applicable Groups:** PCS, AUT, PAIN, DEM · OFS · NEU
+<!-- CON-0072: already merged into B-03; note added -->
 
 **Description:** All LED luminaires specified to IEEE 1789-2015 at low flicker risk. Flicker percentage <5% at all dimming levels. Flicker index <0.1 at full output. Minimum flicker frequency ≥1000 Hz.
 
@@ -845,7 +854,8 @@ Position: visible from any point in room (ceiling or high-wall mount)
 
 ### B-11 Warm Colour Temperature for Evening (≤2700 K After 19:00)
 
-**Applicable Groups:** DEM, NDV/MH, NEU
+**Applicable Groups:** DEM, NDV/MH, NEU · OFS · PAIN
+<!-- CON-0073: warm CCT ≤2700K evening reduces photosensitivity load -->
 
 **Description:** Evening lighting (after 19:00) shifts to ≤2700 K CCT and reduced intensity to support circadian wind-down. This is particularly critical in dementia care where sundowning is driven by circadian disruption. Paired with B-01 (daytime 4000--5500 K) for full circadian lighting strategy.
 
@@ -1212,7 +1222,8 @@ Sensory Processing Model. Focus rooms create an environmental context that enabl
 
 ### D-06 Memory Boxes at Private Office and Residential Room Entrances
 
-**Applicable Groups:** DEM
+**Applicable Groups:** DEM · NEU · DBL
+<!-- CON-0090: personalised entry cues serve NEU (ABI) spatial memory and DBL tactile recognition -->
 
 **Description:** Shadow box display case (minimum 300×300 mm) mounted beside each residential room or private office entrance at eye level. Resident/occupant personalises with their own objects and photographs to enable room identification independent of room number or signage.
 
@@ -1242,7 +1253,8 @@ Contrast)
 
 ### D-07 No Blind Corners (Curved or Mirrored at All Hidden Junctions)
 
-**Applicable Groups:** VIS, DEM, MH
+**Applicable Groups:** VIS, DEM, MH · OFS · PAIN · NDV/MH
+<!-- CON-0091: mirrored corners reduce startle response and surprise exertion trigger for OFS/PAIN/MH -->
 
 **Description:** No right-angle blind corners on primary circulation routes. Corners treated with: 45° splay; convex mirror (minimum 300 mm diameter); or glazed panel with vision panel through corner. Applies at all corridor junctions on primary accessible routes.
 
@@ -1268,7 +1280,8 @@ acquired low-literacy disability (VIS, DEM, post-stroke aphasia).
 
 ### D-08 Pictogram + Single-Word Signage Throughout
 
-**Applicable Groups:** DEM, NDV, VIS (cognitive), DBL
+**Applicable Groups:** DEM, NDV, VIS (cognitive), DBL · NEU · OFS
+<!-- CON-0092: low-text wayfinding reduces cognitive effort for NEU/OFS -->
 
 **Description:** All wayfinding signage uses pictogram + single word. No multi-line text. No symbol-dense information panels. Consistent font: rounded sans-serif (e.g., Arial, Frutiger). Character height ≥150 mm at 10 m viewing distance. Contrast ≥30 LRV. Braille equivalent at all directional and room identification signage.
 
@@ -1395,7 +1408,8 @@ All entry and circulation provisions address the complete journey from arrival a
 
 ### E-01 Accessible Lift (1400×1100 mm Car, All Floors Served)
 
-**Applicable Groups:** MOB, VIS, DEM
+**Applicable Groups:** MOB, VIS, DEM · OFS · PAIN
+<!-- CON-0083: lift eliminates stair exertion — primary OFS/PAIN provision -->
 
 **Description:** Passenger lift serving all occupied floors. Minimum car 1400 mm deep × 1100 mm wide. Door clear width ≥900 mm. Controls: 800--1200 mm AFF; Braille and tactile numerals; audible floor announcements. For bariatric-accessible routes: see .
 
@@ -1427,7 +1441,8 @@ The 5--15 second adjustable door open time addresses the temporal performance ra
 
 ### E-02 Platform Lift (Where Full Passenger Lift Not Achievable)
 
-**Applicable Groups:** MOB
+**Applicable Groups:** MOB · OFS · PAIN
+<!-- CON-0012: CON-0012: platform lift reduces exertion on stairs — OFS/PAIN primary benefit alongside MOB -->
 
 **Description:** Where a full passenger lift cannot be provided (listed building, structural constraint): platform lift with car minimum 900×1400 mm; maximum travel 2 m; maximum speed 0.15 m/s; safety enclosure. Not preferred over E-01; see .
 
@@ -1485,7 +1500,8 @@ Koontz et al. (2012) demonstrated that reducing gradient from 1:12 (code minimum
 
 ### E-04 Accessible Parking (3600 mm Width, Covered, Closest to Entry)
 
-**Applicable Groups:** MOB, VIS, PAIN, OFS
+**Applicable Groups:** MOB, VIS, PAIN, OFS · DEM
+<!-- CON-0084: covered parking close to entry reduces wayfinding load for DEM -->
 
 **Description:** Accessible parking bays: 3600 mm width (standard accessible) minimum; 4500 mm width. Located closest to accessible entry. Covered where possible. Surface: level (≤1:50 cross-fall); PTV ≥36 wet. Marked: International Symbol of Access + Braille equivalent tactile indicator at bay boundary.
 
@@ -1523,7 +1539,8 @@ point of building approach; inadequate parking or excessive distance forces exer
 
 ### E-05 Weather Protection at Entry (Covered Canopy Minimum 3000×2000 mm)
 
-**Applicable Groups:** MOB, PAIN, OFS, VIS
+**Applicable Groups:** MOB, PAIN, OFS, VIS · DEM · DBL
+<!-- CON-0085: covered canopy provides wayfinding landmark and sensory orientation point -->
 
 **Specifications:**
 
@@ -1547,7 +1564,8 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 ### E-06 Level Entry (Zero Step at All Accessible Entrances)
 
-**Applicable Groups:** MOB, VIS, DEM, OFS · DEAF · DBL · NDV/MH
+**Applicable Groups:** MOB, VIS, DEM, OFS · DEAF · DBL · NDV/MH · PAIN
+<!-- CON-0009: Zero threshold eliminates exertion barrier and PAIN vibration trigger at each entry -->
 <!-- CON-0007: CON-0007: Tier 0 companion-width at entries: primary routes ≥1500mm clear. Level entry + wide path = universal. -->
 
 **Description:** Zero step (≤4 mm threshold) at all accessible entrances. Where site topography requires raised threshold: ramped approach ≤1:20 (E-03). No stepped entry at any accessible entrance.
@@ -1580,7 +1598,8 @@ user whose mobility impairment or energy limitation makes threshold negotiation 
 
 ### E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)
 
-**Applicable Groups:** MOB, DEM, VIS (fall prevention) · PAIN · OFS
+**Applicable Groups:** MOB, DEM, VIS (fall prevention) · PAIN · OFS · NEU
+<!-- CON-0086: fall prevention applies equally to NEU/DEM alongside MOB/PAIN -->
 <!-- D2-41: D2-41: fall fear and instability are pain/fatigue amplifiers; slip resistance reduces exertion effort -->
 
 **Description:** All floor surfaces on accessible routes achieve PTV (Pendulum Test Value) ≥36 in wet condition. External approaches, entry vestibules, bathrooms, and kitchens: PTV ≥36 wet (HSE guidance).
@@ -1881,7 +1900,8 @@ possibly layout modification. See Part 12 §12.4.1.
 
 ### F-02 Olfactory Control (Fragrance-Free Zones in Sensitive Areas)
 
-**Applicable Groups:** NDV, PAIN, MH, OFS
+**Applicable Groups:** NDV, PAIN, MH, OFS · NDV/SENS
+<!-- CON-0015: CON-0015: olfactory control serves NDV/SENS alongside OFS/MCAS — multiple sensory pathways -->
 
 **Description:** No air freshener, scent diffuser, or fragranced cleaning product in spaces designated as sensory sensitive or CFS/ME-accessible. Fragrance-free policy posted at entry to fragrance-free zones. Cleaning specification: fragrance-free products only.
 
@@ -2161,7 +2181,8 @@ Review: policy reviewed annually and updated to reflect changes in cleaning prod
 
 ### G-01 Defensible Seating (Back-to-Wall, Entry Sightline Configuration)
 
-**Applicable Groups:** MH (PTSD, trauma, anxiety), AUT, DEAF · OFS · PAIN
+**Applicable Groups:** MH (PTSD, trauma, anxiety), AUT, DEAF · OFS · PAIN · DEM · NEU
+<!-- CON-0087: back-to-wall seating reduces disorientation and threat response for DEM/NEU -->
 <!-- D2-41: D2-41: back-to-wall seating reduces hypervigilance-related fatigue for OFS/NDV/MH -->
 
 **Description:** Seating in all waiting areas and communal spaces includes options with back-to-wall positioning and clear sightlines to all room entries. Minimum 30% of seating in any public waiting area meets this specification. No seating with back to open space or unobserved corridor.
@@ -2292,7 +2313,8 @@ Slip resistance: PTV ≥36 wet throughout shower area
 
 ### G-05 Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range)
 
-**Applicable Groups:** MOB, PAIN, UPL
+**Applicable Groups:** MOB, PAIN, UPL · OFS
+<!-- CON-0044: CON-0044: adjustable desk height eliminates sustained standing — OFS PEM prevention; PAIN energy con -->
 
 **Description:** Minimum 20% of all workstations in any workspace:
 
@@ -2472,7 +2494,8 @@ Part 12 §12.4.2.
 
 ### H-03 Visual Paging and Real-Time Captioning in Assembly Spaces
 
-**Applicable Groups:** DEAF, DBL
+**Applicable Groups:** DEAF, DBL · OFS · DEM
+<!-- CON-0088: visual paging reduces need to attend to audio — OFS cognitive effort; DEM orientation -->
 
 **Description:** All assembly spaces ≥25 persons: (a) real-time captioning display (CART) or auto-captioning via accessible screen; (b) visual paging display integrated with PA for emergency alerts; (c) remote captioning connection infrastructure (network port or wireless AP for CART operator).
 
@@ -2508,7 +2531,8 @@ be inaccessible; the speech-to-text accuracy specification (≥98% for prepared 
 
 ### H-04 Accessible Intercom and Video Door Entry with Visual and Tactile Feedback
 
-**Applicable Groups:** DEAF, VIS, MOB, DEM
+**Applicable Groups:** DEAF, VIS, MOB, DEM · OFS · PAIN
+<!-- CON-0089: video door entry visible from seated position eliminates door-answering exertion -->
 
 **Description:** Building intercoms at entry points: (a) visual display ≥100 mm showing caller video alongside audio; (b) tactile feedback confirming button press; (c) button size ≥30 mm; (d) microphone/speaker at 900--1100 mm AFF; (e) BMS integration for remote door release from accessible indoor location.
 
@@ -2932,6 +2956,23 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dressing turning circle.
 
 ---
+
+
+**G-08 also covers: Seated-Task Design (relocated from F-05 per CO-0003/D2-48)**
+
+**Applicable Groups (seated-task):** OFS · PAIN · MOB · ALL
+<!-- CO-0003/D2-48: F-05 content relocated here. All primary occupational tasks to be achievable without sustained standing. -->
+
+**Seated-task specifications:**
+- ● All primary occupational task surfaces to be achievable from a seated position; standing-only task configurations not to be specified [Tier 5 — BS 8300:2018; JAN workplace accommodation guidance]
+- ● Adjustable-height work surfaces: 650–870 mm AFF range (seated to standing); knee clearance ≥680 mm depth × ≥ 900 mm width under all adjustable surfaces [Co-2 — RCOT 2019; CAOT 2024]
+- ● At least one seated-height service counter or work position per functional zone in non-residential settings [Tier 5 — BS 8300; CSA B651]
+- ○ Reception and service counters: minimum 30% of counter length at 760–860 mm AFF with knee clearance beneath [Tier 6 — ADA; BS 8300]
+- ● Rest seating with backrest and armrests accessible within 25 m of any primary task location [pain-ofs-built-environment-design BPC]
+
+**Design Stage:** Design Development · Technical Architecture
+
+**Retrofit:** LOW penalty — adjustable-height desk mechanisms are non-structural; DAR provision at construction stage: conduit for powered desk motors; knee-clearance maintained under all fixed worktops.
 
 ### G-09 Bedroom Emergency Call Provision and Overnight Lighting
 
