@@ -11,6 +11,8 @@
 
 The following provisions apply to ALL non-residential buildings regardless of type, size, or occupancy. They are non-negotiable for any new or substantially refurbished building. They must appear on the stated drawing at the stated design stage.
 
+**Epistemic disclosure (CON-0047):** The non-residential matrix provisions in this Part are evidence-informed syntheses. They are derived from population-specific design evidence (Parts 2 and 4), conflict resolution methodology (Part 3 §3.8–§3.9), and building-level conflict resolutions (Part 5 §5.2). They have not been empirically validated through dual-population or multi-population post-occupancy evaluation (POE). Where conflicts exist between population specifications in a shared space, the resolution stated in Part 5 §5.2 governs; room-level conflict notes in each matrix identify the specific items and populations involved. The provisions represent the best currently available synthesis of independent population evidence — they are a starting framework for professional judgment, not a substitute for it (Part 1 §1.1).
+
 | Item | Title | Design Stage | Drawing | Why Non-Negotiable |
 | --- | --- | --- | --- | --- |
 | E-06 | Step-free entry (all access points) | SD | Site plan; floor plan | Physical access prerequisite; legal requirement in all DDA/ADA-equivalent jurisdictions |
@@ -55,6 +57,8 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - Staff NDV reasonable adjustment: dedicated sensory-reduced workstation (A-01 buffer, A-06 panels, B-06 dimming, F-01 gradient) as named provision in NR-WRK specification applied to education
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at school principal entrance and library; haptic communication clear floor zone (K-03) at all designated DBL student seating positions in classrooms and assembly — minimum 1200 × 1200 mm clear zone at aisle-end seat; vibrotactile alert infrastructure (K-04 — BMS relay from fire alarm panel) in all classrooms and student areas
 
+
+**Zone 3 sensory retreat and quiet room — mandatory provision (CON-0046):** Sensory gradient (F-01) and sensory retreat/quiet room (A-16) are **mandatory** in all educational settings serving NDV/AUT populations — not optional upgrade provisions. Basis: the NHS CAMHS paradigm failure (documented in Part 12 — Gallaudet DeafSpace failure case and NHS CAMHS case) demonstrates that failure to provide adequate sensory environments in educational and therapeutic settings produces acute clinical harm, not merely comfort reduction. Evidence: Autism Europe 2022 (15–20% NDV/AUT prevalence in school-age population); PAS 6463:2022. ● Minimum provision: ≥1 sensory retreat per 150 students (general); ≥1 per 50 students (autism-specific settings). This is not a best-practice aspiration — it is a harm-prevention specification.
 
 **DEM/NDV[IntD-proxy] provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving students with intellectual disability: (1) Easy Read format for all public-facing information and signage (D-08 extension); (2) pictogram + single-word room identification throughout; (3) sensory gradient and quiet room per NDV provisions (F-01, A-16) — strongest available proxy evidence; (4) consistent layout with no unexpected spatial changes (D-09); (5) support worker access minimum: 1500 mm corridors throughout and 1500 mm turning circles at all primary destinations.
 **Education schematic checklist:**
