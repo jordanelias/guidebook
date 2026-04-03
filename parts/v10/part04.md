@@ -29,8 +29,6 @@
 
 <!-- D2-41 STANDING INSTRUCTION: Every Part 4 item requires PAIN/OFS population audit. Where PAIN or OFS applies based on mechanism (heat, cold, vibration, exertion, fragrance sensitivity), add population code + THIN-POPULATION-SPEC disclosure. Item-specification-writer pass required for all 85 items. -->
 
-## Part 5: Item Specification Library
-
 ## CATEGORY A: ACOUSTICS
 
 All RT60 specifications are for the 500 Hz octave band in the occupied condition unless stated otherwise. NC ratings are single-number noise criterion measurements. STI = Speech Transmission Index (≥0.5 = good speech intelligibility). STC = Sound Transmission Class (partition isolation rating). All hearing loop specifications: IEC 60118-4:2014+AMD1:2017.
