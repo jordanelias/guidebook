@@ -63,6 +63,8 @@ cost and disruption.
 
 ### A-02 Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces
 
+<!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (central sensitisation → auditory hyperalgesia). Mark ○ THIN-POPULATION-SPEC per D2-41. Evidence: pain-ofs-built-environment-design BPC FDR + acoustic sensitivity literature. -->
+
 **Applicable Groups:** ALL (especially NDV, DEM, MH, PAIN, OFS)
 
 **Description:** Acoustic ceiling panels with NRC ≥0.85 installed in all primary occupied spaces — open-plan offices, classrooms, therapy rooms, communal areas, circulation corridors. Combined with A-01, A-05, and A-17 to achieve target RT60.
@@ -287,6 +289,8 @@ amplitude required to remain below the sensitisation threshold for users with es
 
 ### A-10 Counter Hearing Loop (Induction Loop at Reception/Service Counter)
 
+<!-- CON-0052 [HIGH]: Add Auracast DAR provision cross-reference to A-10 and A-11. IEC 60118-17 (Auracast) expected late 2027; dual provision (loop + Auracast-ready conduit) is best practice. See A-12 (Auracast Infrastructure Readiness). -->
+
 **Applicable Groups:** DEAF, DBL
 
 **Description:** Counter loop installed at all service counters, reception desks, ticket offices, and triage points where one-to-one communication occurs. Counter loop provides T-coil compatible audio direct to hearing aid without microphone interference.
@@ -406,6 +410,9 @@ International hearing access committee. IFHOH.
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (adapt strategy). Auracast conduit and power pre-provision implements both the Compensatory FOR principle (environment as future-ready compensation tool) and the EHP 'adapt' strategy: the context is partially modified at construction to enable full modification later without structural intervention, directly aligning with the DAR principle (§1.6).
 
 ### A-13 No Sound Masking in Neurological Population Environments
+
+<!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (same mechanism as A-02). ○ THIN-POPULATION-SPEC. -->
+<!-- CON-0039 [HIGH]: Strict NDV/AUT acoustic target (RT60 ≤0.3 s) is a sub-target of the general DEAF/DEM target. No sound masking in any space where NDV is primary — already specified but ensure cross-reference to NDV/DEAF conflict resolution in Part 5 §5.2. -->
 
 **Applicable Groups:** AUT, PCS, NEU, DEM, NDV
 
@@ -857,6 +864,8 @@ LRV = Light Reflectance Value (0 = black; 100 = white). All contrast specificati
 
 ### C-01 Colour Palette (Muted, Low-Chroma, Non-Institutional)
 
+<!-- CON-0043 [HIGH]: C-01 muted palette conflicts with NDV/MH warm-colour preference. Resolution: muted palette as default in shared spaces; warm-colour biophilic breakout zones. Do not apply high-contrast marking in NDV/AUT-primary environments without MH zoning analysis. Item-specification-writer pass required: add NDV/MH conflict note and zone qualifier. -->
+
 **Applicable Groups:** AUT, PCS, DEM, MH, NDV, OFS
 
 **Description:** Primary wall colour: NCS chroma ≤4 (muted, desaturated) throughout all occupied spaces. No primary colours, no saturated hues. Accent colours (for zoning and wayfinding — C-02) may exceed NCS chroma 4 only where used as deliberate navigational landmarks, not as general decoration.
@@ -946,6 +955,8 @@ replacement without structural works. See Part 12 §12.4.1.
 High-chroma, saturated patterns at floor level constitute a visual stimulus in the hyperarousal frequency range for sensory-sensitive and sensory-avoiding users; pattern-free or low-pattern floor finishes in primary occupied spaces reduce the visual complexity input to the sensory processing system.
 
 ### C-04 LRV Contrast (≥30 at All Critical Junctions)
+
+<!-- CON-0060 [HIGH]: C-04 LRV ≥30 at critical junctions is Tier 0 (VIS, DEM — both require this for safety). NDV/SENS muted palette preference must not reduce safety contrast at critical junctions. Zone-based resolution applies: ≥30 LRV contrast mandatory at all step edges, door frames, and critical junctions regardless of zone. Muted palette applies to non-safety surfaces only. -->
 
 **Applicable Groups:** VIS, DEM, MOB (fall prevention)
 
@@ -1958,6 +1969,8 @@ Specifications are derived from MCAS trigger literature and HVAC engineering sta
 **Evidence basis (OT):** Compensatory FOR; Dunn's Sensory Processing Model. Air quality provisions implement the Compensatory FOR by removing chemical and particulate environmental triggers that would otherwise require OFS/MCAS and chemically sensitive users to withdraw from the space; the MERV 13 and TVOC ≤0.5 specifications are derived from the trigger thresholds documented in MCAS and chemical sensitivity clinical literature.
 
 ### F-05 Seated-Task Design [RELOCATED → G-08 per CO-0003/D2-48] (All Primary Occupational Tasks Achievable Without Sustained Standing)
+
+<!-- CON-0004 [HIGH]: New item G-08 (Adjustable Posture Seating Provision) to specify: ≥1 reclined/tilt seat per primary zone (≥120° recline with footrest); all reception counters with adjacent seated waiting ≤3 m; all shared work surfaces with ≥1 seated-height station (813 mm). Populations: OFS, PAIN, MOB, NEU. F-05 content to migrate to G-08. -->
 
 **Applicable Groups:** OFS/POTS, OFS/CFS, MOB (wheelchair users ---
 
