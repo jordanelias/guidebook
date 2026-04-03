@@ -1902,6 +1902,37 @@ possibly layout modification. See Part 12 §12.4.1.
 
 **Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. Sensory gradient from high-stimulation entry to low-stimulation primary occupied space alters the context progressively to keep cumulative sensory load within the processing capacity of sensory-sensitive users; abrupt transitions from high-load to low-load zones constitute shock stimuli that are themselves a trigger.
 
+---
+
+#### Unified Sensory Environment Specification Matrix (CON-0040)
+
+*This matrix links Dunn's Sensory Processing Model profiles to spatial zones and quantified design parameters. It provides the cross-category coordination framework for Category A (Acoustics), B (Lighting), C (Colour/Surface), and F (Environmental Quality) specifications. Source: CON-0040; sensory-processing-model-design-application BPC (Opus synthesis); sensory-relief-space-design BPC (Opus synthesis).*
+
+**Applicable Groups:** NDV/AUT · NDV/ADHD · NDV/SENS · DEM · OFS · PAIN · NEU/PCS · ALL
+
+| Dunn Profile | Spatial Zone | Acoustic | Illuminance | CCT | Colour | Notes |
+|---|---|---|---|---|---|---|
+| **Sensory avoiding** | Zone 3 — sensory retreat (A-16, F-01) | RT60 ≤0.3 s; NC-25; no masking (A-13) | 0–50 lux (user-controlled); full blackout available | ≤2700 K warm amber | NCS chroma ≤2; no high-contrast pattern | Individual control (H-02) is primary; static parameters are floor, not target |
+| **Sensory sensitivity** (low threshold, passive) | Zone 2–3 — quiet workspace, consultation | RT60 ≤0.4 s; NC-25; no sudden sound events | 50–200 lux; consistent; no flicker (B-03/04) | ≤3000 K | NCS chroma ≤3; predictable palette; no sudden colour change | Predictability and consistency are as important as attenuation level |
+| **Sensory seeking** | Zone 1–2 — active circulation, social zones | RT60 ≤0.6 s (minimum acceptable); NC-35 | 300–500 lux; daylight; dynamic circadian (B-01) | 4000–6500 K daytime | NCS chroma ≤6; varied but controlled; biophilic elements (BIO-01) | Higher stimulation serves engagement; still below clinical distress thresholds |
+| **Low registration** | Zone 1 — entry, circulation spine | RT60 ≤0.5 s with clear SNR ≥15 dB (signal intelligibility) | ≥300 lux; ≥500 lux at task surfaces; high circadian EML | ≥4000 K daytime | LRV ≥30 at all wayfinding elements; high-contrast clear signage (D-08) | Stronger cues required to register environmental information — serves DEM as well |
+
+**Zone cross-reference:**
+- Zone 1 (high activation): entry, reception, main corridors — Items: F-01, A-01, B-07, C-04
+- Zone 2 (moderate): workspace, consultation, dining — Items: F-01, A-02, B-06, G-05
+- Zone 3 (low activation): sensory retreat, quiet rooms — Items: A-16, F-03, B-06, A-03
+
+**Conflict notes:**
+- Sensory avoiding vs low registration: resolved by SZ (Sensory Zoning) — Zone 3 serves avoiding; Zone 1 serves low registration. These populations do not share a zone.
+- Sensory seeking vs sensory sensitivity: resolved by IEC (Individual Environmental Control, H-02) within Zone 2 — individual dimming and acoustic partition access resolve the conflict at the workstation level.
+- DEM illuminance requirement (≥300 lux daytime, DSDC 2024) conflicts with NDV ambient preference (≤200 lux). Resolved via three-zone model (§5.2 LIGHT-INT): Zone 1/2 serves DEM circadian; Zone 3 serves NDV. Individual dimming (B-06) resolves at individual level within Zone 2.
+
+**Implementation note:** This matrix does not replace individual item specifications. It provides the coordination framework ensuring that A, B, C, and F category specifications are calibrated consistently across zones. Conflicts between items in the same zone are resolved by §5.2 and Part 5.
+
+● [sensory-processing-model-design-application BPC — Opus synthesis]; ◐ [Unwin et al. 2022 Tier 3 — individual control as primary variable]; ◐ [PAS 6463:2022 Tier 5]; ◐ [DSDC EADDAT 2022 Tier 4]
+
+---
+
 ### F-02 Olfactory Control (Fragrance-Free Zones in Sensitive Areas)
 
 **Applicable Groups:** NDV, PAIN, MH, OFS · NDV/SENS
