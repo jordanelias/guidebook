@@ -1,8 +1,8 @@
 ## Appendices, Bibliography and Glossary
 
 <!-- v10.0 scaffold — combines v9.0 part14 (appendices) + part13 (bibliography + glossary).
-     Appendix C retired (CO-0004: TC items integrated into Part 4).
-     Appendix C content archived in 88_to_90/part14 for reference.
+     Part 4 (Appendix C retired — TC items integrated) retired (CO-0004: TC items integrated into Part 4).
+     Part 4 (Appendix C retired — TC items integrated) content archived in 88_to_90/part14 for reference.
      PENDING:
      - Bibliography: full compilation from all Part 4 sources-cited tables (bibliography-compiler pass)
      - Glossary: review against v10.0 terminology changes (CO-0003: INTRA/INTER/BOTH; CO-0004: Part numbers)
@@ -276,7 +276,7 @@ Standards with version-date sensitivity (DIN 18040, AS 1428.1, CAN/ASC 2.8, Appr
 ---
 
 
-<!-- Appendix C: Thermal Comfort — RETIRED per CO-0004. TC items integrated into Part 4. -->
+<!-- Part 4 (Appendix C retired — TC items integrated): Thermal Comfort — RETIRED per CO-0004. TC items integrated into Part 4. -->
 
 ## Appendix D: Emergency Evacuation
 

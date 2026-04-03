@@ -9,6 +9,7 @@
  — Documented Accessible Built Environments
 
 ### Note on Methodology
+<!-- GAP-CR-10/D3-19: §12.3 subsection ordering — verify case study sequence reflects evidence quality ordering not chronological. Author review required. -->
 
 Case studies are selected for documented, independently verified outcomes — not promotional material. Each entry includes: building type; primary population; key design strategies with Part 7 item references; verified outcomes with metric, source, and sample size; evidence quality tier; cost data where available; and limitations. Where outcomes are self-reported, this is noted explicitly.
 

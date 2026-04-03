@@ -2,7 +2,7 @@
 
 <!-- v10.0 scaffold — CO-0004: was Part 5. CO-0004/D2 changes PENDING:
      - D2-12: absorb §7.0a into §6.0
-     - D2-13: delete all BAR columns from matrices; add footnote
+     - D2-13: delete all Supp.Vol columns from matrices; add footnote
      - D2-16: fix 4 cross-reference code errors in Universal Residential table
      - D2-45: remove ~~R-STA-02~~ <!-- D2-45: removed from Universal Residential table --> from Universal Residential table
      - D2-10: citation sub-tables eliminated (data absorbed into Part 4 items)
@@ -36,7 +36,9 @@ Each room matrix is structured as: 1.
 | DD=developed design | CD=construction documents | SPEC=specification | COMM=commissioning | OPS=operation — |
 
 ### §6.0a Universal Residential Provisions
-<!-- D2-13: All BAR columns deleted from this and all room matrices below. BAR population relocated to Supplementary Volume Part 4. Where BAR previously appeared as a population column, the column has been removed. A footnote has been added: "Large body size provisions: see Supplementary Volume Part 4." -->
+*^BAR (large body size) provisions: see Supplementary Volume Part 4. These provisions have been removed from all residential matrices per CO-0002.*
+
+<!-- D2-13: All Supp.Vol columns deleted from this and all room matrices below. Supp.Vol population relocated to Supplementary Volume Part 4. Where Supp.Vol previously appeared as a population column, the column has been removed. A footnote has been added: "Large body size provisions: see Supplementary Volume Part 4." -->
 
 The following provisions apply to ALL new and substantially refurbished dwellings, regardless of size or occupancy. They are non-negotiable and must appear on the stated drawing at the indicated stage. This list provides symmetry with the Universal Non-Residential Provisions in Part III §I5.0.
 

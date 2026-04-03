@@ -96,7 +96,7 @@ US unit-level data (Angi/HomeAdvisor, 2025--26) provides the operational picture
 
 *Sources: TERRAGON/DStGB (2017); Prognos/KfW; Ielegems \& Vanrie (2024); ADA National Network; Rick Hansen Foundation (2023).*
 
-For DAR (Design for Adaptable Readiness) construction-stage provision costs and retrofit multipliers at the individual technique level, see Part 11 §11.5 and §11.4 below
+For DAR (Design for Adaptable Readiness) construction-stage provision costs and retrofit multipliers at the individual technique level, see Part 10 §11.5 and §11.4 below
 
 ### §11.3 How to Think About Value
 

@@ -16,11 +16,11 @@ All Part 7 item codes cited in Volume 3 use the v9.0 item codes: Category F = Se
 
 Part 10 addresses homes and buildings that can adapt to changing functional needs without full reconstruction. The core argument is asymmetric and economic: the cost of not designing for adaptability is not zero. The most expensive accessible features are prohibitively expensive as retrofits but negligible at construction when planned at schematic design stage.
 
-For the full international evidence base on new-build versus retrofit cost economics, including the macro cost ratio (0.5--1.3% new construction vs 10--40× retrofit), see Part 12. The table in §10.1 below provides the item-level cost multipliers; Part 12 §12.2 provides the macro context, and Part 12 §12.4 provides technique-level cost intelligence for all Part 7 items.
+For the full international evidence base on new-build versus retrofit cost economics, including the macro cost ratio (0.5--1.3% new construction vs 10--40× retrofit), see Part 12. The table in §10.1 below provides the item-level cost multipliers; Part 11 §12.2 provides the macro context, and Part 11 §12.4 provides technique-level cost intelligence for all Part 7 items.
 
 ### §10.1 The DAR Cost Multiplier Framework
 
-The following table presents the cost case for DAR provisions. All figures are approximate; see Part 12 §8.2 for the full international evidence base.
+The following table presents the cost case for DAR provisions. All figures are approximate; see Part 11 §8.2 for the full international evidence base.
 
 | Provision | At Construction | Retrofit Cost | Multiplier |
 | --- | --- | --- | --- |
@@ -100,8 +100,8 @@ All new dwellings: accessible-ready specification. Multi-dwelling buildings: lif
 
 For DAR provisions in practice, see the following case studies in Part 13:
 
-- **Part 13 §13.03** (The Kelsey Civic Commons): all units built with DAR provisions; ceiling hoist blocking, bilateral grab bar blocking, and 950 mm structural door openings specified universally. Resident-reported care attendant hour reduction: 62% of respondents.
-- **Part 13 §13.07** (Singapore HDB): grab bar blocking in all bathrooms; flat-to-care-home transfer rate significantly lower in UD-specified blocks vs standard blocks (longitudinal, n>5,000).
-- **Part 13 §13.14** (BC Housing HAFI): programme evaluation of retrofit outcomes provides the converse evidence — average CAD 7,500 modification cost per home represents \~30--40% of what would have been required without DAR provisions.
+- **Part 12 §13.03** (The Kelsey Civic Commons): all units built with DAR provisions; ceiling hoist blocking, bilateral grab bar blocking, and 950 mm structural door openings specified universally. Resident-reported care attendant hour reduction: 62% of respondents.
+- **Part 12 §13.07** (Singapore HDB): grab bar blocking in all bathrooms; flat-to-care-home transfer rate significantly lower in UD-specified blocks vs standard blocks (longitudinal, n>5,000).
+- **Part 12 §13.14** (BC Housing HAFI): programme evaluation of retrofit outcomes provides the converse evidence — average CAD 7,500 modification cost per home represents \~30--40% of what would have been required without DAR provisions.
 
-*Next: Part 12 — The Economics of Accessible Construction* *Cross-reference: Part 1 §1.6 (DAR cost multiplier table, also in this Part §10.1); Part 12 §12.2 (macro cost ratio); Part 12 §12.4 (technique-level retrofit cost intelligence); Part 13 (case study evidence for DAR provisions in practice)*
+*Next: Part 11 — The Economics of Accessible Construction* *Cross-reference: Part 1 §1.6 (DAR cost multiplier table, also in this Part §10.1); Part 11 §12.2 (macro cost ratio); Part 11 §12.4 (technique-level retrofit cost intelligence); Part 12 (case study evidence for DAR provisions in practice)*
