@@ -28,7 +28,7 @@ The resolution hierarchy for this guidebook is:
 
 ### §5.2 Conflict Resolution Table
 
-Eleven environmental parameters produce direct conflicts between population-specific specifications. For each conflict: the opposing specifications are stated, the governing resolution is identified, and the guidebook item cross-references are given. Conflicts are classified by resolution status using the definitions in §5.1.
+Eleven environmental parameters produce direct conflicts between population-specific specifications. For each conflict: the opposing specifications are stated, the governing resolution is identified, and the guidebook item cross-references are given. Conflicts are classified by resolution status using the definitions in §5.1
 
 Resolution evidence quality is marked: ● = Tier 1–3 OT clinical or post-occupancy evidence; ◐ = Tier 3–5 consensus or standards; ○ = Tier 5–6 expert consensus with no outcome data.
 
@@ -66,7 +66,7 @@ Glazed corridor junctions (DEAF visual advance warning provision — §5.2 SPATI
 
 ---
 
-*§5.4 Worked Examples — Building-Level Co-Occurrence Resolution: to be drafted in Phase 3, Session 2. See part04_v9-0 worked examples (§4.5) for cross-population synthesis examples pending formal §5.4 extraction.*
+*§5.4 Worked Examples — Building-Level Co-Occurrence Resolution: to be drafted in Phase 3, Session 2. See part04_v9-0 worked examples (§3.11) for cross-population synthesis examples pending formal §5.4 extraction.*
 
 ---
 
@@ -81,7 +81,7 @@ The conflict resolution table in §5.2 operates at design stage: conflicts must 
 
 ---
 
-#### §5.4.1 Worked Example A: Dementia Care Home (DEM Primary; MOB Secondary; NDV/SENS Tertiary — Staff)
+#### §5.41 Worked Example A: Dementia Care Home (DEM Primary; MOB Secondary; NDV/SENS Tertiary — Staff)
 
 **Population brief.** 24 residents: DEM (all residents, by definition of facility type); MOB (20 of 24 — ambulant with walking aids or wheeled mobility); NDV/SENS (estimated 4 of 14 staff — UK CIPD 2023 prevalence data applied to care workforce).
 
@@ -102,7 +102,7 @@ The conflict resolution table in §5.2 operates at design stage: conflicts must 
 
 ---
 
-#### §5.4.2 Worked Example B: Neurodivergent Co-Working Office (NDV Primary; DEAF Secondary; OFS Tertiary)
+#### §5.42 Worked Example B: Neurodivergent Co-Working Office (NDV Primary; DEAF Secondary; OFS Tertiary)
 
 **Population brief.** 60-person co-working office; 25% NDV/AUT/ADHD (client disclosure); 2 DEAF staff (hearing aid users); 8% OFS (ME/CFS, POTS, MCS — self-disclosed).
 
@@ -123,7 +123,7 @@ The conflict resolution table in §5.2 operates at design stage: conflicts must 
 
 ---
 
-#### §5.4.3 Worked Example C: Mixed-Needs Supported Housing (DEM + MOB + NEU/MS + PAIN)
+#### §5.43 Worked Example C: Mixed-Needs Supported Housing (DEM + MOB + NEU/MS + PAIN)
 
 **Population brief.** 12 apartments; 4 residents DEM (older adults); 8 residents MOB (4 manual wheelchair, 4 ambulant with walking aids); 3 residents NEU/MS (two with Uhthoff's phenomenon); 2 residents PAIN (fibromyalgia, diagnosed MS-fibromyalgia overlap).
 
@@ -144,4 +144,4 @@ The conflict resolution table in §5.2 operates at design stage: conflicts must 
 
 ---
 
-*End of Part 5. Cross-references: Part 3 §3.4 (Co-occurrence guidance by pair); Part 4 §4.5 (Population-specific worked examples); Part 7 (Non-residential population matrices); Part 9 §9.6 (DeafBlind specialist consultant).*
+*End of Part 5. Cross-references: Part 3 §3.4 (Co-occurrence guidance by pair); Part 4 §3.11 (Population-specific worked examples); Part 7 (Non-residential population matrices); Part 9 §9.6 (DeafBlind specialist consultant).*

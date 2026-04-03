@@ -37,9 +37,9 @@ True accessibility encompasses:
 
 **Universal design:** design that works for the widest possible range of users without adaptation or specialist provision.
 
-**DAR (Design for Adaptable Readiness):** construction-stage provisions that allow future accessibility modifications at minimal cost, without structural intervention. See §1.6.
+**DAR (Design for Adaptable Readiness):** construction-stage provisions that allow future accessibility modifications at minimal cost, without structural intervention. See §1.6
 
-**OT (Occupational Therapist):** a registered healthcare professional whose discipline is concerned with the relationship between person, environment, and occupation. OT is the highest-tier evidence source for accessible design in this document. See §1.5.
+**OT (Occupational Therapist):** a registered healthcare professional whose discipline is concerned with the relationship between person, environment, and occupation. OT is the highest-tier evidence source for accessible design in this document. See §1.5
 
 ### §1.2 The Code-as-Floor Principle
 
@@ -221,27 +221,27 @@ This guidebook grounds all provisions in Article 9 of the UN Convention on the R
 
 Eight theoretical frameworks underpin the evidence basis for specifications in this document. Each maps a distinct dimension of the person-environment relationship; together they constitute the conceptual architecture from which specifications are derived.
 
-**§1.8.1 Biomechanical Frame of Reference** Specifications derived from this framework address physical capacity, joint range of motion, muscle strength, grip, reach, balance, and gait. Grab bar diameters, handrail heights, turning radii, and threshold heights are biomechanically derived. All Part 4 specifications grounded in this framework are calibrated to the functional range of the relevant disability category, not to code averages.
+### §1.8.1 Biomechanical Frame of Reference Specifications derived from this framework address physical capacity, joint range of motion, muscle strength, grip, reach, balance, and gait. Grab bar diameters, handrail heights, turning radii, and threshold heights are biomechanically derived. All Part 4 specifications grounded in this framework are calibrated to the functional range of the relevant disability category, not to code averages.
 
-**§1.8.2 Dunn's Sensory Processing Model** Sensory processing differences produce four profiles: sensory seeking, sensory avoiding, sensory sensitivity, and low registration. Design must accommodate all four. Acoustic specifications (Category A), lighting specifications (Category B), and colour/surface specifications (Category C) are calibrated across all four profiles.
+### §1.8.2 Dunn's Sensory Processing Model Sensory processing differences produce four profiles: sensory seeking, sensory avoiding, sensory sensitivity, and low registration. Design must accommodate all four. Acoustic specifications (Category A), lighting specifications (Category B), and colour/surface specifications (Category C) are calibrated across all four profiles.
 
-**§1.8.3 Ecology of Human Performance (EHP) Framework** EHP defines four intervention strategies: establish, alter, adapt, prevent. Accessible design interventions in Part 4 are classified by EHP strategy: most interventions alter the context (environment) rather than the person; some prevent barrier formation at source.
+### §1.8.3 Ecology of Human Performance (EHP) Framework EHP defines four intervention strategies: establish, alter, adapt, prevent. Accessible design interventions in Part 4 are classified by EHP strategy: most interventions alter the context (environment) rather than the person; some prevent barrier formation at source.
 
-**§1.8.4 Compensatory Frame of Reference** Where functional capacity cannot be restored, the environment compensates. Lever hardware, automatic doors, and grab bars are compensatory provisions.
+### §1.8.4 Compensatory Frame of Reference Where functional capacity cannot be restored, the environment compensates. Lever hardware, automatic doors, and grab bars are compensatory provisions.
 
-**§1.8.5 Allen's Cognitive Disabilities Model (CDM)** CDM identifies six cognitive levels (0–6). Environmental specifications for DEM and NDV users are calibrated to the cognitive level range of the target population. Wayfinding, signage, and spatial layout specifications (Category D) draw on CDM research.
+### §1.8.5 Allen's Cognitive Disabilities Model (CDM) CDM identifies six cognitive levels (0–6). Environmental specifications for DEM and NDV users are calibrated to the cognitive level range of the target population. Wayfinding, signage, and spatial layout specifications (Category D) draw on CDM research.
 
-**§1.8.6 Person-Environment-Occupation-Performance (PEOP) Model** PEOP frames the person-environment relationship as a dynamic interaction affecting occupation performance. Dignified access, socially integrated design, and equivalent provisions are PEOP requirements — not merely aesthetic preferences.
+### §1.8.6 Person-Environment-Occupation-Performance (PEOP) Model PEOP frames the person-environment relationship as a dynamic interaction affecting occupation performance. Dignified access, socially integrated design, and equivalent provisions are PEOP requirements — not merely aesthetic preferences.
 
-**§1.8.7 Ecological Psychology — Affordance Theory** Gibson's affordance theory holds that the environment communicates its usability through physical cues. Accessible environments provide affordances legible to the full range of functional capacities. Grab bar shapes, door pull widths, and floor texture specifications are affordance-based.
+### §1.8.7 Ecological Psychology — Affordance Theory Gibson's affordance theory holds that the environment communicates its usability through physical cues. Accessible environments provide affordances legible to the full range of functional capacities. Grab bar shapes, door pull widths, and floor texture specifications are affordance-based.
 
-**§1.8.8 Competence-Press Model** Lawton & Nahemow's (1973) model holds that adaptive behaviour occurs in a zone of moderate environmental press relative to individual competence. Specifications for DEM, CFS/ME, and OFS users are calibrated to maintain press within the performance zone for the lower end of the functional capacity range.
+### §1.8.8 Competence-Press Model Lawton & Nahemow's (1973) model holds that adaptive behaviour occurs in a zone of moderate environmental press relative to individual competence. Specifications for DEM, CFS/ME, and OFS users are calibrated to maintain press within the performance zone for the lower end of the functional capacity range.
 
 The **Housing Enabler** instrument (Iwarsson & Slaug, Lund University CASE; 2001, revised 2010) is the direct OT operationalisation of the competence-press model for built environment assessment. It combines a personal component (188 functional limitation items, OT-assessed) with an environmental component (188 environmental barrier items, OT-measured) to produce an accessibility problem score — a quantified measure of person-environment misfit. Reliability: r = 0.74 (inter-rater); validated in residential and institutional settings across 11 countries. The Housing Experiment 2021 (Slaug, Granbom & Iwarsson 2024; citizen science; large Swedish housing stock sample) confirmed that environmental barriers remain prevalent despite 30 years of public health evidence, and that person-environment fit predicts falls more reliably than environmental hazard counts alone (cf. Iwarsson et al. 2009). Population-specific Housing Enabler research includes Parkinson's disease (Nilsson & Iwarsson 2021), demonstrating population-specific barrier ranking within the general instrument.
 
 For Tier 2 practice, the Housing Enabler is the recommended assessment instrument for resolving Tier 1 specification ranges to individual values. OT assessment protocols for Housing Enabler use in accessible design commissions are set out in Part 9.
 
-**§1.8.9 Attention Restoration Theory (ART) and Stress Recovery Theory (SRT)** ART and SRT provide the evidence basis for biophilic design provisions (Appendix B), natural lighting specifications (B-09), and sensory retreat provisions (A-16, F-01).
+### §1.8.9 Attention Restoration Theory (ART) and Stress Recovery Theory (SRT) ART and SRT provide the evidence basis for biophilic design provisions (Appendix B), natural lighting specifications (B-09), and sensory retreat provisions (A-16, F-01).
 
 
 
