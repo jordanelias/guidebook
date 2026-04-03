@@ -317,7 +317,7 @@ Flags lifted when relevant Opus session commits output and marks session COMPLET
 | OP-A | Part 5 §5.2 conflict resolution adjudication | Opus | COMPLETE 2026-04-03 05:27 |
 | OP-B | CON connection synthesis adjudication (10 HIGH entries) | Opus | COMPLETE 2026-04-03 05:58 |
 | OP-C | Part 10 DAR — BPC integration | Opus | COMPLETE 2026-04-03 05:58 |
-| OP-D | Part 11 Economics — BPC integration | Opus | PENDING |
+| OP-D | Part 11 Economics — BPC integration | Opus | COMPLETE 2026-04-03 05:58 |
 | OP-E | Phase 2C connection-scout re-scan | Opus | COMPLETE 2026-04-03 05:27 |
 | OP-F | FDR for 5 Phase 2B slugs | Opus | COMPLETE 2026-04-03 05:27 |
 | OP-G | Part 3 §3.8/3.9 methodology review | Opus | COMPLETE 2026-04-03 05:27 |
