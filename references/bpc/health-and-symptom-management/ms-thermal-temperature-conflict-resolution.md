@@ -59,7 +59,7 @@
 Not yet performed.
 
 ### Bottom-up findings (functional deficit pass)
-Not yet run.
+FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tier 3; Davis 2010 Tier 3) — cooling station ≤16C within 50m of MS facility circulation; extended occupancy capacity distinct from NDV retreat. FDR-MST-02: MS fatigue diurnal pattern — afternoon ambient should reduce 1-2C from morning setpoint via BMS programming. Krupp 2003 Tier 3. Items affected: F-07, A-16.
 
 ### Key sources
 - MSIF-Atlas2023 — MS heat sensitivity prevalence (60–80%)
