@@ -66,6 +66,18 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Hearing loop (A-11) in all classrooms and assembly spaces on electrical drawings
 - [ ] Emergency evacuation strategy (E-12): refuge locations on fire strategy —
 
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+
+
 ### 7.2 NR-HLT: Healthcare (Hospitals, Clinics, Primary Care, Mental Health)
 
 **Primary populations:** The full disability spectrum simultaneously. Clinical spaces serve patients (full disability range), staff (occupational health — NDV, OFS, MOB reasonable adjustments), and visitors (older adult-concentrated). DEM-specific provisions (DSDC 2024 audit programme) apply throughout all older adult and dementia care settings. MOB-clinical interactions (transfer, scan positioning) are the primary OT specification challenge.
@@ -106,6 +118,18 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Fragrance-free policy in FM brief (not only construction spec)
 - [ ] Emergency evacuation strategy: PEEP protocol + refuge locations on fire strategy —
 
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+
+
 ### 7.3 NR-WRK: Workplace (Offices, Co-Working, Studios)
 
 **Primary populations:** NDV/MH + OFS is the defining non-residential working population co-occurrence. Approximately 20% of working-age adults report a mental health condition (WHO 2022); 5–10% report chronic fatigue or pain. Acoustic and thermal control are the primary OT provisions beyond physical access. Remote working has reduced urgency for some OFS categories — design must serve those who cannot remote-work.
@@ -142,6 +166,18 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Individual temperature control at each enclosed office on M\&E drawings
 - [ ] Open-plan ceiling NRC ≥0.85 specified (no parallel hard surfaces ≥4 m) —
 
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+
+
 ### 7.4 NR-RET: Retail and Commercial
 
 **Primary populations:** Full disability spectrum — public retail receives the complete adult disability range within a single day. Service counter and accessible parking proximity are the two most documented retail barriers in DDA/ADA audit data. Sensory environment is systematically underspecified in retail compliance assessments.
@@ -171,6 +207,18 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Aisle widths ≥1500 mm confirmed on retail layout plan
 - [ ] Dual-height counter (760 mm + 900 mm) on floor plan
 - [ ] Accessible fitting room on floor plan (turning circle + grab bar blocking) —
+
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+
 
 ### 7.5 NR-CUL: Cultural (Museums, Libraries, Theatres, Galleries, Places of Worship)
 
@@ -205,6 +253,18 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Accessible wheelchair positions (≥1% capacity, distributed) on theatre/auditorium plan
 - [ ] Interpreter seating position with B-02 face illuminance on electrical drawings —
 
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+
+
 ### 7.6 NR-HOS: Hospitality (Hotels, Restaurants, Conference, Leisure)
 
 **Primary populations:** Hotel accessible rooms are the most poorly specified non-residential accessible space in international standards. Most standards address physical access only. The hotel room is a temporary residential environment and must be assessed against Part 5 residential specifications, not NR specifications alone.
@@ -234,6 +294,18 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Grab bar blocking in accessible hotel bathrooms on structural drawings
 - [ ] ≥20% dining tables with turning circle on restaurant layout plan
 - [ ] Pool hoist provision on pool plan (if applicable) —
+
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+
 
 ### 7.7 NR-TRP: Transport (Stations, Airports, Terminals, Interchanges)
 
@@ -268,3 +340,15 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - [ ] Accessible route (≥1800 mm clear) bypassing crowd zones on floor plan
 - [ ] Auracast (A-12) infrastructure in MEP brief for all platforms and waiting areas
 - [ ] Emergency evacuation: PEEP + refuge + evacuation lift strategy on fire strategy —
+
+
+**Cross-population conflict register — this building type:**
+| Items | Population A | Population B | Domain | Resolution | Strategy |
+|---|---|---|---|---|---|
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
+*For building-wide system conflicts, see Part 5 §5.2.*
+

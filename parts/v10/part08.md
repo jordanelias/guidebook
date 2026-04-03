@@ -402,3 +402,24 @@ The following minimum scope language is to be inserted in the DBL specialist con
 ---
 
 *Evidence basis (DBL specialist section):* DbI World Access guidelines (Tier 2, international); Nordic ledsagarservice statutes (SE, NO, DK, FI — Tier 6 statutory); Protactile Movement literature (Clark; Nuccio & Granda — Co-1); ISO 23599:2019 applied to DBL context (Tier 4); Japanese 接近手話 practice (Tier 5). THIN-BASE disclosure: no Tier 1 OT clinical research on DBL-specific built environment spatial provisions has been identified in any language reviewed. All specifications derive from Tier 2–6 sources. See GAP-DBL-BE-01 for research gap disclosure.
+
+
+### §8.1.4 Thermal Envelope and Mass — Passive Thermal Performance
+
+<!-- CO-0004/CO-0003: TC-02 + TC-03 combined item. Previously in Appendix C (retired). Now in Part 8 Engineering and Coordination as an engineering coordination item. Cross-references: F-07 (Thermal Zoning — design brief); F-08 (Thermal Transition — system response). -->
+
+**Engineering coordination item — Mechanical and Structural Engineers.**
+
+Passive thermal performance of the building envelope and thermal mass determines the baseline ambient temperature stability that HVAC systems must maintain. For buildings serving NEU/MS (Uhthoff's), OFS, or PAIN populations, envelope performance directly affects patient and user safety.
+
+**Coordination requirement.** The mechanical engineer's HVAC brief (§8.2.3) must state the thermal envelope performance targets required to achieve the F-07 ambient temperature specification (≤18°C primary activity spaces where NEU/MS is primary). The structural engineer must confirm thermal mass specification is compatible with the HVAC zoning strategy.
+
+**Thermal Envelope (from TC-02):**
+**Applicable Groups:** OFS, NEU, ALL **Specification:** U-value ≤0.15 W/m²K for external wall; windows triple-glazed (Uw ≤0.8 W/m²K); thermal bridges eliminated at structural connections. Internal surface temperature variation ≤2°C between floor and 1800 mm AFF in occupied spaces. **Clinical basis:** Temperature fluctuation triggers exertional response in OFS/MCAS and fatigue escalation in NEU. Thermal stability reduces physiological demand of building occupation. *Co-benefit: sustainability synergy — reduced heating/cooling load. See Part 11I §8.5.1.*
+
+**Thermal Mass (from TC-03):**
+**Applicable Groups:** OFS, NEU, ALL **Specification:** Exposed thermal mass (concrete, masonry, earth) in primary occupied spaces to moderate temperature swing. Target: ≤3°C diurnal internal temperature variation without active HVAC. **Clinical basis:** Passive thermal stability via thermal mass reduces dependency on active HVAC systems (which introduce acoustic noise: see A-08) while achieving thermal stability for NEU and OFS users. *Cross-reference: A-08 (HVAC noise — reduced dependency); TC-02 (envelope)*
+
+**Cross-population coordination note:** High-performance envelope eliminates cold bridging that creates localised cold surfaces — a PAIN allodynia trigger. Thermal mass dampens daily temperature swing (target ≤3°C per F-08). Both provisions serve NEU/MS, OFS, PAIN, and DEM populations simultaneously with no specification conflict. See Part 5 §5.2 TEMP-RANGE for conflict resolution where PAIN and NEU/MS occupy the same space.
+
+**Cross-references:** F-07 (Thermal Zoning); F-08 (Thermal Transition); Part 9 §9.1.4 (Mechanical Engineer brief); ms-thermal-temperature-conflict-resolution BPC.
