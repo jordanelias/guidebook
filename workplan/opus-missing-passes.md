@@ -314,7 +314,7 @@ Flags lifted when relevant Opus session commits output and marks session COMPLET
 
 | Session | Scope | Model | Status |
 |---|---|---|---|
-| OP-A | Part 5 §5.2 conflict resolution adjudication | Opus | PENDING |
+| OP-A | Part 5 §5.2 conflict resolution adjudication | Opus | COMPLETE 2026-04-03 05:27 |
 | OP-B | CON connection synthesis adjudication (10 HIGH entries) | Opus | PENDING |
 | OP-C | Part 10 DAR — BPC integration | Opus | PENDING |
 | OP-D | Part 11 Economics — BPC integration | Opus | PENDING |
