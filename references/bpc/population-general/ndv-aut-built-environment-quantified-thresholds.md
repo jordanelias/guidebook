@@ -84,7 +84,7 @@
 Not yet performed.
 
 ### Bottom-up findings (functional deficit pass)
-Not yet run.
+FDR-NDV-01: Proprioceptive underresponsivity (Dunn Q1) — textured floor zones for self-regulation in NDV circulation. THIN (Tier 5). DEM conflict: visual uniformity required — resolve via under-foot texture only. FDR-NDV-02: Interoceptive processing delay — WC/water within 20m of NDV occupied spaces (urgency response). Garfinkel 2016 Tier 1 mechanism. THIN architectural. FDR-NDV-03: Executive function — visible/labelled storage (open shelving, glass doors) in NDV residential/workplace. Pennington and Ozonoff 1996 Tier 1 mechanism. Items affected: D-05, G-08, WC proximity specification.
 
 ### Key sources
 [STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
