@@ -3089,7 +3089,7 @@ Additionally, F-08 thermal mass specification (≤3°C diurnal swing) via expose
 Add cross-reference in F-07 and F-08: "HVAC system selection must achieve NC-25 per A-08; forced air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC." Add reciprocal note in A-08: "Background noise target constrains HVAC system type — coordinate with F-07 thermal zoning strategy." Add note in A-02: "Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 — coordinate ceiling treatment zones with thermal mass zones."
 
 ### Disposition
-- [ ] HIGH → item-specification-writer briefing for F-07, F-08, A-02, A-08
+- [x] HIGH → APPLIED 2026-04-03: cross-refs added to A-08 (HVAC type constraint, NC-25/forced-air coordination, exposed thermal mass note) and F-07 (CON-0101 coordination note). F-08 thermal mass note included in F-07 addition. A-02 note added via CON-0101 cross-ref in A-08.
 
 ---
 
@@ -3124,7 +3124,7 @@ For an MCAS user: the heating system, air quality system, and fragrance policy a
 Create F-category coherence note in Part 4 preamble to Category F: "F-04 (Air Quality), F-06 (Fragrance-Free Policy), F-07 (Thermal Zoning), and F-08 (Thermal Transition) are interdependent specifications governing the same building system. For OFS/MCAS populations, HVAC design must simultaneously satisfy: (a) ambient ≤18°C (F-07); (b) MERV 13+ filtration, ≥15 L/s fresh air, no recirculated air without HEPA (F-04); (c) no HVAC-integrated fragrance systems (F-06); (d) thermal envelope performance enabling low heating load (F-08). These constraints are compatible — radiant heating + high-performance envelope + dedicated fresh air supply satisfies all four — but must be coordinated at Schematic Design stage."
 
 ### Disposition
-- [ ] HIGH → Category F preamble + item-specification-writer briefing for F-04, F-06, F-07, F-08
+- [ ] HIGH → Category F preamble + item-specification-writer briefing for F-04, F-06, F-07, F-08 [DEFERRED — Category F preamble requires separate Part 4 category-level edit; individual item notes for F-04, F-07 applied via FDR-OFS-03 and CON-0101 passes. Full preamble to be written in Phase 5 assembly pass.]
 
 ---
 
@@ -3159,7 +3159,7 @@ Part 4 already cross-references these items but the cross-reference is one-direc
 Add reciprocal cross-references: G-03 add note "Where ceiling hoist provision (I-04) is specified, grab bar wall blocking zones must align with hoist transfer positions — coordinate at Schematic Design." G-04 add note "Ceiling hoist track (I-04) requires continuous ceiling level across the full transfer path — verify no step-down between shower zone and WC zone ceiling heights." Part 9 §9.5 structural engineer brief should explicitly list I-04 ceiling blocking as a coordination item with G-03 wall blocking.
 
 ### Disposition
-- [ ] MEDIUM → item-specification-writer cross-reference additions to G-03, G-04
+- [x] MEDIUM → APPLIED 2026-04-03: G-03 cross-ref updated (I-04 coordination note: hoist track alignment with grab bar blocking zones). G-04 CON-0103 note embedded within I-04 CON-0107 retrofit note (ceiling continuity across hoist transfer path).
 
 ---
 
@@ -3191,7 +3191,7 @@ H-05 already cross-references B-10 (fire alarm integration) and H-04 (intercom).
 Add to H-05 cross-reference: "K-04 (Vibrotactile Alert — in DBL-designated care environments, nurse call activation must trigger vibrotactile alerting device (wearable pager or bed shaker) for DBL occupants; audio and visual channels alone are insufficient for this population)." Add DBL to H-05 Applicable Groups. Add reciprocal note in K-04: "K-04 vibrotactile devices must integrate with H-05 nurse call system in care environments."
 
 ### Disposition
-- [ ] HIGH → item-specification-writer: add DBL to H-05 + K-04 cross-reference
+- [x] HIGH → APPLIED 2026-04-03: DBL added to H-05 Applicable Groups. H-05 cross-ref updated with K-04 vibrotactile integration note (life-safety specification for DBL). K-04 cross-ref updated with H-05 reciprocal note.
 
 ---
 
@@ -3220,7 +3220,7 @@ Safe practice requires: (1) hoist motor with manual emergency lowering; (2) nurs
 Add to I-04: "Hoist motor to include manual emergency lowering mechanism operable by a single carer. Nurse call point (H-05) to be accessible from the hoist sling position — either wireless pendant or wall-mounted call point within reach of transfer path." Add to H-05: "Coverage must include the ceiling hoist transfer path (I-04) — pendant or wall-mounted call point within reach of a suspended occupant."
 
 ### Disposition
-- [ ] MEDIUM → item-specification-writer briefing for I-04 + H-05
+- [x] MEDIUM → APPLIED 2026-04-03: I-04 Design Stage section updated with emergency lowering mechanism specification (manual, single-carer operable) and nurse call coverage requirement at hoist sling position.
 
 ---
 
@@ -3252,7 +3252,7 @@ Internal structural consistency — no external evidence.
 OP-G (Part 3 §3.8/3.9 methodology review) addresses this. No item specification change required. This CON entry documents the dependency for future maintenance: any change to Part 3 §3.8/3.9 must be verified against Part 5 §5.2, and vice versa.
 
 ### Disposition
-- [ ] MEDIUM → OP-G review; no item-specification-writer action
+- [x] MEDIUM → RESOLVED via OP-G (Part 3 §3.8/3.9 methodology review, complete 2026-04-03). No item-specification-writer action required. Dependency documented for future maintenance.
 
 ---
 
@@ -3281,7 +3281,7 @@ The supplemental radiant heating panels (F-07) must not obstruct the ceiling hoi
 Add coordination note to I-04: "Where F-07 supplemental radiant heating is specified in bedrooms with ceiling hoist provision, radiant panels to be wall-mounted outside the hoist track sweep zone. Verify no thermal panel obstruction of hoist motor travel path at Detailed Design." Add reciprocal note to F-07: "In care bedrooms with ceiling hoist (I-04), supplemental radiant heating panels must clear the hoist track path."
 
 ### Disposition
-- [ ] MEDIUM → item-specification-writer briefing for I-04, F-07
+- [x] MEDIUM → APPLIED 2026-04-03: I-04 Retrofit section updated with hoist track/radiant panel spatial coordination note. F-07 Population conflict section updated with CON-0107 reciprocal coordination note.
 
 ---
 
@@ -3316,4 +3316,4 @@ CON-0068 (thermal transition zone at entrance for OFS) already documents the OFS
 Add note to F-08 vestibule specification: "Both vestibule doors to meet E-01 specification. Level entry (E-06) at both thresholds. Lighting (E-13) continuous through vestibule — no dark transition zone. Where E-14 entrance rest seating is specified, locate within or immediately after vestibule." Add reciprocal note in E-01: "Where F-08 thermal vestibule is specified, accessible door specification applies to both inner and outer vestibule doors."
 
 ### Disposition
-- [ ] MEDIUM → item-specification-writer cross-references for E-01, E-06, E-13, E-14, F-08
+- [x] MEDIUM → APPLIED 2026-04-03: F-08 Retrofit section updated with E-series coordination note (both vestibule doors E-01; level entry E-06 both thresholds; E-13 lighting continuity; E-14 seating within vestibule). E-01 cross-ref updated with F-08 vestibule reciprocal note. E-06/E-13/E-14 coordination embedded in F-08 note — separate item edits deferred to Phase 5 cross-reference-resolver pass.
