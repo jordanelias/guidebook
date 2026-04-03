@@ -1,15 +1,15 @@
 ## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
 
-<!-- v10.0 — CO-0004 applied: merged old Part 3 (§3.1-3.4) + old Part 4 (synthesis/sequencing).
-     Added §3.8 Resolution Decision Tree, §3.9 Resolution Strategies Menu per CO-0004.
-     REWRITE REQUIRED: use BPC cross-population-conflict-resolutions + CON register.
-     §3.8 and §3.9 are new content (no v9.0 equivalent — draft from scratch). -->
+*Guidebook for Accessible Design v10.0*
+
+---
+
+## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
+
 
 ## Part 3: Designing for Multiple Disability Categories
 
-*Accessible Built Environments — Utopian
 
-Best Practice Guidebook v9.0*
 
 ### §3.1 Introduction and Rationale
 
@@ -89,7 +89,9 @@ Common presentation: PTSD with ME/CFS; anxiety disorder with POTS (documented in
 
 ---
 
-<!-- MERGED FROM OLD PART 4: Synthesis and Sequencing (renumbered §3.x per CO-0004) -->
+---
+
+## Synthesis and Sequencing — Design Process
 
 ## Part 4: Synthesis and Sequencing
 
@@ -429,29 +431,142 @@ The distinction is between producing an accessible building and producing a buil
 
 ---
 
+---
+
 ### §3.8 Resolution Decision Tree
 
-<!-- NEW SECTION — CO-0004/D3-01. Draft from scratch using cross-population-conflict-resolutions BPC.
-     Covers: INTRA-INDIVIDUAL vs INTER-GROUP vs BOTH classification → tier identification → strategy selection → cascade check.
-     [PLACEHOLDER — requires Phase 3 writing session] -->
+Co-occurring population provisions sometimes conflict: the specification that serves one population is contraindicated for another in the same space. Section 3.8 provides the decision tree for resolving these conflicts at design stage. The conflict resolution table in Part 5 §5.2 applies this tree to eleven documented building-wide system conflicts.
 
-[PLACEHOLDER: §3.8 Resolution Decision Tree — to be drafted from BPC cross-population-conflict-resolutions + CON-0014/CON-0020/CON-0024]
+**Step 1 — Classify the conflict type.**
+
+| Classification | Definition | Examples |
+|---|---|---|
+| INTRA-INDIVIDUAL | One person has two co-occurring conditions with conflicting requirements | MS (cool ambient) + fibromyalgia (warm ambient); AUT (muted palette) + VIS (high contrast) |
+| INTER-GROUP | Different occupants with different conditions share the same space | DEM (plain floor) vs VIS (tactile indicators); DEAF (open sightlines) vs NDV/MH (enclosed routes) |
+| BOTH | The conflict applies both within individuals and between groups | Thermal zoning; lighting intensity; acoustic level |
+
+**Step 2 — Apply the resolution hierarchy.**
+
+| Priority | Rule | Rationale |
+|---|---|---|
+| 1 | Safety-critical provisions govern without exception | A provision that prevents falls, scalding, or failed fire evacuation takes Tier 1 priority over any comfort or sensory provision |
+| 2 | Higher-tier OT clinical evidence governs where safety provisions are equivalent | Tier 1 OT clinical research > Tier 2 NGO guidelines > Tier 4 standards |
+| 3 | The most constrained user governs where evidence tier is equal | The population for whom non-compliance causes the most severe functional consequence receives the provision |
+| 4 | Range specifications are preferred over point specifications | A specification expressed as a range (e.g., 32–45 mm grab bar diameter) serves both populations rather than requiring a choice |
+| 5 | Zoning separates irreconcilable ambient parameter conflicts | Where no single parameter value serves all populations, spatial separation assigns distinct zones with distinct parameter sets |
+| 6 | Irresolvable conflicts are documented and escalated to Tier 2 | Where no Tier 0–1 resolution exists, OT assessment is mandatory (see Part 9 §9.10). Document the conflict; do not hide it. |
+
+**Step 3 — Check for cascade effects.**
+
+After resolving a primary conflict, verify the resolution does not create a secondary conflict with a third population. Record: *Primary conflict resolved → Secondary conflict checked → Net outcome confirmed*.
+
+Example: Ambient temperature ≤18°C resolves NEU/MS vs PAIN (Step 2, Rule 1 — safety-critical MS governs). Cascade check: does ≤18°C affect DEM users sharing the space? DEM thermal specification: comfortable, not safety-critical; ≤18°C is within acceptable DEM range with appropriate clothing provision. Secondary conflict: none. Net outcome: RESOLVED-CONSENSUS.
+
+**Step 4 — Assign resolution status.**
+
+| Status | Meaning |
+|---|---|
+| RESOLVED-EVIDENCE | Resolution is supported by Tier 1–3 OT clinical or post-occupancy evidence |
+| RESOLVED-CONSENSUS | Resolution is supported by Tier 4–5 standards or expert consensus; no evidence conflict found |
+| PARTIAL | Resolution serves most but not all configurations; residual gap documented |
+| TIER-2-ONLY | Resolution is only achievable through individual OT assessment (Tier 2); no Tier 0–1 resolution possible |
+| UNRESOLVABLE | No resolution exists that serves all populations at Tier 0–1; documented in Part 5 §5.3 |
+
+---
 
 ### §3.9 Resolution Strategies Menu
 
-<!-- NEW SECTION — CO-0004/D3-01. Eight strategies: IEC, SZ, TS, DAR, SRW, PP, T0, OT-REF.
-     [PLACEHOLDER — requires Phase 3 writing session] -->
+Eight resolution strategies are available to the designer. They are listed in order of preference — strategies higher in the list resolve conflicts without requiring occupant action or spatial compromise; strategies lower in the list impose greater design constraints or leave residual gaps.
 
-[PLACEHOLDER: §3.9 Resolution Strategies Menu — to be drafted from BPC]
+**IEC — Individual Environmental Control**
+The building system provides occupant-operated adjustment of the conflicting parameter — lighting level, CCT, acoustic absorption, thermal setpoint — within the Tier 1 range. This eliminates the specification selection problem entirely. Where IEC is achievable, it is always the preferred resolution strategy. IEC is the H-02 provision extended to all conflicting environmental parameters.
+*Applicable to:* thermal conflicts (TEMP-RANGE), lighting conflicts (LIGHT-INT), acoustic conflicts (ACOUSTIC-LVL where individual receiver systems are feasible).
+*Limitation:* IEC requires that every occupant be able to operate the control; H-01 (accessible height, one-fist operable) is a prerequisite.
 
-### §3.10 Co-Occurrence Design Guidance (Synergies)
+**T0 — Tier 0 Universal Specification**
+The provision is valid for all populations without conflict; no choice is required. Where a specification exists that serves all conflicting populations simultaneously, it should be applied as a Tier 0 universal and the conflict is closed.
+*Examples:* 32–45 mm grab bar diameter (serves both MOB and UPL); level entry (serves MOB, PAIN, OFS, all populations); storage zone 380–1220 mm (serves MOB, PAIN, OFS, ageing).
 
-<!-- FROM OLD §3.4 — retained. Cross-reference review required post-renumber. -->
+**RNG — Range Specification**
+Where conflicting provisions can be expressed as ranges that overlap, the overlap zone is the specification. The overlap serves all populations; positions within the range are resolved by individual OT assessment at Tier 2.
+*Examples:* Grab bar diameter 32–45 mm (RNG over MOB 32–38 mm and UPL 32–45 mm); ambient temperature 18–21°C (RNG over NEU/MS ≤18°C and PAIN ≥18°C warmth need, with individual supplemental heating above 18°C).
+
+**SZ — Sensory Zoning**
+Where no single parameter value serves all populations, spatial separation assigns distinct zones. Three-zone sensory gradient (F-01): Zone 1 (high activation — primary circulation, assembly), Zone 2 (moderate — workspace, consultation), Zone 3 (low activation — sensory retreat, quiet rooms). The zone assignment resolves the conflict spatially rather than by specification compromise.
+*Applicable to:* lighting intensity (LIGHT-INT), acoustic level, olfactory environment (FRAGRANCE), colour and contrast (COLOUR-CONT where high-stimulation vs low-stimulation populations share a floor plate).
+*Limitation:* Zoning requires sufficient floor area to provide meaningful zone separation. In constrained buildings, zone boundaries may be too close to provide functional separation.
+
+**SRW — Safety Resolution with Workaround**
+A safety-critical provision governs; the conflicting population's need is partially met through an alternative design element.
+*Example:* ISO 23599:2019 TWSI (yellow raised tactile paving) governs on primary accessible routes (VIS/DBL safety — directional cue). PAIN vibration sensitivity is partially mitigated by JIS T9251 dome sizing (smallest profile meeting ISO 23599 — limits vibration transmission); on secondary routes, high-contrast flush edging strip provides orientation cue without raised profile. The primary route provision does not yield; the secondary route provides a partial alternative.
+
+**TS — Technology Substitution**
+Where a physical design conflict cannot be resolved, a technology substitution provides the at-risk population's functional need through an alternative means.
+*Examples:* Auracast personal receiver substitutes for open-plan hearing loop in NDV-primary zones where ambient acoustic amplification conflicts with NDV quiet; wearable vibrotactile pager substitutes for floor vibrotactile panels where VIS/DBL TWSI conflicts with vibrotactile infrastructure.
+
+**DAR — Deferred Adaptable Resolution**
+The conflict cannot be resolved at Tier 0 for the building population as known at construction stage. DAR provisions are specified at construction stage to enable future individual adaptation without structural intervention. See Part 10.
+*Applicable to:* INTRA-INDIVIDUAL conflicts that are only resolvable once the specific occupant's OT assessment is available; Tier 2-only conflicts in residential settings where the future occupant cannot be identified at construction stage.
+
+**OT-REF — OT Assessment Mandatory Referral**
+No Tier 0–1 resolution exists. The conflict is flagged as Tier 2-only. OT assessment of the specific user(s) sharing the space is the only resolution pathway. Document the conflict as TIER-2-ONLY; record the OT referral requirement in the building's commissioning documentation and FM brief.
+*Applicable to:* INTRA-INDIVIDUAL conflicts in shared non-zoned sleeping spaces; population pairs with no overlapping specification range; situations where the most constrained user's provision directly harms the second population with no workaround.
+
+---
+
+### §3.10 Co-Occurrence Design Guidance — Synergies
+
+Some population-specific provisions serve multiple populations simultaneously without conflict. These synergies are Tier 0 candidates — provisions that should be applied universally because they provide positive benefit across the population spectrum with no contraindication.
+
+The five confirmed Tier 0 provisions (see §1.4.3) derive from this synergy analysis:
+1. Consistent, predictable circulation geometry (loop or single-path; no dead-ends) — CON-0001: DEM, VIS, DBL, IntD, NDV/AUT convergence
+2. 3D landmark objects at all decision points — CON-0001: same 5-population convergence
+3. Consistent furniture arrangement within room types — CON-0001
+4. Fragrance-free policy in all enclosed public areas — F-06: OFS/MCAS, NDV/SENS, PAIN convergence
+5. Acoustic performance ≤ NC-35 in occupied spaces — A-01: DEAF (speech intelligibility), NDV (sensory calm), DEM (communication), NEU/PCS (cognitive load) convergence
+
+Additional synergy pairs documented in the CON register (connections CON-0001 through CON-0100) are noted in individual Part 4 item specifications under CON cross-references.
+
+**Key co-occurrence pairs and their consolidated design response.**
+
+*MOB + OFS.* Rest seating every ≤25 m; lift provision even under 3 storeys; automatic doors; level entry; cool ambient ≤18–21°C. Energy expenditure budget governs all circulation decisions. MS-specific: thermal management and temporal accessibility on high-fatigue days.
+
+*MOB + DEM.* Loop floor plan — dead-end corridors generate agitation for DEM users navigating with a wheelchair. Toilet visibility from bed. All MOB turning radii and DEM wayfinding provisions apply simultaneously.
+
+*NEU + PAIN (MS + fibromyalgia).* TEMP-RANGE conflict — see §3.8 Step 2, Rule 1, and Part 5 §5.2. Resolution: ≤18°C ambient; individual supplemental heating at each seat/workstation.
+
+*NDV + MH.* Sensory-retreat provision at ground-floor level (no lift required for crisis access); acoustic isolation; individual environmental control; defensible seating; no exposed structural services overhead. Note: NDV/AUT muted palette conflicts with NDV/MH warm-colour need — resolve by spatial subtype zoning (see §3.9 SZ).
+
+*VIS + DBL.* DBL residual vision may require LRV ≥50 at critical junctions (exceeding standard VIS ≥30 specification). Tactile floor indicators, vibrotactile fire alerting, and Braille at all key signs with tactile indicator approaching sign from walking surface.
+
+*DEM + OFS.* Both require rest seating every ≤25 m. Loop plan (DEM) and reduced exertion (OFS) are compatible — the DEM loop plan eliminates backtracking, which serves OFS energy conservation. Single specification serves both.
+
+*MOB + NEU.* Post-stroke mobility device use and navigation impairment co-occur frequently. Provision: ≥1500 mm corridor clear width (MOB); bilateral redundant contrast cues on both sides of corridor (NEU — unilateral neglect provision cannot specify neglected side at Tier 1); landmark at each decision point; loop floor plan or destination-visible layout.
+
+*MOB + PAIN.* Cushioned/resilient flooring is neutral for MOB (no wheel resistance problem above the threshold where cushioning reduces vibration); reduces PAIN joint impact. Anti-fatigue floor surface specification to state both benefits.
+
+*NEU + OFS (MS + ME/CFS — common co-occurrence).* Cool ambient governs (NEU/MS Uhthoff safety-critical); OFS cool preference aligns with NEU/MS requirement — no conflict. Cumulative exertion management: all MOB + OFS provisions apply (rest seating, level access, automatic doors).
+
+*MH + PAIN.* Both benefit from individual environmental control (H-02), recline-capable seating, and nature connection. No conflicts — provisions are additive.
+
+*MH + OFS.* Both require quiet retreat space, individual control, cool ambient, fragrance-free environment, and seated service provision. No conflicts — this population pair has the highest provision overlap of any pair in the guidebook.
+
+---
 
 ### §3.11 Worked Examples — Methodology Level
 
-<!-- FROM OLD §4.7 — retained. Update BAR→Supp Vol refs; DD/RFO terminology. -->
+Five methodology-level worked examples are retained from v9.0 Part 4 §4.7 (pending full v10 rewrite). These examples demonstrate how to apply the synthesis and sequencing framework, not how to resolve building-wide system conflicts (which are covered in Part 5 §5.4).
+
+*[v9.0 §4.7 content retained here pending Phase 3 revision. Cross-references to Part numbers updated to CO-0004 numbering: Part 7 → Part 4 (items); Part 5 (residential) → Part 6; Part 6 (non-residential) → Part 7; Part 8 (conflicts) → Part 5.]*
+
+---
 
 ### §3.12 From Approach to Application
 
-<!-- FROM OLD §4.8 — retained. Update Part number references to CO-0004 numbering. -->
+*[v9.0 §4.8 content retained here pending Phase 3 revision. Entry path Part number references updated to CO-0004 numbering.]*
+
+---
+
+*Next: Part 4 — Item Specification Library*
+
+*Cross-references: Part 2 (disability category definitions); Part 5 (building-level conflict resolutions — applies §3.8 decision tree to documented conflicts); Part 9 §9.9 (co-occurrence collaboration protocol for design teams)*
