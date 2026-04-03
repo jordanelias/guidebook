@@ -259,32 +259,113 @@ For Tier 2 projects, the named individual and their chosen support network are t
 *Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Three-Tier Hierarchy) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 13 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
 
 
+
 ---
 
 ### §9.9 Co-Occurrence Collaboration Protocol
 
-<!-- NEW SECTION — D3-03. Draft from scratch.
-     Content: inter-consultant protocol when multiple populations present;
-     escalation triggers; co-occurrence conflict resolution workflow at design stage.
-     [PLACEHOLDER — requires Phase 3 writing] -->
+Multi-population buildings require coordinated inter-consultant action. This section establishes the collaboration protocol for design teams working on buildings where two or more disability population codes are primary in the brief.
 
-[PLACEHOLDER: §9.9 Co-occurrence collaboration protocol]
+**Trigger condition.** The co-occurrence collaboration protocol activates when the building brief includes two or more population codes with documented specification conflicts in Part 5 §5.2 or Part 3 §3.3 (HIGH co-occurrence rating). Activation is not optional — it is a design stage requirement equivalent to a statutory consultation.
+
+**Stage 1 — Population identification (Schematic Design).**
+At brief inception, the design lead identifies all anticipated primary and secondary disability populations from the building programme. Primary populations: those present in significant numbers among regular occupants. Secondary populations: those present occasionally but whose design requirements are safety-critical. Classify each conflict domain (using Part 3 §3.8 classification: INTRA-INDIVIDUAL / INTER-GROUP / BOTH).
+
+**Stage 2 — Conflict register (Schematic Design close).**
+Before schematic design closes, the project co-occurrence conflict register is compiled. For each identified conflict domain:
+- Confirm the conflict classification (§3.8 Step 1)
+- Apply the resolution hierarchy (§3.8 Step 2)
+- Assign resolution strategy (§3.9)
+- Identify which consultant is responsible for each resolution parameter
+
+| Conflict domain | Classification | Resolution strategy | Lead consultant | Input consultant(s) |
+|---|---|---|---|---|
+| TEMP-RANGE (NEU/MS vs PAIN) | INTRA/BOTH | RNG + IEC | M&E Engineer | OT; Access Consultant |
+| ACOUSTIC-LVL (DEAF vs NDV) | INTER-GROUP | IEC (loop input control) | Acoustic Engineer | Deaf Design Consultant |
+| LIGHT-INT (DEM vs NDV) | INTER-GROUP | SZ + IEC | Lighting Designer | Dementia Design Specialist; Sensory Design Consultant |
+| SPATIAL-OPEN (DEAF vs NDV/MH) | INTER-GROUP | SZ | Architect | Deaf Design Consultant; Sensory Design Consultant |
+
+**Stage 3 — Inter-consultant coordination gate (Technical Design).**
+Each consultant working on a conflict domain must have reviewed and signed off the resolution before their scope of services is finalised. The access consultant holds the conflict register and chairs coordination meetings. Resolution changes after Technical Design require a formal Change Order.
+
+**Stage 4 — OT threshold referral (where triggered).**
+If any conflict is classified TIER-2-ONLY at Step 4 of the resolution tree (§3.8), OT assessment is mandatory before Technical Design closes. The conflict cannot be resolved by design alone. OT assessment output is incorporated into the design brief before consultant scopes are finalised. See §9.10.
+
+**Stage 5 — Commissioning verification (Ready for Occupancy).**
+At RFO, each resolved conflict domain is verified against the design intent:
+- Thermal zones commissioned to specified temperature bands
+- Hearing loop performance verified to IEC 60118-4 field strength
+- Lighting levels verified by zone against Part 5 §5.2 LIGHT-INT resolution
+- Acoustic performance measured (RT60, NC level, STI)
+- Sensory retreat room verified (dimensions, acoustic isolation, lighting control range)
+
+---
 
 ### §9.10 OT Threshold
 
-<!-- NEW SECTION — D3-03. Draft from scratch.
-     Content: conditions under which OT assessment becomes mandatory (not advisory);
-     threshold criteria by building type and population combination.
-     [PLACEHOLDER — requires Phase 3 writing] -->
+The OT threshold defines the conditions under which occupational therapist involvement in the design process is mandatory, not advisory. Below the threshold, OT involvement is recommended best practice. At or above the threshold, OT assessment is a prerequisite for completing the design.
 
-[PLACEHOLDER: §9.10 OT threshold criteria]
+**Threshold criteria.** OT assessment is mandatory when ANY of the following conditions applies:
+
+| Condition | Threshold criterion | Applicable stage |
+|---|---|---|
+| Named occupant | A specific individual will be the primary or sole occupant and their disability category is known | Schematic Design |
+| Tier 2 specification required | Any Part 4 item specification must be resolved to a specific value within the Tier 1 range for a named individual | Technical Design |
+| TIER-2-ONLY conflict | A co-occurrence conflict in the Part 5 conflict register is classified TIER-2-ONLY (§3.8 Step 4) | Technical Design |
+| Post-occupancy adaptation | A built environment is being adapted for a current occupant with a specific disability profile | Before adaptation design |
+| Clinical environment | The building is a residential care facility, inpatient psychiatric unit, specialist housing, or similar clinical environment where functional capacity is the primary design variable | Schematic Design |
+| High-consequence failure | Any Part 4 item where the evidence marker is ○ (expert consensus only) and the primary occupant belongs to the relevant population | Technical Design |
+
+**OT assessment scope.** At minimum, the OT assessment for design purposes should produce:
+- Characterisation of the individual's functional capacities across all relevant ICF domains
+- Identification of the environmental barriers for that person in the proposed design
+- Specification of the target values within Part 4 Tier 1 ranges for each contested item
+- Post-modification outcome verification plan (to be executed at RFO)
+
+The Housing Enabler (Iwarsson & Slaug, Lund University CASE) is the recommended assessment instrument for residential and quasi-residential settings. For acute clinical settings, the OT assessment protocol is determined by the clinical governance framework of the commissioning organisation.
+
+**OT assessment output format for design teams.** The OT assessment report is to be structured as an accessible design brief addendum:
+- Part 4 item code → Tier 1 range → Assessed value for this individual
+- Conflict domain → Resolution strategy → Individual-specific parameter
+- DAR provisions required for anticipated functional trajectory
+
+---
 
 ### §9.11 DeafBlind (DBL) Specialist Consultant
 
-<!-- NEW SECTION — GAP-SCOPE-02. Draft from scratch using deafblind-built-environment-design BPC.
-     Content: Protactile spatial requirements (≤600 mm face-to-face, ≥1500 mm per pair);
-     close-range signing zones; intervenor/guide-interpreter clear floor zone;
-     tactile map and wayfinding continuity; appointment trigger.
-     [PLACEHOLDER — requires Phase 3 writing] -->
+**When DBL specialist input is required.** DBL is the population code with the most severe evidence gap in this guidebook — zero Tier 1 evidence for any spatial provision in any language. All DBL specifications are Co-1/Tier 2 at best. This evidence gap is not remediable by the design team alone. DBL specialist consultation is the only way to bridge it.
 
-[PLACEHOLDER: §9.11 DeafBlind Specialist Consultant]
+DBL specialist input is mandatory when DBL appears as a primary or secondary population code in the building brief.
+
+**DBL specialist scope of services.**
+
+| Stage | Service |
+|---|---|
+| Schematic | Confirm which DBL communication modalities are required (Protactile, tactile signing, close-range signing, print-on-palm); identify intervenor/SSP spatial requirements specific to the anticipated DBL users |
+| Technical Design | Verify tactile wayfinding continuity plan; specify vibrotactile alerting locations; review intervenor clear floor zone provision at all service points |
+| Technical Design | Specify tactile map content and format; verify spatial consistency protocol for FM team |
+| RFO | Verify tactile route continuity; test vibrotactile alert coverage; review furniture arrangement against Protactile space requirements |
+
+**Protactile spatial requirements (Tier Co-1 — THIN BASE; emerging best practice).**
+- Face-to-face seating at ≤600 mm between interlocutors
+- Armless movable chairs at all communication nodes
+- Clear floor space ≥1500 mm per Protactile communication pair
+- Seating positions permit shoulder-to-lap contact zone (the Protactile linguistic space)
+
+**Close-range signing for DBL users with residual vision (JA: 接近手話; analogous provisions in BSL, ASL).**
+- Interpreter/SSP positioning zone within 500–1000 mm of the DBL user
+- Dedicated lighting on interpreter from head to knee
+- No shadow on background surface behind interpreter
+
+**Intervenor/guide-interpreter provisions.**
+- Clear floor space ≥1500 mm adjacency at all service counters, reception desks, and primary communication nodes (K-01)
+- Dedicated seating position adjacent to DBL user at all fixed seating areas
+- Unobstructed sightline from intervenor position to DBL user at all times
+
+**Spatial consistency protocol (FM requirement).**
+Furniture rearrangement and spatial changes on primary DBL circulation routes require:
+- Advance notification to DBL occupants (minimum 48 hours where operationally possible)
+- Temporary tactile landmark provision during any disruption to the primary tactile route
+- Post-change orientation walk-through with each DBL occupant who uses the affected route
+
+This protocol is to be incorporated into the FM brief at handover and into the building's health, safety, and accessibility management plan.
