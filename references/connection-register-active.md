@@ -3059,3 +3059,261 @@ Part 1 methodology: add explicit statement that dimensional specifications are b
 
 ### Disposition
 - [x] HIGH → Part 1 methodology note + item-specification-writer briefing
+
+
+## CON-0101 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — HVAC system type affects acoustic environment for all occupants
+**Populations involved:** NEU/MS, OFS, PAIN, NDV/AUT, DEAF
+**Items involved:** F-07, F-08, A-01, A-02, A-08
+**Gap register items:** NONE
+**Source:** Phase 2C re-scan
+
+### Connection description
+F-07 (Thermal Zoning) and F-08 (Thermal Transition) specify HVAC system requirements including forced air prohibition in NEU/OFS spaces and high-performance envelope. The ms-thermal BPC states "no forced air heating as sole source in NEU/OFS spaces (acoustic + airborne trigger concern)." This acoustic rationale is not cross-referenced in Category A acoustic items.
+
+Conversely, A-08 specifies NC-25 background noise. HVAC system type is the primary determinant of achievable NC level. F-07/F-08 HVAC zoning strategy directly constrains which heating systems can meet A-08 NC-25. This bidirectional dependency is not documented.
+
+Additionally, F-08 thermal mass specification (≤3°C diurnal swing) via exposed slab construction affects room acoustic absorption — exposed concrete ceilings have low NRC (≤0.05) and will worsen RT60 unless compensated by additional acoustic treatment (A-02 NRC ≥0.85).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| ms-thermal BPC (forced air prohibition) | 4 | NEU/MS, OFS | A-01, A-02 acoustic cross-ref |
+| room-acoustic-performance BPC | 3–4 | DEAF, NDV | F-07/F-08 HVAC cross-ref |
+| CIBSE Guide A (HVAC noise) | 5 | General | F-07 acoustic constraint |
+
+### Proposed synthesis direction
+Add cross-reference in F-07 and F-08: "HVAC system selection must achieve NC-25 per A-08; forced air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC." Add reciprocal note in A-08: "Background noise target constrains HVAC system type — coordinate with F-07 thermal zoning strategy." Add note in A-02: "Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 — coordinate ceiling treatment zones with thermal mass zones."
+
+### Disposition
+- [ ] HIGH → item-specification-writer briefing for F-07, F-08, A-02, A-08
+
+---
+
+## CON-0102 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — OFS/MCAS user experiences both thermal and chemical triggers from the same HVAC system
+**Populations involved:** OFS/MCAS, NDV (chemical sensitivity), PAIN
+**Items involved:** F-07, F-08, F-04, F-06
+**Gap register items:** NONE
+**Source:** Phase 2C re-scan — F-category coherence
+
+### Connection description
+F-07 (Thermal Zoning) specifies individual supplemental radiant heating. F-04 (Air Quality) specifies MERV 13+ filtration and no recirculated air without HEPA for OFS/MCAS spaces. F-06 (Fragrance-Free Policy) prohibits fragrance diffusers including HVAC-integrated systems.
+
+These three F-category items are interdependent but specified independently:
+1. F-07's radiant heating recommendation avoids forced air — but does not cross-reference F-04's reason (airborne chemical triggers for MCAS) or F-06's prohibition (no HVAC-integrated fragrance systems).
+2. F-04 specifies fresh air supply ≥15 L/s per person in OFS/MCAS spaces — but does not reference F-07's ambient ≤18°C constraint (which affects ventilation heat recovery strategy).
+3. F-08's thermal envelope specification (U ≤0.15 W/m²K) enables reduced heating load, which in turn enables the lower ambient temperature that F-07 requires. This causal chain is not documented.
+
+For an MCAS user: the heating system, air quality system, and fragrance policy are a single environmental system — a forced air heater that recirculates fragrance-laden air at elevated temperature triggers three simultaneous symptom pathways (thermal, chemical, airborne particulate).
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| air-quality-voc BPC | 4–5 | OFS/MCAS | F-07 HVAC type constraint |
+| ms-thermal BPC | 2–4 | NEU/MS | F-04 ventilation heat recovery |
+| pain-ofs-built-environment-design BPC | 3 | OFS | F-category coordination note |
+
+### Proposed synthesis direction
+Create F-category coherence note in Part 4 preamble to Category F: "F-04 (Air Quality), F-06 (Fragrance-Free Policy), F-07 (Thermal Zoning), and F-08 (Thermal Transition) are interdependent specifications governing the same building system. For OFS/MCAS populations, HVAC design must simultaneously satisfy: (a) ambient ≤18°C (F-07); (b) MERV 13+ filtration, ≥15 L/s fresh air, no recirculated air without HEPA (F-04); (c) no HVAC-integrated fragrance systems (F-06); (d) thermal envelope performance enabling low heating load (F-08). These constraints are compatible — radiant heating + high-performance envelope + dedicated fresh air supply satisfies all four — but must be coordinated at Schematic Design stage."
+
+### Disposition
+- [ ] HIGH → Category F preamble + item-specification-writer briefing for F-04, F-06, F-07, F-08
+
+---
+
+## CON-0103 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — ceiling hoist structural provision affects grab bar mounting and wet room layout
+**Populations involved:** MOB, UPL, NEU, OFS
+**Items involved:** I-04, G-03, G-04, Part 9 §9.5
+**Gap register items:** NONE
+**Source:** Phase 2C re-scan
+
+### Connection description
+I-04 (Ceiling Hoist) specifies structural ceiling blocking rated ≥1.5 kN/m² along the full transfer path from bed to bathroom. G-03 (Grab Bars) specifies wall blocking zones for bilateral grab bar mounting at WC, shower, and bath positions. G-04 (Wet Room Configuration) specifies floor gradient, turning circle, and drainage positions.
+
+The three specifications interact physically:
+1. Ceiling hoist track path must align with G-04 turning circle and G-03 grab bar positions — the user transfers from hoist sling to WC/shower seat at specific positions defined by G-03/G-04 layout.
+2. Hoist track mounting may require structural reinforcement that conflicts with ceiling-mounted shower heads, exhaust fans, or lighting positions in G-04 wet rooms.
+3. I-04 specifies "track to be continuous — no step-down between ceiling levels on transfer path." In bathrooms with different ceiling heights (shower zone vs general), this constrains G-04 layout.
+
+Part 4 already cross-references these items but the cross-reference is one-directional (I-04 → G-03/G-04). G-03 and G-04 do not reference I-04 ceiling hoist constraints.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| RCOT Adaptations Without Delay 2019 | Co-2 | MOB | I-04/G-03/G-04 coordination |
+| BS 8300:2018 | 5 | ALL | Ceiling hoist structural |
+| accessible-bathroom-and-grab-bar BPC | 2–4 | MOB, UPL | I-04 spatial coordination |
+
+### Proposed synthesis direction
+Add reciprocal cross-references: G-03 add note "Where ceiling hoist provision (I-04) is specified, grab bar wall blocking zones must align with hoist transfer positions — coordinate at Schematic Design." G-04 add note "Ceiling hoist track (I-04) requires continuous ceiling level across the full transfer path — verify no step-down between shower zone and WC zone ceiling heights." Part 9 §9.5 structural engineer brief should explicitly list I-04 ceiling blocking as a coordination item with G-03 wall blocking.
+
+### Disposition
+- [ ] MEDIUM → item-specification-writer cross-reference additions to G-03, G-04
+
+---
+
+## CON-0104 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — nurse call system serves DBL population through vibrotactile channel
+**Populations involved:** DBL, DEAF, MOB, DEM, OFS, PAIN
+**Items involved:** H-05, K-04, B-10, H-04
+**Gap register items:** GAP-035
+**Source:** Phase 2C re-scan
+
+### Connection description
+H-05 (Nurse Call) specifies multi-modal alerting (audio, visual, tactile) but does not explicitly reference K-04 (Vibrotactile Alert) as the DBL-accessible modality. The deafblind BPC specifies vibrotactile alerting for all alarm/communication systems. H-05's "tactile feedback" specification refers to button confirmation — not to vibrotactile alerting of incoming calls to DBL occupants.
+
+For a DBL occupant in a care environment: the nurse call system is their only emergency communication channel. Without vibrotactile integration, a DBL occupant cannot detect incoming nurse visits, call confirmations, or emergency notifications.
+
+H-05 already cross-references B-10 (fire alarm integration) and H-04 (intercom). K-04 is referenced in the bathroom specification text ("vibrotactile alert integration (K-04) where DBL occupants") but not in the main H-05 cross-reference block.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| deafblind-built-environment-design BPC | 4–5 | DBL | H-05 K-04 integration |
+| DbI best practice guidelines | Tier 2 | DBL | H-05 vibrotactile channel |
+| visual-fire-alarm-seizure-safety BPC | 3–4 | NEU | Multi-channel alerting |
+
+### Proposed synthesis direction
+Add to H-05 cross-reference: "K-04 (Vibrotactile Alert — in DBL-designated care environments, nurse call activation must trigger vibrotactile alerting device (wearable pager or bed shaker) for DBL occupants; audio and visual channels alone are insufficient for this population)." Add DBL to H-05 Applicable Groups. Add reciprocal note in K-04: "K-04 vibrotactile devices must integrate with H-05 nurse call system in care environments."
+
+### Disposition
+- [ ] HIGH → item-specification-writer: add DBL to H-05 + K-04 cross-reference
+
+---
+
+## CON-0105 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — nurse call/emergency response interacts with ceiling hoist emergency lowering
+**Populations involved:** MOB, UPL, NEU, OFS
+**Items involved:** H-05, I-04
+**Gap register items:** NONE
+**Source:** Phase 2C re-scan
+
+### Connection description
+I-04 (Ceiling Hoist) does not specify an emergency lowering procedure. If the ceiling hoist motor fails during a transfer, the occupant is suspended. H-05 (Nurse Call) is the emergency communication channel in care environments, but H-05 does not reference hoist failure as a scenario requiring call activation.
+
+Safe practice requires: (1) hoist motor with manual emergency lowering; (2) nurse call point accessible from the hoist sling position (not just from bed and WC positions); (3) wireless pendant (H-05 specification) carried during all hoist transfers.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| RCOT Adaptations Without Delay 2019 | Co-2 | MOB | Emergency lowering protocol |
+| NHS HTM 08-03 | 5 | ALL | Nurse call coverage in hoist zone |
+
+### Proposed synthesis direction
+Add to I-04: "Hoist motor to include manual emergency lowering mechanism operable by a single carer. Nurse call point (H-05) to be accessible from the hoist sling position — either wireless pendant or wall-mounted call point within reach of transfer path." Add to H-05: "Coverage must include the ceiling hoist transfer path (I-04) — pendant or wall-mounted call point within reach of a suspended occupant."
+
+### Disposition
+- [ ] MEDIUM → item-specification-writer briefing for I-04 + H-05
+
+---
+
+## CON-0106 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** MEDIUM
+**Disposition:** PENDING
+**Type:** [STRUCTURAL] — Part 5 conflict resolution table references items not formally connected
+**Populations involved:** ALL
+**Items involved:** Part 5 §5.2, Part 3 §3.8/§3.9, all items referenced in conflict resolution table
+**Gap register items:** GAP-P8-01, GAP-P8-02
+**Source:** Phase 2C re-scan — merged Part 3 + new Part 5
+
+### Connection description
+Part 5 §5.2 contains an 11-entry conflict resolution table. Each entry identifies a conflict domain, a resolution strategy, and a governing provision. Part 3 §3.8 provides the decision tree for selecting resolution strategies. Part 3 §3.9 provides the strategies menu (IEC/SZ/TS/DAR/SRW/PP/T0/OT-REF).
+
+These two Parts were written by Sonnet independently. The CON register does not contain structural connections documenting:
+1. That Part 5 §5.2 entries must be derivable from Part 3 §3.8 decision tree — applying §3.8 to each conflict should produce the resolution shown in §5.2.
+2. That Part 3 §3.9 strategies must be exhaustive — every strategy code used in §5.2 must appear in §3.9.
+3. That Part 3 §3.11 worked examples must be consistent with §5.2 conflict resolutions.
+4. That Part 5 §5.4 worked examples must be consistent with §3.8 decision tree.
+
+This is a methodology consistency connection — it ensures the guidebook's original practitioner contribution (§3.8/3.9, flagged as GAP-P8-01/02) is internally consistent with its application (§5.2).
+
+### Evidence basis
+Internal structural consistency — no external evidence.
+
+### Proposed synthesis direction
+OP-G (Part 3 §3.8/3.9 methodology review) addresses this. No item specification change required. This CON entry documents the dependency for future maintenance: any change to Part 3 §3.8/3.9 must be verified against Part 5 §5.2, and vice versa.
+
+### Disposition
+- [ ] MEDIUM → OP-G review; no item-specification-writer action
+
+---
+
+## CON-0107 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTRA-INDIVIDUAL] — ceiling hoist user may also require thermal zoning in care bedroom
+**Populations involved:** MOB, NEU, OFS, PAIN
+**Items involved:** I-04, F-07, F-08
+**Gap register items:** NONE
+**Source:** Phase 2C re-scan
+
+### Connection description
+I-04 (Ceiling Hoist) specifies provision in all accessible bathrooms and primary bedrooms in specialist residential, care, and healthcare settings. F-07 (Thermal Zoning) specifies ambient ≤18°C with individual supplemental heating. A user requiring a ceiling hoist in a care bedroom is likely to have high co-occurrence with NEU/MS (progressive conditions requiring hoist transfer) or OFS (weight-bearing intolerance requiring hoist transfer).
+
+The supplemental radiant heating panels (F-07) must not obstruct the ceiling hoist track path (I-04). Wall-mounted radiant panels in I-04 bedrooms must be positioned outside the hoist sweep zone. This spatial coordination is not documented.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| ms-thermal BPC | 2–4 | NEU/MS | I-04 bedroom heating coordination |
+| RCOT 2019 | Co-2 | MOB | Hoist track clearance zone |
+
+### Proposed synthesis direction
+Add coordination note to I-04: "Where F-07 supplemental radiant heating is specified in bedrooms with ceiling hoist provision, radiant panels to be wall-mounted outside the hoist track sweep zone. Verify no thermal panel obstruction of hoist motor travel path at Detailed Design." Add reciprocal note to F-07: "In care bedrooms with ceiling hoist (I-04), supplemental radiant heating panels must clear the hoist track path."
+
+### Disposition
+- [ ] MEDIUM → item-specification-writer briefing for I-04, F-07
+
+---
+
+## CON-0108 [2026-04-03 05:27]
+**Mode:** Internal
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — F-08 entrance vestibule interacts with E-series entrance items
+**Populations involved:** OFS, NEU/MS, MOB, VIS, DEM
+**Items involved:** F-08, E-01, E-06, E-13, E-14
+**Gap register items:** NONE
+**Source:** Phase 2C re-scan
+
+### Connection description
+F-08 specifies an entry vestibule (thermal buffer ≥2 m depth) at primary accessible entrances. E-01 (Entrance Door), E-06 (Level Entry), E-13 (PIR Entrance Lighting), and E-14 (Entrance Rest Seating) all specify provisions at the same spatial location — the building entrance.
+
+The vestibule adds a second door transition (outer + inner) which:
+1. Doubles the E-01 door specification scope — both vestibule doors must meet E-01 accessible door specification.
+2. Creates a transition zone where E-13 lighting must maintain illuminance continuity (no dark zone between outer and inner doors).
+3. Places E-14 entrance rest seating within or immediately after the thermal buffer zone — the seating benefits from the thermal transition.
+4. E-06 level entry must apply at both vestibule thresholds — no raised threshold at either door.
+
+CON-0068 (thermal transition zone at entrance for OFS) already documents the OFS/NEU thermal need. This CON adds the spatial coordination with E-series entrance items.
+
+### Evidence basis
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| CON-0068 (thermal transition) | Internal | OFS, NEU | E-series coordination |
+| pain-ofs-built-environment-design BPC | 3 | OFS | Vestibule spatial requirements |
+
+### Proposed synthesis direction
+Add note to F-08 vestibule specification: "Both vestibule doors to meet E-01 specification. Level entry (E-06) at both thresholds. Lighting (E-13) continuous through vestibule — no dark transition zone. Where E-14 entrance rest seating is specified, locate within or immediately after vestibule." Add reciprocal note in E-01: "Where F-08 thermal vestibule is specified, accessible door specification applies to both inner and outer vestibule doors."
+
+### Disposition
+- [ ] MEDIUM → item-specification-writer cross-references for E-01, E-06, E-13, E-14, F-08
