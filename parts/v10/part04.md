@@ -23,6 +23,12 @@
 
 *(Item codes use category prefix + two-digit number. Bare codes only — no volume-part prefix.)*
 
+<!-- CON-0011 [HIGH]: Systematic pass required — insert DBL and IntD (via DEM/NDV proxy per CO-0002) into all applicable room matrix items. Resolves 15+ gaps in single operation. Execute in Part 6/7 matrix edit pass. -->
+
+<!-- CON-0018 [HIGH]: Essential facility sightline → Tier 0 residential provision. WC/bathroom door visible from main living area without navigational decision points. Add to D-03 (Toilet Visibility). -->
+
+<!-- D2-41 STANDING INSTRUCTION: Every Part 4 item requires PAIN/OFS population audit. Where PAIN or OFS applies based on mechanism (heat, cold, vibration, exertion, fragrance sensitivity), add population code + THIN-POPULATION-SPEC disclosure. Item-specification-writer pass required for all 85 items. -->
+
 ## Part 5: Item Specification Library
 
 ## CATEGORY A: ACOUSTICS
@@ -30,6 +36,8 @@
 All RT60 specifications are for the 500 Hz octave band in the occupied condition unless stated otherwise. NC ratings are single-number noise criterion measurements. STI = Speech Transmission Index (≥0.5 = good speech intelligibility). STC = Sound Transmission Class (partition isolation rating). All hearing loop specifications: IEC 60118-4:2014+AMD1:2017.
 
 ### A-01 Acoustic Buffer Zones at Noisy Adjacencies
+
+<!-- CON-0039 [HIGH]: RT60 ≤0.3 s (mid-frequency 500–2000 Hz) to be elevated to Tier 0 universal specification for all speech-critical rooms. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Frame ≤0.6 s as outer failure boundary, not a compliant specification. Populations: ALL (DEAF speech intelligibility, NDV acoustic calm, DEM communication, NEU/PCS cognitive load). -->
 
 **Applicable Groups:** ALL (especially NDV, PCS, AUT, MIS, DEM)
 
@@ -481,7 +489,10 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 
 **Evidence basis (OT):** Compensatory FOR. Acoustic differentiation preserves the environmental cues that compensate for the absence of visual information during navigation; deliberate maintenance of a distinct acoustic signature between corridor and room surfaces is an environmental compensation strategy that enables independent wayfinding as an occupation.
 
-### A-16 Sensory Room / Quiet Room Provision (≥8 m², one per floor or per 500 m² GFA)
+### A-16 Sensory Room / Quiet Room Provision
+
+<!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Tier 0 universal — one per occupied floor plate. -->
+<!-- CON-0023 [HIGH]: Audit against Al-Harasis taxonomy — spatial configuration (layout topology) is underspecified relative to finish materials. Add note on approach route (no high-stimulation zones on path to A-16). --> (≥8 m², one per floor or per 500 m² GFA)
 
 **Applicable Groups:** AUT, ADHD, PCS, DEM, MH, OFS
 
@@ -675,6 +686,8 @@ requires circuit separation, dimmer installation, and possible luminaire additio
 
 ### B-06 Individual Dimming Control (≥300 Lux Range)
 
+<!-- CON-0017 [HIGH]: B-06 individual dimming is the highest-impact single lighting provision for DEM/VIS vs NDV/OFS illuminance conflict. Cross-reference H-02 (individual environmental control hierarchy). Ensure B-06 specifies CCT adjustability as well as level — CCT adjustment resolves DEM circadian vs NDV predictability conflict (see Part 5 §5.2 LIGHT-INT). --> (≥300 Lux Range)
+
 **Applicable Groups:** AUT, PCS, DEM, MH, PAIN, OFS
 
 **Description:** Occupant-controlled dimmer in all spaces where neurological or sensory populations spend significant time. Dimming range: 100% down to 10 lux minimum — not merely 30--300 lux. 10 lux is the clinically relevant minimum for PCS users in acute symptom periods.
@@ -782,6 +795,9 @@ seated views essential).
 **Evidence basis (OT):** ART (Attention Restoration Theory); SRT (Stress Recovery Theory). Natural light from windows and skylights is the primary restorative element in the built environment per both ART and SRT; the ≥75% provision ensures that the majority of primary occupied time is spent with access to the visually restorative stimulus, reducing directed attention depletion for NEU, DEM, and OFS users.
 
 ### B-10 Visual Fire Alarm (Strobe VAD Throughout Building)
+
+<!-- CON-0014 [HIGH]: New companion item required — Vibrotactile Alerting Device (sleeping areas): minimum vibration intensity, latency ≤3 s, coverage all sleeping rooms where DEAF/DBL/photosensitive populations are primary. Item code K-04 exists (vibrotactile alert) — cross-reference and ensure K-04 explicitly covers sleeping-area installation. Resolves strobe-seizure conflict: where strobes are contraindicated (NDV photosensitivity, epilepsy), vibrotactile is the resolution. -->
+<!-- CON-0042 [HIGH]: DEAF visual alerting system (B-10) conflicts with VIS/NDV glare in shared spaces. Resolution: diffuser technology; strobe placement high on wall (>2100 mm AFF) reduces direct glare while maintaining visual coverage. Add installation note to B-10. -->
 
 **Applicable Groups:** DEAF, DBL
 
@@ -1053,6 +1069,8 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 
 ### D-02 Cognitive Simplicity (Single Primary Route from Entry to Destination)
 
+<!-- CON-0001 [HIGH]: Tier 0 convergence — DEM, VIS, DBL, IntD, NDV/AUT all require consistent, predictable circulation. Synthesis: add Tier 0 universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
+
 **Applicable Groups:** DEM, NDV, VIS (cognitive)
 
 **Description:** All primary building journeys follow a single, legible primary route. No user should need to choose between multiple routes at any decision point unless routes are equivalent and clearly signposted. Decision point = any junction with ≥2 route options.
@@ -1253,6 +1271,8 @@ principle in the guidebook: level 4 users can process a familiar object image pl
 process multi-word directional sentences or abstract symbols.
 
 ### D-09 Consistent Furniture Layout (No Rearrangement Without User Consultation)
+
+<!-- CON-0001 [HIGH]: Tier 0 convergence — DBL and NDV/AUT depend on spatial consistency for tactile wayfinding and sensory predictability respectively. Add to Applicable Groups: DBL, NDV/AUT, VIS (in addition to DEM). Specification to note: furniture rearrangement protocols required; prior notification to DBL occupants mandatory. -->
 
 **Applicable Groups:** DEM, VIS, NDV
 
@@ -1558,6 +1578,8 @@ prevent slip initiation under ambulant and mobility-device loads on wet surfaces
 exceeds clinically acceptable thresholds for populations with reduced balance and reaction time.
 
 ### E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)
+
+<!-- CON-0007 [HIGH]: Create Tier 0 companion-width specification. Primary routes ≥1500 mm clear (best practice); ≥2440 mm where DEAF is primary population (DeafSpace signed-conversation standard, Co-1 ASL-derived). Resolves siloed MOB/DEAF specifications into unified tier-ladder: 1200 mm minimum / 1500 mm best practice / 2440 mm DEAF-primary. --> (≥1200 mm Minimum on All Primary Routes)
 
 **Applicable Groups:** MOB, VIS, DEM
 
@@ -2126,6 +2148,8 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 
 ### G-03 Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)
 
+<!-- CON-0003 [HIGH]: Add PAIN, OFS, DEM, NEU as co-populations. No specification change required — range (32–45 mm, load ≥1.3 kN) already accommodates all. Add population-specific rationale: PAIN (cold-metal allodynia → insulated coating note); DEM (consistent bilateral positioning for spatial habituation); NEU (vertical orientation supports hemiplegic transfer). --> (Clinical Positioning and Bilateral)
+
 **Applicable Groups:** MOB, DEM, PAIN, UPL
 
 **Description:** Toilet: bilateral horizontal bars at 800--900 mm AFF on both sides of WC centre line; angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
@@ -2329,6 +2353,8 @@ Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
 **Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelope of a seated wheelchair user (ISO 26800:2011); the ≤22 N activation force is the UPL threshold from clinical grip strength research; the ≥50 mm dimension for push-pad controls derives from the minimum target size for reliable activation with reduced fine motor control.
 
 ### H-02 Individual Environmental Control (Lighting and Temperature Per Space)
+
+<!-- CON-0002 [HIGH] + CON-0017 [HIGH]: Elevate H-02 to Tier 0 universal provision. All primary occupied spaces to provide occupant-adjustable lighting (level and CCT), local acoustic management, and local thermal control. This is the highest-impact single provision for NDV, MH, OFS, PAIN, DEM conflict resolution. Item-specification-writer pass required. --> (Lighting and Temperature Per Space)
 
 **Applicable Groups:** AUT, PCS, DEM, MH, PAIN, OFS
 
