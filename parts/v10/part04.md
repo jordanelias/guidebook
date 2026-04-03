@@ -232,7 +232,8 @@ BSI.
 
 ### A-08 HVAC Noise Control (NC-25 Maximum in Sensitive Spaces)
 
-**Applicable Groups:** AUT, PCS, DEM, MH, OFS
+**Applicable Groups:** AUT, PCS, DEM, MH, OFS · PAIN
+<!-- CON-0008: CON-0008: NC-25 background noise limit reduces exertion needed for communication — OFS/PAIN energy conservation -->
 
 **Description:** HVAC system designed to achieve NC-25 or better at all air terminal devices in sensitive spaces (sensory rooms, DEM care spaces, therapy rooms, ABI recovery spaces). NC-25 is the single most commonly specified noise criterion in post-occupancy complaints from neurodiverse building occupants.
 
@@ -262,7 +263,8 @@ operationalises Dunn's model by translating 'reduce neurological threshold excee
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 
-**Applicable Groups:** PAIN (fibromyalgia), NEU, NDV
+**Applicable Groups:** PAIN (fibromyalgia), NEU, NDV · OFS
+<!-- CON-0005: HVAC vibration transmission triggers PAIN allodynia and OFS PEM; floating plant room eliminates pathway -->
 
 **Description:** All mechanical plant serving buildings with fibromyalgia, PCS, or NDV users installed on vibration isolation pads (minimum 20 dB insertion loss at 16--250 Hz). Where plant is adjacent to sensitive spaces: floating plant room construction (floating concrete slab on spring isolators).
 
@@ -415,7 +417,8 @@ International hearing access committee. IFHOH.
 <!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (same mechanism as A-02). ○ THIN-POPULATION-SPEC. -->
 <!-- CON-0039 [HIGH]: Strict NDV/AUT acoustic target (RT60 ≤0.3 s) is a sub-target of the general DEAF/DEM target. No sound masking in any space where NDV is primary — already specified but ensure cross-reference to NDV/DEAF conflict resolution in Part 5 §5.2. -->
 
-**Applicable Groups:** AUT, PCS, NEU, DEM, NDV
+**Applicable Groups:** AUT, PCS, NEU, DEM, NDV · OFS · PAIN
+<!-- CON-0008: CON-0008: sound masking increases cognitive load; energy cost for OFS/PAIN populations -->
 
 **Description:** Electronic sound masking systems explicitly excluded from spaces serving neurological populations, PCS patients, and dementia residents. Sound masking adds continuous broadband noise (45--48 dBA) that is clinically contraindicated for PCS and AUT users.
 
@@ -439,7 +442,8 @@ Open offices: acoustic zoning (A-04), focus rooms (D-05)
 
 ### A-14 Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies
 
-**Applicable Groups:** AUT, PCS, DEM, MH
+**Applicable Groups:** AUT, PCS, DEM, MH · OFS · NDV
+<!-- D2-41: D2-41: acoustic separation reduces cognitive load; OFS energy conservation -->
 
 **Description:** Double-leaf partition with 50 mm air gap (unfilled) between two independent leaves, each with 70 mm steel stud, 2×15 mm acoustic plasterboard, 50 kg/m³ mineral wool quilt. Resilient bars on one leaf. No mechanical connections between leaves.
 
@@ -471,7 +475,8 @@ Target: STC ≥50 laboratory; Field STC ≥45
 
 ### A-15 Acoustic Differentiation Between Spaces (Navigation Aid for VIS)
 
-**Applicable Groups:** VIS (blind, severely visually impaired)
+**Applicable Groups:** VIS (blind, severely visually impaired) · NEU · OFS
+<!-- D2-41: D2-41: acoustic landmarks reduce navigation effort for OFS/NEU -->
 
 **Description:** Deliberately maintain distinct acoustic character between spaces rather than uniform RT60 treatment. Hard surfaces in circulation give a live acoustic signature distinct from soft-finished rooms, providing orientation cues for blind users.
 
@@ -556,7 +561,8 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 
 ### B-01 Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces)
 
-**Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU)
+**Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS
+<!-- CON-0006: CON-0006: circadian lighting supports OFS energy regulation and NEU sleep-wake cycle recovery alongside DEM -->
 
 **Description:** Lighting delivering ≥150 EML at seated eye level (1200 mm AFF) during daytime occupied hours (08:00--18:00). Evening (after 19:00): ≤10 EML with shift to warm 2700 K for sleep preparation.
 
@@ -728,7 +734,8 @@ Where residential occupancy: all bedroom and living room circuits minimum
 
 ### B-07 Indirect and Cove Lighting in Sensitive Spaces
 
-**Applicable Groups:** AUT, PCS, PAIN, DEM
+**Applicable Groups:** AUT, PCS, PAIN, DEM · OFS
+<!-- CON-0059: CON-0059: indirect lighting eliminates glare — OFS/PCS photosensitivity + PAIN photophobia (fibromyalgia) -->
 
 **Description:** Uplighting, cove lighting, or indirect luminaires (source not directly visible from occupant positions) as the primary lighting strategy in sensory rooms, ABI recovery spaces, and dementia bedrooms. UGR <10 in sensitive spaces; UGR <19 in general spaces.
 
@@ -1120,7 +1127,8 @@ Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 
 ### D-03 Toilet Visibility from Primary Occupied Spaces (No Navigation Required)
 
-**Applicable Groups:** DEM, PAIN (MS bladder urgency), MOB
+**Applicable Groups:** DEM, PAIN (MS bladder urgency), MOB · OFS
+<!-- D2-41: D2-41: toilet visibility reduces navigation distance and effort — OFS/PAIN energy conservation; DEM orientation -->
 
 **Description:** Toilet door visible from all primary occupied spaces without requiring navigation. Toilet door LRV ≥30 contrast against
 
@@ -1146,7 +1154,8 @@ Maximum 20 m from any primary occupied space to nearest toilet (MS bladder urgen
 
 ### D-04 Landmarks at Every Decision Point
 
-**Applicable Groups:** DEM, VIS, NDV
+**Applicable Groups:** DEM, VIS, NDV · NEU · OFS
+<!-- CON-0030: CON-0030: cognitive wayfinding reduces navigation effort — energy conservation for OFS/NEU; landmark-based strategy -->
 
 **Description:** A permanent, distinctive landmark at every navigation decision point (corridor junction, lift lobby, stair head). Landmark types: permanent artwork; distinct wall colour or plane; planted element; water feature (switchable); distinctive floor pattern (DEM-safe per C-05). Landmark must be visible from ≥5 m approach.
 
@@ -1174,7 +1183,8 @@ without structural intervention. See Part 12 §12.4.1.
 
 ### D-05 Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)
 
-**Applicable Groups:** NDV, PCS, MH, OFS
+**Applicable Groups:** NDV, PCS, MH, OFS · PAIN
+<!-- D2-41: D2-41: low-stimulation retreat reduces exertion load for OFS; pain flare prevention -->
 
 **Description:** Enclosed focus rooms (minimum 6 m²) for individual or paired concentration work. STC ≥35 partition. RT60 ≤0.4s. Full dimming. No visual connection to open-plan area. Bookable or first come-first-served. Minimum 1 per 20 open-plan desks.
 
@@ -1297,7 +1307,8 @@ process multi-word directional sentences or abstract symbols.
 
 <!-- CON-0001 [HIGH]: Tier 0 convergence — DBL and NDV/AUT depend on spatial consistency for tactile wayfinding and sensory predictability respectively. Add to Applicable Groups: DBL, NDV/AUT, VIS (in addition to DEM). Specification to note: furniture rearrangement protocols required; prior notification to DBL occupants mandatory. -->
 
-**Applicable Groups:** DEM, VIS, NDV
+**Applicable Groups:** DEM, VIS, NDV · OFS · PAIN · DBL
+<!-- CON-0053: CON-0053: furniture permanence is safety requirement for DBL; reduces OFS exertion from navigating obstacles -->
 
 **Description:** Furniture layout in primary occupied spaces maintained consistently. No rearrangement of furniture or wayfinding elements without prior consultation with primary users. Applies particularly in DEM care and VIS specialist environments where spatial memory is a primary navigation strategy.
 
@@ -1319,7 +1330,8 @@ at any stage. See Part 12 §12.4.1.
 
 ### D-10 Transparent Glazed Panels in Internal Partitions
 
-**Applicable Groups:** VIS, DEM, MH, DEAF
+**Applicable Groups:** VIS, DEM, MH, DEAF · OFS
+<!-- D2-41: D2-41: visual sightlines reduce navigation effort and disorientation -->
 
 **Description:** Internal partition walls at corridors and meeting rooms include vision panels or full-height glazed panels to maintain sightlines. Allows occupants to see ahead before entering a space. For Deaf users (DeafSpace Principle 1): visual awareness of approaching persons.
 
@@ -1353,7 +1365,8 @@ DEM users and a safety concern for MH users who require advance visibility of th
 
 ### D-11 Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)
 
-**Applicable Groups:** DEM, MOB, MH, OFS
+**Applicable Groups:** DEM, MOB, MH, OFS · PAIN
+<!-- D2-41: D2-41: garden loop with seating ≤20m serves OFS rest intervals; DEM wandering freedom; PAIN cushioned seating -->
 
 **Description:** Accessible outdoor garden with: secured perimeter (no open exit to unsupervised road); loop path (no dead ends — DEM principle from D-01 applied outdoors); seating every 20 m; hard surface throughout (PTV ≥36 wet). Natural planting within reach of path.
 
@@ -1750,7 +1763,8 @@ not depleted in access, grounds the maximum 20 m interval as the design specific
 
 ### E-11 Automatic Sliding Entry and Internal Doors
 
-**Applicable Groups:** MOB, UPL, OFS
+**Applicable Groups:** MOB, UPL, OFS · PAIN
+<!-- D2-41: D2-41: zero door force eliminates push/pull effort — OFS PEM prevention -->
 
 **Description:** Automatic sliding or swing doors (not heavy manually-operated) on all primary accessible routes. Maximum opening force: 22 N (ISO 21542:2021). Door hold-open time: adjustable 5--15 seconds from accessible control.
 
@@ -2308,7 +2322,8 @@ Reception counters: accessible height section per G-06
 
 ### G-06 Reception Counter (Accessible Height Section — 760--860 mm AFF)
 
-**Applicable Groups:** MOB, UPL, VIS · OFS · PAIN
+**Applicable Groups:** MOB, UPL, VIS · OFS · PAIN · DEM
+<!-- CON-0064: CON-0064: low counter facilitates DEM communication and reduces disorientation at point of first contact -->
 <!-- D2-41: D2-41: seated service option eliminates orthostatic stress at point of service -->
 
 **Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below (≥690 mm height × 760 mm width × 480 mm depth). Full hearing loop at counter (A-10). LRV ≥30 contrast at counter edge vs floor.
@@ -2575,7 +2590,8 @@ UPL users.
 
 ### I-02 Kitchen (One-Handed Operation Throughout)
 
-**Applicable Groups:** UPL
+**Applicable Groups:** UPL · OFS · PAIN · DEM
+<!-- CON-0013: CON-0013: knee clearance + one-handed operation eliminates sustained reach/stand — OFS/PAIN primary benefit -->
 
 **Description:** Kitchen designed for full one-handed operation: induction cooktop (flat, front-controls, auto shutoff); side-hinged oven (not drop-down); under-counter knee space at cooktop and sink; non-slip surface; raised perimeter lip ≥15 mm. Single-lever thermostatic mixer tap. D-pull handles throughout.
 
