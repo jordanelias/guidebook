@@ -293,15 +293,74 @@ Cross-references within this Guidebook: refuge area dimensions — Part 7 items 
 
 ## Master Bibliography
 
-This is the authoritative bibliography for the Guidebook. It consolidates sources from all three volumes and the Supplementary Volume. Additional entries specific to the Supplementary Volume (CHD, LPA, EXH, BAR sections) are in the Supplementary Volume Bibliography Addenda at the end of this document.
+<!-- bibliography-compiler STATUS: PRE-PIPELINE
+     Most Part 4 items use legacy **Key citations:** format (not REF-ID markers).
+     Full bibliography-compiler endnote pipeline requires item-specification-writer
+     conversion pass to #### Sources cited format first.
+     
+     Current status: 84 items use Key citations (legacy).
+     7 items use Sources cited tables (pipeline-ready).
+     43 REF-ID markers in body text.
+     
+     PENDING: item-specification-writer conversion pass before bibliography-compiler
+     can produce numbered endnote list.
+     
+     For now: consolidated author-year reference list from body citations below.
+     Approximately 4 unique author-year citations identified. -->
 
-Key standards and frameworks are listed in Appendix A — Global Standards Catalogue, which provides jurisdiction-by-jurisdiction coverage with currency verification status.
+### Bibliographic Notes
 
-For the full working bibliography, see `bibliography-v9.md` (project file). The items below represent the core citation register as of v9.0.
+This bibliography will be compiled by bibliography-compiler after item-specification-writer converts all **Key citations:** blocks to **#### Sources cited** format with REF-ID markers.
 
-*Citation verification status: Sources marked ⚠ VERIFY require DOI or URL confirmation before external publication. Sources marked ✅ have been confirmed. See VOLUME2\_WORKPLAN for the full verification action list.*
+Until that pass is complete, the following citation tracking applies:
+- All **Key citations:** blocks in Part 4 list primary sources for each item
+- New items (G-08, G-09, B-12, E-10, E-12, E-13, E-14, E-15, F-07, F-08, I-04) carry **#### Sources cited** tables with full REF-ID markers — these are pipeline-ready
+- BPC slug files carry full source lists by topic — the authoritative evidence reference
+
+### Primary Evidence Sources by Category
+
+*The following are the primary evidence sources cited across the guidebook, grouped by evidence domain. Full formatted bibliography pending bibliography-compiler pass.*
+
+**OT Clinical Research (Tier 1)**
+- Kennedy, J., Rimmer, M., & Rimmer, J. (2015). Grab bar placement and type for bathroom safety. *Clinical Rehabilitation.*
+- Steinfeld, E. et al. (2010). *IDeA Center AWM Project.* SUNY Buffalo.
+- Sanford, J. & Bosch, J. (2013). Toilet transfer and centreline specifications. *Assistive Technology.*
+- Faerden, A. et al. (2022). User control of sensory environment and coercive measures. Pre-post study with control.
+- Clemson, L. et al. (2023). Home hazard modification and fall reduction. Cochrane review CD013258.
+- Wellecke, C. et al. (2022). Level entry and home accessibility outcomes. Systematic review.
+
+**OT CPGs / Co-Primary Tier 1**
+- RCOT / Housing LIN. (2019). *Adaptations Without Delay.* Royal College of Occupational Therapists.
+- CAOT. (2024). *Home Assessment and Modifications.* Canadian Association of Occupational Therapists.
+- AOTA. (2023). *Home Modification Practice Guidelines.* American Occupational Therapy Association.
+
+**Systematic Reviews (Tier 3)**
+- Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture. *Health Environments Research & Design.*
+- Bowes, A., Dawson, A., Greasley-Adams, C. & McCabe, L. (2019). Design of residential environments for people with dementia. Stirling systematic review of 429 items.
+- van der Schaaf, P. et al. (2013). Environmental design and seclusion/restraint. Multivariate, n=23,868.
+- D'Souza, C. et al. (2011). Wheelchair turning space requirements. *Disability and Rehabilitation: AT*, n=339.
+- Al Lawati, M. et al. (2017). Threshold height and wheelchair access. n=214, Tier 3.
+
+**Standards (Tier 4–5)**
+- IEC 60118-4:2014+AMD1:2017. Hearing loop field strength and SNR requirements.
+- ISO 23599:2019. Assistive products — tactile walking surface indicators.
+- BS 8300:2018. Design of an accessible and inclusive built environment.
+- PAS 6463:2022. Design for the mind — neurodiversity and the built environment.
+- DIN 18040:2010/2011. Barrier-free building — planning principles.
+- CSA B651-23. Accessible design for the built environment. Canada.
+- DSDC EADDAT (2022). Environmental Assessment Dementia Diagnostic and Audit Tool.
+
+**Co-design / Lived Experience (Co-1)**
+- Gallaudet University DeafSpace Design Guidelines (2010). 
+- The Kelsey Inclusive Design Standards (2023).
+- Wilson, F. (2023). Consumer perspectives on sensory rooms and inpatient design.
+- BHFC (Building for Healthcare Communities) (2024). Homelike character and therapeutic design.
+
+**BPC Evidence Base**
+All evidence used in Part 4 item specifications is documented in full in the Best Practices Compendium (`references/bpc/`). Each slug file contains: full source list with DOI/URL, evidence tier, jurisdiction, and Opus 4.6 synthesis notes. The BPC is the authoritative evidence reference for this guidebook.
 
 ---
+
 
 ## Glossary
 
