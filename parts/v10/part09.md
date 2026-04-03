@@ -260,112 +260,103 @@ For Tier 2 projects, the named individual and their chosen support network are t
 
 
 
+
 ---
 
 ### §9.9 Co-Occurrence Collaboration Protocol
 
-Multi-population buildings require coordinated inter-consultant action. This section establishes the collaboration protocol for design teams working on buildings where two or more disability population codes are primary in the brief.
+Where a project serves two or more population codes simultaneously — the majority of institutional, commercial, and multi-resident buildings — specialist consultants whose scopes touch the same spaces or systems must operate under a co-occurrence collaboration protocol. Without explicit coordination, each consultant optimises their own population's provisions without awareness of conflicts generated for other populations.
 
-**Trigger condition.** The co-occurrence collaboration protocol activates when the building brief includes two or more population codes with documented specification conflicts in Part 5 §5.2 or Part 3 §3.3 (HIGH co-occurrence rating). Activation is not optional — it is a design stage requirement equivalent to a statutory consultation.
+**Trigger.** The co-occurrence collaboration protocol is activated when all three conditions are met: (1) two or more population codes are identified in the population approach brief; (2) two or more specialist consultants are appointed; and (3) the conflict matrix (Part 3 §3.3) identifies at least one active conflict domain between the identified populations.
 
-**Stage 1 — Population identification (Schematic Design).**
-At brief inception, the design lead identifies all anticipated primary and secondary disability populations from the building programme. Primary populations: those present in significant numbers among regular occupants. Secondary populations: those present occasionally but whose design requirements are safety-critical. Classify each conflict domain (using Part 3 §3.8 classification: INTRA-INDIVIDUAL / INTER-GROUP / BOTH).
+**Protocol stages.**
 
-**Stage 2 — Conflict register (Schematic Design close).**
-Before schematic design closes, the project co-occurrence conflict register is compiled. For each identified conflict domain:
-- Confirm the conflict classification (§3.8 Step 1)
-- Apply the resolution hierarchy (§3.8 Step 2)
-- Assign resolution strategy (§3.9)
-- Identify which consultant is responsible for each resolution parameter
+*Stage 2 (Schematic Design):* The lead architect convenes a co-occurrence coordination meeting with all appointed specialist consultants. The agenda is: (a) confirm all active population codes; (b) walk the conflict matrix and identify each active domain; (c) assign a resolution strategy (§3.9) to each conflict; (d) identify parameters where two consultants' scopes intersect (acoustic engineer and sensory design consultant both specifying acoustic targets; mechanical engineer and OT both specifying thermal targets). For intersecting parameters, one consultant is designated as specification lead; the other provides input constraints. Record the outcome as a co-occurrence resolution register.
 
-| Conflict domain | Classification | Resolution strategy | Lead consultant | Input consultant(s) |
-|---|---|---|---|---|
-| TEMP-RANGE (NEU/MS vs PAIN) | INTRA/BOTH | RNG + IEC | M&E Engineer | OT; Access Consultant |
-| ACOUSTIC-LVL (DEAF vs NDV) | INTER-GROUP | IEC (loop input control) | Acoustic Engineer | Deaf Design Consultant |
-| LIGHT-INT (DEM vs NDV) | INTER-GROUP | SZ + IEC | Lighting Designer | Dementia Design Specialist; Sensory Design Consultant |
-| SPATIAL-OPEN (DEAF vs NDV/MH) | INTER-GROUP | SZ | Architect | Deaf Design Consultant; Sensory Design Consultant |
+*Stage 3 (Technical Design):* Each specialist consultant issues their brief with co-occurrence constraints explicitly stated. The acoustic engineer's brief notes the NDV RT60 constraint alongside the DEAF IEC 60118-4 loop requirement. The mechanical engineer's brief notes the Uhthoff's ≤18°C floor alongside PAIN supplemental heating provision. No consultant brief is issued without the co-occurrence constraints confirmed in Stage 2.
 
-**Stage 3 — Inter-consultant coordination gate (Technical Design).**
-Each consultant working on a conflict domain must have reviewed and signed off the resolution before their scope of services is finalised. The access consultant holds the conflict register and chairs coordination meetings. Resolution changes after Technical Design require a formal Change Order.
+*Stage 4 (Construction Issue):* Before any specification is changed through value engineering, the lead consultant assesses the VE item against the co-occurrence resolution register. Any VE item that removes a conflict resolution provision must be escalated to the client as a population access impact decision — not resolved by the contractor or cost consultant unilaterally.
 
-**Stage 4 — OT threshold referral (where triggered).**
-If any conflict is classified TIER-2-ONLY at Step 4 of the resolution tree (§3.8), OT assessment is mandatory before Technical Design closes. The conflict cannot be resolved by design alone. OT assessment output is incorporated into the design brief before consultant scopes are finalised. See §9.10.
+*Stage 6 (RFO):* Co-occurrence resolution provisions are tested at commissioning: HVAC temperature setpoints, loop STI, lighting levels in all zones, acoustic performance in NDV and DEAF spaces. Results recorded in the O&M manual accessibility system section (Part 8 §8.4).
 
-**Stage 5 — Commissioning verification (Ready for Occupancy).**
-At RFO, each resolved conflict domain is verified against the design intent:
-- Thermal zones commissioned to specified temperature bands
-- Hearing loop performance verified to IEC 60118-4 field strength
-- Lighting levels verified by zone against Part 5 §5.2 LIGHT-INT resolution
-- Acoustic performance measured (RT60, NC level, STI)
-- Sensory retreat room verified (dimensions, acoustic isolation, lighting control range)
+**Co-occurrence register format.**
+
+The co-occurrence resolution register is a live project document maintained from Stage 1 through Stage 6:
+
+| Conflict ID | Population A | Population B | Domain | Strategy | Lead consultant | Status |
+|---|---|---|---|---|---|---|
+| CR-01 | NEU/MS | PAIN | TEMP-RANGE | SRW | Mechanical engineer | Stage 3 confirmed |
+| CR-02 | DEAF | NDV/AUT | ACOUSTIC-LVL | TS | Acoustic engineer | Stage 2 proposed |
 
 ---
 
-### §9.10 OT Threshold
+### §9.10 OT Threshold — When OT Assessment Becomes Mandatory
 
-The OT threshold defines the conditions under which occupational therapist involvement in the design process is mandatory, not advisory. Below the threshold, OT involvement is recommended best practice. At or above the threshold, OT assessment is a prerequisite for completing the design.
+This section defines the conditions under which OT assessment transitions from recommended best practice to a mandatory project requirement. The OT threshold is distinct from the OT appointment triggers in §9.2.2, which identify when OT involvement adds value. The OT threshold identifies when a project cannot proceed to construction without OT input.
 
-**Threshold criteria.** OT assessment is mandatory when ANY of the following conditions applies:
+**OT assessment is mandatory (not advisory) in the following conditions:**
 
-| Condition | Threshold criterion | Applicable stage |
-|---|---|---|
-| Named occupant | A specific individual will be the primary or sole occupant and their disability category is known | Schematic Design |
-| Tier 2 specification required | Any Part 4 item specification must be resolved to a specific value within the Tier 1 range for a named individual | Technical Design |
-| TIER-2-ONLY conflict | A co-occurrence conflict in the Part 5 conflict register is classified TIER-2-ONLY (§3.8 Step 4) | Technical Design |
-| Post-occupancy adaptation | A built environment is being adapted for a current occupant with a specific disability profile | Before adaptation design |
-| Clinical environment | The building is a residential care facility, inpatient psychiatric unit, specialist housing, or similar clinical environment where functional capacity is the primary design variable | Schematic Design |
-| High-consequence failure | Any Part 4 item where the evidence marker is ○ (expert consensus only) and the primary occupant belongs to the relevant population | Technical Design |
+1. **Individual-specific residential commission.** The building is designed for or occupied by a named individual with a known disability profile. Tier 2 applies. OT assessment of the specific person's functional capacity is the mechanism by which Tier 1 specification ranges are resolved to specific values. Without OT assessment, no valid Tier 2 specification exists.
 
-**OT assessment scope.** At minimum, the OT assessment for design purposes should produce:
-- Characterisation of the individual's functional capacities across all relevant ICF domains
-- Identification of the environmental barriers for that person in the proposed design
-- Specification of the target values within Part 4 Tier 1 ranges for each contested item
-- Post-modification outcome verification plan (to be executed at RFO)
+2. **Irresolvable co-occurrence conflict.** The conflict resolution process (Part 3 §3.8, Steps 1–5) has failed to produce a resolution for a shared non-zoned ambient parameter. The conflict is documented in Part 5 §5.3 or identified as novel during Stage 2. OT assessment of the specific users in the specific space is the only resolution mechanism available at Tier 2.
 
-The Housing Enabler (Iwarsson & Slaug, Lund University CASE) is the recommended assessment instrument for residential and quasi-residential settings. For acute clinical settings, the OT assessment protocol is determined by the clinical governance framework of the commissioning organisation.
+3. **Complex multi-population residential or specialist care.** A building designed for residential occupation that serves three or more population codes simultaneously, where at least one of the following applies: (a) one population code is NEU/MS, OFS, or DBL; (b) the building includes sleeping spaces; (c) any resident has a confirmed co-occurrence of two or more population codes within the same individual. Rationale: the compound specification demands of complex co-occurring populations in sleeping and intimate-care environments cannot be reliably managed through population-level specifications alone.
 
-**OT assessment output format for design teams.** The OT assessment report is to be structured as an accessible design brief addendum:
-- Part 4 item code → Tier 1 range → Assessed value for this individual
-- Conflict domain → Resolution strategy → Individual-specific parameter
-- DAR provisions required for anticipated functional trajectory
+4. **Post-occupancy functional failure.** An occupant of a completed building reports that the building does not support independent function in a primary occupational task. OT assessment of the person-environment mismatch is required before any modification is specified. No modification to the built environment should be specified on the basis of complaint alone without OT assessment identifying the specific barrier and the appropriate intervention.
+
+**OT assessment is strongly recommended (not mandatory) in the following conditions:**
+
+- Any Tier 1 building where the lead designer does not have specialist accessible design experience.
+- Any building serving DEM as a primary population, at schematic design stage, using the DSDC EADDAT instrument.
+- Any building serving DEAF as a primary population, for DeafSpace spatial principles review.
+- Any building undergoing major refurbishment where the existing population is known.
+
+**Documentation requirement.** Where OT assessment is mandatory, the project file must include: the OT's professional registration; the assessment instrument used (Housing Enabler, DSDC EADDAT, or equivalent); the assessment findings and specification recommendations; and the date of assessment. This documentation is required for handover (Stage 6) and must be included in the building's O&M manual.
 
 ---
 
 ### §9.11 DeafBlind (DBL) Specialist Consultant
 
-**When DBL specialist input is required.** DBL is the population code with the most severe evidence gap in this guidebook — zero Tier 1 evidence for any spatial provision in any language. All DBL specifications are Co-1/Tier 2 at best. This evidence gap is not remediable by the design team alone. DBL specialist consultation is the only way to bridge it.
+**Role and scope.** A DBL specialist consultant is a professional with specific expertise in the communication, spatial, and sensory requirements of DeafBlind users. This expertise is distinct from: Deaf design consultants (who address DEAF-population spatial and acoustic provisions); vision impairment specialists (who address VIS tactile and luminance provisions); and occupational therapists (who conduct individual functional assessments). DBL provisions require understanding of Protactile, tactile signing, intervenor practice, and the spatial implications of communication at close range — areas outside standard accessible design training.
 
-DBL specialist input is mandatory when DBL appears as a primary or secondary population code in the building brief.
+**Appointment triggers.** A DBL specialist consultant is to be appointed when any of the following conditions apply:
 
-**DBL specialist scope of services.**
+- DBL is identified as a primary or significant secondary population code in the building brief.
+- The building includes a service counter, reception, consultation room, or other communication node anticipated to serve DBL users as part of normal operations.
+- The building is in the following categories: DeafBlind residential care; DEAF-primary education (where DBL students or students with combined sensory impairment are enrolled); healthcare settings with identified DBL patient population; supported living for users with complex sensory impairment.
 
-| Stage | Service |
-|---|---|
-| Schematic | Confirm which DBL communication modalities are required (Protactile, tactile signing, close-range signing, print-on-palm); identify intervenor/SSP spatial requirements specific to the anticipated DBL users |
-| Technical Design | Verify tactile wayfinding continuity plan; specify vibrotactile alerting locations; review intervenor clear floor zone provision at all service points |
-| Technical Design | Specify tactile map content and format; verify spatial consistency protocol for FM team |
-| RFO | Verify tactile route continuity; test vibrotactile alert coverage; review furniture arrangement against Protactile space requirements |
+**Scope of services by design stage.**
 
-**Protactile spatial requirements (Tier Co-1 — THIN BASE; emerging best practice).**
-- Face-to-face seating at ≤600 mm between interlocutors
-- Armless movable chairs at all communication nodes
-- Clear floor space ≥1500 mm per Protactile communication pair
-- Seating positions permit shoulder-to-lap contact zone (the Protactile linguistic space)
+*Stage 1 (Brief):* Confirm DBL communication modes anticipated among users (Protactile, tactile sign, close-range signing, residual vision). Confirm intervenor/SSP requirement per user. Identify communication nodes requiring DBL specialist input.
 
-**Close-range signing for DBL users with residual vision (JA: 接近手話; analogous provisions in BSL, ASL).**
-- Interpreter/SSP positioning zone within 500–1000 mm of the DBL user
-- Dedicated lighting on interpreter from head to knee
-- No shadow on background surface behind interpreter
+*Stage 2 (Schematic):* Review floor plan for: corridor widths ≥1500 mm on primary DBL routes (intervenor pair); position and size of tactile map station at principal entrance; clear floor zone dimensions at all service counters; sensory wayfinding continuity (ISO 23599 TWSI from street to all primary destinations).
 
-**Intervenor/guide-interpreter provisions.**
-- Clear floor space ≥1500 mm adjacency at all service counters, reception desks, and primary communication nodes (K-01)
-- Dedicated seating position adjacent to DBL user at all fixed seating areas
-- Unobstructed sightline from intervenor position to DBL user at all times
+*Stage 3 (Technical Design):* Specify: tactile building map content and update protocol (embossed/thermoform, 900–1200 mm AFF; updated every 3 years); vibrotactile alerting device specification (intensity, latency ≤3 s, coverage); Protactile seating arrangement at all anticipated communication nodes (face-to-face ≤600 mm, armless movable chairs, ≥1500 mm clear floor per pair).
 
-**Spatial consistency protocol (FM requirement).**
-Furniture rearrangement and spatial changes on primary DBL circulation routes require:
-- Advance notification to DBL occupants (minimum 48 hours where operationally possible)
-- Temporary tactile landmark provision during any disruption to the primary tactile route
-- Post-change orientation walk-through with each DBL occupant who uses the affected route
+*Stage 4 (Construction Issue):* Confirm tactile floor material specifications (ISO 23599 compliance; continuity through all junctions); insulated/non-reflective surface finishes at tactile navigation route boundaries (no high-gloss at floor edges — reflective surfaces are a navigation hazard for residual vision users).
 
-This protocol is to be incorporated into the FM brief at handover and into the building's health, safety, and accessibility management plan.
+*Stage 6 (RFO):* Walk the building's primary DBL circulation routes with a DBL user (co-design verification). Confirm tactile map accuracy against as-built layout. Confirm vibrotactile alerting device operation. Record findings in O&M manual.
+
+**Novel spatial specifications requiring DBL specialist verification.**
+
+The following specifications are evidence-based but not present in any national standard. They require verification with DBL specialist input at Stage 3:
+
+- Intervenor clear floor zone: ≥900 mm × 1500 mm at service counters (K-01)
+- Protactile seating geometry: face-to-face ≤600 mm, ≥1500 mm clear floor per pair (K-03)
+- Close-range signing (接近手話) illumination zone: dedicated lighting from head to knee on interpreter, shadow-free on background surface
+- Tactile map update cycle: every 3 years or after any spatial reconfiguration affecting primary routes
+- TWSI continuity guarantee: no obstruction of tactile route by temporary furniture, stands, or displays — operational requirement to be in FM brief and lease agreement
+
+**DBL specialist brief template.**
+
+The DBL specialist brief is issued at Stage 2 and updated at Stage 3. Minimum content:
+
+1. Population profile: communication modes in use; intervenor ratio expected; residual vision levels if known.
+2. Primary circulation routes to be reviewed for DBL compliance.
+3. Communication nodes: list of all service counters, reception points, consultation rooms, and assembly spaces.
+4. Tactile wayfinding extent: primary routes from principal entrance to all primary destinations.
+5. Vibrotactile alerting requirement: coverage areas; sleeping spaces identified.
+6. Co-design verification: DBL user walk-through at Stage 6 confirmed as project deliverable.
+7. Information sharing: any DBL user or community co-design input from Stage 1 to be provided to specialist.
+
+*Cross-references: K-01 (Intervenor adjacency at service counters); K-02 (Tactile building map); K-03 (Haptic communication clear floor zone); K-04 (Vibrotactile alerting); Part 2 §2.10 (DBL population profile); Part 3 §3.4 (synthesis provisions — DBL provisions); Part 5 §5.2 (SPATIAL-OPEN conflict resolution, DBL provisions).*
