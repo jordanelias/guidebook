@@ -250,3 +250,83 @@ Case studies are selected for documented, independently verified outcomes — no
 **Limitations:** Self-report outcomes; no randomised control. Programme recipients are self-selected (application required). Cost data reflects funded modifications only; some recipients reported additional self-funded modifications.
 
 **Cross-reference to Part 12:** HAFI programme data provides the best available Canadian evidence for the cost-effectiveness of accessibility modifications at the residential retrofit scale. The average CAD $7,500 modification cost represents approximately 30--40% of the retrofit cost that would have been required if no DAR provisions had been incorporated at construction (Part 12 §12.2: the 12:1 built-in to retrofit cost ratio). *End of Part 13 — Case Studies* *Cross-reference: Part 12 §12.1 (cost myth); Part 12 §12.4 (cost intelligence tables for items cited in each case study); Part 11 §11.7 (DAR evidence from §12.03, §12.07, §12.14)*
+
+---
+
+### §12.15 — Enabling Village, Singapore (SG Enable / Woha Architects, 2015)
+
+**Building type:** Community hub (30,000 m² retrofitted campus)
+
+**Primary population:** MOB, VIS, DEAF, NDV/AUT, IntD — explicit cross-disability design intent
+
+**Evidence quality:** Tier 4 (programme data; no standardised clinical POE published)
+
+**Key design strategies:** Universal design at BCA Platinum standard; tactile wayfinding throughout; hearing loop in all assembly spaces; sensory zones for NDV/AUT; employment-integrated programming for IntD. 10 years of continuous operation.
+
+**Verified outcomes:** BCA Universal Design Platinum Award 2016; President's Design Award 2016; ULI Global Award for Excellence 2022. Organisational outcome reports document sustained cross-disability employment and programme participation. No standardised clinical POE published.
+
+**Significance for Part 5:** The strongest documented cross-population built environment with longitudinal operation data. Demonstrates that a single building can serve MOB, VIS, DEAF, NDV, and IntD populations simultaneously — the core premise of the guidebook's co-occurrence framework.
+
+**Limitations:** No peer-reviewed POE; outcome data is programme-level, not building-level. Retrofit context limits transferability to new-build design. Single site.
+
+---
+
+### §12.16 — Summer Foundation SDA Programme, Australia (2018–ongoing)
+
+**Building type:** Specialist Disability Accommodation (individual apartments)
+
+**Primary population:** NEU (ABI/neurological), MOB, complex disability
+
+**Evidence quality:** Tier 1 (BMJ Open peer-reviewed; multiple Disability and Rehabilitation publications)
+
+**Key design strategies:** Individually funded purpose-built accessible apartments replacing group homes and residential aged care. OT-assessed specifications. >2,000 apartments enrolled nationally.
+
+**Verified outcomes:**
+- Douglas et al. (2024, BMJ Open 14:e082802): qualitative study of moving into SDA. Key finding: "Quality of support provided in the home is a greater determinant of tenant quality of life than the built environment."
+- Carey et al. (2025, Disability and Rehabilitation 47(22):5829–5838): family adjustment. Benefits confirmed; transition support essential.
+- Douglas et al. (2022, Disability and Rehabilitation, DOI 10.1080/09638288.2022.2060343): n=15 individualised apartments; significant wellbeing improvement (p=0.031, Eta=0.29); community integration gains (p=0.008, Eta=0.41); average 2.4 support hours/person/day reduction.
+- Winkler et al. (2022): budgetary impact — projected government savings of $121M by 2031 if SDA approvals are timely.
+
+**Significance for Part 5/Part 9:** Provides the strongest available evidence that built environment specification alone is insufficient — OT process quality and support provision are co-determinants of outcome. Supports the Tier 2 framework.
+
+**Limitations:** Australian context (NDIS funding model). Single-population primary focus despite complex disability cohort.
+
+---
+
+### §12.17 — Design Failure Case: NHS CAMHS Inpatient Environments (UK, systematic)
+
+**Building type:** Mental health inpatient wards (class of buildings)
+
+**Primary population affected:** NDV/AUT + NDV/MH co-occurring
+
+**Evidence quality:** Tier 3/Co-1 (NHS audit, National Autistic Society advocacy, systematic review — Rodríguez-Labajos et al. 2024)
+
+**Failure description:** Standard NHS mental health inpatient ward design (communal open areas, institutional fluorescent lighting, unpredictable sensory stimuli, stimulus-present environments) is systematically harmful to autistic young people admitted for co-occurring mental health reasons. No single building — this represents a failure class across the NHS estate.
+
+**Key finding:** Environments designed for NDV/MH population needs (social, communal, activity-based) directly conflict with NDV/AUT sensory needs (low-stimulus, predictable, enclosed). The absence of sensory zoning (F-01) and environmental refuge (A-16) in inpatient mental health settings creates a cross-population design failure that cannot be resolved by staffing alone.
+
+**Significance for Part 5:** Paradigm case for CON-0046 (mandatory Zone 3 + refuge in healthcare/education). Demonstrates that cross-population conflict has real clinical harm when not addressed at design stage.
+
+**Cross-reference:** Part 5 §5.3 CONF-UNRESOLV-02; CON-0046; Part 7 NR-HLT.
+
+---
+
+### §12.18 — Design Failure Case: Gallaudet DeafSpace Rounded Corners (USA, 2005+)
+
+**Building type:** University campus (Gallaudet University)
+
+**Primary population affected:** DEAF (intended beneficiary) vs MOB (harmed)
+
+**Evidence quality:** Co-1 (architect self-report; community documentation)
+
+**Failure description:** Rounded corridor corners, specified under DeafSpace principles to eliminate sightline blind spots for signing communication, created collision hazards for wheelchair users (different blind-spot dynamics for wheeled mobility). Corrected post-occupancy: rounded corners replaced with glass corners providing signing sightlines without collision risk.
+
+**Significance for Part 3/Part 5:** Documents that a well-intentioned single-population design provision can create hazards for another population — and that the conflict was resolvable through design iteration (glass corners). Supports the case for design-stage conflict mapping per §3.8 decision tree.
+
+**Cross-reference:** Part 5 §5.3 CONF-UNRESOLV-03; CON-0020.
+
+---
+
+*End of Part 12 — Case Studies.*
+
+*Cross-references: Part 10 §10.7 (DAR case study evidence); Part 11 §11.1 (cost evidence from case studies); Part 5 §5.2–5.3 (conflict resolution and unresolvable conflicts documented in failure cases); Part 9 (OT involvement as co-determinant of outcomes — Summer Foundation evidence).*
