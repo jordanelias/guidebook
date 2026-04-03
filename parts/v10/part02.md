@@ -8,7 +8,7 @@ This Part defines the eleven disability population categories used throughout th
 
 Population categories are not mutually exclusive. Most buildings serve multiple populations simultaneously; most individuals experience multiple categories concurrently or over time. Part 3 addresses co-occurrence methodology. The category system is an analytical and specification tool, not a clinical classification.
 
-**Note on IntD (Intellectual Disability):** CO-0002 removes IntD as a standalone category. IntD provisions are proxied through DEM (cognitive access, wayfinding, signage) and NDV (sensory and predictability provisions). Where a building serves IntD as a primary population, apply both DEM and NDV provisions and engage OT assessment per Part 9 §9.2.
+**Note on DEM/NDV[IntD-proxy] (Intellectual Disability):** CO-0002 removes DEM/NDV[IntD-proxy] as a standalone category. DEM/NDV[IntD-proxy] provisions are proxied through DEM (cognitive access, wayfinding, signage) and NDV (sensory and predictability provisions). Where a building serves DEM/NDV[IntD-proxy] as a primary population, apply both DEM and NDV provisions and engage OT assessment per Part 9 §9.2.
 
 ---
 

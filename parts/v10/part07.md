@@ -56,7 +56,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at school principal entrance and library; haptic communication clear floor zone (K-03) at all designated DBL student seating positions in classrooms and assembly — minimum 1200 × 1200 mm clear zone at aisle-end seat; vibrotactile alert infrastructure (K-04 — BMS relay from fire alarm panel) in all classrooms and student areas
 
 
-**IntD provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving students with intellectual disability: (1) Easy Read format for all public-facing information and signage (D-08 extension); (2) pictogram + single-word room identification throughout; (3) sensory gradient and quiet room per NDV provisions (F-01, A-16) — strongest available proxy evidence; (4) consistent layout with no unexpected spatial changes (D-09); (5) support worker access minimum: 1500 mm corridors throughout and 1500 mm turning circles at all primary destinations.
+**DEM/NDV[IntD-proxy] provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving students with intellectual disability: (1) Easy Read format for all public-facing information and signage (D-08 extension); (2) pictogram + single-word room identification throughout; (3) sensory gradient and quiet room per NDV provisions (F-01, A-16) — strongest available proxy evidence; (4) consistent layout with no unexpected spatial changes (D-09); (5) support worker access minimum: 1500 mm corridors throughout and 1500 mm turning circles at all primary destinations.
 **Education schematic checklist:**
 
 - [ ] Acoustic consultant brief issued at schematic (A-04 programme adjacency: music room/gym not adjacent to classrooms)
@@ -107,7 +107,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at principal entrance; vibrotactile BMS relay at all bed spaces and accessible bathrooms for DBL inpatients (K-04); intervenor adjacency space (K-01) at reception, pharmacy, and all consultation counters — minimum 1500 × 1500 mm clear floor zone; haptic communication clear floor zone (K-03) at all waiting positions designated for DBL patients
 
 
-**IntD provisions — NR-HLT:** [TIER 4–5; interim; March 2026] All healthcare settings: (1) Easy Read format for consent forms, patient information, appointment letters; (2) pictogram + word signage throughout; (3) DEM wayfinding provisions (D-01, D-03, D-04) applied as strongest proxy — loop floor plan without dead ends aids orientation for IntD users; (4) sensory quiet space (A-16) accessible without staff mediation; (5) support worker accommodation at all clinical appointment points.
+**DEM/NDV[IntD-proxy] provisions — NR-HLT:** [TIER 4–5; interim; March 2026] All healthcare settings: (1) Easy Read format for consent forms, patient information, appointment letters; (2) pictogram + word signage throughout; (3) DEM wayfinding provisions (D-01, D-03, D-04) applied as strongest proxy — loop floor plan without dead ends aids orientation for DEM/NDV[IntD-proxy] users; (4) sensory quiet space (A-16) accessible without staff mediation; (5) support worker accommodation at all clinical appointment points.
 **Healthcare schematic checklist:**
 
 - [ ] Acoustic consultant brief at schematic: NC-25 in consulting, NC-30 in circulation
@@ -157,7 +157,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: where a DBL employee is employed: (1) tactile building map station at principal entrance and floor entry (K-02); (2) haptic communication clear floor zone at that person's designated workstation and at all meeting rooms they regularly use — 1500 × 1500 mm clear (K-03); (3) vibrotactile alert personal pager BMS infrastructure (K-04) at workstation and in all occupied meeting rooms. These are reasonable adjustment provisions; implement on identified need.
 
 
-**IntD provisions — NR-WRK:** [TIER 4–5; interim; March 2026] Workplaces with IntD employees: (1) Easy Read workplace documentation (procedures, health and safety notices, evacuation plans); (2) pictogram wayfinding; (3) sensory environment provisions per NDV proxy evidence (NDV sensory gradient F-01; no fluorescent B-03/04); (4) supported employment provisions — all primary work tasks achievable with support worker present (1500 mm clearance at all workstations).
+**DEM/NDV[IntD-proxy] provisions — NR-WRK:** [TIER 4–5; interim; March 2026] Workplaces with DEM/NDV[IntD-proxy] employees: (1) Easy Read workplace documentation (procedures, health and safety notices, evacuation plans); (2) pictogram wayfinding; (3) sensory environment provisions per NDV proxy evidence (NDV sensory gradient F-01; no fluorescent B-03/04); (4) supported employment provisions — all primary work tasks achievable with support worker present (1500 mm clearance at all workstations).
 **Workplace schematic checklist:**
 
 - [ ] Acoustic pods/focus booths (≥1 per 20 staff) on floor plan

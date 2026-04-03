@@ -91,7 +91,7 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Building type:** Corporate workplace (multi-floor office, existing building retrofit)
 
-**Primary population:** Neurodivergent employees (AUT, ADHD, PCS, MIS — self-identified)
+**Primary population:** Neurodivergent employees (AUT, ADHD, PCS, NDV/SENS — self-identified)
 
 **Evidence quality:** Tier 3 (self-report survey, employer-commissioned)
 

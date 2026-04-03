@@ -121,13 +121,13 @@ AFF — Above Finished Floor · ART — Attention Restoration Theory · CCT — 
 | --- | --- | --- |
 | WS-1A | Structural | CO-0001: All Roman-numeral Part/Volume references → Arabic; item codes V2-P4-XX → P7-XX; §E.x conflict refs → §8.x |
 | WS-2A | Safety | MS/Uhthoff ambient temperature floor corrected: ≤22°C → ≤18°C (TC-01, cross-population conflict §8.4.4) |
-| WS-2A | Code | VIS/DEAF invalid code → DEAF throughout; A-10/A-11/A-12 Applicable Groups corrected |
+| WS-2A | Code | VIS and DEAF invalid code → DEAF throughout; A-10/A-11/A-12 Applicable Groups corrected |
 | WS-2A | Structure | §1.11 Scope renumbered to §1.9 |
 | WS-2A | Evidence | 7-tier evidence hierarchy (D-18 rule) applied throughout; Co-2 (OT CPGs) tier formalised |
 | WS-2C | Identity | All internal version references standardised to v9.0 |
 | WS-3A | Evidence | DBL thin-base disclosures added to all item specs with DBL Applicable Group |
 | WS-3B | Coverage | DBL provisions added to 8 residential room matrices |
-| WS-3C | Coverage | IntD column added to all residential room matrices and non-residential universal provisions |
+| WS-3C | Coverage | DEM/NDV[IntD-proxy] column added to all residential room matrices and non-residential universal provisions |
 | WS-3D | Coverage | DEAF provisions added to 6 residential room matrices |
 | WS-3E | Content | Three new conflict resolutions added: §8.4.10 (DEM/PD floor pattern), §8.4.11 (NDV/AUT + NDV/MH colour), §8.4.12 (ramp gradient walker vs wheelchair) |
 
@@ -136,4 +136,4 @@ AFF — Above Finished Floor · ART — Attention Restoration Theory · CCT — 
 | Ref | Type | Description |
 | --- | --- | --- |
 | CO-0003 | Structural | Cross-population conflict terminology: INTRA-INDIVIDUAL / INTER-GROUP / BOTH replaces "cross-population". F-06 Thermal Zoning, F-07 Thermal Transition written; F-04 expanded. |
-| CO-0004 | Structural | Three-volume structure merged to single volume. Part renumbering throughout: old Parts 1–14 → Parts 1–12. Volume II Part 7 (Item Specification Library) → Part 4. Part 8 (Conflicts) split: methodology → Part 3 §§3.8–3.9; building-level resolutions → Part 5. Category J (Bariatric) deleted; items relocated to Supplementary Volume Part 4. F-05 relocated to G-08. A-17 absorbed into G-02. New items: I-04 (Ceiling Hoist), H-05 (Nurse Call), F-06 (Thermal Zoning), F-07 (Thermal Transition). Appendix C retired. §2.12 (IntD) deleted — IntD proxied through DEM/NDV per project-standards. |
+| CO-0004 | Structural | Three-volume structure merged to single volume. Part renumbering throughout: old Parts 1–14 → Parts 1–12. Volume II Part 7 (Item Specification Library) → Part 4. Part 8 (Conflicts) split: methodology → Part 3 §§3.8–3.9; building-level resolutions → Part 5. Category J (Bariatric) deleted; items relocated to Supplementary Volume Part 4. F-05 relocated to G-08. A-17 absorbed into G-02. New items: I-04 (Ceiling Hoist), H-05 (Nurse Call), F-06 (Thermal Zoning), F-07 (Thermal Transition). Appendix C retired. §2.12 (DEM/NDV[IntD-proxy]) deleted — DEM/NDV[IntD-proxy] proxied through DEM/NDV per project-standards. |

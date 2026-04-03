@@ -23,7 +23,7 @@
 
 *(Item codes use category prefix + two-digit number. Bare codes only — no volume-part prefix.)*
 
-<!-- CON-0011 [HIGH]: Systematic pass required — insert DBL and IntD (via DEM/NDV proxy per CO-0002) into all applicable room matrix items. Resolves 15+ gaps in single operation. Execute in Part 6/7 matrix edit pass. -->
+<!-- CON-0011 [HIGH]: Systematic pass required — insert DBL and DEM/NDV[IntD-proxy] (via DEM/NDV proxy per CO-0002) into all applicable room matrix items. Resolves 15+ gaps in single operation. Execute in Part 6/7 matrix edit pass. -->
 
 <!-- CON-0018 [HIGH]: Essential facility sightline → Tier 0 residential provision. WC/bathroom door visible from main living area without navigational decision points. Add to D-03 (Toilet Visibility). -->
 
@@ -37,7 +37,7 @@ All RT60 specifications are for the 500 Hz octave band in the occupied condition
 
 <!-- CON-0039 [HIGH]: RT60 ≤0.3 s (mid-frequency 500–2000 Hz) to be elevated to Tier 0 universal specification for all speech-critical rooms. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Frame ≤0.6 s as outer failure boundary, not a compliant specification. Populations: ALL (DEAF speech intelligibility, NDV acoustic calm, DEM communication, NEU/PCS cognitive load). -->
 
-**Applicable Groups:** ALL (especially NDV, PCS, AUT, MIS, DEM) · OFS · PAIN
+**Applicable Groups:** ALL (especially NDV, PCS, AUT, NDV/SENS, DEM) · OFS · PAIN
 <!-- CON-0069: acoustic buffer reduces noise load — OFS/PAIN energy conservation -->
 
 **Description:** 5 m deep acoustic buffer zone between any noise-generating adjacency (kitchen, plant room, reception desk, circulation corridor) and primary occupied spaces serving sensory sensitive users. Buffer zone finishes: high NRC (≥0.85) ceiling panels; carpeted floor; no parallel hard surfaces. Background noise in primary space: NC-25 maximum.
@@ -48,7 +48,7 @@ Ceiling: NRC ≥0.85 acoustic panels throughout buffer
 Floor: carpet or acoustic vinyl
 Background noise target in sensitive space: NC-25 maximum
 No parallel hard wall surfaces in buffer zone
-Applicable: any space where DEM, PCS, AUT, or MIS users are primary occupants
+Applicable: any space where DEM, PCS, AUT, or NDV/SENS users are primary occupants
 
 **Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic buffer zoning is a room-adjacency planning decision costing nothing at 
 design stage. Retrofit requires spatial reorganisation, partition addition, room-use relocation, or mechanical decoupling at significant 
@@ -137,7 +137,7 @@ Restorative intervals: at least one acoustic low-point per 20m of primary journe
 
 **Cross-reference:** F-01 (Sensory Gradient); A-01 (Buffer Zones);
 
-VI-02 (Sensory Budget)
+[VI-02 — retired code] (Sensory Budget)
 
 **Evidence basis (OT):** EHP Framework (alter strategy); PEOP Model.
 
@@ -171,7 +171,7 @@ VIII §8.4.1.
 
 6463:2022. BSI. CNIB Foundation. (2024). Clearing our path. CNIB.
 
-**Cross-reference:** A-15 (Acoustic Differentiation — VIS navigation); VI-08 (Proprioceptive Design)
+**Cross-reference:** A-15 (Acoustic Differentiation — VIS navigation); [VI-08 — retired code] (Proprioceptive Design)
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model; Biomechanical FOR. Carpet's NRC 0.20--0.35 reduces impact noise and chair movement noise that fall in the frequency ranges most aversive to sensory-sensitive and sensory-avoiding users; the specification of low pile (≤6mm) with flush transitions also satisfies the Biomechanical FOR requirement that floor transitions present no trip hazard to mobility-impaired users.
 
@@ -1036,7 +1036,7 @@ CNIB Foundation. (2024).
 
 Clearing our path. CNIB.
 
-**Cross-reference:** C-04 (LRV contrast — C-05 is the DEM-specific floor transition exception); VI-08 (Proprioceptive Design)
+**Cross-reference:** C-04 (LRV contrast — C-05 is the DEM-specific floor transition exception); [VI-08 — retired code] (Proprioceptive Design)
 
 **Evidence basis (OT):** Allen's CDM. LRV ≤10 between adjacent floor materials prevents the visual signal of a 'step' (high-contrast floor transition) being generated where no step exists; for DEM users at Allen's cognitive levels 3--4, a high-contrast floor transition produces an avoidance response and gait interruption identical to the response to an actual step.
 
@@ -1106,9 +1106,9 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 
 ### D-02 Cognitive Simplicity (Single Primary Route from Entry to Destination)
 
-<!-- CON-0001 [HIGH]: Tier 0 convergence — DEM, VIS, DBL, IntD, NDV/AUT all require consistent, predictable circulation. Synthesis: add Tier 0 universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
+<!-- CON-0001 [HIGH]: Tier 0 convergence — DEM, VIS, DBL, DEM/NDV[IntD-proxy], NDV/AUT all require consistent, predictable circulation. Synthesis: add Tier 0 universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
 
-**Applicable Groups:** DEM, NDV, VIS (cognitive) · DBL · NDV/AUT · IntD proxy→DEM/NDV
+**Applicable Groups:** DEM, NDV, VIS (cognitive) · DBL · NDV/AUT · DEM/NDV[IntD proxy] proxy→DEM/NDV
 <!-- CON-0001: CON-0001: ≤2 route choices per decision point; consistent furniture arrangement (CON-0067) -->
 
 **Description:** All primary building journeys follow a single, legible primary route. No user should need to choose between multiple routes at any decision point unless routes are equivalent and clearly signposted. Decision point = any junction with ≥2 route options.
@@ -1431,7 +1431,7 @@ Floor indicator: visual external to lift on all floors
 
 **Key citations:** Building and Construction Authority. (2025). BCA Code on Accessibility 2025. BCA. British Standards Institution. (2018). BS 8300:2018. BSI. CSA Group. (2023). CSA B651:2023. CSA.
 
-**Cross-reference:** E-02 (Platform Lift); E-06 (Level Entry); VI-03 (Temporal Accessibility)
+**Cross-reference:** E-02 (Platform Lift); E-06 (Level Entry); [VI-03 — retired code] (Temporal Accessibility)
 
 **Evidence basis (OT):** Compensatory FOR; Biomechanical FOR. The lift is the primary environmental compensation for vertical mobility
 
@@ -1492,7 +1492,7 @@ Surface: PTV ≥36 wet; non-slip aggregate or profiled surface
 
 **Key citations:** Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF. Koontz, A.M., et al. (2012). Wheelchair propulsion and ramp gradients. [Tier 3.] Waters, R.L., et al. (1985). Energy cost of wheelchair propulsion and shoulder injury risk on grades above 1:12. Arch Phys Med Rehabil 66(7):465–469. [Tier 3.] Kim, J., et al. (2014). Effect of ramp slope on propulsion force and fall risk for manual wheelchair users. J Biomech Eng 136(4). [Tier 3.] Building and Construction Authority. (2025). BCA Code 2025. BCA.
 
-**Cross-reference:** E-01 (Lift); VI-03 (Temporal Accessibility --- fold-down seating at ramp head)
+**Cross-reference:** E-01 (Lift); [VI-03 — retired code] (Temporal Accessibility --- fold-down seating at ramp head)
 
 **Evidence basis (OT):** Biomechanical FOR. The 1:20 gradient is the primary Biomechanical FOR-derived specification in this guidebook:
 
@@ -1766,7 +1766,7 @@ British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC
 
 interval is derived from clinical pacing guidance and MS fatigue literature. Evidence review recommended at next revision.
 
-**Cross-reference:** E-01 (Lift); E-03 (Ramp gradient); E-08 (Corridor clear width); G-02 (Seating variety); VI-03 (Temporal Accessibility);
+**Cross-reference:** E-01 (Lift); E-03 (Ramp gradient); E-08 (Corridor clear width); G-02 (Seating variety); [VI-03 — retired code] (Temporal Accessibility);
 
 F-05 (Seated-task design)
 
@@ -1813,7 +1813,7 @@ Institution. (2018). BS 8300:2018. BSI.
 
 ### E-15 Changing Places Facility (Height-Adjustable Bench, Overhead Hoist, Peninsular WC)
 
-**Applicable Groups:** MOB, IntD, NEU
+**Applicable Groups:** MOB, DEM/NDV[IntD proxy], NEU
 **Typology:** Non-Residential (public, institutional, transport hubs, entertainment venues, retail ≥1000 m²); Residential (supported living, residential care)
 **Design Stage:** SD — spatial footprint and hoist track structure are irreversible after slab pour
 

@@ -31,7 +31,7 @@ Each room matrix is structured as: 1.
 
 **Schematic checklist** — binary checklist for this room at end of schematic design stage
 
-**Population code key for tables:** MOB=mobility, VIS=visual (vis=low vision), DEAF=deaf/hearing, DEM=dementia, NDV=neurodivergent, NEU=neurological/PCS, PAIN=chronic pain=large body size (→ Supp Vol IV), OFS=environmental sensitivity, DBL=DeafBlind, UPL=upper limb, IntD=intellectual disability [THIN BASE — interim provisions; Tier 4–5 only; March 2026] **Design stage codes:** SD=schematic design
+**Population code key for tables:** MOB=mobility, VIS=visual (vis=low vision), DEAF=deaf/hearing, DEM=dementia, NDV=neurodivergent, NEU=neurological/PCS, PAIN=chronic pain=large body size (→ Supp Vol IV), OFS=environmental sensitivity, DBL=DeafBlind, UPL=upper limb, DEM/NDV[IntD-proxy]=intellectual disability [THIN BASE — interim provisions; Tier 4–5 only; March 2026] **Design stage codes:** SD=schematic design
 
 | DD=developed design | CD=construction documents | SPEC=specification | COMM=commissioning | OPS=operation — |
 
@@ -56,7 +56,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | B-05 | Gradual lighting transition (entry to interior) | DD | Lighting design |
 | G-04 | MERV 13 air filtration provision | SD | MEP brief |  |
 
-*Note on IntD (intellectual disability) in residential matrices:* All IntD provisions in the tables below carry the standing project disclosure: [TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026. Provisions are interim, calibrated to DEM wayfinding and NDV sensory evidence as the strongest available proxies. Full IntD-specific evidence review deferred to v10.0.] IntD cells marked ● indicate provisions with direct cross-population applicability confirmed at Tier 4–5; cells marked ○ indicate the provision benefits IntD users but is not a primary design driver.
+*Note on DEM/NDV[IntD-proxy] (intellectual disability) in residential matrices:* All DEM/NDV[IntD-proxy] provisions in the tables below carry the standing project disclosure: [TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026. Provisions are interim, calibrated to DEM wayfinding and NDV sensory evidence as the strongest available proxies. Full DEM/NDV[IntD-proxy]-specific evidence review deferred to v10.0.] DEM/NDV[IntD-proxy] cells marked ● indicate provisions with direct cross-population applicability confirmed at Tier 4–5; cells marked ○ indicate the provision benefits DEM/NDV[IntD-proxy] users but is not a primary design driver.
 
 ---
 
@@ -68,7 +68,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-ENT:**
 
-| Item | Title | MOB | VIS | DEAF | DEM | NDV | OFS | DBL | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | OFS | DBL | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | E-06 | Step-free threshold | ● | ○ | — | ● | — | ● | ● | ○ | SD |
 | E-11 | Automatic door | ● | — | ○ | ● | — | ● | ● | — | DD |
@@ -129,7 +129,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-GAR:**
 
-| Item | Title | MOB | UPL | VIS | IntD | Design Stage |
+| Item | Title | MOB | UPL | VIS | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- |
 | E-06 | Step-free from garage to interior | ● | ○ | — | — | SD |
 | E-11 | Automatic garage door | ● | ● | — | — | DD |
@@ -167,7 +167,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-LAU:**
 
-| Item | Title | MOB | UPL | PAIN | OFS | IntD | Design Stage |
+| Item | Title | MOB | UPL | PAIN | OFS | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | I-02 | Lever taps (if laundry sink) | ● | ● | ○ | — | — | CD |
 | G-05 | Height-adjustable surface (if laundry bench) | ● | ● | ● | — | — | DD |
@@ -213,7 +213,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-BED:**
 
-| Item | Title | MOB | VIS | DEAF | DEM | NDV | NEU | PAIN | OFS | DBL | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | NEU | PAIN | OFS | DBL | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | B-01 | Circadian lighting (tunable white) | ● | — | — | ● | ● | ● | ○ | ○ | — | — | DD |
 | B-06 | Individual dimming control | ● | — | — | ● | ● | ● | ● | ● | — | — | CD |
@@ -269,7 +269,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **NOTE on sequence:** Per the residential analysis, R-BA-05 (turning circle) is a prerequisite for all other bathroom provisions. It is therefore presented first in the sequence.
 
-**Room criticality:** The bathroom is the highest-risk room in the residence for falls, scalding, and mobility-related injury. IntD users may require visual prompts and simplified controls; standard accessible provisions generally serve IntD users without separate specification. It is the room with the highest-leverage DAR provisions (grab bar blocking) and the highest cost multiplier for retrofitting missed provisions (75× for grab bar blocking). Primary populations: MOB (turning circle, wet room, grab bars), DEM (fall prevention, grab bar colour contrast, heated floor), MS/NEU (anti-scald, thermal stability), ALL populations encounter the bathroom daily.
+**Room criticality:** The bathroom is the highest-risk room in the residence for falls, scalding, and mobility-related injury. DEM/NDV[IntD-proxy] users may require visual prompts and simplified controls; standard accessible provisions generally serve DEM/NDV[IntD-proxy] users without separate specification. It is the room with the highest-leverage DAR provisions (grab bar blocking) and the highest cost multiplier for retrofitting missed provisions (75× for grab bar blocking). Primary populations: MOB (turning circle, wet room, grab bars), DEM (fall prevention, grab bar colour contrast, heated floor), MS/NEU (anti-scald, thermal stability), ALL populations encounter the bathroom daily.
 
 **Item application table — R-BA:**
 
@@ -339,7 +339,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-LIV:**
 
-| Item | Title | MOB | DEM | NDV | OFS | PAIN | VIS | DEAF | DBL | IntD | Design Stage |
+| Item | Title | MOB | DEM | NDV | OFS | PAIN | VIS | DEAF | DBL | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | G-01 | Furniture layout + turning circle | ● | ● | — | — | — | ● | — | ○ | — | DD |
 | G-02 | Seating specification (ergonomic + acoustic) | ● | ● | ● | — | ● | — | — | — | — | DD |
@@ -404,7 +404,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-KIT:**
 
-| Item | Title | MOB | UPL | PAIN | DEM | NDV | DEAF | IntD | Design Stage |
+| Item | Title | MOB | UPL | PAIN | DEM | NDV | DEAF | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | R-KIT-01 G-05/G-06 | Multi-level countertops + knee clearance | ● | ● | ● | ○ | — | — | — | DD |
 | R-KIT-01 storage | Pull-out drawers; D-pull hardware; visual storage | ● | ● | ● | ● | ● | — | ○ | CD |
@@ -459,7 +459,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-HAL:**
 
-| Item | Title | MOB | VIS | DEAF | DEM | NDV | DBL | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | DBL | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | E-08 | Corridor clear width ≥1000 mm | ● | — | — | ○ | — | ● | — | **SD** |
 | E-10 | Rest seating at ≤20 m | ● | — | — | ○ | — | — | — | DD |
@@ -497,7 +497,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **Item application table — R-STA:**
 
-| Item | Title | MOB | VIS | DEAF | DEM | NEU | IntD | Design Stage |
+| Item | Title | MOB | VIS | DEAF | DEM | NEU | DEM/NDV[IntD-proxy] | Design Stage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | E-02 | Handrail both sides, continuous | ● | ● | — | ● | ● | ○ | CD |
 | E-03 | Handrail dimensions (40–50 mm diameter) | ● | ● | — | ● | ● | — | CD |

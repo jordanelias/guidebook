@@ -73,7 +73,7 @@ The layered environment model organises accessible design provisions by their ph
 
 1. **Resolve at the earliest layer.** Conflicts that require a structural resolution cannot be addressed by signage or fit-out. Identify conflicts at Layer 1 and resolve them there. A conflict left to Layer 3 will either be unresolved or require expensive structural remediation.
 
-2. **Converging specifications produce Tier 0 provisions.** Where five or more populations require the same or compatible provisions independently, the specification becomes a Tier 0 universal: loop circulation geometry (DEM, VIS, DBL, NDV/AUT, IntD — CON-0001); quiet retreat space (NDV/AUT, NDV/MH, OFS — CON-0002); fragrance-free policy (OFS/MCAS, NDV/SENS — CON-0007). These should be specified as universal provisions without population conditioning.
+2. **Converging specifications produce Tier 0 provisions.** Where five or more populations require the same or compatible provisions independently, the specification becomes a Tier 0 universal: loop circulation geometry (DEM, VIS, DBL, NDV/AUT, DEM/NDV[IntD-proxy] — CON-0001); quiet retreat space (NDV/AUT, NDV/MH, OFS — CON-0002); fragrance-free policy (OFS/MCAS, NDV/SENS — CON-0007). These should be specified as universal provisions without population conditioning.
 
 3. **Safety-critical provisions establish the floor.** Where one population's provision addresses a safety outcome (fall, scald, fire evacuation, Uhthoff's neurological worsening) and another population's provision addresses a comfort or preference outcome, the safety provision governs the shared environment. Comfort requirements are met through individual supplemental provision.
 
