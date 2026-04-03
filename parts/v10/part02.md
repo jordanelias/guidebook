@@ -1,310 +1,281 @@
 ## Part 2: Disability Categories
 
-<!-- v10.0 — CO-0002 applied: §2.12 IntD removed (IntD proxied through DEM/NDV). REWRITE REQUIRED from BPC. -->
+*Guidebook for Accessible Design v10.0*
 
-Thirteen disability categories are addressed in this document. These are not exhaustive clinical classifications — they are design-relevant groupings of people with similar environmental needs and barriers. One person may belong to multiple categories simultaneously. See Part 3 for multiple disability category design guidance and Part 8 for conflict resolutions.
+---
+
+This Part describes each disability category in this guidebook: its functional characteristics as they relate to the built environment, the evidence base for design provisions, and the cross-references to Part 4 item specifications and Part 5 conflict resolutions that apply. It is not a clinical reference. It is a designer's map — from population to provision.
+
+**How to use this Part.** Read the sections for each population anticipated in your building brief before consulting the matrices in Parts 6 and 7. Understanding why a provision is required is the precondition for applying it correctly and for identifying the conflicts that arise when multiple populations share a space.
+
+**Terminology.** This guidebook uses social model framing throughout. Disability is the mismatch between a person's impairment and an environment that has not been designed to accommodate it — not a characteristic of the person. Population codes (MOB, VIS, DEAF, etc.) refer to design categories, not diagnostic labels. A person may belong to multiple categories simultaneously; Part 3 addresses co-occurring provisions.
+
+**CO-0002 note.** Intellectual disability (IntD) is not a separate section in this Part. IntD design provisions are proxied through DEM (for cognitive and wayfinding provisions) and NDV (for sensory and environmental provisions), where the evidence base is richer and more spatially specific. Where IntD is explicitly cited as a primary population in a Part 4 item, this is noted in the item's Applicable Groups field.
+
+---
 
 ### Category Code Reference
 
-| Code | Category |
-| --- |
-| MOB | Mobility \& Strength |
-| UPL | Upper Limb \& Amputation |
-| VIS | Vision Impairment |
-| DEAF | Deaf / Hard of Hearing |
-| NEU | Neurological \& Acquired Brain Injury |
-| DEM | Dementia |
-| NDV | Neurodivergence |
-| NDV/MH | Mental Health / PTSD / Trauma (sub-code of NDV) |
-| PAIN | Chronic Pain / Fibromyalgia / Migraine |
-| DBL | DeafBlind |
-| OFS | Orthostatic \& Fatigue Spectrum |
-| IntD | Intellectual Disability |
-| ALL | All disability categories |
+| Code | Label | Key design domains |
+|---|---|---|
+| MOB | Mobility & Strength (ambulant and wheeled) | Turning space, ramp gradient, door widths, grab bars, rest seating |
+| MOB/UPL | Upper Limb & Amputation | Hardware force, reach range, toilet transfer geometry, grab bar type |
+| VIS | Vision Impairment (low vision and blind) | TWSI, luminance contrast, lighting consistency, signage, audio wayfinding |
+| DEAF | Deaf / Hard of Hearing / Hearing Device Users | Hearing loops, RT60, visual alerting, signing space, diffuse lighting |
+| NEU | Neurological / Acquired Brain Injury (ABI, stroke, MS, Parkinson's, PCS) | Wayfinding legibility, landmark density, unilateral neglect provisions, floor plan simplicity |
+| DEM | Dementia | Floor plan configuration, luminance contrast, familiar cues, plain flooring, loop plans |
+| NDV | Neurodivergence (AUT, ADHD, SENS, Dyslexia, Dyspraxia) | Acoustic attenuation, sensory zoning, predictable layout, user control, quiet retreat |
+| NDV/MH | Mental Health, PTSD, and Trauma | Private space, user control, trauma-informed spatial sequence, de-escalation room, nature connection |
+| PAIN | Chronic Pain and Fibromyalgia | Cushioned flooring, thermal comfort, seated work surfaces, accessible storage, rest seating |
+| DBL | DeafBlind | Tactile-first design, consistent layout, intervenor adjacency, vibrotactile alerting, Protactile space |
+| OFS | Orthostatic & Fatigue Spectrum (ME/CFS, POTS, MCAS) | Rest seating interval, reclined posture accommodation, cool ambient temperature, fragrance-free |
+| ALL | All disability categories | Tier 0 universal specifications (see §1.4.3 and Part 4 preamble) |
+
+*Supplementary-only codes (Supplementary Volume, not main taxonomy):* CHD · LPA · EXH · BAR
 
 ---
 
-### §2.1 MOB — Mobility \& Strength
+### §2.1 MOB — Mobility & Strength
 
-**Definition**
+**Functional basis.** MOB encompasses all ambulant and wheeled mobility impairments: manual wheelchair users, power wheelchair users, scooter users, ambulant disabled people using walking aids (crutches, frames, canes), and people with reduced lower limb strength or stamina. The population is deliberately broad because most barrier types affect it uniformly — steps, narrow widths, steep gradients, threshold lips, and heavy hardware all restrict MOB users regardless of device type or diagnosis.
 
-Physical access, ambulation, and postural needs arising from lower limb impairment, generalised weakness, or fatigue. Includes: wheelchair users (manual and powered); walker, cane, crutch, and rollator users; ambulatory mobility impairment (gait dysfunction, hip/knee replacement, paraplegia/hemiplegia, cerebral palsy — motor); generalised strength and endurance limitations.
+**The regulatory lag problem.** Building codes for wheelchair access derive from 1970s anthropometric data calibrated to manual wheelchairs. The IDeA Center AWM Project (Steinfeld et al. 2010, n=500, Tier 1) demonstrated that the ADA 1524 mm turning circle serves only the 50th percentile of that era's devices — and excludes the majority of contemporary power wheelchairs and scooters. The Summer Foundation/UTS research (Winkler et al. 2024, Tier 1 co-designed, AU) confirmed the same under-accommodation pattern in the Australian context. Singapore's BCA Code 2025 is the first national standard to incorporate anthropometric data specifically for power wheelchair users. The guidebook's tier-ladder replaces code minimums with evidence-based targets.
 
-**Core environmental needs**
+**Turning space tier-ladder.**
+- 1500 mm diameter: statutory minimum in most jurisdictions (manual WC baseline) — treated as Tier 6 floor only, not a design target
+- 1700 mm: RHFAC/CSA B651-23 (CA) best practice; BS 8300 UK; minimum for power WC on primary routes
+- 1800 mm: recommended in new-build accessible bathrooms, turning nodes, and primary circulation; serves 95th-percentile power WC users (D'Souza et al. 2011, n=339, Tier 3)
+- 2100 mm: CSA B651:23 for power WC; target for new-build primary accessible routes
 
-- Step-free routes throughout; maximum ramp gradient 1:20
-- Turning space ≥1500 mm diameter at all decision points
-- Corridor width ≥1200 mm (single); ≥1500 mm (passing)
-- Door clear width ≥900 mm (minimum accessible); ≥915 mm preferred for new construction; ≥1000 mm on all bariatric-accessible routes
-- Opening force ≤22 N
-- Reach zone 400–1200 mm from floor
-- Seating at 450–500 mm seat height with armrests throughout
-- Rest seating every 20–30 m on primary routes
+**Other primary specifications (evidence basis).**
+- Ramp gradient: ≤1:20 (5%) ideal [Tier 5]; 1:16 intermediate; 1:12 (8.3%) statutory minimum with rest platforms every 9 m [Tier 6]. DIN 18040 and TEK17 specify 1:16.7 (6%) as their national best practice — correctly above ADA/BS code minimums.
+- Door clear opening: 900 mm best practice; 850 mm absolute minimum for power WC (CSA B651).
+- Rest seating: every 50 m on public circulation routes (BS 8300); every 25–30 m where OFS users are anticipated (pain-ofs-built-environment-design BPC).
+- Grab bars: two vertical bars as primary configuration; horizontal bars (ADA-mandated) are the least preferred and least stable configuration per Kennedy et al. 2015 (Tier 3). Load rating: ≥1.3 kN at any point and any angle (KITE Research 2023–25).
 
-**Special Considerations — MOB**
+**Evidence confidence.** HIGH for turning circle and ramp gradient (Tier 1 anthropometric research; 24-jurisdiction convergence on tier-ladder structure). HIGH for home modification effectiveness — Clemson et al. 2023 Cochrane review (38 RCTs, 8,463 participants) confirms OT-delivered home hazard reduction reduces falls 38% in high-risk populations. MODERATE for grab bar type (Tier 3, replicated). LOW for one-handed kitchen/bathroom design (zero indexed studies — [THIN BASE]).
 
-Biomechanics: ramps above 1:12 require high-force shoulder technique unsustainable by many wheelchair users (Waters et al., 1988). Corridors below 900 mm width increase metabolic cost of wheelchair propulsion 30–45% (Koontz et al., 2012). Seat height of 380 mm increases hip extensor moment \~40% compared to 450 mm (Rodosky et al., 1989). ICF (WHO, 2001): environmental factors (e1) constitute either barriers or facilitators.
+**No cross-population conflicts.** MOB turning circles, ramp gradients, and door widths are beneficial or neutral for all other populations. MOB is the only code with zero conflict flags across all synthesised BPCs.
 
-**Distinct from BAR:** MOB addresses the mechanics of mobility device use and ambulant access. Large body size design provisions (BAR) address structural load-bearing requirements and dignity provisions and have been relocated to the Supplementary Volume, Section IV. MOB specifications apply independently; where BAR provisions are also required, see Supplementary Volume.
-
-**Distinct from OFS:** MOB provisions eliminate physical barriers to movement; OFS provisions eliminate exertion load on barrier-free routes. Rest seating (≤20 m, E-10) is the primary OFS-specific provision that MOB does not require as a universal minimum.
-
-*OT Framework: Biomechanical Frame of Reference.*
-
-*Evidence Base: Koontz et al. (2012); Rodosky et al. (1989); Waters et al. (1988).*
+**Part 4 cross-references.** E-01 (lift), E-02 (platform lift), E-03 (ramp gradient), E-04 (accessible parking), E-05 (weather protection), E-06 (level entry), E-08 (corridor width), G-03 (grab bars), G-04 (accessible bathroom), G-05 (adjustable-height surfaces).
 
 ---
 
-### §2.2 MOB/UPL — Upper Limb \& Amputation
+### §2.2 MOB/UPL — Upper Limb & Amputation
 
-UPL is consolidated as sub-code MOB/UPL in an earlier edition. Category K (Upper Limb Provisions, Part 7) is retained as a dedicated item set.
+**Functional basis.** Upper limb impairment affects grip strength, reach range, bilateral coordination, and the ability to apply force. It encompasses amputation (unilateral or bilateral), hemiplegia, rheumatoid arthritis, multiple sclerosis affecting upper limbs, and conditions producing fine motor difficulty. The population has a critically thin evidence base — zero PubMed-indexed studies on one-handed kitchen or bathroom design exist — making non-English standards essential reference material.
 
-**Definition**
+**Key evidence-practice conflicts.**
+- *Toilet centreline:* ADA specifies 457 mm (18 inches) from the nearest wall — calibrated for a lateral wheelchair transfer that 90% of older disabled persons do not perform. The dominant transfer method is stand-pivot (Sanford & Bosch 2013, n=20, Tier 3). The evidence-based centreline is 760 mm (30 inches), not 457 mm. This is the most consequential evidence-practice conflict in this category.
+- *Grab bar type:* Two vertical bars produce the smallest centre of pressure deviation during transfer and are the most preferred configuration. Horizontal bars — mandated by ADA — are the least preferred and least stable (Kennedy et al. 2015, Tier 3). The guidebook specifies vertical as primary; horizontal as supplementary.
+- *Turning circle:* D'Souza et al. 2011 (n=339, Tier 3) establishes that 2100 mm approaches the 95th-percentile power wheelchair user; 2489 mm is required for scooters. The ADA 1524 mm standard excludes the majority of power wheelchair users from what code describes as an "accessible" space.
+- *Threshold:* A 20 mm threshold defeats 45.8% of wheelchair users on first attempt; women face OR 2.71 of failure vs men (Al Lawati et al. 2017, n=214, Tier 3). Level access (0 mm) is the only functionally inclusive specification.
 
-Design needs arising from impairment or absence of one or both upper limbs, or significantly reduced hand/wrist/arm function. Includes: unilateral and bilateral upper limb amputation; partial hand amputation; congenital limb difference; prosthetic users (body-powered, myoelectric, cosmetic); grip weakness from any cause (rheumatoid arthritis, osteoarthritis, MS-related tremor, stroke hemiplegia, Parkinson's disease, lupus, post-surgical immobilisation); single-hand operation requirement.
+**Hardware.** All controls and hardware to be one-fist operable at ≤22 N force throughout. Lever handles, D-pulls, push-plate operation. DIN 18040 specifies U-shaped lever at 850 mm AFF as mandatory — more specific than any Anglophone standard and should be used as the reference specification.
 
-**Core environmental needs**
+**Evidence confidence.** MODERATE for turning circle, threshold, and grab bar type (Tier 3, replicated). LOW for toilet centreline (Tier 3, n=20 — directional, small sample). LOW for one-handed kitchen design (zero indexed studies — [THIN BASE]).
 
-All hardware operable single-handed, without fine pinch grip:
-
-- Door handles: lever, D-handle, or push plate only. No round knobs. Return tip on lever handles to prevent hook snagging.
-- Taps/faucets: single-lever mixer only. Sensor-activated acceptable.
-- Light switches: large rocker or push type. No small toggle.
-- Controls: large surface, ≤22 N activation force.
-- Grab bars: diameter 32–45 mm (circular cross-section preferred; oval cross-sections to achieve equivalent grip perimeter; avoid knurled surfaces). Bilateral provision — bars on both sides of all transfer locations — is essential.
-
-*OT Framework: Biomechanical Frame of Reference.*
-
-*Evidence Base: ISO 21542:2021; CSA B651:2023; BS 8300:2018.*
+**Part 4 cross-references.** I-01 (hardware), I-02 (kitchen one-handed operation), I-03 (bathroom UPL), I-04 (ceiling hoist), G-03 (grab bars), G-04 (accessible bathroom), E-06 (level entry).
 
 ---
 
 ### §2.3 VIS — Vision Impairment
 
-**Definition**
+**Functional basis.** VIS encompasses the full range from low vision to blindness. The majority of the VIS population has partial sight, not total blindness — design that optimises only for cane users (tactile provisions) underserves the larger low-vision population, who rely primarily on luminance contrast, consistent lighting, and glare control. Both provisions are required; the guidebook leads with luminance and lighting, follows with tactile.
 
-Sensory impairment affecting visual perception. Includes: blind and severely visually impaired; low vision. For combined vision and hearing loss see §2.10 DBL. For Deaf and hard of hearing see §2.4 DEAF.
+**Primary specifications.**
+- Luminance contrast: ≥30 LRV points at all critical junctions — stair nosings, door frames, counter edges, floor level changes. This is the most cross-jurisdictionally converged VIS specification, present in virtually all national standards (BS 8300, DIN 32975, NS 11001, ISO 21542). Tier 0 provision — no population conflicts.
+- Lighting consistency: ≥300 lux in circulation areas without glare; no sudden illuminance transitions exceeding 5:1 ratio between adjacent zones. Quantified lux thresholds are Tier 5 — fewer jurisdictions specify them than contrast requirements.
+- Tactile walking surface indicators (TWSI): continuous ISO 23599:2019 system throughout primary interior and exterior routes. Directional (ribbed) indicators on unobstructed routes; attention (domed) indicators at all decision points, hazard alerts, and facility entries. Raised profile ≥4 mm; colour contrast to adjacent surface ≥70% LRV differential. Audio wayfinding at all primary entry points.
+- Braille and tactile text on all fixed signage at 1400–1600 mm AFF.
 
-**Core environmental needs**
+**TWSI/DEM conflict.** Yellow tactile paving conflicts with dementia design requirements for plain, low-pattern flooring. Resolution: profile-based detection takes primacy over colour-based detection. ISO 23599:2019 TWSI with ≥70% LRV contrast to adjacent surface satisfies both — the raised profile is detectable without colour; the contrast band satisfies VIS needs without relying on pattern. See Part 5 §5.2 SURFACE-TEXT.
 
-- LRV contrast ≥30 at all critical junctions: floor/wall, stair nosing/tread, door frame/wall, grab bar/wall, handrail/wall
-- Minimum 50 lux on accessible routes; minimum 300 lux in working areas
-- TWSI (Tactile Walking Surface Indicators): directional bars for guidance, truncated domes for hazard warning, per ISO 23599:2019
-- No glare (UGR <19); matte floor surfaces (<30 gloss units); gradual lighting transitions (no >10:1 illuminance change without transition zone)
-- Signage: minimum 150 mm character height at 10 m viewing distance; sans-serif; high contrast
+**Evidence confidence.** HIGH for TWSI and LRV contrast (Tier 4–6, universal adoption; 14-language convergence). MODERATE for lighting specifications (≥300 lux, no sudden transitions — Tier 5, fewer jurisdictions specify quantified values).
 
-**Distinct from DBL:** VIS users have functional impairment in one primary sensory channel. DBL users have impairment in both vision and hearing simultaneously, requiring tactile-first redundancy that VIS provisions alone do not address.
-
-*OT Framework: Compensatory Frame of Reference.*
-
-*Evidence Base: ISO 23599:2019; BS 8300:2018.*
+**Part 4 cross-references.** C-04 (LRV contrast), E-09 (TWSI), D-08 (pictogram signage), B-01 (circadian lighting), B-07 (indirect lighting).
 
 ---
 
-### §2.4 DEAF — Deaf / Hard of Hearing
+### §2.4 DEAF — Deaf / Hard of Hearing / Hearing Device Users
 
-**Definition**
+**Functional basis.** DEAF encompasses congenitally deaf and late-deafened individuals, hard-of-hearing people, and hearing aid and cochlear implant (CI) users. The design provisions divide into two distinct domains: acoustic performance (affecting all hearing device users and many hard-of-hearing people) and spatial design for signed communication (primarily affecting Deaf signers). These are separate BPCs with distinct specifications.
 
-Sensory impairment affecting auditory perception. Includes: profoundly deaf; hard of hearing; cochlear implant users; hearing aid users. Also includes members of the Deaf community — a distinct cultural and linguistic group for whom signed language is a primary language and Deaf identity is a cultural, not medical, designation. Design provisions should support visual communication channels and signed language use, not only audiological accommodation. See NAD (2023) position statement on Deaf cultural identity.
+**Acoustic provisions.**
+- Hearing loops compliant with IEC 60118-4:2014+AMD1:2017 in all assembly, reception, service counter, and primary communication spaces. IEC 60118-4 is universally adopted across all 14 languages and their governing standards — the highest cross-language convergence of any DEAF-related specification.
+- RT60 not to exceed 0.4 s at mid-frequencies (500 Hz–4 kHz) in speech communication spaces. This target is the consensus best practice across all 14 languages (DIN 18041, BS 8300, BBR, NS 8175, BR18, and equivalents). CI users are more sensitive to reverberation than hearing aid users and benefit from dense early reflection patterns rather than long decay tails.
+- Background noise: NC-25 maximum in hearing-critical spaces. STI ≥ 0.60 at the furthest occupied seat (not room average — compliant room-average STI does not guarantee adequate listening beyond critical distance).
+- Auracast (Bluetooth LE Audio) infrastructure to be included as a DAR provision in all new-build assembly spaces. IEC 60118-17 (Auracast standard) expected late 2027 — dual provision (loop + Auracast-ready) is best practice during transition.
+- Visual fire alarm strobes (≥110 cd) throughout all occupied spaces; auditory alarm alone is insufficient.
 
-**Core environmental needs**
+**Spatial provisions for signed communication (ASL/BSL proxemics).**
+- Primary internal corridors: minimum 2440 mm clear width, sufficient for two signers walking side by side with peripheral scan space. This figure derives from ASL proxemics at Gallaudet University (DeafSpace Design Guidelines 2010, Co-1) and is an ASL-derived floor, not a universal cross-signed-language value. BSL, DGS, NGT, LSF, and LIS have distinct spatial grammars; no cross-language spatial grammar data exists.
+- Sightlines: unobstructed across minimum 3 m depth with no mid-field obstacles at shoulder height or below.
+- Glazed corridor junctions: provide visual advance warning of approaching persons; matte/low-reflectance glazing (conflicts with DEM anti-glare — see Part 5 §5.2 SPATIAL-OPEN and CONF-UNRESOLV-03).
+- Lighting in communication zones: diffuse, uniform, ≥300 lux at face height; no point sources generating glare or backlighting; matte wall surfaces in neutral mid-tone colours.
+- Seating: movable, without fixed armrests, to allow formation of communication circles.
 
-- Hearing loop installation (perimeter loop or counter/window loop) in all assembly and service spaces, compliant with IEC 60118-4:2014+AMD1:2017
-- Visual fire alarms (strobes ≥110 cd) throughout; vibrating pagers for bedrooms
-- Multi-modal alerts: no critical information conveyed by sound alone
-- Room acoustics supporting speech intelligibility: STI ≥0.5; RT60 ≤0.6 s in communication spaces
-- Clear sightlines for signed language interpretation; adequate lighting for facial expression and hand visibility
-- Spatial layouts that support Deaf communication practices
+**Evidence confidence.** HIGH for acoustic provisions (IEC 60118-4, RT60 ≤ 0.4 s — Tier 4–5, 12+ jurisdictions, Tier 1 CI-specific support). LOW for quantified spatial dimensions (single-source, ASL only — genuine evidence limitation, not a retrieval gap). MODERATE for directional spatial principles (glazed junctions, diffuse lighting — converging evidence from multiple contexts).
 
-**Distinct from DBL:** DEAF users have functional impairment in one primary sensory channel. DBL users have impairment in both vision and hearing simultaneously, requiring tactile-first redundancy that DEAF provisions alone do not address.
-
-*OT Framework: Compensatory Frame of Reference.*
-
-*Evidence Base: IEC 60118-4:2014+AMD1:2017; DeafSpace Design Guidelines (2010); BS 8300:2018; NAD (2023).*
+**Part 4 cross-references.** A-10 (counter hearing loop), A-11 (room hearing loop), A-12 (Auracast infrastructure), B-02 (diffuse lighting for lip reading), B-10 (visual fire alarm), K-01 through K-04 (DeafBlind provisions — distinct category, see §2.10).
 
 ---
 
-### §2.5 NEU — Neurological \& Acquired Brain Injury
+### §2.5 NEU — Neurological & Acquired Brain Injury
 
-**Definition**
+**Functional basis.** NEU is the most heterogeneous population code in this guidebook. It encompasses acquired brain injury (ABI), stroke, multiple sclerosis (MS), Parkinson's disease, epilepsy, and post-concussion syndrome (PCS/NEU). Each condition produces distinct functional profiles; the unifying design relevance is impaired wayfinding, movement execution, and sensory processing. Approximately 25% of stroke survivors retain navigation impairment at 12 months (van der Ham et al. 2021, Tier 3), and environmental barriers are independently associated with worse rehabilitation outcomes (PMC10621028, 2023, Tier 3).
 
-Neurological conditions affecting cognition, movement, sensation, fatigue, or behaviour, acquired after birth. Includes: TBI; post-concussion syndrome (PCS); ABI; stroke; Multiple Sclerosis (MS); Parkinson's disease; spinal cord injury.
+**Wayfinding — primary design domain.**
+Floor plan configuration is the most influential environmental factor for ABI/stroke wayfinding — signage and colour cues cannot compensate for poor layout (Marquardt & Schmieg 2009, Tier 3; Bowes et al. 2019, Tier 3). The primary specification: linear or clearly differentiated floor plan with ≤2 directional changes per route segment; distinctive visual landmark at each decision point. Unilateral neglect (affecting 30–60% of ABI cases) requires high-contrast environmental cues on the neglected side — but because buildings cannot reliably determine which side a user neglects, bilateral redundancy is the Tier 1 provision; unilateral-specific placement is Tier 2 only.
 
-**Core environmental needs**
+**Thermal provisions (NEU/MS — Uhthoff's phenomenon).**
+Heat causes demyelination worsening — this is a safety-critical, not comfort, concern. Ambient temperature ≤18°C in primary activity spaces governs for MS/NEU. Individual supplemental heating resolves the PAIN population's warmth need without raising shared ambient. See Part 5 §5.2 TEMP-RANGE for the full resolution.
 
-- Reduced visual clutter and visual noise
-- Reduced acoustic complexity (RT60 ≤0.6 s; no unnecessary background music)
-- No fluorescent lighting (PCS photosensitivity); flicker-free LED throughout
-- Lighting individually dimmable to minimum 50 lux
-- Predictable, consistent spatial layout
-- Rest seating every 20–30 m
-- Clear toilet routing; accessible toilet within 20 m of all primary occupied spaces
-- Thermal management: ambient temperature ≤18°C on primary circulation routes
+**Other provisions.**
+- Adequate circulation width for mobility device use post-stroke: ≥1200 mm minimum; ≥1500 mm preferred.
+- Luminance contrast ≥30 LRV at floor/wall junctions and all critical junctions.
+- Pictographic + colour-coded signage; no text-only wayfinding.
 
-**Special Considerations — MS**
+**Evidence confidence.** MODERATE for directional principles (wayfinding layout, landmark density — Tier 3 systematic review base); LOW for quantified thresholds (population heterogeneity limits specification precision). LOW for non-English evidence (retrieval gaps — extended passes recommended before v10 publication).
 
-MS is the most prevalent acquired neurological condition absent from existing accessibility standards. Approximately 2.9 million people worldwide live with MS (MSIF Atlas, 2023).
-
-- Uhthoff's phenomenon: temporary worsening of neurological symptoms when core body temperature rises by approximately 0.5°C above individual baseline. Design environments for MS should target ambient temperatures of 18°C. See Part 8, §8.4.4.
-- MS fatigue: disproportionate, not fully relieved by rest; fluctuates across the day. Design response: rest seating every 20–30 m; lifts ≤60 m from any point; even surfaces.
-- MS bladder urgency: up to 80% of people with MS experience bladder problems. Accessible toilet within 20 m of all primary occupied spaces is a clinical priority.
-
-**Distinct from NDV:** NEU conditions are acquired — they have a clinical onset event and may partially recover or stabilise. NDV is innate neurological variation with no recovery trajectory.
-
-**Distinct from DEM:** NEU conditions may stabilise or partially recover; DEM follows progressive decline only.
-
-*OT Framework: Ecology of Human Performance (EHP) — performance range concept.*
-
-*Evidence Base: CAOT (2018); AOTA (2023); MSIF Atlas (2023); Rasminsky (1973); Cicerone et al. (2019).*
+**Part 4 cross-references.** D-01 (loop floor plan), D-02 (cognitive simplicity), D-04 (landmarks), D-08 (signage), E-09 (TWSI), F-07 (thermal zoning).
 
 ---
 
 ### §2.6 DEM — Dementia
 
-Dementia is treated as a standalone category rather than a subset of NEU. Neurological conditions (NEU) may recover or stabilise; dementia follows progressive decline with no recovery. The research bases are distinct.
+**Functional basis.** Dementia produces progressive cognitive decline affecting memory, spatial orientation, executive function, and sensory processing. The built environment is a primary therapeutic and safety instrument — not merely a background condition — for this population. Floor plan configuration is the single most influential environmental factor for dementia wayfinding; no signage system, however well designed, can compensate for an illegible floor plan (Marquardt & Schmieg 2009, Tier 3; Bowes et al. 2019, systematic review of 429 items).
 
-**Definition**
+**Primary specifications.**
+- Floor plan: single-corridor or continuous-loop circulation for residential dementia care (eliminates disorientation; permits autonomous wandering). Non-residential DEM settings: legible circulation with identifiable decision points and sightline-to-destination — loop-plan is DEM residential; destination-visible layout is DEM non-residential.
+- Lighting: ≥300 lux in corridors; ≥500 lux at task surfaces (DSDC EADDAT 2022, Tier 5). Improvement in resident orientation up to 30% from lighting optimisation. Warm colour temperature preferred; circadian cycle lighting recommended.
+- Luminance contrast: ≥40 LRV contrast between adjacent horizontal/vertical surfaces at all critical junctions; ≥30 LRV minimum. Toilet door visible from, or in direct sightline of, bedroom doorway.
+- Plain flooring: no geometric patterns; no dark floor mats at thresholds (perceived as holes — common and documented design error, DSDC/Kirklees guidance). C-06 (plain floor) governs over C-04 (pattern) for shared circulation in DEM-primary environments.
+- Personalised door identifiers for residential rooms; distinctive landmark objects at all decision points (D-06, D-04).
+- Secure outdoor garden: loop path, secured perimeter, seating every 20 m.
 
-Dementia arising from progressive neurodegenerative conditions: Alzheimer's disease (\~60–70% of cases); vascular dementia; mixed dementia; Lewy Body Dementia (LBD); Frontotemporal Dementia (FTD).
+**Stage-awareness note.** Early-to-moderate dementia benefits from distinctive landmarks (spatial diversity); advanced dementia benefits from spatial predictability (spatial regularity). The guidebook specifies stage-awareness in D-01 and D-04 rather than choosing a single position.
 
-**Core environmental needs**
+**Evidence confidence.** MODERATE-HIGH for core spatial provisions (Tier 3 systematic review base — Bowes et al. 2019, Marquardt 2009). MODERATE for lighting thresholds (DSDC practitioner guidance — not RCT). LOW for non-English evidence (extended passes for 9 languages not yet run — a retrieval gap, not an evidence gap; concept boundary was clean for all 14 languages).
 
-- Wayfinding: high contrast at toilet doors (≥30 LRV); door colour-coding by function; memory boxes; landmark objects; no dead-ends (D-01 through D-09)
-- Safety: secured exits where wandering is a risk; safe enclosed gardens; no scalding risk; non-slip floors
-- Orientation: consistent spatial layout; clock-face visibility; daylight; familiar objects and domestic scale
-- Sensory calm: low visual complexity; muted colour palette; acoustic calm
-- Contrast: ≥30 LRV at toilet seat vs floor; ≤10 LRV between adjacent floor materials
-
-**Special Considerations — LBD**
-
-Patterned flooring, high-contrast geometric tiles, and strong directional shadows at floor level are associated with visual hallucinations in Lewy Body Dementia. In settings where LBD users are anticipated: specify plain, matte, uniform flooring throughout (C-06).
-
-*OT Framework: Allen's Cognitive Disabilities Model (CDM).*
-
-*Evidence Base: DSDC (2022); Marquardt (2011); Alzheimer's Disease International (2020); France Alzheimer (2022); Kirch \& Marquardt (2023).*
+**Part 4 cross-references.** D-01 (loop floor plan), C-04 (LRV contrast), C-06 (plain flooring), B-01 (circadian lighting), D-04 (landmarks), D-06 (memory boxes), D-11 (secure garden).
 
 ---
 
 ### §2.7 NDV — Neurodivergence
 
-**Definition**
+**Functional basis.** NDV encompasses autism spectrum (NDV/AUT), ADHD (NDV/ADHD), sensory processing differences (NDV/SENS), dyslexia, and dyspraxia. The evidence base for built environment design is Tier 4–5 — practitioner consensus and limited empirical work, not RCT-level validation. This is not a retrieval gap; the evidence base is structurally limited because neurodivergent sensory experience is inherently heterogeneous. Population-level thresholds may never converge the way they do for wheelchair turning circles. The highest-ambition specification for NDV/AUT is a design process — individual occupant control, sensory audit at DD and RFO, adjustment capability built into architecture — not a fixed number.
 
-Innate neurological variation affecting sensory processing, attention, learning, communication, or social cognition. Distinct from dementia (acquired) and ABI (acquired). Includes: autism spectrum (AUT); ADHD; sensory processing differences (SENS); dyspraxia (DCD); misophonia (MIS); dyslexia.
+**Three primary design domains (Tola et al. 2021, Tier 1 scoping review).**
+1. Sensory quality — minimise stimuli; provide quiet/retreat spaces; manage transition zones; control acoustics first, then visual and olfactory
+2. Intelligibility — clear spatial layouts; predictable organisation; compartmentalised activity zones
+3. Predictability — consistent layouts; routine-supporting design; reduced visual complexity
 
-**Core environmental needs**
+**ASPECTSS Design Index (Mostafa 2008/2021).** Seven criteria — acoustics, spatial sequencing, escape space, compartmentalisation, transition spaces, sensory zoning, safety — is the established practitioner consensus framework. ASPECTSS 2.0 (Frontiers in Psychiatry 2021, Tier 3) provides post-occupancy evaluation data.
 
-- Sensory load management: RT60 ≤0.6 s in spaces where AUT users are expected; no HVAC hum above NC-25; muted, low-chroma colour palette; no flickering or strobing
-- Sensory retreat: at least one quiet room or acoustic refuge accessible from primary circulation (A-16)
-- Sensory graduation: transition from high-stimulation entry zones to low-stimulation work/rest areas (F-01)
-- Predictability: consistent layout; no unexpected changes in route; visible destination from decision points
-- Choice: both active/stimulating and contemplative/restful spaces available
-- Individual control over lighting, temperature, and acoustic environment where possible (H-02)
-- Signage: pictogram + single-word; no symbol-dense wayfinding; consistent placement throughout
+**Quantified thresholds — where available.**
+- Background noise: <55 dB(A) in focused-attention spaces (Caniato et al. 2024, single classroom study — PROVISIONAL; directional only; pending replication)
+- RT60: ≤0.3 s in NDV-designated spaces (stricter than the ≤0.4 s DEAF/DEM target; where NDV and DEAF share space, NDV target governs — beneficial relationship, no conflict)
+- Transition buffer: ≥1.5 m between activity zones (PAS 6463:2022, Tier 4)
+- Quiet/retreat space: ≥8 m² (PAS 6463:2022, §14.1, Tier 4)
+- All other thresholds: no validated quantified values; direction only — [THIN BASE; no RCT-level study; March 2026]
 
-*OT Framework: Dunn's Sensory Processing Model.*
+**Sensory quiet room (A-16): Tier 0.** User-controlled lighting (2700–5000 K, 10–500 lux dimmable), acoustic attenuation ≤30 dBA, no fluorescent or stroboscopic lighting anywhere in the building. Benefits all NDV subtypes without population conflict. A-16 is a Tier 0 provision; its absence is a design failure.
 
-*Evidence Base: Mostafa (2021); BSI PAS 6463:2022; Bettarello et al. (2021); RHFAC v4.0 (2024).*
+**NDV/AUT vs NDV/MH colour conflict.** NDV/AUT requires muted, low-chroma palette. NDV/MH (see §2.8) requires warm, nature-derived colours. Co-1 evidence confirms the conflict is real. Resolution: spatial separation only. See C-01 item conflict note and Part 5 §5.2.
+
+**Evidence confidence.** LOW for all quantified thresholds (no RCT-level evidence in any language). MODERATE for acoustic and spatial provisions (Tier 3–4, converging evidence). MODERATE-HIGH for process provisions (ASPECTSS, PAS 6463, post-occupancy evaluation requirement).
+
+**Part 4 cross-references.** A-16 (sensory room), A-01 (acoustic buffer), A-02 (acoustic ceiling panels), A-13 (no sound masking), F-01 (sensory gradient), F-02 (olfactory control), F-06 (fragrance-free policy), D-05 (enclosed spaces), B-06 (individual dimming).
 
 ---
 
-### §2.8 NDV/MH — Mental Health, PTSD, and Trauma (Sub-code of NDV)
+### §2.8 NDV/MH — Mental Health, PTSD, and Trauma
 
-MH is consolidated as sub-code NDV/MH in an earlier edition. MH provisions are retained in full and are cross-coded throughout Part 7 as NDV/MH. Mental health categories include anxiety disorders, PTSD, depression, psychosis, and trauma-related conditions. These users are present in all building types, not only specialist mental health facilities.
+**Functional basis.** NDV/MH encompasses people with mental health conditions, PTSD, and trauma histories as they relate to the built environment. This category is distinct from NDV — it is not primarily a sensory processing issue, but a spatial safety, control, and institutional-harm issue. The built environment has mechanistic, not merely correlational, effects on psychiatric outcomes: ward-level environmental factors independently govern coercive measure (seclusion and restraint) use, independent of patient-level factors (Husum 2010, n=1,016 across 32 wards, Tier 1; van der Schaaf 2013, n=23,868 across 199 wards, Tier 1; Weltens 2023, Tier 1).
 
-**Definition**
+**Organising framework: Trauma-Informed Design (TID).** Safety, choice, collaboration, empowerment, and cultural responsiveness as spatial principles (SAMHSA; Holohan 2022 scoping review, Tier 2–4). Validated functionally by the Tier 1 evidence above.
 
-Design needs arising from mental health conditions, trauma histories, and psychosocial disability. NDV/MH design prioritises environments that reduce threat perception, support autonomy and exit, and avoid non-clinical institutional aesthetics.
+**Specification hierarchy (by evidence strength).**
+1. Private space per patient [Tier 1 — van der Schaaf 2013: multivariate analysis, largest effect among 14 design variables]. Design occupancy = maximum occupancy; no surge capacity without additional spatial provision.
+2. Capacity limits [Tier 1 — Weltens 2023: exceeding bed capacity OR 5.36 for aggression. Single strongest environmental predictor].
+3. User control of sensory environment [Tier 1 — Faerden 2022: Cohen's d = 2.0 patient support]. H-02 individual environmental controls in all patient bedrooms and retreat spaces.
+4. Predictable spatial sequence — no dead-end corridors; all routes loop or terminate at named destinations. Critical for PTSD (no ambush points, no blind corners, exit always visible).
+5. De-escalation / safe retreat room ≥9 m²: user-adjustable lighting (2700–6500 K), RT60 ≤0.4 s, no through-traffic, visual privacy from common areas, unobstructed exit sightline from inside. Distinct from A-16 sensory quiet room (different clinical function — see comparison table in mental-health-built-environment BPC).
+6. Nature connection: views, biophilic elements, outdoor access with clinical governance.
+7. Homelike, non-institutional character: artwork, natural materials, domestic-scale furnishing (Rodríguez-Labajos 2024, 44 studies, Tier 3).
 
-**Core environmental needs**
+**Female-only areas.** In mixed-gender inpatient settings, female-only areas are essential for trauma history populations (Wilson 2023, Co-1; Rodríguez-Labajos 2024, Tier 3). No current Part 4 item — flagged as Phase 3 gap for Part 7.
 
-- Trauma-informed design: sightlines to exit from all seating positions; defensible space (back-to-wall seating, G-01); soft, natural materials; natural light; non-institutional aesthetics
-- Panic exit provisions: all spaces where MH users are anticipated should have clearly visible, unobstructed exit routes; minimum two exit routes visible from primary seating areas
-- Non-clinical aesthetic principle: accessible and MH-supportive design should be indistinguishable from high-quality mainstream design
-- Sensory control: individual control over lighting, acoustic environment, and temperature where possible (H-02)
-- Escape/breakout spaces accessible from primary circulation without requiring interaction (D-05)
+**NDV/MH vs DEAF conflict.** MH/PTSD requires predictable enclosed sequences; DEAF requires open, transparent partitions. Irreconcilable in the same space. Resolution: spatial zoning — see Part 5 §5.2 SPATIAL-OPEN.
 
-*OT Framework: Person-Environment-Occupation (PEO) Model; trauma-informed care frameworks.*
+**Evidence confidence.** MODERATE for framework (TID, Tier 2–4). HIGH for three mechanistic environmental factors (Tier 1 evidence specifies domains — private space, capacity, user control — but not architectural dimensions). LOW for quantified spatial specifications (room sizes, lux ranges — Tier 4–5 only).
 
-*Evidence Base: Champagne (2011); Huckshorn (2004); Ulrich et al. (2008).*
+**Part 4 cross-references.** H-02 (individual environmental control), A-16 (sensory room — note functional distinction from de-escalation room), D-01 (loop floor plan), D-05 (enclosed spaces), B-06 (individual dimming), G-01 (defensible seating).
 
 ---
 
 ### §2.9 PAIN — Chronic Pain and Fibromyalgia
 
-**Definition**
+**Functional basis.** PAIN encompasses chronic pain conditions, fibromyalgia (FM), and related conditions producing persistent or fluctuating pain, reduced grip strength, hyperalgesia (heightened pain response), and limited activity tolerance. The evidence base for built-environment design is structurally thin — zero built-environment spatial parameters exist for PAIN in any jurisdiction or language. All specifications derive from clinical symptom evidence, OT energy conservation principles, and FDR (functional deficit research) extrapolation. All PAIN provisions carry THIN-POPULATION-SPEC disclosure; all are marked ○ (expert consensus only).
 
-Chronic pain conditions including fibromyalgia, complex regional pain syndrome, migraine, and chronic musculoskeletal pain.
+**Primary specifications (from pain-ofs-built-environment-design BPC FDR pass).**
+- Rest seating: every 25–30 m on all circulation routes (vs BS 8300 50 m for MOB); recline-capable for OFS co-occurrence
+- Cushioned/resilient flooring on primary circulation routes — reduces joint impact for chronic pain users; no standard in any jurisdiction specifies this
+- Storage: 380–1220 mm zone (universal reach range); optimal 750–1050 mm — reduces bending and overhead reaching by ~40%; Tier 0 candidate
+- Seated work surfaces: 813 mm (32 in) for seated kitchen preparation; standard 914 mm too high for seated workers
+- Thermal: PAIN warmth preference conflicts with OFS cool requirement; resolution — individually controllable thermal zones 18–23°C; default cooler (OFS-safe) where individual control unavailable
+- Bedroom-bathroom adjacency: ≤5 m recommended — any unnecessary exertion must be eliminated for PAIN/OFS users
 
-**Core environmental needs**
+**Evidence confidence.** LOW-PROVISIONAL across all PAIN-specific built-environment specifications. No indexed research exists. Clinical evidence base (NICE NG206, CDC ME/CFS, PAIN OT literature) is sound; translation to spatial parameters is extrapolated, not evidence-derived. 10/24 jurisdictions not searched — extended pass required before v10 publication.
 
-- Hypersensitivity to tactile stimulation: smooth, consistent flooring preferred; avoid rough surfaces, vibration, and texture contrast at unexpected locations
-- Allodynia provisions: cushioned seating at all rest points; heated floor options in residential settings
-- Vibration isolation: floating plant rooms (HVAC, pumps, lifts) where fibromyalgia users are anticipated
-- Rest seating: cushioned surfaces throughout; avoid hard plastic, metal, or rigid seating; armrests essential for lowering to seat and rising
-- Cold floor surfaces: specify heated floor or seating with footrest at all primary seating areas
-
-**Distinct from NEU:** PAIN conditions produce environmental sensitivity without the cognitive, balance, or fatigue profile of neurological conditions. See Part 8, §8.4.4 for temperature conflict between NEU (Uhthoff's — cool environments) and PAIN (warmth preference).
-
-*OT Framework: Person-Environment-Occupation (PEO) Model.*
-
-*Evidence Base: Desmeules et al. (2003); Staud (2011).*
+**Part 4 cross-references.** E-10 (rest seating interval), G-02 (seating variety — recliner option), F-07 (thermal zoning), A-16 (sensory/retreat room — recumbent provision), I-02 (kitchen seated operation).
 
 ---
 
 ### §2.10 DBL — DeafBlind
 
-**Definition**
+**Functional basis.** DBL is a distinct disability, not the sum of VIS and DEAF. DeafBlind individuals have combined vision and hearing impairment at levels that require specialist communication support (intervenors, guide-interpreters, SSPs). The primary access mechanism is tactile — tactile language, tactile walking surfaces, tactile maps, and vibrotactile alerting. The guidebook gives DBL its own category (K-01 through K-04) because the provisions are distinct from both VIS and DEAF.
 
-Combined vision and hearing loss, making both visual alerts and audio announcements inaccessible or insufficient. DeafBlind design requires a tactile-first approach: all information and navigation must be accessible through touch alone.
+**Evidence tier.** Zero Tier 1–2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4–5 (DeafSpace Design Guidelines 2010, DbI best practice guidelines) and Co-1 (Clark 2023; Nordic Welfare Centre). The population is too small and heterogeneous for RCT-level research to be feasible. Lived experience evidence (Co-1) is co-primary per project-standards. All DBL specifications carry [THIN BASE — <3 studies] disclosure.
 
-**Core environmental needs**
+**Primary specifications.**
+- Tactile-first: all spatial information accessible through touch alone; visual and audio are redundancy
+- TWSI: continuous ISO 23599:2019 / ABNT NBR 16537:2024 on all primary routes
+- Tactile orientation map at each primary building entrance, 900–1200 mm AFF
+- Consistent spatial layout: furniture rearrangement protocols prohibit changes to primary tactile wayfinding routes without advance notification
+- Intervenor adjacency clear floor space: ≥1500 mm at all service counters, reception desks, and primary communication nodes (GAP-NEW-01 — no standard in any jurisdiction specifies this)
+- Protactile contact space: seating face-to-face at ≤600 mm distance; armless movable chairs; clear floor space ≥1500 mm per communication pair (Co-1, THIN BASE — emerging best practice, not established provision)
+- JA close-range signing (接近手話): interpreter positioning zone within 500–1000 mm; dedicated lighting on interpreter
+- Vibrotactile alerting (vibrating pagers, bed shakers) throughout all sleeping accommodation as complement to visual strobes
 
-- Tactile-first: tactile information is primary; visual and audio provide redundancy only
-- Vibrotactile alerting: personal pager alerting for all emergency and communication functions
-- Consistent spatial layout: unexpected changes are not navigable by tactile methods
-- Scent cues: olfactory orientation markers (consistent diffuser scent at key decision points) can supplement tactile navigation
-- Interpreter seating proximity: DeafBlind communication frequently requires an interpreter seated adjacent; reserved zone of ≥2 seats (user + interpreter) at end of rows in all public assembly spaces; 1200 × 1200 mm clear floor zone per position
-- Tactile Information System: embossed or thermoform tactile maps at all major decision points; Braille at all decision points; tactile floor routes connecting entrance → reception → key destinations → lift → escape route; updated every 3 years minimum or upon layout change
-
-**Distinct from VIS:** VIS users have impairment in one sensory channel; redundant audio information remains accessible. DBL users have impairment in both channels; tactile-first provision is non-negotiable.
-
-**Distinct from DEAF:** DEAF users have impairment in one sensory channel; redundant visual information remains accessible. DBL users have impairment in both channels; tactile-first provision is non-negotiable.
-
-*OT Framework: Compensatory Frame of Reference; tactile-first design principle.*
-
-*Evidence Base: DbI Nordic programme; Sense UK (2022); ISO 23599:2019.*
+**Part 4 cross-references.** K-01 (intervenor adjacency), K-02 (tactile building map), K-03 (haptic communication clear floor zone), K-04 (vibrotactile alert), E-09 (TWSI).
 
 ---
 
-### §2.11 OFS — Orthostatic \& Fatigue Spectrum
+### §2.11 OFS — Orthostatic & Fatigue Spectrum
 
-The Orthostatic \& Fatigue Spectrum (OFS) encompasses three clinically distinct but frequently co-occurring conditions that share a common built environment design identity: post-exertional malaise, orthostatic intolerance, and multi-system environmental sensitivity.
+**Functional basis.** OFS encompasses myalgic encephalomyelitis / chronic fatigue syndrome (ME/CFS), postural orthostatic tachycardia syndrome (POTS), mast cell activation syndrome (MCAS), and related orthostatic intolerance conditions. Post-exertional malaise (PEM) is the pathognomonic feature of ME/CFS — symptom worsening following physical or cognitive exertion beyond the individual's energy envelope. The built environment must minimise exertion at every point because each exertion episode carries an accumulating physiological cost that may produce multi-day relapse.
 
-**Definition**
+No built-environment design standard exists for OFS in any jurisdiction or language. All specifications derive from clinical evidence (NICE NG206, CDC ME/CFS 2024, Bateman Horne Center clinical guidance) + OT energy conservation principles + FDR extrapolation. All OFS provisions carry [EXPERT CONSENSUS — no standard; March 2026] disclosure.
 
-| Sub-code | Condition | Core clinical mechanism |
-| --- | --- | --- |
-| OFS/ME | ME/CFS | Post-exertional malaise (PEM): symptom worsening following any exertion with delayed onset (12–48 hours). Orthostatic intolerance as diagnostic criterion. |
-| OFS/POTS | POTS — Postural Orthostatic Tachycardia Syndrome | Pathological heart rate elevation on assuming upright posture; triggers include standing and exertion. Primary symptom: inability to sustain upright posture without tachycardia and pre-syncope. |
-| OFS/MCAS | MCAS — Mast Cell Activation Syndrome | Mast cell degranulation triggered by chemical, thermal, and sensory stimuli; systemic reactions including cardiovascular, respiratory, and neurological symptoms. |
+**Primary specifications.**
+- Rest seating: every 25–30 m (orthostatic intolerance onset from prolonged standing at 5–30 min; Strassheim 2018, Tier 3) — tighter than BS 8300 50 m for MOB
+- Recline-capable seating: 0–30° back angle, footrest provision; mandatory where OFS users are anticipated — standard accessible seating alone is insufficient; reclined positioning is clinically required for OI management
+- Entrance recline seating within 5 m of main entrance (in and out) — OFS users may require recovery on arrival before entering
+- Seated service option at all service counters; queue systems permit seated waiting
+- Cool ambient temperature: ≤18–21°C in transit spaces; heat causes vasodilation and worsens OI. Individually controllable thermal environment preferred — see TEMP-RANGE conflict in Part 5 §5.2
+- Fragrance-free building policy: F-06 — MCAS co-occurrence produces chemical sensitivity; synthetic fragrances are documented triggers
+- Bedroom-bathroom adjacency ≤5 m — any unnecessary exertion triggers PEM
+- Shower temperature: ≤37°C (hot water causes vasodilation, worsens OI — contraindicated; warm water mandatory for OFS regardless of PAIN preference for warmth)
+- Mechanical bathroom ventilation: steam/heat accumulation worsens OI; mandatory in OFS bathrooms
 
-Prevalence: ME/CFS approximately 17 million globally (NIHR, 2023), substantially expanded by post-COVID populations. POTS estimated 0.2–1% general population, substantially higher post-COVID. MCAS population prevalence is uncertain — estimates range from under 1% in population-based studies to higher figures in selected clinical cohorts (Molderings et al., 2011 — specialist referral cohort; the 17% figure from this study should not be used as a general population prevalence estimate). OFS as a combined category is a mainstream design consideration for any building serving a general public.
+**Evidence confidence.** LOW-PROVISIONAL for all spatial parameters (no architectural studies; clinical evidence base is sound; spatial extrapolation is clinically grounded). MODERATE for rest seating interval (Strassheim 2018, Tier 3 — orthostatic onset timing provides direct specification basis).
 
-**Core environmental needs**
-
-- E-10: Rest seating on all circulation routes, ≤20 m interval, cushioned, armrests required
-- F-04: Air quality provisions — MERV 13+ filtration, low-VOC specification, thermal stability
-- F-05: Seated-task design — all primary occupational tasks achievable without sustained standing
-- E-03: Ramp gradient ≤1:20
-- E-04: Accessible parking ≤50 m to entry
-- F-01: Sensory gradient from entry to primary space
-- F-02: Fragrance-free zones extended to all OFS-occupied routes and spaces
-- A-16: Sensory room / rest space with reclining option
-
-**Distinct from MOB:** OFS users may have no mobility impairment. The access barrier is exertion, not physical obstruction. A fully MOB-accessible step-free route may still impose an unacceptable exertion cost for an OFS user if it requires sustained standing or exceeds 20 m without rest seating.
-
-*OT Framework: Ecology of Human Performance (EHP) — energy conservation model.*
-
-*Evidence Base: NINDS (2024); NIHR (2023); Patient Led Research Collaborative (2024); Blitshteyn \& Whitelaw (2021); Molderings et al. (2011).*
+**Part 4 cross-references.** E-10 (rest seating), E-14 (entrance rest seating), A-16 (sensory/retreat room — recumbent provision), F-06 (fragrance-free policy), F-07 (thermal zoning), H-02 (individual environmental control).
 
 ---
+
+*Next: Part 3 — Synthesis, Sequencing and the Co-Occurrence Framework*
+
+*Cross-references: Part 3 (multiple category co-occurrence); Part 4 (item specifications for all provisions cited above); Part 5 (conflict resolutions); Part 9 (specialist consultant appointment triggers by population)*
