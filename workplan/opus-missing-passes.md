@@ -321,7 +321,7 @@ Flags lifted when relevant Opus session commits output and marks session COMPLET
 | OP-E | Phase 2C connection-scout re-scan | Opus | COMPLETE 2026-04-03 05:27 |
 | OP-F | FDR for 5 Phase 2B slugs | Opus | COMPLETE 2026-04-03 05:27 |
 | OP-G | Part 3 §3.8/3.9 methodology review | Opus | COMPLETE 2026-04-03 05:27 |
-| OP-H | Part 12 case studies — BPC integration | Opus | PENDING |
+| OP-H | Part 12 case studies — BPC integration | Opus | COMPLETE 2026-04-03 05:58 |
 | SONNET-A | New items — item-specification-writer protocol pass | Sonnet | PENDING (after OP-B, OP-E, OP-F) |
 | SONNET-B | Part 2 Co-1 evidence gap markers | Sonnet | PENDING |
 
