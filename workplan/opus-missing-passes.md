@@ -10,7 +10,7 @@
 
 | Session | Scope | Status |
 |---|---|---|
-| OP-A | Part 5 §5.2 conflict resolution table adjudication | PENDING |
+| OP-A | Part 5 §5.2 conflict resolution table adjudication | COMPLETE 2026-04-03 04:15 |
 | OP-B | CON connection synthesis adjudication (10 substantive HIGH entries) | PENDING |
 | OP-C | Part 10 DAR — BPC integration pass | PENDING |
 | OP-D | Part 11 Economics — BPC integration pass | PENDING |
