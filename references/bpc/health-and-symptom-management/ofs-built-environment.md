@@ -68,3 +68,5 @@
 7. Kos et al. (2015). Activity pacing self-management in ME/CFS: RCT. *American Journal of Occupational Therapy.* [Tier 1]
 
 ---
+### Bottom-up findings (functional deficit pass)
+FDR-OFS-01: Orthostatic intolerance onset 2-10 min (Raj 2013 Circulation Tier 1; Stewart 2012 Tier 2) — seated service at all counters must be immediately available, not on-request. G-06 specification gap. FDR-OFS-02: PEM delayed 12-72h (IOM/NAM 2015 Tier 1) — residential layout circuit bedroom-bathroom-kitchen-rest ≤25m one-way; bedroom-bathroom ≤5m; bedroom-kitchen ≤8m. Tier X architectural (no standard). FDR-OFS-03: MCAS co-occurrence (Afrin 2020 Tier 3) — commissioning specification: OFS spaces not to be occupied until post-installation VOC test confirms TVOC ≤0.5 mg/m³ (28-day clearance). F-04 addition. Items affected: G-06, Part 6 matrices, F-04.
