@@ -132,8 +132,14 @@ AND ("implementation" OR "monitoring" OR "compliance" OR "audit")
 | ID | DPO Indonesia (Gerakan Difabel) · PERTUNI (vision) · GERKATIN (Deaf) |
 | EG | Egyptian Society for Supporting People with Disabilities |
 | MX | COPARMEX Inclusión · Instituto de Accesibilidad y Diseño Universal Mexico |
-| CO | Consejo Nacional de Discapacidad Colombia · Fundación Saldarriaga Concha |
-| AR | ANDIS Argentina · Red por los Derechos de las Personas con Discapacidad (REDI) |
+| CO | Consejo Nacional de Discapacidad Colombia · Fundación Saldarriaga Concha · Colombia Incluyente |
+| AR | ANDIS Argentina · Red por los Derechos de las Personas con Discapacidad (REDI) · CILSA |
+| CL | SENADIS · Inclusión Chile · Red de Organizaciones de Personas con Discapacidad |
+| CR | CONAPDIS · Asociación de Personas con Discapacidad Auditiva de Costa Rica · Centro Nacional de Recursos para la Educación Inclusiva |
+| PE | CONADIS Peru · SODIS (Sociedad y Discapacidad) · Alter Vida |
+| GT | CONADI Guatemala · Red Nacional de Organizaciones de Personas con Discapacidad |
+| EC | CONADIS Ecuador · Federación Nacional de Ciegos del Ecuador · FENASEC (Deaf) |
+| UY | Comisión Nacional Honoraria de la Discapacidad · Vida Independiente Uruguay |
 | MA | Fédération Nationale des Associations de Personnes Handicapées (FNAPH) |
 | TH | Disabled Peoples' Organizations Thailand · NAD Thailand |
 | ET | Ethiopian Center for Disability and Development (ECDD) |
@@ -152,7 +158,13 @@ AND ("implementation" OR "monitoring" OR "compliance" OR "audit")
 | EG | Egyptian Society of Occupational Therapy |
 | MX | Asociación Mexicana de Terapia Ocupacional (AMTO) |
 | CO | Asociación Colombiana de Terapia Ocupacional (ACTO) |
-| Global | WFOT regional committee reports (Africa, Asia-Pacific) — primary for jurisdiction-wide picture |
+| CL | Colegio de Terapeutas Ocupacionales de Chile (COTOCH) |
+| CR | Asociación Costarricense de Terapia Ocupacional (ACTO-CR) |
+| PE | Colegio de Tecnólogos Médicos del Perú (OT division) |
+| EC | Federación Ecuatoriana de Terapeutas Ocupacionales |
+| AR | Asociación Argentina de Terapeutas Ocupacionales (AATO) |
+| UY | Asociación de Terapeutas Ocupacionales del Uruguay (ATOU) |
+| Global | WFOT regional committee reports (Africa, Asia-Pacific, LAC) — primary for jurisdiction-wide picture |
 
 ### 2d. Multilingual terms — new language additions
 
@@ -238,7 +250,7 @@ Per guidebook §1.5 (canonical — unchanged):
 
 ### Jurisdiction expansion — additions to the 24-jurisdiction register
 
-The following 16 jurisdictions are proposed for addition. Each must be tracked in the search-log with the same status fields as the existing 24.
+The following 22 jurisdictions are proposed for addition (10 Tier A, 12 Tier B). Each must be tracked in the search-log with the same status fields as the existing 24. Caribbean and remaining Central/South American jurisdictions flagged as THIN/NOT-RUN below — not added to register until targeted search confirms retrievable evidence.
 
 **Tier A — Immediate priority (large disabled population + research infrastructure)**
 
@@ -247,8 +259,10 @@ The following 16 jurisdictions are proposed for addition. Each must be tracked i
 | IN | India | HI / EN | Rights of Persons with Disabilities Act 2016; Harmonised Guidelines 2021 | GRIHA accessibility supplement; NBC 2016 §12 | AIOTA |
 | ZA | South Africa | EN / ZU / XH | SANS 10400-S:2011; National Building Regulations Part S | SABS accessibility guidance; NDoH Norms & Standards | OTASA |
 | MX | Mexico | ES | NMX-R-050-SCFI-2006; CONAVI accessibility guidelines | SEDUVI Mexico City accessible design manual | AMTO |
+| CL | Chile | ES | DS 50/2015 (Ordenanza General Urbanismo y Construcciones); Ley 20.422 | SENADIS Guía de Accesibilidad Universal 2016; Colegio de Arquitectos accessibility guidance | COTOCH |
+| CR | Costa Rica | ES | Ley 7600 (1996) + Reglamento; INTECO INTE C90 series | CNREE / CONAPDIS design guidelines; UCR research output | ACTO-CR |
 | ID | Indonesia | ID | SNI 03-1746-2000; Peraturan Menteri PUPR 14/2017 | Kemen PUPR universal design guidance | IOTI |
-| IN/BD | Bangladesh | BN / EN | Bangladesh National Building Code 2020 accessibility provisions | CBR Network Bangladesh guidelines | BOTA |
+| BD | Bangladesh | BN / EN | Bangladesh National Building Code 2020 accessibility provisions | CBR Network Bangladesh guidelines | BOTA |
 | NG | Nigeria | EN | NCP accessibility provisions; Federal Ministry of Works standards | JONAPWD design guides | NIOT |
 | PH | Philippines | EN / FIL | BP 344 (Accessibility Law); RA 7277 implementing rules | NCDA design standards; UniversalDesign.ph | OTAP |
 | EG | Egypt | AR | Egyptian Code 301 accessibility provisions | NCD Egypt accessible design manual | ESOT |
@@ -261,10 +275,20 @@ The following 16 jurisdictions are proposed for addition. Each must be tracked i
 | TH | Thailand | TH | Rehabilitation engineering faculty research; Ministry of Social Dev guidelines |
 | CO | Colombia | ES | Ley 1618/2013; ICONTEC NTC 4141 series; ACTO active |
 | AR | Argentina | ES | IRAM standards; ANDIS ministerial guidance |
+| PE | Peru | ES | Ley 29973 (2012); Norma A.120 (building accessibility); CONADIS Peru; PUCP OT faculty research |
+| GT | Guatemala | ES | Decreto 135-96 (Ley de Atención a las Personas con Discapacidad); CONADI; significant CBR research base |
+| EC | Ecuador | ES | Ley Orgánica de Discapacidades 2012; NTE INEN 2 239 series; CONADIS Ecuador; active DPO network |
+| UY | Uruguay | ES | Ley 18.651 (Protección Integral de Personas con Discapacidad); PRONADIS accessibility guidance |
 | MA | Morocco | AR / FR | Code de la Construction + DPO guidance |
 | GH | Ghana | EN | Ghana Building Regulations 2022; GFD publications |
 | TZ | Tanzania | SW / EN | CCBRT housing accessibility programme; CBR research |
 | ET | Ethiopia | AM / EN | ECDD design guides; Tigrinya-language CBR materials |
+
+**Caribbean — THIN (flag, do not add to jurisdiction register)**
+
+No retrievable accessible design research base identified across English, French (Martinique/Guadeloupe/Haiti), Dutch (Aruba/Curaçao), or Spanish (Cuba/Dominican Republic/Puerto Rico) Caribbean jurisdictions. Co-1 DPO publications exist but are not focused on built environment specifications. Flag as THIN with reason: *no jurisdiction-specific accessible built environment evidence base; Co-1 not yet attempted; record as NOT-RUN pending targeted search*. Review at next edition.
+
+**Bolivia, Paraguay, Venezuela, El Salvador, Honduras, Nicaragua** — recommend THIN flag and deferral. Institutional infrastructure for accessible design guidance is either absent or inaccessible; political or economic conditions limit retrievable material. Record as NOT-RUN. Review after Tier B completion.
 
 ### BPC slug priority gaps — mapped to P1/P2/P3
 
