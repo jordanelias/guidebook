@@ -103,7 +103,7 @@ For each specific, actionable, recurring pattern identified in Steps 1–2:
   ACTION: {what to do}
   DATE: YYYY-MM-DD HH:MM
   ```
-- PUT back. Commit: `session-consolidator: append rule [YYYY-MM-DD HH:MM]`
+- PUT back. Commit: `session-consolidator: append rule [YYYY-MM-DD HH:MM:SS]`
 
 ### 4. Research log hygiene
 If `multilingual-research` ran and LOG was not called → flag as BLOCKER in session YAML.
@@ -129,15 +129,15 @@ Each session is an independent record. Session files are never merged, shared, o
 
 - **Filename:** GET `sessions/LATEST`. Parse the number from the current value (e.g. `session_083.md` → 83). Next file = zero-padded three-digit increment: `session_084.md`. If LATEST contains a legacy timestamp filename, treat the count of all `session_` files in the directory as N; next = N+1.
 - Check for collision: GET the new filename. If 404: proceed. If exists: increment again.
-- Timestamps in the YAML `session_close:` field: use `date -u +"%Y-%m-%d %H:%M"` as canonical source. This is the single timestamp authority for all session operations.
+- Timestamps in the YAML `session_close:` field: use `date -u +"%Y-%m-%d %H:%M:%S"` as canonical source. This is the single timestamp authority for all session operations.
 - This is always a NEW file — never append to an existing session file.
 - PUT (no SHA required for new files).
-- Commit: `session-consolidator: session close [YYYY-MM-DD HH:MM]`
+- Commit: `session-consolidator: session close [YYYY-MM-DD HH:MM:SS]`
 - **Update LATEST pointer:** After writing the session file, GET `sessions/LATEST`, PUT back with content = this session's filename (e.g. `session_084.md`, no trailing newline). Commit: `session-consolidator: update LATEST [session_NNN]`.
 
 **YAML schema:**
 ```yaml
-session_close: YYYY-MM-DD HH:MM
+session_close: YYYY-MM-DD HH:MM:SS
 github_writes: []  # list of files committed this session
 commit_oid: ""     # first 12 chars of batch_commit() OID — required if any GitHub writes occurred
 document: "[DOC-ID]"
@@ -199,4 +199,3 @@ Before writing the session YAML, validate the `blockers:` list against the gap r
 4. Write the validated `blockers:` list only.
 
 **Rule:** Stale blockers cause workplan drift. Validate every close.
-
