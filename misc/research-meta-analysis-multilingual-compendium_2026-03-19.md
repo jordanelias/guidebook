@@ -877,3 +877,140 @@ Brazilian accessible design databases:
 ---
 
 *End of revised document. v2.0 incorporates: 14-language agent audit findings, 8 syncretic findings, legislative vocabulary layer, 5 corrected errors, 4 new concept groups (turning radius, door width, luminance contrast, acoustic performance), 1 new population concept group (dementia design), 3 new network maps (non-English OT, Brazilian APO, sign language spatial grammar research), 6 new non-English exclusive research streams, and expanded database matrix.*
+
+
+---
+
+# PART 3 APPENDIX — NEW LANGUAGE ADDITIONS (CO-0005, 2026-04-05)
+
+**Status:** UNVERIFIED — all terms below are provisional. Flag as `[UNVERIFIED-TERMS]` in all search-log entries until native-speaker verification is recorded here.
+**Languages added:** AR (Arabic) · HI (Hindi) · ID (Indonesian) · SW (Swahili) · BN (Bengali)
+**Verification required before:** removing [UNVERIFIED] flag from any search-log entry using these terms.
+
+---
+
+## CONCEPT GROUP 11: New Language Coverage — All Existing Concept Groups
+
+### 11.0 Disability Participation / Social Inclusion
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *المشاركة الاجتماعية* (al-mushāraka al-ijtimāʿiyya); *الحياة المستقلة* (al-ḥayāt al-mustaqilla) | *لا شيء عنّا بدوننا* (Nothing About Us Without Us) | CRPD ratified; UNVERIFIED |
+| HI | *सामाजिक भागीदारी* (sāmājik bhāgīdārī); *स्वतंत्र जीवन* (svatantra jīvan) | *विकलांग व्यक्तियों के अधिकार* | RPwD Act 2016; UNVERIFIED |
+| ID | *Partisipasi sosial*; *Hidup mandiri* | *Tidak ada yang tentang kita tanpa kita* | UU No. 8/2016; UNVERIFIED |
+| SW | *Ushiriki wa kijamii*; *Maisha ya kujitegemea* | *Hakuna kitu kuhusu sisi bila sisi* | UNVERIFIED |
+| BN | *সামাজিক অংশগ্রহণ* (sāmājik aṃśagrahaṇa); *স্বাধীন জীবন* (svādhīna jīban) | *আমাদের সম্পর্কে আমাদের ছাড়া কিছু নয়* | UNVERIFIED |
+
+### 11.1 Accessibility / Barrier-Free Design
+
+| Language | Statutory term | Policy/academic term | Notes |
+|---|---|---|---|
+| AR | *إمكانية الوصول* (imkāniyyat al-wuṣūl); *التصميم الخالي من الحواجز* | *التصميم الشامل* (al-taṣmīm al-shāmil) | Egyptian Code 301; UNVERIFIED |
+| HI | *अभिगम्यता* (abhigamyatā); *बाधा-रहित डिज़ाइन* (bādhā-rahit ḍizāin) | *सार्वभौमिक डिज़ाइन* (sārvabhaumik ḍizāin) | RPwD Act / Harmonised Guidelines 2021; UNVERIFIED |
+| ID | *Aksesibilitas*; *Desain bebas hambatan* | *Desain universal* | Peraturan Menteri PUPR 14/2017; UNVERIFIED |
+| SW | *Upatikanaji*; *Muundo huru kutoka kwa vizuizi* | *Muundo wa ulimwengu wote* | UNVERIFIED |
+| BN | *প্রবেশযোগ্যতা* (praveśayogyatā); *বাধামুক্ত নকশা* | *সর্বজনীন ডিজাইন* (sarbajānīna ḍizāina) | BNBC 2020; UNVERIFIED |
+
+### 11.2 Universal Design / Design for All
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *التصميم الشامل للجميع* | *التصميم للجميع* | UNVERIFIED |
+| HI | *सार्वभौमिक डिज़ाइन* | *सबके लिए डिज़ाइन* | UNVERIFIED |
+| ID | *Desain universal* | *Desain untuk semua* | UNVERIFIED |
+| SW | *Muundo wa ulimwengu wote* | *Muundo kwa wote* | UNVERIFIED |
+| BN | *সর্বজনীন ডিজাইন* | *সকলের জন্য ডিজাইন* | UNVERIFIED |
+
+### 11.3 Wheelchair / Mobility Aid
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *كرسي متحرك* (kursī mutaḥarrik) | *مساعدات التنقل* (musāʿadāt al-tanaqul) | UNVERIFIED |
+| HI | *व्हीलचेयर* (vhīlceyar); *गतिशीलता सहायता* | *स्वचालित व्हीलचेयर* | UNVERIFIED |
+| ID | *Kursi roda*; *Alat bantu mobilitas* | *Kursi roda bermotor* | UNVERIFIED |
+| SW | *Kiti cha magurudumu*; *Msaada wa uhamaji* | *Kiti cha magurudumu cha umeme* | UNVERIFIED |
+| BN | *হুইলচেয়ার* (hui'laceyāra); *গতিশীলতার সহায়তা* | *চালিত হুইলচেয়ার* | UNVERIFIED |
+
+### 11.4 Ramp / Level Access
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *منحدر* (munḥadar); *وصول مستوي* | *كوبري للمعاقين* | UNVERIFIED |
+| HI | *रैंप* (raimp); *समतल प्रवेश* | *ढलान* (ḍhalān) | UNVERIFIED |
+| ID | *Ram*; *Landaian*; *Akses datar* | — | UNVERIFIED |
+| SW | *Mteremko*; *Ufikiaji wa usawa* | — | UNVERIFIED |
+| BN | *র‍্যাম্প* (r‍yāmpa); *সমতল প্রবেশাধিকার* | — | UNVERIFIED |
+
+### 11.5 Accessible Toilet / Wet Room
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *دورة المياه للمعاقين* (dawrat al-miyāh lil-muʿāqīn) | *الحمام الميسر* | Concept group: includes squat/hybrid fixtures; UNVERIFIED |
+| HI | *विकलांग-अनुकूल शौचालय* (viklāṅg-anukūl śaucālay) | *व्हीलचेयर-सुलभ स्नानघर* | Note: squat toilet prevalence in Indian context; UNVERIFIED |
+| ID | *Toilet aksesibel*; *Kamar mandi bebas hambatan* | *WC jongkok aksesibel* | Note: squat fixture norms; UNVERIFIED |
+| SW | *Choo kinachofaa kwa walemavu*; *Bafu linalofaa* | — | UNVERIFIED |
+| BN | *প্রতিবন্ধীদের জন্য টয়লেট* | *হুইলচেয়ার-অ্যাক্সেসিবল বাথরুম* | UNVERIFIED |
+
+### 11.6 Thermal Comfort / Temperature (Global South priority)
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *الراحة الحرارية* (al-rāḥa al-ḥarāriyya) | *التهوية* (al-tahwiya = ventilation); *التبريد* (al-tabrīd = cooling) | MENA climate context; UNVERIFIED |
+| HI | *थर्मल आराम* (tharmal ārāma); *तापमान नियंत्रण* | *पंखा*; *वेंटिलेशन* | Hot-humid / hot-dry Indian climate context; UNVERIFIED |
+| ID | *Kenyamanan termal*; *Kontrol suhu* | *Ventilasi silang* (cross-ventilation); *Kipas angin* | Tropical climate context; UNVERIFIED |
+| SW | *Faraja ya joto*; *Udhibiti wa joto* | *Uingizaji hewa* (ventilation) | UNVERIFIED |
+| BN | *তাপীয় আরাম* (tāpīẏa ārāma); *তাপমাত্রা নিয়ন্ত্রণ* | *বায়ু চলাচল* (ventilation) | Hot-humid Bangladesh context; UNVERIFIED |
+
+### 11.7 Wayfinding / Signage
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *التوجيه* (al-tawjīh); *اللافتات* (al-lāfitāt = signage) | *المسارات اللمسية* (tactile paths) | UNVERIFIED |
+| HI | *रास्ता खोजना* (rāstā khojnā); *दिशा-निर्देश* | *स्पर्श मार्ग* (tactile path); *ब्रेल साइनेज* | HMIS India; UNVERIFIED |
+| ID | *Orientasi ruang*; *Penunjuk arah* | *Jalur pemandu* (tactile guidance path) | UNVERIFIED |
+| SW | *Kupata njia*; *Mwelekeo* | *Njia za kugusa* (tactile paths) | UNVERIFIED |
+| BN | *পথ খোঁজা* (patha khojā); *দিকনির্দেশনা* | *স্পর্শযোগ্য পথ* (tactile path) | UNVERIFIED |
+
+### 11.8 Occupational Therapy
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *العلاج الوظيفي* (al-ʿilāj al-waẓīfī) | *المعالج الوظيفي* (occupational therapist) | UNVERIFIED |
+| HI | *व्यावसायिक चिकित्सा* (vyāvasāyik cikitsā) | *व्यावसायिक चिकित्सक* | AIOTA; UNVERIFIED |
+| ID | *Terapi okupasi* | *Terapis okupasi* | IOTI; UNVERIFIED |
+| SW | *Tiba ya kazi*; *Tiba ya ushughulikiaji* | *Mtaalamu wa tiba ya kazi* | UNVERIFIED |
+| BN | *অকুপেশনাল থেরাপি* (akupeśanāla thārāpi) | *অকুপেশনাল থেরাপিস্ট* | BOTA; UNVERIFIED |
+
+### 11.9 Post-Occupancy Evaluation
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *تقييم ما بعد الإشغال* (taqyīm mā baʿd al-ishghāl) | *تقييم الأداء* | UNVERIFIED |
+| HI | *उपयोग-पश्चात मूल्यांकन* | *निर्माण-पश्चात मूल्यांकन* | UNVERIFIED |
+| ID | *Evaluasi pasca-huni* | *Penilaian kinerja bangunan* | UNVERIFIED |
+| SW | *Tathmini baada ya makazi* | *Tathmini ya utendaji* | UNVERIFIED |
+| BN | *বাসস্থান-পরবর্তী মূল্যায়ন* | *ভবন কর্মক্ষমতা মূল্যায়ন* | UNVERIFIED |
+
+### 11.10 Community-Based Rehabilitation (Global South specific)
+
+| Language | Primary term | Secondary term | Notes |
+|---|---|---|---|
+| AR | *إعادة التأهيل المجتمعية* (iʿādat al-taʾhīl al-mujtamaʿiyya) | *CBR* (acronym used) | WHO CBR Guidelines; UNVERIFIED |
+| HI | *समुदाय-आधारित पुनर्वास* (samudāy-ādhārit punarvas) | *CBR* | CBR India networks; UNVERIFIED |
+| ID | *Rehabilitasi berbasis masyarakat* | *RBM* (Indonesian acronym) | UNVERIFIED |
+| SW | *Ukarabati unaotegemea jamii* | *CBR* | CBR Africa Network; UNVERIFIED |
+| BN | *সমাজভিত্তিক পুনর্বাসন* (samājabhittik punarbāsana) | *CBR* | CDD Bangladesh; UNVERIFIED |
+
+---
+
+## Concept Boundary Warnings — New Languages
+
+**AR (Arabic):** Built environment research published in Arabic often uses *إمكانية الوصول* (accessibility) as a general term covering both physical access and information access. Distinguish clearly: target *البيئة المبنية* (al-bīʾa al-mabniyya = built environment) as co-search term. Egyptian and Gulf contexts may use different technical vocabulary for the same concept.
+
+**HI (Hindi):** Indian disability legislation uses *दिव्यांग* (divyāṅg) as the official government term replacing older terms. Academic and DPO literature more commonly uses *विकलांग* (viklāṅg). Search both. The term *दिव्यांग* carries government/formal register; *विकलांग* carries more neutral/rights-based register.
+
+**ID (Indonesian):** *Difabel* is a DPO/rights-based term (derived from "differently-abled") used by disability activists; contrasts with government term *penyandang disabilitas* (UU 8/2016). Co-1 sources use *difabel*; statutory sources use *penyandang disabilitas*. Search both.
+
+**SW (Swahili):** Swahili accessibility terminology is less standardised than other languages. Kenyan and Tanzanian usage may differ. East African Community (EAC) has no unified disability standards terminology. Treat all Swahili retrieval as requiring dual-jurisdiction verification (KE + TZ).
+
+**BN (Bengali):** Indian Bengali and Bangladeshi Bengali (standard) differ in script conventions and some vocabulary. BNBC 2020 uses standard Bangladeshi Bengali. Indian Bengali sources (West Bengal context) may use different terms. Flag jurisdiction when logging Bengali-language sources.
