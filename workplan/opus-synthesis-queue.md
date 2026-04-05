@@ -156,3 +156,23 @@ circadian-lighting-melanopic-edi, visual-fire-alarm-seizure-safety, deaf-classro
 **Remaining 19 slugs with stubs=0** already had complete v4 schema content from O1–O10 sessions. No action required.
 
 **GAP-TRIAGE-02 status:** CLOSED-RESOLVED. All CONSUME slugs now have populated v4 schema sections.
+
+
+---
+
+## CO-0005 Evidence Expansion Programme — Opus Queue Additions (2026-04-05)
+
+| Slug | Type | Synthesis task | Trigger |
+|---|---|---|---|
+| `thermoregulation-built-environment` | P1 new | Climate-stratified best-practice table (tropical/subtropical/temperate/cold). Identify where F-07/CON-0101/CON-0107 require climate-conditional variants. | After Phase 1-A LOG |
+| `sensory-space-global-south` | P1 new | Cross-cultural sensory space transfer analysis. Where PAS 6463 transfers; where it requires adaptation; what low-resource alternatives exist. | After Phase 1-B LOG |
+| `wayfinding-global-south` | P1 new | ISO 21542 vs. Global South evidence convergence. Whether tactile/auditory/contrast specs require climate/substrate/maintenance variants. | After Phase 1-C LOG |
+| `bathroom-typology-global-south` | P1 new | Typology-classified specification table (enclosed NE / wet room / split / shared). For each: what transfers from BPC, what requires variant, what has no evidence. | After Phase 1-D LOG |
+| `co1-housing-research-global-south` | P1 new | Top 10 barriers from Co-1 Global South evidence. Cross-reference to existing BPC. Output = prioritised gap list, not specification table. | After Phase 1-E LOG |
+| `crpd-implementation-built-environment` | P2 new | Mapping only — no synthesis. Output feeds back as gap flags on existing slugs. | N/A |
+| `threshold-door-hardware` | P2 expansion | Determine whether new jurisdiction evidence is additive or requires revision to existing best_practice_synthesis. | After Phase 3-A LOG |
+| `pain-ofs-built-environment-design` | P2 expansion | Expansion review — additive or revision? | After Phase 3-B LOG |
+| `acoustics-speech-intelligibility-disability` | P2 expansion | Expansion review — alternative ALT solutions for low-resource settings. | After Phase 3-C LOG |
+| `dementia-built-environment` | P2 expansion | Expansion review — Global South dementia-environment evidence vs. existing synthesis. | After Phase 3-D LOG |
+| `intellectual-disability-built-environment-design` | P2 expansion | Expansion review — communal/family care typologies vs. current Western individual-unit assumptions. | After Phase 3-E LOG |
+| `post-occupancy-evaluation-global` | P3 new | What performs, what fails, what is unknown in Global South contexts. | After Phase 4 LOG |
