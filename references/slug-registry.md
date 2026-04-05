@@ -82,25 +82,38 @@
 
 | Directory | Slug count |
 |---|---|
-| `bathrooms-and-wet-areas` | 2 |
+| `bathrooms-and-wet-areas` | 3 |
 | `communication-and-alerts` | 4 |
 | `controls-and-hardware` | 1 |
 | `economics` | 3 |
 | `entrances-and-circulation` | 6 |
-| `frameworks-and-methodology` | 13 |
-| `health-and-symptom-management` | 6 |
+| `frameworks-and-methodology` | 16 |
+| `health-and-symptom-management` | 7 |
 | `kitchens-and-workspaces` | 1 |
 | `population-general` | 11 |
 | `room-types` | 1 |
 | `seating-and-rest` | 1 |
-| `sensory-environment` | 10 |
-| `wayfinding-and-signage` | 7 |
+| `sensory-environment` | 11 |
+| `wayfinding-and-signage` | 8 |
 
 ---
 
 | `case-study-economics-financial-data` | `economics` | `references/search-log/economics/case-study-economics-financial-data.md` | `references/bpc/economics/case-study-economics-financial-data.md` | STUB — Phase 2B Session 7 |
 | `accessible-design-failures-poor-performance` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/accessible-design-failures-poor-performance.md` | `references/bpc/frameworks-and-methodology/accessible-design-failures-poor-performance.md` | STUB — Phase 2B Session 8 |
 | `cross-population-case-studies` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/cross-population-case-studies.md` | `references/bpc/frameworks-and-methodology/cross-population-case-studies.md` | ACTIVE |
+
+---
+
+## CO-0005 New Slugs (2026-04-05)
+
+| `thermoregulation-built-environment` | `health-and-symptom-management` | `references/search-log/health-and-symptom-management/thermoregulation-built-environment.md` | `references/bpc/health-and-symptom-management/thermoregulation-built-environment.md` | STUB — Phase 1-A (GAP-LRP-01 P1) |
+| `sensory-space-global-south` | `sensory-environment` | `references/search-log/sensory-environment/sensory-space-global-south.md` | `references/bpc/sensory-environment/sensory-space-global-south.md` | STUB — Phase 1-B (GAP-LRP-02 P1) |
+| `wayfinding-global-south` | `wayfinding-and-signage` | `references/search-log/wayfinding-and-signage/wayfinding-global-south.md` | `references/bpc/wayfinding-and-signage/wayfinding-global-south.md` | STUB — Phase 1-C (GAP-LRP-03 P1) |
+| `bathroom-typology-global-south` | `bathrooms-and-wet-areas` | `references/search-log/bathrooms-and-wet-areas/bathroom-typology-global-south.md` | `references/bpc/bathrooms-and-wet-areas/bathroom-typology-global-south.md` | STUB — Phase 1-D (GAP-LRP-04 P1) |
+| `co1-housing-research-global-south` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/co1-housing-research-global-south.md` | `references/bpc/frameworks-and-methodology/co1-housing-research-global-south.md` | STUB — Phase 1-E (GAP-LRP-05 P1) |
+| `crpd-implementation-built-environment` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/crpd-implementation-built-environment.md` | `references/bpc/frameworks-and-methodology/crpd-implementation-built-environment.md` | STUB — Phase 2 (GAP-LRP-11 P2) |
+| `post-occupancy-evaluation-global` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/post-occupancy-evaluation-global.md` | `references/bpc/frameworks-and-methodology/post-occupancy-evaluation-global.md` | STUB — Phase 4 (GAP-LRP-12 P3) |
+
 ## Instructions for research-log-manager
 
 **CHECK:** Normalise slug → look up in table above → GET path from SL path column → parse status.
