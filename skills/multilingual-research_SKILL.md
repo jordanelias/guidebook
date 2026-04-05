@@ -25,9 +25,11 @@ description: >
 
 This skill operates on two axes that are NOT equivalent and cannot substitute for each other:
 
-**Axis 1 — Language (14):** SV · NO · DA · FI · FR · DE · ZH · JA · NL · ES · PT · KO · IT · EN  
+**Axis 1 — Language (19):** SV · NO · DA · FI · FR · DE · ZH · JA · NL · ES · PT · KO · IT · EN · AR · HI · ID · SW · BN
+*(AR/HI/ID/SW/BN added CO-0005 2026-04-05 — UNVERIFIED terms; flag all retrieval [UNVERIFIED-TERMS] until keyword compendium verification recorded)*  
 
-**Axis 2 — Jurisdiction (24):** DE · BE · NO · FR · BR · JP · CA · CH · AU · UK · US · EU · ISO · SG · SE · DK · FI · CN · IE · NZ · KR · ES · NL · IT
+**Axis 2 — Jurisdiction (46):** DE · BE · NO · FR · BR · JP · CA · CH · AU · UK · US · EU · ISO · SG · SE · DK · FI · CN · IE · NZ · KR · ES · NL · IT · IN · ZA · MX · CL · CR · ID · BD · NG · PH · EG · KE · TH · CO · AR · PE · GT · EC · UY · MA · GH · TZ · ET
+*(22 added CO-0005 2026-04-05 — Tier A: IN/ZA/MX/CL/CR/ID/BD/NG/PH/EG; Tier B: KE/TH/CO/AR/PE/GT/EC/UY/MA/GH/TZ/ET)*
 
 A completed language pass does not satisfy jurisdiction coverage. EN covers USA, UK, Canada, Australia, Ireland, New Zealand, Singapore — each must be tracked separately. FR covers France, Belgium (FR), Switzerland (FR). DE covers Germany, Switzerland (DE). NL covers Netherlands, Belgium (NL). PT covers Brazil and Portugal. Each jurisdiction must have its own recorded status in the search-log.
 
@@ -421,11 +423,143 @@ Co-1 and Tier 1 are co-primary in authority. Search order: Co-1/Tier 2/Co-2 firs
 
 ---
 
+
+
+---
+
+## CO-0005 New Jurisdiction Targets (2026-04-05)
+
+### Co-1 / Tier 2 targets — Tier A new jurisdictions
+
+| Jurisdiction | Primary Co-1 / Tier 2 targets |
+|---|---|
+| IN | NCPEDP · Disability Rights India · Mobility India · NAB India (vision) · Deaf Way India · CRD India |
+| ZA | Disability SA · NAD South Africa · SANCB · Blind SA · DeafSA |
+| MX | COPARMEX Inclusión · Instituto de Accesibilidad y Diseño Universal Mexico · CONAPRED |
+| CL | SENADIS · Inclusión Chile · Red de Organizaciones de PcD · Teletón (with caution — medical model) |
+| CR | CONAPDIS · ASOPIECR (VIS) · Asociación de Personas con Discapacidad Auditiva de CR |
+| ID | Gerakan Difabel Indonesia · PERTUNI (visual) · GERKATIN (Deaf) · DPO Indonesia |
+| BD | CDD Bangladesh · NFOWD · BPHC |
+| NG | JONAPWD · NBTS · Nigeria Association of the Deaf |
+| PH | KAMPI · National Federation of Disability Organizations · NAD Philippines |
+| EG | Egyptian Society for Supporting People with Disabilities · EFOD |
+
+### Co-1 / Tier 2 targets — Tier B new jurisdictions
+
+| Jurisdiction | Primary Co-1 / Tier 2 targets |
+|---|---|
+| KE | APDK · Kenya National Association of the Deaf · Deaf Plus Kenya · Kenya Union of the Blind |
+| TH | Disabled Peoples' Organizations Thailand · NAD Thailand · Foundation for the Blind Thailand |
+| CO | Consejo Nacional de Discapacidad · Fundación Saldarriaga Concha · Colombia Incluyente · FENASCOL (Deaf) |
+| AR | ANDIS Argentina · REDI · CILSA · Asociación Argentina de Sordos |
+| PE | CONADIS Peru · SODIS · Alter Vida · FEVISH (vision) |
+| GT | CONADI Guatemala · Red Nacional de OPcD · AGSOR (Deaf) |
+| EC | CONADIS Ecuador · Federación Nacional de Ciegos del Ecuador · FENASEC (Deaf) |
+| UY | Comisión Nacional Honoraria de la Discapacidad · Vida Independiente Uruguay |
+| MA | FNAPH Morocco · UNPH · Union Nationale des Aveugles du Maroc |
+| GH | Ghana Federation of Disability Organisations (GFD) · Ghana Association of the Deaf |
+| TZ | CCBRT · Tanzania Association of the Deaf · Blindness Society Tanzania |
+| ET | ECDD · Ethiopian National Association of the Blind · Ethiopian National Association of the Deaf |
+
+### Co-2 OT body targets — new jurisdictions
+
+| Jurisdiction | Primary Co-2 targets |
+|---|---|
+| IN | All India Occupational Therapists' Association (AIOTA) |
+| ZA | Occupational Therapy Association of South Africa (OTASA) |
+| MX | Asociación Mexicana de Terapia Ocupacional (AMTO) |
+| CL | Colegio de Terapeutas Ocupacionales de Chile (COTOCH) |
+| CR | Asociación Costarricense de Terapia Ocupacional (ACTO-CR) |
+| ID | Ikatan Okupasi Terapis Indonesia (IOTI) |
+| BD | Bangladesh Occupational Therapy Association (BOTA) |
+| NG | Nigerian Institute of Occupational Therapy (NIOT) |
+| PH | Occupational Therapy Association of the Philippines (OTAP) |
+| EG | Egyptian Society of Occupational Therapy (ESOT) |
+| KE | Kenya Occupational Therapy Association |
+| TH | Thai Occupational Therapy Association |
+| CO | Asociación Colombiana de Terapia Ocupacional (ACTO) |
+| AR | Asociación Argentina de Terapeutas Ocupacionales (AATO) |
+| PE | Colegio de Tecnólogos Médicos del Perú (OT division) |
+| EC | Federación Ecuatoriana de Terapeutas Ocupacionales |
+| UY | Asociación de Terapeutas Ocupacionales del Uruguay (ATOU) |
+| LAC/Global | WFOT LAC regional committee; WFOT Africa regional committee; WFOT Asia-Pacific regional committee |
+
+### Tier 6 statutory standards — new jurisdictions
+
+| Jurisdiction | Primary statutory standard |
+|---|---|
+| IN | Rights of Persons with Disabilities Act 2016; Harmonised Guidelines and Space Standards 2021 (MoHUA); NBC 2016 Part 12 |
+| ZA | SANS 10400-S:2011 (Facilities for persons with disabilities); National Building Regulations Part S |
+| MX | NMX-R-050-SCFI-2006; CONAVI accessibility guidelines; Reglamento de Construcciones CDMX |
+| CL | DS 50/2015 (Ordenanza General Urbanismo y Construcciones); Ley 20.422 |
+| CR | Ley 7600 (Igualdad de Oportunidades para las Personas con Discapacidad) + Reglamento; INTE C90 series |
+| ID | SNI 03-1746-2000; Peraturan Menteri PUPR No. 14/PRT/M/2017 |
+| BD | Bangladesh National Building Code 2020 (BNBC 2020) — Part 3 Chapter 1 accessibility provisions |
+| NG | National Building Code 2006 accessibility provisions; Federal Ministry of Works standards |
+| PH | Batas Pambansa Blg. 344 (BP 344) + Implementing Rules and Regulations; RA 7277 |
+| EG | Egyptian Code for Accessible Design (ECP 301) |
+| KE | Physical Planning Act + accessibility provisions; Public Health Act |
+| TH | Building Control Act + Ministerial Regulation on Disabled Persons' Facilities |
+| CO | NTC 4141 (ICONTEC); NTC 4142; NTC 4143; NTC 4279; NTC 4695; Ley 1618/2013 |
+| AR | IRAM 11600 series; Ley 22.431; Ley 24.314 |
+| PE | Norma A.120 (Accesibilidad Universal en Edificaciones); Ley 29973 |
+| GT | Decreto 135-96 (Ley de Atención a las Personas con Discapacidad) + Reglamento |
+| EC | NTE INEN 2 239; NTE INEN 2 240; NTE INEN 2 241; NTE INEN 2 293; NTE INEN 2 854; Ley Orgánica de Discapacidades 2012 |
+| UY | Ley 18.651 (Protección Integral de Personas con Discapacidad); UNIT 200 series |
+| MA | Code de la Construction (RGAB); Loi 10-03 relative aux personnes handicapées |
+| GH | Ghana Building Regulations 2022 (LI 2465) |
+| TZ | Building (Standards) Regulations — accessibility provisions |
+| ET | Building Proclamation accessibility provisions; ECDD design guidelines |
+
+### Tier 5 beyond-code sources — new jurisdictions
+
+| Jurisdiction | Primary Tier 5 source |
+|---|---|
+| IN | GRIHA accessibility supplement; HUDCO accessible housing guides; NBC 2016 Part 12 commentary |
+| ZA | SABS accessibility design guidance; NDoH Norms and Standards (health facilities) |
+| MX | SEDUVI Mexico City accessible design manual; IMSS accessible facility design |
+| CL | SENADIS Guía de Accesibilidad Universal (2016); Ministerio de Vivienda accessible housing guides |
+| CR | INTECO INTE C90 series; CEPAD guides; UCR research publications |
+| ID | Kemen PUPR universal design companion guidance; DPO Indonesia design advocacy publications |
+| BD | CBR Network Bangladesh housing guidelines; BRAC accessible design resources |
+| NG | JONAPWD design guides; CBR Nigeria network publications |
+| PH | NCDA design standards; Universal Design Center Philippines; AITECH accessible design manuals |
+| EG | NCD Egypt accessible design manual; CAHR research publications |
+| KE | APDK accessible design guides; Kenya Institute of Planners disability inclusion resources |
+| TH | Ministry of Social Development and Human Security design guides; Mahidol University rehabilitation research |
+| CO | ICONTEC NTC series commentary; Fundación Saldarriaga Concha design publications |
+| AR | ANDIS ministerial guidance; IRAM standards commentary |
+| PE | CONADIS Peru design guides; PUCP accessibility research |
+| GT | CONADI accessible design resources; CBR Guatemala publications |
+| EC | CONADIS Ecuador guides; FLACSO Ecuador disability research |
+| UY | PRONADIS accessibility guidance; UDELAR Faculty of Architecture research |
+| MA | INH (Institut National d'Hygiène) accessible facility standards; FNAPH advocacy guides |
+| GH | GFD design advocacy publications; KNUST accessibility research |
+| TZ | CCBRT housing accessibility programme publications; UDSM research |
+| ET | ECDD design and construction guides; AASTU (Addis Ababa Science & Technology University) research |
+
+### Additional databases — new jurisdictions
+
+| Database | Jurisdictions served | Priority slugs |
+|---|---|---|
+| African Journals Online (AJOL) | ZA · NG · KE · GH · TZ · ET · MA | All |
+| IndMED / NLM India | IN | All |
+| LILACS | CO · AR · PE · GT · EC · UY · MX · CL · CR · BR | All |
+| EMRO Index Medicus (WHO) | EG · MA | All |
+| WPRIM (WHO Western Pacific) | PH · ID | All |
+| SciELO (full network) | CO · AR · PE · EC · CL · MX · CR · UY · ES · PT · ZA | All |
+
+
+---
+
 ## Token Rules
 
 \- Batch web searches by language family (Batch A: SV/NO/DA/FI · Batch B: FR/DE/NL · Batch C: ES/PT/IT · Batch D: ZH/JA/KO).
 
-\- EN-jurisdiction pass (US/UK/CA/AU/IE/NZ/SG) runs as Batch E.
+\- EN-jurisdiction pass (US/UK/CA/AU/IE/NZ/SG + ZA/NG/KE/GH/TZ/ET) runs as Batch E.
+\- New-language pass (AR/HI/ID/SW/BN) runs as Batch F [UNVERIFIED-TERMS — flag all results].
+\- Tier A new-jurisdiction pass (IN/MX/CL/CR/ID/BD/PH/EG) runs as Batch G (within language batches where applicable; explicit pass for Co-1 and Tier 5 targets).
+\- Tier B new-jurisdiction pass (KE/TH/CO/AR/PE/GT/EC/UY/MA/GH/TZ/ET) runs as Batch H.
 
 \- Return ≤16 sources total per slug; prioritise by tier then cross-jurisdiction diversity.
 
