@@ -285,3 +285,28 @@ RULE: When Part 5 content is added to parts/v10/part05_v10-0_draft.md, the corre
 CONDITION: Any write to parts/v10/part05_v10-0_draft.md or any other part file in parts/v10/.
 ACTION: After committing to parts/v10/, also update versions/current/ consolidated file in the same session. Use targeted string replacement on the stub content.
 DATE: 2026-04-02 23:17
+
+
+---
+
+## Session 2026-04-06 — Evidence Expansion Phase 1 (CO-0005)
+
+CONDITION: Any research query involving architecture, wayfinding, bathroom design, sensory space design, or built environment typology.
+ACTION: Do NOT use PubMed. PubMed returns zero results for these queries. Use web search, J-STAGE (JA), MDPI, ResearchGate, PMC (disability studies), AJOL (Africa), LILACS (LAC).
+DATE: 2026-04-06 03:55
+
+CONDITION: Researching accessible bathroom design outside Europe/North America/Australia.
+ACTION: Note that Indonesia Sejong Toilet (Plan International / Nusa Cendana University / DPO, 2022) is the only documented accessible squat toilet adaptation globally. Cite as Co-1/Tier 1. Japan 多目的トイレ (Barrier-Free New Law 2006) is the most comprehensive non-Western accessible toilet standard.
+DATE: 2026-04-06 03:55
+
+CONDITION: Researching wayfinding/signage outside Europe/North America/Australia.
+ACTION: Singapore BCA Code on Accessibility 2025 Chapter 8 is the most comprehensive Asian wayfinding code (Tier 6). ISO 23599:2019 (Tactile Walking Surface Indicators) is technically sound globally — the gap is implementation, not specification. India 75% policy gap confirmed (PMC12082883). Nigeria: no tactile in hospital wayfinding (Ahmed 2022).
+DATE: 2026-04-06 03:55
+
+CONDITION: Researching sensory space design outside UK/AU/US/IE/CA.
+ACTION: Japan (Tsukuba Tier 1 J-STAGE 2025), Egypt (Mostafa ASPECTSS index — 5/21 Bertone 2021 studies), Chile (Ley Autismo N°21.545 Tier 6) are the confirmed non-Western sensory space evidence sources. Collectivist culture transfer problem confirmed: private individual retreat model (PAS 6463) does not fit collectivist contexts. No alternative model exists in literature.
+DATE: 2026-04-06 03:55
+
+CONDITION: Any Global South disability housing research session.
+ACTION: Formal/informal city divide is the meta-barrier. Legislation consistently exists but implementation fails across ET/TZ/ZA/IN. Best Co-1 route: peer-reviewed papers embedding DPO narratives (not direct DPO websites). Kenya National Cooperative Housing Union (WHO HHGL) is the only Global South positive accessible housing production model identified.
+DATE: 2026-04-06 03:55
