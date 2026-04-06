@@ -3,7 +3,8 @@
 **Status:** NOT-RUN
 **GAP:** GAP-LRP-05 (P1)
 **Phase:** 1-E
-**Created:** 2026-04-05 18:26 (CO-0005 P0-D5)
+**Created:** 2026-04-06 02:34 (session start)
+**Note:** This is a Co-1 evidence bank slug. All sources are Co-1 (lived experience) or Co-2 (DPO/advocacy organisation). No Tier 1–4 academic evidence expected or required.
 
 ---
 
@@ -11,11 +12,8 @@
 
 | Axis | Target | Completed |
 |---|---|---|
-| Languages | 19 (SV/NO/DA/FI/FR/DE/ZH/JA/NL/ES/PT/KO/IT/EN/AR/HI/ID/SW/BN) | 0 |
+| DPO organisations | 7 named + CBR networks + 10 CRPD shadow reports | 0 |
 | Jurisdictions | 46 | 0 |
-
-## Jurisdiction Status
-*To be populated by research-log-manager LOG.*
 
 ## Session Log
 *No sessions run.*
