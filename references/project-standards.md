@@ -310,3 +310,27 @@ DATE: 2026-04-06 03:55
 CONDITION: Any Global South disability housing research session.
 ACTION: Formal/informal city divide is the meta-barrier. Legislation consistently exists but implementation fails across ET/TZ/ZA/IN. Best Co-1 route: peer-reviewed papers embedding DPO narratives (not direct DPO websites). Kenya National Cooperative Housing Union (WHO HHGL) is the only Global South positive accessible housing production model identified.
 DATE: 2026-04-06 03:55
+
+---
+
+## Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2
+
+RULE: Always retrieve full 40-char OIDs via GraphQL `oid` field before any REST PUT operation. The REST API sha display truncates. Pattern: GraphQL `object(expression: "main:path") { ... on Blob { oid } }`. Never use a 12-char truncated sha for a PUT.
+CONDITION: Any bash_tool call preparing a GitHub REST PUT (file update).
+ACTION: Run GraphQL batch query for all target file OIDs first. Use those full OIDs in the PUT payload sha field.
+DATE: 2026-04-06 06:10
+
+RULE: ZH disability housing evidence is policy/statistical dominant. Peer-reviewed Co-1 narrative housing accounts are not available in ZH-indexed or English-indexed literature. Do not allocate search budget expecting ZH Co-1 housing narrative. CDPF statistical bulletins and Wuzhang'ai Lanpishu are the ceiling for Chinese evidence.
+CONDITION: Any research session targeting ZH lived experience in housing or built environment.
+ACTION: Accept CDPF/Wuzhang'ai Lanpishu as the ZH evidence ceiling. Flag as statistical-only in BPC co1_pass_summary. Do not extend search.
+DATE: 2026-04-06 06:10
+
+RULE: IDA compilations of CRPD concluding observations (by article) are the most efficient route to cross-jurisdictional treaty evidence. Single source covering 100+ countries. Always search IDA before individual OHCHR country pages when gathering Art. 9 or Art. 19 evidence.
+CONDITION: Any research session targeting CRPD implementation evidence across multiple jurisdictions.
+ACTION: Search internationaldisabilityalliance.org for article-specific compilation first. Use individual OHCHR country pages only for jurisdictions not covered in the IDA compilation.
+DATE: 2026-04-06 06:10
+
+RULE: UN-Habitat Housing Accessibility Handbook (2016) is the only identified design-level guidance for accessible housing in slum upgrading, affordable housing, and reconstruction contexts globally. Cite as Tier 4 source when addressing accessible design outside formal new-construction contexts.
+CONDITION: Any BPC entry, specification, or scope discussion involving informal settlements, slum upgrading, or affordable housing contexts.
+ACTION: Reference UN-Habitat Housing Accessibility Handbook (2016). Do not treat formal new-construction standards as applicable to informal contexts without this bridge source.
+DATE: 2026-04-06 06:10
