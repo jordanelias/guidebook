@@ -1,11 +1,11 @@
 # BPC Entry — sensory-space-global-south
 **Topic:** sensory-environment
-**Status:** PROVISIONAL — PARTIAL search; Opus synthesis pending
+**Status:** COMPLETE — Opus synthesis complete
 **GAP:** GAP-LRP-02 (P1)
 **Phase:** 1-B (Sessions 1–2)
-**Last updated:** 2026-04-06 02:30
-**opus_synthesis:** false
-**Relationship to existing BPC:** Supplementary to `sensory-relief-space-design` (existing BPC, Opus-synthesised). Does not replace or modify existing BPC. Feeds cross-reference noting Global South and cultural limitations.
+**Last updated:** 2026-04-07 00:33
+**opus_synthesis:** true [OPUS-SYNTHESIS 2026-04-07]
+**Relationship to existing BPC:** Supplementary to sensory-relief-space-design (existing BPC, Opus-synthesised). Does not replace or modify existing BPC. Feeds cross-reference noting Global South and cultural limitations.
 
 ---
 
@@ -49,13 +49,63 @@ Multiple practitioner sources reference sensory gardens as accessible alternativ
 ---
 
 ## best_practice_synthesis
-**BLOCKED** — `opus_synthesis: false`
 
-Synthesis notes for Opus:
-1. Which PAS 6463 principles transfer universally (physics-based) vs. which require cultural adaptation (spatial configuration, access patterns, labelling)?
-2. What is the minimum viable sensory space specification achievable without Snoezelen equipment and without AC, for tropical climates?
-3. What design adaptations does a collectivist cultural context require for a sensory refuge space to be used without stigma?
-4. Should this BPC entry produce a modified specification for Global South contexts, or a set of gap flags directing primary research?
+**Opus synthesis:** YES [OPUS-SYNTHESIS 2026-04-07]
+
+### Transfer Analysis: PAS 6463 Principles vs. Global South Contexts
+
+| PAS 6463 principle | Physics-based? | Transfers universally? | Adaptation required? |
+|---|---|---|---|
+| Acoustic separation from adjacent spaces | Yes — sound transmission is physics | YES — reducing sound transmission benefits sensory-sensitive occupants regardless of culture or climate | Material adaptation: STC 50 partition is not feasible in low-cost construction. Functional equivalent: heavy curtain + distance from noise source achieves partial attenuation. Specify minimum: ≥10 dB reduction from adjacent occupied space. |
+| Individual occupant control of lighting | Yes — photon flux is physics | YES — Tsukuba cross-cultural research (JP/US/FR) confirms individual control as primary design variable | Equipment adaptation: dimmer switch on single light source replaces multi-scene lighting controller. Battery LED string as alternative to mains dimmer in off-grid contexts. |
+| Low visual complexity | Yes — visual processing load is physics | YES — neutral wall colour, absence of pattern, minimal objects | No adaptation required. Neutral paint + absence of decoration is the lowest-cost intervention available. |
+| Individual occupant control of sensory inputs | Partially — the principle is physics; the implementation is cultural | PARTIALLY — the principle transfers; the spatial model does not | Cultural adaptation required (see below). |
+| Private individual retreat space | No — this is a cultural-spatial model | NO — does not transfer to collectivist contexts without modification | PRIMARY GAP — see cultural adaptation section. |
+
+### Cultural Adaptation: Sensory Retreat in Collectivist Contexts
+
+The existing BPC (sensory-relief-space-design) specifies a private, individual-occupancy retreat room. This model assumes:
+- Individual autonomy in deciding to withdraw from social interaction
+- No stigma attached to solitary retreat
+- Physical space availability for a dedicated single-purpose room
+
+In collectivist cultures (documented for East Asia, South Asia, MENA, Sub-Saharan Africa), these assumptions do not hold. The evidence suggests three adaptation pathways, none of which has been research-validated:
+
+**Pathway A — Family-accompanied quiet zone:** A space where a family member or companion accompanies the sensory-sensitive person. Reduces stigma of solitary withdrawal. Requires larger floor area than individual retreat (≥6 m² vs ≥4 m²). Maintains sensory principles (acoustic separation, lighting control, low visual complexity).
+
+**Pathway B — Unlabelled multipurpose quiet space:** A room designated for "rest" or "prayer" or "quiet work" — not labelled as a sensory or disability-related space. Reduces stigma by normalising the space. Nigeria Co-1 (B13) approximates this: sensory corners integrated into living spaces without dedicated labelling.
+
+**Pathway C — Outdoor/semi-outdoor retreat:** Sensory garden or shaded outdoor nook. Culturally acceptable in many contexts where indoor solitary retreat is not. Requires shade, wind protection, acoustic buffer from road/market noise. India Autism Center West Bengal uses this approach. Not feasible in dense urban informal settings.
+
+**Guidebook treatment:** The existing sensory-relief-space-design BPC specification stands as the primary recommendation. This supplement adds a cross-reference note:
+
+> In collectivist cultural contexts, the private individual retreat model may not be culturally appropriate or may deter use due to stigma. Alternative spatial configurations (family-accompanied quiet zone, unlabelled multipurpose quiet space, outdoor sensory retreat) should be considered through Tier 2 co-design with the occupant and their family or community. No research validates these alternatives — they are first-principles adaptations of the underlying sensory principles. [FIRST-PRINCIPLES DISCLOSURE]
+
+### Minimum Viable Sensory Space — Low-Resource Specification
+
+For contexts where Snoezelen equipment and mechanical conditioning are not available:
+
+| Element | Minimum viable specification | Cost category |
+|---|---|---|
+| Acoustic separation | Heavy curtain partition (≥400 g/m² fabric) OR solid door to adjacent space. Target: ≥10 dB reduction from adjacent occupied space. | Low |
+| Lighting control | Single light source with dimmer switch OR blackout curtain on window + battery LED string light. Occupant-controlled. | Low |
+| Visual simplicity | Neutral wall paint (white, cream, light grey). No pattern. Minimal objects. | Minimal |
+| Floor surface | Foam mat or carpet tile (washable). Reduces impact sound, provides tactile comfort. | Low |
+| Thermal comfort | Natural ventilation where climate permits; fan where it does not. Not specified as AC-dependent. | Low–Medium |
+| Minimum floor area | ≥4 m² (individual) or ≥6 m² (family-accompanied). | — |
+
+**This specification is not research-validated.** It is derived from physics-based principles (acoustic attenuation, lighting control, visual complexity reduction) applied to low-cost materials. It should be flagged as [FIRST-PRINCIPLES — LOW-RESOURCE ADAPTATION] in the guidebook.
+
+### Evidence Hierarchy
+
+| Tier | Count | Assessment |
+|---|---|---|
+| Tier 1 | 3 | B3 (Tsukuba), B4 (Tsukuba 2025), B8 (Crompton cross-cultural) |
+| Tier 3 | 5 | B1 (Bertone scoping), B2, B6 (Malaysia ASPECTSS), B7 (de Leeuw camouflaging), B12 (2024 scoping) |
+| Tier 4–6 | 4 | B5 (UAE), B9 (Chile Ley), B10, B11 |
+| Co-1 | 2 | B13 (Nigeria), practitioner reports |
+
+**Confidence:** HIGH for physics-based transfer (acoustic, lighting, visual complexity). LOW for cultural adaptation pathways (no research — first-principles only). LOW for low-resource specification (no validation). MEDIUM for the finding that PAS 6463 does not transfer as a complete spatial model to collectivist cultures.
 
 ---
 

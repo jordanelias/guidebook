@@ -1,10 +1,10 @@
 # BPC Entry — thermoregulation-built-environment
 **Topic:** neurological-and-autonomic
-**Status:** PROVISIONAL — Phase 1-A Session 1; Opus synthesis pending
+**Status:** COMPLETE — Opus synthesis complete
 **GAP:** GAP-LRP-01 (P1)
 **Phase:** 1-A (Session 1)
-**Last updated:** 2026-04-07 00:17
-**opus_synthesis:** false
+**Last updated:** 2026-04-07 00:33
+**opus_synthesis:** true [OPUS-SYNTHESIS 2026-04-07]
 **Relationship to existing BPC:** Supplements existing CON-0101 (thermal comfort), CON-0107 (cross-ventilation), and F-07 (fatigue/thermoregulation connections). This slug provides the disability-population-specific thermal evidence base those connections currently lack.
 
 ---
@@ -67,12 +67,53 @@ The two evidence bases (disability thermoregulation + tropical passive design) e
 
 This integration gap is the primary finding of this slug. The specifications in Cluster 2 and 3 above are derived from first-principles synthesis of the two separate evidence bases, not from direct evidence.
 
-**Opus synthesis note:** The derivation from first principles must be explicitly disclosed. This BPC entry does not constitute Tier 1–3 evidence for tropical accessible design thermal specifications. It constitutes a gap identification and a first-principles framework pending primary research or directly applicable Tier 1–3 evidence.
-
 ---
 
 ## best_practice_synthesis
-**BLOCKED** — `opus_synthesis: false`
+
+**Opus synthesis:** YES [OPUS-SYNTHESIS 2026-04-07]
+
+### Climate-Stratified Best-Practice Table
+
+| Climate zone | Passive design priorities | Mechanical requirement | Target ambient | Confidence | Evidence basis |
+|---|---|---|---|---|---|
+| **Cold (HDD>3000)** | High thermal mass; insulation (U≤0.25 W/m²K walls); airtightness; solar heat gain on south facade; draught-free ventilation | Heating to maintain ≥18°C floor; cooling unlikely required | 18–22°C | HIGH | WHO Housing 2018; clinical SCI/MS evidence (T1–T6); FMS cold sensitivity (T7–T8) |
+| **Temperate** | Moderate insulation; operable shading; thermal mass for diurnal swing absorption; operable windows for night purge | AC provision mandatory for thermoregulation-impaired occupants; not optional | 18–22°C | HIGH | Direct clinical evidence (T1–T6); patient preference data (T2, T3); hospital standards (T14) |
+| **Hot-dry (BWh/BSh)** | High albedo; low SHGC glazing (east/west); thermal mass; night purge ventilation; shaded outdoor buffer (verandah/courtyard); ceiling height ≥2700mm | AC mandatory; evaporative cooling acceptable as supplementary strategy where humidity permits | 18–22°C | MEDIUM | First-principles synthesis: passive design simulation (T16 Honduras; T17 YourHome AU) + clinical thresholds (T1–T6). No direct disability+hot-dry study exists. |
+| **Hot-humid (Af/Am/Aw)** | Cross-ventilation (limited efficacy at >80% RH); low SHGC; high ceiling; high albedo; semi-outdoor buffer zones | AC mandatory — passive strategies cannot maintain ≤22°C when outdoor >32°C and RH >70%. Dehumidification component essential. | 18–22°C | MEDIUM | First-principles synthesis. Passive ventilation ceiling documented at ~2°C below ambient in humid tropics — insufficient when ambient exceeds 24°C. No direct disability+humid tropical study. |
+| **Highlands tropical (Cwb)** | Passive design may achieve target range without mechanical cooling at altitude >1500m; insulation for cool nights | Provision for mechanical cooling recommended (climate change margin) but may not be required for current conditions | 18–22°C | LOW | No direct evidence. Inferred from altitude-adjusted diurnal temperature ranges. |
+
+### Co-Occurrence Conflict Resolution: FMS vs MS/SCI Thermal Needs
+
+**Conflict:** FMS requires warmth (cold pain hypersensitivity); MS/SCI requires cool ambient (neurological deterioration above 22°C).
+
+**Resolution (Tier 1 default):** Cool ambient (18–20°C) as the building-level default. Rationale: the harm from exceeding 22°C for MS (neurological symptom exacerbation, potentially irreversible during flare) and SCI (thermodysregulation approaching medical emergency in high-level SCI) exceeds the harm from cool ambient for FMS (pain exacerbation, reversible with local warmth). The severity asymmetry is clear: neurological deterioration > pain exacerbation.
+
+**Tier 2 individual provision for FMS:** Local warmth delivery (heated seat pad, radiant panel at workstation, heated blanket) within the cool-ambient environment. Zoned heating at room level if single-occupant. OT assessment determines individual thermal profile.
+
+**This resolution must not be presented as a general thermal comfort compromise.** It is a clinically grounded conflict resolution where one population's risk profile (neurological, potentially dangerous) dominates another's (pain, reversible). The guidebook should cite the specific mechanism for each population.
+
+### Existing BPC Cross-References Requiring Update
+
+| Item/BPC | Current state | Required update |
+|---|---|---|
+| CON-0101 (thermal comfort) | Generic thermal comfort range, likely 20–26°C ASHRAE-derived | Add population-conditional narrowing to 18–22°C for NEU/MOB(SCI)/PAIN(FMS)/OFS populations. State that the standard ASHRAE comfortable range is too warm for thermoregulation-impaired populations. |
+| CON-0107 (cross-ventilation) | Passive ventilation specification | Add climate-conditional note: cross-ventilation alone is insufficient for thermoregulation-impaired populations in humid tropical climates. Mechanical cooling provision is required as a designed-in feature. |
+| F-07 (fatigue/thermoregulation) | Connection noted but not specified | Link to this BPC for clinical evidence hierarchy and target range. |
+
+### Evidence Hierarchy
+
+| Tier | Count | Assessment |
+|---|---|---|
+| Tier 1 (clinical/Co-1) | 6 | T1 (MS mechanism), T3 (MS Co-1), T4 (SCI cases), T6 (SCI Co-1), T9 (POTS Co-1), T10 (EDS/POTS Co-1) |
+| Tier 3 (reviews/surveys) | 5 | T2, T5, T7, T8, T11 |
+| Tier 4–6 (policy/guidelines) | 7 | T12–T18 |
+
+**Confidence:** HIGH for 18–22°C target range (convergent clinical evidence from 4 populations). HIGH for FMS vs MS/SCI conflict resolution (mechanism-based, severity-asymmetric). MEDIUM for climate-stratified passive design priorities (first-principles synthesis, not direct evidence). LOW for highlands tropical zone (no evidence).
+
+**FIRST-PRINCIPLES DISCLOSURE:** The hot-dry, hot-humid, and highlands tropical rows in the climate-stratified table are derived from synthesis of two independent evidence bases (disability thermoregulation + tropical passive building design). No study directly validates these specifications for thermoregulation-impaired populations in tropical climates. This is the highest-priority primary research gap identified in this slug.
+
+---
 
 ## co1_pass_summary
 - T3: MS patient Co-1 (ScienceDirect 2022, patient-centred perspective survey + patient column quote)

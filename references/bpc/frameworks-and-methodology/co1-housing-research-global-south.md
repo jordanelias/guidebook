@@ -1,10 +1,10 @@
 # BPC Entry — co1-housing-research-global-south
 **Topic:** frameworks-and-methodology
-**Status:** COMPLETE (Sessions 1-E-1 through 1-E-3) — Opus synthesis pending
+**Status:** COMPLETE — Opus synthesis complete
 **GAP:** GAP-LRP-05 (P1)
 **Phase:** 1-E (Sessions 1–3)
-**Last updated:** 2026-04-06 06:10
-**opus_synthesis:** false
+**Last updated:** 2026-04-07 00:33
+**opus_synthesis:** true [OPUS-SYNTHESIS 2026-04-07]
 **Note:** This is a cross-slug Co-1 evidence bank. It does not contain design specifications. Findings feed into all Phase 1 BPC provisional entries.
 
 ---
@@ -38,7 +38,54 @@ South Africa informal settlement (E15): no accessible toilets mentioned, confirm
 ---
 
 ## best_practice_synthesis
-**BLOCKED** — `opus_synthesis: false`
+
+**Opus synthesis:** YES [OPUS-SYNTHESIS 2026-04-07]
+
+### Scope Decision
+
+The guidebook's scope remains **formal new construction and planned retrofit** (option (a) with qualification). Informal settlement design is outside the guidebook's competence boundary for three reasons:
+
+1. **No evidence base exists.** Zero peer-reviewed or practitioner-validated design specifications for accessible informal settlement housing were found across 30 sources, 14 languages, and 10+ jurisdictions. The Sejong Toilet (Indonesia) is the sole documented accessible design innovation from informal/low-resource contexts, and it remains unpublished. Specifying without evidence violates the guidebook's own evidence hierarchy.
+
+2. **Construction typology mismatch.** Informal settlement construction (corrugated metal, mud brick, found materials, no foundation) cannot accommodate the structural loads, dimensional tolerances, or service provisions that accessible specifications require. A grab bar rated at ≥200 kg SWL requires a structural substrate — informal walls do not provide one. Level access requires a prepared subgrade — informal settlements on slopes or flood plains do not have one.
+
+3. **The intervention required is not design — it is policy, land tenure, and infrastructure.** The Co-1 evidence consistently shows that the barriers disabled people face in informal settlements are pre-design: no paved pathways, no piped water, no sanitation, no electricity, no tenure security. Design specifications presuppose a constructed environment; informal settlements lack this presupposition.
+
+**Qualification — the guidebook must not be silent.** Excluding informal settings from specification scope does not mean excluding them from acknowledgement. The guidebook must:
+
+- State explicitly in Part 1 (Foundations) that its specifications apply to formally constructed and regulated buildings, and that the majority of housing globally — particularly housing occupied by disabled people in the Global South — falls outside this scope.
+- Identify the formal/informal divide as the primary structural barrier to accessible housing globally, citing the Co-1 evidence from this slug.
+- Reference the UN-Habitat Housing Handbook (2016) as the only identified design guidance addressing the intersection of accessibility and informal/affordable housing.
+- Flag the absence of evidence for informal-context accessible design as the highest-priority research gap in the field.
+
+### Prioritised Gap List — Top 10 Barriers from Co-1 Global South Evidence
+
+Ranked by frequency across 30 sources and severity of participation restriction:
+
+| Rank | Barrier | Sources | Cross-ref to existing BPC | Scope status |
+|---|---|---|---|---|
+| 1 | Inaccessible external pathways (unpaved, steep, no tactile, mud/gravel) | E10, E13, E14, E15, E29 | wayfinding-global-south; entrances-and-circulation BPCs | FORMAL: covered. INFORMAL: out of scope — no paved substrate. |
+| 2 | No accessible sanitation (community toilets inaccessible; squat toilet only) | E10, E15, E21 | bathroom-typology-global-south | FORMAL: partially covered (new BPC). INFORMAL: out of scope. |
+| 3 | Entrance barriers (steps, narrow doors, no ramps) | E10, E13, E22, E29 | residential-entry-and-threshold; threshold-and-level-access | FORMAL: covered. INFORMAL: out of scope. |
+| 4 | No mechanical cooling/heating for thermoregulation-impaired populations | E10, E17 (thermal as LAC research theme), E30 (China: not addressed) | thermoregulation-built-environment | FORMAL: new BPC addresses. INFORMAL: out of scope. |
+| 5 | Legislation exists but is unenforced | E14, E20, E21, E24, E25, E26 | crpd-implementation-built-environment | FORMAL: guidebook references enforcement obligation. INFORMAL: enforcement presupposes formal construction. |
+| 6 | No private/quiet space for sensory withdrawal | E15 (ZA informal: no private space), E27 (JP deinstitutionalisation: sensory not addressed) | sensory-space-global-south | FORMAL: new BPC addresses. INFORMAL: out of scope. |
+| 7 | Government-built disability housing fails accessibility standards | E21 (MX: "poco satisfactorio"), E20 (CO: enforcement weak) | co1-housing-research-global-south (this slug) | FORMAL: guidebook specifications apply directly. Quality control is enforcement. |
+| 8 | No assistive technology provision linked to housing | E24 (ID), E25 (NG), E30 (CN: statistical only) | ot-built-environment-interface | FORMAL: AT provision is outside guidebook scope (service, not design). Flag only. |
+| 9 | Rural areas underserved relative to urban | E30 (CN: rural gap), E10 (IN: rural slum), E23 (CAN Africa: rural CBR) | All BPCs | FORMAL: rural formal construction covered by same specifications. Rural informal: out of scope. |
+| 10 | Disabled people concentrated in lowest-quality housing stock | E14 (ZA: middle-class excluded), E29 (KR: 14.6% semi-basement), E17 (LAC: poverty correlation) | economics BPCs; DAR provisions | FORMAL: DAR and economics BPCs address new construction and retrofit. Existing stock: progressive obligation per CRPD GC2. |
+
+### Evidence Hierarchy for This Slug
+
+| Tier | Count | Assessment |
+|---|---|---|
+| Tier 1 / Co-1 | 8 | E10, E13, E14, E15, E21, E29, T3, T6 — strong lived experience base from 6 jurisdictions |
+| Tier 1 (non-Co-1) | 3 | E16, E29, plus cross-refs — peer-reviewed empirical |
+| Tier 2–3 | 4 | E17 (systematic review LAC), E19, plus cross-refs |
+| Tier 4 (treaty/policy) | 8 | E22, E23, E24, E25, E26, E27, C1–C9 cross-refs |
+| Tier 6 (statutory/statistical) | 5 | E18, E20, E28, E30 |
+
+**Confidence:** HIGH for the scope decision (consistent across all sources, no contradictory evidence). HIGH for the formal/informal divide finding. MEDIUM for the prioritised gap ranking (frequency-based, not severity-weighted by clinical evidence).
 
 ## co1_pass_summary
 Sessions 1–3 complete:
