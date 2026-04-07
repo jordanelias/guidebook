@@ -264,7 +264,7 @@ All mechanical plant: mounted on vibration isolation pads
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. NC-25 is the noise criterion below which continuous background HVAC noise ceases to function as a sensory trigger for the majority of sensory-avoiding and sensory-sensitive users; this specification operationalises Dunn's model by translating 'reduce neurological threshold exceedance' into a measurable acoustic design parameter.
 
-**CON-0101 [HIGH]:** HVAC system type is the primary determinant of achievable NC level. NC-25 constrains HVAC system selection — coordinate with F-07 thermal zoning strategy. ● Forced-air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC (acoustic and airborne trigger); radiant heating achieves NC-25 without forced-air noise contribution. Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 at ceiling — coordinate ceiling treatment zones with thermal mass zones.
+**CON-0101 [HIGH]:** HVAC system type is the primary determinant of achievable NC level. NC-25 constrains HVAC system selection — coordinate with F-07 thermal zoning strategy. ● Forced-air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC (acoustic and airborne trigger); radiant heating achieves NC-25 without forced-air noise contribution. For SCI populations, radiant systems additionally avoid ambient heat load increase in cooling-critical environments [thermoregulation-built-environment BPC — PROVISIONAL]. Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 at ceiling — coordinate ceiling treatment zones with thermal mass zones.
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 
@@ -2131,7 +2131,7 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 ### F-07 Thermal Zoning — Building-Wide Temperature Management
 
-**Applicable Groups:** NEU/MS · OFS · PAIN · DEM · ALL
+**Applicable Groups:** NEU/MS · SCI · OFS · PAIN · DEM · ALL
 <!-- CO-0003 new item. CON-0041: inter-room thermal differential ≤5°C safety specification. -->
 
 **Description:** Building-wide HVAC zoning strategy to maintain ambient temperatures that are safe for Uhthoff's-threshold users (NEU/MS) while enabling individual supplemental heating for PAIN and OFS users who require warmth. Resolves the primary TEMP-RANGE cross-population conflict (see Part 5 §5.2).
@@ -2142,6 +2142,7 @@ accessibility at service/workstation points: distinct, complementary scope)
 - ● Individual supplemental radiant heating to be provided at all fixed seating positions in spaces serving PAIN or OFS populations: wall-mounted or portable radiant panel rated ≤22°C output at 0.5 m [REF:ms-thermal-temperature-conflict-resolution:02] *(PAIN allodynia and fibromyalgia require local warmth delivery without raising shared ambient)*
 - ● All apartment or room thermostats (residential settings) to be individually controllable within a 16–24°C range [REF:ms-thermal-temperature-conflict-resolution:01]
 - ○ Insulated coatings specified for all grab bars, handrails, and door hardware on primary circulation routes serving PAIN populations [CON-0003] *(cold metal contact triggers allodynia)*
+- ○ In tropical climates (ambient >28°C) where mechanical cooling is absent: SCI (above T6 lesion) populations require passive cooling strategy as primary design intervention — cross-ventilation, solar shading, high ceiling, low SHGC glazing. Continuous indoor ambient above 28°C exceeds resting thermoregulatory capacity for tetraplegia (impaired sweating ~30% normal; impaired vasodilation) [REF:thermoregulation-built-environment:01] *(PROVISIONAL — no SCI-specific tropical ambient threshold confirmed in accessible design standards; threshold extrapolated from clinical evidence + WHO HHGL Annex G; Opus synthesis pending)*
 
 **Design Stage:** Schematic Design (HVAC zoning strategy) · Technical Design (equipment specification)
 
@@ -2151,10 +2152,10 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 **CON-0107 [MEDIUM]:** In care bedrooms with ceiling hoist (I-04), supplemental radiant heating panels must clear the hoist track path. Coordinate wall-mounted panel positions with hoist track sweep zone at Detailed Design. Cross-ref: I-04.
 
-**CON-0101 [HIGH]:** HVAC system selection to achieve NC-25 (A-08) — radiant heating systems are preferred over forced air in NEU/OFS spaces (lower noise contribution and no airborne trigger). Coordinate with A-08 and F-08 thermal mass specification. Cross-ref: A-08, F-08.
+**CON-0101 [HIGH]:** HVAC system selection to achieve NC-25 (A-08) — radiant heating systems are preferred over forced air in NEU/OFS spaces (lower noise contribution and no airborne trigger). For SCI populations, radiant systems additionally avoid ambient heat load increase in cooling-critical environments [thermoregulation-built-environment BPC — PROVISIONAL]. Coordinate with A-08 and F-08 thermal mass specification. Cross-ref: A-08, F-08.
 
 <!-- NEW ITEM — CO-0003. Derives from TC-01/TC-02/TC-03 (Appendix C, now integrated into Part 4).
-     Evidence: ms-thermal-temperature-conflict-resolution BPC; thermal-comfort-older-adults-care-settings BPC.
+     Evidence: ms-thermal-temperature-conflict-resolution BPC; thermal-comfort-older-adults-care-settings BPC; thermoregulation-built-environment BPC (SCI/tropical — PROVISIONAL; Opus synthesis pending).
      CON connections: CON-0003 (MS vs PAIN thermal conflict), CON-0004 (OFS thermal).
      DRAFT REQUIRED: item-specification-writer briefing pending. -->
 
