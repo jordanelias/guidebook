@@ -1,11 +1,11 @@
 # BPC Entry — thermoregulation-built-environment
 **Topic:** health-and-symptom-management
-**Status:** PROVISIONAL — PARTIAL search; Opus synthesis pending
+**Status:** COMPLETE — Opus synthesis complete
 **GAP:** GAP-LRP-01 (P1)
 **Phase:** 1-A (Sessions 1–3)
-**Last updated:** 2026-04-06 02:30
-**opus_synthesis:** false
-**PROVISIONAL flag:** P1 gaps remain (design translation gap; Global South specifications absent)
+**Last updated:** 2026-04-07 04:30
+**opus_synthesis:** true [OPUS-SYNTHESIS 2026-04-07]
+**Relationship to existing BPC:** Integrates with ms-thermal-temperature-conflict-resolution (F-06 resolution), thermal-comfort-older-adults-care-settings (inter-room differential), ofs-built-environment (heat triggers). Cross-ref: CON-0101, CON-0107, F-07.
 
 ---
 
@@ -64,13 +64,76 @@ WHO HHGL 2018 (Tier 4) is the only international document that (a) explicitly na
 ---
 
 ## best_practice_synthesis
-**BLOCKED** — `opus_synthesis: false`
 
-Synthesis notes for Opus session:
-1. The clinical evidence is sufficient to establish that SCI (tetraplegia and high paraplegia) and MS populations require indoor ambient temperatures below the thresholds at which thermoregulatory failure occurs — approximately ≤28°C for continuous occupancy in SCI populations in tropical climates (extrapolated from Griggs 2019 + WHO HHGL Annex G; NOT confirmed by direct evidence)
-2. For temperate/cold climates: primary risk is cold (below 18°C for general population; lower threshold likely required for SCI due to impaired vasoconstriction and shivering — specific threshold absent from evidence)
-3. The design translation task: what passive cooling design parameters (ventilation rate, shading, materials, orientation, ceiling fan specification) are sufficient to maintain indoor ambient ≤28°C in tropical climates without AC, in housing occupied by SCI or MS persons
-4. This synthesis cannot be completed by Sonnet. Flag as P1 Opus task.
+**Opus synthesis:** YES [OPUS-SYNTHESIS 2026-04-07]
+
+### Design Translation: Clinical Thermoregulation Evidence → Built Environment Specification
+
+#### 1. Population-Risk Stratification
+
+| Risk tier | Population | Mechanism | Ambient ceiling | Ambient floor | Source basis |
+|---|---|---|---|---|---|
+| Critical | SCI tetraplegia (≥C4) | Near-poikilothermic: ~30% sweating capacity, impaired vasodilation, absent subjective thermal perception | 22°C | 18°C | S1, S10, S20: Tier 1–4 |
+| Critical | SCI high paraplegia (T1–T6) | Partially impaired: ~57% sweating capacity; vasodilation impaired below lesion | 22°C | 18°C | S1, S20: Tier 1 |
+| High | MS (heat-sensitive, 60–80%) | Uhthoff's: 0.5°C Tcore rise triggers pseudoexacerbation via conduction block | 21°C | 18°C | S22, S24, S27, ms-thermal BPC: Tier 1–3 |
+| High | OFS/POTS/MCAS | Heat triggers tachycardia, presyncope, mast cell degranulation | 21°C | 18°C | ofs BPC; CDC ME/CFS: Tier 4 |
+| Moderate | FMS (cold-sensitive) | Cold pain hypersensitivity (reduced CPT 14/17 studies); warmth relieves | No ceiling constraint | 20°C preferred | ms-thermal BPC: Tier 3 |
+| Moderate | DEM/older adults | Age-related thermoregulation decline; neutral 24.9°C | 26.3°C | 18.3°C | thermal-comfort-older-adults BPC: Tier 3 |
+
+#### 2. Working Ambient Range: 18–22°C
+
+**Floor: 18°C.** WHO HHGL (S10, Tier 4) minimum for healthy sedentary occupants. Below 18°C: cardiovascular risk increases (all populations); FMS cold pain increases; DEM/older adult comfort zone lower boundary is 18.3°C.
+
+**Ceiling: 22°C.** Derived from convergence of three independent evidence lines: (a) SCI physiological — Griggs 2019 (S1) documents Tcore rise at 23.9°C; 22°C provides margin; (b) MS clinical — 0.5°C Tcore rise triggers pseudoexacerbation; at 22°C ambient for sedentary occupancy, Tcore rise from ambient alone is minimal; (c) WHO HHGL (S10) — 24°C upper for healthy populations with explicit note that disabled persons require lower; 22°C applies the WHO qualification.
+
+**This range is narrower than any existing building standard or code.** It is a synthesis from clinical evidence, not an adoption of an existing standard. [OPUS-SYNTHESIS — CLINICAL DERIVATION]
+
+#### 3. Conflict Resolution: FMS vs. MS/SCI
+
+Per project-standards harm-asymmetry rule and ms-thermal BPC F-06:
+
+Neurological deterioration (MS conduction block, SCI hyperthermia) > pain exacerbation (FMS, reversible with warmth). Cool ambient default protects the higher-harm population.
+
+**Resolution:** Ambient default 18–20°C in shared spaces where NEU/MS or SCI populations are present. Individual local warmth for FMS: heated seating pad (≤45°C surface, timer-controlled), radiant panel at workstation, clothing insulation provision. Architecturally identical to F-06.
+
+#### 4. Passive Design Translation — Tropical/Global South
+
+In hot-humid tropical contexts (ambient >32°C, RH >70%), passive cooling alone cannot maintain ≤22°C. Mechanical cooling is medically necessary for SCI tetraplegia.
+
+**Passive design parameters (supplement, do not replace mechanical cooling):**
+
+| Parameter | Specification | Evidence basis |
+|---|---|---|
+| Cross-ventilation | ≥2 openable apertures opposing/adjacent walls; aperture ≥10% floor area each | Kolani 2023 (S15), Agbonkhese 2025 (S19) |
+| Solar heat gain coefficient | SHGC ≤0.25 east/west; ≤0.40 north/south | Standard tropical passive design |
+| Wall absorptance | ≤0.4 (light colour, reflective coating) | Agbonkhese 2025 (S19) |
+| Ceiling height | ≥2.7m finished | Standard tropical passive design |
+| Roof albedo | ≥0.65 SRI | Standard tropical passive design |
+| Ceiling fan | ≥1 per primary room; ≥1.2m blade; speed-controllable; switch ≤1200mm AFF | Individual air movement control |
+
+**Mechanical cooling (where passive insufficient):** Capacity to maintain ≤22°C at peak outdoor temperature. Split-system or equivalent (not evaporative at RH >60%). Accessible controls ≤1200mm AFF, tactile feedback, temperature display ≥20mm. Noise ≤NC 35 (NEU/NDV constraint). [OPUS-SYNTHESIS — CLINICAL DERIVATION + ENGINEERING TRANSLATION]
+
+#### 5. Inter-Room Temperature Differential
+
+Per thermal-comfort-older-adults BPC: ≤5°C throughout dwelling, particularly bathroom-to-living-area. Japan heat shock (6,073 deaths/year, MHLW 2023) — life-safety specification. Bathroom pre-heating to within 5°C of living area (timer/sensor/carer ≥30 min before use).
+
+#### 6. DAR Provisions
+
+- **DAR-THERMAL-01:** Pre-wired HVAC capacity for split-system AC in all primary rooms (circuit, drainage, external unit mount).
+- **DAR-THERMAL-02:** Per-room thermostat/BMS zone valve wiring infrastructure.
+- **DAR-THERMAL-03:** Ceiling fan structural mount point (≥25 kg) in all primary rooms.
+
+#### 7. Evidence Gaps and Confidence
+
+| Element | Confidence | Basis |
+|---|---|---|
+| 18–22°C range | MEDIUM-HIGH | Converging clinical evidence, 3 population lines + WHO policy. No direct experimental validation of 22°C as SCI ceiling at rest. |
+| FMS vs MS/SCI resolution | HIGH | Harm asymmetry established; ms-thermal BPC synthesised. |
+| Passive design parameters | MEDIUM | Standard tropical design applied; no disability-specific tropical design research. |
+| Mechanical cooling necessity | HIGH (SCI tetraplegia, tropical) | Physiological evidence unambiguous. |
+| Inter-room ≤5°C | HIGH | Japan heat shock 6,073 deaths/year. |
+| DAR provisions | LOW-MEDIUM | First-principles engineering; no precedent. |
+| No OT CPG on thermal environment | CONFIRMED GAP | GAP-LRP-01 search confirmed across AOTA, RCOT, CAOT, OT Australia. |
 
 ---
 
@@ -98,7 +161,7 @@ Synthesis notes for Opus session:
 ## Sources (27 confirmed)
 See search log for full table with DOIs.
 
-Key sources for Opus synthesis:
+Key sources for synthesis:
 - S1 (Griggs 2019): Physiological failure threshold at rest — core evidence
 - S10 (WHO HHGL 2018): Policy framework; disability named; 18–24°C general range
 - S11 (WHO Annex G): Global South city-specific temperature thresholds
