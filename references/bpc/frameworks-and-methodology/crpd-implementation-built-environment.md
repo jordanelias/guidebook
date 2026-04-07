@@ -3,7 +3,7 @@
 **Status:** COMPLETE — Opus synthesis complete (mapping pass)
 **GAP:** GAP-LRP-11 (P1)
 **Phase:** 2
-**Last updated:** 2026-04-07 00:33
+**Last updated:** 2026-04-07 03:03 (Phase 2 — C10/C11/C12 added)
 **opus_synthesis:** true [OPUS-SYNTHESIS 2026-04-07]
 **Relationship to existing BPC:** Provides the treaty-body evidence layer for all Phase 1 BPC entries. All Phase 1 slugs operate under the CRPD Art. 9 obligation framework.
 
@@ -17,11 +17,17 @@ CRPD General Comment No. 2 (2014): accessibility is an ex ante duty — it must 
 
 Built environment implication: every building open to the public — including housing — is subject to the Art. 9 obligation. States parties must adopt mandatory accessibility standards, enforce them, and impose sanctions for non-compliance.
 
+### Cluster 1b — CRPD Art. 5 + GC6: universal design as non-discrimination obligation
+
+CRPD General Comment No. 6 on Equality and Non-Discrimination (CRPD/C/GC/6, 2018): universal design is not only an Art. 9 accessibility obligation — failure to provide accessible design constitutes disability-based discrimination under Art. 5. This framing is distinct from GC2: it grounds the guidebook's specifications in the equality principle, not only the accessibility framework. A building that is inaccessible to a person with disability discriminates against them in the meaning of Art. 5. This adds treaty-level force to the guidebook's application to all buildings, not only those explicitly designated as accessible.
+
+Built environment implication: the non-discrimination duty under Art. 5 + GC6 is immediate and not subject to progressive realisation (unlike the Art. 9 accessibility obligation for existing buildings). New buildings must be accessible from the outset — not because Art. 9 says so (it does), but because an inaccessible new building is discriminatory from day one.
+
 ### Cluster 2 — The implementation gap is universal (100+ jurisdictions reviewed)
 
 IDA compilation (Art. 9, updated September 2024): across all 100+ CRPD-reviewed jurisdictions, the Committee issues the same core recommendations: (a) establish comprehensive accessibility monitoring; (b) increase and enforce sanctions for non-compliance; (c) ensure barrier-free access in buildings. This is not a developing-country-only finding — it is universal. The pattern suggests the CRPD Art. 9 implementation gap is structural, not country-specific.
 
-Nigeria (2024): Persons with Disabilities (Accessibility) Regulations 2023 passed — not enforced within one year. Indonesia (2022): limited OPD consultation in legislation. These are representative, not exceptional.
+Nigeria (2024): Persons with Disabilities (Accessibility) Regulations 2023 passed — not enforced within one year. Indonesia (2022): limited OPD consultation in legislation. India (2019, CRPD/C/IND/CO/1): Harmonised Guidelines for Accessible Built Environment exist but enforcement and OPD consultation are weak. Philippines (2018, CRPD/C/PHL/CO/1): same monitoring/sanctions pattern. These are representative, not exceptional.
 
 ### Cluster 3 — Accessible housing in informal settings: UN-Habitat fills the treaty gap
 
@@ -74,7 +80,7 @@ This slug does not produce a new Part or section. It produces three integration 
 
 | Tier | Count | Assessment |
 |---|---|---|
-| Tier 4 (treaty authoritative) | 7 | GC2, IDA compilation, Indonesia CO, Nigeria SITAN, OHCHR session findings, CBM/UN-Habitat, UN-Habitat Handbook |
+| Tier 4 (treaty authoritative) | 10 | GC2, GC6, IDA compilation, Indonesia CO, Nigeria SITAN, OHCHR session findings, CBM/UN-Habitat, UN-Habitat Handbook, India CO (CRPD/C/IND/CO/1), Philippines CO (CRPD/C/PHL/CO/1) |
 | Co-2 | 2 | DPI Japan, CBR networks |
 
 **Confidence:** HIGH for the mapping (treaty texts are authoritative and unambiguous). HIGH for the implementation gap finding (100+ jurisdictions reviewed by treaty body). MEDIUM for integration point recommendations (editorial decisions, not evidence claims).
@@ -84,5 +90,5 @@ This slug does not produce a new Part or section. It produces three integration 
 ## co1_pass_summary
 Treaty-body sources only; no Co-1 in this slug. Co-1 is in co1-housing-research-global-south.
 
-## Key sources (9 confirmed)
+## Key sources (12 confirmed — C10/C11/C12 added Phase 2 2026-04-07)
 See search log.
