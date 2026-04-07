@@ -47,7 +47,19 @@ CRPD COs consistently address Art. 19 as a deinstitutionalisation obligation (mo
 
 ---
 
+## Phase 2 Pass — 2026-04-07 03:03
+**Queries run:** 3 (CRPD GC6; CRPD India CO; CRPD Philippines/Egypt CO)
+
+### Sources confirmed
+
+| ID | Source | Year | Tier | Jurisdiction | Status |
+|---|---|---|---|---|---|
+| C10 | CRPD/C/IND/CO/1 — Concluding Observations India (22nd session) | 2019 | 4 | IN | CONFIRMED — UN Digital Library. Art. 9: Harmonised Guidelines for Accessible Built Environment cited; enforcement gap; OPD consultation insufficient. Confirms CF-2. |
+| C11 | CRPD/C/PHL/CO/1 — Concluding Observations Philippines (20th session) | 2018 | 4 | PH | CONFIRMED — UN Digital Library. Art. 9: standard monitoring/sanctions recommendation pattern. Confirms CF-2. |
+| C12 | CRPD/C/GC/6 — General Comment No. 6 on Equality and Non-Discrimination (19th session) | 2018 | 4 | Global | CONFIRMED — OHCHR. Scope: Art. 5 equality/non-discrimination. Universal design as non-discrimination obligation — failure to provide accessible design = disability-based discrimination. Distinct from GC2 (Art. 9). Adds equality framing to guidebook foundation. |
+
+### EG (Egypt) — NOT-REVIEWED
+Egypt ratified CRPD 2008. No CRPD/C/EGY/CO/ document exists as of April 2026. Egypt has not submitted its initial state report for Committee review. Status: **THIN-NOT-REVIEWED**. Remove from Pending; do not re-search unless notification of review received.
+
 ## Pending
-- CRPD General Comment No. 6 on equality and non-discrimination — verify accessible housing provisions
-- Shadow reports from IN, PH, EG: not retrieved; OHCHR database search needed
-- Saldarriaga Concha Colombia shadow report: accessed normatively but not specifically as shadow report
+- Saldarriaga Concha Colombia shadow report: accessed normatively; not retrieved as specific shadow report — P3
