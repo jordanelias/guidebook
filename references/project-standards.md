@@ -359,3 +359,18 @@ RULE: In hot-humid tropical contexts (ambient >32°C, relative humidity >70%), p
 CONDITION: Any Part 4 specification, item code, or DAR provision for thermoregulation or climate control in tropical or subtropical jurisdictions (IN, ZA, NG, KE, ID, PH, TH, BD, SG, BR coastal, CO/EC coastal, EG).
 ACTION: State that mechanical cooling capability is required as a designed-in feature, not an optional retrofit, for SCI tetraplegia and heat-sensitive MS populations in hot-humid tropical contexts. Cross-reference CON-0101, CON-0107, and F-07.
 DATE: 2026-04-07 00:22
+
+RULE: The formal/informal city divide is the meta-barrier to accessible housing globally. The guidebook specifies for formal new construction and planned retrofit only. Informal settlement housing is out of specification scope. Part 1 must state this explicitly and identify it as the highest-priority research and policy gap.
+DATE: 2026-04-07 00:44
+
+RULE: ISO wayfinding specifications (23599, 21542) are physically determined and transfer universally without cultural or climate adaptation. The Global South wayfinding gap is implementation and maintenance, not specification design.
+DATE: 2026-04-07 00:44
+
+RULE: PAS 6463 sensory space principles separate into two layers: physics-based (acoustic, lighting, visual complexity) which transfer universally, and spatial-model (private individual retreat) which does not transfer to collectivist cultures. Specify the physics; flag the spatial model for Tier 2 co-design.
+DATE: 2026-04-07 00:44
+
+RULE: The FMS vs MS/SCI thermal conflict resolves to cool ambient default (18–20°C) + local warmth for FMS. Severity asymmetry: neurological deterioration (MS/SCI) > pain exacerbation (FMS, reversible). Do not treat any single thermal standard as universally applicable across all disability populations.
+DATE: 2026-04-07 00:44; consolidates session rule from 2026-04-07 00:17
+
+RULE: CRPD treaty-body evidence mandates obligations, not specifications. The guidebook fills the specification gap that treaty bodies leave unfilled. Part 1 must state this relationship explicitly.
+DATE: 2026-04-07 00:44
