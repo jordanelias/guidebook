@@ -95,7 +95,7 @@ Prepend the flag to your instruction:
 | volii-validator | Code matching; binary status determination |
 | session-consolidator | Pattern extraction from bounded session context; YAML write |
 
-### 50 — Mechanical; extraction, assembly, format correction, I/O
+### Mechanical; does not require effort; extraction, assembly, format correction, I/O
 
 | Skill | Rationale |
 |---|---|
