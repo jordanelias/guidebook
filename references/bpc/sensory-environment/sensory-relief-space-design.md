@@ -59,6 +59,15 @@
 **Thin flags:** ZH, JA, FR, DE, FI, SV, NO, DA (practice consistent with EN; no independent mandatory standards for public buildings)
 **No-data flags:** none
 
+**Global South and cultural context cross-reference note** *(added 2026-04-07 from sensory-space-global-south BPC, GAP-LRP-02)*: The specifications in this BPC entry were developed from evidence based primarily in Western, individualist-culture contexts (UK, AU, IE, CA, US). The following limitations apply when applying these specifications in Global South or collectivist-culture settings:
+1. **Physics-based principles transfer universally.** Acoustic separation, individual occupant control of lighting and sensory inputs, low visual complexity, and transition zones produce benefit regardless of cultural context or climate. These are confirmed via Tsukuba cross-cultural research (JP/US/FR, Tier 1).
+2. **The private individual retreat room model does not transfer universally.** In collectivist cultural contexts (East Asia, South Asia, MENA, Sub-Saharan Africa), individual solitary retreat may be stigmatised or culturally inappropriate. Alternative spatial configurations — family-accompanied quiet zone, unlabelled multipurpose quiet space, outdoor sensory retreat — should be considered through Tier 2 co-design with the occupant and community. *[FIRST-PRINCIPLES — no research validates these alternatives; derived from physics-based principles applied to cultural context. Primary research required.]*
+3. **Snoezelen/specialist equipment does not transfer to low-resource settings.** Cost-equivalent substitutions exist (see sensory-space-global-south BPC minimum viable specification), but are not research-validated.
+4. **AC-dependent thermal control assumes mechanically conditioned space.** Natural ventilation and fan-based cooling are the primary available interventions in tropical low-resource contexts.
+5. **STC 50 partition is not feasible in informal or low-cost construction.** Minimum viable acoustic attenuation: ≥10 dB reduction from adjacent occupied space using heavy curtain (≥400 g/m²) + distance.
+
+For full evidence and source list: see `sensory-space-global-south` BPC (GAP-LRP-02, Opus synthesis 2026-04-07).
+
 **Guidebook items affected:** A-16 (primary); H-02 (cross-reference elevation); F-01, F-03 (confirmed)
 **New gaps raised:** GAP-SRS-01 (H-02 elevation in A-16)
 
