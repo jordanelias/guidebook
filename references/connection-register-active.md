@@ -1094,7 +1094,7 @@ Part 5 residential matrices must include support framework items — not just bu
 ## CON-0039 [2026-03-28 21:45]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [BOTH] — intra-individual (one person benefits from RT60 ≤0.3 s for multiple co-occurring conditions) and inter-group (building serves DEAF + NDV/AUT + DEM occupants)
 **Populations involved:** DEAF, NDV/AUT, DEM, NEU/PCS
 **Items involved:** A-02, A-08, A-13, all Category A items
@@ -1134,7 +1134,7 @@ Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal 
 ## CON-0040 [2026-03-28 21:45]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [BOTH] — serves individuals with co-occurring sensory conditions and buildings with multiple disability populations
 **Populations involved:** NDV/AUT, NDV/ADHD, NDV/SENS, DEM, NEU, DEAF, OFS, PAIN, VIS
 **Items involved:** A-02, A-08, A-13, B-01, B-06, F-01, D-05, A-16
@@ -1181,7 +1181,7 @@ Create unified sensory environment specification matrix linking Dunn's profiles 
 ## CON-0041 [2026-03-28 21:45]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTRA-INDIVIDUAL] — a person with DEM+MOB+PAIN in a residential setting experiences the thermal differential as a single hazard
 **Populations involved:** DEM, MOB (older adults), NEU/MS, PAIN, OFS
 **Items involved:** F-06, Part 9 §9.1.4 (envelope+mass), F-07, H-04, all residential bathroom matrix entries
@@ -1219,7 +1219,7 @@ Propagate inter-room thermal differential ≤5°C to all residential bathroom ma
 ## CON-0042 [2026-03-28 21:45]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — different occupants need different alerting channels; also [INTRA-INDIVIDUAL] for DEAF+NEU co-occurrence
 **Populations involved:** DEAF, DBL, NEU (seizure), NDV/AUT (photosensitive)
 **Items involved:** B-10, visual alerting items, H-04, CON-0014 items
@@ -1252,7 +1252,7 @@ Specify unified multi-channel alerting: every alert event (fire, intrusion, door
 ## CON-0043 [2026-03-28 21:45]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [BOTH] — serves individuals with VIS+DEM co-occurrence and buildings with VIS/DEM/NDV populations
 **Populations involved:** VIS, DEM, NDV/AUT, IntD, DBL
 **Items involved:** All C-items, D-02, D-06, F-01 zone boundaries
@@ -1283,7 +1283,7 @@ Apply ≥50% LRV best-practice target consistently to all contrast-dependent pro
 ## CON-0044 [2026-03-28 21:45]
 **Mode:** Internal
 **Confidence:** MODERATE (theoretical) / HIGH (haptic continuity)
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTRA-INDIVIDUAL] — a person with VIS+MOB co-occurrence relies on haptic pathway for both navigation and postural support
 **Populations involved:** ALL (theoretical); VIS, DBL, MOB (haptic continuity)
 **Items involved:** Part 1 (§1.4 theoretical framework), all G-items, C-04
@@ -1318,7 +1318,7 @@ Part 1 §1.4: cite ecological affordance framework as theoretical foundation. Sp
 ## CON-0045 [2026-03-28 21:45]
 **Mode:** Internal (case study evidence)
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 1 evidence methodology + Part 12 case studies. Route to Part 1 and Part 12 drafting.
 **Type:** N/A — methodological finding, not a specification connection
 **Populations involved:** VIS, PAIN, OFS (absence); DEM, NDV/AUT, MOB (presence)
 **Items involved:** Part 1 (evidence methodology), Part 13 (case studies)
@@ -1350,7 +1350,7 @@ Part 1 evidence methodology: add evidence confidence weighting — provisions va
 ## CON-0046 [2026-03-28 21:45]
 **Mode:** Internal (case study evidence)
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Type:** [INTER-GROUP] — NDV/AUT and NDV/MH are different diagnostic groups co-occupying the same inpatient ward
 **Populations involved:** NDV/AUT, NDV/MH
 **Items involved:** A-16, F-01, D-05, CON-0019 items
@@ -1383,7 +1383,7 @@ Part 7/8: document as mandatory provision — Zone 3 + environmental refuge spec
 ## CON-0047 [2026-03-28 21:45]
 **Mode:** Internal (case study evidence)
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 7/8 methodology. Route to Part 7/8 drafting.
 **Type:** N/A — methodological limitation
 **Populations involved:** ALL
 **Items involved:** Part 7/8 methodology (§7.1 / §8.2)
@@ -1416,7 +1416,7 @@ Part 7/8 §7.1/§8.2 methodology note: explicit epistemic disclosure that confli
 ## CON-0048 [2026-03-28 21:45]
 **Mode:** Internal (case study evidence)
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 12 Economics. Route to Part 12 evidence integration.
 **Type:** [INTRA-INDIVIDUAL] — a person with MOB+DEM+PAIN benefits from home modification programme addressing all conditions
 **Populations involved:** MOB, DEM, PAIN, OFS, ALL
 **Items involved:** Part 12 (Economics)
@@ -1452,7 +1452,7 @@ Part 12: present as unified economic continuum — intervention at any scale is 
 ## CON-0049 [2026-03-28 21:45]
 **Mode:** Internal (case study evidence)
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 5 residential process + Part 7/8. Route to Part 5 and Part 7/8 drafting.
 **Type:** [INTRA-INDIVIDUAL] — a person with co-occurring disabilities needs both environment AND support/assessment framework
 **Populations involved:** ALL (MOB, NEU, DEM, OFS, PAIN primary evidence populations)
 **Items involved:** Part 5 (residential process specification), Part 7/8 items
@@ -1493,7 +1493,7 @@ Part 5: add process specification section — structured OT assessment as prereq
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** BAR, MOB, MOB/UPL
 **Items involved:** K-01, fold-down-grab-bar-specification
 **Gap register items:** NONE
@@ -1523,7 +1523,7 @@ Specify bariatric-rated fold-down grab bars (≥300 kg SWL) where BAR provision 
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** DEAF, VIS, DBL, DEM, IntD
 **Items involved:** D-05, wayfinding-dementia-spatial-design, cognitive-wayfinding-design
 **Gap register items:** GAP-CON-02
@@ -1556,7 +1556,7 @@ Elevate loop/linear circulation to Tier 0 universal provision (D-02 revision). M
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEAF, DBL
 **Items involved:** A-10, A-11, assistive-listening-systems, deafblind-built-environment-design
 **Gap register items:** GAP-CON-03, GAP-ALS-01
@@ -1586,7 +1586,7 @@ Add DBL as co-population for A-10/A-11 hearing loop items. Mechanism: residual h
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** VIS, DEAF, DBL, DEM, IntD
 **Items involved:** D-09, residential-entry-and-threshold, cognitive-wayfinding-design
 **Gap register items:** GAP-S4-R03, GAP-S4-R04, GAP-S4-R05, GAP-S4-R06
@@ -1618,7 +1618,7 @@ Recode D-09 as multi-population provision (DEM, VIS, DBL, IntD). Mechanism: spat
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** OFS, PAIN, MOB/AMB, DEM
 **Items involved:** E-14
 **Gap register items:** GAP-FDR-T0-04
@@ -1649,7 +1649,7 @@ Create new item: entrance recline seating ≤5 m from accessible entrance (E-14)
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** NEU, PAIN, OFS, MOB
 **Items involved:** A-09
 **Gap register items:** GAP-FDR-04
@@ -1680,7 +1680,7 @@ Extend A-09 resilient flooring to PAIN and NEU as co-populations. Flag PAIN appl
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** OFS, PAIN, MOB
 **Items involved:** threshold-and-level-access, residential-entry-and-threshold
 **Gap register items:** NONE
@@ -1710,7 +1710,7 @@ Add OFS and PAIN as co-populations for all threshold items (E-12, E-13). Mechani
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEM, NEU, OFS, PAIN
 **Items involved:** I-03
 **Gap register items:** GAP-FDR-01-b
@@ -1740,7 +1740,7 @@ Add DEM and NEU as co-populations for thermostatic shower valve specification. D
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** DEFERRED — new item needed (bedroom-bathroom adjacency ≤5 m). No existing Part 4 target. Route to item-creation backlog.
 **Populations involved:** OFS, PAIN, MOB/AMB
 **Items involved:** NONE
 **Gap register items:** GAP-FDR-02
@@ -1770,7 +1770,7 @@ Create new DAR item: bedroom-bathroom adjacency ≤5 m for OFS, PAIN, MOB/AMB po
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** BOTH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEM, NEU, MH, OFS
 **Items involved:** B-06, B-07
 **Gap register items:** GAP-CON-06-b, GAP-034-b
@@ -1801,7 +1801,7 @@ Add MH and OFS as co-populations for B-06/B-07 circadian lighting items. Mechani
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** VIS, DBL, DEM
 **Items involved:** C-04, D-02
 **Gap register items:** GAP-CON-01
@@ -1831,7 +1831,7 @@ Add DEM as co-population for TWSI items. Mechanism: continuous tactile route ser
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEAF, VIS, DBL, DEM, IntD
 **Items involved:** E-08, accessible-circulation-geometry
 **Gap register items:** GAP-CO03-07
@@ -1862,7 +1862,7 @@ Consolidate 1500+ mm corridor width as multi-population provision (DEAF, VIS, DB
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** LPA, MOB, OFS, PAIN, VIS
 **Items involved:** I-02, residential-kitchen-and-task-surfaces
 **Gap register items:** NONE
@@ -1893,7 +1893,7 @@ Add LPA, OFS, PAIN, VIS as co-populations for height-adjustable kitchen worktop 
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** NDV, OFS, PAIN, MH
 **Items involved:** F-02, F-04
 **Gap register items:** GAP-CON-15
@@ -1923,7 +1923,7 @@ Add MH as co-population for F-02/F-04 air quality items. Mechanism: chemical sti
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** OFS, PAIN, MOB/AMB
 **Items involved:** G-06
 **Gap register items:** GAP-FDR-03
@@ -1953,7 +1953,7 @@ Create new item: seated service counter option (≥1 per facility) for OFS, PAIN
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** DEFERRED — new item needed (outdoor shade on circulation). No existing Part 4 target. Route to item-creation backlog.
 **Populations involved:** OFS, PAIN, NEU
 **Items involved:** NONE
 **Gap register items:** GAP-FDR-05
@@ -1983,7 +1983,7 @@ Create new item: continuous shade on primary outdoor routes (natural or built) f
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** OFS, PAIN
 **Items involved:** NONE
 **Gap register items:** GAP-FDR-06
@@ -2012,7 +2012,7 @@ Create DAR item: bedroom electrical provision for adjustable bed (future provisi
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEM, IntD, NEU, NDV/AUT
 **Items involved:** D-02, cognitive-wayfinding-design
 **Gap register items:** GAP-CON-0030
@@ -2043,7 +2043,7 @@ Specify ≤2 route choices per decision point for DEM, IntD, NEU, NDV/AUT popula
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEM, NEU, NDV/AUT, OFS
 **Items involved:** NONE
 **Gap register items:** NONE
@@ -2074,7 +2074,7 @@ Elevate toilet visibility to multi-population provision (DEM, NEU, NDV/AUT, OFS)
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** BAR, MOB
 **Items involved:** bariatric-turning-radius-built-environment, accessible-circulation-geometry
 **Gap register items:** NONE
@@ -2104,7 +2104,7 @@ Flag standard MOB turning space (1500-1525 mm) as inadequate for BAR populations
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** CHD, LPA, MOB
 **Items involved:** H-01, reach-range-and-accessible-controls
 **Gap register items:** NONE
@@ -2134,7 +2134,7 @@ Note 400-600 mm control zone serves CHD, LPA, and seated MOB populations. Mechan
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV, MH, DEM, NEU
 **Items involved:** BIO-series
 **Gap register items:** GAP-CON-04
@@ -2165,7 +2165,7 @@ Consolidate biophilic/nature provisions as multi-population (NDV, MH, DEM, NEU).
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** OFS, PAIN
 **Items involved:** NONE
 **Gap register items:** GAP-FDR-07
@@ -2195,7 +2195,7 @@ Create new workplace item: supine rest space (quiet room with reclining surface)
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** OFS, NEU
 **Items involved:** NONE
 **Gap register items:** GAP-FDR-08
@@ -2225,7 +2225,7 @@ Create new item: entrance thermal transition zone (vestibule with cooling) for O
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Populations involved:** DEAF, VIS, DEM, NDV/AUT
 **Items involved:** deaf-spatial-design
 **Gap register items:** GAP-CON-0020
@@ -2256,7 +2256,7 @@ Specify matte/low-reflectance glazing at DEAF corridor junctions; position to av
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV/AUT, VIS
 **Items involved:** NONE
 **Gap register items:** GAP-CON-0025
@@ -2286,7 +2286,7 @@ Create outdoor landscape design guidance integrating NDV sensory-responsive elem
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV/AUT, NEU, DEM
 **Items involved:** A-16, sensory-room-user-control
 **Gap register items:** GAP-CON-0026
@@ -2316,7 +2316,7 @@ Elevate user control principle to cross-population doctrine (NDV, NEU, DEM). Mec
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 4 POE methodology section, not individual item. Route to Part 4 preamble drafting.
 **Populations involved:** ALL
 **Items involved:** Part 4 POE
 **Gap register items:** NONE
@@ -2346,7 +2346,7 @@ Specify IDEA Audit or equivalent as POE tool for accessibility verification. Evi
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** ALL
 **Items involved:** Part 1 structure
 **Gap register items:** GAP-CON-0032
@@ -2376,7 +2376,7 @@ Note 2025 scoping review validation of guidebook item category structure. Flag s
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** MOB, OFS, PAIN
 **Items involved:** R-LAU
 **Gap register items:** GAP-LAU-01, GAP-LAU-02
@@ -2406,7 +2406,7 @@ Add OFS and PAIN as co-populations for laundry appliance riser specification. Me
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** DEFERRED — room matrices (Parts 6/7). Route to matrix population pass when DBL/IntD columns added.
 **Populations involved:** DBL, IntD
 **Items involved:** All room matrices
 **Gap register items:** GAP-S4-R01 through GAP-S4-N07
@@ -2437,7 +2437,7 @@ Systematically add DBL and IntD provisions to all room matrices. DBL: tactile co
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** VIS, DEAF, DBL
 **Items involved:** B-10, visual-alerting-and-wayfinding-light
 **Gap register items:** NONE
@@ -2467,7 +2467,7 @@ Create integrated visual alerting specification serving DEAF/VIS/DBL. Coordinate
 **Mode:** Internal
 **Confidence:** HIGH
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** DEFERRED — DAR items in Part 10. Route to Part 10 drafting.
 **Populations involved:** ALL
 **Items involved:** DAR items, residential-dar-provisions-priority-register
 **Gap register items:** GAP-CON-12, GAP-NEW-12
@@ -2497,7 +2497,7 @@ Present adattabilità and visitability as complementary DAR models: adattabilit�
 **Mode:** Internal
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** DEAF, VIS, DBL, NDV
 **Items involved:** A-02, A-08, A-13
 **Gap register items:** NONE
@@ -2526,7 +2526,7 @@ Flag English-language evidence limitation in acoustic items. Note stronger evide
 **Mode:** Internal
 **Confidence:** SPECULATIVE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** ALL
 **Items involved:** Part 8
 **Gap register items:** GAP-054
@@ -2557,7 +2557,7 @@ Flag cross-population conflict resolution as under-researched domain. Note guide
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** ALL
 **Items involved:** Part 1 framework
 **Gap register items:** NONE
@@ -2587,7 +2587,7 @@ Add salutogenic Sense of Coherence as supplementary theoretical lens in Part 1. 
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV/MH, MH
 **Items involved:** A-16, Part 5 residential
 **Gap register items:** NONE
@@ -2617,7 +2617,7 @@ Add TID evidence caveat to MH provisions: design features alone are necessary bu
 **Mode:** External
 **Confidence:** SPECULATIVE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV/ADHD, NDV/SENS
 **Items involved:** A-02, A-08, A-16
 **Gap register items:** NONE
@@ -2646,7 +2646,7 @@ Flag misophonia as emerging NDV/SENS subpopulation for acoustic specification. M
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV/AUT, NDV/ADHD, DEM
 **Items involved:** Part 1 framework, wayfinding items
 **Gap register items:** CON-0024
@@ -2676,7 +2676,7 @@ Extend prospect-refuge theory in Part 1 to prospect-refuge-context; add NDV as v
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** ALL
 **Items involved:** Part 4 POE
 **Gap register items:** CON-0029
@@ -2706,7 +2706,7 @@ Reference isUD alongside IDEA Audit as POE evaluation tool in Part 4. isUD offer
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** MOB, ALL
 **Items involved:** K-01, bathroom items
 **Gap register items:** NONE
@@ -2735,7 +2735,7 @@ Add Carnemolla 2025 to bathroom BPC as Co-1 evidence. Key finding: regulatory co
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** NDV, ALL
 **Items involved:** Part 1 framework, workplace items
 **Gap register items:** NONE
@@ -2764,7 +2764,7 @@ Add "cognitive well-being" framing to Part 1 alongside sensory processing model.
 **Mode:** External
 **Confidence:** MODERATE
 **Type:** INTER-GROUP
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Populations involved:** ALL
 **Items involved:** Part 1 jurisdiction matrix
 **Gap register items:** NONE
@@ -2811,7 +2811,7 @@ Review for jurisdiction-specific residential accessibility data. Potential updat
 
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTRA-INDIVIDUAL] — manual wheelchair user develops PAIN (shoulder) from inadequate ramp gradient
 **Populations involved:** MOB, PAIN
 **Items involved:** Ramp items (E-series)
@@ -2841,7 +2841,7 @@ Add PAIN as co-population for ramp specifications. Frame 1:20 gradient as both e
 
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — stair descent is higher-risk event for multiple populations
 **Populations involved:** MOB, NEU, DEM, PAIN, VIS
 **Items involved:** Stair items, handrail items (G-series)
@@ -2873,7 +2873,7 @@ Add NEU, DEM, PAIN, VIS as co-populations for stair descent and riser consistenc
 
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Type:** [INTER-GROUP] — EU building occupants interacting with digital interfaces at point of building entry/use
 **Populations involved:** DEAF, VIS, NDV (digital interface users in EU member states)
 **Items involved:** H-series items (self-service terminals, touchscreens, BLE beacons, building management interfaces)
@@ -2904,7 +2904,7 @@ Add EAA compliance note to all H-series items: installations in EU member states
 
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 12 Economics. Route to Part 12 evidence integration.
 **Type:** [INTER-GROUP] — all occupants benefit from reduced lifetime housing adaptation costs
 **Populations involved:** ALL
 **Items involved:** Part 12 (Economics)
@@ -2937,7 +2937,7 @@ Part 12 economics section: add argument — all major government programmes fund
 
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — OTs across jurisdictions converge on three priority provisions
 **Populations involved:** MOB, OFS, PAIN (primary DAR populations)
 **Items involved:** DAR items, visitability items, E-series (threshold), I-series (bathroom/shower)
@@ -2969,7 +2969,7 @@ Add Wellecke 2022 as Tier 1 OT empirical evidence for visitability priority orde
 
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 1 framework (Kawa Model). Route to Part 1 drafting.
 **Type:** [BOTH] — framing principle affecting all item specifications
 **Populations involved:** ALL
 **Items involved:** Part 1 (framework), all item specifications
@@ -3001,7 +3001,7 @@ Part 1 §1.4 theoretical framework: establish Kawa Model as primary writing-lang
 
 **Mode:** Internal
 **Confidence:** MODERATE
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 12 Economics (Nordic grant model). Route to Part 12 evidence integration.
 **Type:** [INTER-GROUP] — policy model comparison for design-stage economics argument
 **Populations involved:** ALL
 **Items involved:** Part 12 (Economics)
@@ -3032,7 +3032,7 @@ Part 12 economics: cite Nordic model as best-practice grant benchmark (uncapped,
 
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Type:** [INTER-GROUP] — multi-population stair descent specification
 **Populations involved:** MOB, NEU, DEM, PAIN, VIS, OFS
 **Items involved:** Stair items, corridor/seating height items
@@ -3064,7 +3064,7 @@ Part 1 methodology: add explicit statement that dimensional specifications are b
 ## CON-0101 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — HVAC system type affects acoustic environment for all occupants
 **Populations involved:** NEU/MS, OFS, PAIN, NDV/AUT, DEAF
 **Items involved:** F-07, F-08, A-01, A-02, A-08
@@ -3096,7 +3096,7 @@ Add cross-reference in F-07 and F-08: "HVAC system selection must achieve NC-25 
 ## CON-0102 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation inserted)
 **Type:** [INTRA-INDIVIDUAL] — OFS/MCAS user experiences both thermal and chemical triggers from the same HVAC system
 **Populations involved:** OFS/MCAS, NDV (chemical sensitivity), PAIN
 **Items involved:** F-07, F-08, F-04, F-06
@@ -3131,7 +3131,7 @@ Create F-category coherence note in Part 4 preamble to Category F: "F-04 (Air Qu
 ## CON-0103 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — ceiling hoist structural provision affects grab bar mounting and wet room layout
 **Populations involved:** MOB, UPL, NEU, OFS
 **Items involved:** I-04, G-03, G-04, Part 9 §9.5
@@ -3166,7 +3166,7 @@ Add reciprocal cross-references: G-03 add note "Where ceiling hoist provision (I
 ## CON-0104 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — nurse call system serves DBL population through vibrotactile channel
 **Populations involved:** DBL, DEAF, MOB, DEM, OFS, PAIN
 **Items involved:** H-05, K-04, B-10, H-04
@@ -3198,7 +3198,7 @@ Add to H-05 cross-reference: "K-04 (Vibrotactile Alert — in DBL-designated car
 ## CON-0105 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — nurse call/emergency response interacts with ceiling hoist emergency lowering
 **Populations involved:** MOB, UPL, NEU, OFS
 **Items involved:** H-05, I-04
@@ -3227,7 +3227,7 @@ Add to I-04: "Hoist motor to include manual emergency lowering mechanism operabl
 ## CON-0106 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** MEDIUM
-**Disposition:** PENDING
+**Disposition:** DEFERRED — Part 5 §5.2 / Part 3 §3.8-§3.9 structural linkage. Route to cross-reference-resolver.
 **Type:** [STRUCTURAL] — Part 5 conflict resolution table references items not formally connected
 **Populations involved:** ALL
 **Items involved:** Part 5 §5.2, Part 3 §3.8/§3.9, all items referenced in conflict resolution table
@@ -3259,7 +3259,7 @@ OP-G (Part 3 §3.8/3.9 methodology review) addresses this. No item specification
 ## CON-0107 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTRA-INDIVIDUAL] — ceiling hoist user may also require thermal zoning in care bedroom
 **Populations involved:** MOB, NEU, OFS, PAIN
 **Items involved:** I-04, F-07, F-08
@@ -3288,7 +3288,7 @@ Add coordination note to I-04: "Where F-07 supplemental radiant heating is speci
 ## CON-0108 [2026-04-03 05:27]
 **Mode:** Internal
 **Confidence:** HIGH
-**Disposition:** PENDING
+**Disposition:** CONSUMED — session_2026-04-07 (Part 4 annotation verified)
 **Type:** [INTER-GROUP] — F-08 entrance vestibule interacts with E-series entrance items
 **Populations involved:** OFS, NEU/MS, MOB, VIS, DEM
 **Items involved:** F-08, E-01, E-06, E-13, E-14

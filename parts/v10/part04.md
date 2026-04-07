@@ -268,6 +268,7 @@ All mechanical plant: mounted on vibration isolation pads
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 
+<!-- CON-0055 [MODERATE]: Cushioned/resilient flooring serves MOB (WBV reduction), PAIN (joint impact reduction per GAP-B4-09), NEU (fall impact mitigation). Currently MOB-only; PAIN and NEU clinical rationales documented in respective BPCs but not cross-referenced. -->
 **Applicable Groups:** PAIN (fibromyalgia), NEU, NDV · OFS
 <!-- CON-0005: HVAC vibration transmission triggers PAIN allodynia and OFS PEM; floating plant room eliminates pathway -->
 
@@ -510,6 +511,7 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 
 ### A-16 Sensory Room / Quiet Room Provision
 
+<!-- CON-0046 [HIGH]: CS-17 (NHS CAMHS, NDTi 2022) documents NDV/MH ward environments actively harmful to NDV/AUT co-occupants. Sensory rooms in MH settings must be distinct from MH de-escalation rooms — different clinical purpose, different specification. -->
 <!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Tier 0 universal — one per occupied floor plate. -->
 <!-- CON-0023 [HIGH]: Audit against Al-Harasis taxonomy — spatial configuration (layout topology) is underspecified relative to finish materials. Add note on approach route (no high-stimulation zones on path to A-16). --> (≥8 m², one per floor or per 500 m² GFA)
 
@@ -1197,6 +1199,8 @@ without structural intervention. See Part 12 §12.4.1.
 
 ### D-05 Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)
 
+<!-- CON-0046 [HIGH]: In MH inpatient settings, D-05 low-stimulation spaces are critical for NDV/AUT patients. MH de-escalation rooms do not meet NDV/AUT sensory needs (CS-17 NDTi 2022). -->
+<!-- CON-0051 [HIGH]: Loop/linear circulation with no dead-ends serves DEAF (visual scan), VIS (tactile memorisation), DBL (tactile navigation), DEM (disorientation prevention), IntD (cognitive load reduction). Tier 0 candidate — see CON-0001. -->
 **Applicable Groups:** NDV, PCS, MH, OFS · PAIN
 <!-- D2-41: D2-41: low-stimulation retreat reduces exertion load for OFS; pain flare prevention -->
 
@@ -1345,6 +1349,7 @@ at any stage. See Part 12 §12.4.1.
 
 ### D-10 Transparent Glazed Panels in Internal Partitions
 
+<!-- CON-0074 [HIGH]: DeafSpace glazed junctions for DEAF visual advance warning potentially conflict with VIS glare, DEM reflective surface confusion, NDV visual noise. Requires matte glazing + strategic placement. Resolution: Part 5 multi-population conflict. -->
 **Applicable Groups:** VIS, DEM, MH, DEAF · OFS
 <!-- D2-41: D2-41: visual sightlines reduce navigation effort and disorientation -->
 
@@ -1568,6 +1573,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 ### E-06 Level Entry (Zero Step at All Accessible Entrances)
 
+<!-- CON-0056 [HIGH]: Zero-threshold (13-15 mm max) specified for MOB caster wheels also serves OFS (step-elimination prevents PEM) and PAIN (reduces joint loading). Add OFS, PAIN to Applicable Groups. -->
 **Applicable Groups:** MOB, VIS, DEM, OFS · DEAF · DBL · NDV/MH · PAIN
 <!-- CON-0009: Zero threshold eliminates exertion barrier and PAIN vibration trigger at each entry -->
 <!-- CON-0007: CON-0007: Tier 0 companion-width at entries: primary routes ≥1500mm clear. Level entry + wide path = universal. -->
@@ -1872,6 +1878,7 @@ Sensory zoning is the deliberate organisation of a building's sensory environmen
 
 ### F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
 
+<!-- CON-0046 [HIGH]: Sensory gradient critical for NDV/AUT in MH inpatient settings — CS-17 documents MH ward sensory environments as actively harmful to AUT co-occupants. -->
 **Applicable Groups:** NDV, PCS, AUT, MH, DEM, OFS
 
 **Description:** The complete building journey from arrival to primary occupied space is organised so that sensory load decreases progressively. Entry/reception: highest acceptable load. Transition zones: intermediate. Primary occupied spaces: lowest load. No abrupt step-change in either direction.
@@ -1935,6 +1942,7 @@ possibly layout modification. See Part 12 §12.4.1.
 
 ### F-02 Olfactory Control (Fragrance-Free Zones in Sensitive Areas)
 
+<!-- CON-0063 [MODERATE]: Fragrance-free policy serves NDV/MH (PTSD) via chemical stimuli as trauma triggers. Add NDV/MH to population coverage. Trauma-informed design framework confirms mechanism but does not cross-reference IAQ specifications. -->
 **Applicable Groups:** NDV, PAIN, MH, OFS · NDV/SENS
 <!-- CON-0015: CON-0015: olfactory control serves NDV/SENS alongside OFS/MCAS — multiple sensory pathways -->
 
@@ -1996,6 +2004,8 @@ intervention. See Part 12 §12.4.2.
 
 ### F-04 Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)
 
+<!-- CON-0063 [MODERATE]: MERV 13+ filtration serves MH/PTSD populations — chemical stimuli function as trauma triggers. Cross-reference F-02 fragrance-free. -->
+<!-- CON-0102 [HIGH]: [INTRA-INDIVIDUAL] OFS/MCAS thermal+chemical co-trigger. Individual radiant heating (F-07) must not use recirculated air without HEPA (F-04). Coordinate F-04 filtration with F-07 thermal zoning delivery method. -->
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity),
 
 PAIN (fragrance triggers), NEU (chemical sensitivity in PCS/ABI)
@@ -2127,10 +2137,12 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 ### F-06 Fragrance-Free Policy (Whole-Building Operational Standard)
 
+<!-- CON-0102 [HIGH]: F-06 fragrance-free whole-building policy coordinates with F-04 filtration and F-08 thermal vestibule to prevent OFS/MCAS chemical+thermal co-triggering. -->
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity), PAIN (fragrance triggers), NEU/PCS
 
 ### F-07 Thermal Zoning — Building-Wide Temperature Management
 
+<!-- CON-0102 [HIGH]: [INTRA-INDIVIDUAL] OFS/MCAS. Individual supplemental radiant heating must not recirculate air — OFS/MCAS user experiences thermal and chemical triggers from same HVAC system. Coordinate with F-04 HEPA requirement. -->
 **Applicable Groups:** NEU/MS · SCI · OFS · PAIN · DEM · ALL
 <!-- CO-0003 new item. CON-0041: inter-room thermal differential ≤5°C safety specification. -->
 
@@ -2167,6 +2179,7 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 ### F-08 Thermal Transition — Heating and Cooling System Response
 
+<!-- CON-0102 [HIGH]: Thermal vestibule specification must coordinate with F-06 fragrance-free and F-04 MERV 13. OFS/MCAS intra-individual co-trigger: thermal transition + chemical exposure from vestibule air handling. -->
 **Applicable Groups:** NEU/MS · OFS · PAIN · DEM
 <!-- CO-0003 new item (formerly F-07 in CO-0003 draft; renumbered F-08 as F-07 = zoning). -->
 
@@ -2260,6 +2273,7 @@ Partitions); C-01 (Palette)
 **Evidence basis (OT):** PEOP Model (volition subsystem); Prospect-Refuge Theory. Defensible seating implements both Prospect-Refuge Theory (back-to-wall, sightline to exit satisfies the evolutionary preference for refuge with prospect) and PEOP's volition subsystem: the ability to choose a seating position that supports psychological safety is a fundamental occupational participation right for MH/PTSD users.
 
 ### G-02 Variety of Seating Types (Three Heights at Every Seating Area; Upholstered Options Throughout)
+<!-- CON-0100 [HIGH]: Seating height 450-500 mm reduces hip extensor moment 40% vs 380 mm (Rodosky et al. 1989 Tier 3). Multi-population specification: MOB (sit-to-stand), PAIN (joint moment), OFS (orthostatic transition), DEM (postural stability), NEU (neuromuscular weakness). -->
 <!-- CON-0003/A-17 absorbed: G-02 now includes upholstered seating throughout occupied spaces as an acoustic absorption and PAIN/OFS comfort provision. -->
 
 **Applicable Groups:** MOB, PAIN, AUT, DEM, ALL · OFS
@@ -2462,6 +2476,8 @@ within the primary waiting area (not a segregated accessible area) implements th
 
 ### H-01 All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)
 
+<!-- CON-0070 [HIGH]: Children reach range (400-600 mm) overlaps LPA and seated adult reach. Single height band serves CHD+LPA+MOB. CHD is Supp-only population — note overlap, do not add to main taxonomy. -->
+<!-- CON-0095 [MODERATE]: EAA (EU Directive 2019/882) applies to digital products embedded in buildings. All H-series digital interface items require EAA compliance note for EU jurisdictions. -->
 **Applicable Groups:** MOB, PAIN, DEM, UPL · OFS
 <!-- D2-41: D2-41: reaching above shoulder height is exertion trigger for OFS/PAIN -->
 
@@ -2664,6 +2680,7 @@ UPL users.
 
 ### I-02 Kitchen (One-Handed Operation Throughout)
 
+<!-- CON-0062 [MODERATE]: Height-adjustable worktop (685-900 mm) for MOB also serves LPA (lower reach), OFS/PAIN (seated work), VIS (consistent tactile surface height). Expand population coverage. -->
 **Applicable Groups:** UPL · OFS · PAIN · DEM
 <!-- CON-0013: CON-0013: knee clearance + one-handed operation eliminates sustained reach/stand — OFS/PAIN primary benefit -->
 
@@ -2837,6 +2854,7 @@ Threshold drain: if a drain channel at room threshold is unavoidable, maximum 6 
 
 ### K-01 Intervenor Adjacency at Service Counters
 
+<!-- CON-0050 [HIGH]: Fold-down grab bar 200 kg SWL (MOB) conflicts with bariatric 300 kg requirement. BAR → Supp. Part 4 only per project-standards. Note structural mounting for future load upgrade as DAR provision. -->
 
 > **THIN-BASE DISCLOSURE:** Specifications in this item derive from Tier 2 sources (DbI guidelines, Sense UK) and Tier 4 (ISO 23599:2019) only. No Tier 1 OT clinical research on DBL-specific built environment spatial provisions has been identified in any reviewed language. Specifications reflect expert consensus and DeafBlind-led guidance, not randomised or controlled evidence. Apply with co-design. See GAP-DBL-BE-01.
 
@@ -3202,6 +3220,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 ## E-14 Entrance Rest Seating
 
+<!-- CON-0054 [HIGH]: Entrance rest seating serves OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause). Tier 0 candidate per GAP-FDR-T0-04. Four populations, independent clinical rationales. -->
 # E-14 — Entrance Rest Seating
 
 **Category:** E — Entrances and Circulation  
