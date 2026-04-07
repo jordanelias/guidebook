@@ -89,7 +89,36 @@ co1_findings:
   - NO CONTRADICTIONS FOUND
 native_standards_pass_summary: {complete: [EN, DE, SV, NO, FR], partial: [DA, FI, ZH, JA, NL, ES, PT, KO, IT], not-run: []}
 companion_networks: {loaded: [], scholar_targets: 0, retrieved: 0}
-citation_mining: {backward: 0, forward: 0, sources_added: 0}
+citation_mining: {backward: 2, forward: 1, sources_added: 1, date: "2026-04-07 03:03"}
+
+citation_mining_log:
+  date: 2026-04-07 03:03
+  targets_attempted:
+    - Putthinoi 2017 (PMID 28656108) — forward citations via web search
+    - US Access Board Ch.4 Guide — reference list (web search)
+    - nullbarriere.de DIN 18040 commentary — reference list (web search)
+    - GAI Specifiers Guide — reference list (web search)
+  queries_run: 2
+  results:
+    - id: CM-01
+      source: "Brandt A et al. (2016). Experimental Studies of Wheelchair and Walker Users Passing Through Doors with Different Opening Force. In: Assistive Technology: From Research to Practice (AAATE 2016). IOS Press. DOI:10.3233/978-1-61499-684-2-612. PMID: 27534356."
+      tier: 3 (controlled empirical — n not reported in abstract; wheelchair + walker users)
+      finding: "30 N door opening force acceptable to 94.7% of wheelchair users; 40 N acceptable to 92.1%. Walker users: 30 N = 100% acceptable; 40 N = 87.5% acceptable."
+      relevance: "Empirical confirmation that ≤30 N is the minimum accessible threshold for the majority of wheelchair users. Supports AU/NO ≤20 N as best practice (conservative relative to empirical 30 N threshold). FR ≤50 N is clearly above the empirical acceptability range for a substantial minority of users."
+      bpc_action: ADD — new source strengthening operating force specification
+      status: ACCEPTED
+    - id: CM-02
+      source: US Access Board Guide Ch.4 — Accessible Routes (Entrances, Doors, Gates). No novel sources beyond those already in BPC. Tier 5 practitioner guide.
+      finding: Confirms ≤5 lbf (22.2 N) for door closer; lever handles; 1.5 inch clearance behind pulls. No sources beyond ADA 2010/ICC A117.1.
+      bpc_action: NONE — no new sources
+      status: NO-YIELD
+    - id: CM-03
+      source: Putthinoi 2017 (PMID 28656108) forward citations — web search (PubMed elink unavailable in environment)
+      finding: No forward-citation cluster identified beyond rehabilitation/AT domain. Original source (Thai suburban community home evaluation) confirmed as only Tier 1 source in the domain.
+      bpc_action: NONE
+      status: NO-YIELD
+  diminishing_return_gate: "2 consecutive no-yield sources after CM-01"
+  net_new_sources: 1 (CM-01)
 at_database_pass: not-run
 
 top_sources:
