@@ -215,7 +215,38 @@ Construction-stage decisions govern the cost of every future accessibility modif
 
 ### §1.7 CRPD Framework Alignment
 
-This guidebook grounds all provisions in Article 9 of the UN Convention on the Rights of Persons with Disabilities (CRPD, 2006). CRPD Article 9 establishes accessibility of the built environment as a legal obligation for 185 States Parties. The general principles of Article 3 (dignity, autonomy, non-discrimination, participation) provide the normative framework within which technical specifications are derived.
+#### §1.7.1 Treaty-Body Foundation
+
+This guidebook grounds all provisions in the UN Convention on the Rights of Persons with Disabilities (CRPD, 2006). Two CRPD articles are directly operative.
+
+**Article 9 — Accessibility (ex ante duty).** CRPD Article 9 establishes accessibility of the built environment as a legal obligation for 185 States Parties. CRPD General Comment No. 2 (GC2, 2014) clarifies that this obligation is *ex ante* — accessibility must be ensured in advance, not as a reactive response to an individual's request for access. Reasonable accommodation cannot substitute for accessible design. Universal design is the required standard. All buildings open to the public are subject to the Article 9 obligation, including housing. Existing buildings must be progressively made accessible; there is no blanket exemption for existing stock. GC2 requires states to adopt mandatory accessibility standards with enforcement and sanctions.
+
+**Article 5 — Equality and Non-Discrimination.** CRPD General Comment No. 6 (GC6, 2018) establishes that universal design is not only an Article 9 accessibility obligation — failure to provide accessible design constitutes disability-based discrimination under Article 5. The non-discrimination duty is *immediate* and not subject to progressive realisation. An inaccessible new building discriminates against disabled people from the date of occupation. This framing strengthens the legal foundation of the guidebook's specifications: each specification is not merely a technical recommendation but a design parameter whose absence creates a discriminatory condition.
+
+**Article 4.3 — Co-Design Obligation.** Article 4.3 requires that disabled people, through their representative organisations, be closely consulted and actively involved in the development of legislation and policies on disability. The design standards codified in this guidebook should be understood as instruments for implementing the CRPD — and their development should involve OPD (Organisation of Persons with Disabilities) consultation. See §1.3 for co-design obligations in practice.
+
+#### §1.7.2 The Universal Implementation Gap
+
+The CRPD Committee has reviewed more than 100 state parties. The International Disability Alliance's compilation of Article 9 Concluding Observations (updated September 2024) documents a consistent finding across all reviewed jurisdictions: the gap is not in legislation — most states have some form of accessible building regulation — but in enforcement, monitoring, and sanctions. Every reviewed jurisdiction receives the same core recommendation: establish comprehensive monitoring mechanisms; increase and enforce sanctions for non-compliance; ensure barrier-free access in buildings open to the public.
+
+This is not a developing-country-only finding. The pattern is universal, and it is structural. The accessible building standards codified in this guidebook are the design-technical content that states must enforce.
+
+Representative jurisdiction findings (confirming CF-2):
+
+- **India** (CRPD/C/IND/CO/1, 2019): Harmonised Guidelines for Accessible Built Environment exist; enforcement and OPD consultation remain weak.
+- **Philippines** (CRPD/C/PHL/CO/1, 2018): standard monitoring and sanctions pattern; limited implementation capacity.
+- **Indonesia** (CRPD/C/IDN/CO/1, 2022): limited OPD involvement in legislation; accessibility strategy incomplete.
+- **Nigeria** (Persons with Disabilities Accessibility Regulations 2023): passed but not enforced within one year of enactment.
+
+These are representative, not exceptional.
+
+#### §1.7.3 The Guidebook as Design Response to the CRPD
+
+The CRPD establishes *what* states must achieve (accessible built environments). It does not establish *how* environments should be designed to achieve accessibility. This guidebook occupies the design-specification gap that treaty bodies leave unfilled: it is the technical content that gives the CRPD's Article 9 obligation material form in the built environment.
+
+The general principles of Article 3 (dignity, autonomy, non-discrimination, participation) provide the normative framework within which specifications are derived. Dignity is the basis for the co-equal accessible entrance requirement (§1.1). Autonomy is the basis for individual occupant control specifications (H-02). Non-discrimination grounds the requirement that accessible features be architecturally integrated rather than visually segregated. Participation is the basis for emergency evacuation provisions for all building users (Appendix D).
+
+**Scope note on informal housing:** CRPD Articles 9 and 28 apply to all housing, including informal and self-built housing occupied by the majority of disabled people in the Global South. This guidebook's specifications are calibrated for formally constructed and regulated buildings, and their direct application to informal construction is limited. The absence of design guidance for accessible informal housing is the highest-priority gap in the global accessible housing evidence base (UN-Habitat Housing Handbook 2016; co1-housing-research-global-south BPC). This gap is explicitly acknowledged; it does not diminish the obligation. See §1.9 for formal scope of this document.
 
 ### §1.8 Evidence Frameworks
 
@@ -253,7 +284,29 @@ This derivation has two implications for practice. First, the values are not int
 
 ### §1.9 Scope
 
-This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part 2. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs.
+#### §1.9.2 Building Types Covered
+
+This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part 2. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles.
+
+#### §1.9.3 Formal Construction Scope
+
+The specifications in this guidebook are calibrated for formally constructed and regulated buildings — buildings constructed under building permit, in compliance with a building code, and subject to inspection and certification. This is not a limitation of intent; it is an honest description of the evidence base from which the specifications are drawn.
+
+Informal housing — self-built, incremental, and non-permitted construction — is occupied by the majority of disabled people in the Global South (UN-Habitat estimates 1 billion people live in informal settlements globally). The accessible design specifications in this document cannot be straightforwardly applied to informal construction contexts: they assume materials, structural tolerances, and regulatory compliance mechanisms that do not exist in informal or self-built environments. This is the highest-priority gap in accessible housing design globally. It is named here as an explicit limitation, not resolved.
+
+Where this guidebook is applied in affordable housing, social housing, or reconstruction contexts: the UN-Habitat Accessibility of Housing Handbook (2016) is the primary reference for adapting these principles to lower-cost and lower-resource construction contexts.
+
+#### §1.9.4 This Guidebook as a Framework for Professional Judgment
+
+This guidebook provides a starting framework for professional judgment — not a substitute for it. The specifications in Part 4 are population-level provisions (Tier 0 and Tier 1 of the Three-Tier Design Hierarchy). They are necessary but not sufficient for producing an accessible environment for a specific individual in a specific building. They define the design floor from which individual assessment begins.
+
+For any specific building and user, OT assessment (Part 9) and co-design with the disabled person resolve the individual's position within the Tier 1 specification ranges. No specification in this document should be applied as a fixed prescription without considering the actual functional capacities of the actual occupants.
+
+Designers, planners, and regulators using this guidebook retain full professional responsibility for the environments they design, approve, or specify. The guidebook's provisions represent the best available evidence, synthesised across multiple populations and jurisdictions; they are not a guarantee of accessibility for any individual case.
+
+#### §1.9.5 Conflict With Statutory Requirements
+
+Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs.
 
 *Next: Part 2 — Disability Categories*
 
