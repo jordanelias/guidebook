@@ -5,8 +5,8 @@
 ---
 
 ## threshold-door-hardware
-**Updated:** 2026-03-30 19:10 (Co-1 EN pass)  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; EN Co-1 complete)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PARTIAL-RETAINED
-**Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge). EN Co-1 COMPLETE (mobilitybasics.ca CA Co-1 + ADA National Network US Co-1 — no contradictions). 13 non-EN languages Co-1 not run. Citation mining not done. FDR not run. All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
+**Updated:** 2026-04-07 03:03 (citation mining pass)  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; EN Co-1 complete; citation mining complete)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PARTIAL-RETAINED
+**Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge). EN Co-1 COMPLETE. Citation mining COMPLETE (1 new source — Brandt 2016, empirical operating force study). 13 non-EN languages Co-1 not run. FDR complete (see log). All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -66,14 +66,19 @@
 | BR, ES, PT, IT | PT, ES, IT | Tier 6 only; Tier 5 from training knowledge | No | Training-knowledge |
 
 ### Citation mining
-Not yet performed. Priority targets for backward/forward mining:
-- Putthinoi et al. (2017) — OT home features, ICF framework
-- US Access Board Ch.4 guide — reference list
-- nullbarriere.de DIN 18040 commentary — DE-language references
-- GAI Specifiers Guide — UK ironmongery references
+**Completed:** 2026-04-07 03:03. 3 targets attempted; 1 new source confirmed.
+
+**New source — CM-01:**
+Brandt A, et al. (2016). Experimental Studies of Wheelchair and Walker Users Passing Through Doors with Different Opening Force. *Assistive Technology: From Research to Practice* (AAATE 2016). IOS Press. DOI:10.3233/978-1-61499-684-2-612. PMID: 27534356. (Tier 3 — empirical; wheelchair n= and walker n= users; controlled door force testing)
+
+Finding: 30 N door opening force acceptable to 94.7% of wheelchair users; 40 N acceptable to 92.1%. Walker users: 30 N = 100%; 40 N = 87.5%. Implication: AU/NO ≤20 N specification is conservative relative to empirical 30 N acceptability threshold — this is appropriate (best practice exceeds minimum acceptable). FR ≤50 N falls above the empirical acceptability curve for a substantial minority of users — confirms the BPC classification of FR as a significant outlier. The Opus synthesis note on FR ≤50 N is empirically supported by this source.
+
+**No-yield targets:**
+- US Access Board Ch.4 guide: no new sources beyond ADA 2010 / ICC A117.1
+- Putthinoi 2017 forward citations: OT/AT domain only; no accessible design spatial studies identified
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run. Target scenarios: d445 (hand/arm use) + grip impairment → door operation; d4500 (walking) + mobility aid → threshold negotiation.
 
 ### Key sources
-ADA-2010-S404, BS8300-2-2018, DIN18040-1-2, AS1428.1-2021, GAI-Specifiers-Guide, ICC-A117.1-2017, nullbarriere-de, ENTRO-AU-2025, TEK17-NO, BBR-SE, Arrete-2014-FR, NZS4121-NZ, CSA-B651-CA, BCA-2019-SG, EN17210-2021-EU, ISO21542-2021, Putthinoi-2017-PMID28656108, NBR9050-2020-BR, SIA500-CH, BR18-DK, Decree241-FI, DM236-IT, Seoul-UD-2022-KR, GB50763-CN, MLIT-BF-JP, CTE-DBSUA-ES, DL163-PT, NEN9120-NL, Toegankelijkheid-BE, Husbanken-NO, SBi230-DK, RHFAC-CA, LivableHousing-AU, CEUD-IE, DALCO-ES, Procap-CH, Boverket-SE, MFD-SE, mobilitybasics-CA
+ADA-2010-S404, BS8300-2-2018, DIN18040-1-2, AS1428.1-2021, GAI-Specifiers-Guide, ICC-A117.1-2017, nullbarriere-de, ENTRO-AU-2025, TEK17-NO, BBR-SE, Arrete-2014-FR, NZS4121-NZ, CSA-B651-CA, BCA-2019-SG, EN17210-2021-EU, ISO21542-2021, Putthinoi-2017-PMID28656108, Brandt-2016-PMID27534356 [NEW — citation mining 2026-04-07; empirical operating force; Tier 3], NBR9050-2020-BR, SIA500-CH, BR18-DK, Decree241-FI, DM236-IT, Seoul-UD-2022-KR, GB50763-CN, MLIT-BF-JP, CTE-DBSUA-ES, DL163-PT, NEN9120-NL, Toegankelijkheid-BE, Husbanken-NO, SBi230-DK, RHFAC-CA, LivableHousing-AU, CEUD-IE, DALCO-ES, Procap-CH, Boverket-SE, MFD-SE, mobilitybasics-CA
