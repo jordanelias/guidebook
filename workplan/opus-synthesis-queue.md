@@ -9,7 +9,7 @@
 | Opus synthesis complete | 44 |
 | Merged (redirect stubs) | 4 |
 | Stubs (research blocked) | 2 |
-| **Ready for Opus synthesis** | **19** |
+| **Ready for Opus synthesis** | **13** |
 
 Tier A (population-specific): 1
 Tier B (topic-specific evidence): 26
@@ -112,6 +112,7 @@ Each session:
 | O8 | COMPLETE | 2026-03-29 |
 | O9 | COMPLETE | 2026-03-29 |
 | O10 | COMPLETE | 2026-03-29 |
+| O-CO0005-P1 | COMPLETE | 2026-04-07 |
 
 ## Already Complete (21 slugs)
 
@@ -183,16 +184,16 @@ circadian-lighting-melanopic-edi, visual-fire-alarm-seizure-safety, deaf-classro
 ## CO-0005 Phase 1 Research Complete — Synthesis Ready (2026-04-07)
 
 All Phase 1 GAPs (LRP-01 through LRP-05) and Phase 2 initial pass (LRP-11) are now OPEN-RESEARCHED.
-Total new slugs ready for Opus synthesis: 6.
+**Opus synthesis COMPLETE 2026-04-07** for all 6 slugs. Total remaining: 0.
 
 | Slug | Status | Synthesis priority | Notes |
 |---|---|---|---|
-| `thermoregulation-built-environment` | PARTIAL LOG | HIGH — needed for Part 4 thermal specs + conflict matrices | FMS vs MS/SCI conflict requires Opus arbitration; tropical gap requires scope statement |
-| `sensory-space-global-south` | PARTIAL LOG | HIGH — PAS 6463 cultural transfer question is unresolved | Collectivist culture transfer problem: Opus to determine whether new BPC section or scope disclaimer |
-| `wayfinding-global-south` | PARTIAL LOG | MEDIUM — ISO specs confirmed transferable; implementation/maintenance gap only | Primarily a policy/enforcement finding, not a specification revision |
-| `bathroom-typology-global-south` | PARTIAL LOG | HIGH — squat toilet gap requires design decision | Sejong Toilet is Co-1/Tier 1 but unpublished; Opus to determine citation validity |
-| `co1-housing-research-global-south` | COMPLETE LOG | HIGH — formal/informal divide scope question must be resolved before any Global South specification is written | Output = scope decision + prioritised gap list |
-| `crpd-implementation-built-environment` | PARTIAL LOG | MEDIUM — mapping only, feeds existing slugs | No new specifications; identifies treaty-body endorsement for existing specs |
+| `thermoregulation-built-environment` | OPUS COMPLETE | HIGH — needed for Part 4 thermal specs + conflict matrices | FMS vs MS/SCI conflict requires Opus arbitration; tropical gap requires scope statement |
+| `sensory-space-global-south` | OPUS COMPLETE | HIGH — PAS 6463 cultural transfer question is unresolved | Collectivist culture transfer problem: Opus to determine whether new BPC section or scope disclaimer |
+| `wayfinding-global-south` | OPUS COMPLETE | MEDIUM — ISO specs confirmed transferable; implementation/maintenance gap only | Primarily a policy/enforcement finding, not a specification revision |
+| `bathroom-typology-global-south` | OPUS COMPLETE | HIGH — squat toilet gap requires design decision | Sejong Toilet is Co-1/Tier 1 but unpublished; Opus to determine citation validity |
+| `co1-housing-research-global-south` | OPUS COMPLETE | HIGH — formal/informal divide scope question must be resolved before any Global South specification is written | Output = scope decision + prioritised gap list |
+| `crpd-implementation-built-environment` | OPUS COMPLETE | MEDIUM — mapping only, feeds existing slugs | No new specifications; identifies treaty-body endorsement for existing specs |
 
 **Recommended Opus session sequence:**
 1. `co1-housing-research-global-south` first — scope decision gates all other Global South synthesis
