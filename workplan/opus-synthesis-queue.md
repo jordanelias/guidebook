@@ -176,3 +176,26 @@ circadian-lighting-melanopic-edi, visual-fire-alarm-seizure-safety, deaf-classro
 | `dementia-built-environment` | P2 expansion | Expansion review — Global South dementia-environment evidence vs. existing synthesis. | After Phase 3-D LOG |
 | `intellectual-disability-built-environment-design` | P2 expansion | Expansion review — communal/family care typologies vs. current Western individual-unit assumptions. | After Phase 3-E LOG |
 | `post-occupancy-evaluation-global` | P3 new | What performs, what fails, what is unknown in Global South contexts. | After Phase 4 LOG |
+
+
+---
+
+## CO-0005 Phase 1 Research Complete — Synthesis Ready (2026-04-07)
+
+All Phase 1 GAPs (LRP-01 through LRP-05) and Phase 2 initial pass (LRP-11) are now OPEN-RESEARCHED.
+Total new slugs ready for Opus synthesis: 6.
+
+| Slug | Status | Synthesis priority | Notes |
+|---|---|---|---|
+| `thermoregulation-built-environment` | PARTIAL LOG | HIGH — needed for Part 4 thermal specs + conflict matrices | FMS vs MS/SCI conflict requires Opus arbitration; tropical gap requires scope statement |
+| `sensory-space-global-south` | PARTIAL LOG | HIGH — PAS 6463 cultural transfer question is unresolved | Collectivist culture transfer problem: Opus to determine whether new BPC section or scope disclaimer |
+| `wayfinding-global-south` | PARTIAL LOG | MEDIUM — ISO specs confirmed transferable; implementation/maintenance gap only | Primarily a policy/enforcement finding, not a specification revision |
+| `bathroom-typology-global-south` | PARTIAL LOG | HIGH — squat toilet gap requires design decision | Sejong Toilet is Co-1/Tier 1 but unpublished; Opus to determine citation validity |
+| `co1-housing-research-global-south` | COMPLETE LOG | HIGH — formal/informal divide scope question must be resolved before any Global South specification is written | Output = scope decision + prioritised gap list |
+| `crpd-implementation-built-environment` | PARTIAL LOG | MEDIUM — mapping only, feeds existing slugs | No new specifications; identifies treaty-body endorsement for existing specs |
+
+**Recommended Opus session sequence:**
+1. `co1-housing-research-global-south` first — scope decision gates all other Global South synthesis
+2. `thermoregulation-built-environment` + `bathroom-typology-global-south` — specification decisions
+3. `sensory-space-global-south` — scope/transfer decision
+4. `wayfinding-global-south` + `crpd-implementation-built-environment` — mapping passes
