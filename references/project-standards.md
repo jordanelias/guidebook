@@ -334,3 +334,28 @@ RULE: UN-Habitat Housing Accessibility Handbook (2016) is the only identified de
 CONDITION: Any BPC entry, specification, or scope discussion involving informal settlements, slum upgrading, or affordable housing contexts.
 ACTION: Reference UN-Habitat Housing Accessibility Handbook (2016). Do not treat formal new-construction standards as applicable to informal contexts without this bridge source.
 DATE: 2026-04-06 06:10
+
+
+---
+
+## Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+
+RULE: Thermoregulation-impaired populations require a narrower ambient temperature range than general accessible building standards. Working target: 18–22°C. Floor: 18°C (WHO minimum; FMS cold threshold). Ceiling: 22°C (MS Uhthoff onset; SCI heat risk begins). Above 24°C exceeds WHO vulnerable individual threshold — not acceptable for thermoregulation-impaired occupants at rest.
+CONDITION: Any specification, conflict resolution, or design guidance involving indoor thermal environment for NEU (MS, SCI), OFS (POTS, MCAS), or PAIN (FMS) populations.
+ACTION: Apply 18–22°C as the working target range. Flag it as derived from clinical evidence synthesis, not from any single accessible building standard or OT CPG (none addresses this specifically).
+DATE: 2026-04-07 00:22
+
+RULE: FMS thermal profile is opposite to MS/SCI. FMS has cold pain hypersensitivity (reduced CPT in 14/17 studies); warmth relieves FMS pain. MS/SCI require cool ambient. This is a confirmed co-occurrence conflict. Resolution: cool default (18–20°C) protects higher-harm population (neurological deterioration > pain exacerbation); individual local warmth provision for FMS occupants.
+CONDITION: Any co-occurrence conflict analysis, Part 5 resolution, or Part 7 conflict note involving FMS + MS or FMS + SCI in shared spaces.
+ACTION: Apply harm-asymmetry rule: neurological deterioration (MS/SCI) is the higher-harm outcome. Set ambient default to 18–20°C. Provide individual local warmth provision for FMS (heated seating, radiant panel, additional clothing insulation) as supplementary provision.
+DATE: 2026-04-07 00:22
+
+RULE: No OT CPG (AOTA, RCOT, CAOT, OT Australia, or any other confirmed body) addresses indoor thermal environment control as a home modification domain. When citing OT evidence for thermal environment specifications, this gap must be disclosed. Specifications in this domain are derived from clinical neurology/rehabilitation evidence (Tier 1–3) and WHO housing standards (Tier 4), not from OT practice guidelines.
+CONDITION: Any BPC entry, item specification, or clinical guidance citing OT support for thermal environment home modification.
+ACTION: Note: "No OT CPG addresses thermal environment as a home modification domain [confirmed GAP-LRP-01 Phase 1-A search 2026-04-07]. Specifications derived from clinical evidence and WHO housing standards."
+DATE: 2026-04-07 00:22
+
+RULE: In hot-humid tropical contexts (ambient >32°C, relative humidity >70%), passive cooling alone cannot maintain ambient ≤22°C for thermoregulation-impaired occupants. Mechanical cooling or dehumidification + fan is medically necessary for SCI tetraplegia (≥C8) in these conditions — not a comfort option. Accessible housing specifications in tropical/subtropical contexts must include mechanical cooling capability as a designed-in feature.
+CONDITION: Any Part 4 specification, item code, or DAR provision for thermoregulation or climate control in tropical or subtropical jurisdictions (IN, ZA, NG, KE, ID, PH, TH, BD, SG, BR coastal, CO/EC coastal, EG).
+ACTION: State that mechanical cooling capability is required as a designed-in feature, not an optional retrofit, for SCI tetraplegia and heat-sensitive MS populations in hot-humid tropical contexts. Cross-reference CON-0101, CON-0107, and F-07.
+DATE: 2026-04-07 00:22
