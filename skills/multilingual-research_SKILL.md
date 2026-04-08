@@ -10,6 +10,8 @@ description: >
   CHECK before / LOG after every run.
 ---
 
+<!-- Updated: CO-0006 2026-04-08 — metadata capture mandate at research time; disposition field in LOG -->
+
 **Model:** Sonnet 4.6 (search, extraction, Steps 1–4) · Opus 4.6 (best_practice_synthesis)
 **Opus routing:** Sonnet completes search → checkpoints to GitHub → flags synthesis for Opus session. Sonnet NEVER writes best_practice_synthesis.  
 
@@ -315,6 +317,12 @@ Backward: mine reference list. Forward: Google Scholar "cited by". Log counts in
 
 Mandatory. Skipping is an error. LOG is blocked until pre-LOG completeness check passes (see below).
 
+Set `disposition` field in search-log entry:
+- `INTEGRATED` — if sources were written into BPC Key sources table in this same session
+- `PENDING` — if sources were found but BPC Key sources table has not yet been updated
+- `DEFERRED` — if sources were found but deliberately held back (state reason)
+- `DISCARDED` — if sources retrieved but excluded (state reason)
+
 ---
 
 ## Pre-LOG Completeness Check (mandatory — executes before every LOG write)
@@ -392,6 +400,8 @@ Group findings by concept cluster, not by language or jurisdiction. For each clu
 **Citation mining:** `Source | Direction | New sources added`  
 
 **Source list:** `# | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI`
+
+**Metadata capture mandate (CO-0006 2026-04-08):** At research time — not at ISW time — record full bibliographic metadata for every confirmed source. Do not defer metadata to downstream stages. For each source in the source list above, the metadata you record IS the BPC Key sources table row. Copy directly into the BPC `### Key sources` table when writing the LOG. Fields required: Authors · Year · Title · Journal/Publisher · DOI/URL · Tier · Lang · Jurisdictions. Missing any field = named gap in LOG output, not a silent omission.
 
 ---
 
