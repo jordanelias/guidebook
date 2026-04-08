@@ -92,3 +92,31 @@
 - [ ] SPECULATIVE → P3 gap item
 
 ---
+
+### CON-0037
+
+**Status:** CONSUMED
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration; from archive register)
+**Target item(s):** E-05, E-10
+**Target population(s):** OFS, PAIN, MOB/AMB, DEM
+**Evidence tier:** —
+**Filed:** 2026-03-28
+**Applied:** —
+
+**Connection:** Entrance recline seating within 5 m of all accessible entrances serves OFS, PAIN, MOB/AMB, and DEM with no identified conflicts. More stringent than existing E-10 (≤25 m interval) and complements E-05 (weather protection). PARTIAL Tier 0 status confirmed for entrance-specific application; neutral for VIS, DEAF, NEU, NDV.
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| PAIN/OFS FDR 2026-03-26 | THIN (expert consensus) | OFS, PAIN | MOB/AMB, DEM |
+| RCOT HAwD 2019 + Roxburgh 2024 BJOT | Co-2 / Tier 1 | MOB, OFS, PAIN | Entrance-specific recline requirement |
+
+**Action required:** Create new Tier 0 item **E-14 Entrance Rest Seating** — reclinable or tilt-capable seating within 5 m of threshold, seat height ≥480 mm AFF, arms both sides, alcove ≥900 mm wide, ≥200 mm recess from circulation path. Cross-reference E-05 and E-10. Evidence tier: THIN pending empirical validation.
+
+**Disposition notes:** - [x] Draft E-14 as new Tier 0 item — parts/v10/e14-entrance-rest-seating.md
+- [x] Cross-reference E-05 and E-10
+- [x] Update GAP-FDR-T0-04 → CONSUMED (gap_register.md updated 2026-03-28)
+
+---
