@@ -3317,3 +3317,163 @@ Add note to F-08 vestibule specification: "Both vestibule doors to meet E-01 spe
 
 ### Disposition
 - [x] MEDIUM → APPLIED 2026-04-03: F-08 Retrofit section updated with E-series coordination note (both vestibule doors E-01; level entry E-06 both thresholds; E-13 lighting continuity; E-14 seating within vestibule). E-01 cross-ref updated with F-08 vestibule reciprocal note. E-06/E-13/E-14 coordination embedded in F-08 note — separate item edits deferred to Phase 5 cross-reference-resolver pass.
+
+
+---
+
+## CON-0109 [2026-04-08 00:50]
+
+**Mode:** External
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — all populations benefit from smart-home-ready infrastructure as DAR provision
+**Populations involved:** MOB, NEU, VIS, DEAF, DEM, OFS, PAIN, ALL
+**Items involved:** H-02, H-04, Part 10 DAR provisions
+**Gap register items:** NONE
+**Source:** External scan 2026-04-07 — OT-led smart home AT research
+
+### Connection description
+Two 2025 OT studies demonstrate mainstream smart home technology (smart speakers, home automation) delivered through structured OT-led service delivery as formal assistive technology. Ding et al. (JMIR Rehabil Assist Technol 12:e70855, 2025) developed the ASSIST intervention: OT assessment → technology recommendation → installation → training. Significant functional independence gains (p<.001) at ~$5000 per client. Mun (AJOT 79(5):7905205190, 2025) confirmed OT-led smart home solutions improve occupational performance, quality of life, and psychosocial impact across physical disability populations. Lee et al. (Disability & Rehab AT, 2025) identified population-differentiated adoption barriers: voice recognition failures (DEAF), automation trust (IntD/DEM), privacy concerns (MOB), cognitive overload (NEU).
+
+Guidebook gap: No Part 4 item specifies smart-home-ready infrastructure (wiring, conduit routing, Wi-Fi access point placement, smart speaker mounting locations, power at assistive technology positions). Part 10 DAR does not include smart-home readiness as a designed-in provision. H-02 (Individual Environmental Control) addresses manual controls but not infrastructure for voice-activated or automated environmental control systems.
+
+### Evidence basis
+| Source | Tier | Current citation context | Proposed extension |
+|---|---|---|---|
+| Ding et al. 2025 (JMIR Rehabil Assist Technol 12:e70855) | 1 | Not cited | H-02, Part 10 DAR — OT-led MSHT intervention model |
+| Mun 2025 (AJOT 79(5):7905205190) | 1 | Not cited | H-02, Part 10 DAR — smart home as formal AT |
+| Lee et al. 2025 (Disability & Rehab AT) | 2 | Not cited | Part 9 §9.5 — population-differentiated technology prescription |
+
+### Proposed synthesis direction
+Create DAR provision for smart-home-ready infrastructure: (1) conduit from distribution board to all primary occupied rooms, (2) Wi-Fi AP position at ceiling level in circulation hub, (3) power outlet at smart speaker mounting height (1200 mm AFF) in kitchen, bedroom, living room, (4) structured cabling to entrance intercom position for future video door integration. Tier 1 evidence supports OT-led prescription model. Infrastructure is architectural; devices are Tier 2 OT-prescribed.
+
+### Disposition
+- [x] HIGH → item-specification-writer briefing (H-02, Part 10 DAR)
+
+---
+
+## CON-0110 [2026-04-08 00:50]
+
+**Mode:** External
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — all populations benefit from accessible-ready modular/prefab housing standard
+**Populations involved:** ALL
+**Items involved:** Part 10 DAR, Part 12 Economics
+**Gap register items:** NONE
+**Source:** External scan 2026-04-07 — CAN-ASC-2.11 (Accessibility Standards Canada 2025–2026)
+
+### Connection description
+Accessibility Standards Canada is developing CAN-ASC-2.11: Accessible-Ready Modular and Prefabricated Housing, building on CAN-ASC-2.8:2025 (Accessible-Ready Housing). The standard addresses barriers specific to modular/prefab construction: module joints crossing accessible circulation routes, service chases interfering with future grab bar or ceiling hoist installation, and connection details that prevent disassembly for accessibility modification. Key provisions include: joints routed away from accessible-ready circulation; framed openings at accessible-ready zones crossing panel joints; fasteners permitting disassembly without damage; service routing through designated chases avoiding non-load-bearing walls designated as accessible-ready.
+
+This is the first international standard explicitly addressing DAR within modular/prefab construction methods. Modular housing is 35–50% cheaper per square foot than site-built (HUD data) and can be delivered in 2–3 months — the lowest-cost, fastest DAR delivery pathway. The guidebook's Part 10 DAR provisions do not currently address modular/prefab-specific constraints or opportunities. Part 12 Economics does not cite modular/prefab as a cost reduction pathway for accessible housing production.
+
+### Evidence basis
+| Source | Tier | Current citation context | Proposed extension |
+|---|---|---|---|
+| CAN-ASC-2.11 NOI (SCC, 2025–2026) | 5 | Not cited | Part 10 DAR, Part 12 Economics |
+| CAN-ASC-2.8:2025 Accessible-Ready Housing | 5 | Cited in DAR context | Part 10 — parent standard for 2.11 |
+| Accessibility Standards Canada guide (Feb 2026) | 5 | Not cited | Part 10 — module/panel design guidance |
+
+### Proposed synthesis direction
+Add modular/prefab-specific DAR provisions to Part 10: (1) module joint location relative to accessible circulation, (2) service chase coordination with future grab bar/hoist zones, (3) design-for-disassembly requirement at accessible-ready wall positions, (4) DAR documentation requirement in modular housing package. Add Part 12 section on modular/prefab as cost-reduction pathway for accessible housing at scale. Add CAN-ASC-2.11 to jurisdiction tracker.
+
+### Disposition
+- [x] HIGH → jurisdiction-tracker update + Part 10 DAR + Part 12 Economics
+
+---
+
+## CON-0111 [2026-04-08 00:50]
+
+**Mode:** External
+**Confidence:** MODERATE
+**Disposition:** PENDING
+**Type:** [STRUCTURAL] — sustainability and accessibility agendas converge at design-for-disassembly
+**Populations involved:** ALL
+**Items involved:** Part 10 DAR, Part 1 Foundations, Part 12 Economics
+**Gap register items:** NONE
+**Source:** External scan 2026-04-07 — Adaptable Building Conference 2026 + DFA/DFD research
+
+### Connection description
+The Adaptable Building Conference 2026 (Nieuwe Instituut, Rotterdam) and recent research (Djukanovic et al., Buildings 2025, 15(6):862) document the convergence of sustainability-driven design-for-disassembly (DFD) with accessibility-driven design-for-adaptable-readiness (DAR). Both fields require: reversible connections, non-load-bearing partition walls that can be removed without structural impact, service routing through designated chases, and documented modification pathways. The sustainability framing (circularity, reduced demolition waste) provides an economic and environmental co-benefit argument for DAR provisions that the guidebook currently presents solely through an accessibility lens.
+
+Marc Koehler's Superlofts model (user-driven adaptable housing) demonstrates commercial viability of adaptable frameworks at market rates. The modular wall systems for circularity (Panels by Knauf) provide manufactured product solutions for the non-load-bearing partition requirement that DAR already specifies.
+
+### Evidence basis
+| Source | Tier | Current citation context | Proposed extension |
+|---|---|---|---|
+| Adaptable Building Conference 2026 programme | Industry/grey | Not cited | Part 1 Foundations — convergence argument |
+| Djukanovic et al. 2025 (Buildings 15(6):862) | 3 | Not cited | Part 10 DAR — DFA/DFD alignment |
+| Superlofts (Koehler) | Case study | Not cited | Part 12 Economics — commercial viability |
+
+### Proposed synthesis direction
+Part 1 should cite the sustainability-accessibility convergence as a strategic framing advantage: DAR provisions deliver both accessibility adaptability and circular economy benefits. Part 10 can cross-reference DFD terminology and standards to access the sustainability policy and funding ecosystem. Part 12 can cite Superlofts as a commercial model demonstrating market-rate adaptable housing.
+
+### Disposition
+- [ ] MODERATE → P2 gap item (Part 1 framing, Part 10 DFD cross-reference, Part 12 case study)
+
+---
+
+## CON-0112 [2026-04-08 00:50]
+
+**Mode:** External
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [INTER-GROUP] — economic evidence for universal design at construction vs retrofit
+**Populations involved:** ALL
+**Items involved:** Part 12 Economics
+**Gap register items:** NONE
+**Source:** External scan 2026-04-07 — JLC Cost vs Value 2025 + Page Foundation UniversALL 2025
+
+### Connection description
+Two new economic data points for universal design:
+
+(1) JLC/Zonda Cost vs Value 2025: Universal design bathroom remodel now returns 61% ROI — a +12% year-over-year gain, the strongest improvement in the bathroom category. This is the first time UD-specific ROI data appears in the industry's primary cost-vs-value benchmark, providing market-verified economic evidence that universal design adds resale value.
+
+(2) ADA National Network data (cited at Page Foundation UniversALL symposium, Austin, July 2025): adding inclusive features during new construction increases project costs by less than 1%. Retrofitting the same features costs 2–20% of project cost. The 20× cost multiplier is the strongest available economic argument for design-stage accessibility and DAR.
+
+Part 12 currently asserts the construction-vs-retrofit cost differential but does not cite the ADA National Network as source, and does not include the JLC UD bathroom ROI figure.
+
+### Evidence basis
+| Source | Tier | Current citation context | Proposed extension |
+|---|---|---|---|
+| JLC/Zonda Cost vs Value 2025 | Industry benchmark | Not cited | Part 12 — UD-specific ROI data |
+| ADA National Network (via Page Foundation 2025) | 4 | Not cited with source attribution | Part 12 — <1% new construction premium |
+| Page Foundation UniversALL proceedings 2025 | Industry/grey | Not cited | Part 12 — symposium context |
+
+### Proposed synthesis direction
+Part 12 §12.4 should cite both sources: (1) UD bathroom ROI 61% as market evidence that UD features retain/add value — not just cost; (2) ADA National Network <1% premium and 2–20% retrofit multiplier as the authoritative US source for the construction-vs-retrofit cost argument. These complement existing economics BPC content and provide the citable figures Part 12 currently lacks.
+
+### Disposition
+- [x] HIGH → Part 12 Economics evidence integration
+
+---
+
+## CON-0113 [2026-04-08 00:50]
+
+**Mode:** External
+**Confidence:** HIGH
+**Disposition:** PENDING
+**Type:** [STRUCTURAL] — US federal legislative development affecting economics argument
+**Populations involved:** ALL
+**Items involved:** Part 12 Economics
+**Gap register items:** NONE
+**Source:** External scan 2026-04-07 — H.R. 8547 Universal Design Standard Tax Incentive Act
+
+### Connection description
+The Universal Design Standard Tax Incentive Act (H.R. 8547) proposes refundable federal tax credits for construction projects meeting universal design standards. If enacted, it would be the first US federal tax instrument specifically incentivising universal design (distinct from ADA compliance, which is mandatory and unfunded). Cited at Page Foundation UniversALL symposium (Austin, July 2025) alongside existing state-level programmes.
+
+Part 12 Economics covers international grant programmes (UK DFG, AU NDIS, Nordic schemes, etc.) and existing US programmes (VA SAH/SHA, HATC) but does not track pending legislation that would create new incentive mechanisms. H.R. 8547 represents a policy model shift: from funding individual retrofit to incentivising design-stage universal design at project level.
+
+### Evidence basis
+| Source | Tier | Current citation context | Proposed extension |
+|---|---|---|---|
+| H.R. 8547 (US Congress) | 6 (pending legislation) | Not cited | Part 12 — pending US incentive mechanism |
+| Page Foundation UniversALL 2025 | Industry/grey | Not cited | Part 12 — policy context |
+
+### Proposed synthesis direction
+Part 12 should note H.R. 8547 as pending legislation with status tracking. If enacted, it validates the guidebook's economic argument that design-stage UD is more cost-effective than retrofit. The refundable credit model is distinct from existing deduction-based approaches (HATC) and grant-based approaches (DFG). Track status; do not cite as enacted.
+
+### Disposition
+- [x] HIGH → Part 12 Economics (pending legislation tracker)
+
