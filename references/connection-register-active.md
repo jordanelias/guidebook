@@ -1,3 +1,10 @@
+<!-- ============================================================ -->
+<!-- ARCHIVED — CO-0006 Phase 0B-1 — 2026-04-08                  -->
+<!-- This file has been migrated to references/connections/        -->
+<!-- Do NOT read or write this file. Use the topic-directory       -->
+<!-- structure: references/connections/_index.md + topic files.   -->
+<!-- ============================================================ -->
+
 # Connection Register — Active (PENDING)
 
 **Split from:** connection-register.md  
