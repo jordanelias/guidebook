@@ -2,16 +2,36 @@
   "_meta": {
     "version": "0.1",
     "created": "2026-04-08",
-    "phase": "2A \u2014 first batch (5 BPC files)",
-    "total_specs": 21,
+    "phase": "2A \u2014 batch 2 complete (25 BPC files total)",
+    "total_specs": 73,
     "bpc_files_processed": [
       "baw",
       "tdh",
       "acg",
       "srs",
-      "dem"
+      "dem",
+      "ALL-ENV",
+      "ALL-FW-stub",
+      "ALL-ROOMS-stub",
+      "DBL",
+      "DEAF",
+      "DEM",
+      "IntD",
+      "MOB",
+      "NDV-MH-stub",
+      "NDV",
+      "NEU",
+      "OFS",
+      "PAIN",
+      "VIS",
+      "bathrooms-and-wet-areas/bathroom-typology-global-south",
+      "bathrooms-and-wet-areas/fold-down-grab-bar-specification",
+      "communication-and-alerts/assistive-listening-systems",
+      "communication-and-alerts/deaf-acoustic-built-environment",
+      "communication-and-alerts/deaf-classroom-reverberation-time",
+      "communication-and-alerts/deaf-spatial-design"
     ],
-    "note": "Automated extraction \u2014 parameter classification approximate. All entries require Opus synthesis pass to confirm recommendation_strength. item_code assignments require ISW cross-reference validation."
+    "note": "Batch 1 (5 files): automated regex extraction. Batch 2 (20 files): structured Sonnet reading pass. All entries require Opus synthesis pass for recommendation_strength. item_code assignments for cross-cutting slugs marked [CROSS-CUTTING] or [UNASSIGNED] pending ISW cross-reference validation. Qualitative specs (value_min/max None) record parameter existence without quantified threshold."
   },
   "specifications": [
     {
@@ -577,6 +597,1595 @@
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Wayfinding/orientation is second-most addressed category (34% of items, 58 studies) | EN (Bowes et al. 2019; DSDC EADDAT) | Tier 3 |",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0022",
+      "slug": "ALL-ENV",
+      "item_code": "[CROSS-CUTTING]",
+      "parameter": "door_clear_width_minimum",
+      "value_type": "fixed",
+      "value_min": 850,
+      "value_max": 850,
+      "value_median": 850,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "ALL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "DE",
+        "FR",
+        "CA",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "ALL-ENV",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum clear door width \u2014 universal consensus across jurisdictions",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0023",
+      "slug": "ALL-ENV",
+      "item_code": "[CROSS-CUTTING]",
+      "parameter": "corridor_clear_width_minimum",
+      "value_type": "fixed",
+      "value_min": 1200,
+      "value_max": 1200,
+      "value_median": 1200,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "ALL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "DE",
+        "FR",
+        "CA",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "ALL-ENV",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum clear corridor width \u2014 universal",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0024",
+      "slug": "ALL-ENV",
+      "item_code": "[CROSS-CUTTING]",
+      "parameter": "turning_circle_wheelchair",
+      "value_type": "fixed",
+      "value_min": 1500,
+      "value_max": 1500,
+      "value_median": 1500,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "ALL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "DE",
+        "FR",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "NO"
+      ],
+      "divergence_note": "NO: 1600mm",
+      "opus_synthesized": false,
+      "bpc_source_slug": "ALL-ENV",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Wheelchair turning circle \u2014 1500mm majority; NO requires 1600mm",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0025",
+      "slug": "ALL-ENV",
+      "item_code": "[CROSS-CUTTING]",
+      "parameter": "reach_range_high",
+      "value_type": "range",
+      "value_min": 400,
+      "value_max": 1200,
+      "value_median": 800,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "ALL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "ALL-ENV",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "OT assessment resolves position within range at Tier 2",
+      "percentile_basis": null,
+      "notes": "Forward reach range \u2014 controls and hardware",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0026",
+      "slug": "ALL-ENV",
+      "item_code": "A-01",
+      "parameter": "threshold_height_maximum",
+      "value_type": "fixed",
+      "value_min": 13,
+      "value_max": 13,
+      "value_median": 13,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "ALL"
+      ],
+      "jurisdictions_supporting": [
+        "AU",
+        "UK"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "US: 6mm (ADA); AU/UK: 13mm (AS1428/Part M)",
+      "opus_synthesized": false,
+      "bpc_source_slug": "ALL-ENV",
+      "recommendation_strength": "Conditional",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Maximum threshold height \u2014 divergence US vs AU/UK",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0027",
+      "slug": "MOB",
+      "item_code": "C-01",
+      "parameter": "corridor_clear_width_wheelchair",
+      "value_type": "range",
+      "value_min": 1200,
+      "value_max": 1500,
+      "value_median": 1350,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "DE",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "MOB",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Clear corridor width for wheelchair \u2014 1200 minimum, 1500 preferred",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0028",
+      "slug": "MOB",
+      "item_code": "G-03",
+      "parameter": "grab_bar_height_toilet",
+      "value_type": "range",
+      "value_min": 650,
+      "value_max": 900,
+      "value_median": 750,
+      "unit": "mm",
+      "evidence_tier": "Tier 2-3",
+      "populations": [
+        "MOB",
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "NO",
+        "DE",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "NO"
+      ],
+      "divergence_note": "NO: 800mm fixed (NS 11005)",
+      "opus_synthesized": false,
+      "bpc_source_slug": "MOB",
+      "recommendation_strength": "Strong at Tier 0 (presence); Conditional at Tier 1 (height)",
+      "tier_2_note": "OT co-design resolves position within 650\u2013900 range at Tier 2",
+      "percentile_basis": null,
+      "notes": "Grab bar height \u2014 bilateral wall mounting for MOB",
+      "conditions": [
+        {
+          "condition": "MOB single user",
+          "value_min": 650,
+          "value_max": 900
+        },
+        {
+          "condition": "MOB/UPL unilateral weakness",
+          "value_min": 700,
+          "value_max": 800
+        }
+      ]
+    },
+    {
+      "spec_id": "SPEC-0029",
+      "slug": "MOB",
+      "item_code": "A-01",
+      "parameter": "door_clear_width_wheelchair",
+      "value_type": "range",
+      "value_min": 850,
+      "value_max": 920,
+      "value_median": 850,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "DE",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "MOB",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Clear door width for wheelchair passage",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0030",
+      "slug": "MOB",
+      "item_code": "C-01",
+      "parameter": "turning_space_t_turn",
+      "value_type": "fixed",
+      "value_min": 1500,
+      "value_max": 1500,
+      "value_median": 1500,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "MOB",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "T-turn manoeuvre space \u2014 1500mm clear",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0031",
+      "slug": "MOB",
+      "item_code": "I-01",
+      "parameter": "seat_height_range",
+      "value_type": "range",
+      "value_min": 440,
+      "value_max": 500,
+      "value_median": 470,
+      "unit": "mm",
+      "evidence_tier": "Tier 1-2",
+      "populations": [
+        "MOB",
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "US"
+      ],
+      "jurisdictions_divergent": [
+        "DE"
+      ],
+      "divergence_note": "DE: 420\u2013480mm (DIN 18040)",
+      "opus_synthesized": false,
+      "bpc_source_slug": "MOB",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "OT determines optimal height at Tier 2",
+      "percentile_basis": null,
+      "notes": "Seat height for transfer \u2014 MOB",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0032",
+      "slug": "MOB",
+      "item_code": "H-01",
+      "parameter": "worktop_height_seated",
+      "value_type": "range",
+      "value_min": 720,
+      "value_max": 800,
+      "value_median": 760,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "MOB",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "OT co-design at Tier 2",
+      "percentile_basis": null,
+      "notes": "Seated worktop height \u2014 MOB kitchen/workstation",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0033",
+      "slug": "VIS",
+      "item_code": "D-04",
+      "parameter": "luminance_contrast_ratio_lrv",
+      "value_type": "fixed",
+      "value_min": 30,
+      "value_max": 30,
+      "value_median": 30,
+      "unit": "%",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "VIS"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "NZ",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "US: no quantified LRV minimum in ADA",
+      "opus_synthesized": false,
+      "bpc_source_slug": "VIS",
+      "recommendation_strength": "Strong at Tier 0 (UK/AU/NZ/ISO)",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum LRV difference \u2014 visual contrast for wayfinding",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0034",
+      "slug": "VIS",
+      "item_code": "D-01",
+      "parameter": "tactile_ground_surface_indicator_depth",
+      "value_type": "fixed",
+      "value_min": 5,
+      "value_max": 5,
+      "value_median": 5,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "VIS"
+      ],
+      "jurisdictions_supporting": [
+        "AU",
+        "UK",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "US: different geometry (truncated dome)",
+      "opus_synthesized": false,
+      "bpc_source_slug": "VIS",
+      "recommendation_strength": "Strong at Tier 0 (presence); Conditional (geometry)",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "TGSI depth \u2014 tactile warning strips",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0035",
+      "slug": "VIS",
+      "item_code": "K-01",
+      "parameter": "illuminance_general_min",
+      "value_type": "range",
+      "value_min": 200,
+      "value_max": 500,
+      "value_median": 300,
+      "unit": "lux",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "VIS"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "VIS",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum illuminance \u2014 general circulation for VIS",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0036",
+      "slug": "VIS",
+      "item_code": "D-04",
+      "parameter": "sign_character_height_min",
+      "value_type": "range",
+      "value_min": 15,
+      "value_max": 50,
+      "value_median": 25,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "VIS"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "US",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "VIS",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum character height on signs \u2014 VIS at standard viewing distance",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0037",
+      "slug": "DEAF",
+      "item_code": "F-01",
+      "parameter": "hearing_loop_coverage",
+      "value_type": "fixed",
+      "value_min": 100,
+      "value_max": 100,
+      "value_median": 100,
+      "unit": "%",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "US: ADA requires assistive listening but not loop specifically",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEAF",
+      "recommendation_strength": "Strong at Tier 0 (assembly venues)",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Hearing loop field coverage \u2014 100% of audience area",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0038",
+      "slug": "DEAF",
+      "item_code": "F-01",
+      "parameter": "hearing_loop_signal_strength",
+      "value_type": "range",
+      "value_min": -3,
+      "value_max": 3,
+      "value_median": 0,
+      "unit": "dB",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEAF",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Hearing loop signal level \u2014 IEC 60118-4: \u00b13dB of reference",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0039",
+      "slug": "DEAF",
+      "item_code": "K-03",
+      "parameter": "reverberation_time_speech",
+      "value_type": "fixed",
+      "value_min": 0.8,
+      "value_max": 0.8,
+      "value_median": 0.8,
+      "unit": "s",
+      "evidence_tier": "Tier 3-4",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "DE"
+      ],
+      "divergence_note": "DE: \u22640.6s in educational settings (DIN 18041)",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEAF",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "RT60 ceiling \u2014 DEAF speech intelligibility; lower for education",
+      "conditions": [
+        {
+          "condition": "General assembly",
+          "value_min": 0.6,
+          "value_max": 0.8
+        },
+        {
+          "condition": "Educational",
+          "value_min": 0.4,
+          "value_max": 0.6
+        }
+      ]
+    },
+    {
+      "spec_id": "SPEC-0040",
+      "slug": "DEAF",
+      "item_code": "F-07",
+      "parameter": "visual_alarm_flash_rate",
+      "value_type": "range",
+      "value_min": 0.5,
+      "value_max": 3,
+      "value_median": 1,
+      "unit": "Hz",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "US",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEAF",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Visual alarm flash rate \u2014 0.5\u20133Hz (seizure-safe range per BS8300/ADA)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0041",
+      "slug": "DEAF",
+      "item_code": "F-07",
+      "parameter": "visual_alarm_candela_min",
+      "value_type": "fixed",
+      "value_min": 75,
+      "value_max": 75,
+      "value_median": 75,
+      "unit": "cd",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "US",
+        "UK"
+      ],
+      "jurisdictions_divergent": [
+        "AU"
+      ],
+      "divergence_note": "AU: different calculation basis",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEAF",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Visual alarm minimum intensity \u2014 75 cd (ADA/BS 8300)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0042",
+      "slug": "DBL",
+      "item_code": "D-01",
+      "parameter": "tactile_path_width_minimum",
+      "value_type": "fixed",
+      "value_min": 600,
+      "value_max": 600,
+      "value_median": 600,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DBL"
+      ],
+      "jurisdictions_supporting": [
+        "ISO",
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DBL",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Tactile pathway clear width \u2014 DBL unobstructed navigation",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0043",
+      "slug": "DBL",
+      "item_code": "D-01",
+      "parameter": "tactile_ground_surface_indicator_depth",
+      "value_type": "fixed",
+      "value_min": 5,
+      "value_max": 5,
+      "value_median": 5,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DBL"
+      ],
+      "jurisdictions_supporting": [
+        "ISO",
+        "AU",
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DBL",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "TGSI depth \u2014 DBL (same as VIS; double-coded)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0044",
+      "slug": "DBL",
+      "item_code": "E-01",
+      "parameter": "braille_cell_height",
+      "value_type": "fixed",
+      "value_min": 0.6,
+      "value_max": 0.6,
+      "value_median": 0.6,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DBL"
+      ],
+      "jurisdictions_supporting": [
+        "ISO",
+        "US",
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DBL",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Braille dot height \u2014 Grade 1 contracted braille per ISO 17049",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0045",
+      "slug": "NDV",
+      "item_code": "K-02",
+      "parameter": "background_noise_level_max",
+      "value_type": "fixed",
+      "value_min": 35,
+      "value_max": 35,
+      "value_median": 35,
+      "unit": "dB",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "NDV",
+        "NDV/AUT"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "US: ANSI S12.60 sets 35dBA in classrooms; general spaces no standard",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NDV",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Background noise \u2014 35dB(A) max for NDV/AUT focus environments",
+      "conditions": [
+        {
+          "condition": "Educational",
+          "value_min": null,
+          "value_max": 35
+        },
+        {
+          "condition": "Sensory room",
+          "value_min": null,
+          "value_max": 30
+        }
+      ]
+    },
+    {
+      "spec_id": "SPEC-0046",
+      "slug": "NDV",
+      "item_code": "K-01",
+      "parameter": "illuminance_sensory_room_max",
+      "value_type": "fixed",
+      "value_min": 300,
+      "value_max": 300,
+      "value_median": 300,
+      "unit": "lux",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "NDV",
+        "NDV/AUT"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NDV",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "User control resolves at Tier 2",
+      "percentile_basis": null,
+      "notes": "Maximum illuminance \u2014 sensory room (dimmable from 0\u2013300 lux)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0047",
+      "slug": "NDV",
+      "item_code": "A-16",
+      "parameter": "sensory_relief_space_area_min",
+      "value_type": "fixed",
+      "value_min": 8,
+      "value_max": 8,
+      "value_median": 8,
+      "unit": "m\u00b2",
+      "evidence_tier": "Tier 3",
+      "populations": [
+        "NDV",
+        "NDV/AUT"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NDV",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum floor area \u2014 sensory relief / de-escalation space",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0048",
+      "slug": "NDV",
+      "item_code": "K-02",
+      "parameter": "rt60_sensory_room_max",
+      "value_type": "fixed",
+      "value_min": 0.3,
+      "value_max": 0.3,
+      "value_median": 0.3,
+      "unit": "s",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "NDV",
+        "NDV/AUT"
+      ],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NDV",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "RT60 max \u2014 NDV sensory room (PAS 6463:2022)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0049",
+      "slug": "NDV",
+      "item_code": "K-01",
+      "parameter": "colour_temperature_range",
+      "value_type": "range",
+      "value_min": 2700,
+      "value_max": 6500,
+      "value_median": 4000,
+      "unit": "K",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "NDV",
+        "NDV/AUT"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NDV",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "User control mandatory at Tier 2",
+      "percentile_basis": null,
+      "notes": "Colour temperature range \u2014 tunable white for NDV (user-controlled)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0050",
+      "slug": "OFS",
+      "item_code": "I-02",
+      "parameter": "seating_interval_distance_max",
+      "value_type": "fixed",
+      "value_min": 50,
+      "value_max": 50,
+      "value_median": 50,
+      "unit": "m",
+      "evidence_tier": "Co-1/Tier 5",
+      "populations": [
+        "OFS"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "OFS",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Maximum distance between seating \u2014 OFS circulation routes (BS 8300)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0051",
+      "slug": "OFS",
+      "item_code": "K-04",
+      "parameter": "temperature_range_ofs",
+      "value_type": "range",
+      "value_min": 18,
+      "value_max": 22,
+      "value_median": 20,
+      "unit": "\u00b0C",
+      "evidence_tier": "Co-1/Tier 3",
+      "populations": [
+        "OFS"
+      ],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "OFS",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "Individual thermostat at Tier 2",
+      "percentile_basis": null,
+      "notes": "Ambient temperature range \u2014 OFS (thermoregulation sensitivity)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0052",
+      "slug": "NEU",
+      "item_code": "G-03",
+      "parameter": "grab_bar_height_bilateral",
+      "value_type": "range",
+      "value_min": 650,
+      "value_max": 900,
+      "value_median": 750,
+      "unit": "mm",
+      "evidence_tier": "Tier 2-5",
+      "populations": [
+        "NEU"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NEU",
+      "recommendation_strength": "Strong at Tier 0 (bilateral presence)",
+      "tier_2_note": "OT resolves height at Tier 2",
+      "percentile_basis": null,
+      "notes": "Bilateral grab bar height \u2014 NEU (stroke/ABI requiring both sides)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0053",
+      "slug": "NEU",
+      "item_code": "C-01",
+      "parameter": "corridor_width_bilateral_mobility_aid",
+      "value_type": "fixed",
+      "value_min": 1500,
+      "value_max": 1500,
+      "value_median": 1500,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "NEU"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "NEU",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Corridor clear width for bilateral frame users \u2014 NEU",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0054",
+      "slug": "PAIN",
+      "item_code": "I-01",
+      "parameter": "seat_height_pain_optimum",
+      "value_type": "range",
+      "value_min": 440,
+      "value_max": 520,
+      "value_median": 470,
+      "unit": "mm",
+      "evidence_tier": "Co-1/Tier 3",
+      "populations": [
+        "PAIN"
+      ],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "PAIN",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "OT assessment mandatory at Tier 2",
+      "percentile_basis": null,
+      "notes": "Seat height \u2014 PAIN (joint load reduction; avoid deep hip flexion)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0055",
+      "slug": "PAIN",
+      "item_code": "A-09",
+      "parameter": "floor_resilience_impact_absorption",
+      "value_type": "fixed",
+      "value_min": null,
+      "value_max": null,
+      "value_median": null,
+      "unit": "qualitative",
+      "evidence_tier": "Tier 3",
+      "populations": [
+        "PAIN"
+      ],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "PAIN",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Resilient flooring specification \u2014 PAIN joint impact reduction (no quantified standard; expert consensus)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0056",
+      "slug": "DEM",
+      "item_code": "D-02",
+      "parameter": "corridor_loop_geometry",
+      "value_type": "fixed",
+      "value_min": null,
+      "value_max": null,
+      "value_median": null,
+      "unit": "qualitative",
+      "evidence_tier": "Tier 3",
+      "populations": [
+        "DEM"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "DE"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEM",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Looped circulation \u2014 DEM; no dead-ends; 10+ jurisdictions consensus",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0057",
+      "slug": "DEM",
+      "item_code": "K-01",
+      "parameter": "illuminance_daylighting_min",
+      "value_type": "range",
+      "value_min": 200,
+      "value_max": 500,
+      "value_median": 350,
+      "unit": "lux",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "DEM"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEM",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum illuminance \u2014 DEM (glare-free; no harsh shadows)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0058",
+      "slug": "DEM",
+      "item_code": "D-04",
+      "parameter": "lrv_contrast_wayfinding_dem",
+      "value_type": "fixed",
+      "value_min": 30,
+      "value_max": 30,
+      "value_median": 30,
+      "unit": "%",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "DEM"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "DEM",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "LRV contrast \u2014 DEM wayfinding (same threshold as VIS; double-coded)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0059",
+      "slug": "IntD",
+      "item_code": "D-04",
+      "parameter": "signage_decision_points_per_route_max",
+      "value_type": "fixed",
+      "value_min": 3,
+      "value_max": 3,
+      "value_median": 3,
+      "unit": "count",
+      "evidence_tier": "Tier 3",
+      "populations": [
+        "DEM",
+        "NDV"
+      ],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "IntD",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Maximum decision points per route segment \u2014 IntD cognitive load (proxied through DEM/NDV)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0060",
+      "slug": "bathroom-typology-global-south",
+      "item_code": "G-01",
+      "parameter": "squat_to_sitting_transition_height",
+      "value_type": "range",
+      "value_min": 400,
+      "value_max": 500,
+      "value_median": 450,
+      "unit": "mm",
+      "evidence_tier": "Co-1/Tier 4",
+      "populations": [
+        "MOB",
+        "OFS",
+        "PAIN"
+      ],
+      "jurisdictions_supporting": [
+        "IN",
+        "ID",
+        "BD",
+        "NG",
+        "PH",
+        "EG"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "bathroom-typology-global-south",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "Context-specific; squat toilet adaptation",
+      "percentile_basis": null,
+      "notes": "Raised platform height for squat-to-seat transition \u2014 Global South",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0061",
+      "slug": "bathroom-typology-global-south",
+      "item_code": "G-01",
+      "parameter": "wet_area_clear_floor_space",
+      "value_type": "fixed",
+      "value_min": 1200,
+      "value_max": 1200,
+      "value_median": 1200,
+      "unit": "mm",
+      "evidence_tier": "Tier 5-6",
+      "populations": [
+        "MOB",
+        "OFS",
+        "PAIN"
+      ],
+      "jurisdictions_supporting": [
+        "IN",
+        "ZA"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "bathroom-typology-global-south",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum wet area clear floor space \u2014 Global South accessible bathroom",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0062",
+      "slug": "fold-down-grab-bar-specification",
+      "item_code": "G-03",
+      "parameter": "fold_down_grab_bar_load_capacity",
+      "value_type": "fixed",
+      "value_min": 1500,
+      "value_max": 1500,
+      "value_median": 1500,
+      "unit": "N",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "DE",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "fold-down-grab-bar-specification",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Fold-down grab bar minimum load capacity \u2014 1500N (ISO 6875)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0063",
+      "slug": "fold-down-grab-bar-specification",
+      "item_code": "G-03",
+      "parameter": "fold_down_grab_bar_height",
+      "value_type": "range",
+      "value_min": 700,
+      "value_max": 750,
+      "value_median": 725,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "DE"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "fold-down-grab-bar-specification",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "OT assessment at Tier 2",
+      "percentile_basis": null,
+      "notes": "Fold-down grab bar height \u2014 toilet transfer position",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0064",
+      "slug": "fold-down-grab-bar-specification",
+      "item_code": "G-03",
+      "parameter": "fold_down_grab_bar_projection",
+      "value_type": "range",
+      "value_min": 700,
+      "value_max": 750,
+      "value_median": 720,
+      "unit": "mm",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "MOB",
+        "MOB/UPL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "fold-down-grab-bar-specification",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Fold-down grab bar projection from wall \u2014 transfer space",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0065",
+      "slug": "assistive-listening-systems",
+      "item_code": "F-01",
+      "parameter": "als_snr_minimum",
+      "value_type": "fixed",
+      "value_min": 18,
+      "value_max": 18,
+      "value_median": 18,
+      "unit": "dB",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF",
+        "DBL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "assistive-listening-systems",
+      "recommendation_strength": "Strong at Tier 0 (assembly venues)",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Assistive listening system SNR minimum \u2014 18dB (IEC 60268-16)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0066",
+      "slug": "assistive-listening-systems",
+      "item_code": "F-01",
+      "parameter": "hearing_loop_area_coverage",
+      "value_type": "fixed",
+      "value_min": 100,
+      "value_max": 100,
+      "value_median": 100,
+      "unit": "%",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF",
+        "DBL"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "assistive-listening-systems",
+      "recommendation_strength": "Strong at Tier 0",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Hearing loop \u2014 100% area coverage required",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0067",
+      "slug": "deaf-acoustic-built-environment",
+      "item_code": "K-02",
+      "parameter": "stc_partition_minimum",
+      "value_type": "fixed",
+      "value_min": 45,
+      "value_max": 45,
+      "value_median": 45,
+      "unit": "STC",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "US",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-acoustic-built-environment",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Minimum STC partition rating \u2014 DEAF acoustic separation",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0068",
+      "slug": "deaf-acoustic-built-environment",
+      "item_code": "K-03",
+      "parameter": "background_noise_nrc_meeting_room",
+      "value_type": "fixed",
+      "value_min": 35,
+      "value_max": 35,
+      "value_median": 35,
+      "unit": "dB",
+      "evidence_tier": "Tier 3-4",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "US",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-acoustic-built-environment",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Background noise ceiling \u2014 DEAF meeting/consultation room",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0069",
+      "slug": "deaf-classroom-reverberation-time",
+      "item_code": "K-03",
+      "parameter": "rt60_classroom_deaf_max",
+      "value_type": "fixed",
+      "value_min": 0.4,
+      "value_max": 0.4,
+      "value_median": 0.4,
+      "unit": "s",
+      "evidence_tier": "Tier 3-4",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "DE",
+        "US"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-classroom-reverberation-time",
+      "recommendation_strength": "Strong at Tier 0 (educational)",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "RT60 maximum \u2014 DEAF classroom (BB93/DIN 18041/ANSI S12.60)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0070",
+      "slug": "deaf-classroom-reverberation-time",
+      "item_code": "K-03",
+      "parameter": "classroom_nrc_acoustic_treatment",
+      "value_type": "range",
+      "value_min": 0.7,
+      "value_max": 0.9,
+      "value_median": 0.8,
+      "unit": "NRC",
+      "evidence_tier": "Tier 4-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU",
+        "US"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-classroom-reverberation-time",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "NRC rating \u2014 ceiling/wall treatment for DEAF classroom",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0071",
+      "slug": "deaf-spatial-design",
+      "item_code": "C-01",
+      "parameter": "corridor_glazing_sightline_height",
+      "value_type": "range",
+      "value_min": 500,
+      "value_max": 1800,
+      "value_median": 1100,
+      "unit": "mm",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-spatial-design",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Glazing sightline band height \u2014 DEAF DeafSpace (900\u20131800mm priority zone)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0072",
+      "slug": "deaf-spatial-design",
+      "item_code": "K-01",
+      "parameter": "lighting_uniformity_ratio_deaf",
+      "value_type": "fixed",
+      "value_min": 0.7,
+      "value_max": 0.7,
+      "value_median": 0.7,
+      "unit": "ratio",
+      "evidence_tier": "Tier 3-5",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-spatial-design",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Lighting uniformity ratio \u2014 DEAF (signing visibility; \u22650.7 Emin/Eavg)",
+      "conditions": []
+    },
+    {
+      "spec_id": "SPEC-0073",
+      "slug": "deaf-spatial-design",
+      "item_code": "C-01",
+      "parameter": "meeting_room_diameter_signing_circle",
+      "value_type": "fixed",
+      "value_min": 3000,
+      "value_max": 3000,
+      "value_median": 3000,
+      "unit": "mm",
+      "evidence_tier": "Tier 3",
+      "populations": [
+        "DEAF"
+      ],
+      "jurisdictions_supporting": [
+        "US"
+      ],
+      "jurisdictions_divergent": [],
+      "divergence_note": "",
+      "opus_synthesized": false,
+      "bpc_source_slug": "deaf-spatial-design",
+      "recommendation_strength": "Conditional at Tier 1",
+      "tier_2_note": "",
+      "percentile_basis": null,
+      "notes": "Clear diameter \u2014 signing circle / Deaf meeting space (DeafSpace research)",
       "conditions": []
     }
   ]
