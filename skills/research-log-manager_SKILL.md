@@ -10,6 +10,7 @@ description: >
 ---
 
 <!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
+<!-- Updated: CO-0006 2026-04-08 — BPC Key sources schema, LOG section validation, search log disposition field -->
 
 **Model:** Sonnet 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main`
@@ -45,7 +46,7 @@ Before CHECK, LOG, or RETRIEVE: GET `references/slug-registry.md`. Look up slug.
 2. Resolve path. If not in registry: create entry (assign topic dir, create files, update registry).
 3. Run pre-LOG completeness check (§below). If BLOCKER: surface named failures; do not write until resolved or accepted.
 4. GET search-log + SHA. Update per schema. PUT.
-5. GET BPC + SHA. Update per schema. PUT.
+5. GET BPC + SHA. Update per schema (including Key sources table — §BPC Entry Schema). PUT.
 6. Confirm: `✓ Logged: {slug}` or list accepted gaps.
 
 ### RETRIEVE
@@ -68,6 +69,16 @@ Before CHECK, LOG, or RETRIEVE: GET `references/slug-registry.md`. Look up slug.
 5. **`native_aliases` populated** — all 14 languages present.
 6. **`citation_mining` recorded** — counts present (may be 0 with explanation).
 7. **`co1_pass_summary`** — ≥1 language listed as complete. All not-run = BLOCKER.
+8. **BPC mandatory sections present** — all of the following sections must exist in the BPC entry (may be empty with a stated reason, but must not be absent):
+   - `### Concept boundary notes`
+   - `### Best-practice synthesis`
+   - `### Consensus findings`
+   - `### Divergent findings`
+   - `### NO-DATA / THIN`
+   - `### Citation mining`
+   - `### Bottom-up findings (functional deficit pass)`
+   - `### Key sources`
+   Any missing section = named BLOCKER. Sections may carry a one-line `{Not yet run — reason}` placeholder if the pass has not been performed; they may not be absent.
 
 Pass: all 24+ISO SEARCHED + all blockers clear → COMPLETE. Any NOT-RUN or accepted gap → PARTIAL (named). Mark BPC PROVISIONAL if P1 gaps remain.
 
@@ -80,6 +91,7 @@ slug: {slug}
 query: "{English query}"
 last_searched: YYYY-MM-DD HH:MM
 early_close_triggered: false  # true when ≥10/14 languages NO-DATA
+disposition: PENDING  # INTEGRATED | DEFERRED | DISCARDED | PENDING — updated at integration time
 
 native_aliases:
   SV: {term} [CLEAN|PARTIAL]
@@ -123,6 +135,14 @@ functional_deficit_pass:
   environments_remaining: []
 ```
 
+**Disposition field values:**
+- `INTEGRATED` — sources incorporated into BPC Key sources table; BPC updated
+- `DEFERRED` — sources retrieved, not yet integrated; reason recorded in disposition_note field
+- `DISCARDED` — sources retrieved, excluded from BPC; reason recorded in disposition_note field
+- `PENDING` — search complete; disposition not yet determined
+
+Entries written before CO-0006 (2026-04-08): set `disposition: [PRE-CO-0006 — no disposition]` on first review. No retroactive mass-update.
+
 ---
 
 ## BPC Entry Schema
@@ -130,6 +150,19 @@ functional_deficit_pass:
 ```markdown
 ## {slug}
 **Updated:** YYYY-MM-DD HH:MM  **Evidence tier range:** {X–Y}  **Opus synthesis:** {YES [OPUS-SYNTHESIS] | NO}
+
+### Metadata
+```yaml
+slug: {slug}
+populations: [{POP1}, {POP2}]
+opus_synthesis: {true|false}
+opus_session: {session ref or null}
+status: {ACTIVE|PROVISIONAL|STUB}
+last_updated: {YYYY-MM-DD}
+evidence_tier_range: {e.g., "Tier 1–5"}
+jurisdiction_count: {N}
+language_count: {N}
+```
 
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
@@ -163,7 +196,26 @@ functional_deficit_pass:
 |---|---|---|---|---|---|---|---|
 
 ### Key sources
-{Ordering frozen once REF-IDs emitted by item-specification-writer}
+
+**Schema (CO-0006 2026-04-08):** Full metadata table. REF-IDs are stable once emitted by item-specification-writer; do not renumber after ISW has run.
+
+| REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | {short-key} | {Authors} | {YYYY} | {Title ≤120 chars} | {Journal or Publisher} | {DOI or URL or [GREY]} | {Tier N} | {EN} | {US, UK} |
+
+**Field rules:**
+- `REF-ID`: Sequential integer (01, 02, …) — stable within this BPC entry
+- `Short-key`: Existing identifier (ADA-2010-S404 etc.) — retained for compatibility
+- `Authors`: Surname Initial; "Organisation Name" for institutional sources
+- `Year`: Publication year; `n.d.` if unknown
+- `Title`: Full title; truncate at 120 chars with `…`
+- `Journal/Publisher`: Journal name, publisher name, or issuing body
+- `DOI/URL`: DOI preferred (`DOI:10.xxxx/...`); URL if no DOI; `[GREY]` if no persistent identifier
+- `Tier`: Evidence tier (Tier 1, Co-1, Tier 2, Co-2, Tier 3, Tier 4, Tier 5, Tier 6)
+- `Lang`: ISO 639-1 code of source language
+- `Jurisdictions`: Comma-separated jurisdiction codes this source covers
+
+**Migration:** Apply when BPC is next touched. Do not mass-migrate. Pre-CO-0006 entries with flat Key sources lists are valid until touched.
 ```
 
 ---
