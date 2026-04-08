@@ -157,49 +157,47 @@ spatial_findings:
     condition: "{when this applies — functional constraint}"
     confidence: "{HIGH | MODERATE | LOW}"
 
-population_mapping:
-  primary: "{population code}"
-  secondary: ["{additional codes}"]
-  cross_population_note: "{why secondary populations benefit}"
-
-existing_bpc_match: "{slug — or NEW}"
-specification_delta: "{NOVEL | CONFIRMS | REFINES | CONTRADICTS}"
+existing_slug_match: "{slug — or NEW}"
+specification_delta: "{NOVEL | CONFIRMS | REFINES | CONTRADICTS | GAP}"
 ```
+
+**Population mapping is NOT performed at collection stage.** FDR evidence is function-indexed, not population-indexed. Population applicability is a downstream annotation applied during Opus synthesis where warranted. Do not assign population codes during collection.
 
 ### Extraction rules:
 - ≤6 sources per scenario (prioritize by tier, then spatial specificity).
 - CONFIRMS: 1-line log only, no full extraction.
 - CONTRADICTS: full extraction + flag for `evidence-auditor`.
-- LOW confidence (single small-N study): cannot enter BPC without corroboration. Hold in extraction log.
+- GAP: log with rationale — no spatial parameter extractable; inherently individualized or no literature exists.
+- LOW confidence (single small-N study): cannot enter FDR findings file without corroboration. Hold in extraction log.
 
 ---
 
-## 6. Categorization Protocol
+## 6. Storage and Integration Protocol
 
-### 6.1 Population Code Assignment
+### 6.1 FDR Findings Store
 
-| Rule | Description |
-|---|---|
-| **Primary** | Population code whose defining functional profile most closely matches the functional deficit |
-| **Secondary** | Population codes with partial functional overlap that benefit from same spatial specification |
-| **Cross-pop flag** | Finding serves ≥3 codes → candidate for `connection-scout` internal mode; potential Tier 0 provision |
-| **No-code** | Deficit doesn't map to any existing code → log as taxonomy gap; do not force-fit |
+All FDR findings are written to `references/fdr/{slug}.md` — a function-indexed file separate from the population BPC. This is the canonical output of every FDR run. Population BPCs are **not modified** during FDR collection.
 
-### 6.2 BPC Integration
+**File structure:** one section per scenario, indexed by label (e.g. `FDR-RRC-01`). Each section contains the extraction block(s) and, for GAPs, the gap log.
+
+FDR findings feed `item-specification-writer` and Opus synthesis independently of population BPC content.
+
+### 6.2 Specification Delta Actions
 
 | `specification_delta` | Action |
 |---|---|
-| CONFIRMS | 1-line append to `### Consensus findings`. No further action. |
-| REFINES | Full append to BPC. Feed to `item-specification-writer` as update brief. |
-| NOVEL | Append to `### Bottom-up findings` subsection. Feed to `item-specification-writer` as new spec candidate. |
-| CONTRADICTS | Append with flag. Route to `evidence-auditor` before BPC integration. |
-| NEW (no slug) | Propose new slug → user approval → `research-log-manager`. |
+| CONFIRMS | 1-line log in FDR file. No further action. |
+| REFINES | Full extraction in FDR file. Flag for item-specification-writer. |
+| NOVEL | Full extraction in FDR file. Flag for item-specification-writer as new spec candidate. |
+| CONTRADICTS | Full extraction in FDR file + flag for `evidence-auditor` before any spec integration. |
+| GAP | Log gap with rationale. No spatial parameter extractable. |
 
-### 6.3 Tier 0 Escalation
+### 6.3 Population Applicability (Downstream — Opus only)
 
-Same spatial specification from ≥3 functional scenarios across ≥2 population codes, no conflict with any population-specific need → `TIER-0-CANDIDATE`. These are universal design provisions where bottom-up evidence converges regardless of the originating deficit.
+Population codes are **not assigned during collection**. After FDR evidence is assembled, an Opus synthesis pass may annotate findings with applicable population codes where the functional deficit profile overlaps a defined population. This annotation is optional and does not constrain what evidence is collected.
 
----
+**Tier 0 Escalation:** Same spatial specification converging from ≥3 functional scenarios with no cross-functional conflict → `TIER-0-CANDIDATE`. Route to connection-scout. Population codes not required for Tier 0 nomination.
+
 
 ## 7. Post-Run (mandatory)
 
