@@ -9,6 +9,8 @@ description: >
   session close", "save progress", or when workplan-orchestrator session-end protocol runs.
 ---
 
+<!-- Updated: CO-0006 2026-04-08 — quarterly skill performance review protocol added -->
+
 **Model:** Sonnet 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
 **All timestamps: `YYYY-MM-DD HH:MM`**
@@ -199,3 +201,37 @@ Before writing the session YAML, validate the `blockers:` list against the gap r
 4. Write the validated `blockers:` list only.
 
 **Rule:** Stale blockers cause workplan drift. Validate every close.
+
+---
+
+## Quarterly Skill Performance Review (CO-0006 2026-04-08)
+
+**Trigger:** After every 10 multilingual-research LOG calls (tracked in project-standards.md under `multilingual_research_run_count`). Invoke as part of session close when count reaches a multiple of 10.
+
+**Increment counter:** At every session close where ≥1 multilingual-research LOG was completed, increment `multilingual_research_run_count` in project-standards.md by the number of LOG calls completed this session.
+
+### Review process
+
+1. **Aggregate per-language yield** from search-log entries for the last 10 runs:
+   - Yield = sources found / searches run, per language
+   - Pull language-level `results: N` from search-log YAML across last 10 slug entries
+
+2. **Flag underperforming languages:** yield <10% across 3+ consecutive runs = underperformance trigger
+
+3. **For each underperforming language:** review and update multilingual-research_SKILL.md:
+   - Keyword quality — are native aliases confirmed, or still UNVERIFIED?
+   - Database selection — is the right database targeted for this language?
+   - Concept boundary warnings — are warnings causing excessive deviation?
+   - Record adaptation in `multilingual_research_adaptations` log in project-standards.md
+
+4. **Track adaptation effectiveness:** In the following 3 runs for that language, note whether yield improved. If yield remains <10% after adaptation: flag as `[LANGUAGE-THIN-PERSISTENT]` in project-standards.md and note in gap register as P3 scope gate candidate.
+
+### Output (append to session close YAML)
+```yaml
+quarterly_skill_review:
+  triggered: true | false
+  run_count_at_close: {N}
+  languages_reviewed: [{LANG}, ...]
+  adaptations_made: [{description}, ...]
+  languages_flagged_persistent_thin: [{LANG}, ...]
+```
