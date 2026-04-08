@@ -1,3 +1,5 @@
+<!-- ARCHIVED — CO-0006 Phase 0B-1 — 2026-04-08. Migrated to references/connections/ topic files. Do not read/write. -->
+
 # Connection Register — Archive
 
 **Split from:** connection-register.md  
