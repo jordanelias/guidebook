@@ -721,3 +721,29 @@ Part 12 Economics covers international grant programmes (UK DFG, AU NDIS, Nordic
 **Disposition notes:** - [x] HIGH → Part 12 Economics (pending legislation tracker)
 
 ---
+
+### CON-0036
+
+**Status:** CONSUMED
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration; from archive register)
+**Target item(s):** D-05
+**Target population(s):** OFS, PAIN, NDV/AUT, NDV/SENS, NEU, DEM, NDV/MH, DEAF
+**Evidence tier:** —
+**Filed:** 2026-03-28
+**Applied:** —
+
+**Connection:** Retreat/reset room overlaps substantively with D-05 (Enclosed Low-Stimulation Spaces) but proposes universal requirement for public buildings >500 m². Sound attenuation specification creates emergency egress and communication isolation risk for DEAF population. Universal (Tier 0) adoption rejected; retreat/reset provisions remain Tier 1.
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| PAIN/OFS FDR session 2026-03-26 | THIN (expert consensus) | OFS, PAIN, NDV/AUT, NDV/SENS, NEU, DEM, NDV/MH | REJECTED for Tier 0 due to DEAF conflict |
+
+**Action required:** Maintain D-05 as Tier 1. Annotate: where retreat/reset spaces serve DEAF population, specify visual emergency alerts, transparent sidelights, or communication pass-through to mitigate isolation risk. Do not elevate to Tier 0.
+
+**Disposition notes:** - [x] Annotate D-05 with DEAF accommodation requirement for sound-attenuated spaces — DONE 2026-03-28 18:00
+- [x] Reject GAP-FDR-T0-03 for Tier 0 status — DONE 2026-03-28 17:00
+
+---
