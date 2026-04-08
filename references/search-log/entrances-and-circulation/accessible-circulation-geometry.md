@@ -137,10 +137,13 @@ ACCEPTED_GAPS: [Co-1 not run — DPO orgs do not produce separate lift dimension
 
 ## functional_deficit_pass
 status: COMPLETE
-session: 2026-03-28
-scenarios_run: 2 (d450+fatigue interval [prior session], d450+fatigue alcove geometry [this session])
+last_run: 2026-04-08 04:15
+fdr_file: references/fdr/accessible-circulation-geometry.md
+scenarios_run: 2
 novel_findings: 3
-refines: 0
-contradicts: 0
+refines_findings: 0
+contradicts_findings: 0
+gaps_confirmed: 0
 tier0_candidates: 1
-note: Interval finding already in BPC. Alcove geometry added this session. Diminishing-return gate fired for interval; did NOT fire for alcove geometry. Tier 0 candidate: rest seating alcove recess geometry.
+scenarios_complete: [FDR-ACG-01, FDR-ACG-02]
+note: Roxburgh et al. 2024 Tier 1 evidence for OFS-specific seat height (>=480mm AFF); alcove recess geometry; Tier 0 candidate for recess geometry.

@@ -208,3 +208,17 @@ fdr_assessment: "No novel spatial findings. Standards-dominated domain; OT liter
 diminishing_return_gate: "4 consecutive no-yield scenarios"
 step1_pubmed: "Self-Help Devices[MeSH] AND Architectural Accessibility[MeSH] — 307 results, 0 relevant spatial findings"
 step2_practice_guidelines: "RCOT, UNSW HMInfo, AOTA, Christopher Reeve Foundation — confirm lever handles, threshold ramps. No novel spatial specs."
+
+## functional_deficit_pass
+status: PARTIAL
+last_run: 2026-04-08 04:15
+fdr_file: references/fdr/threshold-door-hardware.md
+scenarios_run: 6
+novel_findings: 12
+refines_findings: 5
+contradicts_findings: 0
+gaps_confirmed: 0
+tier0_candidates: 0
+scenarios_complete: [FDR-TDH-01, FDR-TDH-02, FDR-TDH-03, FDR-TDH-04, FDR-TDH-05, FDR-TDH-06]
+scenarios_remaining: []
+note: All planned scenarios complete. Spring latch additive load, tremor keypad size, one-hand combined force, swing-clear hinge, zero-energy activation, dementia entrance recognition.

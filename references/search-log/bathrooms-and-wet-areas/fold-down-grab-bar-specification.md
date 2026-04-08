@@ -26,3 +26,16 @@ no_data_flags: [DA, FI]
 ```
 
 ```yaml
+
+## functional_deficit_pass
+status: COMPLETE
+last_run: 2026-04-08 04:15
+fdr_file: references/fdr/fold-down-grab-bar-specification.md
+scenarios_run: 4
+novel_findings: 10
+refines_findings: 2
+contradicts_findings: 0
+gaps_confirmed: 0
+tier0_candidates: 0
+scenarios_complete: [FDR-FGB-01, FDR-FGB-02, FDR-FGB-03, FDR-FGB-04]
+note: Key findings: diameter by hand size (UNSW HMC), wrist neutrality, phase-specific grip demand, shoulder-height constraint, single-hand deployment, laterality selection, satin > peened in wet (Bobrick ASTM F2961).

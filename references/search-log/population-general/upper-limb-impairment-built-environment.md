@@ -52,3 +52,17 @@ log_closed:
   reason: 9 core languages searched; Co-1 PARTIAL EN (Fredericks 2024, Widehammar 2017); Opus synthesis complete; one-handed kitchen/bathroom gap confirmed; NL/ES/PT/KO/IT not-run accepted
   logged_by: Sonnet 4.6
   phase3_ready: YES — with CRITICAL GAP flag on one-handed kitchen/bathroom evidence
+
+## functional_deficit_pass
+status: PARTIAL
+last_run: 2026-04-08 03:30
+fdr_file: references/fdr/upper-limb-impairment-built-environment.md
+scenarios_run: 3
+novel_findings: 9
+refines_findings: 2
+contradicts_findings: 0
+gaps_confirmed: 0
+tier0_candidates: 0
+scenarios_complete: [FDR-UPL-01, FDR-UPL-02, FDR-UPL-03]
+scenarios_remaining: [additional SCI tetraplegia interface scenarios]
+note: Key findings: bilateral reach arc, lever orientation for spasticity, velocity-sensitivity contraindication, tenodesis-compatible hardware.
