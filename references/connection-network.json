@@ -1,461 +1,318 @@
 {
-  "metadata": {
-    "generated": "2026-04-08",
+  "_meta": {
+    "created": "2026-04-08",
     "phase": "2B",
-    "co": "CO-0006",
-    "total_connections": 113,
-    "total_nodes": 59,
+    "source": "references/connections/_index.md",
+    "total_nodes": 53,
     "total_edges": 123,
-    "note": "Automated extraction from _index.md. Population codes extracted from target field only \u2014 load topic files for full population coverage."
+    "note": "Edges derived from _index.md target strings only. Population nodes added where pop codes appear in target field. Full graph requires loading per-topic connection files for population extraction from **Target population(s):** fields."
   },
   "nodes": [
     {
-      "id": "MOB",
-      "type": "population",
-      "label": "MOB",
-      "degree": 0
-    },
-    {
-      "id": "VIS",
-      "type": "population",
-      "label": "VIS",
-      "degree": 0
-    },
-    {
-      "id": "DEAF",
-      "type": "population",
-      "label": "DEAF",
-      "degree": 0
-    },
-    {
-      "id": "DEM",
-      "type": "population",
-      "label": "DEM",
-      "degree": 0
-    },
-    {
-      "id": "NDV",
-      "type": "population",
-      "label": "NDV",
-      "degree": 2
-    },
-    {
-      "id": "MH",
-      "type": "population",
-      "label": "MH",
-      "degree": 1
-    },
-    {
-      "id": "OFS",
-      "type": "population",
-      "label": "OFS",
-      "degree": 1
-    },
-    {
-      "id": "PAIN",
-      "type": "population",
-      "label": "PAIN",
-      "degree": 0
-    },
-    {
-      "id": "NEU",
-      "type": "population",
-      "label": "NEU",
-      "degree": 0
-    },
-    {
-      "id": "DBL",
-      "type": "population",
-      "label": "DBL",
-      "degree": 0
-    },
-    {
-      "id": "PSYCH",
-      "type": "population",
-      "label": "PSYCH",
-      "degree": 0
-    },
-    {
-      "id": "IntD",
-      "type": "population",
-      "label": "IntD",
-      "degree": 0
-    },
-    {
-      "id": "D-02",
-      "type": "item",
-      "category": "D",
-      "category_label": "Wayfinding/Signage",
-      "topic": "wayfinding-and-signage",
-      "degree": 5
-    },
-    {
-      "id": "D-06",
-      "type": "item",
-      "category": "D",
-      "category_label": "Wayfinding/Signage",
-      "topic": "wayfinding-and-signage",
-      "degree": 3
-    },
-    {
-      "id": "D-08",
-      "type": "item",
-      "category": "D",
-      "category_label": "Wayfinding/Signage",
-      "topic": "wayfinding-and-signage",
-      "degree": 1
-    },
-    {
-      "id": "D-09",
-      "type": "item",
-      "category": "D",
-      "category_label": "Wayfinding/Signage",
-      "topic": "wayfinding-and-signage",
-      "degree": 0
-    },
-    {
-      "id": "C-04",
-      "type": "item",
-      "category": "C",
-      "category_label": "Horizontal Circ",
-      "topic": "wayfinding-and-signage",
-      "degree": 6
-    },
-    {
-      "id": "A-16",
+      "id": "A-01",
       "type": "item",
       "category": "A",
-      "category_label": "Entrances",
-      "topic": "kitchens-and-workspaces",
-      "degree": 13
-    },
-    {
-      "id": "H-02",
-      "type": "item",
-      "category": "H",
-      "category_label": "Kitchens/Workspaces",
-      "topic": "kitchens-and-workspaces",
-      "degree": 1
-    },
-    {
-      "id": "G-03",
-      "type": "item",
-      "category": "G",
-      "category_label": "Bathrooms/Wet Areas",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 4
-    },
-    {
-      "id": "G-04",
-      "type": "item",
-      "category": "G",
-      "category_label": "Bathrooms/Wet Areas",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 2
-    },
-    {
-      "id": "G-05",
-      "type": "item",
-      "category": "G",
-      "category_label": "Bathrooms/Wet Areas",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 0
-    },
-    {
-      "id": "F-05",
-      "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 1
-    },
-    {
-      "id": "A-09",
-      "type": "item",
-      "category": "A",
-      "category_label": "Entrances",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 1
-    },
-    {
-      "id": "G-08",
-      "type": "item",
-      "category": "G",
-      "category_label": "Bathrooms/Wet Areas",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 0
-    },
-    {
-      "id": "B-01",
-      "type": "item",
-      "category": "B",
-      "category_label": "Vertical Circ",
-      "topic": "entrances-and-circulation",
-      "degree": 3
-    },
-    {
-      "id": "E-01",
-      "type": "item",
-      "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "controls-and-hardware",
-      "degree": 6
-    },
-    {
-      "id": "E-06",
-      "type": "item",
-      "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "controls-and-hardware",
-      "degree": 4
-    },
-    {
-      "id": "E-08",
-      "type": "item",
-      "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "controls-and-hardware",
-      "degree": 0
+      "topic": "communication-and-alerts"
     },
     {
       "id": "A-02",
       "type": "item",
       "category": "A",
-      "category_label": "Entrances",
-      "topic": "entrances-and-circulation",
-      "degree": 18
+      "topic": "entrances-and-circulation"
     },
     {
       "id": "A-08",
       "type": "item",
       "category": "A",
-      "category_label": "Entrances",
-      "topic": "entrances-and-circulation",
-      "degree": 12
+      "topic": "entrances-and-circulation"
     },
     {
-      "id": "A-13",
+      "id": "A-09",
       "type": "item",
       "category": "A",
-      "category_label": "Entrances",
-      "topic": "entrances-and-circulation",
-      "degree": 5
-    },
-    {
-      "id": "B-10",
-      "type": "item",
-      "category": "B",
-      "category_label": "Vertical Circ",
-      "topic": "entrances-and-circulation",
-      "degree": 4
-    },
-    {
-      "id": "F-04",
-      "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "communication-and-alerts",
-      "degree": 3
-    },
-    {
-      "id": "F-02",
-      "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "communication-and-alerts",
-      "degree": 2
-    },
-    {
-      "id": "B-0",
-      "type": "item",
-      "category": "B",
-      "category_label": "Vertical Circ",
-      "topic": "cross-cutting",
-      "degree": 1
-    },
-    {
-      "id": "B-06",
-      "type": "item",
-      "category": "B",
-      "category_label": "Vertical Circ",
-      "topic": "cross-cutting",
-      "degree": 3
-    },
-    {
-      "id": "F-01",
-      "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "cross-cutting",
-      "degree": 0
-    },
-    {
-      "id": "D-05",
-      "type": "item",
-      "category": "D",
-      "category_label": "Wayfinding/Signage",
-      "topic": "cross-cutting",
-      "degree": 2
-    },
-    {
-      "id": "F-06",
-      "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "kitchens-and-workspaces",
-      "degree": 4
-    },
-    {
-      "id": "F-07",
-      "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "kitchens-and-workspaces",
-      "degree": 5
-    },
-    {
-      "id": "H-04",
-      "type": "item",
-      "category": "H",
-      "category_label": "Kitchens/Workspaces",
-      "topic": "kitchens-and-workspaces",
-      "degree": 2
-    },
-    {
-      "id": "K-01",
-      "type": "item",
-      "category": "K",
-      "category_label": "Sensory Environment",
-      "topic": "sensory-environment",
-      "degree": 0
+      "topic": "bathrooms-and-wet-areas"
     },
     {
       "id": "A-10",
       "type": "item",
       "category": "A",
-      "category_label": "Entrances",
-      "topic": "entrances-and-circulation",
-      "degree": 1
+      "topic": "entrances-and-circulation"
     },
     {
       "id": "A-11",
       "type": "item",
       "category": "A",
-      "category_label": "Entrances",
-      "topic": "entrances-and-circulation",
-      "degree": 0
+      "topic": "entrances-and-circulation"
     },
     {
-      "id": "E-14",
+      "id": "A-13",
       "type": "item",
-      "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "controls-and-hardware",
-      "degree": 1
+      "category": "A",
+      "topic": "entrances-and-circulation"
     },
     {
-      "id": "I-03",
+      "id": "A-16",
       "type": "item",
-      "category": "I",
-      "category_label": "Seating/Rest",
-      "topic": "seating-and-rest",
-      "degree": 0
+      "category": "A",
+      "topic": "kitchens-and-workspaces"
+    },
+    {
+      "id": "B-0",
+      "type": "item",
+      "category": "B",
+      "topic": "cross-cutting"
+    },
+    {
+      "id": "B-01",
+      "type": "item",
+      "category": "B",
+      "topic": "entrances-and-circulation"
+    },
+    {
+      "id": "B-06",
+      "type": "item",
+      "category": "B",
+      "topic": "cross-cutting"
     },
     {
       "id": "B-07",
       "type": "item",
       "category": "B",
-      "category_label": "Vertical Circ",
-      "topic": "entrances-and-circulation",
-      "degree": 0
+      "topic": "entrances-and-circulation"
     },
     {
-      "id": "I-02",
+      "id": "B-10",
       "type": "item",
-      "category": "I",
-      "category_label": "Seating/Rest",
-      "topic": "seating-and-rest",
-      "degree": 0
+      "category": "B",
+      "topic": "entrances-and-circulation"
     },
     {
-      "id": "G-06",
+      "id": "C-04",
       "type": "item",
-      "category": "G",
-      "category_label": "Bathrooms/Wet Areas",
-      "topic": "bathrooms-and-wet-areas",
-      "degree": 0
+      "category": "C",
+      "topic": "wayfinding-and-signage"
     },
     {
-      "id": "H-01",
+      "id": "D-02",
       "type": "item",
-      "category": "H",
-      "category_label": "Kitchens/Workspaces",
-      "topic": "kitchens-and-workspaces",
-      "degree": 0
+      "category": "D",
+      "topic": "wayfinding-and-signage"
     },
     {
-      "id": "F-08",
+      "id": "D-05",
       "type": "item",
-      "category": "F",
-      "category_label": "Communication/Alerts",
-      "topic": "communication-and-alerts",
-      "degree": 1
+      "category": "D",
+      "topic": "cross-cutting"
     },
     {
-      "id": "A-01",
+      "id": "D-06",
       "type": "item",
-      "category": "A",
-      "category_label": "Entrances",
-      "topic": "communication-and-alerts",
-      "degree": 4
+      "category": "D",
+      "topic": "wayfinding-and-signage"
     },
     {
-      "id": "I-04",
+      "id": "D-08",
       "type": "item",
-      "category": "I",
-      "category_label": "Seating/Rest",
-      "topic": "seating-and-rest",
-      "degree": 0
+      "category": "D",
+      "topic": "wayfinding-and-signage"
     },
     {
-      "id": "H-05",
+      "id": "D-09",
       "type": "item",
-      "category": "H",
-      "category_label": "Kitchens/Workspaces",
-      "topic": "cross-cutting",
-      "degree": 2
+      "category": "D",
+      "topic": "wayfinding-and-signage"
     },
     {
-      "id": "K-04",
-      "type": "item",
-      "category": "K",
-      "category_label": "Sensory Environment",
-      "topic": "cross-cutting",
-      "degree": 0
-    },
-    {
-      "id": "E-13",
+      "id": "E-01",
       "type": "item",
       "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "communication-and-alerts",
-      "degree": 2
+      "topic": "controls-and-hardware"
     },
     {
       "id": "E-05",
       "type": "item",
       "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "controls-and-hardware",
-      "degree": 1
+      "topic": "controls-and-hardware"
+    },
+    {
+      "id": "E-06",
+      "type": "item",
+      "category": "E",
+      "topic": "controls-and-hardware"
+    },
+    {
+      "id": "E-08",
+      "type": "item",
+      "category": "E",
+      "topic": "controls-and-hardware"
     },
     {
       "id": "E-10",
       "type": "item",
       "category": "E",
-      "category_label": "Controls/Hardware",
-      "topic": "controls-and-hardware",
-      "degree": 0
+      "topic": "controls-and-hardware"
+    },
+    {
+      "id": "E-13",
+      "type": "item",
+      "category": "E",
+      "topic": "communication-and-alerts"
+    },
+    {
+      "id": "E-14",
+      "type": "item",
+      "category": "E",
+      "topic": "controls-and-hardware"
+    },
+    {
+      "id": "F-01",
+      "type": "item",
+      "category": "F",
+      "topic": "cross-cutting"
+    },
+    {
+      "id": "F-02",
+      "type": "item",
+      "category": "F",
+      "topic": "communication-and-alerts"
+    },
+    {
+      "id": "F-04",
+      "type": "item",
+      "category": "F",
+      "topic": "communication-and-alerts"
+    },
+    {
+      "id": "F-05",
+      "type": "item",
+      "category": "F",
+      "topic": "bathrooms-and-wet-areas"
+    },
+    {
+      "id": "F-06",
+      "type": "item",
+      "category": "F",
+      "topic": "kitchens-and-workspaces"
+    },
+    {
+      "id": "F-07",
+      "type": "item",
+      "category": "F",
+      "topic": "kitchens-and-workspaces"
+    },
+    {
+      "id": "F-08",
+      "type": "item",
+      "category": "F",
+      "topic": "communication-and-alerts"
+    },
+    {
+      "id": "G-03",
+      "type": "item",
+      "category": "G",
+      "topic": "bathrooms-and-wet-areas"
+    },
+    {
+      "id": "G-04",
+      "type": "item",
+      "category": "G",
+      "topic": "bathrooms-and-wet-areas"
+    },
+    {
+      "id": "G-05",
+      "type": "item",
+      "category": "G",
+      "topic": "bathrooms-and-wet-areas"
+    },
+    {
+      "id": "G-06",
+      "type": "item",
+      "category": "G",
+      "topic": "bathrooms-and-wet-areas"
+    },
+    {
+      "id": "G-08",
+      "type": "item",
+      "category": "G",
+      "topic": "bathrooms-and-wet-areas"
+    },
+    {
+      "id": "H-01",
+      "type": "item",
+      "category": "H",
+      "topic": "kitchens-and-workspaces"
+    },
+    {
+      "id": "H-02",
+      "type": "item",
+      "category": "H",
+      "topic": "kitchens-and-workspaces"
+    },
+    {
+      "id": "H-04",
+      "type": "item",
+      "category": "H",
+      "topic": "kitchens-and-workspaces"
+    },
+    {
+      "id": "H-05",
+      "type": "item",
+      "category": "H",
+      "topic": "cross-cutting"
+    },
+    {
+      "id": "I-02",
+      "type": "item",
+      "category": "I",
+      "topic": "seating-and-rest"
+    },
+    {
+      "id": "I-03",
+      "type": "item",
+      "category": "I",
+      "topic": "seating-and-rest"
+    },
+    {
+      "id": "I-04",
+      "type": "item",
+      "category": "I",
+      "topic": "seating-and-rest"
+    },
+    {
+      "id": "K-01",
+      "type": "item",
+      "category": "K",
+      "topic": "sensory-environment"
+    },
+    {
+      "id": "K-04",
+      "type": "item",
+      "category": "K",
+      "topic": "cross-cutting"
+    },
+    {
+      "id": "DEAF",
+      "type": "population"
+    },
+    {
+      "id": "DEM",
+      "type": "population"
+    },
+    {
+      "id": "MH",
+      "type": "population"
+    },
+    {
+      "id": "NDV",
+      "type": "population"
+    },
+    {
+      "id": "NEU",
+      "type": "population"
+    },
+    {
+      "id": "OFS",
+      "type": "population"
     }
   ],
   "edges": [
@@ -464,1107 +321,1107 @@
       "target": "D-06",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-02",
       "target": "D-08",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-02",
       "target": "D-09",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "D-02",
+      "target": "C-04",
+      "con_id": "CON-0001",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-06",
       "target": "D-08",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-06",
       "target": "D-09",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "D-06",
+      "target": "C-04",
+      "con_id": "CON-0001",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-08",
       "target": "D-09",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "C-04",
-      "target": "D-02",
+      "source": "D-08",
+      "target": "C-04",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "C-04",
-      "target": "D-06",
+      "source": "D-09",
+      "target": "C-04",
       "con_id": "CON-0001",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
-    },
-    {
-      "source": "C-04",
-      "target": "D-08",
-      "con_id": "CON-0001",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
-    },
-    {
-      "source": "C-04",
-      "target": "D-09",
-      "con_id": "CON-0001",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "H-02",
       "con_id": "CON-0002",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "kitchens-and-workspaces"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "G-03",
       "target": "G-04",
       "con_id": "CON-0003",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "bathrooms-and-wet-areas"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "G-03",
       "target": "G-05",
       "con_id": "CON-0003",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "bathrooms-and-wet-areas"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "G-04",
       "target": "G-05",
       "con_id": "CON-0003",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "bathrooms-and-wet-areas"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-05",
       "target": "G-05",
       "con_id": "CON-0004",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "bathrooms-and-wet-areas"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-09",
       "target": "G-08",
       "con_id": "CON-0005",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "bathrooms-and-wet-areas"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-01",
       "target": "E-06",
       "con_id": "CON-0007",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "controls-and-hardware"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-01",
       "target": "E-08",
       "con_id": "CON-0007",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "controls-and-hardware"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-06",
       "target": "E-08",
       "con_id": "CON-0007",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "controls-and-hardware"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-08",
       "con_id": "CON-0008",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-13",
       "con_id": "CON-0008",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "A-13",
       "con_id": "CON-0008",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "F-02",
-      "target": "F-04",
+      "source": "F-04",
+      "target": "F-02",
       "con_id": "CON-0015",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "C-04",
       "target": "D-02",
       "con_id": "CON-0016",
       "confidence": "SPECULATIVE",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "A-16",
-      "target": "H-02",
+      "source": "H-02",
+      "target": "A-16",
       "con_id": "CON-0017",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "H-02",
+      "target": "B-0",
+      "con_id": "CON-0017",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "B-0",
       "con_id": "CON-0017",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "B-0",
-      "target": "H-02",
-      "con_id": "CON-0017",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "NDV",
       "con_id": "CON-0019",
       "confidence": "HIGH",
+      "type": "co-population",
       "status": "CONSUMED",
-      "type": "item-population",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "MH",
       "con_id": "CON-0019",
       "confidence": "HIGH",
+      "type": "co-population",
       "status": "CONSUMED",
-      "type": "item-population",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "OFS",
       "con_id": "CON-0019",
       "confidence": "HIGH",
+      "type": "co-population",
       "status": "CONSUMED",
-      "type": "item-population",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "NDV",
       "con_id": "CON-0023",
       "confidence": "HIGH",
+      "type": "co-population",
       "status": "CONSUMED",
-      "type": "item-population",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-08",
       "con_id": "CON-0039",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-13",
       "con_id": "CON-0039",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "A-13",
       "con_id": "CON-0039",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-08",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-13",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "B-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "B-06",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "F-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "D-05",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-16",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "A-13",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "B-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "B-06",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "F-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "D-05",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "A-16",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-13",
       "target": "B-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-13",
       "target": "B-06",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-13",
       "target": "F-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-13",
       "target": "D-05",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-13",
       "target": "A-16",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-01",
       "target": "B-06",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-01",
       "target": "F-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-01",
       "target": "D-05",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "B-01",
+      "target": "A-16",
+      "con_id": "CON-0040",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "PENDING",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-06",
       "target": "F-01",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-06",
       "target": "D-05",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "B-06",
+      "target": "A-16",
+      "con_id": "CON-0040",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "PENDING",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-01",
+      "target": "D-05",
+      "con_id": "CON-0040",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "PENDING",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-01",
+      "target": "A-16",
+      "con_id": "CON-0040",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "PENDING",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-05",
-      "target": "F-01",
+      "target": "A-16",
       "con_id": "CON-0040",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "A-16",
-      "target": "B-01",
-      "con_id": "CON-0040",
-      "confidence": "HIGH",
-      "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "A-16",
-      "target": "B-06",
-      "con_id": "CON-0040",
-      "confidence": "HIGH",
-      "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "A-16",
-      "target": "F-01",
-      "con_id": "CON-0040",
-      "confidence": "HIGH",
-      "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "A-16",
-      "target": "D-05",
-      "con_id": "CON-0040",
-      "confidence": "HIGH",
-      "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-06",
       "target": "F-07",
       "con_id": "CON-0041",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "kitchens-and-workspaces"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-06",
       "target": "H-04",
       "con_id": "CON-0041",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "kitchens-and-workspaces"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-07",
       "target": "H-04",
       "con_id": "CON-0041",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "kitchens-and-workspaces"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-10",
       "target": "H-04",
       "con_id": "CON-0042",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "kitchens-and-workspaces"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-02",
       "target": "D-06",
       "con_id": "CON-0043",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-02",
       "target": "F-01",
       "con_id": "CON-0043",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "D-06",
       "target": "F-01",
       "con_id": "CON-0043",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "F-01",
       "con_id": "CON-0046",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-16",
       "target": "D-05",
       "con_id": "CON-0046",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "D-05",
-      "target": "F-01",
+      "source": "F-01",
+      "target": "D-05",
       "con_id": "CON-0046",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-10",
       "target": "A-11",
       "con_id": "CON-0052",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-06",
       "target": "B-07",
       "con_id": "CON-0059",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "C-04",
       "target": "D-02",
       "con_id": "CON-0060",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "wayfinding-and-signage"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-02",
       "target": "F-04",
       "con_id": "CON-0063",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-08",
       "con_id": "CON-0083",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-13",
       "con_id": "CON-0083",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "A-13",
       "con_id": "CON-0083",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-08",
       "con_id": "CON-0087",
       "confidence": "SPECULATIVE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-16",
       "con_id": "CON-0087",
       "confidence": "SPECULATIVE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-08",
       "target": "A-16",
       "con_id": "CON-0087",
       "confidence": "SPECULATIVE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "entrances-and-circulation"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-07",
       "target": "F-08",
       "con_id": "CON-0101",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "A-01",
-      "target": "F-07",
+      "source": "F-07",
+      "target": "A-01",
       "con_id": "CON-0101",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "A-01",
-      "target": "F-08",
+      "source": "F-07",
+      "target": "A-02",
       "con_id": "CON-0101",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-07",
+      "target": "A-08",
+      "con_id": "CON-0101",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "A-01",
+      "con_id": "CON-0101",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "A-02",
+      "con_id": "CON-0101",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "A-08",
+      "con_id": "CON-0101",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-01",
       "target": "A-02",
       "con_id": "CON-0101",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-01",
       "target": "A-08",
       "con_id": "CON-0101",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "A-02",
-      "target": "F-07",
-      "con_id": "CON-0101",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "A-02",
-      "target": "F-08",
-      "con_id": "CON-0101",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "A-02",
       "target": "A-08",
       "con_id": "CON-0101",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "A-08",
-      "target": "F-07",
-      "con_id": "CON-0101",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "A-08",
-      "target": "F-08",
-      "con_id": "CON-0101",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-07",
       "target": "F-08",
       "con_id": "CON-0102",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "F-04",
-      "target": "F-07",
+      "source": "F-07",
+      "target": "F-04",
       "con_id": "CON-0102",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "F-04",
-      "target": "F-08",
+      "source": "F-07",
+      "target": "F-06",
       "con_id": "CON-0102",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "F-04",
+      "con_id": "CON-0102",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "PENDING",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "F-06",
+      "con_id": "CON-0102",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "PENDING",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-04",
       "target": "F-06",
       "con_id": "CON-0102",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "F-06",
-      "target": "F-07",
-      "con_id": "CON-0102",
-      "confidence": "HIGH",
-      "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "F-06",
-      "target": "F-08",
-      "con_id": "CON-0102",
-      "confidence": "HIGH",
-      "status": "PENDING",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "G-03",
-      "target": "I-04",
+      "source": "I-04",
+      "target": "G-03",
       "con_id": "CON-0103",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "I-04",
+      "target": "G-04",
+      "con_id": "CON-0103",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "G-03",
       "target": "G-04",
       "con_id": "CON-0103",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
-    },
-    {
-      "source": "G-04",
-      "target": "I-04",
-      "con_id": "CON-0103",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "H-05",
       "target": "K-04",
       "con_id": "CON-0104",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "B-10",
-      "target": "H-05",
+      "source": "H-05",
+      "target": "B-10",
       "con_id": "CON-0104",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "B-10",
-      "target": "K-04",
+      "source": "H-05",
+      "target": "H-04",
       "con_id": "CON-0104",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "K-04",
+      "target": "B-10",
+      "con_id": "CON-0104",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "K-04",
+      "target": "H-04",
+      "con_id": "CON-0104",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "B-10",
       "target": "H-04",
       "con_id": "CON-0104",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "H-04",
-      "target": "H-05",
-      "con_id": "CON-0104",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
-    },
-    {
-      "source": "H-04",
-      "target": "K-04",
-      "con_id": "CON-0104",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "cross-cutting"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "H-05",
       "target": "I-04",
       "con_id": "CON-0105",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
+      "evidence_tier": "\u2014"
     },
     {
-      "source": "F-07",
-      "target": "I-04",
+      "source": "I-04",
+      "target": "F-07",
       "con_id": "CON-0107",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "I-04",
+      "target": "F-08",
+      "con_id": "CON-0107",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-07",
       "target": "F-08",
       "con_id": "CON-0107",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "F-08",
-      "target": "I-04",
-      "con_id": "CON-0107",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "seating-and-rest"
-    },
-    {
-      "source": "E-01",
-      "target": "F-08",
+      "target": "E-01",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "E-06",
+      "con_id": "CON-0108",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "E-13",
+      "con_id": "CON-0108",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
+    },
+    {
+      "source": "F-08",
+      "target": "E-14",
+      "con_id": "CON-0108",
+      "confidence": "HIGH",
+      "type": "co-item",
+      "status": "CONSUMED",
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-01",
       "target": "E-06",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-01",
       "target": "E-13",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-01",
       "target": "E-14",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "E-06",
-      "target": "F-08",
-      "con_id": "CON-0108",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-06",
       "target": "E-13",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-06",
       "target": "E-14",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "E-13",
-      "target": "F-08",
-      "con_id": "CON-0108",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-13",
       "target": "E-14",
       "con_id": "CON-0108",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
-    },
-    {
-      "source": "E-14",
-      "target": "F-08",
-      "con_id": "CON-0108",
-      "confidence": "HIGH",
-      "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "communication-and-alerts"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "H-02",
       "target": "H-04",
       "con_id": "CON-0109",
       "confidence": "HIGH",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "kitchens-and-workspaces"
+      "evidence_tier": "\u2014"
     },
     {
       "source": "E-05",
       "target": "E-10",
       "con_id": "CON-0037",
       "confidence": "MODERATE",
+      "type": "co-item",
       "status": "CONSUMED",
-      "type": "item-item",
-      "topic": "controls-and-hardware"
+      "evidence_tier": "\u2014"
     }
   ]
 }
