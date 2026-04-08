@@ -4,8 +4,8 @@
 <!-- Do NOT read/write archived connection-register-active.md -->
 
 **Last migration:** 2026-04-08 (Phase 0B-1 — CO-0006)
-**Total connections migrated:** 110
-**Next CON-ID:** CON-0111
+**Total connections migrated:** 113
+**Next CON-ID:** CON-0114
 
 ## Status summary
 | Status | Count |
@@ -127,3 +127,6 @@
 | CON-0111 | PENDING | Part 10 DAR, Part 1 Foundations, Part 12 Economics | wayfinding-and-signage | MODERATE | false | — |
 | CON-0112 | CONSUMED | Part 12 Economics | wayfinding-and-signage | HIGH | false | — |
 | CON-0113 | CONSUMED | Part 12 Economics | wayfinding-and-signage | HIGH | false | — |
+| CON-0036 | CONSUMED | D-05 | wayfinding-and-signage | MODERATE | false | — |
+| CON-0037 | CONSUMED | E-05, E-10 | controls-and-hardware | MODERATE | false | — |
+| CON-0038 | CLOSED | G-08 | bathrooms-and-wet-areas | MODERATE | false | — |
