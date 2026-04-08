@@ -10,10 +10,11 @@ description: >
 ---
 
 <!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
+<!-- Updated: CO-0006 2026-04-08 — output restructured to topic-directory architecture -->
 
-**Model:** Opus 4.6
+**Model:** Opus 4.6 (identification) · Sonnet 4.6 (writes)
 **GitHub backend:** `jordanelias/guidebook` · `main`
-**Output file:** `references/connection-register.md`
+**Output structure:** `references/connections/{topic}/connections.md` + `references/connections/_index.md`
 **Called by:** workplan-orchestrator (edition boundary); literature-review-planner (on demand); user (explicit request)
 **Never substitutes for `multilingual-research`.** Operates on assembled outputs, not raw search.
 
@@ -42,38 +43,75 @@ Both modes may run in a single session. Internal always before external — inte
 
 3. **External scan (external mode only):** Search adjacent fields. Confirm all sources real.
 
-4. **Write to connection register:** Append to `references/connection-register.md`. GET + SHA before writing. PUT back. Commit: `connection-scout: append connections [{YYYY-MM-DD HH:MM}]`.
+4. **Route to topic directory:**
+   - Determine the primary target item (the item that needs to change).
+   - Look up target item's category → map to topic directory:
 
-5. **Feed downstream:** HIGH → item-specification-writer briefing. SPECULATIVE → gap_register P3.
+   | Item category | Topic directory |
+   |---|---|
+   | A (access/entrances) | entrances-and-circulation |
+   | B (vertical circulation) | entrances-and-circulation |
+   | C (horizontal circulation) | entrances-and-circulation |
+   | D (wayfinding/signage) | wayfinding-and-signage |
+   | E (controls/hardware) | controls-and-hardware |
+   | F (communication/alerts) | communication-and-alerts |
+   | G (bathrooms/wet areas) | bathrooms-and-wet-areas |
+   | H (kitchens/workspaces) | kitchens-and-workspaces |
+   | I (seating/rest) | seating-and-rest |
+   | J (room-types) | room-types |
+   | K (sensory environment) | sensory-environment |
+   | Economics/cost | economics |
+   | Population-general | population-general |
+   | Health/symptom | health-and-symptom-management |
+   | Frameworks/methodology | frameworks-and-methodology |
+   | 3+ directories or ambiguous | cross-cutting |
 
-## Connection Register Entry Schema
+   **Ambiguity tiebreaker:** If connection links items in two directories with no single primary target, file under the directory of the item with the higher item-code letter (later in alphabet = later in specification sequence = more likely to accommodate).
+
+5. **Write to connection register (Sonnet writes):**
+   - GET `references/connections/_index.md` + SHA. Append new row.
+   - GET `references/connections/{topic}/connections.md` + SHA (create file if it does not exist). Append new entry.
+   - PUT both files. Commit: `connection-scout: append {N} connections to {topic} [{YYYY-MM-DD HH:MM}]`
+
+6. **Feed downstream:** HIGH → item-specification-writer briefing. SPECULATIVE → gap_register P3.
+
+## Connection Entry Schema (per-entry, within topic file)
 
 ```markdown
-## CON-{NNNN} [{YYYY-MM-DD HH:MM}]
+### CON-{NNNN}
 
-**Mode:** Internal | External
+**Status:** PENDING | CONSUMED | DEFERRED | SPECULATIVE | CLOSED
 **Confidence:** HIGH | MODERATE | SPECULATIVE
-**Disposition:** PENDING | CONSUMED | DEFERRED | SUPERSEDED | CLOSED
-**Populations involved:** {code list}
-**Items involved:** {item code list or NONE}
-**Gap register items:** {GAP-XXX list or NONE}
+**Opus-reviewed:** true | false
+**Source BPC slug(s):** {slug1}, {slug2}
+**Target item(s):** {item-code(s)}
+**Target population(s):** {pop-codes}
+**Evidence tier:** {tier of supporting evidence}
+**Filed:** {YYYY-MM-DD}
+**Applied:** {session ref or —}
 
-### Connection description
-{What is the unmade connection? Mechanism, evidence basis, why not currently in guidebook.}
+**Connection:** {1–3 sentence description of the cross-population or cross-item relationship}
 
-### Evidence basis
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
+**Evidence basis:** {brief citation of supporting evidence from BPC}
 
-### Proposed synthesis direction
-{What should the guidebook say? What spec change, new item, or cross-reference?}
+**Action required:** {what item-specification-writer needs to do}
 
-### Disposition
-- [ ] HIGH → item-specification-writer briefing
-- [ ] MODERATE → P2 gap item
-- [ ] SPECULATIVE → P3 gap item
-- [ ] Superseded by existing content — CLOSED
+**Disposition notes:** {resolution notes, deferred reasons}
 ```
+
+## _index.md Row Schema
+
+```markdown
+| CON-ID | Status | Primary target | Filed in | Confidence | Opus-reviewed | Session applied |
+|---|---|---|---|---|---|---|
+| CON-{NNNN} | PENDING | {item-code} ({topic}) | {topic-dir} | HIGH | No | — |
+```
+
+**CON-ID assignment:** Increment from highest existing CON-ID in `_index.md`. If `_index.md` does not exist yet (pre-migration): start from CON-0120 (119 connections migrated from monolithic register).
+
+## Migration Note (CO-0006 2026-04-08)
+
+The monolithic `references/connection-register-active.md` has been archived. All new connections write to the topic-directory structure above. The migration session (0B-1) parsed existing entries and routed them. Do not read or write to `references/connection-register-active.md` or `references/connection-register.md` — these are archived.
 
 ## Token Rules
 
