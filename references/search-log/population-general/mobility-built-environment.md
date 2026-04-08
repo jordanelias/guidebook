@@ -104,3 +104,17 @@ log_closed:
   reason: Full 14-language search; Co-1 complete EN+JA partial others; native standards pass complete; companion networks loaded; Opus synthesis complete; no outstanding gaps
   logged_by: Sonnet 4.6
   phase3_ready: YES
+
+functional_deficit_pass:
+  status: PARTIAL
+  last_run: 2026-04-08 01:41
+  fdr_file: references/fdr/mobility-built-environment.md
+  scenarios_run: 2
+  novel_findings: 4
+  refines_findings: 1
+  contradicts_findings: 0
+  gaps_confirmed: 1
+  tier0_candidates: 0
+  scenarios_complete: [FDR-MOB-01]
+  scenarios_gap: [FDR-MOB-02]
+  scenarios_remaining: [d410+lower-limb-spasticity→transfers, d450+lower-limb-strength→ramp]

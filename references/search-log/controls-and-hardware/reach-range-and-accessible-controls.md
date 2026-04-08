@@ -100,3 +100,17 @@ ACCEPTED_GAPS: [16 jurisdictions NOT-RUN for controls; Co-1 complete 0/24; Tier 
 ```
 
 ```yaml
+
+functional_deficit_pass:
+  status: PARTIAL
+  last_run: 2026-04-08 01:41
+  fdr_file: references/fdr/reach-range-and-accessible-controls.md
+  scenarios_run: 3
+  novel_findings: 4
+  refines_findings: 0
+  contradicts_findings: 0
+  gaps_confirmed: 2
+  tier0_candidates: 2
+  scenarios_complete: [FDR-RRC-01]
+  scenarios_gap: [FDR-RRC-02, FDR-RRC-03]
+  scenarios_remaining: [d440+tremor→controls, d445+bilateral-UPL→counter-shelf]
