@@ -9,6 +9,8 @@ description: >
   any multi-step guidebook task, or resuming work after a session gap.
 ---
 
+<!-- Updated: CO-0006 2026-04-08 — connection register restructured; session start loads _index.md -->
+
 **Model:** Sonnet 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
 
@@ -25,10 +27,14 @@ Fetch in one call via github-io batch_read:
 
 Parse LATEST to get session filename.
 
+> **Connection register (CO-0006 2026-04-08):** The monolithic `connection-register-active.md` is archived. Do NOT load it. Connection state is now in `references/connections/_index.md` (master index) + per-topic `connections.md` files. At session start, load `_index.md` only. Load per-topic files only when the session task touches that topic.
+
 ### 1b — Load session file (GraphQL batch_read — call 2)
 
-Fetch the session file identified in LATEST.
+Fetch the session file identified in LATEST AND `references/connections/_index.md` in the same call.
 Report: session_close, next_action, blockers. Confirm with user before resuming. Do not auto-resume.
+
+From `_index.md`: note count of PENDING HIGH-confidence connections — these are the highest-priority integration targets for any ISW session.
 
 ### 2 — Load gap register (filtered bash)
 
