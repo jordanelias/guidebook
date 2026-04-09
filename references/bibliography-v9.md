@@ -3,9 +3,9 @@
 ## Guidebook for Accessible Design
 
 **Version:** v9.0 | **Date:** 2026-03-27 14:34 | **Format:** APA 7th edition
-**Entries:** 220 | **Sources by section:** A: 63 · B: 61 · C: 83 · D: 9 · E: 4
+**Entries:** 216 | **Sources by section:** A: 63 · B: 59 · C: 81 · D: 9 · E: 4
 **Compiled from:** bibliography-v8 (102 entries) + 78 BPC files (430 structured sources)
-**Verification:** ✅ 224 · ⚠ 14 · ❌ 0
+**Verification:** ✅ 222 · ⚠ 9 · ❌ 0 · DELETED: 4 (CIT-AUDIT 2026-04-09)
 
 ---
 
@@ -108,7 +108,6 @@
 
 ✅ KDA — Kuratorium Deutsche Altershilfe. *Wohnkonzepte für Menschen mit Demenz.* [DE Tier 5] [PROVISIONAL — KDA is a verified organisation (est. 1962, Berlin); extensive dementia housing publications confirmed via Pro ALTER journal and BMFSFJ-funded research reports; specific title not locatable as standalone publication; likely series of project reports. Re-search via BMFSFJ Forschungsdatenbank and KDA project archive (kda.de/laufende-projekte/projektarchiv/)]
 
-✅ Latiff, A., et al. (2024). Biophilic outdoor transitional spaces for NDV populations. [EN, Co-1]
 
 ✅ Légifrance (2014) Arrêté du 8 décembre 2014 accessibilité ERP existants. FR. Tier 6.
 
@@ -193,7 +192,7 @@
 
 ✅ Buro Happold (2024). *Neurodiversity and the Workplace*. [EN, UK, Co-1/Tier 2]
 
-✅ Caldwell, J., et al. (2025). A calm space to reset: perceptions of sensory rooms in Australian public buildings. *Archnet-IJAR*. [EN, AU, Co-1]
+✅ Watchorn, V., Cartledge, M., Grant, C., Walker, A., & Hale, I. (2025). "A calm space to reset": perceptions of sensory rooms in Australian public buildings. *Archnet-IJAR: International Journal of Architectural Research*, ahead-of-print. DOI: 10.1108/ARCH-10-2024-0453 [EN, AU, Co-1] [CIT-AUDIT 2026-04-09: corrected from hallucinated author "Caldwell, J."]
 
 ✅ Calkins, M.P. et al. (2022). Evaluation of env. assessment tools for dementia. Alzheimer's & Dementia TRCI, 8, e12353.
 
@@ -273,7 +272,7 @@
 
 ✅ Sense UK. (2023). *DeafBlind design guidance*. Sense. ✅
 
-✅ Sensory Responsive Environments Framework (SREF) (2024). *MDPI Land*, 13(5), 636. [EN, Co-1]
+✅ Finnigan, K.A. (2024). Sensory Responsive Environments: A Qualitative Study on Perceived Relationships between Outdoor Built Environments and Sensory Sensitivities. *Land*, 13(5), 636. DOI: 10.3390/land13050636 [EN, Co-1] [CIT-AUDIT 2026-04-09: corrected from framework name to author]
 
 ✅ Vaughn, A. (DeafScape). (2018). DeafScape: Applying DeafSpace to Landscape. GroundUp Journal / Design With Disabled People Now. — Co-1 / Tier 2. URL: https://www.designwithdisabledpeoplenow.com/deafscape
 
@@ -373,7 +372,6 @@
 
 ✅ Marquardt, G. et al. (2014). Impact of built environment on people with dementia. HERD, 8(1), 127–157. DOI:10.1177/193758671400800111
 
-⚠ MDPI Buildings. (2026). Intellectual disability and home design [forthcoming]. *Buildings*, 16(3), 489. [Publication date post-search; verify on publication]
 
 ✅ Misch, A., et al. (2022). Whole-body vibration and wheelchair users. *JRATE*. [EN, Tier 3]
 
@@ -384,13 +382,11 @@
 
 ✅ NFPA 72-2022. National Fire Alarm and Signaling Code. NFPA.
 
-⚠ National Institute for Health and Care Research. (2023). [Bariatric facilities design evidence — specific publication not identified]. NIHR. [UNVERIFIED — searched NIHR Evidence database; no standalone bariatric facilities design publication found. May be embedded in NIHR surgical/rehabilitation evidence summaries. Delete if not locatable by publication.]
 
 ✅ Omura, K.M. et al. (2022). Energy conservation, minimum steps, and adaptations: A scoping review. Hong Kong J Occup Ther, 35(2), 125–136. DOI:10.1177/15691861221137223
 
 ✅ Petaccia, A., et al. (2021). Lighting conditions and falls in older adults. *International Journal of Environmental Research and Public Health*, 18(6), 3262. ✅
 
-⚠ PMC. (2025). [Intellectual disability home design scoping review — PMC ID not recorded]. [UNVERIFIED — search PMC for 2024–2025 IntD housing scoping reviews to resolve. Delete if not locatable.]
 
 ✅ PMC10621028 (2023). Housing accessibility and rehabilitation outcomes after stroke. *OTJR.* [Tier 3 SV]
 
@@ -555,7 +551,7 @@
 
 ✅ Huckshorn, K. A. (2004). Reducing seclusion and restraint use in mental health settings: Core strategies for prevention. *Journal of Psychosocial Nursing and Mental Health Services*, 42(9), 22–33. DOI: 10.3928/02793695-20040901-05
 
-⚠ Imrie, R. (2012). Universalism, universal design and equitable access to the built environment. *Disability and Rehabilitation*, 34(10), 873–882. DOI: 10.3109/09638288.2011.624250
+✅ Imrie, R. (2012). Universalism, universal design and equitable access to the built environment. *Disability and Rehabilitation*, 34(10), 873–882. DOI: 10.3109/09638288.2011.624250. PMID: 22054109 [CIT-AUDIT 2026-04-09: verified via PubMed]
 
 ✅ Kaplan, R., & Kaplan, S. (1989). *The experience of nature: A psychological perspective*. Cambridge University Press.
 
