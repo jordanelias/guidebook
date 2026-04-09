@@ -29,7 +29,7 @@
 **Opus synthesis note:** Theoretical entry providing the specification logic for the guidebook. Not a BPC entry requiring multilingual research. Cross-reference ot-frameworks for OT-specific frameworks.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Affordances are organism-specific action possibilities | EN | Cross-disciplinary (Gibson 1979; 50+ years of replication) | 3 |
 | Accessibility specifications are minimum functional thresholds | EN | ISO 21542:2021 §8 references affordance-based principles | 4 |
