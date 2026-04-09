@@ -128,7 +128,7 @@ DeafSpace provisions: glazed corridor junctions for visual advance sightlines (m
 ---
 
 ### §2.5 NEU
-> **[Co-1 EVIDENCE GAP]** Co-1 pass not run for non-EN languages. Lived experience evidence for NEU built-environment provisions from non-English-speaking neurological communities not confirmed. See NEU BPC.
+> **[Co-1 EVIDENCE GAP]** Co-1 pass completed for EN only. DA, DE, ES, FI, FR, IT, JA, KO, NL, NO, PT, SV, ZH communities not yet searched. See NEU BPC.
  — Neurological and Acquired Brain Injury
 
 **Functional profile.** NEU is the most heterogeneous category in the guidebook. It encompasses: acquired brain injury (ABI); stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia); multiple sclerosis (MS); Parkinson's disease; epilepsy; and post-concussion syndrome (NEU/PCS). Approximately 25% of stroke survivors retain navigation impairment at 12 months (van der Ham et al. 2021, Tier 3). Co-occurrence with MOB is the most frequent in clinical practice.
@@ -152,7 +152,7 @@ Lighting: no flickering sources; eliminate fluorescent overhead lighting (B-03/B
 ---
 
 ### §2.6 DEM
-> **[Co-1 EVIDENCE GAP]** Co-1 extended pass not run for 9 languages. Lived experience and carer evidence for DEM built-environment provisions from non-English dementia organisations not systematically retrieved. See DEM BPC.
+> **[Co-1 EVIDENCE GAP]** Co-1 pass completed for EN, DE, NL, JA, FR only. DA, ES, FI, IT, KO, NO, PT, SV, ZH communities not yet searched. See DEM BPC.
  — Dementia
 
 **Functional profile.** Dementia produces progressive impairment of cognitive mapping, spatial orientation, memory, recognition, and executive function. The most influential environmental factor is floor plan configuration — signage and colour provisions alone cannot compensate for poor layout (Marquardt and Schmieg 2009, Tier 3; Bowes, Dawson, Greasley-Adams and McCabe 2019 — Stirling systematic review of 429 items, Tier 3).
@@ -264,7 +264,7 @@ Hydrotherapy: warm-water hydrotherapy has Tier 1 evidence for fibromyalgia pain 
 ---
 
 ### §2.10 DBL
-> **[Co-1 EVIDENCE GAP — PARTIAL]** Protactile community only. Co-1 evidence limited to US English-speaking Protactile community (Clark, Nuccio). Lived experience from non-English DeafBlind communities not retrieved. See DBL BPC.
+> **[Co-1 EVIDENCE GAP — PARTIAL]** Co-1 evidence retrieved from US Protactile community only (Clark, Nuccio; EN). DeafBlind communities in all other languages and jurisdictions not yet searched. See DBL BPC.
  — DeafBlind
 
 **Functional profile.** DeafBlind users experience combined vision and hearing impairment. DBL is not VIS plus DEAF — it is a distinct category requiring tactile-first design in which visual and auditory provisions are redundancy layers, not primary channels. The DBL population uses diverse communication modes: tactile sign language, Protactile, hand-over-hand, residual vision-assisted close-range signing, and braille. No jurisdiction has DBL-specific built environment standards. All DBL provisions carry: `[THIN BASE — zero Tier 1–2 evidence; all provisions Tier 4–5 practitioner consensus; March 2026]`.
