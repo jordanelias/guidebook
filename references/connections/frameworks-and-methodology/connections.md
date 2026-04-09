@@ -360,3 +360,206 @@ These programme models demonstrate that the highest-quality national systems sti
 ---
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0156
+
+**Status:** PENDING
+**Target item(s):** Part 11 §11.8.3 → CS-25 DFG budget reconciliation
+**Connection:** [DESCRIPTION PENDING — source session file required]
+
+### CON-0157
+
+**Status:** PENDING
+**Target item(s):** Part 11 §11.6 + §11.8.3 NDIS SDA evidence
+**Connection:** [DESCRIPTION PENDING — source session file required]
+
+### CON-0158
+
+**Status:** PENDING
+**Target item(s):** Part 11 §11.8.3 Aktion Mensch + Husbanken
+**Connection:** [DESCRIPTION PENDING — source session file required]
+
+### CON-0159
+
+**Status:** PENDING
+**Target item(s):** Part 11 §11.3.5 SROI/QALY → CS-22/CS-23/CS-24
+**Connection:** [DESCRIPTION PENDING — source session file required]
+
+### CON-0167
+*[formerly CON-0156]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-design-failures-poor-performance, cross-population-conflict-resolutions
+**Target item(s):** Part 5 §5.2, Part 3 §3.8
+**Target population(s):** ALL
+**Evidence tier:** Tier 3/Co-1 (Zallio & Clarkson, CS-02 Gallaudet)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** The nine conflict resolutions are individually evidence-supported, but the resolution framework as a composed system is untested. Only CS-02 (Gallaudet rounded corners — DEAF/MOB) has been built and evaluated. The framework's assumption that resolutions compose (apply simultaneously) is unvalidated.
+
+**Action required:** Part 5 §5.2 disclosure: conflict resolution framework is evidence-informed but untested as a composed system. POE of first buildings using this framework is essential.
+
+### CON-0168
+*[formerly CON-0157]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** residential-dar-provisions-priority-register, visitability-residential-accessibility-minimum-standards
+**Target item(s):** Part 10 §10.x, Part 11 §11.x
+**Target population(s):** ALL
+**Evidence tier:** Tier 4–5
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** DAR retrofit multipliers (×5 to ×75+) and visitability cost ($100–600) are complementary but unlinked. A composite DAR cost-benefit envelope would show construction-stage accessibility is dramatically cheaper than retrofit. Direction is unambiguous across all jurisdictions; magnitude requires careful sourcing.
+
+**Evidence basis:** DAR register (×75 grab bar, ×20–40 hoist, ×50+ lift zone — UK/CA industry estimates). Visitability ($100–600 — Concrete Change).
+
+**Action required:** Part 11: present composite DAR cost-benefit argument. Use only sourced component costs. ○ marker (synthesis). [UNVERIFIED — composite ratio requires formal cost study to validate. Direction is unambiguous; magnitude is estimated from individual component data.]
+
+**Quality correction from original:** Added UNVERIFIED flag. Original presented "1:15 to 1:25" ratio as if sourced — it was my arithmetic on unsourced component estimates.
+
+### CON-0169
+*[formerly CON-0158]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** cross-population-case-studies, accessible-design-failures-poor-performance
+**Target item(s):** Part 12, Part 1
+**Target population(s):** VIS, PAIN, OFS, MOB/UPL
+**Evidence tier:** N/A (gap finding)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** VIS, PAIN/OFS, and UPL have zero built-environment case study evidence globally AND no validated design framework. These are the most vulnerable to "compliance without adequacy" failures.
+
+**Action required:** Part 1 and Part 12: prominent disclosure. POE of buildings designed for these populations is the highest research priority. Extends CON-0140 and CON-0045.
+
+### CON-0170
+*[formerly CON-0160]*
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-design-failures-poor-performance, residential-dar-provisions-priority-register
+**Target item(s):** Part 10 §10.x (DAR)
+**Target population(s):** ALL
+**Evidence tier:** Co-2/Tier 5
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Post-occupancy regression is a documented failure mode. DAR provisions are vulnerable: blocking zones behind plasterboard are invisible once finished. Needed: nail plates, conduit labelling, O&M "do not disturb" notation.
+
+**Action required:** Part 10: DAR operational protection specification.
+
+### CON-0172
+*[formerly CON-0162]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-design-economics-cost-premium, government-grant-programmes-home-adaptation
+**Target item(s):** Part 11 §11.x
+**Target population(s):** ALL
+**Evidence tier:** Tier 3–5
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** All government programmes fund retrofit only; none funds design-stage construction. UK DFG £711m/year on retrofits. If dwellings had been built accessibly, the cost would have been dramatically lower. The grant budget would fund substantially more accessible homes if redirected to construction.
+
+**Action required:** Part 11: present the policy misallocation argument using only sourced figures. Direction: unambiguous. ○ marker. [UNVERIFIED — the magnitude of the ratio ("3–7×" from original) requires formal cost comparison study. Present the sourced inputs (DFG £711m, average adaptation £12K–15K, new-build premium 0.94–3.92%) and let the reader draw the comparison.]
+
+**Quality correction from original:** Removed the precise "3–7×" multiplier claim. Present sourced inputs; don't calculate an unsourced composite.
+
+### CON-0173
+*[formerly CON-0163]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-design-economics-cost-premium, cross-population-case-studies
+**Target item(s):** Part 11 §11.x, Part 12
+**Target population(s):** DEM, MOB
+**Evidence tier:** Tier 3 (Marquardt 2011, CAPABLE RCT)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Three data points create cost-per-outcome figures: (1) toilet visibility: $0 additional / 47% incontinence reduction. (2) CAPABLE: $700–$1,400 / hospitalisation halved. (3) Loop floor plan: $0 / 94% vs 34% wayfinding. More compelling than cost-as-percentage.
+
+**Action required:** Part 11: cost-per-outcome table. Lead with zero-premium-maximum-outcome entries. All figures sourced from existing BPCs.
+
+### CON-0174
+*[formerly CON-0164]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** jurisdiction-matrix-accessibility-standards, design-framework-evidence-audit
+**Target item(s):** Part 1, Part 2
+**Target population(s):** DEM, NDV, OFS
+**Evidence tier:** Tier 4–6
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** "No jurisdiction addresses DEM, NDV, or OFS in building code" across all 24 surveyed jurisdictions. The guidebook fills a documented regulatory vacuum.
+
+**Action required:** Part 1: explicit statement. Positions guidebook as filling regulatory vacuum, not competing with codes.
+
+### CON-0175
+*[formerly CON-0165]*
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-design-economics-cost-premium
+**Target item(s):** Part 9 §9.x, Part 11
+**Target population(s):** ALL
+**Evidence tier:** Tier 3 (Ielegems & Vanrie 2024)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** "Cost premium approaches zero after three experienced accessible-design projects" (Ielegems & Vanrie 2024). Procurement of experienced teams is itself an economic intervention.
+
+**Action required:** Part 9: accessible-design experience as procurement criterion. Part 11: note 0.94–3.92% includes first-time teams.
+
+### CON-0178
+*[formerly CON-0168]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** multilingual-evidence-convergence-non-english
+**Target item(s):** Part 1, Part 4 items
+**Target population(s):** ALL
+**Evidence tier:** Tier 1–3
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Seven provisions have stronger evidence in non-English literature. Part 1 should cite as validation of multilingual methodology. Part 4 should cite non-English primary sources first for these seven provisions.
+
+### CON-0179
+*[formerly CON-0169]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** crpd-implementation-built-environment, co1-housing-research-global-south
+**Target item(s):** Part 1
+**Target population(s):** ALL
+**Evidence tier:** Tier 4 (treaty body)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** CRPD Art. 5 + GC6 (2018) makes inaccessibility a form of disability-based discrimination — immediate duty, not progressive. Stronger legal basis than Art. 9 alone for new construction.
+
+**Action required:** Part 1: add Art. 5 + GC6 as co-primary legal foundation alongside Art. 9.
+
