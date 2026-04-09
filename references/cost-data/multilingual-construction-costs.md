@@ -234,3 +234,82 @@
 - Legal basis: 「장애인·노인·임산부 등의 편의증진보장에 관한 법률」 Article 10-2
 
 [GAP: Korean BF certification cost impact study — no cost premium data found in Korean sources. Certification fee structure available but construction cost differential not quantified in this search.]
+
+
+---
+
+## Addendum 2: Denmark, Spain, Italy + Citation Mining (2026-04-09 23:15)
+
+### Denmark (DA)
+
+**Regulatory:** BR18 (Bygningsreglementet) §48–62 governs adgangsforhold (access conditions). References DS/ISO 21542:2012 and EN 17210. SBi-anvisning 222 (tilgængelige boliger) and 272 (BR18 commentary). Social- og Boligstyrelsen oversees.
+
+**Key findings:**
+- **NCC (major Nordic contractor, E-4):** Confirms that accessible building "does not have to cost extra if thought into the project from start" ("det ikke behøver at koste ekstra at bygge ligeværdigt og tilgængeligt, hvis man tænker det ind i projektet fra start")
+- Single-family houses exempted from niveaufri adgang (level access) requirement in 2017 reform — government argued cost savings and homeowner freedom
+- SBI research (Aalborg/Build) notes Denmark has minimal enforcement of accessibility requirements compared to other countries
+- Municipal boligindretning (home modification) funding: free for qualifying disability; means-tested; covers trappelift, dørtrin removal, etc.
+- Kommunen (local authority) pays for modifications under Serviceloven; assessed by OT
+
+### Spain (ES)
+
+**Regulatory:** CTE DB SUA (Código Técnico de la Edificación — Documento Básico Seguridad de Utilización y Accesibilidad). Ley 13/1982, Ley 51/2003 (LIONDAU).
+
+**Key findings:**
+- **Only 0.6% of Spanish buildings are universally accessible** (Fundación Mutua de Propietarios / UNESCO Chair URV Tarragona)
+- European comparison: ES 0.6%, DE 1.5%, SE 2.5% — all critically low
+- 100,000 people in Spain cannot leave their homes due to inaccessibility; 22% of people with reduced mobility have had to change housing (Fundación Mutua)
+- Fundación ONCE (2013 Observatorio): widespread non-compliance with CTE; perception that UD is costly persists and prevents adoption
+- **Elevator retrofit:** €75,000–€80,000 for 5-storey building; €5,000–€6,000 per unit (E-7)
+- **Vertical platform lift:** ~€10,000 (E-7)
+- **Plan Estatal de Vivienda 2022-2025:** Programa 7 — subsidies for accessible housing for elderly/disabled
+- **Alonso López (Fernando), ACCEPLAN / UAB:** "Repercusión social de la mejora de accesibilidad en los edificios de uso privado y demanda de viviendas adaptables" — quantified economic/social impact of accessibility improvements. Also published Alonso (2002) in European Journal of Housing Policy — contingent valuation of accessibility as housing attribute.
+
+### Italy (IT)
+
+**Regulatory:** DM 236/89 (technical prescriptions); Legge 13/1989 (barrier elimination in private buildings); DPR 503/1996 (public buildings); Testo Unico Edilizia DPR 380/2001.
+
+**Three-tier quality framework (DM 236/89):**
+- **Accessibilità:** Full — complete independent use by wheelchair user. Mandatory for common areas, ≥5% of social housing units
+- **Visitabilità:** Partial — access to social spaces + ≥1 bathroom. All units must be visitable
+- **Adattabilità:** Deferred — "accessibilità differita" — designed so future modifications (without structural or systems changes) can achieve full accessibility at contained cost. ALL units must be adaptable
+
+**⚑ Guidebook connection:** The Italian "adattabilità" concept (1989) directly parallels Part 10 (Adaptable Readiness). This is the earliest codified version of the "design for future accessibility" principle found across jurisdictions.
+
+**Financial incentives:**
+- **Bonus Barriere Architettoniche:** 75% tax deduction for barrier elimination in existing buildings (Legge di Bilancio 2022, extended through 2025)
+- Max deduction: €50,000 (single unit), €40,000 (2–8 units), €30,000 (8+ units) — per unit
+- Covers: stairs, ramps, elevators, servoscale, platform lifts, automation
+- No specific new-build cost premium study found in Italian sources
+
+[GAP: Italian new-build UD cost premium study — none found. The adattabilità framework implies the cost is deferred rather than measured at construction.]
+
+### Citation Mining Results
+
+**Sources retrieved from Ielegems (2024) bibliography:**
+
+| Source | Status | Key finding |
+|---|---|---|
+| Steinfeld (2005). Education for All: The cost of accessibility. World Bank. | RETRIEVED (full text) | <1% of construction cost; Schroeder & Steinfeld (1979) redesigned 9 buildings with ZERO additional space; Steven Winter Associates (1993) same for 8 residential projects. "Cost is not a significant barrier." |
+| Terashima & Clark (2021). JADA 11(2), 195–231. | RETRIEVED (abstract + refs) | Systematic review: only 2 of 19 papers measured building economic benefits. Massive evidence gap. Also cites WHO/MacLachlan (2018) systematic review on accessible home benefits. |
+| Alonso (2002). European Journal of Housing Policy 2(1), 25–44. | LOCATED (UAB repository) | Contingent valuation of accessibility as housing attribute — quantifies willingness to pay. Same author as Fundación ONCE/ACCEPLAN work. |
+| Fuglerud et al. (2015). NR Report 1032. Norsk Regnesentral. | NOT RETRIEVED | Norwegian cost-benefit of UD — cited but not directly accessed |
+| Société Logique (2015). CMHC. | NOT RETRIEVED | Canadian residential new-build cost study — cited but not directly accessed |
+
+**Additional sources identified via citation networks:**
+- Schroeder & Steinfeld (1979) — redesigned 9 non-accessible buildings; zero additional space (cited by Steinfeld 2005)
+- Steven Winter Associates (1993) — 8 residential projects; same finding (cited by Steinfeld 2005)
+- WHO/MacLachlan et al. (2018) — systematic review on accessible home environments (cited by Terashima 2021)
+- Odeck, Hagen & Fearnley (2010) — Economic appraisal of UD in transport, Norway (cited by Terashima 2021)
+- Alonso (2002) — Contingent valuation, European Journal of Housing Policy (cited by both Ielegems 2024 and Terashima 2021)
+
+---
+
+## Updated Coverage Summary
+
+| Status | Count | Jurisdictions |
+|---|---|---|
+| SEARCHED | 16 | US, UK, AU, DE, FR, SE, NO, JP, CA, BE, NL, KR, EU, DK, ES, IT |
+| NOT-RUN | 30 | CH, FI, NZ, SG, IE, BR, CN, IN, ZA, MX + 20 Tier B |
+
+Languages searched: EN, DE, FR, SV, NO, JA, NL, KO, DA, ES, IT = **11/19**

@@ -79,3 +79,24 @@
 - Terashima & Clark (2021) — JADA 11(2) — referenced
 - Fuglerud et al. (2015) — NR Report 1032 — referenced
 - Jones (2011) — single-aspect cost study — cited but title not retrieved
+
+
+## Update 2026-04-09 23:15
+
+### Added jurisdictions
+- DK: SEARCHED (DA) — BR18 §48-62; NCC zero-cost confirmation; SBi-anvisning 222/272
+- ES: SEARCHED (ES) — CTE DB SUA; 0.6% accessible; Fundación ONCE/Mutua; Alonso UAB
+- IT: SEARCHED (IT) — DM 236/89 three-tier framework; 75% Bonus Barriere; adattabilità = Part 10 parallel
+
+### Citation mining complete (Ielegems 2024)
+- Steinfeld (2005): RETRIEVED — full text — <1%, zero additional space in redesign studies
+- Terashima & Clark (2021): RETRIEVED — abstract + refs — only 2/19 papers measured building benefits
+- Alonso (2002): LOCATED — UAB repository — contingent valuation
+- Fuglerud (2015): NOT RETRIEVED — Norwegian NR Report
+- Société Logique (2015): NOT RETRIEVED — CMHC
+
+### Additional sources from citation networks
+- Schroeder & Steinfeld (1979): zero additional space
+- Steven Winter Associates (1993): same finding, residential
+- WHO/MacLachlan et al. (2018): systematic review on accessible home benefits
+- Odeck et al. (2010): economic appraisal UD transport Norway

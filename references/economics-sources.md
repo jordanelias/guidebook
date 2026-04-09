@@ -36,3 +36,30 @@
 | DE | 560,000 accessible units exist; 3M needed (3.7M by 2035) | KfW 2020 | 2020 |
 | NO | 92% of housing fails basic accessibility; 90% low-rise lacks lifts | Husbanken | n.d. |
 | FR | 220,000+ households with disabled member in inaccessible housing | Fondation logement 2025 | 2025 |
+
+
+## Additional Sources (2026-04-09 23:15)
+
+| ID | Citation | Tier | Jurisdiction | Key finding | Verified date |
+|---|---|---|---|---|---|
+| EC-008 | Steinfeld, E. (2005). Education for All: The cost of accessibility. World Bank EdNotes. | E-1 | Global | <1%; zero additional space in 17 building redesigns | 2026-04-09 |
+| EC-009 | Terashima, M. & Clark, K. (2021). JADA, 11(2), 195–231. | E-1 | Global | Systematic review: only 2/19 papers measured building economic benefits | 2026-04-09 |
+| EC-010 | Alonso, F. (2002). European Journal of Housing Policy, 2(1), 25–44. | E-1 | ES | Contingent valuation of accessibility as housing attribute | 2026-04-09 |
+| EC-011 | NCC Denmark (n.d.). Corporate position. | E-4 | DK | Zero extra cost when planned from start | 2026-04-09 |
+| EC-012 | EU research (via NEN/Ongehinderd). | E-6 | EU | 1–1.4% new-build premium | 2026-04-09 |
+
+## Additional Government Programme Data
+
+| ID | Programme | Jurisdiction | Max funding | Source tier | Verified | Notes |
+|---|---|---|---|---|---|---|
+| GP-009 | Bonus Barriere Architettoniche | IT | 75% deduction; €30K–50K/unit | E-2 | 2026-04-09 | Extended through 2025 |
+| GP-010 | Plan Estatal Vivienda 2022-2025 Prog 7 | ES | TBC | E-2 | 2026-04-09 | Accessible housing subsidies |
+| GP-011 | Kommunal boligindretning | DK | Free (disability-qualifying) | E-2 | 2026-04-09 | Means-tested; Serviceloven |
+
+## Additional Housing Deficit Data
+
+| Jurisdiction | Statistic | Source | Year |
+|---|---|---|---|
+| ES | 0.6% of buildings universally accessible | Fundación Mutua/UNESCO URV | 2024 |
+| ES | 100,000 people cannot leave homes due to inaccessibility | Fundación Mutua | 2024 |
+| IT | Adattabilità framework since 1989 but no comprehensive compliance data found | DM 236/89 | 1989 |
