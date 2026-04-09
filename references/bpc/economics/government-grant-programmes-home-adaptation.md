@@ -38,7 +38,7 @@
 **Opus synthesis note:** All programmes fund retrofit only. No programme funds design-stage accessible construction — confirming the economic primacy of design-stage integration (see economics-cost-premium).
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | All major jurisdictions operate home adaptation grant programmes | EN, DE, FR, NO, SE, DA | UK, IE, AU, CA, US, CH, DE, NO, SE, DK | 5 |
 | All programmes address retrofit, not design-stage provision | All | All | 5 |
