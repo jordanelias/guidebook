@@ -1,10 +1,13 @@
 ## Part 11: The Economics of Accessible Construction
 
 <!-- v10.0 scaffold — CO-0004: was Part 12 Economics (old numbering Part 11 in 88_to_90 file coincidentally matches). Section numbering §11.x confirmed correct.
+     RESOLVED 2026-04-09:
+     - §11.6 Evidence Landscape: Oslo Economics (2018) entry added (GAP-064 CLOSED)
+     - §11.8.3 jurisdiction notes updated: KfW 455-B restarted Apr 2026; DFG £761M; NDIS SDA added; Spain/Fundación ONCE added; Norway/Husbanken added; US Section 811 added
      PENDING:
-     - §11.6 Evidence Landscape: add Oslo Economics (2018) entry (GAP-064)
      - Cross-part references updated to CO-0004 Part numbering
-     - D3 decisions reviewed for any economics-specific content -->
+     - D3 decisions reviewed for any economics-specific content
+     - §11.4 new cost tables needed: kitchen/workspace, bedroom, emergency egress (see economics-gap-analysis-2026-04-09.md) -->
  of Accessible Construction
 
 ### Scope and Purpose
@@ -385,7 +388,7 @@ The most effective economic argument for accessibility does not depend on financ
 
 **Argument 6 — The Grant Programme Paradox (Public-Sector Clients)**
 
-"Every major jurisdiction operates government-funded home adaptation grant programmes — UK DFG (£711m/year), Australia NDIS, Canada HATC, US VA SAH/SHA. Every programme funds retrofit only. No programme funds design-stage accessible construction. The entire public funding apparatus addresses the most expensive endpoint. If the same provisions were required at construction — at <4% of project cost — the retrofit grant programmes would be unnecessary for new housing stock. The current system spends public money at 10–40× the cost that design-stage provision would have required."
+"Every major jurisdiction operates government-funded home adaptation grant programmes — UK DFG (£761m in 2025-26), Australia NDIS SDA (~A$600m/year), Canada HATC, US VA SAH/SHA, Germany KfW (€50m in 2026). Every programme funds retrofit only. No programme funds design-stage accessible construction. The entire public funding apparatus addresses the most expensive endpoint. If the same provisions were required at construction — at <4% of project cost — the retrofit grant programmes would be unnecessary for new housing stock. The current system spends public money at 10–40× the cost that design-stage provision would have required."
 
 **Argument 5 — Social Value (Public-Sector and Institutional Clients)**
 
@@ -409,13 +412,17 @@ The most effective economic argument for accessibility does not depend on financ
 
 | Jurisdiction | Key Notes for Design Teams |
 | --- | --- |
-| Germany | KfW programmes: KfW 455-B grant programme suspended January 2025 (oversubscribed); KfW 159 loan programme continues at reduced rate. Bundesfachstelle Barrierefreiheit: annual guidance on DIN 18040-2. Threshold: ≤10mm DIN 18040-2 'reduced-barrier' variant available where zero-threshold is drainage-constrained (relevant to Item E-06). |
-| Norway | NS 11001 (Universell utforming): most comprehensive national universal design standard globally. SINTEF Byggforsk reach zone research confirms upper reach at 1,300mm AFF for forward reach (powered wheelchair users) — relevant to Item H-01. |
+| Germany | KfW programmes: KfW 455-B grant programme suspended January 2025 (oversubscribed); **restarted 8 April 2026 at €50M** (reduced from €150M in 2024; ZVSHK demanded €150M minimum). Grant: 10% of costs (max €2,500 individual measures) or 12.5% (max €6,250 for full Altersgerechtes Haus standard). KfW 159 loan programme continues. Aktion Mensch (largest private disability funder): barrier-free housing grants up to €200,000 (90% subsidy) or €300,000 (50% subsidy inc. wheelchair spaces at €20,000 each). IWU study: Germany needs 2M+ additional barrier-free dwellings by 2035. Bundesfachstelle Barrierefreiheit: annual guidance on DIN 18040-2. Threshold: ≤10mm DIN 18040-2 'reduced-barrier' variant available where zero-threshold is drainage-constrained (relevant to Item E-06). |
+| Norway | NS 11001 (Universell utforming): most comprehensive national universal design standard globally. SINTEF Byggforsk reach zone research confirms upper reach at 1,300mm AFF for forward reach (powered wheelchair users) — relevant to Item H-01. Husbanken (State Housing Bank): NOK 89M (2026 budget) for home adaptation grants (25% of costs, max NOK 75,000/household); basic loan scheme requires UD compliance. Oslo Economics (2018) Report 2018-36: universally designed Norwegian primary school produces strongly positive benefit-cost ratio (NOK 2.2 billion benefit). DOGA Innovation Award for Inclusive Design recognises built environment exemplars (CS-13 Carpe Diem). |
 | Sweden | Boverket (2022): covered entrance canopies of ≥3,000 × 2,000mm (Item E-05) are functionally necessary for independent wheelchair operation in Nordic winter conditions. |
 | Japan | Barrier-Free Act (2006, rev. 2021). JIS T9251 TWSI standard predates ISO 23599:2012 and established the dot/bar convention used internationally. PTV ≥40 wet may be more appropriate than ≥36 in high-rainfall climates (Item E-07). |
 | France | CEREMA: hearing loop required at all service counters and all spaces with >50 seats — more comprehensive than UK specification (Items A-10, A-11). LRV contrast ≥30 independently confirmed for all door frames, switches, and floor/wall junctions (Item C-04). |
 | Belgium / Netherlands | Ielegems \& Vanrie (2024): building-type cost differentiation (0.94%--3.92%) is the most granular published dataset available. Use when presenting cost evidence by building sector. |
-| Brazil | ABNT NBR 9050:2020 broadly consistent with this Guidebook. PTV ≥40 wet appropriate in tropical/high-humidity conditions. Brazilian epidemiological data supports increasing emphasis on bariatric provisions (Category L). |  |
+| Brazil | ABNT NBR 9050:2020 broadly consistent with this Guidebook. PTV ≥40 wet appropriate in tropical/high-humidity conditions. Brazilian epidemiological data supports increasing emphasis on bariatric provisions (Category L). |
+| Australia | NDIS Specialist Disability Accommodation (SDA): ~A$600M/year (FY25), funding $35,000–$117,000/participant/year across four design categories (Improved Liveability, Fully Accessible, Robust, High Physical Support). ~25,500 participants (Dec 2025). Projected to triple by 2033; ~$14B capital required for ~5,000 new dwellings. Most comprehensive government-backed accessible housing investment programme globally. Summer Foundation research (CS-16): Tier 1 evidence for purpose-built accessible housing reducing support hours by 2.4/person/day. |
+| Spain | Fundación ONCE: barrier-free housing grants up to €200,000 (90% subsidy, 2–8 person housing) or €300,000 (50% subsidy inc. wheelchair spaces at €20,000 each). Funded by 3% of ONCE lottery receipts. AccessibleEU European Accessibility Resource Centre hosted in Spain. European Accessibility Act in force June 2025. |
+| USA | HUD Section 811 Supportive Housing for Persons with Disabilities: $287M enacted FY2026 ($30M increase from FY2025). Total HUD: $77.3B FY2026. ADA tax incentives: §44 Disabled Access Credit (up to $5,000/year for small businesses) and §190 Barrier Removal Deduction (up to $15,000/year). No national accessible housing construction standard equivalent to DIN 18040-2; accessibility governed by ADA, FHA, and state/local codes. |
+| Canada | CMHC National Housing Strategy: $70B over 10 years. Build Canada Homes: $7.3B (2025–2031). BC RAHA: up to $20,000/home for residential adaptations (CS-14). Canada Home Accessibility Tax Credit: up to $20,000 in eligible expenses. CAN/ASC 2.8:2025 published. RHFAC programme: 147 sites rated FY2024. |  |
 
 ### §11.9 Cross-Reference Index: Economics and Part 7
 
