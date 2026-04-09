@@ -57,7 +57,7 @@
 **Opus synthesis note:** Cost data is multi-jurisdiction convergent. Direction is unambiguous. Magnitude varies by building type and jurisdiction but stays within 0–4% at brief stage. The retrofit multiplier (10–40×) is the strongest economic argument.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Design-stage accessible construction costs 0.94–3.92% by building type | EN, DE, NL/BE, NO | Belgium, Germany, Norway, Switzerland | 1–3 |
 | 130/140 DIN 18040-2 criteria add zero cost at design stage | DE | Germany (TERRAGON/DStGB 2017) | 3 |
