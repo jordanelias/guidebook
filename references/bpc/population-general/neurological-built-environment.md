@@ -31,7 +31,7 @@
 **Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed. Two findings. (1) The NEU population is the most heterogeneous in the guidebook — it encompasses ABI, stroke, MS, Parkinson’s, epilepsy, and PCS. The synthesis correctly identifies navigation impairment sub-typing (egocentric/topographic/landmark agnosia) as the Tier 2 assessment framework. However, the unilateral neglect provision (high-contrast cues on neglected side) is clinically sound but architecturally challenging — buildings cannot reliably determine which side a user neglects. Resolution: bilateral redundancy (cues on both sides) is the Tier 1 provision; unilateral-specific placement is Tier 2 only (OT assessment of individual user). (2) The NEU→MOB co-occurrence is the most common in clinical practice. The bathroom BPC Opus synthesis adds NEU-specific provisions (hemiplegic vertical bars, Nakamura 2009). Wayfinding provisions (D-02, D-04, D-08) should cross-reference NEU explicitly, not only DEM. Evidence confidence: MODERATE (directional principles well-supported; quantified thresholds thin; population heterogeneity limits specification precision).
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Spatial configuration (floor plan legibility) is the primary environmental determinant of wayfinding for ABI/stroke; signage/cues cannot compensate for poor layout | EN (Marquardt & Schmieg 2009; Bowes et al. Stirling 2019) | Tier 3 |
 | ~25% of stroke survivors retain navigation impairment at 12 months; wayfinding correlates with quality of life | EN (van der Ham et al. 2021; Hamre et al. 2020) | Tier 3 |
