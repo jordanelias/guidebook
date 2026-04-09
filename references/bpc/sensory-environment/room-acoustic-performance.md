@@ -33,7 +33,7 @@ No room acoustic standard in any jurisdiction addresses these populations acoust
 
 ### Consensus findings by parameter
 
-| Finding | Languages confirming | Jurisdictions | Tier |
+| Finding | Languages with evidence | Jurisdictions | Tier |
 |---|---|---|---|
 | General classroom RT60 ≤ 0.6 s (volumes ≤ 283–566 m³) | EN DE IT DA NO SV FR ZH JA | US UK DE IT DA NO SE FR CN JP AU | Tier 6 (statutory in most); Tier 4–5 in some |
 | DEAF/hearing device users: RT60 ≤ 0.3 s in ≤ 283 m³ | EN (primary); IT (via UNI 11532-2 A3.1/A4) | US IT | Tier 1 (Iglehart 2020) + Tier 6 (ANSI/ASA) |
