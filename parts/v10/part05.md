@@ -162,7 +162,7 @@ The implication is structural. A perfectly specified building with poor support 
 
 #### §5.5.2 The CAPABLE Model — Validated Multicomponent Framework
 
-The strongest evidence for a residential process framework comes from the CAPABLE programme (Community Aging in Place, Advancing Better Living for Elders). The definitive RCT (Szanton et al. 2019, JAMA Internal Medicine, PMID 30615024, n=300) demonstrated a 30% reduction in ADL disability (RR 0.70, 95% CI 0.54–0.93, p=0.01) using a three-component model: occupational therapist assessment, registered nurse clinical intervention, and handyperson environmental modification. Six replications across 12 US sites (Szanton et al. 2021, n=1,087) confirmed effect sizes of 0.41–1.47 across all sites.
+The strongest evidence for a residential process framework comes from the CAPABLE programme (Community Aging in Place, Advancing Better Living for Elders). The definitive RCT (Szanton et al. 2019, JAMA Internal Medicine, PMID 30615024, n=300) demonstrated a 30% reduction in ADL disability (RR 0.70, 95% CI 0.54–0.93, p=0.01) using a three-component model: occupational therapist assessment, registered nurse clinical intervention, and handyperson environmental modification. Six replications across 12 US sites (Szanton et al. 2021, n=1,144) confirmed effect sizes of 0.41–1.47 across all sites.
 
 The CAPABLE model establishes that residential accessibility outcomes require three concurrent inputs, not one. The built environment modification (this guidebook's domain) is the handyperson component. Without the OT assessment directing the modification and the clinical intervention addressing the person's functional trajectory, the modification alone produces smaller and less durable effects.
 
@@ -185,7 +185,7 @@ The room matrices in Parts 6 and 7 specify environmental provisions. This sectio
 | Source | Tier | Key Finding |
 |---|---|---|
 | Szanton et al. 2019 (JAMA Intern Med, PMID 30615024) | 1 RCT | 30% ADL disability reduction with OT+nurse+handyperson model (n=300) |
-| Szanton et al. 2021 (J Am Geriatr Soc, PMID 34314516) | 1 multi-site | Effect sizes 0.41–1.47 across 6 replications (n=1,087) |
+| Szanton et al. 2021 (J Am Geriatr Soc, PMID 34314516) | 1 multi-site | Effect sizes 0.41–1.47 across 6 replications (n=1,144) |
 | Douglas et al. 2024 (BMJ Open) | 1 qualitative | Support quality > built environment for QoL in SDA housing |
 | Ainsworth et al. 2022 (Disabil Rehabil, PMID 36394257) | 1 qualitative | Outcomes co-produced by environment + OT process quality |
 | Malmgren Fänge et al. 2019 (PMID 31684916) | 1 quasi-experimental | Standardised OT assessment: OR 9.50 wheelchair mobility |
