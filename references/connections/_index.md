@@ -6,7 +6,7 @@
 **Last migration:** 2026-04-08 (Phase 0B-1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
 **Total connections migrated:** 113
-**Next CON-ID:** CON-0160
+**Next CON-ID:** CON-0181
 
 ## Status summary
 | Status | Count |
@@ -143,3 +143,24 @@
 | CON-0157 | PENDING | Part 11 §11.6 + §11.8.3 NDIS SDA evidence | frameworks-and-methodology | HIGH | false | — |
 | CON-0158 | PENDING | Part 11 §11.8.3 Aktion Mensch + Husbanken | frameworks-and-methodology | MODERATE | false | — |
 | CON-0159 | PENDING | Part 11 §11.3.5 SROI/QALY → CS-22/CS-23/CS-24 | frameworks-and-methodology | HIGH | false | — |
+| CON-0160 | PENDING | D-02, Part 3 §3.x | wayfinding-and-signage | HIGH | true | — |
+| CON-0161 | PENDING | C-04, B-items (stair nosings) | wayfinding-and-signage | HIGH | true | — |
+| CON-0162 | PENDING | Part 6 residential matrices, H-01 | kitchens-and-workspaces | MODERATE | true | — |
+| CON-0163 | PENDING | Part 9 §9.1, A-16 | cross-cutting | HIGH | true | — |
+| CON-0164 | PENDING | B-10, A-16, K-04 | sensory-environment | HIGH | true | — |
+| CON-0165 | PENDING | A-09, kitchen/laundry flooring | entrances-and-circulation | MODERATE | true | — |
+| CON-0166 | PENDING | B-01, B-06, B-07, A-16 | sensory-environment | HIGH | true | — |
+| CON-0167 | PENDING | Part 5 §5.2, Part 3 §3.8 | frameworks-and-methodology | HIGH | true | — |
+| CON-0168 | PENDING | Part 10, Part 11 | frameworks-and-methodology | HIGH | true | — |
+| CON-0169 | PENDING | Part 12, Part 1 | frameworks-and-methodology | HIGH | true | — |
+| CON-0170 | PENDING | Part 10 §10.x (DAR) | frameworks-and-methodology | MODERATE | true | — |
+| CON-0171 | PENDING | Part 12, Part 5 | cross-cutting | HIGH | true | — |
+| CON-0172 | PENDING | Part 11 §11.x | frameworks-and-methodology | HIGH | true | — |
+| CON-0173 | PENDING | Part 11, Part 12 | frameworks-and-methodology | HIGH | true | — |
+| CON-0174 | PENDING | Part 1, Part 2 | frameworks-and-methodology | HIGH | true | — |
+| CON-0175 | PENDING | Part 9, Part 11 | frameworks-and-methodology | MODERATE | true | — |
+| CON-0176 | PENDING | Part 4 preamble, Part 9 | cross-cutting | HIGH | true | — |
+| CON-0177 | PENDING | Part 9, Part 5, Part 1 | cross-cutting | HIGH | true | — |
+| CON-0178 | PENDING | Part 1, Part 4 items | frameworks-and-methodology | HIGH | true | — |
+| CON-0179 | PENDING | Part 1 | frameworks-and-methodology | HIGH | true | — |
+| CON-0180 | PENDING | Part 6, Part 4 MOB items, Part 1 | population-general | HIGH | true | — |
