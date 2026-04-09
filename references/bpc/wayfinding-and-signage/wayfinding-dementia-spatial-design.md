@@ -34,7 +34,7 @@
 **Opus synthesis note:** Evidence is DEM-population-specific. Cognitive map regression (allocentric → egocentric → landmark) is the core theoretical basis. Design implications are well-supported but not quantified as specifications except through EADDAT.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Allocentric navigation impaired earliest in Alzheimer's; landmark navigation most preserved | EN | Cross-jurisdictional (PMC8545728 2021) | 3 |
 | DEM residents navigate using sequential decisions and landmarks, not cognitive maps | EN | Cross-jurisdictional (van Buuren 2025) | 3 |
