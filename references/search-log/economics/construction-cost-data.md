@@ -129,3 +129,27 @@
 - 15 government programmes documented
 - 15 economics sources verified
 - Opus synthesis complete
+
+
+## Update 2026-04-09 23:50 (Hard Stop — Context Limit)
+
+### Added jurisdictions
+- SG: SEARCHED (EN) — BCA Code 2025; Accessibility Fund S$100K; UDi; no cost data
+- IE: SEARCHED (EN) — Part M 2022; NDA statutory UD centre; 77% non-compliance; CBA pending
+- BR: SEARCHED (PT) — NBR 9050:2020; Lei de Inclusão; Ministério Público enforcement; no cost data
+
+### FINAL SESSION TOTALS
+- **23 jurisdictions** searched (of 46 target)
+- **15 languages** used (of 19 target)
+- **8 independent new-build premium data points** (0.5%–1.8% convergence)
+- **15 economics sources** verified (EC-001–EC-015)
+- **15 government programmes** documented (GP-001–GP-014 + SG Accessibility Fund)
+- **Opus synthesis** complete with three determinations
+- **5 citation mining targets** addressed (3 retrieved, 2 located)
+
+### Remaining for future sessions
+- 23 jurisdictions not yet searched (IN, ZA, MX priority)
+- 4 languages not yet used (AR, HI, ID, SW)
+- Retrieve: Fuglerud NR 1032; Société Logique/CMHC
+- Draft Part 1 §1.5/§1.6 economic foundation text
+- Create Economics Appendix structure

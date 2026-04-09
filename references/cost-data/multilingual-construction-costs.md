@@ -482,3 +482,68 @@ Remaining priority: NZ (EN), CN (ZH), BR/PT (PT), SG (EN), IE (EN)
 | 13 | CH | IV | Case-by-case | Working-age |
 | 14 | FI | ARA + Vammaispalvelulaki | Grants + municipal | Elevators/ramps |
 | 15 | KR | BF certification | Mandatory public | Since 2015 |
+
+
+---
+
+## Addendum 5: Singapore, Ireland, Brazil (2026-04-09 23:50)
+
+### Singapore (EN)
+
+**Regulatory:** BCA Code on Accessibility in the Built Environment (6th revision, April 2025). Building Control Act 1989 (amended 2008). Mandatory for all new buildings + existing buildings undergoing A&A. Landed dwelling-houses excluded from Clause 2.1.
+
+**Key features:**
+- BCA explicitly states: "The Code allows accessibility and usability considerations to be integrated into the overall design, minimising the cost of providing accessibility as an afterthought" (E-2)
+- **Accessibility Fund:** Co-funds up to 60% of construction cost for UD features, capped at **S$100,000 per development** — available until March 2027
+- **Universal Design Index (UDi):** Self-assessment framework for evaluating UD performance
+- 4,000+ buildings evaluated using Accessibility Rating System (ARS)
+- Three Master Plans (2006, 2009, 2012) show systematic progression: barrier-free → accessibility → universal design
+- UD Awards recognise innovative UD solutions (e.g. Punggol Waterfront estates)
+- No TOP (Temporary Occupation Permit) or CSC without Code compliance
+
+[GAP: No Singapore-specific new-build cost premium study found.]
+
+### Ireland (EN)
+
+**Regulatory:** Part M of Building Regulations (2000, 2010, 2022). TGD M (Technical Guidance Document M — "Access and Use"). Disability Act 2005. Building Control Act 2007. Disability Access Certificate (DAC) required for new non-domestic buildings.
+
+**Key features:**
+- Part M 2022: Added M4 requirement for Changing Places facilities
+- NDA (National Disability Authority) Centre for Excellence in Universal Design — **statutory body** (Ireland is unique in having this)
+- **Universal Design Guidelines for Homes in Ireland** (NDA/MCO/PRP): Complement Part M but go beyond minimum standards
+- NDA identifies as next step: "undertake a life cycle cost benefit analysis of universally designed homes" — acknowledged gap
+- "Living in a UD Home helps to avoid the need for re-location or costly building works as your or your family's needs change over time"
+- Housing for All strategy commits to UD units in social housing
+
+**Non-compliance evidence (TU Dublin study):**
+- 48 single one-off houses observed: only 11 had level entrance; **37 (77%) contravened Part M** with stepped entrances
+- 14 housing schemes: 5 had stepped entrances violating Part M
+- Local authorities "have not reached the inspection target" set by DECLG
+
+[GAP: No Ireland-specific new-build cost premium study found. NDA CBA is pending.]
+
+### Brazil (PT)
+
+**Regulatory:** NBR 9050:2020 (ABNT) — "Acessibilidade a edificações, mobiliário, espaços e equipamentos urbanos." First published 1985; revised 1994, 2004, 2015, 2020. Decreto 5.296/2004 + Lei 13.146/2015 (Estatuto da Pessoa com Deficiência / Lei de Inclusão). Certificado de Acessibilidade required by municipalities.
+
+**Key features:**
+- 162-page standard covering all aspects of built environment accessibility
+- 2015 revision brought Desenho Universal (Universal Design) concept with greater depth — moved from "adequação" (adequation) to universal design thinking
+- Applies to urban and rural environments, public and private buildings
+- Non-compliance: building may be denied alvará (occupancy permit); Ministério Público can impose 30-day compliance deadlines with fines
+- Condomínios residenciais are being prosecuted nationwide for accessibility failures
+- Plataforma inclinada de acessibilidade (inclined accessibility platform) common retrofit solution due to lower cost vs. elevator
+
+[GAP: No Brazilian new-build cost premium study found. No government home modification programme data found in this search.]
+
+---
+
+## FINAL SESSION COVERAGE (Hard Stop)
+
+| Status | Count | Jurisdictions |
+|---|---|---|
+| SEARCHED | 23 | US, UK, AU, DE, FR, SE, NO, JP, CA, BE, NL, KR, EU, DK, ES, IT, CH, FI, NZ, CN, SG, IE, BR |
+| NOT-RUN | 23 | IN, ZA, MX, CL, CR, ID, BD, NG, PH, EG, KE, TH, CO, AR, PE, GT, EC, UY, MA, GH, TZ, ET, ISO |
+
+**Languages searched: 15** — EN, DE, FR, SV, NO, JA, NL, KO, DA, ES, IT, FI, ZH, PT (new this commit), plus policy documents in multiple additional languages
+**Remaining: 4** — AR, HI, ID, SW
