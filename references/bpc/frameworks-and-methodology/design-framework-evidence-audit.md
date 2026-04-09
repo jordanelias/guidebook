@@ -33,7 +33,7 @@
 **Opus synthesis note:** Two CRITICAL GAPS identified — OFS/Fatigue Design and Chronic Pain Design have no validated frameworks. These gaps must be disclosed in Part 1 and any OFS/PAIN specifications must carry THIN-BASE.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | ICF is gold standard for disability classification | All | 191 WHO member states | 1 |
 | Competence-Press Model remains valid after 50+ years | EN, SE | Cross-jurisdictional | 1–3 |
