@@ -402,3 +402,6 @@ RULE: connection-scout entry schema includes connection_type field: CROSS-POPULA
 CONDITION: Any connection-scout session (internal or external mode).
 ACTION: Run Step 2b (compound interaction scan) after standard Step 2. Check FDR registry §C compound scenarios against available individual FDR findings. Flag identified interactions as COMPOUND-INTERACTION connections.
 DATE: 2026-04-09 05:10
+
+RULE: MH de-escalation room is distinct from A-16 (sensory quiet room). They serve different clinical functions through different mechanisms: MH requires exit sightline (PTSD anti-entrapment) and staff access; A-16 requires acoustic isolation without staff presence. Wilson 2023 (Co-1) documents failure of combined rooms. Both are required in healthcare, psychiatric, and supported housing settings. CON-0002 multi-population expansion of A-16 (NDV, OFS, PAIN) is correct; CON-0002 retirement of separate MH room is incorrect per CON-0131 (Opus synthesis 2026-03-30). Faerden 2022 d=2.0 for user control in MH room is contingent on MH-specific parameters.
+DATE: 2026-04-09 19:00
