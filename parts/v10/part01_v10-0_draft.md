@@ -281,6 +281,14 @@ This derivation has two implications for practice. First, the values are not int
 
 This guidebook applies to: new residential construction; major residential refurbishments; non-residential buildings including healthcare, education, hospitality, commercial, and cultural facilities; and post-occupancy adaptation of existing buildings. It applies to any building intended for occupation by people with any of the disability categories defined in Part 2. It does not apply to: minor works (single-trade interventions under £5,000); temporary structures with an intended lifespan under 6 months; vehicles. Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs.
 
+#### §1.9.2 Specification Limits — Compound Functioning Scenarios
+
+Some compound functioning scenarios cannot be resolved through environmental specification alone. Where two populations require wayfinding systems that depend on mutually exclusive sensory channels, no single environmental design can serve both without human mediation.
+
+The documented specification limit is DEM+VIS wayfinding. DEM wayfinding relies on colour-coded landmarks and visual spatial cues; VIS wayfinding relies on tactile route learning and floor texture differentiation. These systems are antagonistic: colour requires vision; tactile floor patterns conflict with DEM plain-floor requirements to prevent perceived obstacles. The convergent parameter — simplified, predictable spatial geometry — is the maximum environmental contribution. Beyond this, human wayfinding assistance is the Tier 2 resolution.
+
+This is not a failure of specification. It is the boundary at which environmental design reaches its limit and human support becomes the primary intervention. The guidebook's role at this boundary is to ensure the environment supports the human assistance — simplified layout, adequate corridor width for accompanied walking, rest seating at intervals, and clear sightlines for the accompanying person — rather than attempting to substitute for it. Part 3 §3.2.3 discusses compound functioning in detail. Part 5 provides the resolution process.
+
 *Next: Part 2 — Disability Categories*
 
 *Cross-reference: Part 3 (Multiple Categories); Part 5 (Building-Level Conflict Resolutions); Part 11 (Economics and DAR costs)*
