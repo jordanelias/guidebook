@@ -229,3 +229,100 @@ Source: Schroeder & Steinfeld (1979). Both comparisons in same study using same 
 | 20 | Wealden Rehab / CareSpaces. Ceiling hoist cost guides. | E-7 | Yes | wealdenrehab.com / carespaces.co.uk |
 
 [VERIFY ANNUALLY] — All cost figures are point-in-time snapshots.
+
+---
+
+## SECTION E: §11.4 Categories 3–8 — Additional Cost Intelligence
+
+### §11.4.3 Acoustic Design
+
+| Item | Unit | Low | High | Typical | Sources | Notes |
+|---|---|---|---|---|---|---|
+| Hearing loop — home TV room (self-install) | each | $150 | $300 | ~$200 | Inland Audio, Thunder Hearing (E-7) | Basic perimeter loop |
+| Hearing loop — small venue (church, meeting room) | each | $2,500 | $10,000 | ~$5,000 | American Hearing Loop, Inland Audio (E-7) | Where wire easily installed |
+| Hearing loop — large venue (auditorium, senior centre) | each | $11,000 | $35,000 | ~$20,000 | American Hearing Loop (E-7) | Phased array may be needed |
+| Hearing loop — wire (350 ft / 107 m) | per run | $100 | $140 | — | Listen Technologies (E-7) | AWG 14–16 |
+| Hearing loop — driver/amplifier | each | $650 | $2,100 | — | Listen Technologies (E-7) | Depends on loop current |
+| Hearing loop — complexity multiplier | — | 2× | 5× | — | Listen Technologies (E-7) | Metal structures, difficult access |
+| Counter loop (reception desk) | each | $500 | $1,500 est. | — | General estimate | Compact system |
+| Acoustic panel (NRC ≥0.85) | per sq ft | $5 | $25 | ~$12 | General estimate | Fabric-wrapped fibreglass |
+| Acoustic ceiling tile upgrade (standard → high-NRC) | per sq ft | +$1 | +$5 | — | General estimate | Incremental cost over standard |
+
+**Key note:** Hearing loops most cost-effective when installed during construction or re-carpeting. Retrofit into concrete/metal structures 2–5× more expensive. NYC Local Law 51 (2017) requires hearing loops in assembly areas for projects >$950,000 with city financing.
+
+### §11.4.4 Visual Environment & Lighting
+
+| Item | Unit | Low | High | Typical | Sources | Notes |
+|---|---|---|---|---|---|---|
+| Visual fire alarm strobe (residential, integrated smoke+strobe) | each | $50 | $150 | ~$80 | First Alert, Amazon (E-7) | ADA/UL 1971 compliant |
+| Visual fire alarm strobe (standalone, hardwired) | each | $30 | $100 | ~$50 | First Alert SLED177 (E-7) | Add-on to existing system |
+| ADA fire alarm kit (strobe + bed shaker + transmitter) | each | $200 | $500 | ~$350 | Bellman & Symfon (E-7) | Complete deaf/HoH system |
+| Luminance contrast strip (stair nosing) | per LF | $3 | $15 | ~$8 | General estimate | Aluminium or PVC |
+| TGSI — polyurethane discrete studs | per stud | $3 | $8 | ~$5 | General estimate | Material only |
+| TGSI — stainless steel discrete studs | per stud | $5 | $15 | ~$10 | General estimate | Material only; drill-in |
+| TGSI — integrated tiles (300×300 mm) | per tile | $15 | $50 | ~$30 | General estimate | Ceramic/porcelain |
+| Braille/tactile signage (per sign) | each | $30 | $200 | ~$75 | General estimate | ADA compliant |
+| LED lighting upgrade (per fixture, for melanopic compliance) | each | $50 | $300 | — | General estimate | Tunable white LED |
+
+**Key note:** TGSI costs are highly variable by material and installation method. "Design stage is the most cost effective time to determine compliance" (Safe Environments AU). Luminance contrast requirements (30%/45%/60%) per AS 1428.4.
+
+### §11.4.5 Cognitive Accessibility & Wayfinding
+
+| Item | Unit | Low | High | Typical | Sources | Notes |
+|---|---|---|---|---|---|---|
+| Wayfinding signage system (small building) | lump | $2,000 | $10,000 | — | General estimate | Design + fabrication + install |
+| Wayfinding signage system (large complex) | lump | $20,000 | $100,000+ | — | General estimate | Comprehensive multi-floor |
+| Easy Read formatting (per document) | per page | $50 | $150 | — | General estimate | Professional plain language |
+| Digital wayfinding kiosk | each | $3,000 | $15,000 | — | General estimate | Touchscreen with accessibility |
+| Colour-coded zone system (paint + signage) | lump | $1,000 | $5,000 | — | General estimate | Per floor/wing |
+
+### §11.4.7 Smart & Assistive Technology
+
+| Item | Unit | Low | High | Typical | Sources | Notes |
+|---|---|---|---|---|---|---|
+| Smart home hub (voice-activated control) | each | $50 | $300 | ~$150 | General estimate | Alexa/Google Home |
+| Automated blind/shade system | per window | $200 | $800 | ~$400 | General estimate | Motorised with smart control |
+| Smart thermostat (accessible interface) | each | $100 | $300 | ~$200 | General estimate | Voice/app controlled |
+| Video doorbell (accessible) | each | $100 | $350 | ~$200 | General estimate | Visual + audio alert |
+| Environmental control unit (specialist) | each | $1,000 | $5,000 | — | General estimate | Medical-grade, multiple inputs |
+
+---
+
+## SECTION F: Value & ROI Evidence (§11.3)
+
+### Property Value & Market Evidence
+
+| Finding | Source | Tier | Notes |
+|---|---|---|---|
+| Universal design bathroom remodel yields 68–70% ROI on resale | Home at Home (2026) / Aging in Place | E-7 | Among best remodeling ROI categories |
+| Accessible remodels return 50–70% of cost vs standard remodels | Angi (2026) | E-7 | [SINGLE SOURCE] |
+| Universal/accessible remodel ROI: 61% (vs 80% mid-range standard, 36% upscale) | This Old House / JLC Cost vs Value 2025 | E-5 | Below mid-range but above upscale |
+| 75% of adults 50+ want to remain in their homes as they age | AARP | E-2 | Demand driver |
+| 27% of US adults have a disability; 19% of households have accessibility needs | CDC / HUD | E-2 | Market size |
+| <1% of US housing stock has 5 basic universal design features | Harvard JCHS | E-1 | Supply gap |
+| 4% of housing accessible for moderate mobility difficulties; <1% wheelchair accessible | Harvard JCHS / NLC | E-1 | Critical undersupply |
+| NDIS home modifications return $2.25 per $1.00 invested | NDIS (AU) | E-2 | Australian government data |
+| UK residential care costs ~£39,520/year vs DFG max £30,000 one-off | Age UK | E-6 | Cost-avoidance argument |
+| UK daily care (2 hrs/day) costs ~£13,200/year | Age UK | E-6 | Adaptation vs care trade-off |
+
+### Lifecycle Cost Arguments
+
+| Argument | Evidence | Source |
+|---|---|---|
+| Retrofit costs 4–20× more than building-in from the start | Schroeder & Steinfeld (1979) | E-1 |
+| "The most important reason for unnecessary increased costs is not taking accessibility into consideration from the start" | World Bank / Steinfeld (2005) | E-2 |
+| DFG delivery: >6 months in 2/3 of UK local authorities — delay cost = falls, hospitalisation, care dependency | Age UK | E-6 |
+| Post-hoc renovation "up to 21% of original construction" for single-family | Schroeder & Steinfeld (1979) | E-1 |
+| Walk-in shower adaptation enables independence that "went way beyond the ability to wash" — broader life participation | Age UK / unnamed study | E-6 |
+
+### Key Acquisition Targets
+
+| Source | Tier | Why Needed |
+|---|---|---|
+| **Means ADA Compliance Pricing Guide** (Adaptive Environments Center / RS Means) | E-3 | 70+ ADA modifications with trade-level costs — paywalled |
+| **Spon's Architects' and Builders' Price Book 2025** (UK) | E-3 | UK QS-grade unit rates |
+| **Rawlinson's Australian Construction Handbook** | E-3 | AU QS-grade unit rates |
+| **Arcadis International Construction Costs 2025** | E-5 | Cross-jurisdiction cost index |
+| **2023 ScienceDirect peer-reviewed study (~1.8% premium)** | E-1 | DOI not yet retrieved — cited by Rodighiero 2025 |
+| **Steven Winter Associates (1993) residential accessibility study** | E-1 | Cited by World Bank 2005; 8 residential projects |
+| **Purple Pound / VisitEngland disability spending data** | E-2 | UK disability spending power for §11.3.3 |
