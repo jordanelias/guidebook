@@ -33,7 +33,7 @@
 **Opus synthesis note:** This is a methodology entry documenting where non-English evidence exceeds English-language evidence. Individual specification values are in the respective slug entries.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | 7 provisions have stronger evidence in non-English literature | DE, JA, NL, SE, DA | Germany, Japan, Netherlands, Belgium, Sweden, Denmark, Norway | 1–3 |
 | 5 provisions have ≥5 language consensus | EN, DE, FR, SE, NO, JA | Cross-jurisdictional | 3–5 |
