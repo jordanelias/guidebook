@@ -276,3 +276,144 @@ These three F-category items are interdependent but specified independently:
 **Action required:** Part 3 3.10 compound guidance. Two-layer information design principle.
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0137
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** mental-health-built-environment
+**Target item(s):** Part 7 NR-HLT (healthcare matrices)
+**Target population(s):** NDV/MH
+**Evidence tier:** Tier 1 (Weltens 2023)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** The MH BPC documents that exceeding bed capacity in psychiatric wards produces OR 5.36 for aggression (Weltens 2023, experience sampling method). This is a built-environment capacity specification: the number of beds per ward is a design parameter with a direct, large, quantified effect on safety outcomes. The OR is among the largest in the MH BPC evidence base — comparable to the absence of private space (van der Schaaf 2013).
+
+No Part 7 NR-HLT specification currently addresses maximum bed count per ward as an accessibility parameter. Ward capacity is treated as a programming decision, not a design specification. The evidence says otherwise: over-capacity is an environmental barrier with measurable harm.
+
+Additionally, the MH BPC identifies that ward-level environmental factors (capacity, private space, sensory modulation availability) govern coercive measure use MORE than patient-level factors or staffing. This inverts the typical clinical assumption that patient behaviour drives restraint use.
+
+**Evidence basis:** MH BPC: Weltens 2023 (ESM, OR 5.36 for aggression when capacity exceeded). van der Schaaf 2013 (n=23,868 — ward design variables > staffing variables for coercion). Husum 2010 (n=1,016 — ward-level variation in coercion not explained by patient characteristics).
+
+**Action required:** Part 7 NR-HLT: add maximum bed capacity specification for psychiatric wards as an environmental design parameter. Bed count is not merely a planning metric — it is a safety specification with OR 5.36 evidence. Cross-reference: private space per patient (van der Schaaf 2013), sensory modulation room (Faerden 2022 d=2.0). These three provisions (capacity limit, private space, sensory modulation) are the MH environmental intervention triad.
+
+**Disposition notes:** — Novel specification type: occupancy capacity as environmental design parameter. May face pushback from facility managers; evidence is strong.
+
+### CON-0139
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** methodology-evidence-hierarchy-mapping (Phase 1A), mental-health-built-environment
+**Target item(s):** Part 1 §1.5
+**Target population(s):** ALL
+**Evidence tier:** Tier 1
+**Filed:** 2026-04-09
+
+**Connection:** Phase 1A §7.4 states the ● / ○ system does not further stratify within ●. But the MH BPC contains Faerden 2022 (d=2.0), CAPABLE (RCT, hospitalisation halved), and Clemson Cochrane (38% fall reduction) — all ●, but the effect sizes differ by an order of magnitude. Part 1 should cite the d=2.0 as the upper anchor of ● evidence, demonstrating the range within the marker. This strengthens the methodology transparency commitment (Phase 1A §10.2) without changing the ● / ○ system.
+
+**Action required:** Part 1 §1.5.3: add "effect size exemplars" footnote — d=2.0 (MH user control), 38% fall reduction (grab bars), OR 9.50 (wheelchair turning space) as concrete illustrations of what ● encompasses.
+
+### CON-0147
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** intellectual-disability-built-environment-design, pain-ofs-built-environment-design
+**Target item(s):** Part 7 NR-EDU, NR-HLT
+**Target population(s):** IntD, OFS
+
+**Connection:** IntD BPC: "reception/assistance point within sight of entrance" (CSA B651 §4.7). OFS BPC: "rest seating within 25–30m." In a healthcare or education building serving both populations, the entrance sequence must provide BOTH: visible assistance AND immediate rest. These are complementary, not competing: a reception desk with adjacent seated waiting serves both requirements simultaneously. But no specification links them.
+
+**Action required:** Part 7 NR-HLT/NR-EDU entrance sequence: reception/assistance visible from entry (IntD) WITH adjacent seated waiting ≤3m from entrance (OFS/PAIN). Single spatial provision serves both. Low-cost coordination.
+
+### CON-0155
+
+**Status:** PENDING
+**Target item(s):** Part 10 §10.1 → Part 11 §11.4.10
+**Connection:** [DESCRIPTION PENDING]
+
+### CON-0157
+
+**Status:** PENDING
+**Target item(s):** B-10, H-03, D-08, E-08
+**Connection:** [DESCRIPTION PENDING]
+
+### CON-0163
+*[formerly CON-0151]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** ot-built-environment-interface, sensory-room-user-control
+**Target item(s):** Part 9 §9.1, A-16
+**Target population(s):** ALL
+**Evidence tier:** Tier 1 (Wellecke 2022, Unwin 2022)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** A-16 sensory rooms require occupant-matched equipment configuration (Unwin 2022/2024) — an OT-mediated specification no architect can implement from a drawing. Part 9 addresses OT at design stage; no specification addresses OT at RFO (Ready for Occupancy) — commissioning the environment for the first occupant. Russell 4-phase protocol covers design+modify, not commissioning.
+
+**Evidence basis:** Wellecke 2022 (n=144, OT-led processes superior), Unwin 2022 (sensory room requires occupant-matched configuration), Russell 2018 (gap: no commissioning phase).
+
+**Action required:** Part 9: OT-at-RFO specification for settings with Tier 2 items. Commissioning checklist: A-16 equipment, H-02 control profiles, I-04 hoist track, all adjustable items.
+
+**Quality assessment:** Strong. Real gap. No quality concerns.
+
+### CON-0171
+*[formerly CON-0161]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** cross-population-case-studies
+**Target item(s):** Part 12, Part 5
+**Target population(s):** DEM, NDV/AUT, NDV/MH
+**Evidence tier:** Tier 1/Co-1 (NDTi/NHS England 2022)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** NHS CAMHS is the paradigm cross-population design failure: inpatient MH environments systematically worsen outcomes for autistic young people. This IS the built consequence of collapsing NDV/MH and NDV/AUT spatial provisions (CON-0131 correction). Elevates CON-0131 from expert judgment to documented-failure evidence.
+
+**Action required:** Part 5: cite NHS CAMHS as empirical evidence for separate rooms. Part 12: paradigm failure case.
+
+### CON-0176
+*[formerly CON-0166]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-design-economics-cost-premium
+**Target item(s):** Part 4 preamble, Part 9
+**Target population(s):** ALL
+**Evidence tier:** Tier 5 (industry practice)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Accessibility provisions as independent line items are disproportionately vulnerable to value engineering. Part 4 should define "integrated specification clusters" — groups that must not be VE'd independently (hearing loop + acoustic ceiling + VAD; sensory zone system; grab bar + hoist blocking + turning space).
+
+**Action required:** Part 4 preamble: integrated specification clusters. Part 9: VE resistance protocol.
+
+### CON-0177
+*[formerly CON-0167]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** residential-accessible-home-case-studies, ot-built-environment-interface
+**Target item(s):** Part 9, Part 5, Part 1
+**Target population(s):** ALL
+**Evidence tier:** Tier 1 (Douglas 2024, Ainsworth 2022, Malmgren Fänge 2019)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** "Quality of support provided in the home is a greater determinant of tenant quality of life than the built environment" (Douglas 2024, Tier 1). Built environment specification is necessary but not sufficient. Part 1 must state this. Part 5 must include multicomponent intervention model.
+
+**Action required:** Part 1: foundational principle. Part 5: process specification (CAPABLE structure). Cross-reference CON-0163 (OT at RFO).
+
