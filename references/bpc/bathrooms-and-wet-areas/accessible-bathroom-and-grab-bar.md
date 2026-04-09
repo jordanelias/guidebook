@@ -26,7 +26,7 @@
 **Opus 4.6 synthesis note (2026-03-29):** Five refinements over Sonnet draft: (1) Grab bar height widened to 650–900mm with seat-relative Tier 2 formulation; (2) NEU/hemiplegic vertical bar sub-specification added (Nakamura 2009, Kennedy 2015); (3) Power WC turning circle 1800mm added as Tier 1 sub-spec; (4) Grab bar load rating corrected from WHO 110 kg to guidebook ≥200 kg SWL (per fold-down-grab-bar-specification Opus synthesis — WHO rating inadequate given KITE 1.3 kN peak force); (5) DAR bidet electrical rough-in added.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | 1500mm turning circle | All 14 | 24/24 | 4–6 |
 | Zero-threshold shower mandatory or best practice | EN, DE, NO, SV, FR, NL, IT, PT, JA | 22/24 | 5–6 |
