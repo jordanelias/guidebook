@@ -57,7 +57,7 @@
 **Highest-ambition actionable specification:** Single-corridor or continuous-loop floor plan for dementia residential care settings; pictographic + colour-coded signage at all decision points; minimum 0.4 LRV contrast between adjacent horizontal/vertical surfaces; toilet door visible from resident bedroom (or within direct sightline from bedroom doorway); secure outdoor garden accessible without steps; all floor mats to have LRV ≥30 contrast with floor (never dark on pale).
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Lighting optimisation in care homes can improve resident orientation by up to 30%; minimum 300 lux corridors / 500 lux task areas (DSDC recommendation) | EN/UK (DSDC Stirling research; Kirklees guidance) | Tier 3–5 |
 | Floor plan configuration is the most influential environmental factor for dementia wayfinding; signage/colour alone cannot compensate for poor layout | EN/NL (Marquardt & Schmieg 2009; Bowes et al. Stirling 2019; PMC8725382 NL floorplan study) | Tier 3 |
