@@ -31,7 +31,7 @@
 **Highest-ambition actionable specification:** Minimum one accessible rest space per 50m of public circulation; rest space to include at least one seat with adjustable back support (0–30°); queue systems to permit seated waiting; chemical/scent-free zones in all healthcare settings. `[TIER 5 — no OFS-specific architectural standard in any jurisdiction; March 2026]`
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Seating provision every 50–100m in public routes is accepted best practice (UK: VisitEngland 50m; BS8300/DfT 100m) | EN (UK) | Tier 5–6 |
 | Post-exertional malaise from orthostatic stress requires built environment to minimise prolonged upright posture | EN (CDC, IOM/NAM 2015, Bateman Horne) | Co-1/Tier 3 |
