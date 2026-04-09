@@ -51,6 +51,8 @@
 |---|---|---|---|
 | N/A — evidence base is EN-only | — | — | — |
 
+> **[LANGUAGE GAP]** All OFS built-environment evidence identified to date is EN-only. Non-EN research passes pending. Confidence reduced for cross-jurisdictional applicability until multilingual retrieval is completed.
+
 ### NO-DATA / THIN
 | Language | Reason | Predicted by boundary warning? |
 |---|---|---|
