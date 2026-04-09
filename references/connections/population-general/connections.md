@@ -3,7 +3,7 @@
 
 ### CON-0033
 
-**Status:** PENDING
+**Status:** CONSUMED
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
@@ -31,7 +31,7 @@
 
 ### CON-0034
 
-**Status:** PENDING
+**Status:** CONSUMED
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
@@ -56,7 +56,7 @@
 
 ### CON-0035
 
-**Status:** PENDING
+**Status:** CONSUMED
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
@@ -84,7 +84,7 @@
 
 ### CON-0049
 
-**Status:** PENDING
+**Status:** CONSUMED
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
