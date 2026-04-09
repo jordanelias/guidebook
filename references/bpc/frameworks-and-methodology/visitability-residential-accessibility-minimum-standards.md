@@ -32,7 +32,7 @@
 **Opus synthesis note:** Visitability is the documented minimum. Cost evidence ($100–600) is the strongest argument for policy adoption. Cross-reference residential-dar-provisions for the full DAR cost multiplier register.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Visitability adds $100–600 to new construction cost | EN | US (Concrete Change) | 4–5 |
 | Three core requirements achieve basic wheelchair visitor access | EN | US, UK, AU, CA, NO | 4–5 |
