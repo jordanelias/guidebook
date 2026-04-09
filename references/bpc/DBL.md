@@ -50,7 +50,7 @@
 Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT NBR 16537:2024) is to be continuous on all primary circulation routes. A tactile orientation map is to be provided at each primary building entrance at 900–1200mm AFF. Intervenor adjacency clear floor space of not less than 1500mm is to be provided at all service counters, reception desks, and primary communication nodes. Seating at communication nodes is to be movable and without fixed armrests, with face-to-face positions accessible at ≤600mm. Vibrotactile alerting (vibrating pagers, bed shakers in sleeping accommodation) is to be provided as a complement to visual strobes throughout all occupied spaces. Spatial layout is to remain consistent; furniture rearrangement protocols are to prohibit changes to primary tactile wayfinding routes without advance notification to DBL occupants.
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Tactile floor wayfinding (ISO 23599) essential for DBL independent navigation | EN, SV, NO, DA, FI, FR, DE, NL, ES, PT, KO, IT | Tier 4 |
 | No jurisdiction specifies intervenor/guide-interpreter clear floor space dimensions | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | Tier 6 absence |
