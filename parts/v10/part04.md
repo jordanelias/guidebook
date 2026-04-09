@@ -827,7 +827,7 @@ seated views essential).
 
 **Evidence basis (OT):** ART (Attention Restoration Theory); SRT (Stress Recovery Theory). Natural light from windows and skylights is the primary restorative element in the built environment per both ART and SRT; the ≥75% provision ensures that the majority of primary occupied time is spent with access to the visually restorative stimulus, reducing directed attention depletion for NEU, DEM, and OFS users.
 
-### B-10 Visual Fire Alarm (Strobe VAD Throughout Building)
+### B-10 Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout Building)
 
 <!-- CON-0014 [HIGH]: New companion item required — Vibrotactile Alerting Device (sleeping areas): minimum vibration intensity, latency ≤3 s, coverage all sleeping rooms where DEAF/DBL/photosensitive populations are primary. Item code K-04 exists (vibrotactile alert) — cross-reference and ensure K-04 explicitly covers sleeping-area installation. Resolves strobe-seizure conflict: where strobes are contraindicated (NDV photosensitivity, epilepsy), vibrotactile is the resolution. -->
 <!-- CON-0042 [HIGH]: DEAF visual alerting system (B-10) conflicts with VIS/NDV glare in shared spaces. Resolution: diffuser technology; strobe placement high on wall (>2100 mm AFF) reduces direct glare while maintaining visual coverage. Add installation note to B-10. -->
@@ -845,6 +845,10 @@ Independent circuit from audio alarm system
 Monthly test with visual confirmation logged
 
 Position: visible from any point in room (ceiling or high-wall mount)
+
+**Vibrotactile fire alarm (DBL — LIFE SAFETY):** In all sleeping areas where DBL users are resident or expected: bed-shaker vibrotactile alerting device connected to building fire alarm system. Latency ≤3 s from alarm activation. Vibration intensity sufficient to wake a sleeping person (per EN 54-23 equivalent for tactile channel). Backup battery ≥24 hr. Where photosensitive populations (NEU/epilepsy, NDV) occupy the same sleeping area, vibrotactile alarm is the PRIMARY alert mechanism and strobe is contraindicated — vibrotactile replaces visual, not supplements it. Cross-ref K-04 (Vibrotactile Alert Provision). Source: FDR-NEW-11 (DBL evacuation); CAN/ASC 2.2 Emergency Egress Standard; Krown KA300 system specification.
+
+**Continuous tactile guidance to exit (DBL — LIFE SAFETY):** In all buildings where DBL users are resident: continuous handrail from private room door to building exit without interruption. Handrail to carry raised characters with braille on underside of horizontal section at each stair landing and decision point: floor number, direction of egress, tactile star at exit floor (per CAN/ASC 2.2 §12.6.1). Any gap in handrail continuity on the egress route is a life safety failure for DBL users. Source: FDR-NEW-11; CAN/ASC 2.2; DbI guidelines.
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 11; Part 12 §12.4.
 
@@ -2547,6 +2551,20 @@ Acoustic management: (a) sound-absorbing treatment sized to achieve the RT60 tar
 DEM: BMS with override limits rather than fully individual control (overheating/hypothermia risk)
 
 CAOT principle: adjustability without staff mediation
+
+**Environmental Control Unit — C4–C5 Tetraplegia (LIFE SAFETY):** For residential and care settings where C4–C5 tetraplegic users are resident:
+
+Sip-and-puff interface: fixed mounting bracket at each primary position (bed at 700 mm AFF ≤300 mm from head; WC at seated height; primary seating at armrest level). Mounting position specified on structural drawings.
+
+Eye-gaze screen: adjustable arm mount at 500–700 mm from face, perpendicular to line of sight, at each primary position. Screen must be repositionable when user transfers between positions.
+
+Per-position switch access: accessible switch (head-operated, chin-operated, or proximity-activated) at bed, WC, and primary seating position, wired to ECU hub. No hand operation required.
+
+Voice control acoustic environment: RT60 ≤0.4 s in all rooms with voice-controlled ECU (cross-ref A-02). C4–C5 users have reduced vocal volume, increasing sensitivity to reverberation.
+
+**Backup power (LIFE SAFETY):** UPS with ≥4 hr battery for ECU system. ECU controls door locks, lighting, call system, HVAC, and communication. Power failure = complete environmental lockout for C4–C5 user. Backup power is a life safety requirement, not a comfort provision. DAR provision: conduit from ECU mounting positions to electrical panel at construction stage (≤0.1% NC premium; retrofit ×8–15). Cross-ref Part 10 DAR.
+
+Source: FDR-NEW-16 (C4–C5 ECU); RESNA/ARATA standards; Tobii eye-gaze guidance.
 
 **Retrofit cost note:** Retrofit penalty: MODERATE. Individual environmental control per space requires dedicated wiring and smart
 
