@@ -66,7 +66,7 @@
 **Opus synthesis note:** This entry is the biomechanical evidence basis for multiple item categories. Each specification has a documented functional threshold. The evidence supports tighter values than most codes require.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | 2R + G = 600–630 mm optimal stair geometry | EN, DE, NO | ADA, BS 8300, DIN 18040, TEK17, AS 1428, CSA B651, ISO 21542 | 4 |
 | Ramp gradient >1:12 increases shoulder injury risk for wheelchair users | EN | Cross-jurisdictional (Waters 1985; Kim 2014) | 3 |
