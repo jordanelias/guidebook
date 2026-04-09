@@ -201,3 +201,36 @@
 - [ ] Keyword compendium terms not verified (file not found in repo) — [UNVERIFIED-TERMS] on all non-EN searches
 - [ ] citation-verifier pass — pending
 - [ ] Full 19-language / 46-jurisdiction coverage — incomplete (5/19 languages, 8/46 jurisdictions)
+
+
+---
+
+## Addendum: Netherlands and Korea (added 2026-04-09 22:55)
+
+### Netherlands
+
+**EU research (cited by NEN/Ongehinderd):** Universal design at design stage costs **1–1.4%** additional — described as a "no-brainer" against 15% of population affected. E-6.
+
+**EIB (Economisch Instituut voor de Bouw, 2020):** Study of extra accessibility requirements for new-build apartments found:
+- Specific adaptations (balkons, liften): **€4,000 per apartment** — structural long-term cost
+- Spatial redistribution: average **1.3 m²** repurposed within existing apartment footprint — no increase in construction cost, but traded from other rooms
+- Floor plan adaptations can be executed within existing external dimensions (confirmed by developers)
+- EIB concludes costs are real but do NOT come from significantly higher construction costs — they come from space trade-offs
+
+**NEN 9120 (published 3 February 2025):** New Dutch accessibility norm for all building types (new-build and renovation). Performance-based, covers motor, sensory, cognitive, and mental health disabilities. Free download available.
+
+**Regulatory:** Bouwbesluit sets minimum requirements (drempelhoogte, vrije doorgang); NEN 1814:2001 for detailed specifications (min 85cm door width, wheelchair turning circles). Social housing corporations often set requirements beyond legal minimum.
+
+**Levensloopgeschikt bouwen (lifetime-suitable housing):** WoonKeur certification. Studies show additional costs can be "absent or limited" with good preparation and monitoring.
+
+### Korea
+
+**BF (Barrier Free) Certification System (장애물 없는 생활환경 인증제도):**
+- Jointly operated by Ministry of Health and Welfare + Ministry of Land, Infrastructure and Transport
+- **Mandatory** for all new public buildings since July 2015 (expanded to parks December 2021)
+- Certification bodies: KODDI (한국장애인개발원), KEAD (한국장애인고용공단), KRIEA
+- Covers: buildings, transport, roads, parks, regional areas
+- Pre-certification (예비인증) at design stage; main certification (본인증) after construction completion
+- Legal basis: 「장애인·노인·임산부 등의 편의증진보장에 관한 법률」 Article 10-2
+
+[GAP: Korean BF certification cost impact study — no cost premium data found in Korean sources. Certification fee structure available but construction cost differential not quantified in this search.]

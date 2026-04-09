@@ -122,3 +122,4 @@
 **New slug:** Add row to table. Assign topic dir. Create both SL and BPC files. Update this registry.
 
 **Flat files retired:** All `references/bpc/{POPULATION}.md` and `references/search-log/{POPULATION}.md` files are frozen archives. Do not read or write them.
+| `construction-cost-data` | `economics` | `references/search-log/economics/construction-cost-data.md` | `references/bpc/economics/construction-cost-data.md` | ACTIVE |
