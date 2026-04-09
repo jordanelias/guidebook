@@ -3,7 +3,7 @@
 
 ### CON-0002
 
-**Status:** CONSUMED
+**Status:** CONSUMED — PARTIALLY CORRECT (see CON-0131)
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
