@@ -22,7 +22,7 @@ See search log for full table. EN, JA, DE, SE, NO, FR, NL, ES confirmed. AR/HI/I
 - Hypothalamic thermoregulatory control is decentralised below lesion level
 - Impaired sweating: tetraplegia ~30% of normal capacity; thoracic paraplegia ~57% (Hayashi & Naito 2022, S20)
 - Impaired vasodilation: cannot dissipate heat via cutaneous blood flow
-- Cannot perceive thermal strain subjectively (Griggs 2019, S1): Tcore rises to 37.7°C in tetraplegia at 23.9°C indoor after 37.8°C outdoor exposure
+- Cannot perceive thermal strain subjectively: Tcore rises to 37.7°C in tetraplegia at 23.9°C indoor after 37.8°C outdoor exposure (case series, PMC5798926, 2018 — previously misattributed to Griggs 2019; Griggs is SCI exercise thermoregulation, not indoor ambient case data)
 - Evaporative heat loss insufficient to maintain heat balance at rest at 37°C ambient for SCI populations (Griggs 2019, S1)
 - Pre-cooling more effective than per-cooling; both effective (O'Brien 2022, S2)
 
