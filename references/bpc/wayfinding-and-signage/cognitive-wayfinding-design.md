@@ -40,7 +40,7 @@
 - Single-word + pictogram signage at all junctions; suspended signs ≥2250mm AFF; sans-serif typeface
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Loop circulation / no dead ends reduces DEM spatial disorientation | EN, DE, NL, FR, NO, SV, KO, JA, ZH | UK, DE, NL, NO, SG, AU, CA, US, KR, JP | Tier 3 (van Buuren & Mohammadi 2022; Marquardt 2011) + Co-1 (DSDC EADDAT 2022) |
 | Toilet visibility from primary seating reduces distress and incontinence incidents | EN, DE, NL, FR | UK, DE, NL, US | Tier 3 (Marquardt 2011; Davis & Weisbeck 2016) |
