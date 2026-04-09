@@ -39,7 +39,7 @@
 **Opus synthesis note:** Cost multiplier values are industry estimates (UK/CA data). ×75 for grab bar blocking flagged as UNVERIFIED pending formal cost data source. Direction is unambiguous; magnitude is approximate.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | DAR provisions absent from drawings will not be built | EN | Cross-jurisdictional (industry practice) | 5 |
 | Grab bar blocking is highest-ROI single DAR item | EN | Canada (CAN/ASC 2.8:2025) | 4 |
