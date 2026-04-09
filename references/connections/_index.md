@@ -12,7 +12,7 @@
 | Status | Count |
 |---|---|
 | CONSUMED | 80 |
-| PENDING | 30 |
+| PENDING | 37 |
 
 ## Index
 
@@ -131,3 +131,10 @@
 | CON-0036 | CONSUMED | D-05 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0037 | CONSUMED | E-05, E-10 | controls-and-hardware | MODERATE | false | — |
 | CON-0038 | CLOSED | G-08 | bathrooms-and-wet-areas | MODERATE | false | — |
+| CON-0115 | PENDING | A-16 | sensory-environment | HIGH | false | — |
+| CON-0116 | PENDING | G-XX (proposed) | sensory-environment | HIGH | false | — |
+| CON-0117 | PENDING | A-16 door spec | sensory-environment | HIGH | false | — |
+| CON-0118 | PENDING | G-05, K-01 | bathrooms-and-wet-areas | HIGH | false | — |
+| CON-0119 | PENDING | D-05, I-03 | entrances-and-circulation | HIGH | false | — |
+| CON-0120 | PENDING | D-02, D-05, D-06 | wayfinding-and-signage | HIGH | false | — |
+| CON-0121 | PENDING | G-07, H-01 | kitchens-and-workspaces | HIGH | false | — |
