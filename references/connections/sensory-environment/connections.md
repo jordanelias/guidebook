@@ -310,3 +310,31 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 ---
 
 ---
+
+### CON-0015
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** F-04, F-02
+**Target population(s):** NDV, OFS, PAIN, MH
+**Evidence tier:** —
+**Filed:** 2026-03-26
+**Applied:** —
+
+**Connection:** Air quality / fragrance-free specifications carry OFS, NDV, NEU, PAIN. MH absent despite TID framework emphasis on environmental predictability and trigger avoidance. Chemical stimuli can trigger PTSD hyperarousal.
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Steinemann 2018 | 3 | General | MH |
+| TID framework | 2–3 | MH | MH (chemical triggers) |
+
+**Action required:** Add MH as co-population for F-02/F-04.
+
+**Disposition notes:** - [ ] MODERATE → P2 gap item
+
+---
+
+---

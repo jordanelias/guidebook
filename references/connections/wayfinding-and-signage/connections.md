@@ -37,31 +37,6 @@
 
 ---
 
-### CON-0012
-
-**Status:** PENDING
-**Confidence:** MODERATE
-**Opus-reviewed:** false
-**Source BPC slug(s):** — (pre-migration)
-**Target item(s):** DAR items
-**Target population(s):** ALL
-**Evidence tier:** —
-**Filed:** 2026-03-26
-**Applied:** —
-
-**Connection:** IT DM 236/89 adattabilità concept (walls reinforced for future grab bars, bidet removable, bath-to-shower convertibility at design stage) is a direct statutory parallel to DAR. Possibly the only national-level statutory implementation of the DAR principle. Not cross-referenced in residential-dar-provisions-priority-register BPC.
-
-**Evidence basis:**
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
-| IT DM 236/89 | 6 | MOB (statutory) | ALL (DAR cross-reference) |
-
-**Action required:** Add Italian adattabilità as statutory precedent in DAR specification. Cross-reference in Part 1 DAR doctrine.
-
-**Disposition notes:** - [ ] MODERATE → P2 gap item
-
----
-
 ### CON-0016
 
 **Status:** PENDING
@@ -636,33 +611,6 @@ These seven principles map directly onto the guidebook's existing item categorie
 
 ---
 
-### CON-0111
-
-**Status:** PENDING
-**Confidence:** MODERATE
-**Opus-reviewed:** false
-**Source BPC slug(s):** — (pre-migration)
-**Target item(s):** Part 10 DAR, Part 1 Foundations, Part 12 Economics
-**Target population(s):** ALL
-**Evidence tier:** —
-**Filed:** 2026-04-08
-**Applied:** —
-
-**Connection:** The Adaptable Building Conference 2026 (Nieuwe Instituut, Rotterdam) and recent research (Djukanovic et al., Buildings 2025, 15(6):862) document the convergence of sustainability-driven design-for-disassembly (DFD) with accessibility-driven design-for-adaptable-readiness (DAR). Both fields require: reversible connections, non-load-bearing partition walls that can be removed without structural impact, service routing through designated chases, and documented modification pathways. The sustainability framing (circularity, reduced demolition waste) provides an economic and environmental co-benefit argument for DAR provisions that the guidebook currently presents solely through an accessibility …
-
-**Evidence basis:**
-| Source | Tier | Current citation context | Proposed extension |
-|---|---|---|---|
-| Adaptable Building Conference 2026 programme | Industry/grey | Not cited | Part 1 Foundations — convergence argument |
-| Djukanovic et al. 2025 (Buildings 15(6):862) | 3 | Not cited | Part 10 DAR — DFA/DFD alignment |
-| Superlofts (Koehler) | Case study | Not cited | Part 12 Economics — commercial viability |
-
-**Action required:** Part 1 should cite the sustainability-accessibility convergence as a strategic framing advantage: DAR provisions deliver both accessibility adaptability and circular economy benefits. Part 10 can cross-reference DFD terminology and standards to access the sustainability policy and funding ecosystem. Part 12 can cite Superlofts as a commercial model demonstrating market-rate adaptable housing.
-
-**Disposition notes:** - [ ] MODERATE → P2 gap item (Part 1 framing, Part 10 DFD cross-reference, Part 12 case study)
-
----
-
 ### CON-0112
 
 **Status:** CONSUMED
@@ -770,8 +718,6 @@ Part 12 Economics covers international grant programmes (UK DFG, AU NDIS, Nordic
 
 ---
 
----
-
 ### CON-0116
 
 **Status:** PENDING
@@ -791,8 +737,6 @@ Part 12 Economics covers international grant programmes (UK DFG, AU NDIS, Nordic
 **Action required:** Add door-as-wayfinding-element specification: (a) consistent door colour coding by function (all bathroom doors = one colour; all exit doors = another); (b) LRV contrast between door and frame ≥30% (code minimum) / ≥50% (guidebook target per CON-0043); (c) tactile room-number plate at consistent height (1400mm AFF) on latch side. Cross-reference E-01 ↔ D-02.
 
 **Disposition notes:** — Bridges two item categories that share a spatial location but have no connection.
-
----
 
 ---
 
@@ -829,8 +773,6 @@ The IntD "zone-differentiated ceiling heights" specification is unique — it do
 
 ---
 
----
-
 ### CON-0125
 
 **Status:** PENDING
@@ -854,8 +796,6 @@ Additionally, NEU Opus synthesis notes: "wayfinding provisions (D-02, D-04, D-08
 **Action required:** (1) Add NEU as co-population for D-02, D-06, D-08. (2) Add "bilateral placement" as explicit specification requirement for all wayfinding cues — currently implicit in VIS practice but not codified. (3) Note: bilateral placement serves NEU (hemispatial neglect), VIS (approach-direction coverage), and DEM (reinforcement) — Tier 0 candidate.
 
 **Disposition notes:** — NEU is under-represented in wayfinding items despite NEU Opus synthesis explicitly flagging this gap.
-
----
 
 ---
 
@@ -884,5 +824,35 @@ CON-0018 partially captures this for DEM+toilet. CON-0068 extends to NEU/NDV/OFS
 **Action required:** Elevate "critical facility sightline" to Tier 0 spatial planning principle in Part 3 §3.x or Part 1 §1.4: all primary occupation zones shall provide unobstructed sightline to at least one of: toilet door, reception/assistance, building exit, rest seating. In healthcare settings (Part 7 NR-HLT): nurse station visible from all patient positions.
 
 **Disposition notes:** — Generalises CON-0018/CON-0068 from toilet-specific to facility-class principle. Tier 0 candidate.
+
+---
+
+### CON-0043
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** All C-items, D-02, D-06, F-01 zone boundaries
+**Target population(s):** VIS, DEM, NDV/AUT, IntD, DBL
+**Evidence tier:** —
+**Filed:** 2026-03-28
+**Applied:** —
+
+**Connection:** The `luminance-contrast-lrv-evidence-base` BPC documents that the universal 30% LRV threshold has no empirical basis — it is a regulatory floor adopted from UK DDA guidance without validation. Severe VI needs ≥65% Michelson contrast (2.5× the standard). The guidebook recommends ≥50% LRV as best practice for C-items.
+
+The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifies ≥30 LRV change at zone boundaries — inheriting the unvalidated threshold. Cognitive wayfinding items depend on contrast-based landmarks for DEM, IntD, NDV. The guidebook's own ≥50% best-practice target is not propagated to zone boundaries or wayfinding items.
+
+**Evidence basis:**
+| Source | Tier | Currently cited for | Gap |
+|---|---|---|---|
+| Harper et al. 2022 (Ergonomics) | 3 | Stair contrast enhancement | Supports enhancement; doesn't validate 30% |
+| Brown et al. 2023 (Ergonomics) | 3 | VIS nosing contrast | Confirms benefit; no threshold validation |
+| Dain et al. (cited in Manandhar 2022) | 3 | Severe VI | ≥65% Michelson needed; 2.5× current standard |
+| CNIB 2024 | Co-1 | VIS | 30% is minimum regulatory floor, not functional optimum |
+
+**Action required:** Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions — C-items, zone boundaries, wayfinding items. At critical junctions (platform edges, stair nosings, kerb lines): ≥65% Michelson. The 30% value remains as code-compliance minimum only. Internal consistency correction — the guidebook already established the right position in the LRV BPC.
+
+**Disposition notes:** - [ ] HIGH → item-specification-writer briefing for all C-items + F-01 zone boundaries
 
 ---

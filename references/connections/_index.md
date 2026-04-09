@@ -18,8 +18,8 @@
 
 | CON-ID | Status | Primary target | Filed in | Confidence | Opus-reviewed | Session applied |
 |---|---|---|---|---|---|---|
-| CON-0001 | CONSUMED | D-02, D-06, D-08, D-09, C-04 | wayfinding-and-signage | HIGH | true | — |
-| CON-0002 | CONSUMED | A-16, H-02 | kitchens-and-workspaces | HIGH | false | — |
+| CON-0001 | CONSUMED | D-02, D-06, D-08, D-09, C-04 | frameworks-and-methodology | HIGH | true | — |
+| CON-0002 | CONSUMED | A-16, H-02 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0003 | CONSUMED | G-03, G-04, G-05 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0004 | CONSUMED | F-05, G-05, NEW (reclining seating) | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0005 | PENDING | A-09, G-08 (proposed) | bathrooms-and-wet-areas | MODERATE | true | — |
@@ -29,10 +29,10 @@
 | CON-0009 | PENDING | Threshold items (residential-entry-and-threshold) | entrances-and-circulation | HIGH | true | — |
 | CON-0010 | CONSUMED | BIO-01–BIO-05, A-16 | entrances-and-circulation | HIGH | true | — |
 | CON-0011 | CONSUMED | All room matrix items | room-types | HIGH | false | — |
-| CON-0012 | PENDING | DAR items | wayfinding-and-signage | MODERATE | true | — |
-| CON-0013 | PENDING | Kitchen items | kitchens-and-workspaces | MODERATE | true | — |
+| CON-0012 | PENDING | DAR items | frameworks-and-methodology | MODERATE | true | — |
+| CON-0013 | PENDING | Kitchen items | frameworks-and-methodology | MODERATE | true | — |
 | CON-0014 | CONSUMED | B-10, visual-fire-alarm items | entrances-and-circulation | HIGH | false | — |
-| CON-0015 | PENDING | F-04, F-02 | communication-and-alerts | MODERATE | true | — |
+| CON-0015 | PENDING | F-04, F-02 | cross-cutting | MODERATE | true | — |
 | CON-0016 | PENDING | C-04, D-02 | wayfinding-and-signage | MODERATE | true | — |
 | CON-0017 | CONSUMED | H-02 (Individual Environmental Control), A-16, B-0 | cross-cutting | HIGH | true | — |
 | CON-0018 | CONSUMED | Cognitive wayfinding BPC, DEM BPC, NEU BPC | wayfinding-and-signage | HIGH | false | — |
@@ -55,9 +55,9 @@
 | CON-0035 | PENDING | — | population-general | HIGH | true | — |
 | CON-0039 | PENDING | A-02, A-08, A-13, all Category A items | entrances-and-circulation | HIGH | true | — |
 | CON-0040 | PENDING | A-02, A-08, A-13, B-01, B-06, F-01, D-05, A-16 | cross-cutting | HIGH | true | — |
-| CON-0041 | PENDING | F-06, Part 9 §9.1.4 (envelope+mass), F-07, H-04, a | kitchens-and-workspaces | HIGH | true | — |
-| CON-0042 | PENDING | B-10, visual alerting items, H-04, CON-0014 items | kitchens-and-workspaces | HIGH | true | — |
-| CON-0043 | PENDING | All C-items, D-02, D-06, F-01 zone boundaries | communication-and-alerts | HIGH | true | — |
+| CON-0041 | PENDING | F-06, Part 9 §9.1.4 (envelope+mass), F-07, H-04, a | bathrooms-and-wet-areas | HIGH | true | — |
+| CON-0042 | PENDING | B-10, visual alerting items, H-04, CON-0014 items | sensory-environment | HIGH | true | — |
+| CON-0043 | PENDING | All C-items, D-02, D-06, F-01 zone boundaries | wayfinding-and-signage | HIGH | true | — |
 | CON-0044 | PENDING | Part 1 (§1.4 theoretical framework), all G-items,  | entrances-and-circulation | MODERATE | true | — |
 | CON-0045 | PENDING | Part 1 (evidence methodology), Part 13 (case studi | health-and-symptom-management | HIGH | true | — |
 | CON-0046 | PENDING | A-16, F-01, D-05, CON-0019 items | cross-cutting | HIGH | true | — |
@@ -116,7 +116,7 @@
 | CON-0099 | PENDING | Part 12 (Economics) | frameworks-and-methodology | MODERATE | true | — |
 | CON-0100 | CONSUMED | Stair items, corridor/seating height items | entrances-and-circulation | HIGH | false | — |
 | CON-0101 | CONSUMED | F-07, F-08, A-01, A-02, A-08 | communication-and-alerts | HIGH | false | — |
-| CON-0102 | PENDING | F-07, F-08, F-04, F-06 | communication-and-alerts | HIGH | true | — |
+| CON-0102 | PENDING | F-07, F-08, F-04, F-06 | cross-cutting | HIGH | true | — |
 | CON-0103 | CONSUMED | I-04, G-03, G-04, Part 9 §9.5 | seating-and-rest | HIGH | false | — |
 | CON-0104 | CONSUMED | H-05, K-04, B-10, H-04 | cross-cutting | HIGH | false | — |
 | CON-0105 | CONSUMED | H-05, I-04 | seating-and-rest | HIGH | false | — |
@@ -125,7 +125,7 @@
 | CON-0108 | CONSUMED | F-08, E-01, E-06, E-13, E-14 | communication-and-alerts | HIGH | false | — |
 | CON-0109 | CONSUMED | H-02, H-04, Part 10 DAR provisions | kitchens-and-workspaces | HIGH | false | — |
 | CON-0110 | CONSUMED | Part 10 DAR, Part 12 Economics | frameworks-and-methodology | HIGH | false | — |
-| CON-0111 | PENDING | Part 10 DAR, Part 1 Foundations, Part 12 Economics | wayfinding-and-signage | MODERATE | true | — |
+| CON-0111 | PENDING | Part 10 DAR, Part 1 Foundations, Part 12 Economics | frameworks-and-methodology | MODERATE | true | — |
 | CON-0112 | CONSUMED | Part 12 Economics | wayfinding-and-signage | HIGH | false | — |
 | CON-0113 | CONSUMED | Part 12 Economics | wayfinding-and-signage | HIGH | false | — |
 | CON-0036 | CONSUMED | D-05 | wayfinding-and-signage | MODERATE | false | — |

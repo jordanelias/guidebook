@@ -299,3 +299,40 @@ Additionally, DEM shares this mechanism: DEM users who cannot remember where ite
 ---
 
 ---
+
+### CON-0041
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** F-06, Part 9 §9.1.4 (envelope+mass), F-07, H-04, all residential bathroom matrix entries
+**Target population(s):** DEM, MOB (older adults), NEU/MS, PAIN, OFS
+**Evidence tier:** —
+**Filed:** 2026-03-28
+**Applied:** —
+
+**Connection:** Japan heat shock data (6,073 bathtub drowning deaths/year, MHLW 2023) is the most consequential mortality statistic in the BPC corpus. Root cause: 5–15°C differential between unheated bathrooms and heated living areas. Resolution: inter-room differential ≤5–7°C (Nakayama 1981).
+
+This finding is siloed in `thermal-comfort-older-adults-care-settings` and not propagated to:
+- Part 5 residential bathroom matrices (where it is a P1 safety specification)
+- F-06/Part 9 §9.1.4 items (which specify envelope performance but not inter-room differential)
+- The `ms-thermal-temperature-conflict-resolution` BPC (which addresses population thermal preference conflicts but not the mortality mechanism)
+- CON-…
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| MHLW Japan 2023 (6,073 deaths) | 3 | DEM/older adults (JP) | ALL residential bathroom specification |
+| Nakayama 1981 (≤5–7°C differential) | 3 | DEM/older adults (JP) | ALL residential inter-room thermal spec |
+| Baquero et al. 2023 (n=1,065) | 3 | DEM/older adults | Thermal comfort targets |
+| ms-thermal BPC (Uhthoff/PAIN/OFS conflict) | 2–4 | NEU/MS, PAIN, OFS | Resolution methodology |
+| F-07 (heated bathroom floor, formerly TC-05) | 5 | ALL | Direct prevention of heat shock mechanism |
+
+**Action required:** Propagate inter-room thermal differential ≤5°C to all residential bathroom matrix entries as P1 safety specification. Cross-reference F-07 (heated bathroom floor, formerly TC-05) as the primary prevention mechanism. Link to ms-thermal conflict resolution for multi-condition thermal management. Specify refuge room thermal zone assignment (individual control required).
+
+**Disposition notes:** - [ ] HIGH → item-specification-writer briefing for Part 5 bathroom matrices + F-06/F-07 items
+
+---
+
+---

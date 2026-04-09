@@ -225,3 +225,36 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 **Action required:** Part 7 NR-HLT/NR-EDU entrance sequence: reception/assistance visible from entry (IntD) WITH adjacent seated waiting ≤3m from entrance (OFS/PAIN). Single spatial provision serves both. Low-cost coordination.
 
 ---
+
+### CON-0102
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** F-07, F-08, F-04, F-06
+**Target population(s):** OFS/MCAS, NDV (chemical sensitivity), PAIN
+**Evidence tier:** —
+**Filed:** 2026-04-03
+**Applied:** —
+
+**Connection:** F-07 (Thermal Zoning) specifies individual supplemental radiant heating. F-04 (Air Quality) specifies MERV 13+ filtration and no recirculated air without HEPA for OFS/MCAS spaces. F-06 (Fragrance-Free Policy) prohibits fragrance diffusers including HVAC-integrated systems.
+
+These three F-category items are interdependent but specified independently:
+1. F-07's radiant heating recommendation avoids forced air — but does not cross-reference F-04's reason (airborne chemical triggers for MCAS) or F-06's prohibition (no HVAC-integrated fragrance systems).
+2. F-04 specifies fresh air supply ≥15 L/s per person in OFS/MCAS spaces — but does not reference F-07's ambient ≤18°C constraint (which affects…
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| air-quality-voc BPC | 4–5 | OFS/MCAS | F-07 HVAC type constraint |
+| ms-thermal BPC | 2–4 | NEU/MS | F-04 ventilation heat recovery |
+| pain-ofs-built-environment-design BPC | 3 | OFS | F-category coordination note |
+
+**Action required:** Create F-category coherence note in Part 4 preamble to Category F: "F-04 (Air Quality), F-06 (Fragrance-Free Policy), F-07 (Thermal Zoning), and F-08 (Thermal Transition) are interdependent specifications governing the same building system. For OFS/MCAS populations, HVAC design must simultaneously satisfy: (a) ambient ≤18°C (F-07); (b) MERV 13+ filtration, ≥15 L/s fresh air, no recirculated air wi…
+
+**Disposition notes:** - [ ] HIGH → Category F preamble + item-specification-writer briefing for F-04, F-06, F-07, F-08 [DEFERRED — Category F preamble requires separate Part 4 category-level edit; individual item notes for F-04, F-07 applied via FDR-OFS-03 and CON-0101 passes. Full preamble to be written in Phase 5 assembly pass.]
+
+---
+
+---

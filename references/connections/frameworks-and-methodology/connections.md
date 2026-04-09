@@ -304,3 +304,59 @@ These programme models demonstrate that the highest-quality national systems sti
 **Disposition notes:** - [x] HIGH → jurisdiction-tracker update + Part 10 DAR + Part 12 Economics
 
 ---
+
+### CON-0012
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** DAR items
+**Target population(s):** ALL
+**Evidence tier:** —
+**Filed:** 2026-03-26
+**Applied:** —
+
+**Connection:** IT DM 236/89 adattabilità concept (walls reinforced for future grab bars, bidet removable, bath-to-shower convertibility at design stage) is a direct statutory parallel to DAR. Possibly the only national-level statutory implementation of the DAR principle. Not cross-referenced in residential-dar-provisions-priority-register BPC.
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| IT DM 236/89 | 6 | MOB (statutory) | ALL (DAR cross-reference) |
+
+**Action required:** Add Italian adattabilità as statutory precedent in DAR specification. Cross-reference in Part 1 DAR doctrine.
+
+**Disposition notes:** - [ ] MODERATE → P2 gap item
+
+---
+
+---
+
+### CON-0111
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** Part 10 DAR, Part 1 Foundations, Part 12 Economics
+**Target population(s):** ALL
+**Evidence tier:** —
+**Filed:** 2026-04-08
+**Applied:** —
+
+**Connection:** The Adaptable Building Conference 2026 (Nieuwe Instituut, Rotterdam) and recent research (Djukanovic et al., Buildings 2025, 15(6):862) document the convergence of sustainability-driven design-for-disassembly (DFD) with accessibility-driven design-for-adaptable-readiness (DAR). Both fields require: reversible connections, non-load-bearing partition walls that can be removed without structural impact, service routing through designated chases, and documented modification pathways. The sustainability framing (circularity, reduced demolition waste) provides an economic and environmental co-benefit argument for DAR provisions that the guidebook currently presents solely through an accessibility …
+
+**Evidence basis:**
+| Source | Tier | Current citation context | Proposed extension |
+|---|---|---|---|
+| Adaptable Building Conference 2026 programme | Industry/grey | Not cited | Part 1 Foundations — convergence argument |
+| Djukanovic et al. 2025 (Buildings 15(6):862) | 3 | Not cited | Part 10 DAR — DFA/DFD alignment |
+| Superlofts (Koehler) | Case study | Not cited | Part 12 Economics — commercial viability |
+
+**Action required:** Part 1 should cite the sustainability-accessibility convergence as a strategic framing advantage: DAR provisions deliver both accessibility adaptability and circular economy benefits. Part 10 can cross-reference DFD terminology and standards to access the sustainability policy and funding ecosystem. Part 12 can cite Superlofts as a commercial model demonstrating market-rate adaptable housing.
+
+**Disposition notes:** - [ ] MODERATE → P2 gap item (Part 1 framing, Part 10 DFD cross-reference, Part 12 case study)
+
+---
+
+---

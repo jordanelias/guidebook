@@ -1,62 +1,6 @@
 # Connections — communication-and-alerts
 <!-- CO-0006 Phase 0B-1 migration 2026-04-08 — from connection-register-active.md -->
 
-### CON-0015
-
-**Status:** PENDING
-**Confidence:** MODERATE
-**Opus-reviewed:** false
-**Source BPC slug(s):** — (pre-migration)
-**Target item(s):** F-04, F-02
-**Target population(s):** NDV, OFS, PAIN, MH
-**Evidence tier:** —
-**Filed:** 2026-03-26
-**Applied:** —
-
-**Connection:** Air quality / fragrance-free specifications carry OFS, NDV, NEU, PAIN. MH absent despite TID framework emphasis on environmental predictability and trigger avoidance. Chemical stimuli can trigger PTSD hyperarousal.
-
-**Evidence basis:**
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
-| Steinemann 2018 | 3 | General | MH |
-| TID framework | 2–3 | MH | MH (chemical triggers) |
-
-**Action required:** Add MH as co-population for F-02/F-04.
-
-**Disposition notes:** - [ ] MODERATE → P2 gap item
-
----
-
-### CON-0043
-
-**Status:** PENDING
-**Confidence:** HIGH
-**Opus-reviewed:** false
-**Source BPC slug(s):** — (pre-migration)
-**Target item(s):** All C-items, D-02, D-06, F-01 zone boundaries
-**Target population(s):** VIS, DEM, NDV/AUT, IntD, DBL
-**Evidence tier:** —
-**Filed:** 2026-03-28
-**Applied:** —
-
-**Connection:** The `luminance-contrast-lrv-evidence-base` BPC documents that the universal 30% LRV threshold has no empirical basis — it is a regulatory floor adopted from UK DDA guidance without validation. Severe VI needs ≥65% Michelson contrast (2.5× the standard). The guidebook recommends ≥50% LRV as best practice for C-items.
-
-The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifies ≥30 LRV change at zone boundaries — inheriting the unvalidated threshold. Cognitive wayfinding items depend on contrast-based landmarks for DEM, IntD, NDV. The guidebook's own ≥50% best-practice target is not propagated to zone boundaries or wayfinding items.
-
-**Evidence basis:**
-| Source | Tier | Currently cited for | Gap |
-|---|---|---|---|
-| Harper et al. 2022 (Ergonomics) | 3 | Stair contrast enhancement | Supports enhancement; doesn't validate 30% |
-| Brown et al. 2023 (Ergonomics) | 3 | VIS nosing contrast | Confirms benefit; no threshold validation |
-| Dain et al. (cited in Manandhar 2022) | 3 | Severe VI | ≥65% Michelson needed; 2.5× current standard |
-| CNIB 2024 | Co-1 | VIS | 30% is minimum regulatory floor, not functional optimum |
-
-**Action required:** Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions — C-items, zone boundaries, wayfinding items. At critical junctions (platform edges, stair nosings, kerb lines): ≥65% Michelson. The 30% value remains as code-compliance minimum only. Internal consistency correction — the guidebook already established the right position in the LRV BPC.
-
-**Disposition notes:** - [ ] HIGH → item-specification-writer briefing for all C-items + F-01 zone boundaries
-
----
-
 ### CON-0063
 
 **Status:** CONSUMED
@@ -116,37 +60,6 @@ Additionally, F-08 thermal mass specification (≤3°C diurnal swing) vi…
 
 ---
 
-### CON-0102
-
-**Status:** PENDING
-**Confidence:** HIGH
-**Opus-reviewed:** false
-**Source BPC slug(s):** — (pre-migration)
-**Target item(s):** F-07, F-08, F-04, F-06
-**Target population(s):** OFS/MCAS, NDV (chemical sensitivity), PAIN
-**Evidence tier:** —
-**Filed:** 2026-04-03
-**Applied:** —
-
-**Connection:** F-07 (Thermal Zoning) specifies individual supplemental radiant heating. F-04 (Air Quality) specifies MERV 13+ filtration and no recirculated air without HEPA for OFS/MCAS spaces. F-06 (Fragrance-Free Policy) prohibits fragrance diffusers including HVAC-integrated systems.
-
-These three F-category items are interdependent but specified independently:
-1. F-07's radiant heating recommendation avoids forced air — but does not cross-reference F-04's reason (airborne chemical triggers for MCAS) or F-06's prohibition (no HVAC-integrated fragrance systems).
-2. F-04 specifies fresh air supply ≥15 L/s per person in OFS/MCAS spaces — but does not reference F-07's ambient ≤18°C constraint (which affects…
-
-**Evidence basis:**
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
-| air-quality-voc BPC | 4–5 | OFS/MCAS | F-07 HVAC type constraint |
-| ms-thermal BPC | 2–4 | NEU/MS | F-04 ventilation heat recovery |
-| pain-ofs-built-environment-design BPC | 3 | OFS | F-category coordination note |
-
-**Action required:** Create F-category coherence note in Part 4 preamble to Category F: "F-04 (Air Quality), F-06 (Fragrance-Free Policy), F-07 (Thermal Zoning), and F-08 (Thermal Transition) are interdependent specifications governing the same building system. For OFS/MCAS populations, HVAC design must simultaneously satisfy: (a) ambient ≤18°C (F-07); (b) MERV 13+ filtration, ≥15 L/s fresh air, no recirculated air wi…
-
-**Disposition notes:** - [ ] HIGH → Category F preamble + item-specification-writer briefing for F-04, F-06, F-07, F-08 [DEFERRED — Category F preamble requires separate Part 4 category-level edit; individual item notes for F-04, F-07 applied via FDR-OFS-03 and CON-0101 passes. Full preamble to be written in Phase 5 assembly pass.]
-
----
-
 ### CON-0108
 
 **Status:** CONSUMED
@@ -200,8 +113,6 @@ The vestibule adds a second door transition (outer + inner) which:
 
 ---
 
----
-
 ### CON-0132
 
 **Status:** PENDING
@@ -228,8 +139,6 @@ Resolution: species-restricted planting list for shared OFS+DEM/NDV spaces. Perm
 
 ---
 
----
-
 ### CON-0142
 
 **Status:** PENDING
@@ -245,5 +154,35 @@ Resolution: species-restricted planting list for shared OFS+DEM/NDV spaces. Perm
 **Action required:** Part 8 (Engineering): add HVAC coordination note for tropical jurisdictions — cooling, ventilation, and filtration constraints from F-04 + F-07 are simultaneously binding. Engineering brief must specify all three. Cross-reference CON-0101 (HVAC type constraint).
 
 ---
+
+### CON-0042
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** — (pre-migration)
+**Target item(s):** B-10, visual alerting items, H-04, CON-0014 items
+**Target population(s):** DEAF, DBL, NEU (seizure), NDV/AUT (photosensitive)
+**Evidence tier:** —
+**Filed:** 2026-03-28
+**Applied:** —
+
+**Connection:** CON-0014 proposes vibrotactile alerting for sleeping areas where DEAF/DBL and photosensitive populations co-occur. The `visual-fire-alarm-seizure-safety` BPC specifies synchronised VADs at 0.5–1 Hz + voice alarm + vibrotactile. The `visual-alerting-and-wayfinding-light` BPC covers non-emergency alerting (doorbells, call systems).
+
+The unmade synthesis: the alerting system is a single integrated domain. A person who needs vibrotactile fire alerts also needs vibrotactile doorbell, telephone, and intruder alerts. Specifying vibrotactile for fire only leaves the same person without notification for all other alert types.
+
+The seizure/photosensitivity conflict applies to all visual alerting, not …
+
+**Evidence basis:**
+| Source | Tier | Population currently cited for | Proposed extension to |
+|---|---|---|---|
+| Jordan & Vanderheiden 2024 (ACM TACCESS) | 3 | NEU (photosensitive epilepsy) | All visual alerting items |
+| BS EN 54-23:2010 | 5 | DEAF (fire VAD) | Multi-channel specification |
+| NFPA 72-2022 | 5 | DEAF | Multi-channel specification |
+| RNID / HLAA / Bufdir | Co-1/2 | DEAF (vibrotactile) | All alerting channels |
+
+**Action required:** Specify unified multi-channel alerting: every alert event (fire, intrusion, doorbell, telephone, intercom) available through all three channels (visual + auditory + vibrotactile) simultaneously. Consistent channel specifications across alert types to enable pattern recognition. Extends CON-0014 from sleeping-area fire alarm to all alerting.
+
+**Disposition notes:** - [ ] HIGH → item-specification-writer briefing for B-10 + all alerting items
 
 ---
