@@ -401,3 +401,84 @@ Remaining priority: NZ (EN), CN (ZH), BR/PT (PT), SG (EN), IE (EN)
 | FR | FFB (CONTESTED) | E-7 | 2–5% | 2025 |
 
 **Pattern:** 7 of 8 independent data points cluster between 0.5% and 1.8%. The French FFB figure remains the sole outlier.
+
+
+---
+
+## Addendum 4: New Zealand, China (2026-04-09 23:40)
+
+### New Zealand (EN)
+
+**Regulatory:** NZS 4121:2001 "Design for Access and Mobility — Buildings and Associated Facilities" (currently under revision). Building Code Clause D1 Access Routes; D1/AS1 Acceptable Solution references NZS 4121.
+
+**Critical gap:** NZS 4121 applies only to non-residential buildings. **There is no accessibility standard for residential buildings in New Zealand.** The Building Act 2004 establishes performance standards but explicitly excludes housing from accessibility requirements. This is a major regulatory gap compared to all other jurisdictions studied.
+
+**Lifemark® (2012):** Voluntary universal design standards for dwellings, gifted to the country by Lifetime Design Ltd. Provides a mechanism to define accessible dwelling performance where no mandatory standard exists.
+
+**BRANZ:** Leads UD resource collection in partnership with ACC, MBIE, Kāinga Ora, Ministry of Health, Office for Disability Issues. Provides dimensioned diagrams and NZ-built home examples.
+
+[GAP: No NZ-specific cost premium study found. No government home modification programme data found in this search. Priority for future research: Kāinga Ora accessible housing data; ACC home modification funding.]
+
+### China (ZH)
+
+**Regulatory:** Two-standard framework:
+- **GB 50763-2012** "无障碍设计规范" (Codes for Accessibility Design) — national standard since September 2012. Covers: urban roads, squares, green spaces, residential areas and buildings, public buildings, historic buildings. Authored by Beijing Institute of Architectural Design (BIAD). 5 mandatory provisions (强制性条文).
+- **GB 55019-2021** "建筑与市政工程无障碍通用规范" — supersedes some mandatory provisions of GB 50763-2012 since April 2022. Applies to new-build, renovation, and expansion.
+
+**Technical specifications (from GB 50763-2012):**
+- Door threshold: ≤15mm with sloped transition
+- Door clear width: ≥800mm (≥900mm preferred)
+- Wheelchair turning space: ≥1500mm diameter
+- Automatic doors: clear width ≥1000mm
+- Ramp gradient and tactile paving (盲道) specifications included
+
+**Academic assessment:** Research notes that China's barrier-free environment lags behind developed countries due to differences in "values, social environment, and professional education" ("价值观、社会环境和专业教育的差异性"). Recommendations include: supplementing regulations, increasing R&D investment in new accessibility technology, establishing post-construction monitoring mechanisms.
+
+[GAP: No Chinese new-build cost premium study found. No residential modification cost data found. The GB standards emphasise 经济合理 (economically reasonable) as a design principle but do not quantify the cost differential.]
+
+---
+
+## FINAL Coverage Summary (this research programme)
+
+| Status | Count | Jurisdictions |
+|---|---|---|
+| SEARCHED | 20 | US, UK, AU, DE, FR, SE, NO, JP, CA, BE, NL, KR, EU, DK, ES, IT, CH, FI, NZ, CN |
+| NOT-RUN | 26 | SG, IE, BR, IN, ZA, MX, CL, CR, ID, BD, NG, PH, EG, KE, TH, CO, AR, PE, GT, EC, UY, MA, GH, TZ, ET, ISO |
+
+**Languages searched: 14/19** — EN, DE, FR, SV, NO, JA, NL, KO, DA, ES, IT, FI, ZH (partial — regulatory only), PT (not searched)
+**Remaining: 5** — AR, HI, ID, SW, BN
+
+## Cross-Jurisdictional New-Build Premium — FINAL TABLE (8 independent data points)
+
+| # | Jurisdiction | Source | Tier | Premium | Year |
+|---|---|---|---|---|---|
+| 1 | DE | TERRAGON/DStGB (148 DIN criteria) | E-3/E-4 | 0.54%–1.26% | 2017 |
+| 2 | BE | Ielegems & Vanrie (12 case studies) | E-1 | 0.94%–3.92% (avg 1.19%) | 2024 |
+| 3 | US | ADA National Network | E-6 | <1% | 2025 |
+| 4 | CA | Rick Hansen Foundation/HCMA | E-6 | ~1% or zero | 2024 |
+| 5 | SE | Lund University thesis | E-1 | Not significant | n.d. |
+| 6 | NL/EU | EU research via NEN | E-6 | 1–1.4% | n.d. |
+| 7 | CH | ETH Zürich / NFP45 | E-1/E-3 | 1.8% | 2004 |
+| 8 | FR | FFB | E-7 | 2–5% [CONTESTED] | 2025 |
+
+**Convergence:** 7/8 cluster at 0.5%–1.8%. One contested outlier.
+
+## Government Programme Funding — FINAL TABLE
+
+| # | Country | Programme | Max/typical | Notes |
+|---|---|---|---|---|
+| 1 | US | HUD CDBG HomeMod | avg $12–15K | Cost-benefit positive |
+| 2 | US | USDA Section 504 | $40K+$10K | Rural |
+| 3 | UK | DFG | £30,000 | £723M national 2026-27 |
+| 4 | AU | NDIS Capital | Per-plan | AUD$221/hr assessment |
+| 5 | DE | KfW 159 | Loan | ~25K units/yr |
+| 6 | NO | Husbanken | Means-tested | Livsløpsbolig incentive |
+| 7 | JP | Kaigo Hoken | ¥200K (90%) | Long-term care |
+| 8 | JP | MLIT Long-Life | ¥1M–2.5M | Quality upgrade |
+| 9 | FR | MaPrimeAdapt' | TBC | New programme |
+| 10 | IT | Bonus Barriere | 75% / €30-50K | Through 2025 |
+| 11 | ES | Plan Vivienda Prog 7 | TBC | 2022-2025 |
+| 12 | DK | Kommunal | Free qualifying | Serviceloven |
+| 13 | CH | IV | Case-by-case | Working-age |
+| 14 | FI | ARA + Vammaispalvelulaki | Grants + municipal | Elevators/ramps |
+| 15 | KR | BF certification | Mandatory public | Since 2015 |

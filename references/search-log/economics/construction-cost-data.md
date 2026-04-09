@@ -114,3 +114,18 @@
 - 8 independent new-build premium data points assembled
 - 5 citation mining targets addressed (3 retrieved, 2 located)
 - 12 government programme funding sources documented
+
+
+## Update 2026-04-09 23:40 (Hard Stop)
+
+### Added jurisdictions
+- NZ: SEARCHED (EN) — NZS 4121; NO residential standard; Lifemark voluntary; BRANZ
+- CN: SEARCHED (ZH) — GB 50763-2012 + GB 55019-2021; no cost premium data
+
+### Final session totals
+- 20 jurisdictions searched (of 46)
+- 14 languages used (of 19)
+- 8 independent new-build premium data points
+- 15 government programmes documented
+- 15 economics sources verified
+- Opus synthesis complete
