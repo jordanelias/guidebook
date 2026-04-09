@@ -29,7 +29,7 @@
 **Opus synthesis note:** Japanese heat shock evidence (6,073 deaths/yr) is the strongest single data point. Age-differentiated thermal targets are a universal gap across all 24 jurisdictions.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Older adult neutral temperature ~24.9°C in care settings | EN, ES, NL | Cross-jurisdictional (Baquero 2023) | 3 |
 | PMV/PPD unreliable for cognitively impaired older adults | EN, NL | — | 3 |
