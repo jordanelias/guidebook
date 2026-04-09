@@ -134,3 +134,26 @@ Not yet run.
 
 ### Key sources
 [STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+---
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Rashid et al. 2025** — "Taxonomy for sensory-informed architectural design in autism." Archnet-IJAR. DOI: 10.1080/09613218.2025.2459737. Literature review of 76 sources. 83 sensory-informed design qualities identified and classified by taxonomy (sensory quality, intelligibility, orientation). **Key finding:** Existing frameworks overemphasise interior elements over spatial configuration (adjacency, sequencing, approach). **Tier 3.** Supersedes Bertone 2021 in scope.
+
+**Leonardi et al. 2025** — "Use of multisensory environments in autism: systematic review." Autism (SAGE). DOI: 10.1177/13623613251320424. PRISMA SR, 10 studies. **Key finding:** No evidence-based design guidelines currently exist for MSE. Improvement demonstrated in paediatric populations but not adolescents/adults. **Tier 3.**
+
+**[Archit Sci Rev] 2025** — "Perception and experience of multisensory environments among neurodivergent people: systematic review." DOI: 10.1080/00038628.2025.2462569. PRISMA SR, 27 studies (2013-2023). 7 sensory themes (sight, hearing, touch, smell, taste, body movement, body awareness). Design implications for NDV MSE. **Tier 3.**
+
+**Simpson, Adams, Dargue 2025** — "Built school environment and autistic students: systematic review." Int J Inclusive Educ. DOI: 10.1080/13603116.2025.2589290. 23 studies. Noise and visual elements (lighting, distractions) show strongest associations with learning/well-being. **Tier 3. Target: NR-EDU typology.**
+
+**Watchorn, Hale et al. 2025** — "Sensory rooms in Australian public buildings." Archnet-IJAR. DOI: 10.1108/ARCH-10-2024-0453. Mixed methods (n=57 survey + 4 interview). **Key finding:** User control confirmed as primary design variable (aligns with Unwin 2022/2023). Proximity to accessible toilet identified as missing specification in A-16. **Co-1 + Tier 3.**
+
+**Kiblen et al. 2024** — "Use of sensory adaptive environments with autistic children: scoping review." Res Autism Spectr Disord 112:102327. 13 studies (5 US, 2 UK, global spread). Paediatric focus. Education and healthcare settings dominant. **Tier 3.**
+
+**Rios-Vega et al. 2024** — "Designing sensory adaptive environments for autistic children in healthcare." Discov Psychol. DOI: 10.1007/s44202-024-00118-5. Design-thinking approach with qualitative methods. Parents, healthcare providers, and interior design/architecture professionals. **Co-1 / Tier 3.**
+
+**Specification impact summary:**
+- A-16 user control = PRIMARY: **CONFIRMED** across 4+ reviews (Watchorn, Leonardi, Rashid, Kiblen)
+- A-16 proximity to accessible toilet: **NEW SPECIFICATION GAP** identified by Watchorn 2025
+- Spatial configuration vs interior elements: **GAP** confirmed by Rashid 2025 taxonomy analysis
+- Adult vs paediatric evidence: **GAP** — Leonardi 2025 finds no improvement in adult populations

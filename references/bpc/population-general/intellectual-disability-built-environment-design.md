@@ -69,3 +69,18 @@
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Bottom-up findings (functional deficit pass)
 FDR-IntD-01: Reduced abstract reasoning — concrete landmark wayfinding as primary system; alphanumeric backup only. NDIS SDA Tier 4; Silverman 2010 Tier 2. DEM wayfinding provisions partially transferable but mechanism differs (DEM=memory loss; IntD=abstract reasoning). FDR-IntD-02: Hyperacusis in Down syndrome (Widen 2013 Tier 3), Williams syndrome (Levitin 2005 Tier 1), Fragile X (Castren 2003 Tier 3) — IntD spaces should carry NDV acoustic spec (RT60 ≤0.4s, NC-25). Items affected: D-02, D-08, A-02, A-08.
+---
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Quesada-Cubo 2025** — "Inclusive housing environments for people with intellectual disabilities: systematic review of characteristics and influencing factors." J Appl Res Intell Disabil. DOI: [PENDING VERIFICATION]. PRISMA SR, 73 studies across 6 databases. **CRITICAL: This is the first comprehensive SR directly addressing IntD housing environments.** Key findings:
+- Environmental factors remain fragmented and poorly systematised across the literature
+- Need for flexible models responsive to diversity within IntD population (age, gender, support levels, personal trajectories)
+- Housing models must be personalised, collaborative, and adaptable
+- Population heterogeneity means results are general guidelines subject to adaptation
+- Intersectional research gap identified (Douglas et al. 2023)
+- Confirms THIN-BASE status: evidence exists but is scattered; this SR consolidates it
+
+**Impact on IntD BPC:** Partially addresses THIN-BASE disclosure. The BPC status should be upgraded from "THIN-BASE — no standalone IntD built-environment research" to "THIN-BASE — consolidated evidence now available via Quesada-Cubo 2025 SR (73 studies); dimensional specifications remain proxied through DEM/NDV." **Tier 3.**
+
+**Lindsay et al. 2024** — "Accessible independent housing for people with disabilities: scoping review." PLoS ONE 19(1):e0291228. DOI: 10.1371/journal.pone.0291228. 60 studies, 18 countries, 20-year scope. Key trends: removing barriers, policy influence, technology interventions, co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.**
