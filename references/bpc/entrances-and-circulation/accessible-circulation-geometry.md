@@ -51,7 +51,7 @@
 **Most inclusive provision:** Automatic sliding doors on all primary routes; EN 81-70 Type 2 minimum lift (1100×1400mm) with best practice 1100×1800mm; 1800mm corridor width on primary routes; rest seating at 25–30m intervals with tilt/recline option.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | EN 81-70 Type 2 (1100×1400mm) is the international lift car minimum — wheelchair user + assistant | EN, DE, SV, FI, NO, FR, NL, ES, PT, IT | UK, DE, SE, FI, NO, FR, NL, BE, CH, DK, ES, PT, IT, AU, SG, CA, US (proxy ADA) | Tier 6 (EN 81-70:2021+A1:2022; adopted across all jurisdictions) |
 | 1500mm clear turning space at lift landing | EN, DE, SV, FI | UK, DE, SE, FI, AU | Tier 6 (BS 8300; BFS 2024:12; Finnish F1; AS 1428.1) |
