@@ -11,8 +11,8 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 87 |
-| PENDING | 94 |
+| CONSUMED | 88 |
+| PENDING | 93 |
 
 ## Index
 
@@ -181,7 +181,7 @@
 | CON-0128 | PENDING | G-04, Part 6 residential bathroom matrices | bathrooms-and-wet-areas | HIGH | true | — |
 | CON-0129 | PENDING | G-08 (bedroom storage), kitchen items | bathrooms-and-wet-areas | MODERATE | true | — |
 | CON-0130 | PENDING | D-02 (wayfinding), Part 7 NR-HLT (healthcare matrices) | wayfinding-and-signage | HIGH | true | — |
-| CON-0131 | PENDING | A-16, CON-0002 | sensory-environment | HIGH | true | — |
+| CON-0131 | CONSUMED | A-16, CON-0002 | sensory-environment | HIGH | true | — |
 | CON-0132 | PENDING | BIO-01 through BIO-05, F-04 | communication-and-alerts | HIGH | true | — |
 | CON-0133 | PENDING | H-01, H-02, E-01 (door hardware) | entrances-and-circulation | HIGH | true | — |
 | CON-0134 | PENDING | H-02, Part 7 NR-HLT | controls-and-hardware | HIGH | true | — |
