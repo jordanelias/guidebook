@@ -177,3 +177,80 @@
 | RSMeans accessibility line items | P1 | Search next session — E-3 tier |
 | Peer-reviewed lifecycle cost studies | P1 | Requires research connectors |
 | Government grant offset data (DFG, NDIS HM, VA HISA) | P2 | Separate economics-researcher run |
+
+---
+
+## 12. Australian Data (AUD) — Partial
+
+**Source tier:** E-7 (supplier sites, NDIS guidance) + E-2 (NDIS official)
+**Retrieved:** 2026-04-09
+
+### NDIS Funding Tiers (E-2 — official NDIS)
+
+| Category | Cost range | Examples | Evidence required |
+|---|---|---|---|
+| Category A minor | <$10,000 | Grab rails, lever taps, portable ramps, non-structural doorway widening | OT assessment |
+| Category B minor | $10,000–$20,000 | Accessible bathroom fittings, ceiling hoists, minor bathroom floor mods | OT assessment + quotes |
+| Complex (CHM) | >$20,000 | Bathroom rebuilds, external ramps with footings, platform lifts, extensions | OT report + 2 itemised builder quotes + building approval |
+
+### Granular Items (AUD)
+
+| Item | Unit | Low | High | Source |
+|---|---|---|---|---|
+| Modular aluminium ramp (boards + frame) | per metre | $850 | $950 | Vitalease Melbourne |
+| Ramp handrail (per side) | per metre | ~$350 | ~$350 | Vitalease Melbourne |
+| 3 m modular ramp with rails | lump | ~$2,600 | — | Vitalease Melbourne |
+| Portable telescoping ramp (2 m) | each | ~$300 | — | Vitalease |
+| Portable telescoping ramp (3 m) | each | ~$1,100 | — | Vitalease |
+| Rubber threshold ramp | each | $100 | $1,000 | Vitalease |
+| 3-in-1 throne grab rail (toilet surround) | each | $500 | $600 | Vitalease Melbourne |
+| Floor-to-ceiling grab pole | each | $349 | $379 | The Mobility Store |
+| Bathroom door minimum clear opening | — | 900 mm | 950 mm | NDIS builder guidance |
+| Stepless shower base (AS 1428.1 minimum) | — | 1160×1100 mm | 1500×1500 mm ideal | NDIS builder guidance |
+| Ramp gradient (AS 1428.1) | — | 1:14 max (long) | 1:10 (short <1.9 m) | Australian Standards |
+
+### Key AU Notes
+
+- NDIS ROI: $2.25 return per $1.00 spent on home modifications (NDIS data).
+- All bathroom modifications must use non-slip flooring (vinyl or tiles) per NDIS guidance.
+- Wall reinforcement for grab rails: noggings, studs, wall trimmers, or ≥12 mm structural plywood.
+- Thermostatic mixing valve (TMV) required for new bathrooms.
+- AS 1428.1 (Design for Access and Mobility) governs all ramp and bathroom specifications.
+
+---
+
+## 13. United Kingdom Data (GBP) — Partial
+
+**Source tier:** E-2 (GOV.UK, Age UK) + E-7 (supplier sites)
+**Retrieved:** 2026-04-09
+
+### Disabled Facilities Grant (DFG) — E-2
+
+| Parameter | Value | Source |
+|---|---|---|
+| Maximum grant (England) | £30,000 per application | GOV.UK |
+| 2024–25 / 2025–26 national budget | £711 million (+ £50m boost = £761m for 2025–26) | Homebuilding & Renovating |
+| Minor adaptations (≤£1,000) | Provided free by council | Age UK |
+| Means-tested | Yes (adults); No (children under 19) | GOV.UK, Scope |
+| Covers | Stairlifts, ramps, grab rails, level-access showers, widened doorways, extensions, heating adaptations, assistive technology | GOV.UK |
+
+### Granular Items (GBP)
+
+| Item | Unit | Low | High | Source |
+|---|---|---|---|---|
+| Ceiling hoist — straight/monorail (installed) | each | £1,800 | £3,000 | Wealden Rehab |
+| Ceiling hoist — XY/H-frame (installed) | each | £2,400 | £6,500 | Wealden Rehab, CareSpaces |
+| Ceiling hoist — linked XY (multi-room) | each | ~£12,000 | — | CareSpaces |
+| Ceiling structural reinforcement | lump | £300 | £1,000 | CareSpaces |
+| Hoist electrical works | lump | £200 | £500 | CareSpaces |
+| Inset ceiling track surcharge | per room | ~£100 | — | CareSpaces |
+| Residential care (annual, for comparison) | per year | ~£39,520 | — | Age UK |
+| Daily care (2 hrs/day, annual) | per year | ~£13,200 | — | Age UK |
+
+### Key UK Notes
+
+- DFG process: OT assessment → council approval → work begins. Work started before approval invalidates grant.
+- Average DFG delivery: >6 months in two-thirds of local authorities (2021/22 data).
+- Minor adaptations (grab rails, dropped kerbs, outside lights) ≤£1,000 provided free — no means test.
+- 2025 consultation underway on new DFG allocation formula (first update since 2011).
+- Scotland: DFG not available; separate support scheme for equipment and adaptations.
