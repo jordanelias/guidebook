@@ -34,7 +34,7 @@
 **Highest-ambition actionable specification:** All occupied buildings to provide at least one sensory-quiet room (A-16) per floor plate, with user-controlled lighting (2700–5000 K, 10–500 lux dimmable), acoustic attenuation ≤30 dBA, and no fluorescent or stroboscopic lighting anywhere in the building.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Sensory quiet/reset rooms reduce overload events for autistic occupants | EN, DE, NO, SV, JA | UK (PAS 6463), AU (Caldwell 2025), IE (CEUD), CA | Co-1, 4 |
 | Muted, low-chroma palette (NCS chroma ≤4) reduces anxiety and stimulation in NDV/AUT | EN, DE, SV, NO | UK (PAS 6463, ASPECTSS), NO (SINTEF) | 4 |
