@@ -984,3 +984,63 @@ Internal structural consistency — no external evidence.
 **Disposition notes:** - [x] MEDIUM → RESOLVED via OP-G (Part 3 §3.8/3.9 methodology review, complete 2026-04-03). No item-specification-writer action required. Dependency documented for future maintenance.
 
 ---
+
+### CON-0133
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** dementia-built-environment, neurodivergent-built-environment, intellectual-disability-built-environment-design, reach-range-and-accessible-controls
+**Target item(s):** H-01, H-02, E-01 (door hardware)
+**Target population(s):** DEM, NDV, IntD
+**Evidence tier:** Tier 3-5 (DEM, NDV, IntD BPCs) + Tier 1-6 (controls BPC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** H-01/H-02 specify controls for MOB/UPL: reach range (400-1100mm), activation force (≤22.2N), lever hardware, no pinch/grip/twist. The controls BPC is entirely physical-access focused. Three populations have cognitive operability requirements undocumented in the controls specification:
+
+**DEM:** Consistent placement (same switch position in every room); lever not rotary (rotary operation requires procedural memory); no multi-step sequences (each additional step loses ~30% of DEM users — inferred from CDM cognitive levels); colour contrast between control and wall (≥30% LRV per C-04).
+
+**NDV:** Predictable, consistent response (no variable-speed dimmer behaviour); no ambiguous feedback states (a switch is either on or off — never "transitioning"); tactile confirmation of state; no audible click sounds >45 dBA (acoustic trigger).
+
+**IntD:** Pictogram labels on all controls (light symbol, fan symbol, temperature symbol); single-action operation only; no combined controls (a switch that controls multiple circuits is cognitively inaccessible); placement at same height and same position in every room.
+
+These are interface design requirements that the physical-access specification does not address. A DEM user who can reach a switch at 1000mm but cannot remember which switch does what, or an IntD user who can operate a lever but not interpret a three-way toggle, is functionally excluded by a specification that meets H-01.
+
+**Evidence basis:** DEM BPC: consistent environment reduces confusion. NDV BPC: predictable, non-ambiguous interfaces. IntD BPC: pictogram + single-word signage; simplified interaction. Controls BPC: physical reach only; status PROVISIONAL; 16 jurisdictions NOT-RUN.
+
+**Action required:** Add cognitive operability layer to H-01/H-02: (a) consistent placement across rooms (DEM, IntD); (b) single-action operation, no multi-step (DEM, IntD); (c) pictogram labelling (IntD); (d) unambiguous binary state (NDV); (e) colour contrast to wall ≥30% LRV (DEM, VIS). This is the highest-priority expansion for the controls-and-hardware topic — currently the thinnest in the coverage matrix (1 BPC, MOB only).
+
+**Disposition notes:** — Fills the largest single topic gap in the coverage matrix.
+
+---
+
+---
+
+### CON-0136
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** reach-range-and-accessible-controls, pain-ofs-built-environment-design, ofs-built-environment
+**Target item(s):** E-01, H-01
+**Target population(s):** OFS, PAIN
+**Evidence tier:** Tier 1 (AAATE 2016 door force study) + Tier 5 (PAIN/OFS BPCs)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Door force specification (≤30N preferred, ≤38N maximum) is coded for MOB (wheelchair user arm strength). OFS and PAIN are not coded despite clear clinical rationale: OFS energy conservation — every door push depletes the post-exertional malaise budget; cumulative door-opening through a building visit can trigger PEM. PAIN — joint loading on hands, wrists, and shoulders during manual door operation aggravates arthritic and fibromyalgia pain.
+
+The AAATE 2016 study (Tier 1, 94.7% WC user acceptance at ≤30N) provides the force threshold. The clinical extension: for OFS, the threshold applies not because of arm strength limitation but because of cumulative energy expenditure. For PAIN, because of joint-loading pain. The specification value (≤30N) remains unchanged; the population coding expands.
+
+Additionally: automatic door openers (specified as "best practice" for entrance doors) should be elevated to MANDATORY for all doors on primary circulation routes where OFS/PAIN populations are primary users. The clinical rationale: eliminating door-opening exertion entirely is the energy conservation specification, not merely reducing force.
+
+**Evidence basis:** Controls BPC: ≤30N door force (AAATE 2016 Tier 1). OFS BPC: energy conservation at all interaction points. PAIN BPC: joint loading reduction. The force threshold is already correct; the population rationale extends it.
+
+**Action required:** (1) Add OFS and PAIN as co-populations for door force specification (E-01, H-01). (2) Elevate automatic door openers from "best practice" to "mandatory on primary circulation routes" where OFS/PAIN are primary users. (3) Mechanism note: OFS door force is energy-budget, not strength; PAIN door force is joint-loading, not strength. Same specification value, different clinical rationale.
+
+**Disposition notes:** — Zero-cost connection (population tag expansion). Automatic door elevation has cost implications.
+
+---
+
+---

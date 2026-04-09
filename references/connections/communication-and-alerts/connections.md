@@ -177,3 +177,73 @@ The vestibule adds a second door transition (outer + inner) which:
 **Disposition notes:** - [x] MEDIUM → APPLIED 2026-04-03: F-08 Retrofit section updated with E-series coordination note (both vestibule doors E-01; level entry E-06 both thresholds; E-13 lighting continuity; E-14 seating within vestibule). E-01 cross-ref updated with F-08 vestibule reciprocal note. E-06/E-13/E-14 coordination embedded in F-08 note — separate item edits deferred to Phase 5 cross-reference-resolver pass.
 
 ---
+
+### CON-0119
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** sensory-processing-model-design-application, thermoregulation-built-environment, circadian-lighting-melanopic-edi
+**Target item(s):** F-01, F-07, B-01, B-06
+**Target population(s):** NDV/AUT, OFS, PAIN, NEU/MS
+**Evidence tier:** Tier 5 (PAS 6463) + Tier 3 (Dunn model, thermoregulation BPC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** CON-0040 specifies a three-zone sensory environment system (Zone 1 high activation → Zone 3 low activation) with lighting parameters per zone. F-07 specifies thermal zones (18–22°C range by population). These two zoning systems operate on the same building but are specified independently. The unmade coordination: Zone 3 (low activation) should be both dimmer/warmer CCT AND cooler temperature (for NEU/MS/OFS). Zone 1 (high activation) should be brighter/cooler CCT AND can tolerate wider thermal range. If lighting zones and thermal zones are designed by different consultants (typical), they may produce contradictory sensory environments — a Zone 3 space with high-activation lighting, or a Zone 1 space with low-activation thermal setpoint.
+
+**Evidence basis:** sensory-processing-model BPC: Dunn's profiles map to both lighting and thermal preferences. thermoregulation BPC: harm-asymmetry analysis shows NEU/MS populations need cool ambient in low-activation spaces. circadian-lighting BPC: daytime CCT targets (4000K+) apply to Zone 1/2 but may be inappropriate for Zone 3 refuge spaces.
+
+**Action required:** Create sensory zone coordination table: for each zone level, specify coordinated lighting (lux, CCT, melanopic EDI) AND thermal (ambient °C, radiant supplement) AND acoustic (RT60, NC) targets. Single table replaces three independent specifications. Mark as ○ (expert synthesis) — no single study validates multi-parameter zone coordination.
+
+**Disposition notes:** — Prevents contradictory consultant specifications. Requires cross-category coordination.
+
+---
+
+---
+
+### CON-0132
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** air-quality-voc-chemical-sensitivity-built-environment, biophilic-design-healthcare-workplace
+**Target item(s):** BIO-01 through BIO-05, F-04
+**Target population(s):** OFS/MCAS, DEM, NDV/MH
+**Evidence tier:** Tier 4-5 (air quality BPC) + Tier 3 (biophilic BPC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Biophilic design provisions (BIO-series: indoor planting, nature views, natural materials) are therapeutic for DEM (reduced agitation — Al Khatib 2024 SR), NDV/MH (stress reduction — Ulrich), and NEU (ART/SRT restorative benefit). The air quality BPC specifies for OFS/MCAS spaces: "low-VOC, low-pollen species only; no strongly scented flowering plants." Additionally, F-06 (Fragrance-Free Policy) prohibits fragrance diffusers including any HVAC-integrated scent system.
+
+Conflict: biophilic planting that serves DEM/NDV/MH may trigger OFS/MCAS symptoms. Flowering plants, aromatic herbs (lavender, rosemary — commonly recommended in DEM garden design), and high-pollen species are documented MCAS triggers.
+
+Resolution: species-restricted planting list for shared OFS+DEM/NDV spaces. Permitted: foliage-only plants (ferns, pothos, snake plant), low-pollen succulents, sealed terrarium plantings. Prohibited: flowering plants, aromatic herbs, high-pollen grasses, plants with latex sap. Nature views through glazing (visual biophilia) serve all populations without air quality risk.
+
+**Evidence basis:** air-quality BPC: OFS/MCAS fragrance/VOC/pollen triggers. biophilic BPC (Al Khatib 2024 SR, 61 sources): nature exposure therapeutic for DEM/NDV. Project-standards: DEM olfactory wayfinding is NOT an evidence-based specification; fragrance-free is the universal built environment specification.
+
+**Action required:** Add species-restriction note to BIO-01/BIO-02 (indoor planting items): "Where OFS/MCAS populations co-occur, planting shall comply with F-04 air quality specification (low-VOC, low-pollen, no scented flowering species). Visual biophilia through glazing is the conflict-free alternative." Cross-reference BIO ↔ F-04.
+
+**Disposition notes:** — Resolves a real specification conflict. Species restriction is the architectural equivalent of harm-asymmetry: MCAS reaction (physiological) > therapeutic planting benefit (psychological).
+
+---
+
+---
+
+### CON-0142
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** thermoregulation-built-environment, air-quality-voc-chemical-sensitivity-built-environment
+**Target item(s):** F-07, F-04
+**Target population(s):** NEU/MS, OFS/MCAS
+**Evidence tier:** Project-standards rule (2026-04-07)
+
+**Connection:** Project-standards specifies 18–22°C working target for thermoregulation-impaired populations, with mechanical cooling as medically necessary in hot-humid tropical contexts. F-04 air quality specifies ≥15 L/s fresh air per person for OFS/MCAS spaces with no recirculated air without HEPA. In tropical contexts, these two specifications interact adversely: high fresh-air supply rates at 32°C+ ambient increase cooling load dramatically. The HVAC system must simultaneously cool to ≤22°C AND supply ≥15 L/s fresh air AND filter to MERV 13+ — this is an engineering coordination constraint that neither F-04 nor F-07 documents.
+
+**Action required:** Part 8 (Engineering): add HVAC coordination note for tropical jurisdictions — cooling, ventilation, and filtration constraints from F-04 + F-07 are simultaneously binding. Engineering brief must specify all three. Cross-reference CON-0101 (HVAC type constraint).
+
+---
+
+---

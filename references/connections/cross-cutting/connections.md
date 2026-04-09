@@ -163,3 +163,65 @@ H-05 already cross-references B-10 (fire alarm integration) and…
 **Disposition notes:** - [x] HIGH → APPLIED 2026-04-03: DBL added to H-05 Applicable Groups. H-05 cross-ref updated with K-04 vibrotactile integration note (life-safety specification for DBL). K-04 cross-ref updated with H-05 reciprocal note.
 
 ---
+
+### CON-0137
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** mental-health-built-environment
+**Target item(s):** Part 7 NR-HLT (healthcare matrices)
+**Target population(s):** NDV/MH
+**Evidence tier:** Tier 1 (Weltens 2023)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** The MH BPC documents that exceeding bed capacity in psychiatric wards produces OR 5.36 for aggression (Weltens 2023, experience sampling method). This is a built-environment capacity specification: the number of beds per ward is a design parameter with a direct, large, quantified effect on safety outcomes. The OR is among the largest in the MH BPC evidence base — comparable to the absence of private space (van der Schaaf 2013).
+
+No Part 7 NR-HLT specification currently addresses maximum bed count per ward as an accessibility parameter. Ward capacity is treated as a programming decision, not a design specification. The evidence says otherwise: over-capacity is an environmental barrier with measurable harm.
+
+Additionally, the MH BPC identifies that ward-level environmental factors (capacity, private space, sensory modulation availability) govern coercive measure use MORE than patient-level factors or staffing. This inverts the typical clinical assumption that patient behaviour drives restraint use.
+
+**Evidence basis:** MH BPC: Weltens 2023 (ESM, OR 5.36 for aggression when capacity exceeded). van der Schaaf 2013 (n=23,868 — ward design variables > staffing variables for coercion). Husum 2010 (n=1,016 — ward-level variation in coercion not explained by patient characteristics).
+
+**Action required:** Part 7 NR-HLT: add maximum bed capacity specification for psychiatric wards as an environmental design parameter. Bed count is not merely a planning metric — it is a safety specification with OR 5.36 evidence. Cross-reference: private space per patient (van der Schaaf 2013), sensory modulation room (Faerden 2022 d=2.0). These three provisions (capacity limit, private space, sensory modulation) are the MH environmental intervention triad.
+
+**Disposition notes:** — Novel specification type: occupancy capacity as environmental design parameter. May face pushback from facility managers; evidence is strong.
+
+---
+
+---
+
+### CON-0139
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** methodology-evidence-hierarchy-mapping (Phase 1A), mental-health-built-environment
+**Target item(s):** Part 1 §1.5
+**Target population(s):** ALL
+**Evidence tier:** Tier 1
+**Filed:** 2026-04-09
+
+**Connection:** Phase 1A §7.4 states the ● / ○ system does not further stratify within ●. But the MH BPC contains Faerden 2022 (d=2.0), CAPABLE (RCT, hospitalisation halved), and Clemson Cochrane (38% fall reduction) — all ●, but the effect sizes differ by an order of magnitude. Part 1 should cite the d=2.0 as the upper anchor of ● evidence, demonstrating the range within the marker. This strengthens the methodology transparency commitment (Phase 1A §10.2) without changing the ● / ○ system.
+
+**Action required:** Part 1 §1.5.3: add "effect size exemplars" footnote — d=2.0 (MH user control), 38% fall reduction (grab bars), OR 9.50 (wheelchair turning space) as concrete illustrations of what ● encompasses.
+
+---
+
+---
+
+### CON-0147
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** intellectual-disability-built-environment-design, pain-ofs-built-environment-design
+**Target item(s):** Part 7 NR-EDU, NR-HLT
+**Target population(s):** IntD, OFS
+
+**Connection:** IntD BPC: "reception/assistance point within sight of entrance" (CSA B651 §4.7). OFS BPC: "rest seating within 25–30m." In a healthcare or education building serving both populations, the entrance sequence must provide BOTH: visible assistance AND immediate rest. These are complementary, not competing: a reception desk with adjacent seated waiting serves both requirements simultaneously. But no specification links them.
+
+**Action required:** Part 7 NR-HLT/NR-EDU entrance sequence: reception/assistance visible from entry (IntD) WITH adjacent seated waiting ≤3m from entrance (OFS/PAIN). Single spatial provision serves both. Low-cost coordination.
+
+---

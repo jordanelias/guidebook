@@ -12,7 +12,7 @@
 | Status | Count |
 |---|---|
 | CONSUMED | 80 |
-| PENDING | 42 |
+| PENDING | 76 |
 
 ## Index
 
@@ -164,3 +164,37 @@
 | CON-0178 | PENDING | Part 1, Part 4 items | frameworks-and-methodology | HIGH | true | — |
 | CON-0179 | PENDING | Part 1 | frameworks-and-methodology | HIGH | true | — |
 | CON-0180 | PENDING | Part 6, Part 4 MOB items, Part 1 | population-general | HIGH | true | — |
+| CON-0114 | PENDING | I-04, H-05, K-04 | health-and-symptom-management | HIGH | true | — |
+| CON-0115 | PENDING | D-09, D-02 | wayfinding-and-signage | HIGH | true | — |
+| CON-0116 | PENDING | E-01, D-02 | wayfinding-and-signage | HIGH | true | — |
+| CON-0117 | PENDING | I-03, D-05, A-16 | health-and-symptom-management | HIGH | true | — |
+| CON-0118 | PENDING | H-01, H-02 | controls-and-hardware | HIGH | true | — |
+| CON-0119 | PENDING | F-01, F-07, B-01, B-06 | communication-and-alerts | MODERATE | true | — |
+| CON-0120 | PENDING | G-03, G-04 | bathrooms-and-wet-areas | HIGH | true | — |
+| CON-0121 | PENDING | B-06, B-07 | sensory-environment | MODERATE | true | — |
+| CON-0122 | PENDING | A-02 (corridor width) | sensory-environment | HIGH | true | — |
+| CON-0123 | PENDING | D-02, D-06, D-08, C-04 | wayfinding-and-signage | HIGH | true | — |
+| CON-0124 | PENDING | G-03, G-04 | bathrooms-and-wet-areas | HIGH | true | — |
+| CON-0125 | PENDING | D-02, D-06, D-08 | wayfinding-and-signage | HIGH | true | — |
+| CON-0126 | PENDING | I-03 | health-and-symptom-management | MODERATE | true | — |
+| CON-0127 | PENDING | C-04 (wall colour), B-06 (lighting CCT) | sensory-environment | HIGH | true | — |
+| CON-0128 | PENDING | G-04, Part 6 residential bathroom matrices | bathrooms-and-wet-areas | HIGH | true | — |
+| CON-0129 | PENDING | G-08 (bedroom storage), kitchen items | bathrooms-and-wet-areas | MODERATE | true | — |
+| CON-0130 | PENDING | D-02 (wayfinding), Part 7 NR-HLT (healthcare matrices) | wayfinding-and-signage | HIGH | true | — |
+| CON-0131 | PENDING | A-16, CON-0002 | sensory-environment | HIGH | true | — |
+| CON-0132 | PENDING | BIO-01 through BIO-05, F-04 | communication-and-alerts | HIGH | true | — |
+| CON-0133 | PENDING | H-01, H-02, E-01 (door hardware) | entrances-and-circulation | HIGH | true | — |
+| CON-0134 | PENDING | H-02, Part 7 NR-HLT | controls-and-hardware | HIGH | true | — |
+| CON-0135 | PENDING | A-01, A-02, A-08, A-10 | sensory-environment | HIGH | true | — |
+| CON-0136 | PENDING | E-01, H-01 | entrances-and-circulation | HIGH | true | — |
+| CON-0137 | PENDING | Part 7 NR-HLT (healthcare matrices) | cross-cutting | HIGH | true | — |
+| CON-0138 | PENDING | A-01, A-02, A-08 | sensory-environment | MODERATE | true | — |
+| CON-0139 | PENDING | Part 1 §1.5 | cross-cutting | HIGH | true | — |
+| CON-0140 | PENDING | E-01 (door hardware), I-04 | health-and-symptom-management | MODERATE | true | — |
+| CON-0141 | PENDING | A-16, Part 7 NR-EDU | sensory-environment | HIGH | true | — |
+| CON-0142 | PENDING | F-07, F-04 | communication-and-alerts | HIGH | true | — |
+| CON-0143 | PENDING | Part 6 residential matrices, G-04 | bathrooms-and-wet-areas | MODERATE | true | — |
+| CON-0144 | PENDING | A-16 | sensory-environment | HIGH | true | — |
+| CON-0145 | PENDING | A-10, H-04 | sensory-environment | MODERATE | true | — |
+| CON-0146 | PENDING | B-06, B-07 (lighting) | sensory-environment | HIGH | true | — |
+| CON-0147 | PENDING | Part 7 NR-EDU, NR-HLT | cross-cutting | MODERATE | true | — |

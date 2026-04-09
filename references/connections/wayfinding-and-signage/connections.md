@@ -747,3 +747,142 @@ Part 12 Economics covers international grant programmes (UK DFG, AU NDIS, Nordic
 - [x] Reject GAP-FDR-T0-03 for Tier 0 status — DONE 2026-03-28 17:00
 
 ---
+
+### CON-0115
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** deafblind-built-environment-design, dementia-built-environment
+**Target item(s):** D-09, D-02
+**Target population(s):** DBL, DEM
+**Evidence tier:** Tier 2 (DbI guidelines) + Tier 3 (Marquardt 2011)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** DBL and DEM rely on identical environmental mechanism — spatial predictability — through different sensory channels. DBL navigates by tactile memory of fixed spatial relationships; any furniture rearrangement breaks the tactile map. DEM navigates by cognitive spatial mapping; any layout change breaks the memory trace. The specification (D-09: consistent furniture arrangement) already serves both, and CON-0053 extends D-09 to VIS/DBL/IntD. But the *convergence mechanism* between DBL and DEM is undocumented: both populations are catastrophically (not merely inconvenienced) affected by spatial change. This elevates D-09 from "helpful consistency" to "safety-critical spatial stability" for the DBL+DEM co-occurrence — which occurs in aged-care settings where DEM prevalence is high and DBL (acquired) is co-occurring.
+
+**Evidence basis:** deafblind BPC: tactile memory navigation relies on furniture permanence; unfamiliar changes are high-risk (DbI guidelines, Tier 2). dementia BPC: Marquardt 2011 identifies floor plan as the most influential environmental factor; Bowes et al. 2019 confirms spatial change as disorientation trigger.
+
+**Action required:** Strengthen D-09 with DBL+DEM co-occurrence note: in settings where both populations are present (aged care, residential care), spatial arrangement changes must follow a documented change protocol — advance notification through accessible channels (tactile map update for DBL, gradual phased change for DEM). Specification goes beyond "don't rearrange" to "manage change."
+
+**Disposition notes:** — Extends CON-0053. Aged-care-specific.
+
+---
+
+---
+
+### CON-0116
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** wayfinding-dementia-spatial-design, cognitive-wayfinding-design, visual-impairment-built-environment
+**Target item(s):** E-01, D-02
+**Target population(s):** DEM, VIS, IntD, NDV/AUT
+**Evidence tier:** Tier 3 (Marquardt 2011) + Tier 2 (DSDC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Doors are the primary decision points in wayfinding. E-01 specifies door hardware (handle type, clear width, closing force) but not door-as-wayfinding-element. D-02 specifies wayfinding systems (signage, TWSI, landmarks) but not door-level cues. The gap: a person navigating a corridor encounters doors as the most salient spatial feature, but no specification links the door to the wayfinding system. DEM users identify rooms by door colour/position (Marquardt 2011). VIS users identify doors by contrast and tactile cue. IntD users need pictogram + door-colour coding. NDV/AUT users need consistent door-colour-to-function mapping (e.g., all toilet doors same colour). Currently, door appearance is an interior design decision with no specification guidance.
+
+**Evidence basis:** wayfinding-dementia-spatial-design BPC: door colour and position are the most used wayfinding cues for DEM users; toilet door colour is the single strongest predictor of independent toileting (Marquardt 2011). cognitive-wayfinding-design BPC: decision-point identification reduces cognitive load.
+
+**Action required:** Add door-as-wayfinding-element specification: (a) consistent door colour coding by function (all bathroom doors = one colour; all exit doors = another); (b) LRV contrast between door and frame ≥30% (code minimum) / ≥50% (guidebook target per CON-0043); (c) tactile room-number plate at consistent height (1400mm AFF) on latch side. Cross-reference E-01 ↔ D-02.
+
+**Disposition notes:** — Bridges two item categories that share a spatial location but have no connection.
+
+---
+
+---
+
+### CON-0123
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** intellectual-disability-built-environment-design, dementia-built-environment
+**Target item(s):** D-02, D-06, D-08, C-04
+**Target population(s):** IntD, DEM
+**Evidence tier:** Tier 3-4 (IntD: AU NDIS SDA) + Tier 3-5 (DEM: Marquardt 2011, DSDC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** IntD and DEM wayfinding specifications converge more completely than any other population pair in the guidebook. CON-0001 identified the circulation geometry overlap (loop/linear, no dead-ends). The full convergence extends to the entire wayfinding system:
+
+| Parameter | IntD specification | DEM specification | Match |
+|---|---|---|---|
+| Circulation geometry | One-way legible, loop/radial, no dead-ends | Loop/linear, minimal directional changes | IDENTICAL |
+| Signage type | Pictogram + single-word | Pictographic + colour-coded | OVERLAPPING |
+| Colour coding | Colour-zone per functional area | Colour-coded toilet doors, landmarks | COMPLEMENTARY |
+| Ceiling differentiation | Zone-differentiated ceiling heights | Not specified (but 3D landmarks at decision points) | ADDITIVE |
+| Floor treatment | Tactile floor material differentiation per zone | Plain, no high-gloss, no dark mats | COMPATIBLE |
+| Landmark objects | Not specified | Distinctive 3D landmark at every decision point | ADDITIVE |
+
+The IntD "zone-differentiated ceiling heights" specification is unique — it does not appear in any other population's BPC. This should be evaluated for DEM applicability (spatial differentiation aids cognitive mapping). Conversely, DEM's "3D landmark objects at decision points" is absent from IntD but functionally relevant (reduces cognitive load at route choices).
+
+**Evidence basis:** IntD BPC: all findings AU (NDIS SDA) and CA (CSA B651) derived, Tier 4-5. DEM BPC: Marquardt 2011 (Tier 3), DSDC (Tier 5), 10+ jurisdictions. IntD evidence base is thinner but the convergence pattern suggests DEM evidence can be applied by analogy to IntD.
+
+**Action required:** (1) Cross-reference IntD and DEM as co-populations for ALL wayfinding items (D-02, D-06, D-08). (2) Evaluate IntD ceiling-height specification for DEM: does zone-differentiated ceiling height aid DEM spatial mapping? If yes, add to DEM wayfinding specification. (3) Add 3D landmark objects (DEM) to IntD wayfinding specification. (4) Note in Part 2: IntD and DEM wayfinding evidence bases are independent but convergent — provisions validated for DEM can be applied to IntD with MODERATE confidence.
+
+**Disposition notes:** — Strongest population-pair convergence in the evidence base. Implications for Part 3 co-occurrence framework: IntD+DEM in shared spaces (aged care with ID residents) requires no conflict resolution — provisions are additive.
+
+---
+
+---
+
+### CON-0125
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** neurological-built-environment, visual-impairment-built-environment
+**Target item(s):** D-02, D-06, D-08
+**Target population(s):** NEU, VIS
+**Evidence tier:** Tier 1 (NEU Opus synthesis) + Tier 4-6 (VIS: ISO 23599, BS 8300)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** NEU BPC Opus synthesis establishes bilateral redundancy as the Tier 1 provision for hemispatial neglect: environmental cues on BOTH sides of corridors, because unilateral neglect makes one side invisible. VIS BPC specifies signage at eye level on both sides of corridors for legibility from either approach direction. Both populations independently require bilateral environmental cues — NEU for neglect compensation, VIS for approach-direction legibility.
+
+This convergence is currently undocumented. The shared specification: all wayfinding cues, environmental landmarks, signage, contrast bands, and tactile indicators shall be bilateral (both corridor walls, both sides of doorways, both stair stringers). Unilateral placement is a specification error for both populations.
+
+Additionally, NEU Opus synthesis notes: "wayfinding provisions (D-02, D-04, D-08) should cross-reference NEU explicitly, not only DEM." This cross-reference has not been made.
+
+**Evidence basis:** NEU BPC Opus synthesis: bilateral redundancy is Tier 1 for unilateral neglect. VIS BPC: signage on both sides is standard practice (BS 8300, ISO 21542). The convergence is mechanistically different (NEU = compensating for perceptual deletion; VIS = compensating for approach uncertainty) but specificationally identical.
+
+**Action required:** (1) Add NEU as co-population for D-02, D-06, D-08. (2) Add "bilateral placement" as explicit specification requirement for all wayfinding cues — currently implicit in VIS practice but not codified. (3) Note: bilateral placement serves NEU (hemispatial neglect), VIS (approach-direction coverage), and DEM (reinforcement) — Tier 0 candidate.
+
+**Disposition notes:** — NEU is under-represented in wayfinding items despite NEU Opus synthesis explicitly flagging this gap.
+
+---
+
+---
+
+### CON-0130
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** dementia-built-environment, intellectual-disability-built-environment-design, ofs-built-environment
+**Target item(s):** D-02 (wayfinding), Part 7 NR-HLT (healthcare matrices)
+**Target population(s):** DEM, IntD, OFS
+**Evidence tier:** Tier 3 (Marquardt 2011) + Tier 4 (IntD: NDIS SDA) + Co-1 (OFS)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** DEM BPC specifies toilet visible from primary occupied space (CON-0018, Marquardt 2011 — reduces incontinence). IntD BPC specifies reception/assistance point within sight of entrance (CSA B651 §4.7). OFS BPC specifies rest seating within 25-30m of any point.
+
+All three specifications use the same spatial mechanism: **critical facility sightline** — a person in a primary occupation zone can visually locate the critical facility without navigation or search. DEM: toilet. IntD: assistance point. OFS: nearest rest provision.
+
+This should be generalised as a Tier 0 spatial planning principle: **critical facilities shall be visible from primary occupation zones.** Facilities qualifying as "critical": toilet/bathroom, reception/assistance, exit, rest provision, environmental refuge (A-16). The sightline requirement eliminates the search/navigation burden that DEM, IntD, NEU, and OFS populations all experience from different clinical causes.
+
+CON-0018 partially captures this for DEM+toilet. CON-0068 extends to NEU/NDV/OFS. This connection adds IntD reception sightline and generalises the principle beyond toilet to all critical facilities.
+
+**Evidence basis:** DEM BPC: Marquardt 2011 (toilet visibility strongest environmental factor). IntD BPC: CSA B651 §4.7 (reception within sight of entrance). OFS BPC: rest provision intervals. CON-0018: toilet sightline for DEM. CON-0068: toilet visibility for DEM/NEU/NDV/OFS.
+
+**Action required:** Elevate "critical facility sightline" to Tier 0 spatial planning principle in Part 3 §3.x or Part 1 §1.4: all primary occupation zones shall provide unobstructed sightline to at least one of: toilet door, reception/assistance, building exit, rest seating. In healthcare settings (Part 7 NR-HLT): nurse station visible from all patient positions.
+
+**Disposition notes:** — Generalises CON-0018/CON-0068 from toilet-specific to facility-class principle. Tier 0 candidate.
+
+---
