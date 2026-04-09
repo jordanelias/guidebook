@@ -6,13 +6,13 @@
 **Last migration:** 2026-04-08 (Phase 0B-1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
 **Total connections migrated:** 181
-**Next CON-ID:** CON-0157
+**Next CON-ID:** CON-0158
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 88 |
-| PENDING | 95 |
+| PENDING | 96 |
 
 ## Index
 
@@ -200,3 +200,4 @@
 | CON-0147 | PENDING | Part 7 NR-EDU, NR-HLT | cross-cutting | MODERATE | true | — |
 | CON-0155 | PENDING | H-01, H-02, Part 6 | kitchens-and-workspaces | HIGH | true | — |
 | CON-0156 | PENDING | E-03, C-04, E-09, B-04 | entrances-and-circulation | HIGH | true | — |
+| CON-0157 | PENDING | B-10, H-03, D-08, E-08 | cross-cutting | HIGH | true | --- |
