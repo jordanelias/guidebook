@@ -856,3 +856,56 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Disposition notes:** - [ ] HIGH → item-specification-writer briefing for all C-items + F-01 zone boundaries
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0153
+
+**Status:** PENDING
+**Target:** D-02, D-05, D-06
+**Connection:** [DESCRIPTION PENDING]
+
+### CON-0160
+*[formerly CON-0148]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** wayfinding-cognitive-science-spatial-design, detectable-gradient-protocol-sensory-zones
+**Target item(s):** D-02, Part 3 §3.x
+**Target population(s):** DEM, NEU/ABI, NDV/AUT, VIS
+**Evidence tier:** Tier 3 (O'Neill 1991, Sweller 1988)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Zone boundary signals (LRV change, RT60 change, luminance change) occurring at wayfinding decision points create maximum cognitive load — simultaneous navigation decision + sensory transition. Cognitive load theory (Sweller 1988) predicts this exceeds degraded executive function for DEM/NEU/ABI and triggers sensory overload for NDV/AUT at the moment requiring focused attention.
+
+**Evidence basis:** Sweller 1988 (extraneous cognitive load theory); O'Neill 1991 (spatial configuration outperforms signage); detectable-gradient-protocol BPC (multi-sensory zone transitions).
+
+**Action required:** Part 3 §3.x spatial planning principle: zone boundaries should be separated from wayfinding decision points where architecturally feasible. Where coincidence is unavoidable (e.g., departmental boundaries at corridor junctions), minimise the number of simultaneous sensory changes. ○ marker — no empirical study validates the separation rule.
+
+**Quality correction from original:** Changed "shall not coincide" (binary prohibition) to "should be separated where feasible" with graduated fallback. Original specification was architecturally unrealistic — many buildings necessarily place zone transitions at junctions.
+
+### CON-0161
+*[formerly CON-0149]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** stair-ramp-threshold-biomechanics-accessibility, luminance-contrast-lrv-evidence-base
+**Target item(s):** C-04, B-items (stair nosings)
+**Target population(s):** VIS, MOB, DEM
+**Evidence tier:** Tier 3 (Harper 2022 OR 2.87, Brown 2023, Thompson 2022, Templer 1992, Simoneau 1991)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Stair descent fall risk = 3× ascent (Simoneau 1991); 6mm riser irregularity = +18% misstep (Templer 1992). 30% LRV has no empirical basis (Manandhar 2022); ~65% Michelson needed for reliable boundary detection at moderate VI (Dain/Manandhar). Harper 2022 bridges both: combined contrast enhancement reduced fall events (OR 2.87, p=.023). The highest-risk feature (stairs) has the weakest contrast specification (general 30% LRV). Stair nosings should carry a separate, higher contrast specification.
+
+**Evidence basis:** Five independent sources converge. No source directly tests ≥65% Michelson on stair nosings specifically — the threshold is from general surface-boundary detection research applied to the highest-risk context.
+
+**Action required:** Stair-nosing-specific contrast: ≥65% Michelson (≥75% LRV difference), not general ≥50% LRV target. Width ≥50mm (NIHR/US Access Board convergence). Part 1 evidence exemplar.
+
+**Quality assessment:** Strongest specification-convergence connection in this batch. Five independent evidence streams. Actionable. No quality concerns.
+

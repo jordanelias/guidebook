@@ -336,3 +336,28 @@ This finding is siloed in `thermal-comfort-older-adults-care-settings` and not p
 ---
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0143
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** mobility-built-environment, dementia-built-environment
+**Target item(s):** Part 6 residential matrices, G-04
+**Target population(s):** MOB, DEM
+**Evidence tier:** Tier 3 (IDeA Center, Marquardt)
+
+**Connection:** MOB BPC: ADA 1524mm turning circle rejected; 1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs. DEM BPC: toilet visible from bedroom doorway; loop circulation; no dead-ends. In residential care where MOB+DEM co-occur (the most common co-occurrence in aged care), the turning circle and the toilet-sightline specifications interact: a 1800mm turning circle placed in a bathroom may block the toilet-sightline from the bedroom door if the door swing and turning space are not coordinated. The spatial layout must simultaneously satisfy: DEM sightline (visual axis from bedroom door to toilet), MOB turning (1800mm inscribed circle), and door swing (clear opening 900mm without intruding into turning space).
+
+**Action required:** Part 6 residential bathroom matrix for DEM+MOB: add spatial coordination note — toilet position, door swing, and turning circle must be simultaneously resolved. Provide a diagrammatic layout showing compliant configuration. This is a room-level conflict that cannot be resolved by individual item specifications alone.
+
+### CON-0151
+
+**Status:** PENDING
+**Target:** G-05, K-01
+**Connection:** [DESCRIPTION PENDING]
+

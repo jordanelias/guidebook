@@ -186,3 +186,46 @@ The seizure/photosensitivity conflict applies to all visual alerting, not …
 **Disposition notes:** - [ ] HIGH → item-specification-writer briefing for B-10 + all alerting items
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0132
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** air-quality-voc-chemical-sensitivity-built-environment, biophilic-design-healthcare-workplace
+**Target item(s):** BIO-01 through BIO-05, F-04
+**Target population(s):** OFS/MCAS, DEM, NDV/MH
+**Evidence tier:** Tier 4-5 (air quality BPC) + Tier 3 (biophilic BPC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Biophilic design provisions (BIO-series: indoor planting, nature views, natural materials) are therapeutic for DEM (reduced agitation — Al Khatib 2024 SR), NDV/MH (stress reduction — Ulrich), and NEU (ART/SRT restorative benefit). The air quality BPC specifies for OFS/MCAS spaces: "low-VOC, low-pollen species only; no strongly scented flowering plants." Additionally, F-06 (Fragrance-Free Policy) prohibits fragrance diffusers including any HVAC-integrated scent system.
+
+Conflict: biophilic planting that serves DEM/NDV/MH may trigger OFS/MCAS symptoms. Flowering plants, aromatic herbs (lavender, rosemary — commonly recommended in DEM garden design), and high-pollen species are documented MCAS triggers.
+
+Resolution: species-restricted planting list for shared OFS+DEM/NDV spaces. Permitted: foliage-only plants (ferns, pothos, snake plant), low-pollen succulents, sealed terrarium plantings. Prohibited: flowering plants, aromatic herbs, high-pollen grasses, plants with latex sap. Nature views through glazing (visual biophilia) serve all populations without air quality risk.
+
+**Evidence basis:** air-quality BPC: OFS/MCAS fragrance/VOC/pollen triggers. biophilic BPC (Al Khatib 2024 SR, 61 sources): nature exposure therapeutic for DEM/NDV. Project-standards: DEM olfactory wayfinding is NOT an evidence-based specification; fragrance-free is the universal built environment specification.
+
+**Action required:** Add species-restriction note to BIO-01/BIO-02 (indoor planting items): "Where OFS/MCAS populations co-occur, planting shall comply with F-04 air quality specification (low-VOC, low-pollen, no scented flowering species). Visual biophilia through glazing is the conflict-free alternative." Cross-reference BIO ↔ F-04.
+
+**Disposition notes:** — Resolves a real specification conflict. Species restriction is the architectural equivalent of harm-asymmetry: MCAS reaction (physiological) > therapeutic planting benefit (psychological).
+
+### CON-0142
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** thermoregulation-built-environment, air-quality-voc-chemical-sensitivity-built-environment
+**Target item(s):** F-07, F-04
+**Target population(s):** NEU/MS, OFS/MCAS
+**Evidence tier:** Project-standards rule (2026-04-07)
+
+**Connection:** Project-standards specifies 18–22°C working target for thermoregulation-impaired populations, with mechanical cooling as medically necessary in hot-humid tropical contexts. F-04 air quality specifies ≥15 L/s fresh air per person for OFS/MCAS spaces with no recirculated air without HEPA. In tropical contexts, these two specifications interact adversely: high fresh-air supply rates at 32°C+ ambient increase cooling load dramatically. The HVAC system must simultaneously cool to ≤22°C AND supply ≥15 L/s fresh air AND filter to MERV 13+ — this is an engineering coordination constraint that neither F-04 nor F-07 documents.
+
+**Action required:** Part 8 (Engineering): add HVAC coordination note for tropical jurisdictions — cooling, ventilation, and filtration constraints from F-04 + F-07 are simultaneously binding. Engineering brief must specify all three. Cross-reference CON-0101 (HVAC type constraint).
+

@@ -153,3 +153,22 @@ The practical implication: rest seating (I-03) should be placed AT TWSI attentio
 ---
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0140
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** upper-limb-impairment-built-environment, ofs-built-environment
+**Target item(s):** E-01 (door hardware), I-04
+**Target population(s):** MOB/UPL, OFS
+**Evidence tier:** Tier 3
+
+**Connection:** UPL BPC: "zero PubMed-indexed studies on one-handed kitchen/bathroom built-environment design." OFS BPC: all specifications extrapolated from clinical evidence, zero OFS-specific architectural standards in any jurisdiction. These two populations share a meta-characteristic: they are the most under-researched populations with the largest specification-to-evidence gaps. CON-0045 documents VIS/PAIN/OFS case study absence. UPL should be added to that finding — UPL has zero case studies AND zero primary design research.
+
+**Action required:** Extend CON-0045 to include UPL. Part 1 methodology: UPL and OFS share the distinction of having zero built-environment-specific primary research in any language. Flag as highest-priority commissioned research for v11.
+

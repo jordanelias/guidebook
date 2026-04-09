@@ -172,3 +172,25 @@ The EAA specifi…
 **Disposition notes:** - [ ] MODERATE → P2 gap item (EAA compliance note for H-series in EU jurisdictions)
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0180
+*[formerly CON-0170]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** residential-accessible-home-case-studies
+**Target item(s):** Part 6, Part 4 MOB items, Part 1
+**Target population(s):** MOB
+**Evidence tier:** Tier 1 (Malmgren Fänge 2019)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Malmgren Fänge 2019 OR 9.50 for wheelchair use at home with standardised OT protocol (SE/NO, Tier 1). Strongest single residential effect size in corpus. Should anchor all wheelchair-accessible home specifications.
+
+**Action required:** Part 6: cite as governing evidence. Part 4 MOB items: cross-reference. Part 1: reference as strongest residential effect size.
+

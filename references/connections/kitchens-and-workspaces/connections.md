@@ -133,3 +133,41 @@ Currently A-16 is NDV-only. MH "de-escalation room" described as distinct. Evide
 **Disposition notes:** - [x] HIGH → Part 3 §3.10 + Part 6 residential matrix
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches, 2026-04-09)
+
+### CON-0154
+
+**Status:** PENDING
+**Target:** G-07, H-01
+**Connection:** [DESCRIPTION PENDING]
+
+### CON-0155
+
+**Status:** PENDING
+**Target:** H-01, H-02, Part 6
+**Connection:** [DESCRIPTION PENDING]
+
+### CON-0162
+*[formerly CON-0150]*
+
+**Status:** PENDING
+**Confidence:** MODERATE *(downgraded from HIGH)*
+**Opus-reviewed:** true
+**Source BPC slug(s):** residential-kitchen-and-task-surfaces, accessible-laundry-room-design, ofs-built-environment
+**Target item(s):** Part 6 residential matrices, H-01
+**Target population(s):** OFS, PAIN, MOB
+**Evidence tier:** Co-2 (RCOT, AOTA) + Tier 4 (ADA S611)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Kitchen, laundry, bathroom, and bedroom BPCs each specify task surface heights independently with slightly different values. A unified cross-room task-surface specification (height 760–900mm adjustable, ≥400mm clear surface each side, knee clearance ≥685mm × ≥600mm) would eliminate per-room inconsistency.
+
+**Evidence basis:** RCOT (worktop 760mm seated), AOTA (storage 380–1370mm), ADA S611 (laundry 380–1220mm). DEM/IntD consistency benefit is inferred from spatial-consistency principles, not from any study documenting benefit of identical task surface HEIGHT across rooms.
+
+**Action required:** Cross-room task-surface coordination note in Part 4 preamble or Part 3. Frame as practitioner guidance, not mandatory specification. Consistency serves OFS/PAIN (single learned height) directly; DEM/IntD consistency benefit is ○ (inferred).
+
+**Quality correction from original:** Downgraded from HIGH to MODERATE. Original overclaimed DEM/IntD benefit — DEM BPC documents spatial LAYOUT consistency, not surface HEIGHT consistency across rooms. These are different parameters.
+
