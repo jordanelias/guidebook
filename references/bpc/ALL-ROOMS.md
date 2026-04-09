@@ -35,7 +35,7 @@
 **Highest-ambition actionable specification:** All shared/common laundry rooms to provide: front-loading appliances at ≤430 mm drum centre height or on adjustable platform; controls 380–1220 mm AFF; clear floor ≥760×1220 mm; counter/sink ≤864 mm with knee clearance; 1500 mm turning radius; main-floor location (no stairs). `[ADA S611; Tier 4–5; no Tier 1–3 evidence; March 2026]`
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Front-loading appliances at accessible height (drum centre ≤430 mm AFF) or on riser | EN | US (ADA S611), AU (NDIS SDA) | 4, 5 |
 | Clear floor space ≥760×1220 mm parallel to appliance | EN | US (ADA S611) | 4 |
@@ -95,7 +95,7 @@
 **Opus 4 synthesis note:** NONE
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | 1500mm turning circle | All 14 | 24/24 | 4–6 |
 | Zero-threshold shower mandatory or best practice | EN, DE, NO, SV, FR, NL, IT, PT, JA | 22/24 | 5–6 |
@@ -161,7 +161,7 @@ Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Seki
 **Opus 4 synthesis note:** NONE
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Underrideable worktop requirement | EN, DE, NL, BE, FR, ZH | 10/24 | 5–6 |
 | ø1500mm kitchen turning circle | EN, DE, NL, BE, ZH | 8/24 | 5–6 |
@@ -445,7 +445,7 @@ Same as residential-entry-and-threshold — see above.
 - Single-word + pictogram signage at all junctions; suspended signs ≥2250mm AFF; sans-serif typeface
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Loop circulation / no dead ends reduces DEM spatial disorientation | EN, DE, NL, FR, NO, SV, KO, JA, ZH | UK, DE, NL, NO, SG, AU, CA, US, KR, JP | Tier 3 (van Buuren & Mohammadi 2022; Marquardt 2011) + Co-1 (DSDC EADDAT 2022) |
 | Toilet visibility from primary seating reduces distress and incontinence incidents | EN, DE, NL, FR | UK, DE, NL, US | Tier 3 (Marquardt 2011; Davis & Weisbeck 2016) |
@@ -554,7 +554,7 @@ Same as residential-entry-and-threshold — see above.
 **Most inclusive provision:** Automatic sliding doors on all primary routes; EN 81-70 Type 2 minimum lift (1100×1400mm) with best practice 1100×1800mm; 1800mm corridor width on primary routes; rest seating at 25–30m intervals with tilt/recline option.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | EN 81-70 Type 2 (1100×1400mm) is the international lift car minimum — wheelchair user + assistant | EN, DE, SV, FI, NO, FR, NL, ES, PT, IT | UK, DE, SE, FI, NO, FR, NL, BE, CH, DK, ES, PT, IT, AU, SG, CA, US (proxy ADA) | Tier 6 (EN 81-70:2021+A1:2022; adopted across all jurisdictions) |
 | 1500mm clear turning space at lift landing | EN, DE, SV, FI | UK, DE, SE, FI, AU | Tier 6 (BS 8300; BFS 2024:12; Finnish F1; AS 1428.1) |
