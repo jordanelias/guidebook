@@ -1795,11 +1795,11 @@ not depleted in access, grounds the maximum 20 m interval as the design specific
 **Applicable Groups:** MOB, UPL, OFS · PAIN
 <!-- D2-41: D2-41: zero door force eliminates push/pull effort — OFS PEM prevention -->
 
-**Description:** Automatic sliding or swing doors (not heavy manually-operated) on all primary accessible routes. Maximum opening force: 22 N (ISO 21542:2021). Door hold-open time: adjustable 5--15 seconds from accessible control.
+**Description:** Automatic sliding or swing doors (not heavy manually-operated) on all primary accessible routes. Maximum opening force: 20 N (AU AS 1428.1:2021; NO TEK17 — best practice; ISO 21542 specifies 22 N but AU/NO Tier 5 governs as more inclusive). Door hold-open time: adjustable 5--15 seconds from accessible control.
 
 **Specifications:**
 Automatic operation on all primary route doors
-Maximum opening force: 22 N (manual operation if automatic not installed)
+Maximum opening force: 20 N (manual operation if automatic not installed)
 Hold-open time: adjustable 5--15 seconds (temporal accessibility)
 Slow-open profile: 0--100% over 2--3 seconds (not <1 second — Part 8 §8.4.8)
 Presence detection: both sides of door
@@ -2642,7 +2642,7 @@ Category K items address environments specifically for UPL users. All
 
 UPL provisions apply throughout the building where UPL users are anticipated; they are not confined to specialist rooms.
 
-### I-01 Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)
+### I-01 Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤20 N)
 
 **Applicable Groups:** UPL, MOB, DEM, PAIN
 
@@ -2672,7 +2672,7 @@ hardware replacement across all door and window ironmongery — a low-cost trade
 
 **Cross-reference:** H-01 (Controls Height); G-03 (Grab Bars — UPL bilateral); I-02 (Kitchen); I-03 (Bathroom)
 
-**Evidence basis (OT):** Biomechanical FOR. Lever door hardware, ≤22 N force, and return-tip specification are derived directly from the
+**Evidence basis (OT):** Biomechanical FOR. Lever door hardware, ≤20 N force, and return-tip specification are derived directly from the
 
 Biomechanical FOR: the lever handle converts the grip-rotation motion required by a round knob into a push-down motion achievable with a
 
