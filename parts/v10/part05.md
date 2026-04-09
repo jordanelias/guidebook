@@ -150,5 +150,52 @@ The conflict resolution table in §5.2 operates at design stage: conflicts must 
 
 ---
 
+
+
+### §5.5 Process Specification — The Environment Is Necessary But Not Sufficient
+
+#### §5.5.1 The Evidence Finding
+
+Two Tier 1 findings converge on the most consequential scope question for this guidebook. Douglas et al. (2024, BMJ Open) studied tenants of purpose-built Specialist Disability Accommodation in Australia and found that support quality — the competence and consistency of the people delivering care — was a greater determinant of quality of life than the built environment itself. Ainsworth et al. (2022, Disability and Rehabilitation, PMID 36394257) found that housing adaptation outcomes were co-produced by the environment and the OT process quality: therapists who understood the client's experience of home as their starting point achieved better outcomes than therapists who began with the physical assessment alone.
+
+The implication is structural. A perfectly specified building with poor support produces worse outcomes than a modestly specified building with excellent support. The guidebook's specifications — Parts 4 through 8 — address one half of the equation. This section addresses the other half: the process framework that determines whether built environment provisions translate into lived outcomes.
+
+#### §5.5.2 The CAPABLE Model — Validated Multicomponent Framework
+
+The strongest evidence for a residential process framework comes from the CAPABLE programme (Community Aging in Place, Advancing Better Living for Elders). The definitive RCT (Szanton et al. 2019, JAMA Internal Medicine, PMID 30615024, n=300) demonstrated a 30% reduction in ADL disability (RR 0.70, 95% CI 0.54–0.93, p=0.01) using a three-component model: occupational therapist assessment, registered nurse clinical intervention, and handyperson environmental modification. Six replications across 12 US sites (Szanton et al. 2021, n=1,087) confirmed effect sizes of 0.41–1.47 across all sites.
+
+The CAPABLE model establishes that residential accessibility outcomes require three concurrent inputs, not one. The built environment modification (this guidebook's domain) is the handyperson component. Without the OT assessment directing the modification and the clinical intervention addressing the person's functional trajectory, the modification alone produces smaller and less durable effects.
+
+For residential projects, the process specification is:
+
+1. **OT assessment precedes specification.** The OT assessment determines which guidebook provisions apply to the individual. Part 9 §9.2 defines the OT scope. The assessment must precede the architectural brief for Tier 2 residential work. For Tier 0–1 provisions, the assessment confirms the baseline is correct; for Tier 2 provisions, it resolves the individual's position within specification ranges.
+
+2. **Assessment uses validated instruments.** Malmgren Fänge et al. (2019, PMID 31684916) demonstrated that standardised OT housing assessment produces measurable functional outcomes — OR 9.50 for wheelchair mobility improvement. Unstandardised assessment produces unquantifiable outcomes. The Housing Enabler (Iwarsson & Slaug 2001) and CAPABLE assessment protocol are the validated instruments with the strongest evidence base.
+
+3. **Transition planning is co-primary with design.** Carey et al. (2025, PMID 41175339) documented that families and carers of people with neurological conditions require structured transition support when moving to purpose-built accessible housing. The transition itself — not the destination — is a critical risk period. Design teams must coordinate with support providers on transition timing, orientation programmes, and carer training before occupancy.
+
+4. **Ongoing support quality must be specified.** The ILMI (2021, Ireland) and Douglas et al. (2024) evidence establishes that post-occupancy support frameworks are not ancillary to housing outcomes — they are co-determinant. For supported housing, the design brief must name the support model alongside the built environment specification. Part 9 §9.2 provides the OT coordination protocol.
+
+#### §5.5.3 Relationship to Room Matrices (Parts 6 and 7)
+
+The room matrices in Parts 6 and 7 specify environmental provisions. This section specifies the process provisions that govern whether those environmental provisions produce outcomes. The two are co-primary. A residential project that specifies Part 6 room matrices without the process framework described here has addressed the building but not the living. A project that specifies the process framework without the room matrices has addressed the support but not the environment. Both are required.
+
+#### §5.5.4 Evidence Base
+
+| Source | Tier | Key Finding |
+|---|---|---|
+| Szanton et al. 2019 (JAMA Intern Med, PMID 30615024) | 1 RCT | 30% ADL disability reduction with OT+nurse+handyperson model (n=300) |
+| Szanton et al. 2021 (J Am Geriatr Soc, PMID 34314516) | 1 multi-site | Effect sizes 0.41–1.47 across 6 replications (n=1,087) |
+| Douglas et al. 2024 (BMJ Open) | 1 qualitative | Support quality > built environment for QoL in SDA housing |
+| Ainsworth et al. 2022 (Disabil Rehabil, PMID 36394257) | 1 qualitative | Outcomes co-produced by environment + OT process quality |
+| Malmgren Fänge et al. 2019 (PMID 31684916) | 1 quasi-experimental | Standardised OT assessment: OR 9.50 wheelchair mobility |
+| Carey et al. 2025 (PMID 41175339) | Co-1 | Family/carer transition support essential for neurological conditions |
+| Sheffield et al. 2013 (PMID 23213082) | 1 RCT | 39% personal care hour reduction with OT home modification |
+| ILMI 2021 | Co-1 | Support alongside housing — advocacy evidence from Ireland |
+
+*Cross-reference: Part 9 §9.2 (OT scope); Part 9 §9.10 (OT threshold); Part 11 §11.3.5 (economic evaluation of CAPABLE model); CS-22 (CAPABLE case study in compendium).*
+
+---
+
 *End of Part 5. Cross-references: Part 3 §3.4 (Co-occurrence guidance by pair); Part 4 §3.11 (Population-specific worked examples); Part 7 (Non-residential population matrices); Part 9 §9.6 (DeafBlind specialist consultant).*
 
