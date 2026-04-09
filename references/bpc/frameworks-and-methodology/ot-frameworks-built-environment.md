@@ -24,7 +24,7 @@
 **Opus synthesis note:** ICF supersedes EHP as primary OT framework. Competence-Press Model is NOT superseded by ICF — it is extended and operationalised by it. CRPD General Comment No. 2 (2014) provides the normative basis.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | All four OT frameworks position built environment as primary enabler/barrier | EN, JA | Cross-jurisdictional | 1–4 |
 | PEOP is most internationally validated (109 articles) | EN | Cross-jurisdictional (Siu et al. 2024) | 1 |
