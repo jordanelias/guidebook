@@ -73,7 +73,7 @@
 **Opus synthesis note:** Matrix is reference data. 8 jurisdictions not yet searched. DIN 18040 revision and BBR July 2025 are pending updates.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | ISO 21542:2021 is current international accessibility standard | All | International | 4 |
 | Mandatory residential accessibility exists in AU, NO, IN, SE | EN, NO, SE | Australia, Norway, India, Sweden | 5 |
