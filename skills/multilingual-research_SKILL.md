@@ -287,6 +287,8 @@ For each jurisdiction, retrieve the primary beyond-code framework if one exists.
 
 **Step 3 — Academic and specialist databases**
 
+> **No database priority implies evidence priority.** Sources found in EN-indexed databases (PubMed, OTseeker) and non-EN databases (J-STAGE, CNKI, RISS, REHADAT, BDTD, OpenEdition) carry identical tier authority. The database list below reflects indexing language coverage, not evidence weight. A Tier 1 study in J-STAGE governs over a Tier 3 study in PubMed.
+
 | Database | Languages | Priority |
 
 |---|---|---|
