@@ -138,7 +138,7 @@ Resolution: colour-zone wayfinding for DEM uses door colour and floor colour ban
 
 ### CON-0131
 
-**Status:** PENDING
+**Status:** CONSUMED
 **Confidence:** HIGH
 **Opus-reviewed:** true
 **Source BPC slug(s):** mental-health-built-environment (Opus synthesis 2026-03-30)
