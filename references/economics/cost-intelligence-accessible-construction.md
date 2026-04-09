@@ -326,3 +326,43 @@ Source: Schroeder & Steinfeld (1979). Both comparisons in same study using same 
 | **2023 ScienceDirect peer-reviewed study (~1.8% premium)** | E-1 | DOI not yet retrieved — cited by Rodighiero 2025 |
 | **Steven Winter Associates (1993) residential accessibility study** | E-1 | Cited by World Bank 2005; 8 residential projects |
 | **Purple Pound / VisitEngland disability spending data** | E-2 | UK disability spending power for §11.3.3 |
+
+
+---
+
+## SECTION G: Post-Completion Review Notes (2026-04-09 18:40)
+
+### Confidence Assessment
+
+| Section | Confidence | Reason |
+|---|---|---|
+| A: New-Build Premium | **HIGH** | Multiple E-1/E-2 sources, cross-jurisdiction, consistent finding (<1–3%) |
+| B: Retrofit Unit Costs | **MEDIUM** | Corroborated E-7 data; needs E-3 QS verification |
+| C: Non-US Jurisdictions | **LOW-MEDIUM** | Framework data strong; unit cost coverage thin |
+| E: §11.4 Categories 3–8 | **LOW** | Many "general estimate" items lack citable sources |
+| F: Value & ROI | **MEDIUM** | Qualitative direction clear; quantitative ROI evidence thin |
+
+### Items Requiring [UNSOURCED] Disclosure
+
+The following items in Section E were tagged "general estimate" without a retrievable source. Per PI Rule 5, these are disclosed as gaps:
+
+- Acoustic panel cost ($5–$25/sq ft)
+- Acoustic ceiling tile upgrade ($1–$5/sq ft incremental)
+- Counter hearing loop ($500–$1,500)
+- All TGSI unit prices (studs, tiles)
+- Luminance contrast strip ($3–$15/LF)
+- Braille/tactile signage ($30–$200/sign)
+- LED lighting upgrade ($50–$300/fixture)
+- All wayfinding items
+- All smart/AT items except where retail prices are publicly listed
+
+These should be treated as order-of-magnitude placeholders only. Replace with sourced data before any §11.4 draft text.
+
+### Process Remediation Plan
+
+1. **Slug definition:** `accessible-construction-economics` → CHECK → LOG after next research pass
+2. **Citation-verifier:** Run on all E-1/E-2 sources (Schroeder & Steinfeld, World Bank, Ratzka, NDIS, GOV.UK, ADA National Network, CMHC, Harvard JCHS, CDC)
+3. **2023 ScienceDirect study:** One more search attempt; if DOI not found → CLOSED-DELETED
+4. **E-3 source acquisition:** Means ADA Compliance Pricing Guide, Spon's, Rawlinson's — flag for purchase/library access
+5. **§11.4.6 and §11.4.8:** Thermal comfort and site/outdoor cost data — next research session
+6. **Part 4 cross-referencing:** Requires loading item code registry — next session
