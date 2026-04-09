@@ -549,7 +549,7 @@ Same as residential-entry-and-threshold — see above.
 **Automatic doors:**
 - Sliding automatic doors eliminate operating force barrier entirely — best practice for primary entrances (BS 8300; DIN 18040-1; ADA; TEK17; DIN/EN all recommend).
 - Powered doors with ≥6-second open dwell on primary accessible routes.
-- Operating force where manual: ≤22N (BS 8300); ≤30N preferred (OT Tier 1 evidence per MOB BPC Steinfeld et al. 2016); ≤38N maximum (CMHC; ADA guidance).
+- Operating force where manual: ≤20N (AU AS 1428.1; NO TEK17 — best practice); ≤30N preferred (OT Tier 1 evidence per MOB BPC Steinfeld et al. 2016); ≤38N maximum (CMHC; ADA guidance).
 
 **Most inclusive provision:** Automatic sliding doors on all primary routes; EN 81-70 Type 2 minimum lift (1100×1400mm) with best practice 1100×1800mm; 1800mm corridor width on primary routes; rest seating at 25–30m intervals with tilt/recline option.
 
