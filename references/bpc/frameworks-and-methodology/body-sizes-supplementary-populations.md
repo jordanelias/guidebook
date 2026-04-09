@@ -38,7 +38,7 @@
 **Opus synthesis note:** All specifications are first-principles derivations from anthropometric data. No dedicated standards exist in any jurisdiction. THIN-BASE disclosure required on all items.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | All four supplementary populations absent from all international accessibility standards | EN, DE, NO | All 24 jurisdictions | — |
 | Achondroplasia adult height 122–134 cm | EN | International (Hoover-Fong 2021, n=1,374) | 3 |
