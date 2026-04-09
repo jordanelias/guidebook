@@ -1618,7 +1618,9 @@ Dry-only internal circulation: PTV ≥36 dry.
 
 **Specifications:**
 
-PTV ≥36 wet: external approaches, entry vestibules, bathrooms, kitchens, ramps
+PTV ≥36 wet: external approaches, entry vestibules, bathrooms, kitchens, ramps (temperate climates)
+
+PTV ≥40 wet: all wet surfaces in high-rainfall, tropical, or monsoon climates; all bathroom and shower surfaces regardless of climate (JIS T 9251; Tier 4 — governs over HSE Tier 5 ≥36 value)
 
 PTV ≥36 dry: all internal circulation
 
@@ -2311,11 +2313,11 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 **Applicable Groups:** MOB, DEM, PAIN, UPL · OFS · NEU
 <!-- CON-0003: CON-0003: insulated bar coatings mandatory where PAIN is primary (cold metal triggers allodynia); DEM/NEU co-population rationale added -->
 
-**Description:** Toilet: bilateral horizontal bars at 800--900 mm AFF on both sides of WC centre line; angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
+**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surface per OT assessment — KR/JA Tier 1 biomechanical evidence governs lower bound); angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
 
 **Specifications:**
 
-Toilet: bilateral horizontal bars at 800--900 mm AFF both sides
+Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surface, resolved by OT assessment)
 
 Angled bar at cistern wall
 
@@ -2646,7 +2648,7 @@ UPL provisions apply throughout the building where UPL users are anticipated; th
 
 **Description:** All hardware one-hand operable without grip, pinch, or twist. Lever door handles on all doors; D-ring or bar pulls on all
 
-drawers and cabinet doors; single-lever taps throughout; push-pad access controls. Force: ≤22 N throughout.
+drawers and cabinet doors; single-lever taps throughout; push-pad access controls. Force: ≤20 N throughout (AU AS 1428.1:2021; NO TEK17 — Tier 5 best practice; empirically conservative per Brandt et al. 2016).
 
 **Specifications:**
 
@@ -2656,7 +2658,7 @@ Cabinet pulls: D-ring or bar pulls (hook-grip compatible for prosthetic users)
 
 Taps: single-lever mixer throughout (not separate hot/cold knobs)
 
-Force: ≤22 N for all hardware
+Force: ≤20 N for all hardware
 
 Push-pads: ≥50 mm diameter at all access control points
 
