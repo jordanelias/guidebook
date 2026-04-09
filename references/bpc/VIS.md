@@ -75,7 +75,7 @@
 **Highest-ambition actionable specification:** Continuous ISO 23599:2019 TWSI (ribbed directional + domed attention) on all primary routes. ≥4 mm raised profile. Minimum ≥70% LRV contrast to adjacent surface. Audio beaconing at building entries. Luminance contrast ≥30 LRV points at all level changes and critical junctions. Consistent ≥300 lux circulation lighting without glare. Braille and tactile text on all fixed signage at 1400–1600 mm AFF. Contrasting door frames and hardware at all circulation entries.
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | TWSI (tactile walking surface indicators) mandatory on primary routes | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | 4–6 (ISO 23599 + all jurisdictions) |
 | Directional (ribbed) + attention (domed) TWSI types required | EN, ZH, JA, KO, PT | 4–6 |
