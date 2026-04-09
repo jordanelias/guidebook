@@ -29,7 +29,7 @@
 **CRITICAL FLAG:** Item A-09 in the guidebook cites a 0.1 m/s RMS threshold. This value does NOT correspond to any located ISO 2631-1 value. ISO 2631-1 action/limit values are weighted accelerations (m/s²) over 8h, not simple RMS velocity. The source of this threshold is unverified. A-09 must carry: `[UNVERIFIED — source of 0.1 m/s RMS threshold required before publication]`.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Wheelchair users in community settings exposed to WBV at/above ISO 2631-1 health caution zone | EN | Cross-jurisdictional (Garcia-Mendez 2013) | 3 |
 | Floor type is the single largest determinant of WBV transmitted to cervical spine of manual wheelchair users | EN | Cross-jurisdictional (Larivière 2024) | 3 |
