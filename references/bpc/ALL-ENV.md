@@ -34,7 +34,7 @@
 **Highest-ambition actionable specification:** All healthcare and workplace buildings to provide: direct nature views or high-quality nature representations from primary occupancy areas; indoor vegetation or structured natural complexity per space type; daylight with CCT matched to time-of-day and space function; biophilic outdoor transitional zones for decompression. No mandatory standard in any jurisdiction — specify via WELL v2 or LEED credit pathway where applicable.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Biophilic design reduces hospitalisation time, mortality, pain, and provider stress in healthcare settings | EN | Cross-jurisdictional (Al Khatib et al. 2024, 61-source systematic review) | 3 |
 | Nature exposure in workplace shows statistically significant positive restorative outcomes across 16 studies | EN | Cross-jurisdictional (Gonçalves et al. 2023, Tier 3) | 3 |
@@ -182,7 +182,7 @@ No room acoustic standard in any jurisdiction addresses these populations acoust
 
 ### Consensus findings by parameter
 
-| Finding | Languages confirming | Jurisdictions | Tier |
+| Finding | Languages with evidence | Jurisdictions | Tier |
 |---|---|---|---|
 | General classroom RT60 ≤ 0.6 s (volumes ≤ 283–566 m³) | EN DE IT DA NO SV FR ZH JA | US UK DE IT DA NO SE FR CN JP AU | Tier 6 (statutory in most); Tier 4–5 in some |
 | DEAF/hearing device users: RT60 ≤ 0.3 s in ≤ 283 m³ | EN (primary); IT (via UNI 11532-2 A3.1/A4) | US IT | Tier 1 (Iglehart 2020) + Tier 6 (ANSI/ASA) |
