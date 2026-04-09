@@ -36,7 +36,7 @@
 **Opus synthesis note:** Synthesis is conflict-resolution focused. No single-population best practice applies — the synthesis IS the conflict resolution protocol.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Uhthoff's phenomenon affects 60–80% of MS patients; ambient heat worsens neurological symptoms | EN, DE, FR, JA | Cross-jurisdictional (MSIF Atlas 2023) | 3 |
 | Standard PMV/PPD model unreliable for disability populations | EN, NL | ISO 7730 acknowledged limitation | 4 |
