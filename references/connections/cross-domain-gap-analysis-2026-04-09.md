@@ -1,182 +1,224 @@
-# Cross-Domain Evidence Connection Analysis
+# Cross-Domain Evidence Connection Analysis — Corrected
 **Date:** 2026-04-09
 **Model:** Sonnet 4.6 (reduced-confidence — Opus validation required per project-standards §opus_synthesis)
-**Method:** Disciplinary domain mapping against 76 BPC files, 34 FDR files, 155 connections, 7 Opus scan batches
-**Purpose:** Identify disciplinary perspectives not yet systematically cross-referenced in the evidence base
+**Method:** Verified against 76 BPC files (read, not inferred from names), 34 FDR files, 155 connections (7 Opus scan batches read in full), Parts 5 and 8, per-topic connection files
+**Replaces:** Initial version committed same date (contained false positives, fabricated specifics, and gaps already covered by existing BPCs/connections)
 
 ---
 
-## 1. Domain Coverage Matrix
+## 0. Self-Correction Log
 
-### Domains with GOOD coverage (systematic BPC + Opus scan complete)
+The initial version of this analysis contained the following errors, each caused by inferring coverage from file names rather than reading the evidence:
 
-| Domain | BPC files | Opus batch | Key gaps already identified |
-|---|---|---|---|
-| OT practice / home modification | 3 (ot-built-environment-interface, ot-frameworks, ot-cpg) | Batch 6 | OT thermal gap (GAP-LRP-01) |
-| Clinical rehabilitation / neurology | 7 (thermoregulation, MS-thermal, pain, OFS, fatigue, chronic-pain, thermal-comfort) | Batches 2, 4 | FMS vs MS/SCI thermal conflict resolved |
-| Acoustics / speech intelligibility | 4 (acoustics-SI, room-acoustic, deaf-acoustic, deaf-classroom-RT) | Batch 3 | STI vs NRC criterion established |
-| Lighting / circadian | 2 (therapeutic-lighting, circadian-melanopic) | Batch 3 | Circadian ↔ seizure conflict noted |
-| Wayfinding / cognitive science | 4 (cognitive-wayfinding, wayfinding-cognitive-science, dementia-spatial, detectable-gradient) | Batch 5 | Decision-point + zone-boundary overload (CON-0148) |
-| Sensory processing / NDV | 4 (sensory-relief, sensory-room-control, sensory-processing-model, NDV-quantified) | Batches 2, 5 | PAS 6463 cultural transfer problem |
-| Biomechanics / anthropometrics | 4 (stair-ramp, grab-bar, circulation-geometry, reach-range) | Batch 5 | — |
-| Building codes / jurisdiction | 2 (jurisdiction-matrix, EAA-scope) + 24-jurisdiction tracker | Batch 7 | Implementation gap vs specification gap |
-| Economics / cost | 3 (economics-cost, case-study-financial, grant-programmes) | Batch 7 | Policy misallocation (CON-0162) |
-| Disability rights / CRPD | 1 (crpd-implementation) + Phase 1-E research | Batch 6 | Treaty body = mandate, not specification |
-| Global South / non-Western | 3 (co1-housing, bathroom-typology-GS, wayfinding-GS, sensory-space-GS) | Phase 1-E | Formal/informal city divide meta-barrier |
-| Mental health / TID | 1 (mental-health-built-environment) | Batch 3 | MH room ≠ A-16 (CON-0131) |
-| Ecological psychology / haptics | 1 (ecological-psychology-haptic-affordances) | Batch 5 | Haptic navigation THIN (mechanism scan) |
-| Environmental controls / hardware | 1 (reach-range-and-accessible-controls) | Batch 3 | — |
-
-### Domains with PARTIAL coverage (some BPC content, no dedicated cross-domain scan)
-
-| Domain | What exists | What's missing |
+| Claimed gap | Actual status | Error type |
 |---|---|---|
-| Air quality / chemical sensitivity | 1 BPC (air-quality-voc) | No cross-reference to ventilation ↔ acoustic isolation conflict; no connection to OFS/MCAS ↔ sealed building performance |
-| Biophilic design | 1 BPC (biophilic-design-healthcare) | Appendix B only — no systematic cross-ref to DEM outdoor access, MH nature exposure, or PAIN distraction evidence |
-| Floor vibration | 1 BPC (floor-vibration-wheelchair) | Only wheelchair perspective — not crossed with NEU (seizure trigger?), PAIN (vibration sensitivity), VIS (disorientation) |
-| Post-occupancy evaluation | 1 BPC (STUB) | Phase 1-E identified as gap; no cross-domain scan of POE methods against population-specific outcomes |
-| Interior materiality | LRV contrast BPCs only | No full material specification domain (slip resistance, thermal conductivity of surfaces, acoustic absorption of finishes) |
-| Aging-in-place | DAR provisions register + visitability BPC | No cross-domain scan against gerontechnology, smart home, or progressive adaptation literature |
+| FS-04 strobe ↔ seizure | **COVERED** — visual-fire-alarm-seizure-safety BPC: 0.5–1 Hz, synchronisation, multi-channel resolution | False positive — BPC exists and was not read |
+| Zone coordination | **COVERED** — CON-0119 (Opus mechanism scan): lighting + thermal + acoustic zone alignment | Rediscovery of existing finding |
+| Rest provision scaling | **COVERED** — CON-0117 (Opus mechanism scan): I-03 → D-05 → A-16 scaling hierarchy | Rediscovery of existing finding |
+| VE vulnerability | **COVERED** — CON-0166 (Opus Batch 7): integrated specification clusters | Rediscovery of existing finding |
+| DAR maintenance | **PARTIALLY COVERED** — CON-0160: nail plates, conduit labels, O&M notation | Partial rediscovery |
+| Post-occupancy regression | **COVERED** — design-failures BPC Failure Mode 5 | False positive — BPC read only after initial analysis |
+| FM-01 TWSI "3–5 year degradation" | Number fabricated — no source | Invented specificity |
+| IP-04 copper alloy tactile | No evidence basis for the claim | Speculation presented as finding |
 
-### Domains with ZERO coverage (no BPC, no scan, no connections)
+**Lesson:** 6 of 10 claimed "zero-coverage" gaps were already covered. The method (directory-name scanning without reading content) produced a document that looked authoritative but was substantially wrong.
 
-| Domain | Relevance to guidebook | Estimated connection yield | Priority |
+---
+
+## 1. What the Evidence Base Already Covers (verified)
+
+Before identifying gaps, here is the verified coverage map from reading Opus batches 1–7, the mechanism scan, and key BPCs:
+
+**Environmental mechanisms with GOOD coverage (≥3 connections + BPC):**
+Spatial predictability, sensory modulation, thermal regulation, multi-channel alerting, visual contrast/legibility, fear/stress reduction, energy conservation, postural support
+
+**Mechanisms with THIN coverage (identified by Opus, connections written but not yet consumed):**
+Haptic navigation (CON-0120 DBL grab bar as spatial landmark), emergency communication during transfer (CON-0114 hoist scenario), door as wayfinding element (CON-0116), rest provision scaling (CON-0117), zoning coordination (CON-0119)
+
+**Cross-domain domains already scanned by Opus:**
+OT practice, clinical rehabilitation, acoustics, lighting/circadian, wayfinding/cognitive science, sensory processing, biomechanics, building codes (24 jurisdictions), economics, disability rights/CRPD, Global South, mental health, ecological psychology
+
+---
+
+## 2. Confirmed Gaps — Verified Against Evidence Base
+
+Each gap below has been checked against all BPC files, all 155 connections, Part 5, Part 8, and per-topic connection files. Status: NOT FOUND in any existing source.
+
+### GAP-A: Fire Safety Engineering as Coordination Discipline
+
+**What exists:** Part 8 lists four engineering disciplines: AC, EE, ME, SE. Fire alarm (B-10) appears under EE. Refuge enclosure appears under SE §8.5. E-12 (evacuation lift) references "per fire engineer's strategy."
+
+**What's missing:** Fire safety engineering is NOT a briefed discipline. It appears only as a passive reference — the fire engineer's strategy is assumed to exist but the architect's brief to the fire engineer for accessibility provisions is absent. Every other discipline has a structured brief template (§9.1.2–9.1.5). Fire safety has none.
+
+**Specific accessibility provisions requiring fire engineer coordination:**
+- Refuge area size, location, and communication provisions (not just structural enclosure)
+- Visual alarm placement and synchronisation strategy (currently EE, but fire-safety-strategy-dependent)
+- Evacuation route wayfinding under degraded conditions
+- Fire door hold-open device strategy and locations
+
+**Confidence:** HIGH — verified structural absence in Part 8.
+**Action:** Add FE (Fire Safety Engineer) as fifth discipline in Part 8 §9.0.3 and create §9.1.6 Fire Safety Engineering Items table.
+
+---
+
+### GAP-B: Fire Door ↔ Spatial Continuity Conflict
+
+**What exists:** Part 5 §5.1 states fire evacuation provisions take safety-critical priority. Visual-fire-alarm-seizure BPC covers strobe ↔ seizure. No BPC, connection, or Part 5 entry addresses fire door separation vs spatial continuity.
+
+**What's missing:** Fire doors held closed (fire code requirement) break spatial continuity for DEM users (Marquardt 2011: floor plan is the most influential environmental factor for orientation) and sightlines for DEAF users (DeafSpace: visual connectivity for signing and environmental awareness). Electromagnetic hold-open devices (release on alarm) resolve this — but are a fire engineering specification, not an accessibility specification. No item code, BPC, or connection addresses this conflict.
+
+**Related evidence already in system:** CON-0116 (door as wayfinding element) addresses door appearance/colour but not fire separation function. DEM BPC documents spatial continuity as orientation mechanism. DEAF BPC (deaf-spatial-design) documents sightline requirements.
+
+**Confidence:** HIGH — the two population needs (DEM spatial continuity, DEAF sightline) and the fire code requirement (closed doors) are all documented separately. The conflict is the gap.
+**Action:** New connection + new E-series item for electromagnetic hold-open devices on circulation route fire doors. Cross-reference Part 5. Route to GAP-A fire engineering brief.
+
+---
+
+### GAP-C: Refuge Area Accessibility (Distinct from Environmental Refuge)
+
+**What exists:** Part 8 SE §8.5 specifies refuge enclosure structure. E-12 specifies evacuation lift. CON-0019 specifies environmental refuge (sensory low-stimulation space) — this is a different concept entirely.
+
+**What's missing:** Fire evacuation refuge areas (stairwell refuges for people who cannot use stairs) have no accessibility specification beyond structural enclosure. No specification addresses:
+- Seating in refuge (OFS/PAIN/MOB users cannot stand for extended waits — common evacuation waiting time: 20–45 minutes in high-rise)
+- Communication from refuge (CON-0114 identified the emergency communication gap for hoist use; the same gap applies to refuge areas — a DEAF user in a refuge cannot communicate via intercom; a DBL user cannot use either audio or visual communication)
+- Wayfinding TO refuge (D-series items do not address refuge wayfinding signage under degraded conditions)
+
+**Confidence:** HIGH — verified against Part 8, E-12, CON-0019, CON-0114.
+**Action:** New item specification for accessible refuge areas. Cross-reference I-03 (seating), CON-0114 (emergency communication), D-series (wayfinding).
+
+---
+
+### GAP-D: Emergency Wayfinding Under Degraded Conditions
+
+**What exists:** D-series items (D-02 wayfinding, D-05 spatial design, D-06 TWSI, D-08 signage, D-09 consistency) all assume normal operating conditions — full lighting, clear air, functioning power.
+
+**What's missing:** Under fire conditions (smoke, emergency lighting only, power failure), most wayfinding mechanisms fail:
+- LRV contrast (C-04): invisible in smoke
+- TWSI (D-06): functional (floor-level, tactile) — the only mechanism that survives
+- Colour-coded signage (D-08): invisible in smoke/emergency lighting
+- Cognitive wayfinding (DEM): spatial memory and landmarks degraded by disorientation/panic
+- Digital wayfinding (if installed): power-dependent
+
+Photoluminescent path markings (ISO 16069) and low-level wayfinding lighting (emergency lighting standards) are fire-safety specifications that directly serve VIS and DEM populations under degraded conditions but are not referenced in any D-series item or BPC.
+
+**Confidence:** MODERATE — the degraded-condition gap is logical and the relevant standards exist, but no BPC has investigated whether photoluminescent markings serve the accessibility populations specifically.
+**Action:** Research query required before connection can be written. Check: do photoluminescent path markings benefit VIS users specifically? Does any accessibility standard reference ISO 16069?
+
+---
+
+### GAP-E: Infection Prevention / Touchless Interfaces ↔ Accessibility
+
+**What exists:** Zero coverage. No BPC. No connection. Not mentioned in Part 8. Not mentioned in any per-topic connection file.
+
+**What's missing:** Post-COVID touchless installations (sensor-activated doors, infrared taps, touchless flush, hand sanitiser stations) create specific accessibility conflicts:
+
+1. **Sensor-activated doors ↔ VIS/DBL:** The tactile door-finding cue (sweeping hand to find handle) is eliminated. VIS users may not detect that a door exists until it auto-opens unexpectedly, or may not trigger the sensor if approaching from the wrong angle. DBL users lose both the tactile and visual detection mechanism.
+
+2. **Infrared taps ↔ DEM/IntD:** No visible mechanism. Cognitively opaque — nothing to turn, push, or pull. DEM and IntD users in care settings (where touchless was most aggressively installed) cannot independently operate facilities designed for infection control.
+
+3. **Hand sanitiser station placement ↔ VIS/MOB:** Wall-mounted dispensers protruding into path of travel are collision hazards for VIS users. Pump mechanisms may be inoperable for MOB/UPL users.
+
+**Confidence:** HIGH for items 1 and 2 (the mechanism is straightforward and the populations' needs are documented in existing BPCs). MODERATE for item 3 (specific hazard geometry needs verification).
+**Action:** New BPC: touchless-interface-accessibility. Research: which jurisdictions mandate touchless installations in care/institutional settings? Any DPO/Co-1 evidence on touchless barriers?
+
+---
+
+### GAP-F: BMS ↔ Individual Environmental Control Governance Hierarchy
+
+**What exists:** Part 8 mentions BMS under EE for lighting (B-01, B-06). H-02 specifies individual environmental control. CON-0017 (CONSUMED) links H-02, A-16, and B-01.
+
+**What's missing:** When BMS automation and H-02 individual control conflict, which governs? Part 8 does not specify the hierarchy. If a BMS schedules building-wide temperature at 24°C at 14:00 (typical energy-saving setpoint), and an OFS/MCAS user has H-02 zone control set to 20°C, does the BMS override H-02? For NEU/MS users, a BMS override above 22°C can trigger Uhthoff's phenomenon (neurological deterioration). For NDV users, a BMS override of personal lighting settings removes the sensory regulation mechanism.
+
+**Confidence:** MODERATE — the conflict mechanism is clear from existing BPCs (thermoregulation, NDV sensory), but no evidence base documents BMS override as an accessibility barrier specifically. This may be a specification gap (resolvable by stating H-02 overrides BMS) or an evidence gap (needing research).
+**Action:** Specify in Part 8 EE section: H-02 individual environmental control takes precedence over BMS automation for any space with identified Tier 1/2 population users. BMS provides the default; H-02 provides the override. No BMS schedule may prevent H-02 from reaching the population-specified range.
+
+---
+
+### GAP-G: Accessibility Feature Durability and Maintenance Specification
+
+**What exists:** CON-0160 addresses DAR operational protection (nail plates, conduit labelling). Failure taxonomy Mode 5 (post-occupancy regression) documents the problem category. Part 8 I-03 TMV entry specifies "annual service in FM brief."
+
+**What's missing:** Two specific durability gaps not addressed by CON-0160 or any BPC:
+
+1. **TWSI material durability:** TWSI effectiveness depends on maintained height differential and contrast. High-traffic installations degrade. No specification addresses: minimum material hardness for TWSI in high-traffic areas, replacement trigger criteria (measurable height differential threshold), or inspection frequency. The TMV entry in Part 8 provides a model — "annual service in FM brief" — that could be extended to TWSI.
+
+2. **Automatic door failure mode:** E-01 specifies door hardware including power-operated doors. No specification addresses failure-mode behaviour. Should a failed automatic door fail-open (fire risk, security risk, but maintains access) or fail-closed (maintains fire compartment, but creates a barrier for MOB/UPL who cannot manually open a heavy door)? The failure mode is a fire safety + accessibility intersection — another dimension of GAP-A.
+
+**Confidence:** MODERATE — the degradation mechanism is real but no evidence base quantifies it. These are specification logic gaps, not evidence gaps.
+**Action:** Add maintenance specification notes to TWSI (D-06) and automatic door (E-01) items. Cross-reference Part 8 FM brief requirements.
+
+---
+
+### GAP-H: Acoustic Privacy (Distinct from Speech Intelligibility)
+
+**What exists:** Four acoustics BPCs (acoustics-speech-intelligibility, room-acoustic-performance, deaf-acoustic, deaf-classroom-RT). All focus on making speech audible and intelligible — STI, RT60, NC. CON-0119 addresses zone coordination including acoustic targets.
+
+**What's missing:** Acoustic privacy — preventing speech from being heard outside a space — is the inverse specification. Relevant to:
+- NDV/MH therapy rooms: conversation privacy is clinically essential (therapeutic alliance depends on confidentiality)
+- DEAF relay/interpreter spaces: interpreter conversations are often louder than typical speech; acoustic containment prevents disclosure
+- MH de-escalation rooms (CON-0131): crisis de-escalation may involve raised voices; acoustic isolation protects dignity
+
+STC (Sound Transmission Class) for partition walls between these spaces is an acoustic specification distinct from STI within a space. No BPC addresses this. Part 8 AC items specify RT60 and STI but not STC for privacy-critical spaces.
+
+**Confidence:** MODERATE — the need is clinically obvious for MH/NDV-MH contexts, but no BPC has investigated whether any accessibility standard specifies STC for these spaces.
+**Action:** Research query: do any DPO guidelines, MH facility design standards, or OT CPGs specify acoustic privacy requirements for therapy/de-escalation rooms?
+
+---
+
+## 3. Summary: Genuine vs False Gaps
+
+| Gap | Status | First analysis claim | Corrected status |
 |---|---|---|---|
-| **Fire safety / emergency egress** | Refuge areas, evacuation for MOB/VIS/DEM/DEAF; visual alarms (partial via K-04/B-10); wayfinding under smoke; door hold-open ↔ fire separation | HIGH (10–15 connections) | **P1 — safety-critical** |
-| **Infection prevention / touchless design** | Post-COVID touchless interfaces ↔ VIS (no tactile feedback), DEM (unfamiliar tech), DBL (no visual confirmation), MOB/UPL (gesture requires dexterity) | HIGH (8–12 connections) | **P1 — conflicts with existing specs** |
-| **Smart building / IoT / assistive technology** | Building automation ↔ individual control (H-02); indoor positioning ↔ wayfinding (D-series); voice control ↔ DEAF; app-based control ↔ DEM/IntD | MODERATE (6–10 connections) | P2 |
-| **Facilities management / maintenance** | Degradation of accessibility features (TWSI worn smooth, automatic doors failing, grab bars loosening, contrast fading); maintenance access vs accessible layout | MODERATE (5–8 connections) | P2 |
-| **Construction practice / tolerances** | How specs fail during construction — tolerance stack-up (1200mm clear opening → 1180mm after frame); value engineering removing "non-code" features; sequencing errors (grab bar backing not installed before tiling) | MODERATE (5–8 connections) | P2 |
-| **Pediatric disability** | Different anthropometrics, developmental needs, school/education settings; not just scaled-down adult specs | MODERATE (4–6 connections) | P3 |
-| **Landscape / outdoor transition** | Path of travel to building entry; garden/outdoor space accessibility; transition zone design (indoor→outdoor sensory shift for NDV); outdoor rest provision | MODERATE (4–6 connections) | P3 |
-| **Acoustic privacy** | Distinct from speech intelligibility — privacy in MH settings (anti-eavesdropping), NDV/MH need for conversation privacy, DEAF relay/interpreter privacy | LOW-MODERATE (3–5 connections) | P3 |
-| **Water / plumbing interaction** | Anti-scald (DEM, NEU — reduced sensation), accessible tap/valve operation, drainage in level-access bathrooms, water temperature ↔ thermal sensitivity | LOW (2–4 connections) | P3 |
-| **Disaster resilience** | Accessible emergency shelter, post-disaster temporary housing, climate adaptation ↔ disability | LOW (2–3 connections) | P3 |
+| Fire engineering discipline | **CONFIRMED** | Partially correct | Refined: structural absence in Part 8 |
+| Fire door conflict | **CONFIRMED** | Correct | Unchanged |
+| Refuge area accessibility | **CONFIRMED** | Correct | Distinguished from environmental refuge |
+| Emergency wayfinding | **CONFIRMED** | Correct | Needs research before connection |
+| Touchless interfaces | **CONFIRMED** | Correct but included fabricated IP-04 | IP-04 removed |
+| BMS ↔ H-02 | **CONFIRMED** | Correct | Refined to governance hierarchy |
+| TWSI durability | **CONFIRMED** | Correct principle, fabricated numbers removed | Numbers removed |
+| Automatic door failure mode | **CONFIRMED** | Correct | Unchanged |
+| Acoustic privacy | **CONFIRMED** | Correct | Unchanged |
+| Strobe ↔ seizure (FS-04) | **FALSE** | Claimed as gap | Already in visual-fire-alarm-seizure BPC |
+| Zone coordination | **FALSE** | Claimed as gap | Already CON-0119 |
+| Rest provision scaling | **FALSE** | Claimed as gap | Already CON-0117 |
+| VE vulnerability | **FALSE** | Claimed as gap | Already CON-0166 |
+| Copper alloy tactile (IP-04) | **FALSE** | Speculative | No evidence basis |
+| TWSI "3–5 year" figure | **FALSE** | Fabricated | No source |
+
+**Confirmed genuine gaps: 9. False positives in first analysis: 6.**
 
 ---
 
-## 2. Cross-Domain Connection Candidates (ZERO-coverage domains)
+## 4. Priority and Sequencing
 
-### 2.1 Fire Safety / Emergency Egress — Candidate Connections
+### P1 — Safety-critical or actively creating barriers now
 
-**FS-01: Refuge area ↔ rest provision (I-03)**
-OFS/PAIN/MOB users who cannot use stairs need refuge areas. These are specified by fire codes but never cross-referenced to I-03 (rest seating) or accessibility specs. A refuge area without seating is inaccessible to OFS users who cannot stand for extended evacuation waits. Refuge area design is fire engineer territory — no population-specific specification exists.
+| Gap | Rationale | Estimated work |
+|---|---|---|
+| GAP-A: Fire engineering discipline | Structural gap in Part 8 — every other discipline briefed | 1 session: add FE discipline + §9.1.6 table |
+| GAP-B: Fire door conflict | Undocumented conflict between fire code and DEM/DEAF needs | 1 connection + possible new E-series item |
+| GAP-C: Refuge area accessibility | Safety-critical gap in evacuation provision | 1 connection + cross-references to I-03, CON-0114 |
+| GAP-E: Touchless interfaces | Post-COVID installations are creating barriers in care settings now | New BPC required (research session) |
 
-**FS-02: Emergency wayfinding ↔ D-series items under degraded conditions**
-VIS wayfinding relies on LRV contrast and TWSI. Under smoke: LRV contrast destroyed; TWSI still functions. DEM wayfinding relies on spatial memory and visual landmarks. Under smoke: both destroyed. DEAF wayfinding relies on visual alerts. Under strobe + smoke: reduced effectiveness. No D-series item addresses degraded-condition wayfinding. Low-level photoluminescent path markings (ISO 16069) are a fire-safety spec that benefits VIS/DEM under smoke but is not cross-referenced.
+### P2 — Important specification logic gaps
 
-**FS-03: Fire door hold-open devices ↔ DEM wandering / DEAF sightline**
-Fire doors are normally closed (fire code) OR held open by electromagnetic devices that release on alarm. DEM users are confused by closed fire doors (barrier to spatial continuity — Marquardt 2011). DEAF users lose sightline through closed fire doors (DeafSpace). The fire-safety vs accessibility conflict is a known issue (UK AD M vs AD B) but not documented in our conflict matrices.
-
-**FS-04: Alarm system interaction ↔ NEU seizure / NDV sensory overload**
-Visual fire alarms (strobe, B-10 / K-04) are DEAF-essential but are photosensitive seizure triggers for NEU (3–30 Hz range). CON-0042 and CON-0104 address multi-channel alerting but do not address the strobe-seizure conflict. Additionally, multi-modal alarms (auditory + visual + tactile simultaneously) may trigger NDV sensory overload at the moment requiring clearest cognition.
-
-**FS-05: Evacuation chair / hoist ↔ MOB/SCI dignity + safety**
-Evacuation chairs require a trained operator. For high-SCI users, transfer from wheelchair to evacuation chair is itself a risk. No specification addresses whether the hoist (I-04) can be used for emergency evacuation, or how emergency communication (CON-0114 gap) operates during evacuation.
-
-### 2.2 Infection Prevention / Touchless Design — Candidate Connections
-
-**IP-01: Touchless door activation ↔ VIS/DBL wayfinding**
-Touchless doors (sensor-activated) eliminate the tactile door-finding cue that VIS and DBL users rely on. A VIS user sweeping a hand along a wall to find a door handle encounters nothing if the door auto-opens. The design solution (retain tactile indicator + touchless option) is straightforward but unspecified.
-
-**IP-02: Touchless taps/flush ↔ DEM/IntD comprehension**
-Infrared-sensor taps are cognitively opaque — no visible mechanism. DEM and IntD users may not understand how to activate them (no lever to turn, no button to press). The pandemic accelerated touchless installation in care settings serving precisely these populations. Dual-mode (sensor + manual lever) is the resolution.
-
-**IP-03: Hand sanitiser stations ↔ VIS/MOB/OFS**
-Wall-mounted hand sanitiser dispensers are a trip/collision hazard for VIS users if they protrude into the path of travel. For MOB/UPL users, pump mechanisms may be inoperable. For OFS/MCAS, alcohol-based sanitiser can trigger chemical sensitivity reactions. No item addresses sanitiser station placement or specification.
-
-**IP-04: Antimicrobial surfaces ↔ NDV/AUT tactile sensitivity**
-Antimicrobial coatings and copper-alloy surfaces change the tactile and thermal properties of grab bars, handrails, and door hardware. NDV/AUT users with tactile hypersensitivity may find copper alloy unacceptable (different thermal conductivity, texture). No specification addresses material selection for infection control ↔ sensory acceptability conflict.
-
-### 2.3 Smart Building / IoT — Candidate Connections
-
-**SB-01: Building automation defaults ↔ individual control (H-02)**
-BMS (Building Management Systems) set default lighting, temperature, ventilation. H-02 specifies individual environmental control. The interaction: who governs — the BMS or the individual control? For NDV: BMS override of personal lighting settings removes the regulation mechanism. For OFS: BMS temperature override can trigger symptom cascade. No specification addresses BMS ↔ H-02 hierarchy.
-
-**SB-02: Indoor positioning / Bluetooth beacons ↔ D-series wayfinding**
-Digital wayfinding (smartphone-based) is rapidly supplementing physical signage. For VIS: audio wayfinding via phone is often more effective than TWSI alone. For DEM: phone-based wayfinding is inaccessible (cannot operate device). The physical wayfinding system must remain complete and independent — digital is supplementary, not substitutive. This principle is implicit but unspecified.
-
-**SB-03: Voice control ↔ DEAF/DBL/speech impairment**
-Smart home voice interfaces (lighting, temperature, doors) are inaccessible to DEAF, DBL, and users with speech impairment (NEU/ABI dysarthria). Every voice-controlled system needs an equivalent non-voice control path. This is an existing accessibility principle but not applied to building automation.
-
-### 2.4 Facilities Management / Maintenance — Candidate Connections
-
-**FM-01: TWSI degradation**
-TWSI (Tactile Walking Surface Indicators) effectiveness depends on maintained height differential (5mm) and contrast. In high-traffic areas, TWSI wear flat within 3–5 years. No specification addresses material durability or replacement cycle. The specification becomes inaccessible through maintenance failure, not design failure.
-
-**FM-02: Automatic door maintenance**
-Automatic doors (E-01) are the most failure-prone accessibility feature. A failed automatic door becomes a barrier (heavy, no manual override for MOB/UPL). No specification addresses maintenance protocol, failure-mode behaviour (should a failed door fail-open or fail-closed?), or interim access during repair.
-
-**FM-03: Contrast maintenance**
-LRV contrast (C-04) degrades through cleaning chemical damage, UV fading, and surface wear. A 30-point LRV contrast specified at installation may be 15-point after 5 years. No specification addresses minimum maintained contrast or maintenance inspection protocol.
+| Gap | Rationale | Estimated work |
+|---|---|---|
+| GAP-D: Emergency wayfinding | Needs research before writing connection | 1 research query (ISO 16069 + accessibility) |
+| GAP-F: BMS ↔ H-02 | Resolvable by specification statement in Part 8 EE | 1 Part 8 addition |
+| GAP-G: Feature durability | Specification logic, not evidence gap | Add maintenance notes to D-06, E-01 |
+| GAP-H: Acoustic privacy | Needs research before writing connection | 1 research query (STC for MH/therapy spaces) |
 
 ---
 
-## 3. Existing Mechanism Gaps (from Opus Batch 4) — Cross-Domain Lens
+## 5. Meta-Observations (evidence-derived, not speculative)
 
-The Opus mechanism scan identified 5 gap mechanisms. Applying cross-domain lenses reveals additional depth:
+1. **The evidence base is strong on person-environment fit and weak on building-as-system.** The Opus mechanism scan's five gap mechanisms (haptic navigation, emergency communication during transfer, door as wayfinding element, rest scaling, zone coordination) all involve inter-system relationships, not single-item specifications. The confirmed gaps in this analysis (fire engineering, BMS governance, failure modes) follow the same pattern. The guidebook specifies items well; it specifies system interactions less well.
 
-### Zoning coordination (ZERO coverage)
-Lighting zones (B-01, B-06), thermal zones (F-07), acoustic zones (F-01), and sensory zones (detectable-gradient-protocol) are specified independently. In fire safety: zone boundaries often align with fire compartments. In HVAC engineering: zone boundaries are duct-routing decisions. In lighting design: zone boundaries are circuit-routing decisions. **The cross-domain insight: zone boundaries should align across all systems where possible, reducing the cognitive load of multiple simultaneous environmental transitions.** This is a building physics + sensory science + fire safety intersection with no current BPC.
+2. **Fire safety is the largest genuinely unscanned domain.** It intersects accessibility at four distinct points (GAPs A, B, C, D) and is the only engineering discipline serving every building that has no Part 8 brief template.
 
-### Rest provision scaling (PARTIAL)
-I-03 specifies rest seating. The fire safety domain adds: rest provision along evacuation routes (not just circulation routes). The gerontology domain adds: progressive fatigue means rest interval distance should decrease with building height/complexity. The OFS domain adds: horizontal rest (lying down) required, not just seated. **Multiple domains converge on a rest-scaling specification that is more granular than I-03 currently provides.**
+3. **Touchless is the only confirmed gap actively creating new barriers.** All other gaps describe pre-existing specification holes. Touchless interfaces are being installed in care settings now, creating barriers for DEM, VIS, DBL, and IntD populations that did not exist before COVID.
 
----
+4. **The analysis method matters more than the analysis scope.** My first attempt covered more domains (12 vs 8) but produced 6 false positives because it inferred from file names instead of reading content. The corrected version covers fewer domains but each gap is verified.
 
-## 4. Recommended Actions
-
-### Immediate (Opus session)
-
-1. **Fire safety cross-domain scan (P1)** — FS-01 through FS-05 are safety-critical. Load UK AD B, AS 1428.1 fire provisions, ISO 21542 §Emergency, and NFPA 72 (visual alarm) against existing BPC corpus. Estimate: 10–15 new connections, 2–3 new items. **This is the highest-yield gap.**
-
-2. **Validate this analysis (Opus)** — This document carries reduced-confidence. Opus review needed before any connections are written to the register.
-
-### Short-term (next 2–3 sessions)
-
-3. **Infection prevention / touchless scan (P1)** — IP-01 through IP-04 conflict with existing specifications. Post-COVID installations are creating accessibility barriers in care settings now.
-
-4. **Zoning coordination BPC** — Synthesise lighting, thermal, acoustic, sensory zone specifications into a single zone-coordination methodology entry for Part 3 §3.8 or Part 8.
-
-### Medium-term
-
-5. **Smart building / IoT scan** — SB-01 through SB-03 as the built environment increasingly automates.
-
-6. **Facilities management / maintenance BPC** — FM-01 through FM-03 address the operational dimension that no design guide covers.
-
-7. **Acoustic privacy BPC** — Distinct from speech intelligibility; specific to MH, NDV/MH, DEAF relay contexts.
-
-### Deferred
-
-8. Pediatric disability — P3; requires separate anthropometric and developmental evidence base.
-9. Landscape/outdoor — P3; partially addressed by biophilic BPC but outdoor accessibility is its own domain.
-10. Disaster resilience — P3; out of specification scope (formal new construction) per project-standards but worth flagging in Part 1 §1.9.
-
----
-
-## 5. Coverage Heatmap: Domain × Population
-
-Blank cells = no cross-domain connection identified in current evidence base.
-
-| Domain ↓ / Population → | MOB | VIS | DEAF | NEU | DEM | NDV | MH | PAIN | DBL | OFS | IntD |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| Fire safety | FS-05 | FS-02 | FS-03 | FS-04 | FS-02,03 | FS-04 | — | — | — | FS-01 | — |
-| Infection prev. | IP-03 | IP-01 | — | — | IP-02 | IP-04 | — | — | IP-01 | IP-03 | IP-02 |
-| Smart building | — | SB-02 | SB-03 | SB-03 | SB-02 | SB-01 | — | — | SB-03 | SB-01 | — |
-| Maintenance | FM-02 | FM-01,03 | — | — | FM-03 | — | — | — | FM-01 | — | — |
-| Acoustic privacy | — | — | ✓ (relay) | — | — | ✓ | ✓ | — | — | — | — |
-| Zone coordination | — | ✓ | — | ✓ | ✓ | ✓ | — | ✓ | — | ✓ | — |
-
----
-
-## 6. Meta-Observation
-
-The existing evidence base is strong on **person-environment fit** (how individual populations interact with specific building elements) and on **inter-population conflict** (how different populations' needs clash). The systematic gaps cluster in three meta-categories:
-
-1. **Building operations** — what happens after handover (maintenance, FM, degradation)
-2. **System interactions** — where building systems intersect (fire + accessibility, HVAC + acoustics, BMS + individual control)
-3. **Technology transition** — where new technology changes the accessibility equation (touchless, IoT, digital wayfinding)
-
-These are all domains where the evidence sits outside disability-specific literature — in fire engineering journals, FM research, building science, and HCI. The existing multilingual-research protocol searches disability + built environment literature. A supplementary protocol for adjacent-field literature is needed.
-
-**[REDUCED-CONFIDENCE: Sonnet analysis. Opus validation required before writing connections to register.]**
+**[REDUCED-CONFIDENCE: Sonnet analysis. Connections should not be written to register until Opus validates GAP-B, GAP-C, GAP-D, and GAP-H, which involve cross-population synthesis judgment.]**
