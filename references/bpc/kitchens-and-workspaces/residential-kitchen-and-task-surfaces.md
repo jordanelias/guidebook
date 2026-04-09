@@ -20,7 +20,7 @@
 **Opus synthesis note:** NL WMO-keuken is the most systematised residential kitchen accessibility approach globally. CN GB 50763 is the sole national standard specifying residential kitchen knee clearance dimensions. Height-adjustable worktop (electric, 18–30 cm range) is the only universal resolution for standing/seated/LPA conflicts — correctly identified. 6/24 jurisdictions NOT-RUN; evidence base is European-dominated. PROVISIONAL status retained.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Underrideable worktop requirement | EN, DE, NL, BE, FR, ZH | 10/24 | 5–6 |
 | ø1500mm kitchen turning circle | EN, DE, NL, BE, ZH | 8/24 | 5–6 |
