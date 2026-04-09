@@ -748,14 +748,14 @@ Per-entry fields:
 | id | CS-25 |
 | name | UK Disabled Facilities Grant (DFG) / Better Care Fund Home Adaptations Programme |
 | location | England, Wales, Northern Ireland, UK |
-| year | 1996 (statutory origin); current budget £573M (2023/24) |
+| year | 1996 (statutory origin); current budget £761M (2025/26, inc. £50M in-year uplift Jan 2026); £723M confirmed for 2026/27 (new allocations formula) |
 | populations_served | MOB · DEM · VIS · ALL (any disabled person in own home; OT-assessed) |
 | design_intent | Statutory residential adaptation grant; OT-assessed; £30,000 maximum; mandatory if eligible |
 | building_type | Residential (existing homes; all adaptation types: ramps, wet rooms, stair lifts, grab bars, widened doorways, kitchen adaptations) |
 | outcome_data | Independent DFG Review (2018, UK DHSC): "robust research beginning to show adaptations improve physical and mental wellbeing and reduce fear of falling." BRE cost-benefit modelling: adaptations produce savings through delayed residential care. Age UK (2023): walk-in shower installation documented "went way beyond ability to wash easily — gave autonomy and confidence with wider implications for participation." 53% of UK households needing adaptations do not have all they need (English Housing Survey 2019-20). [Tier 5 — government programme review; Tier 2 for individual outcome studies cited within] |
 | conflict_documented | NO (single-occupant adaptations; no cross-population conflict documented) |
 | failure_notes | Long waiting times documented nationally; 2018 review found 53% increase in unmet need. Administration described as "clunky" by Parliamentary committee. Means test creates access barriers. Private tenants systematically disadvantaged. |
-| construction_cost | £1–£30,000 per adaptation (max grant £30,000 England, £36,000 Wales); £573M national budget 2023/24 [VERIFIED — statutory] |
+| construction_cost | £1–£30,000 per adaptation (max grant £30,000 England, £36,000 Wales); £761M national budget 2025/26 (inc. £50M in-year uplift); £723M confirmed 2026/27 [VERIFIED — statutory] |
 | accessible_design_premium | Not applicable (existing housing modification) |
 | funding_sources | Better Care Fund (pooled NHS England + local authority); central government |
 | operational_cost_change | DFG avoids/delays residential care: £39,520/year residential care cost vs £13,200/year home care avoided [PROVISIONAL — BRE modelling cited in review] |
@@ -763,7 +763,7 @@ Per-entry fields:
 | roi_data | Home adaptations produce "strong improvements" across cost-benefit metrics (Foundations, 2015). DFG produces savings even evaluating only subset of benefit types. [PROVISIONAL — modelled] |
 | financial_evidence_tier | Tier 6 (statutory programme); Tier 2 for modelled economics |
 | financial_data_quality | VERIFIED (statutory budget figures) / PROVISIONAL (cost-benefit models) |
-| evidence_contribution | Largest residential adaptation programme in scope. £573M/year, £30,000 max grant, OT-assessed. UK comparator for BC HAFI (CS-14, Canada). Provides DFG cost benchmarks for Part 12. Documents programme-level failure/waiting time evidence for §8.5 or Part 13 methodology note. |
+| evidence_contribution | Largest residential adaptation programme in scope. £761M/year (2025-26), £30,000 max grant, OT-assessed. New allocations formula from 2026-27 reflects local need (income-deprived disabled working-age adults + 65+ + disabled children, adjusted for local building costs). UK comparator for BC HAFI (CS-14, Canada). Provides DFG cost benchmarks for Part 12. Documents programme-level failure/waiting time evidence for §8.5 or Part 13 methodology note. |
 | part13_status | CANDIDATE |
 | sources | DHSC (2018). Independent DFG Review. Foundations / DFG Evidence library. Age UK (2023). DFG Step Change report. House of Commons Library (2024, SN03011). UK DFG Guidance (2022). |
 
