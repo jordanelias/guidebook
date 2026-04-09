@@ -36,7 +36,7 @@
 **Highest-ambition actionable specification:** Corridor layouts with ≤2 directional changes per route segment; distinctive visual landmark at each decision point; luminance contrast ≥30 LRV at floor/wall junctions; pictographic + colour-coded signage; adequate circulation width for mobility device use post-stroke (minimum 1200mm clear width; preferred 1500mm).
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Spatial configuration (floor plan legibility) is the primary environmental determinant of wayfinding for ABI/stroke; signage/cues cannot compensate for poor layout | EN (Marquardt & Schmieg 2009; Bowes et al. Stirling 2019) | Tier 3 |
 | ~25% of stroke survivors retain navigation impairment at 12 months; wayfinding correlates with quality of life | EN (van der Ham et al. 2021; Hamre et al. 2020) | Tier 3 |
