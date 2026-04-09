@@ -20,7 +20,7 @@
 **Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed. Three findings. (1) The TWSI/DEM conflict (yellow tactile paving vs plain flooring) is correctly identified and correctly resolved (profile-based detection over colour-based). This should be explicit in E-09 conflict notes. (2) LRV ≥30 contrast at critical junctions is the most cross-jurisdictionally converged VIS specification (present in virtually all national standards). This is a Tier 0 provision — no population conflicts. (3) The low-vision majority point is critical: most VIS users have partial sight, not total blindness. Design that optimises only for cane users (tactile) underserves the larger low-vision population (luminance contrast, consistent lighting, glare control). The guidebook should lead with luminance/lighting provisions and follow with tactile provisions, not the reverse. Evidence confidence: HIGH for TWSI and LRV contrast (Tier 4–6, universal adoption); MODERATE for lighting specifications (≥300 lux, no sudden transitions — Tier 5, fewer jurisdictions specify quantified values).
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | TWSI (tactile walking surface indicators) mandatory on primary routes | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | 4–6 (ISO 23599 + all jurisdictions) |
 | Directional (ribbed) + attention (domed) TWSI types required | EN, ZH, JA, KO, PT | 4–6 |
