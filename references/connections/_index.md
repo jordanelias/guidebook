@@ -6,13 +6,13 @@
 **Last migration:** 2026-04-08 (Phase 0B-1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
 **Total connections migrated:** 113
-**Next CON-ID:** CON-0155
+**Next CON-ID:** CON-0160
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 80 |
-| PENDING | 37 |
+| PENDING | 42 |
 
 ## Index
 
@@ -138,3 +138,8 @@
 | CON-0152 | PENDING | D-05, I-03 | entrances-and-circulation | HIGH | false | — |
 | CON-0153 | PENDING | D-02, D-05, D-06 | wayfinding-and-signage | HIGH | false | — |
 | CON-0154 | PENDING | G-07, H-01 | kitchens-and-workspaces | HIGH | false | — |
+| CON-0155 | PENDING | Part 10 §10.1 → Part 11 §11.4.10 | cross-cutting | HIGH | false | — |
+| CON-0156 | PENDING | Part 11 §11.8.3 → CS-25 DFG budget reconciliation | frameworks-and-methodology | HIGH | false | — |
+| CON-0157 | PENDING | Part 11 §11.6 + §11.8.3 NDIS SDA evidence | frameworks-and-methodology | HIGH | false | — |
+| CON-0158 | PENDING | Part 11 §11.8.3 Aktion Mensch + Husbanken | frameworks-and-methodology | MODERATE | false | — |
+| CON-0159 | PENDING | Part 11 §11.3.5 SROI/QALY → CS-22/CS-23/CS-24 | frameworks-and-methodology | HIGH | false | — |
