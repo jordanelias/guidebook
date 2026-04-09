@@ -16,7 +16,7 @@
 **Highest-ambition actionable specification:** Dedicated quiet retreat room ≥9 m² with user-adjustable lighting (2700–6500 K), acoustic treatment (RT60 ≤0.4 s), and no through-traffic; all corridor routes loop or terminate at a named destination.
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Quiet retreat / de-escalation room | EN, DE, NO, SV | 2–4 |
 | User control of lighting and acoustics | EN, DE, SV | 2–4 |
