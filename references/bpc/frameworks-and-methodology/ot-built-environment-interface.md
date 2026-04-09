@@ -27,7 +27,7 @@
 **Opus synthesis note:** Re-synthesis pending for non-EN CPG sources. JA divergence (post-illness only) is significant — indicates cultural/professional scope variation.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Step-free access + zero-threshold shower + ground-floor bed/bath = top 3 OT priorities | EN | Australia (Wellecke 2022, n=144) | 1 |
 | OT-led home modification produces superior outcomes | EN | Cross-jurisdictional (systematic review) | 1–2 |
