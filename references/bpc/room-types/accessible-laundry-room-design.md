@@ -28,7 +28,7 @@
 **Highest-ambition actionable specification:** All shared/common laundry rooms to provide: front-loading appliances at ≤430 mm drum centre height or on adjustable platform; controls 380–1220 mm AFF; clear floor ≥760×1220 mm; counter/sink ≤864 mm with knee clearance; 1500 mm turning radius; main-floor location (no stairs). `[ADA S611; Tier 4–5; no Tier 1–3 evidence; March 2026]`
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Front-loading appliances at accessible height (drum centre ≤430 mm AFF) or on riser | EN | US (ADA S611), AU (NDIS SDA) | 4, 5 |
 | Clear floor space ≥760×1220 mm parallel to appliance | EN | US (ADA S611) | 4 |
