@@ -66,7 +66,7 @@
 **Opus synthesis note:** [STUB — pending Opus synthesis pass]
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | [STUB — pending Opus synthesis pass] | | | |
 
