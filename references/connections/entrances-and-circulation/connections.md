@@ -1044,3 +1044,25 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 ---
 
 ---
+
+### CON-0156
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** FDR-CMP-08 compound interaction audit
+**Target item(s):** E-03 (handrail), C-04 (nosing contrast), E-09 (TWSI), B-04 (stair lighting)
+**Target population(s):** MOB, NEU (tremor), VIS
+**Evidence tier:** Opus synthesis (FDR-NEW-15 + FDR-VI-02 + MOB stair evidence)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Triple compound MOB+NEU/tremor+VIS resolves at Tier 1 with zero antagonistic parameters. The 40–45mm handrail diameter range serves both tremor grip stability AND VIS tactile character readability. All stair provisions (continuous handrail, nosing contrast, TWSI, 300+ lux lighting, step regularity) are independently specifiable and convergent across all three populations. Critical finding: cumulative fall probability is MULTIPLICATIVE across the three risk factors — removing any single provision disproportionately increases compound fall risk. This reinforces Part 11 §11.5.2 value engineering argument for stair accessibility as an integrated system.
+
+**Evidence basis:** FDR-CMP-08 audit (3 convergent, 2 independent, 1 conditional, 0 antagonistic). CAN/ASC 2.2 (handrail tactile characters). Parkinson's Foundation (tremor grip). BS 8300 stair provisions.
+
+**Action required:** Add MOB+NEU+VIS stair compound note to Part 3 §3.10. Note multiplicative fall probability. Cross-ref Part 11 §11.5.2 (VE protection). Confirm 40–45mm handrail for triple compound.
+
+**Disposition notes:** - [x] HIGH → Part 3 §3.10 compound convergence
+
+---

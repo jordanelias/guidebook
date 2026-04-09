@@ -111,3 +111,25 @@ Currently A-16 is NDV-only. MH "de-escalation room" described as distinct. Evide
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing (H-02, Part 10 DAR)
 
 ---
+
+### CON-0155
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** FDR-CMP-03 compound interaction audit
+**Target item(s):** H-01, H-02, Part 6 residential matrices
+**Target population(s):** MOB, DEM
+**Evidence tier:** Opus synthesis (FDR-NEW-05 + MOB wheelchair evidence)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** MOB+DEM kitchen is a pure convergence compound with one spatial constraint. Every DEM simplification provision (glass-front cabinets, open shelving, auto-shutoff, simplified controls) serves MOB wheelchair users equally — reduced reach from seated position makes visible, accessible storage MORE necessary, not less. The single conditional interaction is kitchen area: wheelchair turning (1500mm) + living-space supervision sightline require adequate combined space. Minimum kitchen area for MOB+DEM must accommodate both.
+
+**Evidence basis:** FDR-NEW-05 (DEM kitchen safety), FDR-CMP-03 audit (3 convergent, 1 independent, 1 conditional, 0 antagonistic). DSDC residential guidance. DIN 18040-2 kitchen clearances.
+
+**Action required:** Add MOB+DEM kitchen convergence note to Part 3 §3.10 and Part 6 residential matrix. Specify minimum kitchen area for MOB+DEM compound. All DEM provisions in H-01 apply equally to MOB wheelchair users.
+
+**Disposition notes:** - [x] HIGH → Part 3 §3.10 + Part 6 residential matrix
+
+---
