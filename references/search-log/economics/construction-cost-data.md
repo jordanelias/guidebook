@@ -65,3 +65,17 @@
 - Angi, HomeAdvisor, Fixr, HomGuide (US consumer cost databases)
 - SUUMO, Kakaku, HomePro (Japan consumer cost databases)
 - FFB (France — CONTESTED)
+
+
+## Update 2026-04-09 23:00
+
+### Added jurisdictions
+- DK: SEARCHED (DA) — BR18 §48-62 adgangsforhold; NCC confirms zero-cost UD; SBi-anvisning 222/272; DS/ISO 21542
+- EU: Updated — EN 17210 standard referenced by NL NEN 9120
+
+### Citation mining (Ielegems 2024 bibliography)
+- Steinfeld (2005) — World Bank EdNotes — located (PDF available)
+- Société Logique (2015) — CMHC — referenced but not directly accessed
+- Terashima & Clark (2021) — JADA 11(2) — referenced
+- Fuglerud et al. (2015) — NR Report 1032 — referenced
+- Jones (2011) — single-aspect cost study — cited but title not retrieved
