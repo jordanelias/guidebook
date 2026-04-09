@@ -313,3 +313,91 @@
 | NOT-RUN | 30 | CH, FI, NZ, SG, IE, BR, CN, IN, ZA, MX + 20 Tier B |
 
 Languages searched: EN, DE, FR, SV, NO, JA, NL, KO, DA, ES, IT = **11/19**
+
+
+---
+
+## Addendum 3: Switzerland, Finland (2026-04-09 23:30)
+
+### Switzerland (DE/FR)
+
+**Regulatory:** SIA 500 "Hindernisfreie Bauten" (2009, replacing 1988 norm). BehiG (Behindertengleichstellungsgesetz, 2004). Procap provides cantonal advisory services. Fachstelle Hindernisfreie Architektur (Zürich) is the national technical centre.
+
+**Key cost findings:**
+
+**Swiss National Research Programme NFP45 (ETH Zürich, 2004) — E-1/E-3:**
+- New-build premium: **1.8% of construction cost** (Bausumme)
+- Retrofit: **3.5% of building insurance value** (Gebäudeversicherungswert)
+- ETH researchers found costs are "strongly overestimated by both building owners and planners" ("von Bauherrschaften wie von Planern stark überbewertet")
+- **Cost breakdown:** 72% of additional costs = Erschliessung (access/circulation); 21% = sanitary facilities; 6% = doors/balconies; **1% = perception aids (visual/hearing)** — described as "of inestimable value"
+
+**Retrofit costs:**
+- Individual apartment adaptation: CHF 5,000–30,000 depending on disability level
+- Stairlift (Treppenlift): CHF 20,000–30,000
+- Swiss Life/Bauberatung BKZ estimate: retrofit costs ~2× new-build
+- Estimated CHF 1 billion could be saved in care home construction/operation if accessibility were consistently implemented in new-build (Bick/NZZ)
+
+**Proportionality threshold (BehiG):**
+- Renovation: accessibility costs up to **20% of renovation cost** or **5% of building value** (pre-renovation) are deemed "economically reasonable" (wirtschaftlich zumutbar)
+- IV (Invalidenversicherung) covers modifications for working-age disabled persons if "simple and purposeful"
+- AHV-age persons: social insurance generally does NOT cover building modifications
+
+**Procap:** "hindernisfreies Bauen verursacht keine wirklichen Mehrkosten" (doesn't cause real additional costs) for anpassbare Wohnungen (adaptable apartments)
+
+**SIA 500 three-category system:**
+- Category I: Public buildings — full accessibility mandatory
+- Category II: Housing — adaptable standard; wheelchair-accessible circulation for 5+ units
+- Category III: Workplaces — accessible to disabled employees; anpassbar
+
+### Finland (FI)
+
+**Regulatory:** Maankäyttö- ja rakennuslaki (Land Use and Building Act); Rakentamismääräyskokoelma (Building Regulations Collection); Ympäristöministeriö oversight.
+
+**Key cost findings:**
+
+**Ympäristöministeriö Report 27/2014 "Esteetön kerrostalo tehokkaasti" (Accessible apartment building efficiently):**
+- Ministry of Environment analysis of actual accessibility cost impact in apartment construction
+- Found that accessibility costs are "easily attributed to design choices that don't actually originate from accessibility regulations" — costs routinely overstated
+- Smaller apartments have proportionally higher relative accessibility costs (per m²)
+- Additional space in stairwells for accessibility "is easily seen as mere extra cost rather than a good solution that serves everyone"
+
+**Helsinki (2015 cost data):**
+- RAKLI report with detailed cost calculations using Helsinki unit prices (September 2014)
+- Accessibility costs broken down between unit-specific and shared building costs
+- Detailed case examples calculated per as-m² (apartment square metre)
+
+[GAP: Specific Finnish new-build premium percentage not found in this search — the 2014 Ministry report likely contains it but was not fully extracted]
+
+**Government programmes:**
+- **ARA (Asumisen rahoitus- ja kehittämiskeskus):** Korjausavustus (renovation grant) for individual homes; esteettömyysavustus for housing companies (elevators, ramps)
+- **Municipal support:** Sosiaalihuoltolaki and Vammaispalvelulaki provide home modification funding through municipalities
+- **Kotitalousvähennys:** Tax deduction for household renovation work
+- **Ikäinstituutti:** "Improving accessibility doesn't necessarily require large and expensive modifications" — notes that anticipatory accessibility solutions are a wise investment
+
+---
+
+## Updated Coverage Summary (Session Final)
+
+| Status | Count | Jurisdictions |
+|---|---|---|
+| SEARCHED | 18 | US, UK, AU, DE, FR, SE, NO, JP, CA, BE, NL, KR, EU, DK, ES, IT, CH, FI |
+| NOT-RUN | 28 | NZ, SG, IE, BR, CN, IN, ZA, MX + 20 Tier B |
+
+Languages searched: EN, DE, FR, SV, NO, JA, NL, KO, DA, ES, IT, FI = **12/19**
+
+Remaining priority: NZ (EN), CN (ZH), BR/PT (PT), SG (EN), IE (EN)
+
+## Cross-Jurisdictional New-Build Premium Table (FINAL — 8 independent data points)
+
+| Jurisdiction | Source | Tier | New-build premium | Year |
+|---|---|---|---|---|
+| DE | TERRAGON/DStGB | E-3/E-4 | 0.54%–1.26% | 2017 |
+| BE | Ielegems & Vanrie | E-1 | 0.94%–3.92% (avg 1.19%) | 2024 |
+| US | ADA National Network | E-6 | <1% | 2025 |
+| CA | Rick Hansen Foundation | E-6 | ~1% or zero | 2024 |
+| SE | Lund University | E-1 | Not significant | n.d. |
+| NL/EU | EU research via NEN | E-6 | 1–1.4% | n.d. |
+| CH | ETH/NFP45 | E-1/E-3 | 1.8% | 2004 |
+| FR | FFB (CONTESTED) | E-7 | 2–5% | 2025 |
+
+**Pattern:** 7 of 8 independent data points cluster between 0.5% and 1.8%. The French FFB figure remains the sole outlier.

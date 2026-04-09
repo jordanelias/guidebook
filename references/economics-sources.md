@@ -63,3 +63,20 @@
 | ES | 0.6% of buildings universally accessible | Fundación Mutua/UNESCO URV | 2024 |
 | ES | 100,000 people cannot leave homes due to inaccessibility | Fundación Mutua | 2024 |
 | IT | Adattabilità framework since 1989 but no comprehensive compliance data found | DM 236/89 | 1989 |
+
+
+## Additional Sources (Session Final 2026-04-09 23:30)
+
+| ID | Citation | Tier | Jurisdiction | Key finding | Verified date |
+|---|---|---|---|---|---|
+| EC-013 | ETH Zürich / NFP45. (2004). Behindertengerechtes Bauen – Technische und finanzielle Machbarkeit. | E-1/E-3 | CH | 1.8% new-build; 3.5% retrofit; 72% = circulation costs | 2026-04-09 |
+| EC-014 | Ympäristöministeriö. (2014). Esteetön kerrostalo tehokkaasti. Raportteja 27/2014. | E-2 | FI | Costs routinely overstated; detailed apartment-level analysis | 2026-04-09 |
+| EC-015 | Fundación Mutua de Propietarios / UNESCO URV. (2024). Estudio comparativo accesibilidad. | E-6 | ES/DE/SE | ES 0.6%, DE 1.5%, SE 2.5% accessible buildings | 2026-04-09 |
+
+## Additional Government Programme Data
+
+| ID | Programme | Jurisdiction | Max funding | Source tier | Verified | Notes |
+|---|---|---|---|---|---|---|
+| GP-012 | IV (Invalidenversicherung) | CH | Case-by-case; "simple and purposeful" | E-2 | 2026-04-09 | Working-age only |
+| GP-013 | ARA esteettömyysavustus | FI | Grant for elevators/ramps | E-2 | 2026-04-09 | Housing companies |
+| GP-014 | Vammaispalvelulaki | FI | Municipal funding | E-2 | 2026-04-09 | Home modifications |

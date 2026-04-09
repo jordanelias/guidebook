@@ -100,3 +100,17 @@
 - Steven Winter Associates (1993): same finding, residential
 - WHO/MacLachlan et al. (2018): systematic review on accessible home benefits
 - Odeck et al. (2010): economic appraisal UD transport Norway
+
+
+## Update 2026-04-09 23:30 (Session Final)
+
+### Added jurisdictions
+- CH: SEARCHED (DE) — ETH/NFP45 1.8% new-build; SIA 500; BehiG proportionality; Procap
+- FI: SEARCHED (FI) — Ympäristöministeriö 2014 report; ARA grants; costs routinely overstated
+
+### Session totals
+- 18 jurisdictions searched
+- 12 languages used
+- 8 independent new-build premium data points assembled
+- 5 citation mining targets addressed (3 retrieved, 2 located)
+- 12 government programme funding sources documented
