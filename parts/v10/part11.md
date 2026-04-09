@@ -113,6 +113,28 @@ This figure has two uses in practice: as a benefit metric (accessible design tha
 
 *Part 7 cross-reference: Category F (Sensory Zoning — formerly Category G; see Volume 2 v8.0 resequencing note) provisions — graduated stimulation gradients, re-entry protocols, sensory rooms — are not individually expensive. Their cumulative effect is to make a building habitable for people who would otherwise be unable to remain in it. The cost of their absence is not a reduction in profit; it is an absence of access.*
 
+
+#### §11.3.5 Economic Evaluation Methodologies
+
+Design professionals should be aware that formal economic evaluation methodologies exist for quantifying the value of accessible design. This guidebook does not perform these analyses — they require specialist health economist expertise — but names them so that design teams and clients can commission appropriate evaluations when the business case demands quantified evidence.
+
+**Social Return on Investment (SROI):** Measures the social, environmental, and economic value created by an intervention per unit of investment. Applied to UK DFG-funded home adaptations by Foundations UK; applied to the CAPABLE programme (US) showing ~$10,000–$22,000 in Medicare/Medicaid savings per $2,825 programme cost. The LSE/Habinteg study (2023) models a 4:1 benefit-cost ratio for wheelchair user homes over 10 years.
+
+**Quality-Adjusted Life Year (QALY):** Standard health economics metric measuring quantity and quality of life. The BATH-OUT-2 RCT (UK, 2024) uses SF-36 — which maps directly to QALYs — as its primary outcome measure for level-access shower installation. QALY-based cost-effectiveness analysis of home adaptations is feasible using existing data but has not been published at scale. This represents a significant evidence gap.
+
+**Avoided Institutional Care Cost:** The strongest quantified economic argument for accessible residential design. Data from multiple jurisdictions:
+
+| Jurisdiction | Annual institutional care cost | Annual home care / adaptation cost | Source |
+| --- | --- | --- | --- |
+| UK | £39,520/year residential care | £13,200/year home care | BRE modelling cited in DFG review (2018) |
+| UK | — | £4,800–£9,200/year local authority savings per wheelchair user household | LSE/Habinteg CASEreport 147 (2023) |
+| Netherlands | Comparable to traditional nursing homes | €5,000/month (De Hogeweyk) | Vivium POE reports 2012–2019 |
+| France | Comparable to French nursing homes | €82/day (Village Landais Alzheimer) | NORD Architects / Landes 2020 |
+| Italy | Comparable to Italian nursing homes | €93/day (Il Paese Ritrovato) | Mazzola et al. 2024 |
+| USA | — | Hospitalisations reduced 0.43→0.23/year (CAPABLE, p=0.03) | Breysse et al. 2019 |
+
+The direction is unambiguous: accessible residential design either matches or reduces institutional care costs while improving clinical outcomes.
+
 #### §11.3.1 Functional Value: What the Building Can Do
 
 An accessible building can be used by more people. This is not a peripheral benefit; it is the building's core function. A building that cannot be used by a wheelchair user, a person with low vision, a Deaf person, or a person with a cognitive disability is a building that is failing a proportion of its intended users.
@@ -251,7 +273,66 @@ The following tables provide design-stage cost intelligence for accessible desig
 **| Accessible outdoor seating / rest points | E-10 | \*\*0–0.1%\*\* | 1.5–3× | Construction |** 
 | Sensory garden with loop path | D-11/BIO-01 | **0.1–0.3%** | 2–4× | Construction |  |
 
-#### §11.4.9 The Cost Curve: Summary Table
+
+#### §11.4.9 Kitchen \& Workspace
+
+| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| --- | --- | --- | --- | --- |
+| Knee clearance under sink/hob (≥700mm) | H-01 | **0%** | 4–8× | Schematic |
+| Front-operated controls on appliances | H-01 | **0%** (specification) | 1–1.5× | Technical design |
+| Adjustable-height worktop (manual) | H-01 | **0.3–0.8%** | 3–6× | Technical design |
+| Adjustable-height worktop (electric) | H-01 | **0.5–1.2%** | 2–4× | Technical design |
+| Pull-out shelving / carousel units | H-01 | **0.2–0.5%** | 2–3× | Technical design |
+| Side-opening oven at worktop height | H-01 | **0.1–0.2%** | 1.5–2× | Technical design |
+
+**System integrity note:** Kitchen accessibility is a system. Adjustable worktop without knee clearance is non-functional for seated users. Brief as integrated package. See acoustic system note §11.5.2.
+
+*Calibration sources: DIN 18040-2:2011; NS 11001:2018; SINTEF Byggforsk (reach zone studies).*
+
+#### §11.4.10 Bedroom
+
+| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| --- | --- | --- | --- | --- |
+| Bed transfer space (≥1200mm one side) | — | **0%** | 5–10× | Schematic |
+| Window sill height ≤600mm (seated viewing) | — | **0%** | N/A | Schematic |
+| Ceiling hoist tracking blocking (continuous ≥3600mm) | Part 10 DAR | **0%** (blocking only) | **20–40×** | **Construction** |
+| Ceiling hoist installation (fit-out) | Part 10 DAR | **0.3–0.8%** | 3–6× | Technical design |
+| Pull-down wardrobe rail | H-01 | **0.1–0.3%** | 1.5–2.5× | Technical design |
+
+**Critical note — ceiling hoist blocking:** Structural blocking for future ceiling hoist installation costs effectively nothing at construction (timber nogging between joists). Retrofit without blocking requires ceiling and floor removal, structural reinforcement, and reinstatement. This is the second-highest retrofit multiplier documented after lift shaft omission. See Part 10 §10.1 DAR Cost Multiplier Framework.
+
+*Calibration sources: Habinteg (2010); CAN/ASC 2.8:2025; Part 10 DAR table.*
+
+#### §11.4.11 Emergency Egress
+
+| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| --- | --- | --- | --- | --- |
+| Refuge of rescue / safe haven | — | **0.2–0.5%** | 8–20× | **Brief** |
+| Visual/tactile fire alarm routing (corridors) | B-10 | **0.1–0.3%** | 2–4× | Technical design |
+| Vibrating pillow alert (bedroom, DEAF/DBL) | H-04 | **0.05–0.1%** | 1.5–2× | Technical design |
+| Evacuation lift (fire-rated) | E-01/E-02 | **1–3%** | 15–30× | **Brief** |
+
+**Critical note — refuge of rescue:** A refuge is a protected space where a person who cannot use stairs can wait for assisted evacuation. It is a Brief-stage spatial decision — the space must be allocated in the floor plan and served by fire-rated construction. Omission cannot be corrected without structural intervention. BS 9999 and DIN 18040-1 both require refuge provision. The cost of omission is not just financial; it is a life-safety failure.
+
+*Calibration sources: BS 9999; BS 8300-2:2018; DIN 18040-1; DIN VDE 0833.*
+
+#### §11.4.12 Controls, Hardware \& Communication
+
+| Technique | Part 7 Ref | NC Premium | Retrofit ×NC | Decision Stage |
+| --- | --- | --- | --- | --- |
+| Lever handles throughout | E-03 | **0%** | 1–1.5× | Technical design |
+| Rocker light switches at 900–1100mm AFF | E-05 | **0%** | 0.5–1× | Construction |
+| Power outlets at 450–1200mm AFF | — | **0%** | 1–2× | Construction |
+| Delayed-action door closers | E-04 | **0.05–0.1% per door** | 1.5–2× | Technical design |
+| Accessible intercom with visual display | F-06 | **0.1–0.3%** | 1.5–2.5× | Technical design |
+| Handrail continuity + circular profile (40–45mm) | E-03 | **0%** | 2–4× | Technical design |
+| Colour-contrasted stair nosings | C-04 | **0–0.1%** | 1–1.5× | Construction |
+
+**Note:** Every technique in this table costs zero or near-zero at design stage. These are specification decisions, not additional materials. Their aggregate absence in a building is a failure of specification, not of budget.
+
+*Calibration sources: DIN 18040-2:2011; BS 8300-1/-2:2018; NS 11001:2018.*
+
+#### §11.4.13 The Cost Curve: Summary Table
 
 The cheapest moment for any accessibility provision is the brief stage. Every stage of deferral multiplies cost.
 
