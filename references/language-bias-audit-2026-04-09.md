@@ -96,11 +96,11 @@ multilingual-research skill Step 3: EN databases searched all runs; non-EN datab
 
 | Finding | Severity | Method | Status |
 |---|---|---|---|
-| F1: Column header rename | HIGH | Batch find-and-replace | PENDING |
-| F2: EN (primary) labels | HIGH | Manual edit (3-5 files) | PENDING |
-| F3: "Non-English confirms" | HIGH | Manual edit (2-3 files) | PENDING |
-| F4: Co-1 gap disclosures | MODERATE | Manual edit Part 2 | PENDING |
-| F5: §1.5 source lists | MODERATE | Manual edit Part 1 | PENDING |
-| F6: EN-only normalization | LOW-MOD | Manual edit + gap register | PENDING |
-| F7: Database priority note | LOW | 1-line addition to skill | PENDING |
+| F1: Column header rename | HIGH | Batch find-and-replace | ✅ DONE — 59 files |
+| F2: EN (primary) labels | HIGH | Manual edit (3 files) | ✅ DONE |
+| F3: "Non-English confirms" | HIGH | Manual edit (2 files) | ✅ DONE |
+| F4: Co-1 gap disclosures | MODERATE | Manual edit Part 2 | ✅ DONE |
+| F5: §1.5 source lists | MODERATE | Manual edit Part 1 | ✅ DONE |
+| F6: EN-only normalization | LOW-MOD | Manual edit (3 files) | ✅ DONE |
+| F7: Database priority note | LOW | 1-line addition to skill | ✅ DONE |
 
