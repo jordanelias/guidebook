@@ -1,0 +1,667 @@
+{
+  "resolved_conflicts": [
+    {
+      "conflict_id": "COLOUR-CONT",
+      "conflict_label": "Luminance contrast (LRV)",
+      "domain": "Colour and contrast",
+      "population_a": {
+        "codes": [
+          "VIS",
+          "DEM"
+        ],
+        "specification": "\u226530% LRV differential at step edges, door frames, counter edges; \u226550% at critical junctions"
+      },
+      "population_b": {
+        "codes": [
+          "NDV/SENS",
+          "NDV/AUT"
+        ],
+        "specification": "Muted palette; \u226420 LRV differential in sensory retreat zones; no high-contrast pattern"
+      },
+      "resolution": {
+        "status": "RESOLVED-EVIDENCE",
+        "strategy_codes": [
+          "SZ",
+          "PP"
+        ],
+        "strategy_labels": [
+          "Sensory Zoning",
+          "Parallel Provision"
+        ],
+        "description": "Zone-based: \u226530 LRV on primary accessible routes (safety-critical governs); \u226420 LRV in sensory retreat (Zone 3). Plain floor (C-06) satisfies both DEM fall prevention and VIS orientation via perimeter contrast.",
+        "evidence_quality": "\u25cf"
+      },
+      "governing_principle": "Safety-critical provisions take priority (Rule 1)",
+      "specifications_involved": [
+        "C-04",
+        "C-06",
+        "F-01"
+      ],
+      "citations": [
+        {
+          "ref": "DSDC EADDAT 2022",
+          "finding": "DEM plain floor; +15% pattern-associated falls"
+        },
+        {
+          "ref": "CNIB 2024",
+          "finding": "VIS contrast minimum"
+        },
+        {
+          "ref": "PAS 6463:2022",
+          "finding": "NDV muted palette"
+        }
+      ],
+      "decision_tree": {
+        "root": "Is this a primary accessible route?",
+        "yes": "Apply \u226530 LRV (safety-critical \u2014 VIS/DEM governs)",
+        "no": {
+          "question": "Designated sensory retreat zone (F-01 Zone 3)?",
+          "yes": "Apply \u226420 LRV; VIS via wall contrast + landmarks",
+          "no": "Apply \u226530 LRV with matte/non-reflective finishes"
+        }
+      },
+      "unresolvable_residual": null,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "ACOUSTIC-LVL",
+      "conflict_label": "Amplification and background noise",
+      "domain": "Acoustics",
+      "population_a": {
+        "codes": [
+          "DEAF"
+        ],
+        "specification": "Hearing loop IEC 60118-4; STI \u22650.75 for CI users"
+      },
+      "population_b": {
+        "codes": [
+          "NDV/SENS",
+          "NDV/AUT",
+          "NEU/PCS"
+        ],
+        "specification": "No amplification in retreat zones; \u226430 dBA Zone 3; no sound masking"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "SZ",
+          "IEC"
+        ],
+        "strategy_labels": [
+          "Sensory Zoning",
+          "Individual Environmental Control"
+        ],
+        "description": "Hearing loop amplifies direct speech without broadcast. Independent from PA/music. RT60 \u22640.3s governs in NDV co-occurrence (stricter than DEAF \u22640.4s \u2014 benefits both). No sound masking where NDV is primary.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Range specifications + zoning (Rules 4, 5)",
+      "specifications_involved": [
+        "A-10",
+        "A-11",
+        "A-13"
+      ],
+      "citations": [
+        {
+          "ref": "IEC 60118-4:2022",
+          "finding": "Loop zones and field strength"
+        },
+        {
+          "ref": "Iglehart 2020 AJA",
+          "finding": "RT60 \u22640.3s CI speech scores"
+        },
+        {
+          "ref": "PAS 6463:2022",
+          "finding": "NDV no masking"
+        }
+      ],
+      "decision_tree": {
+        "root": "Is hearing loop required in this space?",
+        "yes": {
+          "question": "Does NDV co-occur as primary population?",
+          "yes": "RT60 \u22640.3s; loop with independent audio input; PA muted; no sound masking",
+          "no": "RT60 \u22640.4s; standard loop provision"
+        },
+        "no": "Standard acoustic provision per room type"
+      },
+      "unresolvable_residual": "CONF-UNRESOLV-02",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "GRAB-BAR-DIA",
+      "conflict_label": "Grip profile \u2014 grab bar diameter",
+      "domain": "Hardware and controls",
+      "population_a": {
+        "codes": [
+          "MOB"
+        ],
+        "specification": "32\u201338mm preferred circular (ISO 21542; BS 8300)"
+      },
+      "population_b": {
+        "codes": [
+          "MOB/UPL"
+        ],
+        "specification": "32\u201345mm; oval permitted; 45\u201350mm where \u2265250kg static load"
+      },
+      "resolution": {
+        "status": "RESOLVED-EVIDENCE",
+        "strategy_codes": [
+          "RS"
+        ],
+        "strategy_labels": [
+          "Range Specification"
+        ],
+        "description": "32\u201345mm serves both populations. Circular preferred. Below 32mm: inadequate standard grip. Above 45mm: both populations degrade.",
+        "evidence_quality": "\u25cf"
+      },
+      "governing_principle": "Range specifications (Rule 4)",
+      "specifications_involved": [
+        "G-03"
+      ],
+      "citations": [
+        {
+          "ref": "BS 8300:2018",
+          "finding": "32\u201345mm range"
+        },
+        {
+          "ref": "ISO 21542:2021",
+          "finding": "Circular preferred"
+        },
+        {
+          "ref": "Guay 2020",
+          "finding": "Clinical Biomechanics biomechanical load"
+        }
+      ],
+      "decision_tree": {
+        "root": "Specify 32\u201345mm circular grab bar",
+        "note": "Tier 2 OT assessment resolves position within range for individual"
+      },
+      "unresolvable_residual": null,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "TEMP-RANGE",
+      "conflict_label": "Ambient temperature",
+      "domain": "Thermal environment",
+      "population_a": {
+        "codes": [
+          "NEU"
+        ],
+        "specification": "\u226418\u00b0C (Uhthoff's phenomenon \u2014 safety-critical)"
+      },
+      "population_b": {
+        "codes": [
+          "PAIN"
+        ],
+        "specification": "22\u201324\u00b0C preferred; cold contact triggers allodynia"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "T0",
+          "IEC"
+        ],
+        "strategy_labels": [
+          "Tier 0 Safety-Critical Governs",
+          "Individual Environmental Control"
+        ],
+        "description": "\u226418\u00b0C governs (MS safety-critical \u2014 heat causes neurological worsening). Warmth delivered individually: radiant panels, heated grab bar coatings, personal thermal options.",
+        "evidence_quality": "\u25cf"
+      },
+      "governing_principle": "Safety-critical provisions take priority (Rule 1)",
+      "specifications_involved": [
+        "F-07",
+        "F-08"
+      ],
+      "citations": [
+        {
+          "ref": "Uhthoff 1890/Davis 2010 Neurology",
+          "finding": "Uhthoff's mechanism"
+        },
+        {
+          "ref": "Staud 2011",
+          "finding": "PAIN allodynia"
+        }
+      ],
+      "decision_tree": {
+        "root": "Does the space serve MS/NEU users?",
+        "yes": "Ambient \u226418\u00b0C governs. Provide individual supplemental radiant heating for PAIN users.",
+        "no": "Standard thermal comfort per building type"
+      },
+      "unresolvable_residual": "CONF-UNRESOLV-01",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "SURFACE-TEXT",
+      "conflict_label": "Tactile floor indicators",
+      "domain": "Flooring and surfaces",
+      "population_a": {
+        "codes": [
+          "VIS",
+          "DBL"
+        ],
+        "specification": "Full ISO 23599 truncated dome on primary routes (safety-critical)"
+      },
+      "population_b": {
+        "codes": [
+          "PAIN",
+          "MOB/AMB"
+        ],
+        "specification": "Smooth surface preferred; vibration pain trigger; wheel resistance"
+      },
+      "resolution": {
+        "status": "PARTIAL",
+        "strategy_codes": [
+          "T0"
+        ],
+        "strategy_labels": [
+          "Tier 0 Safety-Critical Governs"
+        ],
+        "description": "ISO 23599 truncated dome governs on primary routes (VIS/DBL safety function). Secondary routes: high-contrast flush edging strip. JIS T9251 dome sizing (5mm height, 25mm base, 60mm spacing) is the only parameter with full empirical resolution across both populations.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Safety-critical provisions take priority (Rule 1)",
+      "specifications_involved": [
+        "C-04",
+        "E-09"
+      ],
+      "citations": [
+        {
+          "ref": "ISO 23599:2019",
+          "finding": "Profile specification"
+        },
+        {
+          "ref": "JIS T9251",
+          "finding": "Dome sizing empirically resolved in JP context"
+        }
+      ],
+      "decision_tree": {
+        "root": "Is this a primary accessible route?",
+        "yes": "ISO 23599 truncated dome (safety-critical governs). Use JIS T9251 sizing for PAIN vibration mitigation.",
+        "no": "High-contrast flush edging strip (colour + LRV \u226530)"
+      },
+      "unresolvable_residual": "No product currently meets both full ISO 23599 profile and vibration attenuation for PAIN",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "SPATIAL-OPEN",
+      "conflict_label": "Visual transparency and spatial enclosure",
+      "domain": "Spatial configuration",
+      "population_a": {
+        "codes": [
+          "DEAF"
+        ],
+        "specification": "Glazed junctions (DeafSpace visual advance warning); open-plan \u22652400mm for signing pairs"
+      },
+      "population_b": {
+        "codes": [
+          "NDV/AUT",
+          "NDV/SENS"
+        ],
+        "specification": "Compartmentalised zones with predictable, enclosed approaches"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "SZ"
+        ],
+        "strategy_labels": [
+          "Sensory Zoning"
+        ],
+        "description": "Graduated spatial model: open circulation spine (\u22652400mm signing routes) transitions to enclosed sub-zones. Low-reflectance matte glazing at junctions; etched lower band. Prospect-refuge balance.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Zoning separates irreconcilable conflicts (Rule 5)",
+      "specifications_involved": [
+        "E-08",
+        "F-01",
+        "D-05"
+      ],
+      "citations": [
+        {
+          "ref": "DeafSpace Guidelines 2010",
+          "finding": "Glazed junctions"
+        },
+        {
+          "ref": "PAS 6463:2022",
+          "finding": "NDV enclosure preference"
+        },
+        {
+          "ref": "Appleton 1975; Dosen & Ostwald 2016",
+          "finding": "Prospect-refuge theory"
+        }
+      ],
+      "decision_tree": {
+        "root": "Is DEAF a primary population?",
+        "yes": {
+          "question": "Does NDV co-occur?",
+          "yes": "Graduated model: open spine + enclosed sub-zones. Matte glazing.",
+          "no": "Full DeafSpace open sightline provisions"
+        },
+        "no": "Standard spatial configuration per room type"
+      },
+      "unresolvable_residual": "CONF-UNRESOLV-03",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "LIGHT-INT",
+      "conflict_label": "Illuminance (lux and melanopic EDI)",
+      "domain": "Lighting",
+      "population_a": {
+        "codes": [
+          "DEM",
+          "VIS"
+        ],
+        "specification": "\u2265300 lux eye level (DEM); \u2265250 melanopic EDI; \u2265500 lux task (VIS)"
+      },
+      "population_b": {
+        "codes": [
+          "NDV/AUT",
+          "NDV/SENS",
+          "NEU/PCS",
+          "PAIN",
+          "OFS"
+        ],
+        "specification": "\u2264200 lux preferred; dimmable to \u226450 lux; no cool-white CCT in sensory zones"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "SZ",
+          "IEC"
+        ],
+        "strategy_labels": [
+          "Sensory Zoning",
+          "Individual Environmental Control"
+        ],
+        "description": "Three-zone model: Zone 1 (\u2265300 lux / \u2265500 task / \u2265200 EML); Zone 2 (150\u2013300 lux, dimmable); Zone 3 (0\u2013150 lux user-controlled). Individual dimming (B-06) is the highest-impact single conflict mitigation. CCT: \u22654000K morning in DEM areas; \u22642700K from 19:00.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Range + zoning (Rules 4, 5)",
+      "specifications_involved": [
+        "B-01",
+        "B-06",
+        "B-07",
+        "B-11",
+        "F-01"
+      ],
+      "citations": [
+        {
+          "ref": "Brown 2022",
+          "finding": "Melanopic EDI \u2265250 consensus, 13 jurisdictions"
+        },
+        {
+          "ref": "DSDC EADDAT 2022",
+          "finding": "DEM \u2265300 lux"
+        },
+        {
+          "ref": "PAS 6463:2022",
+          "finding": "NDV \u2264200 lux ambient"
+        }
+      ],
+      "decision_tree": {
+        "root": "Which F-01 sensory zone is this space?",
+        "zone_1": "\u2265300 lux ambient / \u2265500 task / \u2265200 EML. No user dimming below 200 lux.",
+        "zone_2": "150\u2013300 lux at workplane with user-dimmable range. \u2265500 lux task lighting available.",
+        "zone_3": "User-controlled 0\u2013150 lux. \u226450 lux available. Warm CCT only."
+      },
+      "unresolvable_residual": null,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "VIS-COMPLEX",
+      "conflict_label": "Signage and visual information density",
+      "domain": "Wayfinding and signage",
+      "population_a": {
+        "codes": [
+          "DEM",
+          "IntD_proxy"
+        ],
+        "specification": "High-redundancy signage: pictogram + word + Braille + colour coding at all junctions"
+      },
+      "population_b": {
+        "codes": [
+          "NDV/SENS"
+        ],
+        "specification": "Minimal visual clutter; \u22643 sign elements per decision point"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "PP"
+        ],
+        "strategy_labels": [
+          "Parallel Provision"
+        ],
+        "description": "Pictogram + word + Braille (D-08) independently satisfies both: pictograms serve DEM/IntD (simple \u22643 elements); matte sign field serves NDV (no visual noise). \u22645 colour zones per building for DEM + NDV predictability. Contrast at architectural elements, not floor patterns.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Parallel provision (Rule 4)",
+      "specifications_involved": [
+        "D-04",
+        "D-08",
+        "D-09"
+      ],
+      "citations": [
+        {
+          "ref": "DSDC EADDAT 2022",
+          "finding": "DEM signage"
+        },
+        {
+          "ref": "PAS 6463:2022",
+          "finding": "NDV visual clutter"
+        },
+        {
+          "ref": "NICE NG93; BILD",
+          "finding": "IntD signage"
+        }
+      ],
+      "decision_tree": {
+        "root": "Use D-08 pictogram+word+Braille system at all decision points",
+        "note": "Matte/non-reflective sign field; \u22645 colour zones building-wide; contrast on architectural elements not floor patterns"
+      },
+      "unresolvable_residual": null,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "MOVE-FREE",
+      "conflict_label": "Circulation freedom vs supervised pathways",
+      "domain": "Spatial configuration",
+      "population_a": {
+        "codes": [
+          "DEM"
+        ],
+        "specification": "Unobstructed loop floor plan; no dead ends; independent circulation"
+      },
+      "population_b": {
+        "codes": [
+          "MOB"
+        ],
+        "specification": "Contained pathways with support surfaces; bilateral grab bars"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "SRW"
+        ],
+        "strategy_labels": [
+          "Shared Route with modifications"
+        ],
+        "description": "Residential: secure garden loop with bilateral handrails + DEM freedom within perimeter. Indoor: grab bars on all extended corridors. Institutional: TIER-2-ONLY (OT assessment required).",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Shared route modification (residential); Tier 2 only (institutional)",
+      "specifications_involved": [
+        "D-01",
+        "D-11",
+        "G-05"
+      ],
+      "citations": [
+        {
+          "ref": "DSDC EADDAT 2022",
+          "finding": "DEM loop; freedom of movement"
+        },
+        {
+          "ref": "Clemson 2023 Cochrane CD013258",
+          "finding": "Fall prevention, grab bars"
+        }
+      ],
+      "decision_tree": {
+        "root": "Building type?",
+        "residential": "Secure loop with bilateral handrails. DEM freedom + MOB support on same route.",
+        "institutional": "OT assessment mandatory. No population-level resolution in non-zoned shared space."
+      },
+      "unresolvable_residual": null,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "FRAGRANCE",
+      "conflict_label": "Olfactory environment",
+      "domain": "Air quality and fragrance",
+      "population_a": {
+        "codes": [
+          "OFS/MCAS",
+          "NDV/SENS"
+        ],
+        "specification": "Zero fragrance throughout (F-02, F-06)"
+      },
+      "population_b": {
+        "codes": [
+          "DEM"
+        ],
+        "specification": "Scented environmental cues for spatial orientation"
+      },
+      "resolution": {
+        "status": "PARTIAL",
+        "strategy_codes": [
+          "PP"
+        ],
+        "strategy_labels": [
+          "Parallel Provision"
+        ],
+        "description": "Fragrance-free policy (F-06) as building-wide baseline. DEM olfactory cueing via natural food smells (kitchen adjacency) and natural scents (lavender planting \u2265600mm from circulation) rather than synthetic fragrances. Natural food smells are not MCAS triggers; synthetic fragrances are.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Parallel provision \u2014 natural vs synthetic distinction",
+      "specifications_involved": [
+        "F-02",
+        "F-03",
+        "F-06"
+      ],
+      "citations": [
+        {
+          "ref": "Afrin 2020",
+          "finding": "MCAS chemical triggers"
+        },
+        {
+          "ref": "DSDC EADDAT 2022",
+          "finding": "DEM olfactory cues"
+        }
+      ],
+      "decision_tree": {
+        "root": "Is synthetic fragrance proposed?",
+        "yes": "Prohibited in shared buildings (F-06). Use natural food/plant alternatives.",
+        "no": {
+          "question": "Is DEM olfactory orientation needed?",
+          "yes": "Architectural-spatial: kitchen adjacency, natural planting at \u2265600mm from circulation",
+          "no": "Fragrance-free baseline applies"
+        }
+      },
+      "unresolvable_residual": "Some DEM programmes use synthetic lavender diffusers \u2014 contraindicated for OFS/MCAS in shared buildings",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "DOOR-OPERATION",
+      "conflict_label": "Automatic vs manual door actuation",
+      "domain": "Hardware and controls",
+      "population_a": {
+        "codes": [
+          "MOB"
+        ],
+        "specification": "Automatic doors; no push force; 10-second hold-open"
+      },
+      "population_b": {
+        "codes": [
+          "NDV/MH"
+        ],
+        "specification": "Predictable actuation; no unexpected movement; advance warning"
+      },
+      "resolution": {
+        "status": "RESOLVED-CONSENSUS",
+        "strategy_codes": [
+          "TS"
+        ],
+        "strategy_labels": [
+          "Technical Specification"
+        ],
+        "description": "Integrated door spec: motion sensor \u22653m (visual warning zone); auditory chime \u226465 dBA; glazed leaf (spatial preview); \u22653s opening travel (no sudden movement); high-contrast floor activation zone (C-04 \u226530 LRV). MOB gets force-free; NDV/MH gets predictable, pre-announced movement.",
+        "evidence_quality": "\u25d0"
+      },
+      "governing_principle": "Technical specification resolves both (Rule 4)",
+      "specifications_involved": [
+        "E-11",
+        "C-04"
+      ],
+      "citations": [
+        {
+          "ref": "PAS 6463:2022",
+          "finding": "NDV door predictability"
+        },
+        {
+          "ref": "BS 8300:2018",
+          "finding": "Automatic door performance"
+        },
+        {
+          "ref": "DeafSpace 2010",
+          "finding": "Glazed leaf visual preview"
+        }
+      ],
+      "decision_tree": {
+        "root": "Specify integrated automatic door: sensor \u22653m + chime \u226465dBA + glazed leaf + \u22653s travel + contrast activation zone",
+        "note": "Single technical solution serves both populations"
+      },
+      "unresolvable_residual": null,
+      "last_updated": "2026-04-09"
+    }
+  ],
+  "unresolvable_conflicts": [
+    {
+      "conflict_id": "CONF-UNRESOLV-01",
+      "conflict_label": "Ambient temperature in non-zoned shared sleeping space",
+      "domain": "Thermal environment",
+      "related_conflict": "TEMP-RANGE",
+      "resolution": {
+        "status": "UNRESOLVABLE-TIER-2"
+      },
+      "trigger": "MS-spectrum + fibromyalgia/cold-aggravated pain in shared non-zoned sleeping space where individual heating is not operationally feasible",
+      "mitigation": "Insulated grab bars (G-03); warm bedding; individual heated throw/vest as FM provision",
+      "ot_assessment_mandatory": true,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "CONF-UNRESOLV-02",
+      "conflict_label": "Acoustic amplification in shared open-plan space",
+      "domain": "Acoustics",
+      "related_conflict": "ACOUSTIC-LVL",
+      "resolution": {
+        "status": "UNRESOLVABLE-TIER-2"
+      },
+      "trigger": "NDV/AUT and DEAF in shared open-plan space without physical zone separation",
+      "mitigation": "Auracast/wireless personal receiver technology; does not reduce DEAF right to accessible ambient if receiver unavailable",
+      "ot_assessment_mandatory": true,
+      "last_updated": "2026-04-09"
+    },
+    {
+      "conflict_id": "CONF-UNRESOLV-03",
+      "conflict_label": "Visual glazing (DEAF sightlines vs DEM reflections vs NDV visual noise)",
+      "domain": "Spatial configuration",
+      "related_conflict": "SPATIAL-OPEN",
+      "resolution": {
+        "status": "UNRESOLVABLE-TIER-2"
+      },
+      "trigger": "DEAF-primary building with maximised glazing + DEM/NDV secondary occupants",
+      "mitigation": "Clear glass upper band >1400mm (signing); frosted/etched lower band \u22641400mm (reduces reflections + visual noise). DEAF signing requirements govern when DEAF is primary.",
+      "ot_assessment_mandatory": true,
+      "last_updated": "2026-04-09"
+    }
+  ]
+}
