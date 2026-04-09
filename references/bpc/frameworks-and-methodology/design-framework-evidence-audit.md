@@ -69,3 +69,6 @@ Not yet run.
 - PAS6463:2022 — UK neurodiversity built environment standard
 - Holohan2022 — trauma-informed design scoping review
 - Iwarsson2005 — Housing Enabler validation
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Chidiac, Reda, Marjaba 2024** — "Accessibility of the Built Environment for People with Sensory Disabilities — Review Quality and Representation of Evidence." Buildings 14(3):707. DOI: 10.3390/buildings14030707. Evaluates quality and representation of existing research on accessibility for people with sensory disabilities. Considers variations in disability type, degree of impairment, and assistive aid usage. Identifies gaps and inconsistencies in current studies. **Methodology reference — Tier 3.**

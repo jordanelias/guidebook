@@ -444,3 +444,6 @@ Not yet run.
 
 ### Key sources
 [STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Lindsay, Fuentes, Ragunathan et al. 2024** — "Accessible independent housing for people with disabilities: A scoping review of promising practices, policies and interventions." PLoS ONE 19(1):e0291228. DOI: 10.1371/journal.pone.0291228. PRISMA-ScR, 60 studies across 18 countries over 20 years. Key trends: (1) removing barriers to accessible housing (advocacy, builders, subsidies); (2) policies influencing accessible housing; (3) technology interventions; (4) co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.**
