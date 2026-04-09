@@ -100,7 +100,7 @@
   - Background noise: ≤35 dBA (ANSI/ASA S12.60-2010)
   - STI: ≥0.5 for hearing aid and hearing loop users
 **Jurisdictions confirmed:** US (ANSI/ASA S12.60-2010) · UK (BB93) · ISO 3382
-**Early-close:** No  **Thin/No-data:** Non-English language acoustic standards broadly confirm RT60 targets but do not separately specify disability-differentiated thresholds
+**Early-close:** No  **Thin/No-data:** Non-English language acoustic standards converge on the same RT60 targets but do not separately specify disability-differentiated thresholds
 **Key sources:** Murgia2023 · PLOSONE2025-binaural · ISO3382 · ANSIASA-S12-60 · IEC60118-4
 **Divergent findings:** Standards specify RT60 ≤0.6 s for classrooms generally; hearing-impaired evidence base requires ≤0.3 s — a 2× difference not reflected in most regulatory documents
 **Notes:** RT differentiation (hearing-impaired vs general) is well-evidenced but absent from most national building codes. Cross-reference A-items with VIS/DEAF BPC entry for hearing loop integration. NDV/ASD and NEU/ABI populations also benefit from RT ≤0.3 s — see NDV/MH BPC entry.
