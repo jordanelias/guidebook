@@ -32,7 +32,7 @@
 **Opus synthesis note:** Regulatory scope clarification. Primary value is preventing misattribution of EAA to physical built environment provisions.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | EAA applies to digital products and services only | All EU | EU-27 | 5 |
 | Physical built environment governed by national codes, not EAA | All EU | EU-27 | 5 |
