@@ -34,7 +34,7 @@ language_count: {N}
 **Opus 4 note:** {contradiction + resolution, or NONE}
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | {finding} | {N languages} | {N jurisdictions} | {tier} |
 
