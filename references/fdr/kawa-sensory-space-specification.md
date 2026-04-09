@@ -86,6 +86,6 @@ This layer specifies the arrangement, sizing, and social configuration of the sp
 
 ## 3. Connection Register Entries Generated
 
-CON-0115: A-16 sensory room specification should reference both Model A and Model B spatial configurations, with Model C as DAR default. Current A-16 text references PAS 6463 only.
-CON-0116: Kawa shared calm space requires companion seating specification — not currently in any G-category item. Propose G-XX (companion seating in calm/sensory spaces).
-CON-0117: Model B door specification (unlocked, closeable) conflicts with NDV/MH PTSD specification requiring lockable retreat. Conflict resolution: Model C hybrid with user-selectable lock.
+CON-0148: A-16 sensory room specification should reference both Model A and Model B spatial configurations, with Model C as DAR default. Current A-16 text references PAS 6463 only.
+CON-0149: Kawa shared calm space requires companion seating specification — not currently in any G-category item. Propose G-XX (companion seating in calm/sensory spaces).
+CON-0150: Model B door specification (unlocked, closeable) conflicts with NDV/MH PTSD specification requiring lockable retreat. Conflict resolution: Model C hybrid with user-selectable lock.

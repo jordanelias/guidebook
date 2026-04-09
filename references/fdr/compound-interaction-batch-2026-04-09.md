@@ -33,7 +33,7 @@
 | Lateral clearance 45-50cm (MOB) × pain-modified approach angle (PAIN) | **CONDITIONAL** | If pain is ipsilateral to hemiplegia: approach must be front-on, not lateral; if contralateral: standard lateral approach works |
 | Seat-relative bar height 28cm (MOB) × shoulder ROM limit (PAIN) | **CONDITIONAL** | Pain in shoulder may reduce ROM for bar grip; bar height must accommodate both hemi trunk support AND pain-limited reach |
 
-**Result:** 1 ANTAGONISTIC + 2 CONDITIONAL. → COMPOUND-INTERACTION connection **CON-0118**
+**Result:** 1 ANTAGONISTIC + 2 CONDITIONAL. → COMPOUND-INTERACTION connection **CON-0151**
 **ISW brief:** Transfer specification for hemiplegia+pain must include front-approach option; bar position cannot assume affected-side loading without OT verification of pain location.
 
 ---
@@ -46,7 +46,7 @@
 | Cognitive load of navigation (VIS) × cognitive reserve depletion (OFS) | **ANTAGONISTIC** | VIS navigation requires active scanning and counting; OFS fatigue reduces cognitive capacity for this; standard rest point intervals insufficient because cognitive fatigue accumulates faster than physical fatigue |
 | Contrast wayfinding (VIS) × lighting level for energy conservation (OFS) | **INDEPENDENT** | OFS does not require dim lighting; contrast works at standard illumination |
 
-**Result:** 1 ANTAGONISTIC + 2 INDEPENDENT. → COMPOUND-INTERACTION connection **CON-0119**
+**Result:** 1 ANTAGONISTIC + 2 INDEPENDENT. → COMPOUND-INTERACTION connection **CON-0152**
 **ISW brief:** Rest point intervals for VIS+OFS compound should be shorter than either population's individual specification (cognitive fatigue accumulates faster). Specify rest points at half the standard OFS interval where VIS tactile navigation is the primary wayfinding method.
 
 ---
@@ -60,7 +60,7 @@
 | Simplified layout (DEM) × consistent predictable layout (VIS) | **CONVERGENT** | Both populations benefit from simple, predictable spatial geometry |
 | Floor texture differentiation (VIS) × plain floor (DEM) | **ANTAGONISTIC** | VIS uses texture for orientation; DEM plain floor prevents perceived obstacles |
 
-**Result:** 3 ANTAGONISTIC + 1 CONVERGENT. → COMPOUND-INTERACTION connection **CON-0120** + **SPECIFICATION-LIMIT** flag
+**Result:** 3 ANTAGONISTIC + 1 CONVERGENT. → COMPOUND-INTERACTION connection **CON-0153** + **SPECIFICATION-LIMIT** flag
 **ISW brief:** No environmental wayfinding system resolves this compound through specification alone. Convergent parameter (simplified layout) is the maximum architectural contribution. Human wayfinding assistance is the Tier 2 resolution. Flag for Part 1 §1.9 Scope as specification boundary.
 
 ---
@@ -73,7 +73,7 @@
 | Closet pull-down rail (MOB) × overhead reach prohibition (PAIN-shoulder) | **CONVERGENT** | Both populations benefit from waist-height storage; pull-down rail serves both |
 | Dressing bench seat height (MOB) × pain-optimal seated posture (PAIN) | **CONDITIONAL** | If pain is in trunk: higher seat reduces trunk flexion demand; if pain is in shoulder: seat height less relevant |
 
-**Result:** 1 ANTAGONISTIC + 1 CONVERGENT + 1 CONDITIONAL. → COMPOUND-INTERACTION connection **CON-0121**
+**Result:** 1 ANTAGONISTIC + 1 CONVERGENT + 1 CONDITIONAL. → COMPOUND-INTERACTION connection **CON-0154**
 **ISW brief:** Closet geometry for hemiplegia+shoulder-pain compound must eliminate overhead reach AND provide bilateral access options (not just unaffected-side). Motorised wardrobe carousel is the specification candidate.
 
 ---
@@ -95,14 +95,14 @@
 
 | CMP-ID | Antagonistic | Convergent | Conditional | Independent | Connection? | Spec limit? |
 |---|---|---|---|---|---|---|
-| CMP-01 | 1 | 0 | 2 | 0 | CON-0118 | No |
-| CMP-02 | 1 | 0 | 0 | 2 | CON-0119 | No |
-| CMP-04 | 3 | 1 | 0 | 0 | CON-0120 | **YES** |
-| CMP-05 | 1 | 1 | 1 | 0 | CON-0121 | No |
+| CMP-01 | 1 | 0 | 2 | 0 | CON-0151 | No |
+| CMP-02 | 1 | 0 | 0 | 2 | CON-0152 | No |
+| CMP-04 | 3 | 1 | 0 | 0 | CON-0153 | **YES** |
+| CMP-05 | 1 | 1 | 1 | 0 | CON-0154 | No |
 | CMP-06 | 0 | 3 | 0 | 0 | None | No |
 
-**New connections generated: 4** (CON-0118 through CON-0121)
-**Kawa connections: 3** (CON-0115 through CON-0117)
+**New connections generated: 4** (CON-0151 through CON-0154)
+**Kawa connections: 3** (CON-0148 through CON-0150)
 **Total new connections this session: 7**
 **Specification limits identified: 1** (CMP-04 DEM+VIS wayfinding)
 **Blocked scenarios: 3** (CMP-03, -07, -08 — awaiting granular FDR runs)
