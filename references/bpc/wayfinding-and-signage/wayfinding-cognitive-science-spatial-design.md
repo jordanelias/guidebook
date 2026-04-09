@@ -38,7 +38,7 @@
 **Opus synthesis note:** Cognitive load framework (Sweller 1988) provides the theoretical grounding. Cognitive map progression (Tolman → Siegel & White → PMC8545728) explains why landmark navigation is most preserved in dementia. Design implications are evidence-derived but not empirically validated as specifications.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Spatial configuration outperforms signage for wayfinding accuracy | EN | Cross-jurisdictional (O'Neill 1991; Passini 1984) | 3 |
 | Extraneous cognitive load reduces wayfinding capacity in impaired populations | EN | Cross-jurisdictional (Sweller 1988) | 3 |
