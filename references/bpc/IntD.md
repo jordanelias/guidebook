@@ -35,7 +35,7 @@
 **Highest-ambition actionable specification:** Buildings in IntD-designated use categories to provide: loop/radial circulation with no dead-end branches; pictogram + single-word signage at all route junctions; zone-differentiated ceiling heights for spatial orientation; accessible information format at all service counters. `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | One-way legible circulation; radial/loop layouts; no blind corners | EN | AU (NDIS SDA), CA (CSA B651) | 3, 4 `[TIER 4–5]` |
 | Pictogram + single-word signage at decision points | EN | AU, CA | 3, 4 `[TIER 4–5]` |
