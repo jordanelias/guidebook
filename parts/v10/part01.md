@@ -197,7 +197,7 @@ OT Clinical Practice Guidelines (CPGs) are distinguished from primary OT clinica
 
 **Tier 4 — International Standards with Evidence Basis**
 
-CRPD Article 9 (UN, 2006) — 185 States Parties; foundational international legal framework for accessibility. PAS 6463:2022 (BSI, UK). WELL v2 (2024). ISO 23599:2019 — tactile walking surface indicators. IEC 60118-4:2014+AMD1:2017 — hearing loop performance [UK/EU: BS EN IEC 60118-4:2015+A1:2018]. ISO 21542:2021 — building accessibility and usability. EN 17210:2021 — pan-European accessibility.
+CRPD Article 9 (UN, 2006) — 185 States Parties; foundational international legal framework for accessibility. PAS 6463:2022 (BSI, UK). WELL v2 (2024). ISO 23599:2019 — tactile walking surface indicators. IEC 60118-4:2014+AMD1:2017 — hearing loop performance [UK/EU: BS EN IEC 60118-4:2015+A1:2018]. ISO 21542:2021 — building accessibility and usability. EN 17210:2021 — pan-European accessibility. JIS T 9251 (Japan) — tactile walking surface indicators and slip resistance. DIN 18041:2016 (Germany) — room acoustics for speech communication. GB 50763-2012 (China) — accessible design code.
 
 **Tier 5 — National Beyond-Code Frameworks**
 
