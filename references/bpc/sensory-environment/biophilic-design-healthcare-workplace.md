@@ -27,7 +27,7 @@
 **Highest-ambition actionable specification:** All healthcare and workplace buildings to provide: direct nature views or high-quality nature representations from primary occupancy areas; indoor vegetation or structured natural complexity per space type; daylight with CCT matched to time-of-day and space function; biophilic outdoor transitional zones for decompression. No mandatory standard in any jurisdiction — specify via WELL v2 or LEED credit pathway where applicable.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Biophilic design reduces hospitalisation time, mortality, pain, and provider stress in healthcare settings | EN | Cross-jurisdictional (Al Khatib et al. 2024, 61-source systematic review) | 3 |
 | Nature exposure in workplace shows statistically significant positive restorative outcomes across 16 studies | EN | Cross-jurisdictional (Gonçalves et al. 2023, Tier 3) | 3 |
