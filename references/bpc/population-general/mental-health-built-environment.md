@@ -70,7 +70,7 @@ These serve different clinical functions and cannot be combined. A single "quiet
 **Highest-ambition actionable specification:** Dedicated quiet retreat room ≥9 m² with user-adjustable lighting (2700–6500 K), acoustic treatment (RT60 ≤ 0.4 s), no through-traffic, visual privacy from common areas, and unobstructed exit sightline from inside; all corridor routes loop or terminate at a named destination; design occupancy = maximum occupancy with no surge provision; H-02 individual environmental controls in all patient bedrooms.
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Quiet retreat / de-escalation room | EN, DE, NO, SV | 2–4 |
 | User control of lighting and acoustics | EN, DE, SV | 2–4 |
