@@ -29,13 +29,13 @@ Five systematic reviews conducted using PRISMA-lite methodology. Databases searc
 
 | # | Author(s) | Year | Design | N | Population | Key Finding | Tier |
 |---|---|---|---|---|---|---|---|
-| 1 | Levine, Montgomery, Novak | 2023 | RCT | 63 | Adults (lab) | Grab bar users 75.8% more likely to recover balance during bathtub exit perturbation | 1 |
-| 2 | Levine, Nirmalanathan, Montgomery, Novak | 2025 | Biomechanical | — | Adults | Grasp location during sit-to-stand and bathtub exit mapped; vertical bar preferred | 1 |
+| 1 | Levine, Montgomery, Novak | 2023 | Controlled experimental (randomized to bar/no-bar) | 63 | Adults (lab) | Grab bar users 75.8% more likely to recover balance during bathtub exit perturbation. [DOI](https://doi.org/10.1177/00187208211059860) | 1 |
+| 2 | Levine, Nirmalanathan, Montgomery, Novak | 2025 | Biomechanical | 65 (28 older + 37 younger) | Adults | Grasp location during sit-to-stand and bathtub exit mapped; vertical bar preferred; grasp height correlated with user height (r=0.67). [DOI](https://doi.org/10.2196/69442) | 1 |
 | 3 | Guay, Vinet, Bombardier et al. | ~2017 | Biomechanical | 7 | Young adults | Force applied to grab bars during bathtub transfers quantified across 4 configurations; horizontal high and vertical produced most force | 1 |
 | 4 | Kennedy et al. | 2015 | Biomechanical | — | Mixed | Vertical bar produced smallest COP deviation (most stable support) | 1 |
 | 5 | Nakamura et al. | 2009 | Clinical | — | NEU/hemiplegic | Vertical bars 70–140 cm height on paralysis side, 5 cm from WC edge; bilateral grab bars essential | 1 |
-| 6 | Clemson, Stark, Pighills et al. | 2023 | Cochrane SR | 12 RCTs | Older adults | Environmental interventions for preventing falls: grab bars among most impactful home modifications | 3 |
-| 7 | Crosby, Rodriguez, Canas et al. | 2026 | Systematic review | 9 RCTs | Community-dwelling ≥60 | Home modifications (secure rails primary) reduce fall-related outcomes; risk of bias moderate-high | 3 |
+| 6 | Clemson, Stark, Pighills et al. | 2023 | Cochrane SR | 22 RCTs, 8463 participants | Older adults | Home fall-hazard interventions reduce fall rate by 26% (RaR 0.74, 95% CI 0.61–0.91); 38% reduction in higher-risk populations (RaR 0.62, 95% CI 0.56–0.70). [DOI](https://doi.org/10.1002/14651858.CD013258.pub2) | 3 |
+| 7 | Crosby, Rodriguez, Canas et al. | 2026 | Systematic review | 9 RCTs | Community-dwelling ≥60 | Secure rails reduce fallers and fall rates; combination of home mods may reduce fallers; moderate-high risk of bias. [DOI](https://doi.org/10.1080/10400435.2025.2596022) | 3 |
 | 8 | Kim et al. | 2025 | Systematic review | 20 studies | Older adults aging in place | Bathroom modifications, grab bars, stair railings most impactful; 65% of studies found effectiveness | 3 |
 | 9 | Guitard, Sveistrup, Edwards, Lockett | 2011 | Clinical trial | 80 | Mixed age | Vertical bar on side wall favoured by both older and younger adults during entry/exit; older adults used bars 59.4% of time | 1 |
 | 10 | King & Novak | 2017 | Experimental | — | Older adults | Effect of bathroom aids and age on balance control during bathing transfers; bars improve stability | 1 |
@@ -46,7 +46,7 @@ Five systematic reviews conducted using PRISMA-lite methodology. Databases searc
 
 ## 1.3 Synthesis
 
-**Balance recovery:** The single RCT (Levine 2023) demonstrates a 75.8% greater likelihood of balance recovery with grab bar presence during bathtub exit perturbation. This is the strongest direct evidence for grab bar efficacy in fall prevention in the built environment.
+**Balance recovery:** The Levine 2023 controlled experimental study demonstrates a 75.8% greater likelihood of balance recovery with grab bar presence during bathtub exit perturbation. This is the strongest direct evidence for grab bar efficacy in fall prevention in the built environment.
 
 **Configuration:** Vertical bars consistently outperform horizontal bars for stability during entry/exit (Kennedy 2015: smallest COP deviation; Guitard 2011: preferred by both age groups; Guay ~2017: quantified force profiles). This supports the project specification requiring both horizontal and vertical bars.
 
@@ -175,7 +175,7 @@ This represents a specification upgrade from the current BPC, which already flag
 | 5 | Chaseling survey | 2022 | Survey | MS | pwMS identify AC, fans, ventilation as primary thermal resilience strategies | Co-1 |
 | 6 | Flensner et al. | 2011 | — | MS | 60–80% MS heat sensitivity prevalence confirmed | 1 |
 | 7 | Grossmann, Flueck, Perret et al. | 2021 | Systematic review | SCI | Thermoregulatory responses during exercise; cooling strategies systematic review | 3 |
-| 8 | SCI hypothermia study | 2007 | Observational | 50 SCI tetra | At 22–23°C ambient, 63% subnormal temperature, 3% hypothermia recorded | 1 |
+| 8 | Khan, Plummer, Martinez-Arizala, Banovac | 2007 | Observational | 50 SCI tetra | At 22.2–23.3°C ambient (controlled AC), 63% subnormal temperature, 3% hypothermia recorded. [DOI](https://doi.org/10.1080/10790268.2007.11753910) | 1 |
 | 9 | WHO Housing and Health Guidelines | 2018 | Guideline | Vulnerable populations | Minimum 18°C; disabled/elderly explicitly identified as higher-risk | 4 |
 | 10 | FMS cold pain threshold studies | Multiple | Multiple (14/17 studies) | FMS | Reduced cold pain threshold; warmth relieves FMS pain; cold exacerbates | 1 |
 
@@ -184,7 +184,7 @@ This represents a specification upgrade from the current BPC, which already flag
 **SCI thermoregulatory failure:**
 - Above T6: hypothalamic control disrupted for regions below lesion
 - Tetraplegia: ~30% normal sweating capacity → cannot dissipate heat above ~23°C at rest
-- At 22–23°C controlled ambient: 63% still showed subnormal temperature (hypothermia risk)
+- At 22.2–23.3°C controlled ambient: 63% still showed subnormal temperature (hypothermia risk; Khan 2007)
 - Thermoneutral zone is extremely narrow for tetraplegia: approximately 20–23°C
 
 **MS heat sensitivity:**
