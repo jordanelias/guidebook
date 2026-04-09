@@ -258,3 +258,21 @@ These three F-category items are interdependent but specified independently:
 ---
 
 ---
+
+### CON-0157
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** FDR-CMP-07
+**Target item(s):** B-10, H-03, D-08, E-08
+**Target population(s):** DEAF, DEM
+**Evidence tier:** Opus synthesis
+**Filed:** 2026-04-09
+**Applied:** ---
+
+**Connection:** DEAF+DEM compound resolves at Tier 1 (0 antagonistic). Two-layer information design: simple pictogram for DEM + detailed text for DEAF. Alarm comprehension gap is procedural (Part 9 staffing), not environmental.
+
+**Action required:** Part 3 3.10 compound guidance. Two-layer information design principle.
+
+---
