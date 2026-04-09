@@ -24,6 +24,10 @@ The resolution hierarchy for this guidebook is:
 
 6. **Irresolvable conflicts are documented, not hidden.** Where a conflict cannot be resolved at Tier 0 or Tier 1 for a shared ambient parameter, this section records it as a Tier 2 conflict — resolvable only through individual co-design. The absence of a Tier 0–1 resolution does not mean the space cannot be designed; it means the OT assessment is mandatory.
 
+**Compound intra-individual profiles.** The resolution hierarchy above addresses inter-group conflicts — different people in the same space. For intra-individual compound profiles — a single person who is simultaneously MOB + PAIN + DEM, for example — pairwise resolution is necessary but insufficient. The compound functional impact of co-occurring conditions is supra-additive: the person's functional profile cannot be predicted from the sum of individual population specifications (BMC Geriatrics 2022, Multimorbidity-Weighted Index; Clarke et al., American Journal of Epidemiology, 4.52x environment-impairment interaction). For these occupants, Part 5's building-level resolution provides the environmental baseline, but the final specification is a Tier 2 domain. The OT co-design assessment addresses the interaction between conditions for the individual, using the compound evidence base where it exists and clinical reasoning where it does not. The guidebook equips the OT with the specification parameters (Part 4), the conflict identification (Part 5), and the co-design methodology (Part 9) — but does not prescribe the compound resolution.
+
+
+
 ---
 
 ### §5.2 Conflict Resolution Table
