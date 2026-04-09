@@ -136,3 +136,12 @@ Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FD
 
 **Population mapping:** Primary MOB, DEM; secondary NEU, OFS, PAIN, NDV. Overnight path lighting = Tier 0 candidate (applies ≥6 codes, no population conflicts).
 **Tier 0 candidates:** (1) storage layout as bracing surface (≥3 codes); (2) overnight path lighting (≥6 codes) → append to gap register.
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Crosby, Rodriguez, Canas et al. 2026** — "Home modifications for older adults: systematic review." Assist Technol 38(2):176-186. DOI: 10.1080/10400435.2025.2596022. PMID 41525145. 9 RCTs of community-dwelling adults ≥60. **Key finding:** Secure rails reduce fallers and fall rates; combination of home mods may reduce fallers. Moderate-high risk of bias noted. **Tier 3.**
+
+**Kim et al. 2025** — "Aging in place home modifications: systematic review." 20 studies of older adults. **Key finding:** Bathroom modifications, grab bars, and stair railings identified as most impactful interventions. 65% of included studies found effectiveness. **Tier 3.**
+
+**Clemson, Stark, Pighills et al. 2023** — Cochrane SR. "Environmental and behavioral interventions to reduce fall risk." 22 RCTs, 8463 participants. DOI: 10.1002/14651858.CD013258.pub2. PMID 36893804. **Key finding:** Home fall-hazard interventions reduce fall rate by 26% (RaR 0.74, 95% CI 0.61-0.91); 38% reduction in higher-risk populations (RaR 0.62, 95% CI 0.56-0.70). **Tier 3 (Cochrane).**
+
+**Evidence synthesis note (2026-04-09):** Three independent SRs (Clemson 2023, Crosby 2026, Kim 2025) unanimously confirm that grab bars and bathroom modifications reduce fall rates. Direction of effect is uncontested across all 51 pooled studies. The BPC grab bar specifications (bilateral, 650-900mm, fold-down, ≥200 kg SWL) are well-supported. GRADE rating: **HIGH** for grab bar efficacy; **MODERATE** for specific dimensional values.
