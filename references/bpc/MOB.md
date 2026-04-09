@@ -26,7 +26,7 @@
 **Highest-ambition actionable specification:** Turning space ≥1800 mm diameter [Co-1/Tier 1 — IDeA Center / VA / Habinteg/RCOTSS]; 1700 mm acceptable where space-constrained [Tier 5 — RHFAC CA]; 1700 mm minimum floor [Tier 5 — RHFAC CA / BS8300 UK]. Note: ADA 1524 mm rejected as a design baseline — cited here as evidence of regulatory lag only, not as a permitted specification value. Ramp gradient: 1:20 (5%) ideal [Tier 5]; 1:16 intermediate; 1:12 (8.3%) code minimum with rest platforms every 9 m [Tier 6]. Door clear opening: 900 mm best practice; 850 mm minimum for power WC (CSA B651). SIA 500:2009 (CH): ramp max 6%; admissible to 12% with handrails. NCC 2022/BCA 2024 (AU): AS 1428.1:2021 turning circle 1500 mm × 1500 mm (Tier 6); Summer Foundation/UTS research confirms AS 1428.1 under-accommodates power WC users — same pattern as US. BCA Code 2025 (SG, effective Nov 2025): now includes anthropometric data for power WC users; wheelchair manoeuvring space requirements updated. DL 163/2006 (PT): 1500 mm turning circle for manual WC only — explicitly acknowledged as insufficient for electric WC by authors. DM 236/89 (IT): accessibility/visitability/adaptability three-tier framework; turning space 1500 mm minimum, no power WC provision. 편의증진법 2024 (KR): major 2024 revision shifts from route access to daily life access; 1500 mm manoeuvre space for WC; noted as manual WC basis. NBR 9050:2020 (BR): 360° rotation = 1500 mm diameter; 180° = 1500 mm × 1200 mm; explicitly uses M.R. (módulo de referência) 800 × 1200 mm. SBi-anvisning 230/BR18 (DK): three-tier A/B/C quality levels; C = code minimum (BR18); B = comfort/best practice for WC users; A = care/residential level. ESKEH (FI): Invalidiliitto accessibility audit framework; pyörätuoli kääntöpaikka 1500 mm minimum; sähköpyörätuoli 2500 mm outdoor turning recommended. CEUD Building for Everyone (IE): NDA/CEUD series; Building Regulations Part M 2022 (latest includes Changing Places). NZS 4121:2001 (NZ): 1500 mm diameter manoeuvring circle; G3/AS1 acceptable solution.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | 1500 mm diameter turning space = statutory code minimum (manual WC) | EN, DE, FR, NL, NO, SV, DA, FI, ES, JA, PT, IT, KO | US, UK, CA, AU, IE, NZ, SG, DE, FR, NL, SE, NO, DK, FI, JP, KR, PT, IT, EU, ISO | Tier 6 |
 | Current code minimums calibrated for manual WC only; inadequate for power WC | EN, JA, PT | US, UK, CA, AU, JP, PT, KR | Tier 1 (IDeA Center, UTS, DL163 acknowledgement) |
@@ -147,7 +147,7 @@
 **CRITICAL FLAG:** Item A-09 in the guidebook cites a 0.1 m/s RMS threshold. This value does NOT correspond to any located ISO 2631-1 value. ISO 2631-1 action/limit values are weighted accelerations (m/s²) over 8h, not simple RMS velocity. The source of this threshold is unverified. A-09 must carry: `[UNVERIFIED — source of 0.1 m/s RMS threshold required before publication]`.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Wheelchair users in community settings exposed to WBV at/above ISO 2631-1 health caution zone | EN | Cross-jurisdictional (Garcia-Mendez 2013) | 3 |
 | Floor type is the single largest determinant of WBV transmitted to cervical spine of manual wheelchair users | EN | Cross-jurisdictional (Larivière 2024) | 3 |
