@@ -36,7 +36,7 @@ Hearing loop systems in all assembly and service counter spaces are to comply wi
 **Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed. Three additions: (1) STI measurement must be at furthest occupied seat, not room average — cross-reference RAP BPC Opus adjudication (GAP-RAP-01-b, closed 2026-03-29). Compliant room-average STI does not guarantee adequate listening beyond critical distance (Amlani & Russo 2016). (2) Acoustic panel spectral balance must be verified across 250 Hz–4 kHz — high-frequency-dominant panels degrade consonant-vowel contrast for CI users specifically (RAP BPC caveat 1). (3) The 2440 mm corridor width from deaf-spatial-design BPC creates a potential conflict with NDV compartmentalisation preferences (narrower, enclosed spaces) in mixed-population settings — route to cross-population-conflict-mapper SPATIAL-OPEN domain. Evidence confidence: HIGH for core provisions (IEC 60118-4, RT60 ≤ 0.4 s — Tier 4–5 across 12+ jurisdictions with Tier 1 CI-specific support); MODERATE for Auracast provisions (technology transition, no IEC standard until 2027).
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | IEC 60118-4 governs hearing loop performance; universally adopted | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | Tier 4 |
 | RT60 ≤ 0.4 s in speech communication spaces (best practice) | EN, SV, NO, DA, FI, FR, DE, NL, ES, PT, KO, IT | Tier 4–5 |
