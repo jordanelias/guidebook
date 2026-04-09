@@ -220,7 +220,8 @@ COMPLETE [YYYY-MM-DD HH:MM] — scenarios: {N} — novel: {N} — refines: {N} �
 
 ## 8. Token Rules
 
-- ≤12 functional scenarios per session.
+- ≤12 functional scenario equivalents per session. Compound = 2x, occupation = 3x, environment = 2x.
+- Compound and occupation synthesis: Opus REQUIRED (per framework-compound-functioning-review.md §5).
 - ≤6 sources extracted per scenario.
 - CONFIRMS = 1 line. No full extraction.
 - Diminishing-return gate: 3 consecutive no-yield → stop environment context.
@@ -229,20 +230,75 @@ COMPLETE [YYYY-MM-DD HH:MM] — scenarios: {N} — novel: {N} — refines: {N} �
 
 ---
 
-## 9. Priority Targets (confirmed first-run batch)
+## 9. Research Slug Registry
 
-| Environment | Scenario | Rationale |
-|---|---|---|
-| Bathroom | d420 + hemiplegia → WC transfer | Large OT base; lateral clearance by transfer side |
-| Bathroom | d510 + seated → shower | Shower seat, controls reach, spray direction |
-| Bathroom | d530 + bilateral UPL → toileting | Bidet/wash-dry spatial gap |
-| Kitchen | d630 + seated → meal prep | Worktop, knee clearance, appliance reach |
-| Kitchen | d440 + unilateral UPL → food prep | One-handed techniques; tap type, stabilization |
-| Bedroom | d540 + trunk instability → dressing | Dressing bench, closet geometry |
-| Entrance | d465 + powered wheelchair → threshold | Threshold transition, gradient, turning at door |
-| General | d450 + fatigue → rest points | Rest intervals, alcove dimensions; spans MOB/OFS/PAIN/DEM |
+**Canonical registry:** `references/fdr/fdr-slug-registry-v2.md`
+
+The registry supersedes the original §9 priority targets (all 8 COMPLETE as of 2026-04-09). It contains four scenario types:
+
+| Type | Format | Token weight | Synthesis model |
+|---|---|---|---|
+| Granular (ICF) | `{d-code} + {constraint} → {env}` | 1x | Sonnet (search) + Opus (classify) |
+| Compound `[COMPOUND]` | `{d-code} + {constraint-A} + {constraint-B} → {env}` | 2x | Sonnet (search) + Opus (synthesis REQUIRED) |
+| Occupation `[OCCUPATION]` | `{occupation} + {constraint cluster} → {env}` | 3x | Sonnet (search) + Opus (synthesis REQUIRED) |
+| Environment `[ENVIRONMENT]` | `{env type} + {research question}` | 2x | Sonnet (search) + Opus (synthesis REQUIRED) |
+
+Compound and occupation scenarios draw on Person-Environment-Occupation (PEO) theory and Multimorbidity-Weighted Index (MWI) research — see `references/fdr/framework-compound-functioning-review.md` for theoretical basis.
+
+Session mix recommendation: 4 granular + 2 compound + 1 occupation = ~12 equivalent.
 
 ---
+
+## 11. Compound, Occupation, and Environment Scenario Protocols
+
+### 11.1 Compound Scenario Search Protocol `[COMPOUND]`
+
+Compound scenarios address non-additive functional interactions in persons with co-occurring conditions. Theoretical basis: MWI research (each additional condition increases disability risk ~16%, supra-additive); Clarke et al. environment-impairment interaction (4.52x multiplicative effect).
+
+1. Search each constituent constraint independently using standard §4 sequence.
+2. Search the compound profile explicitly: `"{constraint-A} AND {constraint-B}" AND {environment}`.
+3. If no compound-specific literature exists: document the interaction as clinical reasoning (Co-2), citing the individual constraint findings and the non-additivity principle.
+4. Classification uses extended delta codes:
+   - `COMPOUND-NOVEL` — no prior BPC or FDR entry addresses the interaction
+   - `COMPOUND-REFINES` — existing spec adequate for compound but interaction rationale unstated
+   - `COMPOUND-CONFLICTS` — individual specs give contradictory guidance for compound profile
+5. Compound synthesis is an Opus task. Sonnet collects; Opus synthesises the interaction.
+
+### 11.2 Occupation Scenario Search Protocol `[OCCUPATION]`
+
+Occupation scenarios search whole-occupation performance (PEO/PEOP model). The search target is the occupational flow, not any single ICF code.
+
+1. Map the occupation to its constituent ICF codes (typically 3-6).
+2. Search the occupation name directly in OT home modification literature (e.g., "morning routine home modification").
+3. Search PEO literature for occupation-environment fit studies.
+4. Extract spatial parameters that emerge only at the occupation level (room adjacency, transition zones, sequential grab bar provision) that no individual ICF code search would surface.
+5. Occupation synthesis is an Opus task.
+
+### 11.3 Environment Scenario Search Protocol `[ENVIRONMENT]`
+
+Environment scenarios search by room/space type, not by functional deficit.
+
+1. Search the environment type + "accessible design" + "home modification".
+2. Search population-specific guidance for that environment (e.g., "dementia balcony safety").
+3. Extract parameters unique to the environment type that cross-cut populations.
+4. Apply spatial filter (standard §4): can an architect specify this?
+
+### 11.4 Extraction Template Extensions
+
+**Compound extraction adds:**
+```yaml
+compound_profile: "{constraint-A} + {constraint-B}"
+interaction_type: "{SYNERGISTIC | ANTAGONISTIC | INDEPENDENT}"
+interaction_mechanism: "{clinical reasoning for non-additive effect}"
+```
+
+**Occupation extraction adds:**
+```yaml
+occupation: "{named occupation}"
+constituent_codes: ["{d-code-1}", "{d-code-2}", ...]
+flow_parameter: "{spatial parameter that emerges only at occupation level}"
+```
+
 
 ## 10. Dependencies
 

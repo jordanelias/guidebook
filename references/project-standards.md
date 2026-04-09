@@ -374,3 +374,27 @@ DATE: 2026-04-07 00:44; consolidates session rule from 2026-04-07 00:17
 
 RULE: CRPD treaty-body evidence mandates obligations, not specifications. The guidebook fills the specification gap that treaty bodies leave unfilled. Part 1 must state this relationship explicitly.
 DATE: 2026-04-07 00:44
+
+---
+
+## Session 2026-04-09 — Framework Review + Compound Functioning
+
+RULE: Four-framework theoretical layering governs Part 1 and Part 3. ICF = taxonomy. PEO/PEOP = practice model. Capability Approach = justice framework. Kawa = cultural lens. No single framework is sufficient. All four are required. See Part 3 §3.2.4.
+CONDITION: Any drafting, revision, or review of Part 1 §1.4 theoretical framework, Part 3 §3.2, or any framing that positions the guidebook's intellectual basis.
+ACTION: Reference all four frameworks. Do not position the guidebook as "ICF-based" alone.
+DATE: 2026-04-09 04:58
+
+RULE: Compound functioning principle. Co-occurring conditions produce supra-additive disability (MWI: ~16% per additional condition; Clarke: 4.52x environment-impairment interaction). Pairwise population conflict resolution (Part 3 §3.8, Part 5) is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Tier 2 OT co-design. The guidebook equips professionals; it does not prescribe compound resolutions.
+CONDITION: Any specification, conflict resolution, or synthesis task involving two or more population codes applying to a single individual.
+ACTION: Apply §3.8 Step 0 compound functioning check. If non-additive interaction identified, route to Tier 2 with documented interaction mechanism. Do not apply pairwise resolution as if it were sufficient.
+DATE: 2026-04-09 04:58
+
+RULE: FDR skill now supports four scenario types: granular (ICF), compound [COMPOUND], occupation [OCCUPATION], environment [ENVIRONMENT]. Token weights: compound = 2x, occupation = 3x, environment = 2x. Compound and occupation synthesis requires Opus. Research slug registry: references/fdr/fdr-slug-registry-v2.md (supersedes §9 priority targets).
+CONDITION: Any FDR session.
+ACTION: Consult fdr-slug-registry-v2.md for scenario selection and priority. Apply §11 protocols for compound/occupation/environment scenarios.
+DATE: 2026-04-09 04:58
+
+RULE: Kawa model informs non-Western sensory space specification. PAS 6463 private individual retreat model does not transfer to collectivist cultures. Kawa-informed specification designs for shared calm (collective flow) rather than individual withdrawal. Physics-based sensory parameters (acoustic, lighting, visual complexity) transfer universally; spatial model (private vs shared) requires cultural adaptation.
+CONDITION: Any specification, BPC entry, or item-specification-writer task for sensory rooms (A-16), retreat spaces, or NDV/MH provisions intended for non-Western or collectivist contexts.
+ACTION: State that the private retreat spatial model is culturally specific. Specify physics-based parameters universally. Flag spatial model for Tier 2 co-design with cultural context input. Reference Kawa (Iwama 2006) and framework review.
+DATE: 2026-04-09 04:58

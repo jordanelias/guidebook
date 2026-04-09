@@ -32,6 +32,30 @@ Epidemiological data confirms that the design assumption of a single-category us
 
 ---
 
+
+#### §3.2.3 Compound Functioning and Non-Additive Disability
+
+The ICF and competence-press models operate on individual functional dimensions. Multimorbidity research demonstrates that co-occurring conditions produce supra-additive disability: each additional chronic condition increases disability risk by approximately 16%, and the interaction between conditions accelerates functional decline faster than any single-condition model predicts (BMC Geriatrics 2022, MWI). Clarke et al. (American Journal of Epidemiology) demonstrated a 4.52x multiplicative interaction between built environment quality and lower-extremity impairment — the environment does not add to impairment; it multiplies it.
+
+For the guidebook, this means: when multiple population codes apply to a single occupant, the specification response is not the union of individual population specifications but a compound assessment. At Tier 1, the pairwise resolution in §3.8 is necessary but insufficient. At Tier 2, the OT co-design assessment addresses the interaction between conditions — not each condition independently.
+
+This principle is operationalised in §3.8 Step 0 (compound functioning check) and in Part 5 §5.1.
+
+#### §3.2.4 Theoretical Framework Layering
+
+This guidebook integrates four complementary frameworks:
+
+1. **ICF (WHO 2001)** provides the classification infrastructure — activity codes, environmental factors, the taxonomy of functioning. It is the shared language between this guidebook and the international disability research and policy community.
+
+2. **Person-Environment-Occupation models (PEO, Law et al. 1996; PEOP, Baum et al. 2015; CMOP-E)** provide the theoretical model. Functioning is not person-minus-impairment but person-environment-occupation *fit*. The guidebook's specifications aim to optimise this fit. The three-tier design hierarchy maps directly onto the PEO congruence model: Tier 0 = universal fit floor; Tier 1 = population-informed fit optimisation; Tier 2 = individual co-design for maximum congruence.
+
+3. **The Capability Approach (Sen 1999; Nussbaum 2006)** provides the justice framework. Accessible design expands the *capability set* of occupants — the real freedoms and opportunities they have to do and be what they value. The built environment is a *conversion factor* that transforms personal resources into capabilities. A wheelchair user with an accessible bathroom has a larger capability set than the same person with an inaccessible one, even though the impairment is unchanged.
+
+4. **The Kawa Model (Iwama 2006)** provides the cultural lens. Kawa rejects the Western decomposition of person/environment/occupation as artificial and instead models life as a river whose flow (well-being) depends on the inseparable interaction of water (life force), rocks (circumstances), driftwood (personal attributes), and riverbed (environment). This model is essential for contexts where PAS 6463-style private individual retreat specifications do not transfer to collectivist cultures, and where the guidebook must specify for shared calm rather than individual withdrawal.
+
+No single framework is sufficient. ICF provides the taxonomy but not the theory. PEO provides the theory but not the classification. CA provides the ethics but not the operationalisation. Kawa provides the cultural correction but not the spatial parameters. Together they constitute the guidebook's intellectual architecture.
+
+
 ### §3.3 Co-Occurrence Matrix
 
 The co-occurrence matrix maps the most clinically significant population pairs and their primary specification conflict domains. For each pair: the conflict type (INTRA-INDIVIDUAL vs INTER-GROUP vs BOTH) is identified; the conflict domain is named; and the resolution status is recorded.
@@ -155,6 +179,26 @@ The resolution decision tree operationalises §3.7 as a practitioner tool. It ap
 ```
 START: A specification conflict is identified between Population A and Population B
 for parameter [X] in space [Y].
+
+Step 0: Preliminary checks
+├── Variable conflation check (per project-standards rule 2026-03-30)
+│     Are the opposing needs operating on the SAME physical variable?
+│     If not → not a true conflict. Specify both independently.
+│
+└── Compound functioning check
+      Does the conflict involve an INTRA-INDIVIDUAL compound profile
+      (same person experiences both populations)?
+      ├── YES, and the functional interaction is non-additive
+      │     → This conflict cannot be resolved by pairwise population logic.
+      │       Route to Tier 2 OT co-design assessment.
+      │       Document: "Compound profile — Tier 2 resolution required.
+      │       Individual specifications: [A-spec], [B-spec].
+      │       Interaction mechanism: [brief clinical reasoning].
+      │       OT assessment resolves: [what the OT determines]."
+      │       → EXIT decision tree. Do not proceed to Step 1.
+      │
+      └── NO, or interaction is additive (specs can co-exist)
+            → Proceed to Step 1.
 
 Step 1: Conflict classification
 ├── Is it INTRA-INDIVIDUAL? (Same person experiences both populations)
