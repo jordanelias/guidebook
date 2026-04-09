@@ -11,8 +11,8 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 83 |
-| PENDING | 98 |
+| CONSUMED | 87 |
+| PENDING | 94 |
 
 ## Index
 
@@ -50,9 +50,9 @@
 | CON-0030 | PENDING | CON-0001 items (circulation legibility); cognitive | entrances-and-circulation | MODERATE | true | — |
 | CON-0031 | CONSUMED | Part 3 (economics) | frameworks-and-methodology | HIGH | false | — |
 | CON-0032 | PENDING | Part 1 (structure validation) | wayfinding-and-signage | MODERATE | true | — |
-| CON-0033 | PENDING | — | population-general | HIGH | true | — |
-| CON-0034 | PENDING | — | population-general | HIGH | true | — |
-| CON-0035 | PENDING | — | population-general | HIGH | true | — |
+| CON-0033 | CONSUMED | — | population-general | HIGH | true | — |
+| CON-0034 | CONSUMED | — | population-general | HIGH | true | — |
+| CON-0035 | CONSUMED | — | population-general | HIGH | true | — |
 | CON-0039 | PENDING | A-02, A-08, A-13, all Category A items | entrances-and-circulation | HIGH | true | — |
 | CON-0040 | PENDING | A-02, A-08, A-13, B-01, B-06, F-01, D-05, A-16 | cross-cutting | HIGH | true | — |
 | CON-0041 | PENDING | F-06, Part 9 §9.1.4 (envelope+mass), F-07, H-04, a | bathrooms-and-wet-areas | HIGH | true | — |
@@ -63,7 +63,7 @@
 | CON-0046 | PENDING | A-16, F-01, D-05, CON-0019 items | cross-cutting | HIGH | true | — |
 | CON-0047 | PENDING | Part 7/8 methodology (§7.1 / §8.2) | frameworks-and-methodology | HIGH | true | — |
 | CON-0048 | PENDING | Part 12 (Economics) | frameworks-and-methodology | HIGH | true | — |
-| CON-0049 | PENDING | Part 5 (residential process specification), Part 7 | population-general | HIGH | true | — |
+| CON-0049 | CONSUMED | Part 5 (residential process specification), Part 7 | population-general | HIGH | true | — |
 | CON-0050 | CONSUMED | K-01, fold-down-grab-bar-specification | sensory-environment | HIGH | false | — |
 | CON-0051 | CONSUMED | D-05, wayfinding-dementia-spatial-design, cognitiv | wayfinding-and-signage | HIGH | false | — |
 | CON-0052 | CONSUMED | A-10, A-11, assistive-listening-systems, deafblind | entrances-and-circulation | HIGH | true | — |
