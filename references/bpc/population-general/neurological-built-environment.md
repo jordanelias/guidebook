@@ -48,7 +48,7 @@
 ### NO-DATA / THIN
 | Language | Reason | Predicted by boundary warning? |
 |---|---|---|
-| All non-EN | EN-primary evidence base for ABI wayfinding research; non-EN extended pass not run this session | No warning — clean concepts; gap is retrieval coverage not conceptual boundary |
+| All non-EN | ABI wayfinding research retrieved in EN only this session; DE, FR, JA, NL, NO, SV passes not yet run | No warning — clean concepts; gap is retrieval coverage not conceptual boundary |
 
 ### Citation mining
 | Source | Direction | New sources added |
