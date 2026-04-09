@@ -35,7 +35,7 @@
 **Opus synthesis note:** All specifications derived from clinical trigger literature + engineering standards (Tier 4–5). No RCT-level evidence exists. THIN-BASE disclosure required on all items.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | MCAS/MCS populations require reduced chemical exposure in built environments | EN, DE, FR | Cross-jurisdictional | 4 |
 | TVOC ≤0.5 mg/m³ at 28 days is engineering best practice | EN, DE | ISO 16000-9 (international) | 4 |
