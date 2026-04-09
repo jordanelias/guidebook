@@ -14,7 +14,7 @@
   - Background noise: ≤35 dBA (ANSI/ASA S12.60-2010)
   - STI: ≥0.5 for hearing aid and hearing loop users
 **Jurisdictions confirmed:** US (ANSI/ASA S12.60-2010) · UK (BB93) · ISO 3382
-**Early-close:** No  **Thin/No-data:** Non-English language acoustic standards broadly confirm RT60 targets but do not separately specify disability-differentiated thresholds
+**Early-close:** No  **Thin/No-data:** Non-English language acoustic standards converge on the same RT60 targets but do not separately specify disability-differentiated thresholds
 ### best_practice_synthesis
 **Opus synthesis:** YES [OPUS-SYNTHESIS] — 2026-03-28
 
