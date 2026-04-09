@@ -22,7 +22,7 @@ description: >
 
 Identify connections that exist in the evidence base but are not yet reflected in the guidebook. Two modes:
 
-**Internal mode:** Scans existing BPC entries, OPEN gap register items, and session research outputs. Finds: design solutions siloed in one population's section that evidence supports for others; gap items sharing root cause resolvable by single spec change; item specifications in one category resolving gaps in another; cross-population overlaps described independently but not synthesised.
+**Internal mode:** Scans existing BPC entries, OPEN gap register items, FDR findings, and session research outputs. Finds: design solutions siloed in one population's section that evidence supports for others; gap items sharing root cause resolvable by single spec change; item specifications in one category resolving gaps in another; cross-population overlaps described independently but not synthesised; **compound interaction effects** — where two individually correct specifications produce non-additive functional impacts when applied to the same person (per Part 3 §3.2.3 compound functioning principle).
 
 **External mode:** Scans current literature via web search. Finds: evidence from adjacent fields not yet applied (ergonomics, environmental psychology, gerontology, sensory science, trauma-informed design, inclusive pedagogy); emerging cross-population research; novel design principles.
 
@@ -31,6 +31,8 @@ Both modes may run in a single session. Internal always before external — inte
 ## Inputs
 
 - `references/bpc/{topic}/{slug}.md` — all BPC entries (via slug-registry lookup)
+- `references/fdr/*.md` — FDR findings files (function-indexed evidence)
+- `references/fdr/fdr-slug-registry-v2.md` — FDR scenario registry (compound scenarios in §C)
 - `gap_register.md` — OPEN items only
 - Session research outputs (assembled, not chunked)
 - For external mode: web search access
@@ -40,6 +42,8 @@ Both modes may run in a single session. Internal always before external — inte
 1. **Internal scan:** Read all BPC entries. For each population code pair: does evidence for A have unremarked implications for B? For each OPEN gap: does another item's spec resolve it? For each category: does evidence in X inform a gap in Y?
 
 2. **Cross-population synthesis:** Rate each candidate: HIGH (directly supported by existing Tier 1–3) · MODERATE (supported by inference; new research would confirm) · SPECULATIVE (plausible but not evidenced).
+
+2b. **Compound interaction scan (internal mode):** For each FDR compound scenario (see `references/fdr/fdr-slug-registry-v2.md` §C), check whether the individual FDR findings for each constituent constraint have been independently extracted. If yes: flag the compound interaction as a connection with type `COMPOUND-INTERACTION`. These connections route to item-specification-writer with a compound-synthesis brief (Opus required). Evidence basis: cite both individual FDR findings + the interaction mechanism from the compound scenario. This scan supplements, not replaces, the standard cross-population scan — it operates at the individual-person level rather than the inter-group level.
 
 3. **External scan (external mode only):** Search adjacent fields. Confirm all sources real.
 
@@ -90,7 +94,8 @@ Both modes may run in a single session. Internal always before external — inte
 **Filed:** {YYYY-MM-DD}
 **Applied:** {session ref or —}
 
-**Connection:** {1–3 sentence description of the cross-population or cross-item relationship}
+**Connection type:** CROSS-POPULATION | CROSS-ITEM | COMPOUND-INTERACTION | METHODOLOGY
+**Connection:** {1–3 sentence description of the relationship}
 
 **Evidence basis:** {brief citation of supporting evidence from BPC}
 

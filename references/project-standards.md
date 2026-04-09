@@ -398,3 +398,7 @@ RULE: Kawa model informs non-Western sensory space specification. PAS 6463 priva
 CONDITION: Any specification, BPC entry, or item-specification-writer task for sensory rooms (A-16), retreat spaces, or NDV/MH provisions intended for non-Western or collectivist contexts.
 ACTION: State that the private retreat spatial model is culturally specific. Specify physics-based parameters universally. Flag spatial model for Tier 2 co-design with cultural context input. Reference Kawa (Iwama 2006) and framework review.
 DATE: 2026-04-09 04:58
+RULE: connection-scout entry schema includes connection_type field: CROSS-POPULATION, CROSS-ITEM, COMPOUND-INTERACTION, or METHODOLOGY. Compound interaction connections (type COMPOUND-INTERACTION) are generated from FDR compound scenarios (fdr-slug-registry-v2.md §C) and flag non-additive effects when two individually correct specifications apply to the same person. These route to ISW with compound-synthesis brief (Opus required).
+CONDITION: Any connection-scout session (internal or external mode).
+ACTION: Run Step 2b (compound interaction scan) after standard Step 2. Check FDR registry §C compound scenarios against available individual FDR findings. Flag identified interactions as COMPOUND-INTERACTION connections.
+DATE: 2026-04-09 05:10
