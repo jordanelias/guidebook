@@ -35,7 +35,7 @@
 **Opus synthesis note:** Updates to VA SAH, France MaPrimeAdapt', Quebec PAD suspension, KfW 455-B suspension must be reflected in any guidebook citation. Programme data is time-sensitive — verify before publication.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | All major jurisdictions operate home adaptation programmes | EN, FR, DE, NO, SE, DA, JA, KO | UK, IE, AU, CA, US, CH, DE, FR, NL, NO, SE, DK, SG, JP, KR | 5 |
 | All programmes fund retrofit only | All | All | 5 |
