@@ -41,7 +41,7 @@ Primary internal corridors serving Deaf users are to achieve a clear width of no
 **Cross-language divergence — IMPORTANT:** The corridor width specification (8 ft / 2440 mm) is derived from ASL proxemics at Gallaudet University. ASL uses a larger signing space than several other signed languages. BSL (UK), DGS (Germany), NGT (Netherlands), LSF (France), and LIS (Italy) all have distinct spatial grammars. The 2440 mm figure is likely conservative for BSL and potentially insufficient for multi-person ASL group conversations. Until cross-language spatial grammar research is completed, 2440 mm is the maximum evidenced minimum but should be treated as an ASL-derived floor, not a universal value. [Syncretic Finding S-06, Compendium v2; concept boundary warning applied]
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | Primary corridors to be ≥2440 mm (8 ft) for side-by-side signed conversation | EN (DSDG) | Co-1 / Tier 2 |
 | Signing conversation distance: 900–3050 mm (3–10 ft) between interlocutors | EN (DSDG, RIT InfoGuides) | Co-1 |
@@ -126,7 +126,7 @@ Primary internal corridors serving Deaf users are to achieve a clear width of no
 Hearing loop systems in all assembly and service counter spaces are to comply with IEC 60118-4:2014+AMD1:2017. Reverberation time in speech communication spaces is to not exceed 0.4 s at mid-frequencies. Background noise is to be controlled to NC-25 or below. STI at the listening position is to achieve not less than 0.60. Auracast-ready infrastructure is to be included in new-build assembly spaces as a DAR provision. Remote microphone assistive listening infrastructure is to be provided in all classrooms and meeting rooms. Visual fire alarm strobes (≥110 cd) are to be installed throughout all occupied spaces; audible alarm alone is not adequate where Deaf or deaf-blind occupants are anticipated.
 
 ### Consensus findings
-| Finding | Languages confirming | Tier |
+| Finding | Languages with evidence | Tier |
 |---|---|---|
 | IEC 60118-4 governs hearing loop performance; universally adopted | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | Tier 4 |
 | RT60 ≤ 0.4 s in speech communication spaces (best practice) | EN, SV, NO, DA, FI, FR, DE, NL, ES, PT, KO, IT | Tier 4–5 |
