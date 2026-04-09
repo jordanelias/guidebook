@@ -1,14 +1,28 @@
 # BPC: construction-cost-data
 **Topic:** economics
 **Created:** 2026-04-09 22:55
-**opus_synthesis:** false
+**opus_synthesis:** true
 **Status:** PARTIAL — reduced-confidence warning per standing rule 6
 
 ### Concept boundary notes
 Construction cost data for accessible built environment modifications. Scope: new-build UD premium, retrofit item costs mapped to Part 4, government programme funding, cost-benefit evidence. NOT product pricing (economics-researcher scope boundary).
 
 ### Best-practice synthesis
-{Not yet run — requires Opus session. Standing rule 6: Sonnet never determines best practice.}
+**Completed: 2026-04-09 23:05 | Model: Opus 4.6**
+
+1. **New-build UD premium is a planning decision, not a cost decision.** 138/148 DIN 18040-2 criteria produce zero cost. Residual 0.5%–2% comes from three items: lifts, bathroom spatial allocation, entrance transitions. Convergence across 6 jurisdictions.
+
+2. **Retrofit multiplier: 12× (Germany); 2×–15× (cross-jurisdictional).** This is the strongest economic argument for Part 10 (Adaptable Readiness).
+
+3. **Avoided-cost dividend:** HUD data shows $6,668 savings/participant; 2.5%–4.6% assisted-living deferral rate breaks even. Transforms framing from "accessibility costs" to "inaccessibility costs more."
+
+4. **Architecture:** Part 4 retrofit notes = qualitative penalty ratings only (LOW/MED/HIGH). Specific cost figures → Economics Appendix, jurisdiction-tagged. Cross-reference between.
+
+5. **Three-tier cost-benefit mapping is valid** but must always be subordinate to the rights-based foundation. The economic case removes the cost objection; it does not create the entitlement.
+
+6. **French FFB 2–5% figure: excluded from primary argument.** Not corroborated by independent study; commercial interest source; footnote only.
+
+Full synthesis: `references/cost-data/opus-synthesis-brief.md` (replaced by Opus synthesis output).
 
 ### Consensus findings
 New-build UD premium converges at <1% to ~2% across 6 independent jurisdictions (DE, BE, US, CA, SE, EU). Retrofit costs 2×–15× higher. 138/148 DIN 18040-2 criteria have zero additional cost (TERRAGON/DStGB 2017).
