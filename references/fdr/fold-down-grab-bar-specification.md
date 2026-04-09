@@ -2,7 +2,7 @@
 **Slug:** `fold-down-grab-bar-specification`
 **Topic directory:** `bathrooms-and-wet-areas`
 **FDR run date:** 2026-04-08
-**Status:** PARTIAL — 3 scenarios complete; texture/surface and dementia-wayfinding scenarios remaining
+**Status:** COMPLETE — 5 scenarios (grip force, shoulder pain, unilateral UPL, wet surface texture, dementia wayfinding)
 **Sources:** UNSW HMC Industry Factsheet (Oram, Cameron & Bridge 2006/2014); ADA §609; BS 8300; OT clinical reasoning
 
 ---
@@ -63,3 +63,21 @@
 | Comfort vs. safety trade-off | Smooth/satin surfaces more comfortable for prolonged grip (reduced skin irritation from texture); textured surfaces cause discomfort in extended-contact situations | Chronic condition users with skin sensitivity (RA, scleroderma, lymphoedema): rough texture causes pain during prolonged contact | GrabBars.com; OT clinical reasoning | Co-2 | **NOVEL** — comfort contraindication for textured bars in chronic condition contexts absent from BPC |
 
 **Clinical reasoning (counterintuitive surface finding):** The Bobrick TB-108 finding reverses the traditional specification logic. Textured (peened/knurled) grab bars are universally assumed to be safer in wet conditions — this is the basis of decades of specification practice. The ASTM F2961 test data show that satin-finish bars provide 10% more wet traction because the smooth surface makes better contact with a wet palm (more contact area, more friction) while textured surfaces create a drainage effect that reduces the contact area under wet conditions. For OT grab bar prescription, this means the "rougher = safer" heuristic is incorrect for wet bathroom contexts, and surface specification must distinguish between dry and wet use conditions.
+
+---
+
+## FDR-FGB-05 — d460 + dementia → grab bar as wayfinding/orientation cue in bathroom
+
+**Sources:** HEWI dementia orientation guide; Dementia Alliance International (O'Connor 2020); Bournemouth University (O'Malley/Wiener); Alzheimer Society NB; PMC8545728 (Marquardt et al. 2021); PMC11931140
+
+| Parameter | Value | Condition | Source | Tier | Delta |
+|---|---|---|---|---|---|
+| Grab bar colour — high contrast | Signal colour (red preferred) against white/light wall; minimum 30 LRV point difference | DEM: white bar on white wall = invisible; red/dark bar on light wall = immediately identifiable | HEWI; Dementia Alliance International (O'Connor 2020) | Co-2/Tier 5 | **NOVEL** — grab bar colour contrast as DEM wayfinding specification absent from BPC |
+| Toilet seat contrast | Seat contrasts with floor AND bowl; minimum 30 LRV difference on both axes | DEM: same-colour seat/floor/bowl = person cannot distinguish fixture from surface | HEWI; Alzheimer Society NB; Dementia Alliance International | Co-2 | REFINES — adds floor-to-seat as second contrast axis |
+| Grab bar as landmark | Bar colour distinct from other fixtures; consistent across all bars in same bathroom | DEM: bars serve dual function — support AND visual landmark for room identification | PMC8545728 (Marquardt et al. 2021); OT reasoning | Co-2 | **NOVEL** — dual-function landmark absent from BPC |
+| Matt finish — anti-glare | Matt/satin finish on all fixtures including grab bars; no reflective chrome | DEM: reflective surfaces create glare and visual confusion; chrome distorts environment | HEWI; Dementia Alliance International | Co-2 | **NOVEL** — matt finish as DEM anti-glare for grab bars absent from BPC |
+| Bathroom door signage | Photographic toilet image + word at 1400mm AFF; bar colour alone not sufficient for room identification | DEM: bar visible only inside bathroom; door-level cue needed; yellow/black persists longest in visual memory | Alzheimer Society NB; PMC8545728 (Namazi/Johnson 1991); Bournemouth (O'Malley) | Co-2/Tier 1–2 | REFINES — adds residential bathroom door as specific wayfinding location |
+
+**Clinical reasoning (dual-function grab bar):** For DEM, grab bar simultaneously serves as visual landmark identifying room function. Signal-coloured bars (red, dark blue) provide both VIS contrast AND DEM landmark — satisfying both populations. White bars on white walls fail both VIS and DEM.
+
+**Clinical reasoning (sign format):** Realistic/photographic images outperform abstract pictograms for DEM. Namazi/Johnson 1991 found floor arrows + word "toilet" most effective. Residential specification: small well-designed sign with realistic image + word, non-institutional appearance, at decision point.

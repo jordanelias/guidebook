@@ -2,8 +2,8 @@
 **Slug:** `mobility-built-environment`
 **Topic directory:** `population-general`
 **FDR run date:** 2026-04-08
-**Scenarios run:** 2 (of planned 4)
-**Status:** PARTIAL — PD festinating gait and hemiplegia/ramp complete; spasticity transfers and lower-limb strength/ramp not yet run
+**Scenarios run:** 4
+**Status:** COMPLETE — 4 scenarios run (PD festinating gait, hemiplegia/ramp GAP, spasticity transfers, lower-limb strength/ramp)
 **Primary sources:** Parkinson's UK / COT OT Best Practice Guidelines (Aragon & Kings, 2010); Ramos et al. 2020 systematic review [PMC7683074, DOI: 10.3233/JPD-202035] (Tier 2)
 
 ---

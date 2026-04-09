@@ -2,7 +2,7 @@
 **Slug:** `upper-limb-impairment-built-environment`
 **Topic directory:** `population-general`
 **FDR run date:** 2026-04-08
-**Status:** PARTIAL — 3 scenarios complete; bilateral SCI tetraplegia scenario remaining
+**Status:** COMPLETE — 4 scenarios complete
 **Sources:** PVA SCI Upper Limb Preservation CPG; UNSW HMC; OT clinical reasoning; France+Associates case; ADA; Hand surgery/spasticity literature
 
 ---
@@ -50,3 +50,22 @@
 | Approach clearance — power WC + BFO | ≥1800×1800mm turning space; door actuator placed ≥500mm from door hinge side | Power WC with balanced forearm orthosis (BFO) has extended lateral footprint; actuator must be reachable from WC without requiring approach angle that obstructs path | OT clinical reasoning; BS 8300 power WC spec | Co-2/Tier 5 | REFINES — power WC turning in BPC; adds BFO lateral footprint and actuator reach as compounding constraint |
 
 **Clinical reasoning (tenodesis grasp):** The tenodesis grasp (passive finger flexion when wrist extends) is the functional hand mechanism for C6 complete SCI. OTs design task modification around this mechanism: hook-style hardware, loop pulls, and low-force levers are compatible; round knobs and high-force latches are not. The architectural implication is that hardware selection must be categorised by the *grasp type it requires*, not just by force — tenodesis-compatible hardware is a distinct specification category that does not appear in any current building standard.
+
+---
+
+## FDR-UPL-04 — d420 + bilateral SCI tetraplegia (C4-C6) → transfers in living space (bed, sofa, car)
+
+**Sources:** Physiopedia SCI bed mobility/transfers; MSKTC Safe Transfer Technique; PVA SCI CPG (upper limb preservation); ACI NSW OT SCI transfer boards; CORADA bed height factsheet; Wheelchair Skills Training Program (Physiopedia)
+
+| Parameter | Value | Condition | Source | Tier | Delta |
+|---|---|---|---|---|---|
+| Bed surface height — WC transfer | 430–585mm AFF to mattress top; optimal = level with WC seat height (within 50mm) | SCI WC user: height mismatch >50mm increases transfer difficulty and shoulder injury risk; downhill transfer easier than uphill | CORADA best practices; MSKTC Safe Transfer Technique | Tier 5/Co-2 | REFINES — adds SCI-specific level-transfer principle and directional preference |
+| Transfer board clearance — lateral space | WC at 30–45 degree angle to target; gap within board length (~600–700mm); minimum 900mm clear on transfer side | C6 tetraplegia: tenodesis grasp on board edge; multiple small lifts across board | ACI NSW OT SCI; Wheelchair Skills Training; Shepherd Center | Co-2 | **NOVEL** — transfer board approach angle and lateral clearance absent from BPC |
+| Ceiling hoist — structural provision | Ceiling supports user + hoist (typically 200kg SWL); H-frame/XY track for full room coverage; hoist unit + sling + clearance approximately 300mm below ceiling | C4–C5 tetraplegia: no independent transfer; ceiling hoist is primary transfer mechanism | UDS Foundation; Enable Living; Molift case study | Co-2/Tier 5 | **NOVEL** — ceiling hoist structural reinforcement as designed-in DAR provision absent from BPC |
+| Room-to-room hoist track | Double-width interconnecting doorway (minimum 1200mm clear) between bedroom and bathroom for continuous hoist track | Higher-level tetraplegia: continuous track eliminates intermediate transfers and shoulder injury risk | Molift/Etac case; OT clinical reasoning | Co-2 | **NOVEL** — hoist track continuity requiring wide interconnecting doorway absent from BPC |
+| Mattress — transfer zone | Medium-firm; memory foam contraindicated (impedes repositioning); edge support essential; firm surface at transfer point | SCI: edge must support full body weight during pivot; sinking edge = failed transfer | CORADA; OT reasoning | Co-2 | **NOVEL** — mattress edge support as transfer specification absent from BPC |
+| Wrist protection | Fingers draped over edge (not flat palm); surface must have grippable edge under 50mm thick | SCI: flat palm = carpal tunnel risk; wrist neutral lengthens arms; bed/sofa edge designed for finger-drape grip | MSKTC; PVA SCI CPG | Tier 4 CPG/Co-2 | **NOVEL** — grippable surface edge specification absent from BPC |
+
+**Clinical reasoning (ceiling hoist as DAR):** For C4–C5 complete tetraplegia, ceiling hoist is not optional — it is the primary means of leaving the bed. DAR specification: structural reinforcement zones in bedroom and bathroom ceilings, with conduit routing for hoist power supply and track mounting points, even if hoist is not installed at construction. Retrofit is substantially more expensive and disruptive.
+
+**Clinical reasoning (transfer board geometry):** The 30–45 degree angle is biomechanically optimal — allows user to clear rear wheel during lateral transfer while maintaining both hands within reach. Gap must be bridged by board without unsupported span. Bed must allow WC approach at this angle with at least 900mm clear on transfer side.
