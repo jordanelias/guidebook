@@ -33,7 +33,7 @@
 (5) Closing speed ≥5 s specification is Tier 6 only (ADA, BS 8300) — no clinical evidence links specific closing speeds to population-specific outcomes. Flag for FDR pass.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Lever handles mandatory (knobs non-compliant) | EN, DE, SV, NO, FR, NL, ES, PT, IT, JA, KO, ZH | All 24 | 5-6 |
 | One-handed operation without grasping, pinching, or twisting | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, FR, NL, BE, SG, EU, ISO | 5-6 |
