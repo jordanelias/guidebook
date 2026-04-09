@@ -3,10 +3,7 @@
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 1–3 (multi-jurisdiction cost studies)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 **Consensus finding:** When accessibility is integrated from brief/schematic stage, its cost in new construction is 0.94%–3.92% of project cost by building type — or zero for provisions that are planning decisions rather than materials. The same provisions as post-occupancy retrofit cost 10–40× more. The strongest economic argument is not a financial model; it is the cost curve.
 **Construction cost premium by building type (new build):**
-  - Residential: 0.94% (Ielegems & Vanrie, Belgium 2024)
-  - Educational: 1.67% (Ielegems & Vanrie 2024)
-  - Office: 2.31% (Ielegems & Vanrie 2024)
-  - Healthcare: 3.92% (Ielegems & Vanrie 2024)
+  - Range across building types: 0.94%–3.92% (Ielegems & Vanrie, Belgium 2024; Archnet-IJAR 18(4):719-736). Study typologies: secondary schools, town halls, small retail shops. Lowest premium for smallest/simplest buildings; highest for most complex.
   - Premium approaches zero after three experienced accessible-design projects
   - Germany DIN 18040-2: 130 of 140 criteria = zero additional cost at design stage; full compliance adds 0.5–1.3% (≈€21.50/m²) (TERRAGON/DStGB 2017)
   - Norway: strongly positive benefit-cost ratios; core specifications add negligible cost at schematic stage (Fuglerud et al. 2015)
@@ -30,9 +27,9 @@
   - Construction: 5–25% (change orders)
   - Post-occupancy retrofit: 10–40× brief-stage equivalent
 **Key evidence-strong findings (beyond cost data):**
-  - Toilet visibility (D-03): 47% reduction in incontinence events across 32 dementia care facilities (Marquardt 2011, Tier 3)
-  - Loop floor plan: 94% vs. 34% wayfinding success rate (De Hogeweyk POE, 2012–2019, Tier 3)
-  - Normalised dementia environment: 31% psychotropic medication reduction (Village Landais Alzheimer, 2020, Tier 3)
+  - Toilet visibility (D-03): Marquardt 2011 (HERD) confirms toilet visibility from primary living area as a key wayfinding design criterion for dementia populations. Quantified incontinence reduction data: [UNVERIFIED-QUANT — original 47%/32 facilities claim removed; not in cited source. Replacement source required.]
+  - Loop floor plan: De Hogeweyk (Weesp, NL) demonstrates improved resident autonomy and wayfinding with continuous-loop design. Quantified success rates: [UNVERIFIED-QUANT — original 94%/34% claim removed; no published POE reports these figures. Van Buuren & Mohammadi 2022 (HERD) evaluates Dutch facility floor plans but does not report these percentages.]
+  - Normalised dementia environment: Village Landais Alzheimer (Dax, France, 2020) INSERM evaluation reports encouraging trends including reduced caregiver medication use and slowed cognitive decline at 3-year follow-up (Medscape France, Jan 2024). Specific medication reduction percentage: [UNVERIFIED-QUANT — original 31% claim removed; not in any published INSERM output as of April 2026.]
   - KfW/Prognos evaluation: average retrofit cost €19,100/dwelling for barrier-reduction measures that did not achieve full DIN 18040-2 compliance (2009–2022, 700,000+ dwellings)
   - Sustainability synergy: bundled energy + accessibility retrofits achieve 21–48% operating cost reduction; payback <20 months
   - Social cost of inaccessibility: extra household expenditure with a disabled member ≈5.7% of total household expenditure across 40 countries (Tibble 2005; Zaidi & Burchardt 2005; Mitra & Jones 2017; Estrada-Mejia et al. 2023)
