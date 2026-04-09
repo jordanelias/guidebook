@@ -1,0 +1,731 @@
+{
+  "populations": [
+    {
+      "population_id": "MOB",
+      "label": "Mobility and Strength",
+      "section": "\u00a72.1",
+      "sub_codes": [
+        "MOB/AMB",
+        "MOB/UPL"
+      ],
+      "sub_code_labels": {
+        "MOB/AMB": "Ambulant with mobility aid",
+        "MOB/UPL": "Upper limb and amputation"
+      },
+      "functional_profile": "Wheelchair users (manual and power), scooter users, ambulant users with walking aids (sticks, crutches, frames, rollators), users with lower limb weakness, balance impairment, or reduced walking endurance.",
+      "primary_barriers": [
+        "Steps",
+        "Thresholds >6mm",
+        "Gradients >1:20",
+        "Inadequate clear widths and turning spaces",
+        "High rolling resistance surfaces",
+        "Grip/twist/multi-point hardware",
+        "Absent rest seating",
+        "Inadequate grab bars"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "turning_space",
+          "value": "\u22651800mm (power); \u22651700mm (best practice); \u22651500mm (code min)",
+          "note": "ADA 1524mm under-accommodates power wheelchair at 50th percentile"
+        },
+        {
+          "parameter": "ramp_gradient",
+          "value": "\u22641:20 ideal; \u22641:16 intermediate; \u22641:12 code min",
+          "note": "DIN 18040 and TEK17 specify \u22646%"
+        },
+        {
+          "parameter": "door_clear_opening",
+          "value": "900mm best practice; 850mm minimum",
+          "note": "Max 22N operating force"
+        },
+        {
+          "parameter": "threshold",
+          "value": "0mm target; >13mm gait interception; >20mm 45.8% wheelchair failure",
+          "note": "Above 20mm door is not effectively accessible"
+        },
+        {
+          "parameter": "grab_bar_config",
+          "value": "Two vertical bars; bilateral; \u22651.3kN load",
+          "note": "ADA horizontal config is least preferred in clinical literature"
+        },
+        {
+          "parameter": "rest_seating",
+          "value": "\u226450m intervals (general); \u226425m (OFS/PAIN primary)",
+          "note": "Seat 430-480mm; armrests; clear heel space"
+        }
+      ],
+      "conflict_domains": [],
+      "conflict_summary": "Zero conflict flags with any other population. MOB provisions are beneficial or neutral for all categories.",
+      "co_occurrence_notes": "Most common compounds: MOB+PAIN, MOB+OFS, MOB+DEM (ageing). No conflicts.",
+      "evidence_confidence": "HIGH",
+      "evidence_sources": [
+        "IDeA Center AWM Project (Tier 1, n=500)",
+        "Clemson et al. 2023 Cochrane (38% fall reduction)",
+        "24-jurisdiction convergence"
+      ],
+      "bpc_slugs": [
+        "mobility-built-environment",
+        "upper-limb-impairment-built-environment",
+        "stair-ramp-threshold-biomechanics-accessibility",
+        "accessible-bathroom-and-grab-bar"
+      ],
+      "co1_status": "Partial",
+      "co1_gap_note": "KR and BR Co-1 sources not retrieved",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "MOB/UPL",
+      "label": "Upper Limb and Amputation",
+      "section": "\u00a72.2",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Unilateral/bilateral amputation; hemiplegia; upper limb weakness/tremor (MS, stroke, Parkinson's, ABI); reduced grip strength; rheumatoid arthritis; repetitive strain.",
+      "primary_barriers": [
+        "Grip/twist hardware",
+        "Handles too small/large",
+        "Heavy doors",
+        "Bilateral operation surfaces",
+        "Kitchen/bathroom requiring sustained reach or two-hand operation"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "hardware",
+          "value": "Lever handles; D-pulls at 850mm AFF; max 22N; 32-45mm diameter",
+          "note": "No round knobs or simultaneous two-hand operation"
+        },
+        {
+          "parameter": "kitchen_bathroom",
+          "value": "One-handed operation throughout",
+          "note": "CRITICAL GAP: zero indexed peer-reviewed studies on one-handed kitchen/bathroom design in any language"
+        },
+        {
+          "parameter": "toilet_transfer",
+          "value": "760mm from nearest side wall; bilateral fold-down grab bars at 813mm",
+          "note": "ADA 457mm centreline designed for minority transfer method"
+        }
+      ],
+      "conflict_domains": [
+        "GRAB BAR DIAMETER"
+      ],
+      "conflict_summary": "Grab bar diameter range 32-45mm serves both standard MOB grip and UPL compromised grip.",
+      "co_occurrence_notes": "Frequently co-occurs with MOB/AMB (stroke, MS) and NEU.",
+      "evidence_confidence": "MODERATE (turning/grab bar); LOW (one-handed kitchen/bathroom \u2014 THIN BASE)",
+      "evidence_sources": [
+        "Sanford and Bosch 2013 (Tier 3)",
+        "Lee et al. 2017 (Tier 3)",
+        "KITE Research 2023-25 (Tier 3)"
+      ],
+      "bpc_slugs": [
+        "upper-limb-impairment-built-environment",
+        "accessible-bathroom-and-grab-bar",
+        "fold-down-grab-bar-specification"
+      ],
+      "co1_status": "Not attempted",
+      "co1_gap_note": "UPL-specific Co-1 retrieval not yet conducted",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "VIS",
+      "label": "Vision Impairment",
+      "section": "\u00a72.3",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Spectrum from partial sight (low vision \u2014 majority) to total blindness. Both groups require specific but different provisions simultaneously.",
+      "primary_barriers": [
+        "Absent tactile wayfinding",
+        "Inadequate luminance contrast at junctions",
+        "Sudden illuminance transitions",
+        "Glare",
+        "Inconsistent spatial layout",
+        "Text-only signage at inaccessible heights"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "lrv_contrast",
+          "value": "\u226530 LRV points at critical junctions",
+          "note": "Most cross-jurisdictionally converged VIS specification"
+        },
+        {
+          "parameter": "lighting",
+          "value": "\u2265300 lux in circulation; no glare (UGR <19); no transitions >5:1",
+          "note": ""
+        },
+        {
+          "parameter": "twsi",
+          "value": "ISO 23599:2019 truncated dome; \u22654-5mm raised; \u226570% LRV contrast",
+          "note": "Continuous on all primary routes"
+        },
+        {
+          "parameter": "signage",
+          "value": "Braille + tactile text at 1400-1600mm AFF",
+          "note": "Audio wayfinding at entries and lift calls"
+        }
+      ],
+      "conflict_domains": [
+        "COLOUR-CONT",
+        "SURFACE-TEXT",
+        "VIS-COMPLEX"
+      ],
+      "conflict_summary": "LRV contrast vs NDV muted palette (zoned resolution); TWSI vs PAIN vibration (safety-critical governs); signage density vs NDV visual clutter (pictogram system resolves).",
+      "co_occurrence_notes": "VIS is independent from DEAF \u2014 DBL is distinct category, not VIS+DEAF.",
+      "evidence_confidence": "HIGH (TWSI, LRV \u2014 Tier 4-6 universal); MODERATE (lighting thresholds)",
+      "evidence_sources": [
+        "ISO 23599:2019",
+        "BS 8300:2018",
+        "CNIB 2024",
+        "14-language convergence"
+      ],
+      "bpc_slugs": [
+        "visual-impairment-built-environment",
+        "luminance-contrast-lrv-evidence-base",
+        "detectable-gradient-protocol-sensory-zones"
+      ],
+      "co1_status": "Partial",
+      "co1_gap_note": "RNIB HQ user trials confirmed (UK). Other jurisdictions not systematically retrieved.",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "DEAF",
+      "label": "Deaf and Hard of Hearing",
+      "section": "\u00a72.4",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Profoundly deaf; hard of hearing (typically aided); cochlear implant users; hearing loop/assistive listening system users. CI users have distinct acoustic requirements.",
+      "primary_barriers": [
+        "Audio-only information systems",
+        "Inadequate room acoustics (high RT60, high background noise)",
+        "Absent hearing loops",
+        "Sightline barriers",
+        "Absent visual paging/captioning"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "hearing_loop",
+          "value": "IEC 60118-4:2014+AMD1:2017 in all assembly/reception/counter/communication spaces",
+          "note": "Highest cross-language convergence of any DEAF specification"
+        },
+        {
+          "parameter": "rt60",
+          "value": "\u22640.4s at 500Hz-4kHz in speech spaces; \u22640.3s where NDV co-occurs",
+          "note": "DIN 18041; BS 8300-2:2018 consensus"
+        },
+        {
+          "parameter": "background_noise",
+          "value": "NC-25 or below",
+          "note": ""
+        },
+        {
+          "parameter": "sti",
+          "value": "\u22650.60 at furthest occupied seat (not room average)",
+          "note": "Amlani and Russo 2016"
+        },
+        {
+          "parameter": "visual_fire_alarm",
+          "value": "Strobe VAD \u2265110 cd throughout occupied spaces",
+          "note": ""
+        },
+        {
+          "parameter": "corridor_width",
+          "value": "\u22651500mm for signing pairs; \u22652400mm on primary signing routes",
+          "note": "DeafSpace Guidelines 2010"
+        }
+      ],
+      "conflict_domains": [
+        "ACOUSTIC-LVL",
+        "SPATIAL-OPEN",
+        "DOOR-OPERATION"
+      ],
+      "conflict_summary": "Amplification vs NDV noise sensitivity (zoned + IEC); glazed junctions vs DEM reflections (matte glazing); open sightlines vs NDV enclosure (graduated spatial model).",
+      "co_occurrence_notes": "DEAF provisions generally benefit all populations (visual redundancy). CI-specific requirements may conflict with NDV acoustic targets.",
+      "evidence_confidence": "HIGH (IEC 60118-4, RT60 \u2014 Tier 4-5 across 12+ jurisdictions + Tier 1 CI support); MODERATE (Auracast \u2014 transition technology)",
+      "evidence_sources": [
+        "IEC 60118-4:2022",
+        "DIN 18041:2016",
+        "BS 8300-2:2018",
+        "Iglehart 2020 AJA",
+        "DeafSpace Guidelines 2010/2022"
+      ],
+      "bpc_slugs": [
+        "deaf-acoustic-built-environment",
+        "assistive-listening-systems",
+        "deaf-spatial-design",
+        "deaf-classroom-reverberation-time",
+        "visual-fire-alarm-seizure-safety"
+      ],
+      "co1_status": "Not reported",
+      "co1_gap_note": "",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "NEU",
+      "label": "Neurological and Acquired Brain Injury",
+      "section": "\u00a72.5",
+      "sub_codes": [
+        "NEU/PCS"
+      ],
+      "sub_code_labels": {
+        "NEU/PCS": "Post-concussion syndrome"
+      },
+      "functional_profile": "ABI; stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia); MS; Parkinson's; epilepsy; PCS. Most heterogeneous category. 25% of stroke survivors retain navigation impairment at 12 months.",
+      "primary_barriers": [
+        "Complex spatial configurations",
+        "Inconsistent/landmark-absent wayfinding",
+        "Fine motor hardware",
+        "Excessive thermal environments (Uhthoff's in MS)",
+        "Glare/flickering light (epilepsy, PCS)"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "wayfinding",
+          "value": "\u22642 directional changes per route segment; distinctive landmark at each decision point",
+          "note": ""
+        },
+        {
+          "parameter": "corridor_width",
+          "value": "\u22651200mm min; \u22651500mm preferred (post-stroke)",
+          "note": ""
+        },
+        {
+          "parameter": "temperature",
+          "value": "\u226418\u00b0C for MS (Uhthoff's \u2014 safety-critical)",
+          "note": "Governs over PAIN thermal preferences"
+        },
+        {
+          "parameter": "lighting",
+          "value": "No flickering; no fluorescent; \u22655m transition zones at illuminance changes",
+          "note": "Photosensitivity in epilepsy and PCS"
+        }
+      ],
+      "conflict_domains": [
+        "TEMP-RANGE"
+      ],
+      "conflict_summary": "MS ambient \u226418\u00b0C vs PAIN warm preference \u2014 safety-critical governs; individual supplemental heating for PAIN.",
+      "co_occurrence_notes": "Co-occurrence with MOB most frequent in clinical practice.",
+      "evidence_confidence": "MODERATE",
+      "evidence_sources": [
+        "van der Ham et al. 2021 (Tier 3)",
+        "Davis 2010 Neurology (Uhthoff's)",
+        "Multiple Tier 3 systematic reviews"
+      ],
+      "bpc_slugs": [
+        "neurological-built-environment",
+        "ms-thermal-temperature-conflict-resolution",
+        "stair-ramp-threshold-biomechanics-accessibility"
+      ],
+      "co1_status": "EN only",
+      "co1_gap_note": "13 other language communities not yet searched",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "DEM",
+      "label": "Dementia",
+      "section": "\u00a72.6",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Progressive impairment of cognitive mapping, spatial orientation, memory, recognition, executive function. Floor plan configuration is the most influential environmental factor \u2014 signage alone cannot compensate for poor layout.",
+      "primary_barriers": [
+        "Complex/non-legible floor plans",
+        "Dark floor mats (perceived as holes)",
+        "Reflective flooring",
+        "Absent toilet visibility",
+        "Inconsistent furniture",
+        "Inadequate lighting",
+        "Patterned flooring"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "floor_plan",
+          "value": "Single-corridor or continuous-loop circulation for DEM residential",
+          "note": "Marquardt and Schmieg 2009; Bowes et al. 2019"
+        },
+        {
+          "parameter": "lighting",
+          "value": "\u2265300 lux at eye level; \u2265500 lux task; \u2265250 melanopic EDI",
+          "note": "DSDC EADDAT 2022; Brown 2022 13-jurisdiction consensus"
+        },
+        {
+          "parameter": "contrast",
+          "value": "\u226530 LRV between adjacent surfaces; plain flooring on primary routes",
+          "note": "Pattern-associated falls +15% (DSDC)"
+        },
+        {
+          "parameter": "toilet_visibility",
+          "value": "Toilet door visible from bedroom or direct sightline",
+          "note": ""
+        }
+      ],
+      "conflict_domains": [
+        "COLOUR-CONT",
+        "LIGHT-INT",
+        "VIS-COMPLEX",
+        "MOVE-FREE",
+        "FRAGRANCE",
+        "SPATIAL-OPEN"
+      ],
+      "conflict_summary": "Multiple conflicts with NDV (lighting, contrast, signage density, olfactory). Most resolved through three-zone model (F-01). Wandering freedom vs MOB fall supervision resolved residentially but Tier-2-only in institutional settings.",
+      "co_occurrence_notes": "DEM+MOB most common (ageing). DEM/NDV[IntD-proxy] provisions proxied through DEM+NDV.",
+      "evidence_confidence": "MODERATE-HIGH (spatial \u2014 Tier 3 systematic review); MODERATE (lighting \u2014 practitioner guidance); LOW (non-EN evidence \u2014 9-language gaps)",
+      "evidence_sources": [
+        "DSDC EADDAT 2022",
+        "Marquardt and Schmieg 2009",
+        "Bowes et al. 2019 (429 items)",
+        "Brown 2022"
+      ],
+      "bpc_slugs": [
+        "dementia-built-environment",
+        "wayfinding-dementia-spatial-design",
+        "circadian-lighting-melanopic-edi",
+        "luminance-contrast-lrv-evidence-base"
+      ],
+      "co1_status": "Partial",
+      "co1_gap_note": "EN, DE, NL, JA, FR only. 9 other language communities not searched.",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "NDV",
+      "label": "Neurodivergence",
+      "section": "\u00a72.7",
+      "sub_codes": [
+        "NDV/AUT",
+        "NDV/ADHD",
+        "NDV/SENS"
+      ],
+      "sub_code_labels": {
+        "NDV/AUT": "Autism spectrum",
+        "NDV/ADHD": "ADHD",
+        "NDV/SENS": "Sensory processing differences"
+      },
+      "functional_profile": "Autism, ADHD, sensory processing differences, dyslexia, dyspraxia. Common design requirement: user control over sensory environment and protection from uncontrolled sensory input.",
+      "primary_barriers": [
+        "Uncontrolled sensory input (acoustic, visual, olfactory, thermal)",
+        "Unpredictable spatial sequences",
+        "Fluorescent/flickering lighting",
+        "Complex/high-chroma visual environments",
+        "Absent quiet/retreat space",
+        "Sound masking"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "sensory_room",
+          "value": "A-16: within 25m of any primary occupancy; dimmable 2700-5000K; \u226430 dBA; RT60 \u22640.3s",
+          "note": "Tier 0 provision \u2014 no population conflicts"
+        },
+        {
+          "parameter": "background_noise",
+          "value": "<55 dB(A) in focused-attention spaces",
+          "note": "PROVISIONAL \u2014 single study, pending replication"
+        },
+        {
+          "parameter": "rt60",
+          "value": "\u22640.3s in NDV-designated spaces",
+          "note": "Stricter than DEAF \u22640.4s; NDV target governs in co-occurrence"
+        },
+        {
+          "parameter": "colour_palette",
+          "value": "NCS chroma \u22644 in shared spaces",
+          "note": "PAS 6463:2022 Tier 4"
+        },
+        {
+          "parameter": "user_control",
+          "value": "Individual control over lighting, acoustic, thermal",
+          "note": "Highest-impact NDV provision across all subtypes"
+        }
+      ],
+      "conflict_domains": [
+        "ACOUSTIC-LVL",
+        "COLOUR-CONT",
+        "LIGHT-INT",
+        "SPATIAL-OPEN",
+        "VIS-COMPLEX",
+        "FRAGRANCE"
+      ],
+      "conflict_summary": "Multiple conflicts with DEM and DEAF. Resolved through three-zone sensory model (F-01), hearing loop zoning, graduated spatial model.",
+      "co_occurrence_notes": "NDV/MH is a separate sub-code with distinct spatial requirements (\u00a72.8). NDV/AUT quiet room \u2260 NDV/MH de-escalation room.",
+      "evidence_confidence": "MODERATE (acoustic \u2014 Tier 3-4); LOW (lighting/colour \u2014 no validated thresholds); MODERATE-HIGH (spatial/process \u2014 ASPECTSS, PAS 6463). All quantified thresholds PROVISIONAL.",
+      "evidence_sources": [
+        "PAS 6463:2022",
+        "ASPECTSS Design Index (Mostafa 2008/2021)",
+        "Caniato et al. 2024"
+      ],
+      "bpc_slugs": [
+        "neurodivergent-built-environment",
+        "ndv-aut-built-environment-quantified-thresholds",
+        "sensory-processing-model-design-application",
+        "sensory-relief-space-design",
+        "sensory-room-user-control"
+      ],
+      "co1_status": "Partial",
+      "co1_gap_note": "ZH, NL, FI, IT Co-1 not retrieved",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "NDV/MH",
+      "label": "Mental Health, PTSD, and Trauma",
+      "section": "\u00a72.8",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Anxiety disorders, PTSD, depression, acute psychiatric conditions, trauma histories. Built environment exerts direct, measurable effect on outcomes \u2014 ward design variables are primary predictors of seclusion/restraint independently of clinical variables.",
+      "primary_barriers": [
+        "Blind corridors/corners (ambush geometry)",
+        "No visual exit (entrapment perception \u2014 PTSD critical)",
+        "Overcrowding",
+        "Absent private space",
+        "High-stimulation sensory environments",
+        "Institutional character",
+        "Absent nature connection"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "private_space",
+          "value": "Per patient \u2014 most robustly evidenced environmental intervention",
+          "note": "van der Schaaf 2013 \u2014 largest effect among 14 design variables, n=23,868"
+        },
+        {
+          "parameter": "capacity",
+          "value": "Design occupancy = maximum occupancy; no surge without space",
+          "note": "Weltens 2023 OR 5.36 for aggression"
+        },
+        {
+          "parameter": "spatial_sequence",
+          "value": "No dead ends; all routes loop or terminate at named destinations; exit always visible",
+          "note": "Critical for PTSD"
+        },
+        {
+          "parameter": "de_escalation_room",
+          "value": "\u22659m\u00b2; visual privacy; exit sightline; RT60 \u22640.4s; warm default CCT",
+          "note": "Functionally distinct from NDV/AUT A-16"
+        },
+        {
+          "parameter": "user_control",
+          "value": "H-02 individual controls in all patient bedrooms and retreat spaces",
+          "note": "Faerden 2022: Cohen's d=2.0 (Tier 1)"
+        },
+        {
+          "parameter": "colour",
+          "value": "Warm, nature-derived colours benefit recovery",
+          "note": "Direct conflict with NDV/AUT muted palette \u2014 spatial separation only"
+        }
+      ],
+      "conflict_domains": [
+        "VIS-COMPLEX"
+      ],
+      "conflict_summary": "Warm biophilic palette (NDV/MH) vs muted palette (NDV/AUT) \u2014 no compromise palette; spatial separation required.",
+      "co_occurrence_notes": "NDV/MH de-escalation room is distinct from NDV/AUT sensory room \u2014 cannot be combined.",
+      "evidence_confidence": "HIGH (private space, capacity, user control \u2014 Tier 1); MODERATE (spatial sequence \u2014 Tier 2-4 TID); LOW (colour/nature \u2014 Tier 3 + Co-1)",
+      "evidence_sources": [
+        "van der Schaaf et al. 2013 (Tier 1, n=23,868)",
+        "Weltens et al. 2023 (Tier 1)",
+        "Faerden et al. 2022 (Tier 1)",
+        "Rodr\u00edguez-Labajos 2024 (44 studies)"
+      ],
+      "bpc_slugs": [
+        "mental-health-built-environment",
+        "sensory-room-user-control",
+        "biophilic-design-healthcare-workplace"
+      ],
+      "co1_status": "EN only",
+      "co1_gap_note": "Wilson 2023 Co-1 retrieved (EN). Other jurisdictions not searched.",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "PAIN",
+      "label": "Chronic Pain and Fibromyalgia",
+      "section": "\u00a72.9",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Fibromyalgia, CRPS, chronic widespread pain. Pain amplification, allodynia, fatigue, functional variability. No indexed built environment design research exists in any jurisdiction.",
+      "primary_barriers": [
+        "Cold metal surfaces (allodynia)",
+        "Vibrating flooring",
+        "Prolonged standing",
+        "Heavy hardware",
+        "Inadequate rest seating",
+        "Cold ambient environments",
+        "Excessive sensory stimulation"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "thermal",
+          "value": "Warm ambient preferred (22-24\u00b0C)",
+          "note": "Directly conflicts with NEU/MS \u226418\u00b0C \u2014 safety-critical governs"
+        },
+        {
+          "parameter": "hardware",
+          "value": "Insulated coatings on all metal grab bars/handles",
+          "note": "Cold metal triggers allodynia"
+        },
+        {
+          "parameter": "flooring",
+          "value": "Resilient/cushioned (cork, rubber, cushioned vinyl)",
+          "note": "Reduces vibration and impact force"
+        },
+        {
+          "parameter": "storage",
+          "value": "750-1050mm AFF",
+          "note": "~40% strain reduction (OT energy conservation)"
+        },
+        {
+          "parameter": "rest_seating",
+          "value": "\u226425m interval (stricter than MOB 50m)",
+          "note": "430-480mm height; armrests; backrest"
+        }
+      ],
+      "conflict_domains": [
+        "TEMP-RANGE",
+        "SURFACE-TEXT"
+      ],
+      "conflict_summary": "Thermal conflict with NEU/MS (safety-critical governs; individual warmth for PAIN). TWSI vibration sensitivity (safety-critical VIS/DBL governs on primary routes; JIS T9251 dome sizing partially resolves).",
+      "co_occurrence_notes": "PAIN+MOB common. PAIN+OFS frequent. PAIN provisions all carry EXPERT CONSENSUS marker.",
+      "evidence_confidence": "LOW throughout \u2014 structural evidence gap. Zero indexed built-environment studies in any language. All provisions extrapolated from clinical evidence.",
+      "evidence_sources": [
+        "Staud 2011 (allodynia)",
+        "CDC fibromyalgia clinical guidance",
+        "OT energy conservation principles"
+      ],
+      "bpc_slugs": [
+        "pain-ofs-built-environment-design",
+        "ms-thermal-temperature-conflict-resolution",
+        "thermal-comfort-older-adults-care-settings"
+      ],
+      "co1_status": "None",
+      "co1_gap_note": "No design-specific Co-1 evidence in any jurisdiction. 7 of 14 languages not attempted.",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "DBL",
+      "label": "DeafBlind",
+      "section": "\u00a72.10",
+      "sub_codes": [],
+      "sub_code_labels": {},
+      "functional_profile": "Combined vision and hearing impairment. NOT VIS+DEAF \u2014 distinct category requiring tactile-first design. Visual and auditory provisions are redundancy layers, not primary channels. Communication modes: tactile sign, Protactile, hand-over-hand, residual vision close-range signing, braille.",
+      "primary_barriers": [
+        "Absent tactile wayfinding",
+        "Corridors too narrow for intervenor pair",
+        "Environmental rearrangement destroying tactile cognitive maps",
+        "Absent vibrotactile alerting",
+        "Absent tactile building maps",
+        "Glare/shadow obscuring residual vision"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "tactile_first",
+          "value": "All spatial information accessible through touch alone",
+          "note": "ISO 23599:2019; ABNT NBR 16537:2024"
+        },
+        {
+          "parameter": "corridor_width",
+          "value": "\u22651500mm on all primary routes (intervenor pair)",
+          "note": "Wider than MOB 1200mm minimum"
+        },
+        {
+          "parameter": "protactile_seating",
+          "value": "Face-to-face \u2264600mm; armless movable chairs; \u22651500mm clear per pair",
+          "note": ""
+        },
+        {
+          "parameter": "tactile_maps",
+          "value": "Embossed/thermoform at all major decision points; 900-1200mm AFF",
+          "note": "Updated every 3 years"
+        },
+        {
+          "parameter": "vibrotactile_alerting",
+          "value": "Throughout all occupied spaces as complement to visual strobes",
+          "note": ""
+        },
+        {
+          "parameter": "spatial_consistency",
+          "value": "Furniture permanence is a design obligation",
+          "note": "DBL users build cognitive maps from repeated tactile experience"
+        }
+      ],
+      "conflict_domains": [
+        "SURFACE-TEXT"
+      ],
+      "conflict_summary": "DBL reinforces VIS TWSI requirement. No unique conflicts beyond those already in VIS.",
+      "co_occurrence_notes": "DBL is always a compound condition. Requires specialist consultant (Part 9 \u00a79.11).",
+      "evidence_confidence": "LOW \u2014 Tier 4-5 exclusively. No OT clinical research on DBL-specific built environment in any searched language.",
+      "evidence_sources": [
+        "ISO 23599:2019",
+        "ABNT NBR 16537:2024",
+        "Clark and Nuccio (Protactile)",
+        "Practitioner consensus"
+      ],
+      "bpc_slugs": [
+        "deafblind-built-environment-design"
+      ],
+      "co1_status": "US only",
+      "co1_gap_note": "Co-1 from US Protactile community only (Clark, Nuccio; EN). All other jurisdictions not searched.",
+      "last_updated": "2026-04-09"
+    },
+    {
+      "population_id": "OFS",
+      "label": "Orthostatic and Fatigue Spectrum",
+      "section": "\u00a72.11",
+      "sub_codes": [
+        "OFS/ME",
+        "OFS/POTS",
+        "OFS/MCAS"
+      ],
+      "sub_code_labels": {
+        "OFS/ME": "Myalgic encephalomyelitis / chronic fatigue syndrome",
+        "OFS/POTS": "Postural orthostatic tachycardia syndrome",
+        "OFS/MCAS": "Mast cell activation syndrome"
+      },
+      "functional_profile": "ME/CFS, POTS, MCAS. Defining characteristic: post-exertional malaise (PEM) \u2014 symptom worsening disproportionate to exertion, persisting 24+ hours. Prolonged standing is primary trigger for POTS orthostatic intolerance; hot environments worsen all OFS subtypes. MCAS co-occurs with chemical/fragrance sensitivity.",
+      "primary_barriers": [
+        "Prolonged standing requirements (queuing, standing-only counters, insufficient seating)",
+        "Hot ambient environments",
+        "Absent reclined/semi-recumbent seating",
+        "Chemical fragrances (MCAS trigger)",
+        "Absent low-stimulus rest spaces"
+      ],
+      "key_parameters": [
+        {
+          "parameter": "rest_seating",
+          "value": "\u226425-30m intervals; proportion with 0-30\u00b0 recline; seated waiting for queues",
+          "note": "BS 8300 50m is insufficient for OFS"
+        },
+        {
+          "parameter": "temperature",
+          "value": "Cool \u226419-21\u00b0C in transit spaces",
+          "note": "Aligns with NEU/MS Uhthoff threshold \u2014 no conflict"
+        },
+        {
+          "parameter": "fragrance_free",
+          "value": "F-06 mandatory wherever OFS/MCAS is primary/significant secondary",
+          "note": "Pathophysiological trigger, not preference"
+        },
+        {
+          "parameter": "rest_space",
+          "value": "Accessible without purchase in public buildings \u2265500m\u00b2 GFA; \u22658m\u00b2",
+          "note": "Shared with NDV/AUT A-16 \u2014 no conflict"
+        },
+        {
+          "parameter": "photosensitivity",
+          "value": "\u22655m light transition zones (B-05); no direct overhead fluorescent; UGR <19",
+          "note": ""
+        }
+      ],
+      "conflict_domains": [],
+      "conflict_summary": "OFS provisions have no unique conflicts. OFS thermal requirement aligns with NEU/MS. OFS rest seating is stricter than MOB but directionally compatible.",
+      "co_occurrence_notes": "OFS+PAIN frequent. OFS+MOB common. OFS rest spaces compatible with NDV quiet rooms.",
+      "evidence_confidence": "MODERATE (seating, thermal \u2014 Co-1/Tier 3); LOW (spatial parameters \u2014 zero indexed studies). All provisions carry Tier 5 marker.",
+      "evidence_sources": [
+        "Strassheim 2018",
+        "CDC 2024",
+        "Bateman Horne Center",
+        "IOM/NAM"
+      ],
+      "bpc_slugs": [
+        "ofs-built-environment",
+        "pain-ofs-built-environment-design",
+        "ms-thermal-temperature-conflict-resolution",
+        "air-quality-voc-chemical-sensitivity-built-environment"
+      ],
+      "co1_status": "None \u2014 structural gap",
+      "co1_gap_note": "No design-specific Co-1 evidence in any jurisdiction. All provisions extrapolated from clinical evidence.",
+      "last_updated": "2026-04-09"
+    }
+  ]
+}
