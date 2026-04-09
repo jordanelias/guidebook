@@ -90,7 +90,19 @@
   - Worked Example 5: Supported Housing — Mixed Needs (MOB/DEM/NDV)
 - §3.12 From Approach to Application
   - §3.12.1 The Prior Question
-  - §3.12.2 Before the Entry Paths: Four Decisions
+  - §3.12.2 Before the Entry Path
+
+## Part 5: Building-Level Co-Occurrence Resolution
+
+- §5.1 Scope and Operating Principle
+- §5.2 Conflict Resolution Table
+- §5.3 Unresolvable Conflicts Register
+- §5.4 Application to Design Stages — Worked Examples
+- §5.5 Process Specification — The Environment Is Necessary But Not Sufficient
+  - §5.5.1 The Evidence Finding
+  - §5.5.2 The CAPABLE Model
+  - §5.5.3 Relationship to Room Matrices
+  - §5.5.4 Evidence Bases: Four Decisions
   - §3.12.3 Using the Entry Paths and Matrices with the Approach Brief
   - §3.12.4 When No Matrix Exists
   - §3.12.5 What the Approach Changes in How This Volume Is Used
