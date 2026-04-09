@@ -338,3 +338,227 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 ---
 
 ---
+
+---
+
+## Connections CON-0131+ (Write-back from Opus batches 3-4 + 5-8 corrected, 2026-04-09)
+
+### CON-0131
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** mental-health-built-environment (Opus synthesis 2026-03-30)
+**Target item(s):** A-16, CON-0002
+**Target population(s):** NDV/MH, NDV/AUT
+**Evidence tier:** Tier 1 (Faerden 2022, van der Schaaf 2013, Wilson 2023 Co-1)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** **CON-0002 correction required.** CON-0002 (CONSUMED) proposes collapsing the MH de-escalation room into A-16, retiring the separate MH room concept. The MH BPC Opus synthesis (completed 2026-03-30, AFTER CON-0002 was applied) explicitly contradicts this: "These serve different clinical functions and cannot be combined. A single 'quiet room' fails MH users (who need exit sightline and staff-accessible de-escalation) and NDV users (who need acoustic isolation without staff presence)."
+
+The MH BPC provides a detailed functional comparison:
+
+| Parameter | MH de-escalation | A-16 sensory quiet |
+|---|---|---|
+| Clinical function | Crisis de-escalation; voluntary retreat | Sensory regulation; overstimulation recovery |
+| Exit sightline | Required FROM inside TO exit (PTSD anti-entrapment) | Not specified |
+| Staff access | Discrete monitoring required | Not required |
+| Visual privacy | Required — no observation from common areas | Preferred, not required |
+| Minimum area | ≥9 m² | ≥8 m² |
+
+Wilson 2023 (Co-1) documents the failure mode: sensory rooms repurposed as de-escalation spaces are "clinically useless." Faerden 2022 (Cohen's d = 2.0 for user control in MH) — the largest single effect size in the entire BPC corpus — depends on the MH room meeting MH-specific requirements that A-16 does not.
+
+**Evidence basis:** MH BPC Opus synthesis 2026-03-30. Wilson 2023 Co-1 (failure documentation). Faerden 2022 (Tier 1, effect size). van der Schaaf 2013 (n=23,868 across 199 wards — private space as primary variable).
+
+**Action required:** (1) Flag CON-0002 as PARTIALLY INCORRECT — the multi-population expansion of A-16 (adding OFS, PAIN) is correct; the retirement of the separate MH room is incorrect per subsequent Opus synthesis. (2) Re-establish MH de-escalation room as a distinct item from A-16 — either as a separate item code or as a population-specific variant within A-16 that carries additional MH requirements (exit sightline, staff access, visual privacy). (3) Part 7 NR-HLT: both A-16 AND MH de-escalation room required in healthcare/psychiatric settings — they are not substitutes.
+
+**Disposition notes:** — Evidence post-dates CON-0002 application. This is the most significant evidence-register inconsistency found during this scan.
+
+### CON-0135
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** deaf-acoustic-built-environment, room-acoustic-performance
+**Target item(s):** A-01, A-02, A-08, A-10
+**Target population(s):** DEAF, ALL
+**Evidence tier:** Tier 4-5 (IEC 60118-4, DIN 18041, deaf-acoustic BPC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** The deaf-acoustic BPC specifies Auracast (Bluetooth LE Audio) infrastructure as a DAR provision in all new assembly spaces, alongside IEC 60118-4 hearing loop systems. IEC 60118-17 (Auracast standard) is expected late 2027. During the transition period, dual provision (loop + Auracast-ready infrastructure) is best practice.
+
+This is a DAR item not currently connected to Part 10 (DAR) or H-04 (digital infrastructure). The infrastructure requirement is physical: BLE access points at ceiling level in all assembly/reception spaces; conduit from AV distribution to BLE AP positions; power at each AP location. The cost at construction stage is trivial (conduit + outlet); the retrofit cost is significant (ceiling access in occupied assembly spaces).
+
+Additionally, Auracast serves not only DEAF but also NDV (personal audio stream selection in multi-source environments), VIS (audio description channel), and DBL (residual hearing via personal receiver). It is a multi-population DAR provision.
+
+**Evidence basis:** deaf-acoustic BPC: Auracast infrastructure provision (IEC 60118-17 expected 2027). DAR principle: construction-stage provisions preserve future capacity at negligible cost.
+
+**Action required:** (1) Create DAR provision for Auracast-ready infrastructure in Part 10: BLE AP positions at ceiling level in all assembly, reception, and service counter spaces; conduit from AV distribution; power at AP locations. (2) Add to A-10 (assistive listening) as DAR supplement: "Auracast infrastructure provided alongside IEC 60118-4 hearing loop during technology transition period." (3) Cross-reference H-04 (digital infrastructure). (4) Add NDV, VIS, DBL as co-populations for personal audio stream provision.
+
+**Disposition notes:** — Time-sensitive: IEC 60118-17 publication will trigger a specification update. DAR now preserves the option.
+
+### CON-0138
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** room-acoustic-performance, neurodivergent-built-environment
+**Target item(s):** A-01, A-02, A-08
+**Target population(s):** NDV/AUT
+**Evidence tier:** Tier 1 (Bettarello 2021, Caniato 2024) + Tier 3 (room-acoustic BPC)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** CON-0039 proposes RT60 ≤0.3 s as Tier 0 universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
+
+This creates a population-within-specification hierarchy for acoustic items:
+- General population: 0.6 s (code compliance, Tier 6)
+- DEAF/hearing devices: 0.3 s (Tier 0 per CON-0039)
+- NDV/AUT primary spaces: <0.3 s (Tier 1 — specific value unquantified; ○ marker)
+
+The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Tier 0 of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
+
+**Evidence basis:** room-acoustic-performance BPC: Bettarello 2021 (Tier 1), Caniato 2024 (Tier 1) — autistic populations significantly more affected by modest noise increases. NDV BPC Opus synthesis: "no internationally agreed quantified RT60 target specific to autistic users."
+
+**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Tier 0) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
+
+**Disposition notes:** — MODERATE because no quantified NDV/AUT-specific target exists. The direction is clear; the value is not.
+
+### CON-0141
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** deaf-spatial-design, sensory-relief-space-design
+**Target item(s):** A-16, Part 7 NR-EDU
+**Target population(s):** DEAF, NDV/AUT
+**Evidence tier:** Co-1 (DeafSpace) + Tier 3 (sensory-relief BPC)
+
+**Connection:** A-16 specifies acoustic isolation (STC ≥50, RT60 ≤0.3s, NC ≤25). This creates a communication isolation hazard for DEAF users — a sound-isolated room without visual alerting or transparent sightlines prevents a DEAF user inside from receiving emergency alerts or communicating with people outside. Project-standards already flags this for D-05 (CON-0036: "sound attenuation creates emergency egress and communication isolation risk for DEAF"). The same logic applies to A-16 but is undocumented.
+
+Resolution per CON-0036 precedent: visual emergency alerts inside A-16; transparent sidelight or vision panel at door; vibrotactile alerting device (K-04) connected to building fire alarm. A-16 acoustic isolation serves NDV/AUT; DEAF communication access prevents isolation becoming entrapment.
+
+**Action required:** Apply CON-0036 pattern to A-16: visual emergency alert + vision panel + K-04 vibrotactile. Prevents A-16 from being a communication-isolation hazard for DEAF/DBL users.
+
+### CON-0144
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** sensory-relief-space-design, neurodivergent-built-environment
+**Target item(s):** A-16
+**Target population(s):** NDV/AUT
+**Evidence tier:** Tier 3 (Rashid/Al-Harasis 2025)
+
+**Connection:** The sensory-relief BPC notes: "Rashid et al. (2025) taxonomy identifies that most frameworks overemphasise interior elements relative to spatial configuration (adjacency, sequencing, approach). This is a gap in A-16's current specification scope." CON-0023 (CONSUMED) independently flags the same finding from Al-Harasis 2025: "current autism design frameworks rely on intuition sensory zoning as the main driver for spatial topology without quantifying the sensory drivers."
+
+Two independent sources in two connection entries identify the same gap: A-16 specifies finishes and fixtures (lighting, acoustic treatment, materials) but NOT spatial configuration (where A-16 sits relative to other spaces, what the approach sequence is, what adjacencies are required). The sensory-relief BPC already identifies "proximity to sanitary facilities" as a NEW requirement from Amaze/Architecture & Access 2025.
+
+**Action required:** A-16 spatial configuration specification: (a) adjacent to primary circulation without passing through high-stimulation zones; (b) proximity to accessible toilet (≤15m); (c) approach via transition/decompression zone (≥3m, per PAS 6463); (d) not adjacent to high-noise sources (kitchens, plant rooms, playgrounds); (e) not at dead-end of corridor (DBL/DEM egress). These are spatial-configuration requirements distinct from the interior specification.
+
+### CON-0145
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** acoustics-speech-intelligibility-disability, deaf-acoustic-built-environment
+**Target item(s):** A-10, H-04
+**Target population(s):** DEAF, NDV, VIS
+**Evidence tier:** Tier 4 (IEC 60118-4)
+
+**Connection:** Hearing loop field uniformity (±3 dB per IEC 60118-4) requires specific spatial conditions: metal structures, underfloor heating, and electrical wiring interfere with magnetic field. H-04 (digital infrastructure) specifies conduit routing but does not cross-reference hearing loop installation constraints. When H-04 conduit and A-10 hearing loop are designed independently, the conduit routing may degrade loop performance.
+
+Additionally: underfloor heating (specified as OFS/PAIN thermal provision via F-07 heated bathroom floor) creates magnetic field interference with hearing loops in the same space. A heated bathroom floor and a hearing loop cannot coexist without a phased-array or cancellation loop design — an engineering coordination requirement not documented.
+
+**Action required:** Part 8 (Engineering): heating system type and electrical conduit routing must be coordinated with hearing loop design. Underfloor heating in looped spaces requires phased-array loop or cancellation coil. Cross-reference F-07 ↔ A-10 ↔ H-04.
+
+### CON-0146
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** visual-impairment-built-environment, deaf-spatial-design, deafblind-built-environment-design
+**Target item(s):** B-06, B-07 (lighting)
+**Target population(s):** DEAF, VIS, DBL
+**Evidence tier:** Co-1 (DeafSpace) + Tier 4-6 (VIS BPC)
+
+**Connection:** DEAF BPC: ≥300 lux diffuse, matte-reflected, shadow-free lighting in communication zones; backlighting eliminated; lighting serves sign language visibility. VIS BPC: ≥300 lux in circulation without glare; no sudden illuminance transitions >5:1. These targets are identical in value (≥300 lux) and complementary in character (both require diffuse, glare-free light). But the rationale is different: DEAF needs light on the signer's face and hands; VIS needs light on environmental surfaces for legibility.
+
+The practical implication: lighting placement differs. DEAF requires frontal/lateral light on the person (face illumination for lip-reading and signing). VIS requires light on the environment (surface illumination for contrast detection). A single luminaire position cannot optimise for both simultaneously. The specification should distinguish: ambient/surface lighting (VIS) and communication-zone lighting (DEAF) as two coordinated layers.
+
+DBL needs BOTH: high ambient for residual vision + shadow-free for tactile reading of faces/hands.
+
+**Action required:** B-06/B-07: specify two lighting layers in shared DEAF+VIS spaces — (a) ambient surface illumination ≥300 lux for VIS legibility; (b) communication-zone face/hand illumination for DEAF signing, positioned to eliminate backlighting on signers. Both diffuse, both glare-free, but different placement geometry.
+
+### CON-0164
+*[formerly CON-0153]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** visual-fire-alarm-seizure-safety, deaf-acoustic-built-environment, sensory-relief-space-design
+**Target item(s):** B-10, A-16, K-04
+**Target population(s):** DEAF, NEU (photosensitive epilepsy), NDV/AUT
+**Evidence tier:** Tier 3–4 (Jordan & Vanderheiden 2024, BS EN 54-23)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** A-16 requires acoustic isolation (NDV/AUT) → DEAF needs visual alerting inside (CON-0141) → NEU photosensitive users need flash protection. Three-way interaction. Resolution: K-04 vibrotactile wearable as primary (serves DEAF/DBL without visual/acoustic trigger); VAD at 0.5 Hz synchronised; voice alarm emergency-only with visual pre-alert; no unsynchronised strobes.
+
+**Evidence basis:** Jordan & Vanderheiden 2024 (0.5–1 Hz safe below 3 Hz seizure threshold). BS EN 54-23 (synchronisation). CON-0141 (DEAF isolation in sound-attenuated spaces).
+
+**Action required:** A-16 emergency notification: (1) K-04 vibrotactile connected to fire alarm; (2) VAD at 0.5 Hz synchronised; (3) voice alarm emergency-only with 5-second visual pre-alert; (4) no unsynchronised strobes.
+
+**Quality assessment:** Strong. Safety-critical. Novel multi-population specification.
+
+### CON-0166
+*[formerly CON-0155]*
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** therapeutic-lighting-design, circadian-lighting-melanopic-edi, sensory-processing-model-design-application
+**Target item(s):** B-01, B-06, B-07, A-16
+**Target population(s):** DEM, NDV/AUT, NEU
+**Evidence tier:** Tier 1 (circadian RCTs) + Tier 3 (Dunn model)
+**Filed:** 2026-04-09
+**Applied:** —
+
+**Connection:** Circadian lighting requires ≥250 melanopic EDI daytime. A-16 needs calming function — low melanopic EDI (≤10, ≤2700K CCT). If A-16 is on the building's circadian programme, mid-morning users receive ≥250 melanopic EDI contradicting the room's calming function. A-16 must be independent from the circadian system.
+
+**Action required:** A-16 lighting: independent from building circadian system. Max melanopic EDI ≤10 (occupant may increase). CCT ≤2700K default. Dimmer to 1%. No automatic circadian programme in A-16. Cross-reference B-01 with exclusion note.
+
+**Quality assessment:** Strong system-interaction finding. Clear, actionable.
+
+### CON-0148
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Target item(s):** A-16
+**Target population(s):** NDV/MH, NDV/AUT
+
+**Connection:** MH de-escalation room specification — separation from NDV quiet room [DESCRIPTION PENDING — source session file required]
+
+### CON-0149
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Target item(s):** G-XX (proposed)
+**Target population(s):** NDV/MH, NDV/AUT
+
+**Connection:** Proposed new item — sensory room furniture specification [DESCRIPTION PENDING]
+
+### CON-0150
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Target item(s):** A-16 door spec
+**Target population(s):** NDV/MH, NDV/AUT
+
+**Connection:** A-16 door specification detail [DESCRIPTION PENDING]
+
