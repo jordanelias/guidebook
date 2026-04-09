@@ -38,7 +38,7 @@
 **Opus synthesis note:** Numeric thresholds (0.2 s RT60, 50 lux, 30 LRV) are working specifications derived from perception science — "minimum perceptually detectable," not empirically validated clinical thresholds.
 
 ### Consensus findings
-| Finding | Languages confirming | Jurisdictions confirming | Tier |
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Multi-sensory redundancy at zone boundaries improves orientation for sensory-impaired populations | EN | ISO 21542:2021; PAS 6463:2022 | 3–4 |
 | Graduated sensory transitions reduce arousal in autistic users | EN | Cross-jurisdictional (Mostafa 2021; Williams 2024) | 1–2 |
