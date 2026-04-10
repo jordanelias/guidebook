@@ -13,7 +13,7 @@
   - Cleaning products: low-fragrance, low-VOC in maintenance specification; no aerosol sprays during occupied hours
   - Biophilic planting: low-VOC, low-pollen species only in OFS-occupied spaces; no strongly scented flowering plants
 **F-02 (Fragrance-free zones — policy level):** Builds on F-04 physical specification. All spaces serving MCAS/MCS/PCS populations to operate under a documented fragrance-free policy. Applies to occupants, staff, and cleaning products. Not a design item — an operational policy that must be embedded in FM brief and lease/occupancy agreements.
-**Chemical sensitivity prevalence:** ~12.8% of US adults report chemical sensitivity; ~3.9% report MCS diagnosis (Steinemann 2018, Tier 3); international co-prevalence with autism ~3× general population
+**Chemical sensitivity prevalence:** ~12.8% of US adults report medically diagnosed MCS; ~25.9% report chemical sensitivity (Steinemann 2018, JOEM 60(3):e152-e156, Tier 3); earlier surveys (2005-2006) found 3.9% MCS — increase represents >300% growth. International co-prevalence with autism ~3× general population
 **Uhthoff's phenomenon and MS thermal conflict:** [XREF ONLY — canonical source: `references/bpc/health-and-symptom-management/ms-thermal-temperature-conflict-resolution.md`. Do not cite thermal conflict resolution content from this slug. Duplicate removed 2026-03-29.]
 **Jurisdictions confirmed:** No jurisdiction has a building standard for chemical sensitivity or MCS. WELL v2 (Air Quality feature) and LEED v4.1 (EQ credits) are the most widely applied voluntary frameworks. ISO 16000-9 governs VOC measurement. MERV ratings per ASHRAE 52.2.
 **Evidence gaps:** No RCT-level evidence linking MERV 13 specification to MCAS symptom reduction in built environments. All specifications are Tier X (expert consensus derived from clinical trigger literature). Evidence review recommended at next revision.
@@ -40,7 +40,7 @@
 | MCAS/MCS populations require reduced chemical exposure in built environments | EN, DE, FR | Cross-jurisdictional | 4 |
 | TVOC ≤0.5 mg/m³ at 28 days is engineering best practice | EN, DE | ISO 16000-9 (international) | 4 |
 | MERV 13 minimum for sensitive populations | EN | ASHRAE 52.2; WELL v2 | 5 |
-| ~12.8% US adults report chemical sensitivity | EN | US (Steinemann 2018) | 3 |
+| ~12.8% US adults medically diagnosed MCS; ~25.9% report chemical sensitivity | EN | US (Steinemann 2018, JOEM 60(3):e152-e156) | 3 |
 
 ### Divergent findings
 | Topic | Position A | Position B | Cause |
@@ -66,5 +66,5 @@ Not yet run.
 - PAS6463:2022 — neurodiversity design guidance (sensory environment)
 - EN-ISO-16000-9 — VOC measurement standard
 - WELL-v2-Air — voluntary air quality framework
-- Steinemann2018 — chemical sensitivity prevalence (12.8% US adults)
+- Steinemann2018 — MCS prevalence (12.8% diagnosed MCS; 25.9% chemical sensitivity; US adults)
 - ASHRAE-52.2 — MERV filtration rating standard
