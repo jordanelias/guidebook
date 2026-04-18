@@ -1,0 +1,58 @@
+name: Guidebook CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  syntax:
+    name: Syntax check (Markdown, JSON, YAML)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check all .md files are valid UTF-8
+        run: |
+          python3 scripts/ci_helpers/check_utf8_md.py
+
+      - name: Check all .json files parse
+        run: |
+          python3 scripts/ci_helpers/check_json.py
+
+      - name: Check all .yaml/.yml files parse
+        run: |
+          pip install pyyaml --quiet
+          python3 scripts/ci_helpers/check_yaml.py
+
+  structure:
+    name: Structure validation (BPC, cross-refs, thresholds)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate all BPC files
+        run: python3 scripts/validate_bpc.py --all --verbose
+
+      - name: Validate cross-references
+        run: python3 scripts/validate_cross_refs.py --repo-root .
+
+      - name: Check file thresholds
+        run: python3 scripts/check_thresholds.py --report
+
+  commit-msg:
+    name: Commit message format check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Validate HEAD commit message format
+        run: python3 scripts/ci_helpers/check_commit_msg.py
