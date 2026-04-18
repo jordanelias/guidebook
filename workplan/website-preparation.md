@@ -139,10 +139,12 @@ All Phase A work runs in Claude.ai because it depends on the existing guidebook 
 
 ### Block 1: Cleanup + Audit (1–2 sessions)
 
+**Path mapping discipline (from ecosystem restructure guidelines §3.1–3.2):** Before any file move (gap register split, session archive), build a complete old→new path mapping. Scan all ecosystem files for references to paths being moved: slug-registry.md, connections/_index.md, skills/*.md, workplan/*.md, gap_register.md, project-standards.md. Update references atomically with or before the move. Verify no orphaned references remain after each move commit.
+
 | Task | Description |
 |---|---|
-| A3 | Split gap register active/archive |
-| C2 | Archive old session files |
+| A3 | Split gap register active/archive. Path map: `gap_register.md` → `gap_register.md` (active only) + `gap_register_archive.md` (CLOSED items). Scan for references in: session files (next_action fields), skills (content-gap-analyzer, critique-report-writer), workplan files. Atomic commit: create archive + update active + update any references. |
+| C2 | Archive old session files. Move pre-2026-04-01 sessions to `sessions/_archive/`. Atomic batch commit (read + create at new path + delete old). No downstream references expected — session files are terminal, not cross-referenced — but verify LATEST pointer is unaffected. |
 | Source format audit | Read every parser source file listed in §2. Document formatting patterns, edge cases, known issues for each. Produce **parser source readiness report** covering: standards-registry, glossary, Part 2, Part 3 (§3.3, §3.5–3.12, §3.8, §3.9, §3.11), Part 4, Part 5, Part 8 (§8.1, §8.3.3), Part 9 (§9.2.2), Part 10 (§10.1), Part 12, bibliography-v9. |
 | A5 (audit only) | During source format audit: count standards referenced in BPC jurisdiction_coverage sections that aren't in standards-registry.md. Quantify the gap (29 current → target 100–150). |
 | A6 | During Part 3/Part 9 audit: validate decision tree completeness and OT trigger logic. Flag any population combinations that produce no output or contradictory output. |
