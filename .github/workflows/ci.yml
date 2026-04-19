@@ -37,12 +37,12 @@ jobs:
           python-version: "3.11"
 
       - name: Validate all BPC files
-        # --warn-only: BPC files predate CO-0006 schema. Remove --warn-only after Block 2.
-        run: python3 scripts/validate_bpc.py --all --verbose --warn-only
+        # Block 2 complete (2026-04-19) — --warn-only removed. CO-0006 schema enforced.
+        run: python3 scripts/validate_bpc.py --all --verbose
 
       - name: Validate cross-references
-        # --warn-only: existing files may have orphan pairs. Remove after Block 2.
-        run: python3 scripts/validate_cross_refs.py --repo-root . --warn-only
+        # Block 2 complete (2026-04-19) — --warn-only removed.
+        run: python3 scripts/validate_cross_refs.py --repo-root .
 
       - name: Check file thresholds
         run: python3 scripts/check_thresholds.py --report
