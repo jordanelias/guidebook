@@ -190,9 +190,10 @@ def collect_bpc_files(repo_root: str = ".") -> list[str]:
     return sorted(glob.glob(pattern, recursive=True))
 
 
-def run(files: list[str], verbose: bool = False) -> int:
+def run(files: list[str], verbose: bool = False, warn_only: bool = False) -> int:
     """
     Validate all files. Returns exit code (0 = all pass, 1 = failures).
+    If warn_only=True, reports failures but always exits 0.
     """
     total = len(files)
     failed = 0
@@ -205,9 +206,10 @@ def run(files: list[str], verbose: bool = False) -> int:
             failed += 1
 
     # Output results
+    label = "WARN" if warn_only else "FAIL"
     for path, errors in all_results.items():
         if errors:
-            print(f"FAIL: {path}")
+            print(f"{label}: {path}")
             for e in errors:
                 print(f"  {e}")
         elif verbose:
@@ -215,12 +217,15 @@ def run(files: list[str], verbose: bool = False) -> int:
 
     # Summary
     passed = total - failed
+    mode = " (warn-only mode — exit 0 regardless)" if warn_only else ""
     print(f"\n{'='*60}", file=sys.stderr)
-    print(f"validate_bpc.py: {passed}/{total} files passed", file=sys.stderr)
+    print(f"validate_bpc.py: {passed}/{total} files passed{mode}", file=sys.stderr)
     if failed:
-        print(f"  {failed} file(s) failed — see errors above", file=sys.stderr)
+        print(f"  {failed} file(s) with issues — see output above", file=sys.stderr)
     print(f"{'='*60}", file=sys.stderr)
 
+    if warn_only:
+        return 0
     return 1 if failed else 0
 
 
@@ -230,6 +235,8 @@ def main():
     parser.add_argument("--all", action="store_true", help="Validate all BPC files in references/bpc/")
     parser.add_argument("--changed", action="store_true", help="Read file paths from stdin")
     parser.add_argument("--verbose", "-v", action="store_true", help="Show PASS results too")
+    parser.add_argument("--warn-only", action="store_true",
+                        help="Report failures but exit 0 (use during transition before Block 2)")
     args = parser.parse_args()
 
     if args.all:
@@ -245,7 +252,7 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    sys.exit(run(files, verbose=args.verbose))
+    sys.exit(run(files, verbose=args.verbose, warn_only=args.warn_only))
 
 
 if __name__ == "__main__":

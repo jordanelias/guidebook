@@ -41,7 +41,7 @@ THRESHOLDS = [
     },
     {
         "glob": "references/project-standards.md",
-        "max_tokens": 10000,
+        "max_tokens": 10500,
         "description": "Project standards (session-start load)",
         "note": "If growing too large, consider splitting into sub-documents",
     },

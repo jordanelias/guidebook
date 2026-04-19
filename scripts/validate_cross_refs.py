@@ -175,8 +175,10 @@ def check_bpc_searchlog_coexistence(
 
 # ── Runner ───────────────────────────────────────────────────────────────────
 
-def run(repo_root: str = ".", fast: bool = False) -> int:
-    """Run all checks. Returns exit code."""
+def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> int:
+    """Run all checks. Returns exit code.
+    If warn_only=True, reports issues but always exits 0.
+    """
     errors: list[tuple[str, str]] = []
 
     print("Loading registries...", file=sys.stderr)
@@ -199,17 +201,21 @@ def run(repo_root: str = ".", fast: bool = False) -> int:
     errors.extend(check_bpc_searchlog_coexistence(bpc_slugs, sl_slugs))
 
     # Output results
+    label = "WARN" if warn_only else "FAIL"
     if errors:
         for path, msg in sorted(errors):
-            print(f"FAIL [{path}]: {msg}")
+            print(f"{label} [{path}]: {msg}")
     else:
         print("All cross-reference checks passed.")
 
     # Summary
+    mode = " (warn-only mode)" if warn_only else ""
     print(f"\n{'='*60}", file=sys.stderr)
-    print(f"validate_cross_refs.py: {len(errors)} error(s) found", file=sys.stderr)
+    print(f"validate_cross_refs.py: {len(errors)} issue(s) found{mode}", file=sys.stderr)
     print(f"{'='*60}", file=sys.stderr)
 
+    if warn_only:
+        return 0
     return 1 if errors else 0
 
 
@@ -217,11 +223,13 @@ def main():
     parser = argparse.ArgumentParser(description="Validate cross-references in guidebook repo")
     parser.add_argument("--fast", action="store_true",
                         help="Skip section heading resolution (faster, less thorough)")
+    parser.add_argument("--warn-only", action="store_true",
+                        help="Report issues but exit 0 (use during transition)")
     parser.add_argument("--repo-root", default=".",
                         help="Path to guidebook repo root (default: current directory)")
     args = parser.parse_args()
 
-    sys.exit(run(repo_root=args.repo_root, fast=args.fast))
+    sys.exit(run(repo_root=args.repo_root, fast=args.fast, warn_only=args.warn_only))
 
 
 if __name__ == "__main__":
