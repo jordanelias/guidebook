@@ -59,10 +59,24 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- PMC8545728 — cognitive map progression and dementia reversal
-- VanBuuren2025-PMC11931140 — DEM residents navigate via sequential decisions
-- Jost2024 — neuroscience-informed wayfinding design
-- IlegemsVanrie2025 — wayfinding as spatial planning not signage [⚠ citation date verify]
-- Marquardt2011 — dementia-friendly spatial design
-- Passini1984 — wayfinding decision theory
-- DO NOT CITE: van Buuren & Mohammadi 2023 (superseded by van Buuren et al. 2025)
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| WDS-01 | Wiener, J.M. & Pazzaglia, F. | 2021 | Ageing- and dementia-friendly design. Cogn Process. PMC8545728 | 3 | INT | Cognitive map progression |
+| WDS-02 | van Buuren, L.P.G. et al. | 2025 | DEM residents navigate via sequential decisions. PMC11931140 | 3 | NL | Supersedes van Buuren 2023 |
+| WDS-03 | Jost, G. et al. | 2024 | Neuroscience-informed wayfinding design. [GREY — full citation unverified; DOI required] | 4 | INT | ⚠ verify |
+| WDS-04 | Ilegems, B. & Vanrie, J. | 2025 | Wayfinding as spatial planning not signage. [GREY — date unverified; may be 2024; citation verifier required] | 3/4 | INT | ⚠ date verify before publication |
+| WDS-05 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD 4(2):75–90. DOI:10.1177/193758671100400207 | 3 | INT | — |
+| WDS-06 | Passini, R. | 1984 | Wayfinding in Architecture. Van Nostrand Reinhold | 3 | INT | Decision theory |
+| WDS-07 | DSDC, University of Stirling | 2022 | EADDAT — sole validated DEM wayfinding assessment tool | Co-1 | UK | https://dementia.stir.ac.uk/design/environmental-audit |
+
+**⚠ DO NOT CITE:** van Buuren & Mohammadi 2023 — superseded by van Buuren et al. 2025 (WDS-02).
+
+## Metadata
+
+```yaml
+slug: wayfinding-dementia-spatial-design
+population: DEM
+last_updated: 2026-04-19
+co0006_migration: true
+```
