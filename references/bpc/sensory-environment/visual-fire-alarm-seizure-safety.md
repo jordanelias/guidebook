@@ -10,11 +10,14 @@
 **Highest-ambition actionable specification:** Synchronised VADs at 0.5–1 Hz + voice alarm + vibrotactile in sleeping areas; safety disclosure on all B-10 specifications
 
 ### Key sources
-- Jordan, J.B. & Vanderheiden, G.C. (2024). International Guidelines for Photosensitive Epilepsy: Gap Analysis and Recommendations. *ACM TACCESS*, 17(3), 1–35. DOI: 10.1145/3694790. PMC11872230.
-- BS EN 54-23:2010. Fire detection and fire alarm systems — Visual alarm devices. BSI.
-- NFPA 72-2022. National Fire Alarm and Signaling Code. NFPA.
-- Epilepsy Foundation Professional Advisory Board recommendations.
-- Martins da Silva, A. & Leal, B. (2017). Photosensitivity and epilepsy. *Seizure*, 50, 209–218. PMID: 28532712.
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| VFA-01 | Jordan, J.B. & Vanderheiden, G.C. | 2024 | International Guidelines for Photosensitive Epilepsy. ACM TACCESS 17(3):1–35. DOI:10.1145/3694790. PMC11872230 | 3 | INT | 0.5–1 Hz safety margin |
+| VFA-02 | BSI | 2010 | BS EN 54-23:2010 — Fire detection: visual alarm devices | 4 | EU/UK | Flash rate 0.5–2 Hz |
+| VFA-03 | NFPA | 2022 | NFPA 72-2022 — National Fire Alarm and Signaling Code | 6 | US | Flash rate 1–3 Hz |
+| VFA-04 | Epilepsy Foundation | n.d. | Professional Advisory Board — photosensitive epilepsy recommendations | 2 | US | https://www.epilepsy.com |
+| VFA-05 | Martins da Silva, A. & Leal, B. | 2017 | Photosensitivity and epilepsy. Seizure 50:209–218. PMID:28532712 | 3 | INT | Harding test range 3–60 Hz |
 
 ---
 
@@ -50,3 +53,12 @@ Not yet performed.
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: visual-fire-alarm-seizure-safety
+population: DEAF, DBL, NEU, NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
