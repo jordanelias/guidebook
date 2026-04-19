@@ -73,6 +73,14 @@ def validate_file(path: str) -> list[str]:
 
     lines = content.split("\n")
 
+    # Redirect/merge stubs: exempt from mandatory section checks
+    # Identifiers: **Status:** MERGED or status: MERGED in Metadata
+    if re.search(r"\*\*Status:\*\*\s*MERGED|status:\s*MERGED", content, re.IGNORECASE):
+        return []  # Redirect stubs pass validation unconditionally
+
+    # STUB-NOT-RUN files: Key sources section may be empty/placeholder — exempt
+    is_stub_not_run = bool(re.search(r"status:\s*STUB.NOT.RUN|STATUS:\s*STUB.NOT.RUN|STUB.*NOT.RUN", content, re.IGNORECASE))
+
     # 1. Mandatory sections present
     for section in MANDATORY_SECTIONS:
         # Accept case-insensitive and minor heading level variants (## or ###)
