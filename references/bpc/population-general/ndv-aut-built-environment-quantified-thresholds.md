@@ -46,7 +46,7 @@
 
 **Guidebook items affected:** All Part 7 NDV/AUT items; A-16 sensory relief space; any item carrying [TIER 4-5; no quantified standard; March 2026] marker.
 
-**Key sources:** Tola2021 · Bettarello2021 · Black2022 · Caniato2024 · PAS6463:2022 · Mostafa-ASPECTSS2021 · Weber2022
+**Key sources (see ## Key sources table below)**
 **Divergent findings:** —
 **Notes:** Cross-reference sensory-processing-model-design-application|NDV for Dunn framework application. The <55 dB(A) figure from Caniato et al. (2024) is a single classroom study — cite with caveat "directional only; pending replication." ASPECTSS Design Index is the most operationalised framework but remains practitioner consensus.
 
@@ -87,4 +87,22 @@ Not yet performed.
 FDR-NDV-01: Proprioceptive underresponsivity (Dunn Q1) — textured floor zones for self-regulation in NDV circulation. THIN (Tier 5). DEM conflict: visual uniformity required — resolve via under-foot texture only. FDR-NDV-02: Interoceptive processing delay — WC/water within 20m of NDV occupied spaces (urgency response). Garfinkel 2016 Tier 1 mechanism. THIN architectural. FDR-NDV-03: Executive function — visible/labelled storage (open shelving, glass doors) in NDV residential/workplace. Pennington and Ozonoff 1996 Tier 1 mechanism. Items affected: D-05, G-08, WC proximity specification.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| NAT-01 | Tola, G. et al. | 2021 | Optimizing architectural design for ASD: scoping review. IJERPH 18(6):3203. DOI:10.3390/ijerph18063203 | 1 | INT | Three design domains confirmed |
+| NAT-02 | Bettarello, F. et al. | 2021 | Acoustic thresholds in ASD daily-care facility. Appl Sci. DOI:10.3390/app11093942 | 3 | INT | RT + background noise study |
+| NAT-03 | Black, M.H. et al. | 2022 | Built environment considerations for autistic individuals. Autism 26(4). DOI:10.1177/13623613221102753. PMID:35695710 | 3 | INT | Systematic review |
+| NAT-04 | Caniato, M. et al. | 2024 | Background noise ≤55 dB(A) in ASD classroom — directional only. [GREY — DOI required; single classroom study PROVISIONAL] | 3 | INT | PROVISIONAL — single study |
+| NAT-05 | BSI | 2022 | PAS 6463:2022 — Design for the Mind: neurodiversity | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| NAT-06 | Mostafa, M. | 2021 | ASPECTSS 2.0 — design index. Front Psychiatry. DOI:10.3389/fpsyt.2021.727353 | 2 | INT | Seven-criteria framework |
+| NAT-07 | Weber, J. et al. | 2022 | [GREY — full citation unverified; journal and DOI required] | 3 | INT | — |
+
+## Metadata
+
+```yaml
+slug: ndv-aut-built-environment-quantified-thresholds
+population: NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
