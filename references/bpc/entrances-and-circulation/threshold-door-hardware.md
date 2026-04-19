@@ -81,4 +81,47 @@ Finding: 30 N door opening force acceptable to 94.7% of wheelchair users; 40 N a
 Not yet run. Target scenarios: d445 (hand/arm use) + grip impairment → door operation; d4500 (walking) + mobility aid → threshold negotiation.
 
 ### Key sources
-ADA-2010-S404, BS8300-2-2018, DIN18040-1-2, AS1428.1-2021, GAI-Specifiers-Guide, ICC-A117.1-2017, nullbarriere-de, ENTRO-AU-2025, TEK17-NO, BBR-SE, Arrete-2014-FR, NZS4121-NZ, CSA-B651-CA, BCA-2019-SG, EN17210-2021-EU, ISO21542-2021, Putthinoi-2017-PMID28656108, Brandt-2016-PMID27534356 [NEW — citation mining 2026-04-07; empirical operating force; Tier 3], NBR9050-2020-BR, SIA500-CH, BR18-DK, Decree241-FI, DM236-IT, Seoul-UD-2022-KR, GB50763-CN, MLIT-BF-JP, CTE-DBSUA-ES, DL163-PT, NEN9120-NL, Toegankelijkheid-BE, Husbanken-NO, SBi230-DK, RHFAC-CA, LivableHousing-AU, CEUD-IE, DALCO-ES, Procap-CH, Boverket-SE, MFD-SE, mobilitybasics-CA
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| TDH-01 | US DOJ | 2010 | ADA Standards §404 — Doors, Doorways, Gates | 6 | US | https://www.ada.gov/law-and-regs/design-standards/2010-stds/#404-doors-doorways-and-gates |
+| TDH-02 | BSI | 2018 | BS 8300-2:2018 — doors and ironmongery | 5 | UK | https://www.bsigroup.com/en-GB/standards/bs-8300/ |
+| TDH-03 | DIN | 2010 | DIN 18040-1/-2 — Türen (doors) | 6 | DE | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 |
+| TDH-04 | Standards Australia | 2021 | AS 1428.1:2021 — doors and hardware | 6 | AU | https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021 |
+| TDH-05 | ICC | 2017 | ICC A117.1-2017 — Accessible and Usable Buildings and Facilities | 6 | US | — |
+| TDH-06 | Direktoratet for byggkvalitet | 2017 | TEK17 §12-17 Dører | 6 | NO | https://lovdata.no/dokument/SF/forskrift/2017-06-19-840 |
+| TDH-07 | Boverket | 2024 | BFS 2024:12 / BBR §3:146 — dörrar | 6 | SE | https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/bbr---bfs-20116/ |
+| TDH-08 | Légifrance | 2014 | Arrêté du 8 décembre 2014 — portes ERP | 6 | FR | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000029925726 |
+| TDH-09 | Standards NZ | 2001 | NZS 4121:2001 — doors | 6 | NZ | — |
+| TDH-10 | CSA Group | 2018 | CAN/CSA B651-18 — doors | 6 | CA | https://www.csagroup.org/store/product/CSA%20B651-18/ |
+| TDH-11 | BCA Singapore | 2019 | Code on Accessibility in the Built Environment 2019 — doors | 6 | SG | https://www.bca.gov.sg/Professionals/iquas/iquas/code_on_accessibility.html |
+| TDH-12 | CEN | 2021 | EN 17210:2021 — Accessibility and usability of the built environment | 6 | EU | — |
+| TDH-13 | ISO | 2021 | ISO 21542:2021 — Accessibility and usability | 4 | INT | https://www.iso.org/standard/71025.html |
+| TDH-14 | Putthinoi, S. et al. | 2017 | ICF-based home modification outcomes. Am J Occup Ther. PMID:28656108 | 1 | TH/AU | Combined threshold+landing barrier |
+| TDH-15 | Brandt, A. et al. | 2016 | WC and walker users passing through doors with different opening force. AAATE 2016. DOI:10.3233/978-1-61499-684-2-612. PMID:27534356 | 3 | INT | NEW — citation mining 2026-04-07; empirical operating force |
+| TDH-16 | ABNT | 2020 | NBR 9050:2020 — portas | 6 | BR | https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500 |
+| TDH-17 | SIA | n.d. | SIA 500 — Hindernisfreies Bauen (doors) | 6 | CH | https://www.sia.ch/de/dienstleistungen/sia-norm/sia-500/ |
+| TDH-18 | Energistyrelsen | 2018 | BR18 — Danish Building Regulations (doors) | 6 | DK | https://bygningsreglementet.dk/ |
+| TDH-19 | Finland MRPE | 2017 | Decree 241/2017 F1 — doors | 6 | FI | https://www.finlex.fi/fi/laki/alkup/2017/20170241 |
+| TDH-20 | Italian Government | 1989 | DM 236/89 — porte accessibili | 6 | IT | https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf |
+| TDH-21 | Seoul Metropolitan Gov. | 2022 | Seoul Universal Design Guidelines (doors) | 5 | KR | — |
+| TDH-22 | MOHURD | 2012 | GB 50763-2012 — 无障碍出入口 | 6 | CN | https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html |
+| TDH-23 | MLIT | 2024 | バリアフリー法 — 出入口規定 | 6 | JP | https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html |
+| TDH-24 | Spanish Government | n.d. | CTE DB SUA — Seguridad de utilización y accesibilidad | 6 | ES | https://www.codigotecnico.org/pdf/Documentos/SUA/DBSUA.pdf |
+| TDH-25 | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — portas acessíveis | 6 | PT | https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296 |
+| TDH-26 | NEN | 2025 | NEN 9120:2025 — deuren | 5 | NL | https://www.nen.nl/nen-9120-2025-nl-335193 |
+| TDH-27 | Inter-Fédération | n.d. | Toegankelijkheid (BE) — doors | 5 | BE | https://www.inter.be/fr/outils/guides-techniques |
+| TDH-28 | Husbanken | n.d. | Norwegian Housing Bank — door guidance | 5 | NO | https://www.husbanken.no/tilskudd/tilpasning-av-bolig/ |
+| TDH-29 | SBi | n.d. | SBi 230 — Danish doors guidance | 5 | DK | — |
+| TDH-30 | Rick Hansen Foundation | 2024 | RHFAC Rating Survey v4.0 — doors | 5 | CA | https://www.rickhansen.com/make-change/accessibility-certification-rhfac |
+| TDH-31 | ABCB | 2022 | Livable Housing Design Guidelines 4th ed. — doors | 5 | AU | https://www.abcb.gov.au/ncc |
+| TDH-32 | CEUD / NDA | n.d. | Universal Design Guidelines for Homes (IE) — doors | 5 | IE | https://universaldesign.ie/built-environment/housing-and-homes/ |
+
+## Metadata
+
+```yaml
+slug: threshold-door-hardware
+population: MOB, DEM, NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
