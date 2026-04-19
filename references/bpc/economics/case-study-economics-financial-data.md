@@ -65,7 +65,25 @@ Project-level financial data for all case studies in references/case-study-compe
 - CS-03 AD premium isolation — requires contact with development team or published breakdown
 
 ### Key sources
-case-study-compendium.md (v10.4, 26 entries); LSE/Habinteg (2023) M4(3) Cost Study; MHCLG DFG programme data 2023/24; CAPABLE RCT costing (Szanton et al. 2019); HUD Section 811/AHSC programme documents (CS-03)
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CSFD-01 | (internal) | 2026 | references/case-study-compendium.md v10.4 — 26 case study entries | — | INT | Primary register |
+| CSFD-02 | LSE / Habinteg | 2023 | M4(3) Wheelchair Standard Cost Study | 3 | UK | VERIFIED; CS-23 basis |
+| CSFD-03 | MHCLG | 2024 | Disabled Facilities Grant programme data 2023/24 | 5 | UK | VERIFIED; CS-25 basis |
+| CSFD-04 | Szanton, S. et al. | 2019 | CAPABLE RCT costing — $2,825/participant, $700–$1,400 home mods | 1 | US | VERIFIED; CS-22 basis |
+| CSFD-05 | HUD | 2024 | Section 811/AHSC programme documents (Kelsey Civic Center) | 2 | US | VERIFIED; CS-03 basis |
+
+## Metadata
+
+```yaml
+slug: case-study-economics-financial-data
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: false
+```
+
 
 ---
 
