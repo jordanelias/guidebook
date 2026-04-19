@@ -1470,8 +1470,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "**Description:** 5 m deep acoustic buffer zone between any noise-generating adjacency (kitchen, plant room, reception de",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00462",
+      "REF-00218",
+      "REF-00006",
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0003",
@@ -1481,8 +1488,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 m",
     "context": "Buffer zone depth: 3 m (minimum); 5 m (preferred)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00462",
+      "REF-00218",
+      "REF-00006",
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0004",
@@ -1492,8 +1506,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "Buffer zone depth: 3 m (minimum); 5 m (preferred)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00462",
+      "REF-00218",
+      "REF-00006",
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0005",
@@ -1503,8 +1524,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "5m",
     "context": "**Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. The buffer zone alters the aco",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00462",
+      "REF-00218",
+      "REF-00006",
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0006",
@@ -1514,8 +1542,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "80%",
     "context": "Coverage: 80% of ceiling area (not spot treatment)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00126",
+      "REF-00159",
+      "REF-00218",
+      "REF-00207",
+      "REF-00030"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0007",
@@ -1525,8 +1560,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥0.75 min",
     "context": "Corridor ceilings: NRC ≥0.75 minimum",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00126",
+      "REF-00159",
+      "REF-00218",
+      "REF-00207",
+      "REF-00030"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0008",
@@ -1536,8 +1578,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "Post-installation RT60 measurement at 500 Hz required",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00126",
+      "REF-00159",
+      "REF-00218",
+      "REF-00207",
+      "REF-00030"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0009",
@@ -1547,8 +1596,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "**FDR-IntD-02 [Tier 1–3]:** Hyperacusis is prevalent in IntD-associated syndromes — Down syndrome (Widen et al. 2013, *I",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00126",
+      "REF-00159",
+      "REF-00218",
+      "REF-00207",
+      "REF-00030"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0010",
@@ -1558,8 +1614,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥ 3mm",
     "context": "No letterbox penetrations; no undercuts ≥ 3mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00159"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0011",
@@ -1570,7 +1629,8 @@
     "claim_value": "20m",
     "context": "Restorative intervals: at least one acoustic low-point per 20m of primary journey",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED",
+    "orphan_reason": "A-04 20m restorative interval spacing is UNSUPPORTED per GAP-OPS-01 (Opus evidence audit 2026-03-28). PAS 6463 mentions need for restorative zones but does not specify 20m interval. Flag for Phase B content review."
   },
   {
     "claim_id": "CLAIM-P04-0012",
@@ -1580,8 +1640,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 mm",
     "context": "Pile height: 4--6 mm (low pile preferred — flush with hard floor transitions — 3 mm)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0013",
@@ -1591,8 +1654,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 mm",
     "context": "Pile height: 4--6 mm (low pile preferred — flush with hard floor transitions — 3 mm)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0014",
@@ -1602,8 +1668,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 mm",
     "context": "At VIS navigation junctions: hard floor strip 200--300 mm wide to maintain acoustic differentiation (A-15)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0015",
@@ -1613,8 +1682,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤6mm",
     "context": "**Evidence basis (OT):** Dunn's Sensory Processing Model; Biomechanical FOR. Carpet's NRC 0.20--0.35 reduces impact nois",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0016",
@@ -1624,8 +1696,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 mm",
     "context": "**Description:** Acoustic fabric wall panels (minimum 50 mm mineral wool core, fabric-wrapped) installed at primary acou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0017",
@@ -1635,8 +1710,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2400 mm",
     "context": "**Description:** Acoustic fabric wall panels (minimum 50 mm mineral wool core, fabric-wrapped) installed at primary acou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0018",
@@ -1646,8 +1724,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "NRC ≥0.70 at 500 Hz",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0019",
@@ -1657,8 +1738,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 mm",
     "context": "Thickness: ≥50 mm mineral wool core",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0020",
@@ -1668,8 +1752,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2400 mm",
     "context": "Height: 900--2400 mm (primary reflection zone)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0021",
@@ -1679,8 +1766,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2400mm",
     "context": "**Evidence basis (OT):** Dunn's Sensory Processing Model. Fabric panel placement at primary reflection points targets th",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0022",
@@ -1690,8 +1780,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 m",
     "context": "**Description:** No two parallel hard surfaces facing each other within 6 m unless one or both are treated to NRC ≥0.70.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0023",
@@ -1701,8 +1793,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 m",
     "context": "No untreated parallel hard surfaces within 6 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0024",
@@ -1712,8 +1806,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 m",
     "context": "Duct sizing: low-velocity design (duct velocity ≤3 m/s at primary distribution)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0025",
@@ -1723,8 +1821,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥10 m",
     "context": "Acoustic lining: rectangular supply ducts lined for ≥10 m from AHU",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0026",
@@ -1734,8 +1836,16 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 dB",
     "context": "**Description:** All mechanical plant serving buildings with fibromyalgia, PCS, or NDV users installed on vibration isol",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00302",
+      "REF-00305",
+      "REF-00403",
+      "REF-00249",
+      "REF-00373",
+      "REF-00347"
+    ],
+    "status": "TAGGED",
+    "partial_orphan_note": "A-09 0.1 m/s RMS threshold is UNVERIFIED per GAP-OPS-01. Standards cover method but specific 0.1 m/s disability threshold is not in any cited source."
   },
   {
     "claim_id": "CLAIM-P04-0027",
@@ -1745,8 +1855,16 @@
     "claim_type": "numeric_specification",
     "claim_value": "250 Hz",
     "context": "**Description:** All mechanical plant serving buildings with fibromyalgia, PCS, or NDV users installed on vibration isol",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00302",
+      "REF-00305",
+      "REF-00403",
+      "REF-00249",
+      "REF-00373",
+      "REF-00347"
+    ],
+    "status": "TAGGED",
+    "partial_orphan_note": "A-09 0.1 m/s RMS threshold is UNVERIFIED per GAP-OPS-01. Standards cover method but specific 0.1 m/s disability threshold is not in any cited source."
   },
   {
     "claim_id": "CLAIM-P04-0028",
@@ -1756,8 +1874,16 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20 dB",
     "context": "All rotating plant: vibration isolation pads with ≥20 dB insertion loss",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00302",
+      "REF-00305",
+      "REF-00403",
+      "REF-00249",
+      "REF-00373",
+      "REF-00347"
+    ],
+    "status": "TAGGED",
+    "partial_orphan_note": "A-09 0.1 m/s RMS threshold is UNVERIFIED per GAP-OPS-01. Standards cover method but specific 0.1 m/s disability threshold is not in any cited source."
   },
   {
     "claim_id": "CLAIM-P04-0029",
@@ -1767,8 +1893,16 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "Post-installation: vibration measurement at sensitive space floors (target: <0.1 m/s RMS)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00302",
+      "REF-00305",
+      "REF-00403",
+      "REF-00249",
+      "REF-00373",
+      "REF-00347"
+    ],
+    "status": "TAGGED",
+    "partial_orphan_note": "A-09 0.1 m/s RMS threshold is UNVERIFIED per GAP-OPS-01. Standards cover method but specific 0.1 m/s disability threshold is not in any cited source."
   },
   {
     "claim_id": "CLAIM-P04-0030",
@@ -1778,8 +1912,16 @@
     "claim_type": "numeric_specification",
     "claim_value": "250 Hz",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Vibration at 16--250 Hz is a documented biomechanical trigger for central se",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00302",
+      "REF-00305",
+      "REF-00403",
+      "REF-00249",
+      "REF-00373",
+      "REF-00347"
+    ],
+    "status": "TAGGED",
+    "partial_orphan_note": "A-09 0.1 m/s RMS threshold is UNVERIFIED per GAP-OPS-01. Standards cover method but specific 0.1 m/s disability threshold is not in any cited source."
   },
   {
     "claim_id": "CLAIM-P04-0031",
@@ -1789,8 +1931,16 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20dB",
     "context": "fibromyalgia (Desmeules et al. 2003; Staud 2011); the ≥20dB insertion loss target at these frequencies is derived from t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00302",
+      "REF-00305",
+      "REF-00403",
+      "REF-00249",
+      "REF-00373",
+      "REF-00347"
+    ],
+    "status": "TAGGED",
+    "partial_orphan_note": "A-09 0.1 m/s RMS threshold is UNVERIFIED per GAP-OPS-01. Standards cover method but specific 0.1 m/s disability threshold is not in any cited source."
   },
   {
     "claim_id": "CLAIM-P04-0032",
@@ -1800,8 +1950,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 dB",
     "context": "Field strength: 100 mA/m ±3 dB (IEC 60118-4:2014+AMD1:2017)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0033",
@@ -1811,8 +1968,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 dB",
     "context": "Frequency response: ±3 dB from 100--5000 Hz",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0034",
@@ -1822,8 +1986,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "5000 Hz",
     "context": "Frequency response: ±3 dB from 100--5000 Hz",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0035",
@@ -1833,8 +2004,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤2.0 s",
     "context": "RT60 ≤2.0 s at 500 Hz and 1000 Hz in occupied condition",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0036",
@@ -1844,8 +2022,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "RT60 ≤2.0 s at 500 Hz and 1000 Hz in occupied condition",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0037",
@@ -1855,8 +2040,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "1000 Hz",
     "context": "RT60 ≤2.0 s at 500 Hz and 1000 Hz in occupied condition",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0038",
@@ -1866,8 +2058,15 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤2.0s",
     "context": "**Evidence basis (OT):** Dunn's Sensory Processing Model. Hydrotherapy pool environments present an unusually high basel",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00217",
+      "REF-00222",
+      "REF-00290",
+      "REF-00291",
+      "REF-00372"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0039",
@@ -1877,8 +2076,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "2.5 mm",
     "context": "Cable: 1.5--2.5 mm² copper, installed in floor screed (new) or under flooring (retrofit)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00291",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0040",
@@ -1888,8 +2091,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 dB",
     "context": "Field strength: 100 mA/m ±3 dB throughout coverage area",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00291",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0041",
@@ -1899,8 +2106,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤10 dB",
     "context": "Spill: ≤10 dB at 1 m outside boundary",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00291",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0042",
@@ -1910,8 +2121,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1 m",
     "context": "Spill: ≤10 dB at 1 m outside boundary",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00291",
+      "REF-00151"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0043",
@@ -1921,8 +2136,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "25 mm",
     "context": "Conduit: 25 mm diameter from electrical distribution to ceiling/high-wall position",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00291"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0044",
@@ -1932,8 +2149,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "48 dB",
     "context": "**Description:** Electronic sound masking systems explicitly excluded from spaces serving neurological populations, PCS ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00512",
+      "REF-00003"
+    ],
+    "status": "TAGGED",
+    "notes": "A-13 94% wayfinding figure from Hogeweyk POE is internal document — UNVERIFIABLE. Flag."
   },
   {
     "claim_id": "CLAIM-P04-0045",
@@ -1943,8 +2165,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "94%",
     "context": "**Key evidence (non-English):** De Hogeweyk post-occupancy evaluation (BuroKade/Vivium, Dutch-language reports, 2012--20",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00512",
+      "REF-00003"
+    ],
+    "status": "TAGGED",
+    "notes": "A-13 94% wayfinding figure from Hogeweyk POE is internal document — UNVERIFIABLE. Flag."
   },
   {
     "claim_id": "CLAIM-P04-0046",
@@ -1954,8 +2181,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "34%",
     "context": "**Key evidence (non-English):** De Hogeweyk post-occupancy evaluation (BuroKade/Vivium, Dutch-language reports, 2012--20",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00512",
+      "REF-00003"
+    ],
+    "status": "TAGGED",
+    "notes": "A-13 94% wayfinding figure from Hogeweyk POE is internal document — UNVERIFIABLE. Flag."
   },
   {
     "claim_id": "CLAIM-P04-0047",
@@ -1965,8 +2197,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "48dB",
     "context": "**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Electronic sound masking add",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00159",
+      "REF-00512",
+      "REF-00003"
+    ],
+    "status": "TAGGED",
+    "notes": "A-13 94% wayfinding figure from Hogeweyk POE is internal document — UNVERIFIABLE. Flag."
   },
   {
     "claim_id": "CLAIM-P04-0048",
@@ -1976,8 +2213,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 mm",
     "context": "**Description:** Double-leaf partition with 50 mm air gap (unfilled) between two independent leaves, each with 70 mm ste",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0049",
@@ -1987,8 +2228,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "70 mm",
     "context": "**Description:** Double-leaf partition with 50 mm air gap (unfilled) between two independent leaves, each with 70 mm ste",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0050",
@@ -1998,8 +2243,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "15 mm",
     "context": "**Description:** Double-leaf partition with 50 mm air gap (unfilled) between two independent leaves, each with 70 mm ste",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0051",
@@ -2009,8 +2258,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 kg",
     "context": "**Description:** Double-leaf partition with 50 mm air gap (unfilled) between two independent leaves, each with 70 mm ste",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0052",
@@ -2020,8 +2273,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 mm",
     "context": "Construction: double leaf, 50 mm cavity minimum (unfilled)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0053",
@@ -2031,8 +2288,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "70 mm",
     "context": "Each leaf: 70 mm stud; 2×15 mm acoustic plasterboard; 50 kg/m³ quilt",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0054",
@@ -2042,8 +2303,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "15 mm",
     "context": "Each leaf: 70 mm stud; 2×15 mm acoustic plasterboard; 50 kg/m³ quilt",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0055",
@@ -2053,8 +2318,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 kg",
     "context": "Each leaf: 70 mm stud; 2×15 mm acoustic plasterboard; 50 kg/m³ quilt",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00151",
+      "REF-00218",
+      "REF-00207"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0056",
@@ -2064,8 +2333,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1.2s",
     "context": "Entry atria/landmarks: allow RT60 0.8--1.2s (recognisable as distinct from corridors)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00140",
+      "REF-00462"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0057",
@@ -2075,8 +2347,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3s",
     "context": "**Description:** Dedicated enclosed room, minimum 8 m², with acoustic specification STC ≥50 partition and RT60 ≤0.3s, in",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0058",
@@ -2086,8 +2367,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "100%",
     "context": "**Description:** Dedicated enclosed room, minimum 8 m², with acoustic specification STC ≥50 partition and RT60 ≤0.3s, in",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0059",
@@ -2097,8 +2387,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "0 lux",
     "context": "**Description:** Dedicated enclosed room, minimum 8 m², with acoustic specification STC ≥50 partition and RT60 ≤0.3s, in",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0060",
@@ -2108,8 +2407,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "RT60: ≤0.3 s (NRC ≥0.90 surfaces throughout)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0061",
@@ -2119,8 +2427,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "100%",
     "context": "Lighting: 100%--0 lux dimming; warm amber 2700 K; no fluorescent",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0062",
@@ -2130,8 +2447,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "0 lux",
     "context": "Lighting: 100%--0 lux dimming; warm amber 2700 K; no fluorescent",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0063",
@@ -2141,8 +2467,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "100%",
     "context": "Blackout: 100% blackout blinds or no windows",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0064",
@@ -2152,8 +2487,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3s",
     "context": "**Evidence basis (OT):** EHP Framework (create strategy). The sensory room implements EHP's 'create' strategy: an entire",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0065",
@@ -2163,8 +2507,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "30–60 min",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0066",
@@ -2174,8 +2527,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤16°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0067",
@@ -2185,8 +2547,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤20°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0068",
@@ -2196,8 +2567,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤16°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0069",
@@ -2207,8 +2587,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤16°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0070",
@@ -2218,8 +2607,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "30–60 min",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0071",
@@ -2229,8 +2627,17 @@
     "claim_type": "numeric_specification",
     "claim_value": "10–15 min",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00048",
+      "REF-00490",
+      "REF-00491",
+      "REF-00523",
+      "REF-00029",
+      "REF-00160",
+      "REF-00454",
+      "REF-00123"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0072",
@@ -2240,8 +2647,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF). CCT = Correlated Colour Temperature. E",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00009",
+      "REF-00046"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0073",
@@ -2251,8 +2661,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "850 mm",
     "context": "All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF). CCT = Correlated Colour Temperature. E",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00009",
+      "REF-00046"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0074",
@@ -2262,8 +2675,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF). CCT = Correlated Colour Temperature. E",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00009",
+      "REF-00046"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0075",
