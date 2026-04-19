@@ -61,7 +61,7 @@
 | E-07 | Slip Resistance (PTV ≥36 Wet Throughout All Circulation and  | 1613 | 1650 | 38 |
 | E-08 | Corridor Clear Width (≥1200 mm Minimum on All Primary Routes | 1651 | 1681 | 31 |
 | E-09 | Tactile Walking Surface Indicators (ISO 23599:2019) | 1682 | 1736 | 55 |
-| E-10 | Rest Seating on Circulation Routes (≤20m Interval) | 1737 | 1796 | 60 |
+| E-10 | Rest Seating on Circulation Routes (≤20m Interval) | 1737 | 1739 | 3 | *REDIRECT — see canonical E-10 at L3205* |
 | E-11 | Automatic Sliding Entry and Internal Doors | 1797 | 1829 | 33 |
 | E-15 | Changing Places Facility (Height-Adjustable Bench, Overhead  | 1830 | 1884 | 55 |
 | F-01 | Sensory Gradient (High to Low Stimulation from Entry to Occu | 1885 | 1948 | 64 |
@@ -69,7 +69,7 @@
 | F-03 | Graduated Stimulation Re-entry (Sensory Room to General Spac | 1981 | 2010 | 30 |
 | F-04 | Air Quality (MERV 13+ Filtration, Low-VOC Specification, The | 2011 | 2070 | 60 |
 | F-05 | Seated-Task Design [CONTENT MOVED TO G-08 per CO-0003/D2-48] | 2071 | 2143 | 73 |
-| F-06 | Fragrance-Free Policy (Whole-Building Operational Standard) | 2144 | 2148 | 5 |
+| F-06 | Fragrance-Free Policy (Whole-Building Operational Standard) | 2144 | 2185 | ~42 | *resolved 2026-04-19* |
 | F-07 | Thermal Zoning — Building-Wide Temperature Management | 2149 | 2185 | 37 |
 | F-08 | Thermal Transition — Heating and Cooling System Response | 2186 | 2246 | 61 |
 | G-01 | Defensible Seating (Back-to-Wall, Entry Sightline Configurat | 2247 | 2280 | 34 |
@@ -116,7 +116,7 @@
 
 ## Stub Items (< 10 lines)
 
-- F-06 (Fragrance-Free Policy (Whole-Building Operational Standard)) — 5 lines at L2144
+*None — F-06 stub resolved 2026-04-19 (Block 3 A4). E-10 duplicate resolved 2026-04-19 (first occurrence L1737 replaced with redirect; canonical at L3205).*
 
 ## Field Presence (from audit)
 
