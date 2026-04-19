@@ -10,7 +10,19 @@
 **Highest-ambition actionable specification:** H-02 (Individual Environmental Control) as PRIMARY cross-reference in A-16; location adjacent to accessible WC; accessible without passing through high-stimulation area
 
 ### Key sources
-- Unwin, K.L., Powell, G. & Jones, C.R.G. (2022). The use of Multi-Sensory Environments with autistic children. *Autism*, 26(6), 1379–1394. DOI: 10.1177/13623613211050176. PMID: 34693744. PMC9340127.
-- Unwin, K.L., Powell, G. & Jones, C.R.G. (2021). A sequential mixed-methods approach. *Res Dev Disabil*, 118, 104061.
-- Unwin, K.L., Powell, G., Price, A. & Jones, C.R.G. (2024). Patterns of equipment use. *Autism*, 28, 644–655.
-- Architecture & Access / Amaze (2025). Neuroinclusive design guidance.
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| SRU-01 | Unwin, K.L. et al. | 2022 | Use of Multi-Sensory Environments with autistic children. Autism 26(6):1379–1394. DOI:10.1177/13623613211050176. PMC9340127 | 3 | UK | User control = primary variable |
+| SRU-02 | Unwin, K.L. et al. | 2021 | A sequential mixed-methods approach to MSE research. Res Dev Disabil 118:104061 | 3 | UK | — |
+| SRU-03 | Unwin, K.L. et al. | 2024 | Patterns of equipment use in sensory rooms. Autism 28:644–655 | 3 | UK | Equipment selection aligned with sensory profile |
+| SRU-04 | Architecture & Access / Amaze | 2025 | Neuroinclusive design guidance | 3/5 | AU | https://amaze.org.au |
+
+## Metadata
+
+```yaml
+slug: sensory-room-user-control
+population: NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
