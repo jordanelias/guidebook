@@ -410,3 +410,64 @@ RULE: Quantified outcome claims (specific percentages, n= facility/participant c
 CONDITION: Any BPC entry, item specification, or economics argument containing a specific percentage, facility count, or quantified outcome attributed to a named source.
 ACTION: Before committing: verify the specific number appears in the cited source. If unverifiable after 2 search attempts, apply [UNVERIFIED-QUANT] flag. Do not delete the directional claim — flag the number only.
 DATE: 2026-04-09
+
+
+---
+
+## Enforcement Gates
+
+Validators in `scripts/` run on every commit via `.github/workflows/ci.yml`. All three jobs must pass before any PR merges to main (branch protection). Do not bypass.
+
+### `scripts/validate_bpc.py`
+
+**Purpose:** Validates BPC file structure.
+
+**Checks:**
+- All 8 mandatory sections present: PICO, Search strategy, Key sources, Best practice synthesis, Evidence gaps, Jurisdiction coverage, Co-1 pass, Metadata.
+- Key sources section contains CO-0006 REF-ID table (required columns: REF-ID, Authors, Year, Title) OR legacy flat format (transition state — accepted during Block 2 migration).
+- Metadata section contains required keys: slug, population, last_updated.
+
+**Failure codes:** MISSING_SECTION · KEY_SOURCES_FORMAT · KEY_SOURCES_MISSING_COLUMN · METADATA_MISSING_KEY
+
+**Usage:** `python3 scripts/validate_bpc.py --all` · `--changed` · `<file.md>`
+
+**Relaxing:** Via PR modifying the validator — do not remove validation entirely.
+
+---
+
+### `scripts/validate_cross_refs.py`
+
+**Purpose:** Cross-reference integrity across the repo.
+
+**Checks:**
+- CON-IDs (CON-NNNN) resolve to entries in `references/connections/_index.md`.
+- BPC ↔ search-log co-existence: every BPC has a matching search-log and vice versa.
+
+**Failure codes:** BROKEN_CON_ID · MISSING_SEARCH_LOG · ORPHAN_SEARCH_LOG
+
+**Usage:** `python3 scripts/validate_cross_refs.py` · `--fast`
+
+---
+
+### `scripts/check_thresholds.py`
+
+**Purpose:** File size limits on governed files (session-start token budget management).
+
+| File | Limit | Action if over |
+|---|---|---|
+| `gap_register.md` | 5K tokens | Archive CLOSED items to `gap_register_archive.md` |
+| `references/project-standards.md` | 10K tokens | Consider splitting |
+| `references/connections/_index.md` | 8K tokens | Index = summary only; detail in per-topic files |
+| `references/slug-registry.md` | 6K tokens | Consider splitting by topic |
+| `sessions/session_*.md` (most recent) | 2K tokens | Session logs must be concise YAML |
+
+**Usage:** `python3 scripts/check_thresholds.py` · `--report`
+
+---
+
+### `.github/workflows/ci.yml`
+
+Three jobs: `syntax` (UTF-8 md, json, yaml parseable) · `structure` (all three validators) · `commit-msg` (HEAD message matches `{skill-name}: {action} [YYYY-MM-DD HH:MM]`).
+
+Branch protection: all three jobs required on `main`. No bypass.
+DATE: 2026-04-19 00:05
