@@ -66,7 +66,7 @@ FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tie
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
 | MST-01 | MSIF | 2023 | MS International Federation Atlas 2023 — heat sensitivity 60–80% | 3 | INT | https://www.msif.org/research/ms-atlas/ |
-| MST-02 | Staud, R. | 2011 | Fibromyalgia cold sensitivity. [GREY — DOI required before publication] | 3 | INT | Cold pain hypersensitivity |
+| MST-02 | Staud, R. | 2011 | Evidence for shared pain mechanisms in OA, LBP, and fibromyalgia. Curr Rheumatol Rep 13(6):513–520. PMID:21833699. DOI:10.1007/s11926-011-0206-6 | 3 | INT | Central sensitization + cold hypersensitivity in FM |
 | MST-03 | Geisser, M. et al. | 2021 | Hyperacusis + temperature co-occurrence in fibromyalgia. [GREY — DOI required] | 3 | INT | — |
 | MST-04 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C (n=1,065). [GREY — DOI required] | 3 | INT | DEM/older adults thermal comfort |
 | MST-05 | CDC | 2024 | ME/CFS Clinical Care — cool environment requirement | Co-1 | US | https://www.cdc.gov/me-cfs/ |
