@@ -81,13 +81,30 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Ielegems-Vanrie-2024 — building-type cost premiums (BE)
-- TERRAGON-DStGB-2017 — DIN 18040-2 zero-cost criteria (DE)
-- KfW-Prognos-2022 — €19,100/dwelling average retrofit (700,000+ dwellings)
-- Fuglerud2015 — Norwegian benefit-cost ratios
-- RHF-Cost-Study-2023 — Scandinavian cost data
-- Marquardt2011 — toilet visibility 47% incontinence reduction
-- BuroKade-Hogeweyk-POE — 94% vs 34% wayfinding
-- VillageLandais-2020 — 31% psychotropic medication reduction
-- Tibble2005 / MitraJones2017 — social cost of inaccessibility (5.7% household expenditure)
-- CAUTION: Do not cite ESG rent premium 25–50% (CIT-03 deleted). Do not generalise Hangzhou elevator study (CIT-04 single jurisdiction).
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| ECP-01 | Ielegems, B. & Vanrie, J. | 2024 | Accessible design cost premiums by building type. Archnet-IJAR 18(4):719–736 | 1 | BE | 0.94–3.92% by building type |
+| ECP-02 | TERRAGON / DStGB | 2017 | DIN 18040-2 cost analysis — 130/140 criteria zero cost; 0.54–1.26% full compliance | 3 | DE | Strongest single-country dataset |
+| ECP-03 | KfW / Prognos | 2022 | Barrier-reduction programme evaluation — €19,100 avg retrofit (700,000+ dwellings) | 3 | DE | Retrofit multiplier evidence |
+| ECP-04 | Fuglerud, K. et al. | 2015 | Benefit-cost ratios for accessible design in Norway | 3 | NO | Positive ratios confirmed |
+| ECP-05 | (RHF/HCMA) | 2024 | Rick Hansen Foundation Accessibility Certification cost study — ~1% or zero | 6 | CA | — |
+| ECP-06 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD. | 1 | INT | Toilet visibility finding; quantified % [UNVERIFIED-QUANT — verify before citing] |
+| ECP-07 | Van Buuren, R. & Mohammadi, N. | 2022 | Dutch facility floor plan evaluation. HERD | 3 | NL | Loop floor plan; 94%/34% figures [UNVERIFIED-QUANT] |
+| ECP-08 | INSERM / Medscape France | 2024 | Village Landais Alzheimer 3-year follow-up | 3 | FR | 31% psychotropic reduction [UNVERIFIED-QUANT] |
+| ECP-09 | Tibble, M. | 2005 | Review of extra costs facing disabled people | 3 | INT | 5.7% household expenditure |
+| ECP-10 | Mitra, S. & Jones, N. | 2017 | Extra costs of disability across 40 countries | 3 | INT | Cross-jurisdiction confirmation |
+| ECP-11 | ADA National Network | 2025 | Cost of accessible design — <1% new-build premium | 6 | US | — |
+| ECP-12 | HUD / Woodstock Institute | 2020 | Accessible housing costs — $12,200–$15,150/unit avg; $6,668 savings/participant | 2 | US | Avoided-cost dividend |
+
+**CAUTION:** Do not cite ESG rent premium 25–50% (CIT-03 deleted — unverified). Do not generalise Hangzhou elevator study (CIT-04 — single jurisdiction, non-generalisable).
+
+## Metadata
+
+```yaml
+slug: accessible-design-economics-cost-premium
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
+
