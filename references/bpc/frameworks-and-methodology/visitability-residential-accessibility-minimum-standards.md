@@ -56,10 +56,22 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Concrete-Change-1987 — visitability standards (Eleanor Smith)
-- CMHC-Universal-Design — Canadian universal design
-- ADA-Standards-2010 — US accessibility standards
-- FHA-Design-Manual — Fair Housing Act design manual
-- DIN-18040-2 — German residential accessibility
-- TEK17 — Norwegian mandatory accessibility
-- NCC-2022 — Australian mandatory residential
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| VRA-01 | Concrete Change (Eleanor Smith) | 1987 | Visitability standards — original framework | Co-1 | US | https://www.concretechange.org |
+| VRA-02 | CMHC | 2023 | Universal Design Guide | 5 | CA | https://www.cmhc-schl.gc.ca |
+| VRA-03 | US Access Board | 2010 | 2010 ADA Standards for Accessible Design | 6 | US | https://www.ada.gov/law-and-regs/design-standards/2010-stds/ |
+| VRA-04 | HUD | 2022 | Fair Housing Act Accessibility Guidelines Design Manual | 6 | US | https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_design_manual |
+| VRA-05 | DIN | 2011 | DIN 18040-2 — Barrierefreies Bauen Wohnungen | 6 | DE | https://www.din.de |
+| VRA-06 | Direktoratet for byggkvalitet | 2017 | TEK17 — Norwegian mandatory accessibility | 6 | NO | https://lovdata.no/dokument/SF/forskrift/2017-06-19-840 |
+| VRA-07 | ABCB | 2022 | NCC 2022 — Australian mandatory residential | 6 | AU | https://www.abcb.gov.au/ncc |
+
+## Metadata
+
+```yaml
+slug: visitability-residential-accessibility-minimum-standards
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
