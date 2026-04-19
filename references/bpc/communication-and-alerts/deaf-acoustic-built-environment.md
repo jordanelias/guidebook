@@ -67,16 +67,19 @@ Hearing loop systems in all assembly and service counter spaces are to comply wi
 | IEC 60118-4 standards history | Forward | IEC TR 63079:2017 (Code of practice HLS); IEC 60118-17 ED1 (Auracast, expected 2027) |
 
 ### Key sources
-1. IEC 60118-4:2014+AMD1:2017. Electroacoustics — Hearing aids — Part 4: Induction-loop systems for hearing aid purposes — System performance requirements. International Electrotechnical Commission. — Tier 4
-2. DIN 18041:2016-03. Hörsamkeit in Räumen — Anforderungen, Empfehlungen und Hinweise für die Planung. Deutsches Institut für Normung. — Tier 5 [DE] — most specific standard for DEAF acoustic environment design
-3. BS 8300-2:2018. Design of an accessible and inclusive built environment. Part 2: Buildings. BSI. — Tier 5 [EN/UK]
-4. Badajoz-Davila, J., Buchholz, J.M. & Van-Hoesel, R. (2020). Effect of noise and reverberation on speech intelligibility for cochlear implant recipients in realistic sound environments. Journal of the Acoustical Society of America, 147(5), 3538. DOI: 10.1121/10.0001259 — Tier 1
-5. ScienceDirect (2019). Impact of room acoustic parameters on speech and music perception among participants with cochlear implants. Hearing Research. DOI: 10.1016/j.heares.2018.12.006 — Tier 1
-6. Hearing Loss Association of America (2025). Auracast Broadcast Audio. HLAA. URL: https://www.hearingloss.org/find-help/auracast/ — Tier 2
-7. IEC TR 63079:2017. Code of practice for hearing-loop systems. IEC. — Tier 4
-8. ANSI S12.60:2010. Acoustical Performance Criteria, Design Requirements, and Guidelines for Schools. — Tier 4 [EN/US]
-9. Ampetronic / Listen Technologies (2023). AURI Auracast system. [Product + accessibility evidence] — Tier 2
-10. Center for Hearing Access. (2025). Auracast Streamed Assistive Listening System. URL: https://centerforhearingaccess.org/auracast/ — Tier 2
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DAB-01 | IEC | 2017 | IEC 60118-4:2014+AMD1:2017 — Induction-loop systems performance requirements | 4 | INT | Universal; universally adopted |
+| DAB-02 | DIN | 2016 | DIN 18041:2016 — Hörsamkeit in Räumen | 5 | DE | Most specific DEAF acoustic standard |
+| DAB-03 | BSI | 2018 | BS 8300-2:2018 — Design of an accessible and inclusive built environment Pt 2 | 5 | UK | — |
+| DAB-04 | Badajoz-Davila et al. | 2020 | Effect of noise and reverberation on speech intelligibility for CI recipients. JASA 147(5):3538. DOI:10.1121/10.0001259 | 1 | INT | CI-specific RT60 |
+| DAB-05 | (author TBC) | 2019 | Impact of room acoustic parameters on speech/music perception among CI participants. Hearing Research. DOI:10.1016/j.heares.2018.12.006 | 1 | INT | CI-specific |
+| DAB-06 | HLAA | 2025 | Auracast Broadcast Audio | 2 | US | Transition guidance |
+| DAB-07 | IEC | 2017 | IEC TR 63079:2017 — Code of practice for hearing-loop systems | 4 | INT | — |
+| DAB-08 | ASA | 2010 | ANSI S12.60:2010 — Acoustical Performance Criteria for Schools | 4 | US | — |
+| DAB-09 | Ampetronic / Listen Technologies | 2023 | AURI Auracast system | 2 | INT | Product evidence |
+| DAB-10 | Center for Hearing Access | 2025 | Auracast Streamed Assistive Listening System | 2 | US | Advocacy |
 
 ---
 
@@ -89,3 +92,12 @@ Hearing loop systems in all assembly and service counter spaces are to comply wi
 | DE | DIN 18041:2016 | CURRENT (no revision found March 2026) |
 | UK | BS 8300-2:2018 | CURRENT (no revision found March 2026) |
 | Auracast | IEC 60118-17 | NOT YET PUBLISHED — expected late 2027 |
+
+## Metadata
+
+```yaml
+slug: deaf-acoustic-built-environment
+population: DEAF
+last_updated: 2026-04-19
+co0006_migration: true
+```
