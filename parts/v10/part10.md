@@ -1,5 +1,9 @@
 ## Part 10: Design for Adaptable Readiness (DAR)
 
+<!-- evidence_density: Moderate -->
+> **Evidence density: ▓ Moderate** — DAR cost multiplier framework is grounded in economic evidence: Ielegems 2024 (Tier 3), TERRAGON/DStGB 2017 (Tier 3 — grab bar blocking ×75, hoist ×20–40, lift ×50+). CAN/ASC 2.8:2025, Lifetime Homes, and Visitability standards are Tier 4–5. DAR 1:15–1:25 cost-benefit ratio is a project-derived synthesis across CAPABLE (Szanton, Tier 1 RCT), Habinteg (4:1 ratio), and Sheffield (39% care hour reduction) evidence; not from a single source.
+
+
 *Accessible Built Environments — Guidebook for Accessible Design v10.0*
 
 ---
