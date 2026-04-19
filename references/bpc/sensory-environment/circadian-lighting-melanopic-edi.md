@@ -19,12 +19,15 @@
 | No national building code mandates circadian metric | All 24 jurisdictions surveyed | Confirmed |
 
 ### Key sources
-- Brown, T.M. et al. (2022). Recommendations for daytime, evening, and nighttime indoor light exposure. *PLOS Biology*, 20(3), e3001571. DOI: 10.1371/journal.pbio.3001571. PMC8929548.
-- CIE S 026/E:2018. CIE System for Metrology of Optical Radiation for ipRGC-Influenced Responses to Light.
-- DIN/TS 67600:2022. Biologically effective illumination — Design guidelines.
-- Lucas, R.J. et al. (2014). Measuring and using light in the melanopsin age. *Trends in Neurosciences*, 37(1), 1–9.
-- WELL Building Standard v2 and v6. Feature L07: Circadian Lighting Design. IWBI.
-- Ticleanu, C. et al. (2025). Assessing melanopic equivalent daylight illuminance in office spaces. *Lighting Research & Technology*. DOI: 10.1177/14771535251317740.
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CML-01 | Brown, T.M. et al. | 2022 | Recommendations for daytime, evening, and nighttime indoor light exposure. PLOS Biol 20(3):e3001571. DOI:10.1371/journal.pbio.3001571. PMC8929548 | 3 | INT | Primary threshold source: ≥250 melanopic EDI |
+| CML-02 | CIE | 2018 | CIE S 026/E:2018 — System for Metrology of Optical Radiation for ipRGC-Influenced Responses | 4 | INT | https://cie.co.at/publications/cie-system-metrology-optical-radiation-iprGC-influenced-responses-light |
+| CML-03 | DIN | 2022 | DIN/TS 67600:2022 — Biologically effective illumination: design guidelines | 5 | DE | German-origin circadian standard |
+| CML-04 | Lucas, R.J. et al. | 2014 | Measuring and using light in the melanopsin age. Trends Neurosci 37(1):1–9 | 3 | INT | Foundational melanopsin paper |
+| CML-05 | IWBI | 2024 | WELL Building Standard v2 + v6 Feature L07: Circadian Lighting Design | 5 | INT | https://v2.wellcertified.com/wellv2/en/light |
+| CML-06 | Ticleanu, C. et al. | 2025 | Assessing melanopic equivalent daylight illuminance in office spaces. Light Res Technol. DOI:10.1177/14771535251317740 | 3 | INT | Recent validation study |
 
 ---
 
@@ -52,3 +55,12 @@ Not yet performed.
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: circadian-lighting-melanopic-edi
+population: DEM, NEU, NDV, OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
