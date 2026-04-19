@@ -7,6 +7,7 @@
 ## Metadata
 
 ```yaml
+population: PAIN, OFS
 slug: chronic-pain-built-environment
 status: MERGED
 merged_into: pain-ofs-built-environment-design
