@@ -79,3 +79,12 @@
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: neurodivergent-built-environment
+population: NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
