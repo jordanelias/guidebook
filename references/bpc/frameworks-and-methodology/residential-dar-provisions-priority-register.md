@@ -62,9 +62,21 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- CAN/ASC 2.8:2025 — Canadian accessible housing standard (blocking requirements)
-- Lifetime-Homes-Standards — UK adaptable design
-- BS-EN-ISO-10535 — ceiling hoist requirements
-- RHFAC-v4 — Rick Hansen Foundation accessibility certification
-- CIH-2022-Adaptable-Housing — Chartered Institute of Housing
-- Habinteg2022 — accessible homes guidance
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| RDP-01 | CSA / ASC | 2025 | CAN/ASC 2.8:2025 — Canadian accessible housing standard | 5 | CA | https://www.csagroup.org |
+| RDP-02 | Habinteg / JRF | 2010 | Lifetime Homes Standard — UK adaptable design | 5 | UK | https://www.lifetimehomes.org.uk |
+| RDP-03 | ISO | 2021 | BS EN ISO 10535:2021 — Hoists for transfer of disabled persons | 4 | INT | Ceiling hoist structural requirements |
+| RDP-04 | Rick Hansen Foundation | 2024 | RHFAC Rating Survey v4.0 | 5 | CA | https://www.rickhansen.com/make-change/accessibility-certification-rhfac |
+| RDP-05 | CIH | 2022 | Adaptable Housing guide | 5 | UK | https://www.cih.org |
+| RDP-06 | Habinteg | 2022 | Accessible homes guidance | 2/5 | UK | https://www.habinteg.org.uk |
+
+## Metadata
+
+```yaml
+slug: residential-dar-provisions-priority-register
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
