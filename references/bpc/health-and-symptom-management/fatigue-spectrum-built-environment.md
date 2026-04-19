@@ -7,6 +7,7 @@
 ## Metadata
 
 ```yaml
+population: OFS
 slug: fatigue-spectrum-built-environment
 status: MERGED
 merged_into: pain-ofs-built-environment-design
