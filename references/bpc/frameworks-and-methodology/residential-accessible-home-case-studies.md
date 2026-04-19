@@ -443,7 +443,28 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| RAH-01 | SCIE | 2023 | Habinteg Housing Association case study — wheelchair-accessible bungalow | Co-1/2 | UK | https://www.scie.org.uk — ADL independence documented |
+| RAH-02 | Runnalls, J. & Walker, M. | 2024 | Inclusive Housing Design Guide. RIBA/Habinteg/CAE. DOI:10.4324/9781003564164 | Co-2 | UK | OT-authored; M4(2)/M4(3) with OT rationale |
+| RAH-03 | Habinteg | 2025 | A forecast for accessible homes 2025 | 2 | UK | 12.6% England housing stock has basic access features |
+| RAH-04 | Szanton, S. et al. | 2019 | CAPABLE RCT — $2,825/participant home modification | 1 | US | PMID:30615553 |
+| RAH-05 | Keall, M. et al. | 2015 | HIPI study — 26% fall reduction. Lancet 385:231. DOI:10.1016/S0140-6736(14)61006-0 | 3 | NZ | — |
+| RAH-06 | Summer Foundation / Winkler | 2024 | Supporting accessible housing transitions. Melbourne | 1 | AU | Co-designed; SDA context |
+| RAH-07 | Newton, C. et al. | 2023 | Inclusive Bathroom Design. UTS/Spinal Cord Injuries Australia | 1 | AU | Co-designed |
+| RAH-08 | Lindsay, L. et al. | 2024 | Accessible independent housing for disabilities: scoping review (60 studies, 18 countries). PLoS ONE 19(1):e0291228. DOI:10.1371/journal.pone.0291228 | 3 | INT | Tier 3 SR — identified in DD-7 review |
+
 ### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
 
 **Lindsay, Fuentes, Ragunathan et al. 2024** — "Accessible independent housing for people with disabilities: A scoping review of promising practices, policies and interventions." PLoS ONE 19(1):e0291228. DOI: 10.1371/journal.pone.0291228. PRISMA-ScR, 60 studies across 18 countries over 20 years. Key trends: (1) removing barriers to accessible housing (advocacy, builders, subsidies); (2) policies influencing accessible housing; (3) technology interventions; (4) co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.**
+
+## Metadata
+
+```yaml
+slug: residential-accessible-home-case-studies
+population: MOB, OFS, PAIN, NDV/MH, ALL
+last_updated: 2026-04-19
+co0006_migration: true
+note: Sources extracted from embedded case study register; search log contains full evidence list
+```
