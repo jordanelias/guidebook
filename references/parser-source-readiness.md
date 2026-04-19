@@ -509,3 +509,121 @@ All 11 conflicts from Part 5 §5.2 tested against §3.8 decision tree steps:
 
 **PASS.** Decision tree is internally consistent. OT triggers cover all Step 6 escalation paths. No missing population pairs. No contradictions between §3.8, §5.2, and §9.2.2.
 
+---
+
+## Audit 2/3 — Block 2–5 update 2026-04-19
+
+### Update: references/standards-registry.md
+```yaml
+file: references/standards-registry.md
+section: full file
+parser_consumer: p01_populations_references, p_standards_ext
+format_summary: "YAML fenced blocks, one per jurisdiction-standard pair"
+update_from_block5: "80 entries (was 30 after Block 1). +51 entries added in Block 2 A5."
+known_patterns:
+  - entry_format: "fenced yaml block with 7 fields"
+  - fields: "jurisdiction, standard_cited, current_version, status, key_changes, last_checked, source_url"
+  - jurisdiction_codes: "26 jurisdictions: AU, BR, CA, CH, CN, DE, DK, ES, EU, FI, FR, IE, INT, ISO, IT, JP, KR, NL, NO, NZ, PT, SE, SG, UK, UN, US"
+  - new_note: "Template block still present as first entry — parser must skip (unchanged)"
+edge_cases:
+  - "Template block ([2-letter code or full name]) included as first entry — skip"
+  - "ISO is used for ISO-body standards; INT for WHO, IEC, IEEE international standards"
+  - "Standard_cited and current_version may differ (UPDATED, SUPERSEDED entries)"
+audit_status: PASS
+audit_date: 2026-04-19
+a5_target_met: true
+entry_count: 80
+```
+
+### Update: references/bpc/**/*.md (all BPC files)
+```yaml
+file: references/bpc/**/*.md
+section: Key sources + Metadata
+parser_consumer: p_bpc_sources, p_ref_extractor
+update_from_block2: "All 70 BPC files migrated to CO-0006 REF-ID table format"
+update_from_block5: "78/78 files pass validate_bpc.py CO-0006 schema"
+known_patterns:
+  - key_sources_format: "Markdown table with columns: REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes"
+  - metadata_format: "yaml fenced block with: slug, population, last_updated, co0006_migration: true"
+  - redirect_stubs: "3 files have status: MERGED — exempt from validation; redirect to canonical slug"
+  - stub_not_run: "3 deferred non-standard files (bathroom-typology-global-south, fold-down-grab-bar, bariatric-turning-radius) have STUB Key sources — flag for Phase B parser"
+  - grey_flags: "~45 entries carry [GREY — DOI required] — parser should flag but not reject"
+edge_cases:
+  - "MERGED redirect stubs: chronic-pain, fatigue-spectrum, hearing-impairment — content minimal; redirect to canonical"
+  - "STUB-NOT-RUN: post-occupancy-evaluation-global — Key sources section empty/placeholder"
+  - "pain-ofs-built-environment-design: duplicate section removed; single ## Key sources table canonical"
+  - "mental-health-built-environment: 25 REF-IDs (MHB-01 to MHB-25); 9 PMIDs resolved; 10 remain GREY"
+audit_status: PASS
+audit_date: 2026-04-19
+```
+
+### Update: parts/v10/part04.md (Part 4 Item Specification Library)
+```yaml
+file: parts/v10/part04.md
+section: all item specs
+parser_consumer: p04_item_specs, p_annotation_extractor
+update_from_block3_a7: "All 91 items annotated with HTML comments: design_stage_lock, ve_risk, ot_appointment_trigger"
+update_from_block3_b3: "90/90 items annotated with grade_confidence HTML comments"
+update_from_block4_b1: "44 items have CON-XXXX cross-reference HTML comments (119 total)"
+update_from_block3_a4: "F-06 spec written; E-10 duplicate resolved (redirect comment at L1737)"
+known_patterns:
+  - item_heading: "### X-NN Title"
+  - annotation_block: "<!-- design_stage_lock: B|SD|DD|CD --> / <!-- ve_risk: CRITICAL|HIGH|MEDIUM|LOW --> / <!-- ot_appointment_trigger: ... --> / <!-- grade_confidence: HIGH|MODERATE|LOW|VERY LOW — rationale -->"
+  - con_annotations: "<!-- CON-XXXX [HIGH]: action summary -->"
+  - e10_redirect: "E-10 at L1737 is a redirect comment — canonical E-10 is at L3205"
+  - absorbed_items: "A-17, B-04, C-06, F-05 are absorbed/merged — headings present but note absorption"
+edge_cases:
+  - "E-10 appears twice: L1737 (redirect) and L3205 (canonical). Parsers must use L3205."
+  - "A-17, B-04, C-06, F-05: heading exists but marked ABSORBED/MERGED — exclude from item count"
+  - "F-06: written in full after A4 stub resolution — full spec content now present"
+  - "grade_confidence VERY LOW items: A-04, F-02, F-06, G-01, K-01, K-03 — include in output but flag low confidence"
+  - "Absorbed/merged items are NOT counted in the 91 active items"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19
+```
+
+### Update: references/connections/_index.md
+```yaml
+file: references/connections/_index.md
+section: Index table
+parser_consumer: p_connections
+update_from_block4_b1: "CONSUMED=140, CONSUMED-DEFERRED=42, PENDING=0 data rows"
+known_patterns:
+  - status_values: "CONSUMED | CONSUMED-DEFERRED | PENDING"
+  - table_format: "| CON-ID | Status | Primary target | Filed in | Confidence | Opus-reviewed | Session applied |"
+edge_cases:
+  - "CONSUMED-DEFERRED: target Parts not yet written (Parts 1,5,6,7,9,10,11,12) — Phase B parsers may need these"
+  - "Status summary rows (| CONSUMED | 140 |) must be distinguished from data rows (| CON-XXXX |)"
+audit_status: PASS
+audit_date: 2026-04-19
+```
+
+### Update: all parts/v10/part*.md (evidence density)
+```yaml
+files: parts/v10/part01.md through parts/v10/part12.md
+section: opening blockquote
+parser_consumer: p_evidence_density
+update_from_block4_b4: "Evidence density statement inserted at top of all 12 Parts"
+known_patterns:
+  - html_comment: "<!-- evidence_density: [descriptor] -->"
+  - blockquote: "> **Evidence density: [symbol] [label]** — [statement]"
+  - density_symbols: "■ Rich | ▓ Moderate | ░ Thin | · Absent"
+audit_status: PASS
+audit_date: 2026-04-19
+```
+
+### Final audit_status summary
+```yaml
+overall_audit_status: PASS
+date: 2026-04-19
+files_audited: 78 BPC + 12 Parts + 5 reference files
+validator_results:
+  validate_bpc_py: "78/78 PASS"
+  threshold_check: "5/5 PASS (project-standards.md at 96% — monitor)"
+  cross_refs: "PASS (--warn-only removed; CI live enforcement)"
+known_pre_publication_actions:
+  - "~45 GREY DOI flags in BPC Key sources — resolve before publication"
+  - "A-09 vibration threshold source unknown — resolve before publication"
+  - "Roxburgh & Mackay 2024 DOI — confirm before citing"
+  - "project-standards.md approaching token limit — archive CLOSED gaps if needed"
+```
