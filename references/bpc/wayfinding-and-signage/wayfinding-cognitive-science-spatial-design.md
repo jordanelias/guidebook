@@ -62,11 +62,23 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Passini1984 — three wayfinding stages; spatial decision-making theory
-- ONeill1991 — floor plan configuration vs. signage density
-- Sweller1988 — cognitive load theory
-- PMC8545728 — cognitive map progression and dementia reversal
-- SiegelWhite1975 — landmark → route → survey knowledge hierarchy
-- Grey2015 — schema scaffolding for DEM/ABI
-- Kahneman1973 — directed attention as finite resource
-- KaplanKaplan1989 — Attention Restoration Theory
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| WCS-01 | Passini, R. | 1984 | Wayfinding in Architecture. Van Nostrand Reinhold | 3 | INT | Three wayfinding stages |
+| WCS-02 | O'Neill, M. | 1991 | Effects of signage and floor plan configuration on wayfinding accuracy. Environ Behav 23(5):553 | 3 | INT | Configuration > signage density |
+| WCS-03 | Sweller, J. | 1988 | Cognitive load during problem solving. Cogn Sci 12(2):257 | 3 | INT | Cognitive load theory |
+| WCS-04 | Wiener, J.M. & Pazzaglia, F. | 2021 | Ageing- and dementia-friendly design. Cogn Process 22(4):715. PMC8545728 | 3 | INT | Cognitive map progression |
+| WCS-05 | Siegel, A. & White, S. | 1975 | The development of spatial representations. Adv Child Dev Behav 10:9 | 3 | INT | Landmark→route→survey hierarchy |
+| WCS-06 | Grey, C. et al. | 2015 | Schema scaffolding for DEM/ABI. [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| WCS-07 | Kahneman, D. | 1973 | Attention and Effort. Prentice Hall | 3 | INT | Directed attention as finite resource |
+| WCS-08 | Kaplan, R. & Kaplan, S. | 1989 | The Experience of Nature: Attention Restoration Theory | 3 | INT | Restorative environments |
+
+## Metadata
+
+```yaml
+slug: wayfinding-cognitive-science-spatial-design
+population: DEM, NEU, NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
