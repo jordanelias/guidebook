@@ -1,5 +1,9 @@
 ## Part 4: Item Specification Library
 
+<!-- evidence_density: Varies by category -->
+> **Evidence density: varies by category** — ■ A (Acoustics): Tier 1 SR (Murgia 2023, Iglehart 2020) + Tier 4–6 standards; HIGH rated items: A-10, A-11. ■ E (Entry/Circulation): Tier 1 biomechanics (Keall 2015 Lancet RCT PMID:25255696, Koontz 2010 PMID:20434614) + standards convergence ≥24 jurisdictions. ■ G (Fixtures): Tier 1 (Levine 2024 PMID:38968649, Clemson 2023 Cochrane PMID:36893804). ▓ B (Lighting), D (Spatial Layout), F (Sensory Zoning), H (Controls): Tier 3–5. ░ I (Upper Limb): THIN-BASE — zero indexed studies on one-handed kitchen/bathroom design. GRADE confidence ratings applied to all 90 rated items (see item annotations). 5 items rated VERY LOW (F-02, F-06, G-01, K-01, K-03).
+
+
 <!-- v10.0 scaffold — CO-0003 + CO-0004 applied.
      Source: v9.0 part05-a/b/cd/e/fg/hi/k (88_to_90).
      Changes applied at scaffold stage:
