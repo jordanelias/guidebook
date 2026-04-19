@@ -291,6 +291,7 @@ All mechanical plant: mounted on vibration isolation pads
 **CON-0101 [HIGH]:** HVAC system type is the primary determinant of achievable NC level. NC-25 constrains HVAC system selection — coordinate with F-07 thermal zoning strategy. ● Forced-air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC (acoustic and airborne trigger); radiant heating achieves NC-25 without forced-air noise contribution. For SCI populations, radiant systems additionally avoid ambient heat load increase in cooling-critical environments [thermoregulation-built-environment BPC — PROVISIONAL]. Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 at ceiling — coordinate ceiling treatment zones with thermal mass zones.
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
+<!-- UNVERIFIED: The 0.1 m/s RMS threshold cited in this item does not correspond to any located ISO 2631-1 value. ISO 2631-1 uses weighted accelerations (m/s²) over 8h, not simple RMS velocity. Source of 0.1 m/s RMS is unknown. This value must carry [UNVERIFIED — source of 0.1 m/s RMS threshold required before publication] on every appearance in specification text. See BPC floor-vibration-wheelchair-disability §Critical Flag and spec-db-part4-reconciliation Section C1. -->
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
@@ -621,10 +622,11 @@ implications. Retrofit is furniture replacement, phaseable without building disr
 
 All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF). CCT = Correlated Colour Temperature. EML measured per WELL v2 Feature L07. UGR = Unified Glare Rating (EN 12464-1). Lux values: horizontal illuminance at 850 mm AFF unless stated. Vertical illuminance at 1500 mm AFF (face level).
 
-### B-01 Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces)
+### B-01 Circadian Lighting (≥250 Melanopic EDI at Eye Level in Daytime Spaces)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU|NDV -->
+<!-- METRIC NOTE: This item uses melanopic EDI (≥250) as the daytime threshold per Brown et al. 2022 PLOS Biology. Prior versions cited EML (≥150–200 EML). Conversion: melanopic EDI ≈ EML / 1.104. Use melanopic EDI ≥250 as the unified design target. See BPC circadian-lighting-melanopic-edi and spec-db-part4-reconciliation Section C1. -->
 
 **Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS
 <!-- CON-0006: CON-0006: circadian lighting supports OFS energy regulation and NEU sleep-wake cycle recovery alongside DEM -->
@@ -1277,7 +1279,7 @@ Maximum 20 m from any primary occupied space to nearest toilet (MS bladder urgen
 
 **Retrofit cost note:** Retrofit penalty: HIGH. Toilet visibility from primary occupied spaces requires sight-line planning. Retrofit requires spatial reorganisation or transparent partition introduction; where structural walls are involved the intervention is major. At design stage, toilet positioning is a zero-cost planning decision. See Part 12 §12.4.2.
 
-**Key citations:** Marquardt, G. (2011). Wayfinding for people with dementia: A review of the role of architectural design. HERD, 4(2), 75--90. [Landmark German-language OT research: 32-facility study documenting 47% reduction in incontinence events where toilet is directly visible from primary living space. Strongest single empirical finding for any spatial provision in this Guidebook.\] Kirch, M., \& Marquardt, G. (2023). HERD, 16(1). doi:10.1177/19375867221119540 Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF.
+**Key citations:** Marquardt, G. (2011). Wayfinding for people with dementia: A review of the role of architectural design. HERD, 4(2), 75--90. [Landmark German-language OT research: 32-facility study documenting 47% [UNVERIFIED-QUANT — this figure has been removed from the BPC as unverifiable; do not cite as evidence-based. See spec-db-part4-reconciliation Section C1 and project-standards 2026-04-09] reduction in incontinence events where toilet is directly visible from primary living space. Strongest single empirical finding for any spatial provision in this Guidebook.\] Kirch, M., \& Marquardt, G. (2023). HERD, 16(1). doi:10.1177/19375867221119540 Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF.
 
 **Cross-reference:** D-01 (Loop Plan); G-03 (Grab Bars in Bathroom)
 
