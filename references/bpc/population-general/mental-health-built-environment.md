@@ -201,25 +201,25 @@ Evidence quality: Tier 3. Evidence marker: ●
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| MHB-01 | (author TBC) | n.d. | Trauma-informed design (TID). PMC9658651 | 3 | INT | [GREY — full citation unverified; DOI required] |
+| MHB-01 | (author TBC) | 2022 | Trauma-informed design (TID). PMC9658651. PMID:36742289 | 3 | INT | [GREY — full title/authors unverified; PMID resolved via PubMed] |
 | MHB-02 | (author TBC) | n.d. | TID youth. PMC10689333 | 3 | INT | [GREY — full citation unverified] |
 | MHB-03 | SAMHSA | n.d. | Trauma-Informed Care in Behavioral Health Services | Co-2 | US | https://www.samhsa.gov/trauma-violence |
 | MHB-04 | Holohan, E. | 2022 | Trauma-informed design. [GREY — full citation unverified; DOI required] | 3 | INT | — |
 | MHB-05 | BuroHappold | 2024 | [TID or MH design guidance — GREY — full citation unverified] | 5 | INT | — |
 | MHB-06 | BSI | 2022 | PAS 6463:2022 — Design for the Mind | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
-| MHB-07 | Oostermeijer, S. et al. | 2021 | BMJ Open — [GREY — full citation unverified; DOI required] | 3 | INT | — |
-| MHB-08 | Faerden, A. et al. | 2022 | Single rooms and patient control in inpatient mental health. HERD. [GREY — DOI required] | 3 | NO | User control d=2.0 |
+| MHB-07 | Oostermeijer, S. et al. | 2021 | BMJ Open. PMID:34233981 | 3 | INT | [GREY — full title unverified] |
+| MHB-08 | Faerden, A. et al. | 2022 | Single rooms and patient control in inpatient mental health. HERD. PMID:36567605 | 3 | NO | User control d=2.0 |
 | MHB-09 | Haig, R. et al. | 2022 | Int J Mental Health Nurs — [GREY — full citation unverified; DOI required] | 3 | INT | — |
 | MHB-10 | Price, E. et al. | 2024 | EDITION study. [GREY — full citation unverified; DOI required] | 3 | INT | — |
 | MHB-11 | van der Schaaf, P. et al. | 2013 | British Journal of Psychiatry — [GREY — full citation unverified; DOI required] | 3 | NL | — |
-| MHB-12 | Bodryzlova, Y. et al. | 2024 | J Psychiatric Research — [GREY — full citation unverified; DOI required] | 3 | INT | — |
-| MHB-13 | Schreiber, V. et al. | 2022 | BMC Health Services Research — psychiatric architecture. [GREY — DOI required] | 3 | DE | — |
-| MHB-14 | Weltens, I. et al. | 2023 | BMJ Open — [GREY — full citation unverified; DOI required] | 3 | NL | Via citation mining |
-| MHB-15 | Husum, T.L. et al. | 2010 | BMC Health Services Research — Norwegian acute psychiatry. [GREY — DOI required] | 3 | NO | — |
+| MHB-12 | Bodryzlova, Y. et al. | 2024 | J Psychiatric Research. PMID:39128221 | 3 | INT | — |
+| MHB-13 | Schreiber, V. et al. | 2022 | BMC Health Services Research — psychiatric architecture. PMID:35869551 | 3 | DE | — |
+| MHB-14 | Weltens, I. et al. | 2023 | BMJ Open. PMID:36806071 | 3 | NL | Via citation mining |
+| MHB-15 | Husum, T.L. et al. | 2010 | BMC Health Services Research — Norwegian acute psychiatry. PMID:20370928 | 3 | NO | — |
 | MHB-16 | Askew, R. et al. | 2019 | J Psychiatric Mental Health Nurs — [GREY — DOI required] | 3 | INT | — |
-| MHB-17 | Quinn, C. et al. | 2024 | Int J Mental Health Nurs — [GREY — DOI required] | 3 | INT | — |
+| MHB-17 | Quinn, C. et al. | 2024 | Int J Mental Health Nurs. PMID:38193620 | 3 | INT | — |
 | MHB-18 | DeCuyper, M. et al. | 2023 | J Psychiatric Mental Health Nurs — [GREY — DOI required] | 3 | INT | — |
-| MHB-19 | Goulet, M-H. et al. | 2022 | Santé Mentale au Québec — ecological model. [GREY — DOI required] | 3 | CA | TID framing |
+| MHB-19 | Goulet, M-H. et al. | 2022 | Santé Mentale au Québec — ecological model. PMID:36548797 | 3 | CA | TID framing |
 | MHB-20 | Wilson, C. et al. | 2023 | Int J Mental Health Nurs — AU service user perspectives. DOI:10.1111/inm.13070 | Co-1/3 | AU | Sensory room failure modes |
 | MHB-21 | Rodríguez-Labajos, B. et al. | 2024 | HERD — 44 studies, 9 countries. PMID:38385552. DOI:10.1177/19375867231219031 | 3 | INT | Therapeutic design factors SR |
 | MHB-22 | DiMHN | n.d. | Design in Mental Health Network — lived experience research | Co-1 | UK | https://www.dimhn.org |
