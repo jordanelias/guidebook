@@ -161,11 +161,24 @@ Per thermal-comfort-older-adults BPC: ≤5°C throughout dwelling, particularly 
 ## Sources (27 confirmed)
 See search log for full table with DOIs.
 
-Key sources for synthesis:
-- S1 (Griggs 2019): Physiological failure threshold at rest — core evidence
-- S10 (WHO HHGL 2018): Policy framework; disability named; 18–24°C general range
-- S11 (WHO Annex G): Global South city-specific temperature thresholds
-- S22 (Flensner 2011): 60–80% MS heat sensitivity prevalence — scale of problem
-- S25 (MS housing 2025): Only peer-reviewed housing-design adjacent source for MS
-- S20 (Hayashi & Naito 2022): Japanese clinical review — sweating capacity percentages
-- S28 (Chaseling 2022): Patient thermal resilience strategies — AC/fans/ventilation
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| TBE-01 | Griggs, K. et al. | 2019 | Physiological failure threshold at rest (thermoregulation). [GREY — DOI required] | 3 | INT | Core evidence |
+| TBE-02 | WHO | 2018 | WHO Housing and Health Guidelines — 18–24°C general range; disability named | 4 | INT | https://www.who.int/publications/i/item/who-housing-and-health-guidelines |
+| TBE-03 | WHO | 2018 | WHO Housing and Health Guidelines Annex G — Global South city-specific thresholds | 4 | INT | See TBE-02 |
+| TBE-04 | Flensner, G. et al. | 2011 | 60–80% MS heat sensitivity prevalence. [GREY — DOI required] | 3 | INT | — |
+| TBE-05 | (author TBC) | 2025 | MS housing design peer-reviewed source. [GREY — only housing-design adjacent MS source; DOI required] | 3 | INT | Only such source identified |
+| TBE-06 | Hayashi, H. & Naito, H. | 2022 | Japanese clinical review — sweating capacity percentages in SCI. [GREY — DOI required; JA journal likely] | 3 | JP | — |
+| TBE-07 | Chaseling, G. et al. | 2022 | Patient thermal resilience strategies — AC/fans/ventilation. [GREY — DOI required] | 3 | INT | — |
+
+## Metadata
+
+```yaml
+slug: thermoregulation-built-environment
+population: NEU, PAIN, OFS
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+```
