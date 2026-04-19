@@ -76,6 +76,13 @@ Not yet run.
 
 **Chidiac, Reda, Marjaba 2024** — "Accessibility of the Built Environment for People with Sensory Disabilities — Review Quality and Representation of Evidence." Buildings 14(3):707. DOI: 10.3390/buildings14030707. Evaluates quality and representation of existing research on accessibility for people with sensory disabilities. Considers variations in disability type, degree of impairment, and assistive aid usage. Identifies gaps and inconsistencies in current studies. **Methodology reference — Tier 3.**
 
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09 — B2 update)
+
+**Chidiac, M., Reda, M. & Marjaba, G. (2024)** — "Accessibility of the Built Environment for People with Sensory Disabilities — Review Quality and Representation of Evidence." *Buildings* 14(3):707. DOI:10.3390/buildings14030707. **Key finding:** Evaluates quality and representation of existing research on built environment accessibility for sensory disability populations. Identifies gaps and inconsistencies in current studies. Considers variations in disability type, degree of impairment, and assistive aid usage. **Tier 3 (methodology reference).** [GREY — full PMID not in PubMed; DOI confirmed via DOI.org]
+
+**Impact on BPC:** Methodological reference confirming the evidence quality assessment approach used in this compendium. Supports the guidebook's evidence hierarchy and GRADE adaptation framework. No specification change; confirms methodology validity.
+
 ## Metadata
 
 ```yaml
