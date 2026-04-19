@@ -75,28 +75,28 @@
 | REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
 |---|---|---|---|---|---|---|---|---|---|
 | 01 | Levine2025-JMIR | Levine D et al. | 2025 | Bathroom Safety for Older Adults: Scoping Review of Evidence for Home Modification | JMIR | DOI:10.2196/69442 | Tier 1 | EN | US |
-| 02 | Greene2024-CJOT | Greene D et al. | 2024 | [Bathroom accessibility OT practice] | CJOT | [GREY] | Tier 1 | EN | CA |
-| 03 | Lee2019 | Lee J et al. | 2019 | [Grab bar usage and placement study] | [GREY] | [GREY] | Tier 3 | EN | [GREY] |
-| 04 | Guitard2011 | Guitard P et al. | 2011 | [Bathroom transfer techniques study] | [GREY] | [GREY] | Tier 3 | EN | CA |
-| 05 | Guay2020 | Guay M et al. | 2020 | [Bathroom home modification outcomes] | [GREY] | [GREY] | Tier 1 | EN | CA |
-| 06 | Sekiguchi2017 | Sekiguchi Y et al. | 2017 | [Japanese bathroom accessibility study] | [GREY] | [GREY] | Tier 3 | JA | JP |
-| 07 | Keall2015-Lancet | Keall M et al. | 2015 | Home modifications to reduce injuries from falls in the Home Injury Prevention… | The Lancet | [GREY] | Tier 1 | EN | NZ |
-| 08 | GoldingDay2018-BATH-OUT | Golding-Day S et al. | 2018 | BATH-OUT: Bathing Out of Tubs study | [GREY] | [GREY] | Tier 1 | EN | UK |
-| 09 | DIN18040-2 | DIN | 2011 | DIN 18040-2 Barrierefreies Bauen — Wohnungen | DIN | [GREY] | Tier 4 | DE | DE |
-| 10 | BS8300-2018 | BSI | 2018 | BS 8300-2:2018 Design of an accessible and inclusive built environment — Buildings | BSI | [GREY] | Tier 5 | EN | UK |
-| 11 | GB50763-2012 | MOHURD | 2012 | GB 50763-2012 无障碍设计规范 (Code for Accessibility Design) | MOHURD | [GREY] | Tier 6 | ZH | CN |
-| 12 | DL163-2006-PT | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — Regime da acessibilidade | Diário da República | [GREY] | Tier 6 | PT | PT |
-| 13 | DM236-89-IT | Italian Government | 1989 | DM 236/89 — Prescrizioni tecniche per l'accessibilità | Gazzetta Ufficiale | [GREY] | Tier 6 | IT | IT |
-| 14 | 편의증진법-KR | Korean Government | n.d. | 장애인·노인·임산부 등의 편의증진 보장에 관한 법률 (Convenience Promotion Act) | Korean Government | [GREY] | Tier 6 | KO | KR |
-| 15 | Inter-BE | Inter-Fédération | n.d. | [Belgian accessibility guidelines — bathroom provisions] | Inter-Fédération | [GREY] | Tier 5 | FR | BE |
-| 16 | IWA-IE | IWA/NSAI | n.d. | [Irish Wheelchair Association accessibility guidelines] | IWA | [GREY] | Tier 5 | EN | IE |
-| 17 | CEUD-IE | CEUD NDA | n.d. | [Centre for Excellence in Universal Design guidelines] | NDA Ireland | [GREY] | Tier 5 | EN | IE |
-| 18 | RCOT-HAwD-2019 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | [GREY] | Co-2 | EN | UK |
-| 19 | AOTA-HomeModGuidelines-2023 | AOTA | 2023 | Home Modification Practice Guidelines | AOTA | [GREY] | Co-2 | EN | US |
-| 20 | CAOT-HomeAssessment-2024 | CAOT | 2024 | Home Assessment and Modifications | CAOT | [GREY] | Co-2 | EN | CA |
-| 21 | UNSW-HMC-OTGuidelines-2023 | UNSW HMC | 2023 | OT Home Modification Guidelines | UNSW/HMC | [GREY] | Co-2 | EN | AU |
-| 22 | DementiaAustralia-BEGuidelines-2022 | Dementia Australia | 2022 | Built Environment Guidelines | Dementia Australia | [GREY] | Tier 2 | EN | AU |
-| 23 | AOTA-FallPrevBedroom-2023 | AOTA | 2023 | Fall Prevention in Bedroom | AOTA | [GREY] | Co-2 | EN | US |
+| 02 | Greene2024-CJOT | Greene D et al. | 2024 | [GREY — title unverified; DOI required before publication] | CJOT | [GREY — DOI required] | Tier 1 | EN | CA |
+| 03 | Lee2019 | Lee J et al. | 2019 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | EN | [GREY — jurisdiction unverified] |
+| 04 | Guitard2011 | Guitard P et al. | 2011 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | EN | CA |
+| 05 | Guay2020 | Guay M et al. | 2020 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 1 | EN | CA |
+| 06 | Sekiguchi2017 | Sekiguchi Y et al. | 2017 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | JA | JP |
+| 07 | Keall2015-Lancet | Keall M et al. | 2015 | Home modifications to reduce injuries from falls in the Home Injury Prevention Intervention (HIPI) study: a cluster-randomised controlled trial | The Lancet | https://doi.org/10.1016/S0140-6736(14)61006-0 | Tier 1 | EN | NZ |
+| 08 | GoldingDay2018-BATH-OUT | Golding-Day S et al. | 2018 | BATH-OUT: Bathing Out of Tubs study | [GREY — journal unverified] | [GREY — DOI required before publication] | Tier 1 | EN | UK |
+| 09 | DIN18040-2 | DIN | 2011 | DIN 18040-2 Barrierefreies Bauen — Wohnungen | DIN | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 | Tier 4 | DE | DE |
+| 10 | BS8300-2018 | BSI | 2018 | BS 8300-2:2018 Design of an accessible and inclusive built environment — Buildings | BSI | https://www.bsigroup.com/en-GB/standards/bs-8300/ | Tier 5 | EN | UK |
+| 11 | GB50763-2012 | MOHURD | 2012 | GB 50763-2012 无障碍设计规范 (Code for Accessibility Design) | MOHURD | https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html | Tier 6 | ZH | CN |
+| 12 | DL163-2006-PT | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — Regime da acessibilidade | Diário da República | https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296 | Tier 6 | PT | PT |
+| 13 | DM236-89-IT | Italian Government | 1989 | DM 236/89 — Prescrizioni tecniche per l'accessibilità | Gazzetta Ufficiale | https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf | Tier 6 | IT | IT |
+| 14 | 편의증진법-KR | Korean Government | 1997 | 장애인·노인·임산부 등의 편의증진 보장에 관한 법률 (Act on Convenience Promotion for Persons with Disabilities, the Aged, Pregnant Women, etc.) | Ministry of Health and Welfare | https://www.law.go.kr/법령/장애인%C2%B7노인%C2%B7임산부등의편의증진보장에관한법률 | Tier 6 | KO | KR |
+| 15 | Inter-BE | Inter-Fédération | n.d. | Guide d'accessibilité — prescriptions techniques (bathroom provisions) | Inter-Fédération | https://www.inter.be/fr/outils/guides-techniques | Tier 5 | FR | BE |
+| 16 | IWA-IE | IWA | n.d. | IWA Accessibility Guidelines | IWA | https://www.iwa.ie/accessibility/ | Tier 5 | EN | IE |
+| 17 | CEUD-IE | CEUD / NDA | n.d. | Universal Design Guidelines for Homes | Centre for Excellence in Universal Design | https://universaldesign.ie/built-environment/housing-and-homes/ | Tier 5 | EN | IE |
+| 18 | RCOT-HAwD-2019 | RCOT | 2019 | Housing Adaptations Without Delay: A good practice guide to delivering timely home adaptations | RCOT / Housing LIN | https://www.rcot.co.uk/housing-adaptations-without-delay | Co-2 | EN | UK |
+| 19 | AOTA-HomeModGuidelines-2023 | AOTA | 2023 | Home Modification Practice Guidelines [GREY — 2023 edition unverified; confirmed edition is Siebert, Smallfield & Stark 2014 per project-standards; verify before citing] | AOTA | [GREY — URL/DOI required; edition unverified] | Co-2 | EN | US |
+| 20 | CAOT-HomeAssessment-2024 | CAOT | 2024 | Home Assessment and Modifications | CAOT | https://caot.ca/client/product/productDetail.cfm?id=3850 | Co-2 | EN | CA |
+| 21 | UNSW-HMC-OTGuidelines-2023 | UNSW HMC | 2023 | Home Modification Guidelines for Occupational Therapists | Home Modification Information Clearinghouse (UNSW) | https://www.homemods.info/resources/hmic-publications/ | Co-2 | EN | AU |
+| 22 | DementiaAustralia-BEGuidelines-2022 | Dementia Australia | 2022 | Built Environment Guidelines | Dementia Australia | https://www.dementia.org.au/information/for-health-professionals/built-environment | Tier 2 | EN | AU |
+| 23 | AOTA-FallPrevBedroom-2023 | AOTA | 2023 | Fall Prevention in Bathroom (fact sheet) [GREY — exact title unverified; URL required before publication] | AOTA | [GREY — URL required] | Co-2 | EN | US |
 ### Bottom-up findings — Session 2026-03-27 (scenarios 3–8)
 
 #### Scenario 3 — d530 + bilateral UPL → toileting (bidet spatial requirements)
@@ -163,3 +163,14 @@ Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FD
 **Clemson, Stark, Pighills et al. 2023** — Cochrane SR. "Environmental and behavioral interventions to reduce fall risk." 22 RCTs, 8463 participants. DOI: 10.1002/14651858.CD013258.pub2. PMID 36893804. **Key finding:** Home fall-hazard interventions reduce fall rate by 26% (RaR 0.74, 95% CI 0.61-0.91); 38% reduction in higher-risk populations (RaR 0.62, 95% CI 0.56-0.70). **Tier 3 (Cochrane).**
 
 **Evidence synthesis note (2026-04-09):** Three independent SRs (Clemson 2023, Crosby 2026, Kim 2025) unanimously confirm that grab bars and bathroom modifications reduce fall rates. Direction of effect is uncontested across all three SRs (Clemson: 22 RCTs; Crosby: 9 RCTs; Kim: 20 studies — with likely overlap between reviews). The BPC grab bar specifications (bilateral, 650-900mm, fold-down, ≥200 kg SWL) are well-supported. GRADE rating: **HIGH** for grab bar efficacy; **MODERATE** for specific dimensional values.
+
+## Metadata
+
+```yaml
+slug: accessible-bathroom-and-grab-bar
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+grey_resolution_pass: 2026-04-19
+grey_remaining: [Greene2024-CJOT, Lee2019, Guitard2011, Guay2020, Sekiguchi2017, GoldingDay2018-BATH-OUT, AOTA-HomeModGuidelines-2023, AOTA-FallPrevBedroom-2023]
+```
