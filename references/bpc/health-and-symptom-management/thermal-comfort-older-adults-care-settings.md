@@ -58,7 +58,7 @@ FDR-TCOA-01: Thermoregulatory unawareness in DEM (van Hoof 2010 Tier 3) — ward
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| TCO-01 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C; comfort zone 18.3–26.3°C (n=1,065). [GREY — DOI required] | 3 | INT | Primary thermal comfort source for older adults |
+| TCO-01 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C; comfort zone 18.3–26.3°C (n=1,065). [GREY — ambiguous PubMed; verify via DOI.org 'Baquero 2023 thermal comfort older adults neutral temperature'; Sci Rep likely] | 3 | INT | Primary thermal comfort source for older adults |
 | TCO-02 | Van Hoof, J. et al. | 2010 | PMV/PPD unreliable for cognitively impaired populations. [GREY — DOI required] | 3 | INT | — |
 | TCO-03 | MHLW Japan | 2023 | 6,073 bathtub drowning deaths from heat shock — official statistics | 5 | JP | https://www.mhlw.go.jp |
 | TCO-04 | Nakayama, K. et al. | 1981 | Foundational inter-room temperature differential study. [GREY — DOI required; JA journal] | 3 | JP | Heat shock physics basis |
