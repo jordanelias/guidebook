@@ -168,7 +168,7 @@ See search log for full table with DOIs.
 | TBE-01 | Griggs, K.E. et al. | 2019 | Thermoregulatory impairment in athletes with a spinal cord injury (infographic). Br J Sports Med 53(20):1305–1306. PMID:30610000. DOI:10.1136/bjsports-2018-099853 | 3 | INT | Physiological failure threshold in SCI — thermoregulatory impairment |
 | TBE-02 | WHO | 2018 | WHO Housing and Health Guidelines — 18–24°C general range; disability named | 4 | INT | https://www.who.int/publications/i/item/who-housing-and-health-guidelines |
 | TBE-03 | WHO | 2018 | WHO Housing and Health Guidelines Annex G — Global South city-specific thresholds | 4 | INT | See TBE-02 |
-| TBE-04 | Flensner, G. et al. | 2011 | 60–80% MS heat sensitivity prevalence. [GREY — DOI required] | 3 | INT | — |
+| TBE-04 | Flensner, G. et al. | 2011 | Sensitivity to heat in MS patients: a factor strongly influencing symptomology — an explorative survey. BMC Neurol 11:27. PMID:21352533. DOI:10.1186/1471-2377-11-27 | 3 | INT | 60–80% MS heat sensitivity prevalence; fatigue correlation |
 | TBE-05 | (author TBC) | 2025 | MS housing design peer-reviewed source. [GREY — only housing-design adjacent MS source; DOI required] | 3 | INT | Only such source identified |
 | TBE-06 | Hayashi, H. & Naito, H. | 2022 | Japanese clinical review — sweating capacity percentages in SCI. [GREY — DOI required; JA journal likely] | 3 | JP | — |
 | TBE-07 | Chaseling, G. et al. | 2022 | Patient thermal resilience strategies — AC/fans/ventilation. [GREY — DOI required] | 3 | INT | — |
