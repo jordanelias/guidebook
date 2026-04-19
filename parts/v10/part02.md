@@ -1,5 +1,9 @@
 ## Part 2: Disability Categories
 
+<!-- evidence_density: Moderate (varies by population) -->
+> **Evidence density: ▓ Moderate (varies by population)** — ■ Rich: MOB, VIS, DEAF, DEM, NDV — extensive Tier 1–4 evidence across multiple jurisdictions. ▓ Moderate: NEU, NDV/MH — Tier 2–4; some Tier 1 for specific conditions (MS thermal, epilepsy). ░ Thin: PAIN, OFS — clinical evidence (Tier 1–3) but near-zero built-environment-specific research; all provisions extrapolated from clinical literature. ░ Thin: IntD — proxied through DEM/NDV; Quesada-Cubo 2025 (73 studies, Tier 3 SR, PMID:41201449) now available but specifications remain proxied. · Absent: DBL — zero Tier 1–2 built-environment evidence; all provisions from Tier 4–5 practitioner guidance (DeafSpace, NELOWV). THIN-BASE disclosures apply to PAIN, OFS, IntD, DBL.
+
+
 *Guidebook for Accessible Design v10.0*
 
 ---
