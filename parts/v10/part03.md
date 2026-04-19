@@ -1,5 +1,9 @@
 ## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
 
+<!-- evidence_density: Moderate (methodology) / Thin (compound effects) -->
+> **Evidence density: ▓ Moderate (methodology) / ░ Thin (compound effects)** — The co-occurrence framework draws on ICF intersection theory (Tier 3), Competence-Press Model (Tier 3), Clarke 4.52× environment-impairment interaction (Tier 1), MWI ~16% per additional condition (Tier 3), 12 conflict domain analyses (Opus synthesis, expert consensus), and 9 resolved cross-population conflicts (Tier 1–4 sources). **Critical gap:** Zero primary built-environment studies exist on compound functioning. All 8 FDR compound scenarios remain NOT-RUN. Pairwise resolution is synthesis from single-population evidence, not from compound-profile research.
+
+
 *Guidebook for Accessible Design v10.0*
 
 ---
