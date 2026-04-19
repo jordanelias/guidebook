@@ -1,5 +1,9 @@
 ## Part 6: Residential Application Matrices
 
+<!-- evidence_density: Moderate (varies by room) -->
+> **Evidence density: ▓ Moderate (varies by room)** — ■ Rich: R-BA (bathroom) — strongest evidence in project (grab bars Tier 1 SR Crosby 2026 PMID:41525145, fall prevention Clemson 2023 Cochrane, turning circles IDeA Center Tier 1). ▓ Moderate: R-KIT (kitchen), R-ENT (entry) — OT home modification evidence + standards convergence. ░ Thin: R-BED (bedroom), R-HAL (hallway), R-LAU (laundry), R-STA (staircase) — standards-derived with limited RCT evidence. · Absent: R-LIV (living room), R-GAR (garage) — zero dedicated built-environment research.
+
+
 <!-- v10.0 scaffold — CO-0004: was Part 5. CO-0004/D2 changes PENDING:
      - D2-12: absorb §7.0a into §6.0
      - D2-13: delete all Supp.Vol columns from matrices; add footnote
