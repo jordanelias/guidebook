@@ -1,5 +1,9 @@
 ## Part 9: Working with Specialist Consultants
 
+<!-- evidence_density: Moderate -->
+> **Evidence density: ▓ Moderate** — OT role and scope grounded in 4 confirmed OT professional body CPGs (Co-2: RCOT, CAOT, AOTA, OT Australia). OT appointment triggers (§9.2.2) are expert consensus informed by clinical evidence for NDV, DEM, OFS, DBL populations. Housing Enabler instrument: Iwarsson & Ståhl 2003 (Disabil Rehabil, Tier 1 framework). DSDC EADDAT: Marquardt 2011 (HERD, Tier 3 — 30 care homes validation). Specialist consultant scope sections (acoustic, structural, DeafBlind) are procedural expert consensus.
+
+
 <!-- v10.0 scaffold — CO-0004: was Part 9. Section numbering renumbered §9.x/§9.x → §9.x.
      PENDING:
      - §9.9 Co-occurrence collaboration protocol (D3-03 — new section, draft required)
