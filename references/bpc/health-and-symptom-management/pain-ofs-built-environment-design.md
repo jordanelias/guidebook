@@ -82,7 +82,7 @@
 | POD-08 | Boverket | 2024 | BFS 2024:12 — bostadsanpassning | 6 | SE | https://www.boverket.se |
 | POD-09 | MDPH France | n.d. | PCH — housing adaptation funding | 5 | FR | https://www.cnsa.fr/aides-et-prestations/pch |
 | POD-10 | REHADAT | n.d. | REHADAT DE — housing adaptation | 5 | DE | https://www.rehadat.de |
-| POD-11 | Ismail, A. et al. | 2023 | Fibromyalgia hydrotherapy SR. Tandfonline. [GREY — DOI required] | 1 | INT | Hydrotherapy Tier 1 FM |
+| POD-11 | Ismail, A. et al. | 2023 | Fibromyalgia hydrotherapy SR. Tandfonline. [GREY — DOI required; PubMed search returned incorrect match (Egyptian RA study); verify via Tandfonline direct search] | 1 | INT | Hydrotherapy Tier 1 FM |
 | POD-12 | RCOT | n.d. | Energy conservation guide | Co-2 | UK | https://www.rcot.co.uk |
 | POD-13 | Hersche, R. et al. | 2022 | OT interventions in chronic pain: SR. OT Int. [GREY — DOI required] | 1 | INT | — |
 | POD-14 | (author TBC) | 2022 | PMC9716468 — ME/CFS activity pacing SR [GREY — DOI required] | 3 | INT | — |
