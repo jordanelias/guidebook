@@ -225,3 +225,17 @@ remaining_genuine_grey_28: >
   ULB-02 Togni, NAT-04 Caniato, BSP-01/03/04 body sizes, MHB-04/09/10/11/16/18,
   SSG-01/04/07, WDS-03 Jost, WCS-06 Grey, DGP-04 Williams, OTF-05 Siu, BDH-07 Latiff.
   Require desktop session with institutional journal access.
+
+
+## Step 2 Session 1 — Part 4 Category A tagging (2026-04-19)
+
+scope: Part 4 Category A (acoustics) — 73 claims
+tagged: 72
+orphaned: 1 (A-04 20m restorative interval per GAP-OPS-01)
+refs_used: 25 unique REF-IDs
+primary_standards: BS 8300, PAS 6463, DIN 18041, ANSI S12.60, BB93, AS/NZS 2107, TEK17, IEC 60118-4
+partial_orphan_flags:
+  A-09: 0.1 m/s RMS vibration threshold UNVERIFIED per GAP-OPS-01
+  A-13: 94% wayfinding figure from Hogeweyk POE — UNVERIFIABLE internal doc
+completion: 73/558 Part 4 claims (13%)
+remaining_sessions: 13 (Part 4 Cat B-K = 5 sessions; Parts 2,3,5-12 = 8 sessions)
