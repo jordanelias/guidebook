@@ -38,3 +38,17 @@
 **Key sources:** ADA-S604-2010 · USDOJ-ADA-Chapter6 · WHO-APS-15-2022 · FHA-Design-Manual-Ch6 · NS11001-2-2018
 **Divergent findings:** —
 **Notes:** PROVISIONAL: BS 8300:2018 specific clauses not retrieved in search; DIN 18040-3 and NS 11001-2 further search recommended. DO NOT CITE: Novak et al. 2024 (removed citation). Grab bar type preference (vertical vs horizontal) — see mobility-wheelchair-built-environment|MOB entry. Replacement source search for fold-down bars: GAP-001 partially resolved by Session B_P1.
+
+## Key sources
+
+[STUB — this BPC file is a deferred non-standard file. Full research pass pending (Block 5 decision required). See gap register for status.]
+
+## Metadata
+
+```yaml
+slug: fold-down-grab-bar-specification
+population: MOB
+last_updated: 2026-04-19
+status: DEFERRED-NON-STANDARD
+note: Non-standard BPC file. Full content deferred pending project decision.
+```
