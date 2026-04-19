@@ -20,6 +20,27 @@
 **Jurisdictions confirmed:** UK · Australia/NZ · Germany · Norway · Sweden · Japan · France (CEREMA)
 **Early-close:** Yes  **Thin/No-data:** None (confirmed absence of evidence for threshold is itself the finding)
 **Opus synthesis note:** The finding that 30% LRV is a regulatory floor with unknown empirical basis is one of the most consequential in the compendium. Six national standards adopted this threshold from UK DDA guidance without independent validation. The guidebook's recommendation to target ≥50% (general) and ≥65% Michelson (severe VI) is evidence-supported and represents a genuine advance over current regulatory practice. All C-items in Volume I Part 4 should carry this annotation.
-**Key sources:** Harper2022 · Brown2023 · Thompson2022 · Dain-cited-Manandhar2022 · CNIB2024 · AS1428.1:2021 · BS8300:2018
+**Key sources (see ## Key sources table below)**
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| LCL-01 | Harper, B. et al. | 2022 | Step-face and edge contrast enhancement reduces fall events. J Ergonomics. DOI:10.35248/2165-7556-22.12.303 | 3 | INT | OR=2.87, p=.023 |
+| LCL-02 | Brown, C. et al. | 2023 | High-contrast nosing reduces descending gait speed. Ergonomics. DOI:10.1080/00140139.2022.2141347 | 3 | INT | coeff −0.07, p=.010 |
+| LCL-03 | Thompson, D. | 2022 | Computational modelling: low-contrast nosings at 30% LRV become invisible at moderate VI. PMC PMC8993136 | 3 | INT | — |
+| LCL-04 | Dain, S. (cited in Manandhar 2022) | 2022 | ~65% Michelson contrast needed for reliable surface boundary detection at severe VI | 3 | INT | ~2.5× current 30% standard |
+| LCL-05 | CNIB | 2024 | 30% LRV is regulatory floor not functional optimum; recommend maximum achievable contrast | 2 | CA | https://www.cnib.ca/en/accessibility-standards |
+| LCL-06 | Standards Australia | 2021 | AS 1428.1:2021 — luminance contrast provisions | 6 | AU | https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021 |
+| LCL-07 | BSI | 2018 | BS 8300:2018 — luminance contrast provisions | 5 | UK | https://www.bsigroup.com/en-GB/standards/bs-8300/ |
 **Divergent findings:** —
 **Notes:** Decision D-03 confirmed: all C-items must carry the regulatory-floor caveat. This is one of the most significant evidence-standards gaps in the entire guidebook. DO NOT cite 30% as an evidence-based optimum. Cite it as a regulatory minimum and recommend highest achievable contrast as design intent.
+
+## Metadata
+
+```yaml
+slug: luminance-contrast-lrv-evidence-base
+population: VIS
+last_updated: 2026-04-19
+co0006_migration: true
+```
