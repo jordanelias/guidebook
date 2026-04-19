@@ -199,3 +199,29 @@ phase_a_freeze:
 
 phase_a_complete: true
 phase_b_ready: true
+
+## GREY DOI Resolution Sessions 1–4 (phone session 2026-04-19)
+
+resolved_7:
+  - RAP-12 Murgia 2022 PMID:36260411 DOI:10.1044/2022_LSHSS-21-00181
+  - MST-02 Staud 2011 PMID:21833699 DOI:10.1007/s11926-011-0206-6
+  - OTI-02 Wellecke 2022 PMID:35292211 DOI:10.1016/j.dhjo.2022.101281
+  - ULB-05 Kennedy 2015 PMID:26132352 DOI:10.1080/10400435.2014.976799
+  - AQV-01 Afrin 2021 DOI:10.1515/dx-2020-0005
+  - TBE-01 Griggs 2019 PMID:30610000 DOI:10.1136/bjsports-2018-099853
+  - TBE-04 Flensner 2011 PMID:21352533 DOI:10.1186/1471-2377-11-27
+
+flagged_errors_5:
+  - POD-11 Ismail 2023 FM hydro SR — POSSIBLE-ERROR (not locatable)
+  - POD-04 Strassheim 2018 OI — POSSIBLE-ERROR (verify author/year)
+  - POD-03 PMC6260403 — WRONG-MATCH (1981 immunology paper)
+  - Gitlin2006 kitchen PMID:17050754 — WRONG-MATCH (Adult Day Services)
+  - OTI-02 journal — corrected from AOTJ to Disability and Health Journal
+
+remaining_genuine_grey_28: >
+  Archnet-IJAR (Rashid, Watchorn), AOTJ (OTI-03 Russell), Indoor Air (TCO-02),
+  JA thermal (TCO-04 Nakayama 1981), Architectural Science Review, Solarlits/MDPI
+  (TLD-01/02/03), AJOT (Stark 2017, OTI-01 Young, OBE-07 Kos), NAT-07 Weber,
+  ULB-02 Togni, NAT-04 Caniato, BSP-01/03/04 body sizes, MHB-04/09/10/11/16/18,
+  SSG-01/04/07, WDS-03 Jost, WCS-06 Grey, DGP-04 Williams, OTF-05 Siu, BDH-07 Latiff.
+  Require desktop session with institutional journal access.
