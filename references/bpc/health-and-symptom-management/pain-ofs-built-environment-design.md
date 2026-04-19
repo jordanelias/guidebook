@@ -69,7 +69,26 @@
 *Pending — functional-deficit-researcher next.*
 
 ### Key sources
-NICE-NG206-2021, BatemanHorne-CCG-2025, PMC6260403-2019, Strassheim-2018, CDC-MECFS-2024, DysautonomiaSupportNetwork, JAN-POTS, Boverket-SE, MDPH-PCH-FR, REHADAT-DE, Ismail-2023-Tandfonline, RCOT-energy-guide, Hersche-2022-OTInt, PMC9716468-2022
+(see ## Key sources table below)
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| POD-01 | NICE | 2021 | NICE NG206 — ME/CFS | Co-2 | UK | https://www.nice.org.uk/guidance/ng206 |
+| POD-02 | Bateman Horne Center | 2025 | ME/CFS Clinical Care Guide 2025 | Co-1 | US | https://batemanhornecenter.org |
+| POD-03 | (author TBC) | 2019 | PMC6260403 — ME/CFS built environment review [GREY — DOI required] | 3 | INT | — |
+| POD-04 | Strassheim, V. et al. | 2018 | OI in ME/CFS. [GREY — DOI required; Tandfonline likely] | 3 | INT | OI onset timing 2–10 min |
+| POD-05 | CDC | 2024 | ME/CFS Clinical Care 2024 | Co-1 | US | https://www.cdc.gov/me-cfs/ |
+| POD-06 | Dysautonomia Support Network | n.d. | Environmental guidance for dysautonomia | 2 | US | https://www.dysautonomiasupport.org |
+| POD-07 | JAN | n.d. | POTS workplace accommodations | 5 | US | https://askjan.org |
+| POD-08 | Boverket | 2024 | BFS 2024:12 — bostadsanpassning | 6 | SE | https://www.boverket.se |
+| POD-09 | MDPH France | n.d. | PCH — housing adaptation funding | 5 | FR | https://www.cnsa.fr/aides-et-prestations/pch |
+| POD-10 | REHADAT | n.d. | REHADAT DE — housing adaptation | 5 | DE | https://www.rehadat.de |
+| POD-11 | Ismail, A. et al. | 2023 | Fibromyalgia hydrotherapy SR. Tandfonline. [GREY — DOI required] | 1 | INT | Hydrotherapy Tier 1 FM |
+| POD-12 | RCOT | n.d. | Energy conservation guide | Co-2 | UK | https://www.rcot.co.uk |
+| POD-13 | Hersche, R. et al. | 2022 | OT interventions in chronic pain: SR. OT Int. [GREY — DOI required] | 1 | INT | — |
+| POD-14 | (author TBC) | 2022 | PMC9716468 — ME/CFS activity pacing SR [GREY — DOI required] | 3 | INT | — |
 
 
 ### Bottom-up findings (functional deficit pass)
@@ -162,3 +181,12 @@ NICE-NG206-2021, BatemanHorne-CCG-2025, PMC6260403-2019, Strassheim-2018, CDC-ME
 
 All three: ○ marker (emerging/provisional). Phase 3 Session 15 action: add codes to Part 4 item specifications.
 Gap logged: GAP-D241-01
+
+## Metadata
+
+```yaml
+slug: pain-ofs-built-environment-design
+population: PAIN, OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
