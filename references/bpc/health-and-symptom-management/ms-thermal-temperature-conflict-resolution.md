@@ -62,11 +62,23 @@ Not yet performed.
 FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tier 3; Davis 2010 Tier 3) — cooling station ≤16C within 50m of MS facility circulation; extended occupancy capacity distinct from NDV retreat. FDR-MST-02: MS fatigue diurnal pattern — afternoon ambient should reduce 1-2C from morning setpoint via BMS programming. Krupp 2003 Tier 3. Items affected: F-07, A-16.
 
 ### Key sources
-- MSIF-Atlas2023 — MS heat sensitivity prevalence (60–80%)
-- Staud2011 — fibromyalgia cold sensitivity
-- Geisser2021 — hyperacusis + temperature co-occurrence in fibromyalgia
-- Baquero2023 — older adult neutral temperature 24.9°C (n=1,065)
-- CDC-MECFS — OFS cool environment requirement
-- Newcastle-POTS-2018 — POTS thermal triggers
-- ISO-7730-2005 — PMV/PPD model limitations
-- WELL-v2-Thermal — voluntary framework (general thermal comfort only)
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| MST-01 | MSIF | 2023 | MS International Federation Atlas 2023 — heat sensitivity 60–80% | 3 | INT | https://www.msif.org/research/ms-atlas/ |
+| MST-02 | Staud, R. | 2011 | Fibromyalgia cold sensitivity. [GREY — DOI required before publication] | 3 | INT | Cold pain hypersensitivity |
+| MST-03 | Geisser, M. et al. | 2021 | Hyperacusis + temperature co-occurrence in fibromyalgia. [GREY — DOI required] | 3 | INT | — |
+| MST-04 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C (n=1,065). [GREY — DOI required] | 3 | INT | DEM/older adults thermal comfort |
+| MST-05 | CDC | 2024 | ME/CFS Clinical Care — cool environment requirement | Co-1 | US | https://www.cdc.gov/me-cfs/ |
+| MST-06 | Newcastle POTS clinic | 2018 | POTS thermal triggers — clinical guidance. [GREY — specific publication unverified] | 4 | UK | — |
+| MST-07 | ISO | 2005 | ISO 7730:2005 — Ergonomics of the thermal environment (PMV/PPD) | 4 | INT | https://www.iso.org/standard/39155.html |
+| MST-08 | IWBI | 2024 | WELL v2 Thermal Comfort feature | 5 | INT | https://v2.wellcertified.com/wellv2/en/thermal-comfort |
+
+## Metadata
+
+```yaml
+slug: ms-thermal-temperature-conflict-resolution
+population: NEU, PAIN, OFS, DEM
+last_updated: 2026-04-19
+co0006_migration: true
+```
