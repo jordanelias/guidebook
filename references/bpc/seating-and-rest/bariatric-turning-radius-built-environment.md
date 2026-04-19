@@ -15,3 +15,17 @@
 **Key sources:** Steinfeld2006-RESNA · VA-BFDS-2025 · Stroupe-Sarbaugh-2008-ASPHP · IWA-TurningCircle
 **Divergent findings:** Steinfeld 1925 mm empirical vs. VA 1830 mm federal standard — guidebook should cite 1900 mm as the rounded, evidence-informed figure
 **Notes:** BAR cross-reference code only — not a main taxonomy code; not in Volume 2. Item belongs in Supplementary Volume §IV. Current BAR-03 specification (1800 mm) is supported by VA and IWA standards; upgrade to 1900 mm recommended for new build. Stroupe & Sarbaugh "radius" likely means diameter — verify terminology before citing.
+
+## Key sources
+
+[STUB — this BPC file is a deferred non-standard file. Full research pass pending (Block 5 decision required). See gap register for status.]
+
+## Metadata
+
+```yaml
+slug: bariatric-turning-radius-built-environment
+population: MOB
+last_updated: 2026-04-19
+status: DEFERRED-NON-STANDARD
+note: Non-standard BPC file. Full content deferred pending project decision.
+```
