@@ -315,3 +315,516 @@ source_url: "https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/a
 
 <!-- Total entries: 29 -->
 
+
+
+<!-- A5 expansion — 2026-04-19: added 51 entries from BPC Key sources -->
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "IEC 60118-4:2014+AMD1:2017"
+current_version: "IEC 60118-4:2014+AMD1:2017"
+status: "CURRENT"
+key_changes: "Universal performance standard for hearing loop systems. Field strength ±3 dB across listening plane; SNR ≥47 dB(A). Universally adopted across all reviewed jurisdictions."
+last_checked: "2026-04-19"
+source_url: "https://webstore.iec.ch/publication/29792"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "IEC TR 63079:2017"
+current_version: "IEC TR 63079:2017"
+status: "CURRENT"
+key_changes: "Code of practice for hearing-loop systems. Technical report supplementing IEC 60118-4."
+last_checked: "2026-04-19"
+source_url: "https://webstore.iec.ch/publication/32448"
+```
+
+```yaml
+jurisdiction: "DE"
+standard_cited: "DIN 18041:2016-03"
+current_version: "DIN 18041:2016-03"
+status: "CURRENT"
+key_changes: "Hörsamkeit in Räumen — most specific DEAF acoustic environment design standard globally. Introduced disability/BGG framing in 2016 revision. Nutzungsart A3/A4 categories address hearing-impaired users."
+last_checked: "2026-04-19"
+source_url: "https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706"
+```
+
+```yaml
+jurisdiction: "UK"
+standard_cited: "BB93:2015"
+current_version: "BB93:2015"
+status: "CURRENT"
+key_changes: "Acoustic Design of Schools — UK Department for Education. Specifies RT60 and background noise for school environments."
+last_checked: "2026-04-19"
+source_url: "https://www.gov.uk/government/publications/bb93-acoustic-design-of-schools"
+```
+
+```yaml
+jurisdiction: "US"
+standard_cited: "ANSI/ASA S12.60-2010/Part 1"
+current_version: "ANSI/ASA S12.60-2010/Part 1 (reaffirmed)"
+status: "CURRENT"
+key_changes: "Acoustical Performance Criteria, Design Requirements, and Guidelines for Schools. Mandatory RT60 ≤0.3 s for DEAF/HH learners."
+last_checked: "2026-04-19"
+source_url: "https://acousticalsociety.org/standards/"
+```
+
+```yaml
+jurisdiction: "IT"
+standard_cited: "UNI 11532-2:2020"
+current_version: "UNI 11532-2:2020"
+status: "CURRENT"
+key_changes: "Acoustic requirements in buildings. Most advanced NDV-equivalent provisions internationally — explicitly names students with hearing deficits and attention disorders (categoria A3.1/A4) with stricter RT60/STI."
+last_checked: "2026-04-19"
+source_url: "https://www.uni.com/en/"
+```
+
+```yaml
+jurisdiction: "NO"
+standard_cited: "NS 8175:2019"
+current_version: "NS 8175:2019"
+status: "CURRENT"
+key_changes: "Lydisolasjon og romakustiske forhold i bygninger — Norwegian acoustic standard for buildings."
+last_checked: "2026-04-19"
+source_url: "https://standard.no/"
+```
+
+```yaml
+jurisdiction: "AU"
+standard_cited: "AS/NZS 2107:2016"
+current_version: "AS/NZS 2107:2016"
+status: "CURRENT"
+key_changes: "Acoustics — recommended design sound levels and reverberation times for building interiors."
+last_checked: "2026-04-19"
+source_url: "https://www.standards.org.au/"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "CIE S 026/E:2018"
+current_version: "CIE S 026/E:2018"
+status: "CURRENT"
+key_changes: "CIE System for Metrology of Optical Radiation for ipRGC-Influenced Responses to Light. Defines melanopic EDI metric for circadian-effective lighting."
+last_checked: "2026-04-19"
+source_url: "https://cie.co.at/publications/cie-system-metrology-optical-radiation-iprGC-influenced-responses-light"
+```
+
+```yaml
+jurisdiction: "DE"
+standard_cited: "DIN/TS 67600:2022"
+current_version: "DIN/TS 67600:2022"
+status: "CURRENT"
+key_changes: "Biologically effective illumination — Design guidelines. German-origin standard adopting melanopic EDI metric. Most advanced national standard for circadian lighting."
+last_checked: "2026-04-19"
+source_url: "https://www.din.de/"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "IEEE 1789-2015"
+current_version: "IEEE 1789-2015"
+status: "CURRENT"
+key_changes: "Recommended Practices for Modulating Current in High-Brightness LEDs for Mitigating Health Risks to Viewers — flicker-free specification mandatory for NDV/NEU populations."
+last_checked: "2026-04-19"
+source_url: "https://standards.ieee.org/ieee/1789/4795/"
+```
+
+```yaml
+jurisdiction: "EU"
+standard_cited: "BS EN 54-23:2010"
+current_version: "BS EN 54-23:2010"
+status: "CURRENT"
+key_changes: "Fire detection and fire alarm systems — Part 23: Visual alarm devices. Flash rate 0.5–2 Hz."
+last_checked: "2026-04-19"
+source_url: "https://www.bsigroup.com/"
+```
+
+```yaml
+jurisdiction: "US"
+standard_cited: "NFPA 72:2022"
+current_version: "NFPA 72:2022"
+status: "CURRENT"
+key_changes: "National Fire Alarm and Signaling Code. Flash rate 1–3 Hz for visual alarm devices."
+last_checked: "2026-04-19"
+source_url: "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=72"
+```
+
+```yaml
+jurisdiction: "FR"
+standard_cited: "Arrêté du 20 avril 2017 (ERP)"
+current_version: "Arrêté du 8 décembre 2014 + 2017 amendment"
+status: "CURRENT"
+key_changes: "French ERP accessibility regulations. Mandatory hearing loop (BIM) in all ERP cat. 1–4 and spaces ≥50 seats (CEREMA threshold). Ressaut ≤20mm at thresholds."
+last_checked: "2026-04-19"
+source_url: "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000029925726"
+```
+
+```yaml
+jurisdiction: "JP"
+standard_cited: "MLIT Barrier-Free Law 2018–2024"
+current_version: "建築物移動等円滑化誘導基準 (2024 revision)"
+status: "CURRENT"
+key_changes: "Japanese Ministry of Land Infrastructure Transport and Tourism barrier-free building standard. 2025 update adds anthropometric data for power wheelchair users."
+last_checked: "2026-04-19"
+source_url: "https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html"
+```
+
+```yaml
+jurisdiction: "KR"
+standard_cited: "편의증진법 (Act on Convenience Promotion) 2024"
+current_version: "2024 major revision"
+status: "UPDATED"
+key_changes: "Korean Welfare Facilities Promotion Act — 2024 revision shifts from route access to daily life access. Most advanced framing shift in 2024 review cycle."
+last_checked: "2026-04-19"
+source_url: "https://www.law.go.kr/"
+```
+
+```yaml
+jurisdiction: "CN"
+standard_cited: "GB 50763-2012"
+current_version: "GB 50763-2012"
+status: "CURRENT"
+key_changes: "无障碍设计规范 — Code for Accessibility Design. Primary Chinese accessibility standard. Tactile paving (盲道) specified in major cities."
+last_checked: "2026-04-19"
+source_url: "https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html"
+```
+
+```yaml
+jurisdiction: "PT"
+standard_cited: "Decreto-Lei 163/2006"
+current_version: "Decreto-Lei 163/2006"
+status: "CURRENT"
+key_changes: "Regime da acessibilidade — Portuguese accessibility decree. Threshold ≤20mm; ramp ≤8%."
+last_checked: "2026-04-19"
+source_url: "https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296"
+```
+
+```yaml
+jurisdiction: "IT"
+standard_cited: "DM 236/89"
+current_version: "DM 236/89 (1989; under review)"
+status: "CURRENT"
+key_changes: "Prescrizioni tecniche per l'accessibilità — Italian accessibility technical requirements. Three-tier framework: accessibilità/visitabilità/adattabilità."
+last_checked: "2026-04-19"
+source_url: "https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf"
+```
+
+```yaml
+jurisdiction: "BR"
+standard_cited: "ABNT NBR 9050:2020"
+current_version: "ABNT NBR 9050:2020"
+status: "CURRENT"
+key_changes: "Acessibilidade a edificações — primary Brazilian accessibility standard. M.R. (módulo de referência) 800×1200mm. 1500mm 360° turning circle."
+last_checked: "2026-04-19"
+source_url: "https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500"
+```
+
+```yaml
+jurisdiction: "NZ"
+standard_cited: "NZS 4121:2001"
+current_version: "NZS 4121:2001 (under revision)"
+status: "CURRENT"
+key_changes: "Design for access and mobility — New Zealand standard. 1500mm turning circle. Under revision as of 2024."
+last_checked: "2026-04-19"
+source_url: "https://www.standards.govt.nz/"
+```
+
+```yaml
+jurisdiction: "CH"
+standard_cited: "SIA 500:2009"
+current_version: "SIA 500:2009"
+status: "CURRENT"
+key_changes: "Constructions sans obstacles — Swiss barrier-free building standard. Ramp max 6%; admissible 12% with handrails. Most restrictive European ramp standard."
+last_checked: "2026-04-19"
+source_url: "https://www.sia.ch/de/dienstleistungen/sia-norm/sia-500/"
+```
+
+```yaml
+jurisdiction: "IE"
+standard_cited: "Part M (Ireland) 2010"
+current_version: "Technical Guidance Document M: Access and Use (2010)"
+status: "CURRENT"
+key_changes: "Irish building regulations accessibility requirements."
+last_checked: "2026-04-19"
+source_url: "https://www.gov.ie/en/publication/ef0f3-technical-guidance-document-m/"
+```
+
+```yaml
+jurisdiction: "SG"
+standard_cited: "BCA Code on Accessibility 2025"
+current_version: "Code on Accessibility in the Built Environment 2025"
+status: "UPDATED"
+key_changes: "Most comprehensive Asian accessibility code. Chapter 8: wayfinding (TGSI §9.7, tactile/braille §8.5). Effective November 2025. Incorporates anthropometric data for power WC users."
+last_checked: "2026-04-19"
+source_url: "https://www.bca.gov.sg/Professionals/iquas/iquas/code_on_accessibility.html"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "ISO 23599:2019"
+current_version: "ISO 23599:2019"
+status: "CURRENT"
+key_changes: "Assistive products for persons with vision impairment — tactile walking surface indicators. Derives from Japanese JIS T 9251:2001. Physically determined geometry; transfers universally."
+last_checked: "2026-04-19"
+source_url: "https://www.iso.org/standard/66862.html"
+```
+
+```yaml
+jurisdiction: "JP"
+standard_cited: "JIS T 9251:2001"
+current_version: "JIS T 9251:2001"
+status: "CURRENT"
+key_changes: "日本工業規格 — Tactile Walking Surface Indicators. Origin standard for ISO 23599:2019."
+last_checked: "2026-04-19"
+source_url: "https://www.jisc.go.jp/"
+```
+
+```yaml
+jurisdiction: "DE"
+standard_cited: "DIN 32984:2011-10"
+current_version: "DIN 32984:2011-10"
+status: "CURRENT"
+key_changes: "Bodenindikatoren im öffentlichen Raum — German tactile pavement standard."
+last_checked: "2026-04-19"
+source_url: "https://www.din.de/"
+```
+
+```yaml
+jurisdiction: "BR"
+standard_cited: "ABNT NBR 16537:2024"
+current_version: "ABNT NBR 16537:2024"
+status: "UPDATED"
+key_changes: "Acessibilidade — Sinalização tátil no piso. 2024 update. Only jurisdiction explicitly extending tactile paving to DeafBlind (surdo-cegueira)."
+last_checked: "2026-04-19"
+source_url: "https://www.abntcatalogo.com.br/"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "EN ISO 16000-9:2006"
+current_version: "EN ISO 16000-9:2006"
+status: "CURRENT"
+key_changes: "Indoor air — determination of VOC emission from building products (chamber method). TVOC ≤0.5 mg/m³ at 28 days is the specification threshold for OFS/MCAS spaces."
+last_checked: "2026-04-19"
+source_url: "https://www.iso.org/standard/39141.html"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "ISO 7730:2005"
+current_version: "ISO 7730:2005"
+status: "CURRENT"
+key_changes: "Ergonomics of the thermal environment — PMV/PPD model. CONFIRMED LIMITATION: PMV/PPD unreliable for disability populations including NEU/MS, OFS, DEM. Not applicable as sole thermal comfort criterion."
+last_checked: "2026-04-19"
+source_url: "https://www.iso.org/standard/39155.html"
+```
+
+```yaml
+jurisdiction: "CA"
+standard_cited: "CAN/ASC 2.8:2025"
+current_version: "CAN/ASC 2.8:2025"
+status: "CURRENT"
+key_changes: "Accessible-Ready Housing — Canadian accessible housing standard. Blocking requirements for grab bars and ceiling hoists."
+last_checked: "2026-04-19"
+source_url: "https://accessible.canada.ca/advancing-accessibility-canada/accessibility-standards-canada"
+```
+
+```yaml
+jurisdiction: "AU"
+standard_cited: "AS 1428.2:1992"
+current_version: "AS 1428.2:1992"
+status: "CURRENT"
+key_changes: "Enhanced requirements for access — people with disabilities. §15 reach range for 90th percentile wheelchair users."
+last_checked: "2026-04-19"
+source_url: "https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-2-1992"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "BS EN ISO 10535:2021"
+current_version: "BS EN ISO 10535:2021"
+status: "CURRENT"
+key_changes: "Hoists for the transfer of disabled persons — requirements and test methods. Ceiling hoist structural power provision; minimum 800kg dynamic load rating."
+last_checked: "2026-04-19"
+source_url: "https://www.bsigroup.com/"
+```
+
+```yaml
+jurisdiction: "DE"
+standard_cited: "DIN 18040-2:2011"
+current_version: "DIN 18040-2:2011 + Draft E 2023"
+status: "UPDATED"
+key_changes: "Barrierefreies Bauen — Wohnungen. Residential accessibility. Nullschwelle doctrine (0mm threshold). Draft E 2023 revision tightening to ≤10mm. 130/140 criteria have zero additional cost at design stage (TERRAGON/DStGB 2017)."
+last_checked: "2026-04-19"
+source_url: "https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706"
+```
+
+```yaml
+jurisdiction: "FI"
+standard_cited: "Maankäyttö- ja rakennuslaki Decree 241/2017 (F1)"
+current_version: "Decree 241/2017"
+status: "CURRENT"
+key_changes: "Finnish accessibility building regulations. F1 = Accessibility of the Built Environment."
+last_checked: "2026-04-19"
+source_url: "https://www.finlex.fi/fi/laki/alkup/2017/20170241"
+```
+
+```yaml
+jurisdiction: "DK"
+standard_cited: "BR18"
+current_version: "BR18 (Bygningsreglement 2018)"
+status: "CURRENT"
+key_changes: "Danish Building Regulations 2018. Three-quality-level framework (A/B/C) in SBi-anvisning 230."
+last_checked: "2026-04-19"
+source_url: "https://bygningsreglementet.dk/"
+```
+
+```yaml
+jurisdiction: "NL"
+standard_cited: "NEN 9120:2025"
+current_version: "NEN 9120:2025"
+status: "UPDATED"
+key_changes: "Toegankelijkheid van gebouwen — supersedes NEN 1814:2001. Published February 2025. NL implementation of EN 17210:2021. Free to download."
+last_checked: "2026-04-19"
+source_url: "https://www.nen.nl/nen-9120-2025-nl-335193"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "EN 81-70:2021+A1:2022"
+current_version: "EN 81-70:2021+A1:2022"
+status: "UPDATED"
+key_changes: "Safety rules for construction and installation of lifts — accessibility for persons with disability. Type 2: 1100×1400mm minimum car. A1 amendment 2022."
+last_checked: "2026-04-19"
+source_url: "https://www.en-standard.eu/"
+```
+
+```yaml
+jurisdiction: "UK"
+standard_cited: "PAS 6463:2022"
+current_version: "PAS 6463:2022"
+status: "CURRENT"
+key_changes: "Design for the Mind — Neurodiversity and the Built Environment. First BSI standard for neurodiversity-inclusive design. Guidance only (PAS, not mandatory BS). Sensory zoning, quiet spaces, transition zones."
+last_checked: "2026-04-19"
+source_url: "https://www.bsigroup.com/en-GB/standards/pas-6463/"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "WHO Housing and Health Guidelines 2018"
+current_version: "WHO Housing and Health Guidelines (2018)"
+status: "CURRENT"
+key_changes: "18–24°C general indoor thermal range; disability populations named. WHO minimum 18°C applies to thermoregulation-impaired occupants. Annex G: Global South city-specific temperature thresholds."
+last_checked: "2026-04-19"
+source_url: "https://www.who.int/publications/i/item/who-housing-and-health-guidelines"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "WELL Building Standard v2"
+current_version: "WELL Building Standard v2 (current)"
+status: "CURRENT"
+key_changes: "International WELL Building Institute voluntary certification. Feature L07: Circadian Lighting Design (≥200 EML / ≥181 melanopic EDI — less strict than Brown et al. 2022 ≥250 melanopic EDI). Feature A: Air Quality (TVOC, CO₂)."
+last_checked: "2026-04-19"
+source_url: "https://v2.wellcertified.com/"
+```
+
+```yaml
+jurisdiction: "ES"
+standard_cited: "UNE 41500:2020"
+current_version: "UNE 41500:2020"
+status: "CURRENT"
+key_changes: "Spain DALCO accessibility framework — Deambulación, Aprehensión, Localización, Comunicación. Voluntary standard."
+last_checked: "2026-04-19"
+source_url: "https://www.une.org/"
+```
+
+```yaml
+jurisdiction: "ES"
+standard_cited: "CTE DB SUA"
+current_version: "Código Técnico de la Edificación — DB SUA (current)"
+status: "CURRENT"
+key_changes: "Seguridad de utilización y accesibilidad — Spanish building technical code accessibility chapter."
+last_checked: "2026-04-19"
+source_url: "https://www.codigotecnico.org/pdf/Documentos/SUA/DBSUA.pdf"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "ISO 21542:2021"
+current_version: "ISO 21542:2021 (Edition 2)"
+status: "CURRENT"
+key_changes: "Building construction — Accessibility and usability of the built environment. Edition 2 June 2021 supersedes 2011. Expanded vertical circulation, acoustics, emergency evacuation, wheelchair footprint."
+last_checked: "2026-04-19"
+source_url: "https://www.iso.org/standard/71025.html"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "ASHRAE 52.2:2017"
+current_version: "ASHRAE 52.2:2017"
+status: "CURRENT"
+key_changes: "Method of Testing General Ventilation Air-Cleaning Devices for Removal Efficiency by Particle Size — MERV filtration rating standard. MERV 13+ required for OFS/MCAS-occupied spaces."
+last_checked: "2026-04-19"
+source_url: "https://www.ashrae.org/technical-resources/bookstore/52-2"
+```
+
+```yaml
+jurisdiction: "US"
+standard_cited: "FGI Guidelines 2022"
+current_version: "FGI Guidelines for Design and Construction of Hospitals 2022"
+status: "CURRENT"
+key_changes: "Facility Guidelines Institute — US healthcare facility design requirements including bariatric and accessible provisions."
+last_checked: "2026-04-19"
+source_url: "https://fgiguidelines.org/"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "CRPD General Comment No. 2 (2014)"
+current_version: "CRPD General Comment No. 2 — Art. 9 Accessibility"
+status: "CURRENT"
+key_changes: "UN CRPD Committee authoritative interpretation of Art. 9 (Accessibility). Confirms accessibility as a precondition for full rights enjoyment. Distinguishes reasonable accommodation from universal design."
+last_checked: "2026-04-19"
+source_url: "https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no2-article-9-accessibility-2014"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "CRPD General Comment No. 5 (2017)"
+current_version: "CRPD General Comment No. 5 — Art. 19 Independent Living"
+status: "CURRENT"
+key_changes: "UN CRPD Committee authoritative interpretation of Art. 19 (Living independently and being included in the community). Housing accessibility as independent living prerequisite."
+last_checked: "2026-04-19"
+source_url: "https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-5-2017"
+```
+
+```yaml
+jurisdiction: "EU"
+standard_cited: "Directive (EU) 2019/882"
+current_version: "Directive (EU) 2019/882 — European Accessibility Act"
+status: "CURRENT"
+key_changes: "European Accessibility Act — mandatory accessibility requirements for products and services. Built environment provisions via EN 17210:2021 harmonised standard."
+last_checked: "2026-04-19"
+source_url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32019L0882"
+```
+
+```yaml
+jurisdiction: "INT"
+standard_cited: "ISO 11199-3:2005"
+current_version: "ISO 11199-3:2005"
+status: "CURRENT"
+key_changes: "Walking aids manipulated by both arms — requirements and test methods. Referenced for walking frame structural loads. Grab bar load standard: ≥1.3 kN per fixing point (KITE Research)."
+last_checked: "2026-04-19"
+source_url: "https://www.iso.org/standard/35900.html"
+```
+
+```yaml
+jurisdiction: "CA"
+standard_cited: "RHFAC Rating Survey v4.0"
+current_version: "RHFAC Rating Survey v4.0 (2024)"
+status: "UPDATED"
+key_changes: "Rick Hansen Foundation Accessibility Certification — most comprehensive Canadian voluntary accessibility rating. §2.4 reach range; §2 exterior approach and entrance. v4.0 incorporates updated anthropometric data."
+last_checked: "2026-04-19"
+source_url: "https://www.rickhansen.com/make-change/accessibility-certification-rhfac"
+```
