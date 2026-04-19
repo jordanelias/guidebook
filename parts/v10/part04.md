@@ -642,6 +642,7 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU|NDV -->
+<!-- grade_confidence: MODERATE — Melanopic EDI ≥250: Brown et al. 2022 PLOS Biology (Tier 1) + CIE S026:2018. WELL v2 sets lower threshold (≥181 melanopic EDI). DIN/TS 67600:2022 adopts melanopic EDI metric. ≥5 jurisdictions moving toward circadian metrics. Tier 1 photobiology evidence; limited built-env RCT. -->
 <!-- METRIC NOTE: This item uses melanopic EDI (≥250) as the daytime threshold per Brown et al. 2022 PLOS Biology. Prior versions cited EML (≥150–200 EML). Conversion: melanopic EDI ≈ EML / 1.104. Use melanopic EDI ≥250 as the unified design target. See BPC circadian-lighting-melanopic-edi and spec-db-part4-reconciliation Section C1. -->
 
 **Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS
@@ -673,6 +674,7 @@ DEM environments: circadian lighting is a clinical requirement, not a comfort en
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
+<!-- grade_confidence: MODERATE — Diffuse shadow-free lighting for lip reading/BSL: DeafSpace guidelines (Gallaudet, Tier 2 co-design) + BS 8300 §8.3. Photometric principle is sound (lighting science). No RCT on diffuse lighting vs directional for Deaf communication outcomes. ≥4 jurisdictions reference. -->
 
 **Applicable Groups:** DEAF, DBL
 
@@ -712,6 +714,7 @@ DeafSpace design guidelines. Gallaudet. British Standards Institution.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|NEU -->
+<!-- grade_confidence: HIGH — No fluorescent/non-IEEE-1789-compliant LEDs: IEEE 1789-2015 (Tier 4 engineering standard) defines flicker-free threshold. NDV/NEU seizure and photosensitivity evidence: Harding et al. 2005 Epilepsia (Tier 3 SR). ≥10 jurisdictions moving to LED — mandatory IEEE compliance is VE-protected per Part 8. HIGH on fluorescent elimination; MODERATE on IEEE 1789 threshold specifically. -->
 
 **Applicable Groups:** PCS, AUT, PAIN, NDV · OFS · NEU
 <!-- CON-0071: fluorescent flicker is OFS/NEU/PAIN trigger -->
@@ -740,6 +743,7 @@ Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 complianc
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|NEU -->
+<!-- grade_confidence: HIGH — IEEE 1789-2015 flicker-free spec: same evidence as B-03. MERGED into B-03 per CO-0003. Rating inherited. VE-protected per Part 8 §9.3.3. -->
 <!-- CO-0003: B-04 content absorbed into B-03. B-03 now covers: elimination of fluorescent + flicker-free LED specification (IEEE 1789-2015 / IEC TR 61547-1). Applicable Groups: NDV · NEU/PCS · OFS · DEM · VIS · ALL. -->
 
 **Applicable Groups:** PCS, AUT, PAIN, DEM · OFS · NEU
@@ -771,6 +775,7 @@ Product specification: IEEE 1789 compliance certificate required before installa
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:VIS|DEM -->
+<!-- grade_confidence: MODERATE — Gradual lighting transition ≥5m: VIS/DEM populations — BS 8300, DSDC EADDAT, CNIB guidance. Physiological rationale (pupil adaptation, ~5s at high contrast) is Tier 3 (vision science). No built-env RCT. ≥6 jurisdictions reference transition zones. -->
 
 **Applicable Groups:** PCS, AUT, VIS, DEM · PAIN · OFS
 <!-- D2-41: D2-41: photosensitivity in OFS/PCS; gradual transitions prevent pain flare from sudden light exposure -->
@@ -803,6 +808,7 @@ requires circuit separation, dimmer installation, and possible luminaire additio
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS -->
+<!-- grade_confidence: MODERATE — Individual dimming ≥300 lux range: BS 8300 + WELL v2 + PAS 6463. Circadian and NDV evidence supports individual control (Tier 3-4). No RCT on dimmer range for disability outcomes. Cross-population benefit (DEM/NDV/NEU/OFS). ≥8 jurisdictions reference occupant lighting control. -->
 
 <!-- CON-0017 [HIGH]: B-06 individual dimming is the highest-impact single lighting provision for DEM/VIS vs NDV/OFS illuminance conflict. Cross-reference H-02 (individual environmental control hierarchy). Ensure B-06 specifies CCT adjustability as well as level — CCT adjustment resolves DEM circadian vs NDV predictability conflict (see Part 5 §5.2 LIGHT-INT). --> (≥300 Lux Range)
 
@@ -836,6 +842,7 @@ Where residential occupancy: all bedroom and living room circuits minimum
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM -->
+<!-- grade_confidence: LOW — Indirect/cove lighting in sensitive spaces: PAS 6463 + DSDC guidance + WELL v2. Expert consensus. No RCT. Tier 4-5. -->
 
 **Applicable Groups:** AUT, PCS, PAIN, DEM · OFS
 <!-- CON-0059: CON-0059: indirect lighting eliminates glare — OFS/PCS photosensitivity + PAIN photophobia (fibromyalgia) -->
@@ -864,6 +871,7 @@ Illuminance: 200--300 lux at task level achieved by indirect strategy
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:VIS|DEM -->
+<!-- grade_confidence: MODERATE — Matte floor finishes ≤30 gloss units: CNIB guidance + DSDC EADDAT + BS 8300. LRV contrast evidence (Dain/Manandhar Tier 3 for VIS). No RCT specifically on gloss units. ≥6 jurisdictions reference low-reflectance floors. -->
 
 **Applicable Groups:** PCS, VIS, DEM, AUT · PAIN · OFS
 <!-- D2-41: D2-41: glare from high-gloss floors exacerbates OFS/PCS photosensitivity -->
@@ -896,6 +904,7 @@ DSDC. (2022). EADDAT. University of Stirling.
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: MODERATE — Maximise natural light: Ulrich 1984 PMID:6143402 (Science, Tier 3 — recovery from surgery with window view). Multiple healthcare design SRs confirm biophilic benefit (Tier 3). ≥8 jurisdictions reference daylight in accessible design. MODERATE — Tier 3 evidence, no built-env accessibility RCT. -->
 
 **Applicable Groups:** ALL (especially MH, DEM, PAIN, NEU, OFS)
 
@@ -927,6 +936,7 @@ seated views essential).
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
+<!-- grade_confidence: HIGH — Visual + vibrotactile fire alarm multi-channel: BS EN 54-23 + NFPA 72 — universally mandated for DEAF populations. VE-protected per Part 8 (independent circuit mandatory). ≥12 jurisdictions mandate visual fire alarms. Efficacy evidence: physiologically sound (DEAF users cannot hear audio alarms). HIGH on provision mandate. -->
 
 <!-- CON-0014 [HIGH]: New companion item required — Vibrotactile Alerting Device (sleeping areas): minimum vibration intensity, latency ≤3 s, coverage all sleeping rooms where DEAF/DBL/photosensitive populations are primary. Item code K-04 exists (vibrotactile alert) — cross-reference and ensure K-04 explicitly covers sleeping-area installation. Resolves strobe-seizure conflict: where strobes are contraindicated (NDV photosensitivity, epilepsy), vibrotactile is the resolution. -->
 <!-- CON-0042 [HIGH]: DEAF visual alerting system (B-10) conflicts with VIS/NDV glare in shared spaces. Resolution: diffuser technology; strobe placement high on wall (>2100 mm AFF) reduces direct glare while maintaining visual coverage. Add installation note to B-10. -->
@@ -965,6 +975,7 @@ Position: visible from any point in room (ceiling or high-wall mount)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU -->
+<!-- grade_confidence: MODERATE — Warm colour temperature ≤2700K after 19:00: Circadian lighting science (Tier 1 — Brown et al. 2022, CIE S026). WELL v2 Feature L07 references evening colour temperature. DEM sleep evidence (Tier 3). ≥5 jurisdictions/standards reference evening lighting. MODERATE — evidence strong on principle; built-env implementation studies sparse. -->
 
 **Applicable Groups:** DEM, NDV/MH, NEU · OFS · PAIN
 <!-- CON-0073: warm CCT ≤2700K evening reduces photosensitivity load -->
@@ -1001,6 +1012,7 @@ LRV = Light Reflectance Value (0 = black; 100 = white). All contrast specificati
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM -->
+<!-- grade_confidence: LOW — Muted, low-chroma, non-institutional colour palette: PAS 6463 + ASPECTSS (Tier 4) + Co-1 NDV user research. No RCT on colour palette for NDV outcomes. Tier 4-5. -->
 
 <!-- CON-0043 [HIGH]: C-01 muted palette conflicts with NDV/MH warm-colour preference. Resolution: muted palette as default in shared spaces; warm-colour biophilic breakout zones. Do not apply high-contrast marking in NDV/AUT-primary environments without MH zoning analysis. Item-specification-writer pass required: add NDV/MH conflict note and zone qualifier. -->
 
@@ -1036,6 +1048,7 @@ Model. Muted, low-chroma colours reduce the visual complexity that constitutes a
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|NDV -->
+<!-- grade_confidence: LOW — Colour-coded wayfinding zones: DSDC EADDAT + Marquardt 2011 (HERD Tier 3). DEM wayfinding research supports colour coding for zone differentiation (Tier 3, single study). No RCT on colour zone effectiveness. ≥4 jurisdictions reference. -->
 
 **Applicable Groups:** DEM, NDV, VIS (cognitive)
 
@@ -1069,6 +1082,7 @@ that substitutes for abstract wayfinding reasoning when cognitive capacity for s
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM -->
+<!-- grade_confidence: LOW — Pattern avoidance in sensitive environments: PAS 6463 (Tier 4) + NDV lived experience. No RCT on pattern vs plain flooring for NDV outcomes. Visual noise research is Tier 4-5. -->
 
 **Applicable Groups:** DEM, AUT, PCS, NDV, OFS
 
@@ -1102,6 +1116,7 @@ High-chroma, saturated patterns at floor level constitute a visual stimulus in t
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:VIS|DEM -->
+<!-- grade_confidence: MODERATE — LRV ≥30% contrast: BS 8300 + CNIB + AS 1428.2 + multiple jurisdictions (≥10). Dain/Manandhar (Ophthalmic Physiol Opt, Tier 3) — computational + observational study on contrast ratios for VIS navigation. Note: GRADE framework document rates LRV ≥30% as LOW (standards convergence, no empirical validation). MODERATE assigned here given jurisdictional convergence ≥10. -->
 <!-- CON-0043: ≥30 LRV = code-compliance minimum only. Best practice: ≥50% LRV at all contrast-dependent provisions. At platform edges, stair nosings, kerb lines: ≥65% Michelson. Pops: VIS · DEM · NDV/AUT · DBL. -->
 
 <!-- CON-0060 [HIGH]: C-04 LRV ≥30 at critical junctions is Tier 0 (VIS, DEM — both require this for safety). NDV/SENS muted palette preference must not reduce safety contrast at critical junctions. Zone-based resolution applies: ≥30 LRV contrast mandatory at all step edges, door frames, and critical junctions regardless of zone. Muted palette applies to non-safety surfaces only. -->
@@ -1138,6 +1153,7 @@ G-03 (Grab Bars)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM -->
+<!-- grade_confidence: LOW — Low LRV differential at adjacent floor materials (DEM inverse floor trap): DSDC EADDAT (Tier 5) + DSDC Stirling research (Tier 3). Dark mats = perceived holes — Tier Co-1/3. No RCT. ≥4 jurisdictions reference. -->
 
 **Applicable Groups:** DEM
 
@@ -1171,6 +1187,7 @@ Clearing our path. CNIB.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — MERGED into C-03 per CO-0003. Inherited C-03 rating. No independent evidence review. -->
 <!-- CO-0003: C-06 content absorbed into C-03. C-03 now covers: pattern avoidance + plain flooring specification. DEM fall prevention (+15% pattern-associated falls DSDC 2024) is primary rationale. --> (No Geometric Patterns)
 
 **Applicable Groups:** DEM, AUT, PCS, OFS
@@ -1209,6 +1226,7 @@ Wayfinding is the ability to determine one's location, plan a route, and navigat
 <!-- design_stage_lock: B -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:DEM -->
+<!-- grade_confidence: MODERATE — Loop floor plan for DEM environments: Marquardt & Schmieg 2009 (AJAD Tier 3) + Bowes et al. 2019 Stirling SR (429 items, Tier 3). PMC8725382 (NL floorplan study, Tier 3). Floor plan configuration confirmed as most influential factor. ≥5 jurisdictions reference loop plans for DEM care. MODERATE — multiple Tier 3 studies converge; no RCT. -->
 
 **Applicable Groups:** DEM · VIS · DBL · NDV/AUT
 <!-- CON-0001: Tier 0: 5 populations require consistent loop/single-path circulation from independent clinical rationales -->
@@ -1241,6 +1259,7 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU|NDV -->
+<!-- grade_confidence: MODERATE — Cognitive simplicity / single primary route: Passini 1984 (wayfinding theory, Tier 3 equivalent) + Iwarsson & Ståhl 2003 (Disabil Rehabil framework). ≥6 jurisdictions reference. Tier 3 + standards convergence. -->
 
 <!-- CON-0001 [HIGH]: Tier 0 convergence — DEM, VIS, DBL, DEM/NDV[IntD-proxy], NDV/AUT all require consistent, predictable circulation. Synthesis: add Tier 0 universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
 
@@ -1275,6 +1294,7 @@ Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 <!-- design_stage_lock: B -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: conditional:DEM -->
+<!-- grade_confidence: MODERATE — Toilet visibility from occupied spaces: Marquardt 2011 (HERD Tier 3) — toilet proximity to bedroom reduces confusion. DSDC EADDAT guidance. DEM incontinence evidence: 47% claim REMOVED as UNVERIFIED-QUANT. Base evidence: Tier 3 (Marquardt). NOT-RETROFITTABLE — brief-stage design decision. MODERATE on direction; quantified % claim excised. -->
 
 **Applicable Groups:** DEM, PAIN (MS bladder urgency), MOB · OFS
 <!-- D2-41: D2-41: toilet visibility reduces navigation distance and effort — OFS/PAIN energy conservation; DEM orientation -->
@@ -1305,6 +1325,7 @@ Maximum 20 m from any primary occupied space to nearest toilet (MS bladder urgen
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU -->
+<!-- grade_confidence: LOW — Landmarks at every decision point: DSDC EADDAT + CNIB + cognitive mapping theory (Tier 3 Lynch 1960). No RCT on landmark density for DEM/NEU outcomes. Tier 4-5 guidance. -->
 
 **Applicable Groups:** DEM, VIS, NDV · NEU · OFS
 <!-- CON-0030: CON-0030: cognitive wayfinding reduces navigation effort — energy conservation for OFS/NEU; landmark-based strategy -->
@@ -1337,6 +1358,7 @@ without structural intervention. See Part 12 §12.4.1.
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|NDV/MH -->
+<!-- grade_confidence: LOW — Enclosed low-stimulation spaces: PAS 6463 (Tier 4) + Wilson 2023 PMID (Co-1, AU mental health service user). No RCT on quiet room provision for NDV/MH outcomes. VERY LOW on room size threshold; LOW overall. -->
 
 <!-- CON-0046 [HIGH]: In MH inpatient settings, D-05 low-stimulation spaces are critical for NDV/AUT patients. MH de-escalation rooms do not meet NDV/AUT sensory needs (CS-17 NDTi 2022). -->
 <!-- CON-0051 [HIGH]: Loop/linear circulation with no dead-ends serves DEAF (visual scan), VIS (tactile memorisation), DBL (tactile navigation), DEM (disorientation prevention), IntD (cognitive load reduction). Tier 0 candidate — see CON-0001. -->
@@ -1373,6 +1395,7 @@ Sensory Processing Model. Focus rooms create an environmental context that enabl
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM -->
+<!-- grade_confidence: LOW — Memory boxes at residential room entrances: DSDC EADDAT + Alzheimer's Society UK guidance (Tier Co-1). No RCT on memory box effectiveness for DEM orientation. Tier 4-5. -->
 
 **Applicable Groups:** DEM · NEU · DBL
 <!-- CON-0090: personalised entry cues serve NEU (ABI) spatial memory and DBL tactile recognition -->
@@ -1407,6 +1430,7 @@ Contrast)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|DEAF -->
+<!-- grade_confidence: LOW — No blind corners: DSDC guidance + DeafSpace sightline requirements (Tier 2 co-design). Geometric rationale sound. No RCT. Tier 4-5. -->
 
 **Applicable Groups:** VIS, DEM, MH · OFS · PAIN · NDV/MH
 <!-- CON-0091: mirrored corners reduce startle response and surprise exertion trigger for OFS/PAIN/MH -->
@@ -1437,6 +1461,7 @@ acquired low-literacy disability (VIS, DEM, post-stroke aphasia).
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|NDV -->
+<!-- grade_confidence: LOW — Pictogram + single-word signage: BS 8300 + intellectual-disability BPC (NDIS SDA Tier 4) + CSA B651. Tier 4-5. No RCT on pictogram density for IntD/DEM orientation outcomes. -->
 
 **Applicable Groups:** DEM, NDV, VIS (cognitive), DBL · NEU · OFS
 <!-- CON-0092: low-text wayfinding reduces cognitive effort for NEU/OFS -->
@@ -1474,6 +1499,7 @@ D-04 (Landmarks)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM -->
+<!-- grade_confidence: LOW — Consistent furniture layout: DSDC EADDAT + CNIB guidance. DEM/VIS spatial predictability — Tier 4-5 consensus. No RCT. -->
 
 <!-- CON-0001 [HIGH]: Tier 0 convergence — DBL and NDV/AUT depend on spatial consistency for tactile wayfinding and sensory predictability respectively. Add to Applicable Groups: DBL, NDV/AUT, VIS (in addition to DEM). Specification to note: furniture rearrangement protocols required; prior notification to DBL occupants mandatory. -->
 
@@ -1502,6 +1528,7 @@ at any stage. See Part 12 §12.4.1.
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|DEM -->
+<!-- grade_confidence: MODERATE — Transparent glazed panels: DeafSpace guidelines (Gallaudet, Tier 2 co-design). Sightline requirement for sign language communication and DEM transparency. ≥4 jurisdictions reference. MODERATE — strong co-design evidence + jurisdictional adoption. -->
 
 <!-- CON-0074 [HIGH]: DeafSpace glazed junctions for DEAF visual advance warning potentially conflict with VIS glare, DEM reflective surface confusion, NDV visual noise. Requires matte glazing + strategic placement. Resolution: Part 5 multi-population conflict. -->
 **Applicable Groups:** VIS, DEM, MH, DEAF · OFS
@@ -1541,6 +1568,7 @@ DEM users and a safety concern for MH users who require advance visibility of th
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEM|OFS -->
+<!-- grade_confidence: MODERATE — Safe accessible garden with loop path: Gonzalez & Kirkevold 2014 J Clin Nurs (Tier 3 scoping review — horticultural therapy + dementia). DSDC EADDAT. Helsedirektoratet NO guidelines. ≥5 jurisdictions reference. MODERATE — Tier 3 scoping + multiple jurisdictions. -->
 
 **Applicable Groups:** DEM, MOB, MH, OFS · PAIN
 <!-- D2-41: D2-41: garden loop with seating ≤20m serves OFS rest intervals; DEM wandering freedom; PAIN cushioned seating -->
@@ -2032,6 +2060,7 @@ Sensory zoning is the deliberate organisation of a building's sensory environmen
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS|NDV/MH -->
+<!-- grade_confidence: LOW — Sensory gradient high-to-low: Kaplan & Kaplan 1989 (attention restoration theory, Tier 3). PAS 6463 (Tier 4) + detectable-gradient-protocol BPC. No RCT on sensory gradient spatial design for NDV outcomes. Tier 3-4. -->
 
 <!-- CON-0046 [HIGH]: Sensory gradient critical for NDV/AUT in MH inpatient settings — CS-17 documents MH ward sensory environments as actively harmful to AUT co-occupants. -->
 **Applicable Groups:** NDV, PCS, AUT, MH, DEM, OFS
@@ -2099,6 +2128,7 @@ possibly layout modification. See Part 12 §12.4.1.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|NDV -->
+<!-- grade_confidence: VERY LOW — Fragrance-free zones: Mast Cell Action guidance (Tier Co-1). No RCT on fragrance-free zones for OFS/NDV outcomes in built environments. No standard in any jurisdiction. VERY LOW — operational policy with clinical rationale but no architectural evidence. -->
 
 <!-- CON-0063 [MODERATE]: Fragrance-free policy serves NDV/MH (PTSD) via chemical stimuli as trauma triggers. Add NDV/MH to population coverage. Trauma-informed design framework confirms mechanism but does not cross-reference IAQ specifications. -->
 **Applicable Groups:** NDV, PAIN, MH, OFS · NDV/SENS
@@ -2134,6 +2164,7 @@ Part 12 §12.4.1.
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|OFS|NDV/MH -->
+<!-- grade_confidence: LOW — Graduated stimulation re-entry: PAS 6463 + Kaplan 1995 (J Environmental Psychology Tier 3). Sensory transition zone principle. No RCT. Expert consensus + Tier 3-4. -->
 
 **Applicable Groups:** NDV, PCS, AUT, OFS
 
@@ -2167,6 +2198,7 @@ intervention. See Part 12 §12.4.2.
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:OFS -->
+<!-- grade_confidence: LOW — MERV 13+ filtration + low-VOC + TVOC ≤0.5 mg/m³: EN ISO 16000-9 (Tier 4 standard) + Mast Cell Action Tier 2. WELL v2 Air Feature. OFS/MCAS chemical sensitivity evidence is Tier 2-3 clinical. No built-env RCT on MERV rating for OFS symptom outcomes. LOW — clinically grounded, architecturally extrapolated. -->
 
 <!-- CON-0063 [MODERATE]: MERV 13+ filtration serves MH/PTSD populations — chemical stimuli function as trauma triggers. Cross-reference F-02 fragrance-free. -->
 <!-- CON-0102 [HIGH]: [INTRA-INDIVIDUAL] OFS/MCAS thermal+chemical co-trigger. Individual radiant heating (F-07) must not use recirculated air without HEPA (F-04). Coordinate F-04 filtration with F-07 thermal zoning delivery method. -->
@@ -2230,6 +2262,7 @@ Specifications are derived from MCAS trigger literature and HVAC engineering sta
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|PAIN -->
+<!-- grade_confidence: LOW — MOVED to G-08 per CO-0003. Rating based on pain-ofs BPC: OT energy conservation CPG (Tier Co-2). No architectural RCT. LOW. -->
 <!-- CO-0003: F-05 content now lives in G-08 (below, in new items section). G-08 covers: seated-task design for all primary occupational tasks; adjustable-height work surfaces 650–870 mm AFF; seated option at all service counters. Populations: OFS · PAIN · MOB · ALL. --> (All Primary Occupational Tasks Achievable Without Sustained Standing)
 
 <!-- CON-0004 [HIGH]: New item G-08 (Adjustable Posture Seating Provision) to specify: ≥1 reclined/tilt seat per primary zone (≥120° recline with footrest); all reception counters with adjacent seated waiting ≤3 m; all shared work surfaces with ≥1 seated-height station (813 mm). Populations: OFS, PAIN, MOB, NEU. F-05 content to migrate to G-08. -->
@@ -2306,6 +2339,7 @@ accessibility at service/workstation points: distinct, complementary scope)
 <!-- design_stage_lock: B -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|NDV -->
+<!-- grade_confidence: VERY LOW — Fragrance-free whole-building operational policy: Mast Cell Action (Tier Co-1) + clinical MCAS trigger literature (Tier 2-4). No OT CPG, no RCT, no standard in any jurisdiction. Operational policy only. VERY LOW — maximum evidence base available for this clinical context; architectural extrapolation. -->
 
 <!-- CON-0102 [HIGH]: F-06 fragrance-free whole-building policy coordinates with F-04 filtration and F-08 thermal vestibule to prevent OFS/MCAS chemical+thermal co-triggering. -->
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity), PAIN (fragrance triggers), NEU/PCS
@@ -2336,6 +2370,7 @@ accessibility at service/workstation points: distinct, complementary scope)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NEU|OFS|PAIN -->
+<!-- grade_confidence: MODERATE — Thermal zoning ≤18–21°C: ms-thermal-temperature-conflict-resolution BPC (Opus synthesis). MSIF Atlas 2023 (Tier 3, 60-80% MS heat sensitivity). CDC ME/CFS (Tier Co-1). WHO HHGL 2018 (Tier 4). ≥8 jurisdictions reference thermal comfort standards. No disability-specific built-env RCT but strong clinical evidence + physical principle. MODERATE. -->
 
 <!-- CON-0102 [HIGH]: [INTRA-INDIVIDUAL] OFS/MCAS. Individual supplemental radiant heating must not recirculate air — OFS/MCAS user experiences thermal and chemical triggers from same HVAC system. Coordinate with F-04 HEPA requirement. -->
 **Applicable Groups:** NEU/MS · SCI · OFS · PAIN · DEM · ALL
@@ -2376,6 +2411,7 @@ accessibility at service/workstation points: distinct, complementary scope)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:OFS|NEU -->
+<!-- grade_confidence: MODERATE — Thermal transition — heating/cooling system response: ofs-built-environment BPC + ms-thermal BPC (Opus). Clinical evidence for OFS thermal triggers is Tier 1-3 (IOM/NAM, CDC, Bateman Horne). No built-env RCT on HVAC response time for OFS outcomes. MODERATE — clinical basis strong; architectural specification extrapolated. -->
 
 <!-- CON-0102 [HIGH]: Thermal vestibule specification must coordinate with F-06 fragrance-free and F-04 MERV 13. OFS/MCAS intra-individual co-trigger: thermal transition + chemical exposure from vestibule air handling. -->
 **Applicable Groups:** NEU/MS · OFS · PAIN · DEM
@@ -2704,6 +2740,7 @@ within the primary waiting area (not a segregated accessible area) implements th
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: MODERATE — Controls 400–1100mm AFF, one-fist force: ADA + BS 8300 + CSA B651 + DIN 18040 + multiple jurisdictions (≥10). Reach range evidence: Steinfeld 2010 AWM study (Tier 1, n=500 WC users). One-hand operable ≤20N: ISO 21542:2021 + ANSI A117.1. HIGH on provision mandate; MODERATE on specific values — Steinfeld 1-fist force basis partially ambiguous. -->
 
 <!-- CON-0070 [HIGH]: Children reach range (400-600 mm) overlaps LPA and seated adult reach. Single height band serves CHD+LPA+MOB. CHD is Supp-only population — note overlap, do not add to main taxonomy. -->
 <!-- CON-0095 [MODERATE]: EAA (EU Directive 2019/882) applies to digital products embedded in buildings. All H-series digital interface items require EAA compliance note for EU jurisdictions. -->
@@ -2756,6 +2793,7 @@ Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS -->
+<!-- grade_confidence: MODERATE — Individual environmental control — Tier 0 universal: CAOT CPG (Tier Co-2) + BS 8300 + WELL v2. Control provision for DEM/NDV/NEU/OFS. Tier 1 clinical evidence for individual control in NDV/NEU (sensory processing model). ≥8 jurisdictions. MODERATE. -->
 <!-- CON-0017: H-02 elevated to Tier 0. ALL primary occupied spaces to provide occupant-adjustable lighting (level + CCT) and local thermal control. Acoustic management: (a) sound-absorbing treatment to achieve RT60 target without reliance on operable panel configuration; (b) operable partitions or doors allowing users to close off their space from adjacent noise sources. Operable acoustic panels are not the standard mechanism — partition/door closure is. Population-specific overlays at Tier 1. Governs B-06, F-07, F-08. Populations: NDV/AUT · NDV/MH · OFS · DEM · NEU · DEAF · VIS · ALL. -->
 
 <!-- CON-0002 [HIGH] + CON-0017 [HIGH]: Elevate H-02 to Tier 0 universal provision. All primary occupied spaces to provide occupant-adjustable lighting (level and CCT), local acoustic management, and local thermal control. This is the highest-impact single provision for NDV, MH, OFS, PAIN, DEM conflict resolution. Item-specification-writer pass required. --> (Lighting and Temperature Per Space)
@@ -2810,6 +2848,7 @@ Part 12 §12.4.2.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
+<!-- grade_confidence: HIGH — Visual paging + real-time captioning in assembly spaces: WFD built environment access (Tier 1-2) + HLAA guidance + BS EN 54-23 (visual alarm component). Real-time captioning: NFPA 72 + ADA Title III. ≥10 jurisdictions mandate visual alerting in assembly spaces. HIGH on visual paging mandate; MODERATE on real-time captioning (jurisdiction variation). -->
 
 **Applicable Groups:** DEAF, DBL · OFS · DEM
 <!-- CON-0088: visual paging reduces need to attend to audio — OFS cognitive effort; DEM orientation -->
@@ -2850,6 +2889,7 @@ be inaccessible; the speech-to-text accuracy specification (≥98% for prepared 
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|VIS|DBL -->
+<!-- grade_confidence: MODERATE — Accessible intercom + video door entry + visual/tactile: DeafSpace guidelines (Tier 2 co-design) + BS 8300 + ADA Title III. VIS provisions: CNIB guidance. ≥6 jurisdictions. MODERATE. -->
 
 **Applicable Groups:** DEAF, VIS, MOB, DEM · OFS · PAIN
 <!-- CON-0089: video door entry visible from seated position eliminates door-answering exertion -->
@@ -2896,6 +2936,7 @@ UPL provisions apply throughout the building where UPL users are anticipated; th
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: MODERATE — Lever, D-pull, one-hand operable hardware ≤20N: ISO 21542:2021 + CSA B651 + BS 8300 + DIN 18040 + ADA + AS 1428. ≥10 jurisdictions mandate lever hardware. Force threshold: ISO/EN standards. MODERATE — universally mandated; no RCT on lever vs knob for disability-specific outcomes. -->
 
 **Applicable Groups:** UPL, MOB, DEM, PAIN
 
@@ -2937,6 +2978,7 @@ UPL users.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB|PAIN -->
+<!-- grade_confidence: LOW — Kitchen one-handed operation: Independent Living Centre (Tier Co-2) + OT energy conservation CPG + NIOSH ergonomics. upper-limb-impairment BPC: zero PubMed-indexed studies on one-handed kitchen design. THIN-BASE. LOW. -->
 
 <!-- CON-0062 [MODERATE]: Height-adjustable worktop (685-900 mm) for MOB also serves LPA (lower reach), OFS/PAIN (seated work), VIS (consistent tactile surface height). Expand population coverage. -->
 **Applicable Groups:** UPL · OFS · PAIN · DEM
@@ -2972,6 +3014,7 @@ Australia. (2024). Kitchen modifications for one-handed function.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: HIGH — TMV ≤38°C anti-scald: MS Trust thermal guidance + RCOT OT CPG + NHS requirements. VE-protected per Part 8 §9.3.3. ≥8 jurisdictions mandate TMV in care settings. OFS water temperature evidence: CDC ME/CFS (Tier Co-1) — hot water contraindicated. HIGH — clinical safety mandate + VE protection. -->
 
 **Applicable Groups:** UPL, PAIN (MS heat sensitivity) · DEM · NEU · OFS
 <!-- CON-0057: CON-0057: thermostatic shower valve serves dual mechanism — OFS therapeutic temperature control AND DEM/NEU/PAIN anti-scald safety -->
@@ -3008,6 +3051,7 @@ Federation. (2023). Atlas of MS. MSIF. Petajan, J.H., \& White, A.T.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:OFS|MOB|DEM -->
+<!-- grade_confidence: MODERATE — Nurse call + personal emergency response: BS 8300 + NHS England guidance (Tier 4) + CAN/ASC 2.8:2025. OFS/MOB/DEM populations. ≥6 jurisdictions mandate nurse call in healthcare settings. Tier 4-5 standards convergence. MODERATE. -->
 <!-- NOTE: H-05 position corrected — belongs in Category H, not after I-04. CO-0004 new item. -->
 
 **Applicable Groups:** MOB, PAIN, OFS, DEM, UPL, NEU, DBL
@@ -3052,6 +3096,7 @@ Auditory alert: alert at nursing station ≥75 dB(A); alert signal distinguishab
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: HIGH — Ceiling hoist provision: BS EN ISO 10535:2021 + BS 8300 + CAN/ASC 2.8:2025 + NCC 2022. VE-protected per Part 8 (structural blocking ×20–40 if missed). ≥8 jurisdictions mandate in residential care. Structural retrofit cost evidence: TERRAGON/DStGB 2017 (Tier 3). NOT-RETROFITTABLE at SD — highest retrofit cost in corpus. HIGH on provision mandate + retrofit cost evidence. -->
 
 **Applicable Groups:** MOB · MOB/UPL · NEU · OFS
 <!-- CO-0004/D2-30: new item. Evidence: upper-limb-impairment-built-environment BPC; KITE Research structural load data. -->
@@ -3123,6 +3168,7 @@ Threshold drain: if a drain channel at room threshold is unavoidable, maximum 6 
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DBL -->
+<!-- grade_confidence: VERY LOW — Intervenor adjacency ≥900×1500mm at service counters: deafblind-built-environment BPC (DBL specialist guidance, Tier 2 Co-1). Novel specification — no standard in any jurisdiction. Part 8 §9.6.3 flags as requiring DBL specialist verification at Stage 3. VERY LOW — evidence base is practitioner guidance only. -->
 
 <!-- CON-0050 [HIGH]: Fold-down grab bar 200 kg SWL (MOB) conflicts with bariatric 300 kg requirement. BAR → Supp. Part 4 only per project-standards. Note structural mounting for future load upgrade as DAR provision. -->
 
@@ -3162,6 +3208,7 @@ Staff awareness: service design briefing to confirm that staff speak to the Deaf
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:VIS|DBL -->
+<!-- grade_confidence: LOW — Tactile building map station: ISO 23599:2019 (TWSI, Tier 4) + CNIB guidance + BCA SG 2025. Tactile map provision: Tier 4-5 standards. No RCT on tactile map provision for VIS/DBL orientation outcomes. LOW. -->
 
 
 > **THIN-BASE DISCLOSURE:** Specifications in this item derive from Tier 2 sources (DbI guidelines, Sense UK) and Tier 4 (ISO 23599:2019) only. No Tier 1 OT clinical research on DBL-specific built environment spatial provisions has been identified in any reviewed language. Specifications reflect expert consensus and DeafBlind-led guidance, not randomised or controlled evidence. Apply with co-design. See GAP-DBL-BE-01.
@@ -3204,6 +3251,7 @@ Approach: TWSI directional bar route (E-09) from entrance to map station; tactil
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DBL -->
+<!-- grade_confidence: VERY LOW — Haptic communication clear floor zone ≥900×1500mm: deafblind-built-environment BPC (Protactile/tactile sign requirements). Novel specification. No standard in any jurisdiction. DBL specialist verification required. VERY LOW. -->
 
 
 > **THIN-BASE DISCLOSURE:** Specifications in this item derive from Tier 2 sources (DbI guidelines, Sense UK) and Tier 4 (ISO 23599:2019) only. No Tier 1 OT clinical research on DBL-specific built environment spatial provisions has been identified in any reviewed language. Specifications reflect expert consensus and DeafBlind-led guidance, not randomised or controlled evidence. Apply with co-design. See GAP-DBL-BE-01.
@@ -3240,6 +3288,7 @@ Zone adjacency: haptic communication zones are within the primary circulation ro
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
+<!-- grade_confidence: MODERATE — Vibrotactile alert provision: BS EN 54-23 (Tier 4) + NFPA 72 + Assistive Listening Systems BPC. Vibrotactile alerting is mandated for DEAF in ≥6 jurisdictions. DeafBlind extension requires specialist input (Part 8 §9.6). MODERATE on DEAF mandate; VERY LOW on DBL-specific parameters. -->
 
 
 > **THIN-BASE DISCLOSURE:** Specifications in this item derive from Tier 2 sources (DbI guidelines, Sense UK) and Tier 4 (ISO 23599:2019) only. No Tier 1 OT clinical research on DBL-specific built environment spatial provisions has been identified in any reviewed language. Specifications reflect expert consensus and DeafBlind-led guidance, not randomised or controlled evidence. Apply with co-design. See GAP-DBL-BE-01.
@@ -3379,6 +3428,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|OFS -->
+<!-- grade_confidence: LOW — Sensor-activated overnight pathway lighting: BS 8300 + DSDC EADDAT + OT CPG. No RCT on sensor vs manual lighting for DEM/OFS overnight outcomes. Tier 5-6 standards + Co-2. -->
 
 **Applicable Groups:** MOB, DEM, NEU, OFS, PAIN, VIS, NDV/MH, DBL
 
