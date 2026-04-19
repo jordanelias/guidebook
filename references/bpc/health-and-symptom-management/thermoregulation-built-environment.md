@@ -165,7 +165,7 @@ See search log for full table with DOIs.
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| TBE-01 | Griggs, K. et al. | 2019 | Physiological failure threshold at rest (thermoregulation). [GREY — DOI required] | 3 | INT | Core evidence |
+| TBE-01 | Griggs, K.E. et al. | 2019 | Thermoregulatory impairment in athletes with a spinal cord injury (infographic). Br J Sports Med 53(20):1305–1306. PMID:30610000. DOI:10.1136/bjsports-2018-099853 | 3 | INT | Physiological failure threshold in SCI — thermoregulatory impairment |
 | TBE-02 | WHO | 2018 | WHO Housing and Health Guidelines — 18–24°C general range; disability named | 4 | INT | https://www.who.int/publications/i/item/who-housing-and-health-guidelines |
 | TBE-03 | WHO | 2018 | WHO Housing and Health Guidelines Annex G — Global South city-specific thresholds | 4 | INT | See TBE-02 |
 | TBE-04 | Flensner, G. et al. | 2011 | 60–80% MS heat sensitivity prevalence. [GREY — DOI required] | 3 | INT | — |
