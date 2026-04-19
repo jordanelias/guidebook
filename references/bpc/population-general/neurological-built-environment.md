@@ -57,16 +57,28 @@
 | PMC 2022 stroke rehab clinic study | forward | 2 wayfinding technology studies |
 
 ### Key sources
-1. Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture. *Health Environments Research & Design.* [Tier 3 — wayfinding layout primary]
-2. van der Ham, I. et al. (2021). Navigation ability in patients with ABI: population-wide online study. *Neuropsychological Rehabilitation.* [Tier 3]
-3. Antonakos, C. et al. (2004). Wayfinding with visuo-spatial impairment from stroke and TBI. *Disability Studies Quarterly* 24(3). [Tier Co-1]
-4. Hamre, C., Fure, B., Helbostad, J.L., Wyller, T.B., Ihle-Hansen, H., Vlachos, G., Ursin, M.H. & Tangen, G.G. (2020). Impairments in spatial navigation during walking in patients ≤70 years with mild stroke. *Topics in Stroke Rehabilitation* 27(8):601–609. DOI: 10.1080/10749357.2020.1755814 [Tier 3 — verified; PMID 32316862]
-5. Iwarsson, S. & Ståhl, A. (2003). Accessibility, usability and universal design. *Disability & Rehabilitation* 25(2):57–66. [Tier 1 framework]
-6. PMC10621028 (2023). Housing accessibility and rehabilitation outcomes after stroke. *OTJR.* [Tier 3 SV]
-7a. Claessen, M.H.G. & van der Ham, I.J.M. (2017). Classification of navigation impairment: A systematic review of neuropsychological case studies. *Neuroscience & Biobehavioral Reviews* 73:81–97. DOI: 10.1016/j.neubiorev.2016.12.015 [Tier 3 — verified; PMID 27993606]
-7b. Claessen, M.H.G. et al. (2017). A systematic investigation of navigation impairment in chronic stroke patients: Evidence for three distinct types. *Neuropsychologia* 103:154–161. DOI: 10.1016/j.neuropsychologia.2017.07.001 [Tier 3 — verified; PMID 28684296]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| NEB-01 | Marquardt, G. & Schmieg, P. | 2009 | Dementia-friendly architecture: wayfinding in nursing homes. HERD | 3 | INT | — |
+| NEB-02 | van der Ham, I. et al. | 2021 | Navigation ability in ABI patients: population-wide online study. Neuropsychol Rehabil | 3 | INT | — |
+| NEB-03 | Antonakos, C. et al. | 2004 | Wayfinding with visuo-spatial impairment from stroke/TBI. Disabil Stud Q 24(3) | Co-1 | US | — |
+| NEB-04 | Hamre, C. et al. | 2020 | Spatial navigation impairment in mild stroke patients. Top Stroke Rehabil 27(8):601–609. DOI:10.1080/10749357.2020.1755814. PMID:32316862 | 3 | NO | — |
+| NEB-05 | Iwarsson, S. & Ståhl, A. | 2003 | Accessibility, usability and universal design. Disabil Rehabil 25(2):57–66 | 1 | INT | Framework paper |
+| NEB-06 | (author TBC) | 2023 | Housing accessibility and rehabilitation outcomes after stroke. OTJR. PMC10621028 | 3 | SE | [GREY — full authors/title unverified] |
+| NEB-07 | Claessen, M.H.G. & van der Ham, I.J.M. | 2017 | Classification of navigation impairment: SR of neuropsychological case studies. Neurosci Biobehav Rev 73:81–97. DOI:10.1016/j.neubiorev.2016.12.015. PMID:27993606 | 3 | NL | — |
+| NEB-08 | Claessen, M.H.G. et al. | 2017 | Navigation impairment in chronic stroke: three distinct types. Neuropsychologia 103:154–161. DOI:10.1016/j.neuropsychologia.2017.07.001. PMID:28684296 | 3 | NL | — |
 
 ---
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: neurological-built-environment
+population: NEU
+last_updated: 2026-04-19
+co0006_migration: true
+```
