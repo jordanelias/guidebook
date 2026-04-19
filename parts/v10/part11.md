@@ -1,5 +1,9 @@
 ## Part 11: The Economics of Accessible Construction
 
+<!-- evidence_density: Moderate (direction) / Thin (precision) -->
+> **Evidence density: ▓ Moderate (direction) / ░ Thin (precision)** — Direction of effect (sub-4% cost premium; zero premium with contractor experience) is robust across 10 studies, 6 jurisdictions (Ielegems 2024, TERRAGON 2017, Fuglerud 2016, BRE 2012, Bringolf 2011, CHF 2010). CAPABLE programme ROI: $10,000–$22,000 savings per $2,825 intervention (Szanton Tier 1 RCT). Per-item cost data is jurisdiction-specific and mostly estimated, not empirically derived. SROI/QALY methodologies absent from accessible construction literature (GAP-ECON-04). No formal SR of accessible construction economics exists.
+
+
 <!-- v10.0 scaffold — CO-0004: was Part 12 Economics (old numbering Part 11 in 88_to_90 file coincidentally matches). Section numbering §11.x confirmed correct.
      RESOLVED 2026-04-09:
      - §11.6 Evidence Landscape: Oslo Economics (2018) entry added (GAP-064 CLOSED)
