@@ -242,3 +242,22 @@ citation_mining:
   new_case_study: CS-22
   note: Related article network dominated by DEM nursing home pharmacology studies; built environment evidence sparse in PubMed network from these seeds
 ```
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CCS-01 | NDTi / NHS England | 2022 | Autistic-led assessment of NHS CAMHS inpatient environments | 1 | UK | Co-1; sensory design failure |
+| CCS-02 | Gallaudet University | 2008 | DeafSpace SLCC rounded corners self-report (Co-1) | Co-1 | US | Design-provision conflict DEAF vs MOB |
+| CCS-03 | Kapsalis, G. et al. | 2024 | Tenji tactile blocks as MOB hazard: systematic review | 3 | INT | VIS vs MOB cross-population conflict |
+| CCS-04 | Zallio, M. & Clarkson, P.J. | 2021 | Accessible toilet failures: ethnographic study. Build Environ. DOI:10.1016/j.buildenv.2021.108352 | 3 | UK | MOB accessible toilet blockage |
+
+## Metadata
+
+```yaml
+slug: cross-population-case-studies
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+note: No Key sources section in original file; sources extracted from inline case study register
+```
