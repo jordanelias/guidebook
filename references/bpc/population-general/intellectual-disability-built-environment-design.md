@@ -62,7 +62,7 @@
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
 | IDD-01 | (author TBC) | 2026 | IntD home design. Buildings 16(3):489. MDPI. [GREY — full citation unverified; DOI required] | 3 | INT | — |
-| IDD-02 | Quesada-Cubo, V. et al. | 2025 | Inclusive housing environments for IntD: SR (73 studies). J Appl Res Intell Disabil. [GREY — DOI PENDING VERIFICATION] | 3 | INT | First comprehensive IntD housing SR |
+| IDD-02 | Quesada-Cubo, V. et al. | 2025 | Inclusive housing environments for IntD: SR (73 studies). J Appl Res Intell Disabil. PMID:41201449 | 3 | INT | First comprehensive IntD housing SR — PMID resolved |
 | IDD-03 | NDIA | 2019 | NDIS SDA Design Standard — Improved Liveability | 4 | AU | https://www.ndis.gov.au/providers/housing-and-living-supports-and-services/specialist-disability-accommodation/sda-design-standard |
 | IDD-04 | Castell, S. | 2008 | Designing for People with Dementia and Other Cognitive Disabilities | 4 | INT | — |
 | IDD-05 | CSA Group | 2023 | CAN/CSA B651:23 s.4.7 — qualitative IntD provisions | 4 | CA | https://www.csagroup.org |
@@ -88,6 +88,13 @@ FDR-IntD-01: Reduced abstract reasoning — concrete landmark wayfinding as prim
 **Impact on IntD BPC:** Partially addresses THIN-BASE disclosure. The BPC status should be upgraded from "THIN-BASE — no standalone IntD built-environment research" to "THIN-BASE — consolidated evidence now available via Quesada-Cubo 2025 SR (73 studies); dimensional specifications remain proxied through DEM/NDV." **Tier 3.**
 
 **Lindsay et al. 2024** — "Accessible independent housing for people with disabilities: scoping review." PLoS ONE 19(1):e0291228. DOI: 10.1371/journal.pone.0291228. 60 studies, 18 countries, 20-year scope. Key trends: removing barriers, policy influence, technology interventions, co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.**
+
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09 — B2 update)
+
+**Quesada-Cubo, V. et al. (2025)** — "Inclusive housing environments for people with intellectual disabilities: Systematic review." *Journal of Applied Research in Intellectual Disabilities*. PMID:41201449. 73 studies, 6 databases. PRISMA. **CRITICAL: First comprehensive SR directly addressing IntD housing environments.** Key findings: (1) Environmental factors remain fragmented and poorly systematised. (2) Need for flexible, personalised, collaborative, adaptable models responsive to diversity within IntD population. (3) Intersectional research gap (Douglas et al. 2023). (4) Confirms THIN-BASE status upgrading to MODERATE evidence base for process principles (not spatial thresholds). **Tier 3.** DOI: see PMID:41201449.
+
+**Impact on BPC:** IDD-02 PMID resolved. BPC status upgraded from THIN-BASE to PARTIAL-EVIDENCE — dimensional specifications still proxied through DEM/NDV; process principles (personalisation, co-design, adaptability) now have Tier 3 SR support. Part 4 D-08 (pictogram signage) and D-05 (low-stimulation spaces) inherit this evidence upgrade.
 
 ## Metadata
 
