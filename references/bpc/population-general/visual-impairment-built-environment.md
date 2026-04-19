@@ -49,16 +49,17 @@
 | ISO 23599:2019 | Forward | Not yet mined — deferred |
 
 ### Key sources
-1. ISO 23599:2019 — Assistive products for persons with vision impairment: tactile walking surface indicators. [International · Tier 4]
-2. GB 50763-2012 §3.2 — 盲道 specifications. [ZH · Tier 6]
-3. MLIT BF Law + JIS T 9251:2006 — 点字ブロック. [JA · Tier 4/6]
-4. DIN 32984:2011-10 — Bodenindikatoren im öffentlichen Raum. [DE · Tier 5/6]
-5. ABNT NBR 16537:2024 — Acessibilidade — Sinalização tátil no piso. [PT · Tier 6]
-6. 편의증진법 시행규칙 별표1 §3 — 시각장애인 유도 블록. [KO · Tier 6]
-7. 한국시각장애인연합회 publications — tactile route advocacy. [KO · Tier 2]
 
-
-8. RNIB (2023). *Building Sight: Design principles and practical recommendations for accessible buildings and environments*. London: RNIB. [EN, Tier 2, UK — primary community-developed VIS built environment guide]
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| VIB-01 | ISO | 2019 | ISO 23599:2019 — Assistive products for VIS: tactile walking surface indicators | 4 | INT | https://www.iso.org/standard/66862.html |
+| VIB-02 | MOHURD | 2012 | GB 50763-2012 §3.2 — 盲道 specifications | 6 | CN | https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html |
+| VIB-03 | MLIT / JIS | 2006 | MLIT BF Law + JIS T 9251:2006 — 点字ブロック | 4/6 | JP | https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html |
+| VIB-04 | DIN | 2011 | DIN 32984:2011-10 — Bodenindikatoren im öffentlichen Raum | 5/6 | DE | — |
+| VIB-05 | ABNT | 2024 | NBR 16537:2024 — Sinalização tátil no piso | 6 | BR | — |
+| VIB-06 | Korean Government | n.d. | 편의증진법 시행규칙 별표1 §3 — 시각장애인 유도 블록 | 6 | KR | https://www.law.go.kr |
+| VIB-07 | 한국시각장애인연합회 | n.d. | Tactile route advocacy publications | 2 | KR | — |
+| VIB-08 | RNIB | 2023 | Building Sight: Design principles for accessible buildings and environments | 2 | UK | https://www.rnib.org.uk — primary community-developed VIS built environment guide |
 ---
 
 ---
@@ -66,3 +67,12 @@
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: visual-impairment-built-environment
+population: VIS
+last_updated: 2026-04-19
+co0006_migration: true
+```
