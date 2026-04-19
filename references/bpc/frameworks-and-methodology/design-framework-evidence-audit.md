@@ -60,15 +60,27 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- ICF-WHO2001 — International Classification of Functioning
-- Lawton-Nahemow1973 — Competence-Press Model
-- Ulrich1984 — Stress Recovery Theory
-- DSDC-EADDAT2022 — Dementia Services Development Centre assessment tool
-- Marquardt2011 — EADDAT validation (30 care homes)
-- Mostafa2021-ASPECTSS — Autism ASPECTSS framework
-- PAS6463:2022 — UK neurodiversity built environment standard
-- Holohan2022 — trauma-informed design scoping review
-- Iwarsson2005 — Housing Enabler validation
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DFE-01 | WHO | 2001 | International Classification of Functioning, Disability and Health (ICF) | 4 | INT | https://www.who.int/standards/classifications/international-classification-of-functioning-disability-and-health |
+| DFE-02 | Lawton, M.P. & Nahemow, L. | 1973 | Ecology and the aging process (Competence-Press Model). In Eisdorfer & Lawton (Eds.) | 3 | INT | — |
+| DFE-03 | Ulrich, R.S. | 1984 | View through a window may influence recovery. Science 224:420–421 | 3 | US | Stress Recovery Theory |
+| DFE-04 | DSDC, University of Stirling | 2022 | EADDAT — Environments for Ageing and Dementia Design Assessment Tool | 5 | UK | https://dementia.stir.ac.uk/design/environmental-audit |
+| DFE-05 | Marquardt, G. | 2011 | EADDAT validation (30 care homes). HERD. DOI:10.1177/193758671100400207 | 3 | INT | — |
+| DFE-06 | Mostafa, M. | 2021 | ASPECTSS 2.0. Front Psychiatry. DOI:10.3389/fpsyt.2021.727353 | 2 | INT | — |
+| DFE-07 | BSI | 2022 | PAS 6463:2022 — UK neurodiversity built environment standard | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| DFE-08 | Holohan, E. | 2022 | Trauma-informed design scoping review. [GREY — DOI required] | 3 | INT | — |
+| DFE-09 | Iwarsson, S. et al. | 2005 | Housing Enabler validation. [GREY — DOI required; Aging Clin Exp Res likely] | 3 | SE | — |
 ### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
 
 **Chidiac, Reda, Marjaba 2024** — "Accessibility of the Built Environment for People with Sensory Disabilities — Review Quality and Representation of Evidence." Buildings 14(3):707. DOI: 10.3390/buildings14030707. Evaluates quality and representation of existing research on accessibility for people with sensory disabilities. Considers variations in disability type, degree of impairment, and assistive aid usage. Identifies gaps and inconsistencies in current studies. **Methodology reference — Tier 3.**
+
+## Metadata
+
+```yaml
+slug: design-framework-evidence-audit
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
