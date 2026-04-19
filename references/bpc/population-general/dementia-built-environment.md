@@ -63,14 +63,17 @@
 | PMC8725382 NL floorplan study | backward | Marquardt 2009; Voogd 1982 MCA method |
 
 ### Key sources
-1. Bowes, A., Dawson, A., Greasley-Adams, C. & McCabe, L. (2019). *Designing Environments for People with Dementia: A Systematic Literature Review.* Emerald. DOI: 10.1108/978-1-78769-971-720191004 [Tier 3 — 429 items]
-2. DSDC, University of Stirling (2022). *Environments for Ageing and Dementia Design Assessment Tool (EADDAT).* stir.ac.uk/dsdc [Tier 5]
-3. Marquardt, G. & Schmieg, P. (2009). Dementia-friendly architecture: environments that facilitate wayfinding in nursing homes. *American Journal of Alzheimer's Disease and Other Dementias.* [Tier 3]
-4. Vivium Zorggroep / BuroKade (n.d.). De Hogeweyk post-occupancy evaluation [internal Dutch-language document]. [NL Tier Co-1] [UNVERIFIABLE — internal organisational document; not publicly indexed; cannot formally cite. Confirm with Vivium Zorggroep, Weesp, Netherlands. Use as background evidence only until formally published.]
-5. PMC8725382 (2022). Dementia-friendly design: design criteria and typologies supporting wayfinding. *International Journal of Environmental Research and Public Health.* [Tier 3 NL]
-6. KDA — Kuratorium Deutsche Altershilfe. *Wohnkonzepte für Menschen mit Demenz.* [DE Tier 5] [PROVISIONAL — KDA is a verified organisation (est. 1962, Berlin); extensive dementia housing publications confirmed via Pro ALTER journal and BMFSFJ-funded research reports; specific title not locatable as standalone publication; likely series of project reports. Re-search via BMFSFJ Forschungsdatenbank and KDA project archive (kda.de/laufende-projekte/projektarchiv/)]
-7. Helsedirektoratet (first published 16 August 2017; last updated 23 February 2024). *Nasjonal faglig retningslinje om demens* [nettdokument]. Oslo: Helsedirektoratet. URL: https://www.helsedirektoratet.no/retningslinjer/demens [NO Tier 5–6 — verified]
-8. [SOURCE REDIRECTED] Prior reference to 'Nationalt Videnscenter for Demens sensory garden research' cannot be verified — DDRC (videnscenterfordemens.dk) is a clinical research centre; sensory garden/loop-path built environment literature is more likely sourced from SBi-anvisning 263 (2016) or Dagmarsminde/Midgaard Fredericia POE documentation. Replace with: Gonzalez, M.T. & Kirkevold, M. (2014). Benefits of sensory garden and horticultural activities in dementia care: a modified scoping review. *Journal of Clinical Nursing* 23:2698–2715. DOI: 10.1111/jocn.12388 [EN/NO Tier 3 — verified via PMC citation chain]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DBE-01 | Bowes, A. et al. | 2019 | Designing Environments for People with Dementia: SR (429 items). Emerald. DOI:10.1108/978-1-78769-971-720191004 | 3 | INT | Primary SR |
+| DBE-02 | DSDC, University of Stirling | 2022 | EADDAT — Environments for Ageing and Dementia Design Assessment Tool | 5 | UK | https://dementia.stir.ac.uk/design/environmental-audit |
+| DBE-03 | Marquardt, G. & Schmieg, P. | 2009 | Dementia-friendly architecture: wayfinding in nursing homes. Am J Alzheimers Dis | 3 | INT | Floor plan configuration as primary factor |
+| DBE-04 | Vivium Zorggroep / BuroKade | n.d. | De Hogeweyk post-occupancy evaluation [UNVERIFIABLE — internal document; background evidence only] | Co-1 | NL | Not publicly indexed; confirm with Vivium Zorggroep, Weesp, Netherlands |
+| DBE-05 | (author TBC) | 2022 | Dementia-friendly design: criteria and typologies. IJERPH. PMC8725382 | 3 | NL | — |
+| DBE-06 | KDA | ongoing | Wohnkonzepte für Menschen mit Demenz [PROVISIONAL — verified org; specific title not locatable] | 5 | DE | https://www.kda.de — via BMFSFJ Forschungsdatenbank |
+| DBE-07 | Helsedirektoratet | 2024 | Nasjonal faglig retningslinje om demens | 5/6 | NO | https://www.helsedirektoratet.no/retningslinjer/demens |
+| DBE-08 | Gonzalez, M.T. & Kirkevold, M. | 2014 | Benefits of sensory garden and horticultural activities in dementia care: scoping review. J Clin Nurs 23:2698–2715. DOI:10.1111/jocn.12388 | 3 | INT | Replaces redirected DA source |
 
 1. Keall et al. (2015). HIPI study. Lancet, 385, 231–238. DOI: 10.1016/S0140-6736(14)61006-0 [EN · Tier 3 RCT]
 2. Keall et al. (2021). MHIPI study. Lancet Public Health, 6, e631–e640 [EN · Tier 3 RCT]
@@ -82,3 +85,12 @@
 8. ADA Standards for Accessible Design (2010) §§304, 403, 404. US Access Board. [EN · Tier 6]
 9. AS 1428.1-2009 — Design for access and mobility. Standards Australia. [AU · Tier 6]
 10. GB 50763-2012 — 无障碍设计规范. Ministry of Housing and Urban-Rural Development, PRC. [ZH · Tier 6]
+
+## Metadata
+
+```yaml
+slug: dementia-built-environment
+population: DEM
+last_updated: 2026-04-19
+co0006_migration: true
+```
