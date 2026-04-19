@@ -67,3 +67,12 @@ Not yet run.
 - Boverket2022 — Swedish covered entrance specification
 - NationaltVidenscenter — Danish loop garden evidence
 - Ielegems-Vanrie2024-full — Belgian building-type cost premiums
+
+## Metadata
+
+```yaml
+slug: multilingual-evidence-convergence-non-english
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
