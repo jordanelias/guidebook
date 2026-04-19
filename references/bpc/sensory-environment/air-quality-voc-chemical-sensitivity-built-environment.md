@@ -60,11 +60,23 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Afrin2020-Brain-Behavior-Immunity — MCAS triggers and built environment
-- MastCellAction2023 — MCAS environmental management
-- CIBSE-Guide-A-2015 — ventilation and air quality engineering
-- PAS6463:2022 — neurodiversity design guidance (sensory environment)
-- EN-ISO-16000-9 — VOC measurement standard
-- WELL-v2-Air — voluntary air quality framework
-- Steinemann2018 — MCS prevalence (12.8% diagnosed MCS; 25.9% chemical sensitivity; US adults)
-- ASHRAE-52.2 — MERV filtration rating standard
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| AQV-01 | Afrin, L.B. et al. | 2020 | MCAS triggers and built environment. Brain Behav Immun | 3 | INT | [GREY — DOI required before publication] |
+| AQV-02 | Mast Cell Action | 2023 | MCAS environmental management guidance | 2 | UK | https://www.mastcellaction.org |
+| AQV-03 | CIBSE | 2015 | CIBSE Guide A: Environmental Design | 4 | UK | https://www.cibse.org/knowledge/cibse-guide/guide-a-environmental-design |
+| AQV-04 | BSI | 2022 | PAS 6463:2022 — Design for the Mind: neurodiversity and the built environment | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| AQV-05 | ISO | 2006 | EN ISO 16000-9 — VOC measurement from building products (chamber method) | 4 | INT | https://www.iso.org/standard/39141.html |
+| AQV-06 | IWBI | 2024 | WELL Building Standard v2 — Air Quality feature | 5 | INT | https://v2.wellcertified.com/wellv2/en/air |
+| AQV-07 | Steinemann, A. | 2018 | Prevalence and effects of MCS. JOEM 60(3):e152-e156. DOI:10.1097/JOM.0000000000001272 | 3 | US | 12.8% diagnosed MCS; 25.9% chemical sensitivity |
+| AQV-08 | ASHRAE | 2017 | ASHRAE 52.2-2017 — MERV filtration rating standard | 4 | INT | https://www.ashrae.org/technical-resources/bookstore/52-2 |
+
+## Metadata
+
+```yaml
+slug: air-quality-voc-chemical-sensitivity-built-environment
+population: OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
