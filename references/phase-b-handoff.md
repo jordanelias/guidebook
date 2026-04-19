@@ -215,3 +215,43 @@ Architecture/design journals not indexed in PubMed:
 - **Other**: NAT-07 Weber 2022, ULB-02 Togni 2022, NAT-04 Caniato 2024, BSP-01 Hoover-Fong 2021
 
 **POD-03 note:** PMCID PMC6260403 is directly fetchable — PMC ID resolves to specific paper without needing journal access.
+
+---
+
+## 13. Citation Infrastructure (Phase A addition — 2026-04-19)
+
+### Status: Foundation complete, tagging in progress
+
+**Three-layer citation system built to support Wikipedia-style footnotes on the website:**
+
+| Layer | File | Status |
+|---|---|---|
+| 1. Global reference registry | `references/global-reference-registry.md` + `.json` | ✅ COMPLETE — 531 unique refs |
+| 2. Claim-to-reference tagging | Populated via `citation-tagging-protocol.md` | ⏳ PENDING — 1,382 claims to tag (GAP-CITE-01) |
+| 3. Claim enumeration + join schema | `references/claim-reference-join.md` + `.json` | ✅ COMPLETE — 1,382 claims enumerated |
+
+### Reference metadata quality (Step 1 output)
+
+| Quality | Count | % |
+|---|---|---|
+| COMPLETE (DOI present) | 56 | 10% |
+| PMID-ONLY | 16 | 3% |
+| GREY (DOI resolution required) | 64 | 12% |
+| AUTHOR-TITLE-ONLY (standards, grey lit) | 395 | 74% |
+
+**Implication:** 74% of references are standards/grey literature that don't have DOIs by nature (ADA, BS 8300, DIN 18040, etc.) — this is expected and correct. Only the 64 GREY items need DOI resolution before publication (see GAP-DOI-01).
+
+### Phase B parser contract
+
+For any piece of content on the website:
+1. Load `parts/v10/partNN.md` for specification text
+2. Look up claim in `claim-reference-join.json` by CLAIM-ID
+3. Get `ref_ids` array
+4. Resolve each REF-ID via `global-reference-registry.json`
+5. Render inline `[n]` superscript → footnote with full citation + DOI link
+
+### Updating the registry
+
+- New references: append next sequential REF-ID to registry
+- Retired references: mark `status: RETIRED`, never delete
+- BPC Key sources tables remain source of truth for per-file context; registry is the global join layer
