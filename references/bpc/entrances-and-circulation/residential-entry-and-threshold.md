@@ -61,27 +61,30 @@
 | RCOT Adaptations Without Delay 2019 | Forward | 1 |
 
 ### Key sources
-1. Habinteg/CAE, Runnalls J. & Walker M. (2024) Inclusive Housing Design Guide. RIBA/Habinteg. UK. Tier 5.
-2. Habinteg (2018) Wheelchair Housing Design Guide, 3rd ed. RIBA/Habinteg/RCOTSS-H. UK. Tier 5.
-3. RCOT / Housing LIN (2019) Adaptations Without Delay. Royal College of Occupational Therapists. UK. Tier Co-2.
-4. BSI (2018) BS 8300-2:2018, Annex G, Tables G.7–G.8. Design of an accessible and inclusive built environment — Part 2: Buildings. BSI. UK. Tier 5. [E-12: power WC turning geometry]
-5. Putthinoi, S. et al. (2017) ICF-based home modification outcomes in OT practice. American Journal of Occupational Therapy. TH/AU. Tier 1. [E-12: combined threshold+landing barrier]
-6. RCOT / Housing LIN (2020) Dementia Design Guidance. Royal College of Occupational Therapists. UK. Tier Co-2. [E-13: entrance legibility]
-7. American Occupational Therapy Association (2023) Cognitive Impairment Home Modification. AOTA. US. Tier Co-2. [E-13: address signage]
-8. Dementia Australia (2022) Built Environment Guidelines. Dementia Australia. AU. Tier 2. [E-13: boundary demarcation]
-4. US Access Board (2010) ADA Standards §§302–405 Accessible Routes, Entrances, Ramps. US. Tier 6.
-5. Rick Hansen Foundation (2024) RHFAC Rating Survey v4.0 §2 Exterior Approach and Entrance. CA. Tier 5.
-6. Direktoratet for byggkvalitet (2017, updated) TEK17 §12-4 Inngangsparti; §12-16 Rampe; §1-3(m) Trinnfri. NO. Tier 6.
-7. DIN 18040-2:2011 + Draft E DIN 18040-2:2023. DE. Tier 6.
-8. Boverket BFS 2024:12 / BBR §3:122 §3:146. SE. Tier 6.
-9. ABNT NBR 9050:2020 §6.2 Rampas. BR. Tier 6.
-10. Légifrance (2014) Arrêté du 8 décembre 2014 accessibilité ERP existants. FR. Tier 6.
-11. ABCB (2022) NCC 2022 + Livable Housing Design Guidelines 4th ed. AU. Tier 5–6.
-12. AS 1428.1:2021 Design for access and mobility. Standards Australia. AU. Tier 6.
-13. NEN 9120:2025 Toegankelijkheid van gebouwen (NL implementation EN 17210). NL. Tier 5.
-14. Informatiepunt Leefomgeving (2025) Bbl art.4.182 drempel ≤20mm. NL. Tier 6.
-15. MLIT (2018–2024) バリアフリー法 建築物移動等円滑化誘導基準. JP. Tier 6.
-16. ISO 21542:2021 Building Construction – Accessibility and Usability. ISO. Tier 4.
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| RET-01 | Habinteg/CAE | 2024 | Inclusive Housing Design Guide (Runnalls J. & Walker M.). RIBA/Habinteg | 5 | UK | https://www.habinteg.org.uk/ihdg |
+| RET-02 | Habinteg | 2018 | Wheelchair Housing Design Guide, 3rd ed. RIBA/Habinteg/RCOTSS-H | 5 | UK | — |
+| RET-03 | RCOT / Housing LIN | 2019 | Housing Adaptations Without Delay | Co-2 | UK | https://www.rcot.co.uk/housing-adaptations-without-delay |
+| RET-04 | BSI | 2018 | BS 8300-2:2018 Annex G Tables G.7–G.8 — power WC turning geometry | 5 | UK | https://www.bsigroup.com/en-GB/standards/bs-8300/ |
+| RET-05 | Putthinoi, S. et al. | 2017 | ICF-based home modification outcomes in OT practice. Am J Occup Ther. PMID:28656108 | 1 | TH/AU | Combined threshold+landing barrier |
+| RET-06 | RCOT / Housing LIN | 2020 | Dementia Design Guidance | Co-2 | UK | Entrance legibility |
+| RET-07 | AOTA | 2023 | Cognitive Impairment Home Modification [GREY — title/URL unverified] | Co-2 | US | Address signage |
+| RET-08 | Dementia Australia | 2022 | Built Environment Guidelines | 2 | AU | https://www.dementia.org.au/information/for-health-professionals/built-environment |
+| RET-09 | US Access Board | 2010 | ADA Standards §§302–405 Accessible Routes, Entrances, Ramps | 6 | US | https://www.ada.gov/law-and-regs/design-standards/2010-stds/ |
+| RET-10 | Rick Hansen Foundation | 2024 | RHFAC Rating Survey v4.0 §2 Exterior Approach and Entrance | 5 | CA | https://www.rickhansen.com/make-change/accessibility-certification-rhfac |
+| RET-11 | Direktoratet for byggkvalitet | 2017 | TEK17 §12-4 Inngangsparti; §12-16 Rampe; §1-3(m) Trinnfri | 6 | NO | https://lovdata.no/dokument/SF/forskrift/2017-06-19-840 |
+| RET-12 | DIN | 2011 | DIN 18040-2:2011 + Draft E DIN 18040-2:2023 | 6 | DE | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 |
+| RET-13 | Boverket | 2024 | BFS 2024:12 / BBR §3:122 §3:146 | 6 | SE | https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/bbr---bfs-20116/ |
+| RET-14 | ABNT | 2020 | NBR 9050:2020 §6.2 Rampas | 6 | BR | https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500 |
+| RET-15 | Légifrance | 2014 | Arrêté du 8 décembre 2014 accessibilité ERP existants | 6 | FR | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000029925726 |
+| RET-16 | ABCB | 2022 | NCC 2022 + Livable Housing Design Guidelines 4th ed. | 5/6 | AU | https://www.abcb.gov.au/ncc |
+| RET-17 | Standards Australia | 2021 | AS 1428.1:2021 — Design for access and mobility | 6 | AU | https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021 |
+| RET-18 | NEN | 2025 | NEN 9120:2025 — Toegankelijkheid van gebouwen | 5 | NL | https://www.nen.nl/nen-9120-2025-nl-335193 |
+| RET-19 | Informatiepunt Leefomgeving | 2025 | Bbl art.4.182 drempel ≤20mm | 6 | NL | https://iplo.nl/thema/toegankelijkheid/ |
+| RET-20 | MLIT | 2024 | バリアフリー法 建築物移動等円滑化誘導基準 | 6 | JP | https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html |
+| RET-21 | ISO | 2021 | ISO 21542:2021 — Building Construction: Accessibility and Usability | 4 | INT | https://www.iso.org/standard/71025.html |
 
 ---
 
@@ -106,3 +109,12 @@
 
 **Population mapping (Sc.12):** Primary DEM; secondary NEU, NDV/AUT, VIS. Entrance legibility provisions (contrast, lighting, signage) converge across ≥4 codes → Tier 0 candidates for all 3 items.
 **Tier 0 candidates:** Entrance PIR lighting; entrance luminance contrast; house address signage (≥4 population codes, no conflicts).
+
+## Metadata
+
+```yaml
+slug: residential-entry-and-threshold
+population: MOB, DEM, NDV, VIS
+last_updated: 2026-04-19
+co0006_migration: true
+```
