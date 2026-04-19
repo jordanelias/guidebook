@@ -73,32 +73,33 @@
 | Keall et al. 2015 (Lancet) | Forward via Semantic Scholar | MHIPI (Keall et al. 2021, Lancet Pub Health); cost-benefit (Keall et al. 2017, Inj Prev) |
 | Sawatzky et al. 2015 | Not yet mined | Deferred — citation-miner |
 ### Key sources
-1. Steinfeld E, Maisel J, Feathers D, D'Souza C (2010). Anthropometry and Standards for Wheeled Mobility. *Assistive Technology* 22(1):51–67. [EN, Tier 1, US/UK/CA/AU] DOI:10.1080/10400430903496580
-2. Steinfeld E et al. (2010). *Anthropometry of Wheeled Mobility Project — Final Report*. IDeA Center, Univ. at Buffalo / US Access Board. [EN, Tier 1, US]
-3. VA CFM (2025). *VA Barrier-Free Design Standard*. US Dept of Veterans Affairs. [EN, Tier 5, US — 1675mm power WC; 1800mm bariatric]
-4. PVA (2021). *Accessible Home Design*, 2nd ed. Washington DC: PVA. [EN, Co-1, US]
-5. Habinteg / CAE / RIBA (2024). *Inclusive Housing Design Guide*. Runnalls J (RCOTSS-Housing). [EN, Co-1/Tier 5, UK]
-6. NHF / Husbanken (2014). *Tilgjengelige bygg og uteområder*. Oslo: Husbanken. [NO, Tier 2, NO]
-7. MLIT Japan (2025). *建築設計標準* (updated). Tokyo: MLIT. [JA, Tier 6/5, JP]
-8. DPI Japan (2024). *障害者の居住にも対応した住宅の設計ハンドブック*. [JA, Co-1/Tier 5, JP]
-9. Boverket (2025). BFS 2024:12. Karlskrona: Boverket. [SV, Tier 6, SE — in force July 2025]
-- Keall et al. (2015). HIPI study. Lancet, 385, 231–238. DOI: 10.1016/S0140-6736(14)61006-0 [EN · Tier 3 RCT]
-- Keall et al. (2021). MHIPI study. Lancet Public Health, 6, e631–e640 [EN · Tier 3 RCT]
-- Sawatzky et al. (2015). Upper extremity preservation in manual wheelchair users. Am J Phys Med Rehabil, 94(4), 313–324 [EN · Tier 1]
-10. NEN (2025). NEN 9120:2025. Delft: NEN. [NL, Tier 5, NL — free download]
-11. APF France Handicap (2020). *Enquête Ifop/APF*. Paris: APF. [FR, Co-1, FR]
-12. Ringaert L et al. (2001). *Determination of new dimensions for universal design*. Manitoba: UDI. [EN, Tier 1, CA]
-13. BCA (2025). *Code on Accessibility in the Built Environment 2025*. Singapore: BCA. [EN, Tier 6, SG — effective Nov 2025]
-14. Winkler D et al. (2024). *Supporting the design and construction sector to transition to accessible standards*. Melbourne: Summer Foundation. [EN, Tier 1 co-designed, AU]
-15. Newton C, Carnemolla P, Darcy S (2023). *Inclusive and Embodied Approach to Accessible Bathroom Design*. UTS/Spinal Cord Injuries Australia. [EN, Tier 1 co-designed, AU]
-16. ABNT NBR 9050:2020. *Acessibilidade a edificações*. Rio de Janeiro: ABNT. [PT, Tier 6, BR]
-17. Procap / SIA (2009). SIA 500 *Constructions sans obstacles*. Zurich: SIA. [FR/DE, Tier 5, CH — ramp max 6%; admissible 12%]
-18. CEUD / NDA (2012). *Building for Everyone*. Dublin: NDA. [EN, Tier 5, IE]
-19. Invalidiliitto (2018, updated). *ESKEH-kartoitusmenetelmä*. Helsinki: Invalidiliitto. [FI, Tier 2/Co-1, FI]
-20. Standards New Zealand (2001). NZS 4121:2001. Wellington: SNZ. [EN, Tier 6, NZ]
 
-
-21. BSK e.V. (n.d.). *ABC Barrierefreies Bauen*. Schönaich: Bundesverband Selbsthilfe Körperbehinderter. [DE, Tier 2, DE — community-developed planning guide]
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| MOB-01 | Steinfeld, E. et al. | 2010 | Anthropometry and Standards for Wheeled Mobility. Assist Technol 22(1):51–67. DOI:10.1080/10400430903496580 | 1 | US | IDeA Center; 1524mm ADA rejected |
+| MOB-02 | Steinfeld, E. et al. | 2010 | Anthropometry of Wheeled Mobility Project — Final Report. IDeA Center / US Access Board | 1 | US | Primary anthropometric research |
+| MOB-03 | VA CFM | 2025 | VA Barrier-Free Design Standard — 1675mm power WC; 1800mm bariatric | 5 | US | — |
+| MOB-04 | PVA | 2021 | Accessible Home Design, 2nd ed. Paralyzed Veterans of America | Co-1 | US | — |
+| MOB-05 | Habinteg / CAE / RIBA | 2024 | Inclusive Housing Design Guide (Runnalls J., RCOTSS-Housing). DOI:10.4324/9781003564164 | Co-1/5 | UK | https://www.habinteg.org.uk/ihdg |
+| MOB-06 | NHF / Husbanken | 2014 | Tilgjengelige bygg og uteområder | 2 | NO | https://www.husbanken.no |
+| MOB-07 | MLIT Japan | 2025 | 建築設計標準 (updated) | 6/5 | JP | https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html |
+| MOB-08 | DPI Japan | 2024 | 障害者の居住にも対応した住宅の設計ハンドブック | Co-1/5 | JP | First residential WC design handbook |
+| MOB-09 | Boverket | 2025 | BFS 2024:12 — dimensionerande mått | 6 | SE | https://www.boverket.se |
+| MOB-10 | Keall, M. et al. | 2015 | HIPI study. Lancet 385:231–238. DOI:10.1016/S0140-6736(14)61006-0 | 3 | NZ | Home modifications 26% fall reduction |
+| MOB-11 | Keall, M. et al. | 2021 | MHIPI study. Lancet Public Health 6:e631–e640 | 3 | NZ | — |
+| MOB-12 | Sawatzky, B. et al. | 2015 | Upper extremity preservation in manual wheelchair users. Am J Phys Med Rehabil 94(4):313–324 | 1 | INT | Propulsion effort + shoulder injury |
+| MOB-13 | NEN | 2025 | NEN 9120:2025 — Toegankelijkheid van gebouwen | 5 | NL | https://www.nen.nl/nen-9120-2025-nl-335193 |
+| MOB-14 | APF France Handicap | 2020 | Enquête Ifop/APF | Co-1 | FR | — |
+| MOB-15 | Ringaert, L. et al. | 2001 | Determination of new dimensions for universal design. UDI, Manitoba | 1 | CA | — |
+| MOB-16 | BCA | 2025 | Code on Accessibility in the Built Environment 2025 | 6 | SG | https://www.bca.gov.sg — effective Nov 2025 |
+| MOB-17 | Winkler, D. et al. | 2024 | Supporting design and construction sector for accessible standards. Summer Foundation | 1 | AU | Co-designed research |
+| MOB-18 | Newton, C., Carnemolla, P. & Darcy, S. | 2023 | Inclusive and Embodied Approach to Accessible Bathroom Design. UTS/Spinal Cord Injuries Australia | 1 | AU | Co-designed research |
+| MOB-19 | ABNT | 2020 | NBR 9050:2020 — Acessibilidade a edificações | 6 | BR | https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500 |
+| MOB-20 | Procap / SIA | 2009 | SIA 500 — Constructions sans obstacles (ramp max 6%; admissible 12%) | 5 | CH | https://www.sia.ch/de/dienstleistungen/sia-norm/sia-500/ |
+| MOB-21 | CEUD / NDA | 2012 | Building for Everyone (8-volume series) | 5 | IE | https://universaldesign.ie/built-environment/building-for-everyone |
+| MOB-22 | Invalidiliitto | 2018 | ESKEH-kartoitusmenetelmä — accessibility audit framework | Co-1/2 | FI | https://www.invalidiliitto.fi |
+| MOB-23 | Standards New Zealand | 2001 | NZS 4121:2001 — Design for access and mobility | 6 | NZ | — |
+| MOB-24 | BSK e.V. | n.d. | ABC Barrierefreies Bauen — community-developed planning guide | 2 | DE | Community DPO source |
 ### Gap-fill addendum (2026-03-19 23:45)
 **Co-1 jurisdictions newly confirmed:** NZ (DPA-NZ; Flemmer et al. 2025 lived-experience survey, n=319 WC/scooter users — path condition, door width, and turning space identified as top barriers); SG (SgEnable; SPD; BCA Code 2025 eff. Nov 2025 — new anthropometric data for power WC users incorporated); NL (Ieder(in) in NEN 9120:2025 normcommissie; CROW Pub 337 — 1800mm for scooter passing confirmed); DK (DH Danske Handicaporganisationer; SBi-anvisning 230); KR (KODDI 편의시설 매뉴얼 2023 — detailed AT installation standards); BR (MVI Brasil; Brasil Acessível programme; NUTAU/USP APO research); PT (INR Guia Acessibilidade e Mobilidade para Todos; OA Recomendação Técnica 2024 — bathroom wheelchair manoeuvre); IT (FISH 2025 parliamentary submission — calls for DM 236/89 update; ANFFAS Accessibilità Universale guide); ISO (ISO TC 173 publications).
 
@@ -142,3 +143,12 @@
 - RHFAC v4.2 detailed criteria (CA): framework confirmed, criteria detail not retrieved
 - JP Housing Performance Indication System Elderly Care Grades 1-5: requires JA-language J-STAGE search
 - No standalone SR on corridor width functional adequacy for power wheelchair users (NO-DATA)
+
+## Metadata
+
+```yaml
+slug: mobility-built-environment
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+```
