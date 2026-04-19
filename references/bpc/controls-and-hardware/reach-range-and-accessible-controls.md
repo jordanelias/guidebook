@@ -70,14 +70,25 @@
 
 | REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | ADA-2010-S308 | US Access Board | 2010 | ADA 2010 Standards §308 Reach Ranges | US DOJ | [GREY] | Tier 6 | EN | US |
+| 01 | ADA-2010-S308 | US Access Board | 2010 | 2010 ADA Standards for Accessible Design §308 Reach Ranges | US DOJ | https://www.ada.gov/law-and-regs/design-standards/2010-stds/#308-reach-ranges | Tier 6 | EN | US |
 | 02 | Steinfeld-2016 | Steinfeld E et al. | 2016 | Experimental Studies of Wheelchair and Walker Users Passing Through Doors… | AAATE 2016 | DOI:10.3233/978-1-61499-684-2-883 | Tier 3 | EN | US |
-| 03 | CMHC-2021 | CMHC | 2021 | Renovating for Accessibility: Building Entrances — door force ≤38N | CMHC | [GREY] | Tier 5 | EN | CA |
-| 04 | USAB-Doors-2014 | US Access Board | 2014 | Understanding New Accessibility Requirements for Doors — actuator force ≤22.2N | US Access Board | [GREY] | Tier 6 | EN | US |
-| 05 | DIN-18040-2-S5 | DIN | 2011 | DIN 18040-2 §5 Bedienungshöhen door handle 850mm, window 850–1050mm | DIN | [GREY] | Tier 6 | DE | DE |
-| 06 | ABNT-NBR-9050-S46 | ABNT | 2020 | NBR 9050 §4.6 Alcance Manual lateral — puxador 800–1100mm | ABNT | [GREY] | Tier 6 | PT | BR |
-| 07 | BS-8300-S8 | BSI | 2018 | BS 8300 §8 Controls and switches 450–1200mm | BSI | [GREY] | Tier 5 | EN | UK |
-| 08 | RHFAC-v4-S24 | RHF | 2024 | RHFAC Rating Survey v4.0 §2.4 power door operator 800–1100mm | Rick Hansen Foundation | [GREY] | Tier 5 | EN | CA |
-| 09 | AS-1428-2-S15 | Standards Australia | 1992 | AS 1428.2 §15 Reach range enhanced requirements (90th percentile WC users) | Standards Australia | [GREY] | Tier 5 | EN | AU |
-| 10 | CSA-B651-RHF | CSA Group / RHF | 2025 | RHFAC exam — CSA B651 door clear opening ≥850mm | CSA Group | [GREY] | Tier 6 | EN | CA |
-| 11 | ADA-Network-2017 | ADA National Network | 2017 | Opening Doors to Everyone — door closer 5-second minimum | ADA National Network | [GREY] | Tier 5 | EN | US |
+| 03 | CMHC-2021 | CMHC | 2021 | Renovating for Accessibility: Building Entrances | CMHC | https://www.cmhc-schl.gc.ca/en/consumers/owning-a-home/make-your-home-accessible | Tier 5 | EN | CA |
+| 04 | USAB-Doors-2014 | US Access Board | 2014 | Understanding New Accessibility Requirements for Doors | US Access Board | https://www.access-board.gov/ada/ | Tier 6 | EN | US |
+| 05 | DIN-18040-2-S5 | DIN | 2011 | DIN 18040-2 §5 Bedienungshöhen (operating heights) | DIN | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 | Tier 6 | DE | DE |
+| 06 | ABNT-NBR-9050-S46 | ABNT | 2020 | ABNT NBR 9050:2020 Acessibilidade a edificações §4.6 Alcance Manual lateral | ABNT | https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500 | Tier 6 | PT | BR |
+| 07 | BS-8300-S8 | BSI | 2018 | BS 8300-2:2018 §8 Controls and switches | BSI | https://www.bsigroup.com/en-GB/standards/bs-8300/ | Tier 5 | EN | UK |
+| 08 | RHFAC-v4-S24 | RHF | 2024 | RHFAC Rating Survey v4.0 §2.4 — power door operator reach range | Rick Hansen Foundation | https://www.rickhansen.com/make-change/accessibility-certification-rhfac | Tier 5 | EN | CA |
+| 09 | AS-1428-2-S15 | Standards Australia | 1992 | AS 1428.2:1992 Enhanced requirements for people with disabilities §15 Reach range | Standards Australia | https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-2-1992 | Tier 5 | EN | AU |
+| 10 | CSA-B651-RHF | CSA Group | 2024 | CAN/CSA B651-18 Accessible design for the built environment (door clear opening ≥850mm) | CSA Group | https://www.csagroup.org/store/product/CSA%20B651-18/ | Tier 6 | EN | CA |
+| 11 | ADA-Network-2017 | ADA National Network | 2017 | Opening Doors to Everyone | ADA National Network | https://adata.org/factsheet/opening-doors-everyone | Tier 5 | EN | US |
+
+## Metadata
+
+```yaml
+slug: reach-range-and-accessible-controls
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+grey_resolution_pass: 2026-04-19
+grey_remaining: []
+```
