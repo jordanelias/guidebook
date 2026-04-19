@@ -56,9 +56,21 @@ CAOT. (2024). *Home assessment and modifications*. Canadian Association of Occup
 - GAP-CR-14: CLOSED-ABSORBED — resolved by same action
 
 ### Key sources
-1. RCOT. (2019). *Housing adaptations without delay*. Royal College of Occupational Therapists, London. — Co-2
-2. RCOT / Habinteg. (2024). *Inclusive housing design guide*. RIBA / Habinteg. — Co-2
-3. RCOT. (2023). *Living well by design*. Royal College of Occupational Therapists. — Co-2
-4. Siebert, C., Smallfield, S., & Stark, S. (2014). *Occupational therapy practice guidelines for home modifications*. AOTA Press. ISBN 9781569003572. — Co-2
-5. CAOT. (2024). *Home assessment and modifications*. Canadian Association of Occupational Therapists. https://caot.ca/document/8205/Home%20Assessment%20and%20Modifications%20EN.pdf — Co-2 [ADD TO BIBLIOGRAPHY]
-6. COTEC/WFOT. (2022). *Position statement on occupational therapy and accessibility*. COTEC. — Co-2
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| OTC-01 | RCOT | 2019 | Housing Adaptations Without Delay | Co-2 | UK | https://www.rcot.co.uk/housing-adaptations-without-delay |
+| OTC-02 | RCOT / Habinteg | 2024 | Inclusive Housing Design Guide. RIBA/Habinteg | Co-2 | UK | https://www.habinteg.org.uk/ihdg |
+| OTC-03 | RCOT | 2023 | Living Well by Design | Co-2 | UK | https://www.rcot.co.uk/living-well-by-design |
+| OTC-04 | Siebert, C., Smallfield, S. & Stark, S. | 2014 | OT Practice Guidelines for Home Modifications. AOTA Press. ISBN:9781569003572 | Co-2 | US | Confirmed 2014 edition per project-standards; verify 2023 edition before citing |
+| OTC-05 | CAOT | 2024 | Home Assessment and Modifications | Co-2 | CA | https://caot.ca/document/8205/Home%20Assessment%20and%20Modifications%20EN.pdf |
+| OTC-06 | COTEC / WFOT | 2022 | Position statement on occupational therapy and accessibility | Co-2 | INT | https://cotec.eu |
+
+## Metadata
+
+```yaml
+slug: ot-cpg-built-environment
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
