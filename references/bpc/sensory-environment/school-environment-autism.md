@@ -29,6 +29,8 @@
 
 ```yaml
 slug: school-environment-autism
+population: NDV
+last_updated: 2026-04-19
 topic_directory: sensory-environment
 status: STUB-NEW
 created: 2026-04-19
