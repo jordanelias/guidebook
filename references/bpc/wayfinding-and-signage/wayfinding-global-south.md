@@ -98,3 +98,30 @@ No formal DPO Co-1 wayfinding publications retrieved from any Global South juris
 
 ## Sources (12 confirmed)
 See search log for full table.
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| WGS-01 | (author TBC) | 2025 | India: 75% gap in tactile wayfinding provisions. PMC12082883 | 1 | IN | — |
+| WGS-02 | Ahmed, S. et al. | 2022 | Hospital wayfinding and VIS patients — Nigeria study | 1 | NG | Only Sub-Saharan AF peer-reviewed study |
+| WGS-03 | ISO | 2019 | ISO 23599:2019 — Assistive products: TGSI | 4 | INT | https://www.iso.org/standard/66862.html |
+| WGS-04 | ISO | 2021 | ISO 21542:2021 — Accessibility and usability | 4 | INT | https://www.iso.org/standard/71025.html |
+| WGS-05 | BCA Singapore | 2025 | Code on Accessibility 2025 Chapter 8 — wayfinding | 6 | SG | Most comprehensive Asian wayfinding code |
+| WGS-06 | ESCAP | 2012 | Incheon Strategy — ASEAN enabling masterplan | 4 | ASEAN | — |
+| WGS-07 | India MSJE | 2021 | Harmonised Guidelines and Space Standards 2021 | 6 | IN | Tactile provision referenced; implementation gap |
+| WGS-08 | MOHURD | 2012 | GB 50763-2012 盲道 (tactile wayfinding) | 6 | CN | Urban major cities; rural minimal |
+| WGS-09 | Korea Ministry | n.d. | 편의증진법 — 점자블록 statutory provisions | 6 | KR | Comprehensive implementation |
+| WGS-10 | JIS | 2001 | JIS T 9251:2001 — Tactile Walking Surface Indicators | 4 | JP | ISO 23599 derives from this |
+| WGS-11 | (scoping review author TBC) | n.d. | Scoping review — TWSI implementation Global South [GREY — full citation unverified] | 3 | INT | — |
+| WGS-12 | (scoping review author TBC) | n.d. | Scoping review — wayfinding accessible environments Global South [GREY — full citation unverified] | 3 | INT | — |
+
+## Metadata
+
+```yaml
+slug: wayfinding-global-south
+population: VIS, DEAF, DBL
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+```
