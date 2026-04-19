@@ -115,3 +115,12 @@ Not yet run.
 - BS8300:2018 — UK best practice
 - ANSIA117-1:2017 — USA
 - CRPD-UNGA-2006 / CRPD-GC2-2014 / CRPD-GC5-2017 — CRPD framework
+
+## Metadata
+
+```yaml
+slug: jurisdiction-matrix-accessibility-standards
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
