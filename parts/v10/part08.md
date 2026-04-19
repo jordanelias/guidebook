@@ -1,5 +1,9 @@
 ## Part 8: Engineering and Coordination
 
+<!-- evidence_density: Moderate -->
+> **Evidence density: ▓ Moderate** — Engineering performance targets (RT60, STI, NC-25, STC, melanopic EDI ≥250, MERV 13+) are derived from Part 4 specifications and their underlying BPC evidence. Part 8 is a coordination register and engineering brief framework, not an independent evidence source. Engineering coordination protocol and stage-gating are procedural (expert consensus + professional practice standards). VE Protection Register items are supported by verified retrofit cost multipliers (TERRAGON/DStGB 2017 Tier 3; RHF 2023).
+
+
 <!-- v10.0 scaffold — CO-0004: was Part 8. Section numbering renumbered §8.x → §8.x.
      PENDING:
      - §8.1.4: Write TC-02+TC-03 combined item (Thermal Envelope and Mass — Passive Thermal Performance)
