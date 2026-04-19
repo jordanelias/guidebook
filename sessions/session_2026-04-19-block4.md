@@ -80,3 +80,51 @@ next_action: >
   Load references/evidence-synthesis-integration-2026-04-09.md §A (12 density statements).
   Insert at each Part opening. Then B5 hallucination audit (BPC).
   Then CI validation script check before Block 5 parser validation.
+
+## B4 + B5 addendum
+
+commits_b4:
+  - f442b48be021: B4 evidence density Part 1
+  - 13194626e2d2: B4 evidence density Part 2
+  - 3aeed93af3b3: B4 evidence density Part 3
+  - 60bf2242fa90: B4 evidence density Part 4
+  - c2962ca7d57f: B4 evidence density Part 5
+  - 3449f62f3303: B4 evidence density Part 6
+  - 3a9e798ffae4: B4 evidence density Part 7
+  - d8ee7573cd5f: B4 evidence density Part 8
+  - fca75e5945ea: B4 evidence density Part 9
+  - d02f22f602e9: B4 evidence density Part 10
+  - 1c77bd083930: B4 evidence density Part 11
+  - 24b5e05e3709: B4 evidence density Part 12
+  - 2db947729736: GAP-080 CLOSED-CONSUMED
+
+commits_b5:
+  - ca3207e7a5a2: B5 hallucination audit document created
+
+b4_summary: >
+  Evidence density statements inserted at opening of all 12 Parts.
+  Format: HTML comment + blockquote with tier-coded density assessment.
+  GAP-080 CLOSED-CONSUMED.
+
+b5_summary: >
+  BPC hallucination audit complete. No invented citations or fabricated statistics
+  identified across 70 BPC files. ~45 GREY flags require DOI resolution before
+  publication (not fabrications — sources exist but DOIs not retrieved).
+  3 claims carry UNVERIFIED/PROVISIONAL markers with explicit disclosures.
+  Audit document: references/bpc-hallucination-audit-2026-04-19.md
+
+workplan_phase_a_b_final_status:
+  A1: COMPLETE
+  A2: COMPLETE
+  A3: COMPLETE
+  A4: COMPLETE
+  A5: COMPLETE (80 entries)
+  A6: COMPLETE
+  A7: COMPLETE (91/91)
+  B1: COMPLETE (95/95 connections)
+  B2: COMPLETE (12/12 SRs)
+  B3: COMPLETE (90/90 GRADE ratings)
+  B4: COMPLETE (12/12 Parts)
+  B5: COMPLETE (no fabrications; ~45 GREY pre-publication action items)
+
+session_close: 2026-04-19 03:08
