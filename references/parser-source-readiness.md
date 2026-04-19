@@ -283,3 +283,183 @@ notes: "Part 7 uses a different matrix format than Part 6. Parser p07 needs sepa
 | Part 6 (full) | p06 | PASS-WITH-NOTES | 9 room types, 185 table rows, variable population columns |
 | Part 7 (full) | p07 | PASS-WITH-NOTES | 7 building types, 127 table rows, different format from Part 6 |
 
+---
+
+## Audit 3/3 — 2026-04-19 02:21
+
+### parts/v10/part08.md (Part 8: Engineering and Coordination)
+
+```yaml
+file: parts/v10/part08.md
+section: full file (426 lines, 48306 bytes)
+parser_consumer: p08_engineering_coordination
+format_summary: "Engineering coordination register (tables by discipline) + brief templates + VE protection register"
+known_patterns:
+  - heading_numbering: "Uses §9.x numbering (pre-CO-0004 — file says Part 8 but headings say 9.x)"
+  - register_format: "pipe-delimited tables per discipline (acoustic, electrical, mechanical)"
+  - brief_template_format: "H3 per discipline with structured prose"
+  - ve_protection_format: "2-column table (Item | Protected Specification)"
+  - thermal_section: "§8.1.4 appended at end (L407) — out of sequence"
+edge_cases:
+  - "Section numbering mismatch: file is Part 8 but headings use 9.x — CO-0004 propagation incomplete"
+  - "§8.1.4 thermal section appended at end, disconnected from §9.1 register"
+  - "185 table rows — rich parser source"
+  - "Part 4/Part 8 deduplication needed (GAP-SCOPE-01): ~40 performance targets restated"
+  - "per project-standards: Part 8 is coordination register, not specification source — values must cross-reference Part 4"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:21
+notes: "Section numbering needs CO-0004 fix. Parser must treat this as coordination metadata, not specifications — Part 4 governs values."
+```
+
+---
+
+### parts/v10/part09.md (Part 9: Working with Specialist Consultants)
+
+```yaml
+file: parts/v10/part09.md
+section: full file (363 lines, 39697 bytes)
+parser_consumer: p_brief_builder (§9.2.2 OT triggers), p08_engineering_coordination (§9.7 coordination)
+format_summary: "H2 per consultant type. §9.2.2 has bullet-list triggers. §9.2.3 has stage-gated scope table."
+known_patterns:
+  - consultant_types: "OT, Dementia, DeafSpace/Deaf, Sensory, Accessibility Auditor"
+  - trigger_format: "bullet list with bold condition + prose"
+  - scope_table: "Stage | Tier 1 Min Scope | Tier 2 Min Scope (6 stages)"
+  - co_occurrence_protocol: "§9.9 (L266-292)"
+  - ot_threshold: "§9.10 (L293-317)"
+  - dbl_specialist: "§9.11 (L318-363) — duplicate of Part 8 §9.6 DBL section"
+edge_cases:
+  - "§9.9 and §9.10 are new sections (CO-0004) — may not be in all file versions"
+  - "§9.11 DBL specialist content appears to duplicate Part 8 §9.6 — reconciliation needed"
+  - "Mixed heading numbering: some sections use §9.x, others use 9.x or 10.0"
+  - "Heading L12 says '10.0 Overview' — CO-0004 numbering not propagated"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:21
+notes: "Brief Builder logic validation (A6) depends on §9.2.2 triggers. Format is clean bullet list — parseable. DBL duplication with Part 8 needs resolution."
+```
+
+---
+
+### parts/v10/part10.md (Part 10: Design for Adaptable Readiness — DAR)
+
+```yaml
+file: parts/v10/part10.md
+section: full file (131 lines, 11836 bytes)
+parser_consumer: p10_dar
+format_summary: "Prose sections with embedded tables. CAN/ASC + Lifetime Homes + Visitability + Nordic models."
+known_patterns:
+  - sections: "DAR cost multiplier, CAN/ASC 2.8:2025, Lifetime Homes 16, Visitability, Aging in Place, Nordic"
+  - cost_multiplier_table: "provision | design-stage | retrofit | multiplier"
+  - no_item_code_refs: "0 item code references — DAR operates at building level, not item level"
+  - table_rows: 28
+edge_cases:
+  - "Smallest Part file (11K). Sparse content."
+  - "No item code cross-references — disconnected from Part 4"
+  - "CON-0155, CON-0168 PENDING connections target this Part"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:21
+notes: "Content is thin. Phase A Block 4 will add connection-based enrichment. No parser complexity."
+```
+
+---
+
+### parts/v10/part11.md (Part 11: The Economics of Accessible Construction)
+
+```yaml
+file: parts/v10/part11.md
+section: full file (635 lines, 66370 bytes)
+parser_consumer: p11_economics, p11_sources
+format_summary: "Prose + 163 table rows across cost intelligence tables, economic timeline, cross-reference index"
+known_patterns:
+  - cost_tables: "§11.4 — per-item-category construction cost intelligence tables"
+  - cost_table_columns: "Item | Provision | New Build % | Retrofit % | Source"
+  - value_framework: "§11.3 — ROI, avoided cost, social value, productivity (prose)"
+  - economics_timeline: "§11.7 — design stage × economic decision table"
+  - cross_ref_index: "§11.9 — Part 7 NR-type × economics cross-reference"
+  - references_section: "§References at L577 — standalone bibliography for Part 11"
+edge_cases:
+  - "p11_sources parser needs BPC Key sources migration (Block 2 A1) — current format not CO-0006"
+  - "§11.4 cost tables have sparse population where data unavailable"
+  - "188 item code refs but many reference items not in cost tables yet (GAP-ECON-01, 02)"
+  - "NDIS SDA data added late (GAP-ECON-05) — may not be fully integrated"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:21
+notes: "Largest Part after Part 4. Parser p11_sources blocked until Block 2 BPC migration. Cost tables have known gaps (kitchen, bedroom, emergency egress — GAP-ECON items)."
+```
+
+---
+
+### parts/v10/part12.md (Part 12: Case Studies)
+
+```yaml
+file: parts/v10/part12.md
+section: full file (333 lines, 35982 bytes)
+parser_consumer: p12_case_studies
+format_summary: "H3 per case study (### §12.NN — Name). Consistent field structure per entry."
+known_patterns:
+  - case_study_count: 18 (§12.01 through §12.18)
+  - field_labels: "**Building type:** · **Primary population:** · **Setting:** · **Architect:** · **Evidence quality:** · **Key design strategies:** · **Verified outcomes:** · **Cost data:** · **Limitations:**"
+  - includes_failure_cases: "§12.17 (NHS CAMHS) and §12.18 (Gallaudet rounded corners) are design failure cases"
+  - item_refs: "80 item code references inline in Key design strategies"
+  - no_tables: "0 table rows — all prose"
+edge_cases:
+  - "Key design strategies uses bullet list with inline item codes — parser must extract both narrative and codes"
+  - "Verified outcomes uses bullet list with inline metrics"
+  - "Cost data often 'Not published' — sparse field"
+  - "Two failure cases have different framing (lessons learned, not positive outcomes)"
+audit_status: PASS
+audit_date: 2026-04-19 02:21
+notes: "Clean, consistent format across all 18 entries. Parser can reliably extract by bold field labels. Failure cases are valuable but need parser flag."
+```
+
+---
+
+### parts/v10/part13.md — Master Bibliography (L294-365)
+
+```yaml
+file: parts/v10/part13.md
+section: "## Master Bibliography (L294-365)"
+parser_consumer: p25_spec_sources
+format_summary: "Pre-pipeline state. 84 items use legacy Key citations, 7 use Sources cited tables, 43 REF-ID markers in body."
+known_patterns:
+  - current_state: "PRE-PIPELINE per HTML comment"
+  - legacy_format: "**Key citations:** inline author-year list per Part 4 item"
+  - pipeline_format: "#### Sources cited table with REF-ID markers"
+  - pipeline_ready_count: 7 items
+  - legacy_count: 84 items
+edge_cases:
+  - "Bibliography cannot be compiled until Block 2 (A1 BPC migration) + Block 3 (ISW conversion pass)"
+  - "Current content is placeholder with methodology notes, not actual reference list"
+  - "Part 11 has its own §References section — needs merge or cross-reference"
+audit_status: FAIL
+audit_date: 2026-04-19 02:21
+notes: "Not parser-ready. Requires Block 2 (A1) + Block 3 (ISW) + bibliography-compiler pass. Blocked until those complete. FAIL does not block Phase A progress — bibliography is a late-stage artifact."
+```
+
+---
+
+## Summary — Audit 3/3
+
+| Source | Parser | Status | Key notes |
+|---|---|---|---|
+| Part 8 (full) | p08 | PASS-WITH-NOTES | §9.x numbering mismatch; ~40 duplicated values with Part 4 |
+| Part 9 (§9.2.2) | p_brief | PASS-WITH-NOTES | Clean trigger list; DBL duplicate with Part 8 |
+| Part 10 (full) | p10 | PASS-WITH-NOTES | Thin content (11K); no item code refs |
+| Part 11 (full) | p11 | PASS-WITH-NOTES | 163 table rows; cost gaps; p11_sources blocked until Block 2 |
+| Part 12 (full) | p12 | PASS | 18 case studies, consistent format |
+| Bibliography | p25 | FAIL | Pre-pipeline; blocked until Block 2 + Block 3 |
+
+---
+
+## Audit Complete — Overall Summary
+
+| Audit | Sources | PASS | PASS-WITH-NOTES | FAIL |
+|---|---|---|---|---|
+| 1/3 | standards-registry, Part 2, Part 3, glossary | 2 | 4 | 0 |
+| 2/3 | Part 4, Part 5, Part 6, Part 7 | 0 | 4 | 0 |
+| 3/3 | Part 8, Part 9, Part 10, Part 11, Part 12, bibliography | 1 | 4 | 1 |
+| **Total** | **18 sections** | **3** | **12** | **1** |
+
+**Single FAIL:** Master Bibliography — blocked until Block 2 + Block 3. Not a Phase A blocker (bibliography is a late-stage artifact produced during Block 5).
+
+**Standards registry gap (A5 audit):** 30 entries currently; target ≥80. Gap of 50+ entries. Quantified in Audit 1/3.
+
