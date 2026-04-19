@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|---|---|
 | GAP-078 | RP | P1 | CLOSED-CONSUMED | literature-review-planner | BPC files (multiple) | 12 SRs integrated (Block 4 B2 2026-04-19). sensory-relief-space x5, IntD x1, bathrooms x2, residential x1, design-framework x1. New slug school-environment-autism created. See references/evidence-synthesis-integration-2026-04-09.md §B for full register. Highest priority: Rashid 2025 (NDV taxonomy), Quesada-Cubo ... | 2026-04-09 23:00 |
 | GAP-079 | RP | P1 | OPEN | literature-review-planner | Part 4 Categories A-I | GRADE-equivalent confidence ratings designed but not yet applied to ~125 item specifications. Framework in references/evidence-synthesis-integration-2026-04-09.md §F. Requires 3-4 sessions to apply. | 2026-04-09 23:00 |
-| GAP-080 | RP | P1 | OPEN | literature-review-planner | Parts 1-12 | Evidence density statements drafted for all 12 Parts + Supplementary Volume. Ready for voice-style pass then insertion at each Part opening. See references/evidence-synthesis-integration-2026-04-09... | 2026-04-09 23:00 |
+| GAP-080 | RP | P1 | CLOSED-CONSUMED | literature-review-planner | Parts 1-12 | Evidence density statements inserted at all 12 Part openings (Block 4 B4 2026-04-19). Commits: f442b48be021 through 24b5e05e3709. See references/evidence-synthesis-integration-2026-04-09... | 2026-04-09 23:00 |
 | GAP-031 | RP | P2 | OPEN | multilingual-research | visual-alerting-and-wayfinding-light | VIS,DEAF,DBL | JA: 光警報装置 (visual al |
 | GAP-033 | RP | P2 | OPEN | multilingual-research | luminance-contrast-and-pattern | VIS,DEM,NDV | Thin empirical basis |
 | GAP-034 | RP | P2 | OPEN | multilingual-research | therapeutic-lighting-design | ALL | Circadian lighting ( |
