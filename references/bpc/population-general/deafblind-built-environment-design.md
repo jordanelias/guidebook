@@ -101,13 +101,25 @@ Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT 
 | DbI best practice guidelines | Forward | ACVREP CDBIS scope; Nordic ledsagarservice documentation |
 
 ### Key sources
-1. Deafblind International (DbI). (n.d.). Guidelines on Best Practice for Service Provision to Deafblind People. DbI. URL: https://www.deafblindinternational.org/?media_dl=3219 — Tier 2 [EN, global]
-2. Nordic Welfare Centre. (2023). The Deafblind Field. NVC. URL: https://nordicwelfare.org/en/disability-issues/the-deafblind-field/ — Tier 2 [SV/NO/DA/FI]
-3. Clark, J.L. (2023). Touch the Future: A Manifesto in Essays. Norton. — Co-1 [EN]
-4. Clark, J.L. (2021). Against Access. McSweeney's / Jim Cromwell Interpreting. — Co-1 [EN]
-5. Protactile. (2025). Wikipedia. URL: https://en.wikipedia.org/wiki/Protactile — Co-1 (sourced from Nuccio/granda/Clark) [EN]
-6. ABNT NBR 16537:2024. Acessibilidade — Sinalização tátil no piso — Diretrizes para elaboração de projetos. ABNT. — Tier 4 [PT] — only jurisdiction explicitly extending tactile paving to surdo-cegueira
-7. DINF. (n.d.). 盲ろう者のコミュニケーション. DINF Japan. URL: https://www.dinf.ne.jp/doc/japanese/resource/blind/z02002/z0200204.html — Tier 2 [JA]
-8. DeafBlind Information Australia. (2022). Adapting the Environment. URL: https://www.deafblindinformation.org.au/living-with-deafblindness/adapting-the-environment/ — Tier 2 [EN/AU]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DBL-01 | Deafblind International (DbI) | n.d. | Guidelines on Best Practice for Service Provision to Deafblind People | 2 | INT | https://www.deafblindinternational.org/?media_dl=3219 |
+| DBL-02 | Nordic Welfare Centre | 2023 | The Deafblind Field | 2 | Nordic | https://nordicwelfare.org/en/disability-issues/the-deafblind-field/ |
+| DBL-03 | Clark, J.L. | 2023 | Touch the Future: A Manifesto in Essays. Norton | Co-1 | US | DeafBlind lived experience |
+| DBL-04 | Clark, J.L. | 2021 | Against Access. McSweeney's | Co-1 | US | — |
+| DBL-05 | Protactile movement | 2025 | Protactile (Wikipedia / Nuccio, granda, Clark) | Co-1 | US | https://en.wikipedia.org/wiki/Protactile |
+| DBL-06 | ABNT | 2024 | NBR 16537:2024 — Sinalização tátil no piso (extends to surdo-cegueira) | 4 | BR | Only jurisdiction explicitly extending tactile paving to DeafBlind |
+| DBL-07 | DINF Japan | n.d. | 盲ろう者のコミュニケーション | 2 | JP | https://www.dinf.ne.jp/doc/japanese/resource/blind/z02002/z0200204.html |
+| DBL-08 | DeafBlind Information Australia | 2022 | Adapting the Environment | 2 | AU | https://www.deafblindinformation.org.au/living-with-deafblindness/adapting-the-environment/ |
 
 ---
+
+## Metadata
+
+```yaml
+slug: deafblind-built-environment-design
+population: DBL
+last_updated: 2026-04-19
+co0006_migration: true
+```
