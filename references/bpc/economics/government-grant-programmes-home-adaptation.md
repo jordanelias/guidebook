@@ -63,10 +63,26 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- MHCLG-DFG-2024 — UK Disabled Facilities Grant
-- NDIS-2024 — Australia National Disability Insurance Scheme
-- CRA-HATC-2024 — Canada Home Accessibility Tax Credit
-- VA-SAH-FY2024 — US Veterans Affairs SAH/SHA grants
-- HUD-S504 — US HUD Section 504
-- KfW-159 — Germany barrier-reduction loan programme
-- ⚠ KfW "Altersgerecht Umbauen" grant programme suspended December 2021 — do not cite as current
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| GGP-01 | MHCLG | 2024 | Disabled Facilities Grant programme data — £30,000/household; £711m/year | 5 | UK | Largest volume EN-language programme |
+| GGP-02 | NDIS | 2024 | NDIS Home Modifications — variable, plan-based; OT report required | 5 | AU | Most flexible model internationally |
+| GGP-03 | CRA | 2024 | Home Accessibility Tax Credit (HATC) — CAD $20,000 max; 15% credit | 5 | CA | Non-refundable; benefits only taxable HH |
+| GGP-04 | US VA | 2024 | SAH/SHA grants — SAH up to $109,986; SHA up to $22,036 | 5 | US | Highest ceiling; veterans only |
+| GGP-05 | HUD | 2024 | Section 504 — $10,000 grant + $27,500 loan; rural very-low income | 5 | US | Limited scope |
+| GGP-06 | KfW | 2024 | KfW 159 barrier-reduction loan — reduced rate; grant element varies | 5 | DE | ⚠ KfW "Altersgerecht Umbauen" grant SUSPENDED Dec 2021 — do not cite as current |
+| GGP-07 | IV (Invalidenversicherung) | 2024 | Swiss federal/cantonal disability insurance home adaptation co-funding | 5 | CH | Federal + cantonal |
+
+**⚠ CAUTION:** KfW "Altersgerecht Umbauen" grant programme suspended December 2021 (oversubscribed). Confirm KfW 159 current status before citing.
+
+## Metadata
+
+```yaml
+slug: government-grant-programmes-home-adaptation
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+```
+
