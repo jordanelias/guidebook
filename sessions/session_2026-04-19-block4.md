@@ -182,3 +182,20 @@ block5_final_summary: >
 
 website_preparation_phase_a_status: COMPLETE
 all_workplan_criteria_met: true
+
+## Block 5 final artifacts
+
+commits_block5_artifacts:
+  - 7085ec9b1b6e: parser-source-readiness audit 2/3 update
+  - 3bee237f6e8b: phase-b-handoff.md created
+  - 36b406951d73: check_phase_a_complete.py created
+  - phase-a-complete-20260419: Git tag (Phase A freeze)
+
+phase_a_freeze:
+  tag: phase-a-complete-20260419
+  head_sha: 36b406951d73
+  date: 2026-04-19
+  status: FROZEN — Phase B parsers read from this tag
+
+phase_a_complete: true
+phase_b_ready: true
