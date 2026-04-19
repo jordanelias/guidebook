@@ -6,13 +6,14 @@
 **Last migration:** 2026-04-19 (Block 4 B1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
 **Total connections migrated:** 181
-**Next CON-ID:** CON-0158
+**Next CON-ID:** CON-0181
 
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 141 |
-| PENDING | 1 |
+| CONSUMED | 140 |
+| CONSUMED-DEFERRED | 42 |
+| PENDING | 0 |
 
 ## Index
 
