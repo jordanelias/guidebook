@@ -24,15 +24,23 @@ from pathlib import Path
 
 # ── Constants ────────────────────────────────────────────────────────────────
 
+# CO-0006 schema mandatory sections (Block 2 migration complete 2026-04-19)
+# Pre-CO-0006 schema: PICO, Search strategy, Best practice synthesis,
+#   Evidence gaps, Jurisdiction coverage, Co-1 pass — these sections are
+#   optional enrichment in CO-0006 files and should not be validated as mandatory.
+# CO-0006 mandatory: Key sources (REF-ID table) + Metadata (slug/population/last_updated)
 MANDATORY_SECTIONS = [
-    "## PICO",
-    "## Search strategy",
     "## Key sources",
-    "## Best practice synthesis",
-    "## Evidence gaps",
-    "## Jurisdiction coverage",
-    "## Co-1 pass",
     "## Metadata",
+]
+
+# Optional sections — present in fully-enriched files but not required for validation
+OPTIONAL_SECTIONS = [
+    "### Best-practice synthesis",
+    "### Consensus findings",
+    "### Divergent findings",
+    "### NO-DATA / THIN",
+    "### Bottom-up findings",
 ]
 
 # CO-0006 REF-ID table schema: at minimum these columns must be present
