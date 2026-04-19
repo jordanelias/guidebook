@@ -65,14 +65,25 @@
 
 | REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | ADA-2010-S611 | DOJ | 2010 | ADA Standards for Accessible Design S611 — Washing Machines and Clothes Dryers | US DOJ | [GREY] | Tier 4 | EN | US |
-| 02 | USAB-WashDry-2021 | US Access Board | 2021 | Accessible Washers and Dryers | US Access Board | [GREY] | Tier 5 | EN | US |
-| 03 | NDIS-SDA-2019 | NDIA | 2019 | NDIS SDA Design Standard — High Physical Support, laundry | NDIA | [GREY] | Tier 4 | EN | AU |
-| 04 | BBR-3-148 | Boverket | n.d. | Tillgänglighet i gemensamma tvättstugor (Accessibility in shared laundry rooms) | Boverket | [GREY] | Tier 5 | SV | SE |
-| 05 | DIN-18040-2 | DIN | 2011 | Barrierefreies Bauen — Wohnungen | DIN | [GREY] | Tier 4 | DE | DE |
-| 06 | SDSU-Laundry-2020 | SD State Extension | 2020 | Accessible Laundry Room Design | SD State Extension | [GREY] | Tier 5 | EN | US |
+| 01 | ADA-2010-S611 | DOJ | 2010 | 2010 ADA Standards for Accessible Design §611 — Washing Machines and Clothes Dryers | US DOJ | https://www.ada.gov/law-and-regs/design-standards/2010-stds/#611-washing-machines-and-clothes-dryers | Tier 4 | EN | US |
+| 02 | USAB-WashDry-2021 | US Access Board | 2021 | Accessible Washers and Dryers | US Access Board | https://www.access-board.gov/research/human-factors/washers-dryers/ | Tier 5 | EN | US |
+| 03 | NDIS-SDA-2019 | NDIA | 2019 | NDIS SDA Design Standard — High Physical Support (laundry provisions) | NDIA | https://www.ndis.gov.au/providers/housing-and-living-supports-and-services/specialist-disability-accommodation/sda-design-standard | Tier 4 | EN | AU |
+| 04 | BBR-3-148 | Boverket | n.d. | Boverkets byggreglar (BBR) — Tillgänglighet i gemensamma tvättstugor | Boverket | https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/bbr---bfs-20116/ | Tier 5 | SV | SE |
+| 05 | DIN-18040-2 | DIN | 2011 | DIN 18040-2 Barrierefreies Bauen — Wohnungen | DIN | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 | Tier 4 | DE | DE |
+| 06 | SDSU-Laundry-2020 | SD State Extension | 2020 | Accessible Laundry Room Design [GREY — exact publication unverified; URL required before publication] | SD State Extension | [GREY — URL required] | Tier 5 | EN | US |
 ---
 
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: accessible-laundry-room-design
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+grey_resolution_pass: 2026-04-19
+grey_remaining: [SDSU-Laundry-2020]
+```
