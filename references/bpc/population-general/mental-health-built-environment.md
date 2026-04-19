@@ -198,7 +198,34 @@ Evidence quality: Tier 3. Evidence marker: ●
 | Oostermeijer 2021 (PMID 34233981) | Related articles | Quinn 2024; De Cuyper 2023; Goulet 2022 |
 
 ### Key sources
-PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022 · Oostermeijer2021-BMJOpen · Faerden2022-HERD · Haig2022-IJMHN · Price2024-EDITION · vanderSchaaf2013-BJP · Bodryzlova2024-JPsychRes · Schreiber2022-BMCHSR · Weltens2023-BMJOpen · Husum2010-BMCHSR · Askew2019-JPMHN · Quinn2024-IJMHN · DeCuyper2023-JPMHN · Goulet2022-SMQ · Wilson2023-IJMHN · RodriguezLabajos2024-HERD · DiMHN-UK · Permanente2020-KaiserSanJose · BHFC2024-DesignGuide · CenterForHealthDesign-EBD
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| MHB-01 | (author TBC) | n.d. | Trauma-informed design (TID). PMC9658651 | 3 | INT | [GREY — full citation unverified; DOI required] |
+| MHB-02 | (author TBC) | n.d. | TID youth. PMC10689333 | 3 | INT | [GREY — full citation unverified] |
+| MHB-03 | SAMHSA | n.d. | Trauma-Informed Care in Behavioral Health Services | Co-2 | US | https://www.samhsa.gov/trauma-violence |
+| MHB-04 | Holohan, E. | 2022 | Trauma-informed design. [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| MHB-05 | BuroHappold | 2024 | [TID or MH design guidance — GREY — full citation unverified] | 5 | INT | — |
+| MHB-06 | BSI | 2022 | PAS 6463:2022 — Design for the Mind | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| MHB-07 | Oostermeijer, S. et al. | 2021 | BMJ Open — [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| MHB-08 | Faerden, A. et al. | 2022 | Single rooms and patient control in inpatient mental health. HERD. [GREY — DOI required] | 3 | NO | User control d=2.0 |
+| MHB-09 | Haig, R. et al. | 2022 | Int J Mental Health Nurs — [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| MHB-10 | Price, E. et al. | 2024 | EDITION study. [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| MHB-11 | van der Schaaf, P. et al. | 2013 | British Journal of Psychiatry — [GREY — full citation unverified; DOI required] | 3 | NL | — |
+| MHB-12 | Bodryzlova, Y. et al. | 2024 | J Psychiatric Research — [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| MHB-13 | Schreiber, V. et al. | 2022 | BMC Health Services Research — psychiatric architecture. [GREY — DOI required] | 3 | DE | — |
+| MHB-14 | Weltens, I. et al. | 2023 | BMJ Open — [GREY — full citation unverified; DOI required] | 3 | NL | Via citation mining |
+| MHB-15 | Husum, T.L. et al. | 2010 | BMC Health Services Research — Norwegian acute psychiatry. [GREY — DOI required] | 3 | NO | — |
+| MHB-16 | Askew, R. et al. | 2019 | J Psychiatric Mental Health Nurs — [GREY — DOI required] | 3 | INT | — |
+| MHB-17 | Quinn, C. et al. | 2024 | Int J Mental Health Nurs — [GREY — DOI required] | 3 | INT | — |
+| MHB-18 | DeCuyper, M. et al. | 2023 | J Psychiatric Mental Health Nurs — [GREY — DOI required] | 3 | INT | — |
+| MHB-19 | Goulet, M-H. et al. | 2022 | Santé Mentale au Québec — ecological model. [GREY — DOI required] | 3 | CA | TID framing |
+| MHB-20 | Wilson, C. et al. | 2023 | Int J Mental Health Nurs — AU service user perspectives. DOI:10.1111/inm.13070 | Co-1/3 | AU | Sensory room failure modes |
+| MHB-21 | Rodríguez-Labajos, B. et al. | 2024 | HERD — 44 studies, 9 countries. PMID:38385552. DOI:10.1177/19375867231219031 | 3 | INT | Therapeutic design factors SR |
+| MHB-22 | DiMHN | n.d. | Design in Mental Health Network — lived experience research | Co-1 | UK | https://www.dimhn.org |
+| MHB-23 | Permanente / Kaiser San Jose | 2020 | Patient perspectives on outpatient MH environment (n=13) | Co-1 | US | 4 dimensions: sensory, engagement, social, affective |
+| MHB-24 | BHFC | 2024 | Behavioral Health Facility Compendium Design Guide (26th revision) | 5 | US | — |
+| MHB-25 | Center for Health Design | n.d. | Evidence-based design for behavioral mental health | Co-2 | US | https://www.healthdesign.org |
 
 ---
 
@@ -254,3 +281,14 @@ Not yet run.
 Rodríguez-Labajos 2024 documents preference for "homelike" environments with visual richness (artwork, colours). This CONFLICTS with NDV/AUT muted/minimal visual stimulation preference. Co-1 evidence confirms the conflict is real (both populations are correct about their needs). Resolution: spatial separation + adjustable multi-mode design. Routed to conflict note C-01 in best-practice synthesis.
 
 **New gap raised:** NDV/MH requires female-only area provision in mixed-gender inpatient settings — no built environment item currently in Part 4 for this. Flag for Phase 3.
+
+## Metadata
+
+```yaml
+slug: mental-health-built-environment
+population: NDV/MH
+last_updated: 2026-04-19
+co0006_migration: true
+grey_count: 19
+note: 19 REF-IDs carry GREY flags (opaque cite codes in original BPC); PubMed lookup recommended for resolution
+```
