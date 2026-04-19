@@ -32,6 +32,25 @@
 
 **Guidebook items affected:** Part 7 acoustic specification items; any item referencing RT60, background noise limits, or hearing-loop performance criteria.
 
-**Key sources:** Murgia2023 · PLOSONE2025-binaural · ISO3382 · ANSIASA-S12-60 · IEC60118-4
+**Key sources (see ## Key sources table below)**
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| ASI-01 | Murgia, A. et al. | 2023 | [GREY — full citation unverified; DOI required before publication] | 1 | INT | Systematic review; RT60 0.3s for hearing-impaired |
+| ASI-02 | (author TBC) | 2025 | Binaural study: hearing-impaired listeners and reverberation. PLOS ONE. DOI:10.1371/journal.pone.0317266 | 2 | INT | Temporal smearing mechanism |
+| ASI-03 | ISO | 2009 | ISO 3382-1:2009 — Measurement of room acoustic parameters | 4 | INT | https://www.iso.org/standard/40979.html |
+| ASI-04 | ASA | 2010 | ANSI/ASA S12.60-2010 — Acoustical Performance Criteria for Schools | 4 | US | ≤35 dBA; RT ≤0.3s for HI |
+| ASI-05 | IEC | 2017 | IEC 60118-4:2014+AMD1:2017 — Hearing loop performance | 4 | INT | See ALS-01 / DAB-01 |
 **Divergent findings:** Standards specify RT60 ≤0.6 s for classrooms generally; hearing-impaired evidence base requires ≤0.3 s — a 2× difference not reflected in most regulatory documents
 **Notes:** RT differentiation (hearing-impaired vs general) is well-evidenced but absent from most national building codes. Cross-reference A-items with VIS/DEAF BPC entry for hearing loop integration. NDV/ASD and NEU/ABI populations also benefit from RT ≤0.3 s — see NDV/MH BPC entry.
+
+## Metadata
+
+```yaml
+slug: acoustics-speech-intelligibility-disability
+population: DEAF, NEU, NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
