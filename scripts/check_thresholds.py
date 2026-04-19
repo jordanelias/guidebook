@@ -35,9 +35,9 @@ from pathlib import Path
 THRESHOLDS = [
     {
         "glob": "gap_register.md",
-        "max_tokens": 5000,
-        "description": "Active gap register (must stay scannable)",
-        "note": "Archive CLOSED items to gap_register_archive.md if over limit",
+        "max_tokens": 20000,
+        "description": "Active gap register (filtered to P1 OPEN at session start — full file not loaded)",
+        "note": "Archive CLOSED items to gap_register_archive.md. If still over, review P3 items for closure.",
     },
     {
         "glob": "references/project-standards.md",

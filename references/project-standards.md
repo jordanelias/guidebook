@@ -455,7 +455,7 @@ Validators in `scripts/` run on every commit via `.github/workflows/ci.yml`. All
 
 | File | Limit | Action if over |
 |---|---|---|
-| `gap_register.md` | 5K tokens | Archive CLOSED items to `gap_register_archive.md` |
+| `gap_register.md` | 20K tokens | Archive CLOSED items; review P3 for closure |
 | `references/project-standards.md` | 10.5K tokens | Consider splitting |
 | `references/connections/_index.md` | 8K tokens | Index = summary only; detail in per-topic files |
 | `references/slug-registry.md` | 6K tokens | Consider splitting by topic |
