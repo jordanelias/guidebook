@@ -55,16 +55,28 @@
 | Rhee et al. (2023) | Forward | Latiff et al. (2024) |
 
 ### Key sources
-1. Al Khatib, H., et al. (2024). Biophilic design in healthcare: systematic review, 61 sources. [EN, Tier 3]
-2. Gonçalves, A., et al. (2023). Nature exposure and workplace restorative outcomes: 16 studies. [EN, Tier 3]
-3. Rhee, J., et al. (2023). Indoor vegetation and cognitive restoration: EEG study. [EN, Tier 3]
-4. Tekin, B., et al. (2023). User group stratification in biophilic healthcare design. [EN, Tier 3]
-5. Liu, Y., et al. (2024). Attention Restoration Theory: 571-source review; HRV/cortisol measurement. [EN, Tier 3]
-6. Ulrich, R. S. (1984). View through a window may influence recovery from surgery. *Science*, 224, 420–421. [EN, historical reference only — Tier 3/single study]
-7. Latiff, A., et al. (2024). Biophilic outdoor transitional zones for NDV populations. [EN, Co-1]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| BDH-01 | Al Khatib, H. et al. | 2024 | Biophilic design in healthcare: systematic review of 61 sources | 3 | INT | Primary SR; use over Ulrich 1984 |
+| BDH-02 | Gonçalves, A. et al. | 2023 | Nature exposure and workplace restorative outcomes: 16 studies | 3 | INT | — |
+| BDH-03 | Rhee, J. et al. | 2023 | Indoor vegetation and cognitive restoration: EEG study | 3 | INT | Working memory improvement |
+| BDH-04 | Tekin, B. et al. | 2023 | User group stratification in biophilic healthcare design | 3 | INT | Space typology differentiation |
+| BDH-05 | Liu, Y. et al. | 2024 | Attention Restoration Theory: 571-source review; HRV/cortisol measurement | 3 | INT | HRV/cortisol preferred over BP as proxy |
+| BDH-06 | Ulrich, R.S. | 1984 | View through a window may influence recovery from surgery. Science 224:420–421 | 3 | US | Historical reference only — single hospital, n=46; cite BDH-01 as primary |
+| BDH-07 | Latiff, A. et al. | 2024 | Biophilic outdoor transitional zones for NDV populations | Co-1 | AU/UK | [GREY — full citation unverified; DOI required] |
 
 ---
 
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: biophilic-design-healthcare-workplace
+population: NDV, DEM, NEU, OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
