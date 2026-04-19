@@ -1736,64 +1736,9 @@ Lighting: ≥100 lux at entry surface level; night-activated
 
 ### E-10 Rest Seating on Circulation Routes (≤20m Interval)
 
-**Applicable Groups:** OFS, MOB, PAIN, NEU (MS fatigue) (also benefits ALL users on long routes)
+<!-- DUPLICATE RESOLVED 2026-04-19 (A4). This entry superseded by the revised E-10 specification below (L3205+). Canonical specification: see E-10 at end of Category E section. The 20 m interval in this entry has been revised to 25 m per Tier 1 evidence (Roxburgh et al. 2024); alcove geometry and OFS seat height added. Do not use this entry for specification writing. -->
 
-**Description:** New item added in v9.0 per OFS category review (Stage 3). Resolves OFS-specific seating gap identified in §2.11 review. Seating provided at maximum 20 m intervals on all primary accessible circulation routes in buildings regularly occupied by OFS,
-
-MS, PAIN, or, and recommended universally in public-facing buildings. Rest seating must be accessible without requiring social
-
-interaction. It is located within the accessible route flow — not in an alcove requiring diversion — and does not obstruct the clear
-
-width required by E-08.
-
-**Specifications:**
-
-Maximum interval: 20m on primary routes in OFS/MS/PAIN environments;
-30m acceptable in general-population buildings with no identified OFS users
-Height: 450--500mm seat height with firm cushion; not less than 430mm
-Armrests: bilateral; at 680--710mm AFF; extended to front edge of seat (sit-to-stand support)
-Seat depth: 420--500 mm; not greater than 500 mm for short-limb users
-Back support: full back support to ≥750 mm AFF; reclining option preferred in dedicated OFS buildings
-Surface: cushioned, not hard plastic or metal; wipe-clean fabric or vinyl acceptable
-Clear floor space: 900×1200mm alongside seating for companion or mobility device
-Location: within primary circulation route; no diversion required; visible from route
-Does not obstruct clear route width (E-08: ≥1200mm clear maintained past seating)
-DAR note (residential): fold-down wall-mounted corridor seating satisfies this item in residential occupancy contexts (CAN/ASC
-
-2.8:2025; Part 11 DAR provisions)
-
-**Retrofit cost note:** Retrofit penalty: LOW. Rest seating installation is a procurement and surface-fixing operation. No
-
-structural works required. See Part 12 §12.4.1.
-
-**Key citations:** Matuska, K., \& Christiansen, C.H. (2008). A proposed model of lifestyle balance. Journal of Occupational Science,
-
-15(1), 9--19. Multiple Sclerosis International Federation. (2023).
-
-Atlas of MS (4th ed.). MSIF. Patient Led Research Collaborative.
-
-(n.d.). Clinician's pacing guide for ME/CFS and Long COVID. PLRC.
-
-British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC
-
-2.8:2025. Accessible-Ready Housing. ASC.
-
-**Tier X:** No systematic review of rest-seating interval design in relation to OFS or POTS outcomes identified as of March 2026. The 20m
-
-interval is derived from clinical pacing guidance and MS fatigue literature. Evidence review recommended at next revision.
-
-**Cross-reference:** E-01 (Lift); E-03 (Ramp gradient); E-08 (Corridor clear width); G-02 (Seating variety); [VI-03 — retired code] (Temporal Accessibility);
-
-F-05 (Seated-task design)
-
-**Evidence basis (OT):** Life Balance Model; EHP (alter strategy).
-
-Rest seating at ≤20 m intervals alters the circulation context to keep the exertion cost of traversing any route within the functional
-
-capacity range of OFS and high-fatigue users; the Life Balance Model principle that energy should be preserved for the primary occupation,
-
-not depleted in access, grounds the maximum 20 m interval as the design specification.
-
+*[See E-10 canonical specification below — resolved per workplan Block 3 A4 2026-04-19]*
 ### E-11 Automatic Sliding Entry and Internal Doors
 
 **Applicable Groups:** MOB, UPL, OFS · PAIN
@@ -2145,6 +2090,28 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 <!-- CON-0102 [HIGH]: F-06 fragrance-free whole-building policy coordinates with F-04 filtration and F-08 thermal vestibule to prevent OFS/MCAS chemical+thermal co-triggering. -->
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity), PAIN (fragrance triggers), NEU/PCS
+
+**Description:** A documented fragrance-free operational policy shall be applied to all spaces routinely occupied by OFS/MCAS, NDV (chemical sensitivity), PAIN, or NEU/PCS populations. This is an operational specification embedded in the facility management (FM) brief, occupancy agreements, cleaning specification, and staff induction materials. It is not a design element but a designed-in operational requirement — it must be specified at brief stage to be enforceable at Ready for Occupancy. Fragrance-free policy is the built environment's primary OFS/MCAS chemical trigger prevention mechanism; no architectural intervention substitutes for it. ● [REF:air-quality-voc:04]
+
+**Specifications:**
+- ● No fragrance diffusers (electronic, passive HVAC-integrated, or plug-in) in any occupied space where OFS/MCAS or chemical-sensitive populations are identified [REF:air-quality-voc:04]
+- ● Cleaning products in OFS-occupied environments to be low-fragrance, low-VOC formulations; no aerosol sprays during occupied hours [REF:air-quality-voc:04]
+- ○ A written fragrance-free policy to be embedded in: FM brief, lease/occupancy agreements, staff handbook, and cleaning specification [EXPERT CONSENSUS — operational requirement; no built-environment standard specifies this; project-standards DEM olfactory wayfinding rule 2026-03-30]
+- ○ Policy scope to include occupants, staff, contractors, and cleaning operatives [EXPERT CONSENSUS]
+- ○ Biophilic planting in OFS-occupied spaces: low-VOC, low-pollen species only; no strongly scented flowering plants [REF:air-quality-voc:04]
+- ○ Building commissioning hold point: occupancy of OFS-primary spaces to be deferred until post-installation VOC clearance test confirms TVOC ≤0.5 mg/m³ at 28 days (EN ISO 16000-9) [REF:air-quality-voc:05]
+
+**Design Stage:** Brief · Pre-Design (operational policy must be embedded at brief stage to appear in occupancy agreements)
+
+**Retrofit cost note:** Retrofit penalty: NEGLIGIBLE. F-06 is a policy, not a construction item. Cost is operational (cleaning product substitution, policy documentation). No capital expenditure required. See Part 11 §11.4.
+
+**Key citations:** [REF:air-quality-voc:04] Mast Cell Action (2023). MCAS environmental management guidance. mastcellaction.org. Tier 2, UK. [REF:air-quality-voc:05] EN ISO 16000-9:2006. Indoor air — Part 9: Determination of emission of volatile organic compounds from building products and furnishing. ISO. Tier 4.
+
+**Cross-reference:** F-02 (Olfactory control — fragrance-free zones); F-04 (Air quality — MERV 13+ filtration, TVOC specification); F-08 (Thermal transition vestibule — OFS co-trigger prevention); H-02 (Individual environmental control)
+
+**Evidence basis (OT):** EHP (alter strategy). F-06 alters the chemical environment of the built setting to remove MCAS/MCS triggers before they reach the occupant. No OT CPG addresses fragrance-free policy as a home modification domain; specifications derive from clinical trigger literature (Tier 2–4). ○ [THIN-BASE — operational policy domain; no OT practice guideline or RCT evidence; expert consensus + clinical rationale]
+
+**Tier disclosure:** [EXPERT CONSENSUS — no built-environment standard or OT CPG mandates fragrance-free policy for chemical sensitivity populations in any jurisdiction searched (March 2026). WELL v2 Air Quality feature is the closest voluntary framework but does not specify fragrance-free policy. This item is operational policy, not architectural specification. Evidence review recommended at next revision.]
 
 ### F-07 Thermal Zoning — Building-Wide Temperature Management
 
