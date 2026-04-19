@@ -63,7 +63,7 @@ Not yet run.
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| AQV-01 | Afrin, L.B. et al. | 2020 | MCAS triggers and built environment. Brain Behav Immun | 3 | INT | [GREY — DOI required before publication] |
+| AQV-01 | Afrin, L.B. et al. | 2021 | Diagnosis of mast cell activation syndrome: a global consensus-2. Diagnosis 8(2):137–152. DOI:10.1515/dx-2020-0005 | 3 | INT | MCAS diagnostic criteria + environmental triggers — consensus statement |
 | AQV-02 | Mast Cell Action | 2023 | MCAS environmental management guidance | 2 | UK | https://www.mastcellaction.org |
 | AQV-03 | CIBSE | 2015 | CIBSE Guide A: Environmental Design | 4 | UK | https://www.cibse.org/knowledge/cibse-guide/guide-a-environmental-design |
 | AQV-04 | BSI | 2022 | PAS 6463:2022 — Design for the Mind: neurodiversity and the built environment | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
