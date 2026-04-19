@@ -97,3 +97,27 @@ Sessions 1–3 complete:
 
 ## Sources (30 confirmed)
 Sessions 1–3. E1–E12 in original search log; E13–E30 in updated search log.
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CGS-01 | (E10 — source TBC) | n.d. | Co-1 lived experience housing — [GREY — full citation from search log required] | Co-1 | INT | Strong lived experience base |
+| CGS-02 | (E13 — source TBC) | n.d. | Co-1 housing — ZA middle-class exclusion [GREY — full citation from search log required] | Co-1 | ZA | — |
+| CGS-03 | (E14 — source TBC) | n.d. | ZA Co-1 housing [GREY — full citation from search log required] | Co-1 | ZA | — |
+| CGS-04 | (E17 — source TBC) | n.d. | LAC systematic review — disability-poverty housing correlation [GREY — full citation required] | 3 | LAC | — |
+| CGS-05 | (E29 — source TBC) | n.d. | KR — 14.6% semi-basement housing Co-1 [GREY — full citation required] | Co-1/1 | KR | — |
+| CGS-06 | WHO | 2010 | WHO CBR Guidelines — accessible housing in Global South contexts | 4 | INT | https://www.who.int/teams/noncommunicable-diseases/sensory-functions-disability-and-rehabilitation/cbr-guidelines |
+| CGS-07 | IDA | n.d. | IDA CRPD Art. 9 compilation — cross-jurisdictional treaty evidence | 4 | INT | https://www.internationaldisabilityalliance.org |
+| CGS-08 | UN-Habitat | 2016 | Housing Accessibility Handbook — slum upgrading and affordable housing contexts | 4 | INT | Only Global South accessible housing design guidance identified |
+
+## Metadata
+
+```yaml
+slug: co1-housing-research-global-south
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+note: 30 sources in search log (E1-E30); 8 key sources in CO-0006 table; full list in search log
+```
