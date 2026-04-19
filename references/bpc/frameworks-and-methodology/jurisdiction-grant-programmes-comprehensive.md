@@ -60,12 +60,24 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- CRA-HATC — Canada tax credit
-- VA-SAH-FY2026 — updated US Veterans Affairs
-- MHCLG-DFG — UK Disabled Facilities Grant
-- ANAH-MaPrimeAdapt — France (launched January 2024)
-- HDB-EASE2 — Singapore EASE 2.0
-- KfW-159 — Germany loan programme (455-B grant suspended)
-- Husbanken — Norway
-- Bostadsanpassning-2024 — Sweden
-- Riksdagen-Lov116 — Denmark §116
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| JGP-01 | CRA | 2024 | Home Accessibility Tax Credit (HATC) | 5 | CA | https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-31285-home-accessibility-expenses.html |
+| JGP-02 | US VA | 2026 | VA SAH/SHA grants FY2026 | 5 | US | https://www.va.gov/housing-assistance/disability-housing-grants/ |
+| JGP-03 | MHCLG | 2024 | Disabled Facilities Grant (DFG) | 5 | UK | https://www.gov.uk/disabled-facilities-grants |
+| JGP-04 | ANAH | 2024 | MaPrimeAdapt' — France (January 2024) | 5 | FR | https://www.anah.gouv.fr/proprietaires/aides-de-lanah/maprimeadapt |
+| JGP-05 | HDB Singapore | n.d. | EASE 2.0 — Enhancement for Active Seniors | 5 | SG | https://www.hdb.gov.sg/cs/infoweb/residential/living-in-an-hdb-flat/for-our-seniors/ease |
+| JGP-06 | KfW | 2024 | KfW 159 — barrier-reduction loan | 5 | DE | https://www.kfw.de |
+| JGP-07 | Husbanken | n.d. | Norwegian Housing Bank — tilpasning av bolig | 5 | NO | https://www.husbanken.no/tilskudd/tilpasning-av-bolig/ |
+| JGP-08 | Boverket | 2024 | Bostadsanpassningsbidrag — Swedish housing adaptation grant | 5 | SE | https://www.boverket.se/sv/bidrag--garantier/bidrag-till-privatpersoner/bostadsanpassningsbidrag/ |
+| JGP-09 | Riksdagen | n.d. | Lov om social service §116 — Denmark housing adaptation | 5 | DK | https://www.retsinformation.dk/eli/lta/2023/1187 |
+
+## Metadata
+
+```yaml
+slug: jurisdiction-grant-programmes-comprehensive
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
