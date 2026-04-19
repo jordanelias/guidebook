@@ -1,5 +1,9 @@
 ## Part 1: Foundations of Accessible Design
 
+<!-- evidence_density: Rich -->
+> **Evidence density: ■ Rich** — Four theoretical frameworks (ICF, PEO/PEOP, Capability Approach, Kawa) are well-established in peer-reviewed literature. CRPD framework alignment is grounded in treaty text and General Comments (GC2, GC5). Evidence hierarchy (§1.5) draws on 6 OT professional body CPGs (Co-2: AOTA, RCOT, CAOT, OT Australia, COTEC, WFOT). The three-tier design hierarchy is an original contribution of this guidebook, grounded in but not directly derived from any single source.
+
+
 ### §1.1 Definitions
 
 **Accessibility.** Accessibility is the condition in which any person — regardless of physical, sensory, cognitive, or psychological characteristics — can independently, safely, and with dignity reach, enter, use, and exit a built environment and all its facilities.
