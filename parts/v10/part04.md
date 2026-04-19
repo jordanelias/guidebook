@@ -37,6 +37,7 @@ All RT60 specifications are for the 500 Hz octave band in the occupied condition
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU -->
+<!-- grade_confidence: LOW — Standards convergence (PAS 6463, AS/NZS 2107, BB93); no RCT on adjacency planning. NC-25 target derives from Tier 5-6 standards. ≥10 jurisdictions confirm direction. -->
 
 <!-- CON-0039 [HIGH]: RT60 ≤0.3 s (mid-frequency 500–2000 Hz) to be elevated to Tier 0 universal specification for all speech-critical rooms. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Frame ≤0.6 s as outer failure boundary, not a compliant specification. Populations: ALL (DEAF speech intelligibility, NDV acoustic calm, DEM communication, NEU/PCS cognitive load). -->
 
@@ -67,6 +68,7 @@ cost and disruption.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU -->
+<!-- grade_confidence: MODERATE — Bettarello et al. 2021 (Applied Sciences, Tier 3) provides RT60+NRC data for ASD environments. Multiple standards confirm NRC ≥0.85 as procurement proxy. Note: STI ≥0.60 is performance criterion per A2 reconciliation. -->
 
 <!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (central sensitisation → auditory hyperalgesia). Mark ○ THIN-POPULATION-SPEC per D2-41. Evidence: pain-ofs-built-environment-design BPC FDR + acoustic sensitivity literature. -->
 
@@ -96,6 +98,7 @@ Post-installation RT60 measurement at 500 Hz required
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|DEAF -->
+<!-- grade_confidence: LOW — ISO 10140-2 and BS 8300 confirm STC ≥35–45 dB direction. No RCT on partition type effect for disability populations specifically. Tier 5-6 standards convergence. -->
 
 **Applicable Groups:** AUT, PCS, DEM, MH, SENS · OFS · PAIN · NDV
 <!-- CON-0075: STC≥35 door reduces exertion from noise processing -->
@@ -122,6 +125,7 @@ full frame and threshold sealing which may require opening up surrounding constr
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM -->
+<!-- grade_confidence: VERY LOW — Sensory gradient concept: PAS 6463 Tier 4 + Kaplan & Kaplan 1989 (environmental psychology, Tier 3 adjacent). No built-environment RCT. Expert consensus for spatial sequencing specification. -->
 
 **Applicable Groups:** ALL · OFS · PAIN
 <!-- CON-0076: graduated acoustic zones allow OFS/PAIN to self-select low-noise areas -->
@@ -161,6 +165,7 @@ Graduated acoustic zoning alters the context systematically across the building 
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — BS 8300, PAS 6463 recommend carpet in corridors. Bettarello 2021 confirms acoustic benefit (RT60). No RCT on carpet vs hard floor for disability outcomes. Tier 4-5. -->
 
 **Applicable Groups:** NDV, DEM, PAIN, MH, OFS
 
@@ -196,6 +201,7 @@ VIII §8.4.1.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — Bettarello 2021 — RT60 improvement from absorption panels measured. No RCT on NRC ≥0.70 threshold. Tier 3 (single study) + Tier 5 standards. -->
 
 **Applicable Groups:** NDV, DEM, PCS, MH · OFS · PAIN
 <!-- CON-0078: NRC≥0.70 panels reduce noise load for OFS/PAIN cognitive effort -->
@@ -230,6 +236,7 @@ standard fixing. See Part 12 §12.4.1.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — Flutter echo elimination: geometric principle (parallel hard surface avoidance). No disability-specific RCT. Acoustically sound; standards-based. Tier 5-6. -->
 
 **Applicable Groups:** NDV, PCS, DEM · OFS · PAIN
 <!-- CON-0079: flutter echo increases cognitive processing effort — OFS/PAIN energy cost -->
@@ -260,6 +267,7 @@ BSI.
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: MODERATE — NC-25 target: ANSI S12.60, DIN 18041, BS 8300 converge (≥6 jurisdictions). Plant room schematic-stage requirement is irreversible (NOT-RETROFITTABLE per Part 8). No RCT but strong standards consensus. -->
 
 **Applicable Groups:** AUT, PCS, DEM, MH, OFS · PAIN
 <!-- CON-0008: CON-0008: NC-25 background noise limit reduces exertion needed for communication — OFS/PAIN energy conservation -->
@@ -295,6 +303,7 @@ All mechanical plant: mounted on vibration isolation pads
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — UNVERIFIED: 0.1 m/s RMS threshold not located in ISO 2631-1. Floor vibration-wheelchair BPC confirms no disability-specific standard anywhere. Standards-based only; threshold source unknown. -->
 
 <!-- CON-0055 [MODERATE]: Cushioned/resilient flooring serves MOB (WBV reduction), PAIN (joint impact reduction per GAP-B4-09), NEU (fall impact mitigation). Currently MOB-only; PAIN and NEU clinical rationales documented in respective BPCs but not cross-referenced. -->
 **Applicable Groups:** PAIN (fibromyalgia), NEU, NDV · OFS
@@ -328,6 +337,7 @@ amplitude required to remain below the sensitisation threshold for users with es
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
+<!-- grade_confidence: HIGH — IEC 60118-4 field strength target universally adopted. Hearing loop efficacy: multiple Tier 1-2 RCT/cohort studies for DEAF populations. ≥10 jurisdictions mandate. Counter loop geometry: BS 8300 + BCA SG. HIGH confidence. -->
 
 <!-- CON-0052 [HIGH]: Add Auracast DAR provision cross-reference to A-10 and A-11. IEC 60118-17 (Auracast) expected late 2027; dual provision (loop + Auracast-ready conduit) is best practice. See A-12 (Auracast Infrastructure Readiness). -->
 
@@ -385,6 +395,7 @@ Post-installation: RT60 measurement at commissioning
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
+<!-- grade_confidence: HIGH — As A-10: IEC 60118-4 universally adopted. Room loop geometry: BS 8300, EN 17210, multiple jurisdictions. Tier 1-2 evidence on hearing loop benefit. HIGH confidence. -->
 
 **Applicable Groups:** DEAF, DBL
 
@@ -424,6 +435,7 @@ Required: all assembly spaces ≥25 capacity; all consultation/interview rooms
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF -->
+<!-- grade_confidence: MODERATE — Auracast readiness: technology is Bluetooth LE Audio standard (confirmed 2023). No built-environment RCT yet — standard very new. Tier 2 (BT SIG). MODERATE given forward-compatibility rationale. -->
 
 **Applicable Groups:** DEAF, DBL · OFS
 <!-- CON-0081: personal receiver system reduces OFS exertion from following speech in noisy environments -->
@@ -460,6 +472,7 @@ International hearing access committee. IFHOH.
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEAF|NDV -->
+<!-- grade_confidence: LOW — No sound masking in NEU/NDV spaces: PAS 6463 guidance. Physiological rationale (hyperacusis) is Tier 1 mechanism (Garfinkel 2016 interoception). No built-env RCT. Tier 4. -->
 
 <!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (same mechanism as A-02). ○ THIN-POPULATION-SPEC. -->
 <!-- CON-0039 [HIGH]: Strict NDV/AUT acoustic target (RT60 ≤0.3 s) is a sub-target of the general DEAF/DEM target. No sound masking in any space where NDV is primary — already specified but ensure cross-reference to NDV/DEAF conflict resolution in Part 5 §5.2. -->
@@ -491,6 +504,7 @@ Open offices: acoustic zoning (A-04), focus rooms (D-05)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NDV|MH -->
+<!-- grade_confidence: MODERATE — STC ≥50 at clinical partitions: speech privacy standard well-established (ANSI, BS 8300, ISO). Mental health built environment BPC (Faerden 2022 PMID:36567605 — single rooms, patient control). ≥6 jurisdictions. -->
 
 **Applicable Groups:** AUT, PCS, DEM, MH · OFS · NDV
 <!-- D2-41: D2-41: acoustic separation reduces cognitive load; OFS energy conservation -->
@@ -527,6 +541,7 @@ Target: STC ≥50 laboratory; Field STC ≥45
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:VIS|DBL -->
+<!-- grade_confidence: LOW — Acoustic differentiation for VIS/DBL wayfinding: Tier 4 (ISO 23599 adjacent). No disability-specific RCT on acoustic landmark design. Expert consensus + standards. -->
 
 **Applicable Groups:** VIS (blind, severely visually impaired) · NEU · OFS
 <!-- D2-41: D2-41: acoustic landmarks reduce navigation effort for OFS/NEU -->
@@ -559,6 +574,7 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS|NDV/MH -->
+<!-- grade_confidence: LOW — Sensory room ≥8m²: PAS 6463 §14.1 (Tier 4). No RCT on room size for NDV outcomes. Wilson 2023 PMID (Co-1) documents failure modes. Caldwell 2025 qualitative. No validated threshold. -->
 
 <!-- CON-0046 [HIGH]: CS-17 (NHS CAMHS, NDTi 2022) documents NDV/MH ward environments actively harmful to NDV/AUT co-occupants. Sensory rooms in MH settings must be distinct from MH de-escalation rooms — different clinical purpose, different specification. -->
 <!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Tier 0 universal — one per occupied floor plate. -->
@@ -1560,6 +1576,7 @@ All entry and circulation provisions address the complete journey from arrival a
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: HIGH — Lift accessibility: EN 81-70:2021 + multiple Tier 6 standards (ADA, BCA, AS 1428, BS 8300, DIN 18040, TEK17). ≥12 jurisdictions mandate. 1400×1100mm car dimension confirmed by wheelchair anthropometry (Steinfeld 2010, ambiguous PMID but Tier 1 study). HIGH — universally mandated and supported. -->
 
 **Applicable Groups:** MOB, VIS, DEM · OFS · PAIN
 <!-- CON-0083: lift eliminates stair exertion — primary OFS/PAIN provision -->
@@ -1596,6 +1613,7 @@ The 5--15 second adjustable door open time addresses the temporal performance ra
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: MODERATE — Platform lift: ISO 9386-1:2000 + BS 8300 + multiple standards. Acceptable interim where E-01 unachievable. No RCT on platform vs full lift for disability outcomes. Tier 5-6 standards convergence. -->
 
 **Applicable Groups:** MOB · OFS · PAIN
 <!-- CON-0012: CON-0012: platform lift reduces exertion on stairs — OFS/PAIN primary benefit alongside MOB -->
@@ -1630,6 +1648,7 @@ constitutes an effective compensation,
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB|OFS|NEU -->
+<!-- grade_confidence: MODERATE — Ramp ≤1:20 (5%): DIN 18040 (6% = 1:16.7), TEK17, SIA 500 (max 6%), BS 8300. Koontz et al. 2010 PMID:20434614 (Tier 1) — upper extremity load vs ramp gradient. ≥8 jurisdictions. MODERATE — Tier 1 biomechanical study + standards convergence. -->
 
 **Applicable Groups:** MOB, PAIN, OFS
 
@@ -1661,6 +1680,7 @@ Koontz et al. (2012) demonstrated that reducing gradient from 1:12 (code minimum
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — Accessible parking 3600mm width: BS 8300, ADA, AS 1428, BCA SG. No RCT on parking bay width for disability outcomes. Tier 5-6 standards only. -->
 
 **Applicable Groups:** MOB, VIS, PAIN, OFS · DEM
 <!-- CON-0084: covered parking close to entry reduces wayfinding load for DEM -->
@@ -1703,6 +1723,7 @@ point of building approach; inadequate parking or excessive distance forces exer
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:OFS -->
+<!-- grade_confidence: LOW — Weather protection 3000×2000mm canopy: BS 8300 + expert consensus. No RCT. OFS rationale (thermal triggers) is Tier 2-3 clinical but no built-env study. -->
 
 **Applicable Groups:** MOB, PAIN, OFS, VIS · DEM · DBL
 <!-- CON-0085: covered canopy provides wayfinding landmark and sensory orientation point -->
@@ -1731,6 +1752,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: HIGH — Zero step at accessible entrances: ADA, DIN 18040, TEK17, BS 8300, NCC 2022, BCA SG, NBR 9050, NZS 4121, AS 1428 — universally mandated (≥12 jurisdictions). Al Lawati 2017 (Tier 3, n=214): 2cm defeats 45.8% WC users on first attempt. Keall 2015 PMID:25255696 (Tier 1 RCT Lancet): home modifications reduce falls. HIGH — cross-jurisdictional mandate + Tier 1 RCT evidence. -->
 
 <!-- CON-0056 [HIGH]: Zero-threshold (13-15 mm max) specified for MOB caster wheels also serves OFS (step-elimination prevents PEM) and PAIN (reduces joint loading). Add OFS, PAIN to Applicable Groups. -->
 **Applicable Groups:** MOB, VIS, DEM, OFS · DEAF · DBL · NDV/MH · PAIN
@@ -1769,6 +1791,7 @@ user whose mobility impairment or energy limitation makes threshold negotiation 
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: MODERATE — PTV ≥36 wet: HSE guidance + BS 8300. Slip resistance science is Tier 3-4 (HSL studies). No RCT on PTV threshold for disability-specific fall outcomes. ≥8 jurisdictions reference anti-slip requirements. -->
 
 **Applicable Groups:** MOB, DEM, VIS (fall prevention) · PAIN · OFS · NEU
 <!-- CON-0086: fall prevention applies equally to NEU/DEM alongside MOB/PAIN -->
@@ -1810,6 +1833,7 @@ exceeds clinically acceptable thresholds for populations with reduced balance an
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: MODERATE — Corridor ≥1200mm: BS 8300, ADA, DIN 18040, TEK17, NCC 2022, NBR 9050, AS 1428. Koontz 2010 PMID:20434614 (Tier 1): corridor width affects propulsion biomechanics. ≥10 jurisdictions confirm 1200mm minimum. MODERATE — Tier 1 biomechanical + strong standards convergence. -->
 
 <!-- CON-0007 [HIGH]: Create Tier 0 companion-width specification. Primary routes ≥1500 mm clear (best practice); ≥2440 mm where DEAF is primary population (DeafSpace signed-conversation standard, Co-1 ASL-derived). Resolves siloed MOB/DEAF specifications into unified tier-ladder: 1200 mm minimum / 1500 mm best practice / 2440 mm DEAF-primary. --> (≥1200 mm Minimum on All Primary Routes)
 
@@ -1844,6 +1868,7 @@ efficiency, directly restricting the performance range of manual wheelchair user
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:VIS|DBL -->
+<!-- grade_confidence: MODERATE — ISO 23599:2019 TWSI: derived from JIS T 9251 (Japan — extensive field deployment since 1967). Multiple jurisdictions adopt. No RCT on TWSI efficacy vs no TWSI for VIS outcomes (would be unethical). Standards + established practice evidence. -->
 
 **Applicable Groups:** VIS, DBL, NEU, DEM, PAIN
 
@@ -1902,6 +1927,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|MOB|PAIN -->
+<!-- grade_confidence: LOW — Rest seating interval 25m: Roxburgh et al. 2024 (BJ Occup Ther, Tier 1) — OT home modification for ME/CFS. OFS clinical pacing guidance (CDC, IOM/NAM Tier 1 clinical). BS 8300: 100m general. No built-env RCT on seating interval vs OFS outcomes. LOW — clinical rationale strong but no architectural study. -->
 
 <!-- DUPLICATE RESOLVED 2026-04-19 (A4). This entry superseded by the revised E-10 specification below (L3205+). Canonical specification: see E-10 at end of Category E section. The 20 m interval in this entry has been revised to 25 m per Tier 1 evidence (Roxburgh et al. 2024); alcove geometry and OFS seat height added. Do not use this entry for specification writing. -->
 
@@ -1910,6 +1936,7 @@ Lighting: ≥100 lux at entry surface level; night-activated
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB|OFS -->
+<!-- grade_confidence: MODERATE — Automatic sliding doors: BS 8300, DIN 18040, ADA, TEK17, multiple jurisdictions. No RCT but engineering standard + disability population surveys confirm door force as primary barrier. ≥8 jurisdictions. -->
 
 **Applicable Groups:** MOB, UPL, OFS · PAIN
 <!-- D2-41: D2-41: zero door force eliminates push/pull effort — OFS PEM prevention -->
@@ -1946,6 +1973,7 @@ Institution. (2018). BS 8300:2018. BSI.
 <!-- design_stage_lock: B -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: MODERATE — Changing Places: Changing Places Consortium UK evidence (Tier 2 Co-1). MHCLG mandate in England (Tier 6). BCA SG 2025 adopts. No RCT. ≥5 jurisdictions now mandate. MODERATE — strong advocacy evidence + increasing mandates. -->
 
 **Applicable Groups:** MOB, DEM/NDV[IntD proxy], NEU
 **Typology:** Non-Residential (public, institutional, transport hubs, entertainment venues, retail ≥1000 m²); Residential (supported living, residential care)
@@ -2412,6 +2440,7 @@ Review: policy reviewed annually and updated to reflect changes in cleaning prod
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:NDV/MH|DEM -->
+<!-- grade_confidence: VERY LOW — Defensible seating: psychiatric design literature (DiMHN, Tier Co-1; Faerden 2022 PMID:36567605 Tier 3 — single rooms, not specifically seating orientation). Environmental psychology theory (Tier 3). No RCT on seating orientation for outcomes. -->
 
 **Applicable Groups:** MH (PTSD, trauma, anxiety), AUT, DEAF · OFS · PAIN · DEM · NEU
 <!-- CON-0087: back-to-wall seating reduces disorientation and threat response for DEM/NEU -->
@@ -2449,6 +2478,7 @@ Partitions); C-01 (Palette)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|MOB -->
+<!-- grade_confidence: LOW — Three seating heights: BS 8300 + RCOT clinical guidance. No RCT on multi-height seating provision vs single-height for disability outcomes. Standards + OT CPG Tier Co-2. -->
 <!-- CON-0100 [HIGH]: Seating height 450-500 mm reduces hip extensor moment 40% vs 380 mm (Rodosky et al. 1989 Tier 3). Multi-population specification: MOB (sit-to-stand), PAIN (joint moment), OFS (orthostatic transition), DEM (postural stability), NEU (neuromuscular weakness). -->
 <!-- CON-0003/A-17 absorbed: G-02 now includes upholstered seating throughout occupied spaces as an acoustic absorption and PAIN/OFS comfort provision. -->
 
@@ -2484,6 +2514,7 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 <!-- design_stage_lock: CD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: HIGH — Grab bars bilateral, vertical primary: Levine 2024 PMID:38968649 (J Biomechanics Tier 1) — grasp location varies with height r=0.67; KITE Research 2023-25 (Tier 3) — 1.3 kN load. Kennedy 2015 (Tier 3) — vertical bars = smallest COP deviation. Clemson 2023 Cochrane PMID:36893804 (Tier 1 SR 22 RCTs) — OT home hazard reduction 38% fall reduction. ≥8 jurisdictions mandate grab bars (though ADA specifies horizontal — evidence supports vertical). HIGH on provision; MODERATE on exact configuration (ADA divergence noted). -->
 
 <!-- CON-0003 [HIGH]: Add PAIN, OFS, DEM, NEU as co-populations. No specification change required — range (32–45 mm, load ≥1.3 kN) already accommodates all. Add population-specific rationale: PAIN (cold-metal allodynia → insulated coating note); DEM (consistent bilateral positioning for spatial habituation); NEU (vertical orientation supports hemiplegic transfer). --> (Clinical Positioning and Bilateral)
 
@@ -2526,6 +2557,7 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:MOB -->
+<!-- grade_confidence: MODERATE — Wet room zero-threshold shower: BS 8300, DIN 18040-2, AS 1428, BCA SG, TEK17. ≥8 jurisdictions specify level-access shower. No RCT on wet room vs step-in shower for disability outcomes. Strong standards convergence. -->
 
 **Applicable Groups:** MOB, DEM, PAIN, UPL · OFS · NEU
 <!-- CON-0003: CON-0003: PAIN/OFS thermostatic shower mandatory; DEM/NEU anti-scald dual mechanism -->
@@ -2557,6 +2589,7 @@ Slip resistance: PTV ≥36 wet throughout shower area
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB|PAIN -->
+<!-- grade_confidence: MODERATE — Adjustable-height desks 650-870mm: NIOSH ergonomics evidence (Tier 3) + BS 8300. Multiple jurisdictions reference adjustable heights. OT ergonomics evidence (Tier Co-2). MODERATE. -->
 
 **Applicable Groups:** MOB, PAIN, UPL · OFS
 <!-- CON-0044: CON-0044: adjustable desk height eliminates sustained standing — OFS PEM prevention; PAIN energy con -->
@@ -2589,6 +2622,7 @@ Reception counters: accessible height section per G-06
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:MOB|OFS -->
+<!-- grade_confidence: MODERATE — Reception counter accessible height 760-860mm: BS 8300, ADA, BCA SG, DIN 18040, NCC 2022. ≥8 jurisdictions specify accessible counter height. No RCT but standards convergence strong. -->
 
 **Applicable Groups:** MOB, UPL, VIS · OFS · PAIN · DEM
 <!-- CON-0064: CON-0064: low counter facilitates DEM communication and reduces disorientation at point of first contact -->
@@ -2624,6 +2658,7 @@ LRV ≥30 at counter edge vs floor
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:MOB|OFS|PAIN -->
+<!-- grade_confidence: LOW — Waiting area seating configuration: BS 8300 guidance + RCOT CPG. No RCT on waiting seating configuration for disability outcomes. Tier 5-6 standards. -->
 
 **Applicable Groups:** MOB, DEM, OFS · PAIN
 <!-- D2-41: D2-41: reclined seating option in waiting areas; queue-bypass for OFS unable to stand -->
@@ -3244,6 +3279,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:MOB|PAIN|OFS -->
+<!-- grade_confidence: LOW — Wardrobe and storage reach configuration: NIOSH reach range (Tier 4) + OT energy conservation CPG (Tier Co-2). No RCT on reach zone specification for disability outcomes. -->
 
 **Applicable Groups:** MOB, MOB/UPL, NEU, OFS, PAIN
 
@@ -3305,6 +3341,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|NEU|DEM -->
+<!-- grade_confidence: LOW — Bedroom emergency call + overnight lighting: BS 8300 + DEN provisions. Tier 5-6. No RCT on emergency call provision for OFS/NEU overnight outcomes. -->
 
 **Applicable Groups:** MOB, DEM, NEU, OFS, PAIN, NDV/MH, MOB/UPL
 
@@ -3376,6 +3413,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: not-triggered -->
+<!-- grade_confidence: LOW — Evacuation lift + refuge: BS EN 81-70, BS 9999. No RCT on evacuation outcomes for disabled users. Tier 5-6 fire engineering standards. Fire safety context — precautionary principle applies. -->
 
 **Applicable Groups:** MOB, MOB/UPL, OFS
 
@@ -3410,6 +3448,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DEM|NDV -->
+<!-- grade_confidence: LOW — Entrance cognitive legibility: cognitive wayfinding BPC (Tier 3-4). No RCT. Expert consensus for DEM/NDV entrance design. -->
 
 **Applicable Groups:** DEM, NEU, NDV, VIS, DBL, NDV/MH
 
@@ -3445,6 +3484,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:OFS|MOB|PAIN -->
+<!-- grade_confidence: LOW — Rest seating interval 25m: Roxburgh et al. 2024 (BJ Occup Ther, Tier 1) — OT home modification for ME/CFS. OFS clinical pacing guidance (CDC, IOM/NAM Tier 1 clinical). BS 8300: 100m general. No built-env RCT on seating interval vs OFS outcomes. LOW — clinical rationale strong but no architectural study. -->
 
 **Applicable Groups:** OFS, MOB/AMB, PAIN, DEM, NEU, NDV
 
