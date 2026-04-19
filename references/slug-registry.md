@@ -78,6 +78,8 @@
 
 | `residential-accessible-home-case-studies` | `frameworks-and-methodology` | `references/search-log/frameworks-and-methodology/residential-accessible-home-case-studies.md` | `references/bpc/frameworks-and-methodology/residential-accessible-home-case-studies.md` | ACTIVE |
 
+| `school-environment-autism` | `sensory-environment` | `references/search-log/sensory-environment/school-environment-autism.md` | `references/bpc/sensory-environment/school-environment-autism.md` | STUB — B2 SR4 2026-04-19 |
+
 ## Topic Directory Index
 
 | Directory | Slug count |
