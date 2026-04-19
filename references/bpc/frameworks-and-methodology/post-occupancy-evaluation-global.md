@@ -22,3 +22,18 @@
 
 ## Sources
 *None yet.*
+
+## Key sources
+
+*Not yet run — see GAP-LRP-12 (P3). Phase 4 research pending.*
+
+## Metadata
+
+```yaml
+slug: post-occupancy-evaluation-global
+population: ALL
+status: STUB-NOT-RUN
+last_updated: 2026-04-19
+co0006_migration: true
+gap: GAP-LRP-12 P3
+```
