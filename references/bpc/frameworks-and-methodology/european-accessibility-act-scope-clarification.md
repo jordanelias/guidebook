@@ -55,9 +55,21 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Directive-EU-2019-882 — European Accessibility Act
-- EN17210:2021 — functional requirements for accessible built environment
-- Rijksoverheid-Bbl2024 — Netherlands Besluit bouwwerken leefomgeving
-- UNE41500:2020 — Spain DALCO accessibility framework
-- NZS4121:2001-under-revision — New Zealand accessibility standard
-- accessible-eu-centre-ec — EU accessibility centre
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| EAA-01 | EU | 2019 | Directive (EU) 2019/882 — European Accessibility Act | 6 | EU | https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32019L0882 |
+| EAA-02 | CEN | 2021 | EN 17210:2021 — Accessibility and usability of the built environment: functional requirements | 6 | EU | — |
+| EAA-03 | Rijksoverheid | 2024 | Besluit bouwwerken leefomgeving (Bbl) — Netherlands accessibility requirements | 6 | NL | https://iplo.nl/thema/toegankelijkheid/ |
+| EAA-04 | AENOR | 2020 | UNE 41500:2020 — Spain DALCO accessibility framework | 5 | ES | https://www.une.org |
+| EAA-05 | Standards NZ | 2001 | NZS 4121:2001 — Design for access and mobility (under revision) | 6 | NZ | — |
+| EAA-06 | European Commission | n.d. | AccessibleEU Centre — EU accessibility resources | 5 | EU | https://accessible-eu-centre.ec.europa.eu |
+
+## Metadata
+
+```yaml
+slug: european-accessibility-act-scope-clarification
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
