@@ -89,7 +89,7 @@ Not yet run.
 | ULB-02 | Togni, G. et al. | 2022 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
 | ULB-03 | Al Lawati, M. et al. | 2017 | 2cm threshold defeats 45.8% WC users. Disabil Rehabil Assist Technol | 3 | INT | See SRB-06 |
 | ULB-04 | Sanford, J. & Bosch, P. | 2013 | Toilet centreline 30 in. for stand-pivot transfers (n=20). [GREY — journal/DOI required] | 3 | US | 90% use stand-pivot, not lateral |
-| ULB-05 | Kennedy, R. et al. | 2015 | Two vertical grab bars = smallest COP deviation; horizontal least preferred. [GREY — DOI required] | 3 | INT | — |
+| ULB-05 | Kennedy, M.J. et al. | 2015 | Toilet grab-bar preference and COP deviation during toilet transfers. Assist Technol 27(2):78–87. PMID:26132352. DOI:10.1080/10400435.2014.976799 | 3 | INT | 2VB most preferred + smallest COP deviation |
 | ULB-06 | Levine, D. et al. | 2023 | Grab bar placement varies with body height (r=0.67). Human Factors. DOI:10.1177/00187208211059860 | 3 | INT | See per project-standards Levine 2023 |
 | ULB-07 | Levine, D. et al. | 2025 | Grab bar adjustability evidence. JMIR. DOI:10.2196/69442 | 3 | INT | See per project-standards Levine 2025 |
 | ULB-08 | Kim, W. et al. | 2014 | Ramp gradient >6% increases propulsion effort | 3 | INT | See SRB-04 |
