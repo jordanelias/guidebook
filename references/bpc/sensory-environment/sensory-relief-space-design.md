@@ -44,17 +44,23 @@
 
 **Guidebook items affected:** A-16 (primary); H-02 (cross-reference elevation); F-01, F-03 (confirmed); any item referencing quiet rooms, retreat spaces, or sensory environments.
 
-**Key sources:**
-- Unwin, Powell & Jones (2022). Use of Multi-Sensory Environments with autistic children: user control as primary factor. *Autism*, 26(6). PMC9340127. (Tier 3 — n=41, Cardiff)
-- Unwin, Powell & Jones (2023). Follow-up study — sensory room control findings replicated. *Autism*. (Tier 3)
-- Rashid et al. (2025). Taxonomy for sensory-informed architectural design qualities in autism. *Building Research & Information*. DOI:10.1080/09613218.2025.2459737. (Tier 3)
-- Architecture & Access / Amaze / Deakin University (2025). Reset Rooms / Sensory Rooms / Chill-Out Zones — Design Guide. amaze.org.au. February 2025. (Tier 3/5 — OT co-produced; AU)
-- NCSE Ireland (2025). Sensory Spaces in Schools. ncse.ie. (Tier 3 — OT authored; IE)
-- Petaccia et al. (2021). Built Environment Design and People with ASD: Scoping Review. *IJERPH* 18(6):3203. MDPI. (Tier 3)
-- Black, Sharma & Roberts (2022). Scoping review of environmental design for ASD. *Autism*. SAGE. (Tier 3)
-- PAS 6463:2022 (BSI/UK) — sensory zoning; quiet space; transition zone (Tier 5)
-- NCC 2022 — Livable Housing / accessible public building provisions (AU) (Tier 6)
-- RCOT / NAS — sensory environment guidance (Tier 2/5)
+**Key sources (see ## Key sources table below)**
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| SRS-01 | Unwin, K.L., Powell, G. & Jones, C.R.G. | 2022 | Use of Multi-Sensory Environments with autistic children. Autism 26(6). PMC9340127. DOI:10.1177/13623613211050176 | 3 | UK | User control = primary variable; n=41 Cardiff |
+| SRS-02 | Unwin, K.L., Powell, G. & Jones, C.R.G. | 2023 | Follow-up study — sensory room control findings replicated. Autism | 3 | UK | Replication of SRS-01 |
+| SRS-03 | Rashid, M. et al. | 2025 | Taxonomy for sensory-informed architectural design in autism. Build Res Inf. DOI:10.1080/09613218.2025.2459737 | 3 | INT | 76 sources; spatial config underemphasised in frameworks |
+| SRS-04 | Architecture & Access / Amaze / Deakin | 2025 | Reset Rooms / Sensory Rooms / Chill-Out Zones Design Guide | 3/5 | AU | https://amaze.org.au — OT co-produced; February 2025 |
+| SRS-05 | NCSE Ireland | 2025 | Sensory Spaces in Schools | 3 | IE | https://ncse.ie — OT authored |
+| SRS-06 | Petaccia, G. et al. | 2021 | Built Environment Design and People with ASD: Scoping Review. IJERPH 18(6):3203. DOI:10.3390/ijerph18063203 | 3 | INT | — |
+| SRS-07 | Black, M.H., Sharma, A. & Roberts, J. | 2022 | Scoping review of environmental design for ASD. Autism. SAGE. DOI:10.1177/13623613221102753 | 3 | INT | — |
+| SRS-08 | BSI | 2022 | PAS 6463:2022 — Design for the Mind: sensory zoning; quiet space; transition zone | 5 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| SRS-09 | ABCB | 2022 | NCC 2022 — Livable Housing / accessible public building provisions | 6 | AU | https://www.abcb.gov.au/ncc |
+| SRS-10 | RCOT / NAS | n.d. | Sensory environment guidance | 2/5 | UK | https://www.rcot.co.uk |
+| SRS-11 | Vetter, M.J. et al. | 2025 | Paediatric outpatient waiting room design and autistic children: pilot study. HERD. DOI:10.1177/19375867251353735 | 1 | US | Pilot n=3 families; emerging evidence only |
 
 **Thin flags:** ZH, JA, FR, DE, FI, SV, NO, DA (practice consistent with EN; no independent mandatory standards for public buildings)
 **No-data flags:** none
@@ -157,3 +163,12 @@ Not yet run.
 - A-16 proximity to accessible toilet: **NEW SPECIFICATION GAP** identified by Watchorn 2025
 - Spatial configuration vs interior elements: **GAP** confirmed by Rashid 2025 taxonomy analysis
 - Adult vs paediatric evidence: **GAP** — Leonardi 2025 finds no improvement in adult populations
+
+## Metadata
+
+```yaml
+slug: sensory-relief-space-design
+population: NDV, OFS, PAIN, NDV/MH
+last_updated: 2026-04-19
+co0006_migration: true
+```
