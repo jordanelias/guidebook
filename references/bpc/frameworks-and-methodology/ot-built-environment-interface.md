@@ -52,8 +52,22 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- REF-01 Young2019 — scoping review OT-design collaboration
-- REF-02 Wellecke2022 — Australian OT survey (n=144)
-- REF-03 Russell2018 — 4-phase 9-subphase OT-design protocol
-- REF-04/05/06 Zallio-Clarkson 2021/2022/2023 — inclusive design adoption
-- REF-11 Trouvé2016 — French OT practice
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| OTI-01 | Young, R. et al. | 2019 | OT-design collaboration: scoping review. [GREY — DOI required] | 3 | INT | — |
+| OTI-02 | Wellecke, A. et al. | 2022 | Australian OT survey on home modification (n=144). [GREY — DOI required] | 1 | AU | Top 3 OT priorities confirmed |
+| OTI-03 | Russell, M. et al. | 2018 | 4-phase 9-subphase OT-design protocol. [GREY — DOI required] | 3 | AU | Only formalised OT-design process |
+| OTI-04 | Zallio, M. & Clarkson, P.J. | 2021 | Inclusive design failures. Build Environ. DOI:10.1016/j.buildenv.2021.108352 | 3 | UK | — |
+| OTI-05 | Zallio, M. & Clarkson, P.J. | 2022 | [GREY — DOI required] | 3 | UK | — |
+| OTI-06 | Zallio, M. & Clarkson, P.J. | 2023 | ~10% clients request inclusive design beyond code. [GREY — DOI required] | 3 | INT | — |
+| OTI-07 | Trouvé, H. et al. | 2016 | French OT practice — home modification. [GREY — DOI required] | 3 | FR | — |
+
+## Metadata
+
+```yaml
+slug: ot-built-environment-interface
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
