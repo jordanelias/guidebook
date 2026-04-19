@@ -1,5 +1,9 @@
 ## Part 12: Case Studies — Documented Accessible Built Environments
 
+<!-- evidence_density: Moderate (existence) / Thin (financial) -->
+> **Evidence density: ▓ Moderate (existence) / ░ Thin (financial data)** — 14 case studies documented across residential, healthcare, education, and public building typologies. 5 cases have VERIFIED financial data; 4 PROVISIONAL (press release/website sources); 5 GREY (internal documents or unverifiable). Financial data quality is the weakest dimension. Outcome data quality varies: De Hogeweyk (DEM) and Gallaudet DeafSpace (DEAF) have strongest POE documentation; MOB, OFS, PAIN cases have qualitative outcomes only.
+
+
 <!-- v10.0 scaffold — CO-0004: was Part 13. Section numbering §12.x confirmed correct.
      PENDING:
      - §12.3 subsection ordering fix (GAP-CR-10, D3-19)
