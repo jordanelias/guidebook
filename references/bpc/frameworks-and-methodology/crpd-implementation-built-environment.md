@@ -92,3 +92,24 @@ Treaty-body sources only; no Co-1 in this slug. Co-1 is in co1-housing-research-
 
 ## Key sources (12 confirmed — C10/C11/C12 added Phase 2 2026-04-07)
 See search log.
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CRB-01 | UN | 2006 | Convention on the Rights of Persons with Disabilities (CRPD) — Art. 9, Art. 19 | 4 | INT | https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-rights-persons-disabilities |
+| CRB-02 | CRPD Committee | 2014 | General Comment No. 2 — Art. 9 Accessibility | 4 | INT | https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no2-article-9-accessibility-2014 |
+| CRB-03 | CRPD Committee | 2017 | General Comment No. 5 — Art. 19 Independent Living | 4 | INT | https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-5-2017 |
+| CRB-04 | IDA | n.d. | IDA CRPD Art. 9 compilation — 100+ countries | 4 | INT | https://www.internationaldisabilityalliance.org |
+| CRB-05–12 | (C01–C12 — full citations in search log) | n.d. | CRPD implementation sources C1–C12 [GREY — full citations in search log; DOI/URL required before publication] | 4–6 | INT | See search log for full list |
+
+## Metadata
+
+```yaml
+slug: crpd-implementation-built-environment
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+note: 12 confirmed sources in search log; 5 key REF-IDs in table; full list in search log
+```
