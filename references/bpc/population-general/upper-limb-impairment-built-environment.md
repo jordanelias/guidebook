@@ -42,7 +42,7 @@
 
 **Guidebook items affected:** All Part 7 MOB/UPL items; toilet compartment specifications; grab bar specifications; threshold specifications; ramp gradient items; turning space items; hardware specifications.
 
-**Key sources:** DSouza2011 · Togni2022 · AlLawati2017 · Sanford2013 · Kennedy2015 · Levine2023 · Levine2025 · Kim2014 · Zanotto2023 · Cockayne2021 · Lee2017
+**Key sources (see ## Key sources table below)**
 **Divergent findings:** OT home assessment effectiveness: Cochrane (RR 0.88 high-risk) vs. OTIS RCT (no benefit in general at-risk elderly, IRR 1.17, p=0.07) — targeting criteria unclear; high-risk subgroup qualification required
 
 ---
@@ -82,4 +82,26 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| ULB-01 | D'Souza, C. et al. | 2011 | Wheeled mobility device dimensions. IDeA Center / Steinfeld. Assist Technol. DOI:10.1080/10400430903496580 | 1 | US | 2108mm needed for 95th-percentile power chairs |
+| ULB-02 | Togni, G. et al. | 2022 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| ULB-03 | Al Lawati, M. et al. | 2017 | 2cm threshold defeats 45.8% WC users. Disabil Rehabil Assist Technol | 3 | INT | See SRB-06 |
+| ULB-04 | Sanford, J. & Bosch, P. | 2013 | Toilet centreline 30 in. for stand-pivot transfers (n=20). [GREY — journal/DOI required] | 3 | US | 90% use stand-pivot, not lateral |
+| ULB-05 | Kennedy, R. et al. | 2015 | Two vertical grab bars = smallest COP deviation; horizontal least preferred. [GREY — DOI required] | 3 | INT | — |
+| ULB-06 | Levine, D. et al. | 2023 | Grab bar placement varies with body height (r=0.67). Human Factors. DOI:10.1177/00187208211059860 | 3 | INT | See per project-standards Levine 2023 |
+| ULB-07 | Levine, D. et al. | 2025 | Grab bar adjustability evidence. JMIR. DOI:10.2196/69442 | 3 | INT | See per project-standards Levine 2025 |
+| ULB-08 | Kim, W. et al. | 2014 | Ramp gradient >6% increases propulsion effort | 3 | INT | See SRB-04 |
+| ULB-09 | Zanotto, D. et al. | 2023 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| ULB-10 | Cockayne, S. et al. | 2021 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| ULB-11 | Lee, J. et al. | 2017 | Bilateral fold-down grab bars at 813mm height outperform ADA configuration. [GREY — DOI required] | 3 | INT | 356mm from toilet CL |
+
+## Metadata
+
+```yaml
+slug: upper-limb-impairment-built-environment
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+```
