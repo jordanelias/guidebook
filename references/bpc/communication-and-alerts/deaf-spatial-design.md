@@ -73,15 +73,28 @@ Primary internal corridors serving Deaf users are to achieve a clear width of no
 | DSDG Gallaudet (2010) | Forward | DeafScape Vaughn (2018); Mithun WSD project (2025) |
 
 ### Key sources
-1. Bauman, H-D. (2010). DeafSpace Design Guidelines (working draft, 85pp). Gallaudet University. [Unpublished; accessible via RIT InfoGuides with permission] — Co-1 / Tier 2
-2. Gallaudet University. (2010). DeafSpace Design Guidelines Volume 1. Gallaudet University Press. — Co-1 / Tier 2. URL: https://gallaudet.edu/campus-design-facilities/campus-design-and-planning/deafspace/
-3. Edwards, C. & Harold, G. (2014). DeafSpace and the principles of universal design. Disability and Rehabilitation, 36(16), 1350–1359. DOI: 10.3109/09638288.2014.913710 — Tier 3
-4. Cloete, M. & Rout, M. (2025). 'DeafSpace' in the built school environment: A scoping review. Acta Structilia, 32(2), 238–263. URL: https://www.ajol.info/index.php/actas/article/view/312270 — Tier 3
-5. Vaughn, A. (DeafScape). (2018). DeafScape: Applying DeafSpace to Landscape. GroundUp Journal / Design With Disabled People Now. — Co-1 / Tier 2. URL: https://www.designwithdisabledpeoplenow.com/deafscape
-6. Bauman, H-D. & Murray, J. (2014). Deaf Gain: Raising the Stakes for Human Diversity. University of Minnesota Press. — Tier 2
-7. RIT InfoGuides. (n.d.). DeafSpace: Principles and Elements. Rochester Institute of Technology. URL: https://infoguides.rit.edu/deafspace/principles — Tier 2
-8. Kusters, A. (2015). Deaf Space in Adamorobe. Gallaudet University Press. — Co-1 (ethnographic, Deaf researcher)
-9. Stockholm Stad. (n.d.). Stockholm — en stad för alla [accessibility handbook excerpt: belysning for teckenspråk]. — Tier 5 [SV]
-10. ENS (Ente Nazionale Sordi) / Camera dei Deputati. (2021). Riconoscimento della lingua dei segni italiana e disposizioni. — Tier 2 [IT]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DSD-01 | Bauman, H-D. | 2010 | DeafSpace Design Guidelines (working draft, 85pp). Gallaudet University | Co-1/2 | US | Primary source; unpublished; single-institution origin |
+| DSD-02 | Gallaudet University | 2010 | DeafSpace Design Guidelines Volume 1. Gallaudet University Press | Co-1/2 | US | ASL-derived; cross-language caveat applies |
+| DSD-03 | Edwards, C. & Harold, G. | 2014 | DeafSpace and the principles of universal design. Disability and Rehabilitation 36(16):1350–1359. DOI:10.3109/09638288.2014.913710 | 3 | INT | Cross-cultural validity |
+| DSD-04 | Cloete, M. & Rout, M. | 2025 | 'DeafSpace' in the built school environment: scoping review. Acta Structilia 32(2):238–263 | 3 | INT/ZA | Confirms cross-cultural applicability |
+| DSD-05 | Vaughn, A. | 2018 | DeafScape: Applying DeafSpace to Landscape. GroundUp Journal | Co-1/2 | INT | — |
+| DSD-06 | Bauman, H-D. & Murray, J. | 2014 | Deaf Gain: Raising the Stakes for Human Diversity. U of Minnesota Press | 2 | INT | — |
+| DSD-07 | RIT InfoGuides | n.d. | DeafSpace: Principles and Elements | 2 | US | Reference |
+| DSD-08 | Kusters, A. | 2015 | Deaf Space in Adamorobe. Gallaudet University Press | Co-1 | GH | Ethnographic; Deaf researcher |
+| DSD-09 | Stockholm Stad | n.d. | Stockholm — en stad för alla [belysning for teckenspråk excerpt] | 5 | SE | — |
+| DSD-10 | ENS / Camera dei Deputati | 2021 | Riconoscimento della lingua dei segni italiana | 2 | IT | — |
+
+## Metadata
+
+```yaml
+slug: deaf-spatial-design
+population: DEAF
+last_updated: 2026-04-19
+co0006_migration: true
+```
+
 
 ---
