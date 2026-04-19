@@ -42,7 +42,7 @@
 
 **Guidebook items affected:** Part 7 items A-04, A-09, B-05; all cross-population specification items; conflict-resolution protocol section (Part 8 §8.4); any item where two population codes appear with divergent specifications.
 
-**Key sources:** PAS6463:2022 · ISO23599:2019 · IEC60118-4 · DSDC2024 · Marquardt2011 · MSIF-Atlas2023
+**Key sources (see ## Key sources table below)**
 
 ---
 
@@ -81,4 +81,21 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-[STUB — key sources listed in content above; formal REF-ID list pending item-specification-writer pass]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CCR-01 | BSI | 2022 | PAS 6463:2022 — Design for the Mind | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| CCR-02 | ISO | 2019 | ISO 23599:2019 — Tactile walking surface indicators | 4 | INT | https://www.iso.org/standard/66862.html |
+| CCR-03 | IEC | 2017 | IEC 60118-4:2014+AMD1:2017 — Hearing loop performance | 4 | INT | See ALS-01 |
+| CCR-04 | DSDC, University of Stirling | 2024 | EADDAT — Environments for Ageing and Dementia Design Assessment Tool | 5 | UK | https://dementia.stir.ac.uk/design/environmental-audit |
+| CCR-05 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD 4(2):75–90. DOI:10.1177/193758671100400207 | 3 | INT | — |
+| CCR-06 | MSIF | 2023 | MS International Federation Atlas 2023 | 3 | INT | https://www.msif.org/research/ms-atlas/ |
+
+## Metadata
+
+```yaml
+slug: cross-population-conflict-resolutions
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
