@@ -10,9 +10,22 @@
 **Highest-ambition actionable specification:** RT60 ≤0.3s in core learning spaces ≤283 m³ with DEAF learners; background noise ≤35 dBA; +15 dB SNR maintained
 
 ### Key sources
-- Iglehart, F. (2020). Speech Perception in Classroom Acoustics by Children With Hearing Loss and Wearing Hearing Aids. *AJA*, 29(1), 6–17. DOI: 10.1044/2019_AJA-19-0010. PMID: 31835909. PMC7229780.
-- ANSI/ASA S12.60-2010/Part 1. Acoustical Performance Criteria, Design Requirements, and Guidelines for Schools. ASA.
-- Finitzo-Hieber, T. & Tillman, T.W. (1978). Room acoustics effects on monosyllabic word discrimination ability for normal and hearing-impaired children. *JSHD*, 43(4), 440–458.
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DCR-01 | Iglehart, F. | 2020 | Speech Perception in Classroom Acoustics by Children With Hearing Loss and Wearing Hearing Aids. AJA 29(1):6–17. DOI:10.1044/2019_AJA-19-0010. PMID:31835909 | 1 | US | Key Tier 1; RT60 ≤0.3s finding |
+| DCR-02 | ASA | 2010 | ANSI/ASA S12.60-2010/Part 1 — Acoustical Performance Criteria for Schools | 4 | US | Standard; ≤0.6s general; ≤0.3s DEAF-specific |
+| DCR-03 | Finitzo-Hieber, T. & Tillman, T.W. | 1978 | Room acoustics effects on monosyllabic word discrimination for normal and hearing-impaired children. JSHD 43(4):440–458 | 1 | US | Foundational study |
+
+## Metadata
+
+```yaml
+slug: deaf-classroom-reverberation-time
+population: DEAF
+last_updated: 2026-04-19
+co0006_migration: true
+```
+
 
 ---
 
