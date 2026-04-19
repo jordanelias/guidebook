@@ -164,6 +164,15 @@ Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FD
 
 **Evidence synthesis note (2026-04-09):** Three independent SRs (Clemson 2023, Crosby 2026, Kim 2025) unanimously confirm that grab bars and bathroom modifications reduce fall rates. Direction of effect is uncontested across all three SRs (Clemson: 22 RCTs; Crosby: 9 RCTs; Kim: 20 studies — with likely overlap between reviews). The BPC grab bar specifications (bilateral, 650-900mm, fold-down, ≥200 kg SWL) are well-supported. GRADE rating: **HIGH** for grab bar efficacy; **MODERATE** for specific dimensional values.
 
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09 — B2 update)
+
+**Crosby, L. et al. (2026)** — "Home modifications for older adults: Systematic review of randomised controlled trials." *Assistive Technology*. PMID:41525145. 9 RCTs. **Key finding:** Secure rails/grab bars significantly reduce fallers (OR ~0.70) and fall rates. Moderate-to-high RoB in included studies. Evidence supports grab bar provision as fall prevention intervention. **Tier 3 (SR of RCTs).**
+
+**Kim, Y. et al. (2025)** — "Aging in place home modifications: Systematic review." *[GREY — Journal unverified; Kim ambiguous in PubMed]*. 20 studies. 65% found effectiveness. Bathroom modifications, grab bars, and stair railings identified as most impactful home modification types. **Tier 3.** [GREY — full citation and DOI required before publication]
+
+**Impact on BPC:** Crosby 2026 (PMID:41525145) upgrades grab bar evidence from individual Tier 3 studies to Tier 3 SR of RCTs — strengthens the GRADE HIGH rating on G-03 (grab bars bilateral, vertical primary). Kim 2025 corroborates bathroom modifications as most impactful category. Part 4 G-03 GRADE remains HIGH; confidence now supported by two SRs.
+
 ## Metadata
 
 ```yaml
