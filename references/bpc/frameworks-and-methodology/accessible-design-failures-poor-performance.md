@@ -179,3 +179,13 @@ Not applicable — this slug is a failure register, not a functional deficit res
 
 ### Key sources
 [STUB — formal REF-IDs pending item-specification-writer pass]
+
+## Metadata
+
+```yaml
+slug: accessible-design-failures-poor-performance
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+note: REF-ID table already present pre-migration
+```
