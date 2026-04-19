@@ -68,9 +68,6 @@
 ### Bottom-up findings (functional deficit pass)
 *Pending — functional-deficit-researcher next.*
 
-### Key sources
-(see ## Key sources table below)
-
 ## Key sources
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
