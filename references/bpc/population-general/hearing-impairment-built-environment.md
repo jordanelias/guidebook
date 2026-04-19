@@ -7,6 +7,7 @@
 ## Metadata
 
 ```yaml
+population: DEAF
 slug: hearing-impairment-built-environment
 status: MERGED
 merged_into: deaf-acoustic-built-environment
