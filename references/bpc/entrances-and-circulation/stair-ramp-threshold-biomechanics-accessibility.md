@@ -93,15 +93,27 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Templer1992 — stair geometry biomechanics (Blondel's rule; misstep probability)
-- Simoneau1991 — stair descent fall risk 3× ascent
-- Waters1985 — wheelchair ramp propulsion shoulder injury
-- Kim2014 — ramp gradient >6% increases propulsion effort
-- Pavol2001 — threshold gait interception >6 mm
-- AlLawati2017 — 2 cm threshold defeats 45.8% wheelchair users
-- Koontz2012 — corridor width metabolic cost
-- Rodosky1989 — seating height hip extensor moment
-- LordSR1993 — sit-to-stand as falls predictor
-- KITE2023-2025 — grab bar peak force 1.3 kN
-- Owsley2001 — contrast sensitivity decline with age
-- Manandhar2022 — 30% LRV standard lacks published evidence basis
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| SRB-01 | Templer, J. | 1992 | The Staircase: Studies of Hazards, Falls, and Safer Design. MIT Press | 4 | INT | Blondel's rule; misstep probability |
+| SRB-02 | Simoneau, G. et al. | 1991 | Whole-body kinematics during stair ascent and descent. Hum Mov Sci | 3 | INT | Descent fall risk 3× ascent |
+| SRB-03 | Waters, R. et al. | 1985 | Energy-speed relationship of walking. J Orthop Res 3(1):61 | 3 | INT | WC ramp propulsion shoulder injury |
+| SRB-04 | Kim, W. et al. | 2014 | Effect of slope on wheelchair users. J Mech Sci Technol | 3 | INT | Gradient >6% increases propulsion effort |
+| SRB-05 | Pavol, M. et al. | 2001 | Influence of lower extremity on likelihood of falls in older persons. J Gerontol 56(8):M438 | 3 | INT | Threshold >6mm gait interception |
+| SRB-06 | Al Lawati, M. et al. | 2017 | Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol | 3 | INT | 2cm threshold defeats 45.8% |
+| SRB-07 | Koontz, A. et al. | 2012 | Shoulder moment contributions to wheelchair propulsion. Clin Biomech | 3 | INT | Corridor width metabolic cost |
+| SRB-08 | Rodosky, M. et al. | 1989 | Influence of chair height on lower limb mechanics during rising. J Orthop Res 7(2):266 | 3 | INT | Seat height hip extensor moment |
+| SRB-09 | Lord, S. et al. | 1993 | Sit-to-stand performance depends on sensation, speed, balance, and psychological status in addition to strength. J Gerontol 49(4):M97 | 3 | INT | Sit-to-stand as falls predictor |
+| SRB-10 | KITE Research Institute | 2025 | Grab bar peak force during bathtub exit fall recovery — 1.3 kN | 3 | CA | Ongoing 2023–2025 |
+| SRB-11 | Owsley, C. et al. | 2001 | Contrast sensitivity, acuity, and visual impairment in older adults. J Am Geriatr Soc 49(5):568 | 3 | INT | Contrast sensitivity decline with age |
+| SRB-12 | Manandhar, A. et al. | 2022 | LRV contrast standards: lack of published evidence basis. [GREY — full citation unverified; DOI required] | 3 | INT | 30% LRV standard lacks evidence basis |
+
+## Metadata
+
+```yaml
+slug: stair-ramp-threshold-biomechanics-accessibility
+population: MOB, VIS
+last_updated: 2026-04-19
+co0006_migration: true
+```
