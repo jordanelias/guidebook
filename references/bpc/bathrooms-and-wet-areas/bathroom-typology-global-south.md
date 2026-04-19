@@ -102,3 +102,17 @@ D1: Indonesia (DPO co-design, Sejong Toilet). D3: MIUSA (wheelchair traveller sq
 
 ## Sources (12 confirmed)
 See search log for full table.
+
+## Key sources
+
+[STUB — this BPC file is a deferred non-standard file. Full research pass pending (Block 5 decision required). See gap register for status.]
+
+## Metadata
+
+```yaml
+slug: bathroom-typology-global-south
+population: MOB, ALL
+last_updated: 2026-04-19
+status: DEFERRED-NON-STANDARD
+note: Non-standard BPC file. Full content deferred pending project decision.
+```
