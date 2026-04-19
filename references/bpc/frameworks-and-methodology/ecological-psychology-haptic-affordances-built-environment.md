@@ -52,8 +52,20 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Gibson1979 — ecological psychology; affordance theory
-- Heft2001 — nested affordance hierarchies
-- Reed1982 — individual-specific affordances
-- Turvey-Carello1995 — haptic affordances
-- Barker1968 — behaviour settings
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| EPH-01 | Gibson, J.J. | 1979 | The Ecological Approach to Visual Perception. Houghton Mifflin | 3 | INT | Affordance theory |
+| EPH-02 | Heft, H. | 2001 | Ecological Psychology in Context. Lawrence Erlbaum | 3 | INT | Nested affordance hierarchies |
+| EPH-03 | Reed, E.S. | 1982 | An outline of a theory of action systems. J Motor Behav 14(2):98 | 3 | INT | Individual-specific affordances |
+| EPH-04 | Turvey, M.T. & Carello, C. | 1995 | Dynamic touch. In Handbook of Perception and Action Vol 2. Academic Press | 3 | INT | Haptic affordances |
+| EPH-05 | Barker, R.G. | 1968 | Ecological Psychology. Stanford University Press | 3 | INT | Behaviour settings |
+
+## Metadata
+
+```yaml
+slug: ecological-psychology-haptic-affordances-built-environment
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
