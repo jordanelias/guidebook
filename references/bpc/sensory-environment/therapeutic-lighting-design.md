@@ -8,4 +8,25 @@
 **Early-close:** no  **Thin/No-data:** FI, FR, DE, ZH, JA, KO (no circadian-specific statutory provision found)
 **Citation mining:** Kolberg et al. 2021 (NO/melanopic EDI nursing homes); Konis 2017 Building and Environment
 **Opus synthesis note:** Metric transition alert — this entry uses EML (equivalent melanopic lux) values (≥150–200 EML). The circadian-lighting-melanopic-edi BPC uses the newer melanopic EDI metric (≥250 melanopic EDI). Conversion: EML = 1.104 × melanopic EDI. Thus 200 EML ≈ 181 melanopic EDI, which is below the 250 melanopic EDI threshold in the circadian slug. The discrepancy reflects the source literature: older RCTs report EML, Brown et al. 2022 recommends in melanopic EDI. For specification purposes, use melanopic EDI ≥250 as the unified daytime threshold (per circadian slug); the ≥2500 lux photopic / ≥200 EML values are historical RCT reporting, not the recommended design target.
-**Key sources:** REF-10 (ScienceDirect ambient bright light RCT); REF-12 (MDPI 24-week cluster RCT); REF-14 (Solarlits systematic review 2024); REF-17 (Arbetsmiljöverket 2019 SV); REF-18 (WELL v2); REF-19 (Chromaviso/DemensCentrum DA)
+**Key sources (see ## Key sources table below)**
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| TLD-01 | (author TBC) | n.d. | Ambient bright light RCT — ScienceDirect [GREY — DOI required before publication] | 1 | INT | ≥2500 lux / ≥200 EML dementia RCT |
+| TLD-02 | (author TBC) | n.d. | 24-week cluster RCT — MDPI [GREY — DOI required before publication] | 1 | INT | Dementia circadian lighting |
+| TLD-03 | (author TBC) | 2024 | Systematic review of therapeutic lighting — Solarlits [GREY — DOI required] | 3 | INT | — |
+| TLD-04 | Arbetsmiljöverket | 2019 | Swedish Work Environment Authority — lighting in workplace guidance | 5 | SE | https://www.av.se |
+| TLD-05 | IWBI | 2024 | WELL Building Standard v2 Feature 54: Circadian Lighting Design | 5 | INT | https://v2.wellcertified.com/wellv2/en/light |
+| TLD-06 | Chromaviso / DemensCentrum Aarhus | n.d. | Circadian lighting in dementia care — DemensCentrum DA | 5 | DA | Chromaviso product + POE |
+| TLD-07 | IEEE | 2015 | IEEE 1789-2015 — Recommended practices for modulating current in LED lighting for risk mitigation | 4 | INT | Flicker-free LED — mandatory for NDV/NEU |
+
+## Metadata
+
+```yaml
+slug: therapeutic-lighting-design
+population: DEM, NDV, NEU
+last_updated: 2026-04-19
+co0006_migration: true
+```
