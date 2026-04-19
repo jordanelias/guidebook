@@ -55,13 +55,16 @@
 | ISO 2631-1 | Forward | Chénier & Aissaoui (2014) |
 
 ### Key sources
-1. Garcia-Mendez, Y., et al. (2013). Health risks of vibration exposure to wheelchair users. *Journal of Spinal Cord Medicine*, 36(4), 365–375. [EN, Tier 3]
-2. Larivière, O., et al. (2024). Floor type and WBV in manual wheelchair users. *Journal of Rehabilitation and Assistive Technologies Engineering*. [EN, Tier 3]
-3. Misch, A., et al. (2022). Whole-body vibration and wheelchair users. *JRATE*. [EN, Tier 3]
-4. Chénier, F., & Aissaoui, R. (2014). Effect of wheelchair frame on vibration transmission. *Medical Engineering & Physics*, 36(7), 872–879. [EN, Tier 3]
-5. ISO 2631-1. (1997/2004). *Mechanical Vibration and Shock — Evaluation of Human Exposure to Whole-Body Vibration*. ISO. [Tier 4]
-6. ISO 10137:2007. *Bases for Design of Structures — Serviceability of Buildings*. ISO. [Tier 4]
-7. NHS HTM 08-01. *Acoustics — Hospital Floors (Vibration Criteria)*. NHS. [EN, UK, Tier 4]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| FVW-01 | Garcia-Mendez, Y. et al. | 2013 | Health risks of vibration exposure to wheelchair users. J Spinal Cord Med 36(4):365–375 | 3 | INT | WBV health risk baseline |
+| FVW-02 | Larivière, O. et al. | 2024 | Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng | 3 | INT | Floor type = largest WBV determinant |
+| FVW-03 | Misch, A. et al. | 2022 | Whole-body vibration and wheelchair users. JRATE | 3 | INT | — |
+| FVW-04 | Chénier, F. & Aissaoui, R. | 2014 | Effect of wheelchair frame on vibration transmission. Med Eng Phys 36(7):872–879 | 3 | INT | Frame material effect |
+| FVW-05 | ISO | 2004 | ISO 2631-1:1997/2004 — Mechanical Vibration and Shock — WBV evaluation | 4 | INT | https://www.iso.org/standard/30516.html |
+| FVW-06 | ISO | 2007 | ISO 10137:2007 — Serviceability of Buildings (vibration criteria) | 4 | INT | https://www.iso.org/standard/40133.html |
+| FVW-07 | NHS | n.d. | NHS HTM 08-01 — Acoustics: Hospital Floors (Vibration Criteria) | 4 | UK | https://www.england.nhs.uk/publication/health-technical-memorandum-08-01-acoustics/ |
 
 ---
 
@@ -69,3 +72,12 @@
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
+
+## Metadata
+
+```yaml
+slug: floor-vibration-wheelchair-disability
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+```
