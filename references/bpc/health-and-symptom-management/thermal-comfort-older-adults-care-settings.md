@@ -55,8 +55,20 @@ Not yet performed.
 FDR-TCOA-01: Thermoregulatory unawareness in DEM (van Hoof 2010 Tier 3) — wardrobe specification for carer-managed dressing: full-width opening, adjustable rail 1050-1200mm, shelf 600-900mm, visual display of clothing options. G-08 addition. FDR-TCOA-02: Heat shock is differential-at-entry, not absolute temp — bathroom pre-heating specification: ≥30 min pre-heat activation (timer/sensor/carer) before bathing. F-07 commissioning addition. FDR-TCOA-03: Reduced peripheral sensation — LST radiators ≤43C surface temp (NHS Estates HBN 00-10 Tier 5), insulated pipework, thermostatic heated towel rails ≤43C in DEM/older adult settings. F-07 addition. Items affected: G-08, F-07, Part 6 residential bathroom matrices.
 
 ### Key sources
-- Baquero2023 — neutral temperature 24.9°C, comfort zone 18.3–26.3°C (n=1,065)
-- VanHoof2010 — PMV/PPD unreliable for cognitively impaired
-- MHLW-Japan2023 — 6,073 bathtub drowning deaths from heat shock
-- NakayamaJAP1981 — foundational inter-room differential study
-- MSsociety-heat — MS heat sensitivity (cross-reference only)
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| TCO-01 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C; comfort zone 18.3–26.3°C (n=1,065). [GREY — DOI required] | 3 | INT | Primary thermal comfort source for older adults |
+| TCO-02 | Van Hoof, J. et al. | 2010 | PMV/PPD unreliable for cognitively impaired populations. [GREY — DOI required] | 3 | INT | — |
+| TCO-03 | MHLW Japan | 2023 | 6,073 bathtub drowning deaths from heat shock — official statistics | 5 | JP | https://www.mhlw.go.jp |
+| TCO-04 | Nakayama, K. et al. | 1981 | Foundational inter-room temperature differential study. [GREY — DOI required; JA journal] | 3 | JP | Heat shock physics basis |
+| TCO-05 | MS Society | n.d. | MS heat sensitivity guidance (cross-reference only — see MST-01/hs3) | 2 | UK | https://www.mssociety.org.uk |
+
+## Metadata
+
+```yaml
+slug: thermal-comfort-older-adults-care-settings
+population: DEM, NEU, OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
