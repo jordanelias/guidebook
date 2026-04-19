@@ -56,7 +56,7 @@ Not yet run.
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
 | OTI-01 | Young, R. et al. | 2019 | OT-design collaboration: scoping review. [GREY — DOI required] | 3 | INT | — |
-| OTI-02 | Wellecke, A. et al. | 2022 | Australian OT survey on home modification (n=144). [GREY — DOI required] | 1 | AU | Top 3 OT priorities confirmed |
+| OTI-02 | Wellecke, C. et al. | 2022 | Accessible design features and home modifications: mixed-methods survey of OTs. Disabil Health J 15(3):101281. PMID:35292211. DOI:10.1016/j.dhjo.2022.101281 | 1 | AU | Step-free access + bathroom access = top 3 OT priorities (n=144) |
 | OTI-03 | Russell, M. et al. | 2018 | 4-phase 9-subphase OT-design protocol. [GREY — DOI required] | 3 | AU | Only formalised OT-design process |
 | OTI-04 | Zallio, M. & Clarkson, P.J. | 2021 | Inclusive design failures. Build Environ. DOI:10.1016/j.buildenv.2021.108352 | 3 | UK | — |
 | OTI-05 | Zallio, M. & Clarkson, P.J. | 2022 | [GREY — DOI required] | 3 | UK | — |
