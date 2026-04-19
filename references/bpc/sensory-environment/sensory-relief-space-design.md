@@ -164,6 +164,21 @@ Not yet run.
 - Spatial configuration vs interior elements: **GAP** confirmed by Rashid 2025 taxonomy analysis
 - Adult vs paediatric evidence: **GAP** — Leonardi 2025 finds no improvement in adult populations
 
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Rashid, M. et al. (2025)** — "Taxonomy for sensory-informed architectural design in autism: A systematic review." *Archnet-IJAR*. 76 sources. **Key finding:** 83 design qualities mapped; overemphasis on interior finishes vs spatial configuration. Four taxonomy dimensions: sensory modulation, spatial sequencing, transition zones, escape space. Confirms ASPECTSS framework; extends to spatial configuration domain. **Tier 3.** [GREY — DOI required; Archnet-IJAR not in PubMed]
+
+**Leonardi, B. et al. (2025)** — "Use of multi-sensory environments in autism: Systematic review." *Autism (SAGE)*. PMID:40087858. 10 studies. **Key finding:** Improvement confirmed in paediatric populations; evidence lacking for adults. No evidence-based design guidelines exist — confirms THIN-BASE disclosure. Tier 3.
+
+**(Author TBC) (2025)** — "Perception of multi-sensory environments among neurodivergent people: Systematic review." *Architectural Science Review*. PRISMA-compliant. 27 studies. 7 sensory themes. Design implications for NDV MSE spaces. **Tier 3.** [GREY — full authors/DOI required]
+
+**Watchorn, V., Hale, L. et al. (2025)** — "Sensory rooms in Australian public buildings: Primary research." *Archnet-IJAR*. **Key finding:** Toilet proximity to sensory room is missing from specifications (A-16 gap confirmed). User control confirmed as primary design variable — corroborates SRS-01/02. **Co-1 + Tier 3.** [GREY — DOI required]
+
+**Kiblen, J.C. et al. (2024)** — "Sensory adaptive environments for autistic children: Systematic review." *Research in Autism Spectrum Disorders*. 13 studies; 5 US, 2 UK, global spread. Paediatric focus. Confirms sensory room effectiveness for children; adult evidence gap. **Tier 3.** [GREY — DOI required]
+
+**Impact on BPC:** Watchorn 2025 confirms P2 specification gap: toilet adjacency within ≤10m of A-16 sensory rooms should be mandatory provision, not advisory. Rashid 2025 + Archit Sci Rev 2025 confirm spatial configuration (not just finishes) is the primary design domain — ASPECTSS spatial sequencing and escape space dimensions are evidence-supported. Leonardi 2025 (PMID:40087858) confirms THIN-BASE for adult MSE populations; BPC confidence disclosure should be upgraded to reflect paediatric vs adult distinction.
+
 ## Metadata
 
 ```yaml
