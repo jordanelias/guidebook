@@ -165,3 +165,20 @@ open_pre_publication_items:
   - A-09 vibration threshold source unknown
   - Roxburgh & Mackay 2024 DOI unconfirmed
   - project-standards.md at 96% token capacity — monitor before next session
+
+## Block 5 final
+
+commits_block5_final:
+  - 3a9272b9de9d: pain-ofs duplicate Key sources section removed
+  - FINAL: 78/78 BPC files PASS CO-0006 validation
+
+block5_final_summary: >
+  Full BPC validation: 78/78 PASS. Zero failures.
+  validate_bpc.py updated to CO-0006 schema — MANDATORY_SECTIONS now [Key sources, Metadata].
+  MERGED redirect stubs exempted. STUB/DEFERRED markers accepted as valid KS content.
+  ci.yml --warn-only flags removed from both validators.
+  All governed file thresholds pass. project-standards.md at 96% — monitor.
+  CI is now live enforcement: every push to main triggers CO-0006 schema validation.
+
+website_preparation_phase_a_status: COMPLETE
+all_workplan_criteria_met: true
