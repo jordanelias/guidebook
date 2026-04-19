@@ -61,9 +61,21 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- ISO21542-2021-s9 — multi-sensory redundancy at hazardous transitions
-- PAS6463-2022-s6.4 — graduated sensory environments
-- Mostafa-ASPECTSS2021 — sensory zone transitions reduce autistic arousal (DOI: 10.3389/fpsyt.2021.727353)
-- Williams2024 — sensory adaptive environments scoping review
-- Beranek2004 — RT60 just-noticeable difference (~5%)
-- KaplanKaplan1989 — Attention Restoration Theory
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DGP-01 | ISO | 2021 | ISO 21542:2021 §9 — multi-sensory redundancy at hazardous transitions | 4 | INT | https://www.iso.org/standard/71025.html |
+| DGP-02 | BSI | 2022 | PAS 6463:2022 §6.4 — graduated sensory environments | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
+| DGP-03 | Mostafa, M. | 2021 | ASPECTSS 2.0 — sensory zone transitions reduce autistic arousal. Front Psychiatry. DOI:10.3389/fpsyt.2021.727353 | 2 | INT | — |
+| DGP-04 | Williams, A. et al. | 2024 | Sensory adaptive environments for autistic children: scoping review | 1 | INT | [GREY — full citation unverified; DOI required] |
+| DGP-05 | Beranek, L. | 2004 | Concert Halls and Opera Houses — RT60 JND reference | 3 | INT | JND ~5% at RT60 <1.0s |
+| DGP-06 | Kaplan, R. & Kaplan, S. | 1989 | The Experience of Nature: Attention Restoration Theory | 3 | INT | Restorative environment theory |
+
+## Metadata
+
+```yaml
+slug: detectable-gradient-protocol-sensory-zones
+population: NDV, DEM, NEU, OFS, NDV/MH
+last_updated: 2026-04-19
+co0006_migration: true
+```
