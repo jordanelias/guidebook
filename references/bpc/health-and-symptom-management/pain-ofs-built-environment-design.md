@@ -74,7 +74,7 @@
 |---|---|---|---|---|---|---|
 | POD-01 | NICE | 2021 | NICE NG206 — ME/CFS | Co-2 | UK | https://www.nice.org.uk/guidance/ng206 |
 | POD-02 | Bateman Horne Center | 2025 | ME/CFS Clinical Care Guide 2025 | Co-1 | US | https://batemanhornecenter.org |
-| POD-03 | (author TBC) | 2019 | PMC6260403 — ME/CFS built environment review [GREY — DOI required] | 3 | INT | — |
+| POD-03 | (author TBC) | 2019 | PMC6260403 — ME/CFS built environment review [GREY — WRONG-MATCH: PMC6260403 resolves to unrelated 1981 immunology paper. Correct PMC ID unknown; re-search 2019 ME/CFS built environment review.] | 3 | INT | — |
 | POD-04 | Strassheim, V. et al. | 2018 | OI in ME/CFS. [GREY — specific Strassheim 2018 not located; closest match is Richardson et al. 2018 J Transl Med DOI:10.1186/s12967-018-1473-z (weighted standing time); verify author name and OI onset timing claim 2–10 min] | 3 | INT | OI onset timing 2–10 min |
 | POD-05 | CDC | 2024 | ME/CFS Clinical Care 2024 | Co-1 | US | https://www.cdc.gov/me-cfs/ |
 | POD-06 | Dysautonomia Support Network | n.d. | Environmental guidance for dysautonomia | 2 | US | https://www.dysautonomiasupport.org |
