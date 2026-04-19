@@ -1,5 +1,9 @@
 ## Part 5: Building-Level Co-Occurrence Resolution
 
+<!-- evidence_density: Thin -->
+> **Evidence density: ░ Thin** — Conflict resolution methodology is expert consensus informed by harm-asymmetry analysis. Nine resolved conflicts draw on Tier 1–4 sources from individual population evidence. No primary study validates the resolution framework itself. The variable-conflation correction (Step 0) is an original analytical contribution of this guidebook. **Critical gap:** Zero primary built-environment studies on compound functioning; all compound resolutions are inference from single-population evidence.
+
+
 *Guidebook for Accessible Design v10.0*
 
 ---
