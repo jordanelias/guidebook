@@ -93,7 +93,7 @@ No room acoustic standard in any jurisdiction addresses these populations acoust
 | RAP-09 | BSI | 2022 | PAS 6463:2022 §10 — Acoustic requirements | 4 | UK | NDV acoustic provisions |
 | RAP-10 | BrainXchange / DMA | 2011 | Dementia and noise: design guidance | 2 | CA | DEM soundscape |
 | RAP-11 | Iglehart, F. | 2020 | Speech perception in classroom acoustics by children with hearing loss. AJA 29(1):6–17. DOI:10.1044/2019_AJA-19-0010. PMID:31835909 | 1 | US | RT60 ≤0.3s for DEAF learners; also DCR-01 |
-| RAP-12 | Murgia, A. et al. | 2022 | [GREY — full citation unverified; LSHSS systematic review; DOI required] | 3 | INT | Systematic review |
+| RAP-12 | Murgia, S. et al. | 2022 | Systematic Review of Literature on Speech Intelligibility and Classroom Acoustics in Elementary Schools. Lang Speech Hear Serv Sch 54(1):322–335. PMID:36260411. DOI:10.1044/2022_LSHSS-21-00181 | 3 | INT | Primary systematic review for RT60/STI evidence |
 | RAP-13 | Devos, H. et al. | 2019 | Dementia soundscape. PMC6950055. DOI:10.3389/fneur.2019.01286 | 3 | INT | DEM soundscape |
 | RAP-14 | CEREMA / DMA | 2019 | Guide acoustique pour personnes malentendantes | 5 | FR | FR hearing-impaired acoustic guide |
 | RAP-15 | Caniato, M. et al. | 2025 | NDV acoustic environment requirements. [GREY — DOI required; ScienceDirect 2024/2025] | 3 | INT | NDV acoustic |
