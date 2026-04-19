@@ -161,3 +161,125 @@ notes: "Mixed format (prose definitions + tables). Parser needs two extraction m
 
 **Audit 2/3 scope:** Part 4, Part 5, Part 6, Part 7.
 **Audit 3/3 scope:** Part 8, Part 9, Part 10, Part 12, bibliography.
+
+---
+
+## Audit 2/3 — 2026-04-19 02:07
+
+### parts/v10/part04.md (Part 4: Item Specification Library)
+
+```yaml
+file: parts/v10/part04.md
+section: full file (3352 lines, 249925 chars, ~63K tokens)
+parser_consumer: p09_specifications, p18_categories
+format_summary: "H3 per item (### X-NN Title). 7 bold-labelled fields per item."
+known_patterns:
+  - heading_format: "### X-NN Title"
+  - item_count: 91 (including E-10 duplicate)
+  - categories: "A(17), B(12), C(6), D(11), E(15), F(8), G(9), H(5), I(4), K(4)"
+  - field_labels: "**Applicable Groups:** · **Description:** · **Specifications:** · **Retrofit cost note:** · **Key citations:** · **Cross-reference:** · **Evidence basis (OT):**"
+  - field_coverage: "Applicable Groups 94/91 · Description 92/91 · Specifications 93/91 · Retrofit 84/91 · Citations 84/91 · Cross-ref 90/91 · Evidence basis 84/91"
+  - con_annotations: "58/91 items have <!-- CON-NNNN --> HTML comment annotations"
+  - additional_fields: "some items have **Evidence disclosure:** · **FDR-*:** · **Conflict notes:** · **Population conflict:** · **Zone cross-reference:**"
+edge_cases:
+  - "E-10 DUPLICATE: two entries at L1737 and L3205 with different content — merge or rename required (A4)"
+  - "F-06: 5 lines only — stub item"
+  - "B-04: marked [MERGED INTO B-03] but still has full content"
+  - "H-05 appears between I-03 and I-04 — out of category sort order"
+  - "G-08, G-09, B-12, E-12, E-13: appear after K-04 — appended late, not in category order"
+  - "v2 HTML annotations (design_stage_lock, ve_risk, ot_appointment_trigger): 0/91 — Block 3 A7 task"
+  - "Some items have **Design Stage:** field; others embed stage in Specifications text"
+  - "CON annotations in HTML comments not in consistent schema — some have [HIGH], some [MEDIUM], some no confidence"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:07
+notes: "Parser must handle: variable field presence, out-of-order items, merged/stub items, HTML comment annotations. Item index created at references/part04-item-index.md for targeted loading."
+```
+
+---
+
+### parts/v10/part05.md (Part 5: Building-Level Co-Occurrence Resolution)
+
+```yaml
+file: parts/v10/part05.md
+section: full file (202 lines, 38869 bytes)
+parser_consumer: p04_co_occurrence_matrix (§5.2 table), p_brief_builder (§5.4 worked examples)
+format_summary: "Prose + one 8-column conflict resolution table + worked examples"
+known_patterns:
+  - conflict_table_columns: "Domain | Pop A | Pop B | Pop A spec | Pop B spec | Resolution | Status | Evidence"
+  - conflict_count: 11 domain rows
+  - evidence_markers: "● ◐ ○ (three-tier)"
+  - strategy_codes: "IEC, SZ, TS, DAR, SRW, PP, T0, RS referenced inline"
+  - worked_examples: 3 (DEM care home, NDV co-working, mixed-needs supported housing)
+  - unresolvable_conflicts: "§5.3 register — separate section"
+edge_cases:
+  - "§5.41/5.42/5.43 numbering (no dot before digit) — non-standard heading format"
+  - "Part 5 has two files: part05.md (38K) and part05_v10-0_draft.md (29K) — reconciliation needed"
+  - "Conflict resolution table uses pipe-delimited markdown — very wide rows that may need parser line-continuation handling"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:07
+notes: "Two Part 5 files exist. part05.md is larger and appears more current. Reconciliation required before Phase B."
+```
+
+---
+
+### parts/v10/part06.md (Part 6: Residential Application Matrices)
+
+```yaml
+file: parts/v10/part06.md
+section: full file (562 lines, 43773 bytes)
+parser_consumer: p06_residential_matrices
+format_summary: "H3 per room type (### §6.N R-XXX: Room Name). Item application table + DAR provisions table per room."
+known_patterns:
+  - room_types: "R-ENT, R-GAR, R-LAU, R-BED, R-BA (bathroom), R-LIV, R-KIT, R-HAL, R-STA"
+  - room_count: 9 room types + universal provisions (§6.0a) + DAR register (§6.10)
+  - item_table_columns: "Item | Title | MOB | VIS | DEAF | DEM | NDV | OFS | DBL | DEM/NDV[IntD-proxy] | Design Stage"
+  - markers: "● Primary | ○ Secondary | — Not applicable"
+  - dar_table_columns: "Provision | What to install now | What it enables later | Timing"
+  - table_rows: 185 total
+edge_cases:
+  - "§6.5 heading uses non-standard format: R-BA-05 → R-BA-01"
+  - "Population column headers vary slightly between rooms (some include PAIN, NEU)"
+  - "IntD-proxy column present in some rooms, absent in others"
+  - "H-04 placement note at R-ENT indicates a known item-to-room mapping issue"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:07
+notes: "Parser must handle variable population column counts per room. ● / ○ / — markers are consistent. DAR provisions follow each room's item table."
+```
+
+---
+
+### parts/v10/part07.md (Part 7: Non-Residential Application Matrices)
+
+```yaml
+file: parts/v10/part07.md
+section: full file (359 lines, 34512 bytes)
+parser_consumer: p07_nonresidential_matrices
+format_summary: "H3 per building type (### §7.N NR-XXX: Type Name). Space criticality table + education-specific enhancements."
+known_patterns:
+  - building_types: "NR-EDU, NR-HLT, NR-WRK, NR-RET, NR-CUL, NR-HOS, NR-TRP"
+  - type_count: 7 building types + universal provisions (§7.0)
+  - space_table_columns: "Space | Primary populations | Critical items"
+  - item_refs_format: "A-04, RT60 ≤0.4 s (DIN 18041 Cat A), A-11 (room loop)"
+  - enhancement_format: "bullet list with inline item code references"
+  - table_rows: 127 total
+edge_cases:
+  - "Part 7 format differs from Part 6: Part 6 uses full item application matrices (per-population columns); Part 7 uses space-criticality tables (space → populations → critical items in prose)"
+  - "Enhancement bullet lists contain inline quantified specifications — parser must extract these separately from the tables"
+  - "Some building types have DBL provisions marked [EXPERT CONSENSUS — no standard]"
+  - "Gap items reference F-06, F-07, H-05, H-06, I-04, I-05, I-06 in matrices but some lack Part 4 headings (GAP-XREF-02)"
+audit_status: PASS-WITH-NOTES
+audit_date: 2026-04-19 02:07
+notes: "Part 7 uses a different matrix format than Part 6. Parser p07 needs separate extraction logic from p06. Phantom item codes (GAP-XREF-02) need resolution before Phase B."
+```
+
+---
+
+## Summary — Audit 2/3
+
+| Source | Parser | Status | Key notes |
+|---|---|---|---|
+| Part 4 (full) | p09, p18 | PASS-WITH-NOTES | 91 items, E-10 duplicate, F-06 stub, 5 out-of-order items, 0/91 v2 annotations |
+| Part 5 (full) | p04, p_brief | PASS-WITH-NOTES | 11 conflict domains, 3 worked examples, two files need reconciliation |
+| Part 6 (full) | p06 | PASS-WITH-NOTES | 9 room types, 185 table rows, variable population columns |
+| Part 7 (full) | p07 | PASS-WITH-NOTES | 7 building types, 127 table rows, different format from Part 6 |
+
