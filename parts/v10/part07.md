@@ -1,5 +1,9 @@
 ## Part 7: Non-Residential Application Matrices
 
+<!-- evidence_density: Thin (varies by typology) -->
+> **Evidence density: ░ Thin (varies by typology)** — ■ Rich: NR-EDU (education) — classroom acoustics Tier 1 (Murgia 2023, Iglehart 2020, Simpson 2025 SR 23 studies). ▓ Moderate: NR-HLT (healthcare) — POE evidence; mental health built environment BPC (Faerden 2022 PMID:36567605, Rodríguez-Labajos 2024). ░ Thin: NR-WRK (workplace), NR-CUL (cultural) — limited population-specific evidence. · Very thin/Absent: NR-RET (retail), NR-HOS (hospitality), NR-TRP (transport) — code-derived only.
+
+
 <!-- v10.0 scaffold — CO-0004: was Part 6. PENDING:
      - D2-21: add conflict register sub-table to each NR matrix
      - CO-0004: inline room-level conflict notes per CO-0004 format
