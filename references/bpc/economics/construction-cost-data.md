@@ -44,15 +44,26 @@ Forward/backward citation mining not yet performed. Priority targets: Ielegems 2
 
 ### Key sources
 
-| Citation | Tier | Jurisdiction | Verified | Key claim |
-|---|---|---|---|---|
-| TERRAGON/DStGB (2017) | E-3/E-4 | DE | true | 138/148 criteria zero cost; 0.54%–1.26% premium |
-| Ielegems & Vanrie (2024) | E-1 | BE | true | 0.94%–3.92% new-build; 2.24%–14.9% renovation |
-| HUD/Woodstock (2020) | E-2 | US | true | $12,200–$15,150/unit avg; $6,668 savings/participant |
-| ADA National Network (2025) | E-6 | US | true | <1% new-build premium |
-| RHFAC/HCMA (2024) | E-6 | CA | true | ~1% or zero |
-| Lund University thesis | E-1 | SE | true | Not significant impact |
-| EIB (2020) | E-3 | NL | true | €4,000/apt specific; 1.3 m² trade-off |
-| KfW/Prognos | E-3 | DE | true | €19,100 avg retrofit |
-| UK Government (2026) | E-2 | UK | true | £30,000 max DFG; £723M allocation |
-| NDIS (2025) | E-2 | AU | true | AUD$221/hr assessment rate |
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CCD-01 | TERRAGON / DStGB | 2017 | DIN 18040-2 cost analysis | 3 | DE | 138/148 criteria zero cost; 0.54–1.26% premium |
+| CCD-02 | Ielegems, B. & Vanrie, J. | 2024 | Cost premiums by building type. Archnet-IJAR 18(4) | 1 | BE | 0.94–3.92% new-build; 2.24–14.9% renovation |
+| CCD-03 | HUD / Woodstock Institute | 2020 | Accessible housing costs and savings | 2 | US | $12,200–$15,150/unit avg; $6,668 savings/participant |
+| CCD-04 | ADA National Network | 2025 | Cost of accessible design | 6 | US | <1% new-build premium |
+| CCD-05 | RHFAC / HCMA | 2024 | Rick Hansen Foundation cost study | 6 | CA | ~1% or zero |
+| CCD-06 | (Lund University author TBC) | 2023 | Lund University accessible design cost thesis | 1 | SE | No significant impact |
+| CCD-07 | EIB | 2020 | Accessible housing cost analysis — €4,000/apt; 1.3 m² trade-off | 3 | NL | — |
+| CCD-08 | KfW / Prognos | 2022 | Barrier-reduction retrofit evaluation — €19,100 avg | 3 | DE | Retrofit multiplier |
+| CCD-09 | UK Government (MHCLG) | 2026 | DFG allocation — £30,000 max; £723M confirmed 2026–27 | 2 | UK | — |
+| CCD-10 | NDIS | 2025 | Home modifications assessment — AUD$221/hr | 2 | AU | — |
+
+## Metadata
+
+```yaml
+slug: construction-cost-data
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+```
+
