@@ -181,3 +181,37 @@ Architecture/design journals not indexed in PubMed:
 - Other: TBE-01 Griggs 2019, TBE-04 Flensner 2011, ULB-05 Kennedy 2015, AQV-01 Afrin 2020
 
 **Recommended next tool:** Semantic Scholar API or direct journal website search for each remaining item. Session 2 DOI resolution should prioritise Tier 1 citations (OTI-02 Wellecke, OTI-03 Russell, Kennedy 2015 ULB-05, Afrin 2020 AQV-01).
+
+---
+
+## 12. GREY DOI Resolution — Final Status (2026-04-19 sessions 1–4)
+
+### Confirmed resolved (7 items):
+| REF-ID | BPC file | PMID | DOI |
+|---|---|---|---|
+| RAP-12 | room-acoustic-performance | 36260411 | 10.1044/2022_LSHSS-21-00181 |
+| MST-02 | ms-thermal | 21833699 | 10.1007/s11926-011-0206-6 |
+| OTI-02 | ot-built-environment-interface | 35292211 | 10.1016/j.dhjo.2022.101281 |
+| ULB-05 | upper-limb-impairment | 26132352 | 10.1080/10400435.2014.976799 |
+| AQV-01 | air-quality-voc | — | 10.1515/dx-2020-0005 |
+| TBE-01 | thermoregulation | 30610000 | 10.1136/bjsports-2018-099853 |
+| TBE-04 | thermoregulation | 21352533 | 10.1186/1471-2377-11-27 |
+
+### Wrong-match / possible-error flagged (4 items):
+- **POD-11** Ismail 2023 FM hydrotherapy — POSSIBLE-ERROR; no such paper locatable
+- **POD-04** Strassheim 2018 OI — possible match is Richardson et al. 2018 J Transl Med
+- **Gitlin2006** kitchen — PMID:17050754 is Adult Day Services; verify AJOT home mod
+- **AQV-01** — original BBI journal wrong; corrected to Diagnosis 2021 consensus-2
+
+### Remaining ~32 items — require desktop session with institutional journal access:
+- **Archnet-IJAR** (not in PubMed): Rashid 2025 (taxonomy), Watchorn 2025 (sensory rooms)
+- **Architectural Science Review**: MSE perception SR 2025 (author TBC)
+- **AOTJ**: OTI-03 Russell 2018 (4-phase OT-design protocol)
+- **Indoor Air / J Environ Sci**: TCO-02 Van Hoof 2010, TCO-04 Nakayama 1981
+- **Tandfonline**: POD-11 Ismail 2023 (if correct), POD-04 Strassheim 2018
+- **Solarlits / MDPI**: TLD-01, TLD-02, TLD-03 (therapeutic lighting)
+- **AJOT**: Stark 2017 kitchen, OTI-01 Young 2019, OBE-07 Kos 2015
+- **PMC6260403**: POD-03 (ME/CFS built environment review — retrieve by PMC ID)
+- **Other**: NAT-07 Weber 2022, ULB-02 Togni 2022, NAT-04 Caniato 2024, BSP-01 Hoover-Fong 2021
+
+**POD-03 note:** PMCID PMC6260403 is directly fetchable — PMC ID resolves to specific paper without needing journal access.
