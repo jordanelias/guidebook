@@ -166,3 +166,4 @@
 | GAP-CO03-13 | ST | P3 | OPEN | 2C | 9 | Slug registry: add CO-0003 terminology notes for frozen slug names | Bundled with slug re |
 | GAP-XREF-03 | ST | P3 | OPEN | cross-reference-resolver | Parts 1-6 | D-18 cited as rule reference ("D-18 rule") — not an item code. Labelling inconsistency in evidence hierarchy section. Author decision: rename to avoid item-code confusion. | 2026-03-28 17:50 |
 | GAP-ECON-03 | EC | P3 | OPEN | economics-researcher | Part 11 §11.4 | Emergency egress cost table absent from §11.4. Refuge of rescue is a Brief-stage decision with high retrofit cost. BS 9999, DIN 18040-1 provide evidence. | 2026-04-09 18:03 |
+| GAP-DOI-01 | RP | P2 | OPEN | jurisdiction-tracker | All BPC Key sources tables | ~45 [GREY — DOI required] flags across BPC corpus. Decision 2026-04-19: resolve before publication. Priority: Tier 1 citations first (OTI-02 Wellecke, OTI-03 Russell, POD-03/04). See phase-b-handoff.md §10 Decision 4. | 2026-04-19 |
