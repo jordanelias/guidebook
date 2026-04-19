@@ -78,24 +78,41 @@ No room acoustic standard in any jurisdiction addresses these populations acoust
 
 7. **UNI 11532-2:2020.** Caratteristiche acustiche interne di ambienti confinati – Metodi di progettazione e tecniche di valutazione – Parte 2: Settore scolastico. UNI. [IT national standard — explicitly addresses students with hearing deficits; categoria A3.1/A4]
 
-### Key sources (full list)
-REF-RAP-01: Bettarello et al. (2021) — Appl. Sci. 11(9), 3942 ✅
-REF-RAP-02: DIN 18041:2016 — Hörsamkeit in Räumen (DE)
-REF-RAP-03: BB93:2015 — Acoustic Design of Schools (UK)
-REF-RAP-04: ANSI/ASA S12.60-2010/Part 1 (US)
-REF-RAP-05: UNI 11532-2:2020 (IT)
-REF-RAP-06: NS 8175:2019 (NO)
-REF-RAP-07: GB 50118-2010 §5.3.4 (ZH)
-REF-RAP-08: AIJ AIJES-S001-2008 (JA)
-REF-RAP-09: PAS 6463:2022 §10 (UK)
-REF-RAP-10: BrainXchange DMA (2011) — Dementia Noise design guidance (CA)
-REF-RAP-11: Iglehart (2020) — AJA, DEAF RT60 0.3 s ✅ NEW
-REF-RAP-12: Murgia et al. (2022) — LSHSS, systematic review ✅ NEW
-REF-RAP-13: Devos et al. (2019) — PMC 6950055, DEM soundscape ✅ NEW
-REF-RAP-14: CEREMA/DMA (2019) — FR hearing-impaired acoustic guide ✅ NEW
-REF-RAP-15: Caniato et al. (2024/2025) — NDV acoustic, Sci. Dir. ✅ NEW
-REF-RAP-16: AS/NZS 2107:2016 (AU/NZ) — background noise/RT60 schools
-REF-RAP-17: SBi-anvisning 218 — DA school acoustics
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| RAP-01 | Bettarello, F. et al. | 2021 | Room acoustic parameters and accessibility. Appl Sci 11(9):3942 | 3 | INT | — |
+| RAP-02 | DIN | 2016 | DIN 18041:2016 — Hörsamkeit in Räumen | 5 | DE | Disability as driver; most specific DEAF acoustic standard |
+| RAP-03 | DfE | 2015 | BB93:2015 — Acoustic Design of Schools | 5 | UK | https://www.gov.uk/government/publications/bb93-acoustic-design-of-schools |
+| RAP-04 | ASA | 2010 | ANSI/ASA S12.60-2010/Part 1 — Schools | 4 | US | RT ≤0.3s for DEAF learners |
+| RAP-05 | UNI | 2020 | UNI 11532-2:2020 — Acoustic requirements for buildings | 5 | IT | Most advanced NDV-equivalent provisions |
+| RAP-06 | Standard Norge | 2019 | NS 8175:2019 — Sound conditions in buildings | 5 | NO | — |
+| RAP-07 | MOHURD | 2010 | GB 50118-2010 §5.3.4 — Room acoustic performance | 6 | CN | — |
+| RAP-08 | AIJ | 2008 | AIJES-S001-2008 — Room acoustic design guidelines | 5 | JP | — |
+| RAP-09 | BSI | 2022 | PAS 6463:2022 §10 — Acoustic requirements | 4 | UK | NDV acoustic provisions |
+| RAP-10 | BrainXchange / DMA | 2011 | Dementia and noise: design guidance | 2 | CA | DEM soundscape |
+| RAP-11 | Iglehart, F. | 2020 | Speech perception in classroom acoustics by children with hearing loss. AJA 29(1):6–17. DOI:10.1044/2019_AJA-19-0010. PMID:31835909 | 1 | US | RT60 ≤0.3s for DEAF learners; also DCR-01 |
+| RAP-12 | Murgia, A. et al. | 2022 | [GREY — full citation unverified; LSHSS systematic review; DOI required] | 3 | INT | Systematic review |
+| RAP-13 | Devos, H. et al. | 2019 | Dementia soundscape. PMC6950055. DOI:10.3389/fneur.2019.01286 | 3 | INT | DEM soundscape |
+| RAP-14 | CEREMA / DMA | 2019 | Guide acoustique pour personnes malentendantes | 5 | FR | FR hearing-impaired acoustic guide |
+| RAP-15 | Caniato, M. et al. | 2025 | NDV acoustic environment requirements. [GREY — DOI required; ScienceDirect 2024/2025] | 3 | INT | NDV acoustic |
+| RAP-16 | Standards Australia / NZS | 2016 | AS/NZS 2107:2016 — Acoustics: recommended design sound levels | 5 | AU/NZ | Background noise / RT60 schools |
+| RAP-17 | SBi | n.d. | SBi-anvisning 218 — DA school acoustics | 5 | DA | — |
+| RAP-18 | Wroblewski, M. et al. | 2012 | Effects of reverberation on speech recognition. Ear Hear 33(6):731–744. PMID:22732772. DOI:10.1097/AUD.0b013e31825aecad | 1 | US | Children 6–18; modulated noise + RT |
+| RAP-19 | Neuman, A.C. et al. | 2010 | Combined effects of noise and reverberation. Ear Hear 31(3):336–344. PMID:20215967. DOI:10.1097/AUD.0b013e3181d3d514 | 1 | US | SNR-50 thresholds at RT 0.3/0.6/0.8s |
+| RAP-20 | Iglehart, F. | 2016 | Speech perception by CI and typical hearing children. AJA 25(2):100–109. PMID:27244568. DOI:10.1044/2016_AJA-15-0064 | 1 | US | 0.6→0.3s RT benefits CI more |
+| RAP-21 | Anderson, K.L. & Goldstein, H. | 2004 | FM and infrared devices for HH children in classroom. LSHSS 35(2):169–184. PMID:15191328. DOI:10.1044/0161-1461(2004/017) | 1 | US | Ceiling SFA no benefit at RT 1.1s |
+| RAP-22 | Amlani, A.M. & Russo, T.A. | 2016 | Negative effect of acoustic panels on listening effort. JAAA 27(10):805–815. PMID:27885976. DOI:10.3766/jaaa.15096 | 1 | US | [CONTRADICTED BY FDR] — panels reduced STI |
+| RAP-23 | Prodi, N. & Visentin, C. | 2022 | Slight RT increase affects performance and listening effort. Ear Hear 43(2):460–476. PMID:34369418. DOI:10.1097/AUD.0000000000001110 | 1 | IT | 0.12s RT increase significantly impacts children |
+| RAP-24 | Spratford, M. et al. | 2019 | Classroom acoustic recommendations for CHH. AJA 28(4):927–934. PMID:31682768. DOI:10.1044/2019_AJA-19-0041 | 1 | US | HVAC and volume as modifiable parameters |
+| RAP-25 | McGarrigle, R. et al. | 2019 | Behavioral measures of listening effort in school-age children. Ear Hear 40(2):381–392. PMID:29905670. DOI:10.1097/AUD.0000000000000623 | 1 | INT | CHL processing speed decrement |
+| RAP-26 | Vickers, D.A. et al. | 2013 | Personal response systems to assess speech perception in classroom. Ear Hear 34(4):491–502. PMID:23340455. DOI:10.1097/AUD.0b013e31827ad76f | 1 | UK | SFA benefits lower vocabulary children most |
+| RAP-27 | Saravanan, G. et al. | 2019 | Indian classroom listening conditions for HI children. Noise Health 21(99):83–95. PMID:32174643. DOI:10.4103/nah.NAH_15_19 | 1 | IN | All 37 classrooms exceeded recommendations |
+| RAP-28 | Wu, Y.H. & Bentler, R.A. | 2012 | Audiovisual ceiling performance and reverberation. Ear Hear 33(5):604–614. PMID:22677815. DOI:10.1097/AUD.0b013e31825641e4 | 1 | US | Very low RT may reduce HA directional utility |
+| RAP-29 | Reinhart, P. et al. | 2019 | Digital noise reduction and reverberation interactions. JAAA 31(1):17–29. PMID:31267958. DOI:10.3766/jaaa.18048 | 1 | US | HA DNR cannot compensate for high RT |
+| RAP-30 | Iglehart, F. | 2004 | CI children with sound-field systems in classrooms. AJA 13(1):62–72. PMID:15248805. DOI:10.1044/1059-0889(2004/009) | 1 | US | Desktop SFA > ceiling in high-RT rooms |
+| RAP-31 | Black, M.H. et al. | 2022 | Built environment for autistic individuals: systematic review. Autism 26(4):1014–1034. PMID:35695710. DOI:10.1177/13623613221102753 | 3 | INT | NDV acoustic provisions confirmed |
 
 ### Divergent findings
 - IT (UNI 11532-2) is the most advanced standard for NDV-equivalent provisions: explicitly names students with hearing deficits or attention/concentration disorders as a distinct category (categoria A3.1/A4) with more stringent RT60 and STI requirements
@@ -241,3 +258,13 @@ citation_mining:
 
 **Status:** Caveats EXEC-READY for item-specification-writer. Gap register: GAP-RAP-01 OPEN P1.
 
+## Metadata
+
+```yaml
+slug: room-acoustic-performance
+population: DEAF, NDV, DEM, NEU
+last_updated: 2026-04-19
+co0006_migration: true
+ref_id_prefix: RAP
+note: REF-RAP-NN flat list in citation mining section preserved for traceability; CO-0006 table above is canonical
+```
