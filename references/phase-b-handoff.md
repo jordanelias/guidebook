@@ -156,3 +156,28 @@ At Phase B Session 1 start:
 **Decision 5 (multilingual):** Second language not yet selected. Candidates: DE (strongest non-EN evidence base in BPC corpus), FR (CEREMA, PCH, APF), NL (NEN 9120:2025, ME/cvs Stichting). Decide before Phase B Phase 2 (i18n architecture).
 
 **Decision 6 (replace vs supplement):** Document (.docx/.pdf) maintained during Phase B build. Website becomes canonical at launch. Post-launch: document updated by derivation from website content, not independently authored. This affects Phase B content pipeline design.
+
+---
+
+## 11. GREY DOI Resolution Progress (logged 2026-04-19)
+
+**Session 1 completed — PubMed pass:**
+
+| REF-ID | BPC file | Resolution |
+|---|---|---|
+| RAP-12 | room-acoustic-performance | ✅ RESOLVED — Murgia et al. 2022 PMID:36260411, DOI:10.1044/2022_LSHSS-21-00181 |
+| MST-02 | ms-thermal-temperature-conflict-resolution | ✅ RESOLVED — Staud 2011 PMID:21833699, DOI:10.1007/s11926-011-0206-6 |
+| POD-11 | pain-ofs-built-environment-design | ⚠ WRONG-MATCH — PubMed returned Egyptian RA study; verify Ismail 2023 via Tandfonline |
+| Gitlin2006 | residential-kitchen-and-task-surfaces | ⚠ WRONG-MATCH — PMID:17050754 is Adult Day Services; verify AJOT home mod paper |
+
+**Remaining ~43 items — non-PubMed lookup required:**
+
+Architecture/design journals not indexed in PubMed:
+- Archnet-IJAR: Rashid 2025 (taxonomy), Watchorn 2025 (sensory rooms)
+- Australian Occupational Therapy Journal: Wellecke 2022 (OTI-02), Russell 2018 (OTI-03)
+- Architectural Science Review: MSE perception SR 2025
+- Indoor Air / JA thermal journals: TCO-01 Baquero, TCO-02 Van Hoof, TCO-04 Nakayama
+- Tandfonline: Ismail 2023 FM hydrotherapy (POD-11), Strassheim 2018 OI (POD-04)
+- Other: TBE-01 Griggs 2019, TBE-04 Flensner 2011, ULB-05 Kennedy 2015, AQV-01 Afrin 2020
+
+**Recommended next tool:** Semantic Scholar API or direct journal website search for each remaining item. Session 2 DOI resolution should prioritise Tier 1 citations (OTI-02 Wellecke, OTI-03 Russell, Kennedy 2015 ULB-05, Afrin 2020 AQV-01).
