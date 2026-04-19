@@ -463,3 +463,49 @@ notes: "Not parser-ready. Requires Block 2 (A1) + Block 3 (ISW) + bibliography-c
 
 **Standards registry gap (A5 audit):** 30 entries currently; target ≥80. Gap of 50+ entries. Quantified in Audit 1/3.
 
+---
+
+## A5 — Standards Registry Gap Quantification (2026-04-19 02:24)
+
+Current standards-registry.md: **30 entries** across **15 jurisdictions** (+ 1 template entry).
+Block 3 target: **≥80 entries**.
+Gap: **50+ entries needed**.
+
+BPC files do not have a dedicated jurisdiction_coverage section. Standards references are distributed across Consensus findings, Divergent findings, and NO-DATA tables. A full count requires scanning all 77 BPC files (~604K bytes). This scan deferred to Block 3 A5 (exec) when BPC files are being read for CO-0006 migration anyway — standard identifiers will be extracted during that pass.
+
+---
+
+## A6 — Decision Tree + OT Trigger Validation (2026-04-19 02:24)
+
+### §3.8 Decision Tree Validation
+
+All 11 conflicts from Part 5 §5.2 tested against §3.8 decision tree steps:
+
+| Domain | Type | Resolution | Tree path | OT trigger? |
+|---|---|---|---|---|
+| COLOUR-CONT | INTER-GROUP | RESOLVED-EVIDENCE | Step 3 | YES (pop) |
+| ACOUSTIC-LVL | INTER-GROUP | RESOLVED-CONSENSUS | Step 4 | YES (pop) |
+| GRAB-DIAM | BOTH | RESOLVED | Step 2/4 | NO |
+| TEMP-RANGE | BOTH | RESOLVED-CONSENSUS | Step 4 | YES (pop) |
+| SURFACE-TEXT | INTER-GROUP | PARTIAL | Step 5→6 | YES (pop) |
+| SPATIAL-OPEN | INTER-GROUP | RESOLVED-CONSENSUS | Step 4 | YES (pop) |
+| LIGHT-INT | INTER-GROUP | RESOLVED-CONSENSUS | Step 4 | YES (pop) |
+| VIS-COMPLEX | INTER-GROUP | RESOLVED (zoning) | Step 5 | YES (pop) |
+| MOVE-FREE | INTER-GROUP | RESOLVED | Step 2/4/5 | YES (pop) |
+| FRAGRANCE | INTER-GROUP | PARTIAL | Step 5→6 | YES (pop) |
+| DOOR-OPERATION | INTER-GROUP | RESOLVED | Step 2/4/5 | YES (pop) |
+
+### §9.2.2 OT Trigger Coverage
+
+**Triggers cover:** NDV, DEM, NEU, OFS, DBL as primary populations + Tier 2 projects + healthcare/supported housing.
+
+**Findings:**
+- 10 of 11 conflicts involve at least one OT-trigger population — correct coverage.
+- GRAB-DIAM (MOB vs UPL) is the only conflict without an OT-trigger population — resolves at Step 2/4 without OT referral. Correct.
+- PAIN is not an OT-trigger population — correct, PAIN conflicts resolve through harm-asymmetry (project-standards rule), not OT referral.
+- 2 PARTIAL conflicts (SURFACE-TEXT, FRAGRANCE) route to Step 6 → §9.10 OT threshold. Both involve OT-trigger populations. Pathway verified.
+
+### Validation result
+
+**PASS.** Decision tree is internally consistent. OT triggers cover all Step 6 escalation paths. No missing population pairs. No contradictions between §3.8, §5.2, and §9.2.2.
+
