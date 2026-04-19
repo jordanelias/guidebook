@@ -62,10 +62,22 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- Hoover-Fong2021-CLARITY — achondroplasia anthropometrics (n=1,374)
-- WHO-Growth-Standards — child growth reference data
-- McDowell2021-NHANES — US paediatric anthropometrics
-- Steinfeld2006-RESNA — wheelchair turning radius research
-- VA-BFDS-2025 — bariatric facility design standards
-- NHS-HBN-00-03 — UK healthcare bariatric guidance
-- FGI-Guidelines — US healthcare facility guidelines
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| BSP-01 | Hoover-Fong, J. et al. | 2021 | CLARITY — achondroplasia anthropometrics (n=1,374). [GREY — DOI required] | 3 | INT | LPA anthropometric data |
+| BSP-02 | WHO | 2006 | WHO Child Growth Standards | 4 | INT | https://www.who.int/tools/child-growth-standards |
+| BSP-03 | McDowell, M.A. et al. | 2021 | NHANES — US paediatric anthropometrics. [GREY — DOI required] | 3 | US | — |
+| BSP-04 | Steinfeld, E. et al. | 2006 | Wheelchair turning radius research — RESNA. [GREY — DOI required] | 4 | INT | — |
+| BSP-05 | VA CFM | 2025 | VA Barrier-Free Design Standard — bariatric facility design | 5 | US | — |
+| BSP-06 | NHS | n.d. | NHS HBN 00-03 — healthcare bariatric guidance | 4 | UK | https://www.england.nhs.uk/publication/health-building-note-00-03/ |
+| BSP-07 | FGI | 2022 | FGI Guidelines for Design and Construction of Hospitals | 4 | US | https://fgiguidelines.org |
+
+## Metadata
+
+```yaml
+slug: body-sizes-supplementary-populations
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
