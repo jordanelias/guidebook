@@ -83,18 +83,21 @@
 | IDeA Center / MOB BPC (turning circle) | Cross-ref | No new sources — deferred to MOB BPC |
 
 ### Key sources
-1. EN 81-70:2021+A1:2022. Safety rules for the construction and installation of lifts — Particular applications for passenger and goods passenger lifts — Part 70: Accessibility to lifts for persons including persons with disability. CEN.
-2. BS 8300:2018. Design of an accessible and inclusive built environment — Part 2: Buildings. BSI.
-3. DIN 18040-1:2010. Barrierefreies Bauen — Planungsgrundlagen — Teil 1: Öffentlich zugängliche Gebäude. DIN.
-4. Boverket BFS 2024:12. Tillgänglighet och användbarhet för personer med nedsatt rörelse- eller orienteringsförmåga. Boverket, Sweden.
-5. Finnish Building Regulations F1: Accessibility of the Built Environment (Decree 241/2017). Finland.
-6. ADA 2010 Standards for Accessible Design, §407. US Access Board.
-7. AS 1428.1:2021. Design for access and mobility — General requirements for access — New building work. Standards Australia.
-8. Part M (Approved Document M, Volume 2): Access to and use of buildings. MHCLG, England (2026 edition).
-9. Roxburgh, R., Hughes, J., & Milgate, W. (2024). Using time diaries to inform OT practice for people with ME/CFS. British Journal of Occupational Therapy. DOI:10.1177/03080226241249279 [OFS rest seating — OT clinical evidence]
-10. Omura, K.M. et al. (2022). Energy conservation, minimum steps, and adaptations: A scoping review. Hong Kong J Occup Ther, 35(2), 125–136. DOI:10.1177/15691861221137223
-11. LEIA (2016). Lifts in dwellings: guidance for Approved Document M 2015. Lift & Escalator Industry Association.
-12. RCOT / Housing LIN (2019) Housing Adaptations Without Delay. Royal College of Occupational Therapists. UK. Tier Co-2. [E-10 rev: alcove geometry, seat height]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| ACG-01 | CEN | 2022 | EN 81-70:2021+A1:2022 — Safety rules for lifts Pt 70: Accessibility | 4 | INT | Universal lift accessibility standard |
+| ACG-02 | BSI | 2018 | BS 8300-2:2018 — Design of an accessible and inclusive built environment | 5 | UK | https://www.bsigroup.com/en-GB/standards/bs-8300/ |
+| ACG-03 | DIN | 2010 | DIN 18040-1:2010 — Barrierefreies Bauen Pt 1: Öffentlich zugängliche Gebäude | 6 | DE | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 |
+| ACG-04 | Boverket | 2024 | BFS 2024:12 / ALM 2 — Tillgänglighet och användbarhet | 6 | SE | https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/alm---bfs-20114/ |
+| ACG-05 | Finland MRPE | 2017 | Decree 241/2017 — Accessibility of the Built Environment (F1) | 6 | FI | https://www.finlex.fi/fi/laki/alkup/2017/20170241 |
+| ACG-06 | US Access Board | 2010 | 2010 ADA Standards for Accessible Design §407 | 6 | US | https://www.ada.gov/law-and-regs/design-standards/2010-stds/#407-elevators |
+| ACG-07 | Standards Australia | 2021 | AS 1428.1:2021 — Design for access and mobility | 6 | AU | https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021 |
+| ACG-08 | MHCLG | 2026 | Approved Document M Vol 2 — Access to and use of buildings | 6 | UK | https://www.gov.uk/guidance/approved-document-m-access-to-and-use-of-buildings |
+| ACG-09 | Roxburgh, R. et al. | 2024 | Using time diaries to inform OT practice for ME/CFS. British J Occup Ther. DOI:10.1177/03080226241249279 | 1 | UK | OFS rest seating — OT clinical evidence |
+| ACG-10 | Omura, K.M. et al. | 2022 | Energy conservation, minimum steps, and adaptations: scoping review. Hong Kong J Occup Ther 35(2):125–136. DOI:10.1177/15691861221137223 | 3 | INT | Rest seating interval |
+| ACG-11 | LEIA | 2016 | Lifts in dwellings: guidance for Approved Document M 2015 | 5 | UK | https://www.leia.co.uk/technical-resources/ |
+| ACG-12 | RCOT / Housing LIN | 2019 | Housing Adaptations Without Delay | Co-2 | UK | https://www.rcot.co.uk/housing-adaptations-without-delay |
 
 ### Bottom-up findings — Session 2026-03-28 (scenario 13 — rest seating alcove geometry)
 
@@ -109,3 +112,12 @@
 
 **Population mapping:** Primary OFS; secondary MOB/AMB, PAIN, DEM, NEU. Alcove geometry (recess + width) spans ≥5 codes → Tier 0 candidate.
 **Tier 0 candidate:** Rest seating alcove recess geometry (≥6 population codes benefit; no conflicts).
+
+## Metadata
+
+```yaml
+slug: accessible-circulation-geometry
+population: MOB, OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
