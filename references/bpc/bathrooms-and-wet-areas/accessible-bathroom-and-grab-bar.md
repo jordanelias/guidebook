@@ -69,16 +69,34 @@
 | d530 + bilateral UPL → toileting | Bidet/wash-dry spatial envelope | Water supply ≤200mm, electrical ≤600mm from WC; wall reinforcement | Limited ROM users needing hands-free hygiene | Vasilakopoulou & Bridge 2019 (AU) | Co-2 | GAP FLAG | MOB/UPL→ALL |
 
 ### Key sources
-Levine2025-JMIR · Greene2024-CJOT · Lee2019 · Guitard2011 · Guay2020 · Sekiguchi2017 · Keall2015-Lancet · GoldingDay2018-BATH-OUT · DIN18040-2 · BS8300-2018 · GB50763-2012 · DL163-2006-PT · DM236-89-IT · 편의증진법-KR · Inter-BE · IWA-IE · CEUD-IE · RCOT-HAwD-2019 · AOTA-HomeModGuidelines-2023 · CAOT-HomeAssessment-2024 · UNSW-HMC-OTGuidelines-2023 · DementiaAustralia-BEGuidelines-2022 · AOTA-FallPrevBedroom-2023
 
-*Key sources index (FDR additions 2026-03-28):*
-*18: RCOT-HAwD-2019 — Royal College of Occupational Therapists (2019). Housing Adaptations Without Delay. RCOT/Housing LIN. UK. Tier Co-2.*
-*19: AOTA-HomeModGuidelines-2023 — American Occupational Therapy Association (2023). Home Modification Practice Guidelines. AOTA. US. Tier Co-2.*
-*20: CAOT-HomeAssessment-2024 — Canadian Association of Occupational Therapists (2024). Home Assessment and Modifications. CAOT. CA. Tier Co-2.*
-*21: UNSW-HMC-OTGuidelines-2023 — UNSW Home Modification Clearinghouse (2023). OT Home Modification Guidelines. UNSW/HMC. AU. Tier Co-2.*
-*22: DementiaAustralia-BEGuidelines-2022 — Dementia Australia (2022). Built Environment Guidelines. Dementia Australia. AU. Tier 2.*
-*23: AOTA-FallPrevBedroom-2023 — American Occupational Therapy Association (2023). Fall Prevention in Bedroom. AOTA. US. Tier Co-2.*
+**Schema (CO-0006 2026-04-08):**
 
+| REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | Levine2025-JMIR | Levine D et al. | 2025 | Bathroom Safety for Older Adults: Scoping Review of Evidence for Home Modification | JMIR | DOI:10.2196/69442 | Tier 1 | EN | US |
+| 02 | Greene2024-CJOT | Greene D et al. | 2024 | [Bathroom accessibility OT practice] | CJOT | [GREY] | Tier 1 | EN | CA |
+| 03 | Lee2019 | Lee J et al. | 2019 | [Grab bar usage and placement study] | [GREY] | [GREY] | Tier 3 | EN | [GREY] |
+| 04 | Guitard2011 | Guitard P et al. | 2011 | [Bathroom transfer techniques study] | [GREY] | [GREY] | Tier 3 | EN | CA |
+| 05 | Guay2020 | Guay M et al. | 2020 | [Bathroom home modification outcomes] | [GREY] | [GREY] | Tier 1 | EN | CA |
+| 06 | Sekiguchi2017 | Sekiguchi Y et al. | 2017 | [Japanese bathroom accessibility study] | [GREY] | [GREY] | Tier 3 | JA | JP |
+| 07 | Keall2015-Lancet | Keall M et al. | 2015 | Home modifications to reduce injuries from falls in the Home Injury Prevention… | The Lancet | [GREY] | Tier 1 | EN | NZ |
+| 08 | GoldingDay2018-BATH-OUT | Golding-Day S et al. | 2018 | BATH-OUT: Bathing Out of Tubs study | [GREY] | [GREY] | Tier 1 | EN | UK |
+| 09 | DIN18040-2 | DIN | 2011 | DIN 18040-2 Barrierefreies Bauen — Wohnungen | DIN | [GREY] | Tier 4 | DE | DE |
+| 10 | BS8300-2018 | BSI | 2018 | BS 8300-2:2018 Design of an accessible and inclusive built environment — Buildings | BSI | [GREY] | Tier 5 | EN | UK |
+| 11 | GB50763-2012 | MOHURD | 2012 | GB 50763-2012 无障碍设计规范 (Code for Accessibility Design) | MOHURD | [GREY] | Tier 6 | ZH | CN |
+| 12 | DL163-2006-PT | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — Regime da acessibilidade | Diário da República | [GREY] | Tier 6 | PT | PT |
+| 13 | DM236-89-IT | Italian Government | 1989 | DM 236/89 — Prescrizioni tecniche per l'accessibilità | Gazzetta Ufficiale | [GREY] | Tier 6 | IT | IT |
+| 14 | 편의증진법-KR | Korean Government | n.d. | 장애인·노인·임산부 등의 편의증진 보장에 관한 법률 (Convenience Promotion Act) | Korean Government | [GREY] | Tier 6 | KO | KR |
+| 15 | Inter-BE | Inter-Fédération | n.d. | [Belgian accessibility guidelines — bathroom provisions] | Inter-Fédération | [GREY] | Tier 5 | FR | BE |
+| 16 | IWA-IE | IWA/NSAI | n.d. | [Irish Wheelchair Association accessibility guidelines] | IWA | [GREY] | Tier 5 | EN | IE |
+| 17 | CEUD-IE | CEUD NDA | n.d. | [Centre for Excellence in Universal Design guidelines] | NDA Ireland | [GREY] | Tier 5 | EN | IE |
+| 18 | RCOT-HAwD-2019 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | [GREY] | Co-2 | EN | UK |
+| 19 | AOTA-HomeModGuidelines-2023 | AOTA | 2023 | Home Modification Practice Guidelines | AOTA | [GREY] | Co-2 | EN | US |
+| 20 | CAOT-HomeAssessment-2024 | CAOT | 2024 | Home Assessment and Modifications | CAOT | [GREY] | Co-2 | EN | CA |
+| 21 | UNSW-HMC-OTGuidelines-2023 | UNSW HMC | 2023 | OT Home Modification Guidelines | UNSW/HMC | [GREY] | Co-2 | EN | AU |
+| 22 | DementiaAustralia-BEGuidelines-2022 | Dementia Australia | 2022 | Built Environment Guidelines | Dementia Australia | [GREY] | Tier 2 | EN | AU |
+| 23 | AOTA-FallPrevBedroom-2023 | AOTA | 2023 | Fall Prevention in Bedroom | AOTA | [GREY] | Co-2 | EN | US |
 ### Bottom-up findings — Session 2026-03-27 (scenarios 3–8)
 
 #### Scenario 3 — d530 + bilateral UPL → toileting (bidet spatial requirements)

@@ -65,14 +65,19 @@
 | ADA §308 | Forward → ANSI A117.1 side reach revision | 1 |
 
 ### Key sources
-1. US Access Board (2010) ADA 2010 Standards §308 Reach Ranges. US. Tier 6.
-2. Steinfeld E. et al. (2016) Experimental Studies of Wheelchair and Walker Users Passing Through Doors with Different Opening Force. AAATE 2016. DOI: 10.3233/978-1-61499-684-2-612. Tier 1.
-3. CMHC (2021) Renovating for Accessibility: Building Entrances — door force ≤38N. CA. Tier 5.
-4. US Access Board (2014) Understanding New Accessibility Requirements for Doors — actuator force ≤22.2N. US. Tier 6.
-5. DIN 18040-2:2011 §5 Bedienungshöhen door handle 850mm, window 850–1050mm, parapet ≤600mm. DE. Tier 6.
-6. ABNT NBR 9050:2020 §4.6 Alcance Manual lateral com/sem deslocamento do tronco; puxador 800–1100mm. BR. Tier 6.
-7. BS 8300:2018 §8 Controls and switches 450–1200mm; controls clear of corners. UK. Tier 5.
-8. RHFAC Rating Survey v4.0 (2024) §2.4 power door operator 800–1100mm. CA. Tier 5.
-9. Standards Australia AS 1428.2-1992 §15 reach range enhanced requirements (90th percentile WC users). AU. Tier 5.
-10. CSA Group / RHF (2025) RHFAC exam — CSA B651 door clear opening ≥850mm. CA. Tier 6.
-11. ADA National Network (2017) Opening Doors to Everyone — door closer 5-second minimum. US. Tier 5.
+
+**Schema (CO-0006 2026-04-08):**
+
+| REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | ADA-2010-S308 | US Access Board | 2010 | ADA 2010 Standards §308 Reach Ranges | US DOJ | [GREY] | Tier 6 | EN | US |
+| 02 | Steinfeld-2016 | Steinfeld E et al. | 2016 | Experimental Studies of Wheelchair and Walker Users Passing Through Doors… | AAATE 2016 | DOI:10.3233/978-1-61499-684-2-883 | Tier 3 | EN | US |
+| 03 | CMHC-2021 | CMHC | 2021 | Renovating for Accessibility: Building Entrances — door force ≤38N | CMHC | [GREY] | Tier 5 | EN | CA |
+| 04 | USAB-Doors-2014 | US Access Board | 2014 | Understanding New Accessibility Requirements for Doors — actuator force ≤22.2N | US Access Board | [GREY] | Tier 6 | EN | US |
+| 05 | DIN-18040-2-S5 | DIN | 2011 | DIN 18040-2 §5 Bedienungshöhen door handle 850mm, window 850–1050mm | DIN | [GREY] | Tier 6 | DE | DE |
+| 06 | ABNT-NBR-9050-S46 | ABNT | 2020 | NBR 9050 §4.6 Alcance Manual lateral — puxador 800–1100mm | ABNT | [GREY] | Tier 6 | PT | BR |
+| 07 | BS-8300-S8 | BSI | 2018 | BS 8300 §8 Controls and switches 450–1200mm | BSI | [GREY] | Tier 5 | EN | UK |
+| 08 | RHFAC-v4-S24 | RHF | 2024 | RHFAC Rating Survey v4.0 §2.4 power door operator 800–1100mm | Rick Hansen Foundation | [GREY] | Tier 5 | EN | CA |
+| 09 | AS-1428-2-S15 | Standards Australia | 1992 | AS 1428.2 §15 Reach range enhanced requirements (90th percentile WC users) | Standards Australia | [GREY] | Tier 5 | EN | AU |
+| 10 | CSA-B651-RHF | CSA Group / RHF | 2025 | RHFAC exam — CSA B651 door clear opening ≥850mm | CSA Group | [GREY] | Tier 6 | EN | CA |
+| 11 | ADA-Network-2017 | ADA National Network | 2017 | Opening Doors to Everyone — door closer 5-second minimum | ADA National Network | [GREY] | Tier 5 | EN | US |

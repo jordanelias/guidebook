@@ -60,13 +60,17 @@
 | BBR 3:148 | Forward | No new sources found |
 
 ### Key sources
-1. ADA Standards for Accessible Design S611. (2010). Washing Machines and Clothes Dryers. DOJ. [EN, US, Tier 4]
-2. US Access Board. (2021). *Accessible Washers and Dryers*. [EN, US, Tier 5]
-3. NDIS SDA Design Standard. (2019). High Physical Support — laundry. NDIA. [EN, AU, Tier 4]
-4. Boverket (BBR 3:148). *Tillgänglighet i gemensamma tvättstugor*. [SV, SE, Tier 5]
-5. DIN 18040-2. (2011). *Barrierefreies Bauen — Wohnungen*. DIN. [DE, DE, Tier 4]
-6. SD State Extension. (2020). Accessible Laundry Room Design. [EN, US, Tier 5]
 
+**Schema (CO-0006 2026-04-08):**
+
+| REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | ADA-2010-S611 | DOJ | 2010 | ADA Standards for Accessible Design S611 — Washing Machines and Clothes Dryers | US DOJ | [GREY] | Tier 4 | EN | US |
+| 02 | USAB-WashDry-2021 | US Access Board | 2021 | Accessible Washers and Dryers | US Access Board | [GREY] | Tier 5 | EN | US |
+| 03 | NDIS-SDA-2019 | NDIA | 2019 | NDIS SDA Design Standard — High Physical Support, laundry | NDIA | [GREY] | Tier 4 | EN | AU |
+| 04 | BBR-3-148 | Boverket | n.d. | Tillgänglighet i gemensamma tvättstugor (Accessibility in shared laundry rooms) | Boverket | [GREY] | Tier 5 | SV | SE |
+| 05 | DIN-18040-2 | DIN | 2011 | Barrierefreies Bauen — Wohnungen | DIN | [GREY] | Tier 4 | DE | DE |
+| 06 | SDSU-Laundry-2020 | SD State Extension | 2020 | Accessible Laundry Room Design | SD State Extension | [GREY] | Tier 5 | EN | US |
 ---
 
 <!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->

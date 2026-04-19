@@ -55,8 +55,24 @@
 | Wellecke 2022 | Forward | 1 |
 
 ### Key sources
-Stark2017-AJOT · Foundations-AKW-2023 · DIN18040-2 · BS8300-2018 · ADA-2010-kitchen · GB50763-2012-§3.12.4 · Inter-BE · ISO21542-2021 · Wellecke2022 · Gitlin2006 · DM236-89-IT · DL163-2006-PT · 편의증진법-KR
 
+**Schema (CO-0006 2026-04-08):**
+
+| REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | Stark2017-AJOT | Stark S et al. | 2017 | [Kitchen task performance and home modification outcomes] | AJOT | [GREY] | Tier 1 | EN | US |
+| 02 | Foundations-AKW-2023 | Foundations / AKW | 2023 | [Accessible kitchen design guide] | Foundations / AKW | [GREY] | Tier 5 | EN | UK |
+| 03 | DIN18040-2 | DIN | 2011 | DIN 18040-2 Barrierefreies Bauen — Wohnungen | DIN | [GREY] | Tier 4 | DE | DE |
+| 04 | BS8300-2018 | BSI | 2018 | BS 8300-2:2018 Design of an accessible and inclusive built environment — Buildings | BSI | [GREY] | Tier 5 | EN | UK |
+| 05 | ADA-2010-kitchen | US DOJ | 2010 | ADA Standards for Accessible Design — kitchen provisions | US DOJ | [GREY] | Tier 6 | EN | US |
+| 06 | GB50763-2012-§3.12.4 | MOHURD | 2012 | GB 50763-2012 §3.12.4 无障碍厨房设计 (Accessible kitchen design) | MOHURD | [GREY] | Tier 6 | ZH | CN |
+| 07 | Inter-BE | Inter-Fédération | n.d. | [Belgian accessibility guidelines — kitchen provisions] | Inter-Fédération | [GREY] | Tier 5 | FR | BE |
+| 08 | ISO21542-2021 | ISO | 2021 | ISO 21542:2021 Building construction — Accessibility and usability of the built environment | ISO | [GREY] | Tier 4 | EN | ISO |
+| 09 | Wellecke2022 | Wellecke A et al. | 2022 | [Kitchen accessibility and aging in place study] | [GREY] | [GREY] | Tier 3 | EN | [GREY] |
+| 10 | Gitlin2006 | Gitlin L et al. | 2006 | [Home environmental skill-building program for older adults] | [GREY] | [GREY] | Tier 1 | EN | US |
+| 11 | DM236-89-IT | Italian Government | 1989 | DM 236/89 — Prescrizioni tecniche per l'accessibilità | Gazzetta Ufficiale | [GREY] | Tier 6 | IT | IT |
+| 12 | DL163-2006-PT | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — Regime da acessibilidade | Diário da República | [GREY] | Tier 6 | PT | PT |
+| 13 | 편의증진법-KR | Korean Government | n.d. | 장애인·노인·임산부 등의 편의증진 보장에 관한 법률 (Convenience Promotion Act) | Korean Government | [GREY] | Tier 6 | KO | KR |
 ### Bottom-up findings — Session 2026-03-27 (d630 + d440 FDR pass)
 
 #### Scenario 4 — d630 + seated wheelchair → meal prep
