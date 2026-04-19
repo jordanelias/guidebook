@@ -75,25 +75,37 @@
 | DSDC EADDAT (2022) | Backward | Calkins et al. (2022) |
 
 ### Key sources
-1. Marquardt, G. (2011). Wayfinding for people with dementia. HERD, 4(2), 75–90. DOI:10.1177/193758671100400207
-2. Marquardt, G., & Schmieg, P. (2009). Dementia-friendly architecture. Am J Alzheimers Dis, 24(4), 333–340. PMID:19487549
-3. van Buuren, L.P.G., & Mohammadi, M. (2022). Dementia-friendly design: criteria and typologies. HERD, 15(1), 150–172. DOI:10.1177/19375867211043546
-4. van Buuren, L.P.G., & Mohammadi, M. (2025). Wayfinding behavioral patterns. Front. Dementia. DOI:10.3389/frdem.2025.1524425
-5. Wiener, J.M., & Pazzaglia, F. (2021). Ageing- and dementia-friendly design. Cogn Process, 22(4), 715–730. PMC8545728
-6. Marquardt, G. et al. (2014). Impact of built environment on people with dementia. HERD, 8(1), 127–157. DOI:10.1177/193758671400800111
-7. Tola, G. et al. (2021). Built environment design and ASD: scoping review. IJERPH, 18(6), 3203. DOI:10.3390/ijerph18063203
-8. Black, M.H. et al. (2022). Built environment considerations for autistic individuals. Autism, 26(8). DOI:10.1177/13623613221102753
-9. Mostafa, M. (2021/2023). ASPECTSS 2.0 / Autism Friendly University Design Guide. DCU; Archnet-IJAR.
-10. DSDC, University of Stirling (2022). EADDAT. dementia.stir.ac.uk
-11. Calkins, M.P. et al. (2022). Evaluation of env. assessment tools for dementia. Alzheimer's & Dementia TRCI, 8, e12353.
-12. AIC / CLC / SUTD Singapore (2023). Dementia-Friendly Neighbourhood Design Guide. Centre for Liveable Cities.
-13. Yuen, B. et al. (2020). Six Principles of Dementia-Friendly Neighbourhood. AIC/SUTD.
-14. CEREMA (2022). Construire ou rénover une structure d'accueil Alzheimer, Fiche n°8. CEREMA.
-15. KDA (ongoing). Wohnkonzepte für Menschen mit Demenz; PRO ALTER. KDA, Germany.
-16. Helsedirektoratet (2017/2024). Nasjonal faglig retningslinje om demens. Oslo.
-17. Alzheimer Nederland (2023). Dementievriendelijke ontmoetingsplekken pilot. RadarAdvies.
-18. Seoul Metropolitan Government (2023). 서울형 치매전담실 가이드북.
-19. Jee, S.I. (2022). Daylighting Design Factors for Korean Dementia Nursing Homes. J. Korea Inst. Healthcare Architecture, 28(4), 71–87.
-20. Dementia Australia / DTA (ongoing). Designing Dementia-Friendly Care Environments. dementia.org.au
-21. 周燕珉 et al. (2023). 老年住宅 (3rd ed.). China Architecture & Building Press.
-22. Siegelaar, A. et al. (2025). Physical environment and quality of life in dementia: meta-review. Sage Open Aging. DOI:10.1177/30495334251345092
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| CWD-01 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD 4(2):75–90. DOI:10.1177/193758671100400207 | 3 | INT | Core reference |
+| CWD-02 | Marquardt, G. & Schmieg, P. | 2009 | Dementia-friendly architecture. Am J Alzheimers Dis 24(4):333–340. PMID:19487549 | 3 | INT | — |
+| CWD-03 | van Buuren, L.P.G. & Mohammadi, M. | 2022 | Dementia-friendly design: criteria and typologies. HERD 15(1):150–172. DOI:10.1177/19375867211043546 | 3 | NL | — |
+| CWD-04 | van Buuren, L.P.G. & Mohammadi, M. | 2025 | Wayfinding behavioral patterns. Front Dementia. DOI:10.3389/frdem.2025.1524425 | 3 | NL | — |
+| CWD-05 | Wiener, J.M. & Pazzaglia, F. | 2021 | Ageing- and dementia-friendly design. Cogn Process 22(4):715–730. PMC8545728 | 3 | INT | Cognitive map progression |
+| CWD-06 | Marquardt, G. et al. | 2014 | Impact of built environment on people with dementia. HERD 8(1):127–157. DOI:10.1177/193758671400800111 | 3 | INT | — |
+| CWD-07 | Tola, G. et al. | 2021 | Built environment design and ASD: scoping review. IJERPH 18(6):3203. DOI:10.3390/ijerph18063203 | 3 | INT | NDV/AUT |
+| CWD-08 | Black, M.H. et al. | 2022 | Built environment considerations for autistic individuals. Autism 26(8). DOI:10.1177/13623613221102753 | 3 | INT | NDV/AUT |
+| CWD-09 | Mostafa, M. | 2023 | ASPECTSS 2.0 / Autism Friendly University Design Guide. DCU; Archnet-IJAR | 2 | INT | NDV/AUT spatial sequencing |
+| CWD-10 | DSDC, University of Stirling | 2022 | EADDAT — Environment Assessment Dementia Design Audit Tool | Co-1 | UK | https://dementia.stir.ac.uk/design/environmental-audit |
+| CWD-11 | Calkins, M.P. et al. | 2022 | Evaluation of env. assessment tools for dementia. Alzheimers Dement TRCI 8:e12353 | 3 | INT | — |
+| CWD-12 | AIC / CLC / SUTD | 2023 | Dementia-Friendly Neighbourhood Design Guide. Centre for Liveable Cities, Singapore | 5 | SG | — |
+| CWD-13 | Yuen, B. et al. | 2020 | Six Principles of Dementia-Friendly Neighbourhood. AIC/SUTD | 5 | SG | — |
+| CWD-14 | CEREMA | 2022 | Construire ou rénover une structure d'accueil Alzheimer Fiche n°8 | 5 | FR | https://www.cerema.fr/ |
+| CWD-15 | KDA | ongoing | Wohnkonzepte für Menschen mit Demenz; PRO ALTER | 5 | DE | https://www.kda.de/ |
+| CWD-16 | Helsedirektoratet | 2024 | Nasjonal faglig retningslinje om demens | 5 | NO | https://www.helsedirektoratet.no/retningslinjer/demens |
+| CWD-17 | Alzheimer Nederland | 2023 | Dementievriendelijke ontmoetingsplekken pilot. RadarAdvies | 2 | NL | — |
+| CWD-18 | Seoul Metropolitan Government | 2023 | 서울형 치매전담실 가이드북 | 5 | KR | — |
+| CWD-19 | Jee, S.I. | 2022 | Daylighting Design Factors for Korean Dementia Nursing Homes. J Korea Inst Healthcare Archit 28(4):71–87 | 3 | KR | — |
+| CWD-20 | Dementia Australia | ongoing | Designing Dementia-Friendly Care Environments | 2 | AU | https://www.dementia.org.au/information/for-health-professionals/built-environment |
+| CWD-21 | 周燕珉 et al. | 2023 | 老年住宅 (3rd ed.). China Architecture & Building Press | 5 | CN | — |
+| CWD-22 | Siegelaar, A. et al. | 2025 | Physical environment and quality of life in dementia: meta-review. Sage Open Aging. DOI:10.1177/30495334251345092 | 3 | INT | — |
+
+## Metadata
+
+```yaml
+slug: cognitive-wayfinding-design
+population: DEM, NDV
+last_updated: 2026-04-19
+co0006_migration: true
+```
