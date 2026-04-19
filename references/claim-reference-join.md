@@ -38,7 +38,7 @@
 | Part 1 | 7 | 7 | 0 | 0 |
 | Part 2 | 83 | 83 | 0 | 0 |
 | Part 3 | 42 | 42 | 0 | 0 |
-| Part 4 | 558 | 558 | 0 | 0 |
+| Part 4 | 558 | 485 | 72 | 0 |
 | Part 5 | 79 | 79 | 0 | 0 |
 | Part 6 | 115 | 115 | 0 | 0 |
 | Part 7 | 111 | 111 | 0 | 0 |
@@ -167,3 +167,16 @@ For each claim:
 - If no reference exists for a claim, flag as `status: ORPHANED` (important — indicates specification derived without direct citation)
 
 **Verification:** After tagging, a second pass sets `status: VERIFIED` for claims where the cited ref genuinely supports the stated value (not just same topic).
+---
+
+## Session log
+
+### Step 2 Session 1 (2026-04-19) — Part 4 Category A (acoustics)
+- **Scope:** A-01 through A-17 (73 claims)
+- **TAGGED:** 72
+- **ORPHANED:** 1 (A-04 20m restorative interval — UNSUPPORTED per GAP-OPS-01)
+- **Partial-orphan annotations:** A-09 (0.1 m/s vibration threshold UNVERIFIED); A-13 (94% wayfinding figure from unverifiable Hogeweyk POE)
+- **Primary reference sources used:** 
+  - Standards: BS 8300 (REF-00151), PAS 6463 (REF-00159/160), DIN 18041 (REF-00218), ANSI S12.60 (REF-00126), BB93 (REF-00207), AS/NZS 2107 (REF-00462), TEK17 (REF-00222), IEC 60118-4 (REF-00289)
+  - Evidence (journals): Bettarello 2021 (REF-00142), Murgia 2022 (REF-00030), Black 2022 (REF-00006), Mostafa 2021 (REF-00029), Unwin 2022/21/24 (REF-00048/490/491), Williams 2024 (REF-00523), Brown 2022 (REF-00009)
+- **Commit:** claim-reference-join.json updated
