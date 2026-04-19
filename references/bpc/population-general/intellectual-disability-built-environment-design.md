@@ -58,11 +58,15 @@
 | NDIS SDA (2019) | Forward | No new sources found |
 
 ### Key sources
-1. MDPI. (2026). *Buildings*, 16(3), 489. IntD home design. [EN, Tier 3]
-2. PMC. (2025). IntD home design scoping review. [EN, Tier 3]
-3. NDIS SDA. (2019). Specialist Disability Accommodation Design Standard — Improved Liveability. NDIA. [EN, AU, Tier 4]
-4. Castell, S. (2008). *Designing for People with Dementia and Other Cognitive Disabilities*. [EN, Tier 4]
-5. CSA B651:23 s.4.7. (2023). Qualitative IntD provisions. [EN, CA, Tier 4]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| IDD-01 | (author TBC) | 2026 | IntD home design. Buildings 16(3):489. MDPI. [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| IDD-02 | Quesada-Cubo, V. et al. | 2025 | Inclusive housing environments for IntD: SR (73 studies). J Appl Res Intell Disabil. [GREY — DOI PENDING VERIFICATION] | 3 | INT | First comprehensive IntD housing SR |
+| IDD-03 | NDIA | 2019 | NDIS SDA Design Standard — Improved Liveability | 4 | AU | https://www.ndis.gov.au/providers/housing-and-living-supports-and-services/specialist-disability-accommodation/sda-design-standard |
+| IDD-04 | Castell, S. | 2008 | Designing for People with Dementia and Other Cognitive Disabilities | 4 | INT | — |
+| IDD-05 | CSA Group | 2023 | CAN/CSA B651:23 s.4.7 — qualitative IntD provisions | 4 | CA | https://www.csagroup.org |
+| IDD-06 | Lindsay, S. et al. | 2024 | Accessible independent housing for people with disabilities: scoping review. PLoS ONE 19(1):e0291228. DOI:10.1371/journal.pone.0291228 | 3 | INT | 60 studies, 18 countries |
 
 ---
 
@@ -84,3 +88,13 @@ FDR-IntD-01: Reduced abstract reasoning — concrete landmark wayfinding as prim
 **Impact on IntD BPC:** Partially addresses THIN-BASE disclosure. The BPC status should be upgraded from "THIN-BASE — no standalone IntD built-environment research" to "THIN-BASE — consolidated evidence now available via Quesada-Cubo 2025 SR (73 studies); dimensional specifications remain proxied through DEM/NDV." **Tier 3.**
 
 **Lindsay et al. 2024** — "Accessible independent housing for people with disabilities: scoping review." PLoS ONE 19(1):e0291228. DOI: 10.1371/journal.pone.0291228. 60 studies, 18 countries, 20-year scope. Key trends: removing barriers, policy influence, technology interventions, co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.**
+
+## Metadata
+
+```yaml
+slug: intellectual-disability-built-environment-design
+population: DEM, NDV
+last_updated: 2026-04-19
+co0006_migration: true
+note: IntD proxied through DEM/NDV per project-standards; no standalone IntD population code
+```
