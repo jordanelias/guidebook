@@ -69,7 +69,7 @@
 | 07 | Inter-BE | Inter-Fédération | n.d. | Guide d'accessibilité — prescriptions techniques (kitchen provisions) | Inter-Fédération | https://www.inter.be/fr/outils/guides-techniques | Tier 5 | FR | BE |
 | 08 | ISO21542-2021 | ISO | 2021 | ISO 21542:2021 Building construction — Accessibility and usability of the built environment | ISO | https://www.iso.org/standard/71025.html | Tier 4 | EN | ISO |
 | 09 | Wellecke2022 | Wellecke A et al. | 2022 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | EN | [GREY — jurisdiction unverified] |
-| 10 | Gitlin2006 | Gitlin L et al. | 2006 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 1 | EN | US |
+| 10 | Gitlin2006 | Gitlin, L.N. et al. | 2006 | [GREY — title unverified; PubMed PMID:17050754 (Gerontologist Adult Day Services) is NOT this paper; verify AJOT 2006 home modification paper directly; DOI required] | AJOT (probable) | [GREY — DOI required] | Tier 1 | EN | US |
 | 11 | DM236-89-IT | Italian Government | 1989 | DM 236/89 — Prescrizioni tecniche per l'accessibilità | Gazzetta Ufficiale | https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf | Tier 6 | IT | IT |
 | 12 | DL163-2006-PT | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — Regime da acessibilidade | Diário da República | https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296 | Tier 6 | PT | PT |
 | 13 | 편의증진법-KR | Korean Government | 1997 | 장애인·노인·임산부 등의 편의증진 보장에 관한 법률 (Act on Convenience Promotion for Persons with Disabilities, the Aged, Pregnant Women, etc.) | Ministry of Health and Welfare | https://www.law.go.kr/법령/장애인%C2%B7노인%C2%B7임산부등의편의증진보장에관한법률 | Tier 6 | KO | KR |
