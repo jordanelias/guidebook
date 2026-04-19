@@ -44,7 +44,32 @@ Same as residential-entry-and-threshold — see above.
 | ADA §303 threshold provisions | Backward | 1 |
 
 ### Key sources
-1–14: Same as residential-entry-and-threshold (threshold values embedded in same statutory standards)
-15. iDigHardware (2019/2021) Decoded: Thresholds and Changes in Level. ADA §303 analysis. US. Tier 6 commentary.
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| TLA-01 | US Access Board | 2010 | ADA Standards §303 Changes in Level | 6 | US | https://www.ada.gov/law-and-regs/design-standards/2010-stds/#303-changes-in-level |
+| TLA-02 | BSI | 2018 | BS 8300-2:2018 — threshold provisions | 5 | UK | See RET-04 |
+| TLA-03 | DIN | 2011 | DIN 18040-2:2011 — Nullschwelle doctrine | 6 | DE | See RET-12 |
+| TLA-04 | Direktoratet for byggkvalitet | 2017 | TEK17 §1-3(m) trinnfri ≤25mm definition | 6 | NO | See RET-11 |
+| TLA-05 | NEN | 2025 | NEN 9120:2025 — drempel ≤20mm | 5 | NL | See RET-18 |
+| TLA-06 | Légifrance | 2014 | Arrêté 2014 — ressaut ≤20mm | 6 | FR | See RET-15 |
+| TLA-07 | ABNT | 2020 | NBR 9050:2020 — soleira ≤20mm | 6 | BR | See RET-14 |
+| TLA-08 | Standards Australia | 2021 | AS 1428.1:2021 — threshold ≤35mm at 1:8 ramp (retrofit) | 6 | AU | See RET-17 |
+| TLA-09 | Habinteg/CAE | 2024 | Inclusive Housing Design Guide — threshold provisions | 5 | UK | See RET-01 |
+| TLA-10 | Rick Hansen Foundation | 2024 | RHFAC Rating Survey v4.0 §2 — threshold | 5 | CA | See RET-10 |
+| TLA-11 | DIN | 2023 | Draft E DIN 18040-2:2023 — tightening to ≤10mm | 6 | DE | Draft only; confirms convergence trend |
+| TLA-12 | Boverket | 2024 | BFS 2024:12 / BBR threshold provisions | 6 | SE | See RET-13 |
+| TLA-13 | MLIT | 2024 | バリアフリー法 — 段差なし principle | 6 | JP | See RET-20 |
+| TLA-14 | ISO | 2021 | ISO 21542:2021 — threshold provisions | 4 | INT | See RET-21 |
+| TLA-15 | iDigHardware | 2021 | Decoded: Thresholds and Changes in Level (ADA §303 analysis) | 6 commentary | US | https://www.idigardware.com |
 
 ---
+
+## Metadata
+
+```yaml
+slug: threshold-and-level-access
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+```
