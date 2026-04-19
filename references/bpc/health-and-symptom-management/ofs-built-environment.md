@@ -61,14 +61,26 @@
 | Wheels for Wellbeing UK seating 2025 | forward | 1 access association endorsement |
 
 ### Key sources
-1. IOM/NAM (2015). *Beyond ME/CFS: Redefining an Illness*. National Academies Press. DOI: 10.17226/19012
-2. Bateman Horne Center. *ME/CFS Clinical Care: Criteria-Specific Guidance.* batemanhornecenter.org/providers/mecfs/criteria-specific-guidance/ [Tier Co-1 — verified]
-3. CDC (2024). *ME/CFS Clinical Care for Severely Affected Patients.* cdc.gov/me-cfs [Tier Co-1]
-4. Wheels for Wellbeing (2025). *Benches and Seating in Public Spaces.* wheelsforwellbeing.org.uk [Tier 5]
-5. VisitEngland. *Make Your Business Accessible: Section 5.* visitbritain.org — 50m seating interval [Tier 5]
-6. BS8300-1:2018 / DfT (2007). *Manual for Streets* — 100m seating interval [Tier 6]
-7. Kos et al. (2015). Activity pacing self-management in ME/CFS: RCT. *American Journal of Occupational Therapy.* [Tier 1]
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| OBE-01 | IOM/NAM | 2015 | Beyond ME/CFS: Redefining an Illness. NAP. DOI:10.17226/19012 | 3 | US | Core clinical framework |
+| OBE-02 | Bateman Horne Center | 2025 | ME/CFS Clinical Care: Criteria-Specific Guidance | Co-1 | US | https://batemanhornecenter.org/providers/mecfs/ |
+| OBE-03 | CDC | 2024 | ME/CFS Clinical Care for Severely Affected Patients | Co-1 | US | https://www.cdc.gov/me-cfs/ |
+| OBE-04 | Wheels for Wellbeing | 2025 | Benches and Seating in Public Spaces | 5 | UK | https://www.wheelsforwellbeing.org.uk |
+| OBE-05 | VisitEngland | n.d. | Make Your Business Accessible §5 — 50m seating interval | 5 | UK | https://www.visitbritain.org/business-advice/make-your-business-accessible |
+| OBE-06 | BSI / DfT | 2018 | BS 8300-1:2018 + Manual for Streets — 100m seating interval | 6 | UK | — |
+| OBE-07 | Kos, D. et al. | 2015 | Activity pacing self-management in ME/CFS: RCT. Am J Occup Ther | 1 | INT | [GREY — DOI required] |
 
 ---
 ### Bottom-up findings (functional deficit pass)
 FDR-OFS-01: Orthostatic intolerance onset 2-10 min (Raj 2013 Circulation Tier 1; Stewart 2012 Tier 2) — seated service at all counters must be immediately available, not on-request. G-06 specification gap. FDR-OFS-02: PEM delayed 12-72h (IOM/NAM 2015 Tier 1) — residential layout circuit bedroom-bathroom-kitchen-rest ≤25m one-way; bedroom-bathroom ≤5m; bedroom-kitchen ≤8m. Tier X architectural (no standard). FDR-OFS-03: MCAS co-occurrence (Afrin 2020 Tier 3) — commissioning specification: OFS spaces not to be occupied until post-installation VOC test confirms TVOC ≤0.5 mg/m³ (28-day clearance). F-04 addition. Items affected: G-06, Part 6 matrices, F-04.
+
+## Metadata
+
+```yaml
+slug: ofs-built-environment
+population: OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```
