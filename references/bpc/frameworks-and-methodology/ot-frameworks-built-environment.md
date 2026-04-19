@@ -47,8 +47,20 @@ Not yet performed.
 Not yet run.
 
 ### Key sources
-- TownsendPolatajko2007 — CMOP-E
-- Kielhofner2008 — MOHO
-- BaumEtal2015 — PEOP
-- Iwama2006 — Kawa Model
-- Siu2024-PMC — PEOP validation (109 articles)
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| OTF-01 | Townsend, E. & Polatajko, H. | 2007 | Enabling Occupation II: CMOP-E. CAOT Publications | 1 | CA | CMOP-E |
+| OTF-02 | Kielhofner, G. | 2008 | Model of Human Occupation, 4th ed. Lippincott | 1 | INT | MOHO |
+| OTF-03 | Baum, C. et al. | 2015 | PEOP model. In Willard and Spackman's OT | 1 | INT | Person-Environment-Occupation-Performance |
+| OTF-04 | Iwama, M. | 2006 | The Kawa Model: Culturally Relevant OT. Churchill Livingstone | 1 | INT | Cultural lens |
+| OTF-05 | Siu, A. et al. | 2024 | PEOP validation: SR (109 articles). PMC. [GREY — DOI required] | 3 | INT | — |
+
+## Metadata
+
+```yaml
+slug: ot-frameworks-built-environment
+population: ALL
+last_updated: 2026-04-19
+co0006_migration: true
+```
