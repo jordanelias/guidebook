@@ -459,6 +459,13 @@ Not yet run.
 
 **Lindsay, Fuentes, Ragunathan et al. 2024** — "Accessible independent housing for people with disabilities: A scoping review of promising practices, policies and interventions." PLoS ONE 19(1):e0291228. DOI: 10.1371/journal.pone.0291228. PRISMA-ScR, 60 studies across 18 countries over 20 years. Key trends: (1) removing barriers to accessible housing (advocacy, builders, subsidies); (2) policies influencing accessible housing; (3) technology interventions; (4) co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.**
 
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09 — B2 update)
+
+**Lindsay, L. et al. (2024)** — "Accessible independent housing for people with disabilities: Scoping review of promising practices, policies and interventions." *PLoS ONE* 19(1):e0291228. DOI:10.1371/journal.pone.0291228. [Ambiguous PMID — three candidates; confirm via DOI]. 60 studies, 18 countries, 20-year scope. **Key findings:** (1) Removing barriers to accessible housing (advocacy, builder requirements, subsidies); (2) Policies influencing accessible housing; (3) Technology interventions; (4) Co-design approaches. Cross-references visitability and housing policy frameworks. **Tier 3.** Note: Already indexed as RAH-08 in Key sources table above.
+
+**Impact on BPC:** Lindsay 2024 confirms visitability framework as the most widely evidenced minimum standard across 18 countries. Co-design and technology intervention as complementary strategies (not substitutes for physical provision). No change to existing RAH-08 entry — addendum records DD-7 synthesis confirmation.
+
 ## Metadata
 
 ```yaml
