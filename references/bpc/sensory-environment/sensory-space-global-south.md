@@ -117,3 +117,30 @@ Nigeria (EN) — Co-1 DIY sensory space in Nigerian home. Cross-cultural literat
 
 ## Sources (14 confirmed)
 See search log for full table.
+
+## Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| SSG-01 | Bertone, A. et al. | 2021 | Scoping review: built environment design and ASD — 21 studies. [GREY — DOI required] | 3 | INT | 9 US, 6 UK, 5 Egypt |
+| SSG-02 | Tsukuba University | 2021 | カームダウンスペース — calming space research (JP/US/FR comparison) | 1 | JP | Individual control = primary design variable |
+| SSG-03 | Tsukuba University | 2025 | カームダウンスペース — follow-up study | 5 | JP | — |
+| SSG-04 | Crompton, C.J. et al. | 2024 | Collectivist cultures, autism camouflaging, and stigma. [GREY — DOI required] | 1 | INT | Collectivist culture / PAS 6463 model transfer problem |
+| SSG-05 | UAE (case study) | n.d. | Quiet and simple design — natural light, neutral colours, acoustic and ventilation | 3 | UAE | No dimensional specifications |
+| SSG-06 | Ghazali, R. et al. | 2019 | ASPECTSS application in Malaysian school context | 3 | MY | Cross-cultural application confirmed |
+| SSG-07 | de Leeuw, A. et al. | 2020 | Collectivist cultures and autism stigma. [GREY — DOI required] | 3 | INT | — |
+| SSG-08 | (Crompton co-author) | 2024 | Cross-cultural camouflaging study | 1 | INT | See SSG-04 |
+| SSG-09 | Chilean Congress | 2023 | Ley de Autismo N°21.545 — first LAC statutory sensory accommodation mandate | 6 | CL | No design specifications — statutory trigger only |
+| SSG-10 | (Nigeria Co-1 source) | n.d. | DIY sensory corners in Nigerian homes (foam mats, neutral paint) | Co-1 | NG | Low-resource implementation |
+| SSG-11 | (2024 scoping review) | 2024 | Sensory room practice — Indonesia, Korea, Italy, France. [GREY — full citation unverified] | 3 | INT | 1 study per country |
+| SSG-12 | (India Autism Center) | n.d. | West Bengal outdoor sensory design emphasis (52 acres) | 2 | IN | Practitioner source |
+
+## Metadata
+
+```yaml
+slug: sensory-space-global-south
+population: NDV
+last_updated: 2026-04-19
+co0006_migration: true
+opus_synthesis: true
+```
