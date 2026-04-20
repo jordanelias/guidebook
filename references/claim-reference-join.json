@@ -13582,8 +13582,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "| A-02 | Acoustic Ceiling Panels (NRC ≥0.85) | AC | DD | No | RT60 at 500 Hz in occupied condition | Finishes specificat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0002",
@@ -13593,8 +13596,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "| A-06 | Acoustic Wall Panels — Mid-Frequency Treatment | AC | DD | No | RT60 at 500 Hz | Finishes specification |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0003",
@@ -13604,8 +13610,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "| A-09 | HVAC Vibration Isolation (Floating Plant Room) | AC, ME, SE | SD | ⚠ YES — floating slab and isolation specific",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0004",
@@ -13615,8 +13624,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-13 | Reverberation Time Control (RT60 ≤0.4 s) | AC | DD | No | RT60 at 500 Hz in occupied condition | Acoustic strat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0005",
@@ -13626,8 +13638,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "| A-13 | Reverberation Time Control (RT60 ≤0.4 s) | AC | DD | No | RT60 at 500 Hz in occupied condition | Acoustic strat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00218"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0006",
@@ -13637,8 +13652,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-16 | Sensory Room (Multi-Sensory Environment) | AC, ME, EE | SD | ⚠ YES — room location and adjacency are schematic ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0007",
@@ -13648,8 +13666,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<5%",
     "context": "| B-04 | Flicker-Free LED (IEEE 1789-2015 Compliant) | EE | DD | No | Flicker % <5% at all dimming levels including 20% ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0008",
@@ -13659,8 +13680,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "| B-04 | Flicker-Free LED (IEEE 1789-2015 Compliant) | EE | DD | No | Flicker % <5% at all dimming levels including 20% ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0009",
@@ -13670,8 +13694,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3–5 m",
     "context": "| B-05 | Gradual Lighting Transition Zones (≥3–5 m) | EE | DD | No | No illuminance step change >10:1 over <1 m across t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0010",
@@ -13681,8 +13708,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<1 m",
     "context": "| B-05 | Gradual Lighting Transition Zones (≥3–5 m) | EE | DD | No | No illuminance step change >10:1 over <1 m across t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0011",
@@ -13692,8 +13722,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "| B-06 | Individual Dimming Control (≥300 Lux Range) | EE | DD | No | 10 lux minimum to full output; response time <1 s ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00185",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0012",
@@ -13703,8 +13736,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<1 s",
     "context": "| B-06 | Individual Dimming Control (≥300 Lux Range) | EE | DD | No | 10 lux minimum to full output; response time <1 s ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00185",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0013",
@@ -13714,8 +13750,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥150 lux",
     "context": "| B-09 | Maximisation of Natural Light — Supplementary Electric in Transition Zones | EE | DD | No | ≥150 lux in transit",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0014",
@@ -13725,8 +13764,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1–3 Hz",
     "context": "| B-10 | Visual Fire Alarm (Strobe VAD, BS EN 54-23 Category W) | EE | DD | No | Full EN 54-23 coverage; flash rate 1–3 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00149",
+      "REF-00401"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0015",
@@ -13736,8 +13778,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 lux",
     "context": "| D-11 | Secured Outdoor Loop Path — Gate Operation and Lighting | EE | SD | No | Gate operation; external lighting ≥50 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0016",
@@ -13747,8 +13792,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "| E-01 | Accessible Lift — Power, Controls, Announcement System | EE | SD | ⚠ YES — shaft location is schematic. SE scop",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0017",
@@ -13758,8 +13806,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 lux",
     "context": "| E-04 | Accessible Parking — External Lighting | EE | SD | No | Illuminance ≥50 lux at bay surface | Site plan; EE brie",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0018",
@@ -13769,8 +13820,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "| E-11 | Automatic Door (Low-Energy Operator, ≤22 N) | EE | DD | No | Door force ≤22 N; activation zone function test | ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0019",
@@ -13780,8 +13834,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "| E-11 | Automatic Door (Low-Energy Operator, ≤22 N) | EE | DD | No | Door force ≤22 N; activation zone function test | ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0020",
@@ -13791,8 +13848,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "| H-01 | Accessible Controls (400–1100 mm AFF, All Operated Surfaces) | EE | CD | No | Height measurement at all electri",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0021",
@@ -13802,8 +13862,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<1 s",
     "context": "| H-02 | Individual Environmental Control (Lighting, HVAC, Blinds) | EE, ME | DD | No | Full function from accessible co",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0022",
@@ -13813,8 +13876,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥98%",
     "context": "| H-03 | Visual Paging and CART Captioning | EE | DD | No | Visual coverage; CART accuracy ≥98% for prepared speech | EE",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00273",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0023",
@@ -13824,8 +13890,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 s",
     "context": "| H-05 | Nurse Call / Emergency Pull Cord | EE | DD | No | Response within 3 s from all cord positions; audible and visu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0024",
@@ -13835,8 +13904,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "| A-09 | HVAC Vibration Isolation (Floating Plant Room) | ME, AC, SE | SD | ⚠ YES — see §8.1.2 | Vibration <0.1 m/s RMS ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0025",
@@ -13846,8 +13918,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 mm",
     "context": "| E-06 | Level Entry (Zero Step Threshold) — Threshold Drainage | ME | SD | ⚠ YES — floor levels and drainage route are ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0026",
@@ -13857,8 +13932,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 mg",
     "context": "| F-02 | Fragrance-Free Zone — Dedicated Ventilation | ME | DD | No | VOC <0.1 mg/m³; no shared recirculation confirmed ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00042",
+      "REF-00304"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0027",
@@ -13868,8 +13946,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| F-03 | Sensory Retreat — Mechanical Supply | ME, AC, EE | SD | ⚠ YES — location is schematic | NC-25; RT60 ≤0.4 s; lig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0028",
@@ -13879,8 +13960,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50–200 lux",
     "context": "| F-03 | Sensory Retreat — Mechanical Supply | ME, AC, EE | SD | ⚠ YES — location is schematic | NC-25; RT60 ≤0.4 s; lig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0029",
@@ -13890,8 +13974,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<800 ppm",
     "context": "| F-05 | Olfactory / VOC Control — Mechanical Ventilation | ME | DD | No | CO₂ <800 ppm; VOC <0.1 mg/m³ at supply | ME b",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00304",
+      "REF-00322"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0030",
@@ -13901,8 +13988,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 mg",
     "context": "| F-05 | Olfactory / VOC Control — Mechanical Ventilation | ME | DD | No | CO₂ <800 ppm; VOC <0.1 mg/m³ at supply | ME b",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00042",
+      "REF-00304"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0031",
@@ -13912,8 +14002,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "18–22°C",
     "context": "| H-02 | Individual Environmental Control — HVAC Zone | ME, EE | DD | No | 18–22°C range independently achievable per zo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00184"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0032",
@@ -13923,8 +14016,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤38°C",
     "context": "| I-03 | TMV (Thermostatic Mixing Valve, ≤38°C at Outlet) | ME | DD | No | ≤38°C at all outlets under all flow condition",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0033",
@@ -13934,8 +14030,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤38°C",
     "context": "| I-03 | TMV (Thermostatic Mixing Valve, ≤38°C at Outlet) | ME | DD | No | ≤38°C at all outlets under all flow condition",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0034",
@@ -13945,8 +14044,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥80%",
     "context": "| A-02 | Confirm NRC ≥0.85 achievable with architect's ceiling system; coverage ≥80% of ceiling area | DD | NRC ≥0.85; R",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00218"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0035",
@@ -13956,8 +14058,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "| A-02 | Confirm NRC ≥0.85 achievable with architect's ceiling system; coverage ≥80% of ceiling area | DD | NRC ≥0.85; R",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00218"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0036",
@@ -13967,8 +14072,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-05/A-06 | Confirm wall treatment achieves target RT60 in combination with ceiling and floor specification | DD | RT6",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0037",
@@ -13978,8 +14086,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "| A-09 | Confirm vibration isolation specification with ME achieves <0.1 m/s RMS at sensitive space floors | SD | <0.1 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0038",
@@ -13989,8 +14100,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "| A-09 | Confirm vibration isolation specification with ME achieves <0.1 m/s RMS at sensitive space floors | SD | <0.1 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0039",
@@ -14000,8 +14114,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-12/A-13 | Confirm RT60 ≤0.4 s and STI ≥0.7 achievable with proposed ceiling and wall treatment; confirm sound field ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0040",
@@ -14011,8 +14128,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-12/A-13 | Confirm RT60 ≤0.4 s and STI ≥0.7 achievable with proposed ceiling and wall treatment; confirm sound field ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0041",
@@ -14022,8 +14142,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-16 | Confirm sensory room achieves NC-25 and RT60 ≤0.4 s with specified finishes and HVAC supply; no vibration from ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0042",
@@ -14033,8 +14156,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| A-16 | Confirm sensory room achieves NC-25 and RT60 ≤0.4 s with specified finishes and HVAC supply; no vibration from ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0043",
@@ -14044,8 +14170,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<5%",
     "context": "| B-04 | All LED drivers IEEE 1789-2015 low-risk compliant; flicker % <5% at all dimming levels including 20% output | D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0044",
@@ -14055,8 +14184,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "| B-04 | All LED drivers IEEE 1789-2015 low-risk compliant; flicker % <5% at all dimming levels including 20% output | D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0045",
@@ -14066,8 +14198,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<5%",
     "context": "| B-04 | All LED drivers IEEE 1789-2015 low-risk compliant; flicker % <5% at all dimming levels including 20% output | D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0046",
@@ -14077,8 +14212,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "| B-04 | All LED drivers IEEE 1789-2015 low-risk compliant; flicker % <5% at all dimming levels including 20% output | D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0047",
@@ -14088,8 +14226,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100%",
     "context": "| B-04 | All LED drivers IEEE 1789-2015 low-risk compliant; flicker % <5% at all dimming levels including 20% output | D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00022",
+      "REF-00185"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0048",
@@ -14099,8 +14240,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "| B-05 | Dedicated lighting circuits at all illuminance transition zones; ramp gradient across ≥3 m | DD | No step chang",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0049",
@@ -14110,8 +14254,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<1 m",
     "context": "| B-05 | Dedicated lighting circuits at all illuminance transition zones; ramp gradient across ≥3 m | DD | No step chang",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0050",
@@ -14121,8 +14268,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "| B-06 | Occupant dimmer in all spaces where NDV, DEM, PCS, PAIN, or OFS users are primary occupants: 10 lux minimum to ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00185",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0051",
@@ -14132,8 +14282,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "| B-06 | Occupant dimmer in all spaces where NDV, DEM, PCS, PAIN, or OFS users are primary occupants: 10 lux minimum to ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0052",
@@ -14143,8 +14296,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<1 s",
     "context": "| B-06 | Occupant dimmer in all spaces where NDV, DEM, PCS, PAIN, or OFS users are primary occupants: 10 lux minimum to ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00185",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0053",
@@ -14154,8 +14310,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "| B-06 | Occupant dimmer in all spaces where NDV, DEM, PCS, PAIN, or OFS users are primary occupants: 10 lux minimum to ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00185",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0054",
@@ -14165,8 +14324,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "| B-08 | Task lighting ≥500 lux at work surfaces; independently switched from ambient | DD | ≥500 lux at task plane | Il",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0055",
@@ -14176,8 +14338,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "| B-08 | Task lighting ≥500 lux at work surfaces; independently switched from ambient | DD | ≥500 lux at task plane | Il",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0056",
@@ -14187,8 +14352,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥150 lux",
     "context": "| B-09 | Supplementary electric lighting in daylit transition zones: ≥150 lux under overcast conditions | DD | ≥150 lux ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0057",
@@ -14198,8 +14366,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥150 lux",
     "context": "| B-09 | Supplementary electric lighting in daylit transition zones: ≥150 lux under overcast conditions | DD | ≥150 lux ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0058",
@@ -14209,8 +14380,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1–3 Hz",
     "context": "| B-10 | VAD on independent circuit from audio alarm; BS EN 54-23 Category W; all occupied spaces including sleeping are",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00149",
+      "REF-00401"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0059",
@@ -14220,8 +14394,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "| H-01 | All electrical devices 400–1100 mm AFF; forward reach clear of obstruction within 600 mm; confirm heights with ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0060",
@@ -14231,8 +14408,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "| H-01 | All electrical devices 400–1100 mm AFF; forward reach clear of obstruction within 600 mm; confirm heights with ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0061",
@@ -14242,8 +14422,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "| H-01 | All electrical devices 400–1100 mm AFF; forward reach clear of obstruction within 600 mm; confirm heights with ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0062",
@@ -14253,8 +14436,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "| H-02 | BMS: occupant control of lighting level, CCT, HVAC zone, and motorised blinds from 900–1100 mm AFF; response <1",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0063",
@@ -14264,8 +14450,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<1 s",
     "context": "| H-02 | BMS: occupant control of lighting level, CCT, HVAC zone, and motorised blinds from 900–1100 mm AFF; response <1",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0064",
@@ -14275,8 +14464,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥98%",
     "context": "| H-03 | Visual paging coverage throughout building; CART display units at all assembly and meeting spaces | DD | Full v",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00273",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0065",
@@ -14286,8 +14478,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥100 mm",
     "context": "| H-04 | Video intercom: display ≥100 mm; tactile feedback on button press; button ≥30 mm; 900–1100 mm AFF; BMS remote d",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0066",
@@ -14297,8 +14492,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30 mm",
     "context": "| H-04 | Video intercom: display ≥100 mm; tactile feedback on button press; button ≥30 mm; 900–1100 mm AFF; BMS remote d",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0067",
@@ -14308,8 +14506,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "| H-04 | Video intercom: display ≥100 mm; tactile feedback on button press; button ≥30 mm; 900–1100 mm AFF; BMS remote d",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0068",
@@ -14319,8 +14520,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1000 mm",
     "context": "| H-05 | Nurse call / pull cord: 900–1000 mm AFF with lower cord at 100 mm AFF; audible and visual response at call poin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0069",
@@ -14330,8 +14534,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100 mm",
     "context": "| H-05 | Nurse call / pull cord: 900–1000 mm AFF with lower cord at 100 mm AFF; audible and visual response at call poin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0070",
@@ -14341,8 +14548,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 s",
     "context": "| H-05 | Nurse call / pull cord: 900–1000 mm AFF with lower cord at 100 mm AFF; audible and visual response at call poin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0071",
@@ -14352,8 +14562,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 s",
     "context": "| H-05 | Nurse call / pull cord: 900–1000 mm AFF with lower cord at 100 mm AFF; audible and visual response at call poin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0072",
@@ -14363,8 +14576,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32 mm",
     "context": "| H-06 | DAR conduit: 32 mm conduit from consumer unit to accessible height chase in each primary room; power provision ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0073",
@@ -14374,8 +14590,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "| H-06 | DAR conduit: 32 mm conduit from consumer unit to accessible height chase in each primary room; power provision ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0074",
@@ -14385,8 +14604,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 dB",
     "context": "| A-10/A-11 | Hearing loop circuit: dedicated circuit from distribution board; IEC 60118-4 field strength −3 to +3 dBPa ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0075",
@@ -14396,8 +14618,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 m",
     "context": "| A-08 | HVAC to achieve NC-25 in sensitive spaces; NC-30 in all other occupied spaces. Duct velocity ≤3 m/s at primary ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00305"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0076",
@@ -14407,8 +14632,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥10 m",
     "context": "| A-08 | HVAC to achieve NC-25 in sensitive spaces; NC-30 in all other occupied spaces. Duct velocity ≤3 m/s at primary ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00305"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0077",
@@ -14418,8 +14646,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20 dB",
     "context": "| A-09 | Rotating plant on vibration isolation pads ≥20 dB insertion loss at 16–250 Hz. Floating plant room where adjace",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0078",
@@ -14429,8 +14660,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "16–250 Hz",
     "context": "| A-09 | Rotating plant on vibration isolation pads ≥20 dB insertion loss at 16–250 Hz. Floating plant room where adjace",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0079",
@@ -14440,8 +14674,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "| A-09 | Rotating plant on vibration isolation pads ≥20 dB insertion loss at 16–250 Hz. Floating plant room where adjace",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0080",
@@ -14451,8 +14688,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 mg",
     "context": "| F-02 | Dedicated ventilation supply to fragrance-free zones; no shared recirculation with zones where scented products",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00042",
+      "REF-00304"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0081",
@@ -14462,8 +14702,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<800 ppm",
     "context": "| F-05 | CO₂ <800 ppm in all occupied spaces; VOC <0.1 mg/m³ at supply air | DD | CO₂ and VOC targets | Air quality post",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00304",
+      "REF-00322"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0082",
@@ -14473,8 +14716,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 mg",
     "context": "| F-05 | CO₂ <800 ppm in all occupied spaces; VOC <0.1 mg/m³ at supply air | DD | CO₂ and VOC targets | Air quality post",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00042",
+      "REF-00304"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0083",
@@ -14484,8 +14730,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "| H-02 | Individual HVAC zone control accessible from 900–1100 mm AFF; each zone independently operable | DD | 18–22°C r",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0084",
@@ -14495,8 +14744,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "18–22°C",
     "context": "| H-02 | Individual HVAC zone control accessible from 900–1100 mm AFF; each zone independently operable | DD | 18–22°C r",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00184"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0085",
@@ -14506,8 +14758,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤38°C",
     "context": "| I-03 | TMV at all patient/resident bathrooms and WCs: ≤38°C at outlet. ≤35°C where NEU users are primary occupants. An",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0086",
@@ -14517,8 +14772,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤35°C",
     "context": "| I-03 | TMV at all patient/resident bathrooms and WCs: ≤38°C at outlet. ≤35°C where NEU users are primary occupants. An",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00371"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0087",
@@ -14528,8 +14786,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤38°C",
     "context": "| I-03 | TMV at all patient/resident bathrooms and WCs: ≤38°C at outlet. ≤35°C where NEU users are primary occupants. An",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0088",
@@ -14539,8 +14800,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.1 m",
     "context": "| A-08/A-09 | HVAC NC-25/NC-30 targets; vibration isolation <0.1 m/s RMS |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00305",
+      "REF-00302"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0089",
@@ -14550,8 +14814,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤38°C",
     "context": "| I-03 | TMV specification ≤38°C — no substitution with standard mixer tap |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0090",
@@ -14561,8 +14828,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 kN",
     "context": "| G-03 | Grab bar blocking: all bathrooms, shower rooms, WCs, and any space where future grab bar installation is antici",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0091",
@@ -14572,8 +14842,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 mm",
     "context": "| G-03 | Grab bar blocking: all bathrooms, shower rooms, WCs, and any space where future grab bar installation is antici",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0092",
@@ -14583,8 +14856,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "800 kg",
     "context": "| I-05 | Ceiling hoist tracking: structural blocking or dedicated track support in all designated bedrooms and bathrooms",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0093",
@@ -14594,8 +14870,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| K-01 | DBL Intervenor Adjacency Zone | SD | Confirm intervenor zone position relative to primary occupant's habitual s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0094",
@@ -14605,8 +14884,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "| K-03 | Haptic Communication Clear Zone | SD | Identify all primary DBL occupant positions (classroom seat, dining posi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0095",
@@ -14616,8 +14898,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "| K-03 | Haptic Communication Clear Zone | SD | Identify all primary DBL occupant positions (classroom seat, dining posi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0096",
@@ -14627,8 +14912,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "**Protactile communication clearance (≤600 mm face-to-face):** Protactile and hand-on-body communication requires partic",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0097",
@@ -14638,8 +14926,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "**Protactile communication clearance (≤600 mm face-to-face):** Protactile and hand-on-body communication requires partic",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0098",
@@ -14649,8 +14940,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "**Protactile communication clearance (≤600 mm face-to-face):** Protactile and hand-on-body communication requires partic",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0099",
@@ -14660,8 +14954,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1200 mm",
     "context": "**Protactile communication clearance (≤600 mm face-to-face):** Protactile and hand-on-body communication requires partic",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0100",
@@ -14671,8 +14968,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "**Protactile communication clearance (≤600 mm face-to-face):** Protactile and hand-on-body communication requires partic",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0101",
@@ -14682,8 +14982,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500–1000 mm",
     "context": "**Close-range sign language clearance (接近手話: 500–1000 mm):** Japanese close-proximity signing (接近手話) and equivalent clos",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0102",
@@ -14693,8 +14996,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500–1000 mm",
     "context": "**Close-range sign language clearance (接近手話: 500–1000 mm):** Japanese close-proximity signing (接近手話) and equivalent clos",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0103",
@@ -14704,8 +15010,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500–1000 mm",
     "context": "**Close-range sign language clearance (接近手話: 500–1000 mm):** Japanese close-proximity signing (接近手話) and equivalent clos",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0104",
@@ -14715,8 +15024,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "**Intervenor accompaniment corridor width (≥1500 mm):** Nordic ledsagarservice (intervenor accompaniment) is a statutory",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0105",
@@ -14726,8 +15038,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "**Intervenor accompaniment corridor width (≥1500 mm):** Nordic ledsagarservice (intervenor accompaniment) is a statutory",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0106",
@@ -14737,8 +15052,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2400 mm",
     "context": "**Intervenor accompaniment corridor width (≥1500 mm):** Nordic ledsagarservice (intervenor accompaniment) is a statutory",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0107",
@@ -14748,8 +15066,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "**Intervenor accompaniment corridor width (≥1500 mm):** Nordic ledsagarservice (intervenor accompaniment) is a statutory",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0108",
@@ -14759,8 +15080,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "**Intervenor accompaniment corridor width (≥1500 mm):** Nordic ledsagarservice (intervenor accompaniment) is a statutory",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0109",
@@ -14770,8 +15094,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "| SD | Review floor plan for K-01 and K-03 zone dimensions; confirm intervenor corridor widths on primary circulation ro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0110",
@@ -14781,8 +15108,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "**Coordination requirement.** The mechanical engineer's HVAC brief (§8.2.3) must state the thermal envelope performance ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0111",
@@ -14792,8 +15122,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.15 W",
     "context": "**Applicable Groups:** OFS, NEU, ALL **Specification:** U-value ≤0.15 W/m²K for external wall; windows triple-glazed (Uw",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00518",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0112",
@@ -14803,8 +15136,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.8 W",
     "context": "**Applicable Groups:** OFS, NEU, ALL **Specification:** U-value ≤0.15 W/m²K for external wall; windows triple-glazed (Uw",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00518",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0113",
@@ -14814,8 +15150,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤2°C",
     "context": "**Applicable Groups:** OFS, NEU, ALL **Specification:** U-value ≤0.15 W/m²K for external wall; windows triple-glazed (Uw",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0114",
@@ -14825,8 +15164,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1800 mm",
     "context": "**Applicable Groups:** OFS, NEU, ALL **Specification:** U-value ≤0.15 W/m²K for external wall; windows triple-glazed (Uw",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0115",
@@ -14836,8 +15178,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3°C",
     "context": "**Applicable Groups:** OFS, NEU, ALL **Specification:** Exposed thermal mass (concrete, masonry, earth) in primary occup",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0116",
@@ -14847,8 +15192,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3°C",
     "context": "**Cross-population coordination note:** High-performance envelope eliminates cold bridging that creates localised cold s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0001",

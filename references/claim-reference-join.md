@@ -9,14 +9,15 @@
 <!-- Session 8 of Step 2 (Parts 3+5 conflict resolution) complete 2026-04-19 -->
 <!-- Session 9 of Step 2 (Part 6 residential matrices) complete 2026-04-19 -->
 <!-- Session 10 of Step 2 (Part 7 non-residential matrices) complete 2026-04-19 -->
+<!-- Session 11 of Step 2 (Part 8 engineering targets) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 394
-- TAGGED (refs assigned): 874
+- PENDING (untagged): 278
+- TAGGED (refs assigned): 990
 - VERIFIED (confirmed): 0
 - DEFERRED (non-citable: methodology, definitional, echo): 93
 - ORPHANED (no supporting ref in global registry): 21
@@ -36,7 +37,7 @@
 | Part 5 | 79 | 0 | 77 | 0 | 2 | 0 |
 | Part 6 | 115 | 0 | 114 | 0 | 1 | 0 |
 | Part 7 | 111 | 0 | 99 | 0 | 2 | 10 |
-| Part 8 | 116 | 116 | 0 | 0 | 0 | 0 |
+| Part 8 | 116 | 0 | 116 | 0 | 0 | 0 |
 | Part 9 | 10 | 10 | 0 | 0 | 0 | 0 |
 | Part 10 | 23 | 23 | 0 | 0 | 0 | 0 |
 | Part 11 | 191 | 191 | 0 | 0 | 0 | 0 |
@@ -280,7 +281,23 @@
 
 ---
 
-### Next session (Session 11): Part 8 (engineering targets) — ~116 claims
+### Step 2 Session 11 — Part 8 (engineering targets) — 2026-04-19 ✅
+
+- **Scope:** 116 claims across 9.1.2–9.1.4 (conceptual schedules), 9.2.1–9.2.3 (detailed design), 9.3.3 (construction), 9.5 (structural), 9.6.2–9.6.3 (DBL coordination), §8.1.4 (thermal envelope)
+- **Results:** 116 TAGGED, 0 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - Acoustic (A items): REF-00142 (Bettarello RT60), REF-00124 (ANSI S12.60), REF-00218 (DIN 18041), REF-00029 (Mostafa ASPECTSS), REF-00305 (ISO 10137 vibration), REF-00302 (ISO 2631)
+  - Electrical (B/H items): REF-00022 (Jordan 2024 flicker), REF-00185 (CIE S026), REF-00149 (BS EN 54-23 VAD), REF-00401 (NFPA 72), REF-00157 (PAS 6463), REF-00437 (RNIB), REF-00492 (ADA §308), REF-00152 (BS 8300 controls), REF-00273 (HLAA Auracast), REF-00248 (Gallaudet DeafSpace)
+  - Mechanical (F/H/I items): REF-00042 (Steinemann MCS), REF-00304 (ISO EN 16000-9 VOC), REF-00322 (WELL v2 Air), REF-00303 (ISO 7730 thermal), REF-00184 (CIBSE Guide A), REF-00371 (MHLW Japan TMV), REF-00388 (MSIF Atlas), REF-00014 (Flensner MS)
+  - Structural (G/I items): REF-00340 (KITE grab bar), REF-00150 (BS 8300-2), REF-00311 (BS EN ISO 10535), REF-00416 (RCOT)
+  - DBL (K items): REF-00203 (DbI), REF-00188 (Clark), REF-00406 (Nordic Welfare), REF-00414 (Protactile), REF-00306 (ISO 23599)
+  - Thermal envelope: REF-00518 (WHO Housing), REF-00303 (ISO 7730), REF-00014 (Flensner MS), REF-00388 (MSIF)
+- **No DEFERRED or ORPHANED** — all engineering targets directly reference published standards and clinical evidence already in registry
+- **Running total:** 990 TAGGED / 93 DEFERRED / 21 ORPHANED / 278 PENDING
+
+---
+
+### Next session (Session 12): Part 11 (economics) — ~191 claims
 
 ---
 
