@@ -12062,8 +12062,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "| E-11 | Automatic doors (primary entrance; motion ≥3 m) | DD | Floor plan; electrical | OFS/POTS: sustained push effort",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0002",
@@ -12073,8 +12076,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| E-08 | Corridor clear width ≥1500 mm (≥1800 mm HLT/TRP) | SD | Floor plan | MOB primary circulation requirement |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0003",
@@ -12084,8 +12090,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "| E-08 | Corridor clear width ≥1500 mm (≥1800 mm HLT/TRP) | SD | Floor plan | MOB primary circulation requirement |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0004",
@@ -12095,8 +12104,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "38°C",
     "context": "| G-04 / G-03 | Accessible WC on each public floor (turning circle, bilateral grab bars, TMV38°C) | DD | Floor plan | Le",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0005",
@@ -12106,8 +12118,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760 mm",
     "context": "| G-06 | Dual-height counter (760 mm + 900 mm sections, ≥1500 mm each) | DD | Floor plan; section | Physical access at s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0006",
@@ -12117,8 +12132,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "| G-06 | Dual-height counter (760 mm + 900 mm sections, ≥1500 mm each) | DD | Floor plan; section | Physical access at s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0007",
@@ -12128,8 +12146,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| G-06 | Dual-height counter (760 mm + 900 mm sections, ≥1500 mm each) | DD | Floor plan; section | Physical access at s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0008",
@@ -12139,8 +12160,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1200 mm",
     "context": "| H-01 | All controls at 400–1200 mm AFF | CD | Electrical drawings | MOB/UPL/BAR access to all building services |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0009",
@@ -12150,8 +12174,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤25 m",
     "context": "| E-10 | Rest seating at ≤25 m on all primary routes | DD | Layout plan | OFS/PAIN/MOB — public user population | — |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00514"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0010",
@@ -12161,8 +12188,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "15–20%",
     "context": "**Primary populations:** NDV/AUT/ADHD (15–20% of school-age population, Autism Europe 2022; US CDC 2023 — most significa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0011",
@@ -12172,8 +12202,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| Classroom | NDV, DEAF, MOB, DBL | A-04 (acoustic zone), RT60 ≤0.4 s (DIN 18041 Cat A), A-11 (room loop), B-03/04, G-05",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0012",
@@ -12183,8 +12216,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "| Classroom | NDV, DEAF, MOB, DBL | A-04 (acoustic zone), RT60 ≤0.4 s (DIN 18041 Cat A), A-11 (room loop), B-03/04, G-05",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0013",
@@ -12194,8 +12230,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "| Sensory room | NDV/AUT | A-16 (RT60 ≤0.3 s; NC ≤20), F-01, F-03 (≥1 per 150 students) |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0014",
@@ -12205,8 +12244,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| Corridors | MOB, NDV, DEM | E-08 (≥1500 mm), D-04 (landmark at junctions), F-01 (sensory buffer zones) |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0015",
@@ -12216,8 +12258,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "- Classroom acoustics: RT60 ≤0.4 s in classrooms ≤200 m³ (DIN 18041:2016 Category A); background noise ≤35 dBA; SNR ≥15 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0016",
@@ -12227,8 +12272,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤35 dB",
     "context": "- Classroom acoustics: RT60 ≤0.4 s in classrooms ≤200 m³ (DIN 18041:2016 Category A); background noise ≤35 dBA; SNR ≥15 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00124",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0017",
@@ -12238,8 +12286,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥15 dB",
     "context": "- Classroom acoustics: RT60 ≤0.4 s in classrooms ≤200 m³ (DIN 18041:2016 Category A); background noise ≤35 dBA; SNR ≥15 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00124",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0018",
@@ -12249,8 +12300,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "- Height-adjustable furniture: ≥20% of student workspaces height-adjustable 380–760 mm (G-05)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0019",
@@ -12260,8 +12314,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "380–760 mm",
     "context": "- Height-adjustable furniture: ≥20% of student workspaces height-adjustable 380–760 mm (G-05)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0020",
@@ -12272,7 +12329,7 @@
     "claim_value": "1200 mm",
     "context": "- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at school principal e",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0021",
@@ -12282,8 +12339,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "15–20%",
     "context": "**Zone 3 sensory retreat and quiet room — mandatory provision (CON-0046):** Sensory gradient (F-01) and sensory retreat/",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0022",
@@ -12294,7 +12354,7 @@
     "claim_value": "1500 mm",
     "context": "**DEM/NDV[IntD-proxy] provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving s",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0023",
@@ -12305,7 +12365,7 @@
     "claim_value": "1500 mm",
     "context": "**DEM/NDV[IntD-proxy] provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving s",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0024",
@@ -12315,8 +12375,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "- [ ] ≥20% height-adjustable desks noted in FF\\&E brief",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0025",
@@ -12326,8 +12389,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0026",
@@ -12337,8 +12403,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0027",
@@ -12348,8 +12417,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0028",
@@ -12359,8 +12431,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0029",
@@ -12370,8 +12445,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "200 lux",
     "context": "| Consulting room | DEAF, MOB, DEM | A-11 (≥15 m²), B-02 (200 lux face), NC-25 (A-08), F-04 (6 ACH fresh air) |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0030",
@@ -12381,8 +12459,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤24°C",
     "context": "| Patient ward / bed space | MOB, DEM, NDV, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0031",
@@ -12392,8 +12473,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| Patient ward / bed space | MOB, DEM, NDV, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0032",
@@ -12404,7 +12488,8 @@
     "claim_value": "13 min",
     "context": "- HEPA filtration (F-04 extended) in all clinical areas; MERV 13 minimum in non-clinical areas",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "cross-reference parsing artifact — \"13 min\" = MERV-13 filter rating misextracted as time value"
   },
   {
     "claim_id": "CLAIM-P07-0033",
@@ -12414,8 +12499,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "- Sensory room provision: ≥1 per ward; mandatory in all MH inpatient, CAMHS, and paediatric settings; RT60 ≤0.3 s; NC ≤2",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0034",
@@ -12425,8 +12513,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "- MS neurology ward: ambient ≤18°C (TC-01); TMV ≤35°C (I-03); personal cooling provision (TC-03)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0035",
@@ -12436,8 +12527,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤35°C",
     "context": "- MS neurology ward: ambient ≤18°C (TC-01); TMV ≤35°C (I-03); personal cooling provision (TC-03)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00371"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0036",
@@ -12448,7 +12542,7 @@
     "claim_value": "1500 mm",
     "context": "- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at principal entrance",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0037",
@@ -12458,8 +12552,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0038",
@@ -12469,8 +12566,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0039",
@@ -12480,8 +12580,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0040",
@@ -12491,8 +12594,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0041",
@@ -12502,8 +12608,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "**Primary populations:** NDV/MH + OFS is the defining non-residential working population co-occurrence. Approximately 20",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0042",
@@ -12513,8 +12622,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5–10%",
     "context": "**Primary populations:** NDV/MH + OFS is the defining non-residential working population co-occurrence. Approximately 20",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0043",
@@ -12524,8 +12636,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| Focus / quiet room | NDV, OFS, PAIN | F-03 (≥1 per 20 staff, mandatory), RT60 ≤0.4 s, NC-25 |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0044",
@@ -12535,8 +12650,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "| Accessible desk workstation | MOB, UPL, NDV | G-05 (≥20% height-adjustable), H-01, B-06, F-01 sensory-reduced workstat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0045",
@@ -12546,8 +12664,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "- Open-plan acoustics: no design achieves NC-30 throughout open plan. Specify: (a) acoustic ceiling NRC ≥0.85 throughout",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0046",
@@ -12557,8 +12678,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤40 dB",
     "context": "- Open-plan acoustics: no design achieves NC-30 throughout open plan. Specify: (a) acoustic ceiling NRC ≥0.85 throughout",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00124",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0047",
@@ -12569,7 +12693,7 @@
     "claim_value": "1500 mm",
     "context": "- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: where a DBL employee is employed: (1) tactile building ma",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0048",
@@ -12580,7 +12704,7 @@
     "claim_value": "1500 mm",
     "context": "**DEM/NDV[IntD-proxy] provisions — NR-WRK:** [TIER 4–5; interim; March 2026] Workplaces with DEM/NDV[IntD-proxy] employe",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0049",
@@ -12590,8 +12714,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "- [ ] ≥20% height-adjustable desks in FF\\&E brief",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0050",
@@ -12601,8 +12728,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥4 m",
     "context": "- [ ] Open-plan ceiling NRC ≥0.85 specified (no parallel hard surfaces ≥4 m) —",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0051",
@@ -12612,8 +12742,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0052",
@@ -12623,8 +12756,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0053",
@@ -12634,8 +12770,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0054",
@@ -12645,8 +12784,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0055",
@@ -12656,8 +12798,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| Main retail floor | MOB, DEM, NDV | G-01 (clear routes ≥1500 mm between displays), C-04, B-03/04, F-04 |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0056",
@@ -12667,8 +12812,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| Fitting rooms | MOB | Turning circle ≥1500 mm, ≥950 mm door clear, grab bar, fold-down seat |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0057",
@@ -12678,8 +12826,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥950 mm",
     "context": "| Fitting rooms | MOB | Turning circle ≥1500 mm, ≥950 mm door clear, grab bar, fold-down seat |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0058",
@@ -12689,8 +12840,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- Aisle/route clear width: ≥1500 mm clear between all display units; ≥1800 mm in primary circulation routes. Retail layo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0059",
@@ -12700,8 +12854,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "- Aisle/route clear width: ≥1500 mm clear between all display units; ≥1800 mm in primary circulation routes. Retail layo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0060",
@@ -12711,8 +12868,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- Fitting room: ≥1500 mm turning circle; fold-down seat (G-02 specification); mirror lower edge ≤400 mm AFF; lever door ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0061",
@@ -12722,8 +12882,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤400 mm",
     "context": "- Fitting room: ≥1500 mm turning circle; fold-down seat (G-02 specification); mirror lower edge ≤400 mm AFF; lever door ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0062",
@@ -12733,8 +12896,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "- [ ] Accessible parking (3600 + 1200 mm, or 4500 mm BAR) on site plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0063",
@@ -12744,8 +12910,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "4500 mm",
     "context": "- [ ] Accessible parking (3600 + 1200 mm, or 4500 mm BAR) on site plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0064",
@@ -12755,8 +12924,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Aisle widths ≥1500 mm confirmed on retail layout plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0065",
@@ -12766,8 +12938,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760 mm",
     "context": "- [ ] Dual-height counter (760 mm + 900 mm) on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0066",
@@ -12777,8 +12952,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "- [ ] Dual-height counter (760 mm + 900 mm) on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0067",
@@ -12788,8 +12966,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0068",
@@ -12799,8 +12980,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0069",
@@ -12810,8 +12994,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0070",
@@ -12821,8 +13008,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0071",
@@ -12832,8 +13022,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1.5–2.5 s",
     "context": "**Primary populations:** Widest disability range in any building type after transport. Cultural buildings serve the full",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00218"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0072",
@@ -12843,8 +13036,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1%",
     "context": "| Auditorium / theatre | DEAF, NDV, MOB, DBL | A-11, H-03 (CART), B-10, wheelchair positions (≥1% of capacity at multipl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0073",
@@ -12855,7 +13051,7 @@
     "claim_value": "1200 mm",
     "context": "| Place of worship | ALL + DBL | A-11, H-03, K-03 (interpreter seating — DBL haptic zone ≥1200 × 1200 mm per position), ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0074",
@@ -12865,8 +13061,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1%",
     "context": "- Auditorium accessible positions: ≥1% total capacity as wheelchair positions; positions at multiple viewing angles (not",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0075",
@@ -12876,8 +13075,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥200 lux",
     "context": "- Deaf/Hard of Hearing position: designated front-third seating with direct sightline to performer and interpreter; face",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0076",
@@ -12887,8 +13089,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 s",
     "context": "- Library quiet: RT60 ≤0.5 s in reading rooms; no PA announcements in quiet zones; visual display paging (H-03); F-03 qu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0077",
@@ -12899,7 +13104,7 @@
     "claim_value": "≥1%",
     "context": "- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) mandatory at all cult",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0078",
@@ -12910,7 +13115,7 @@
     "claim_value": "1200 mm",
     "context": "- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) mandatory at all cult",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0079",
@@ -12920,8 +13125,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1%",
     "context": "- [ ] Accessible wheelchair positions (≥1% capacity, distributed) on theatre/auditorium plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0080",
@@ -12931,8 +13139,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0081",
@@ -12942,8 +13153,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0082",
@@ -12953,8 +13167,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0083",
@@ -12964,8 +13181,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0084",
@@ -12975,8 +13195,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤43°C",
     "context": "| Hotel bathroom | MOB, DEM | R-BA item suite; G-04 (wet room), G-03 (bilateral grab bars), I-03 (TMV ≤43°C) |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0085",
@@ -12986,8 +13209,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1100 mm",
     "context": "- Accessible hotel room: specify to Part 5 residential standard (R-BA, R-BED) as minimum. Additions: visual fire alarm i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0086",
@@ -12997,8 +13223,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "- Accessible hotel room: specify to Part 5 residential standard (R-BA, R-BED) as minimum. Additions: visual fire alarm i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0087",
@@ -13008,8 +13237,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "- Restaurant accessibility: ≥20% of dining tables with ≥1500 mm turning circle at both ends (not only one end); no fixed",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0088",
@@ -13019,8 +13251,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- Restaurant accessibility: ≥20% of dining tables with ≥1500 mm turning circle at both ends (not only one end); no fixed",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0089",
@@ -13030,8 +13265,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1.0 s",
     "context": "- Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00218"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0090",
@@ -13041,8 +13279,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "- Pool: A-10b (RT60 ≤1.0 s at 500 Hz for hydrotherapy environments); pool hoist provision; accessible changing (G-03 blo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00218"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0091",
@@ -13052,8 +13293,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1200 mm",
     "context": "- Guest room controls: all controls at 400–1200 mm AFF (H-01); bedside panel controls all room services (H-04)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0092",
@@ -13063,8 +13307,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20%",
     "context": "- [ ] ≥20% dining tables with turning circle on restaurant layout plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0093",
@@ -13074,8 +13321,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0094",
@@ -13085,8 +13335,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0095",
@@ -13096,8 +13349,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0096",
@@ -13107,8 +13363,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0097",
@@ -13118,8 +13377,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 m",
     "context": "| Entry / ticket hall | ALL | E-06, E-11, B-05 (exterior-to-interior transition over ≥5 m), F-01 (sensory buffer zone) |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0098",
@@ -13129,8 +13391,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥65 dB",
     "context": "| PA and announcements | DEAF, NDV, DBL | A-12 (Auracast), H-03 (visual display + captioning), K-04 (vibrotactile alert ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00273",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0099",
@@ -13140,8 +13405,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 m",
     "context": "- Luminance transition at entries: graded over ≥5 m from exterior to interior (outdoor daylight 20,000–100,000 lux to in",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0100",
@@ -13152,7 +13420,8 @@
     "claim_value": "000 lux",
     "context": "- Luminance transition at entries: graded over ≥5 m from exterior to interior (outdoor daylight 20,000–100,000 lux to in",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "cross-reference parsing artifact — \"000 lux\" = ≥1000 lux exterior luminance misextracted"
   },
   {
     "claim_id": "CLAIM-P07-0101",
@@ -13162,8 +13431,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 lux",
     "context": "- Luminance transition at entries: graded over ≥5 m from exterior to interior (outdoor daylight 20,000–100,000 lux to in",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0102",
@@ -13173,8 +13445,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "- Accessible route: alternative to primary crowd flows; clear width ≥1800 mm; adjacent to sensory room; staff contact po",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0103",
@@ -13184,8 +13459,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥600 mm",
     "context": "- Tactile paving: platform edge warning ≥600 mm depth (UK) or ≥900 mm depth (AU AS 1428.4); note jurisdiction-specific c",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0104",
@@ -13195,8 +13473,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- Tactile paving: platform edge warning ≥600 mm depth (UK) or ≥900 mm depth (AU AS 1428.4); note jurisdiction-specific c",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0105",
@@ -13207,7 +13488,7 @@
     "claim_value": "1500 mm",
     "context": "- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at all interchange en",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "ORPHANED"
   },
   {
     "claim_id": "CLAIM-P07-0106",
@@ -13217,8 +13498,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 m",
     "context": "- [ ] Luminance transition zone (≥5 m graded) at all entries on lighting design drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0107",
@@ -13228,8 +13512,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "- [ ] Accessible route (≥1800 mm clear) bypassing crowd zones on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0108",
@@ -13239,8 +13526,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0109",
@@ -13250,8 +13540,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0110",
@@ -13261,8 +13554,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3m",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0111",
@@ -13272,8 +13568,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3s",
     "context": "| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s tra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P08-0001",

@@ -8,17 +8,18 @@
 <!-- Session 7 of Step 2 (Part 2 disability population categories) complete 2026-04-19 -->
 <!-- Session 8 of Step 2 (Parts 3+5 conflict resolution) complete 2026-04-19 -->
 <!-- Session 9 of Step 2 (Part 6 residential matrices) complete 2026-04-19 -->
+<!-- Session 10 of Step 2 (Part 7 non-residential matrices) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 505
-- TAGGED (refs assigned): 775
+- PENDING (untagged): 394
+- TAGGED (refs assigned): 874
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 91
-- ORPHANED (no supporting ref in global registry): 11
+- DEFERRED (non-citable: methodology, definitional, echo): 93
+- ORPHANED (no supporting ref in global registry): 21
 
 **Full machine-readable data:** `references/claim-reference-join.json`
 
@@ -34,7 +35,7 @@
 | Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
 | Part 5 | 79 | 0 | 77 | 0 | 2 | 0 |
 | Part 6 | 115 | 0 | 114 | 0 | 1 | 0 |
-| Part 7 | 111 | 111 | 0 | 0 | 0 | 0 |
+| Part 7 | 111 | 0 | 99 | 0 | 2 | 10 |
 | Part 8 | 116 | 116 | 0 | 0 | 0 | 0 |
 | Part 9 | 10 | 10 | 0 | 0 | 0 | 0 |
 | Part 10 | 23 | 23 | 0 | 0 | 0 | 0 |
@@ -253,7 +254,33 @@
 
 ---
 
-### Next session (Session 10): Part 7 (non-residential matrices) — ~111 claims
+### Step 2 Session 10 — Part 7 (non-residential design matrices) — 2026-04-19 ✅
+
+- **Scope:** 111 claims across §7.0–§7.7 (education, health, workplace, retail, civic/cultural, hospitality, transport)
+- **Results:** 99 TAGGED, 2 DEFERRED, 10 ORPHANED
+- **Primary references used:**
+  - REF-00154 (BS 8300-2), REF-00308 (ISO 21542), REF-00494 (ADA), REF-00492 (ADA §308), REF-00152 (BS 8300 controls)
+  - REF-00044 (Steinfeld wheeled mobility), REF-00150 (BS 8300-2 residential)
+  - REF-00029 (Mostafa ASPECTSS), REF-00157 (PAS 6463), REF-00142 (Bettarello RT60), REF-00218 (DIN 18041 halls)
+  - REF-00124 (ANSI S12.60), REF-00289 (IEC 60118-4), REF-00273 (HLAA Auracast)
+  - REF-00014 (Flensner MS), REF-00388 (MSIF Atlas), REF-00041 (Staud fibromyalgia), REF-00303 (ISO 7730)
+  - REF-00371 (MHLW Japan TMV), REF-00518 (WHO Housing), REF-00405 (NICE NG206)
+  - REF-00135 (DeafSpace), REF-00248 (Gallaudet DeafSpace Vol 1), REF-00306 (ISO 23599 TWSI)
+  - REF-00437 (RNIB Building Sight), REF-00229 (DSDC EADDAT), REF-00311 (BS EN ISO 10535)
+  - REF-00036 (Roxburgh seating), REF-00514 (Wheels for Wellbeing), REF-00416 (RCOT), REF-00052 (Wellecke)
+- **ORPHANED (10):** All are DBL/IntD expert consensus provisions explicitly flagged "no standard; March 2026" or "DEM/NDV[IntD-proxy] TIER 4–5 interim" in the Part 7 source text — no qualifying registry references exist
+  - P07-0020 (NR-EDU DBL tactile zone 1200mm), P07-0022/0023 (DEM/NDV proxy zones)
+  - P07-0036 (HLT DBL zone 1500mm), P07-0047 (WRK DBL zone 1500mm), P07-0048 (DEM/NDV proxy WRK)
+  - P07-0073 (CIV DBL interpreter zone 1200mm), P07-0077/0078 (CIV DBL tactile floor)
+  - P07-0105 (TRP DBL zone 1500mm)
+- **DEFERRED (2):**
+  - P07-0032: "13 min" = MERV-13 filter rating misextracted as time value
+  - P07-0100: "000 lux" = ≥1000 lux exterior luminance misextracted
+- **Running total:** 874 TAGGED / 93 DEFERRED / 21 ORPHANED / 394 PENDING
+
+---
+
+### Next session (Session 11): Part 8 (engineering targets) — ~116 claims
 
 ---
 
