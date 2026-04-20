@@ -6,16 +6,17 @@
 <!-- Session 4 of Step 2 (Part 4 Category F-G env controls/bathroom/seating) complete 2026-04-19 -->
 <!-- Session 6 of Step 2 (Part 4 Category H-I-K controls/UPL/DeafBlind) complete 2026-04-19 -->
 <!-- Session 7 of Step 2 (Part 2 disability population categories) complete 2026-04-19 -->
+<!-- Session 8 of Step 2 (Parts 3+5 conflict resolution) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 741
-- TAGGED (refs assigned): 543
+- PENDING (untagged): 620
+- TAGGED (refs assigned): 661
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 87
+- DEFERRED (non-citable: methodology, definitional, echo): 90
 - ORPHANED (no supporting ref in global registry): 11
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -28,9 +29,9 @@
 |---|---|---|---|---|---|---|
 | Part 1 | 7 | 7 | 0 | 0 | 0 | 0 |
 | Part 2 | 83 | 0 | 81 | 0 | 2 | 0 |
-| Part 3 | 42 | 42 | 0 | 0 | 0 | 0 |
+| Part 3 | 42 | 0 | 41 | 0 | 1 | 0 |
 | Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
-| Part 5 | 79 | 79 | 0 | 0 | 0 | 0 |
+| Part 5 | 79 | 0 | 77 | 0 | 2 | 0 |
 | Part 6 | 115 | 115 | 0 | 0 | 0 | 0 |
 | Part 7 | 111 | 111 | 0 | 0 | 0 | 0 |
 | Part 8 | 116 | 116 | 0 | 0 | 0 | 0 |
@@ -201,7 +202,33 @@
 
 ---
 
-### Next session (Session 8): Parts 3 + 5 (conflict resolution) — ~121 claims
+### Step 2 Session 8 — Parts 3 + 5 (conflict resolution) — 2026-04-19 ✅
+
+- **Scope:** 121 claims — Part 3 (42): §3.1, §3.2.3, §3.3, §3.6, §3.7, §3.9, §3.10, §3.11; Part 5 (79): §5.1, §5.2 (7 conflict tables), §5.3, §5.41–5.43, §5.5.2, §5.5.4
+- **Results:** 118 TAGGED, 3 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - Conflict tables cite same sources as Part 4 specs (same underlying research):
+  - REF-00154 (BS 8300-2), REF-00340 (KITE grab bar), REF-00014 (Flensner MS), REF-00388 (MSIF Atlas)
+  - REF-00405 (NICE NG206), REF-00036 (Roxburgh ME/CFS), REF-00233 (dysautonomia)
+  - REF-00360 (Manandhar LRV), REF-00437 (RNIB), REF-00229 (DSDC EADDAT), REF-00157 (PAS 6463)
+  - REF-00142 (Bettarello RT60), REF-00124 (ANSI S12.60), REF-00289 (IEC 60118-4)
+  - REF-00135 (DeafSpace), REF-00248 (Gallaudet DeafSpace Vol 1), REF-00308 (ISO 21542)
+  - REF-00029 (Mostafa ASPECTSS), REF-00306 (ISO 23599 TWSI)
+  - REF-00042 (Steinemann MCS), REF-00002 (Afrin MCAS)
+  - REF-00026 (Marquardt wayfinding), REF-00044 (Steinfeld wheeled mobility), REF-00494 (ADA routes)
+  - REF-00333 (MHIPI Lancet), REF-00265 (Habinteg), REF-00311 (BS EN ISO 10535)
+- **DEFERRED (3):**
+  - part3-intro evidence density editorial note
+  - §5.41 OT evidence echo ×2 (≥300 lux DEM, ≥15m wandering loop)
+- **Registry gaps (cited in §5.5.4 but absent from global registry — add before publication):**
+  - Szanton, S.L. et al. (2019) — JAMA Intern Med; PMID 30615024 (30% ADL improvement from home modifications)
+  - Sheffield, C. et al. (2013) — PMID 23213082 (39% personal care hours reduction)
+  - Both tagged with REF-00333 (MHIPI) as best-available home modification outcomes evidence
+- **Running total:** 661 TAGGED / 90 DEFERRED / 11 ORPHANED / 620 PENDING
+
+---
+
+### Next session (Session 9): Part 6 (residential matrices) — ~115 claims
 
 ---
 

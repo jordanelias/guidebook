@@ -1233,7 +1233,8 @@
     "claim_value": "16%",
     "context": "> **Evidence density: ▓ Moderate (methodology) / ░ Thin (compound effects)** — The co-occurrence framework draws on ICF ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "editorial evidence density metadata note"
   },
   {
     "claim_id": "CLAIM-P03-0002",
@@ -1243,8 +1244,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Designing for one population category at a time and then attempting to reconcile the results produces inferior environme",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0003",
@@ -1254,8 +1258,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "42.5%",
     "context": "Epidemiological data confirms that the design assumption of a single-category user is a statistical fiction. Multimorbid",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00333",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0004",
@@ -1265,8 +1272,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "16%",
     "context": "The ICF and competence-press models operate on individual functional dimensions. Multimorbidity research demonstrates th",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00333",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0005",
@@ -1276,8 +1286,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25 m",
     "context": "| MOB | OFS | INTRA-INDIVIDUAL | Rest seating interval | RESOLVED — OFS 25 m governs |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00036"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0006",
@@ -1287,8 +1300,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5–7%",
     "context": "**Educational:** NDV is the most prevalent population in mainstream education (ADHD prevalence 5–7%; autism 1.5–2%; dysl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0007",
@@ -1298,8 +1314,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1.5–2%",
     "context": "**Educational:** NDV is the most prevalent population in mainstream education (ADHD prevalence 5–7%; autism 1.5–2%; dysl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0008",
@@ -1309,8 +1328,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10%",
     "context": "**Educational:** NDV is the most prevalent population in mainstream education (ADHD prevalence 5–7%; autism 1.5–2%; dysl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0009",
@@ -1320,8 +1342,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "**Educational:** NDV is the most prevalent population in mainstream education (ADHD prevalence 5–7%; autism 1.5–2%; dysl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0010",
@@ -1331,8 +1356,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "If the conflict is about a point value (a single fixed specification), test whether a range that falls within the accept",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0011",
@@ -1342,8 +1370,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 m",
     "context": "Assign population-specific ambient parameters to distinct spatial zones using the F-01 three-zone model. Zone 1: high-ac",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0012",
@@ -1353,8 +1384,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Apply the safety-critical provision to the shared environment without compromise; deliver the comfort/preference provisi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0013",
@@ -1364,8 +1398,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "Specify a parameter range that falls within the acceptable zone for both populations, rather than selecting a point valu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0014",
@@ -1375,8 +1412,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32 mm",
     "context": "Specify a parameter range that falls within the acceptable zone for both populations, rather than selecting a point valu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0015",
@@ -1386,8 +1426,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "Specify a parameter range that falls within the acceptable zone for both populations, rather than selecting a point valu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0016",
@@ -1397,8 +1440,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤25 m",
     "context": "| MOB + OFS | Rest seating | ≤25 m interval (OFS governs — stricter than MOB 50 m); seat 430–480 mm; armrests | YES (5+ ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00036"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0017",
@@ -1408,8 +1454,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 m",
     "context": "| MOB + OFS | Rest seating | ≤25 m interval (OFS governs — stricter than MOB 50 m); seat 430–480 mm; armrests | YES (5+ ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0018",
@@ -1419,8 +1468,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "430–480 mm",
     "context": "| MOB + OFS | Rest seating | ≤25 m interval (OFS governs — stricter than MOB 50 m); seat 430–480 mm; armrests | YES (5+ ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0019",
@@ -1430,8 +1482,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| NDV + MH | Retreat space | Separate dedicated rooms required (not combinable — different clinical functions); both req",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0020",
@@ -1441,8 +1496,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "| MOB + NEU | Grab bars | Bilateral vertical bars; 32–45 mm diameter; ≥1.3 kN load rating | YES |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0021",
@@ -1452,8 +1510,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.3 kN",
     "context": "| MOB + NEU | Grab bars | Bilateral vertical bars; 32–45 mm diameter; ≥1.3 kN load rating | YES |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0022",
@@ -1463,8 +1524,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 m",
     "context": "| NEU + OFS | Photosensitivity | Gradual illuminance transition zones ≥5 m (B-05); eliminate fluorescent | YES |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0023",
@@ -1474,8 +1538,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "Layer 1 decisions: Loop-plan floor plan with no dead-ends (DEM+MOB convergence — T0 strategy). All doors on loop to be a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00026",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0024",
@@ -1485,8 +1552,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 m",
     "context": "Layer 1 decisions: Loop-plan floor plan with no dead-ends (DEM+MOB convergence — T0 strategy). All doors on loop to be a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0025",
@@ -1496,8 +1566,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "Layer 2 decisions: Circadian lighting circuit (≥300 lux daytime, ≥250 EML — DEM Tier 3–5); dimmable zones in staff areas",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0026",
@@ -1507,8 +1580,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥15 m",
     "context": "Layer 3 decisions: Plain flooring throughout resident areas (DEM T1 — PP strategy; VIS orientation via wall/skirting con",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00026",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0027",
@@ -1518,8 +1594,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25%",
     "context": "Populations: NDV/AUT + NDV/ADHD (25% of headcount — disclosed); DEAF (2 staff — hearing aid users); OFS/ME (8% — self-di",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0028",
@@ -1529,8 +1608,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "8%",
     "context": "Populations: NDV/AUT + NDV/ADHD (25% of headcount — disclosed); DEAF (2 staff — hearing aid users); OFS/ME (8% — self-di",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0029",
@@ -1540,8 +1622,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "Layer 1 decisions: Open-plan collaboration spine ≥1500 mm (DEAF signing + OFS circulation — T0); enclosed acoustic pods ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0030",
@@ -1551,8 +1636,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "Layer 1 decisions: Open-plan collaboration spine ≥1500 mm (DEAF signing + OFS circulation — T0); enclosed acoustic pods ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0031",
@@ -1562,8 +1650,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤25 m",
     "context": "Layer 2 decisions: Hearing loop throughout collaboration spine and all meeting rooms, independent audio input (DEAF — TS",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0032",
@@ -1573,8 +1664,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "15%",
     "context": "Populations: NDV/AUT + NDV/ADHD (approximately 15% of student body); MOB (3 students — one power wheelchair, two ambulan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0033",
@@ -1584,8 +1678,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "Layer 1 decisions: Sensory quiet room on every floor plate (NDV — A-16, T0); single-path circulation with predictable la",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0034",
@@ -1595,8 +1692,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "Layer 2 decisions: Hearing loop in every classroom and assembly space (DEAF — IEC 60118-4, TS); RT60 ≤0.3 s in all class",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0035",
@@ -1606,8 +1706,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "Layer 2 decisions: Hearing loop in every classroom and assembly space (DEAF — IEC 60118-4, TS); RT60 ≤0.3 s in all class",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0036",
@@ -1617,8 +1720,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "Layer 3 decisions: Muted, low-chroma palette in classrooms (NDV — PP); high-contrast TWSI at all stair heads (VIS — mand",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0037",
@@ -1628,8 +1734,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "40%",
     "context": "Populations: MOB (all patients — post-operative); DEM (estimated 40% of ward — comorbid); NEU/MS (3 patients — confirmed",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0038",
@@ -1639,8 +1748,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Governing conflicts: TEMP-RANGE (NEU/MS vs OFS/PAIN warmth preference). Step 2: NEU/MS is safety-critical. Resolution: S",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0039",
@@ -1650,8 +1762,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "Governing conflicts: TEMP-RANGE (NEU/MS vs OFS/PAIN warmth preference). Step 2: NEU/MS is safety-critical. Resolution: S",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0040",
@@ -1661,8 +1776,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "Layer 1: Loop-plan internal circulation (DEM+MOB — T0); ≥1800 mm turning space at all destinations (MOB/power WC); enclo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0041",
@@ -1672,8 +1790,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤20°C",
     "context": "Layer 2: Individual thermostats per apartment (OFS/ME requires ≤20°C; MOB/DEM residents may prefer warmer — IEC at apart",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00233"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0042",
@@ -1683,8 +1804,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Layer 2: Individual thermostats per apartment (OFS/ME requires ≤20°C; MOB/DEM residents may prefer warmer — IEC at apart",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0001",
@@ -9234,8 +9358,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "4. **Range specifications are preferred over point specifications.** Where a parameter is contested, a range that falls ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0002",
@@ -9245,8 +9372,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32 mm",
     "context": "4. **Range specifications are preferred over point specifications.** Where a parameter is contested, a range that falls ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0003",
@@ -9256,8 +9386,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "4. **Range specifications are preferred over point specifications.** Where a parameter is contested, a range that falls ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0004",
@@ -9267,8 +9400,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30%",
     "context": "| **COLOUR-CONT — Luminance contrast (LRV)** | VIS, DEM | NDV/SENS, NDV/AUT | ≥30% LRV differential at all step edges, d",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00360",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0005",
@@ -9278,8 +9414,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50%",
     "context": "| **COLOUR-CONT — Luminance contrast (LRV)** | VIS, DEM | NDV/SENS, NDV/AUT | ≥30% LRV differential at all step edges, d",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00360",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0006",
@@ -9289,8 +9428,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "15%",
     "context": "| **COLOUR-CONT — Luminance contrast (LRV)** | VIS, DEM | NDV/SENS, NDV/AUT | ≥30% LRV differential at all step edges, d",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0007",
@@ -9300,8 +9442,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤30 dB",
     "context": "| **ACOUSTIC-LVL — Amplification and background noise** | DEAF, CI users | NDV/SENS, NDV/AUT, NEU/PCS | Hearing loop (IE",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0008",
@@ -9311,8 +9456,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "| **ACOUSTIC-LVL — Amplification and background noise** | DEAF, CI users | NDV/SENS, NDV/AUT, NEU/PCS | Hearing loop (IE",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0009",
@@ -9322,8 +9470,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| **ACOUSTIC-LVL — Amplification and background noise** | DEAF, CI users | NDV/SENS, NDV/AUT, NEU/PCS | Hearing loop (IE",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0010",
@@ -9333,8 +9484,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "| **ACOUSTIC-LVL — Amplification and background noise** | DEAF, CI users | NDV/SENS, NDV/AUT, NEU/PCS | Hearing loop (IE",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0011",
@@ -9344,8 +9498,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–38 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0012",
@@ -9355,8 +9512,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0013",
@@ -9366,8 +9526,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45–50 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0014",
@@ -9377,8 +9540,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥250 kg",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00311"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0015",
@@ -9388,8 +9554,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0016",
@@ -9399,8 +9568,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0017",
@@ -9410,8 +9582,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0018",
@@ -9421,8 +9596,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0019",
@@ -9432,8 +9610,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "| **GRAB BAR DIAMETER — Grip profile** | MOB (standard grip) | UPL (upper limb pathology) | 32–38 mm preferred circular ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0020",
@@ -9443,8 +9624,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| **TEMP-RANGE — Ambient temperature** | NEU/MS (Uhthoff's phenomenon) | PAIN (fibromyalgia, chronic pain) | ≤18°C in pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0021",
@@ -9454,8 +9638,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "60–80%",
     "context": "| **TEMP-RANGE — Ambient temperature** | NEU/MS (Uhthoff's phenomenon) | PAIN (fibromyalgia, chronic pain) | ≤18°C in pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0022",
@@ -9465,8 +9652,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "22–24°C",
     "context": "| **TEMP-RANGE — Ambient temperature** | NEU/MS (Uhthoff's phenomenon) | PAIN (fibromyalgia, chronic pain) | ≤18°C in pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00233"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0023",
@@ -9476,8 +9666,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "| **TEMP-RANGE — Ambient temperature** | NEU/MS (Uhthoff's phenomenon) | PAIN (fibromyalgia, chronic pain) | ≤18°C in pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0024",
@@ -9487,8 +9680,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18–20°C",
     "context": "| **TEMP-RANGE — Ambient temperature** | NEU/MS (Uhthoff's phenomenon) | PAIN (fibromyalgia, chronic pain) | ≤18°C in pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0025",
@@ -9498,8 +9694,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 mm",
     "context": "| **SURFACE-TEXT — Tactile floor indicators** | VIS, DBL | PAIN (vibration sensitivity), MOB/AMB (wheel and frame resist",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0026",
@@ -9509,8 +9707,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "25 mm",
     "context": "| **SURFACE-TEXT — Tactile floor indicators** | VIS, DBL | PAIN (vibration sensitivity), MOB/AMB (wheel and frame resist",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0027",
@@ -9520,8 +9720,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "60 mm",
     "context": "| **SURFACE-TEXT — Tactile floor indicators** | VIS, DBL | PAIN (vibration sensitivity), MOB/AMB (wheel and frame resist",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0028",
@@ -9531,8 +9733,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2400 mm",
     "context": "| **SPATIAL-OPEN — Visual transparency and spatial enclosure** | DEAF | NDV/AUT, NDV/SENS | Glazed corridor junctions (D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0029",
@@ -9542,8 +9747,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| **SPATIAL-OPEN — Visual transparency and spatial enclosure** | DEAF | NDV/AUT, NDV/SENS | Glazed corridor junctions (D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0030",
@@ -9553,8 +9761,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2400 mm",
     "context": "| **SPATIAL-OPEN — Visual transparency and spatial enclosure** | DEAF | NDV/AUT, NDV/SENS | Glazed corridor junctions (D",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0031",
@@ -9564,8 +9775,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0032",
@@ -9575,8 +9789,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0033",
@@ -9586,8 +9803,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤200 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0034",
@@ -9597,8 +9817,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤50 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0035",
@@ -9608,8 +9831,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0036",
@@ -9619,8 +9845,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0037",
@@ -9630,8 +9859,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "150–300 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0038",
@@ -9641,8 +9873,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0039",
@@ -9652,8 +9887,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0–150 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0040",
@@ -9663,8 +9901,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤50 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0041",
@@ -9674,8 +9915,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0042",
@@ -9685,8 +9929,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤200 lux",
     "context": "| **LIGHT-INT — Illuminance (lux and EML)** | DEM, VIS | NDV/AUT, NDV/SENS, NEU/PCS, PAIN, OFS | DEM circadian: ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0043",
@@ -9696,8 +9943,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥600 mm",
     "context": "| **FRAGRANCE — Olfactory environment** | OFS/MCAS, NDV/SENS | DEM (olfactory orientation therapy) | Zero fragrance thro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00042",
+      "REF-00002"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0044",
@@ -9707,8 +9957,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "| **DOOR-OPERATION — Automatic vs manual door actuation** | MOB (force-free access) | NDV/MH (predictability; startle re",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0045",
@@ -9718,8 +9971,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤65 dB",
     "context": "| **DOOR-OPERATION — Automatic vs manual door actuation** | MOB (force-free access) | NDV/MH (predictability; startle re",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0046",
@@ -9729,8 +9985,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1 m",
     "context": "| **DOOR-OPERATION — Automatic vs manual door actuation** | MOB (force-free access) | NDV/MH (predictability; startle re",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0047",
@@ -9740,8 +9999,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "The thermal resolution in §5.2 (≤18°C ambient + individual supplemental heating) resolves the NEU/MS vs PAIN conflict fo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0048",
@@ -9751,8 +10013,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "The thermal resolution in §5.2 (≤18°C ambient + individual supplemental heating) resolves the NEU/MS vs PAIN conflict fo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0049",
@@ -9762,8 +10027,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤35 dB",
     "context": "Where a hearing loop or sound field system (A-11, A-12) serves DEAF and CI users in an open-plan space, and NDV/AUT user",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0050",
@@ -9773,8 +10041,11 @@
     "claim_type": "numeric_specification",
     "claim_value": ">1400 mm",
     "context": "Glazed corridor junctions (DEAF visual advance warning provision — §5.2 SPATIAL-OPEN) conflict with DEM reflective surfa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0051",
@@ -9784,8 +10055,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1400 mm",
     "context": "Glazed corridor junctions (DEAF visual advance warning provision — §5.2 SPATIAL-OPEN) conflict with DEM reflective surfa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0052",
@@ -9795,8 +10069,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "*LIGHT-INT.* DEM circadian lighting (≥300 lux daytime, ≥250 melanopic EDI) governs in all resident-occupied spaces. NDV/",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0053",
@@ -9807,7 +10084,8 @@
     "claim_value": "≥300 lux",
     "context": "*LIGHT-INT.* DEM circadian lighting (≥300 lux daytime, ≥250 melanopic EDI) governs in all resident-occupied spaces. NDV/",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats ≥300 lux DEM (CLAIM-P05-0052)"
   },
   {
     "claim_id": "CLAIM-P05-0054",
@@ -9817,8 +10095,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "150–300 lux",
     "context": "*LIGHT-INT.* DEM circadian lighting (≥300 lux daytime, ≥250 melanopic EDI) governs in all resident-occupied spaces. NDV/",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0055",
@@ -9828,8 +10109,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0–150 lux",
     "context": "*LIGHT-INT.* DEM circadian lighting (≥300 lux daytime, ≥250 melanopic EDI) governs in all resident-occupied spaces. NDV/",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0056",
@@ -9839,8 +10123,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥15 m",
     "context": "*MOVE-FREE.* DEM residents benefit from autonomous wandering within a legible loop. MOB residents require bilateral grab",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00026",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0057",
@@ -9851,7 +10138,8 @@
     "claim_value": "≥15 m",
     "context": "- DD: B-06 dimming circuits by zone; C-04 LRV schedule (≥30 in resident areas; ≤20 in staff areas); G-05 grab bars on al",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats ≥15m wandering loop (CLAIM-P05-0056)"
   },
   {
     "claim_id": "CLAIM-P05-0058",
@@ -9861,8 +10149,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25%",
     "context": "**Population brief.** 60-person co-working office; 25% NDV/AUT/ADHD (client disclosure); 2 DEAF staff (hearing aid users",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0059",
@@ -9872,8 +10163,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "8%",
     "context": "**Population brief.** 60-person co-working office; 25% NDV/AUT/ADHD (client disclosure); 2 DEAF staff (hearing aid users",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0060",
@@ -9883,8 +10177,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤35 dB",
     "context": "*ACOUSTIC-LVL.* DEAF staff require hearing loop (A-11) in all meeting rooms and the collaboration zone. NDV/AUT and NDV/",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0061",
@@ -9894,8 +10191,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "*ACOUSTIC-LVL.* DEAF staff require hearing loop (A-11) in all meeting rooms and the collaboration zone. NDV/AUT and NDV/",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0062",
@@ -9905,8 +10205,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "*SPATIAL-OPEN.* DEAF staff benefit from open-plan layouts with sightlines for signing pairs. NDV/AUT staff benefit from ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0063",
@@ -9916,8 +10219,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "*SPATIAL-OPEN.* DEAF staff benefit from open-plan layouts with sightlines for signing pairs. NDV/AUT staff benefit from ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0064",
@@ -9927,8 +10233,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤200 lux",
     "context": "*LIGHT-INT.* NDV/ADHD staff: individual dimming (≤200 lux ambient preferred in quiet zones). OFS/PCS staff: glare contra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0065",
@@ -9938,8 +10247,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "*TEMP-RANGE.* The MS population requires ≤18°C ambient (Uhthoff's — safety-critical). The PAIN population requires warmt",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0066",
@@ -9949,8 +10261,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "*TEMP-RANGE.* The MS population requires ≤18°C ambient (Uhthoff's — safety-critical). The PAIN population requires warmt",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0067",
@@ -9960,8 +10275,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22°C",
     "context": "*TEMP-RANGE.* The MS population requires ≤18°C ambient (Uhthoff's — safety-critical). The PAIN population requires warmt",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0068",
@@ -9971,8 +10289,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "*DOOR-OPERATION.* MOB residents require automatic doors (E-11) at communal entries. DEM residents: §5.2 DOOR-OPERATION r",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0069",
@@ -9982,8 +10303,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 s",
     "context": "*DOOR-OPERATION.* MOB residents require automatic doors (E-11) at communal entries. DEM residents: §5.2 DOOR-OPERATION r",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0070",
@@ -9993,8 +10317,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "*MOVE-FREE (Tier 2 conflict).* DEM wandering freedom vs MOB powered-wheelchair turning radius: a powered-wheelchair user",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00026",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0071",
@@ -10004,8 +10331,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1800 mm",
     "context": "*MOVE-FREE (Tier 2 conflict).* DEM wandering freedom vs MOB powered-wheelchair turning radius: a powered-wheelchair user",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0072",
@@ -10015,8 +10345,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1800 mm",
     "context": "*MOVE-FREE (Tier 2 conflict).* DEM wandering freedom vs MOB powered-wheelchair turning radius: a powered-wheelchair user",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0073",
@@ -10026,8 +10359,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "*MOVE-FREE (Tier 2 conflict).* DEM wandering freedom vs MOB powered-wheelchair turning radius: a powered-wheelchair user",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0074",
@@ -10037,8 +10373,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "- SD: corridor ≥1800 mm clear; loop floor plan (D-01); TC-02 individual thermostats in all apartments; supplement heatin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0075",
@@ -10048,8 +10387,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "- CD: B-05 gradual light transitions at building entry (OFS/MS photophobia); TC-01 ≤18°C controls confirmed for common-a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0076",
@@ -10059,8 +10401,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "The strongest evidence for a residential process framework comes from the CAPABLE programme (Community Aging in Place, A",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00333",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0077",
@@ -10070,8 +10415,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "95%",
     "context": "The strongest evidence for a residential process framework comes from the CAPABLE programme (Community Aging in Place, A",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0078",
@@ -10081,8 +10429,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "| Szanton et al. 2019 (JAMA Intern Med, PMID 30615024) | 1 RCT | 30% ADL disability reduction with OT+nurse+handyperson ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P05-0079",
@@ -10092,8 +10442,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "39%",
     "context": "| Sheffield et al. 2013 (PMID 23213082) | 1 RCT | 39% personal care hour reduction with OT home modification |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0001",
