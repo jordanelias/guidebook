@@ -227,7 +227,7 @@ Architecture/design journals not indexed in PubMed:
 | Layer | File | Status |
 |---|---|---|
 | 1. Global reference registry | `references/global-reference-registry.md` + `.json` | ✅ COMPLETE — 531 unique refs |
-| 2. Claim-to-reference tagging | Populated via `citation-tagging-protocol.md` | ⏳ PENDING — 1,382 claims to tag (GAP-CITE-01) |
+| 2. Claim-to-reference tagging | `references/claim-reference-join.json` + `claim-reference-join.md` | ✅ COMPLETE — 1,252 TAGGED / 109 DEFERRED / 21 ORPHANED / 0 PENDING (GAP-CITE-01 CLOSED) |
 | 3. Claim enumeration + join schema | `references/claim-reference-join.md` + `.json` | ✅ COMPLETE — 1,382 claims enumerated |
 
 ### Reference metadata quality (Step 1 output)
