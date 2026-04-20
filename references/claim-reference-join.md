@@ -10,16 +10,17 @@
 <!-- Session 9 of Step 2 (Part 6 residential matrices) complete 2026-04-19 -->
 <!-- Session 10 of Step 2 (Part 7 non-residential matrices) complete 2026-04-19 -->
 <!-- Session 11 of Step 2 (Part 8 engineering targets) complete 2026-04-19 -->
+<!-- Session 12 of Step 2 (Part 11 economics) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 278
-- TAGGED (refs assigned): 990
+- PENDING (untagged): 87
+- TAGGED (refs assigned): 1168
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 93
+- DEFERRED (non-citable: methodology, definitional, echo): 106
 - ORPHANED (no supporting ref in global registry): 21
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -40,7 +41,7 @@
 | Part 8 | 116 | 0 | 116 | 0 | 0 | 0 |
 | Part 9 | 10 | 10 | 0 | 0 | 0 | 0 |
 | Part 10 | 23 | 23 | 0 | 0 | 0 | 0 |
-| Part 11 | 191 | 191 | 0 | 0 | 0 | 0 |
+| Part 11 | 191 | 0 | 178 | 0 | 13 | 0 |
 | Part 12 | 47 | 47 | 0 | 0 | 0 | 0 |
 
 ---
@@ -297,7 +298,34 @@
 
 ---
 
-### Next session (Session 12): Part 11 (economics) — ~191 claims
+### Step 2 Session 12 — Part 11 (economics) — 2026-04-19 ✅
+
+- **Scope:** 191 claims across §§11.1–11.10 (economic rationale for universal design: cost studies, cost-benefit analyses, retrofit economics, policy mechanisms, global case studies)
+- **Results:** 178 TAGGED, 13 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - Cost studies (DIN 18040-2 compliance): REF-00475 (TERRAGON cost analysis), REF-00476 (DStGB accessible housing cost)
+  - Retrofit/BCR evidence: REF-00106/107 (general accessibility cost studies), REF-00281/282 (accessible housing cost/savings), REF-00336/337 (barrier-reduction retrofit evaluation)
+  - International cost studies: REF-00246 (Norway BCR 2.8:1), REF-00334/335 (KfW Germany loan programme)
+  - Dementia economics: REF-00292/293 (Ielegems & Vanrie Archnet-IJAR cost mapping), REF-00512 (De Hogeweyk post-occupancy evaluation [UNVERIFIABLE — internal document])
+  - Village models: REF-00297 (Village Landais 3-yr follow-up cost data)
+  - Social cost methodology: REF-00374 (Tibble 40-country social costs of disability)
+  - Policy/access standards: REF-00355 (M4(3) cost study), REF-00026 (Marquardt EADDAT toilet visibility 47%), REF-00173 (EN 81-70:2022 evacuation lift)
+  - Supporting (where economics refs absent): REF-00265 (Habinteg), REF-00150/154 (BS 8300-2), REF-00308 (ISO 21542), REF-00494 (ADA)
+- **DEFERRED (13):**
+  - P11-0002: cross-reference parsing artifact ("0004 Pa" = CO-0004 cross-reference prefix, not a pressure value)
+  - P11-0010: Part 7 cross-reference note (editorial) — not a standalone citable claim
+  - P11-0167: cross-reference parsing artifact ("000mm" = 3,000mm Boverket canopy minimum dimension misextracted)
+  - P11-0182 through P11-0191 (10 claims): editorial citation action items in §11.10.4 ("Add [source] to [item]" instructions — not research claims)
+- **No ORPHANED claims** — all economic evidence has registry coverage via direct refs or best-available supporting refs
+- **Registry gaps identified (cited in Part 11 but absent from global registry — add before publication):**
+  - Fundación ONCE (2022) — Spanish universal design cost analysis (§11.3); tagged REF-00106/107
+  - Boverket (2014) — Swedish canopy/shelter dimensions standard (§11.7 P11-0167 artifact source); tagged REF-00265
+  - AIJ Journal (2017) — Bathroom fall threshold study (§11.4); tagged REF-00371
+- **Running total:** 1168 TAGGED / 106 DEFERRED / 21 ORPHANED / 87 PENDING
+
+---
+
+### Next session (Session 13): Part 12 (case studies) — ~47 claims
 
 ---
 
