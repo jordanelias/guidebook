@@ -11,16 +11,19 @@
 <!-- Session 10 of Step 2 (Part 7 non-residential matrices) complete 2026-04-19 -->
 <!-- Session 11 of Step 2 (Part 8 engineering targets) complete 2026-04-19 -->
 <!-- Session 12 of Step 2 (Part 11 economics) complete 2026-04-19 -->
+<!-- Session 13 of Step 2 (Part 12 case studies) complete 2026-04-19 -->
+<!-- Session 14 of Step 2 (Parts 1, 9, 10 — introduction, checklist, DAR) complete 2026-04-19 -->
+<!-- Step 2 COMPLETE 2026-04-19 — 0 PENDING, 1252 TAGGED, 109 DEFERRED, 21 ORPHANED -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 87
-- TAGGED (refs assigned): 1168
+- PENDING (untagged): 0 ✅ **Step 2 complete**
+- TAGGED (refs assigned): 1252
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 106
+- DEFERRED (non-citable: methodology, definitional, echo): 109
 - ORPHANED (no supporting ref in global registry): 21
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -31,7 +34,7 @@
 
 | Part | Total | PENDING | TAGGED | VERIFIED | DEFERRED | ORPHANED |
 |---|---|---|---|---|---|---|
-| Part 1 | 7 | 7 | 0 | 0 | 0 | 0 |
+| Part 1 | 7 | 0 | 7 | 0 | 0 | 0 |
 | Part 2 | 83 | 0 | 81 | 0 | 2 | 0 |
 | Part 3 | 42 | 0 | 41 | 0 | 1 | 0 |
 | Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
@@ -39,10 +42,10 @@
 | Part 6 | 115 | 0 | 114 | 0 | 1 | 0 |
 | Part 7 | 111 | 0 | 99 | 0 | 2 | 10 |
 | Part 8 | 116 | 0 | 116 | 0 | 0 | 0 |
-| Part 9 | 10 | 10 | 0 | 0 | 0 | 0 |
-| Part 10 | 23 | 23 | 0 | 0 | 0 | 0 |
+| Part 9 | 10 | 0 | 10 | 0 | 0 | 0 |
+| Part 10 | 23 | 0 | 23 | 0 | 0 | 0 |
 | Part 11 | 191 | 0 | 178 | 0 | 13 | 0 |
-| Part 12 | 47 | 47 | 0 | 0 | 0 | 0 |
+| Part 12 | 47 | 0 | 44 | 0 | 3 | 0 |
 
 ---
 
@@ -325,7 +328,61 @@
 
 ---
 
-### Next session (Session 13): Part 12 (case studies) — ~47 claims
+### Step 2 Session 13 — Part 12 (case studies) — 2026-04-19 ✅
+
+- **Scope:** 47 claims across §§12.01–12.14 (NHS Highland, Gallaudet, Kelsey, dementia loop, neurodivergent workplace, dementia school retrofit, Singapore BCA HDB, DeafSpace corridor, De Hogeweyk, acoustic dementia intervention, ASPECTSS retrofit, Korian, HAFI/BC Housing)
+- **Results:** 44 TAGGED, 3 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - §12.01 (NHS Highland dementia home): REF-00229 (DSDC EADDAT), REF-00150 (BS 8300-2), REF-00432 (RHFAC v4.0)
+  - §12.02/12.08 (Gallaudet DeafSpace + corridor study): REF-00135 (DeafSpace guidelines), REF-00248 (Gallaudet DeafSpace Vol 1)
+  - §12.03 (Kelsey RHFAC Exceptional): REF-00432 (RHFAC), REF-00265 (Habinteg), REF-00154 (BS 8300-2)
+  - §12.04/12.10 (dementia loop floor plan / acoustic intervention): REF-00142 (Bettarello), REF-00229 (DSDC), REF-00029 (Mostafa ASPECTSS)
+  - §12.05/12.11 (neurodivergent workplace / ASPECTSS classroom): REF-00029 (Mostafa ASPECTSS 2.0), REF-00157 (PAS 6463), REF-00142 (Bettarello)
+  - §12.06 (dementia school retrofit): REF-00142 (Bettarello), REF-00124 (ANSI S12.60), REF-00029 (Mostafa)
+  - §12.07 (Singapore BCA HDB): REF-00308 (ISO 21542), REF-00494 (ADA), REF-00106/246 (cost studies)
+  - §12.09 (De Hogeweyk): REF-00512 (De Hogeweyk [UNVERIFIABLE]), REF-00229 (DSDC)
+  - §12.12 (Korian/Bordeaux): REF-00229 (DSDC), REF-00297 (Village Landais)
+  - §12.13/12.14 (cost/HAFI): REF-00106 (accessibility cost), REF-00281 (housing costs), REF-00333 (MHIPI)
+- **DEFERRED (3):**
+  - P12-0021: building age descriptor ("1980s") — contextual date, not a design spec
+  - P12-0026: 500 Hz measurement frequency — standard octave band per ISO 3382-2, not a design claim
+  - P12-0047: editorial cross-reference note ("HAFI provides best available...") — not a standalone citable claim
+- **Running total:** 1212 TAGGED / 109 DEFERRED / 21 ORPHANED / 40 PENDING
+
+---
+
+### Step 2 Session 14 — Parts 1, 9, 10 (methodology, DBL checklist, DAR) — 2026-04-19 ✅
+
+- **Scope:** 40 claims — Part 1 §1.9.1 (7 derivation methodology), Part 9 §9.9 + §9.11 (10 thermal + DBL checklist), Part 10 §10.1–10.7 (23 DAR structural provisions, housing stats, visitability, programme evaluation)
+- **Results:** 40 TAGGED, 0 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - Part 1 §1.9.1 (derivation methodology): REF-00154 (BS 8300-2 thresholds), REF-00495 (ADA §303), REF-00340 (KITE grab bar), REF-00044 (Steinfeld anthropometry), REF-00113 (Al Lawati), REF-00265 (Habinteg), REF-00150 (BS 8300-2)
+  - Part 9 §9.9 (MS thermal): REF-00014 (Flensner MS heat), REF-00388 (MSIF Atlas)
+  - Part 9 §9.11 (DBL checklist): REF-00203 (DbI guidelines), REF-00308 (ISO 21542), REF-00306 (ISO 23599 TWSI), REF-00406 (Nordic Welfare Centre), REF-00414 (Protactile), REF-00188 (Clark 2024)
+  - Part 10 §10.1–10.2 (DAR structural): REF-00311 (BS EN ISO 10535 hoist), REF-00173 (EN 81-70 lift), REF-00340 (KITE grab bar), REF-00154/150/265 (BS 8300 + Habinteg)
+  - Part 10 §10.3–10.4 (housing stock + visitability): REF-00265 (Habinteg Forecast), REF-00281 (accessible housing), REF-00492/494 (ADA), REF-00106/246 (cost studies)
+  - Part 10 §10.6 (Sweden BFS): REF-00308 (ISO 21542), REF-00150 (BS 8300-2)
+  - Part 10 §10.7 (programme evaluation): REF-00281 (housing costs), REF-00333 (MHIPI), REF-00106 (accessibility cost)
+- **No DEFERRED or ORPHANED** — all Part 1, 9, 10 claims have qualifying registry coverage
+- **Final overall total: TAGGED=1252 / DEFERRED=109 / ORPHANED=21 / PENDING=0 / TOTAL=1382**
+
+---
+
+## ✅ Step 2 Complete — 2026-04-19
+
+All 1382 claims processed. PENDING = 0.
+
+**Summary:**
+| Status | Count | % |
+|---|---|---|
+| TAGGED | 1252 | 90.6% |
+| DEFERRED | 109 | 7.9% |
+| ORPHANED | 21 | 1.5% |
+| PENDING | 0 | 0% |
+
+**ORPHANED claims (21) require Phase B content review** — these are provisions with no supporting reference in the global registry (primarily DBL expert-consensus provisions in Part 7 with no published standard, and a small number of specialist claims in Part 4).
+
+**Next phase:** Step 3 — frontend rendering (Phase B parsers read `claim-reference-join.json` to attach footnotes to specification text).
 
 ---
 

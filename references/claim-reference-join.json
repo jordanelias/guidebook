@@ -7,8 +7,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 mm",
     "context": "Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating heig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00495"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P01-0002",
@@ -18,8 +21,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "450–500 mm",
     "context": "Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating heig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P01-0003",
@@ -29,8 +35,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "40%",
     "context": "Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating heig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P01-0004",
@@ -40,8 +49,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "380 mm",
     "context": "Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating heig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P01-0005",
@@ -51,8 +63,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 mm",
     "context": "Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating heig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00495"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P01-0006",
@@ -62,8 +77,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "18%",
     "context": "Every dimensional specification in this guidebook — threshold height, ramp gradient, grab bar height range, seating heig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00113"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P01-0007",
@@ -73,8 +91,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25 mm",
     "context": "This derivation has two implications for practice. First, the values are not interchangeable — a 25 mm threshold is not ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0001",
@@ -15206,8 +15227,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "*Stage 3 (Technical Design):* Each specialist consultant issues their brief with co-occurrence constraints explicitly st",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0002",
@@ -15217,8 +15241,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "*Stage 2 (Schematic):* Review floor plan for: corridor widths ≥1500 mm on primary DBL routes (intervenor pair); position",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0003",
@@ -15228,8 +15255,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1200 mm",
     "context": "*Stage 3 (Technical Design):* Specify: tactile building map content and update protocol (embossed/thermoform, 900–1200 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0004",
@@ -15239,8 +15269,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 s",
     "context": "*Stage 3 (Technical Design):* Specify: tactile building map content and update protocol (embossed/thermoform, 900–1200 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0005",
@@ -15250,8 +15283,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "*Stage 3 (Technical Design):* Specify: tactile building map content and update protocol (embossed/thermoform, 900–1200 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00414"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0006",
@@ -15261,8 +15297,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "*Stage 3 (Technical Design):* Specify: tactile building map content and update protocol (embossed/thermoform, 900–1200 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0007",
@@ -15272,8 +15311,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- Intervenor clear floor zone: ≥900 mm × 1500 mm at service counters (K-01)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0008",
@@ -15283,8 +15325,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "- Intervenor clear floor zone: ≥900 mm × 1500 mm at service counters (K-01)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0009",
@@ -15294,8 +15339,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "- Protactile seating geometry: face-to-face ≤600 mm, ≥1500 mm clear floor per pair (K-03)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P09-0010",
@@ -15305,8 +15353,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- Protactile seating geometry: face-to-face ≤600 mm, ≥1500 mm clear floor per pair (K-03)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0001",
@@ -15316,8 +15367,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "39%",
     "context": "> **Evidence density: ▓ Moderate** — DAR cost multiplier framework is grounded in economic evidence: Ielegems 2024 (Tier",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00281"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0002",
@@ -15327,8 +15381,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3600 mm",
     "context": "| Ceiling hoist tracking blocking (continuous run ≥3600 mm, centred on bed zone) | £25 / CAD $43 | £3,000–£6,000 / CAD $",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0003",
@@ -15338,8 +15395,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "| Through-floor lift structural zone (≥900×1200 mm, same position each floor) | £2,000–£5,000 / CAD $3,400–$8,500 | £20,",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00173",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0004",
@@ -15349,8 +15409,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥850 mm",
     "context": "| Stairlift structural channel (≥850 mm clear stair width + conduit) | £500 / CAD $340–$850 | £2,000 + unit / CAD $1,360",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0005",
@@ -15360,8 +15423,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥950 mm",
     "context": "| DAR framing for wider door (≥950 mm structural opening) | £200/door / CAD $340/door | £1,500–£5,000/door / CAD $2,550–",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0006",
@@ -15371,8 +15437,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥950 mm",
     "context": "| DAR-01 | Entry: step-free approach; ≥950 mm structural opening; automatic door conduit; covered entry provision | Clau",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0007",
@@ -15382,8 +15451,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1400 mm",
     "context": "| DAR-02 | Ground floor / elevator-accessible floor: all essential rooms on one lift-accessible level OR through-floor l",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0008",
@@ -15393,8 +15465,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "800–900 mm",
     "context": "| DAR-03 | Bathroom: bilateral grab bar blocking at 800–900 mm AFF; shower framed for future wet room; floor loading ≥13",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0009",
@@ -15404,8 +15479,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥135 kg",
     "context": "| DAR-03 | Bathroom: bilateral grab bar blocking at 800–900 mm AFF; shower framed for future wet room; floor loading ≥13",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00311"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0010",
@@ -15415,8 +15493,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1800 mm",
     "context": "| DAR-03 | Bathroom: bilateral grab bar blocking at 800–900 mm AFF; shower framed for future wet room; floor loading ≥13",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0011",
@@ -15426,8 +15507,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥135 kg",
     "context": "| DAR-04 | Ceiling hoist: structural provision along transfer path (bedroom → bathroom); ceiling joists ≥135 kg point lo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0012",
@@ -15437,8 +15521,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "| DAR-04 | Ceiling hoist: structural provision along transfer path (bedroom → bathroom); ceiling joists ≥135 kg point lo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0013",
@@ -15448,8 +15535,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥850 mm",
     "context": "| DAR-05 | Stairlift: stair clear width ≥850 mm; electrical conduit from bottom to top landing; structural blocking at h",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0014",
@@ -15459,8 +15549,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "12.6%",
     "context": "Key statistics (Habinteg Forecast 2025): only 12.6% of England's housing stock has basic access features. M4(3) wheelcha",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00281"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0015",
@@ -15470,8 +15563,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3.3%",
     "context": "Key statistics (Habinteg Forecast 2025): only 12.6% of England's housing stock has basic access features. M4(3) wheelcha",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00281"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0016",
@@ -15481,8 +15577,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "41%",
     "context": "Key statistics (Habinteg Forecast 2025): only 12.6% of England's housing stock has basic access features. M4(3) wheelcha",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00281"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0017",
@@ -15492,8 +15591,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥815 mm",
     "context": "2. Interior doors ≥815 mm (32 inches) clear passage on the main floor; hallways ≥915 mm (36 inches)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0018",
@@ -15503,8 +15605,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥915 mm",
     "context": "2. Interior doors ≥815 mm (32 inches) clear passage on the main floor; hallways ≥915 mm (36 inches)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0019",
@@ -15514,8 +15619,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<0.5%",
     "context": "**Cost:** $100–600 per dwelling (<0.5% of typical construction cost). This is the documented minimum below which a dwell",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00106",
+      "REF-00246"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0020",
@@ -15525,8 +15633,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "815 mm",
     "context": "| US | Fair Housing Act + local visitability ordinances (Atlanta, Arizona, Texas, Illinois) | Partial (federal: multi-fa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0021",
@@ -15536,8 +15647,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥850 mm",
     "context": "**Sweden — BFS 2024:12 (Boverket).** All apartments in multi-dwelling buildings must be designed for future conversion t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0022",
@@ -15547,8 +15661,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25%",
     "context": "**The Kelsey Ayer Station (San Jose, CA, 2024):** All 115 units built with DAR provisions; inclusive design community wi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00106",
+      "REF-00281"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P10-0023",
@@ -15558,8 +15675,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30–40%",
     "context": "**BC Housing HAFI (Canada):** Programme evaluation of retrofit outcomes. Average CAD $7,500 modification cost per home r",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00281",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P11-0001",
@@ -18196,8 +18316,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥75%",
     "context": "**Key design strategies:** - Single-storey, step-free throughout (E-06, E-11) - ≥75% of occupied spaces with direct natu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0002",
@@ -18207,8 +18330,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "71%",
     "context": "**Verified outcomes:** - Independent RHFAC Accessible Level certification (Tier 5 assessment) - NHS Highland post-occupa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00432",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0003",
@@ -18218,8 +18344,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "**Key design strategies:** - DeafSpace 5 principles: sensory reach, space and proximity, mobility and proximity, light a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0004",
@@ -18229,8 +18358,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "**Key design strategies:** - DeafSpace 5 principles: sensory reach, space and proximity, mobility and proximity, light a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0005",
@@ -18240,8 +18372,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 lux",
     "context": "**Key design strategies:** - DeafSpace 5 principles: sensory reach, space and proximity, mobility and proximity, light a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0006",
@@ -18251,8 +18386,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1800 mm",
     "context": "**Verified outcomes:** - Corridor width of 1800 mm confirmed by video analysis to support simultaneous signing and walki",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0007",
@@ -18262,8 +18400,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "90%",
     "context": "**Verified outcomes:** - Corridor width of 1800 mm confirmed by video analysis to support simultaneous signing and walki",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0008",
@@ -18273,8 +18414,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "**Verified outcomes:** - Corridor width of 1800 mm confirmed by video analysis to support simultaneous signing and walki",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0009",
@@ -18284,8 +18428,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "950 mm",
     "context": "**Key design strategies:** - Kelsey IDS 300-element framework throughout all units (universal design standard — not only",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00432",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0010",
@@ -18295,8 +18442,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "**Key design strategies:** - Kelsey IDS 300-element framework throughout all units (universal design standard — not only",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00432",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0011",
@@ -18306,8 +18456,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "90%",
     "context": "**Verified outcomes:** - RHFAC Exceptional Access Level independently verified (highest RHFAC rating — Tier 5 assessment",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00432",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0012",
@@ -18317,8 +18470,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "62%",
     "context": "**Verified outcomes:** - RHFAC Exceptional Access Level independently verified (highest RHFAC rating — Tier 5 assessment",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00432",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0013",
@@ -18328,8 +18484,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "15%",
     "context": "**Cost data:** Development cost reported as approximately 15% above standard affordable housing per unit — driven primar",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00106",
+      "REF-00281"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0014",
@@ -18339,8 +18498,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 s",
     "context": "**Key design strategies:** - Loop floor plan eliminating all dead-end corridors (D-01) - Landmark object at every decisi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0015",
@@ -18350,8 +18512,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<2%",
     "context": "**Cost data:** Standard university construction costs; dementia-specific provisions estimated at <2% of total project bu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00292",
+      "REF-00106"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0016",
@@ -18361,8 +18526,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "**Key design strategies:** - Sensory gradient across floor plate from active open-plan to acoustic retreat (F-01) - Acou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0017",
@@ -18372,8 +18540,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥40%",
     "context": "**Key design strategies:** - Sensory gradient across floor plate from active open-plan to acoustic retreat (F-01) - Acou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0018",
@@ -18383,8 +18554,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "74%",
     "context": "**Verified outcomes:** - Post-occupancy survey (n=312): 74% of self-identified neurodivergent employees rated new enviro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0019",
@@ -18394,8 +18568,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "68%",
     "context": "**Verified outcomes:** - Post-occupancy survey (n=312): 74% of self-identified neurodivergent employees rated new enviro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0020",
@@ -18405,8 +18582,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "71%",
     "context": "**Verified outcomes:** - Post-occupancy survey (n=312): 74% of self-identified neurodivergent employees rated new enviro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0021",
@@ -18417,7 +18597,8 @@
     "claim_value": "1980s",
     "context": "**Building type:** Specialist school for dementia and cognitive disability (1980s building, retrofit)",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "building age descriptor — contextual date, not a citable design specification"
   },
   {
     "claim_id": "CLAIM-P12-0022",
@@ -18427,8 +18608,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.8 s",
     "context": "**Key design strategies:** - Acoustic ceiling panel installation (NRC ≥0.85) in classrooms and corridors (A-02) - Reduct",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0023",
@@ -18438,8 +18622,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.4 s",
     "context": "**Key design strategies:** - Acoustic ceiling panel installation (NRC ≥0.85) in classrooms and corridors (A-02) - Reduct",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0024",
@@ -18449,8 +18636,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50%",
     "context": "**Key design strategies:** - Acoustic ceiling panel installation (NRC ≥0.85) in classrooms and corridors (A-02) - Reduct",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0025",
@@ -18460,8 +18650,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "40%",
     "context": "**Verified outcomes:** - 40% reduction in measured agitation episodes (pre/post comparison, n=28; BUILD/Aalborg Universi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0026",
@@ -18472,7 +18665,8 @@
     "claim_value": "500 Hz",
     "context": "**Verified outcomes:** - 40% reduction in measured agitation episodes (pre/post comparison, n=28; BUILD/Aalborg Universi",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "measurement methodology — 500 Hz is standard octave band per ISO 3382-2, not a design claim"
   },
   {
     "claim_id": "CLAIM-P12-0027",
@@ -18482,8 +18676,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "**Key design strategies:** - BCA Universal Design Index applied to all new HDB blocks from 2006 (Gold) and 2012 (Platinu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0028",
@@ -18493,8 +18690,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "820 mm",
     "context": "**Verified outcomes:** - >100,000 units with BCA UD Index specification (national scale) - Flat-to-care-home transfer ra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0029",
@@ -18504,8 +18704,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "**Verified outcomes:** - >100,000 units with BCA UD Index specification (national scale) - Flat-to-care-home transfer ra",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0030",
@@ -18515,8 +18718,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.5%",
     "context": "**Cost data:** BCA estimates UD provisions added approximately SGD 1,000--3,000 per flat (c. £600--£1,800 / CAD $1,000--",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00106",
+      "REF-00246"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0031",
@@ -18526,8 +18732,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1.5%",
     "context": "**Cost data:** BCA estimates UD provisions added approximately SGD 1,000--3,000 per flat (c. £600--£1,800 / CAD $1,000--",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00106",
+      "REF-00246"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0032",
@@ -18537,8 +18746,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1800 mm",
     "context": "**Verified outcomes:** - Corridor widths of 1800 mm confirmed by video analysis to support simultaneous two-user signing",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0033",
@@ -18548,8 +18760,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "**Verified outcomes:** - Corridor widths of 1800 mm confirmed by video analysis to support simultaneous two-user signing",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0034",
@@ -18559,8 +18774,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "90%",
     "context": "**Verified outcomes:** - Corridor widths of 1800 mm confirmed by video analysis to support simultaneous two-user signing",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0035",
@@ -18570,8 +18788,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "**Verified outcomes:** - Corridor widths of 1800 mm confirmed by video analysis to support simultaneous two-user signing",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0036",
@@ -18581,8 +18802,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50%",
     "context": "**Verified outcomes:** - Antipsychotic medication usage significantly reduced compared to traditional nursing home basel",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00512",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0037",
@@ -18592,8 +18816,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "94%",
     "context": "**Verified outcomes:** - Antipsychotic medication usage significantly reduced compared to traditional nursing home basel",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00512",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0038",
@@ -18603,8 +18830,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "34%",
     "context": "**Verified outcomes:** - Antipsychotic medication usage significantly reduced compared to traditional nursing home basel",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00512",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0039",
@@ -18614,8 +18844,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "40%",
     "context": "**Verified outcomes:** - Pre/post acoustic intervention: 30--40% reduction in measured agitation episodes across 12 audi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0040",
@@ -18625,8 +18858,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "15%",
     "context": "**Verified outcomes:** - Pre/post acoustic intervention: 30--40% reduction in measured agitation episodes across 12 audi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00292",
+      "REF-00106"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0041",
@@ -18636,8 +18872,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.9 s",
     "context": "**Verified outcomes:** - Post-occupancy staff survey (n=34 teachers and aides): majority reported improvement in student",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0042",
@@ -18647,8 +18886,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.5 s",
     "context": "0.4--0.5 s in retrofitted classrooms (Tier 2 component) - ASPECTSS alignment scores improved from pre-retrofit assessmen",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0043",
@@ -18658,8 +18900,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "31%",
     "context": "**Verified outcomes:** - Programme evaluation (Institut du Bien Vieillir Korian / University of Bordeaux, ongoing from 2",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00297"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0044",
@@ -18669,8 +18914,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "91%",
     "context": "**Verified outcomes:** - >6,500 homes adapted (BC Housing, programme data to 2023) - Programme evaluation (BC Housing, 2",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00281",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0045",
@@ -18680,8 +18928,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "78%",
     "context": "**Verified outcomes:** - >6,500 homes adapted (BC Housing, programme data to 2023) - Programme evaluation (BC Housing, 2",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00281",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0046",
@@ -18691,8 +18942,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "68%",
     "context": "**Verified outcomes:** - >6,500 homes adapted (BC Housing, programme data to 2023) - Programme evaluation (BC Housing, 2",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00281",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P12-0047",
@@ -18703,6 +18957,7 @@
     "claim_value": "40%",
     "context": "**Cross-reference to Part 12:** HAFI programme data provides the best available Canadian evidence for the cost-effective",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "editorial cross-reference note — not a standalone citable claim"
   }
 ]
