@@ -84,8 +84,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 mm",
     "context": "**Primary environmental barriers.** Steps; thresholds above 6 mm; gradients exceeding 1:20; inadequate clear widths and ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0002",
@@ -95,8 +98,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1524 mm",
     "context": "Turning space is the most consequential single parameter. The ADA 1524 mm (5'0\") standard is derived from 1970s anthropo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00468"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0003",
@@ -106,8 +112,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1970s",
     "context": "Turning space is the most consequential single parameter. The ADA 1524 mm (5'0\") standard is derived from 1970s anthropo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00468"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0004",
@@ -117,8 +126,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "Turning space is the most consequential single parameter. The ADA 1524 mm (5'0\") standard is derived from 1970s anthropo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0005",
@@ -128,8 +140,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1700 mm",
     "context": "Turning space is the most consequential single parameter. The ADA 1524 mm (5'0\") standard is derived from 1970s anthropo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0006",
@@ -139,8 +154,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "Turning space is the most consequential single parameter. The ADA 1524 mm (5'0\") standard is derived from 1970s anthropo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0007",
@@ -150,8 +168,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Turning space is the most consequential single parameter. The ADA 1524 mm (5'0\") standard is derived from 1970s anthropo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0008",
@@ -161,8 +182,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5%",
     "context": "Ramp gradient: ≤1:20 (5%) ideal; ≤1:16 intermediate; ≤1:12 (8.3%) code minimum with rest platforms every 9 m. DIN 18040 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0009",
@@ -172,8 +196,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "8.3%",
     "context": "Ramp gradient: ≤1:20 (5%) ideal; ≤1:16 intermediate; ≤1:12 (8.3%) code minimum with rest platforms every 9 m. DIN 18040 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0010",
@@ -183,8 +210,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "9 m",
     "context": "Ramp gradient: ≤1:20 (5%) ideal; ≤1:16 intermediate; ≤1:12 (8.3%) code minimum with rest platforms every 9 m. DIN 18040 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0011",
@@ -194,8 +224,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤6%",
     "context": "Ramp gradient: ≤1:20 (5%) ideal; ≤1:16 intermediate; ≤1:12 (8.3%) code minimum with rest platforms every 9 m. DIN 18040 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0012",
@@ -205,8 +238,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "8.3%",
     "context": "Ramp gradient: ≤1:20 (5%) ideal; ≤1:16 intermediate; ≤1:12 (8.3%) code minimum with rest platforms every 9 m. DIN 18040 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0013",
@@ -216,8 +252,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "Door clear opening: 900 mm best practice; 850 mm minimum (CSA B651). All hardware to be lever-operated, U-pull, or autom",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0014",
@@ -227,8 +266,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "850 mm",
     "context": "Door clear opening: 900 mm best practice; 850 mm minimum (CSA B651). All hardware to be lever-operated, U-pull, or autom",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0015",
@@ -238,8 +280,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "22 N",
     "context": "Door clear opening: 900 mm best practice; 850 mm minimum (CSA B651). All hardware to be lever-operated, U-pull, or autom",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0016",
@@ -249,8 +294,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0 mm",
     "context": "Thresholds: 0 mm (flush) is the target. Above 13 mm: gait interception for older adults (Pavol et al. 2001, Tier 3). Abo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0017",
@@ -260,8 +308,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "13 mm",
     "context": "Thresholds: 0 mm (flush) is the target. Above 13 mm: gait interception for older adults (Pavol et al. 2001, Tier 3). Abo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00410",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0018",
@@ -271,8 +322,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 mm",
     "context": "Thresholds: 0 mm (flush) is the target. Above 13 mm: gait interception for older adults (Pavol et al. 2001, Tier 3). Abo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0019",
@@ -282,8 +336,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "45.8%",
     "context": "Thresholds: 0 mm (flush) is the target. Above 13 mm: gait interception for older adults (Pavol et al. 2001, Tier 3). Abo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00113"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0020",
@@ -293,8 +349,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.3 kN",
     "context": "Grab bars: two vertical bars as primary configuration (smallest centre-of-pressure deviation, highest user preference — ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0021",
@@ -304,8 +363,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤50 m",
     "context": "Rest seating: at intervals ≤50 m on all primary circulation routes (BS 8300); ≤25 m where OFS or PAIN populations are pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0022",
@@ -315,8 +377,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤25 m",
     "context": "Rest seating: at intervals ≤50 m on all primary circulation routes (BS 8300); ≤25 m where OFS or PAIN populations are pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00514"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0023",
@@ -326,8 +391,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "430–480 mm",
     "context": "Rest seating: at intervals ≤50 m on all primary circulation routes (BS 8300); ≤25 m where OFS or PAIN populations are pr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0024",
@@ -338,7 +406,8 @@
     "claim_value": "38%",
     "context": "**Evidence confidence:** HIGH. Tier 1 anthropometric data (IDeA Center), Tier 3 Cochrane systematic reviews (Clemson et ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "editorial evidence confidence note"
   },
   {
     "claim_id": "CLAIM-P02-0025",
@@ -348,8 +417,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "850 mm",
     "context": "All hardware throughout: lever handles (not round knobs); D-pulls at 850 mm AFF (DIN 18040 mandatory specification); max",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0026",
@@ -359,8 +431,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "22 N",
     "context": "All hardware throughout: lever handles (not round knobs); D-pulls at 850 mm AFF (DIN 18040 mandatory specification); max",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0027",
@@ -370,8 +445,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "32–45 mm",
     "context": "All hardware throughout: lever handles (not round knobs); D-pulls at 850 mm AFF (DIN 18040 mandatory specification); max",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0028",
@@ -381,8 +459,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥ 150 mm",
     "context": "Kitchen and bathroom: designed for one-handed operation throughout. This evidence category has a critical gap — zero ind",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0029",
@@ -392,8 +473,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "90%",
     "context": "Toilet transfer: 90% of older disabled users use stand-pivot transfer, not the lateral wheelchair transfer assumed by mo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00333",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0030",
@@ -403,8 +487,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "457 mm",
     "context": "Toilet transfer: 90% of older disabled users use stand-pivot transfer, not the lateral wheelchair transfer assumed by mo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0031",
@@ -414,8 +501,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760 mm",
     "context": "Toilet transfer: 90% of older disabled users use stand-pivot transfer, not the lateral wheelchair transfer assumed by mo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0032",
@@ -425,8 +515,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "813 mm",
     "context": "Toilet transfer: 90% of older disabled users use stand-pivot transfer, not the lateral wheelchair transfer assumed by mo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00494",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0033",
@@ -436,8 +529,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "356 mm",
     "context": "Toilet transfer: 90% of older disabled users use stand-pivot transfer, not the lateral wheelchair transfer assumed by mo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00340"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0034",
@@ -447,8 +543,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "For low vision (majority): luminance contrast ≥30 LRV points at all critical junctions — stair nosings, door frames, cou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00437",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0035",
@@ -458,8 +557,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥4–5 mm",
     "context": "For total blindness (tactile): continuous ISO 23599:2019 TWSI system (ribbed directional + domed attention indicators) t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0036",
@@ -469,8 +570,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥70%",
     "context": "For total blindness (tactile): continuous ISO 23599:2019 TWSI system (ribbed directional + domed attention indicators) t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00360",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0037",
@@ -480,8 +584,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1400–1600 mm",
     "context": "For total blindness (tactile): continuous ISO 23599:2019 TWSI system (ribbed directional + domed attention indicators) t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0038",
@@ -491,8 +597,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 dB",
     "context": "Hearing loop systems: compliant with IEC 60118-4:2014+AMD1:2017 (field strength ±3 dB across listening plane, SNR ≥47 dB",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0039",
@@ -502,8 +610,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥47 dB(A)",
     "context": "Hearing loop systems: compliant with IEC 60118-4:2014+AMD1:2017 (field strength ±3 dB across listening plane, SNR ≥47 dB",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00289",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0040",
@@ -513,8 +624,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.4 s",
     "context": "Room acoustics: RT60 not to exceed 0.4 s at 500 Hz–4 kHz in speech communication spaces (DIN 18041:2016; BS 8300-2:2018 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0041",
@@ -524,8 +638,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 Hz",
     "context": "Room acoustics: RT60 not to exceed 0.4 s at 500 Hz–4 kHz in speech communication spaces (DIN 18041:2016; BS 8300-2:2018 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0042",
@@ -535,8 +652,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "250 Hz",
     "context": "Room acoustics: RT60 not to exceed 0.4 s at 500 Hz–4 kHz in speech communication spaces (DIN 18041:2016; BS 8300-2:2018 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142",
+      "REF-00289"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0043",
@@ -546,8 +666,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 m",
     "context": "For CI users specifically: source-to-listener distance not to exceed 3 m without assistive listening augmentation; dense",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0044",
@@ -557,8 +680,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "DeafSpace provisions: glazed corridor junctions for visual advance sightlines (matte or low-reflectance specification to",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0045",
@@ -568,8 +694,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2400 mm",
     "context": "DeafSpace provisions: glazed corridor junctions for visual advance sightlines (matte or low-reflectance specification to",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0046",
@@ -580,7 +709,8 @@
     "claim_value": "≤0.4 s",
     "context": "**Evidence confidence:** HIGH for core provisions (IEC 60118-4, RT60 ≤0.4 s — Tier 4–5 across 12+ jurisdictions with Tie",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "editorial evidence confidence note"
   },
   {
     "claim_id": "CLAIM-P02-0047",
@@ -590,8 +720,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25%",
     "context": "**Functional profile.** NEU is the most heterogeneous category in the guidebook. It encompasses: acquired brain injury (",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00010"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0048",
@@ -601,8 +734,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1200 mm",
     "context": "Wayfinding: corridor layouts with ≤2 directional changes per route segment; distinctive visual landmark at each decision",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00010"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0049",
@@ -612,8 +748,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "Wayfinding: corridor layouts with ≤2 directional changes per route segment; distinctive visual landmark at each decision",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0050",
@@ -623,8 +762,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "30–60%",
     "context": "Navigation impairment sub-typing (Tier 2): egocentric disorientation, topographic disorientation, and landmark agnosia r",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00010"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0051",
@@ -634,8 +775,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Thermal: MS users with Uhthoff's phenomenon require ambient temperatures ≤18°C in primary activity spaces (heat-induced ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0052",
@@ -645,8 +789,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 m",
     "context": "Lighting: no flickering sources; eliminate fluorescent overhead lighting (B-03/B-04); gradual transition zones ≥5 m at a",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0053",
@@ -656,8 +802,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 lux",
     "context": "Lighting: minimum 300 lux at eye level in corridor circulation; minimum 500 lux at task surfaces (DSDC EADDAT 2022); min",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0054",
@@ -667,8 +816,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 lux",
     "context": "Lighting: minimum 300 lux at eye level in corridor circulation; minimum 500 lux at task surfaces (DSDC EADDAT 2022); min",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0055",
@@ -678,8 +830,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "Lighting: minimum 300 lux at eye level in corridor circulation; minimum 500 lux at task surfaces (DSDC EADDAT 2022); min",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0056",
@@ -689,8 +844,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "15%",
     "context": "Colour and surface: luminance contrast ≥30 LRV (0.4 LRV ratio) between adjacent horizontal and vertical surfaces — floor",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0057",
@@ -700,8 +857,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25 m",
     "context": "Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K,",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0058",
@@ -711,8 +871,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10–500 lux",
     "context": "Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K,",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0059",
@@ -722,8 +885,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤30 dB",
     "context": "Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K,",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00124"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0060",
@@ -733,8 +899,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K,",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0061",
@@ -744,8 +913,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K,",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0062",
@@ -755,8 +927,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<55 dB(A)",
     "context": "Acoustic: background noise <55 dB(A) in focused-attention spaces (directional only — Caniato et al. 2024, single classro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0063",
@@ -766,8 +941,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "Acoustic: background noise <55 dB(A) in focused-attention spaces (directional only — Caniato et al. 2024, single classro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0064",
@@ -777,8 +955,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "De-escalation room (NDV/MH-specific): functionally distinct from the NDV/AUT sensory quiet room (A-16). Minimum area ≥9 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0065",
@@ -788,8 +969,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Thermal: PAIN users require warm ambient environments (fibromyalgia — cold worsens allodynia). This directly conflicts w",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0066",
@@ -799,8 +983,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "Thermal: PAIN users require warm ambient environments (fibromyalgia — cold worsens allodynia). This directly conflicts w",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0067",
@@ -810,8 +997,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "750–1050 mm",
     "context": "Storage: 750–1050 mm AFF (waist-to-shoulder height reduces strain approximately 40% — energy conservation OT guideline, ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0068",
@@ -821,8 +1011,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "40%",
     "context": "Storage: 750–1050 mm AFF (waist-to-shoulder height reduces strain approximately 40% — energy conservation OT guideline, ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0069",
@@ -832,8 +1024,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤25 m",
     "context": "Rest seating: ≤25 m interval on primary circulation (stricter than the MOB 50 m provision — pain-ofs BPC). Seat height 4",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00514"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0070",
@@ -843,8 +1038,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 m",
     "context": "Rest seating: ≤25 m interval on primary circulation (stricter than the MOB 50 m provision — pain-ofs BPC). Seat height 4",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0071",
@@ -854,8 +1051,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "430–480 mm",
     "context": "Rest seating: ≤25 m interval on primary circulation (stricter than the MOB 50 m provision — pain-ofs BPC). Seat height 4",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0072",
@@ -865,8 +1065,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "Intervenor clear floor zone: ≥1500 mm corridor clear width on all primary routes serving DBL populations (required for i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0073",
@@ -876,8 +1079,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Intervenor clear floor zone: ≥1500 mm corridor clear width on all primary routes serving DBL populations (required for i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0074",
@@ -887,8 +1093,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "Intervenor clear floor zone: ≥1500 mm corridor clear width on all primary routes serving DBL populations (required for i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0075",
@@ -898,8 +1107,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Intervenor clear floor zone: ≥1500 mm corridor clear width on all primary routes serving DBL populations (required for i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00414"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0076",
@@ -909,8 +1121,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "Protactile seating: where Protactile communication is anticipated, seating arranged face-to-face at ≤600 mm distance; ar",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00414",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0077",
@@ -920,8 +1135,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "Protactile seating: where Protactile communication is anticipated, seating arranged face-to-face at ≤600 mm distance; ar",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00414"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0078",
@@ -931,8 +1149,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500–1000 mm",
     "context": "Close-range signing (JA 接近手話 / DBL with residual vision): interpreter positioning zone within 500–1000 mm; dedicated lig",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0079",
@@ -942,8 +1163,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1200 mm",
     "context": "Tactile building maps: embossed/thermoform at all major decision points at 900–1200 mm AFF; updated every 3 years minimu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00306",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0080",
@@ -953,8 +1177,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤25–30 m",
     "context": "Rest seating: intervals ≤25–30 m on all primary circulation routes (BS 8300 50 m MOB provision is insufficient for OFS —",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00036"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0081",
@@ -964,8 +1191,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "50 m",
     "context": "Rest seating: intervals ≤25–30 m on all primary circulation routes (BS 8300 50 m MOB provision is insufficient for OFS —",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0082",
@@ -975,8 +1204,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤19–21°C",
     "context": "Ambient temperature: cool (≤19–21°C in transit spaces); aligns with NEU/MS Uhthoff threshold — no conflict. Hot environm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00233"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P02-0083",
@@ -986,8 +1218,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 m",
     "context": "Photosensitivity (OFS/PCS co-occurrence): gradual light transition zones ≥5 m (B-05); no direct overhead fluorescent sou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P03-0001",

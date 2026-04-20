@@ -5,16 +5,17 @@
 <!-- Session 3 of Step 2 (Part 4 Category D-E wayfinding/circulation) complete 2026-04-19 -->
 <!-- Session 4 of Step 2 (Part 4 Category F-G env controls/bathroom/seating) complete 2026-04-19 -->
 <!-- Session 6 of Step 2 (Part 4 Category H-I-K controls/UPL/DeafBlind) complete 2026-04-19 -->
+<!-- Session 7 of Step 2 (Part 2 disability population categories) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 824
-- TAGGED (refs assigned): 462
+- PENDING (untagged): 741
+- TAGGED (refs assigned): 543
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 85
+- DEFERRED (non-citable: methodology, definitional, echo): 87
 - ORPHANED (no supporting ref in global registry): 11
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -26,7 +27,7 @@
 | Part | Total | PENDING | TAGGED | VERIFIED | DEFERRED | ORPHANED |
 |---|---|---|---|---|---|---|
 | Part 1 | 7 | 7 | 0 | 0 | 0 | 0 |
-| Part 2 | 83 | 83 | 0 | 0 | 0 | 0 |
+| Part 2 | 83 | 0 | 81 | 0 | 2 | 0 |
 | Part 3 | 42 | 42 | 0 | 0 | 0 | 0 |
 | Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
 | Part 5 | 79 | 79 | 0 | 0 | 0 | 0 |
@@ -178,7 +179,29 @@
 
 ---
 
-### Next session (Session 7): Part 2 (disability categories) — ~83 claims
+### Step 2 Session 7 — Part 2 (disability population categories) — 2026-04-19 ✅
+
+- **Scope:** 83 claims across §2.1 MOB (24), §2.2 UPL (9), §2.3 VIS (4), §2.4 DEAF (9), §2.5 NEU (6), §2.6 DEM (4), §2.7 NDV (7), §2.8 MH (1), §2.9 PAIN (7), §2.10 DBL (8), §2.11 OFS (4)
+- **Results:** 81 TAGGED, 2 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - §2.1 MOB: REF-00044 (Steinfeld wheeled mobility), REF-00468 (IDeA anthropometry), REF-00154 (BS 8300-2 threshold), REF-00494 (ADA routes), REF-00308 (ISO 21542), REF-00113 (Al Lawati threshold 45.8%), REF-00410 (gait interception/falls), REF-00340 (KITE grab bar 1.3 kN), REF-00036 (Roxburgh ME/CFS seating), REF-00514 (Wheels for Wellbeing)
+  - §2.2 UPL: REF-00152 (BS 8300 controls), REF-00492 (ADA §308), REF-00333 (MHIPI toilet transfer), REF-00150 (BS 8300-2), REF-00416 (RCOT), REF-00052 (Wellecke kitchen), REF-00340 (KITE grab bar)
+  - §2.3 VIS: REF-00437 (RNIB Building Sight), REF-00360 (Manandhar LRV), REF-00306 (ISO 23599 TWSI)
+  - §2.4 DEAF: REF-00289 (IEC 60118-4 loop), REF-00124 (ANSI S12.60), REF-00142 (Bettarello RT60), REF-00135 (DeafSpace), REF-00248 (Gallaudet DeafSpace Vol 1)
+  - §2.5 NEU: REF-00388 (MSIF Atlas), REF-00010 (navigation impairment SR), REF-00157 (PAS 6463), REF-00014 (Flensner MS Uhthoff), REF-00308 (ISO 21542)
+  - §2.6 DEM: REF-00229 (DSDC EADDAT), REF-00360 (Manandhar LRV)
+  - §2.7 NDV + §2.8 MH: REF-00029 (Mostafa ASPECTSS 2.0), REF-00157 (PAS 6463), REF-00124 (ANSI S12.60), REF-00142 (Bettarello), REF-00232 (Dunn sensory processing)
+  - §2.9 PAIN: REF-00041 (Staud fibromyalgia), REF-00388 (MSIF), REF-00036 (Roxburgh), REF-00514 (Wheels for Wellbeing), REF-00154 (BS 8300-2), REF-00416 (RCOT)
+  - §2.10 DBL: REF-00203 (DbI guidelines), REF-00188 (Clark Touch the Future), REF-00414 (Protactile), REF-00306 (ISO 23599), REF-00308 (ISO 21542)
+  - §2.11 OFS: REF-00405 (NICE NG206), REF-00036 (Roxburgh), REF-00233 (dysautonomia), REF-00157 (PAS 6463)
+- **DEFERRED categories (2):**
+  - Editorial evidence confidence notes (§2.1 "HIGH — Tier 1 anthropometric data", §2.4 evidence confidence note)
+- **No ORPHANED claims.** All disability category specs have registry coverage.
+- **Running total:** 543 TAGGED / 87 DEFERRED / 11 ORPHANED / 741 PENDING
+
+---
+
+### Next session (Session 8): Parts 3 + 5 (conflict resolution) — ~121 claims
 
 ---
 
