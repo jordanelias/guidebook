@@ -4,16 +4,17 @@
 <!-- Session 2 of Step 2 (Part 4 Category B-C lighting/surfaces) complete 2026-04-19 -->
 <!-- Session 3 of Step 2 (Part 4 Category D-E wayfinding/circulation) complete 2026-04-19 -->
 <!-- Session 4 of Step 2 (Part 4 Category F-G env controls/bathroom/seating) complete 2026-04-19 -->
+<!-- Session 6 of Step 2 (Part 4 Category H-I-K controls/UPL/DeafBlind) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 918
-- TAGGED (refs assigned): 386
+- PENDING (untagged): 824
+- TAGGED (refs assigned): 462
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 67
+- DEFERRED (non-citable: methodology, definitional, echo): 85
 - ORPHANED (no supporting ref in global registry): 11
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -27,7 +28,7 @@
 | Part 1 | 7 | 7 | 0 | 0 | 0 | 0 |
 | Part 2 | 83 | 83 | 0 | 0 | 0 | 0 |
 | Part 3 | 42 | 42 | 0 | 0 | 0 | 0 |
-| Part 4 | 558 | 94 | 386 | 0 | 67 | 11 |
+| Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
 | Part 5 | 79 | 79 | 0 | 0 | 0 | 0 |
 | Part 6 | 115 | 115 | 0 | 0 | 0 | 0 |
 | Part 7 | 111 | 111 | 0 | 0 | 0 | 0 |
@@ -138,7 +139,46 @@
   - Raj, S.R. et al. (2013) — Orthostatic intolerance onset time 2-10 min (cited G-06 FDR-OFS-01)
   - Stewart, J.M. et al. (2012) — Orthostatic intolerance clinical data (cited G-06 FDR-OFS-01)
 
-### Next session (Session 5): Part 4 Category H-I-K (~94 claims)
+### Step 2 Session 6 — Part 4 Category H-I-K (controls, UPL, DeafBlind) — 2026-04-19 ✅
+
+- **Scope:** 94 claims across part4-intro (1), H-01 to H-05 (35), I-01 to I-04 (33), K-01 to K-04 (25)
+- **Results:** 76 TAGGED, 18 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - REF-00492 (ADA §308 Reach Ranges), REF-00152 (BS 8300-2 §8 Controls), REF-00212 (DIN 18040-2 §5 Operating Heights), REF-00308 (ISO 21542:2021), REF-00200 (CSA B651)
+  - REF-00044 (Steinfeld 2010 IDeA Center wheeled mobility anthropometry)
+  - REF-00157 (PAS 6463:2022), REF-00150 (BS 8300-2:2018), REF-00416 (RCOT Housing Adaptations Without Delay 2019)
+  - REF-00415 (PVA Accessible Home Design 2021)
+  - REF-00135 (DeafSpace Design Guidelines working draft), REF-00248 (DeafSpace Design Guidelines Vol 1)
+  - REF-00371 (MHLW Japan bathtub heat shock), REF-00388 (MSIF Atlas 2023), REF-00014 (Flensner 2011 MS heat)
+  - REF-00311 (BS EN ISO 10535:2021 ceiling hoists), REF-00265 (Habinteg 2024)
+  - REF-00052 (Wellecke 2022), REF-00383 (GB 50763 kitchen)
+  - REF-00203 (DbI guidelines), REF-00406 (Nordic Welfare Centre Deafblind), REF-00188 (Clark 2024 Touch the Future), REF-00414 (Protactile)
+  - REF-00306 (ISO 23599:2019 TWSI), REF-00273 (HLAA Auracast — best-available for H-03 captioning)
+- **DEFERRED categories (18 total):**
+  - OT evidence echo paragraphs (H-01, I-01, I-03, I-04 drainage, K-01, K-03, K-04 — echoing spec values tagged upstream)
+  - Retrofit cost notes (H-01, K-01, K-03)
+  - DAR cost specification: H-02 UPS NC premium ≤0.1%
+  - Cross-reference parsing artifact: K-01 CLAIM-P04-0428 ("06 min" = "G-06 minimum" within spec text)
+  - Methodology note: part4-intro 500 Hz RT60 octave band
+- **No new ORPHANED claims.** All cited sources tagged with best-available supporting refs.
+- **Registry gaps identified (cited in Part 4 H-I-K but absent from global registry — add before publication):**
+  - NS 11001:2018/SINTEF — Norwegian controls reach range for powered WC users (H-01 1300 mm); tagged DIN 18040-2
+  - RESNA/ARATA standards — ECU/sip-and-puff for C4–C5 tetraplegic users (H-02); tagged RCOT/PVA
+  - Tobii eye-gaze guidance — ECU screen positioning (H-02); tagged RCOT/PVA
+  - WFD 2022 — Built environment access for Deaf users (H-03); tagged Gallaudet DeafSpace
+  - HLAA CART captioning guidance — captioning accuracy ≥98% (H-03); tagged REF-00273 (Auracast — different HLAA topic, best-available)
+  - ILCWA 2024 — Kitchen modifications for one-handed function (I-02); tagged RCOT/Wellecke
+  - Petajan, J.H. & White, A.T. (1999) — Sports Medicine 27(3):179–191; Uhthoff 0.5°C range (I-03); tagged MSIF Atlas + Flensner
+  - Sense UK 2022 — Building and Communicating; tagged DbI/Nordic Welfare
+  - Bellman & Symfon 2024 — Vibrotactile alerting systems (K-04); tagged DbI/Nordic Welfare
+  - Verrillo (1993) — Vibrotactile frequency perceptibility range 20–200 Hz (K-04); tagged DbI/Nordic Welfare
+  - DIN 51130 — Anti-slip floor rating R-scale (I-04 drainage); tagged BS 8300/ISO 21542
+  - ANSI A137.1 — DCOF anti-slip rating (I-04 drainage); tagged BS 8300/ISO 21542
+- **Part 4 complete — 0 PENDING remaining.** Running total: 462 TAGGED / 85 DEFERRED / 11 ORPHANED / 824 PENDING (other parts).
+
+---
+
+### Next session (Session 7): Part 2 (disability categories) — ~83 claims
 
 ---
 

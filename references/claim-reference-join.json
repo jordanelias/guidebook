@@ -1460,7 +1460,8 @@
     "claim_value": "500 Hz",
     "context": "All RT60 specifications are for the 500 Hz octave band in the occupied condition unless stated otherwise. NC ratings are",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "methodology note — RT60 at 500 Hz octave band (acoustic measurement standard per ISO 3382-2)"
   },
   {
     "claim_id": "CLAIM-P04-0002",
@@ -6291,8 +6292,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "control readers) at 400--1100 mm AFF and operable with one closed fist without tight grasping, pinching, or twisting. Le",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152",
+      "REF-00212",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0359",
@@ -6302,8 +6308,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 mm",
     "context": "doors. Rocker or touch switches (not toggle). Large push-pads ≥50 mm diameter.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0360",
@@ -6313,8 +6323,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Height range: 400--1100 mm AFF (standard upper limit, this Guidebook)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152",
+      "REF-00212"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0361",
@@ -6324,8 +6338,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "Force: ≤22 N",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0362",
@@ -6335,8 +6353,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 mm",
     "context": "Push-pads: ≥50 mm diameter",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0363",
@@ -6346,8 +6367,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "**Jurisdiction note — upper reach zone discrepancy:** DIN 18040-2 specifies 400--1200 mm AFF for storage/controls (OT re",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00212"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0364",
@@ -6357,8 +6380,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1300 mm",
     "context": "self-propelling wheelchair users). NS 11001/SINTEF specifies 400--1300 mm for powered wheelchair users (greater reach en",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00212"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0365",
@@ -6368,8 +6393,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Guidebook retains 1100 mm as the standard upper limit pending the full",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0366",
@@ -6379,8 +6407,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "For powered wheelchair users, 1200 mm is supportable from available evidence.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00212"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0367",
@@ -6391,7 +6422,8 @@
     "claim_value": "1100 mm",
     "context": "**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Controls at accessible height (400--1100 mm AFF) is a specifi",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "retrofit cost note"
   },
   {
     "claim_id": "CLAIM-P04-0368",
@@ -6402,7 +6434,8 @@
     "claim_value": "1200 mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelop",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats reach range values already tagged upstream"
   },
   {
     "claim_id": "CLAIM-P04-0369",
@@ -6413,7 +6446,8 @@
     "claim_value": "≤22 N",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelop",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats force value already tagged upstream"
   },
   {
     "claim_id": "CLAIM-P04-0370",
@@ -6424,7 +6458,8 @@
     "claim_value": "≥50 mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelop",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats push-pad size already tagged upstream"
   },
   {
     "claim_id": "CLAIM-P04-0371",
@@ -6434,8 +6469,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2°C",
     "context": "**Description:** Every primary occupied space has in-room or at-desk control of: (a) overhead lighting dimming (accessib",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0372",
@@ -6445,8 +6483,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1100 mm",
     "context": "Thermostat/temperature adjustment: ≤1100 mm AFF; ≤22 N force",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0373",
@@ -6456,8 +6497,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "Thermostat/temperature adjustment: ≤1100 mm AFF; ≤22 N force",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0374",
@@ -6467,8 +6511,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "700 mm",
     "context": "Sip-and-puff interface: fixed mounting bracket at each primary position (bed at 700 mm AFF ≤300 mm from head; WC at seat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0375",
@@ -6478,8 +6525,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤300 mm",
     "context": "Sip-and-puff interface: fixed mounting bracket at each primary position (bed at 700 mm AFF ≤300 mm from head; WC at seat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0376",
@@ -6489,8 +6539,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500–700 mm",
     "context": "Eye-gaze screen: adjustable arm mount at 500–700 mm from face, perpendicular to line of sight, at each primary position.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0377",
@@ -6500,8 +6553,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "Voice control acoustic environment: RT60 ≤0.4 s in all rooms with voice-controlled ECU (cross-ref A-02). C4–C5 users hav",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0378",
@@ -6511,8 +6566,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥4 hr",
     "context": "**Backup power (LIFE SAFETY):** UPS with ≥4 hr battery for ECU system. ECU controls door locks, lighting, call system, H",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0379",
@@ -6523,7 +6581,8 @@
     "claim_value": "≤0.1%",
     "context": "**Backup power (LIFE SAFETY):** UPS with ≥4 hr battery for ECU system. ECU controls door locks, lighting, call system, H",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "DAR cost specification (NC premium) — cost note not a citable research claim"
   },
   {
     "claim_id": "CLAIM-P04-0380",
@@ -6533,8 +6592,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥98%",
     "context": "be inaccessible; the speech-to-text accuracy specification (≥98% for prepared speech) ensures the compensation is functi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00248",
+      "REF-00273"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0381",
@@ -6544,8 +6606,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥100 mm",
     "context": "**Description:** Building intercoms at entry points: (a) visual display ≥100 mm showing caller video alongside audio; (b",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0382",
@@ -6555,8 +6620,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30 mm",
     "context": "**Description:** Building intercoms at entry points: (a) visual display ≥100 mm showing caller video alongside audio; (b",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0383",
@@ -6566,8 +6634,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "**Description:** Building intercoms at entry points: (a) visual display ≥100 mm showing caller video alongside audio; (b",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0384",
@@ -6577,8 +6648,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥100 mm",
     "context": "Visual display: ≥100 mm screen at intercom",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0385",
@@ -6588,8 +6662,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30 mm",
     "context": "Button: ≥30 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0386",
@@ -6599,8 +6676,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Height: 900--1100 mm AFF",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0387",
@@ -6610,8 +6690,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤20 N",
     "context": "drawers and cabinet doors; single-lever taps throughout; push-pad access controls. Force: ≤20 N throughout (AU AS 1428.1",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00200",
+      "REF-00150",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0388",
@@ -6621,8 +6706,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤20 N",
     "context": "Force: ≤20 N for all hardware",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00200",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0389",
@@ -6632,8 +6721,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 mm",
     "context": "Push-pads: ≥50 mm diameter at all access control points",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0390",
@@ -6644,7 +6736,8 @@
     "claim_value": "≤20 N",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Lever door hardware, ≤20 N force, and return-tip specification are derived d",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats lever hardware force and spec values"
   },
   {
     "claim_id": "CLAIM-P04-0391",
@@ -6654,8 +6747,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥15 mm",
     "context": "**Description:** Kitchen designed for full one-handed operation: induction cooktop (flat, front-controls, auto shutoff);",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0392",
@@ -6665,8 +6761,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Cooktop: induction; flat surface; front-mounted controls 400--1100 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00052",
+      "REF-00383"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0393",
@@ -6676,8 +6776,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "Microwave: counter mounted or under-counter at 760--900 mm AFF",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0394",
@@ -6687,8 +6790,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥15 mm",
     "context": "Countertop: non-slip surface; raised lip ≥15 mm at perimeter; suction mount points",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0395",
@@ -6698,8 +6804,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "38°C",
     "context": "**Description:** Thermostatic mixing valve preset to 38°C (UPL anti-scald — cannot disengage rapidly with one hand). For",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00416",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0396",
@@ -6709,8 +6819,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "35°C",
     "context": "**Description:** Thermostatic mixing valve preset to 38°C (UPL anti-scald — cannot disengage rapidly with one hand). For",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0397",
@@ -6720,8 +6833,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1400 mm",
     "context": "**Description:** Thermostatic mixing valve preset to 38°C (UPL anti-scald — cannot disengage rapidly with one hand). For",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0398",
@@ -6731,8 +6847,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "38°C",
     "context": "TMV: 38°C (UPL anti-scald); 37°C (MS general); 35°C (Uhthoff-positive",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0399",
@@ -6742,8 +6861,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "37°C",
     "context": "TMV: 38°C (UPL anti-scald); 37°C (MS general); 35°C (Uhthoff-positive",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0400",
@@ -6753,8 +6875,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "35°C",
     "context": "TMV: 38°C (UPL anti-scald); 37°C (MS general); 35°C (Uhthoff-positive",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0401",
@@ -6764,8 +6889,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1400 mm",
     "context": "Towel hooks: bilateral positions at 1100--1400 mm AFF",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0402",
@@ -6775,8 +6903,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Soap/shampoo dispensers: wall-mounted at 900--1100 mm AFF (one-hand pump)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00152",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0403",
@@ -6786,8 +6917,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.5°C",
     "context": "(1999). Sports Medicine, 27(3), 179--191. [Uhthoff — IS-51 resolved: 0.5°C range.\\]",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0404",
@@ -6798,7 +6932,8 @@
     "claim_value": "38°C",
     "context": "**Evidence basis (OT):** Biomechanical FOR; Compensatory FOR. Anti-scald thermostatic controls at 38°C compensate for th",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats TMV temperature values already tagged"
   },
   {
     "claim_id": "CLAIM-P04-0405",
@@ -6809,7 +6944,8 @@
     "claim_value": "38°C",
     "context": "**Evidence basis (OT):** Biomechanical FOR; Compensatory FOR. Anti-scald thermostatic controls at 38°C compensate for th",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats anti-scald specification"
   },
   {
     "claim_id": "CLAIM-P04-0406",
@@ -6819,8 +6955,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 mm",
     "context": "Bathroom call point: pull-cord at 400--500 mm AFF when seated or fallen (low cord end); second cord end at 1000--1100 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0407",
@@ -6830,8 +6969,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Bathroom call point: pull-cord at 400--500 mm AFF when seated or fallen (low cord end); second cord end at 1000--1100 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0408",
@@ -6841,8 +6983,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 m",
     "context": "Wireless pendant: compatible pendant option for ambulant users; pendant waterproof ≥IPX4; range ≥50 m from receiving sta",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0409",
@@ -6852,8 +6996,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "Wireless pendant: compatible pendant option for ambulant users; pendant waterproof ≥IPX4; range ≥50 m from receiving sta",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00492"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0410",
@@ -6863,8 +7010,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1100 mm",
     "context": "Reset: call cancel/reset control accessible at 400--1100 mm AFF; DEM typologies: reset requires staff cancellation to ma",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0411",
@@ -6874,8 +7024,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥75 dB(A)",
     "context": "Auditory alert: alert at nursing station ≥75 dB(A); alert signal distinguishable from building fire alarm and all other ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0412",
@@ -6885,8 +7037,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 kN",
     "context": "- ● Structural ceiling blocking (rated ≥1.5 kN/m² uniformly distributed or ≥2.0 kN point load at any hoist attachment po",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0413",
@@ -6896,8 +7052,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2.0 kN",
     "context": "- ● Structural ceiling blocking (rated ≥1.5 kN/m² uniformly distributed or ≥2.0 kN point load at any hoist attachment po",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0414",
@@ -6907,8 +7067,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- ○ Portable hoist provision: where ceiling hoist is not achievable in retrofit, portable floor hoist with ≥900 mm base ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0415",
@@ -6918,8 +7080,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "- ○ Portable hoist provision: where ceiling hoist is not achievable in retrofit, portable floor hoist with ≥900 mm base ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0416",
@@ -6929,8 +7094,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "Drain position: linear channel drain at wall perimeter, or point drain at shower-head position at minimum 600 mm from WC",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0417",
@@ -6940,8 +7108,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Drain position: linear channel drain at wall perimeter, or point drain at shower-head position at minimum 600 mm from WC",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0418",
@@ -6951,8 +7122,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤8 mm",
     "context": "Drain cover: grating clear gap width ≤8 mm in any direction; grating bars oriented perpendicular to principal direction ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0419",
@@ -6962,8 +7136,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥8 mm",
     "context": "Drain cover: grating clear gap width ≤8 mm in any direction; grating bars oriented perpendicular to principal direction ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0420",
@@ -6973,8 +7150,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Floor gradient: maximum 1:50 fall in any direction within the showering zone; level (zero gradient) within the ø1500 mm ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0421",
@@ -6984,8 +7164,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1 mm",
     "context": "Drain cover flush fit: all drain covers flush with surrounding floor surface ±1 mm; no projecting lip or recess that cat",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0422",
@@ -6995,8 +7178,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "6 mm",
     "context": "Threshold drain: if a drain channel at room threshold is unavoidable, maximum 6 mm raised lip; 45° bevelled edge on both",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0423",
@@ -7007,7 +7193,8 @@
     "claim_value": "≤8 mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Accessible drain specification addresses two distinct biomechanical hazards:",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats drain grating gap spec (CLAIM-P04-0418)"
   },
   {
     "claim_id": "CLAIM-P04-0424",
@@ -7018,7 +7205,8 @@
     "claim_value": "100 mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Accessible drain specification addresses two distinct biomechanical hazards:",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — wheelchair caster diameter 100mm is mechanical context not a specification value"
   },
   {
     "claim_id": "CLAIM-P04-0425",
@@ -7029,7 +7217,8 @@
     "claim_value": "≥12 mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Accessible drain specification addresses two distinct biomechanical hazards:",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats drain/caster gap relationship context"
   },
   {
     "claim_id": "CLAIM-P04-0426",
@@ -7039,8 +7228,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Counter approach zone: minimum 1500 × 1500 mm clear floor space at the lowered counter section (G-06), clear of all obst",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0427",
@@ -7050,8 +7242,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Lowered section width: minimum 1200 mm (wider than the standard G-06 minimum of 1000 mm) to accommodate simultaneous app",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0428",
@@ -7062,7 +7256,8 @@
     "claim_value": "06 min",
     "context": "Lowered section width: minimum 1200 mm (wider than the standard G-06 minimum of 1000 mm) to accommodate simultaneous app",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "cross-reference parsing artifact — claim_value \"06 min\" = \"G-06 minimum\" within spec text; not a specification value"
   },
   {
     "claim_id": "CLAIM-P04-0429",
@@ -7072,8 +7267,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1000 mm",
     "context": "Lowered section width: minimum 1200 mm (wider than the standard G-06 minimum of 1000 mm) to accommodate simultaneous app",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0430",
@@ -7083,8 +7281,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Knee clearance: per G-06 specification; extends across full 1200 mm lowered section width",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0431",
@@ -7094,8 +7294,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "No barrier or queue management system (post, rope, barrier arm) within the 1500 mm approach zone",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0432",
@@ -7106,7 +7308,8 @@
     "claim_value": "1200 mm",
     "context": "**Retrofit cost note:** Retrofit penalty: LOW. Counter approach zone is a furniture and layout decision. Achieving the 1",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "retrofit cost note"
   },
   {
     "claim_id": "CLAIM-P04-0433",
@@ -7117,7 +7320,8 @@
     "claim_value": "1500 mm",
     "context": "**Evidence basis (OT):** Compensatory FOR; PEOP Model. The intervenor adjacency provision compensates for the absence of",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats 1500mm approach zone (CLAIM-P04-0426)"
   },
   {
     "claim_id": "CLAIM-P04-0434",
@@ -7127,8 +7331,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 m",
     "context": "Location: within 3 m of the principal entrance, off the primary circulation route (clear of pedestrian flow), at a stabl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0435",
@@ -7138,8 +7345,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "750–900 mm",
     "context": "Map frame: horizontal or tilted surface at 750–900 mm AFF; tilted 15° toward user preferred for exploration ease",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0436",
@@ -7149,8 +7359,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 mm",
     "context": "Map dimensions: minimum 400 × 300 mm tactile field; maximum 600 × 450 mm (beyond this, single-session orientation is not",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0437",
@@ -7160,8 +7373,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "450 mm",
     "context": "Map dimensions: minimum 400 × 300 mm tactile field; maximum 600 × 450 mm (beyond this, single-session orientation is not",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00306"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0438",
@@ -7171,8 +7387,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1100 mm",
     "context": "Companion audio: optional audio description via accessible button (≤1100 mm AFF; ≤22 N force) at the station for users w",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0439",
@@ -7182,8 +7401,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22 N",
     "context": "Companion audio: optional audio description via accessible button (≤1100 mm AFF; ≤22 N force) at the station for users w",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0440",
@@ -7193,8 +7415,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Minimum clear floor zone: 1500 × 1500 mm at all service points (counters, reception, information desks) in addition to t",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188",
+      "REF-00414"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0441",
@@ -7204,8 +7430,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "At seating positions: 900 × 900 mm clear alongside each designated accessible seat for an intervenor seated position wit",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0442",
@@ -7215,8 +7444,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "At assembly and meeting spaces: row-end seats (aisle positions) designated for DBL users — minimum 1200 × 1200 mm clear ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00188",
+      "REF-00414"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0443",
@@ -7227,7 +7460,8 @@
     "claim_value": "1200 mm",
     "context": "**Retrofit cost note:** Retrofit penalty: LOW. Clear floor zone provision is a furniture layout and seating placement de",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "retrofit cost note"
   },
   {
     "claim_id": "CLAIM-P04-0444",
@@ -7238,7 +7472,8 @@
     "claim_value": "1500 mm",
     "context": "**Evidence basis (OT):** PEOP Model (volition subsystem); Compensatory FOR. The haptic communication clear floor zone co",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats 1500mm haptic zone (CLAIM-P04-0440)"
   },
   {
     "claim_id": "CLAIM-P04-0445",
@@ -7248,8 +7483,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20–200 Hz",
     "context": "Floor panel specification (where fixed installation): vibration frequency 20–200 Hz; minimum perceptible amplitude 0.1 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0446",
@@ -7259,8 +7497,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.1 mm",
     "context": "Floor panel specification (where fixed installation): vibration frequency 20–200 Hz; minimum perceptible amplitude 0.1 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0447",
@@ -7270,8 +7511,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 mm",
     "context": "Floor panel specification (where fixed installation): vibration frequency 20–200 Hz; minimum perceptible amplitude 0.1 m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00203",
+      "REF-00406"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0448",
@@ -7281,8 +7525,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "Personal pager system: where fixed floor panels are not provided, the building management infrastructure must support a ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0449",
@@ -7292,8 +7539,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1100 mm",
     "context": "Communication alerting: where a DBL user occupies a space without staff continuously present, a secondary vibrotactile c",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00203"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0450",
@@ -7304,7 +7554,8 @@
     "claim_value": "20–200 Hz",
     "context": "**Evidence basis (OT):** Compensatory FOR; EHP Framework (prevent strategy). Vibrotactile alerting compensates for the a",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "OT evidence echo — repeats 20-200 Hz vibrotactile frequency (CLAIM-P04-0445)"
   },
   {
     "claim_id": "CLAIM-P04-0451",
