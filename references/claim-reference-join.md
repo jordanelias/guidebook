@@ -2,16 +2,17 @@
 <!-- Generated 2026-04-19 — Step 3 of citation infrastructure -->
 <!-- Session 1 of Step 2 (Part 4 Category A acoustics) complete 2026-04-19 -->
 <!-- Session 2 of Step 2 (Part 4 Category B-C lighting/surfaces) complete 2026-04-19 -->
+<!-- Session 3 of Step 2 (Part 4 Category D-E wayfinding/circulation) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 1265
-- TAGGED (refs assigned): 83
+- PENDING (untagged): 1072
+- TAGGED (refs assigned): 247
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 23
+- DEFERRED (non-citable: methodology, definitional, echo): 52
 - ORPHANED (no supporting ref in global registry): 11
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -25,7 +26,7 @@
 | Part 1 | 7 | 7 | 0 | 0 | 0 | 0 |
 | Part 2 | 83 | 83 | 0 | 0 | 0 | 0 |
 | Part 3 | 42 | 42 | 0 | 0 | 0 | 0 |
-| Part 4 | 558 | 441 | 83 | 0 | 23 | 11 |
+| Part 4 | 558 | 248 | 247 | 0 | 52 | 11 |
 | Part 5 | 79 | 79 | 0 | 0 | 0 | 0 |
 | Part 6 | 115 | 115 | 0 | 0 | 0 | 0 |
 | Part 7 | 111 | 111 | 0 | 0 | 0 | 0 |
@@ -83,7 +84,34 @@
   - Alzheimer's Disease International 2020 — World Alzheimer Report 2020 (cited B-01, B-11)
 - **Data quality flag:** Claims 0109–0111 scoped as B-11 in join file but content at line 1050 is E-05 canopy spec (3000×2000 mm, ≥2500 mm height) — appears to be misplaced E-05 content between B-11 and Category C. Tagged with entry refs (REF-00428, REF-00150). Flag for Part 4 content review.
 
-### Next session (Session 3): Part 4 Category D-E (spatial/circulation) — ~157 claims
+### Step 2 Session 3 — Part 4 Category D-E (wayfinding, circulation) — 2026-04-19 ✅
+
+- **Scope:** 193 claims across D-01 to D-11 and E-01/E-02/E-03/E-04/E-05/E-06/E-08/E-09/E-10/E-11/E-12/E-13/E-15
+- **Results:** 164 TAGGED, 29 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - REF-00026 (Marquardt 2011 EADDAT — dementia wayfinding), REF-00229 (DSDC EADDAT 2022), REF-00361 (Marquardt 2011 wayfinding review)
+  - REF-00409 (Passini 1984 Wayfinding in Architecture), REF-00047 (Tola 2021 ASD built environment)
+  - REF-00199 (CSA B651:23 IntD provisions), REF-00151 (BS 8300-2:2018), REF-00437 (RNIB Building Sight 2023)
+  - REF-00135 (Bauman 2010 DeafSpace), REF-00248 (Gallaudet 2010 DeafSpace Vol 1)
+  - REF-00173 (EN 81-70:2022 — accessible lifts), REF-00370 (Approved Document M Vol 2 2026)
+  - REF-00341 (Koontz 2012 — ramp gradient shoulder load), REF-00044 (Steinfeld 2010 wheeled mobility anthropometry)
+  - REF-00265 (Habinteg 2024 Inclusive Housing Design Guide), REF-00153 (BS 8300-2 Annex G power WC geometry)
+  - REF-00154 (BS 8300-2 threshold provisions), REF-00214 (DIN 18040-2 Nullschwelle), REF-00495 (ADA §303)
+  - REF-00306 (ISO 23599:2019 — TWSI), REF-00155 (BS 8300-2 doors), REF-00494 (ADA §§302–405)
+  - REF-00036 (Roxburgh 2024 ME/CFS — seating intervals), REF-00514 (Wheels for Wellbeing 2025 benches/seating)
+  - REF-00232 (Dunn 1997 sensory processing), REF-00157 (PAS 6463:2022), REF-00015 (Gonzalez 2014 sensory garden)
+  - REF-00405 (NICE NG206 ME/CFS 2021)
+- **DEFERRED categories:**
+  - OT evidence echo paragraphs (E-01 L1710, E-02 L1745, E-08 L1968-1970, E-04 L1824, E-05 L1853, E-09 L2032)
+  - Retrofit cost notes echoing spec values (E-04 L1806, E-08 L1956 ×2)
+  - Illustration placeholder notes (E-12 L3616, E-13 L3652, E-10 L3689-L3691, L3776)
+  - Cross-reference notes (E-10 revision note L3664 old ≤20m, E-10 L3689 D-11 xref, E-10 L3776 weather-conditional note)
+  - Date reference in key evidence (D-11 "1990s" Danish research), glazing class cross-ref (D-10 "Class 2 minimum")
+  - D-03 OT echo (L1381 ≤20m), D-03 same OT paragraph
+- **Data quality flag:** Claims 0214–0218 (E-09 scope at L2016–2032) contain misplaced E-05 canopy content (≥3000mm / ≥2000mm / ≥2500mm / ≥100 lux). Tagged with entry refs (REF-00265, REF-00370) appropriate to canopy content. Flag carried forward for Part 4 content review.
+- **No new ORPHANED claims** — all cited sources have registry coverage via supporting refs.
+
+### Next session (Session 4): Part 4 Category F-G (~90 claims)
 
 ---
 
