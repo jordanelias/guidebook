@@ -7,16 +7,17 @@
 <!-- Session 6 of Step 2 (Part 4 Category H-I-K controls/UPL/DeafBlind) complete 2026-04-19 -->
 <!-- Session 7 of Step 2 (Part 2 disability population categories) complete 2026-04-19 -->
 <!-- Session 8 of Step 2 (Parts 3+5 conflict resolution) complete 2026-04-19 -->
+<!-- Session 9 of Step 2 (Part 6 residential matrices) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 620
-- TAGGED (refs assigned): 661
+- PENDING (untagged): 505
+- TAGGED (refs assigned): 775
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 90
+- DEFERRED (non-citable: methodology, definitional, echo): 91
 - ORPHANED (no supporting ref in global registry): 11
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -32,7 +33,7 @@
 | Part 3 | 42 | 0 | 41 | 0 | 1 | 0 |
 | Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
 | Part 5 | 79 | 0 | 77 | 0 | 2 | 0 |
-| Part 6 | 115 | 115 | 0 | 0 | 0 | 0 |
+| Part 6 | 115 | 0 | 114 | 0 | 1 | 0 |
 | Part 7 | 111 | 111 | 0 | 0 | 0 | 0 |
 | Part 8 | 116 | 116 | 0 | 0 | 0 | 0 |
 | Part 9 | 10 | 10 | 0 | 0 | 0 | 0 |
@@ -228,7 +229,31 @@
 
 ---
 
-### Next session (Session 9): Part 6 (residential matrices) — ~115 claims
+### Step 2 Session 9 — Part 6 (residential design matrices) — 2026-04-19 ✅
+
+- **Scope:** 115 claims across §6.0–§6.10 (entry, parking, laundry, bedroom, bathroom, living room, kitchen, circulation, stair/lift, DAR summary)
+- **Results:** 114 TAGGED, 1 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - REF-00265 (Habinteg 2024 — Inclusive Housing Design Guide), REF-00150 (BS 8300-2:2018)
+  - REF-00154 (BS 8300-2 threshold/corridor provisions), REF-00308 (ISO 21542)
+  - REF-00492 (ADA §308), REF-00152 (BS 8300 controls), REF-00044 (Steinfeld wheeled mobility)
+  - REF-00303 (ISO 7730 thermal), REF-00518 (WHO Housing 18-24°C), REF-00416 (RCOT adaptations)
+  - REF-00311 (BS EN ISO 10535 ceiling hoists), REF-00371 (MHLW Japan TMV), REF-00014 (Flensner MS)
+  - REF-00388 (MSIF Atlas), REF-00041 (Staud fibromyalgia), REF-00405 (NICE NG206)
+  - REF-00029 (Mostafa ASPECTSS), REF-00157 (PAS 6463), REF-00142 (Bettarello RT60)
+  - REF-00229 (DSDC EADDAT), REF-00486 (Ulrich 1984 view/recovery)
+  - REF-00360 (Manandhar LRV), REF-00437 (RNIB Building Sight)
+  - REF-00052 (Wellecke kitchen), REF-00036 (Roxburgh seating), REF-00514 (Wheels for Wellbeing)
+  - REF-00494 (ADA routes)
+- **DEFERRED (1):**
+  - §6.7 kitchen "760W" — cross-reference parsing artifact (760mm Width misextracted as unit value)
+- **Registry gaps (cited in Part 6 but absent from global registry — add before publication):**
+  - EN 14501 — European standard for shading product light transmission classification (cited §6.6 blackout blind); tagged REF-00150 + REF-00157 as best-available
+- **Running total:** 775 TAGGED / 91 DEFERRED / 11 ORPHANED / 505 PENDING
+
+---
+
+### Next session (Session 10): Part 7 (non-residential matrices) — ~111 claims
 
 ---
 

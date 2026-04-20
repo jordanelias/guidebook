@@ -10455,8 +10455,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "| E-08 | Corridor clear width ≥900 mm on all circulation routes | SD | Floor plan |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0002",
@@ -10466,8 +10469,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "| H-01 | All controls 400–1100 mm AFF | CD | Electrical drawings |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0003",
@@ -10477,8 +10483,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 mm",
     "context": "| Smart lock conduit | 20 mm conduit from external entry to consumer unit | Future smart lock/video entry upgrade | Cons",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0004",
@@ -10488,8 +10497,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "950 mm",
     "context": "| Entry door width | Minimum 950 mm clear opening framed at construction | large body size-accessible entry ; future pow",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0005",
@@ -10499,8 +10511,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 m",
     "context": "| Lobby acoustic buffer | ≥1.5 m depth lobby with STC ≥30 inner door | Sensory transition for NDV users; decompression b",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0006",
@@ -10510,8 +10525,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥50 mm",
     "context": "| Level threshold vs. water ingress | E-06 (zero threshold) vs. waterproofing | Specify recessed drainage channel ≥50 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0007",
@@ -10521,8 +10539,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "| External keypad height vs. reach | MOB (400–1100 mm AFF) vs. (max 1050 mm reach forward) | Specify 400–1050 mm AFF for",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0008",
@@ -10532,8 +10553,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1050 mm",
     "context": "| External keypad height vs. reach | MOB (400–1100 mm AFF) vs. (max 1050 mm reach forward) | Specify 400–1050 mm AFF for",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0009",
@@ -10543,8 +10567,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1050 mm",
     "context": "| External keypad height vs. reach | MOB (400–1100 mm AFF) vs. (max 1050 mm reach forward) | Specify 400–1050 mm AFF for",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0010",
@@ -10554,8 +10581,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥950 mm",
     "context": "- [ ] Entry door clear opening ≥950 mm ( ≥1000 mm) on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0011",
@@ -10565,8 +10595,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1000 mm",
     "context": "- [ ] Entry door clear opening ≥950 mm ( ≥1000 mm) on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0012",
@@ -10576,8 +10609,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3 m",
     "context": "- [ ] Automatic door with ≥3 m motion detection approach shown on floor plan and electrical drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00308",
+      "REF-00494"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0013",
@@ -10587,8 +10623,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 m",
     "context": "- [ ] Lobby depth ≥1.5 m confirmed on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0014",
@@ -10598,8 +10637,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1050 mm",
     "context": "- [ ] External keypad position (if applicable) at 400–1050 mm AFF on building elevation",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0015",
@@ -10609,8 +10651,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 mm",
     "context": "| EV charger conduit | 20 mm conduit + 32 A circuit to accessible vehicle bay | Future EV charger at 400–1100 mm AFF (st",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0016",
@@ -10620,8 +10665,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400–1100 mm",
     "context": "| EV charger conduit | 20 mm conduit + 32 A circuit to accessible vehicle bay | Future EV charger at 400–1100 mm AFF (st",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0017",
@@ -10631,8 +10679,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3600 mm",
     "context": "| Wider bay marking | Bay width ≥3600 mm + 1200 mm transfer zone marked at construction | No future re-lining needed |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0018",
@@ -10642,8 +10693,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "| Wider bay marking | Bay width ≥3600 mm + 1200 mm transfer zone marked at construction | No future re-lining needed |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0019",
@@ -10653,8 +10707,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "| Step-free door frame | Interior garage-to-dwelling door framed at ≥900 mm clear; no step, no sill | Direct accessible ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0020",
@@ -10664,8 +10721,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3600 mm",
     "context": "- BS 8300:2018 Clause 5.4 — accessible bay dimensions (3600 mm + 1200 mm transfer zone)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0021",
@@ -10675,8 +10735,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "- BS 8300:2018 Clause 5.4 — accessible bay dimensions (3600 mm + 1200 mm transfer zone)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0022",
@@ -10686,8 +10749,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3600 mm",
     "context": "- [ ] Accessible bay dimensions (3600 mm + 1200 mm, or 4500 mm ) on site plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0023",
@@ -10697,8 +10763,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "- [ ] Accessible bay dimensions (3600 mm + 1200 mm, or 4500 mm ) on site plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0024",
@@ -10708,8 +10777,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "4500 mm",
     "context": "- [ ] Accessible bay dimensions (3600 mm + 1200 mm, or 4500 mm ) on site plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0025",
@@ -10719,8 +10791,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- [ ] Interior garage door: ≥900 mm clear, lever hardware, no step/sill on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0026",
@@ -10730,8 +10805,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "| E-08 | Clear width ≥900 mm (laundry door) | ● | — | — | — | — | DD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0027",
@@ -10741,8 +10819,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "750–900 mm",
     "context": "- Structural blocking at 750–900 mm AFF for future wall-mounted appliance support",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0028",
@@ -10752,8 +10833,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100 mm",
     "context": "- Extract ventilation provision (100 mm duct stub) for future mechanical extract if not installed at construction",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0029",
@@ -10763,8 +10847,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "430–500 mm",
     "context": "- Front-loading appliance recess at 430–500 mm AFF pedestal height — specify recess depth and electrical/plumbing connec",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0030",
@@ -10774,8 +10861,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- [ ] Laundry door clear width ≥900 mm on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0031",
@@ -10785,8 +10875,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0032",
@@ -10796,8 +10889,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤24°C",
     "context": "| TC-01 | Temperature maximum ≤24°C | — | — | — | ● | ● | ● | ● | ● | — | — | SD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0033",
@@ -10807,8 +10903,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "| G-01 | Turning circle ≥1500 mm (bedside) | ● | — | — | — | — | — | — | — | — | — | DD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0034",
@@ -10818,8 +10917,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3600 mm",
     "context": "| Ceiling hoist tracking blocking | Structural blocking in ceiling (continuous run, 3600 mm minimum, centred on bed zone",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0035",
@@ -10829,8 +10931,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 mm",
     "context": "| Bedside control conduit | 20 mm conduit from bedside position to consumer unit | Smart bedside control, nurse-call, as",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0036",
@@ -10840,8 +10945,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "| Bedroom door ≥900 mm clear | Framed at ≥900 mm clear opening | Future power chair access | ×5–15 retrofit |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0037",
@@ -10851,8 +10959,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "| Bedroom door ≥900 mm clear | Framed at ≥900 mm clear opening | Future power chair access | ×5–15 retrofit |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0038",
@@ -10862,8 +10973,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "| Structural wall provision (future through-floor lift) | In multi-storey dwellings: structural zone ≥900×1200 mm on eac",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0039",
@@ -10873,8 +10987,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0–100%",
     "context": "- B-01 (circadian lighting, bright daytime, warm evening) vs. NDV users sensitive to any light change: Resolution: speci",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0040",
@@ -10884,8 +11001,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤24°C",
     "context": "- TC-01 (temperature maximum ≤24°C) vs. PAIN/fibromyalgia users who require warmer environments: Resolution: individual ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00041"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0041",
@@ -10895,8 +11015,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "26°C",
     "context": "- TC-01 (temperature maximum ≤24°C) vs. PAIN/fibromyalgia users who require warmer environments: Resolution: individual ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0042",
@@ -10906,8 +11029,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤24°C",
     "context": "- TC-01 (temperature maximum ≤24°C) vs. PAIN/fibromyalgia users who require warmer environments: Resolution: individual ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0043",
@@ -10917,8 +11043,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥3600 mm",
     "context": "- [ ] Ceiling hoist blocking zone (≥3600 mm continuous) on structural drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00311",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0044",
@@ -10928,8 +11057,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Turning circle ≥1500 mm at bedside (both sides of bed) confirmed on furniture layout plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0045",
@@ -10939,8 +11071,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- [ ] Bedroom door ≥900 mm clear on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0046",
@@ -10950,8 +11085,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "- [ ] Individual thermostat at 900–1100 mm AFF on electrical drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0047",
@@ -10961,8 +11099,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤5°C",
     "context": "- Ambient temperature: inter-room differential ≤5°C entry from corridor. See F-07, CON-0041.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0048",
@@ -10972,8 +11113,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "**| \\*\\*R-BA-05\\*\\* G-01 | Turning circle ≥1500 mm | ● | ● | — | — | — | — | — | — | \\*\\*SD\\*\\* |**",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0049",
@@ -10983,8 +11127,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤43°C",
     "context": "**| \\*\\*R-BA-03\\*\\* I-03 | Anti-scald TMV3 (≤43°C; ≤38°C DEM/MS) | ● | — | ● | ● | ● | — | — | — | CD |**",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0050",
@@ -10994,8 +11141,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤38°C",
     "context": "**| \\*\\*R-BA-03\\*\\* I-03 | Anti-scald TMV3 (≤43°C; ≤38°C DEM/MS) | ● | — | ● | ● | ● | — | — | — | CD |**",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0051",
@@ -11005,8 +11155,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "200 lux",
     "context": "**| \\*\\*R-BA-04a\\*\\* B-02/B-06 | Bathroom lighting (200 lux face; dimmable) | — | — | ● | ● | ● | ● | — | — | CD |**",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0052",
@@ -11016,8 +11169,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "26–28°C",
     "context": "| TC-05 | Heated bathroom floor (26–28°C surface) | ● | — | ● | ● | ● | — | — | — | CD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0053",
@@ -11027,8 +11183,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1000 mm",
     "context": "| G-07 | Mirror lower edge ≤1000 mm AFF | ● | — | — | — | — | — | — | — | CD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0054",
@@ -11038,8 +11197,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "18 mm",
     "context": "| Grab bar blocking all positions | 75× per grab bar position | 18 mm plywood blocking 600–1200 mm AFF at all toilet, sh",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0055",
@@ -11049,8 +11211,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600–1200 mm",
     "context": "| Grab bar blocking all positions | 75× per grab bar position | 18 mm plywood blocking 600–1200 mm AFF at all toilet, sh",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0056",
@@ -11060,8 +11225,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥100 mm",
     "context": "| Floor recess for future wet room conversion | ×20–40 structural intervention | Recess depth ≥100 mm below slab at show",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0057",
@@ -11071,8 +11239,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 kg",
     "context": "| Large body size structural floor provision | Structural intervention cost | Structural engineer review: 300 kg point l",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00311"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0058",
@@ -11082,8 +11253,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 s",
     "context": "| NDV acoustic (RT60 ≤0.5 s) vs. tiled wet room (RT60 0.8–1.4 s default) | Specify Class A-rated perforated tile or acou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00029",
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0059",
@@ -11093,8 +11267,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.8–1.4 s",
     "context": "| NDV acoustic (RT60 ≤0.5 s) vs. tiled wet room (RT60 0.8–1.4 s default) | Specify Class A-rated perforated tile or acou",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00142"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0060",
@@ -11104,8 +11280,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "35°C",
     "context": "| TMV35°C (MS) vs. TMV38°C (general) | Label TMV setting in O\\&M manual with named clinical requirement; OT records set ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00371"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0061",
@@ -11115,8 +11294,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "38°C",
     "context": "| TMV35°C (MS) vs. TMV38°C (general) | Label TMV setting in O\\&M manual with named clinical requirement; OT records set ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0062",
@@ -11126,8 +11308,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "26–28°C",
     "context": "| Heated floor (TC-05) vs. OFS temperature sensitivity | Heated floor is floor-surface temperature (26–28°C), not air te",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0063",
@@ -11137,8 +11322,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥200 lux",
     "context": "-**R-BA-04a — Bathroom Lighting:** dimmable warm CCT (2700–3000 K); flicker-free LED (B-03/04); face illuminance ≥200 lu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0064",
@@ -11148,8 +11336,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900–1100 mm",
     "context": "- **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual the",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00492",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0065",
@@ -11159,8 +11350,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "35°C",
     "context": "- **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual the",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00371"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0066",
@@ -11170,8 +11364,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "- **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual the",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0067",
@@ -11181,8 +11378,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Turning circle ≥1500 mm ( ≥1800 mm) confirmed on furniture layout plan (not floor plan alone)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0068",
@@ -11192,8 +11392,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1800 mm",
     "context": "- [ ] Turning circle ≥1500 mm ( ≥1800 mm) confirmed on furniture layout plan (not floor plan alone)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0069",
@@ -11203,8 +11406,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤24°C",
     "context": "| TC-01 | Temperature ≤24°C | — | — | ● | ● | ● | — | — | — | — | SD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0070",
@@ -11214,8 +11420,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤900 mm",
     "context": "| BIO-04 | View to nature (windowsill ≤900 mm AFF) | — | ● | ● | ● | ● | — | — | — | — | SD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00486",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0071",
@@ -11225,8 +11434,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤750 mm",
     "context": "- Window sill height ≤750 mm AFF for seated natural view access (MOB, ; preferred ≤600 mm AFF in residential care settin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00486"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0072",
@@ -11236,8 +11448,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "- Window sill height ≤750 mm AFF for seated natural view access (MOB, ; preferred ≤600 mm AFF in residential care settin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00486"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0073",
@@ -11247,8 +11462,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤750 mm",
     "context": "- Window sill height: framed at ≤750 mm AFF at construction; cannot be changed without structural intervention",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0074",
@@ -11258,8 +11476,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 mm",
     "context": "- Electrical provision for future blackout blind motor at all primary windows (20 mm conduit; 5 V DC supply position)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0075",
@@ -11269,8 +11490,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤6 mm",
     "context": "| Carpet (NDV acoustic) vs. MOB (carpet friction) | Specify low-pile carpet ≤6 mm pile depth (firm underlay ≥95% Proctor",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0076",
@@ -11280,8 +11504,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥95%",
     "context": "| Carpet (NDV acoustic) vs. MOB (carpet friction) | Specify low-pile carpet ≤6 mm pile depth (firm underlay ≥95% Proctor",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0077",
@@ -11291,8 +11518,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1%",
     "context": "- EN 14501 — blackout blind light transmission standard (Class 5: ≤1% light transmission)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0078",
@@ -11302,8 +11532,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0079",
@@ -11313,8 +11546,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤750 mm",
     "context": "- [ ] Window sill height ≤750 mm AFF confirmed on elevation drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00486"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0080",
@@ -11324,8 +11560,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 mm",
     "context": "- Full-extension pull-out drawers (500 mm min extension, soft-close, 30 kg rated) in all lower cabinet zones",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0081",
@@ -11335,8 +11574,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30 kg",
     "context": "- Full-extension pull-out drawers (500 mm min extension, soft-close, 30 kg rated) in all lower cabinet zones",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0082",
@@ -11346,8 +11588,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30 mm",
     "context": "- Hardware: D-ring pulls ≥30 mm inside dimension or continuous bar handles; no round knobs",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00152"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0083",
@@ -11357,8 +11602,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1100 mm",
     "context": "- Dishwasher: drawer-style preferred; front-opening with controls ≤1100 mm AFF; lower rack ≤900 mm AFF when open. Note: ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0084",
@@ -11368,8 +11616,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤900 mm",
     "context": "- Dishwasher: drawer-style preferred; front-opening with controls ≤1100 mm AFF; lower rack ≤900 mm AFF when open. Note: ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0085",
@@ -11379,8 +11630,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300–400 mm",
     "context": "- Dishwasher: drawer-style preferred; front-opening with controls ≤1100 mm AFF; lower rack ≤900 mm AFF when open. Note: ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0086",
@@ -11390,8 +11644,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1000 mm",
     "context": "- Oven: side-hinged door; pull-out shelf at ≤1000 mm AFF; route services at rear of knee clearance zone, not below cabin",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0087",
@@ -11401,8 +11658,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1100 mm",
     "context": "- Induction cooktop: front-mounted controls ≤1100 mm AFF; auto-shutoff ≥30 min no-movement (DEM safety); flat surface.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0088",
@@ -11412,8 +11672,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30 min",
     "context": "- Induction cooktop: front-mounted controls ≤1100 mm AFF; auto-shutoff ≥30 min no-movement (DEM safety); flat surface.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0089",
@@ -11423,8 +11686,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥70 mm",
     "context": "- Adjustable base unit recess: specify floor void space ≥70 mm below base units for future motorised height-adjustable m",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0090",
@@ -11434,8 +11700,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760–860 mm",
     "context": "- Perch stool position: counter section at 760–860 mm AFF with knee clearance ≥690H × 760W × 480D mm + floor clear space",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0091",
@@ -11446,7 +11715,8 @@
     "claim_value": "760W",
     "context": "- Perch stool position: counter section at 760–860 mm AFF with knee clearance ≥690H × 760W × 480D mm + floor clear space",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED",
+    "note": "cross-reference parsing artifact — \"760W\" = 760mm Width in counter spec, not a unit value"
   },
   {
     "claim_id": "CLAIM-P06-0092",
@@ -11456,8 +11726,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥600 mm",
     "context": "- Perch stool position: counter section at 760–860 mm AFF with knee clearance ≥690H × 760W × 480D mm + floor clear space",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0093",
@@ -11467,8 +11740,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760 mm",
     "context": "- [ ] Multi-level counter (760 mm + 900 mm sections) confirmed on cabinetry drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0094",
@@ -11478,8 +11754,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "- [ ] Multi-level counter (760 mm + 900 mm sections) confirmed on cabinetry drawings",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00052"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0095",
@@ -11489,8 +11768,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan —",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00154"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0096",
@@ -11500,8 +11782,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1000 mm",
     "context": "| E-08 | Corridor clear width ≥1000 mm | ● | — | — | ○ | — | ● | — | **SD** |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0097",
@@ -11511,8 +11796,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤20 m",
     "context": "| E-10 | Rest seating at ≤20 m | ● | — | — | ○ | — | — | — | DD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00514"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0098",
@@ -11522,8 +11810,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤600 mm",
     "context": "| B-05 | Motion-activated night lighting (≤600 mm AFF) | ● | ● | — | ● | — | — | — | CD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0099",
@@ -11533,8 +11824,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "- Night-light path circuit: isolated circuit from main hallway lighting; motion sensor at 600 mm AFF; warm amber LED ≤10",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0100",
@@ -11544,8 +11838,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤10 lux",
     "context": "- Night-light path circuit: isolated circuit from main hallway lighting; motion sensor at 600 mm AFF; warm amber LED ≤10",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0101",
@@ -11555,8 +11852,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- All internal door frames: framed at ≥900 mm clear opening at construction",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0102",
@@ -11566,8 +11866,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "- Lifetime Homes Criterion 3 — internal corridor width (900 mm min)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0103",
@@ -11577,8 +11880,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1000 mm",
     "context": "- [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred; ≥1500 mm ) confirmed on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0104",
@@ -11588,8 +11894,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1200 mm",
     "context": "- [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred; ≥1500 mm ) confirmed on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0105",
@@ -11599,8 +11908,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1500 mm",
     "context": "- [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred; ≥1500 mm ) confirmed on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0106",
@@ -11610,8 +11922,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "- [ ] All internal door frames ≥900 mm clear on floor plan",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0107",
@@ -11621,8 +11936,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "40–50 mm",
     "context": "| E-03 | Handrail dimensions (40–50 mm diameter) | ● | ● | — | ● | ● | — | CD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0108",
@@ -11632,8 +11950,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100 mm",
     "context": "| Structural channel in wall (stairlift rail) | 100 mm × 75 mm channel section in wall at stair stringer height, full st",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0109",
@@ -11643,8 +11964,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "75 mm",
     "context": "| Structural channel in wall (stairlift rail) | 100 mm × 75 mm channel section in wall at stair stringer height, full st",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0110",
@@ -11654,8 +11978,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 mm",
     "context": "| Electrical supply conduit to stair | 20 mm conduit from consumer unit to stair base and top | Future stairlift power s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0111",
@@ -11665,8 +11992,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "| Through-floor lift zone (multi-storey) | Structural zone ≥900 × 1200 mm on each floor at same position; no structural ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0112",
@@ -11676,8 +12006,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤100 mm",
     "context": "- Nosing contrast: full tread width (not edge studs ≤100 mm); 55–75 mm depth; LRV ≥30; flush ≤3 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00360",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0113",
@@ -11687,8 +12020,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "55–75 mm",
     "context": "- Nosing contrast: full tread width (not edge studs ≤100 mm); 55–75 mm depth; LRV ≥30; flush ≤3 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00360",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0114",
@@ -11698,8 +12034,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 mm",
     "context": "- Nosing contrast: full tread width (not edge studs ≤100 mm); 55–75 mm depth; LRV ≥30; flush ≤3 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00308"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P06-0115",
@@ -11709,8 +12048,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥950 mm",
     "context": "| Accessible entry door framing (≥950 mm) | R-ENT | ×5–15 | Floor plan / door schedule | SD |",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P07-0001",
