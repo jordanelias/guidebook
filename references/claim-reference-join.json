@@ -4601,8 +4601,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 lux",
     "context": "Entry zone: NC 35; muted palette (NCS chroma ≤6); 300--500 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0235",
@@ -4612,8 +4615,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 lux",
     "context": "Transition: NC 30; NCS chroma ≤4; 200--300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0236",
@@ -4623,8 +4629,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "200 lux",
     "context": "Primary occupied spaces: NC 25; NCS chroma ≤3; 100--200 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0237",
@@ -4634,8 +4643,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.3 s",
     "context": "| **Sensory avoiding** | Zone 3 — sensory retreat (A-16, F-01) | RT60 ≤0.3 s; NC-25; no masking (A-13) | 0–50 lux (user-",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0238",
@@ -4645,8 +4657,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "0–50 lux",
     "context": "| **Sensory avoiding** | Zone 3 — sensory retreat (A-16, F-01) | RT60 ≤0.3 s; NC-25; no masking (A-13) | 0–50 lux (user-",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0239",
@@ -4656,8 +4671,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.4 s",
     "context": "| **Sensory sensitivity** (low threshold, passive) | Zone 2–3 — quiet workspace, consultation | RT60 ≤0.4 s; NC-25; no s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0240",
@@ -4667,8 +4685,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "50–200 lux",
     "context": "| **Sensory sensitivity** (low threshold, passive) | Zone 2–3 — quiet workspace, consultation | RT60 ≤0.4 s; NC-25; no s",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0241",
@@ -4678,8 +4699,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.6 s",
     "context": "| **Sensory seeking** | Zone 1–2 — active circulation, social zones | RT60 ≤0.6 s (minimum acceptable); NC-35 | 300–500 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0242",
@@ -4689,8 +4713,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300–500 lux",
     "context": "| **Sensory seeking** | Zone 1–2 — active circulation, social zones | RT60 ≤0.6 s (minimum acceptable); NC-35 | 300–500 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0243",
@@ -4700,8 +4727,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 s",
     "context": "| **Low registration** | Zone 1 — entry, circulation spine | RT60 ≤0.5 s with clear SNR ≥15 dB (signal intelligibility) ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0244",
@@ -4711,8 +4741,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥15 dB",
     "context": "| **Low registration** | Zone 1 — entry, circulation spine | RT60 ≤0.5 s with clear SNR ≥15 dB (signal intelligibility) ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0245",
@@ -4722,8 +4754,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "| **Low registration** | Zone 1 — entry, circulation spine | RT60 ≤0.5 s with clear SNR ≥15 dB (signal intelligibility) ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0246",
@@ -4733,8 +4768,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "| **Low registration** | Zone 1 — entry, circulation spine | RT60 ≤0.5 s with clear SNR ≥15 dB (signal intelligibility) ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0247",
@@ -4744,8 +4782,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "- DEM illuminance requirement (≥300 lux daytime, DSDC 2024) conflicts with NDV ambient preference (≤200 lux). Resolved v",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0248",
@@ -4755,8 +4796,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤200 lux",
     "context": "- DEM illuminance requirement (≥300 lux daytime, DSDC 2024) conflicts with NDV ambient preference (≤200 lux). Resolved v",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0249",
@@ -4766,8 +4810,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "A 3--5 m transition space (intermediate stimulation level) is provided between the sensory room exit and the general cir",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0250",
@@ -4777,8 +4824,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "Transition zone: 3--5 m depth between sensory room exit and primary circulation",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00161"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0251",
@@ -4788,8 +4838,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "200 lux",
     "context": "Intermediate stimulation: NC 30; muted palette; 100--200 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00232"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0252",
@@ -4799,8 +4852,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "No high contrast or high-stimulation elements within 5 m of sensory room exit",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0253",
@@ -4810,8 +4866,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "13 min",
     "context": "Filtration: MERV 13 minimum in all air handling units serving",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00127",
+      "REF-00322"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0254",
@@ -4821,8 +4880,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥10 L",
     "context": "Fresh air supply: ≥10 L/s per person in primary occupied spaces; ≥15",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00322",
+      "REF-00184"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0255",
@@ -4832,8 +4894,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 mg",
     "context": "VOC specification: all finishes, adhesives, sealants, flooring, ceilings, and furniture within OFS-occupied spaces: TVOC",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00304",
+      "REF-00042"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0256",
@@ -4843,8 +4908,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤1°C",
     "context": "Thermal stability: ambient temperature variation ≤1°C per hour in primary occupied spaces; ≤2°C across any zone on the p",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0257",
@@ -4854,8 +4922,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤2°C",
     "context": "Thermal stability: ambient temperature variation ≤1°C per hour in primary occupied spaces; ≤2°C across any zone on the p",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0258",
@@ -4865,8 +4936,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3°C",
     "context": "maximum 3°C differential at entry vestibule to main space; target ambient 21°C on primary routes",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00184"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0259",
@@ -4876,8 +4950,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "21°C",
     "context": "maximum 3°C differential at entry vestibule to main space; target ambient 21°C on primary routes",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00303",
+      "REF-00518"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0260",
@@ -4887,8 +4964,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 mg",
     "context": "**FDR-OFS-03 [Tier 3 — Afrin 2020]:** MCAS co-occurrence with OFS (Afrin et al. 2020, *Brain, Behavior, and Immunity* — ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00002",
+      "REF-00364"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0261",
@@ -4898,8 +4978,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "860mm",
     "context": "760--860mm AFF) without requiring the user to stand at any point",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0262",
@@ -4909,8 +4992,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200mm",
     "context": "400--1200mm AFF; knee clearance below terminal ≥690mm height × 760mm width × 480mm depth (consistent with G-06 and H-01)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0263",
@@ -4920,8 +5006,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥690mm",
     "context": "400--1200mm AFF; knee clearance below terminal ≥690mm height × 760mm width × 480mm depth (consistent with G-06 and H-01)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0264",
@@ -4931,8 +5020,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760mm",
     "context": "400--1200mm AFF; knee clearance below terminal ≥690mm height × 760mm width × 480mm depth (consistent with G-06 and H-01)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0265",
@@ -4942,8 +5034,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "480mm",
     "context": "400--1200mm AFF; knee clearance below terminal ≥690mm height × 760mm width × 480mm depth (consistent with G-06 and H-01)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0266",
@@ -4953,8 +5048,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤760mm",
     "context": "seated-height workstations (≤760mm surface height) for OFS-designated workstations",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0267",
@@ -4964,8 +5062,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.5 mg",
     "context": "- ○ Building commissioning hold point: occupancy of OFS-primary spaces to be deferred until post-installation VOC cleara",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00304",
+      "REF-00042"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0268",
@@ -4975,8 +5076,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "- ● Ambient temperature in all primary activity spaces and shared circulation to be maintained at ≤18°C where NEU/MS is ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00014"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0269",
@@ -4986,8 +5090,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5°C",
     "context": "- ● Inter-room thermal differential across the building to not exceed 5°C [CON-0041] *(sudden temperature change from co",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00184",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0270",
@@ -4997,8 +5104,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤22°C",
     "context": "- ● Individual supplemental radiant heating to be provided at all fixed seating positions in spaces serving PAIN or OFS ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0271",
@@ -5008,8 +5118,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "0.5 m",
     "context": "- ● Individual supplemental radiant heating to be provided at all fixed seating positions in spaces serving PAIN or OFS ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00041"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0272",
@@ -5019,8 +5131,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "16–24°C",
     "context": "- ● All apartment or room thermostats (residential settings) to be individually controllable within a 16–24°C range [REF",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00518",
+      "REF-00321"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0273",
@@ -5030,8 +5145,11 @@
     "claim_type": "numeric_specification",
     "claim_value": ">28°C",
     "context": "- ○ In tropical climates (ambient >28°C) where mechanical cooling is absent: SCI (above T6 lesion) populations require p",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00519",
+      "REF-00016"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0274",
@@ -5041,8 +5159,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "28°C",
     "context": "- ○ In tropical climates (ambient >28°C) where mechanical cooling is absent: SCI (above T6 lesion) populations require p",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00519",
+      "REF-00016"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0275",
@@ -5052,8 +5173,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "- ○ In tropical climates (ambient >28°C) where mechanical cooling is absent: SCI (above T6 lesion) populations require p",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00268",
+      "REF-00016"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0276",
@@ -5063,8 +5187,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤18°C",
     "context": "**Population conflict:** PAIN warmth preference conflicts with NEU/MS ambient ≤18°C requirement. Resolution: ambient gov",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00388",
+      "REF-00041"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0277",
@@ -5074,8 +5201,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1–2°C",
     "context": "**FDR-MST-02 [Tier 3 — Krupp 2003]:** MS fatigue follows a diurnal pattern with peak fatigue typically mid-afternoon (Kr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0278",
@@ -5085,8 +5215,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥30 min",
     "context": "**FDR-TCOA-02 [Tier 3 — MHLW Japan 2023]:** Bathroom heat shock is caused by inter-room temperature differential at entr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0279",
@@ -5096,8 +5229,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥20°C",
     "context": "**FDR-TCOA-02 [Tier 3 — MHLW Japan 2023]:** Bathroom heat shock is caused by inter-room temperature differential at entr",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00371",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0280",
@@ -5107,8 +5243,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤43°C",
     "context": "**FDR-TCOA-03 [Tier 5 — NHS Estates HBN 00-10]:** Reduced peripheral sensation in DEM and older adult populations increa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0281",
@@ -5118,8 +5257,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤43°C",
     "context": "**FDR-TCOA-03 [Tier 5 — NHS Estates HBN 00-10]:** Reduced peripheral sensation in DEM and older adult populations increa",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0282",
@@ -5129,8 +5271,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤0.15 W",
     "context": "- ● High-performance thermal envelope (U-value ≤0.15 W/m²K walls, ≤0.10 roof in new build) to reduce thermal drift and i",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00184",
+      "REF-00321"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0283",
@@ -5140,8 +5285,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3°C",
     "context": "- ● Thermal mass provision in exposed slab or wall construction to dampen daily temperature swing to ≤3°C [REF:ms-therma",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00184",
+      "REF-00321"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0284",
@@ -5151,8 +5299,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "15 min",
     "context": "- ● HVAC control system response time to thermal setpoint change not to exceed 15 minutes for primary occupied spaces",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00184"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0285",
@@ -5162,8 +5312,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2 m",
     "context": "- ○ Entry vestibule (thermal buffer ≥2 m depth) at all primary accessible entrances in climates with >15°C seasonal vari",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00184",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0286",
@@ -5173,8 +5326,11 @@
     "claim_type": "numeric_specification",
     "claim_value": ">15°C",
     "context": "- ○ Entry vestibule (thermal buffer ≥2 m depth) at all primary accessible entrances in climates with >15°C seasonal vari",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00184",
+      "REF-00303"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0287",
@@ -5184,8 +5340,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "**Description:** Seating in all waiting areas and communal spaces includes options with back-to-wall positioning and cle",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00053",
+      "REF-00057"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0288",
@@ -5195,8 +5354,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "30% of seating in public waiting areas: wall-backed with entry sightline",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00053",
+      "REF-00057"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0289",
@@ -5206,8 +5368,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "450 mm",
     "context": "**Description:** Every primary seating area provides minimum three seating types simultaneously: (a) standard chair with",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0290",
@@ -5217,8 +5382,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "**Description:** Every primary seating area provides minimum three seating types simultaneously: (a) standard chair with",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0291",
@@ -5228,8 +5396,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400 mm",
     "context": "**Description:** Every primary seating area provides minimum three seating types simultaneously: (a) standard chair with",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0292",
@@ -5239,8 +5410,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "450 mm",
     "context": "Type A: 430--450 mm seat height; armrests; upholstered",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0293",
@@ -5250,8 +5424,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "Type B: 550--600 mm seat height; footrest available",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0294",
@@ -5261,8 +5438,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "400 mm",
     "context": "Type C: 400 mm seat height; soft upholstery",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0295",
@@ -5273,7 +5453,7 @@
     "claim_value": "500mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0296",
@@ -5284,7 +5464,7 @@
     "claim_value": "500mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0297",
@@ -5295,7 +5475,7 @@
     "claim_value": "40%",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0298",
@@ -5306,7 +5486,7 @@
     "claim_value": "380mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0299",
@@ -5317,7 +5497,7 @@
     "claim_value": "25%",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0300",
@@ -5327,8 +5507,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0301",
@@ -5338,8 +5521,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "700 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0302",
@@ -5349,8 +5535,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "280 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00253"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0303",
@@ -5360,8 +5549,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00400"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0304",
@@ -5371,8 +5563,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 kN",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0305",
@@ -5382,8 +5577,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2.5 kN",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0306",
@@ -5393,8 +5591,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "18 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0307",
@@ -5404,8 +5605,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0308",
@@ -5415,8 +5619,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 70",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00400"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0309",
@@ -5426,8 +5633,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surfac",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0310",
@@ -5437,8 +5647,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "700 mm",
     "context": "Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surfac",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0311",
@@ -5448,8 +5661,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "280 mm",
     "context": "Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surfac",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00253"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0312",
@@ -5459,8 +5675,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "Bar diameter: 32--45 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00400"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0313",
@@ -5470,8 +5689,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1.5 kN",
     "context": "Load: ≥1.5 kN continuous static; ≥2.5 kN peak dynamic (fall-arrest)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0314",
@@ -5481,8 +5703,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2.5 kN",
     "context": "Load: ≥1.5 kN continuous static; ≥2.5 kN peak dynamic (fall-arrest)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00340",
+      "REF-00333"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0315",
@@ -5492,8 +5717,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "18 mm",
     "context": "Blocking: 18 mm structural plywood, 300×600 mm minimum per bar position",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0316",
@@ -5503,8 +5730,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "Blocking: 18 mm structural plywood, 300×600 mm minimum per bar position",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0317",
@@ -5514,8 +5743,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "45 mm",
     "context": "Wall clearance: 35--45 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00024",
+      "REF-00400"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0318",
@@ -5525,8 +5757,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "850 mm",
     "context": "Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00253",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0319",
@@ -5537,7 +5772,7 @@
     "claim_value": "45mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0320",
@@ -5548,7 +5783,7 @@
     "claim_value": "≥1.5kN",
     "context": "**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0321",
@@ -5559,7 +5794,7 @@
     "claim_value": "≥2.5kN",
     "context": "**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0322",
@@ -5569,8 +5804,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "**Description:** Shower area as continuous wet room: no shower tray, no threshold, no step. Continuous floor from bathro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0323",
@@ -5580,8 +5818,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "**Description:** Shower area as continuous wet room: no shower tray, no threshold, no step. Continuous floor from bathro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0324",
@@ -5591,8 +5832,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "**Description:** Shower area as continuous wet room: no shower tray, no threshold, no step. Continuous floor from bathro",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0325",
@@ -5602,8 +5846,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 mm",
     "context": "Zero threshold: no shower tray, no threshold ≤3 mm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00154",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0326",
@@ -5613,8 +5860,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Drain: within 1200 mm of all shower area points",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0327",
@@ -5624,8 +5873,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥900 mm",
     "context": "Shower clear area: ≥900 mm; ≥1200×900 mm preferred",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0328",
@@ -5635,8 +5887,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "Shower clear area: ≥900 mm; ≥1200×900 mm preferred",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0329",
@@ -5646,8 +5900,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "**Description:** Minimum 20% of all workstations in any workspace:",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0330",
@@ -5657,8 +5914,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "650 mm",
     "context": "height-adjustable (electric or manual) from 650 mm to 870 mm AFF. Knee clearance depth ≥600 mm at all heights.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0331",
@@ -5668,8 +5928,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "870 mm",
     "context": "height-adjustable (electric or manual) from 650 mm to 870 mm AFF. Knee clearance depth ≥600 mm at all heights.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0332",
@@ -5679,8 +5942,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥600 mm",
     "context": "height-adjustable (electric or manual) from 650 mm to 870 mm AFF. Knee clearance depth ≥600 mm at all heights.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0333",
@@ -5690,8 +5956,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "20% of all workstations: height-adjustable",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0334",
@@ -5701,8 +5970,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "870 mm",
     "context": "Height range: 650--870 mm AFF",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0335",
@@ -5712,8 +5984,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥600 mm",
     "context": "Knee clearance: ≥600 mm depth at all heights",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0336",
@@ -5724,7 +5999,7 @@
     "claim_value": "1200mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Height-adjustable desks (660--1200mm range) ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0337",
@@ -5735,7 +6010,7 @@
     "claim_value": "660mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Height-adjustable desks (660--1200mm range) ",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0338",
@@ -5745,8 +6020,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "860 mm",
     "context": "**Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0339",
@@ -5756,8 +6034,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥690 mm",
     "context": "**Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0340",
@@ -5767,8 +6048,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760 mm",
     "context": "**Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0341",
@@ -5778,8 +6062,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "480 mm",
     "context": "**Description:** All reception and service counters include a lowered section 760--860 mm AFF with knee clearance below ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0342",
@@ -5789,8 +6076,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "860 mm",
     "context": "Lowered section: 760--860 mm AFF; continuous with counter (not separate station)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0343",
@@ -5800,8 +6090,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥690 mm",
     "context": "Knee clearance: ≥690 mm height × 760 mm width × 480 mm depth",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0344",
@@ -5811,8 +6103,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "760 mm",
     "context": "Knee clearance: ≥690 mm height × 760 mm width × 480 mm depth",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0345",
@@ -5822,8 +6116,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "480 mm",
     "context": "Knee clearance: ≥690 mm height × 760 mm width × 480 mm depth",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0346",
@@ -5833,8 +6129,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2–10 min",
     "context": "● Lowered counter section to be available at all times as the default service position — not on request only [FDR-OFS-01",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00324"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0347",
@@ -5845,7 +6144,7 @@
     "claim_value": "860mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Counter height 760--860mm AFF with ≥690mm knee clearance is derived from the",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0348",
@@ -5856,7 +6155,7 @@
     "claim_value": "≥690mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. Counter height 760--860mm AFF with ≥690mm knee clearance is derived from the",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0349",
@@ -5866,8 +6165,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2–10 min",
     "context": "**FDR-OFS-01 [Tier 1 — Raj 2013; Tier 2 — Stewart 2012]:** Orthostatic intolerance onset time 2–10 minutes from prolonge",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00233"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0350",
@@ -5877,8 +6179,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2–10 min",
     "context": "**FDR-OFS-01 [Tier 1 — Raj 2013; Tier 2 — Stewart 2012]:** Orthostatic intolerance onset time 2–10 minutes from prolonge",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00405",
+      "REF-00233"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0351",
@@ -5888,8 +6193,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 m",
     "context": "**Description:** Accessible waiting seating within 10 m of reception.",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0352",
@@ -5899,8 +6207,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10%",
     "context": "Minimum 10% of waiting seats wheelchair companion pairs (1200×1200 mm per pair). No serpentine queue management barriers",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0353",
@@ -5910,8 +6221,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Minimum 10% of waiting seats wheelchair companion pairs (1200×1200 mm per pair). No serpentine queue management barriers",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0354",
@@ -5921,8 +6235,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10%",
     "context": "Wheelchair-companion seating: minimum 10% of total; 1200×1200 mm per pair",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0355",
@@ -5932,8 +6249,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Wheelchair-companion seating: minimum 10% of total; 1200×1200 mm per pair",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0356",
@@ -5943,8 +6263,11 @@
     "claim_type": "numeric_specification",
     "claim_value": ">5 min",
     "context": "Rest seating: within queue where wait >5 minutes expected",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0357",
@@ -5954,8 +6277,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20 m",
     "context": "Accessible toilet: within 20 m of waiting area",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00405"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0358",
@@ -6988,8 +7314,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1050 mm",
     "context": "- ● Hanging rods to be at no greater than 1050 mm AFF, permitting seated forward reach without trunk lean exceeding 30° ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0452",
@@ -6999,8 +7328,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1000–1100 mm",
     "context": "- ● Where wardrobe depth permits, a dual-rod configuration to be provided — upper rod at 1000–1100 mm AFF, lower rod at ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0453",
@@ -7010,8 +7342,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "- ● Where wardrobe depth permits, a dual-rod configuration to be provided — upper rod at 1000–1100 mm AFF, lower rod at ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0454",
@@ -7021,8 +7356,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "380 mm",
     "context": "- ● Fixed shelf depth not to exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18] *(single Co-2 source)*",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0455",
@@ -7032,8 +7370,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "- ● Where deeper storage is required, full-extension pull-out drawers to be provided, drawer depth not to exceed 600 mm ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0456",
@@ -7043,8 +7384,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 mm",
     "context": "- ● Fixed storage below 500 mm AFF to be provided with a pull-out mechanism only [REF:accessible-bathroom-and-grab-bar:1",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0457",
@@ -7054,8 +7397,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "600 mm",
     "context": "- ○ Wardrobe doors to be sliding or bi-fold; outward-swing doors to be used only where clear floor space ≥ door-width pl",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00415",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0458",
@@ -7065,8 +7411,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "- ● A turning and manoeuvre space of no less than 1500 mm × 1500 mm to be maintained clear of fixed furniture throughout",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0459",
@@ -7076,8 +7425,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "- ● A turning and manoeuvre space of no less than 1500 mm × 1500 mm to be maintained clear of fixed furniture throughout",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0460",
@@ -7088,7 +7440,7 @@
     "claim_value": "380 mm",
     "context": "**Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dr",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0461",
@@ -7099,7 +7451,7 @@
     "claim_value": "1500 mm",
     "context": "**Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dr",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0462",
@@ -7109,8 +7461,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "**FDR-TCOA-01 [Tier 3 — van Hoof 2010]:** Thermoregulatory unawareness in DEM — carer-managed dressing is a primary occu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0463",
@@ -7120,8 +7475,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1050–1200 mm",
     "context": "**FDR-TCOA-01 [Tier 3 — van Hoof 2010]:** Thermoregulatory unawareness in DEM — carer-managed dressing is a primary occu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0464",
@@ -7131,8 +7489,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "600–900 mm",
     "context": "**FDR-TCOA-01 [Tier 3 — van Hoof 2010]:** Thermoregulatory unawareness in DEM — carer-managed dressing is a primary occu",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0465",
@@ -7142,8 +7502,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "650–870 mm",
     "context": "- ● Adjustable-height work surfaces: 650–870 mm AFF range (seated to standing); knee clearance ≥680 mm depth × ≥ 900 mm ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0466",
@@ -7153,8 +7516,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥680 mm",
     "context": "- ● Adjustable-height work surfaces: 650–870 mm AFF range (seated to standing); knee clearance ≥680 mm depth × ≥ 900 mm ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0467",
@@ -7164,8 +7530,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥ 900 mm",
     "context": "- ● Adjustable-height work surfaces: 650–870 mm AFF range (seated to standing); knee clearance ≥680 mm depth × ≥ 900 mm ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00415"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0468",
@@ -7175,8 +7544,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "30%",
     "context": "- ○ Reception and service counters: minimum 30% of counter length at 760–860 mm AFF with knee clearance beneath [Tier 6 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0469",
@@ -7186,8 +7558,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "760–860 mm",
     "context": "- ○ Reception and service counters: minimum 30% of counter length at 760–860 mm AFF with knee clearance beneath [Tier 6 ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00044",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0470",
@@ -7197,8 +7572,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "25 m",
     "context": "- ● Rest seating with backrest and armrests accessible within 25 m of any primary task location [pain-ofs-built-environm",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00036",
+      "REF-00514"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0471",
@@ -7208,8 +7586,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100–150 mm",
     "context": "- ● Two emergency call positions to be provided: one with cord end at 100–150 mm AFF (floor-level fall recovery), one at",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0472",
@@ -7219,8 +7600,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 mm",
     "context": "- ● Two emergency call positions to be provided: one with cord end at 100–150 mm AFF (floor-level fall recovery), one at",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0473",
@@ -7230,8 +7614,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "900 mm",
     "context": "- ● A luminaire control to be positioned within 900 mm of the pillow position, operable without sitting upright [REF:acc",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0474",
@@ -7241,8 +7628,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300–400 mm",
     "context": "- ● Continuous low-level pathway lighting to be installed at 300–400 mm AFF on the bed-to-bathroom route, providing a mi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00265"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0475",
@@ -7252,8 +7642,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 lux",
     "context": "- ● Continuous low-level pathway lighting to be installed at 300–400 mm AFF on the bed-to-bathroom route, providing a mi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0476",
@@ -7263,8 +7655,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "- ○ Bedroom doors to be distinguishable from other internal doors by colour contrast or texture; a name, number, or pers",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00229"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0477",
@@ -7274,8 +7669,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "- ● Medication storage, where provided, to be lockable, at no greater than 1200 mm AFF, and within 500 mm horizontal rea",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0478",
@@ -7285,8 +7683,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "500 mm",
     "context": "- ● Medication storage, where provided, to be lockable, at no greater than 1200 mm AFF, and within 500 mm horizontal rea",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00416"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0479",
@@ -7296,8 +7697,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1000 mm",
     "context": "- ● Clear floor space of no less than 1000 mm to be maintained at the foot of the bed as an emergency responder access p",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00265",
+      "REF-00044"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0480",
@@ -7308,7 +7712,7 @@
     "claim_value": "1000 mm",
     "context": "**Illustration:** [Illustration: to be provided] — Bedroom plan showing dual cord positions, pillow-proximity switch zon",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0481",

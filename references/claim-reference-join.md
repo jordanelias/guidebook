@@ -3,16 +3,17 @@
 <!-- Session 1 of Step 2 (Part 4 Category A acoustics) complete 2026-04-19 -->
 <!-- Session 2 of Step 2 (Part 4 Category B-C lighting/surfaces) complete 2026-04-19 -->
 <!-- Session 3 of Step 2 (Part 4 Category D-E wayfinding/circulation) complete 2026-04-19 -->
+<!-- Session 4 of Step 2 (Part 4 Category F-G env controls/bathroom/seating) complete 2026-04-19 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
 **Total claims enumerated:** 1382
 
 **Overall status:**
-- PENDING (untagged): 1072
-- TAGGED (refs assigned): 247
+- PENDING (untagged): 918
+- TAGGED (refs assigned): 386
 - VERIFIED (confirmed): 0
-- DEFERRED (non-citable: methodology, definitional, echo): 52
+- DEFERRED (non-citable: methodology, definitional, echo): 67
 - ORPHANED (no supporting ref in global registry): 11
 
 **Full machine-readable data:** `references/claim-reference-join.json`
@@ -26,7 +27,7 @@
 | Part 1 | 7 | 7 | 0 | 0 | 0 | 0 |
 | Part 2 | 83 | 83 | 0 | 0 | 0 | 0 |
 | Part 3 | 42 | 42 | 0 | 0 | 0 | 0 |
-| Part 4 | 558 | 248 | 247 | 0 | 52 | 11 |
+| Part 4 | 558 | 94 | 386 | 0 | 67 | 11 |
 | Part 5 | 79 | 79 | 0 | 0 | 0 | 0 |
 | Part 6 | 115 | 115 | 0 | 0 | 0 | 0 |
 | Part 7 | 111 | 111 | 0 | 0 | 0 | 0 |
@@ -111,7 +112,33 @@
 - **Data quality flag:** Claims 0214–0218 (E-09 scope at L2016–2032) contain misplaced E-05 canopy content (≥3000mm / ≥2000mm / ≥2500mm / ≥100 lux). Tagged with entry refs (REF-00265, REF-00370) appropriate to canopy content. Flag carried forward for Part 4 content review.
 - **No new ORPHANED claims** — all cited sources have registry coverage via supporting refs.
 
-### Next session (Session 4): Part 4 Category F-G (~90 claims)
+### Step 2 Session 4 — Part 4 Category F-G (env controls, bathroom, seating) — 2026-04-19 ✅
+
+- **Scope:** 154 claims across F-01/F-03/F-04/F-05/F-06/F-07/F-08 and G-01–G-09
+- **Results:** 139 TAGGED, 15 DEFERRED, 0 ORPHANED
+- **Primary references used:**
+  - REF-00157 (PAS 6463:2022), REF-00161 (PAS 6463 §6.4 graduated sensory), REF-00232 (Dunn 1997 sensory processing), REF-00029 (Mostafa 2021 ASPECTSS 2.0)
+  - REF-00127 (ASHRAE 52.2-2017 MERV), REF-00322 (WELL v2 Air Quality), REF-00304 (ISO EN 16000-9 VOC), REF-00042 (Steinemann 2018 MCS)
+  - REF-00303 (ISO 7730:2005 thermal), REF-00184 (CIBSE Guide A), REF-00321 (WELL v2 Thermal), REF-00518 (WHO Housing 18-24°C), REF-00519 (WHO Annex G Global South)
+  - REF-00388 (MSIF Atlas 2023 MS heat sensitivity), REF-00014 (Flensner 2011 MS heat), REF-00016 (Griggs 2019 SCI thermoregulation)
+  - REF-00268 (Hayashi 2022 SCI sweating), REF-00371 (MHLW Japan 2023 bathtub heat shock)
+  - REF-00002 (Afrin 2021 MCAS), REF-00364 (Mast Cell Action 2023), REF-00041 (Staud 2011 OFS/pain)
+  - REF-00053 (Wilson 2023 mental health), REF-00057 (TID trauma-informed design 2022)
+  - REF-00024 (Levine 2025 bathroom safety), REF-00253 (Golding-Day 2018 BATH-OUT), REF-00400 (Newton 2023 accessible bathroom)
+  - REF-00340 (KITE 2025 grab bar peak force), REF-00333 (Keall 2021 MHIPI), REF-00150 (BS 8300-2:2018)
+  - REF-00415 (PVA 2021 Accessible Home Design), REF-00416 (RCOT 2019 Housing Adaptations), REF-00044 (Steinfeld 2010 wheeled mobility)
+  - REF-00405 (NICE NG206 ME/CFS), REF-00233 (Dysautonomia Support Network), REF-00324 (JAN POTS accommodations)
+  - REF-00036 (Roxburgh 2024 ME/CFS), REF-00514 (Wheels for Wellbeing 2025), REF-00265 (Habinteg 2024), REF-00229 (DSDC EADDAT 2022)
+- **DEFERRED categories:**
+  - OT evidence echo paragraphs (G-02, G-03, G-05, G-06 — seat heights, grab specs, desk heights, counter heights repeated in Evidence basis sections)
+  - Illustration placeholder notes (G-08 dual-rod plan, G-09 bedroom plan)
+- **No new ORPHANED claims.** Krupp 2003 (F-07 MS diurnal) and Raj 2013 / Stewart 2012 (G-06 orthostatic onset) cited in FDRs but not in global registry — tagged with best-available supporting refs (Flensner, MSIF, NICE NG206, JAN POTS). Log as registry gaps below.
+- **Registry gaps identified (cited in Part 4 F-G but absent from global registry — add before publication):**
+  - Krupp, L.B. et al. (2003) — MS fatigue diurnal pattern (cited F-07 FDR-MST-02)
+  - Raj, S.R. et al. (2013) — Orthostatic intolerance onset time 2-10 min (cited G-06 FDR-OFS-01)
+  - Stewart, J.M. et al. (2012) — Orthostatic intolerance clinical data (cited G-06 FDR-OFS-01)
+
+### Next session (Session 5): Part 4 Category H-I-K (~94 claims)
 
 ---
 
