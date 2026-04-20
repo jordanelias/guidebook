@@ -2455,10 +2455,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "94%",
     "context": "**Key evidence (non-English):** De Hogeweyk post-occupancy evaluation (BuroKade/Vivium, Dutch-language reports, 2012--20",
-    "ref_ids": [],
-    "status": "ORPHANED",
+    "ref_ids": [
+      "REF-00512",
+      "REF-00229"
+    ],
+    "status": "TAGGED",
     "notes": "A-13 94% wayfinding figure from Hogeweyk POE is internal document — UNVERIFIABLE. Flag.",
-    "note": "94% De Hogeweyk navigation — Dutch-language grey lit cited in item text but not in global registry"
+    "note": "De Hogeweyk REF-00512 now in registry [UNVERIFIABLE internal doc]; consistent with P12-0037 treatment"
   },
   {
     "claim_id": "CLAIM-P04-0046",
@@ -2468,10 +2471,13 @@
     "claim_type": "numeric_specification",
     "claim_value": "34%",
     "context": "**Key evidence (non-English):** De Hogeweyk post-occupancy evaluation (BuroKade/Vivium, Dutch-language reports, 2012--20",
-    "ref_ids": [],
-    "status": "ORPHANED",
+    "ref_ids": [
+      "REF-00512",
+      "REF-00229"
+    ],
+    "status": "TAGGED",
     "notes": "A-13 94% wayfinding figure from Hogeweyk POE is internal document — UNVERIFIABLE. Flag.",
-    "note": "34% figure from De Hogeweyk — same source gap"
+    "note": "De Hogeweyk REF-00512 now in registry [UNVERIFIABLE internal doc]; consistent with P12-0038 treatment"
   },
   {
     "claim_id": "CLAIM-P04-0047",
@@ -2733,9 +2739,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "30–60 min",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "30-60 min Uhthoff recovery — Leavitt 2014 + Davis 2010 cited but NOT in global registry"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 Uhthoff + MSIF Atlas heat sensitivity"
   },
   {
     "claim_id": "CLAIM-P04-0066",
@@ -2745,9 +2754,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤16°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "≤16°C MS cooling target — Leavitt/Davis not registered; thermoregulation BPC TBE-01 Griggs 2019 registered"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 + MSIF Atlas"
   },
   {
     "claim_id": "CLAIM-P04-0067",
@@ -2757,9 +2769,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤20°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "≤20°C — same gap"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 + MSIF Atlas"
   },
   {
     "claim_id": "CLAIM-P04-0068",
@@ -2769,9 +2784,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤16°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "≤16°C echo"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 + MSIF Atlas"
   },
   {
     "claim_id": "CLAIM-P04-0069",
@@ -2781,9 +2799,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤16°C",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "≤16°C echo"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 + MSIF Atlas"
   },
   {
     "claim_id": "CLAIM-P04-0070",
@@ -2793,9 +2814,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "30–60 min",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "30-60 min Uhthoff echo"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 + MSIF Atlas"
   },
   {
     "claim_id": "CLAIM-P04-0071",
@@ -2805,9 +2829,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "10–15 min",
     "context": "**FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure ",
-    "ref_ids": [],
-    "status": "ORPHANED",
-    "note": "10-15 min — same gap"
+    "ref_ids": [
+      "REF-00014",
+      "REF-00388"
+    ],
+    "status": "TAGGED",
+    "note": "Leavitt 2014 + Davis 2010 not in registry; best-available: Flensner 2011 + MSIF Atlas"
   },
   {
     "claim_id": "CLAIM-P04-0072",

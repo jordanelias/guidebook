@@ -14,6 +14,7 @@
 <!-- Session 13 of Step 2 (Part 12 case studies) complete 2026-04-19 -->
 <!-- Session 14 of Step 2 (Parts 1, 9, 10 — introduction, checklist, DAR) complete 2026-04-19 -->
 <!-- Step 2 COMPLETE 2026-04-19 — 0 PENDING, 1252 TAGGED, 109 DEFERRED, 21 ORPHANED -->
+<!-- ORPHANED resolution pass 2026-04-19 — 9 resolved → TAGGED=1261, ORPHANED=12 -->
 
 **Purpose:** Traceable mapping from each specification claim in Parts 1-12 to the references that support it. Phase B parsers read this table to render footnotes on the frontend.
 
@@ -21,10 +22,10 @@
 
 **Overall status:**
 - PENDING (untagged): 0 ✅ **Step 2 complete**
-- TAGGED (refs assigned): 1252
+- TAGGED (refs assigned): 1261
 - VERIFIED (confirmed): 0
 - DEFERRED (non-citable: methodology, definitional, echo): 109
-- ORPHANED (no supporting ref in global registry): 21
+- ORPHANED (no supporting ref in global registry): 12
 
 **Full machine-readable data:** `references/claim-reference-join.json`
 
@@ -37,7 +38,7 @@
 | Part 1 | 7 | 0 | 7 | 0 | 0 | 0 |
 | Part 2 | 83 | 0 | 81 | 0 | 2 | 0 |
 | Part 3 | 42 | 0 | 41 | 0 | 1 | 0 |
-| Part 4 | 558 | 0 | 462 | 0 | 85 | 11 |
+| Part 4 | 558 | 0 | 471 | 0 | 85 | 2 |
 | Part 5 | 79 | 0 | 77 | 0 | 2 | 0 |
 | Part 6 | 115 | 0 | 114 | 0 | 1 | 0 |
 | Part 7 | 111 | 0 | 99 | 0 | 2 | 10 |
@@ -375,12 +376,14 @@ All 1382 claims processed. PENDING = 0.
 **Summary:**
 | Status | Count | % |
 |---|---|---|
-| TAGGED | 1252 | 90.6% |
+| TAGGED | 1261 | 91.2% |
 | DEFERRED | 109 | 7.9% |
-| ORPHANED | 21 | 1.5% |
+| ORPHANED | 12 | 0.9% |
 | PENDING | 0 | 0% |
 
-**ORPHANED claims (21) require Phase B content review** — these are provisions with no supporting reference in the global registry (primarily DBL expert-consensus provisions in Part 7 with no published standard, and a small number of specialist claims in Part 4).
+**ORPHANED claims (12) require Phase B content review** — 9 of the original 21 were resolved in cleanup pass (De Hogeweyk claims re-tagged with REF-00512; Leavitt/Davis MS cooling claims upgraded to best-available REF-00014 + REF-00388). Remaining 12 are genuinely unresolvable:
+- Part 4 (2): P04-0011 (Kaplan 1989 restorative interval — no acoustic BPC coverage), P04-0029 (BS 6472-1:2008 vibration threshold — UNVERIFIED source)
+- Part 7 (10): DBL expert-consensus provisions explicitly flagged "no published standard; March 2026" in source text
 
 **Next phase:** Step 3 — frontend rendering (Phase B parsers read `claim-reference-join.json` to attach footnotes to specification text).
 
