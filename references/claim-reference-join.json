@@ -2472,8 +2472,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "**Description:** Lighting delivering ≥150 EML at seated eye level (1200 mm AFF) during daytime occupied hours (08:00--18",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00009",
+      "REF-00185",
+      "REF-00323"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0076",
@@ -2483,8 +2487,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "EML: ≥150 at 1200 mm AFF during daytime hours",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00009",
+      "REF-00185",
+      "REF-00323"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0077",
@@ -2494,8 +2502,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥500 lux",
     "context": "Horizontal illuminance: ≥500 lux at table/work surface",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0078",
@@ -2505,8 +2517,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "1500 mm",
     "context": "Vertical illuminance at face (1500 mm AFF, omnidirectional): ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0079",
@@ -2516,8 +2532,12 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥300 lux",
     "context": "Vertical illuminance at face (1500 mm AFF, omnidirectional): ≥300 lux",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00135",
+      "REF-00248",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0080",
@@ -2528,7 +2548,7 @@
     "claim_value": "≥300 lux",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The ≥300 lux vertical illuminance at face level (1500mm AFF) and shadow-free",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0081",
@@ -2539,7 +2559,7 @@
     "claim_value": "1500mm",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The ≥300 lux vertical illuminance at face level (1500mm AFF) and shadow-free",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0082",
@@ -2550,7 +2570,7 @@
     "claim_value": "1.5m",
     "context": "**Evidence basis (OT):** Biomechanical FOR. The ≥300 lux vertical illuminance at face level (1500mm AFF) and shadow-free",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0083",
@@ -2561,7 +2581,7 @@
     "claim_value": "100Hz",
     "context": "**Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Fluorescent luminaires (magn",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0084",
@@ -2571,8 +2591,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<5%",
     "context": "**Description:** All LED luminaires specified to IEEE 1789-2015 at low flicker risk. Flicker percentage <5% at all dimmi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00022"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0085",
@@ -2582,8 +2605,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1000 Hz",
     "context": "**Description:** All LED luminaires specified to IEEE 1789-2015 at low flicker risk. Flicker percentage <5% at all dimmi",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00022"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0086",
@@ -2593,8 +2619,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "<5%",
     "context": "Flicker percentage: <5% at all dimming levels (IEEE 1789-2015 low-risk threshold)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00022"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0087",
@@ -2604,8 +2633,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥1000 Hz",
     "context": "Minimum flicker frequency: ≥1000 Hz if ripple present",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00022"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0088",
@@ -2615,8 +2647,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "20%",
     "context": "At all dimming levels including 20% output: within low-risk range",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00022"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0089",
@@ -2626,8 +2661,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "**Description:** Transitional lighting zone 3--5 m deep at all entries and all transitions where illuminance changes >10",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0090",
@@ -2637,8 +2675,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 m",
     "context": "Zone depth: 3 m minimum; 5 m preferred",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0091",
@@ -2648,8 +2689,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 m",
     "context": "Zone depth: 3 m minimum; 5 m preferred",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00437"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0092",
@@ -2659,8 +2703,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100%",
     "context": "**Description:** Occupant-controlled dimmer in all spaces where neurological or sensory populations spend significant ti",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0093",
@@ -2670,8 +2717,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "**Description:** Occupant-controlled dimmer in all spaces where neurological or sensory populations spend significant ti",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0094",
@@ -2681,8 +2731,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 lux",
     "context": "**Description:** Occupant-controlled dimmer in all spaces where neurological or sensory populations spend significant ti",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0095",
@@ -2692,8 +2745,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "**Description:** Occupant-controlled dimmer in all spaces where neurological or sensory populations spend significant ti",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0096",
@@ -2703,8 +2759,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "100%",
     "context": "Dimming range: 100% to 10 lux minimum",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0097",
@@ -2714,8 +2773,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "Dimming range: 100% to 10 lux minimum",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0098",
@@ -2725,8 +2787,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "1200 mm",
     "context": "Control: accessible switch 800--1200 mm AFF; lever or rocker (UPL compatible)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0099",
@@ -2736,8 +2801,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "10 lux",
     "context": "Sensory/consulting rooms: scene controller with preset 'minimum' (10 lux) scene",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157",
+      "REF-00432"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0100",
@@ -2747,8 +2815,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "300 lux",
     "context": "Illuminance: 200--300 lux at task level achieved by indirect strategy",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00157"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0101",
@@ -2758,8 +2828,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥40%",
     "context": "Window-to-wall ratio: ≥40% on primary facades",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00323",
+      "REF-00486"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0102",
@@ -2769,8 +2842,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "2%",
     "context": "All primary occupied spaces: direct natural light (minimum 2% daylight factor)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00323"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0103",
@@ -2780,8 +2855,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤750 mm",
     "context": "Sill height: ≤750 mm AFF for seated and reclined views. Applicable where DEM, OFS, NEU are primary occupants (reclined o",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0104",
@@ -2792,7 +2869,7 @@
     "claim_value": "≥75%",
     "context": "**Evidence basis (OT):** ART (Attention Restoration Theory); SRT (Stress Recovery Theory). Natural light from windows an",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0105",
@@ -2802,8 +2879,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 Hz",
     "context": "**Description:** Visual Alarm Devices (VAD) installed in all areas where deaf or hard-of-hearing users may be present. M",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00149",
+      "REF-00401"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0106",
@@ -2813,8 +2893,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3 Hz",
     "context": "75 candela minimum; 1--3 Hz flash rate; BS EN 54-23:2010 Category W Coverage: all sleeping areas, bathrooms, meeting roo",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00149",
+      "REF-00401"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0107",
@@ -2824,8 +2907,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 s",
     "context": "**Vibrotactile fire alarm (DBL — LIFE SAFETY):** In all sleeping areas where DBL users are resident or expected: bed-sha",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00149"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0108",
@@ -2835,8 +2920,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥24 hr",
     "context": "**Vibrotactile fire alarm (DBL — LIFE SAFETY):** In all sleeping areas where DBL users are resident or expected: bed-sha",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00149"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0109",
@@ -2846,8 +2933,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "3000 mm",
     "context": "**Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00428",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0110",
@@ -2857,8 +2947,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "2000 mm",
     "context": "**Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00428",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0111",
@@ -2868,8 +2961,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥2500 mm",
     "context": "**Description:** Permanent canopy or covered approach at accessible entry: minimum 3000 mm depth × 2000 mm width. Level ",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00428",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0112",
@@ -2879,8 +2975,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤200 mm",
     "context": "Stripe patterns (threshold marking, navigation): ≤200 mm width; maximum 3 stripes per zone",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00029"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0113",
@@ -2890,8 +2989,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "75 mm",
     "context": "Stair nosings: ≥30 LRV full-width strip (55--75 mm depth)",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00150",
+      "REF-00360"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0114",
@@ -2901,8 +3003,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "≤3 mm",
     "context": "Tactile transition strip (≤3 mm height): permitted; colour must meet",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00229",
+      "REF-00150"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0115",
@@ -6938,8 +7043,11 @@
     "claim_type": "numeric_specification",
     "claim_value": "300–400 mm",
     "context": "- ● Luminaires to be positioned at 300–400 mm AFF, oriented to illuminate the floor surface [REF:accessible-bathroom-and",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00416",
+      "REF-00205"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0482",
@@ -6949,8 +7057,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "5 lux",
     "context": "- ● Floor illuminance to be no less than 5 lux throughout the route [REF:accessible-bathroom-and-grab-bar:22]",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00205"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0483",
@@ -6960,8 +7070,10 @@
     "claim_type": "numeric_specification",
     "claim_value": "≥5 lux",
     "context": "**Retrofit:** MODERATE penalty — new circuit and sensor required. Floor-level conduit chase is moderate cost. Plug-in se",
-    "ref_ids": [],
-    "status": "PENDING"
+    "ref_ids": [
+      "REF-00205"
+    ],
+    "status": "TAGGED"
   },
   {
     "claim_id": "CLAIM-P04-0484",
@@ -6972,7 +7084,7 @@
     "claim_value": "300–400 mm",
     "context": "**Illustration:** [Illustration: to be provided] — Section through bedroom showing 300–400 mm AFF luminaire position and",
     "ref_ids": [],
-    "status": "PENDING"
+    "status": "DEFERRED"
   },
   {
     "claim_id": "CLAIM-P04-0485",
