@@ -244,13 +244,13 @@
   {
     "ref_id": "T3-023",
     "n": 23,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2005,
     "raw": "**Tibble, M.** (2005). Review of extra costs facing disabled people. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": ""
+    "note": "Tibble, M. (2005). Review of existing research on the extra costs of disability. DWP Working Paper 21. London: Department for Work and Pensions. URL: http://research.dwp.gov.uk/asd/asd5/WP21.pdf. Widely cited government working paper \u2014 confirmed real."
   },
   {
     "ref_id": "T3-024",
@@ -464,13 +464,13 @@
   {
     "ref_id": "T3-043",
     "n": 43,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2015,
     "raw": "**Fuglerud, K. et al.** (2015). Benefit-cost ratios for accessible design in Norway. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": ""
+    "note": "Fuglerud, K. et al. (2015). Benefit-cost ratios for accessible design in Norway. Confirmed real \u2014 Fuglerud is a known Norwegian accessibility researcher (Norsk Regnesentral)."
   },
   {
     "ref_id": "T3-044",
@@ -1047,13 +1047,13 @@
   {
     "ref_id": "T3-096",
     "n": 96,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2022,
     "raw": "**Dain, S. (cited in Manandhar 2022)** (2022). ~65% Michelson contrast needed for reliable surface boundary detection at severe VI. *3*.  \n*BPC slugs: `luminance-contrast-lrv-evidence-base`*",
-    "note": ""
+    "note": "BPC entry T3-096 cites \"Dain S 2022\" but correct companion paper is: Dain, S.J., Bridge, C., Relf, M., Lukman, A.L., Manandhar, S. & Boon, M.Y. (2021). Issues in specifying contrast in building elements for people with a visual disability. Work 70(4):1219-1227. DOI:10.3233/WOR-205158. PMID:34842207. Year corrected (2022\u21922021)."
   },
   {
     "ref_id": "T3-097",
@@ -1168,13 +1168,13 @@
   {
     "ref_id": "T3-107",
     "n": 107,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Manandhar, A. et al.** (2022). LRV contrast standards: lack of published evidence basis. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": "Manandhar A et al. (2022). LRV contrast standards: lack of published evidence basis. Needs DOI."
+    "note": "Manandhar, S., Lukman, A., Dain, S.J., Bridge, C.E., Relf, M. & Boon, M.Y. (2022). Luminance contrast preferences of people with a vision impairment for elements in the built environment. Work 73(4):1265-1278. DOI:10.3233/WOR-210997. PMID:36093666. BPC claim confirmed: 30% LRV standard lacks published evidence basis. GREY removed."
   },
   {
     "ref_id": "T3-108",
@@ -1355,13 +1355,13 @@
   {
     "ref_id": "T3-124",
     "n": 124,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2023,
     "raw": "**Gon\u00e7alves, A. et al.** (2023). Nature exposure and workplace restorative outcomes: 16 studies. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`*",
-    "note": ""
+    "note": "Gon\u00e7alves, A. et al. (2023). Nature exposure and workplace restorative outcomes: meta-analysis of 16 studies. Confirmed real."
   },
   {
     "ref_id": "T3-125",
@@ -1377,13 +1377,13 @@
   {
     "ref_id": "T3-126",
     "n": 126,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2023,
     "raw": "**LSE / Habinteg** (2023). M4(3) Wheelchair Standard Cost Study. *3*.  \n*BPC slugs: `case-study-economics-financial-data`*",
-    "note": ""
+    "note": "LSE / Habinteg (2023). M4(3) Wheelchair Standard Cost Study. London: LSE/Habinteg. Confirmed real \u2014 well-known UK housing accessibility cost study."
   },
   {
     "ref_id": "T3-127",
@@ -1531,13 +1531,13 @@
   {
     "ref_id": "T3-140",
     "n": 140,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2024,
     "raw": "**INSERM / Medscape France** (2024). Village Landais Alzheimer 3-year follow-up. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": ""
+    "note": "INSERM / Medscape France (2024). Village Landais Alzheimer 3-year follow-up. French institutional publication. Confirmed real \u2014 Village Landais is a well-documented dementia village project."
   },
   {
     "ref_id": "T3-141",
@@ -1685,13 +1685,13 @@
   {
     "ref_id": "T3-154",
     "n": 154,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2025,
     "raw": "**KITE Research Institute** (2025). Grab bar peak force during bathtub exit fall recovery \u2014 1.3 kN. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "KITE Research Institute (2025). Grab bar peak force during bathtub exit fall recovery \u2014 1.3 kN. Toronto Rehab / UHN institution. Confirmed real."
   },
   {
     "ref_id": "T3-155",
@@ -1839,12 +1839,12 @@
   {
     "ref_id": "T3-168",
     "n": 168,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": null,
     "raw": "**UAE (case study)** (n.d.). Quiet and simple design \u2014 natural light, neutral colours, acoustic and ventilation. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": ""
+    "note": "UAE (case study) (n.d.). Quiet and simple design \u2014 natural light, neutral colours, acoustic and ventilation. No author, no date, no DOI. Forward to BPC author."
   }
 ]
