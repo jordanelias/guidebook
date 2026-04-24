@@ -72,4 +72,7 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+jurisdiction_summary: >
+  MS heat sensitivity (Uhthoff's phenomenon) conflicts with DEM cold sensitivity. No code addresses this conflict. Resolution: individual thermal zoning (F-07). ASHRAE 55 / EN 16798-1 general comfort only.
+
 ```
