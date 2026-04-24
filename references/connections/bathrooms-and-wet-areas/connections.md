@@ -361,3 +361,24 @@ This finding is siloed in `thermal-comfort-older-adults-care-settings` and not p
 **Target:** G-05, K-01
 **Connection:** [DESCRIPTION PENDING]
 
+
+### CON-0185
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, fold-down-grab-bar-specification, chronic-pain-built-environment, fatigue-spectrum-built-environment
+**Target item(s):** G-03, G-04 (grab bar height/configuration)
+**Target population(s):** MOB, PAIN, OFS
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Grab bar biomechanics evidence (Lee 2017/18 DOI:10.1177/1937586717730338; Sekiguchi 2017 DOI:10.1016/j.clinbiomech.2017.05.005; Guitard 2011 DOI:10.1080/10400435.2011.614674 — all verified) was developed for MOB populations but the design implications extend to PAIN (pain-modified transfer per FDR-CMP-01 requires grab bars positioned for weight-bearing avoidance) and OFS (fatigue populations need grab bars within easy reach without stretching — reduced energy budget means every unnecessary reach movement costs disproportionately). Bilateral fold-down bars at 813mm (Lee 2017/18) serve all three populations.
+
+**Evidence basis:** Lee et al. 2018 (PMID:28952364); Sekiguchi et al. 2017 (PMID:28528238); Guitard et al. 2011 (PMID:22256669); Lee et al. 2019 (PMID:29522366). All verified T3.
+
+**Action required:** Add PAIN and OFS population tags to bilateral grab bar spec. Cross-reference FDR-CMP-01 (pain-modified transfer).
+
+**Disposition notes:** —
