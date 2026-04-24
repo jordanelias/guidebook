@@ -616,3 +616,36 @@ Completed 2026-04-24 03:34.
 
 session_close: 2026-04-24 03:34
 next_action: Co-1 second searches + Tier 2/Co-2 verification
+
+
+## Block 12 — Phase 3A + 3B (partial)
+
+### Phase 3A: Divergence matrix delivered
+`references/item-jurisdiction-divergence-matrix.md` — 9 HIGH DIVERGENCE items mapped.
+
+### Phase 3B: 6 jurisdiction comparison tables added to Part 4
+Inserted directly into `parts/v10/part04.md`:
+- E-03 Ramp Gradient: US 8.3% vs DE 6% vs NO/ISO 5%
+- E-06 Level Entry: AU ≤5mm vs US ≤13mm vs DE ≤20mm
+- E-08 Corridor Width: US 915mm vs UK 1200mm vs DE 1500mm
+- E-09 TWSIs: JP origin vs ISO 23599 vs DE DIN 32984
+- C-04 LRV Contrast: US no numeric vs UK ≥30/≥70 vs AU ≥30%
+- H-01 Controls: US 380-1220mm vs DE 850-1050mm vs AU 900-1100mm
+
+Each table shows jurisdiction, standard, value, notes, and guidebook target.
+
+commits_block12:
+  - 6b54bedf47bf: item-jurisdiction-divergence-matrix.md
+  - d9843e70f033: Part 4 jurisdiction comparison tables (6 items)
+
+### Remaining Phase 3B items (3 of 9)
+- A-04 Classroom RT: needs comparison table (partial — grade_confidence comment has some data)
+- Kitchen worktop adjustability: DE vs US/UK
+- Turning space: already in E-01 item context
+
+next_action: >
+  Complete remaining 3 Phase 3B items. Then Phase 3C (Opus divergence synthesis
+  for items with ≥3 conflicting jurisdictions). Then Phase 4 (spec database curation)
+  and Phase 5 (Appendix A tables, supersession tracker, CRPD map).
+
+session_close: 2026-04-23 13:45
