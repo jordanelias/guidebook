@@ -78,3 +78,51 @@ bpc_ref: "deaf-spatial-design"
 ```
 
 ```yaml
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  FI: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  BR: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
+  PT: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  IN: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
