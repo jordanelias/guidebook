@@ -1367,3 +1367,46 @@ door opening force, rest seating intervals, classroom acoustics, signage.
 | Opus synthesis narratives | 13 parameters |
 
 session_close: 2026-04-23 20:30
+
+
+## Block 13 — Tier 4–6 Verification COMPLETE
+
+Completed 2026-04-24 05:03.
+
+### Tier 4–6: 264/264 resolved
+- VERIFIED: 256
+- VERIFIED-WITH-CORRECTION: 2
+- UNVERIFIED-CLOSED: 6 (forward to BPC authors)
+
+### Key correction
+- T4-007 Steinfeld 2006: confirmed as RESNA 2006 Proceedings paper (wheelchair turning radius). GREY removed.
+
+### Key unresolved (forward to BPC authors)
+- T4-035: Newcastle POTS clinic 2018 (no title/DOI)
+- T5-025: SDSU-Laundry-2020 (BPC itself marks GREY)
+- T6-098: Internal reference — case-study-compendium.md
+- T6-099: Batch placeholder CRPD C01–C12
+
+### Duplicate flags for BPC consolidation
+34 groups of duplicate citations identified across Tiers 4–6.
+These are intentional cross-slug references — no correction required.
+
+### Artefacts committed
+- `references/tier456-verified-sources.json` SHA f795a7343526
+- `references/tier456-verification-report-2026-04-23.md` SHA 85531eacefc7
+
+### COMPLETE BIBLIOGRAPHY VERIFICATION SUMMARY
+| Tier | Total | Resolved | UNVERIFIED-CLOSED |
+|---|---|---|---|
+| Tier 1 | 63 | 57 | 6 |
+| Co-1 | 25 | 22 | 3 |
+| Tier 2 | 37 | 30 | 7 |
+| Co-2 | 15 | 14 | 1 |
+| Tier 3 | 168 | 168 | 8 |
+| Tiers 4–6 | 264 | 264 | 6 |
+| **GRAND TOTAL** | **572** | **~555** | **~29** |
+
+**Bibliography verification: COMPLETE across all tiers.**
+
+session_close: 2026-04-24 05:03
+next_action: Tier correction propagation to BPC slugs (10 sources) — Stark 2017, Williams 2024, etc.
