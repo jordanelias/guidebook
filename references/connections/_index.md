@@ -6,14 +6,14 @@
 **Last migration:** 2026-04-19 (Block 4 B1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
 **Total connections migrated:** 181
-**Next CON-ID:** CON-0181
+**Next CON-ID:** CON-0189
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 140 |
 | CONSUMED-DEFERRED | 42 |
-| PENDING | 0 |
+| PENDING | 8 |
 
 ## Index
 
@@ -202,3 +202,11 @@
 | CON-0155 | CONSUMED-DEFERRED | H-01, H-02, Part 6 | kitchens-and-workspaces | HIGH | true | — |
 | CON-0156 | CONSUMED | E-03, C-04, E-09, B-04 | entrances-and-circulation | HIGH | true | — |
 | CON-0157 | CONSUMED | B-10, H-03, D-08, E-08 | cross-cutting | HIGH | true | --- |
+| CON-0181 | PENDING | A-09 (floor surface spec) | entrances-and-circulation | HIGH | true | — |
+| CON-0182 | PENDING | K-03 (circadian lighting) | sensory-environment | HIGH | true | — |
+| CON-0183 | PENDING | K-01 (RT60), K-02 (background noise) | sensory-environment | HIGH | true | — |
+| CON-0184 | PENDING | K-05 (thermal comfort assessment) | health-and-symptom-management | HIGH | true | — |
+| CON-0185 | PENDING | G-03, G-04 (grab bar height/configuration) | bathrooms-and-wet-areas | HIGH | true | — |
+| CON-0186 | PENDING | A-16 (sensory quiet room) | sensory-environment | HIGH | true | — |
+| CON-0187 | PENDING | D-02 (wayfinding system), D-06 (decision-point design) | wayfinding-and-signage | MODERATE | true | — |
+| CON-0188 | PENDING | Multiple (cross-cutting design framework) | cross-cutting | HIGH | true | — |
