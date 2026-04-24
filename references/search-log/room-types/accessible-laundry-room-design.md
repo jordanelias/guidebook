@@ -73,3 +73,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Limited code coverage. US ADA §611 laundry (front-loading, clear floor space). UK BS 8300 laundry provisions. AU AS 1428.1. DE DIN 18040-2 domestic utility spaces. THIN for most jurisdictions.
+
+```
