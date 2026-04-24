@@ -75,3 +75,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Anthropometric data: US NHANES, UK HSE/DINED, DE DIN 33402, ISO 7250. JP JIS Z 8500. BAR data in Supplementary Volume only per project standards.
+
+```
