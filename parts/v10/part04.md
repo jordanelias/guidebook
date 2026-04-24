@@ -382,11 +382,11 @@ All mechanical plant: mounted on vibration isolation pads
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 <!-- CON-0005 [HIGH]: A-09 vibration threshold + G-08 seated reach cluster (MODERATE) -->
-<!-- THRESHOLD RESOLVED (citation-verifier + ISW, connection-scout Opus {ts}): The prior 0.1 m/s RMS threshold was UNVERIFIED and has been replaced with ISO 2631-1 standard values. Garcia-Mendez et al. 2013 (J Spinal Cord Med 36(4):365-375, PMID:23820152, verified T3) found wheelchair users experience 0.83 ± 0.17 m/s² weighted RMS acceleration — exceeding ISO 2631-1 EAV (0.5 m/s²) and approaching ELV (1.15 m/s²) in community settings. Correct unit: m/s² (not m/s RMS). Correct threshold: ISO 2631-1 EAV = 0.5 m/s² (8h); ELV = 1.15 m/s² (8h). Floor type is the single largest WBV determinant (Garcia-Mendez 2013; Chénier & Aissaoui 2014 PMID:25276802). Specification should cite EAV 0.5 m/s² as the design target for vibration-sensitive populations. -->
+<!-- THRESHOLD RESOLVED (citation-verifier + ISW, connection-scout Opus 2026-04-24 15:17): The prior 0.1 m/s RMS threshold was UNVERIFIED and has been replaced with ISO 2631-1 standard values. Garcia-Mendez et al. 2013 (J Spinal Cord Med 36(4):365-375, PMID:23820152, verified T3) found wheelchair users experience 0.83 ± 0.17 m/s² weighted RMS acceleration — exceeding ISO 2631-1 EAV (0.5 m/s²) and approaching ELV (1.15 m/s²) in community settings. Correct unit: m/s² (not m/s RMS). Correct threshold: ISO 2631-1 EAV = 0.5 m/s² (8h); ELV = 1.15 m/s² (8h). Floor type is the single largest WBV determinant (Garcia-Mendez 2013; Chénier & Aissaoui 2014 PMID:25276802). Specification should cite EAV 0.5 m/s² as the design target for vibration-sensitive populations. -->
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
-<!-- grade_confidence: MODERATE — Garcia-Mendez 2013 PMID:23820152 (Tier 3, verified) confirms wheelchair users exceed ISO 2631-1 EAV (0.83 m/s² observed vs 0.5 m/s² EAV). EAV/ELV thresholds from ISO 2631-1 (Tier 4). Floor type confirmed as primary WBV determinant. MODERATE — no disability-specific building standard; specification derived from well-established occupational health standard applied to disability context. CON-0181 [HIGH]: extends population applicability to PAIN, NEU, OFS (connection-scout Opus {ts}). -->
+<!-- grade_confidence: MODERATE — Garcia-Mendez 2013 PMID:23820152 (Tier 3, verified) confirms wheelchair users exceed ISO 2631-1 EAV (0.83 m/s² observed vs 0.5 m/s² EAV). EAV/ELV thresholds from ISO 2631-1 (Tier 4). Floor type confirmed as primary WBV determinant. MODERATE — no disability-specific building standard; specification derived from well-established occupational health standard applied to disability context. CON-0181 [HIGH]: extends population applicability to PAIN, NEU, OFS (connection-scout Opus 2026-04-24 15:17). -->
 
 <!-- CON-0055 [MODERATE]: Cushioned/resilient flooring serves MOB (WBV reduction), PAIN (joint impact reduction per GAP-B4-09), NEU (fall impact mitigation). Currently MOB-only; PAIN and NEU clinical rationales documented in respective BPCs but not cross-referenced. -->
 **Applicable Groups:** PAIN (fibromyalgia), NEU, NDV · OFS
@@ -402,7 +402,8 @@ Adjacent to sensitive spaces: floating slab on spring isolators
 
 Pipe connections: flexible connections at all mechanical plant
 
-Post-installation: vibration measurement at sensitive space floors (target: <0.1 m/s RMS)
+Post-installation: vibration measurement at sensitive space floors  
+(target: weighted RMS acceleration ≤0.5 m/s² per ISO 2631-1 EAV; older specification referenced 0.1 m/s RMS — incorrect unit, now superseded [CORRECTED: ISW Opus cross-check 2026-04-24 15:17; see threshold-resolved comment above])
 
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Floating plant room specification cannot be retrofitted without rebuilding the plant room. Anti-vibration mounts and structural decoupling must be incorporated at construction stage. Among the highest-penalty items when deferred. See Part 12 §12.4.
 
@@ -803,7 +804,7 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 <!-- METRIC NOTE: This item uses melanopic EDI (≥250) as the daytime threshold per Brown et al. 2022 PLOS Biology. Prior versions cited EML (≥150–200 EML). Conversion: melanopic EDI ≈ EML / 1.104. Use melanopic EDI ≥250 as the unified design target. See BPC circadian-lighting-melanopic-edi and spec-db-part4-reconciliation Section C1. -->
 
 **Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS · NDV/AUT
-<!-- CON-0182 [HIGH]: NDV/AUT photosensitivity at high melanopic EDI creates compound interaction with DEM/MH circadian needs — added to Applicable Groups with compound-interaction note below. ISW: connection-scout Opus [{ts}] -->
+<!-- CON-0182 [HIGH]: NDV/AUT photosensitivity at high melanopic EDI creates compound interaction with DEM/MH circadian needs — added to Applicable Groups with compound-interaction note below. ISW: connection-scout Opus [2026-04-24 15:17] -->
 <!-- CON-0006: CON-0006: circadian lighting supports OFS energy regulation and NEU sleep-wake cycle recovery alongside DEM -->
 
 **Description:** Lighting delivering ≥150 EML at seated eye level (1200 mm AFF) during daytime occupied hours (08:00--18:00). Evening (after 19:00): ≤10 EML with shift to warm 2700 K for sleep preparation.
@@ -812,11 +813,12 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 
 **Specifications:**
 
-EML: ≥150 at 1200 mm AFF during daytime hours
+Melanopic EDI: ≥250 lux at eye level (1200 mm AFF) during daytime hours (08:00–18:00) — per Brown et al. 2022, CIE S 026:2018, DIN/TS 67600:2022. (Equivalent to ≥276 EML via conversion factor 1.104 — older EML values of ≥150 EML are insufficient and have been superseded by the melanopic EDI metric. See METRIC NOTE in item header.)  
+[CORRECTED: ISW Opus cross-check 2026-04-24 15:17 — Specifications block previously retained legacy EML ≥150 while item heading and jurisdiction comparison table cited ≥250 MEDI; internal inconsistency now resolved.]
 
 CCT: ≥4000 K for electric light during daytime
 
-Evening: ≤10 EML; 2700 K; reduced intensity
+Evening (after 19:00): ≤50 lux melanopic EDI; 2700 K CCT; reduced intensity (legacy EML equivalent: ≤10 EML — superseded)
 
 Natural light maximised; not substituted by electric light where achievable
 
@@ -828,7 +830,7 @@ DEM environments: circadian lighting is a clinical requirement, not a comfort en
 
 **Cross-reference:** B-09 (Natural Light); B-11 (Warm CCT Evening); B-06 (Individual Dimming)
 
-**Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model. Circadian-appropriate lighting (≥150 EML daytime, ≤10 EML evening) supports the occupation of time-structured daily activity by calibrating the environmental light signal to the neurological systems that regulate alertness and sleep; for DEM and NEU users this is a clinical requirement, not an enhancement.
+**Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model. Circadian-appropriate lighting (≥250 MEDI daytime, ≤50 MEDI evening) supports the occupation of time-structured daily activity by calibrating the environmental light signal to the neurological systems that regulate alertness and sleep; for DEM and NEU users this is a clinical requirement, not an enhancement.
 
 **Jurisdiction comparison:**
 
