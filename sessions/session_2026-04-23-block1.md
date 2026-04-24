@@ -1111,3 +1111,28 @@ Completed 2026-04-24 04:30.
 
 session_close: 2026-04-24 04:30
 next_action: Tier 3 UNVERIFIED-1 DOI batch searches — prioritise high-citation/high-specificity entries
+
+
+## Block 18 — Phase 3B Near-Complete
+
+### Part 4 jurisdiction data: 73 items now covered
+Batches 7-8 added 30 compact jurisdiction entries for beyond-code items.
+
+Key pattern: ~25 items have NO code equivalent in ANY jurisdiction — these are
+the guidebook's original contribution to accessibility standards. They are derived
+from clinical/OT evidence (Tier 1-3), population co-design (Co-1), or specialist
+practitioner guidance (Co-2) rather than statutory codes.
+
+### Beyond-Code Items Catalogued
+Category D (wayfinding): D-01 loop plan, D-02 cognitive simplicity, D-03 toilet visibility,
+D-04 landmarks, D-05 low-stimulation, D-06 memory boxes, D-07 no blind corners, D-09 furniture consistency
+Category F (sensory/thermal): F-01 sensory gradient, F-02 olfactory, F-03 re-entry transition,
+F-06 fragrance-free, F-08 thermal transition
+Category B (lighting): B-02 lip-reading, B-05 transition zones, B-06 dimming, B-07 indirect, B-08 matte
+Category C (colour): C-01 palette, C-02 colour-coded, C-05 inverse contrast
+Category G (seating): G-01 defensible, G-02 variety
+
+commits_block18: 2 commits (batches 7, 8)
+total_commits_conversation: ~250
+
+session_close: 2026-04-23 18:15
