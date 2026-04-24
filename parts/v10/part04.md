@@ -173,6 +173,21 @@ Restorative intervals: at least one acoustic low-point per 20m of primary journe
 
 Graduated acoustic zoning alters the context systematically across the building journey so that the environmental acoustic demand progressively decreases as the user approaches the primary occupation space, matching environmental demand to functional capacity and expanding the performance range across the full journey.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Classroom RT (general) | Classroom RT (HI) | Background Noise |
+|---|---|---|---|---|
+| US | ANSI/ASA S12.60-2010 | ≤0.6s (<283m³); ≤0.7s (283-566m³) | **≤0.3s** | ≤35 dBA |
+| UK | BB93 (mandatory England) | By room type | Lower targets | By room type |
+| DE | DIN 18041:2016 | By room type and use | — | By room classification |
+| NO | NS 8175:2019 | Acoustic classification system | — | By class (A-D) |
+| AU | AS/NZS 2107:2016 | Recommended design levels | — | By space type |
+| ISO | ISO 3382-2:2008 | Measurement method | — | — |
+| **Guidebook** | **A-04** | **≤0.6s** | **≤0.3s (DEAF population)** | **≤35 dBA** |
+
+US ANSI S12.60-2010 is the only standard specifying separate RT for hearing-impaired children (0.3s). UK BB93 is the most prescriptive mandatory standard. DE DIN 18041 is the most comprehensive room acoustic standard.
+
+
 ### A-05 Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -388,6 +403,21 @@ penalty is minimal; power supply proximity is the principal constraint. See Part
 **Cross-reference:** A-11 (Room Perimeter Loop); B-02 (Face Illumination for Lip Reading)
 
 **Evidence basis (OT):** Compensatory FOR. The counter loop is an environmental compensation enabling the occupation of independent service interaction for users dependent on hearing devices; without this compensation the environment disables the occupation. The IEC 60118-4:2014+AMD1:2017 field strength specification ensures functional effectiveness, not symbolic compliance.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Requirement | Performance Standard |
+|---|---|---|---|
+| US | ADA 2010 §219 | Assistive listening in assembly ≥50 occ. | IEC 60118-4 via A117.1 |
+| UK | BS 8300-2:2018 | Hearing loop at ALL counters/help points | BS EN 60118-4 |
+| AU | NCC / AS 60118.4 | Hearing augmentation in assembly | AS 60118.4 |
+| DE | DIN 18040-1 | Two-Senses: visual + auditory redundancy | DIN EN 60118-4 |
+| EU | EN 17210:2021 | Hearing enhancement recommended | EN 60118-4 |
+| ISO | IEC 60118-4:2018 | Universal performance standard | — |
+| **Guidebook** | **A-10** | **All counters/service points** | **IEC 60118-4** |
+
+UK BS 8300-2 is most prescriptive — requires hearing loop specifically at counters (not just "assistive listening"). US ADA allows choice of technology (loop, IR, FM).
+
 
 ### A-10b RT60 for Hydrotherapy and Pool Environments
 
@@ -1016,6 +1046,21 @@ Position: visible from any point in room (ceiling or high-wall mount)
 **Evidence basis (OT):** Compensatory FOR. The visual fire alarm compensates for the absence of auditory fire alarm detection in Deaf/HoH and DBL users; the 110 cd output specification is derived from the minimum luminous intensity required to achieve reliable detection across the visual field at the maximum coverage distances specified in EN 54-23.
 
 <!-- CON-0014/CON-0042: Multi-channel alerting required. Every alert event to be available through all three channels simultaneously: visual (strobe ≥110 cd) + auditory (≥75 dBA at bed) + vibrotactile (latency ≤3 s in sleeping areas). Vibrotactile alerting is mandatory where DEAF, DBL, or photosensitive populations (NEU/epilepsy, NDV) occupy sleeping spaces. See new item K-04 Vibrotactile Alert Provision. Populations: DEAF · DBL · NEU · NDV · ALL. -->
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Flash Rate | Visual Alarm Standard | Notes |
+|---|---|---|---|---|
+| US | ADA §702 / NFPA 72 | **≤2 Hz** | UL 1971 | Seizure risk mitigation |
+| UK | BS 5839-1 | EN 54-23 categories | EN 54-23 W/C/O | Area coverage categories |
+| EU | EN 54-23:2010 | ≤2 Hz implicit | EN 54-23 | Harmonised European |
+| AU | AS 1670 | Referenced | — | NCC fire safety |
+| DE | DIN VDE 0833-2 | Referenced | — | Fire alarm systems |
+| ISO | ISO 7240 series | Referenced | — | Fire detection/alarm |
+| **Guidebook** | **B-10** | **≤2 Hz** | **EN 54-23 coverage** | **DEAF vs NEU/NDV conflict resolved** |
+
+≤2 Hz flash rate resolves the conflict between DEAF need for visual alerting and NEU/NDV photosensitive seizure risk.
+
 
 ### B-11 Warm Colour Temperature for Evening (≤2700 K After 19:00)
 <!-- design_stage_lock: DD -->
@@ -1723,6 +1768,22 @@ impairment; the 1400×1100mm car dimensions are derived from wheelchair biomecha
 
 The 5--15 second adjustable door open time addresses the temporal performance range of users with variable motor speed.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Min Car (W×D mm) | Turning Space | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 / A117.1-2017 | 1730×1370 | 1702mm (powered) | Largest for powered chairs |
+| UK | BS 8300-2:2018 / EN 81-70 | 1100×1400 | 1500mm | Matches guidebook |
+| DE | DIN 18040-1 / EN 81-70 | 1100×1400 | 1500mm | DIN aligns with EN |
+| AU | AS 1735 / NCC | 1400×1600 | 2070mm (powered) | Largest turning space globally |
+| NO | TEK17 / NS 11001 | 1100×1400 | 1500mm | EN 81-70 adopted |
+| ISO | ISO 21542:2021 | 1100×1400 | 1524mm | Reference dimension |
+| EU | EN 81-70:2021+A1:2022 | 1100×1400 (Type 2) | 1500mm | Harmonised European |
+| **Guidebook** | **E-01** | **1400×1100** | **By device type** | **ISO baseline; note AU/US for powered** |
+
+KEY DIVERGENCE: AU 2070mm turning for powered chairs is 36% larger than ISO 1524mm. US A117.1 1702mm is intermediate.
+
+
 ### E-02 Platform Lift (Where Full Passenger Lift Not Achievable)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
@@ -2202,6 +2263,20 @@ G-03 (Grab Bars — bilateral at peninsular WC); G-04 (Wet Room Configuration �
 ## CATEGORY F: SENSORY ZONING
 
 Sensory zoning is the deliberate organisation of a building's sensory environment so that stimulation level varies predictably, decreasing from public/entry zones to primary occupied/private zones.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Mandatory | Key Features |
+|---|---|---|---|
+| UK | BS 8300-2:2018 / Building Regs 2021 | **YES** (since Sept 2021) | Height-adjustable bench, ceiling hoist, peninsular WC, ≥12m² |
+| AU | NCC / AS 1428.1 | Partial | "Accessible adult change facility" in some building classes |
+| US | ADA / A117.1-2017 | Adult changing stations (Supplement 1) | Added 2024 IBC; not yet universal |
+| DE | DIN 18040-1 | Not mandated | "Toilette für alle" voluntary initiative |
+| ISO | ISO 21542:2021 | Referenced | Not mandated |
+| **Guidebook** | **E-15** | **Recommended** | **UK BS 8300-2 specification** |
+
+UK is the ONLY jurisdiction where Changing Places are mandatory (since September 2021 via Building Regulations amendment).
+
 
 ### F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
@@ -3202,6 +3277,20 @@ Australia. (2024). Kitchen modifications for one-handed function.
 **Cross-reference:** I-01 (Hardware); R-KIT-01 (Residential Kitchen)
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Kitchen one-handed operation provisions (lever taps, drawer pull hardware, single-hand appliances, knee clearance under worktops) adapt the kitchen environment to enable the occupation of cooking which the standard kitchen context makes impossible for bilateral UPL users — implementing EHP's 'adapt' strategy at the task-context level.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Worktop Height | Adjustable Required | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 §804 | 710-865mm (work surface) | No | Controls front-mounted |
+| UK | BS 8300 / Lifetime Homes | 850mm standard | No (recommended) | M4(3) wheelchair-user dwellings |
+| DE | DIN 18040-2 §5.7 | 820-870mm | **YES** | Height-adjustable worktop mandatory |
+| AU | AS 1428.1 / Livable Housing | Referenced | No | NCC kitchen provisions |
+| ISO | ISO 21542:2021 | Referenced | No | General guidance |
+| **Guidebook** | **I-02** | **DAR-ready range** | **Recommended (Tier 1 best practice)** | **DE standard as aspiration** |
+
+KEY DIVERGENCE: DE DIN 18040-2 is the ONLY jurisdiction requiring height-adjustable kitchen worktops. US/UK do not mandate adjustability.
+
 
 ### I-03 Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)
 <!-- CON-0117 [HIGH]: I-03 TMV ≤38°C + D-05 low-stimulation + A-16 sensory room — OFS/NDV/MH cluster -->
