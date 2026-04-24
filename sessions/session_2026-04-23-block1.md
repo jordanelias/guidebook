@@ -2069,3 +2069,52 @@ next_action: >
 
 blockers: none
 session_close: 2026-04-24 08:45
+
+
+## Block 20 — ISW Spec Applications (P1 Briefings)
+
+Completed 2026-04-24 07:34. Model: Opus 4.6 (spec application requires cross-referential verification).
+
+### Spec changes applied to parts/v10/part04.md [SHA 673ad6bbc705]
+
+**B-01 (Circadian Lighting):**
+- NDV/AUT added to Applicable Groups (was missing; ot_appointment_trigger already included NDV but groups did not)
+- CON-0182 compound-interaction note added to Description: melanopic EDI ≥250 lux triggers photosensitivity in NDV/AUT and OFS/ME; mandatory A-16 opt-out (≤50 lux) within 25m resolves
+
+**A-09 (HVAC Vibration Isolation):**
+- UNVERIFIED flag resolved: 0.1 m/s RMS (unknown origin) → ISO 2631-1 EAV 0.5 m/s² (Garcia-Mendez 2013 PMID:23820152)
+- grade_confidence upgraded LOW → MODERATE
+- CON-0181 note added: population applicability extends to PAIN, NEU, OFS
+
+**A-16 (Sensory Room):**
+- CON-0186 four-population convergence note added: NDV + MH + DEM + OFS arrive at identical room spec via separate mechanisms; provision of one A-16 per floor plate resolves all four simultaneously
+
+### Findings from cross-checking (Opus judgment)
+
+**CON-0183 already exists as CON-0039:** RT60 ≤0.3s Tier 0 universal already noted in part04 comments at L48, L89, L102 — "serves DEAF/NDV/DEM/NEU simultaneously." No new spec change needed; CON-0183 is confirmatory.
+
+**CON-0185 already captured as CON-0003:** G-03 Applicable Groups already include MOB, DEM, PAIN, UPL, OFS, NEU. CON-0003 comment already present. No change needed.
+
+**CON-0184 → GAP-THERMAL-01:** No thermal comfort assessment spec item exists (K-05 not found). Gap registered for spec creation.
+
+### Connection register updates
+- CON-0181 → CONSUMED
+- CON-0182 → CONSUMED  
+- CON-0186 → CONSUMED
+- CON-0183 → already CON-0039 (existing)
+- CON-0185 → already CON-0003 (existing)
+- CON-0184 → GAP-THERMAL-01 (new gap item)
+- CON-0187 → remains PENDING (MODERATE confidence — deferred)
+- CON-0188 → remains PENDING (Part 3 chapter — deferred to author)
+
+### Total session output (connection-scout + ISW)
+- 8 new connections identified (CON-0181–0188)
+- 7 ISW briefings prepared
+- 3 spec items updated in part04.md
+- 1 UNVERIFIED threshold resolved (A-09)
+- 1 gap item registered (GAP-THERMAL-01)
+- 3 connections confirmed as already captured by prior connections (CON-0039, CON-0003)
+
+session_close: 2026-04-24 07:34
+next_action: Part 3 §3.2 Owen/Crane framework note (CON-0188, Part 3 author); GAP-THERMAL-01 spec creation; CON-0187 FDR-CMP-04 compound wayfinding spec
+blockers: none
