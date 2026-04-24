@@ -113,4 +113,7 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+jurisdiction_summary: >
+  OFS (ME/CFS, POTS, MCAS) — NO code addresses. Key provisions: rest seating intervals (E-10), thermal control (F-07), air quality (F-04), recline capability. Clinical evidence only.
+
 ```
