@@ -241,3 +241,22 @@ South/SE Asia cluster (BD, ID, PH, TH) — assess for wayfinding-global-south sl
 - GAP-FROZEN: 15 root-level FROZEN slug files — confirm superseded by topic slugs
 - GAP-SCOPE-CN: CN/ZH formally scope-gate in affected slugs (GAP-055 extension)
 - GAP-SCOPE-NL: NL formally scope-gate in affected slugs (GAP-057 extension)
+
+
+---
+
+## GAP-THERMAL-01 — Thermal Comfort Assessment Spec Item Missing
+**Added:** 2026-04-24 07:34
+**Source:** CON-0184 (connection-scout Opus run) → ISW execution pass
+**Priority:** P2
+
+Van Hoof et al. 2010 (verified T3, DOI:10.1016/j.buildenv.2009.06.017) demonstrates that PMV/PPD thermal comfort models (ISO 7730) are unreliable for DEM, NEU/MS, and OFS populations who cannot self-report thermal discomfort or thermoregulate normally. No part04 item addresses thermal comfort assessment methodology.
+
+**Gap:** No spec item for thermal comfort assessment protocol — only F-07 addresses thermal zoning (ambient temperature targets). Required: a new spec item specifying PMV/PPD contraindication + alternative assessment methods (objective physiological monitoring, proxy-report protocols) for DEM/NEU/OFS.
+
+**Action:** Create new spec item (likely K-05 or append to F-07) specifying:
+- PMV/PPD contraindicated for DEM, NEU, OFS [○ inferred]
+- Alternative: behavioural observation protocols, skin temperature sensors, proxy-report
+- Evidence: van Hoof 2010 (●), WHO HHGL 2018 (●)
+
+**OPEN**
