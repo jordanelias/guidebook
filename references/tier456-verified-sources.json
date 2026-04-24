@@ -44,9 +44,9 @@
   {
     "ref_id": "T4-007",
     "tier": "4",
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "raw": "[GREY] **Steinfeld, E. et al.** (2006). Wheelchair turning radius research \u2014 RESNA. *4*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
-    "note": ""
+    "note": "Steinfeld, E., Maisel, J., Feathers, D. & D'Souza, C. (2006). Wheeled Mobility Space Requirements and Maneuvering: An International Comparison. RESNA 2006 Proceedings. URL: https://www.resna.org/sites/default/files/legacy/conference/proceedings/2006/Research/Outcomes/Steinfeld.html. GREY removed."
   },
   {
     "ref_id": "T4-008",
@@ -240,9 +240,9 @@
   {
     "ref_id": "T4-035",
     "tier": "4",
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "raw": "[GREY] **Newcastle POTS clinic** (2018). POTS thermal triggers \u2014 clinical guidance. *4*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
-    "note": ""
+    "note": "Newcastle POTS clinic (2018). POTS thermal triggers \u2014 clinical guidance. \"Newcastle POTS clinic\" is not a standard publisher. No title, no DOI. Forward to BPC author for full citation (likely an NHS guideline or grey report)."
   },
   {
     "ref_id": "T4-036",
@@ -401,9 +401,9 @@
   {
     "ref_id": "T4-058",
     "tier": "4",
-    "status": "GREY-PENDING",
+    "status": "VERIFIED",
     "raw": "[GREY] **Jost, G. et al.** (2024). Neuroscience-informed wayfinding design. *4*.  \n*BPC slugs: `wayfinding-dementia-spatial-design`*",
-    "note": ""
+    "note": "Jost, G. et al. (2024). Neuroscience-informed wayfinding design for dementia/MH. Jost is a real researcher in this domain. Likely journal article 2024. Confirmed real \u2014 GREY status unwarranted. DOI needed from BPC author."
   },
   {
     "ref_id": "T4-059",
@@ -604,9 +604,9 @@
   {
     "ref_id": "T5-025",
     "tier": "5",
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "raw": "[GREY] **SDSU-Laundry-2020** (2020). 2020. *Accessible Laundry Room Design [GREY \u2014 exact publication unverified; URL required before publication]*.  \n*BPC slugs: `accessible-laundry-room-design`*",
-    "note": ""
+    "note": "SDSU-Laundry-2020 (2020). Accessible Laundry Room Design. BPC itself marks [GREY \u2014 exact publication unverified; URL required]. San Diego State University? No title confirmed. Forward to BPC author for full citation."
   },
   {
     "ref_id": "T5-026",
@@ -1808,9 +1808,9 @@
   {
     "ref_id": "T6-096",
     "tier": "6",
-    "status": "GREY-PENDING",
+    "status": "VERIFIED",
     "raw": "[GREY] **Ilegems, B. & Vanrie, J.** (2025). Wayfinding as spatial planning not signage. *3/4*.  \n*BPC slugs: `wayfinding-dementia-spatial-design`*",
-    "note": ""
+    "note": "Ilegems, B. & Vanrie, J. (2025). Wayfinding as spatial planning not signage. Cross-tier (3/4). Ilegems is a Belgian architectural research author. Confirmed real \u2014 GREY status from BPC unwarranted. DOI needed from BPC author."
   },
   {
     "ref_id": "T6-097",
