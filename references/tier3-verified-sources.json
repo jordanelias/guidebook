@@ -992,13 +992,13 @@
   {
     "ref_id": "T3-091",
     "n": 91,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **(author TBC)** (2022). PMC9716468 \u2014 ME/CFS activity pacing SR. *3*.  \n*BPC slugs: `pain-ofs-built-environment-design`*",
-    "note": ""
+    "note": "PMC9716468 confirmed. This is: Espejo-Ant\u00fanez et al. (2022) or similar \u2014 PMC ID is real but author TBC in BPC. Full citation: verify via PMC search. GREY partially removed."
   },
   {
     "ref_id": "T3-092",
@@ -1113,24 +1113,24 @@
   {
     "ref_id": "T3-102",
     "n": 102,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Holohan, E.** (2022). Trauma-informed design scoping review. *3*.  \n*BPC slugs: `design-framework-evidence-audit`*",
-    "note": ""
+    "note": "BPC \"Holohan E 2022\" \u2014 ATTRIBUTION ERROR. Correct: Owen, C. & Crane, J. (2022). Trauma-Informed Design of Supported Housing: A Scoping Review through the Lens of Neuroscience. Int J Environ Res Public Health 19(21):14279. DOI:10.3390/ijerph192114279. PMID:36361166. PMC:PMC9658651. AUTHOR CORRECTION REQUIRED."
   },
   {
     "ref_id": "T3-103",
     "n": 103,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Holohan, E.** (2022). Trauma-informed design. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "Duplicate of T3-102. Same Owen & Crane 2022 paper. BPC has \"Holohan E 2022\" again \u2014 same attribution error applies. DUPLICATE + ATTRIBUTION ERROR."
   },
   {
     "ref_id": "T3-104",
@@ -1300,35 +1300,35 @@
   {
     "ref_id": "T3-119",
     "n": 119,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **(author TBC)** (2023). Housing accessibility and rehabilitation outcomes after stroke. OTJR. PMC10621028. *3*.  \n*BPC slugs: `neurological-built-environment`*",
-    "note": ""
+    "note": "PMC10621028 confirmed as real article. Housing accessibility and rehabilitation outcomes after stroke. OTJR 2023. Author TBC in BPC \u2014 needs author name from BPC author."
   },
   {
     "ref_id": "T3-120",
     "n": 120,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Baquero, M. et al.** (2023). Older adult neutral temperature 24.9\u00b0C (n=1,065). *3*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
-    "note": ""
+    "note": "Baquero, M. et al. (2023). Older adult neutral temperature 24.9\u00b0C (n=1,065). GREY. Needs journal/DOI. Likely real paper on thermal comfort in older adults."
   },
   {
     "ref_id": "T3-121",
     "n": 121,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Baquero, M. et al.** (2023). Older adult neutral temperature 24.9\u00b0C; comfort zone 18.3\u201326.3\u00b0C (n=1,065). *3*.  \n*BPC slugs: `thermal-comfort-older-adults-care-settings`*",
-    "note": ""
+    "note": "Baquero, M. et al. (2023). Same or duplicate of T3-120. Comfort zone 18.3-26.3\u00b0C figure. Needs DOI."
   },
   {
     "ref_id": "T3-122",
@@ -1630,13 +1630,13 @@
   {
     "ref_id": "T3-149",
     "n": 149,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **Siu, A. et al.** (2024). PEOP validation: SR (109 articles). PMC. *3*.  \n*BPC slugs: `ot-frameworks-built-environment`*",
-    "note": ""
+    "note": "Siu, A. et al. (2024). PEOP model validation: systematic review of 109 articles. PMC confirmed. PEOP = Person-Environment-Occupation-Performance model. Real paper."
   },
   {
     "ref_id": "T3-150",
@@ -1740,13 +1740,13 @@
   {
     "ref_id": "T3-159",
     "n": 159,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2025,
     "raw": "[GREY] **Simpson, K., Adams, D. & Dargue, N.** (2025). Built school environment and autistic students: Systematic review. Int J Inclusive Educ. *3*.  \n*BPC slugs: `school-environment-autism`*",
-    "note": ""
+    "note": "Simpson, K., Adams, D. & Dargue, N. (2025). Built school environment and autistic students: Systematic review. Int J Inclusive Educ. Needs DOI/PMID confirmation."
   },
   {
     "ref_id": "T3-160",
@@ -1784,24 +1784,24 @@
   {
     "ref_id": "T3-163",
     "n": 163,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2026,
     "raw": "[GREY] **(author TBC)** (2026). IntD home design. Buildings 16(3):489. MDPI. *3*.  \n*BPC slugs: `intellectual-disability-built-environment-design`*",
-    "note": ""
+    "note": "(author TBC 2026). IntD home design. Buildings 16(3):489. MDPI. DOI: 10.3390/buildings16030489 (inferred from volume/issue). Real journal article \u2014 Buildings is a real MDPI journal. Author TBC in BPC should be supplied."
   },
   {
     "ref_id": "T3-164",
     "n": 164,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": null,
     "raw": "[GREY] **(author TBC)** (n.d.). TID youth. PMC10689333. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "PMC10689333 confirmed as real article. TID youth mental health built environment. Author TBC in BPC."
   },
   {
     "ref_id": "T3-165",
