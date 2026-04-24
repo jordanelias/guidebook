@@ -14,11 +14,11 @@ languages:
   FI: {status: THIN, results: 1, db: [web], note: "Finnish care facility thermal standards"}
   ZH: {status: THIN, results: 1, db: [web], note: "Chinese elderly care thermal comfort"}
   JA: {status: SEARCHED, results: 8, db: [web], note: "AIJ epidemiological studies heat shock 寒冷暴露; MHLW bathtub death data 6541/year official; ~17000 estimated; Ministry of Health and Welfare publications; JApanese residential insulation Energy Conservation Act 2022/2024"}
-  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [Baquero2023-n1065, AIJ-HeatShock-Epidemiology, MHLW-Bathtub-Deaths, ISO7730-2005, WELL-v2-Thermal, CIBSE-TM52, Fanger1970]
 bpc_ref: "thermal-comfort-older-adults-care-settings"
 thin_flags: [NO, SV, DA, FI, ZH]
@@ -39,17 +39,17 @@ jurisdiction_coverage:
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   FI: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -57,11 +57,11 @@ jurisdiction_coverage:
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

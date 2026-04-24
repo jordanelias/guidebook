@@ -53,10 +53,10 @@ jurisdiction_coverage:
   NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   DK: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
@@ -64,10 +64,10 @@ jurisdiction_coverage:
   JP: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   EU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
 

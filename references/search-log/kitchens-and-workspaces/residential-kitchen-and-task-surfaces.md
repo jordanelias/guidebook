@@ -37,10 +37,10 @@ languages:
   PT: {status: THIN, results: 1, db: [web], co1_pass: partial, native_standards_pass: partial}
   IT: {status: THIN, results: 1, db: [web], co1_pass: partial, native_standards_pass: partial}
   BE-NL: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: partial}
-  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  NO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  SV: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 
 jurisdiction_coverage:
   US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
@@ -62,12 +62,12 @@ jurisdiction_coverage:
   CH: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_coverage_summary:
   searched: [US, UK, CA, AU, DE, FR, NL, ES, IE, BE, CN, CH, ISO, EU]
