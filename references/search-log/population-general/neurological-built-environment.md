@@ -120,3 +120,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  NEU provisions overlap with MOB (mobility), DEM (cognitive), and PAIN (fatigue). No code addresses neurological conditions specifically. MS Society (UK/US/AU) provides built environment guidance. ABI/TBI rehabilitation facility design is healthcare-specific.
+
+```
