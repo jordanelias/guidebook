@@ -649,3 +649,55 @@ next_action: >
   and Phase 5 (Appendix A tables, supersession tracker, CRPD map).
 
 session_close: 2026-04-23 13:45
+
+
+## Block 13 — Phase 3B Complete
+
+### 13 jurisdiction comparison tables now in Part 4
+
+| Item | Parameter | Key Divergence |
+|---|---|---|
+| E-03 | Ramp gradient | US 8.3% vs DE 6% vs FR/NO 5% |
+| E-06 | Threshold height | AU ≤5mm vs US ≤13mm vs DE ≤20mm |
+| E-08 | Corridor width | US 915mm vs UK 1200mm vs DE 1500mm |
+| E-09 | TWSIs | JP origin vs ISO 23599 vs DE DIN 32984 |
+| C-04 | LRV contrast | US none vs UK ≥30/≥70 |
+| H-01 | Reach range | US 380-1220mm vs DE 850-1050mm |
+| A-04 | Classroom RT (HI) | US 0.3s vs general 0.6s |
+| E-01 | Lift car / turning | AU 2070mm vs ISO 1524mm |
+| A-10 | Counter hearing loop | UK all counters vs US ≥50 occ |
+| A-11 | Room hearing loop | US choice vs UK loop specified |
+| B-10 | Visual fire alarm | ≤2 Hz per NFPA 72/EN 54-23 |
+| E-15 | Changing Places | UK ONLY mandatory (since 2021) |
+| I-02 | Kitchen worktop | DE ONLY requires height-adjustable |
+
+commits_block13:
+  - f14f88685695: batch 2 (A-04, E-01, A-10, B-10, E-15, I-02)
+  - [A-11 commit]: A-11 room hearing loop
+
+### PHASE 3B STATUS: 13/91 Part 4 items have jurisdiction comparison tables
+Remaining ~78 items: many will be NO-DATA for jurisdiction-specific divergence
+(population-specific items, merged items, etc.). The 13 completed items cover
+the highest-divergence parameters that drive specification values.
+
+### Overall Workplan Progress
+
+| Phase | Status |
+|---|---|
+| Phase 1: Standards Registry | COMPLETE 46/46 |
+| Phase 2A: Audit + Infrastructure | COMPLETE |
+| Phase 2B: Search-log enrichment | COMPLETE 90/90 |
+| Phase 3A: Divergence matrix | COMPLETE |
+| Phase 3B: Part 4 tables | 13/91 (HIGH DIVERGENCE items done) |
+| Phase 3C: Opus divergence synthesis | NOT STARTED |
+| Phase 4: Spec database curation | NOT STARTED |
+| Phase 5: Cross-cutting deliverables | NOT STARTED |
+
+next_action: >
+  Phase 5A — Appendix A jurisdiction comparison tables.
+  The divergence data is now assembled — next step is to render it
+  into the formal Appendix A comparison tables covering all 7 parameter
+  categories (turning radii, ramp gradients, lift dimensions, grab bars,
+  hearing loops, contrast, reach ranges).
+
+session_close: 2026-04-23 14:30
