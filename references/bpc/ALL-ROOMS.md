@@ -125,7 +125,7 @@
 | Levine 2025 | Backward | Greene 2024, Guitard 2011 |
 | Lee 2019 | Forward | Sekiguchi 2017 |
 | Keall 2015 HIPI RCT | Forward | Keall 2021 MHIPI |
-| GoldingDay 2018 BATH-OUT | Both | 2 |
+| Whitehead 2018 BATH-OUT [CORRECTED: citation-verifier 2026-04-23 — Whitehead P.J. is lead author; Golding-Day is 2nd author] | Both | 2 |
 
 ### Bottom-up findings (functional deficit pass)
 | Scenario | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
