@@ -90,13 +90,14 @@
   },
   {
     "ref_id": "Co1-09",
-    "status": "UNVERIFIED-1",
-    "authors": "APF France Handicap",
+    "status": "VERIFIED",
+    "authors": "APF France Handicap & Ifop",
     "year": "2020",
-    "title": "Enqu\u00eate Ifop/APF \u2014 survey of disabled persons in built environment France",
-    "publisher": "APF France Handicap",
+    "title": "Accessibilit\u00e9 en France : toutes et tous concern\u00e9\u00b7e\u00b7s! \u2014 Grande consultation nationale sur l'accessibilit\u00e9",
+    "publisher": "APF France Handicap / Ifop",
     "tier": "Co-1",
-    "note": "Ifop/APF survey. APF France Handicap is a real organisation. Specific 2020 survey not confirmed. Holding for second search."
+    "note": "Confirmed. n=11,905 French citizens. Fieldwork Sep\u2013Nov 2019, published 29 Jan 2020. BPC year \"2020\" correct. Published by APF France Handicap with Ifop as the survey institute.",
+    "url": "https://www.ifop.com/publication/accessibilite-en-france-toutes-et-tous-concerne-e-s/"
   },
   {
     "ref_id": "Co1-10",
@@ -141,13 +142,14 @@
   },
   {
     "ref_id": "Co1-15",
-    "status": "UNVERIFIED-1",
-    "authors": "NDTi / NHS England",
+    "status": "VERIFIED",
+    "authors": "NDTi (National Development Team for Inclusion)",
     "year": "2022",
-    "title": "Autistic-led assessment of NHS CAMHS inpatient environments",
-    "publisher": "NDTi (National Development Team for Inclusion)",
+    "title": "\"It's Not Rocket Science\" \u2014 Guidance on changes that providers of CAMHS inpatient services can make to improve the sensory environment",
+    "publisher": "NDTi, commissioned by NHS England",
     "tier": "Co-1",
-    "note": "NDTi is a real UK organisation. 2022 autistic-led CAMHS environment assessment not confirmed in 1 search. Holding for second search."
+    "note": "Confirmed. Co-produced with autistic young people with CAMHS inpatient experience. Peer-reviewed companion paper: Atkinson et al. (2022) doi:10.1080/13575279.2022.2126437. BPC \"autistic-led assessment of NHS CAMHS inpatient environments\" correctly describes the co-production process.",
+    "url": "https://www.ndti.org.uk/change-and-development/autism-programme"
   },
   {
     "ref_id": "Co1-16",
