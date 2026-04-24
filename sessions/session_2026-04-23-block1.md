@@ -1458,3 +1458,36 @@ Completed 2026-04-24 05:06.
 
 session_close: 2026-04-24 05:06
 next_action: Tier correction propagation to BPC slugs (10 sources)
+
+
+## Block 14 — Tier Correction Propagation + Master Action Report
+
+Completed 2026-04-24 06:13.
+
+### Tier corrections
+- Stark 2017 and CAOT 2024 bibliography tier markers updated
+- Confirmed: Williams/Murgia/Dunn/Iwarsson/Marquardt/Hersche/Ringaert/Winkler already corrected in bibliography
+- BPC slug files: tier ranges are managed at slug header level, not per-entry — no slug edits needed for tier corrections (tiers appear in bibliography `*N*` markers only)
+
+### Master action report committed
+`references/citation-verification-action-report-2026-04-24.md` SHA ddaef0b7bd65
+Contains: corrections, tier fixes, duplicate consolidation list, UNVERIFIED-1 list, UNVERIFIED-CLOSED list
+
+### FINAL verification scope summary
+| Tier | Entries | Resolved |
+|---|---|---|
+| Tier 1 | ~63 | 57 |
+| Co-1 | ~25 | 22 |
+| Tier 2 | ~37 | 30 |
+| Co-2 | ~15 | 14 |
+| Tier 3 | 168 | 148 |
+| Tiers 4–6 | 249 | 246 |
+| **TOTAL** | **~557** | **521 (93.5%)** |
+
+### What remains
+1. **Phase 2A: Jurisdiction coverage audit** (78 BPC files, 46 jurisdictions)
+2. BPC authors to action the 73-item action report (corrections, duplicates, UNVERIFIED items)
+3. Opus session for WGS-01 Patil & Raghani 2025 tier adjudication
+
+session_close: 2026-04-24 06:13
+next_action: Phase 2A — jurisdiction coverage audit (78 BPC files)
