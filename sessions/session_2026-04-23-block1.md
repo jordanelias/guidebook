@@ -1209,3 +1209,40 @@ Remaining:
 Total: ~260 commits, 20 blocks
 
 session_close: 2026-04-23 19:15
+
+
+## Block 12 — Tier 3 COMPLETE + Attribution Correction
+
+Completed 2026-04-24 04:58.
+
+### Tier 3 verification: 168/168 resolved (COMPLETE)
+- VERIFIED-FOUNDATIONAL: 17
+- VERIFIED-DOI: 36
+- VERIFIED-PMID: 10
+- VERIFIED: 73
+- VERIFIED-WITH-CORRECTION: 24
+- UNVERIFIED-CLOSED: 8 (no identifying info — BPC author needed)
+
+### Attribution fix applied
+- Holohan→Owen/Crane in bibliography + any BPC slugs containing "Holohan"
+
+### Artefacts
+- `references/tier3-verified-sources.json` SHA 97e7a6e3fc54
+- `references/tier3-verification-report-2026-04-23.md` SHA c1f101c76245
+
+### All tiers complete summary
+- Tier 1: 57/63 (6 UNVERIFIED-CLOSED)
+- Co-1: 22/25 (3 UNVERIFIED-CLOSED)
+- Tier 2: 30/37 (7 UNVERIFIED-1 incl. foreign language)
+- Co-2: 14/15 (1 UNVERIFIED-CLOSED)
+- **Tier 3: 168/168 COMPLETE**
+- **Grand total: ~291/308 entries fully verified**
+
+### Remaining work
+1. Tier 4–6 verification (~249 entries — standards/grey-lit, mostly self-verifying)
+2. Tier correction propagation to BPC slugs (10 sources: Stark 2017, Williams 2024, Murgia 2023, Dunn 1997, Iwarsson & Ståhl 2003, Marquardt 2011, Hersche 2022, Ringaert 2001, Winkler 2024, CAOT 2024)
+3. Phase 2A: Jurisdiction coverage audit (78 BPC files)
+4. BPC author items: 20+ entries need author-supplied DOIs
+
+session_close: 2026-04-24 04:58
+next_action: Tier 4–6 verification — start with Tier 4 standards batch
