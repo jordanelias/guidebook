@@ -93,8 +93,15 @@
         "DEM",
         "NEU"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "AU"
+      ],
+      "jurisdictions_divergent": [
+        "US",
+        "UK",
+        "DE"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-bathroom-and-grab-bar",
@@ -122,8 +129,15 @@
         "DEM",
         "NEU"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "AU"
+      ],
+      "jurisdictions_divergent": [
+        "US",
+        "UK",
+        "DE"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-bathroom-and-grab-bar",
