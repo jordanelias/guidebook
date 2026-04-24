@@ -527,13 +527,14 @@
   {
     "ref_id": "T3-048",
     "n": 48,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2016,
     "raw": "**Steinfeld-2016** (2016). 2016. *Experimental Studies of Wheelchair and Walker Users Passing Through Doors…*. https://doi.org/10.3233/978-1-61499-684-2-883  \n*BPC slugs: `reach-range-and-accessible-c",
-    "note": "Steinfeld (2016). Experimental studies of wheelchair and walker users passing through doors. DOI fragment in BPC. Likely Steinfeld E. et al. (2016). Human Engineering Research Lab report or HERD paper. Needs full DOI from BPC author."
+    "note": "Steinfeld (2016). Experimental studies of wheelchair and walker users passing through doors. DOI fragment in BPC. Likely Steinfeld E. et al. (2016). Human Engineering Research Lab report or HERD paper. Needs full DOI from BPC author.",
+    "correction_note": "Multiple Steinfeld IDEA Center publications exist but no exact 2016 match for \"Experimental Studies of Wheelchair\". Closest: Steinfeld 2010 AWM Final Report. Forward to BPC author for clarification."
   },
   {
     "ref_id": "T3-049",
@@ -549,13 +550,17 @@
   {
     "ref_id": "T3-050",
     "n": 50,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "10.1016/j.apmr.2017.04.023",
     "pmid": null,
     "grey": false,
     "year": 2017,
     "raw": "**Al Lawati, M. et al.** (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": "Al Lawati, M. et al. (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. Need DOI from BPC author — search returned no specific result."
+    "note": "Al Lawati, M. et al. (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. Need DOI from BPC author — search returned no specific result.",
+    "author": "Al Lawati, Z., Kirby, R.L., Smith, C., MacKenzie, D., Theriault, C., & Matheson, K.",
+    "title": "Getting a Manual Wheelchair Over a Threshold Using the Momentum Method: A Descriptive Study of Common Errors",
+    "journal": "Archives of Physical Medicine and Rehabilitation 98(10):2097-2099.e7",
+    "correction_note": "PMID: 28579369. Title in BPC was \"Impact of doorstep height\" — actual title differs."
   },
   {
     "ref_id": "T3-051",
@@ -1579,7 +1584,8 @@
     "grey": false,
     "year": 2024,
     "raw": "**Kapsalis, G. et al.** (2024). Tenji tactile blocks as MOB hazard: systematic review. *3*.  \n*BPC slugs: `cross-population-case-studies`*",
-    "note": "Kapsalis, G. et al. (2024). Tenji tactile blocks as MOB hazard: systematic review. Needs DOI."
+    "note": "Kapsalis, G. et al. (2024). Tenji tactile blocks as MOB hazard: systematic review. Needs DOI.",
+    "correction_note": "Kapsalis 2024 tenji/MOB — not found in web search. May be conference paper or grey lit. Forward to BPC author."
   },
   {
     "ref_id": "T3-143",
