@@ -28,41 +28,41 @@ note: "CRITICAL FINDING: A-09 0.1 m/s RMS threshold — ISO 2631-1 is occupation
 ```yaml
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "No ADA vibration provision. AISC Design Guide 11 floor vibration (general, not disability-specific)."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 6472-1:2008 vibration in buildings. No BS 8300 vibration provision for wheelchair users."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 2631-2:2003 vibration in buildings. Not disability-specific."}
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -70,7 +70,12 @@ jurisdiction_coverage:
   GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  NO building code addresses floor vibration as an accessibility provision. Evidence is clinical/OT (A-09 vibration threshold UNVERIFIED). THIN BASE.
+
+```
