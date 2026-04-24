@@ -188,7 +188,7 @@
 **Roxburgh, R. et al.** (2024). Using time diaries to inform OT practice for ME/CFS. British J Occup Ther. DOI:10.1177/03080226241249279. *1*. https://doi.org/10.1177/03080226241249279  
 *BPC slugs: `accessible-circulation-geometry`*
 
-**Summer Foundation / Winkler** (2024). Supporting accessible housing transitions. Melbourne. *1*.  
+**Summer Foundation / Winkler** (2024). Supporting accessible housing transitions. Melbourne. *5* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 5 — grey-lit report, not peer-reviewed OT research].  
 *BPC slugs: `residential-accessible-home-case-studies`*
 
 [GREY] **Williams, A. et al.** (2024). Sensory adaptive environments for autistic children: scoping review. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — scoping review].  
