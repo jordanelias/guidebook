@@ -494,6 +494,9 @@ Post-installation: RT60 measurement at commissioning
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. Hydrotherapy pool environments present an unusually high baseline acoustic energy load from hard reflective surfaces and water sounds; RT60 ≤2.0s limits the reverberation that amplifies this load for sensory-sensitive users, preserving the therapeutic occupation value of the hydrotherapy environment.
 
+**Jurisdiction comparison:** No code specifies RT60 for hydrotherapy pools specifically. UK BB93 covers school pool halls. UK HTM 08-01 covers healthcare acoustic environments. ISO 3382 provides measurement methodology. Hydrotherapy RT60 targets are guidebook-specific — derived from DEAF/HI communication needs in high-reverberation wet environments.
+
+
 ### A-11 Room Perimeter Hearing Loop (Assembly and Meeting Spaces)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
@@ -586,6 +589,9 @@ International hearing access committee. IFHOH.
 
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (adapt strategy). Auracast conduit and power pre-provision implements both the Compensatory FOR principle (environment as future-ready compensation tool) and the EHP 'adapt' strategy: the context is partially modified at construction to enable full modification later without structural intervention, directly aligning with the DAR principle (§1.6).
 
+**Jurisdiction comparison:** No jurisdiction mandates Auracast (Bluetooth LE Audio). Technology is pre-regulatory — Bluetooth SIG published LC3 codec specification. UK RNID and US HLAA are monitoring. IEC 60118-4 (induction loop) remains the only mandated assistive listening technology. Guidebook specifies infrastructure readiness (conduit, power, network) for future adoption.
+
+
 ### A-13 No Sound Masking in Neurological Population Environments
 <!-- CON-0008 [HIGH]: A-02/A-08/A-13 acoustic convergence: RT60 + NC-25 + masking prohibition -->
 <!-- CON-0039 [HIGH]: RT60 ≤0.3s Tier 0 universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
@@ -620,6 +626,9 @@ Open offices: acoustic zoning (A-04), focus rooms (D-05)
 **Cross-reference:** A-08 (HVAC Noise); A-16 (Sensory Room); D-05 (Focus Rooms)
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Electronic sound masking adds a continuous broadband signal (45--48dBA) that constitutes an uncontrolled, non-adjustable sensory input; for AUT and PCS users in the sensory-avoiding and sensory-sensitive quadrants (Dunn's model), this input exceeds neurological thresholds and actively restricts the performance range. This item implements a categorical EHP 'prevent' intervention.
+
+**Jurisdiction comparison:** No code restricts sound masking systems. US ASHRAE and sound masking industry promote it for open offices. Guidebook PROHIBITS sound masking in neurological population environments — derived from NEU/NDV/AUT evidence that artificial noise exacerbates cognitive load and sensory distress.
+
 
 ### A-14 Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies
 <!-- design_stage_lock: DD -->
@@ -658,6 +667,9 @@ Target: STC ≥50 laboratory; Field STC ≥45
 
 **Evidence basis (OT):** EHP Framework (create strategy); Dunn's Sensory Processing Model. The double-leaf partition at STC ≥50 creates a new acoustic context enabling occupations (therapy, recovery, focused work) that require protection from auditory intrusion above what any single-leaf construction can provide.
 
+**Jurisdiction comparison:** US ANSI S12.60 specifies STC ≥50 for classroom-corridor partitions. UK BB93 specifies DnT,w values by room pair. DE DIN 4109 specifies R'w by building type. Guidebook specifies STC ≥50 double-leaf for ALL sensitive adjacencies — exceeds codes that limit to educational settings.
+
+
 ### A-15 Acoustic Differentiation Between Spaces (Navigation Aid for VIS)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -690,6 +702,9 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 **Cross-reference:** A-05 (Carpet tension); D-04 (Landmarks); BIO-03 (Tactile Variety)
 
 **Evidence basis (OT):** Compensatory FOR. Acoustic differentiation preserves the environmental cues that compensate for the absence of visual information during navigation; deliberate maintenance of a distinct acoustic signature between corridor and room surfaces is an environmental compensation strategy that enables independent wayfinding as an occupation.
+
+**Jurisdiction comparison:** No code addresses acoustic differentiation as a VIS navigation aid. This is a guidebook-specific provision — different acoustic signatures (floor material, ceiling height, reverberation character) help VIS users identify space transitions without visual cues.
+
 
 ### A-16 Sensory Room / Quiet Room Provision
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
@@ -736,6 +751,9 @@ Location: adjacent to primary circulation; not via another occupied space
 
 **FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure (Leavitt & Feinstein 2014, Davis 2010). NEU/MS users require a cooling-capacity retreat distinct from NDV sensory regulation — ambient ≤16°C preferred (vs NDV typical ≤20°C). ○ In facilities serving NEU/MS as a primary or significant secondary population: where A-16 serves both NDV and NEU/MS, specify individual HVAC control enabling ≤16°C setpoint. Alternatively, a separate cooling station (≤12 m², individually temperature-controlled to ≤16°C, adjacent to MS clinic or specialist facility area) may be provided as a dedicated NEU/MS provision. Extended occupancy capacity required (30–60 min recovery duration vs 10–15 min NDV reset). [THIN — architectural implication only; no design standard specifies]
 
+**Jurisdiction comparison:** No code mandates sensory rooms. UK PAS 6463:2022 references sensory environments. NL Snoezelen concept (1970s) is historical origin. ISO 25552 (dementia) references calming environments. Guidebook specifies provision in all settings serving NDV/AUT/DEM populations — user-controllable lighting, sound, texture.
+
+
 ### A-17 Upholstered Seating [ABSORBED INTO G-02 per CO-0003/D2-24]
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: LOW -->
@@ -768,6 +786,9 @@ implications. Retrofit is furniture replacement, phaseable without building disr
 ## CATEGORY B: LIGHTING
 
 All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF). CCT = Correlated Colour Temperature. EML measured per WELL v2 Feature L07. UGR = Unified Glare Rating (EN 12464-1). Lux values: horizontal illuminance at 850 mm AFF unless stated. Vertical illuminance at 1500 mm AFF (face level).
+
+**Jurisdiction comparison:** MERGED — see G-02 (Variety of Seating Types).
+
 
 ### B-01 Circadian Lighting (≥250 Melanopic EDI at Eye Level in Daytime Spaces)
 <!-- CON-0006 [HIGH]: B-01 circadian lighting melanopic EDI — updated per A2 P1 (B-01 title + metric note) -->
@@ -944,6 +965,9 @@ Product specification: IEEE 1789 compliance certificate required before installa
 **Cross-reference:** B-03 (No Fluorescent); B-06 (Dimming Control)
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. IEEE 1789-2015 compliant LED luminaires eliminate the flicker frequencies that cause neurological distress in photosensitive users; the standard defines the safe modulation depth and frequency relationship that prevent flicker from entering the visual pathways as a trigger.
+
+**Jurisdiction comparison:** MERGED — see B-03 (Elimination of Fluorescent Overhead Lighting).
+
 
 ### B-05 Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes)
 <!-- design_stage_lock: DD -->
@@ -1248,6 +1272,9 @@ Evening shift to ≤10 EML and 2700K CCT removes the alerting light wavelengths 
 
 LRV = Light Reflectance Value (0 = black; 100 = white). All contrast specifications: LRV difference between adjacent surfaces unless stated. NCS = Natural Colour System. Gloss: measured at 60° per ASTM D523.
 
+**Jurisdiction comparison:** No code specifies evening colour temperature limits. DE DIN/TS 67600:2022 recommends ≥2700K for evening in care settings. WELL v2 Feature L03 specifies colour temperature schedules. Guidebook specifies ≤2700K after 19:00 — derived from circadian melatonin suppression evidence (Brown et al. 2022).
+
+
 ### C-01 Colour Palette (Muted, Low-Chroma, Non-Institutional)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -1500,6 +1527,9 @@ Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353.
 ## CATEGORY D: SPATIAL LAYOUT AND WAYFINDING
 
 Wayfinding is the ability to determine one's location, plan a route, and navigate to a destination. For DEM, VIS, and NDV users, wayfinding failure is the primary built environment access barrier.
+
+**Jurisdiction comparison:** MERGED — see C-03 (Pattern Avoidance).
+
 
 ### D-01 Loop Floor Plan (No Dead-End Corridors in DEM Environments)
 <!-- design_stage_lock: B -->
@@ -2898,6 +2928,9 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 **Evidence basis (OT):** Life Balance Model; EHP (alter strategy). Seated-task design alters the environmental context of service delivery and workstation design to eliminate the requirement for sustained standing as a pre-condition of participation; for OFS/POTS users whose orthostatic intolerance makes sustained standing a physiological hazard, this item implements the EHP 'alter' strategy at the task level — the task remains but the postural demand is removed.
 
+**Jurisdiction comparison:** CONTENT MOVED — see G-08 (Bedroom Wardrobe and Storage Reach Configuration).
+
+
 ### F-06 Fragrance-Free Policy (Whole-Building Operational Standard)
 <!-- CON-0102 [HIGH]: F-04/F-06/F-07/F-08 interdependent OFS/MCAS HVAC system — F-category coherence note required -->
 <!-- design_stage_lock: B -->
@@ -3861,6 +3894,19 @@ Auditory alert: alert at nursing station ≥75 dB(A); alert signal distinguishab
 
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (adapt strategy). Nurse call and personal emergency response systems compensate for the reduced mobility and communication capacity of MOB, PAIN, OFS, and DEM users in care environments, enabling the occupation of independent rest and personal care in private rooms without forfeiting access to emergency support; the multi-modality specification (audio, visual, tactile, wireless pendant) ensures the system remains accessible when any single sensory or motor channel is unavailable.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Nurse Call Required | Accessible Activation | Visual + Audible | Notes |
+|---|---|---|---|---|---|
+| US | ADA / FGI Guidelines | Healthcare facilities | Pull-cord + push button | Yes | — |
+| UK | BS 8300-2 / HTM 08-03 | Care/healthcare | Multiple activation methods | Yes | — |
+| DE | DIN VDE 0834 | Healthcare/care | Accessible height | Yes | — |
+| AU | AS 3811 | Healthcare | Referenced | Yes | — |
+| **Guidebook** | **H-05** | **All care settings** | **Pull-cord + push + pendant** | **Yes** | **Accessible from floor** |
+
+Guidebook extends nurse call to all care settings and specifies floor-level activation — derived from falls risk evidence.
+
+
 ### I-04 Ceiling Hoist Provision
 <!-- CON-0114 [HIGH]: Residential care cluster: I-04 hoist + H-05 nurse call + K-04 vibrotactile -->
 <!-- CON-0140 [HIGH]: I-04 ceiling hoist floor recess — structural coordination with SE brief (Part 8 §9.5) -->
@@ -3990,6 +4036,9 @@ Staff awareness: service design briefing to confirm that staff speak to the Deaf
 
 ---
 
+**Jurisdiction comparison:** No code addresses intervenor (support worker for DeafBlind) spatial requirements. This is a guidebook-specific provision — derived from DBL Co-1 lived experience evidence. Clear floor space adjacent to service counter for intervenor positioning.
+
+
 ### K-02 Tactile Building Map Station at Principal Entrance
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -4033,6 +4082,9 @@ Approach: TWSI directional bar route (E-09) from entrance to map station; tactil
 
 ---
 
+**Jurisdiction comparison:** No code mandates tactile building maps at entrances. US ADA §216 requires accessible signage but not tactile maps. Some US/UK transport facilities provide tactile maps voluntarily. Guidebook specifies raised-relief map station at principal entrance — derived from VIS/DBL wayfinding evidence.
+
+
 ### K-03 Haptic Communication Clear Floor Zone
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -4069,6 +4121,9 @@ Zone adjacency: haptic communication zones are within the primary circulation ro
 **Evidence basis (OT):** PEOP Model (volition subsystem); Compensatory FOR. The haptic communication clear floor zone compensates for the absence of visual and auditory communication channels by ensuring that the physical space required for Protactile and other tactile communication is not obstructed. The PEOP volition subsystem grounds the provision: the ability to communicate with full agency and without spatial obstruction is a fundamental occupational participation right for DeafBlind users. The 1500 mm zone is derived from two-person tactile communication positioning described in Protactile practice; no architectural measurement study exists.
 
 ---
+
+**Jurisdiction comparison:** No code addresses haptic (tactile sign language) communication zones. This is a guidebook-specific provision for DBL population — clear floor zone with adequate lighting for tactile signing. No jurisdiction equivalent exists.
+
 
 ### K-04 Vibrotactile Alert Provision
 <!-- CON-0042 [HIGH]: Multi-channel alerting: visual + auditory + vibrotactile simultaneously across all alert types -->
@@ -4112,6 +4167,9 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 ---
 
 ## New Items (v10.0 additions)
+
+**Jurisdiction comparison:** No code mandates vibrotactile alerting as a building system. US ADA §702 specifies visual alarms. UK BS 5839 specifies visual alerting. Guidebook adds vibrotactile as a third alerting channel — derived from DBL evidence where neither auditory nor visual alerts are received.
+
 
 ### G-08 Bedroom Wardrobe and Storage Reach Configuration
 <!-- CON-0005 [HIGH]: A-09 vibration threshold + G-08 seated reach cluster (MODERATE) -->
@@ -4224,6 +4282,9 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 ---
 
+**Jurisdiction comparison:** UK HTM 08-03 covers healthcare call systems. DE DIN VDE 0834 covers nurse call. Guidebook specifies bedroom-specific emergency call with overnight low-level pathway lighting — integrated provision for falls prevention + alerting.
+
+
 ### B-12 Sensor-Activated Overnight Pathway Lighting
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -4258,6 +4319,9 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Illustration:** [Illustration: to be provided] — Section through bedroom showing 300–400 mm AFF luminaire position and sensor activation zone.
 
 ---
+
+**Jurisdiction comparison:** No code specifies sensor-activated overnight pathway lighting. UK DSDC Stirling recommends nighttime lighting for DEM. Guidebook specifies PIR-activated low-level warm lighting (≤2700K, ≤10 lux) on bedroom-to-bathroom route — derived from DEM falls prevention and circadian protection evidence.
+
 
 ### E-12 Entrance Landing and Manoeuvring Space for Power Wheelchair Users
 <!-- design_stage_lock: SD -->
