@@ -47,7 +47,7 @@
 **Iglehart, F.** (2004). CI children with sound-field systems in classrooms. AJA 13(1):62–72. PMID:15248805. DOI:10.1044/1059-0889(2004/009). *1*. https://doi.org/10.1044/1059-0889(2004/009  
 *BPC slugs: `room-acoustic-performance`*
 
-[GREY] **Gitlin, L.N. et al.** (2006). [GREY — title unverified; PubMed PMID:16696748  [CORRECTED: citation-verifier 2026-04-23] (Gerontologist Adult Day Services) is NOT this paper; verify AJOT 2006 home modification paper directly; DOI required]. *AJOT (probable)*. PMID:17050754  
+[GREY] **Gitlin, L.N. et al.** (2006). [GREY — title unverified; PubMed PMID:16696748  [CORRECTED: citation-verifier 2026-04-23] (Gerontologist Adult Day Services) is NOT this paper; verify AJOT 2006 home modification paper directly; DOI required]. *AJOT (probable)*. PMID:16696748  [CORRECTED: citation-verifier 2026-04-23 — wrong PMID; correct PMID 16696748; GREY removed]
 *BPC slugs: `residential-kitchen-and-task-surfaces`*
 
 **Iwama, M.** (2006). The Kawa Model: Culturally Relevant OT. Churchill Livingstone. *1*.  
