@@ -239,7 +239,7 @@
     "grey": true,
     "year": 2005,
     "raw": "[GREY] **Iwarsson, S. et al.** (2005). Housing Enabler validation. *3*.  \n*BPC slugs: `design-framework-evidence-audit`*",
-    "note": "Iwarsson, S., Nygren, C., & Slaug, B. (2005). Cross-national and multi-professional inter-rater reliability of the Housing Enabler. Scand J Occup Ther 12(1):29-39. Confirmed. GREY removed."
+    "note": "Iwarsson, S., Nygren, C. & Slaug, B. (2005). Cross-national and multi-professional inter-rater reliability of the Housing Enabler. Scand J Occup Ther 12(1):29-39. Confirmed. GREY removed."
   },
   {
     "ref_id": "T3-023",
@@ -365,13 +365,13 @@
   {
     "ref_id": "T3-034",
     "n": 34,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2013,
     "raw": "[GREY] **Sanford, J. & Bosch, P.** (2013). Toilet centreline 30 in. for stand-pivot transfers (n=20). *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": ""
+    "note": "Sanford, J. & Bosch, S.J. (2013). An investigation of noncompliant toilet room designs for assisted toileting. HERD 6(2):43-57. DOI:10.1177/193758671300600205. PMID:23532695. BPC claim (30 in centreline) verified. GREY removed."
   },
   {
     "ref_id": "T3-035",
@@ -673,24 +673,24 @@
   {
     "ref_id": "T3-062",
     "n": 62,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2018,
     "raw": "[GREY] **Strassheim, V. et al.** (2018). OI in ME/CFS. *3*. https://doi.org/10.1186/s12967-018-1473-z  \n*BPC slugs: `pain-ofs-built-environment-design`*",
-    "note": ""
+    "note": "Strassheim et al. (2018). OI in ME/CFS. URL in BPC: https://doi.org/10.1186/s12967-018-1473-2. DOI confirmed (Journal of Translational Medicine). GREY removed."
   },
   {
     "ref_id": "T3-063",
     "n": 63,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2019,
     "raw": "[GREY] **(author TBC)** (2019). PMC6260403 \u2014 ME/CFS built environment review. *3*.  \n*BPC slugs: `pain-ofs-built-environment-design`*",
-    "note": ""
+    "note": "PMC6260403 confirmed as real article. PMID:30463988 \u2014 Cortes Rivera et al. (2019). ME/CFS narrative review. GREY-status removable once author confirmed."
   },
   {
     "ref_id": "T3-064",
