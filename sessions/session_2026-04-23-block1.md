@@ -366,3 +366,47 @@ next_action: >
   (6 slugs) then sensory-environment (11 slugs).
 
 session_close: 2026-04-23 11:15
+
+
+## Block 3 — Tier 1 Citation Verification (bibliography-v11)
+
+### Task
+Publication-grade bibliography for v11. Starting point: 584 deduplicated sources harvested from 78 BPC slugs. Tier 1 verification pass using web search.
+
+### Completed
+- Harvested all BPC sources → 584 deduplicated entries (`references/bibliography-v11-draft.md`)
+- Verified 26/63 Tier 1 entries
+
+### Corrections found
+| Issue | Detail |
+|---|---|
+| DOI error | MOB-01 Steinfeld: BPC DOI wrong — corrected to 10.1080/10400430903520280 |
+| Author error | BATH-OUT: lead author Whitehead PJ not Golding-Day S |
+| Title error | Levine 2025: BPC title wrong — actual paper is grab bar biomechanics, not scoping review |
+| PMID error | Gitlin 2006: BPC PMID 17050754 wrong — correct PMID 16696748 |
+| Attribution error | POD-11 "Ismail 2023": CLOSED-DELETED — PMID resolves to McVeigh 2008 |
+| 6 tier corrections | Stark 2017, Murgia 2023, Williams 2024, Dunn 1997, Hersche 2022, Iwarsson 2003 — all Tier 3/Co-1, not Tier 1 |
+| 7 grey entries resolved | Guay 2020, Whitehead/Golding-Day 2018, Stark 2017, Gitlin 2006, Murgia 2023, Kos 2015, Hersche 2022 |
+
+### Artefacts committed
+- `references/bibliography-v11-draft.md` (SHA 2f3f08657e47) — 584 entry harvest
+- `references/tier1-verification-progress-2026-04-23.md` (SHA 5ca856276450)
+- `references/tier1-verified-sources.json` (SHA ea3d41bc4eab)
+
+commits_block3:
+  - 2f3f08657e47: bibliography-v11 draft harvest
+  - 5ca856276450: Tier 1 verification progress report
+  - ea3d41bc4eab: Tier 1 verified sources JSON
+
+next_action: >
+  Continue Tier 1 verification — 37 entries remaining.
+  Priority order:
+  1. RAP-series acoustic entries (21) — all have confirmed DOIs, need full citation pull
+  2. Remaining grey entries: TLD-01, TLD-02, SSG-04/08 (Crompton 2024), Greene 2024 (2nd search)
+  3. No-ID entries: Allen 1988, Baum 2015, MOB-02/15/17/18, DCR-03, Marquardt 2011, WGS-01/02
+  After Tier 1 complete: proceed to Co-1 verification (34 entries), then Tier 2/Co-2.
+  Load: references/tier1-verified-sources.json to resume from checkpoint.
+
+blockers: none
+
+session_close: 2026-04-24 03:06
