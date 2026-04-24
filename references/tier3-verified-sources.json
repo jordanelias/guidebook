@@ -808,14 +808,17 @@
   {
     "ref_id": "T3-072",
     "n": 72,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "GREY — eib.org/publications/social-and-affordable-housing-overview-2020",
     "pmid": null,
     "grey": false,
     "year": 2020,
     "raw": "**EIB** (2020). Accessible housing cost analysis — €4,000/apt; 1.3 m² trade-off. *3*.  \n*BPC slugs: `construction-cost-data`*",
     "note": "EIB (2020). Accessible housing cost analysis. European Investment Bank report. Needs specific report title and URL from BPC author.",
-    "correction_note": "EIB 2020 accessible housing cost analysis €4,000/apartment — EIB publishes housing investment analyses but exact document with this figure not confirmed. Forward to BPC author for specific URL/title."
+    "correction_note": "Document confirmed real. Specific €4,000/apartment figure [UNVERIFIED-QUANT] — not confirmed in search results. Forward to BPC author for page reference.",
+    "author": "European Investment Bank (EIB)",
+    "title": "Social and affordable housing overview 2020",
+    "journal": "GREY — EIB thematic publication"
   },
   {
     "ref_id": "T3-073",
@@ -1393,13 +1396,17 @@
   {
     "ref_id": "T3-124",
     "n": 124,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "10.3390/ijerph20216986",
     "pmid": null,
     "grey": false,
     "year": 2023,
     "raw": "**Gonçalves, A. et al.** (2023). Nature exposure and workplace restorative outcomes: 16 studies. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`*",
-    "note": "Gonçalves, A. et al. (2023). Nature exposure and workplace restorative outcomes: 16 studies. Needs DOI."
+    "note": "Gonçalves, A. et al. (2023). Nature exposure and workplace restorative outcomes: 16 studies. Needs DOI.",
+    "author": "Gonçalves, G., Sousa, C., Fernandes, M.J., Almeida, N., & Sousa, A.",
+    "title": "Restorative Effects of Biophilic Workplace and Nature Exposure during Working Time: A Systematic Review",
+    "journal": "IJERPH 20(21):6986",
+    "correction_note": "PMID: 37947544. University of Algarve. 16 studies analyzed. MDPI open access."
   },
   {
     "ref_id": "T3-125",
@@ -1458,7 +1465,8 @@
     "grey": false,
     "year": 2023,
     "raw": "**Rhee, J. et al.** (2023). Indoor vegetation and cognitive restoration: EEG study. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`*",
-    "note": "Rhee, J. et al. (2023). Indoor vegetation and cognitive restoration: EEG study. Needs DOI."
+    "note": "Rhee, J. et al. (2023). Indoor vegetation and cognitive restoration: EEG study. Needs DOI.",
+    "correction_note": "Rhee 2023 indoor vegetation cognitive — plausible but not confirmed in available search results. Forward to BPC author for DOI."
   },
   {
     "ref_id": "T3-130",
@@ -1587,7 +1595,8 @@
     "grey": false,
     "year": 2024,
     "raw": "**INSERM / Medscape France** (2024). Village Landais Alzheimer 3-year follow-up. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": "INSERM / Medscape France (2024). Village Landais Alzheimer 3-year follow-up. Needs URL or report citation."
+    "note": "INSERM / Medscape France (2024). Village Landais Alzheimer 3-year follow-up. Needs URL or report citation.",
+    "correction_note": "Village Landais Alzheimer POE is real (opened June 2020, Dax, France). INSERM/Medscape 2024 report not confirmed as a specific publication. Forward to BPC author."
   },
   {
     "ref_id": "T3-141",
@@ -1610,7 +1619,7 @@
     "year": 2024,
     "raw": "**Kapsalis, G. et al.** (2024). Tenji tactile blocks as MOB hazard: systematic review. *3*.  \n*BPC slugs: `cross-population-case-studies`*",
     "note": "Kapsalis, G. et al. (2024). Tenji tactile blocks as MOB hazard: systematic review. Needs DOI.",
-    "correction_note": "Kapsalis 2024 tenji/MOB — not found in web search. May be conference paper or grey lit. Forward to BPC author."
+    "correction_note": "Kapsalis 2024 tenji/MOB barrier — not found. Forward to BPC author."
   },
   {
     "ref_id": "T3-143",

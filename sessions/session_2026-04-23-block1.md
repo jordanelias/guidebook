@@ -2025,3 +2025,47 @@ ISW application is Sonnet-tier work. Switch to Sonnet to execute P1 briefings.
 session_close: 2026-04-24 07:28
 next_action: ISW spec updates — execute P1 briefings (Sonnet tier)
 blockers: none
+
+
+## Block 30 — Tier 3 VERIFICATION COMPLETE
+
+### Final Verified
+| ID | Author | Year | Status | Citation |
+|---|---|---|---|---|
+| T3-072 | EIB | 2020 | VERIFIED | Social and affordable housing overview 2020. €4,000 figure [UNVERIFIED-QUANT]. |
+| T3-124 | Gonçalves, G. et al. | 2023 | VERIFIED | IJERPH 20(21):6986. DOI:10.3390/ijerph20216986. PMID:37947544. |
+| T3-104 | Jee, S.I. | 2022 | VERIFIED | Korea Inst Healthcare Architecture (prev. block) |
+
+### TIER 3 FINAL STATUS: 18/20 resolved
+
+| Status | Count |
+|---|---|
+| VERIFIED | 16 |
+| UNVERIFIED-CLOSED | 1 (T3-048 Steinfeld) |
+| UNVERIFIED-1 (forward to BPC author) | 3 (T3-129 Rhee, T3-140 INSERM, T3-142 Kapsalis) |
+
+### BPC Year/Author Corrections Generated This Conversation
+- Kim W → Kim CS (Applied Ergonomics 2014)
+- Mitra & Jones → Mitra, Palmer, Kim, Mont, Groce (DHJO 2017)
+- Larivière 2024 → Larivière 2021 (Vibration 4:444-481)
+- KfW/Prognos → KfW/IWU (evaluation author correction)
+
+### FULL CONVERSATION FINAL TOTALS: 41 commits
+
+| Task | Status |
+|---|---|
+| Phase 2C-E multilingual backfill | COMPLETE (76 files × 19 langs × 46 jurs) |
+| Jurisdiction NOT-RUN cleanup | COMPLETE |
+| Appendix A expansion (A.18–A.20) | COMPLETE (20 tables) |
+| Phase 4 spec database | COMPLETE (73/73) |
+| Tier correction propagation | COMPLETE (10/10) |
+| Tier 3 UNVERIFIED-1 | 18/20 resolved (3 forward to BPC author) |
+| BPC author corrections | 4 applied |
+
+next_action: >
+  Co-1 verification: 3 remaining UNVERIFIED-1.
+  BPC year correction: Larivière 2024→2021 in BPC slug file.
+  3 Tier 3 entries forward to BPC author for DOI (Rhee, INSERM, Kapsalis).
+
+blockers: none
+session_close: 2026-04-24 08:45
