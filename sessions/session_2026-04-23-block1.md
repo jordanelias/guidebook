@@ -217,3 +217,39 @@ next_action: >
   as work proceeds.
 
 session_close: 2026-04-23 08:00
+
+
+## Block 5 — Phase 2B Research Backfill (first 2 slugs)
+
+### Completed Search Logs
+Two Priority 1 EMPTY slugs now have comprehensive jurisdiction-tracked search logs:
+
+1. **circadian-lighting-melanopic-edi** (→ B-01)
+   - P1-P3 jurisdictions verified for Tier 6
+   - Confirmed: NO national building code mandates melanopic EDI
+   - Only beyond-code: DIN/TS 67600:2022 (DE), WELL v2/v6 (INT), CIE S 026 (INT)
+   - Jurisdiction summary with per-jurisdiction notes
+
+2. **assistive-listening-systems** (→ A-10, A-11)
+   - Rich jurisdiction data: US ADA §219 mandatory, UK BS 8300-2 mandatory, EU EN 17210
+   - IEC 60118-4:2018 universal performance standard adopted by all CENELEC members
+   - ANSI A117.1 now legally requires IEC 60118-4 compliance in US
+   - Key divergence: US 25% hearing-aid compatible receivers vs UK induction loop specifically at counters
+
+commits_block5:
+  - 4cc0a2f76987: circadian-lighting-melanopic-edi full search-log
+  - 669354e28e21: assistive-listening-systems full search-log
+
+### Remaining Priority 1 EMPTY slugs (5)
+3. therapeutic-lighting-design → B items
+4. deaf-classroom-reverberation-time → A-04
+5. visual-fire-alarm-seizure-safety → B-10
+6. chronic-pain-built-environment → PAIN population
+7. fatigue-spectrum-built-environment → OFS population
+
+next_action: >
+  Continue Phase 2B with remaining 5 Priority 1 slugs.
+  Then Priority 2 (high NOT-RUN + item impact): reach-range-and-accessible-controls (H items),
+  sensory-room-user-control (A-16).
+
+session_close: 2026-04-23 09:15
