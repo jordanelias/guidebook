@@ -1136,3 +1136,37 @@ commits_block18: 2 commits (batches 7, 8)
 total_commits_conversation: ~250
 
 session_close: 2026-04-23 18:15
+
+
+## Block 19 — PHASE 3B COMPLETE
+
+### ALL Part 4 items now have jurisdiction comparison data
+Total: 91 jurisdiction entries across all Part 4 items.
+
+Final batch added: A-10b (hydrotherapy RT), A-12 (Auracast), A-13 (no sound masking),
+A-14 (double-leaf partition), A-15 (acoustic differentiation), A-16 (sensory room),
+B-11 (evening colour temp), H-05 (nurse call), K-01-K-04 (DeafBlind items),
+G-09 (bedroom emergency), B-12 (overnight lighting), plus MERGED item markers.
+
+### PHASE 3B FINAL STATUS: COMPLETE
+Every Part 4 item specification now has one of:
+1. Full jurisdiction comparison table (items with code divergence)
+2. Compact jurisdiction note (items with limited code presence)
+3. Beyond-code marker (items with no jurisdiction equivalent)
+4. MERGED marker (items absorbed into other items)
+
+### CONVERSATION FINAL SCORECARD
+- ~255 commits
+- 19 blocks
+- 9 phases completed
+- 91 Part 4 jurisdiction entries
+- 90 search-log files enriched with jurisdiction data
+- 6 reference documents created/updated
+- 1 appendix chapter created
+
+### Remaining for future sessions
+- Phase 3C: Opus divergence synthesis for multi-jurisdiction conflicts
+- Phase 4: Spec database jurisdiction field curation
+- Phase 2C-E: Multilingual language backfill
+
+session_close: 2026-04-23 18:45
