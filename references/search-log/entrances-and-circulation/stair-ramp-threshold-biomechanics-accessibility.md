@@ -28,41 +28,41 @@ no_data_flags: []
 ```yaml
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA 2010 §405: ramp max 1:12 (8.3%), rise ≤760mm per run. §504: stair riser 100-180mm, tread ≥280mm."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300-1:2018 §9: ramp preferred 1:20, max 1:12. AD M: 1:20 preferred. Stair: riser 150-170mm."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §10: ramp max 1:14 (7.1%). NCC: 1:14. Stair: riser 130-180mm."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18040-1 §4.3.8: ramp max 6% (1:16.7). DIN 18040-2: residential ramp 6%."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "TEK17 §12-18: ramp max 1:20 outdoor, 1:12 indoor short. Step-free preferred."}
   SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021 §10: ramp 1:20 preferred, 1:12 max."}
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "Arrêté: ramp 5% preferred, 8% max for short runs."}
+  CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -70,7 +70,12 @@ jurisdiction_coverage:
   GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  KEY DIVERGENCE: ramp gradient — ADA 8.3% vs DIN 6% vs FR 5% preferred vs AU 7.1%. Guidebook targets DE/FR range (5-6.7%) as best practice, with ADA 8.3% as minimum.
+
+```
