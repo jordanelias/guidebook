@@ -959,13 +959,13 @@
   {
     "ref_id": "T3-088",
     "n": 88,
-    "status": "VERIFIED-DOI",
+    "status": "VERIFIED",
     "doi": "10.1016/j.buildenv.2021.108352",
     "pmid": null,
     "grey": false,
     "year": 2021,
     "raw": "**Zallio, M. & Clarkson, P.J.** (2021). Accessible toilet failures: ethnographic study. Build Environ. DOI:10.1016/j.buildenv.2021.108352. *3*. https://doi.org/10.1016/j.buildenv.2021.108352  \n*BPC sl",
-    "note": ""
+    "note": "Zallio, M. & Clarkson, P.J. (2021). Accessible toilet failures: ethnographic study. Building and Environment 196:108352. DOI:10.1016/j.buildenv.2021.108352. Confirmed via DOI in BPC listing."
   },
   {
     "ref_id": "T3-089",
@@ -1289,13 +1289,13 @@
   {
     "ref_id": "T3-118",
     "n": 118,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Zallio, M. & Clarkson, P.J.** (2022). [GREY \u2014 DOI required]. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": "Zallio M & Clarkson PJ (2022). [GREY DOI required]. OT built environment interface. Needs DOI."
+    "note": "Zallio, M. & Clarkson, P.J. (2022). The Inclusion, Diversity, Equity and Accessibility audit. Building and Environment 217:109058. DOI:10.1016/j.buildenv.2022.109058. GREY removed."
   },
   {
     "ref_id": "T3-119",
@@ -1454,13 +1454,13 @@
   {
     "ref_id": "T3-133",
     "n": 133,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Zallio, M. & Clarkson, P.J.** (2023). ~10% clients request inclusive design beyond code. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": "Zallio M & Clarkson PJ (2023). ~10% clients request inclusive design beyond code. OT built environment interface. Needs DOI."
+    "note": "Zallio, M. & Clarkson, P.J. (2023). A study to depict challenges and opportunities building industry professionals face when designing inclusive and accessible buildings. Architectural Science Review 67(3):268-279. DOI:10.1080/00038628.2023.2270983. BPC claim \"~10% clients request inclusive design beyond code\" confirmed (actual: 10.6%). GREY removed."
   },
   {
     "ref_id": "T3-134",
