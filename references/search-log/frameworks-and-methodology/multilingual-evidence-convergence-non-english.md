@@ -60,7 +60,7 @@ jurisdiction_coverage:
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -70,7 +70,7 @@ jurisdiction_coverage:
   MA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 jurisdiction_summary: >
   Meta-analysis of non-English evidence convergence. Demonstrates English-language bias in accessibility research. Nordic languages strongest alternative evidence base.
 
