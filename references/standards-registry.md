@@ -1026,3 +1026,127 @@ key_changes: "Egypt ratified CRPD in 2008. Law 10/2018 on Persons with Disabilit
 last_checked: "2026-04-23 06:15"
 source_url: ""
 ```
+
+
+---
+<!-- Phase 1D — Tier B jurisdictions (12 entries) — 2026-04-23 -->
+
+```yaml
+jurisdiction: "CO"
+standard_cited: "NTC 6047:2013"
+current_version: "NTC 6047:2013 — Accesibilidad al medio físico. Espacios de servicio al ciudadano en la administración pública. Requisitos. Ratified by ICONTEC 2013-12-11. Also: NTC 4143 (ramps), NTC 4145 (stairs), NTC 4201 (handrails), NTC 4279 (external spaces), NTC 5610 (tactile signage), NTC 6304 (HE accessibility)."
+status: "CURRENT"
+key_changes: "Comprehensive 179-page standard for public administration spaces. Covers ramps, corridors, doors, signage, elevators, toilets, parking, evacuation. Developed by Comité Técnico 27 Accesibilidad. Legal basis: Ley 361/1997, Ley 762/2002, Decreto 1538/2005. NTC 6304 extends to higher education institutions."
+last_checked: "2026-04-23 06:30"
+source_url: "https://colaboracion.dnp.gov.co/CDT/Programa%20Nacional%20del%20Servicio%20al%20Ciudadano/NTC6047.pdf"
+```
+
+```yaml
+jurisdiction: "AR"
+standard_cited: "Ley 24.314 + Decreto 914/97"
+current_version: "Ley 24.314 (1994) modifying Ley 22.431 — Accesibilidad de personas con movilidad reducida. Decreto Reglamentario 914/97. Also: IRAM 111102 series (accessibility standards)."
+status: "CURRENT"
+key_changes: "Mandates accessibility in urban and architectural environments. Decreto 914/97 provides technical specifications. IRAM 111102 standards provide detailed technical requirements for accessible built environment. CRPD ratified 2008."
+last_checked: "2026-04-23 06:30"
+source_url: "https://www.argentina.gob.ar/normativa/nacional/ley-24314-713/texto"
+```
+
+```yaml
+jurisdiction: "PE"
+standard_cited: "Norma A.120 (RNE)"
+current_version: "Norma A.120 Accesibilidad Universal en Edificaciones del Reglamento Nacional de Edificaciones (RNE). Updated by DS 011-2006-VIVIENDA and subsequent modifications. Ley 29973 (2012) General Law on Persons with Disabilities."
+status: "CURRENT"
+key_changes: "Mandatory for all buildings. Covers accessible routes, ramps (max 1:12), doors (min 900mm), lifts, toilets, parking, signage. Ley 29973 reinforces accessibility obligations with sanctions. THIN — technical detail verification from full RNE text pending."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "GT"
+standard_cited: "Reglamento de Construcción (Guatemala City)"
+current_version: "THIN — no standalone national accessibility building standard identified. Decreto 135-96 Ley de Atención a las Personas con Discapacidad provides general framework. Guatemala City Reglamento de Construcción includes some accessibility provisions. CONADI oversees disability policy."
+status: "CURRENT"
+key_changes: "THIN BASE. CRPD ratified 2009. Implementation of built environment accessibility requirements limited. National building code accessibility provisions require verification."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "EC"
+standard_cited: "NEC + Ley Orgánica de Discapacidades"
+current_version: "Norma Ecuatoriana de Construcción (NEC). Ley Orgánica de Discapacidades (2012). NTE INEN 2239:2000 (accessibility) and NTE INEN 2247:2000 (ramps and walkways) — national technical standards."
+status: "CURRENT"
+key_changes: "NTE INEN accessibility standards provide technical requirements. Ley Orgánica de Discapacidades establishes legal obligations. CRPD ratified 2008. THIN — detailed technical scope verification pending."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "UY"
+standard_cited: "Ley 18.651 + UNIT 200"
+current_version: "Ley 18.651 (2010) Protección Integral de Personas con Discapacidad. UNIT 200:2019 — accessible built environment standard (Instituto Uruguayo de Normas Técnicas)."
+status: "CURRENT"
+key_changes: "UNIT 200:2019 provides technical accessibility specifications. Ley 18.651 mandates accessible public buildings. CRPD ratified 2011. THIN — detailed technical scope verification pending."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "KE"
+standard_cited: "Kenya Building Code (accessibility provisions)"
+current_version: "THIN — Building Code of Kenya includes accessibility provisions but standalone accessibility standard not identified. Persons with Disabilities Act 2003. Kenya ratified CRPD 2008."
+status: "CURRENT"
+key_changes: "THIN BASE. Kenya Bureau of Standards (KEBS) has not published a standalone accessibility building standard equivalent to SANS 10400-S or BS 8300. Built environment accessibility largely governed by Persons with Disabilities Act 2003 and building code general provisions."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "TH"
+standard_cited: "Ministerial Regulation on Facilities for Disabled Persons (2005)"
+current_version: "Ministerial Regulation B.E. 2548 (2005) issued under Building Control Act B.E. 2522 (1979). Persons with Disabilities Empowerment Act B.E. 2550 (2007)."
+status: "CURRENT"
+key_changes: "Mandates accessibility in public buildings: ramps, lifts, accessible toilets, signage. Building Control Act framework. CRPD ratified 2008. THIN — detailed technical specifications require verification from Thai-language source."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "MA"
+standard_cited: "Loi 10-03 relative à l'accessibilité (2003)"
+current_version: "Loi 10-03 relative à l'accessibilité des personnes à mobilité réduite. Implemented by regulatory decrees. Morocco ratified CRPD 2009."
+status: "CURRENT"
+key_changes: "THIN BASE. Law covers public buildings and urban spaces. Technical implementation details through regulatory decrees. Enforcement and compliance data limited."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "GH"
+standard_cited: "Ghana Building Code (accessibility provisions)"
+current_version: "THIN — Ghana Building Code (Ghana Standards Authority GS 1207:2018) includes accessibility provisions. Persons with Disability Act 715 (2006)."
+status: "CURRENT"
+key_changes: "THIN BASE. Act 715 mandates accessibility in public buildings. CRPD ratified 2012. GS 1207:2018 may include accessibility requirements — verification from full text pending."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "TZ"
+standard_cited: "No standalone standard identified"
+current_version: "NO-DATA — no standalone accessibility building standard identified. Persons with Disabilities Act 2010. Tanzania ratified CRPD 2009."
+status: "CURRENT"
+key_changes: "NO-DATA. Act 2010 provides general accessibility obligations but no technical building standard identified. Implementation in built environment limited."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
+
+```yaml
+jurisdiction: "ET"
+standard_cited: "Ethiopian Building Proclamation (accessibility provisions)"
+current_version: "THIN — Building Proclamation No. 624/2009 includes general construction requirements. National Plan of Action of Persons with Disabilities 2012-2021. Ethiopia ratified CRPD 2010."
+status: "CURRENT"
+key_changes: "THIN BASE. No standalone accessibility building standard identified. Building Proclamation provides framework but detailed accessibility technical specifications require verification."
+last_checked: "2026-04-23 06:30"
+source_url: ""
+```
