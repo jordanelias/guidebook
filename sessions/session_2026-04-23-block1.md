@@ -809,3 +809,45 @@ Remaining:
 Total conversation output: ~225 commits, 15 blocks, 8 phases completed
 
 session_close: 2026-04-23 15:45
+
+
+## Block 6 — Co-2 Verification + Tier 2 Second Searches
+
+Completed 2026-04-24 03:57.
+
+### Co-2 (15 entries, 14/15 resolved)
+- 11 VERIFIED (all major OT professional bodies confirmed)
+- 3 DUPLICATES (RCOT HAwD ×3, CAOT ×2)
+- 1 UNVERIFIED-CLOSED (RCOT/HousingLIN 2020 dementia — no exact document found)
+
+### Tier 2 second searches (2/9 resolved this session)
+- T2-01 BrainXchange 2011: VERIFIED (Dementia Friendly Design Considerations: Noise)
+- T2-26 NDIS 2025: VERIFIED-WITH-CORRECTION (publication confirmed; $221/hr figure doesn't match standard $193.99/hr OT rate)
+- 7 remaining: non-English or insufficient info (Japanese ×2, Dutch, Italian, German, Korean, commercial product)
+
+### Master report committed
+`references/verification-progress-report-2026-04-23.md` — full corrections inventory across all tiers
+
+### Verification scope completed
+- Tier 1: 57 entries (63 total)
+- Co-1: 22/25 resolved
+- Tier 2: 30/37 resolved
+- Co-2: 14/15 resolved
+- **Total: ~123/140 entries across 4 tiers resolved**
+
+### Corrections generated (all tiers)
+- 4 CLOSED-DELETED
+- 4 attribution errors
+- 5+ detail errors (DOI, PMID, title, year, figure)
+- 10 tier corrections
+- 8 duplicate groups to consolidate
+- 1 Opus adjudication needed
+- 8 items for BPC author clarification
+
+### Artefacts committed this session
+- `references/co2-verified-sources.json`
+- `references/tier2-verified-sources.json` (updated)
+- `references/verification-progress-report-2026-04-23.md`
+
+session_close: 2026-04-24 03:57
+next_action: BPC correction pass OR Tier 3 verification (168 systematic reviews)
