@@ -253,3 +253,36 @@ next_action: >
   sensory-room-user-control (A-16).
 
 session_close: 2026-04-23 09:15
+
+
+## Block 6 — Phase 2B Priority 1 Complete
+
+### All 7 Priority 1 EMPTY slugs now have jurisdiction-tracked search logs
+
+| # | Slug | Items | Key Jurisdiction Findings |
+|---|---|---|---|
+| 1 | circadian-lighting-melanopic-edi | B-01 | NO code mandates melanopic EDI. DE DIN/TS 67600 only beyond-code. |
+| 2 | assistive-listening-systems | A-10, A-11 | US ADA §219 mandatory. UK BS 8300-2. ANSI A117.1 requires IEC 60118-4. |
+| 3 | deaf-classroom-reverberation-time | A-04 | US ANSI S12.60 (≤0.3s for HI children). UK BB93 mandatory. DE DIN 18041. |
+| 4 | visual-fire-alarm-seizure-safety | B-10 | US NFPA 72 (≤2Hz flash). EN 54-23. DEAF vs NEU conflict at ≤2Hz. |
+| 5 | therapeutic-lighting-design | B items | NO code. DE DIN/TS 67600 covers care homes. Clinical evidence only. |
+| 6 | chronic-pain-built-environment | PAIN pop | NO code anywhere addresses PAIN built environment specifically. |
+| 7 | fatigue-spectrum-built-environment | OFS pop | NO code anywhere addresses OFS built environment specifically. |
+
+commits_block6:
+  - 4cc0a2f76987: circadian-lighting-melanopic-edi
+  - 669354e28e21: assistive-listening-systems
+  - 2dd19a6b2feb: deaf-classroom-reverberation-time
+  - edadb6a170d8: visual-fire-alarm-seizure-safety
+  - be4905d0c46f: therapeutic-lighting-design
+  - 8586d93c270b: chronic-pain-built-environment
+  - 08c1250f757f: fatigue-spectrum-built-environment
+
+next_action: >
+  Phase 2B Priority 2 — high NOT-RUN + item impact slugs:
+  1. reach-range-and-accessible-controls (H items — 10 NOT-RUN languages)
+  2. sensory-room-user-control (A-16 — 13 NOT-RUN languages)
+  3. residential-entry-and-threshold (E-06 — 6 NOT-RUN)
+  Then Priority 3: OK-language slugs needing jurisdiction tracking upgrade.
+
+session_close: 2026-04-23 10:00
