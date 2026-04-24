@@ -1,0 +1,1850 @@
+[
+  {
+    "ref_id": "T4-001",
+    "tier": "4",
+    "status": "UNVERIFIED-1",
+    "raw": "**Templer, J.** (1992). The Staircase: Studies of Hazards, Falls, and Safer Design. MIT Press. *4*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-002",
+    "tier": "4",
+    "status": "UNVERIFIED-1",
+    "raw": "**JIS** (2001). JIS T 9251:2001 \u2014 Tactile Walking Surface Indicators. *4*.  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-003",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**WHO** (2001). International Classification of Functioning, Disability and Health (ICF). *4*. https://www.who.int/standards/classifications/international-classification-of-functioning-disability-and-",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-004",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2004). ISO 2631-1:1997/2004 \u2014 Mechanical Vibration and Shock \u2014 WBV evaluation. *4*. https://www.iso.org/standard/30516.html  \n*BPC slugs: `floor-vibration-wheelchair-disability`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-005",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2005). ISO 7730:2005 \u2014 Ergonomics of the thermal environment (PMV/PPD). *4*. https://www.iso.org/standard/39155.html  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-006",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2006). EN ISO 16000-9 \u2014 VOC measurement from building products (chamber method). *4*. https://www.iso.org/standard/39141.html  \n*BPC slugs: `air-quality-voc-chemical-sensitivity-built-environ",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-007",
+    "tier": "4",
+    "status": "GREY-PENDING",
+    "raw": "[GREY] **Steinfeld, E. et al.** (2006). Wheelchair turning radius research \u2014 RESNA. *4*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-008",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**UN** (2006). Convention on the Rights of Persons with Disabilities (CRPD) \u2014 Art. 9, Art. 19. *4*. https://www.ohchr.org/en/instruments-mechanisms/instruments/convention-rights-persons-disabilities  ",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-009",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**WHO** (2006). WHO Child Growth Standards. *4*. https://www.who.int/tools/child-growth-standards  \n*BPC slugs: `body-sizes-supplementary-populations`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-010",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2007). ISO 10137:2007 \u2014 Serviceability of Buildings (vibration criteria). *4*. https://www.iso.org/standard/40133.html  \n*BPC slugs: `floor-vibration-wheelchair-disability`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-011",
+    "tier": "4",
+    "status": "UNVERIFIED-1",
+    "raw": "**Castell, S.** (2008). Designing for People with Dementia and Other Cognitive Disabilities. *4*.  \n*BPC slugs: `intellectual-disability-built-environment-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-012",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2009). ISO 3382-1:2009 \u2014 Measurement of room acoustic parameters. *4*. https://www.iso.org/standard/40979.html  \n*BPC slugs: `acoustics-speech-intelligibility-disability`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-013",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ADA-2010-S611** (2010). 2010. *2010 ADA Standards for Accessible Design \u00a7611 \u2014 Washing Machines and Clothes Dryers*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/#611-washing-machines",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-014",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ASA** (2010). ANSI/ASA S12.60-2010 \u2014 Acoustical Performance Criteria for Schools. *4*.  \n*BPC slugs: `acoustics-speech-intelligibility-disability`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-015",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ASA** (2010). ANSI S12.60:2010 \u2014 Acoustical Performance Criteria for Schools. *4*.  \n*BPC slugs: `deaf-acoustic-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-016",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ASA** (2010). ANSI/ASA S12.60-2010/Part 1 \u2014 Acoustical Performance Criteria for Schools. *4*.  \n*BPC slugs: `deaf-classroom-reverberation-time`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-017",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ASA** (2010). ANSI/ASA S12.60-2010/Part 1 \u2014 Schools. *4*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-018",
+    "tier": "4",
+    "status": "UNVERIFIED-1",
+    "raw": "**BSI** (2010). BS EN 54-23:2010 \u2014 Fire detection and alarm systems: visual alarm devices. *4*.  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-019",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2010). BS EN 54-23:2010 \u2014 Fire detection: visual alarm devices. *4*.  \n*BPC slugs: `visual-fire-alarm-seizure-safety`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-020",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**WHO** (2010). WHO CBR Guidelines \u2014 accessible housing in Global South contexts. *4*. https://www.who.int/teams/noncommunicable-diseases/sensory-functions-disability-and-rehabilitation/cbr-guidelines",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-021",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2011). DIN 18040-2 Barrierefreies Bauen \u2014 Wohnungen. *DIN*. https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706  \n*BPC slugs: `accessible-bat",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-022",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**DIN-18040-2** (2011). 2011. *DIN 18040-2 Barrierefreies Bauen \u2014 Wohnungen*. https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706  \n*BPC slugs: `acces",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-023",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ESCAP** (2012). Incheon Strategy \u2014 ASEAN enabling masterplan. *4*.  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-024",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**CRPD Committee** (2014). General Comment No. 2 \u2014 Art. 9 Accessibility. *4*. https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no2-article-9-accessibility-2014  ",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-025",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**CIBSE** (2015). CIBSE Guide A: Environmental Design. *4*. https://www.cibse.org/knowledge/cibse-guide/guide-a-environmental-design  \n*BPC slugs: `air-quality-voc-chemical-sensitivity-built-environme",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-026",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IEEE** (2015). IEEE 1789-2015 \u2014 Recommended practices for modulating current in LED lighting for risk mitigation. *4*.  \n*BPC slugs: `therapeutic-lighting-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-027",
+    "tier": "4",
+    "status": "UNVERIFIED-1",
+    "raw": "**UN-Habitat** (2016). Housing Accessibility Handbook \u2014 slum upgrading and affordable housing contexts. *4*.  \n*BPC slugs: `co1-housing-research-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-028",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ASHRAE** (2017). ASHRAE 52.2-2017 \u2014 MERV filtration rating standard. *4*. https://www.ashrae.org/technical-resources/bookstore/52-2  \n*BPC slugs: `air-quality-voc-chemical-sensitivity-built-environm",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-029",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**CRPD Committee** (2017). General Comment No. 5 \u2014 Art. 19 Independent Living. *4*. https://www.ohchr.org/en/documents/general-comments-and-recommendations/general-comment-no-5-2017  \n*BPC slugs: `crp",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-030",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IEC** (2017). IEC 60118-4:2014+AMD1:2017 \u2014 Hearing loop performance. *4*.  \n*BPC slugs: `acoustics-speech-intelligibility-disability`, `cross-population-conflict-resolutions`, `visual-alerting-and-w",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-031",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IEC** (2017). IEC 60118-4:2014+AMD1:2017 \u2014 Hearing aids Pt 4: Induction-loop systems performance requirements. *4*.  \n*BPC slugs: `assistive-listening-systems`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-032",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IEC** (2017). IEC 60118-4:2014+AMD1:2017 \u2014 Induction-loop systems performance requirements. *4*.  \n*BPC slugs: `deaf-acoustic-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-033",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IEC** (2017). IEC TR 63079:2017 \u2014 Code of practice for hearing-loop systems. *4*.  \n*BPC slugs: `deaf-acoustic-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-034",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**CIE** (2018). CIE S 026/E:2018 \u2014 System for Metrology of Optical Radiation for ipRGC-Influenced Responses. *4*. https://cie.co.at/publications/cie-system-metrology-optical-radiation-iprGC-influenced",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-035",
+    "tier": "4",
+    "status": "GREY-PENDING",
+    "raw": "[GREY] **Newcastle POTS clinic** (2018). POTS thermal triggers \u2014 clinical guidance. *4*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-036",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**WHO** (2018). WHO Housing and Health Guidelines \u2014 18\u201324\u00b0C general range; disability named. *4*. https://www.who.int/publications/i/item/who-housing-and-health-guidelines  \n*BPC slugs: `thermoregulat",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-037",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**WHO** (2018). WHO Housing and Health Guidelines Annex G \u2014 Global South city-specific thresholds. *4*.  \n*BPC slugs: `thermoregulation-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-038",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2019). ISO 23599:2019 \u2014 Tactile walking surface indicators. *4*. https://www.iso.org/standard/66862.html  \n*BPC slugs: `cross-population-conflict-resolutions`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-039",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2019). ISO 23599:2019 \u2014 Assistive products for VIS: tactile walking surface indicators. *4*. https://www.iso.org/standard/66862.html  \n*BPC slugs: `visual-impairment-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-040",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2019). ISO 23599:2019 \u2014 Assistive products: TGSI. *4*. https://www.iso.org/standard/66862.html  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-041",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**NDIA** (2019). NDIS SDA Design Standard \u2014 Improved Liveability. *4*. https://www.ndis.gov.au/providers/housing-and-living-supports-and-services/specialist-disability-accommodation/sda-design-standar",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-042",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**NDIS-SDA-2019** (2019). 2019. *NDIS SDA Design Standard \u2014 High Physical Support (laundry provisions)*. https://www.ndis.gov.au/providers/housing-and-living-supports-and-services/specialist-disabilit",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-043",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2021). ISO 21542:2021 \u00a79 \u2014 multi-sensory redundancy at hazardous transitions. *4*. https://www.iso.org/standard/71025.html  \n*BPC slugs: `detectable-gradient-protocol-sensory-zones`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-044",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2021). BS EN ISO 10535:2021 \u2014 Hoists for transfer of disabled persons. *4*.  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-045",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2021). ISO 21542:2021 \u2014 Building Construction: Accessibility and Usability. *4*. https://www.iso.org/standard/71025.html  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-046",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2021). ISO 21542:2021 Building construction \u2014 Accessibility and usability of the built environment. *ISO*. https://www.iso.org/standard/71025.html  \n*BPC slugs: `residential-kitchen-and-task-",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-047",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2021). ISO 21542:2021 \u2014 threshold provisions. *4*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-048",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ISO** (2021). ISO 21542:2021 \u2014 Accessibility and usability. *4*. https://www.iso.org/standard/71025.html  \n*BPC slugs: `threshold-door-hardware`, `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-049",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2022). PAS 6463:2022 \u2014 Design for the Mind: neurodiversity and the built environment. *4*. https://www.bsigroup.com/en-GB/standards/pas-6463/  \n*BPC slugs: `air-quality-voc-chemical-sensitivi",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-050",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2022). PAS 6463:2022 \u2014 Design for the Mind. *4*. https://www.bsigroup.com/en-GB/standards/pas-6463/  \n*BPC slugs: `cross-population-conflict-resolutions`, `mental-health-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-051",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2022). PAS 6463:2022 \u2014 UK neurodiversity built environment standard. *4*. https://www.bsigroup.com/en-GB/standards/pas-6463/  \n*BPC slugs: `design-framework-evidence-audit`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-052",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2022). PAS 6463:2022 \u00a76.4 \u2014 graduated sensory environments. *4*. https://www.bsigroup.com/en-GB/standards/pas-6463/  \n*BPC slugs: `detectable-gradient-protocol-sensory-zones`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-053",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2022). PAS 6463:2022 \u00a710 \u2014 Acoustic requirements. *4*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-054",
+    "tier": "4",
+    "status": "UNVERIFIED-1",
+    "raw": "**CEN** (2022). EN 81-70:2021+A1:2022 \u2014 Safety rules for lifts Pt 70: Accessibility. *4*.  \n*BPC slugs: `accessible-circulation-geometry`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-055",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**FGI** (2022). FGI Guidelines for Design and Construction of Hospitals. *4*. https://fgiguidelines.org  \n*BPC slugs: `body-sizes-supplementary-populations`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-056",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**CSA Group** (2023). CAN/CSA B651:23 s.4.7 \u2014 qualitative IntD provisions. *4*. https://www.csagroup.org  \n*BPC slugs: `intellectual-disability-built-environment-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-057",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**ABNT** (2024). NBR 16537:2024 \u2014 Sinaliza\u00e7\u00e3o t\u00e1til no piso (extends to surdo-cegueira). *4*.  \n*BPC slugs: `deafblind-built-environment-design`, `visual-impairment-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-058",
+    "tier": "4",
+    "status": "GREY-PENDING",
+    "raw": "[GREY] **Jost, G. et al.** (2024). Neuroscience-informed wayfinding design. *4*.  \n*BPC slugs: `wayfinding-dementia-spatial-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-059",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IDA** (n.d.). IDA CRPD Art. 9 compilation \u2014 cross-jurisdictional treaty evidence. *4*. https://www.internationaldisabilityalliance.org  \n*BPC slugs: `co1-housing-research-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-060",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**IDA** (n.d.). IDA CRPD Art. 9 compilation \u2014 100+ countries. *4*. https://www.internationaldisabilityalliance.org  \n*BPC slugs: `crpd-implementation-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-061",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**NHS** (n.d.). NHS HBN 00-03 \u2014 healthcare bariatric guidance. *4*. https://www.england.nhs.uk/publication/health-building-note-00-03/  \n*BPC slugs: `body-sizes-supplementary-populations`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T4-062",
+    "tier": "4",
+    "status": "VERIFIED",
+    "raw": "**NHS** (n.d.). NHS HTM 08-01 \u2014 Acoustics: Hospital Floors (Vibration Criteria). *4*. https://www.england.nhs.uk/publication/health-technical-memorandum-08-01-acoustics/  \n*BPC slugs: `floor-vibration",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-001",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**AS-1428-2-S15** (1992). 1992. *AS 1428.2:1992 Enhanced requirements for people with disabilities \u00a715 Reach range*. https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-do",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-002",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**AIJ** (2008). AIJES-S001-2008 \u2014 Room acoustic design guidelines. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-003",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Procap / SIA** (2009). SIA 500 \u2014 Constructions sans obstacles (ramp max 6%; admissible 12%). *5*. https://www.sia.ch/de/dienstleistungen/sia-norm/sia-500/  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-004",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Habinteg / JRF** (2010). Lifetime Homes Standard \u2014 UK adaptable design. *5*. https://www.lifetimehomes.org.uk  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-005",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CEUD / NDA** (2012). Building for Everyone (8-volume series). *5*. https://universaldesign.ie/built-environment/building-for-everyone  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-006",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**DfE** (2015). BB93:2015 \u2014 Acoustic Design of Schools. *5*. https://www.gov.uk/government/publications/bb93-acoustic-design-of-schools  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-007",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2016). DIN 18040-1 \u00a75.2.2 \u2014 Induktionsschleife; Zwei-Sinne-Prinzip. *5*.  \n*BPC slugs: `assistive-listening-systems`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-008",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2016). DIN 18041:2016 \u2014 H\u00f6rsamkeit in R\u00e4umen. *5*.  \n*BPC slugs: `deaf-acoustic-built-environment`, `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-009",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**FDMA Japan** (2016). \u5149\u8b66\u5831\u88c5\u7f6e guideline \u2014 recommended not mandatory. *5*.  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-010",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**LEIA** (2016). Lifts in dwellings: guidance for Approved Document M 2015. *5*. https://www.leia.co.uk/technical-resources/  \n*BPC slugs: `accessible-circulation-geometry`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-011",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Standards Australia / NZS** (2016). AS/NZS 2107:2016 \u2014 Acoustics: recommended design sound levels. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-012",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**ADA-Network-2017** (2017). 2017. *Opening Doors to Everyone*. https://adata.org/factsheet/opening-doors-everyone  \n*BPC slugs: `reach-range-and-accessible-controls`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-013",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BS-8300-S8** (2018). 2018. *BS 8300-2:2018 \u00a78 Controls and switches*. https://www.bsigroup.com/en-GB/standards/bs-8300/  \n*BPC slugs: `reach-range-and-accessible-controls`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-014",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2018). BS 8300-2:2018 Design of an accessible and inclusive built environment \u2014 Buildings. *BSI*. https://www.bsigroup.com/en-GB/standards/bs-8300/  \n*BPC slugs: `accessible-bathroom-and-grab",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-015",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2018). BS 8300-2:2018 \u2014 Design of an accessible and inclusive built environment. *5*. https://www.bsigroup.com/en-GB/standards/bs-8300/  \n*BPC slugs: `accessible-circulation-geometry`, `deaf-",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-016",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2018). BS 8300:2018 \u2014 luminance contrast provisions. *5*. https://www.bsigroup.com/en-GB/standards/bs-8300/  \n*BPC slugs: `luminance-contrast-lrv-evidence-base`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-017",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2018). BS 8300-2:2018 Annex G Tables G.7\u2013G.8 \u2014 power WC turning geometry. *5*. https://www.bsigroup.com/en-GB/standards/bs-8300/  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-018",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**BSI** (2018). BS 8300-2:2018 \u2014 threshold provisions. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-019",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2018). BS 8300-2:2018 \u2014 doors and ironmongery. *5*. https://www.bsigroup.com/en-GB/standards/bs-8300/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-020",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Habinteg** (2018). Wheelchair Housing Design Guide, 3rd ed. RIBA/Habinteg/RCOTSS-H. *5*.  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-021",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Arbetsmilj\u00f6verket** (2019). Swedish Work Environment Authority \u2014 lighting in workplace guidance. *5*. https://www.av.se  \n*BPC slugs: `therapeutic-lighting-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-022",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**CEREMA / DMA** (2019). Guide acoustique pour personnes malentendantes. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-023",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Standard Norge** (2019). NS 8175:2019 \u2014 Sound conditions in buildings. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-024",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**AENOR** (2020). UNE 41500:2020 \u2014 Spain DALCO accessibility framework. *5*. https://www.une.org  \n*BPC slugs: `european-accessibility-act-scope-clarification`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-025",
+    "tier": "5",
+    "status": "GREY-PENDING",
+    "raw": "[GREY] **SDSU-Laundry-2020** (2020). 2020. *Accessible Laundry Room Design [GREY \u2014 exact publication unverified; URL required before publication]*.  \n*BPC slugs: `accessible-laundry-room-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-026",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**UNI** (2020). UNI 11532-2:2020 \u2014 Acoustic requirements for buildings. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-027",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Yuen, B. et al.** (2020). Six Principles of Dementia-Friendly Neighbourhood. AIC/SUTD. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-028",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CMHC-2021** (2021). 2021. *Renovating for Accessibility: Building Entrances*. https://www.cmhc-schl.gc.ca/en/consumers/owning-a-home/make-your-home-accessible  \n*BPC slugs: `reach-range-and-accessib",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-029",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**USAB-WashDry-2021** (2021). 2021. *Accessible Washers and Dryers*. https://www.access-board.gov/research/human-factors/washers-dryers/  \n*BPC slugs: `accessible-laundry-room-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-030",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**ABCB** (2022). Livable Housing Design Guidelines 4th ed. \u2014 doors. *5*. https://www.abcb.gov.au/ncc  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-031",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BSI** (2022). PAS 6463:2022 \u2014 Design for the Mind: sensory zoning; quiet space; transition zone. *5*. https://www.bsigroup.com/en-GB/standards/pas-6463/  \n*BPC slugs: `sensory-relief-space-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-032",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CEREMA** (2022). Construire ou r\u00e9nover une structure d'accueil Alzheimer Fiche n\u00b08. *5*. https://www.cerema.fr/  \n*BPC slugs: `cognitive-wayfinding-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-033",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CIH** (2022). Adaptable Housing guide. *5*. https://www.cih.org  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-034",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**DIN** (2022). DIN/TS 67600:2022 \u2014 Biologically effective illumination: design guidelines. *5*.  \n*BPC slugs: `circadian-lighting-melanopic-edi`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-035",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**DSDC, University of Stirling** (2022). EADDAT \u2014 Environments for Ageing and Dementia Design Assessment Tool. *5*. https://dementia.stir.ac.uk/design/environmental-audit  \n*BPC slugs: `dementia-built",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-036",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Seoul Metropolitan Gov.** (2022). Seoul Universal Design Guidelines (doors). *5*.  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-037",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**AIC / CLC / SUTD** (2023). Dementia-Friendly Neighbourhood Design Guide. Centre for Liveable Cities, Singapore. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-038",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CMHC** (2023). Universal Design Guide. *5*. https://www.cmhc-schl.gc.ca  \n*BPC slugs: `visitability-residential-accessibility-minimum-standards`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-039",
+    "tier": "5",
+    "status": "VERIFIED-WITH-CORRECTION",
+    "raw": "[GREY] **Foundations-AKW-2023** (2023). 2023. *Accessible Bathroom Guide (AKW product/guidance publication) [GREY \u2014 title unverified]*. https://www.akw-ltd.co.uk/products/bathrooms/  \n*BPC slugs: `res",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-040",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**MHLW Japan** (2023). 6,073 bathtub drowning deaths from heat shock \u2014 official statistics. *5*. https://www.mhlw.go.jp  \n*BPC slugs: `thermal-comfort-older-adults-care-settings`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-041",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Riksdagen** (2023). Lov om social service \u00a7116 \u2014 Denmark housing adaptation. *5*. https://www.retsinformation.dk/eli/lta/2023/1187  \n*BPC slugs: `jurisdiction-grant-programmes-comprehensive`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-042",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Seoul Metropolitan Government** (2023). \uc11c\uc6b8\ud615 \uce58\ub9e4\uc804\ub2f4\uc2e4 \uac00\uc774\ub4dc\ubd81. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-043",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**\u5468\u71d5\u73c9 et al.** (2023). \u8001\u5e74\u4f4f\u5b85 (3rd ed.). China Architecture & Building Press. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-044",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**ANAH** (2024). MaPrimeAdapt' \u2014 France (January 2024). *5*. https://www.anah.gouv.fr/proprietaires/aides-de-lanah/maprimeadapt  \n*BPC slugs: `jurisdiction-grant-programmes-comprehensive`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-045",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**BHFC** (2024). Behavioral Health Facility Compendium Design Guide (26th revision). *5*.  \n*BPC slugs: `mental-health-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-046",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2024). Bostadsanpassningsbidrag \u2014 Swedish housing adaptation grant. *5*. https://www.boverket.se/sv/bidrag--garantier/bidrag-till-privatpersoner/bostadsanpassningsbidrag/  \n*BPC slugs: `",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-047",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**BuroHappold** (2024). [TID or MH design guidance \u2014 GREY \u2014 full citation unverified]. *5*.  \n*BPC slugs: `mental-health-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-048",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**CRA** (2024). Home Accessibility Tax Credit (HATC) \u2014 CAD $20,000 max; 15% credit. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-049",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CRA** (2024). Home Accessibility Tax Credit (HATC). *5*. https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-c",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-050",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**DSDC, University of Stirling** (2024). EADDAT \u2014 Environments for Ageing and Dementia Design Assessment Tool. *5*. https://dementia.stir.ac.uk/design/environmental-audit  \n*BPC slugs: `cross-populati",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-051",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Habinteg/CAE** (2024). Inclusive Housing Design Guide (Runnalls J. & Walker M.). RIBA/Habinteg. *5*. https://www.habinteg.org.uk/ihdg  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-052",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Habinteg/CAE** (2024). Inclusive Housing Design Guide \u2014 threshold provisions. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-053",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Helsedirektoratet** (2024). Nasjonal faglig retningslinje om demens. *5*. https://www.helsedirektoratet.no/retningslinjer/demens  \n*BPC slugs: `cognitive-wayfinding-design`, `dementia-built-environm",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-054",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**HUD** (2024). Section 504 \u2014 $10,000 grant + $27,500 loan; rural very-low income. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-055",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**IV (Invalidenversicherung)** (2024). Swiss federal/cantonal disability insurance home adaptation co-funding. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-056",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**IWBI** (2024). WELL Building Standard v2 \u2014 Air Quality feature. *5*. https://v2.wellcertified.com/wellv2/en/air  \n*BPC slugs: `air-quality-voc-chemical-sensitivity-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-057",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**IWBI** (2024). WELL Building Standard v2 + v6 Feature L07: Circadian Lighting Design. *5*. https://v2.wellcertified.com/wellv2/en/light  \n*BPC slugs: `circadian-lighting-melanopic-edi`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-058",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**IWBI** (2024). WELL v2 Thermal Comfort feature. *5*. https://v2.wellcertified.com/wellv2/en/thermal-comfort  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-059",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**IWBI** (2024). WELL Building Standard v2 Feature 54: Circadian Lighting Design. *5*. https://v2.wellcertified.com/wellv2/en/light  \n*BPC slugs: `therapeutic-lighting-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-060",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**KfW** (2024). KfW 159 barrier-reduction loan \u2014 reduced rate; grant element varies. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-061",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**KfW** (2024). KfW 159 \u2014 barrier-reduction loan. *5*. https://www.kfw.de  \n*BPC slugs: `jurisdiction-grant-programmes-comprehensive`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-062",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**MHCLG** (2024). Disabled Facilities Grant programme data 2023/24. *5*.  \n*BPC slugs: `case-study-economics-financial-data`, `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-063",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**MHCLG** (2024). Disabled Facilities Grant (DFG). *5*. https://www.gov.uk/disabled-facilities-grants  \n*BPC slugs: `jurisdiction-grant-programmes-comprehensive`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-064",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**NDIS** (2024). NDIS Home Modifications \u2014 variable, plan-based; OT report required. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-065",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**RHFAC-v4-S24** (2024). 2024. *RHFAC Rating Survey v4.0 \u00a72.4 \u2014 power door operator reach range*. https://www.rickhansen.com/make-change/accessibility-certification-rhfac  \n*BPC slugs: `reach-range-an",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-066",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Rick Hansen Foundation** (2024). RHFAC Rating Survey v4.0. *5*. https://www.rickhansen.com/make-change/accessibility-certification-rhfac  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-067",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Rick Hansen Foundation** (2024). RHFAC Rating Survey v4.0 \u00a72 Exterior Approach and Entrance. *5*. https://www.rickhansen.com/make-change/accessibility-certification-rhfac  \n*BPC slugs: `residential-",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-068",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Rick Hansen Foundation** (2024). RHFAC Rating Survey v4.0 \u2014 sensory environment provisions. *5*. https://www.rickhansen.com/make-change/accessibility-certification-rhfac  \n*BPC slugs: `sensory-proce",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-069",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Rick Hansen Foundation** (2024). RHFAC Rating Survey v4.0 \u00a72 \u2014 threshold. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-070",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Rick Hansen Foundation** (2024). RHFAC Rating Survey v4.0 \u2014 doors. *5*. https://www.rickhansen.com/make-change/accessibility-certification-rhfac  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-071",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**US VA** (2024). SAH/SHA grants \u2014 SAH up to $109,986; SHA up to $22,036. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-072",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CSA / ASC** (2025). CAN/ASC 2.8:2025 \u2014 Canadian accessible housing standard. *5*. https://www.csagroup.org  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-073",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**NEN** (2025). NEN 9120:2025 \u2014 Toegankelijkheid van gebouwen. *5*. https://www.nen.nl/nen-9120-2025-nl-335193  \n*BPC slugs: `mobility-built-environment`, `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-074",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**NEN** (2025). NEN 9120:2025 \u2014 drempel \u226420mm. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-075",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**NEN** (2025). NEN 9120:2025 \u2014 deuren. *5*. https://www.nen.nl/nen-9120-2025-nl-335193  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-076",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Tsukuba University** (2025). \u30ab\u30fc\u30e0\u30c0\u30a6\u30f3\u30b9\u30da\u30fc\u30b9 \u2014 follow-up study. *5*.  \n*BPC slugs: `sensory-space-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-077",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**VA CFM** (2025). VA Barrier-Free Design Standard \u2014 bariatric facility design. *5*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-078",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**VA CFM** (2025). VA Barrier-Free Design Standard \u2014 1675mm power WC; 1800mm bariatric. *5*.  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-079",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Wheels for Wellbeing** (2025). Benches and Seating in Public Spaces. *5*. https://www.wheelsforwellbeing.org.uk  \n*BPC slugs: `ofs-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-080",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**US VA** (2026). VA SAH/SHA grants FY2026. *5*. https://www.va.gov/housing-assistance/disability-housing-grants/  \n*BPC slugs: `jurisdiction-grant-programmes-comprehensive`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-081",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**BBR-3-148** (n.d.). n.d.. *Boverkets byggreglar (BBR) \u2014 Tillg\u00e4nglighet i gemensamma tv\u00e4ttstugor*. https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/bbr---bfs-20116/  \n*BPC slugs: `ac",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-082",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Bufdir** (n.d.). Lydalarm og blinkende lys \u2014 visual alerting guidance. *5*. https://www.bufdir.no/universell-utforming/  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-083",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CEUD / NDA** (n.d.). Universal Design Guidelines for Homes (IE) \u2014 doors. *5*. https://universaldesign.ie/built-environment/housing-and-homes/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-084",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**CEUD-IE** (n.d.). n.d.. *Universal Design Guidelines for Homes*. https://universaldesign.ie/built-environment/housing-and-homes/  \n*BPC slugs: `accessible-bathroom-and-grab-bar`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-085",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Chromaviso / DemensCentrum Aarhus** (n.d.). Circadian lighting in dementia care \u2014 DemensCentrum DA. *5*.  \n*BPC slugs: `therapeutic-lighting-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-086",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**European Commission** (n.d.). AccessibleEU Centre \u2014 EU accessibility resources. *5*. https://accessible-eu-centre.ec.europa.eu  \n*BPC slugs: `european-accessibility-act-scope-clarification`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-087",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**HDB Singapore** (n.d.). EASE 2.0 \u2014 Enhancement for Active Seniors. *5*. https://www.hdb.gov.sg/cs/infoweb/residential/living-in-an-hdb-flat/for-our-seniors/ease  \n*BPC slugs: `jurisdiction-grant-pro",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-088",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Husbanken** (n.d.). Norwegian Housing Bank \u2014 tilpasning av bolig. *5*. https://www.husbanken.no/tilskudd/tilpasning-av-bolig/  \n*BPC slugs: `jurisdiction-grant-programmes-comprehensive`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-089",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Husbanken** (n.d.). Norwegian Housing Bank \u2014 door guidance. *5*. https://www.husbanken.no/tilskudd/tilpasning-av-bolig/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-090",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Inter-BE** (n.d.). n.d.. *Guide d'accessibilit\u00e9 \u2014 prescriptions techniques (bathroom provisions)*. https://www.inter.be/fr/outils/guides-techniques  \n*BPC slugs: `accessible-bathroom-and-grab-bar`, ",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-091",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**Inter-F\u00e9d\u00e9ration** (n.d.). Toegankelijkheid (BE) \u2014 doors. *5*. https://www.inter.be/fr/outils/guides-techniques  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-092",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**IWA-IE** (n.d.). n.d.. *IWA Accessibility Guidelines*. https://www.iwa.ie/accessibility/  \n*BPC slugs: `accessible-bathroom-and-grab-bar`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-093",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**JAN** (n.d.). POTS workplace accommodations. *5*. https://askjan.org  \n*BPC slugs: `pain-ofs-built-environment-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-094",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**KDA** (n.d.). Wohnkonzepte f\u00fcr Menschen mit Demenz; PRO ALTER. *5*. https://www.kda.de/  \n*BPC slugs: `cognitive-wayfinding-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-095",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**KDA** (n.d.). Wohnkonzepte f\u00fcr Menschen mit Demenz [PROVISIONAL \u2014 verified org; specific title not locatable]. *5*. https://www.kda.de \u2014 via BMFSFJ Forschungsdatenbank  \n*BPC slugs: `dementia-built-",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-096",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**MDPH France** (n.d.). PCH \u2014 housing adaptation funding. *5*. https://www.cnsa.fr/aides-et-prestations/pch  \n*BPC slugs: `pain-ofs-built-environment-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-097",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**REHADAT** (n.d.). REHADAT DE \u2014 housing adaptation. *5*. https://www.rehadat.de  \n*BPC slugs: `pain-ofs-built-environment-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-098",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**SBi** (n.d.). SBi-anvisning 218 \u2014 DA school acoustics. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-099",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**SBi** (n.d.). SBi 230 \u2014 Danish doors guidance. *5*.  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-100",
+    "tier": "5",
+    "status": "UNVERIFIED-1",
+    "raw": "**Stockholm Stad** (n.d.). Stockholm \u2014 en stad f\u00f6r alla [belysning for teckenspr\u00e5k excerpt]. *5*.  \n*BPC slugs: `deaf-spatial-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T5-101",
+    "tier": "5",
+    "status": "VERIFIED",
+    "raw": "**VisitEngland** (n.d.). Make Your Business Accessible \u00a75 \u2014 50m seating interval. *5*. https://www.visitbritain.org/business-advice/make-your-business-accessible  \n*BPC slugs: `ofs-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-001",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DM236-89-IT** (1989). 1989. *DM 236/89 \u2014 Prescrizioni tecniche per l'accessibilit\u00e0*. https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf  \n*BPC slugs: `accessible-bathroom-and-grab-b",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-002",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Italian Government** (1989). DM 236/89 \u2014 porte accessibili. *6*. https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-003",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**\ud3b8\uc758\uc99d\uc9c4\ubc95-KR** (1997). 1997. *\uc7a5\uc560\uc778\u00b7\ub178\uc778\u00b7\uc784\uc0b0\ubd80 \ub4f1\uc758 \ud3b8\uc758\uc99d\uc9c4 \ubcf4\uc7a5\uc5d0 \uad00\ud55c \ubc95\ub960 (Act on Convenience Promotion for Persons with Disabilities, the Aged, Pregnant Women, etc.)*. https://www.law.go.kr/\ubc95\ub839/\uc7a5\uc560\uc778%C2%B7\ub178\uc778%C2%B7\uc784\uc0b0\ubd80\ub4f1\uc758\ud3b8",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-004",
+    "tier": "6",
+    "status": "UNVERIFIED-1",
+    "raw": "**Standards New Zealand** (2001). NZS 4121:2001 \u2014 Design for access and mobility. *6*.  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-005",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Standards NZ** (2001). NZS 4121:2001 \u2014 Design for access and mobility (under revision). *6*.  \n*BPC slugs: `european-accessibility-act-scope-clarification`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-006",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Standards NZ** (2001). NZS 4121:2001 \u2014 doors. *6*.  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-007",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DL163-2006-PT** (2006). 2006. *Decreto-Lei 163/2006 \u2014 Regime da acessibilidade*. https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296  \n*BPC slugs: `accessible-bathroom-and-grab-bar`, `residential",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-008",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Governo de Portugal** (2006). Decreto-Lei 163/2006 \u2014 portas acess\u00edveis. *6*. https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-009",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**L\u00e9gifrance** (2009). D\u00e9cret 2009-1272 \u2014 syst\u00e8mes d'alarme visuels. *6*. https://www.legifrance.gouv.fr/loda/id/JORFTEXT000021284055  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-010",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ADA-2010-kitchen** (2010). 2010. *2010 ADA Standards for Accessible Design*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/  \n*BPC slugs: `residential-kitchen-and-task-surfaces`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-011",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ADA-2010-S308** (2010). 2010. *2010 ADA Standards for Accessible Design \u00a7308 Reach Ranges*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/#308-reach-ranges  \n*BPC slugs: `reach-range-a",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-012",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2010). DIN 18040-1:2010 \u2014 Barrierefreies Bauen Pt 1: \u00d6ffentlich zug\u00e4ngliche Geb\u00e4ude. *6*. https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-013",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2010). DIN 18040-1/-2 \u2014 T\u00fcren (doors). *6*. https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-014",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2010). GB 50118-2010 \u00a75.3.4 \u2014 Room acoustic performance. *6*.  \n*BPC slugs: `room-acoustic-performance`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-015",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**US Access Board** (2010). 2010 ADA Standards for Accessible Design \u00a7407. *6*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/#407-elevators  \n*BPC slugs: `accessible-circulation-geometr",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-016",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**US Access Board** (2010). ADA Standards \u00a7\u00a7302\u2013405 Accessible Routes, Entrances, Ramps. *6*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/  \n*BPC slugs: `residential-entry-and-threshol",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-017",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**US Access Board** (2010). ADA Standards \u00a7303 Changes in Level. *6*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/#303-changes-in-level  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-018",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**US DOJ** (2010). ADA Standards \u00a7404 \u2014 Doors, Doorways, Gates. *6*. https://www.ada.gov/law-and-regs/design-standards/2010-stds/#404-doors-doorways-and-gates  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-019",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2011). DIN 18040-2:2011 + Draft E DIN 18040-2:2023. *6*. https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706  \n*BPC slugs: `residential-entry",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-020",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2011). DIN 18040-2:2011 \u2014 Nullschwelle doctrine. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-021",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2011). DIN 18040-2 \u2014 Barrierefreies Bauen Wohnungen. *6*. https://www.din.de  \n*BPC slugs: `visitability-residential-accessibility-minimum-standards`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-022",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN-18040-2-S5** (2011). 2011. *DIN 18040-2 \u00a75 Bedienungsh\u00f6hen (operating heights)*. https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706  \n*BPC slug",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-023",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2012). GB 50763-2012 \u65e0\u969c\u788d\u8bbe\u8ba1\u89c4\u8303 (Code for Accessibility Design). *MOHURD*. https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html  \n*BPC slugs: `accessible-bathroom-and-g",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-024",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2012). GB 50763-2012 \u00a73.12.4 \u65e0\u969c\u788d\u8bbe\u8ba1\u89c4\u8303 (Code for Accessibility Design \u2014 kitchen provisions). *MOHURD*. https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html  \n*BPC slug",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-025",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2012). GB 50763-2012 \u2014 \u65e0\u969c\u788d\u51fa\u5165\u53e3. *6*. https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-026",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2012). GB 50763-2012 \u00a78 \u2014 visual alarm provisions. *6*. https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-027",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2012). GB 50763-2012 \u00a73.2 \u2014 \u76f2\u9053 specifications. *6*. https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html  \n*BPC slugs: `visual-impairment-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-028",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MOHURD** (2012). GB 50763-2012 \u76f2\u9053 (tactile wayfinding). *6*.  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-029",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**L\u00e9gifrance** (2014). Arr\u00eat\u00e9 du 8 d\u00e9cembre 2014 accessibilit\u00e9 ERP existants. *6*. https://www.legifrance.gouv.fr/loda/id/JORFTEXT000029925726  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-030",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**L\u00e9gifrance** (2014). Arr\u00eat\u00e9 2014 \u2014 ressaut \u226420mm. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-031",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**L\u00e9gifrance** (2014). Arr\u00eat\u00e9 du 8 d\u00e9cembre 2014 \u2014 portes ERP. *6*. https://www.legifrance.gouv.fr/loda/id/JORFTEXT000029925726  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-032",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**USAB-Doors-2014** (2014). 2014. *Understanding New Accessibility Requirements for Doors*. https://www.access-board.gov/ada/  \n*BPC slugs: `reach-range-and-accessible-controls`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-033",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u00a713-10 \u2014 hearing loop or wireless speech transmission mandatory. *6*.  \n*BPC slugs: `assistive-listening-systems`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-034",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u00a712-4 Inngangsparti; \u00a712-16 Rampe; \u00a71-3(m) Trinnfri. *6*. https://lovdata.no/dokument/SF/forskrift/2017-06-19-840  \n*BPC slugs: `residential-entry-and-t",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-035",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u00a71-3(m) trinnfri \u226425mm definition. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-036",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u00a712-17 D\u00f8rer. *6*. https://lovdata.no/dokument/SF/forskrift/2017-06-19-840  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-037",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u2014 Norwegian mandatory accessibility. *6*. https://lovdata.no/dokument/SF/forskrift/2017-06-19-840  \n*BPC slugs: `visitability-residential-accessibility-",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-038",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Finland MRPE** (2017). Decree 241/2017 \u2014 Accessibility of the Built Environment (F1). *6*. https://www.finlex.fi/fi/laki/alkup/2017/20170241  \n*BPC slugs: `accessible-circulation-geometry`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-039",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Finland MRPE** (2017). Decree 241/2017 F1 \u2014 doors. *6*. https://www.finlex.fi/fi/laki/alkup/2017/20170241  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-040",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ICC** (2017). ICC A117.1-2017 \u2014 Accessible and Usable Buildings and Facilities. *6*.  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-041",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**BSI / DfT** (2018). BS 8300-1:2018 + Manual for Streets \u2014 100m seating interval. *6*.  \n*BPC slugs: `ofs-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-042",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**CSA Group** (2018). CAN/CSA B651-18 \u2014 doors. *6*. https://www.csagroup.org/store/product/CSA%20B651-18/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-043",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Energistyrelsen** (2018). BR18 \u2014 Danish Building Regulations (doors). *6*. https://bygningsreglementet.dk/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-044",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**BCA Singapore** (2019). Code on Accessibility in the Built Environment 2019 \u2014 doors. *6*. https://www.bca.gov.sg/Professionals/iquas/iquas/code_on_accessibility.html  \n*BPC slugs: `threshold-door-ha",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-045",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**EU** (2019). Directive (EU) 2019/882 \u2014 European Accessibility Act. *6*. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32019L0882  \n*BPC slugs: `european-accessibility-act-scope-clarifi",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-046",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABNT** (2020). NBR 9050:2020 \u2014 Acessibilidade a edifica\u00e7\u00f5es. *6*. https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-047",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABNT** (2020). NBR 9050:2020 \u00a76.2 Rampas. *6*. https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-048",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABNT** (2020). NBR 9050:2020 \u2014 soleira \u226420mm. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-049",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABNT** (2020). NBR 9050:2020 \u2014 portas. *6*. https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-050",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABNT-NBR-9050-S46** (2020). 2020. *ABNT NBR 9050:2020 Acessibilidade a edifica\u00e7\u00f5es \u00a74.6 Alcance Manual lateral*. https://www.abntcatalogo.com.br/norma.aspx?ID=000000000002500  \n*BPC slugs: `reach-ra",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-051",
+    "tier": "6",
+    "status": "UNVERIFIED-1",
+    "raw": "**CEN** (2021). EN 17210:2021 \u2014 Accessibility and usability of the built environment: functional requirements. *6*.  \n*BPC slugs: `european-accessibility-act-scope-clarification`, `threshold-door-hard",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-052",
+    "tier": "6",
+    "status": "UNVERIFIED-1",
+    "raw": "**India MSJE** (2021). Harmonised Guidelines and Space Standards 2021. *6*.  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-053",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Standards Australia** (2021). AS 1428.1:2021 \u2014 Design for access and mobility. *6*. https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021  \n*BPC slugs: `accessi",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-054",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Standards Australia** (2021). AS 1428.1:2021 \u2014 luminance contrast provisions. *6*. https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021  \n*BPC slugs: `luminanc",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-055",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Standards Australia** (2021). AS 1428.1:2021 \u2014 threshold \u226435mm at 1:8 ramp (retrofit). *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-056",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Standards Australia** (2021). AS 1428.1:2021 \u2014 doors and hardware. *6*. https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021  \n*BPC slugs: `threshold-door-hard",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-057",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABCB** (2022). NCC 2022 \u2014 Livable Housing / accessible public building provisions. *6*. https://www.abcb.gov.au/ncc  \n*BPC slugs: `sensory-relief-space-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-058",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABCB** (2022). NCC 2022 \u2014 Australian mandatory residential. *6*. https://www.abcb.gov.au/ncc  \n*BPC slugs: `visitability-residential-accessibility-minimum-standards`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-059",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**HUD** (2022). Fair Housing Act Accessibility Guidelines Design Manual. *6*. https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_design_manual  \n*BPC slugs: `visitability-resi",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-060",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**NFPA** (2022). NFPA 72 \u2014 National Fire Alarm and Signaling Code (visual alarm provisions). *6*.  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-061",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**NFPA** (2022). NFPA 72-2022 \u2014 National Fire Alarm and Signaling Code. *6*.  \n*BPC slugs: `visual-fire-alarm-seizure-safety`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-062",
+    "tier": "6",
+    "status": "UNVERIFIED-1",
+    "raw": "**Chilean Congress** (2023). Ley de Autismo N\u00b021.545 \u2014 first LAC statutory sensory accommodation mandate. *6*.  \n*BPC slugs: `sensory-space-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-063",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2023). Draft E DIN 18040-2:2023 \u2014 tightening to \u226410mm. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-064",
+    "tier": "6",
+    "status": "UNVERIFIED-1",
+    "raw": "**(RHF/HCMA)** (2024). Rick Hansen Foundation Accessibility Certification cost study \u2014 ~1% or zero. *6*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-065",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2024). BFS 2024:12 / ALM 2 \u2014 Tillg\u00e4nglighet och anv\u00e4ndbarhet. *6*. https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/alm---bfs-20114/  \n*BPC slugs: `accessible-circulatio",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-066",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2024). BFS 2024:12 \u2014 bostadsanpassning. *6*. https://www.boverket.se  \n*BPC slugs: `pain-ofs-built-environment-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-067",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2024). BFS 2024:12 / BBR \u00a73:122 \u00a73:146. *6*. https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/bbr---bfs-20116/  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-068",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2024). BFS 2024:12 / BBR threshold provisions. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-069",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2024). BFS 2024:12 / BBR \u00a73:146 \u2014 d\u00f6rrar. *6*. https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/bbr---bfs-20116/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-070",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**CSA-B651-RHF** (2024). 2024. *CAN/CSA B651-18 Accessible design for the built environment (door clear opening \u2265850mm)*. https://www.csagroup.org/store/product/CSA%20B651-18/  \n*BPC slugs: `reach-ran",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-071",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MLIT** (2024). \u30d0\u30ea\u30a2\u30d5\u30ea\u30fc\u6cd5 \u5efa\u7bc9\u7269\u79fb\u52d5\u7b49\u5186\u6ed1\u5316\u8a98\u5c0e\u57fa\u6e96. *6*. https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-072",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MLIT** (2024). \u30d0\u30ea\u30a2\u30d5\u30ea\u30fc\u6cd5 \u2014 \u6bb5\u5dee\u306a\u3057 principle. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-073",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MLIT** (2024). \u30d0\u30ea\u30a2\u30d5\u30ea\u30fc\u6cd5 \u2014 \u51fa\u5165\u53e3\u898f\u5b9a. *6*. https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-074",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**RHFAC / HCMA** (2024). Rick Hansen Foundation cost study. *6*.  \n*BPC slugs: `construction-cost-data`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-075",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Rijksoverheid** (2024). Besluit bouwwerken leefomgeving (Bbl) \u2014 Netherlands accessibility requirements. *6*. https://iplo.nl/thema/toegankelijkheid/  \n*BPC slugs: `european-accessibility-act-scope-c",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-076",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ADA National Network** (2025). Cost of accessible design \u2014 <1% new-build premium. *6*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-077",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ADA National Network** (2025). Cost of accessible design. *6*.  \n*BPC slugs: `construction-cost-data`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-078",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**BCA** (2025). Code on Accessibility in the Built Environment 2025. *6*. https://www.bca.gov.sg \u2014 effective Nov 2025  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-079",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**BCA Singapore** (2025). Code on Accessibility 2025 Chapter 8 \u2014 wayfinding. *6*.  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-080",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Boverket** (2025). BFS 2024:12 \u2014 dimensionerande m\u00e5tt. *6*. https://www.boverket.se  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-081",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Informatiepunt Leefomgeving** (2025). Bbl art.4.182 drempel \u226420mm. *6*. https://iplo.nl/thema/toegankelijkheid/  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-082",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MHCLG** (2026). Approved Document M Vol 2 \u2014 Access to and use of buildings. *6*. https://www.gov.uk/guidance/approved-document-m-access-to-and-use-of-buildings  \n*BPC slugs: `accessible-circulation-",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-083",
+    "tier": "6",
+    "status": "UNVERIFIED-1",
+    "raw": "**Korea Ministry** (n.d.). \ud3b8\uc758\uc99d\uc9c4\ubc95 \u2014 \uc810\uc790\ube14\ub85d statutory provisions. *6*.  \n*BPC slugs: `wayfinding-global-south`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-084",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Korean Government** (n.d.). \ud3b8\uc758\uc99d\uc9c4\ubc95 \uc2dc\ud589\uaddc\uce59 \ubcc4\ud45c1 \u00a73 \u2014 \uc2dc\uac01\uc7a5\uc560\uc778 \uc720\ub3c4 \ube14\ub85d. *6*. https://www.law.go.kr  \n*BPC slugs: `visual-impairment-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-085",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**SIA** (n.d.). SIA 500 \u2014 Hindernisfreies Bauen (doors). *6*. https://www.sia.ch/de/dienstleistungen/sia-norm/sia-500/  \n*BPC slugs: `threshold-door-hardware`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-086",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Spanish Government** (n.d.). CTE DB SUA \u2014 Seguridad de utilizaci\u00f3n y accesibilidad. *6*. https://www.codigotecnico.org/pdf/Documentos/SUA/DBSUA.pdf  \n*BPC slugs: `threshold-door-hardware`*\n\n## Tier ",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-087",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MLIT / JIS** (2006). MLIT BF Law + JIS T 9251:2006 \u2014 \u70b9\u5b57\u30d6\u30ed\u30c3\u30af. *4/6*. https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html  \n*BPC slugs: `visual-impairment-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-088",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**DIN** (2011). DIN 32984:2011-10 \u2014 Bodenindikatoren im \u00f6ffentlichen Raum. *5/6*.  \n*BPC slugs: `visual-impairment-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-089",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**iDigHardware** (2021). Decoded: Thresholds and Changes in Level (ADA \u00a7303 analysis). *6 commentary*. https://www.idigardware.com  \n*BPC slugs: `threshold-and-level-access`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-090",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Minist\u00e8re du Logement / CEREMA** (2021). Arr\u00eat\u00e9 20 avril 2017 + CEREMA \u2014 BIM mandatory in all ERP cat. 1\u20134 and \u226550 seats. *6/5*.  \n*BPC slugs: `assistive-listening-systems`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-091",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**ABCB** (2022). NCC 2022 + Livable Housing Design Guidelines 4th ed. *5/6*. https://www.abcb.gov.au/ncc  \n*BPC slugs: `residential-entry-and-threshold`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-092",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Habinteg** (2022). Accessible homes guidance. *2/5*. https://www.habinteg.org.uk  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-093",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Architecture & Access / Amaze** (2025). Neuroinclusive design guidance. *3/5*. https://amaze.org.au  \n*BPC slugs: `sensory-room-user-control`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-094",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**Architecture & Access / Amaze / Deakin** (2025). Reset Rooms / Sensory Rooms / Chill-Out Zones Design Guide. *3/5*. https://amaze.org.au \u2014 OT co-produced; February 2025  \n*BPC slugs: `sensory-relief",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-095",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**IAHA** (2025). Auracast assistive listening technical assessment. *2/5*.  \n*BPC slugs: `assistive-listening-systems`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-096",
+    "tier": "6",
+    "status": "GREY-PENDING",
+    "raw": "[GREY] **Ilegems, B. & Vanrie, J.** (2025). Wayfinding as spatial planning not signage. *3/4*.  \n*BPC slugs: `wayfinding-dementia-spatial-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-097",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**MLIT Japan** (2025). \u5efa\u7bc9\u8a2d\u8a08\u6a19\u6e96 (updated). *6/5*. https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html  \n*BPC slugs: `mobility-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-098",
+    "tier": "6",
+    "status": "UNVERIFIED-CLOSED",
+    "raw": "**(internal)** (2026). references/case-study-compendium.md v10.4 \u2014 26 case study entries.  \n*BPC slugs: `case-study-economics-financial-data`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-099",
+    "tier": "6",
+    "status": "UNVERIFIED-CLOSED",
+    "raw": "[GREY] **(C01\u2013C12 \u2014 full citations in search log)** (n.d.). CRPD implementation sources C1\u2013C12. *4\u20136*.  \n*BPC slugs: `crpd-implementation-built-environment`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-100",
+    "tier": "6",
+    "status": "VERIFIED",
+    "raw": "**RCOT / NAS** (n.d.). Sensory environment guidance. *2/5*. https://www.rcot.co.uk  \n*BPC slugs: `sensory-relief-space-design`*",
+    "note": ""
+  },
+  {
+    "ref_id": "T6-101",
+    "tier": "6",
+    "status": "UNVERIFIED-CLOSED",
+    "raw": "**Short-key** (n.d.). Year. *Title*.  \n*BPC slugs: `accessible-bathroom-and-grab-bar`, `accessible-laundry-room-design`, `reach-range-and-accessible-controls`, `residential-kitchen-and-task-surfaces`*",
+    "note": ""
+  }
+]
