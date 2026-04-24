@@ -78,7 +78,7 @@
 | Keall et al. 2015 (Lancet) | Forward via Semantic Scholar | MHIPI (Keall et al. 2021, Lancet Pub Health); cost-benefit (Keall et al. 2017, Inj Prev) |
 | Sawatzky et al. 2015 | Not yet mined | Deferred — citation-miner |
 ### Key sources
-1. Steinfeld E, Maisel J, Feathers D, D'Souza C (2010). Anthropometry and Standards for Wheeled Mobility. *Assistive Technology* 22(1):51–67. [EN, Tier 1, US/UK/CA/AU] DOI:10.1080/10400430903496580
+1. Steinfeld E, Maisel J, Feathers D, D'Souza C (2010). Anthropometry and Standards for Wheeled Mobility. *Assistive Technology* 22(1):51–67. [EN, Tier 1, US/UK/CA/AU] DOI:10.1080/10400430903520280  [CORRECTED: citation-verifier 2026-04-23]
 2. Steinfeld E et al. (2010). *Anthropometry of Wheeled Mobility Project — Final Report*. IDeA Center, Univ. at Buffalo / US Access Board. [EN, Tier 1, US]
 3. VA CFM (2025). *VA Barrier-Free Design Standard*. US Dept of Veterans Affairs. [EN, Tier 5, US — 1675mm power WC; 1800mm bariatric]
 4. PVA (2021). *Accessible Home Design*, 2nd ed. Washington DC: PVA. [EN, Co-1, US]
