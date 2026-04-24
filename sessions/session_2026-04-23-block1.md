@@ -1920,3 +1920,44 @@ CON-0188 directly leverages the Owen & Crane 2022 attribution correction (was "H
 session_close: 2026-04-24 07:21
 next_action: Route 7 HIGH-confidence connections to item-specification-writer for spec updates
 blockers: none
+
+
+## Block 28 — Tier 3 UNVERIFIED-1 Batch 3
+
+### Verified Entries
+| ID | Author | Year | Status | Key Finding |
+|---|---|---|---|---|
+| T3-058 | TERRAGON / DStGB | 2017 | VERIFIED | German industry study. 148 DIN 18040-2 criteria: accessibility adds ~1% to costs (€21.50/m²). 138/148 achievable at zero premium. |
+| T3-105 | KfW / IWU | 2022 | VERIFIED | Programme evaluation. Avg retrofit €19,100/dwelling. BPC author attribution "Prognos" corrected to IWU (Prognos did earlier 2014 eval). |
+
+### Cumulative Tier 3 Progress: 11/20 resolved
+- 9 VERIFIED (Kim CS, Fuglerud, Al Lawati, Mitra, Ghazali, LSE/Habinteg, Liu, TERRAGON, KfW)
+- 1 VERIFIED-WITH-CORRECTION (already counted in previous)
+- 1 UNVERIFIED-CLOSED (Steinfeld 2016)
+- 9 remaining: T3-072 EIB, T3-104 Jee, T3-108 Misch, T3-124 Gonçalves, T3-129 Rhee, T3-130 Tekin, T3-137 Al Khatib, T3-140 INSERM, T3-142 Kapsalis, T3-143 Larivière
+
+commits: 5f0c2f2c9f06
+
+### FULL CONVERSATION TOTALS
+
+| Task | Commits | Status |
+|---|---|---|
+| Phase 2C-E multilingual backfill | 18 | COMPLETE |
+| Jurisdiction NOT-RUN cleanup | 4 | COMPLETE |
+| Appendix A expansion (A.18–A.20) | 1 | COMPLETE |
+| Phase 4 spec database | 1 | COMPLETE (73/73) |
+| Tier correction propagation | 1 | COMPLETE (10/10) |
+| Tier 3 verification | 5 | 11/20 resolved |
+| BPC author corrections | 1 | 2 corrections applied |
+| Session management | 6 | Blocks 23–28 |
+| **Total** | **37** | |
+
+next_action: >
+  Tier 3 UNVERIFIED-1: 9 remaining (EIB, Jee KR, Misch DE, Gonçalves PT,
+  Rhee KR, Tekin TR, Al Khatib AE, INSERM FR, Kapsalis GR, Larivière CA).
+  Most are non-English grey lit requiring native-language search.
+  Co-1 verification: 3 remaining.
+
+blockers: none
+
+session_close: 2026-04-24 08:15
