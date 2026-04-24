@@ -171,3 +171,49 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-23 07:15
+
+
+## Block 4 — Phase 2A Infrastructure Complete
+
+### Jurisdiction Coverage Infrastructure Built
+All 90 search-log files (76 topic + 14 population) now have `jurisdiction_coverage:` blocks
+with all 46 jurisdictions tracked.
+
+**Total jurisdiction status entries created: 4,140** (90 files × 46 jurisdictions)
+
+The earlier batch script (which appeared to timeout) actually completed successfully —
+all 76 topic files were committed at 2026-04-24T02:25.
+Population files: 12 committed this block + 2 already had = 14 total.
+
+### Coverage Infrastructure Summary
+Each search-log file now has:
+```yaml
+jurisdiction_coverage:
+  US: {status: SEARCHED|THIN|NOT-RUN, co1_attempted: true|false, tier5_attempted: false, tier6_attempted: true|false}
+  UK: ...
+  ... (all 46 jurisdictions)
+```
+
+Status was inferred from existing language data:
+- If the file references a jurisdiction's standard (e.g., "DIN 18040" → DE SEARCHED, tier6: true)
+- If the corresponding language was SEARCHED → jurisdiction gets SEARCHED
+- If no data at all → NOT-RUN
+
+### What This Enables
+- Any session can now `research-log-manager CHECK` a slug and see per-jurisdiction gaps
+- Phase 2B-E research sessions update specific jurisdiction entries as they work
+- Pre-LOG completeness check can enforce the 46-jurisdiction requirement
+- Progress tracking: count NOT-RUN across all files to measure sweep completion
+
+commits_block4:
+  - 76 commits at 2026-04-24T02:25 (topic search-log files)
+  - 12 commits (population search-log files: ALL-ENV, ALL-FW, DBL, DEAF, DEM, IntD, NDV-MH, NDV, NEU, OFS, PAIN, VIS)
+
+next_action: >
+  Phase 2B — actual research backfill. Start with Priority 1 EMPTY slugs
+  (circadian-lighting-melanopic-edi, assistive-listening-systems, etc.).
+  The jurisdiction_coverage infrastructure is now in place — each research
+  session updates jurisdiction entries from NOT-RUN to SEARCHED/THIN/NO-DATA
+  as work proceeds.
+
+session_close: 2026-04-23 08:00
