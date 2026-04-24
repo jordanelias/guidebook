@@ -562,3 +562,68 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 
 **Connection:** A-16 door specification detail [DESCRIPTION PENDING]
 
+
+### CON-0182
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** circadian-lighting-melanopic-edi, neurodivergent-built-environment, fatigue-spectrum-built-environment
+**Target item(s):** K-03 (circadian lighting)
+**Target population(s):** DEM, MH, NDV/AUT, OFS
+**Evidence tier:** 3–4
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** COMPOUND-INTERACTION
+**Connection:** Circadian lighting specification (melanopic EDI ≥250 lux daytime) serves DEM and MH circadian entrainment needs but compounds with NDV/AUT photosensitivity and OFS/ME light-triggered symptom exacerbation. This is not a simple divergence — it is a compound interaction where the dose that treats circadian disruption in one population actively harms sensory processing in another. Resolution requires spatial zoning: circadian-optimised communal areas with opt-out low-lux zones accessible within 25m.
+
+**Evidence basis:** CIE S 026/E:2018 (melanopic EDI); PAS 6463:2022 §NDV lighting; van Hoof 2010 (DEM thermoregulation, confirmed T3-027); BPC circadian-lighting divergent finding NDV/AUT.
+
+**Action required:** Add compound-interaction note to circadian lighting spec. Cross-reference sensory-relief-space A-16 as the mandatory opt-out mechanism.
+
+**Disposition notes:** —
+
+
+### CON-0183
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** room-acoustic-performance, deaf-acoustic-built-environment, neurodivergent-built-environment, mental-health-built-environment
+**Target item(s):** K-01 (RT60), K-02 (background noise)
+**Target population(s):** DEAF, NDV, MH
+**Evidence tier:** 3–5
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** RT60 ≤0.3 s specification converges across three independent evidence bases via different clinical mechanisms: DEAF (speech intelligibility with hearing devices), NDV/AUT (reduced reverberation decreases auditory processing load, PAS 6463), MH (noise reduction in trauma-informed environments, Owen & Crane 2022). The convergence is strong because all three arrive at the same numerical threshold independently — this is a genuine cross-population specification that should be tagged for all three populations rather than siloed in DEAF.
+
+**Evidence basis:** BB93:2015; PAS 6463:2022 §10; Oostermeijer et al. 2021 (PMID:34233981); Weber et al. 2022 (PMID:35046849); van der Schaaf et al. 2013 (DOI:10.1192/bjp.bp.112.118422). All verified.
+
+**Action required:** Add NDV and MH population tags to RT60 ≤0.3s specification. Reference PAS 6463 and MH evidence alongside DEAF sources.
+
+**Disposition notes:** —
+
+
+### CON-0186
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** sensory-relief-space-design, mental-health-built-environment, dementia-built-environment, fatigue-spectrum-built-environment
+**Target item(s):** A-16 (sensory quiet room)
+**Target population(s):** NDV, MH, DEM, OFS
+**Evidence tier:** Co-1, 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Four independent evidence bases converge on an identical room-type specification — a quiet, low-stimulation, user-controlled space within 25m of primary occupancy: NDV/AUT (sensory quiet room, PAS 6463 A-16), MH (de-escalation space in psychiatric facilities, Oostermeijer 2021 PMID:34233981, Weber 2022 PMID:35046849), DEM (calm/retreat zone in dementia environments, DSDC EADDAT), OFS/ME (rest space during post-exertional malaise episodes). Each arrives via different clinical mechanisms but the specification is identical. This is the strongest cross-population convergence in the evidence base.
+
+**Evidence basis:** PAS 6463:2022; Oostermeijer et al. 2021; Weber et al. 2022; DSDC EADDAT 2022; Unwin et al. 2021 (T3-085); BPC sensory-relief-space consensus findings.
+
+**Action required:** Elevate A-16 to cross-population universal provision. Tag all four populations explicitly. This room type resolves gaps across NDV, MH, DEM, and OFS simultaneously.
+
+**Disposition notes:** —
