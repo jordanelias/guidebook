@@ -2,7 +2,7 @@
   "_meta": {
     "version": "0.1",
     "created": "2026-04-08",
-    "phase": "2A \u2014 batch 2 complete (25 BPC files total)",
+    "phase": "2A — batch 2 complete (25 BPC files total)",
     "total_specs": 73,
     "bpc_files_processed": [
       "baw",
@@ -31,7 +31,9 @@
       "communication-and-alerts/deaf-classroom-reverberation-time",
       "communication-and-alerts/deaf-spatial-design"
     ],
-    "note": "Batch 1 (5 files): automated regex extraction. Batch 2 (20 files): structured Sonnet reading pass. All entries require Opus synthesis pass for recommendation_strength. item_code assignments for cross-cutting slugs marked [CROSS-CUTTING] or [UNASSIGNED] pending ISW cross-reference validation. Qualitative specs (value_min/max None) record parameter existence without quantified threshold."
+    "note": "Batch 1 (5 files): automated regex extraction. Batch 2 (20 files): structured Sonnet reading pass. All entries require Opus synthesis pass for recommendation_strength. item_code assignments for cross-cutting slugs marked [CROSS-CUTTING] or [UNASSIGNED] pending ISW cross-reference validation. Qualitative specs (value_min/max None) record parameter existence without quantified threshold.",
+    "last_jurisdiction_update": "2026-04-23",
+    "jurisdiction_coverage": "Phase 4 — 46 jurisdictions mapped"
   },
   "specifications": [
     {
@@ -52,16 +54,26 @@
         "DEM",
         "NEU"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "UK",
+        "DE",
+        "NO",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "US",
+        "AU",
+        "CA"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-bathroom-and-grab-bar",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| 1500mm turning circle | All 14 | 24/24 | 4\u20136 |",
-      "conditions": []
+      "notes": "| 1500mm turning circle | All 14 | 24/24 | 4–6 |",
+      "conditions": [],
+      "context_note": "Jurisdiction: UK/DE/NO/ISO 1500mm; US 1524-1702mm; AU 2070mm"
     },
     {
       "spec_id": "SPEC-0002",
@@ -86,10 +98,10 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-bathroom-and-grab-bar",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| WC seat 450\u2013500mm | EN, DE, FR, NL, BE, IT, PT | 20/24 | 6 |",
+      "notes": "| WC seat 450–500mm | EN, DE, FR, NL, BE, IT, PT | 20/24 | 6 |",
       "conditions": []
     },
     {
@@ -115,10 +127,10 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-bathroom-and-grab-bar",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| WC seat 450\u2013500mm | EN, DE, FR, NL, BE, IT, PT | 20/24 | 6 |",
+      "notes": "| WC seat 450–500mm | EN, DE, FR, NL, BE, IT, PT | 20/24 | 6 |",
       "conditions": []
     },
     {
@@ -143,11 +155,12 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| Handle height range within 800\u20131300 mm (varies) | All 14 | All 24 | 5-6 |",
-      "conditions": []
+      "notes": "| Handle height range within 800–1300 mm (varies) | All 14 | All 24 | 5-6 |",
+      "conditions": [],
+      "context_note": "Jurisdiction: Parameter too generic — check item_code"
     },
     {
       "spec_id": "SPEC-0005",
@@ -171,11 +184,12 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| Handle height range within 800\u20131300 mm (varies) | All 14 | All 24 | 5-6 |",
-      "conditions": []
+      "notes": "| Handle height range within 800–1300 mm (varies) | All 14 | All 24 | 5-6 |",
+      "conditions": [],
+      "context_note": "Jurisdiction: Parameter too generic — check item_code"
     },
     {
       "spec_id": "SPEC-0006",
@@ -199,10 +213,10 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| Maximum operating force specified (20\u201350 N range) | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, DK, FI, NL, BE, CH, FR, ES, PT, KR, IT, SG, EU,",
+      "notes": "| Maximum operating force specified (20–50 N range) | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, DK, FI, NL, BE, CH, FR, ES, PT, KR, IT, SG, EU,",
       "conditions": []
     },
     {
@@ -227,10 +241,10 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| Maximum operating force specified (20\u201350 N range) | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, DK, FI, NL, BE, CH, FR, ES, PT, KR, IT, SG, EU,",
+      "notes": "| Maximum operating force specified (20–50 N range) | EN, DE, SV, NO, FR | US, UK, DE, AU, CA, SE, NO, DK, FI, NL, BE, CH, FR, ES, PT, KR, IT, SG, EU,",
       "conditions": []
     },
     {
@@ -250,16 +264,23 @@
         "OFS",
         "PAIN"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "UK",
+        "DE"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| Clear opening width \u2265800 mm minimum | All 14 | All 24 | 5-6 |",
-      "conditions": []
+      "notes": "| Clear opening width ≥800 mm minimum | All 14 | All 24 | 5-6 |",
+      "conditions": [],
+      "context_note": "Jurisdiction: ISO/UK/DE 900mm; US 815mm"
     },
     {
       "spec_id": "SPEC-0009",
@@ -278,16 +299,23 @@
         "OFS",
         "PAIN"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "UK",
+        "DE"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| \u2265900 mm clear width at Tier 5 level | EN, DE, SV, NO, FR, NL | DE, AU(Gold), SG(Plat), FR, NL, BE, SE, NO, DK(SBi), FI, BR, EU | 5 |",
-      "conditions": []
+      "notes": "| ≥900 mm clear width at Tier 5 level | EN, DE, SV, NO, FR, NL | DE, AU(Gold), SG(Plat), FR, NL, BE, SE, NO, DK(SBi), FI, BR, EU | 5 |",
+      "conditions": [],
+      "context_note": "Jurisdiction: ISO/UK/DE 900mm; US 815mm"
     },
     {
       "spec_id": "SPEC-0010",
@@ -310,11 +338,12 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| EN 81-70 Type 2 (1100\u00d71400mm) is the international lift car minimum \u2014 wheelchair user + assistant | EN, DE, SV, FI, NO, FR, NL, ES, PT, IT | UK, DE,",
-      "conditions": []
+      "notes": "| EN 81-70 Type 2 (1100×1400mm) is the international lift car minimum — wheelchair user + assistant | EN, DE, SV, FI, NO, FR, NL, ES, PT, IT | UK, DE,",
+      "conditions": [],
+      "context_note": "Jurisdiction: Parameter too generic — check item_code"
     },
     {
       "spec_id": "SPEC-0011",
@@ -332,16 +361,23 @@
         "VIS",
         "DEM"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "UK",
+        "DE"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| 1500mm clear turning space at lift landing | EN, DE, SV, FI | UK, DE, SE, FI, AU | Tier 6 (BS 8300; BFS 2024:12; Finnish F1; AS 1428.1) |",
-      "conditions": []
+      "conditions": [],
+      "context_note": "Jurisdiction: ISO/UK/DE 900mm; US 815mm"
     },
     {
       "spec_id": "SPEC-0012",
@@ -359,16 +395,23 @@
         "VIS",
         "DEM"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "UK",
+        "DE"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| \u2265900mm clear door width for lifts | EN, DE, SV, NL | UK, DE, SE, NL, AU, US | Tier 6 (EN 81-70; DIN 18040-1; ADA) |",
-      "conditions": []
+      "notes": "| ≥900mm clear door width for lifts | EN, DE, SV, NL | UK, DE, SE, NL, AU, US | Tier 6 (EN 81-70; DIN 18040-1; ADA) |",
+      "conditions": [],
+      "context_note": "Jurisdiction: ISO/UK/DE 900mm; US 815mm"
     },
     {
       "spec_id": "SPEC-0013",
@@ -386,16 +429,23 @@
         "VIS",
         "DEM"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
+      "jurisdictions_supporting": [
+        "ISO",
+        "UK",
+        "DE"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "| \u22651525mm corridor width for two wheelchair users to pass | EN | US, UK, AU | Tier 6 (ADA; Part M; AS 1428.1) |",
-      "conditions": []
+      "notes": "| ≥1525mm corridor width for two wheelchair users to pass | EN | US, UK, AU | Tier 6 (ADA; Part M; AS 1428.1) |",
+      "conditions": [],
+      "context_note": "Jurisdiction: ISO/UK/DE 900mm; US 815mm"
     },
     {
       "spec_id": "SPEC-0014",
@@ -418,11 +468,12 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| 1800mm corridor preferred on primary residential/care routes | EN, DE, NL | UK, DE, NL | Tier 6/5 (BS 8300; DIN 18040-1; care home guidance) |",
-      "conditions": []
+      "conditions": [],
+      "context_note": "Jurisdiction: Parameter too generic — check item_code"
     },
     {
       "spec_id": "SPEC-0015",
@@ -443,7 +494,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Lighting optimisation in care homes can improve resident orientation by up to 30%; minimum 300 lux corridors / 500 lux task areas (DSDC recommendati",
@@ -468,7 +519,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Lighting optimisation in care homes can improve resident orientation by up to 30%; minimum 300 lux corridors / 500 lux task areas (DSDC recommendati",
@@ -493,7 +544,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Lighting optimisation in care homes can improve resident orientation by up to 30%; minimum 300 lux corridors / 500 lux task areas (DSDC recommendati",
@@ -518,7 +569,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Floor plan configuration is the most influential environmental factor for dementia wayfinding; signage/colour alone cannot compensate for poor layou",
@@ -543,7 +594,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Appearance/familiarity/recognisability is the most-cited design category in dementia literature (43% of 429 items) | EN (Bowes, Dawson, Greasley-Ada",
@@ -568,7 +619,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Wayfinding/orientation is second-most addressed category (34% of items, 58 studies) | EN (Bowes et al. 2019; DSDC EADDAT) | Tier 3 |",
@@ -593,7 +644,7 @@
       "divergence_note": "",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
-      "recommendation_strength": "[UNSET \u2014 Opus review required]",
+      "recommendation_strength": "[UNSET — Opus review required]",
       "tier_2_note": "",
       "percentile_basis": null,
       "notes": "| Wayfinding/orientation is second-most addressed category (34% of items, 58 studies) | EN (Bowes et al. 2019; DSDC EADDAT) | Tier 3 |",
@@ -629,7 +680,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum clear door width \u2014 universal consensus across jurisdictions",
+      "notes": "Minimum clear door width — universal consensus across jurisdictions",
       "conditions": []
     },
     {
@@ -662,7 +713,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum clear corridor width \u2014 universal",
+      "notes": "Minimum clear corridor width — universal",
       "conditions": []
     },
     {
@@ -696,7 +747,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Wheelchair turning circle \u2014 1500mm majority; NO requires 1600mm",
+      "notes": "Wheelchair turning circle — 1500mm majority; NO requires 1600mm",
       "conditions": []
     },
     {
@@ -726,7 +777,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "OT assessment resolves position within range at Tier 2",
       "percentile_basis": null,
-      "notes": "Forward reach range \u2014 controls and hardware",
+      "notes": "Forward reach range — controls and hardware",
       "conditions": []
     },
     {
@@ -756,7 +807,7 @@
       "recommendation_strength": "Conditional",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Maximum threshold height \u2014 divergence US vs AU/UK",
+      "notes": "Maximum threshold height — divergence US vs AU/UK",
       "conditions": []
     },
     {
@@ -789,7 +840,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Clear corridor width for wheelchair \u2014 1200 minimum, 1500 preferred",
+      "notes": "Clear corridor width for wheelchair — 1200 minimum, 1500 preferred",
       "conditions": []
     },
     {
@@ -823,9 +874,9 @@
       "opus_synthesized": false,
       "bpc_source_slug": "MOB",
       "recommendation_strength": "Strong at Tier 0 (presence); Conditional at Tier 1 (height)",
-      "tier_2_note": "OT co-design resolves position within 650\u2013900 range at Tier 2",
+      "tier_2_note": "OT co-design resolves position within 650–900 range at Tier 2",
       "percentile_basis": null,
-      "notes": "Grab bar height \u2014 bilateral wall mounting for MOB",
+      "notes": "Grab bar height — bilateral wall mounting for MOB",
       "conditions": [
         {
           "condition": "MOB single user",
@@ -901,7 +952,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "T-turn manoeuvre space \u2014 1500mm clear",
+      "notes": "T-turn manoeuvre space — 1500mm clear",
       "conditions": []
     },
     {
@@ -928,13 +979,13 @@
       "jurisdictions_divergent": [
         "DE"
       ],
-      "divergence_note": "DE: 420\u2013480mm (DIN 18040)",
+      "divergence_note": "DE: 420–480mm (DIN 18040)",
       "opus_synthesized": false,
       "bpc_source_slug": "MOB",
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "OT determines optimal height at Tier 2",
       "percentile_basis": null,
-      "notes": "Seat height for transfer \u2014 MOB",
+      "notes": "Seat height for transfer — MOB",
       "conditions": []
     },
     {
@@ -965,7 +1016,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "OT co-design at Tier 2",
       "percentile_basis": null,
-      "notes": "Seated worktop height \u2014 MOB kitchen/workstation",
+      "notes": "Seated worktop height — MOB kitchen/workstation",
       "conditions": []
     },
     {
@@ -997,7 +1048,7 @@
       "recommendation_strength": "Strong at Tier 0 (UK/AU/NZ/ISO)",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum LRV difference \u2014 visual contrast for wayfinding",
+      "notes": "Minimum LRV difference — visual contrast for wayfinding",
       "conditions": []
     },
     {
@@ -1028,7 +1079,7 @@
       "recommendation_strength": "Strong at Tier 0 (presence); Conditional (geometry)",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "TGSI depth \u2014 tactile warning strips",
+      "notes": "TGSI depth — tactile warning strips",
       "conditions": []
     },
     {
@@ -1057,7 +1108,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum illuminance \u2014 general circulation for VIS",
+      "notes": "Minimum illuminance — general circulation for VIS",
       "conditions": []
     },
     {
@@ -1087,7 +1138,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum character height on signs \u2014 VIS at standard viewing distance",
+      "notes": "Minimum character height on signs — VIS at standard viewing distance",
       "conditions": []
     },
     {
@@ -1118,7 +1169,7 @@
       "recommendation_strength": "Strong at Tier 0 (assembly venues)",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Hearing loop field coverage \u2014 100% of audience area",
+      "notes": "Hearing loop field coverage — 100% of audience area",
       "conditions": []
     },
     {
@@ -1147,7 +1198,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Hearing loop signal level \u2014 IEC 60118-4: \u00b13dB of reference",
+      "notes": "Hearing loop signal level — IEC 60118-4: ±3dB of reference",
       "conditions": []
     },
     {
@@ -1172,13 +1223,13 @@
       "jurisdictions_divergent": [
         "DE"
       ],
-      "divergence_note": "DE: \u22640.6s in educational settings (DIN 18041)",
+      "divergence_note": "DE: ≤0.6s in educational settings (DIN 18041)",
       "opus_synthesized": false,
       "bpc_source_slug": "DEAF",
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "RT60 ceiling \u2014 DEAF speech intelligibility; lower for education",
+      "notes": "RT60 ceiling — DEAF speech intelligibility; lower for education",
       "conditions": [
         {
           "condition": "General assembly",
@@ -1219,7 +1270,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Visual alarm flash rate \u2014 0.5\u20133Hz (seizure-safe range per BS8300/ADA)",
+      "notes": "Visual alarm flash rate — 0.5–3Hz (seizure-safe range per BS8300/ADA)",
       "conditions": []
     },
     {
@@ -1249,7 +1300,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Visual alarm minimum intensity \u2014 75 cd (ADA/BS 8300)",
+      "notes": "Visual alarm minimum intensity — 75 cd (ADA/BS 8300)",
       "conditions": []
     },
     {
@@ -1277,7 +1328,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Tactile pathway clear width \u2014 DBL unobstructed navigation",
+      "notes": "Tactile pathway clear width — DBL unobstructed navigation",
       "conditions": []
     },
     {
@@ -1306,7 +1357,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "TGSI depth \u2014 DBL (same as VIS; double-coded)",
+      "notes": "TGSI depth — DBL (same as VIS; double-coded)",
       "conditions": []
     },
     {
@@ -1335,7 +1386,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Braille dot height \u2014 Grade 1 contracted braille per ISO 17049",
+      "notes": "Braille dot height — Grade 1 contracted braille per ISO 17049",
       "conditions": []
     },
     {
@@ -1366,7 +1417,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Background noise \u2014 35dB(A) max for NDV/AUT focus environments",
+      "notes": "Background noise — 35dB(A) max for NDV/AUT focus environments",
       "conditions": [
         {
           "condition": "Educational",
@@ -1406,7 +1457,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "User control resolves at Tier 2",
       "percentile_basis": null,
-      "notes": "Maximum illuminance \u2014 sensory room (dimmable from 0\u2013300 lux)",
+      "notes": "Maximum illuminance — sensory room (dimmable from 0–300 lux)",
       "conditions": []
     },
     {
@@ -1418,7 +1469,7 @@
       "value_min": 8,
       "value_max": 8,
       "value_median": 8,
-      "unit": "m\u00b2",
+      "unit": "m²",
       "evidence_tier": "Tier 3",
       "populations": [
         "NDV",
@@ -1435,7 +1486,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum floor area \u2014 sensory relief / de-escalation space",
+      "notes": "Minimum floor area — sensory relief / de-escalation space",
       "conditions": []
     },
     {
@@ -1463,7 +1514,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "RT60 max \u2014 NDV sensory room (PAS 6463:2022)",
+      "notes": "RT60 max — NDV sensory room (PAS 6463:2022)",
       "conditions": []
     },
     {
@@ -1492,7 +1543,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "User control mandatory at Tier 2",
       "percentile_basis": null,
-      "notes": "Colour temperature range \u2014 tunable white for NDV (user-controlled)",
+      "notes": "Colour temperature range — tunable white for NDV (user-controlled)",
       "conditions": []
     },
     {
@@ -1520,7 +1571,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Maximum distance between seating \u2014 OFS circulation routes (BS 8300)",
+      "notes": "Maximum distance between seating — OFS circulation routes (BS 8300)",
       "conditions": []
     },
     {
@@ -1532,7 +1583,7 @@
       "value_min": 18,
       "value_max": 22,
       "value_median": 20,
-      "unit": "\u00b0C",
+      "unit": "°C",
       "evidence_tier": "Co-1/Tier 3",
       "populations": [
         "OFS"
@@ -1547,7 +1598,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "Individual thermostat at Tier 2",
       "percentile_basis": null,
-      "notes": "Ambient temperature range \u2014 OFS (thermoregulation sensitivity)",
+      "notes": "Ambient temperature range — OFS (thermoregulation sensitivity)",
       "conditions": []
     },
     {
@@ -1576,7 +1627,7 @@
       "recommendation_strength": "Strong at Tier 0 (bilateral presence)",
       "tier_2_note": "OT resolves height at Tier 2",
       "percentile_basis": null,
-      "notes": "Bilateral grab bar height \u2014 NEU (stroke/ABI requiring both sides)",
+      "notes": "Bilateral grab bar height — NEU (stroke/ABI requiring both sides)",
       "conditions": []
     },
     {
@@ -1604,7 +1655,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Corridor clear width for bilateral frame users \u2014 NEU",
+      "notes": "Corridor clear width for bilateral frame users — NEU",
       "conditions": []
     },
     {
@@ -1631,7 +1682,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "OT assessment mandatory at Tier 2",
       "percentile_basis": null,
-      "notes": "Seat height \u2014 PAIN (joint load reduction; avoid deep hip flexion)",
+      "notes": "Seat height — PAIN (joint load reduction; avoid deep hip flexion)",
       "conditions": []
     },
     {
@@ -1658,7 +1709,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Resilient flooring specification \u2014 PAIN joint impact reduction (no quantified standard; expert consensus)",
+      "notes": "Resilient flooring specification — PAIN joint impact reduction (no quantified standard; expert consensus)",
       "conditions": []
     },
     {
@@ -1687,7 +1738,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Looped circulation \u2014 DEM; no dead-ends; 10+ jurisdictions consensus",
+      "notes": "Looped circulation — DEM; no dead-ends; 10+ jurisdictions consensus",
       "conditions": []
     },
     {
@@ -1715,7 +1766,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum illuminance \u2014 DEM (glare-free; no harsh shadows)",
+      "notes": "Minimum illuminance — DEM (glare-free; no harsh shadows)",
       "conditions": []
     },
     {
@@ -1743,7 +1794,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "LRV contrast \u2014 DEM wayfinding (same threshold as VIS; double-coded)",
+      "notes": "LRV contrast — DEM wayfinding (same threshold as VIS; double-coded)",
       "conditions": []
     },
     {
@@ -1771,7 +1822,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Maximum decision points per route segment \u2014 IntD cognitive load (proxied through DEM/NDV)",
+      "notes": "Maximum decision points per route segment — IntD cognitive load (proxied through DEM/NDV)",
       "conditions": []
     },
     {
@@ -1805,7 +1856,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "Context-specific; squat toilet adaptation",
       "percentile_basis": null,
-      "notes": "Raised platform height for squat-to-seat transition \u2014 Global South",
+      "notes": "Raised platform height for squat-to-seat transition — Global South",
       "conditions": []
     },
     {
@@ -1835,7 +1886,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum wet area clear floor space \u2014 Global South accessible bathroom",
+      "notes": "Minimum wet area clear floor space — Global South accessible bathroom",
       "conditions": []
     },
     {
@@ -1866,7 +1917,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Fold-down grab bar minimum load capacity \u2014 1500N (ISO 6875)",
+      "notes": "Fold-down grab bar minimum load capacity — 1500N (ISO 6875)",
       "conditions": []
     },
     {
@@ -1896,7 +1947,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "OT assessment at Tier 2",
       "percentile_basis": null,
-      "notes": "Fold-down grab bar height \u2014 toilet transfer position",
+      "notes": "Fold-down grab bar height — toilet transfer position",
       "conditions": []
     },
     {
@@ -1925,7 +1976,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Fold-down grab bar projection from wall \u2014 transfer space",
+      "notes": "Fold-down grab bar projection from wall — transfer space",
       "conditions": []
     },
     {
@@ -1955,7 +2006,7 @@
       "recommendation_strength": "Strong at Tier 0 (assembly venues)",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Assistive listening system SNR minimum \u2014 18dB (IEC 60268-16)",
+      "notes": "Assistive listening system SNR minimum — 18dB (IEC 60268-16)",
       "conditions": []
     },
     {
@@ -1985,7 +2036,7 @@
       "recommendation_strength": "Strong at Tier 0",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Hearing loop \u2014 100% area coverage required",
+      "notes": "Hearing loop — 100% area coverage required",
       "conditions": []
     },
     {
@@ -2014,7 +2065,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Minimum STC partition rating \u2014 DEAF acoustic separation",
+      "notes": "Minimum STC partition rating — DEAF acoustic separation",
       "conditions": []
     },
     {
@@ -2043,7 +2094,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Background noise ceiling \u2014 DEAF meeting/consultation room",
+      "notes": "Background noise ceiling — DEAF meeting/consultation room",
       "conditions": []
     },
     {
@@ -2073,7 +2124,7 @@
       "recommendation_strength": "Strong at Tier 0 (educational)",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "RT60 maximum \u2014 DEAF classroom (BB93/DIN 18041/ANSI S12.60)",
+      "notes": "RT60 maximum — DEAF classroom (BB93/DIN 18041/ANSI S12.60)",
       "conditions": []
     },
     {
@@ -2102,7 +2153,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "NRC rating \u2014 ceiling/wall treatment for DEAF classroom",
+      "notes": "NRC rating — ceiling/wall treatment for DEAF classroom",
       "conditions": []
     },
     {
@@ -2130,7 +2181,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Glazing sightline band height \u2014 DEAF DeafSpace (900\u20131800mm priority zone)",
+      "notes": "Glazing sightline band height — DEAF DeafSpace (900–1800mm priority zone)",
       "conditions": []
     },
     {
@@ -2158,7 +2209,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Lighting uniformity ratio \u2014 DEAF (signing visibility; \u22650.7 Emin/Eavg)",
+      "notes": "Lighting uniformity ratio — DEAF (signing visibility; ≥0.7 Emin/Eavg)",
       "conditions": []
     },
     {
@@ -2185,7 +2236,7 @@
       "recommendation_strength": "Conditional at Tier 1",
       "tier_2_note": "",
       "percentile_basis": null,
-      "notes": "Clear diameter \u2014 signing circle / Deaf meeting space (DeafSpace research)",
+      "notes": "Clear diameter — signing circle / Deaf meeting space (DeafSpace research)",
       "conditions": []
     }
   ]
