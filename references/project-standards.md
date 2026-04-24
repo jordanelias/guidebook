@@ -11,14 +11,20 @@ DATE: 2026-04-24 23:38 — enshrined as foundational principle; governs all othe
 RULE: Disability populations are not uniform. Every person within a population code has a unique experience and unique functional limitations, even where there is significant overlap with others who share the same condition. There are different ways to struggle with mobility, different ways to be blind, different ways to have MS, different ways to be autistic, different ways to have dementia, different ways to experience PTSD. There is no generic ideal for any population. Specifications provide ranges and starting points — not definitive answers. It is rare for a disability to be experienced in isolation; co-occurring conditions are the norm. Every item specification must acknowledge functional variability within the population and discuss how co-occurrence affects the design parameter, because that is the lived reality of the people the guidebook serves. Population codes are a high-level organizing principle: at Tier 0 they are comprehensive (mapping all considerations); at Tier 1 they offer insight (what to think about for a known population); at Tier 2 they step aside because a person is not defined by their disabilities — OT works bottom-up from functional impairments because everything must be uniquely tailored to the individual.
 DATE: 2026-04-24 23:38
 
-RULE: Best practice is not determined by code. Best practice is determined by the evidence hierarchy: Tier 1 (OT clinical research), Co-1 (lived experience), Co-2 (OT CPGs), Tier 3 (systematic reviews). Codes are Tier 6 — the lowest evidence tier. They set the compliance floor. Code consensus across jurisdictions establishes what most codes agree on; it does not establish what most fully removes barriers or what is most accommodating, dignified, and usable. A BPC best_practice_synthesis that derives its value solely from code consensus is in error. The test: is this value derived from what codes agree on, or from what the evidence says actually serves the person? If the former, it is a code floor, not best practice.
-DATE: 2026-04-24 23:38
-
 RULE: Three-Tier Design Hierarchy governs all specifications. Tier 0 = Universal Design / Code Compliance (population-agnostic, fixed values). Tier 1 = Population-Informed Inclusive Design (ranges; median as default). Tier 2 = Person-Specific Co-Design (OT assessment resolves position within Tier 1 range). DAR mandatory at all tiers.
 DATE: Established — pre-session
 
+RULE: Evidence hierarchy is seven tiers. Tier 1 = OT intervention-tested clinical research; Co-1 = lived experience / participatory design (CRPD Art. 4.3, co-primary with Tier 1); Tier 2 = NGO/DPO/advocacy guidelines; Co-2 = OT professional body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT); Tier 3 = systematic reviews and meta-analyses; Tier 4 = international standards with evidence basis; Tier 5 = national beyond-code frameworks; Tier 6 = statutory codes (reference baseline only). OT body guidelines = Tier 3 with [Tier 3 — CPG] marker. The evidence hierarchy determines what constitutes best practice. Codes (Tier 6) inform us in situations where nothing else can. Where higher-tier evidence exists, it governs.
+DATE: 2026-03-19 19:00; consolidated 2026-03-29; elevated to Core Doctrine 2026-04-24 23:46
+
+RULE: Best practice means the most accommodating, thoughtful, respectful, dignified, and usable condition achievable for the disabled person. Best practice is determined by the evidence hierarchy — Tier 1 clinical research, Co-1 lived experience, Co-2 OT CPGs, Tier 3 systematic reviews — not by code consensus. Codes are Tier 6: the compliance floor, not the aspiration. Code consensus across jurisdictions establishes what most codes agree on; it does not establish what is most accommodating or most dignified. A BPC best_practice_synthesis that derives its value solely from code consensus is in error. The test: does this specification provide the most accommodating, dignified, usable condition the evidence supports — or does it merely reflect what codes agree on?
+DATE: 2026-04-24 23:46 — replaces and supersedes prior "best practice is not determined by code" rule
+
 RULE: Universal design is co-extensive with code compliance — the floor, not an aspiration. Inclusive design is the positive aspiration.
 DATE: Established — pre-session
+
+RULE: Evidence specification markers. ● (filled circle) = evidence-based specification (Tier 1–6). ○ (empty circle) = inferred from clinical reasoning or expert consensus (gap disclosed). Every specification sentence carries either ● or ○. Unmarked = error.
+DATE: 2026-03-20 21:00
 
 RULE: BAR is not a main taxonomy code. Large body size is not a disability. BAR provisions belong in Supplementary Volume Supp. Part 4 only. No BAR reference, cross-reference, heading, or J-code is permitted in Volumes I–II. Delete on sight without replacement or pointer. Category J (J-01–J-05) is struck from Volume II Part 4.
 DATE: Established — pre-session; consolidated 2026-03-29
@@ -43,16 +49,6 @@ DATE: 2026-03-26 16:00
 
 RULE: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Tier 1 only. At Tier 2, conflict resolution is the domain of the OT and the individual through co-design. The guidebook's Tier 2 role is to equip non-OT professionals with decision frameworks and structured approaches — not prescriptive answers.
 DATE: 2026-03-26 16:00
-
----
-
-## Evidence Hierarchy
-
-RULE: Evidence hierarchy is seven tiers (D-18 extension). Tier 1 = OT intervention-tested clinical research; Co-1 = lived experience / participatory design (CRPD Art. 4.3, co-primary with Tier 1); Tier 2 = NGO/DPO/advocacy guidelines; Co-2 = OT professional body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT); Tier 3 = systematic reviews and meta-analyses; Tier 4 = international standards with evidence basis; Tier 5 = national beyond-code frameworks; Tier 6 = statutory codes (reference baseline only). OT body guidelines = Tier 3 with [Tier 3 — CPG] marker.
-DATE: 2026-03-19 19:00; consolidated 2026-03-29
-
-RULE: Evidence specification markers. ● (filled circle) = evidence-based specification (Tier 1–6). ○ (empty circle) = inferred from clinical reasoning or expert consensus (gap disclosed). Every specification sentence carries either ● or ○. Unmarked = error.
-DATE: 2026-03-20 21:00
 
 ---
 
