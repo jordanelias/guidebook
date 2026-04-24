@@ -73,3 +73,51 @@ no_data_flags: []
 bpc_ref: "neurological-built-environment|NEU"
 note: "EN evidence strong for wayfinding/ABI. DE extended pass complete: BAR is rehabilitation coordination body (not built env design org); DE built env NEU guidance embedded in Wohnraumanpassung practice (SGB XI 40) and DIN 18040 — no standalone document. JA extended pass complete: 高次脳機能障害 provisions in prefectural support centre guidance and MLIT 建築設計標準 (already in BPC). NL/Nordic pass still recommended for rehabilitation facility design literature."
 ```
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SG: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
