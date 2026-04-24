@@ -1342,3 +1342,28 @@ T3-039=T3-040 | T3-051=T3-050 | T3-059=T3-058 | T3-106=T3-105 | T3-128=T3-127
 
 session_close: 2026-04-24 05:01
 next_action: Tier 4–6 verification (self-verifying standards body sources)
+
+
+## Block 22 — Appendix A Expanded + Phase 4
+
+### Appendix A: 17 tables (was 10)
+New tables A.11-A.17: grab bars, anti-scald temperature, slip resistance methods,
+door opening force, rest seating intervals, classroom acoustics, signage.
+
+### FINAL CONVERSATION OUTPUT
+
+| Metric | Value |
+|---|---|
+| Total commits | ~270 |
+| Blocks | 22 |
+| Phases completed | 11 |
+| Part 4 items with jurisdiction data | 91/91 (100%) |
+| Search-log files enriched | 90/90 (100%) |
+| Appendix A tables | 17 |
+| Spec database records with jurisdiction | 60/73 (82%) |
+| Reference documents created | 7 |
+| Measurable jurisdiction divergences catalogued | 17 parameters |
+| Beyond-code provisions documented | 25 items |
+| Opus synthesis narratives | 13 parameters |
+
+session_close: 2026-04-23 20:30
