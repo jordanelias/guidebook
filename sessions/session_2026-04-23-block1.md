@@ -586,3 +586,33 @@ next_action: >
   DIVERGENCE items. Estimated 10-13 sessions per workplan.
 
 session_close: 2026-04-23 13:15
+
+
+## Block 4 — Co-1 Verification (25/29 entries)
+
+Completed 2026-04-24 03:34.
+
+### Summary
+- 18 VERIFIED (17 correct + 1 with correction)
+- 1 VERIFIED-WITH-CORRECTION (Clark "Against Access" — wrong year and format in BPC)
+- 3 UNVERIFIED-1 (APF France, NDTi/NHS, pending; Vaughn 2018 resolved in same session)
+- 3 UNVERIFIED-CLOSED (Gallaudet 2008 internal, Kaiser 2020 internal, DPI Japan JA)
+- 2 CLOSED-DELETED (Nigeria DIY n.d., De Hogeweyk internal)
+
+### Corrections
+- Clark 2021 "Against Access McSweeney's" — year wrong (2022), format wrong (essay not book)
+- 3 BPC duplicate entries (DSDC x2, CDC x3, Bateman Horne x2) — consolidate
+- Protactile Wikipedia citation — upgrade to Nuccio/granda/Clark primary papers
+- De Hogeweyk POE — already BPC-marked unverifiable; CLOSED-DELETED confirmed
+
+### Artefacts committed
+- `references/co1-verified-sources.json` (SHA 9de40095b897)
+- `references/co1-verification-report-2026-04-23.md`
+
+### Next actions
+1. Resolve 3 Co-1 UNVERIFIED-1 (APF France, NDTi/NHS England, then continue)
+2. Tier 2/Co-2 verification (55 entries)
+3. Apply all BPC corrections across Tier 1 and Co-1
+
+session_close: 2026-04-24 03:34
+next_action: Co-1 second searches + Tier 2/Co-2 verification
