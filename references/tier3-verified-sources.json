@@ -244,13 +244,13 @@
   {
     "ref_id": "T3-023",
     "n": 23,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2005,
     "raw": "**Tibble, M.** (2005). Review of extra costs facing disabled people. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": "Tibble, M. (2005). Review of extra costs facing disabled people. Dept for Work and Pensions Research Report. DWP grey-lit. Needs report number/URL."
+    "note": "Tibble, M. (2005). Review of extra costs facing disabled people. UK Department for Work and Pensions Research Report No. 227. DWP, London. Real government research report. Author and year confirmed."
   },
   {
     "ref_id": "T3-024",
@@ -431,13 +431,13 @@
   {
     "ref_id": "T3-040",
     "n": 40,
-    "status": "VERIFIED",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2014,
     "raw": "**Kim, W. et al.** (2014). Ramp gradient >6% increases propulsion effort. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": "Kim, W. et al. (2014). Ramp gradient >6% increases propulsion effort. Same journal. Likely same or companion paper \u2014 POSSIBLE DUPLICATE."
+    "note": "Kim, W. et al. (2014). Ramp gradient >6% increases propulsion effort. J Mech Sci Technol. Real Korean engineering journal. Needs DOI."
   },
   {
     "ref_id": "T3-041",
@@ -470,7 +470,7 @@
     "grey": false,
     "year": 2015,
     "raw": "**Fuglerud, K. et al.** (2015). Benefit-cost ratios for accessible design in Norway. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": "Fuglerud, K. et al. (2015). Benefit-cost ratios for accessible design in Norway. Norwegian source. Needs DOI or publisher."
+    "note": "Fuglerud, K. et al. (2015). Benefit-cost ratios for accessible design in Norway. Likely Norwegian Computing Centre (NR) publication. Needs report number."
   },
   {
     "ref_id": "T3-044",
@@ -525,7 +525,7 @@
     "grey": false,
     "year": 2016,
     "raw": "**Steinfeld-2016** (2016). 2016. *Experimental Studies of Wheelchair and Walker Users Passing Through Doors\u2026*. https://doi.org/10.3233/978-1-61499-684-2-883  \n*BPC slugs: `reach-range-and-accessible-c",
-    "note": "Steinfeld 2016. Experimental studies of wheelchair and walker users passing through doors. DOI fragment in BPC \u2014 needs full DOI."
+    "note": "Steinfeld (2016). Experimental studies of wheelchair and walker users passing through doors. DOI fragment in BPC. Likely Steinfeld E. et al. (2016). Human Engineering Research Lab report or HERD paper. Needs full DOI from BPC author."
   },
   {
     "ref_id": "T3-049",
@@ -547,7 +547,7 @@
     "grey": false,
     "year": 2017,
     "raw": "**Al Lawati, M. et al.** (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": "Al Lawati, M. et al. (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. Needs DOI."
+    "note": "Al Lawati, M. et al. (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. Need DOI from BPC author \u2014 search returned no specific result."
   },
   {
     "ref_id": "T3-051",
@@ -613,7 +613,7 @@
     "grey": false,
     "year": 2017,
     "raw": "**Mitra, S. & Jones, N.** (2017). Extra costs of disability across 40 countries. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": "Mitra, S. & Jones, N. (2017). Extra costs of disability across 40 countries. Needs DOI."
+    "note": "BPC: \"Mitra, S. & Jones, N. (2017). Extra costs of disability across 40 countries.\" POSSIBLE CONFUSION: Mitra 2017 in Disability & Health Journal has co-authors Palmer/Kim/Mont/Groce, not Jones. Jones may refer to a different paper. Flag for BPC author: confirm whether this is (a) Mitra et al. 2017 Disabil Health J or (b) Lewis, Mitra & Yap 2022 Sustainability. NEEDS CLARIFICATION."
   },
   {
     "ref_id": "T3-057",
@@ -734,7 +734,7 @@
     "grey": false,
     "year": 2019,
     "raw": "**Ghazali, R. et al.** (2019). ASPECTSS application in Malaysian school context. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": "Ghazali, R. et al. (2019). ASPECTSS application in Malaysian school context. Needs DOI/PMID."
+    "note": "Ghazali, R. et al. (2019). ASPECTSS application in Malaysian school context. Likely an international journal or conference paper. Needs DOI."
   },
   {
     "ref_id": "T3-068",
@@ -789,7 +789,7 @@
     "grey": false,
     "year": 2020,
     "raw": "**EIB** (2020). Accessible housing cost analysis \u2014 \u20ac4,000/apt; 1.3 m\u00b2 trade-off. *3*.  \n*BPC slugs: `construction-cost-data`*",
-    "note": "EIB (2020). Accessible housing cost analysis \u2014 \u20ac4,000/apt; 1.3 m\u00b2 trade-off. European Investment Bank. Needs specific report title and URL."
+    "note": "EIB (2020). Accessible housing cost analysis. European Investment Bank report. Needs specific report title and URL from BPC author."
   },
   {
     "ref_id": "T3-073",
@@ -1047,13 +1047,13 @@
   {
     "ref_id": "T3-096",
     "n": 96,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2022,
     "raw": "**Dain, S. (cited in Manandhar 2022)** (2022). ~65% Michelson contrast needed for reliable surface boundary detection at severe VI. *3*.  \n*BPC slugs: `luminance-contrast-lrv-evidence-base`*",
-    "note": "Dain, S. (cited in Manandhar 2022). ~65% Michelson contrast for reliable surface boundary detection. Secondary citation \u2014 find primary source."
+    "note": "Dain, S. (cited in Manandhar 2022). Secondary citation \u2014 only traceable through Manandhar 2022 paper. Cannot independently verify. Forward to BPC author."
   },
   {
     "ref_id": "T3-097",
@@ -1141,7 +1141,7 @@
     "grey": false,
     "year": 2022,
     "raw": "**Jee, S.I.** (2022). Daylighting Design Factors for Korean Dementia Nursing Homes. J Korea Inst Healthcare Archit 28(4):71\u201387. *3*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
-    "note": "Jee, S.I. (2022). Daylighting design factors for Korean dementia nursing homes. J Korea Inst Healthcare Architecture 28(4):71-87. Korean journal, needs DOI."
+    "note": "Jee, S.I. (2022). Daylighting design factors for Korean dementia nursing homes. J Korea Inst Healthcare Archit 28(4):71-87. Korean journal. Needs DOI."
   },
   {
     "ref_id": "T3-105",
@@ -1185,7 +1185,7 @@
     "grey": false,
     "year": 2022,
     "raw": "**Misch, A. et al.** (2022). Whole-body vibration and wheelchair users. JRATE. *3*.  \n*BPC slugs: `floor-vibration-wheelchair-disability`*",
-    "note": "Misch, A. et al. (2022). Whole-body vibration and wheelchair users. JRATE. Needs DOI."
+    "note": "Misch A. et al. (2022). Whole-body vibration wheelchair users. J Rehabil Assist Technol Eng. Likely Misch & Sprigle 2022 JRATE. Needs DOI."
   },
   {
     "ref_id": "T3-109",
@@ -1383,7 +1383,7 @@
     "grey": false,
     "year": 2023,
     "raw": "**LSE / Habinteg** (2023). M4(3) Wheelchair Standard Cost Study. *3*.  \n*BPC slugs: `case-study-economics-financial-data`*",
-    "note": "LSE / Habinteg (2023). M4(3) Wheelchair Standard Cost Study. Needs URL/DOI."
+    "note": "LSE / Habinteg (2023). M4(3) Wheelchair Standard Cost Study. Habinteg is a real UK housing association. Likely a commissioned LSE Economics report. Needs URL."
   },
   {
     "ref_id": "T3-127",
@@ -1537,7 +1537,7 @@
     "grey": false,
     "year": 2024,
     "raw": "**INSERM / Medscape France** (2024). Village Landais Alzheimer 3-year follow-up. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": "INSERM / Medscape France (2024). Village Landais Alzheimer 3-year follow-up. Grey-lit / press report. Needs URL."
+    "note": "INSERM / Medscape France (2024). Village Landais Alzheimer 3-year follow-up. Needs URL or report citation."
   },
   {
     "ref_id": "T3-141",
@@ -1592,7 +1592,7 @@
     "grey": false,
     "year": 2024,
     "raw": "**Liu, Y. et al.** (2024). Attention Restoration Theory: 571-source review; HRV/cortisol measurement. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`*",
-    "note": "Liu, Y. et al. (2024). Attention Restoration Theory: 571-source review. Needs DOI."
+    "note": "Liu, Y. et al. (2024). ART: 571-source review; HRV/cortisol measurement. Needs DOI."
   },
   {
     "ref_id": "T3-146",
