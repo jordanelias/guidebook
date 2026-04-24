@@ -1740,3 +1740,35 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 07:20
+
+
+## Block 17 — Opus Adjudication: WGS-01
+
+Completed 2026-04-24 07:12M. Model: Opus 4.6.
+
+### WGS-01 Patil & Raghani 2025 — Tier Adjudication
+
+**Source:** Patil, A. & Raghani, S. (2025). Designing accessible and independent living
+spaces for visually impaired individuals. Int J Equity Health 24(1):137.
+DOI:10.1186/s12939-025-02503-5. PMID:40375267.
+
+**Ruling: Tier 1 → Co-1**
+
+**Reasoning:**
+- Not Tier 1: No OT intervention defined, tested, or measured against baseline/comparator.
+  The study is observational/descriptive — examines existing accessibility barriers.
+- Co-1: Mixed-methods design study incorporating lived experience of VI users via
+  participatory methods. The "75% gap in tactile wayfinding" is a survey finding,
+  not an intervention outcome. Consistent with CRPD Art. 4.3 participatory evidence.
+- Not Tier 3: Primary research, not a systematic review or meta-analysis.
+
+**Commits:**
+- T1 JSON: 5b7af56291d2
+- Bibliography: tier marker corrected
+
+### Opus queue now empty
+No further items flagged for Opus adjudication.
+
+session_close: 2026-04-24 07:12M
+next_action: AWAITING BPC AUTHOR ACTION — all autonomous work complete
+blockers: none
