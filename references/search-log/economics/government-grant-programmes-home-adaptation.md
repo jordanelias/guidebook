@@ -18,7 +18,7 @@ languages:
   ES: {status: SEARCHED, results: 2, db: [web], note: "Plan Estatal 2022-2025 Programa 11 up to 60% max €12500"}
   PT: {status: SEARCHED, results: 2, db: [web], note: "PIH PRR-funded 100% up to €15500; SAPA assistive products"}
   KO: {status: SEARCHED, results: 2, db: [web], note: "주거급여 3-tier ₩5.9M/₩10.95M/₩16.01M; disability add-on ₩3.8M"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [MHCLG-DFG-2024, NDIS-2024, CRA-HATC-2024, VA-SAH-FY2026, ANAH-MaPrimeAdapt-2024, KfW-159-2025, Husbanken-2025, Bostadsanpassning-2024, Riksdagen-Lov116, HDB-EASE2-2025]
 bpc_ref: "government-grant-programmes-home-adaptation"
 thin_flags: [FI, ZH]
@@ -48,7 +48,7 @@ jurisdiction_coverage:
   KR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -57,11 +57,11 @@ jurisdiction_coverage:
   MX: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
