@@ -2660,6 +2660,9 @@ possibly layout modification. See Part 12 §12.4.1.
 
 ---
 
+**Jurisdiction comparison:** No code addresses sensory gradients. UK PAS 6463:2022 recommends graduated sensory environments. Guidebook's high→low stimulation gradient from entry to occupation is a novel design framework derived from NDV/AUT sensory processing research.
+
+
 ### F-02 Olfactory Control (Fragrance-Free Zones in Sensitive Areas)
 <!-- CON-0015 [HIGH]: F-04 MERV 13+/TVOC + F-02 fragrance-free — chemical sensitivity co-specification -->
 <!-- design_stage_lock: DD -->
@@ -2697,6 +2700,9 @@ Part 12 §12.4.1.
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Fragrance-free zones implement the EHP 'prevent' strategy by removing chemical trigger sources before they reach OFS/MCAS, NDV, and PAIN users; the specification of no introduced fragrance sources (diffusers, cleaning products, personal fragrance signage) is the minimum preventive context.
 
+**Jurisdiction comparison:** No code addresses olfactory control as accessibility. WELL Air concept includes VOC limits. Guidebook specifies fragrance-free zones in sensitive areas — derived from MCAS/OFS/migraine chemical sensitivity evidence.
+
+
 ### F-03 Graduated Stimulation Re-entry (Sensory Room to General Space Transition)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
@@ -2730,6 +2736,9 @@ intervention. See Part 12 §12.4.2.
 **Cross-reference:** A-16 (Sensory Room); F-01 (Sensory Gradient)
 
 **Evidence basis (OT):** EHP Framework (establish strategy); Dunn's Sensory Processing Model. Graduated re-entry implements EHP's 'establish' strategy: the design builds on the user's existing regulatory capacity by providing a low-stimulation transition space that allows sensory regulation to be re-established at the user's own pace before re-entering higher stimulation zones.
+
+**Jurisdiction comparison:** No code addresses transition from low-stimulation to general spaces. Guidebook-specific provision — sensory room users need graduated re-entry to avoid sensory shock. Cross-reference A-16 (sensory room), F-01 (sensory gradient).
+
 
 ### F-04 Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)
 <!-- CON-0015 [HIGH]: F-04 MERV 13+/TVOC + F-02 fragrance-free — chemical sensitivity co-specification -->
@@ -2921,6 +2930,9 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 **Tier disclosure:** [EXPERT CONSENSUS — no built-environment standard or OT CPG mandates fragrance-free policy for chemical sensitivity populations in any jurisdiction searched (March 2026). WELL v2 Air Quality feature is the closest voluntary framework but does not specify fragrance-free policy. This item is operational policy, not architectural specification. Evidence review recommended at next revision.]
 
+**Jurisdiction comparison:** No building code mandates fragrance-free policies. US Job Accommodation Network provides guidance. Some US/CA government buildings have voluntary policies. Guidebook specifies whole-building operational standard — derived from MCAS/OFS chemical sensitivity evidence.
+
+
 ### F-07 Thermal Zoning — Building-Wide Temperature Management
 <!-- CON-0041 [HIGH]: Japan heat shock: inter-room thermal differential ≤5°C; F-07 heated bathroom floor as prevention -->
 <!-- CON-0102 [HIGH]: F-04/F-06/F-07/F-08 interdependent OFS/MCAS HVAC system — F-category coherence note required -->
@@ -3045,6 +3057,9 @@ Review: policy reviewed annually and updated to reflect changes in cleaning prod
 
 ## CATEGORY G: FURNITURE, FIXTURES AND INTERIOR ELEMENTS
 
+**Jurisdiction comparison:** No code addresses thermal transition as accessibility. ASHRAE 55 and EN 16798-1 address thermal comfort but not transition response. Guidebook specifies heating/cooling system response time — derived from MS heat sensitivity (Uhthoff's) and OFS temperature intolerance evidence.
+
+
 ### G-01 Defensible Seating (Back-to-Wall, Entry Sightline Configuration)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -3083,6 +3098,9 @@ Partitions); C-01 (Palette)
 
 **Evidence basis (OT):** PEOP Model (volition subsystem); Prospect-Refuge Theory. Defensible seating implements both Prospect-Refuge Theory (back-to-wall, sightline to exit satisfies the evolutionary preference for refuge with prospect) and PEOP's volition subsystem: the ability to choose a seating position that supports psychological safety is a fundamental occupational participation right for MH/PTSD users.
 
+**Jurisdiction comparison:** No code mandates back-to-wall seating. UK PAS 6463 recommends defensible space for NDV/MH. Crime Prevention Through Environmental Design (CPTED) provides general defensible space framework. Guidebook specifies for NDV/MH/PTSD populations.
+
+
 ### G-02 Variety of Seating Types (Three Heights at Every Seating Area; Upholstered Options Throughout)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -3118,6 +3136,9 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 **Cross-reference:** G-01 (Defensible Seating); G-03 (Armrests)
 
 **Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions derives from biomechanical research on the muscle force requirements of sit-to-stand transfer: 450--500mm seat height reduces hip extensor moment by \~40% compared to 380mm (Rodosky et al. 1989); armrest availability reduces peak shoulder force during sit-to-stand by 15--25%.
+
+**Jurisdiction comparison:** No code specifies seating variety. UK BS 8300 references different seat heights (450mm standard). Guidebook specifies three heights at every seating area — derived from MOB/OFS/PAIN clinical evidence for varied transfer heights and postures.
+
 
 ### G-03 Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)
 <!-- CON-0120 [HIGH]: G-03 grab bars bilateral/vertical + G-04 wet room zero-threshold — bathroom safety cluster -->
@@ -3369,6 +3390,15 @@ service with the same comfort, privacy, and dignity as a non-disabled person is 
 within the primary waiting area (not a segregated accessible area) implements this principle.
 
 ## CATEGORY H: CONTROLS, TECHNOLOGY AND INDIVIDUAL ENVIRONMENTAL CONTROL
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Accessible Seating | Seat Height | Armrests | Clear Space |
+|---|---|---|---|---|---|
+| US | ADA §903 | Required | — | — | Clear floor space adjacent |
+| UK | BS 8300-2:2018 §10 | Required | 450-475mm | Both sides | 900mm clear |
+| **Guidebook** | **G-07** | **Adjacent to service** | **Three heights** | **Both sides** | **Wheelchair companion** |
+
 
 ### H-01 All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)
 <!-- CON-0095 [HIGH]: H-series self-service terminals: voice + tactile + adjustable height for VIS/MOB/NDV -->
@@ -4146,6 +4176,16 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Retrofit:** LOW penalty — adjustable-height desk mechanisms are non-structural; DAR provision at construction stage: conduit for powered desk motors; knee-clearance maintained under all fixed worktops.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Reach Range | Rail Height | Shelf Height | Notes |
+|---|---|---|---|---|---|
+| US | ADA §811 / A117.1 | Per §308 reach ranges | — | — | Storage elements |
+| UK | M4(2) / M4(3) | — | — | — | Wheelchair-user dwellings |
+| DE | DIN 18040-2 | 850-1050mm handles | — | — | General reach |
+| **Guidebook** | **G-08** | **Per H-01 (900-1100mm)** | **Adjustable** | **Adjustable** | **UPL one-hand operation** |
+
+
 ### G-09 Bedroom Emergency Call Provision and Overnight Lighting
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -4301,6 +4341,9 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Illustration:** [Illustration: to be provided] — Elevation of entrance door showing luminance contrast zones, intercom position at 900–1200 mm AFF, and address numeral placement.
 
 ---
+
+**Jurisdiction comparison:** No code specifies cognitive legibility at entrances. UK PAS 6463 recommends clear entrance identification for NDV. Guidebook specifies visible entrance, clear signage, consistent approach sequence — derived from DEM/NDV wayfinding evidence.
+
 
 ### E-10 Rest Seating on Circulation Routes
 <!-- design_stage_lock: SD -->
