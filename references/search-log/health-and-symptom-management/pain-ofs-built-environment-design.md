@@ -65,7 +65,7 @@ jurisdiction_coverage:
   KR: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
