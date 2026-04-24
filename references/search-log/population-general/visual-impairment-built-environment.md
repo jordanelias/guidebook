@@ -104,3 +104,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Strong code coverage. US ADA detectable warnings, tactile signs. UK BS 8300 LRV contrast, TWSIs. AU AS 1428.4 tactile indicators. DE DIN 32984 Bodenindikatoren, DIN 32975 visual design. JP TWSI originator. ISO 23599 TWSIs.
+
+```
