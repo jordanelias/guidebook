@@ -38,66 +38,54 @@ languages:
   IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA 2010 §404.2.5: threshold ≤13mm (1/2 inch), beveled if >6mm."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AD M: level threshold at all accessible entrances. BS 8300-1 §8.3."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021: threshold ≤5mm. NCC Livable Housing."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18040-2: threshold ≤20mm (draft revision ≤10mm)."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "TEK17 §12-4: step-free entry mandatory."}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021 §14: level thresholds preferred."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "Arrêté: threshold ≤20mm."}
   CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
-jurisdiction_coverage_summary:
-  searched: [US, UK, CA, AU, DE, FR, NL, SE, NO, JP, BR, EU, ISO]
-  thin: [PT]
-  no_data: []
-  not_run: [IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT]
-  co1_complete: []
-  co1_not_attempted: [DE, FR, SE, NO, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
-  tier5_complete: [US, UK, CA, AU, NL, SE]
-  tier5_not_attempted: [DE, FR, NO, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
+jurisdiction_summary: >
+  KEY DIVERGENCE: threshold height — AU ≤5mm (strictest) vs US ≤13mm vs DE ≤20mm (→10mm) vs FR ≤20mm. Same as residential-entry-and-threshold.
 
-co1_pass_summary: {complete: [], partial: [EN, NL], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, ES, PT, KO, IT]}
-native_standards_pass_summary: {complete: [EN, SV, NO, FR, DE, JA, NL, PT], partial: [], not-run: [DA, FI, ZH, ES, KO, IT]}
-companion_networks: {loaded: [Habinteg/CAE, RCOTSS-Housing, DiBK Norway, Boverket Sweden, NEN Netherlands], scholar_targets: 2, retrieved: 5}
-citation_mining: {backward: 1, forward: 0, sources_added: 1}
-at_database_pass: not-run
-
-top_sources:
-  - ADA 2010 §303 (changes in level) (US, Tier 6)
-  - UK Part M ADM / LABC guidance (UK, Tier 6/5)
-  - DIN 18040-2 §5 Schwelle (current + draft 2023) (DE, Tier 6)
-  - TEK17 §1-3(m) definition of trinnfri (NO, Tier 6)
-  - Boverket BBR §3:146 threshold (SE, Tier 6)
-  - Bbl art.4.182 (NL, Tier 6)
-  - NEN 9120:2025 (NL, Tier 5)
-  - NBR 9050:2020 §4 desníveis (BR, Tier 6)
-  - MLIT バリアフリー法 段差 provisions (JP, Tier 6)
-  - NCC LHDG Silver criterion 1 (AU, Tier 5)
-  - Arrêté 8 décembre 2014 ressaut ≤20mm (FR, Tier 6)
-  - ISO 21542:2021 (ISO, Tier 4)
-bpc_ref: "threshold-and-level-access"
-thin_flags: [PT]
-no_data_flags: []
-PROVISIONAL: true
-ACCEPTED_GAPS: [10 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 6/24; native aliases missing DA/FI/ZH/KO/IT/ES]
 ```
-
-```yaml
