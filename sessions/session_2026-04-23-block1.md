@@ -109,3 +109,65 @@ next_action: >
   to determine current per-jurisdiction tracking state.
 
 session_close: 2026-04-23 06:45
+
+
+## Block 3 — Phase 2A Audit
+
+### Phase 2A Complete
+Jurisdiction coverage audit across all 90 search-log entries (76 topic + 14 population).
+Deliverable: `references/jurisdiction-coverage-audit-2026-04.md`
+
+**Critical structural finding:** Per-jurisdiction tracking (Axis 2) essentially does not exist.
+All search-log files track by language (Axis 1) only. None have the per-jurisdiction status
+records required by project-standards.md. Phase 2B-E is new construction, not backfill.
+
+### Audit Numbers
+- OK (≥10 langs, 0 NOT-RUN): ~16 (20%)
+- PARTIAL (some NOT-RUN): ~43 (52%)
+- EMPTY (no data): ~18 (22%)
+- With any jurisdiction tracking: ~17 (21%)
+- With full 46-jurisdiction tracking: 0
+
+### Priority 1 Targets (EMPTY + High Item Impact)
+1. circadian-lighting-melanopic-edi → B-01
+2. assistive-listening-systems → A-10, A-11
+3. deaf-classroom-reverberation-time → A-04
+4. visual-fire-alarm-seizure-safety → B-10
+5. therapeutic-lighting-design → B items
+6. chronic-pain-built-environment → PAIN
+7. fatigue-spectrum-built-environment → OFS
+
+### Priority 2 Targets (High NOT-RUN + Item Impact)
+1. reach-range-and-accessible-controls → H items (10 NOT-RUN!)
+2. sensory-room-user-control → A-16 (13 NOT-RUN!)
+3. residential-entry-and-threshold → E-06 (6 NOT-RUN)
+
+commits_block3:
+  - cc061c8c57fe: jurisdiction-coverage-audit-2026-04.md
+
+## Full Session Summary
+
+commits_all:
+  - 38a9e019e3aa: workplan created
+  - 4ac36c443541: Phase 1A+1B+1C(partial)
+  - 2e0e53fac46b: Phase 1C complete
+  - 14627b95d7e4: Phase 1D complete
+  - cc061c8c57fe: Phase 2A audit
+  - (session file updates)
+
+### Workplan Progress
+- Phase 1: COMPLETE (46/46 jurisdictions in standards registry)
+- Phase 2A: COMPLETE (audit report delivered)
+- Phase 2B-E: NOT STARTED (next action)
+- Phase 3-5: NOT STARTED
+
+next_action: >
+  Phase 2B — start with Priority 1 EMPTY slugs.
+  Session 2B-1: circadian-lighting-melanopic-edi + therapeutic-lighting-design.
+  Load multilingual-research skill + research-log-manager.
+  Full run: keyword compendium → Step 1–3 → citation-miner → LOG.
+  Add per-jurisdiction status block to search-log.
+
+blockers: none
+
+session_close: 2026-04-23 07:15
