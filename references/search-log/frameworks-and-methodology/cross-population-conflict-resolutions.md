@@ -75,3 +75,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  No code addresses cross-population conflicts. Guidebook Part 5 addresses. DE Two-Senses principle is closest framework. Resolution methodology is guidebook-specific.
+
+```
