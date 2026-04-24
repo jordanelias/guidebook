@@ -252,9 +252,61 @@ US ANSI S12.60 is the ONLY standard specifying a separate RT target for hearing-
 
 ---
 
+---
+
+## A.18 Platform Lift Dimensions
+
+| Jurisdiction | Standard | Min. Platform (W×D) | Door Width | Max Speed | Max Travel | Notes |
+|---|---|---|---|---|---|---|
+| US | ADA §410 / ASME A18.1 | 915×1220mm (narrow end entry); 915×1524mm (side entry) | 915mm | 0.15 m/s | 3.66m (12 ft) | Unassisted operation required |
+| UK | BS 6440:2011 | 1100×1400mm (adjacent entry); 800×1400mm (straight); 750×1250mm (domestic) | 800mm min | 0.15 m/s | — | Three size tiers by context |
+| EU | EN 81-41:2010 | By wheelchair type; ≥900×1400mm typical | 900mm | 0.15 m/s | — | Harmonised with EN 81-70 elevator types |
+| DE | DIN 18040 + DIN EN 81-41 | 1100×1400mm (Type 2) | 900mm | 0.15 m/s | — | Landesbauordnung may add requirements |
+| AU | AS 1735.12 | 1100×1400mm | 850mm | 0.15 m/s | — | NCC 2022 references |
+| ISO | ISO 21542:2021 | References EN 81-41 | — | — | — | Defers to regional standards |
+| **Guidebook** | **E-12** | **1100×1400mm min** | **900mm** | **0.15 m/s** | **Per code** | **EN 81-41 Type 2 as baseline** |
+
+UK BS 6440 provides the most granular size differentiation by context. US ASME A18.1 is the only standard that distinguishes platform dimensions by entry direction (narrow end vs side approach). The 12 ft (3.66m) US travel limit is the most restrictive globally.
+
+---
+
+## A.19 Accessible Bathroom Minimum Dimensions
+
+| Jurisdiction | Standard | Min. Floor Area (approx.) | Turning Circle | WC Transfer Space | Door Width | Grab Bar Height |
+|---|---|---|---|---|---|---|
+| US | ADA 2010 §604–608 | ~4.2 m² (varies by config) | 1524mm (60″) | 1524mm clear alongside | 815mm (32″) | 838–914mm (33–36″) |
+| UK | BS 8300-2:2018 / Part M | ~4.7 m² (2200×1500mm+) | 1500mm | 1000mm clear alongside | 800mm | 680mm (BS 8300) |
+| DE | DIN 18040-1 (public) | ~5.3 m² | 1500×1500mm | 950mm alongside; 700mm front | 900mm | 850mm |
+| DE | DIN 18040-2 R (residential, wheelchair) | ~4.7 m² | 1500×1500mm | 900mm alongside | 800mm | 850mm |
+| AU | AS 1428.1:2021 | ~5.0 m² | 1950mm (ambulant + WC) or 2070×1600mm | 1200mm alongside | 850mm | 800–810mm |
+| FR | Arrêté 2014 | ~3.6 m² (1300×1300mm + fixtures) | 1500mm | — | 800mm | — |
+| ISO | ISO 21542:2021 | References national | 1500mm | — | 800mm min | — |
+| **Guidebook** | **G-04** | **≥5.0 m²** | **1500mm min** | **1000mm alongside** | **900mm** | **Per population** |
+
+AU requires the largest effective turning space (2070mm for combined transfer + turning). DE DIN 18040-1 (public buildings) is the most prescriptive overall. US ADA grab bar height (838–914mm) is notably higher than UK BS 8300 (680mm) — a 158mm divergence with direct functional impact.
+
+---
+
+## A.20 Tactile Walking Surface Indicator (TWSI) Detail Patterns
+
+| Jurisdiction | Standard | Warning Pattern | Guidance/Directional Pattern | Dome/Bar Height | Dome Diameter (base) | Colour Contrast |
+|---|---|---|---|---|---|---|
+| JP | JIS T 9251:2014 | Truncated dome (点状ブロック) | Linear bar (線状ブロック) | 5mm | 22–25mm | Yellow (70% contrast) |
+| US | ADA 2010 §705 / PROWAG | Truncated dome only | Not specified | — | 23mm base, 0.9mm truncation | 70% LRV contrast |
+| UK | DfT Guidance 2021 | Blister (offset rows) | Corduroy (hazard); Lozenge (guidance) | 5mm | 25mm (blister) | Red/buff (warning); Not specified (guidance) |
+| AU | AS/NZS 1428.4.1:2009 | Truncated dome | Directional bars | 4–5mm | 25–35mm | 30% LRV contrast |
+| DE | DIN 32984:2020 | Truncated dome (Noppenplatte) | Ribbed (Rippenplatte) | 3–5mm | 18–25mm | Luminance contrast ≥0.4 |
+| ISO | ISO 23599:2019 | Truncated dome/cone | Flat-top elongated bar | 4–5mm | 25mm ±2mm | 0.45 min contrast ratio |
+| SG | BCA Code 2019 | Truncated dome (per ISO) | Per ISO 23599 | Per ISO | Per ISO | Yellow preferred |
+| **Guidebook** | **E-09** | **ISO 23599 dome** | **ISO 23599 bar** | **5mm** | **25mm** | **LRV ≥30 points (per C-04)** |
+
+Japan originated TWSIs (Seiichi Miyake, 1965). ISO 23599:2019 harmonised international dimensions from the Japanese original. UK is the only jurisdiction using three distinct patterns (blister, corduroy, lozenge) for different hazard types. US is notable for specifying warning surfaces only — no standardised guidance/directional pattern. DE DIN 32984 allows the widest dome diameter range (18–25mm), while ISO is the most precise (25mm ±2mm).
+
+---
+
 ## Notes (updated)
 
-6. Tables A.11–A.17 were added in Phase 3B (April 2026) based on divergence findings from the jurisdiction sweep.
-7. Anti-scald temperature (A.12) is the most safety-critical divergence — the 6°C spread between DE and US has direct clinical implications for burn injury risk.
-8. Slip resistance (A.13) is the most methodologically complex divergence — practitioners must specify both the target value AND the test method.
-9. Rest seating (A.15) represents the largest gap between guidebook and any code — no jurisdiction requires what the guidebook specifies.
+10. Tables A.18–A.20 were added in Phase 2C-E (April 2026) covering platform lifts, bathroom layouts, and TWSI detail patterns.
+11. Platform lift dimensions (A.18) show limited divergence — EN 81-41 has achieved substantial global harmonisation. The US ASME A18.1 travel limit (12 ft) is the most restrictive constraint.
+12. Accessible bathroom dimensions (A.19) show the largest divergence in grab bar height: US 838–914mm vs UK 680mm (158mm gap). This has direct implications for MOB/UPL population reach and transfer biomechanics.
+13. TWSI patterns (A.20) demonstrate the strongest Japanese technical influence of any accessibility domain. The UK three-pattern system (blister/corduroy/lozenge) is unique globally and carries the richest information content for VIS users.
