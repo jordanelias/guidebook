@@ -1625,3 +1625,35 @@ All planned work is done. Handoff to BPC authors for action report items.
 
 session_close: 2026-04-24 06:32
 next_action: BPC authors to action citation-verification-action-report-2026-04-24.md
+
+
+## Block 24 — Appendix A Expansion Complete
+
+### Deliverable
+`parts/v10/appendix-a-jurisdiction-comparison.md` expanded from 17 to 20 tables.
+
+### New Tables
+- **A.18 Platform Lift Dimensions** — US ASME A18.1 vs UK BS 6440 vs EU EN 81-41 vs DE DIN 18040. Key finding: EN 81-41 achieved substantial global harmonisation; US 12ft travel limit is most restrictive.
+- **A.19 Accessible Bathroom Minimum Dimensions** — US ADA vs UK BS 8300 vs DE DIN 18040-1/2 vs AU AS 1428.1 vs FR Arrêté 2014. Key finding: grab bar height divergence of 158mm (US 838-914mm vs UK 680mm). AU requires largest turning space (2070mm).
+- **A.20 TWSI Detail Patterns** — JP JIS T 9251 (origin) vs ISO 23599 vs US ADA vs UK DfT vs AU AS/NZS vs DE DIN 32984. Key finding: UK unique three-pattern system (blister/corduroy/lozenge); US has no standardised guidance pattern.
+
+commit: 2e7567a83018
+
+### FINAL SESSION OUTPUT
+
+| Metric | Value |
+|---|---|
+| Total commits this session | 20 |
+| Phase 2C-E language backfill | 76/76 files, 19 languages, 46 jurisdictions |
+| Appendix A tables added | 3 (A.18-A.20) |
+| Appendix A total | 20 tables |
+
+next_action: >
+  Phase 4 remaining: 13 spec database records without jurisdiction fields.
+  Tier correction propagation: 10 sources to BPC slugs.
+  Co-1 verification: resolve 3 remaining UNVERIFIED-1.
+  Tier 3 UNVERIFIED-1 DOI batch: 74 entries remaining.
+
+blockers: none
+
+session_close: 2026-04-24 07:00
