@@ -958,3 +958,88 @@ H-02 (individual env. control), H-03 (captioning), I-04 (ceiling hoist scope)
 commits_block17: 3 commits (batches 4, 5, 6)
 
 session_close: 2026-04-23 17:30
+
+
+## Block 9 — BPC Correction Pass + Tier 3 Pass 2
+
+Completed 2026-04-24 04:24. Context at ~85% — initiating session close.
+
+### BPC Corrections Applied (this session — complete)
+All corrections from verification phases committed to GitHub:
+- `references/bibliography-v11-draft.md`: 4 corrections (Levine author+title, Gitlin PMID, Crompton→Keating, Golding-Day→Whitehead)
+- `references/bpc/MOB.md`: Steinfeld 2010 DOI
+- `references/bpc/PAIN.md`: Ismail2023 CLOSED-DELETED  
+- `references/bpc/DBL.md`: Clark 2021→2022 year+format
+- `references/bpc/NDV.md`: Mostafa 2021 invalid DOI removed
+- `references/bpc/VIS.md`: Mostafa 2021 invalid DOI removed
+- `references/bpc/ALL-ROOMS.md`: GoldingDay→Whitehead BATH-OUT
+- `references/bpc-corrections-manifest-2026-04-23.md`: Corrections manifest NEW
+
+### Tier 3 Verification Pass 1+2 (73/168 resolved)
+Status:
+- 17 VERIFIED-FOUNDATIONAL
+- 36 VERIFIED-DOI
+- 10 VERIFIED-PMID
+- 5 VERIFIED (targeted search)
+- 5 VERIFIED-WITH-CORRECTION (GREY removed)
+- 47 GREY-PENDING (47 remaining)
+- 48 UNVERIFIED-1 (48 remaining)
+
+### All artefacts committed to GitHub (confirmed)
+- `references/tier3-verified-sources.json` SHA 10b4bc932c7b (168 entries)
+- `references/tier2-verified-sources.json` SHA 65abf9c7377c
+- `references/co2-verified-sources.json` SHA 3b3d953a6860
+- `references/co1-verified-sources.json` SHA 56619f9e3836 (wait — check)
+- `references/tier1-verified-sources.json` SHA 846077693914
+- `references/verification-progress-report-2026-04-23.md` SHA a61586144836
+- `references/bpc-corrections-manifest-2026-04-23.md` SHA 5acf615c8f5b
+
+### Tier 3 GREY-PENDING — next session priority order
+The following 47 GREY entries need targeted searches. Priority by domain:
+
+**Bathroom/mobility (high specificity):**
+- T3-029 Guitard 2011 [GREY — title unverified; DOI required]
+- T3-054 Lee J 2017 bilateral fold-down grab bars 813mm
+- T3-057 Sekiguchi Y 2017 [GREY — title unverified]
+- T3-069 Lee J 2019 [GREY — title unverified]
+
+**Mental health / psychiatric built environment:**
+- T3-035 van der Schaaf 2013 British J Psychiatry
+- T3-064 Askew R 2019 J Psychiatric Mental Health Nurs
+- T3-099 Haig R 2022 Int J Mental Health Nurs
+- T3-102/103 Holohan E 2022 trauma-informed design (duplicate?)
+- T3-123 DeCuyper M 2023 J Psychiatric Mental Health Nurs
+
+**ME/CFS / OFS:**
+- T3-062 Strassheim 2018 OI in ME/CFS [DOI in BPC — use it]
+- T3-063 PMC6260403 ME/CFS built environment review [author TBC]
+- T3-079 Geisser 2021 hyperacusis + temperature fibromyalgia
+- T3-091 PMC9716468 ME/CFS activity pacing SR
+
+**Dementia / thermal:**
+- T3-006 Nakayama 1981 inter-room temperature (Japanese)
+- T3-027 Van Hoof 2010 PMV/PPD cognitively impaired
+- T3-120/121 Baquero 2023 (duplicate?)
+
+**Neurodiversity / acoustics:**
+- T3-076 Bettarello 2021 acoustic thresholds ASD
+- T3-107 Manandhar 2022 LRV contrast standards
+- T3-117 Weber 2022 [GREY — journal and DOI required]
+- T3-118 Zallio & Clarkson 2022 [GREY — DOI required]
+
+**Unresolvable without BPC author:**
+- T3-163 Buildings 16(3):489 MDPI (author TBC)
+- T3-135 Sensory room practice (author TBC, Indonesia/Korea)
+- T3-136 Systematic review therapeutic lighting (author TBC)
+- T3-165 LAC systematic review (source TBC)
+- T3-166/167 Scoping reviews Global South (author TBC)
+
+### Remaining work (next sessions)
+1. Tier 3 GREY-PENDING: 47 entries — 3–4 more search sessions
+2. Tier 3 UNVERIFIED-1: 48 entries — most are real, need DOI confirmation
+3. Tier 4–6: ~249 entries — largely self-verifying via issuing body
+4. Tier correction propagation to BPC slugs (10 sources)
+5. Phase 2A: Jurisdiction coverage audit
+
+session_close: 2026-04-24 04:24
+next_action: Tier 3 GREY-PENDING searches — start with bathroom/mobility domain
