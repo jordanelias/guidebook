@@ -28,41 +28,41 @@ no_data_flags: []
 ```yaml
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ANSI/ASA S12.60: classroom acoustics. ASHRAE noise criteria. FGI Guidelines NC-25 healthcare."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BB93 mandatory school acoustics. BS 8233:2014 sound in buildings. PAS 6463 acoustic environment."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS/NZS 2107:2016 design sound levels."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18041:2016 acoustic quality in rooms. DIN 18040 Two-Senses principle."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "SINTEF Byggforsk 87-school RT60 study. NS 8175 acoustic classification."}
   SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 3382-2:2008 RT measurement. IEC 60268-16 STI. ISO 21542 references acoustic environment."}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "EN 17210 acoustic environment provisions."}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "Arrêté 25 avril 2003 school acoustics."}
+  CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -70,7 +70,12 @@ jurisdiction_coverage:
   GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Strong code coverage: US ANSI S12.60, UK BB93 (mandatory), DE DIN 18041, NO NS 8175. Key metric divergence: RT60 targets vary by room type and jurisdiction. STI ≥0.60 is emerging as universal speech intelligibility threshold.
+
+```
