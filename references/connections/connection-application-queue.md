@@ -1,148 +1,111 @@
-# Connection Application Queue
-**Generated:** 2026-04-08 · Phase 0B-2 · CO-0006
-**Basis:** `references/connections/_index.md` — 113 total connections
-**Purpose:** Prioritised ISW briefing list. Work batches in order. Batch 4 held for Opus.
+# Connection Application Queue — ISW Briefings
+**Generated:** 2026-04-24 07:28
+**Source:** connection-scout Opus run Block 18
+**Connections:** CON-0181 through CON-0186, CON-0188 (7 HIGH confidence)
+**CON-0187 excluded:** MODERATE confidence — deferred to gap register P3
 
 ---
 
-## Summary
-| Batch | Criteria | Count | Action |
-|---|---|---|---|
-| 1 | HIGH confidence · PENDING | 14 | Apply to Part 4 items — highest priority |
-| 2 | HIGH confidence · CONSUMED | 47 | Verify CO-0004 renumbering validity — spot-check |
-| 3 | MODERATE confidence · PENDING | 15 | Apply after Batch 1 verification |
-| 4 | SPECULATIVE | 4 | Hold for Opus review before application |
+## ISW-BRIEF-01: CON-0181 — Floor Vibration Population Extension
+
+**Target spec:** A-09 (floor surface specification)
+**Current state:** A-09 specifies surface characteristics for wheelchair users (MOB). WBV evidence is siloed in floor-vibration BPC slug.
+**Change required:**
+1. Add population tags: PAIN, NEU, OFS to A-09 floor surface spec
+2. Add specification note: "Floor surfaces in primary circulation zones shall minimise whole-body vibration transmission. Surfaces exceeding 0.5 m/s² RMS vertical acceleration (ISO 2631-1 EAV threshold) are contraindicated for chronic pain (spinal disorder risk amplification), neurological tremor (tremor amplification), and fatigue-spectrum populations (vibration-induced fatigue compounds reduced activity tolerance)."
+3. Add cross-reference to floor-vibration BPC slug from chronic-pain and fatigue-spectrum slugs
+**Evidence:** Garcia-Mendez 2013 PMID:23820152; Koontz 2012 DOI:10.1123/jab.28.4.412; Chénier 2014 PMID:25276802
+**Opus note:** The 0.5 m/s² threshold derives from ISO 2631-1 EAV. Garcia-Mendez found wheelchair users routinely exceed this on common surfaces (0.83 ± 0.17 m/s²). The clinical implications for PAIN/NEU/OFS are inferred from the shared physiological mechanism (spinal loading, neuromuscular fatigue) — not directly tested in those populations. Mark ○ (inferred) not ● (evidence-based).
 
 ---
 
-## Batch 1 — HIGH Confidence · PENDING
-**Action:** Load each connection's topic file → verify target item exists in current Part 4 scaffold → apply via ISW.
-**Priority within batch:** items appearing in multiple connections first.
+## ISW-BRIEF-02: CON-0182 — Circadian Lighting Compound Interaction
 
-| CON-ID | Target item(s) | Topic | Action summary |
-|---|---|---|---|
-| CON-0033 | — | population-general | Write Part 5 residential assessment specification using CAPABLE as governing model. Malmgren Fänge OR 9.50 anchors wheel… |
-| CON-0034 | — | population-general | Cross-reference to bathroom-design, kitchen-design, entrance-and-threshold, and corridor/circulation MOB items. Effect s… |
-| CON-0035 | — | population-general | Part 5 residential matrices must include support framework items — not just built environment specification. Transition … |
-| CON-0039 | A-02, A-08, A-13, all Category A items | entrances-and-circulation | Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms.… |
-| CON-0040 | A-02, A-08, A-13, B-01, B-06, F-01, D-05, A-1 | cross-cutting | Create unified sensory environment specification matrix linking Dunn's profiles to spatial zones to quantified parameter… |
-| CON-0041 | F-06, Part 9 §9.1.4 (envelope+mass), F-07, H- | kitchens-and-workspaces | Propagate inter-room thermal differential ≤5°C to all residential bathroom matrix entries as P1 safety specification. Cr… |
-| CON-0042 | B-10, visual alerting items, H-04, CON-0014 i | kitchens-and-workspaces | Specify unified multi-channel alerting: every alert event (fire, intrusion, doorbell, telephone, intercom) available thr… |
-| CON-0043 | All C-items, D-02, D-06, F-01 zone boundaries | communication-and-alerts | Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions — C-items, zone boundaries, wayfin… |
-| CON-0045 | Part 1 (evidence methodology), Part 13 (case  | health-and-symptom-management | Part 1 evidence methodology: add evidence confidence weighting — provisions validated by built environment POE carry hig… |
-| CON-0046 | A-16, F-01, D-05, CON-0019 items | cross-cutting | Part 7/8: document as mandatory provision — Zone 3 + environmental refuge specified as required (not recommended) in hea… |
-| CON-0047 | Part 7/8 methodology (§7.1 / §8.2) | frameworks-and-methodology | Part 7/8 §7.1/§8.2 methodology note: explicit epistemic disclosure that conflict resolutions are evidence-informed synth… |
-| CON-0048 | Part 12 (Economics) | frameworks-and-methodology | Part 12: present as unified economic continuum — intervention at any scale is cost-effective. Anchor figures: CAPABLE ($… |
-| CON-0049 | Part 5 (residential process specification), P | population-general | Part 5: add process specification section — structured OT assessment as prerequisite, multicomponent intervention model … |
-| CON-0102 | F-07, F-08, F-04, F-06 | communication-and-alerts | Create F-category coherence note in Part 4 preamble to Category F: "F-04 (Air Quality), F-06 (Fragrance-Free Policy), F-… |
-
-### Batch 1 — connection descriptions
-
-**CON-0033** (`population-general`): **Evidence basis:**
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
-| Liu/CAPABLE 2020 (PMID 32951215) | 1 RCT | MOB/ALL (older adults) | Part 5 residential assessment protocol |
-| Washington/CAPABLE 2023 
-
-**CON-0034** (`population-general`): **Evidence basis:**
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
-| Malmgren Fänge 2019 (PMID 31684916) | 1 quasi-experimental | MOB/ALL (older adults, SE/NO) | Part 7 MOB wheelchair home items — dimensi
-
-**CON-0035** (`population-general`): **Evidence basis:**
-| Source | Tier | Population currently cited for | Proposed extension to |
-|---|---|---|---|
-| Douglas et al. 2024 (BMJ Open) | 1 qualitative | NEU/MOB/ALL (SDA tenants) | Part 5 support framework specification |
-| Carey et al. 20
-
-**CON-0039** (`entrances-and-circulation`): Four independent evidence streams converge on RT60 ≤0.3 s as the specification ceiling for speech-critical rooms:
-
-- **DEAF/hearing device users:** Iglehart 2020 (Tier 1 AJA), ANSI/ASA S12.60 Footnote e — 0.3 s for classrooms ≤283 m³. Speech percepti
-
-**CON-0040** (`cross-cutting`): Four unreferenced BPC slugs describe four facets of a single sensory environment design system with no internal cross-references:
-
-1. **`sensory-processing-model-design-application`** — Dunn's four sensory profiles → design requirement matrix
-2. **`d
-
-**CON-0041** (`kitchens-and-workspaces`): Japan heat shock data (6,073 bathtub drowning deaths/year, MHLW 2023) is the most consequential mortality statistic in the BPC corpus. Root cause: 5–15°C differential between unheated bathrooms and heated living areas. Resolution: inter-room differen
-
-**CON-0042** (`kitchens-and-workspaces`): CON-0014 proposes vibrotactile alerting for sleeping areas where DEAF/DBL and photosensitive populations co-occur. The `visual-fire-alarm-seizure-safety` BPC specifies synchronised VADs at 0.5–1 Hz + voice alarm + vibrotactile. The `visual-alerting-a
-
-**CON-0043** (`communication-and-alerts`): The `luminance-contrast-lrv-evidence-base` BPC documents that the universal 30% LRV threshold has no empirical basis — it is a regulatory floor adopted from UK DDA guidance without validation. Severe VI needs ≥65% Michelson contrast (2.5× the standar
-
-**CON-0045** (`health-and-symptom-management`): The case study corpus reveals a stark evidence asymmetry: VIS, PAIN/OFS, and DEAF (beyond Gallaudet) have zero purpose-built or home-modified environment case studies with outcome data globally. Confirmed not-found after full multilingual research pa
-
-**CON-0046** (`cross-cutting`): CS-17 (NHS CAMHS inpatient review, NDTi/NHS England 2022) documents systematic harm: NHS inpatient mental health wards designed for NDV/MH are actively harmful to co-occurring NDV/AUT patients. Sensory environments "present sometimes extreme challeng
-
-**CON-0047** (`frameworks-and-methodology`): The cross-population case study Opus synthesis confirms: "Cross-population with outcomes for both populations: CONFIRMED NOT FOUND globally." No built environment study exists where a multi-population conflict resolution was implemented and both popu
-
-**CON-0048** (`frameworks-and-methodology`): Four evidence sources form a single economic argument at different scales:
-
-- **CAPABLE** (CS-22, Tier 1 RCT, 6 trials, 1,087 participants): Programme cost ~$2,825 (including ~$700–$1,400 modifications). Hospitalisation 0.43→0.23/year (p=0.03). Model
-
-**CON-0049** (`population-general`): Two Tier 1 studies converge on the most consequential finding for the guidebook's scope:
-
-- **Douglas et al. 2024** (BMJ Open, Tier 1 qualitative): Support quality is a greater determinant of tenant QoL than the built environment in SDA housing.
-- **
-
-**CON-0102** (`communication-and-alerts`): F-07 (Thermal Zoning) specifies individual supplemental radiant heating. F-04 (Air Quality) specifies MERV 13+ filtration and no recirculated air without HEPA for OFS/MCAS spaces. F-06 (Fragrance-Free Policy) prohibits fragrance diffusers including H
+**Target spec:** K-03 (circadian lighting)
+**Current state:** K-03 specifies melanopic EDI ≥250 lux daytime. Divergent finding exists for NDV/AUT photosensitivity.
+**Change required:**
+1. Add compound-interaction annotation to K-03
+2. Add specification clause: "In buildings serving NDV/AUT or OFS/ME populations alongside DEM or MH populations, circadian-optimised lighting (≥250 lux melanopic EDI) shall be applied to communal spaces with a mandatory opt-out zone (A-16 sensory quiet room or equivalent) maintained at ≤50 lux within 25m of any primary occupancy space."
+3. Cross-reference A-16 as the resolution mechanism
+**Evidence:** CIE S 026/E:2018; PAS 6463:2022; van Hoof 2010 DOI:10.1016/j.buildenv.2009.06.017
+**Opus note:** This is a genuine compound interaction, not a simple divergence. The dose-response curves are opposed: DEM/MH benefit from high melanopic lux; NDV/OFS are harmed by it. Spatial zoning is the only resolution — compromise (e.g., 150 lux) serves neither population adequately. The A-16 quiet room provides the opt-out mechanism.
 
 ---
 
-## Batch 2 — HIGH Confidence · CONSUMED
-**Action:** Spot-check — verify CO-0004 renumbering has not invalidated the application. Sample 5–10 entries, confirm target item codes are current.
-**Full list in `_index.md`.** 47 entries total. Do not reload all at once.
+## ISW-BRIEF-03: CON-0183 — RT60 ≤0.3s Cross-Population Tagging
 
-**Spot-check protocol:**
-1. Load 5 CONSUMED entries from `_index.md`
-2. For each: confirm target item code exists in current Part 4 scaffold (CO-0004 numbering)
-3. If item code is stale (pre-CO-0004): reopen as PENDING with updated target code
-4. Record result in connection's `**Disposition notes:**` field
+**Target spec:** K-01 (reverberation time)
+**Current state:** K-01 specifies RT60 ≤0.3s for DEAF/hearing device users in spaces ≤283 m³. NDV and MH reach the same threshold independently.
+**Change required:**
+1. Add population tags: NDV, MH to the ≤0.3s tier of K-01
+2. Revise specification note: "RT60 ≤0.3 s applies to all spaces designated for DEAF, NDV, or MH populations (volumes ≤283 m³). Evidence converges from three independent clinical mechanisms: speech intelligibility with hearing devices (DEAF), reduced auditory processing load (NDV/AUT per PAS 6463), and noise reduction in trauma-informed environments (MH per Owen & Crane 2022)."
+3. Update room-acoustic BPC slug to cite NDV and MH sources alongside DEAF
+**Evidence:** BB93:2015; PAS 6463:2022 §10; Oostermeijer 2021 PMID:34233981; Weber 2022 PMID:35046849; van der Schaaf 2013 DOI:10.1192/bjp.bp.112.118422
+**Opus note:** The numerical convergence on ≤0.3s from three independent evidence bases is unusually strong. All three are ● (evidence-based). This should be presented as a convergent specification, not three separate requirements.
 
 ---
 
-## Batch 3 — MODERATE Confidence · PENDING
-**Action:** Apply after Batch 1 complete. For each: verify evidence basis in BPC before applying; do not apply on confidence alone.
+## ISW-BRIEF-04: CON-0184 — PMV/PPD Contraindication
 
-| CON-ID | Target item(s) | Topic | Confidence note |
+**Target spec:** K-05 (thermal comfort assessment method)
+**Current state:** K-05 may reference ISO 7730 PMV/PPD as default assessment.
+**Change required:**
+1. Add contraindication note: "PMV/PPD thermal comfort assessment (ISO 7730) is contraindicated for DEM (inability to self-report thermal discomfort or operate environmental controls), NEU/MS (thermoregulation impairment invalidates metabolic rate assumptions), and OFS (orthostatic intolerance modulated by ambient temperature). For these populations, specify objective physiological monitoring (skin temperature sensors, behavioural observation protocols) or proxy-reported assessment."
+2. Add population tags: DEM, NEU, OFS to K-05
+3. Cross-reference thermoregulation BPC slug Cluster 1
+**Evidence:** Van Hoof et al. 2010 DOI:10.1016/j.buildenv.2009.06.017 (confirmed T3-027)
+**Opus note:** Van Hoof 2010 is the primary source demonstrating PMV/PPD failure for cognitively impaired populations. The extension to NEU and OFS is inferred from the shared mechanism (inability to thermoregulate normally or self-report accurately). Mark DEM as ● and NEU/OFS as ○.
+
+---
+
+## ISW-BRIEF-05: CON-0185 — Grab Bar Biomechanics Extension
+
+**Target spec:** G-03, G-04 (grab bar height and configuration)
+**Current state:** Grab bar specs reference MOB wheelchair and ambulant transfer biomechanics. Lee 2017/18 bilateral fold-down at 813mm is the strongest evidence for toilet transfer.
+**Change required:**
+1. Add population tags: PAIN, OFS to G-03 (grab bar height) and G-04 (grab bar configuration)
+2. Add specification note: "Bilateral grab bar configuration (G-04) also serves pain-modified transfers (PAIN: weight-bearing avoidance on affected side changes handedness requirement — bilateral provision eliminates directionality constraint) and fatigue populations (OFS: grab bars within easy reach without stretching minimises energy expenditure per transfer). Reference FDR-CMP-01."
+3. Cross-reference FDR-CMP-01 compound scenario
+**Evidence:** Lee et al. 2018 PMID:28952364; Sekiguchi et al. 2017 PMID:28528238; Guitard et al. 2011 PMID:22256669; Lee et al. 2019 PMID:29522366
+**Opus note:** The bilateral configuration is the key insight. Unilateral grab bars force a transfer direction. Pain-modified transfers and fatigue-limited transfers both benefit from directional flexibility. The 813mm height serves MOB, PAIN, and OFS simultaneously — no dimensional conflict.
+
+---
+
+## ISW-BRIEF-06: CON-0186 — A-16 Sensory Relief Space Elevation
+
+**Target spec:** A-16 (sensory quiet room)
+**Current state:** A-16 is specified for NDV populations (PAS 6463). Located in sensory-environment domain.
+**Change required:**
+1. Elevate A-16 to cross-population universal provision with explicit tags: NDV, MH, DEM, OFS
+2. Revise specification: "Every occupied building shall provide at least one sensory-relief space per floor plate, accessible within 25m of any primary occupancy space. Specification: user-controlled lighting (2700–5000 K, 10–500 lux dimmable), acoustic attenuation ≤30 dBA, no fluorescent or stroboscopic lighting. This room type serves four independent clinical functions: sensory overload recovery (NDV/AUT), de-escalation and safety (MH), calm retreat and wandering management (DEM), and post-exertional malaise rest (OFS/ME)."
+3. Add A-16 cross-references to mental-health, dementia, and fatigue-spectrum BPC slugs
+4. Update sensory-relief-space BPC consensus findings to cite all four population evidence bases
+**Evidence:** PAS 6463:2022; Oostermeijer 2021 PMID:34233981; Weber 2022 PMID:35046849; DSDC EADDAT 2022; Unwin et al. 2021 (T3-085)
+**Opus note:** This is the single strongest cross-population connection in the evidence base. The convergence is remarkable because all four populations arrive at the same physical specification via entirely different clinical mechanisms. This should be presented prominently in Part 3 as a paradigm example of universal design emerging from population-specific evidence.
+
+---
+
+## ISW-BRIEF-07: CON-0188 — Owen & Crane Neuroscience Framework
+
+**Target:** Part 3 compound-functioning chapter; cross-cutting design framework
+**Current state:** MH, NDV, and DEM design principles are presented as separate design traditions with occasional cross-references.
+**Change required:**
+1. Add methodology note to Part 3 §3.2: "Owen & Crane (2022) demonstrate that trauma-informed design (MH), sensory-responsive design (NDV), and dementia-friendly design (DEM) share a common neuroscience mechanism: built environment modulation of threat/safety neural circuits (amygdala-prefrontal regulation, autonomic nervous system response). The shared design principles — control, predictability, safety, reduced sensory load — are not coincidental convergences but expressions of the same underlying brain-environment interaction."
+2. Create cross-cutting reference note in frameworks-and-methodology BPC domain
+3. Cite Owen, C. & Crane, J. (2022). IJERPH 19(21):14279. DOI:10.3390/ijerph192114279. PMID:36361166.
+**Evidence:** Owen & Crane 2022 (citation-verified; attribution corrected from "Holohan 2022")
+**Opus note:** This is a methodological connection, not a specification change. It restructures how the guidebook explains why cross-population convergences occur. The neuroscience framework provides the theoretical scaffolding for CON-0183 (RT60), CON-0186 (A-16), and future compound-interaction specifications. Route to Part 3 chapter author, not ISW.
+
+---
+
+## Disposition
+
+| Brief | CON-ID | Route to | Priority |
 |---|---|---|---|
-| CON-0005 | A-09, G-08 (proposed) | bathrooms-and-wet-areas | Floor-vibration BPC: resilient flooring is primary intervention for MOB wheelchair WBV. GAP-B4-09: c… |
-| CON-0006 | B-01 (circadian lighting) | entrances-and-circulation | Circadian lighting (≥250 melanopic EDI daytime) specified for DEM/NEU. MH BPC and OFS BPC do not men… |
-| CON-0008 | A-02, A-08, A-13 | entrances-and-circulation | Room acoustic items coded for DEAF, DEM, NDV populations. OFS BPC identifies acoustic sensitivity ("… |
-| CON-0009 | Threshold items (residential-entry-and-thresh | entrances-and-circulation | Entry/threshold BPC specifies level access for MOB/wheelchair. OFS (energy conservation — steps trig… |
-| CON-0012 | DAR items | wayfinding-and-signage | IT DM 236/89 adattabilità concept (walls reinforced for future grab bars, bidet removable, bath-to-s… |
-| CON-0013 | Kitchen items | kitchens-and-workspaces | Kitchen height-adjustable worktop (650–900mm) specified for MOB. OFS and PAIN not listed despite req… |
-| CON-0015 | F-04, F-02 | communication-and-alerts | Air quality / fragrance-free specifications carry OFS, NDV, NEU, PAIN. MH absent despite TID framewo… |
-| CON-0030 | CON-0001 items (circulation legibility); cogn | entrances-and-circulation | Cognitive ergonomics research on wayfinding quantifies the decision-point mechanism that the guidebo… |
-| CON-0032 | Part 1 (structure validation) | wayfinding-and-signage | A 2025 scoping review in Humanities and Social Sciences Communications (Nature, accepted July 2025) … |
-| CON-0044 | Part 1 (§1.4 theoretical framework), all G-it | entrances-and-circulation | The `ecological-psychology-haptic-affordances-built-environment` BPC provides the most fundamental t… |
-| CON-0095 | H-series items (self-service terminals, touch | population-general | The european-accessibility-act-scope-clarification BPC confirms that the EAA (EU Directive 2019/882)… |
-| CON-0096 | Part 12 (Economics) | frameworks-and-methodology | The government-grant-programmes-home-adaptation and jurisdiction-grant-programmes-comprehensive BPCs… |
-| CON-0098 | Part 1 (framework), all item specifications | frameworks-and-methodology | The ot-frameworks-built-environment BPC documents that the Kawa Model (Iwama 2006) is the OT theoret… |
-| CON-0099 | Part 12 (Economics) | frameworks-and-methodology | The jurisdiction-grant-programmes-comprehensive BPC documents the Nordic model (Sweden, Norway, Denm… |
-| CON-0111 | Part 10 DAR, Part 1 Foundations, Part 12 Econ | wayfinding-and-signage | The Adaptable Building Conference 2026 (Nieuwe Instituut, Rotterdam) and recent research (Djukanovic… |
-
----
-
-## Batch 4 — SPECULATIVE · Hold for Opus
-**Action:** Do not apply without Opus review. Add to opus-synthesis-queue.md.
-
-| CON-ID | Target item(s) | Topic |
-|---|---|---|
-| CON-0016 | C-04, D-02 | wayfinding-and-signage |
-| CON-0020 | DEAF corridor glazing (DeafSpace), DEM glare  | entrances-and-circulation |
-| CON-0084 | Part 8 | frameworks-and-methodology |
-| CON-0087 | A-02, A-08, A-16 | entrances-and-circulation |
-
----
-
-## ISW Session Structure (recommended)
-
-Each ISW session loads:
-1. `references/connections/_index.md` — confirm target items, update status after application
-2. `references/connections/{topic}/connections.md` — only the topic file(s) relevant to the session's item category
-3. Relevant BPC file(s) for evidence
-
-Do NOT load multiple topic files in one ISW session unless items overlap across categories.
-
-**After applying each connection:** update `**Status:**` → CONSUMED and `**Applied:**` → session ref in the topic file; update `_index.md` row status.
+| ISW-BRIEF-06 | CON-0186 | ISW (A-16 spec rewrite) | P1 — strongest connection |
+| ISW-BRIEF-03 | CON-0183 | ISW (K-01 population tags) | P1 — simple tag addition |
+| ISW-BRIEF-05 | CON-0185 | ISW (G-03/G-04 population tags) | P1 — simple tag addition |
+| ISW-BRIEF-04 | CON-0184 | ISW (K-05 contraindication note) | P1 — safety-relevant |
+| ISW-BRIEF-02 | CON-0182 | ISW (K-03 compound annotation) | P2 — requires zoning design |
+| ISW-BRIEF-01 | CON-0181 | ISW (A-09 population extension) | P2 — inferred evidence |
+| ISW-BRIEF-07 | CON-0188 | Part 3 chapter author | P3 — methodological |
