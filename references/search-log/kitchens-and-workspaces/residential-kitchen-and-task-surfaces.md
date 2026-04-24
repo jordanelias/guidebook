@@ -112,27 +112,7 @@ opus_synthesis_triggered: false
 opus_synthesis_ref: "NONE"
 PROVISIONAL: true
 ACCEPTED_GAPS: [6 jurisdictions NOT-RUN (NO, SE, DK, FI, SG, BR); tier5 8/24; structural gap — most jurisdictions lack kitchen-specific beyond-code standards]
+jurisdiction_summary: >
+  US ADA §804 kitchen. UK BS 8300 kitchen provisions. AU AS 1428.1 kitchen. DE DIN 18040-2 §5.7 kitchen (height-adjustable worktop 820-870mm). ISO 21542 kitchen. KEY DIVERGENCE: DE requires height-adjustable worktops; US/UK do not.
+
 ```
-
-```yaml
-
-functional_deficit_pass:
-  status: PARTIAL
-  last_run: 2026-03-26 18:30
-  scenarios_searched: 2
-  novel_findings: 0
-  refines_findings: 0
-  contradicts_findings: 0
-  tier0_candidates: 0
-  environments_covered: [kitchen]
-  environments_remaining: []
-
-## functional_deficit_pass
-status: COMPLETE-THIN-BASE
-session: 2026-03-28
-scenarios_run: 5 (d630+seated meal prep, d440+unilateral UPL, d640+limited reach laundry)
-novel_findings: 6
-refines: 2
-contradicts: 0
-tier0_candidates: 1
-note: Kitchen FDR gated COMPLETE THIN-BASE. Top-down pass PROVISIONAL. GAP-FDR-K-01 resolved. BPC written 2026-03-27 (sc4-5) and 2026-03-28 (sc10).
