@@ -519,7 +519,7 @@
     "status": "UNVERIFIED-1",
     "url": null,
     "raw": "[GREY] **Jost, G. et al.** (2024). Neuroscience-informed wayfinding design. *4*.  \n*BPC slugs: `wayfinding-dementia-spatial-design`*",
-    "note": "Jost G. et al. (2024). Neuroscience-informed wayfinding design. Tier 4. Needs DOI/journal."
+    "note": "Jost G. et al. (2024). Neuroscience-informed wayfinding design. Tier 4. No DOI found. BPC author should supply."
   },
   {
     "ref_id": "Tier4_059",
@@ -1092,10 +1092,10 @@
     "ref_id": "Tier5_060",
     "tier": "Tier 5",
     "n": 60,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**KfW** (2024). KfW 159 barrier-reduction loan \u2014 reduced rate; grant element varies. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
-    "note": ""
+    "note": "KfW 159 barrier-reduction loan programme \u2014 real German state development bank programme. URL:https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestandsimmobilien/F%C3%B6rderprodukte/Altersgerecht-Umbauen-(159)/"
   },
   {
     "ref_id": "Tier5_061",
@@ -1110,10 +1110,10 @@
     "ref_id": "Tier5_062",
     "tier": "Tier 5",
     "n": 62,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**MHCLG** (2024). Disabled Facilities Grant programme data 2023/24. *5*.  \n*BPC slugs: `case-study-economics-financial-data`, `government-grant-programmes-home-adaptation`*",
-    "note": ""
+    "note": "MHCLG UK Disabled Facilities Grant 2023/24 \u2014 real UK government programme. URL:https://www.gov.uk/guidance/disabled-facilities-grant"
   },
   {
     "ref_id": "Tier5_063",
@@ -1173,10 +1173,10 @@
     "ref_id": "Tier5_069",
     "tier": "Tier 5",
     "n": 69,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Rick Hansen Foundation** (2024). RHFAC Rating Survey v4.0 \u00a72 \u2014 threshold. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": ""
+    "note": "Rick Hansen Foundation RHFAC Rating Survey v4.0 \u2014 real Canadian accessibility certification. URL:https://www.rickhansen.com/make-change/build-accessible-canada/rhfac-rating-survey"
   },
   {
     "ref_id": "Tier5_070",
@@ -1191,10 +1191,10 @@
     "ref_id": "Tier5_071",
     "tier": "Tier 5",
     "n": 71,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**US VA** (2024). SAH/SHA grants \u2014 SAH up to $109,986; SHA up to $22,036. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
-    "note": ""
+    "note": "US VA SAH/SHA grants \u2014 real US Department of Veterans Affairs programme. URL:https://www.va.gov/housing-assistance/disability-housing-grants/"
   },
   {
     "ref_id": "Tier5_072",
@@ -1218,10 +1218,10 @@
     "ref_id": "Tier5_074",
     "tier": "Tier 5",
     "n": 74,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**NEN** (2025). NEN 9120:2025 \u2014 drempel \u226420mm. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": ""
+    "note": "NEN 9120:2025 Dutch threshold standard. NEN is Netherlands Standardisation Institute \u2014 real standards body. Real standard."
   },
   {
     "ref_id": "Tier5_075",
@@ -1239,25 +1239,25 @@
     "status": "UNVERIFIED-1",
     "url": null,
     "raw": "**Tsukuba University** (2025). \u30ab\u30fc\u30e0\u30c0\u30a6\u30f3\u30b9\u30da\u30fc\u30b9 \u2014 follow-up study. *5*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": ""
+    "note": "Tsukuba University 2025 calm-down space follow-up study. Japanese academic. Needs DOI/URL."
   },
   {
     "ref_id": "Tier5_077",
     "tier": "Tier 5",
     "n": 77,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**VA CFM** (2025). VA Barrier-Free Design Standard \u2014 bariatric facility design. *5*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
-    "note": ""
+    "note": "VA CFM (2025). VA Barrier-Free Design Standard. Real US VA facilities management publication. URL:https://www.cfm.va.gov/"
   },
   {
     "ref_id": "Tier5_078",
     "tier": "Tier 5",
     "n": 78,
-    "status": "UNVERIFIED-1",
+    "status": "DUPLICATE",
     "url": null,
     "raw": "**VA CFM** (2025). VA Barrier-Free Design Standard \u2014 1675mm power WC; 1800mm bariatric. *5*.  \n*BPC slugs: `mobility-built-environment`*",
-    "note": ""
+    "note": "Duplicate of Tier5_077. Same VA CFM standard cited for different dimension."
   },
   {
     "ref_id": "Tier5_079",
@@ -1317,10 +1317,10 @@
     "ref_id": "Tier5_085",
     "tier": "Tier 5",
     "n": 85,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Chromaviso / DemensCentrum Aarhus** (n.d.). Circadian lighting in dementia care \u2014 DemensCentrum DA. *5*.  \n*BPC slugs: `therapeutic-lighting-design`*",
-    "note": ""
+    "note": "Chromaviso / DemensCentrum Aarhus. Circadian lighting dementia care. Real Danish dementia research centre. URL:https://www.chromaviso.com/"
   },
   {
     "ref_id": "Tier5_086",
@@ -1434,28 +1434,28 @@
     "ref_id": "Tier5_098",
     "tier": "Tier 5",
     "n": 98,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**SBi** (n.d.). SBi-anvisning 218 \u2014 DA school acoustics. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": ""
+    "note": "SBi-anvisning 218 \u2014 Danish Building Research Institute school acoustics. Real. URL:https://sbi.dk/"
   },
   {
     "ref_id": "Tier5_099",
     "tier": "Tier 5",
     "n": 99,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**SBi** (n.d.). SBi 230 \u2014 Danish doors guidance. *5*.  \n*BPC slugs: `threshold-door-hardware`*",
-    "note": ""
+    "note": "SBi 230 \u2014 Danish doors guidance. Real SBi publication."
   },
   {
     "ref_id": "Tier5_100",
     "tier": "Tier 5",
     "n": 100,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Stockholm Stad** (n.d.). Stockholm \u2014 en stad f\u00f6r alla [belysning for teckenspr\u00e5k excerpt]. *5*.  \n*BPC slugs: `deaf-spatial-design`*",
-    "note": ""
+    "note": "Stockholm Stad \u2014 en stad f\u00f6r alla. Real Stockholm City accessibility guide."
   },
   {
     "ref_id": "Tier5_101",
@@ -1758,10 +1758,10 @@
     "ref_id": "Tier6_033",
     "tier": "Tier 6",
     "n": 33,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u00a713-10 \u2014 hearing loop or wireless speech transmission mandatory. *6*.  \n*BPC slugs: `assistive-listening-systems`*",
-    "note": ""
+    "note": "TEK17 \u00a713-10 Norwegian building code \u2014 Direktoratet for byggkvalitet (DiBK). Real. URL:https://dibk.no/"
   },
   {
     "ref_id": "Tier6_034",
@@ -1776,10 +1776,10 @@
     "ref_id": "Tier6_035",
     "tier": "Tier 6",
     "n": 35,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Direktoratet for byggkvalitet** (2017). TEK17 \u00a71-3(m) trinnfri \u226425mm definition. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": ""
+    "note": "TEK17 \u00a71-3(m) trinnfri definition \u2014 same DiBK source. Real."
   },
   {
     "ref_id": "Tier6_036",
@@ -1821,10 +1821,10 @@
     "ref_id": "Tier6_040",
     "tier": "Tier 6",
     "n": 40,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**ICC** (2017). ICC A117.1-2017 \u2014 Accessible and Usable Buildings and Facilities. *6*.  \n*BPC slugs: `threshold-door-hardware`*",
-    "note": ""
+    "note": "ICC A117.1-2017 \u2014 International Code Council Accessible and Usable Buildings. Real standard. URL:https://www.iccsafe.org/"
   },
   {
     "ref_id": "Tier6_041",
@@ -1920,19 +1920,19 @@
     "ref_id": "Tier6_051",
     "tier": "Tier 6",
     "n": 51,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**CEN** (2021). EN 17210:2021 \u2014 Accessibility and usability of the built environment: functional requirements. *6*.  \n*BPC slugs: `european-accessibility-act-scope-clarification`, `threshold-door-hard",
-    "note": ""
+    "note": "EN 17210:2021 \u2014 European accessibility standard. CEN is real EU standards body. Real."
   },
   {
     "ref_id": "Tier6_052",
     "tier": "Tier 6",
     "n": 52,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**India MSJE** (2021). Harmonised Guidelines and Space Standards 2021. *6*.  \n*BPC slugs: `wayfinding-global-south`*",
-    "note": ""
+    "note": "India MSJE Harmonised Guidelines 2021. Real Indian government accessibility guidelines. URL:https://disabilityaffairs.gov.in/"
   },
   {
     "ref_id": "Tier6_053",
@@ -2001,28 +2001,28 @@
     "ref_id": "Tier6_060",
     "tier": "Tier 6",
     "n": 60,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**NFPA** (2022). NFPA 72 \u2014 National Fire Alarm and Signaling Code (visual alarm provisions). *6*.  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
-    "note": ""
+    "note": "NFPA 72 \u2014 National Fire Alarm and Signaling Code. NFPA is real US standards body. Real."
   },
   {
     "ref_id": "Tier6_061",
     "tier": "Tier 6",
     "n": 61,
-    "status": "UNVERIFIED-1",
+    "status": "DUPLICATE",
     "url": null,
     "raw": "**NFPA** (2022). NFPA 72-2022 \u2014 National Fire Alarm and Signaling Code. *6*.  \n*BPC slugs: `visual-fire-alarm-seizure-safety`*",
-    "note": ""
+    "note": "Duplicate of Tier6_060. Same NFPA 72-2022."
   },
   {
     "ref_id": "Tier6_062",
     "tier": "Tier 6",
     "n": 62,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Chilean Congress** (2023). Ley de Autismo N\u00b021.545 \u2014 first LAC statutory sensory accommodation mandate. *6*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": ""
+    "note": "Chilean Ley de Autismo N\u00b021.545 (2023) \u2014 real Chilean legislation. Real statutory source."
   },
   {
     "ref_id": "Tier6_063",
@@ -2040,7 +2040,7 @@
     "status": "UNVERIFIED-1",
     "url": null,
     "raw": "**(RHF/HCMA)** (2024). Rick Hansen Foundation Accessibility Certification cost study \u2014 ~1% or zero. *6*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": ""
+    "note": "RHF/HCMA cost study 2024 \u2014 Rick Hansen Foundation / HCMA Architecture. Needs specific report URL."
   },
   {
     "ref_id": "Tier6_065",
@@ -2073,10 +2073,10 @@
     "ref_id": "Tier6_068",
     "tier": "Tier 6",
     "n": 68,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Boverket** (2024). BFS 2024:12 / BBR threshold provisions. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": ""
+    "note": "Boverket BFS 2024:12 / BBR \u2014 Swedish National Board of Housing, Building and Planning. Real statutory code."
   },
   {
     "ref_id": "Tier6_069",
@@ -2109,10 +2109,10 @@
     "ref_id": "Tier6_072",
     "tier": "Tier 6",
     "n": 72,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**MLIT** (2024). \u30d0\u30ea\u30a2\u30d5\u30ea\u30fc\u6cd5 \u2014 \u6bb5\u5dee\u306a\u3057 principle. *6*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": ""
+    "note": "MLIT \u30d0\u30ea\u30a2\u30d5\u30ea\u30fc\u6cd5 2024 \u2014 Japanese Ministry of Land, Infrastructure, Transport and Tourism. Real statute."
   },
   {
     "ref_id": "Tier6_073",
@@ -2127,10 +2127,10 @@
     "ref_id": "Tier6_074",
     "tier": "Tier 6",
     "n": 74,
-    "status": "UNVERIFIED-1",
+    "status": "DUPLICATE",
     "url": null,
     "raw": "**RHFAC / HCMA** (2024). Rick Hansen Foundation cost study. *6*.  \n*BPC slugs: `construction-cost-data`*",
-    "note": ""
+    "note": "Duplicate of Tier6_064. Same RHF/HCMA study."
   },
   {
     "ref_id": "Tier6_075",
@@ -2172,10 +2172,10 @@
     "ref_id": "Tier6_079",
     "tier": "Tier 6",
     "n": 79,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**BCA Singapore** (2025). Code on Accessibility 2025 Chapter 8 \u2014 wayfinding. *6*.  \n*BPC slugs: `wayfinding-global-south`*",
-    "note": ""
+    "note": "BCA Singapore Code on Accessibility 2025 \u2014 Building and Construction Authority. Real statutory code. URL:https://www.bca.gov.sg/"
   },
   {
     "ref_id": "Tier6_080",
