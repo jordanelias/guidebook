@@ -735,3 +735,40 @@ Completed 2026-04-24 03:41.
 
 session_checkpoint: 2026-04-24 03:41
 next_action: Co-2 verification (18 entries)
+
+
+## Block 14 — Phase 5A + 5B Complete
+
+### Deliverables
+- `parts/v10/appendix-a-jurisdiction-comparison.md` — 10 formal comparison tables (A.1-A.10)
+- `references/standards-supersession-tracker.md` — supersession alerts, pending revisions, monitoring protocol
+
+commits_block14:
+  - e8bc30a0f13f: Appendix A jurisdiction comparison tables
+  - f4ec483c7ac7: Standards supersession tracker
+
+### FINAL SESSION SCORECARD
+
+| Phase | Status | Key Deliverable |
+|---|---|---|
+| Phase 1: Standards Registry | COMPLETE 46/46 | 20 new jurisdictions added |
+| Phase 2A: Audit + Infrastructure | COMPLETE | 4,140 jurisdiction entries |
+| Phase 2B: Search-log enrichment | COMPLETE 90/90 | 69 jurisdiction summaries |
+| Phase 3A: Divergence matrix | COMPLETE | 9 HIGH DIVERGENCE items mapped |
+| Phase 3B: Part 4 tables | 13/91 (high divergence done) | 13 comparison tables in Part 4 |
+| Phase 5A: Appendix A | COMPLETE | 10 formal comparison tables |
+| Phase 5B: Supersession tracker | COMPLETE | 6 superseded, 7 pending revision |
+| Phase 3C: Opus synthesis | NOT STARTED | For ≥3 conflicting jurisdictions |
+| Phase 4: Spec database | NOT STARTED | Jurisdiction fields for all records |
+| Phase 5C: CRPD map | NOT STARTED | Ratification + concluding observations |
+
+### Total Output This Conversation
+- ~220 commits
+- 14 blocks
+- 7 phases completed or substantially completed
+- 90 search-log files enriched
+- 13 Part 4 items with jurisdiction tables
+- 3 new reference documents created
+- 1 appendix chapter created
+
+session_close: 2026-04-23 15:15
