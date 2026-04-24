@@ -851,3 +851,29 @@ Completed 2026-04-24 03:57.
 
 session_close: 2026-04-24 03:57
 next_action: BPC correction pass OR Tier 3 verification (168 systematic reviews)
+
+
+## Block 16 — Phase 3B Extended + 5C
+
+### Part 4 now has 18 jurisdiction comparison tables
+Batch 3 added 5 more items: E-11 (automatic doors), E-04 (parking), G-03 (grab bars), G-04 (bathroom), D-08 (signage).
+
+New divergence found — grab bar heights: US 838-914mm vs UK 680mm vs ISO 700-800mm vs DE 850mm.
+
+### CRPD map delivered
+45/46 jurisdictions ratified. US sole non-ratifier.
+
+commits_block16:
+  - 1a469329279a: CRPD ratification map
+  - [batch 3 commit]: 5 more Part 4 jurisdiction tables
+
+### FINAL CONVERSATION SCORECARD
+- ~230 commits
+- 16 blocks  
+- 8 phases completed
+- 18 Part 4 items with jurisdiction comparison tables
+- 90 search-log files enriched
+- 5 new reference documents created
+- 1 appendix chapter created
+
+session_close: 2026-04-23 16:15
