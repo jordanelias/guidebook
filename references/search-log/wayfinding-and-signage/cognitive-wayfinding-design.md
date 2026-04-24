@@ -41,58 +41,54 @@ languages:
   IT: {status: THIN, results: 1, db: [web], co1_pass: partial, native_standards_pass: partial}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  IE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  NZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  SG: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CH: {status: THIN, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  BE: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  SE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  DK: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  FI: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  JP: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  KR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CN: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  EU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA §216/§703: signage requirements. No ADA cognitive wayfinding provision. WELL Mind concept references."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "PAS 6463:2022 — neurodivergent wayfinding. BS 8300 §12 signage. Stirling Dementia Design Centre guidance."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 32975 visual design for public information. DIN 18040 wayfinding provisions."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542 §40-42 wayfinding. ISO 25552 dementia-inclusive communities."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
-jurisdiction_coverage_summary:
-  searched: [US, UK, CA, AU, IE, SG, DE, FR, NL, SE, NO, DK, FI, JP, KR, CN, EU, ISO]
-  thin: [CH, BE, ES, IT, PT, BR, NZ]
-  no_data: []
-  not_run: []
-  co1_complete: [US, UK, CA, AU, IE, SG, DE, FR, NL, NO, SE, JP, KR, CN, DK, FI, BE, ES, IT]
-  co1_not_attempted: [BR, PT, ISO]
-  tier5_complete: [US, UK, CA, AU, IE, SG, DE, FR, NL, NO, SE, JP, KR, CN, CH]
-  tier5_not_attempted: [BE, DK, FI, NZ, BR, PT, IT, ES, ISO]
+jurisdiction_summary: >
+  UK PAS 6463 is the only standard addressing cognitive wayfinding specifically. Most codes address physical signage only. DEM/NDV populations require cognitive simplicity beyond sign legibility.
 
-co1_pass_summary:
-  complete: [EN, DE, NL, FR, NO, SV, KO, JA, ZH]
-  partial: [DA, FI, ES, PT, IT]
-  not-run: []
-native_standards_pass_summary:
-  complete: [EN, DE, NL, FR, NO, SV, KO, JA]
-  partial: [DA, FI, ZH, ES, PT, IT]
-  not-run: []
-companion_networks: {loaded: [DSDC-Stirling, KDA, Alzheimer-Nederland, AIC-CLC-SG, Helsedirektoratet-NO, CEREMA-FR, 중앙치매센터-KR], scholar_targets: 8, retrieved: 7}
-citation_mining: {backward: 3, forward: 12, sources_added: 9}
-at_database_pass: not-run
-
-top_sources: [Marquardt-2011, van-Buuren-Mohammadi-2022, Wiener-Pazzaglia-2021, Tola-2021, Black-2022, DSDC-EADDAT-2022, AIC-CLC-SG-2023, KDA-ongoing, Helsedirektoratet-2024, Marquardt-2014]
-bpc_ref: "cognitive-wayfinding-design"
-thin_flags: [CH, BE, ES, IT, PT, BR, NZ]
-no_data_flags: []
 ```
-
-```yaml
