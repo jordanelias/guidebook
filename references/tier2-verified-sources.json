@@ -1,9 +1,14 @@
 [
   {
     "ref_id": "T2-01",
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "key": "BrainXchange/DMA 2011 dementia noise design guidance",
-    "note": "Not found in session. BrainXchange is a Canadian dementia knowledge network. 'DMA' unclear. Holding for second search."
+    "note": "Confirmed. Two-part document series (physical interventions + social interventions) published 2011. brainXchange is real Canadian dementia knowledge network. BPC 'BrainXchange/DMA 2011' \u2014 DMA likely = 'Design and dementia, Module A/Alzheimer Knowledge Exchange'.",
+    "authors": "Design and Dementia Community of Practice / brainXchange",
+    "year": "2011",
+    "title": "Dementia Friendly Design Considerations: Noise (Physical and Social Design Interventions)",
+    "publisher": "Alzheimer Knowledge Exchange / brainXchange",
+    "url": "https://brainxchange.ca/Public/Files/Design/Noise-K2P-Social-Design-V6.aspx"
   },
   {
     "ref_id": "T2-02",
@@ -215,9 +220,14 @@
   },
   {
     "ref_id": "T2-26",
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-WITH-CORRECTION",
     "key": "NDIS 2025 home modifications assessment AUD$221/hr",
-    "note": "NDIS is Australia's National Disability Insurance Scheme. Home modification assessment rate. Not yet confirmed via search."
+    "note": "Confirmed at org/publication level. NDIS AT/HM Code Guide 2025-26 is real. However BPC figure 'AUD$221/hr' does not match standard NDIS OT rate ($193.99/hr weekday 2025-26). $221 may be remote-area rate or a different line item. FIGURE REQUIRES VERIFICATION against actual NDIS code guide. Potential BPC detail error.",
+    "authors": "NDIS (National Disability Insurance Agency)",
+    "year": "2025",
+    "title": "NDIS Pricing Arrangements and Price Limits 2025-26: Assistive Technology, Home Modifications and Consumables Code Guide",
+    "publisher": "NDIA",
+    "url": "https://www.ndis.gov.au/providers/pricing-arrangements"
   },
   {
     "ref_id": "T2-27",
