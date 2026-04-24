@@ -80,3 +80,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  UK PAS 6463:2022 world's first neurodivergent built environment standard. No other jurisdiction has equivalent. Research evidence (Tier 3) from AU, US, NL. Sensory processing frameworks (Dunn, Miller).
+
+```
