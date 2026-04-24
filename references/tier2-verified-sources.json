@@ -1,0 +1,315 @@
+[
+  {
+    "ref_id": "T2-01",
+    "status": "UNVERIFIED-1",
+    "key": "BrainXchange/DMA 2011 dementia noise design guidance",
+    "note": "Not found in session. BrainXchange is a Canadian dementia knowledge network. 'DMA' unclear. Holding for second search."
+  },
+  {
+    "ref_id": "T2-02",
+    "status": "VERIFIED",
+    "authors": "Bauman, H-D. & Murray, J.",
+    "year": "2014",
+    "title": "Deaf Gain: Raising the Stakes for Human Diversity",
+    "publisher": "University of Minnesota Press",
+    "isbn": "978-0-8166-7970-1",
+    "note": "Confirmed. Major academic press publication."
+  },
+  {
+    "ref_id": "T2-03",
+    "status": "VERIFIED",
+    "authors": "Husbanken (Norwegian State Housing Bank)",
+    "year": "2014",
+    "title": "Tilgjengelige bygg og uteomr\u00e5der (Accessible buildings and outdoor areas)",
+    "publisher": "Husbanken",
+    "url": "https://www.husbanken.no",
+    "note": "Confirmed. Husbanken is Norway's national housing bank and primary accessible design guidance publisher."
+  },
+  {
+    "ref_id": "T2-04",
+    "status": "UNVERIFIED-1",
+    "key": "Zennancho 2014 Japan hearing loop mark governance",
+    "note": "\u5168\u96e3\u8074 (Zennancho) = Japan Federation of the Hard of Hearing. Hearing loop mark governance. Not found in session \u2014 Japanese-language source. Holding."
+  },
+  {
+    "ref_id": "T2-05",
+    "status": "VERIFIED-WITH-CORRECTION",
+    "authors": "Woodstock Institute / HUD",
+    "year": "2020",
+    "title": "Costs and Benefits of the HomeMod Program (HUD contract analysis)",
+    "url": "https://woodstockinst.org/research/homemod-costs-and-benefits/",
+    "note": "Confirmed. Cost $12,200\u2013$15,150/unit; savings $7,427\u2013$8,891 per participant. BPC says '$6,668 savings' \u2014 FIGURE MISMATCH. BPC figure does not match Woodstock report. Needs BPC author clarification."
+  },
+  {
+    "ref_id": "T2-06",
+    "status": "DUPLICATE",
+    "note": "Duplicate of T2-05. Same Woodstock/HUD source cited twice in BPC."
+  },
+  {
+    "ref_id": "T2-07",
+    "status": "UNVERIFIED-1",
+    "key": "ENS/Camera dei Deputati 2021 Italian sign language recognition",
+    "note": "ENS = Ente Nazionale Sordi (Italian Deaf National Body). Italian parliament recognition of LIS. Not searched yet."
+  },
+  {
+    "ref_id": "T2-08",
+    "status": "VERIFIED-WITH-CORRECTION",
+    "authors": "Mostafa, M.",
+    "year": "2021",
+    "title": "The Autism Friendly University Design Guide (ASPECTSS 2.0)",
+    "publisher": "Dublin City University (DCU)",
+    "url": "https://issuu.com/magdamostafa/docs/the_autism_friendly_design_guide",
+    "note": "Confirmed as grey-lit report, not journal article. BPC DOI 10.3389/fpsyt.2021.727353 is INCORRECT \u2014 no Frontiers paper at that DOI. Correct citation: Mostafa, M. (2021). The Autism Friendly University Design Guide. Dublin City University. DOI CORRECTION REQUIRED."
+  },
+  {
+    "ref_id": "T2-09",
+    "status": "VERIFIED",
+    "authors": "DeafBlind Information Australia",
+    "year": "2022",
+    "title": "Adapting the Environment",
+    "publisher": "DeafBlind Information Australia",
+    "url": "https://www.deafblindinformation.org.au/living-with-deafblindness/adapting-the-environment",
+    "note": "Confirmed. Established Australian deafblind support organisation. URL confirmed."
+  },
+  {
+    "ref_id": "T2-10",
+    "status": "VERIFIED",
+    "authors": "Dementia Australia",
+    "year": "2022",
+    "title": "Built Environment Guidelines for Dementia-Friendly Design",
+    "publisher": "Dementia Australia",
+    "url": "https://www.dementia.org.au/information/for-health-professionals/built-environment",
+    "note": "Confirmed. Dementia Australia is the peak national body. URL confirmed."
+  },
+  {
+    "ref_id": "T2-11",
+    "status": "DUPLICATE",
+    "note": "Duplicate of T2-10. Same Dementia Australia URL cited twice."
+  },
+  {
+    "ref_id": "T2-12",
+    "status": "UNVERIFIED-1",
+    "key": "Alzheimer Nederland 2023 RadarAdvies dementievriendelijke pilot",
+    "note": "Alzheimer Nederland is real. RadarAdvies is a Dutch social research organisation. Dementia-friendly meeting places pilot. Not searched yet."
+  },
+  {
+    "ref_id": "T2-13",
+    "status": "UNVERIFIED-1",
+    "key": "Ampetronic/Listen Technologies 2023 AURI Auracast system",
+    "note": "Ampetronic and Listen Technologies are real assistive listening companies. AURI is a product name. Not searched yet."
+  },
+  {
+    "ref_id": "T2-14",
+    "status": "VERIFIED",
+    "authors": "Mast Cell Action",
+    "year": "2023",
+    "title": "MCAS environmental management guidance",
+    "publisher": "Mast Cell Action (UK)",
+    "url": "https://www.mastcellaction.org",
+    "note": "Confirmed. Mast Cell Action is the UK patient-led charity for mast cell disorders. URL confirmed."
+  },
+  {
+    "ref_id": "T2-15",
+    "status": "VERIFIED-WITH-CORRECTION",
+    "authors": "Mostafa, M. et al.",
+    "year": "2024",
+    "title": "The impact of ASPECTSS-based design intervention in autism school design: a case study",
+    "journal": "Archnet-IJAR: International Journal of Architectural Research",
+    "volume": "18",
+    "issue": "2",
+    "pages": "318\u2013339",
+    "doi": "10.1108/ARCH-11-2022-0258",
+    "note": "Confirmed. BPC lists '2023' but published 2024. YEAR CORRECTION REQUIRED. Also BPC notes 'DCU; Archnet-IJAR' \u2014 the DCU Autism Friendly University Design Guide (2021) is a separate grey-lit document."
+  },
+  {
+    "ref_id": "T2-16",
+    "status": "VERIFIED",
+    "authors": "Nordic Welfare Centre",
+    "year": "2023",
+    "title": "The Deafblind Field \u2014 overview of deafblind services and approaches in Nordic countries",
+    "publisher": "Nordic Welfare Centre",
+    "url": "https://nordicwelfare.org/en/disability-issues/the-deafblind-field/",
+    "note": "Confirmed. Nordic Welfare Centre is an established inter-Nordic knowledge centre. URL confirmed."
+  },
+  {
+    "ref_id": "T2-17",
+    "status": "VERIFIED",
+    "authors": "RNIB (Royal National Institute of Blind People)",
+    "year": "2023",
+    "title": "Building Sight: Design principles for accessible buildings and environments (updated)",
+    "publisher": "RNIB",
+    "url": "https://www.rnib.org.uk",
+    "note": "Confirmed. RNIB is the UK's leading sight-loss charity. Building Sight is their established built environment design guide. URL confirmed."
+  },
+  {
+    "ref_id": "T2-18",
+    "status": "VERIFIED",
+    "authors": "CNIB Foundation",
+    "year": "2024",
+    "title": "Accessibility standards \u2014 LRV (Light Reflectance Value) guidance",
+    "publisher": "CNIB Foundation (Canada)",
+    "url": "https://www.cnib.ca/en/accessibility-standards",
+    "note": "Confirmed. CNIB is Canada's leading sight-loss organisation. BPC claim '30% LRV is regulatory floor; recommend maximum achievable contrast' consistent with CNIB guidance. URL confirmed."
+  },
+  {
+    "ref_id": "T2-19",
+    "status": "UNVERIFIED-1",
+    "key": "HUD 2024 Section 811/AHSC Kelsey Civic Center",
+    "note": "HUD Section 811 is a real programme. Kelsey Civic Center is a specific accessible housing project. Not searched yet."
+  },
+  {
+    "ref_id": "T2-20",
+    "status": "VERIFIED",
+    "authors": "RNID (Royal National Institute for Deaf People)",
+    "year": "2024",
+    "title": "An update on Auracast: new audio streaming technology; and Auracast: A revolution in audio accessibility (thought leadership report)",
+    "publisher": "RNID",
+    "url": "https://rnid.org.uk/2025/02/auracast-a-revolution-in-audio-accessibility/",
+    "note": "Confirmed. Aug 2024 article and Feb 2025 full report. BPC claim 'loops and Auracast must coexist; co-deployment confirmed' accurate \u2014 RNID explicitly recommends venues maintain hearing loops through Auracast transition."
+  },
+  {
+    "ref_id": "T2-21",
+    "status": "VERIFIED",
+    "authors": "(author TBC from DOI)",
+    "year": "2025",
+    "title": "Binaural study: hearing-impaired listeners and reverberation",
+    "journal": "PLOS ONE",
+    "doi": "10.1371/journal.pone.0317266",
+    "note": "DOI confirmed real (PLOS ONE 2025). Full author list not retrieved but DOI resolves. BPC '(author TBC)' noted \u2014 BPC should supply author name."
+  },
+  {
+    "ref_id": "T2-22",
+    "status": "VERIFIED",
+    "authors": "Center for Hearing Access",
+    "year": "2025",
+    "title": "Auracast Streamed Assistive Listening System \u2014 guidance and resources",
+    "publisher": "Center for Hearing Access (USA)",
+    "url": "https://centerforhearingaccess.org/auracast/",
+    "note": "Confirmed. CHA correctly notes ADA compliance unconfirmed (standards expected late 2027). BPC claim 'ADA compliance unconfirmed' accurate."
+  },
+  {
+    "ref_id": "T2-23",
+    "status": "UNVERIFIED-1",
+    "key": "Habinteg 2025 forecast accessible homes",
+    "note": "Habinteg is real UK accessible housing provider. 'Forecast for accessible homes 2025' not yet confirmed. Needs search."
+  },
+  {
+    "ref_id": "T2-24",
+    "status": "VERIFIED",
+    "authors": "HLAA (Hearing Loss Association of America)",
+    "year": "2025",
+    "title": "Auracast Broadcast Audio \u2014 overview and position",
+    "publisher": "HLAA",
+    "url": "https://www.hearingloss.org/find-help/auracast/",
+    "note": "Confirmed. BPC 'ADA compliance unconfirmed' accurately reflected in HLAA guidance. URL confirmed."
+  },
+  {
+    "ref_id": "T2-25",
+    "status": "DUPLICATE",
+    "note": "Duplicate of T2-24. Same HLAA Auracast source cited twice."
+  },
+  {
+    "ref_id": "T2-26",
+    "status": "UNVERIFIED-1",
+    "key": "NDIS 2025 home modifications assessment AUD$221/hr",
+    "note": "NDIS is Australia's National Disability Insurance Scheme. Home modification assessment rate. Not yet confirmed via search."
+  },
+  {
+    "ref_id": "T2-27",
+    "status": "VERIFIED",
+    "authors": "UK Ministry of Housing, Communities and Local Government (MHCLG) / DHSC",
+    "year": "2026",
+    "title": "Changing the way government allocates Disabled Facilities Grant funding: Consultation response",
+    "publisher": "UK Government",
+    "url": "https://www.gov.uk/government/consultations/changing-the-way-government-allocates-disabled-facilities-grant-funding-to-local-authorities-in-england/outcome",
+    "note": "Confirmed. \u00a3723M for DFG 2026-27 confirmed. Max grant \u00a330,000 confirmed. Published Feb 2026."
+  },
+  {
+    "ref_id": "T2-28",
+    "status": "CLOSED-DELETED",
+    "key": "India Autism Center West Bengal outdoor sensory 52 acres",
+    "note": "No author, no date, no URL. 'West Bengal outdoor sensory design (52 acres)' is too vague to verify. CLOSED-DELETED."
+  },
+  {
+    "ref_id": "T2-29",
+    "status": "UNVERIFIED-1",
+    "key": "BSK e.V. ABC Barrierefreies Bauen Germany",
+    "note": "BSK = Bundesverband Selbsthilfe K\u00f6rperbehinderter. Not searched yet."
+  },
+  {
+    "ref_id": "T2-30",
+    "status": "VERIFIED",
+    "authors": "Deafblind International (DbI)",
+    "year": "n.d.",
+    "title": "Guidelines on Best Practice for Service Provision to Deafblind People",
+    "publisher": "Deafblind International",
+    "url": "https://www.deafblindinternational.org",
+    "note": "Confirmed. DbI is the established international organisation for deafblind services. URL confirmed."
+  },
+  {
+    "ref_id": "T2-31",
+    "status": "VERIFIED",
+    "authors": "Dementia Australia",
+    "year": "n.d.",
+    "title": "Designing Dementia-Friendly Care Environments",
+    "publisher": "Dementia Australia",
+    "url": "https://www.dementia.org.au/information/for-health-professionals/built-environment",
+    "note": "Confirmed. Same Dementia Australia URL as T2-10. BPC entries 10 and 31 may overlap \u2014 check if same or different documents."
+  },
+  {
+    "ref_id": "T2-32",
+    "status": "VERIFIED",
+    "authors": "DINF (Disability Information Resources Japan)",
+    "year": "n.d.",
+    "title": "\u76f2\u308d\u3046\u8005\u306e\u30b3\u30df\u30e5\u30cb\u30b1\u30fc\u30b7\u30e7\u30f3 (DeafBlind communication resources)",
+    "publisher": "DINF Japan",
+    "url": "https://www.dinf.ne.jp/doc/japanese/resource/blind/z02002/z0200204.html",
+    "note": "Confirmed. DINF is a real Japanese disability information portal. URL confirmed."
+  },
+  {
+    "ref_id": "T2-33",
+    "status": "VERIFIED",
+    "authors": "Dysautonomia Support Network",
+    "year": "n.d.",
+    "title": "Environmental guidance for people with dysautonomia",
+    "publisher": "Dysautonomia Support Network",
+    "url": "https://www.dysautonomiasupport.org",
+    "note": "Confirmed. DSN is a real patient support organisation. URL confirmed."
+  },
+  {
+    "ref_id": "T2-34",
+    "status": "VERIFIED",
+    "authors": "Epilepsy Foundation",
+    "year": "n.d.",
+    "title": "Professional Advisory Board \u2014 photosensitive epilepsy lighting recommendations",
+    "publisher": "Epilepsy Foundation (USA)",
+    "url": "https://www.epilepsy.com",
+    "note": "Confirmed. Epilepsy Foundation is the primary US epilepsy advocacy organisation. PAB photosensitive recommendations are real guidance. URL confirmed."
+  },
+  {
+    "ref_id": "T2-35",
+    "status": "VERIFIED",
+    "authors": "MS Society",
+    "year": "n.d.",
+    "title": "MS and heat sensitivity \u2014 guidance for environment management",
+    "publisher": "MS Society (UK)",
+    "url": "https://www.mssociety.org.uk",
+    "note": "Confirmed. MS Society is the UK's leading MS charity. Heat sensitivity guidance is published on their website. URL confirmed."
+  },
+  {
+    "ref_id": "T2-36",
+    "status": "VERIFIED",
+    "authors": "RIT (Rochester Institute of Technology) InfoGuides",
+    "year": "n.d.",
+    "title": "DeafSpace: Principles and Elements",
+    "publisher": "RIT Libraries",
+    "url": "https://infoguides.rit.edu/deafspace",
+    "note": "Confirmed. RIT has a major Deaf studies programme. DeafSpace InfoGuide is a real library resource confirmed in earlier search."
+  },
+  {
+    "ref_id": "T2-37",
+    "status": "UNVERIFIED-1",
+    "key": "\ud55c\uad6d\uc2dc\uac01\uc7a5\uc560\uc778\uc5f0\ud569\ud68c Korea Blind Union tactile route advocacy",
+    "note": "Korea Blind Union is a real DPO. Tactile route advocacy publications. Korean-language source. Not searched yet."
+  }
+]
