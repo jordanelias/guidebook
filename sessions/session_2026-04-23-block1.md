@@ -1873,3 +1873,50 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 08:00
+
+
+## Block 18 — Connection Scout (Opus, max effort)
+
+Completed 2026-04-24 07:21. Model: Opus 4.6, max effort.
+
+### Internal scan — 8 new connections identified (CON-0181 through CON-0188)
+
+| CON-ID | Type | Populations | Confidence | Topic |
+|---|---|---|---|---|
+| CON-0181 | CROSS-POPULATION | MOB→PAIN,NEU,OFS | HIGH | Floor vibration WBV applicability |
+| CON-0182 | COMPOUND-INTERACTION | DEM+MH vs NDV+OFS | HIGH | Circadian lighting compound |
+| CON-0183 | CROSS-POPULATION | DEAF+NDV+MH | HIGH | RT60 ≤0.3s convergence |
+| CON-0184 | CROSS-POPULATION | DEM+NEU+OFS | HIGH | PMV/PPD thermal model failure |
+| CON-0185 | CROSS-POPULATION | MOB→PAIN,OFS | HIGH | Grab bar biomechanics applicability |
+| CON-0186 | CROSS-POPULATION | NDV+MH+DEM+OFS | HIGH | Sensory relief space convergence |
+| CON-0187 | COMPOUND-INTERACTION | DEM+VIS+IntD | MODERATE | FDR-CMP-04 sequential wayfinding |
+| CON-0188 | METHODOLOGY | MH+NDV+DEM | HIGH | Owen/Crane neuroscience TID framework |
+
+### Key finding
+**CON-0186 (sensory relief space convergence)** is the strongest cross-population connection
+in the evidence base: four independent populations (NDV, MH, DEM, OFS) arrive at the same
+room-type specification via different clinical mechanisms. A-16 should be elevated to
+cross-population universal provision.
+
+### Evidence basis
+All supporting citations were verified in the citation-verification phase (T3 confirmed).
+CON-0188 directly leverages the Owen & Crane 2022 attribution correction (was "Holohan 2022").
+
+### Commits
+- entrances-and-circulation: 1 connections [0dbd3941749f]
+- sensory-environment: 3 connections [3fe464b5a21e]
+- health-and-symptom-management: 1 connections [b7b2893f2275]
+- bathrooms-and-wet-areas: 1 connections [5df9f602734a]
+- wayfinding-and-signage: 1 connections [d3ce1552303e]
+- cross-cutting: 1 connections [9eedfa97720e]
+- _index.md: 8 connections [59de8580dba7]
+
+### Connection register totals
+- Previous: 181 (140 CONSUMED, 42 CONSUMED-DEFERRED, 0 PENDING)
+- Added: 8 PENDING
+- New total: 189 (140 CONSUMED, 42 CONSUMED-DEFERRED, 8 PENDING)
+- Next CON-ID: CON-0189
+
+session_close: 2026-04-24 07:21
+next_action: Route 7 HIGH-confidence connections to item-specification-writer for spec updates
+blockers: none
