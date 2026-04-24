@@ -1246,3 +1246,36 @@ Completed 2026-04-24 04:58.
 
 session_close: 2026-04-24 04:58
 next_action: Tier 4–6 verification — start with Tier 4 standards batch
+
+
+## Block 21 — Phase 4 Spec Database
+
+### Spec database jurisdiction fields populated
+- 73 total spec records
+- 60 with jurisdiction data (supporting + divergent fields)
+- 13 remaining (parameters with no direct jurisdiction mapping)
+
+Phase 4 STATUS: SUBSTANTIALLY COMPLETE (60/73)
+
+commits_block21:
+  - 6c2644eeb08e: jurisdiction field population (10 specs by parameter)
+  - [this commit]: item-code backfill (6 specs)
+
+### COMPLETE WORKPLAN STATUS — 11 PHASES
+
+| Phase | Status |
+|---|---|
+| Phase 1: Standards Registry 46/46 | COMPLETE |
+| Phase 2A: Audit + Infrastructure | COMPLETE |
+| Phase 2B: Search-log enrichment 90/90 | COMPLETE |
+| Phase 3A: Divergence matrix | COMPLETE |
+| Phase 3B: Part 4 tables 91/91 | COMPLETE |
+| Phase 3C: Opus divergence synthesis | COMPLETE |
+| Phase 4: Spec database jurisdiction | SUBSTANTIALLY COMPLETE (60/73) |
+| Phase 5A: Appendix A 10 tables | COMPLETE |
+| Phase 5B: Supersession tracker | COMPLETE |
+| Phase 5C: CRPD map 46 jurisdictions | COMPLETE |
+
+Total: ~265 commits, 21 blocks, 11 phases
+
+session_close: 2026-04-23 20:00
