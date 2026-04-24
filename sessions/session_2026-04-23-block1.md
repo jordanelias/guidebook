@@ -1772,3 +1772,52 @@ No further items flagged for Opus adjudication.
 session_close: 2026-04-24 07:12M
 next_action: AWAITING BPC AUTHOR ACTION — all autonomous work complete
 blockers: none
+
+
+## Block 26 — Tier 3 UNVERIFIED-1 Batch (5/20)
+
+### Verified Entries
+| ID | Author | Year | Status | Key Finding |
+|---|---|---|---|---|
+| T3-040 | Kim, C.S. et al. | 2014 | VERIFIED-WITH-CORRECTION | Author "Kim W" → Kim CS. Applied Ergonomics. DOI:10.1016/j.apergo.2014.08.011 |
+| T3-043 | Fuglerud, K.S. et al. | 2015 | VERIFIED | NR Report 1032. Grey — no DOI. Cost-benefit analysis of UD. |
+| T3-056 | Mitra, S. et al. | 2017 | VERIFIED-WITH-CORRECTION | BPC "Mitra & Jones" wrong — correct: Mitra, Palmer, Kim, Mont, Groce. DHJO 10(4). DOI:10.1016/j.dhjo.2017.04.007 |
+| T3-067 | Ghazali, R. et al. | 2019 | VERIFIED | jABs 4(14):53-62. ASPECTSS in Malaysia. |
+| T3-126 | LSE/Habinteg | 2023 | VERIFIED | CASE Report 147. M4(3) cost £22k vs £94k 10yr benefit. |
+
+### BPC Corrections Generated
+- T3-040: Author name correction in BPC (Kim W → Kim CS)
+- T3-056: Author list correction in BPC (Mitra & Jones → Mitra, Palmer, Kim, Mont, Groce)
+
+### Remaining UNVERIFIED-1 (15 entries)
+T3-048 (Steinfeld 2016), T3-050 (Al Lawati 2017), T3-058 (TERRAGON 2017), T3-072 (EIB 2020),
+T3-104 (Jee 2022), T3-105 (KfW/Prognos 2022), T3-108 (Misch 2022), T3-124 (Gonçalves 2023),
+T3-129 (Rhee 2023), T3-130 (Tekin 2023), T3-137 (Al Khatib 2024), T3-140 (INSERM 2024),
+T3-142 (Kapsalis 2024), T3-143 (Larivière 2024), T3-145 (Liu 2024)
+
+commit: cf6d833cc3e8
+
+### CONVERSATION TOTALS
+
+| Task | Commits | Status |
+|---|---|---|
+| Phase 2C-E multilingual backfill | 18 | COMPLETE — 76 files × 19 langs × 46 jurs |
+| Jurisdiction NOT-RUN cleanup | 4 | COMPLETE |
+| Appendix A expansion (A.18–A.20) | 1 | COMPLETE — 20 tables total |
+| Phase 4 spec database | 1 | COMPLETE — 73/73 |
+| Tier correction propagation | 1 | COMPLETE — 10/10 |
+| Tier 3 UNVERIFIED-1 batch | 1 | 5/20 verified |
+| Session management | 4 | Blocks 23–26 |
+| **Total** | **30** | |
+
+next_action: >
+  Tier 3 UNVERIFIED-1: 15 entries remaining (Steinfeld 2016, Al Lawati 2017,
+  TERRAGON 2017, EIB 2020, Jee 2022, KfW/Prognos 2022, Misch 2022,
+  Gonçalves 2023, Rhee 2023, Tekin 2023, Al Khatib 2024, INSERM 2024,
+  Kapsalis 2024, Larivière 2024, Liu 2024).
+  BPC author corrections: Kim W→Kim CS, Mitra&Jones→Mitra et al.
+  Co-1 verification: 3 remaining UNVERIFIED-1.
+
+blockers: none
+
+session_close: 2026-04-24 07:35
