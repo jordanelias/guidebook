@@ -120,6 +120,9 @@ Post-installation RT60 measurement at 500 Hz required
 
 **FDR-IntD-02 [Tier 1–3]:** Hyperacusis is prevalent in IntD-associated syndromes — Down syndrome (Widen et al. 2013, *Int J Audiol* Tier 3), Williams syndrome (Levitin et al. 2005, *Nature Neuroscience* Tier 1), Fragile X syndrome (Castrén et al. 2003 Tier 3). ● IntD-occupied educational and residential spaces should apply the NDV acoustic specification (RT60 ≤0.4 s, NC-25 background noise — A-02, A-08) as the governing acoustic standard rather than the general occupancy standard. DEM/NDV[IntD-proxy] routing applies.
 
+**Jurisdiction comparison:** US ANSI S12.60 and UK BB93 reference ceiling absorption but do not specify NRC ≥0.85. DE DIN 18041 specifies absorption coefficients by room type. Guidebook's NRC ≥0.85 exceeds all code thresholds.
+
+
 ### A-03 Acoustic Door (STC ≥35) at All Sensitive Space Boundaries
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
@@ -248,6 +251,9 @@ VIII §8.4.1.
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model; Biomechanical FOR. Carpet's NRC 0.20--0.35 reduces impact noise and chair movement noise that fall in the frequency ranges most aversive to sensory-sensitive and sensory-avoiding users; the specification of low pile (≤6mm) with flush transitions also satisfies the Biomechanical FOR requirement that floor transitions present no trip hazard to mobility-impaired users.
 
+**Jurisdiction comparison:** No code mandates carpet as acoustic treatment. UK PAS 6463 notes carpet aids acoustic absorption but may impede wheelchair propulsion. Guidebook specifies carpet only where VIS navigation aids (TWSIs) are maintained — balancing acoustic benefit against MOB access.
+
+
 ### A-06 Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -283,6 +289,9 @@ standard fixing. See Part 12 §12.4.1.
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. Fabric panel placement at primary reflection points targets the specific acoustic conditions (strong specular reflections) that are most disruptive to sensory-processing regulation; the 900--2400mm height band places the treatment within the acoustic influence zone of seated and standing occupants.
 
+**Jurisdiction comparison:** No code specifies fabric wall panels. DE DIN 18041 specifies absorption coefficients at reflection points. Guidebook's NRC ≥0.70 is an OT-derived threshold for speech intelligibility.
+
+
 ### A-07 Flutter Echo Elimination (Parallel Hard Surface Avoidance)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -313,6 +322,9 @@ BSI.
 **Cross-reference:** A-02 (Ceiling); A-06 (Wall Panels)
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Flutter echo between parallel untreated hard surfaces produces a sustained, non-decaying reflection series that functions as an uncontrolled repetitive auditory stimulus; this item prevents its formation at source, implementing the EHP 'prevent' strategy before the stimulus reaches the neurological threshold for distress in AUT and PCS users.
+
+**Jurisdiction comparison:** UK BB93 addresses flutter echo in school design. DE DIN 18041 §6 addresses room acoustic defects including flutter echo. No other code specifically targets flutter echo. Guidebook extends to all occupied spaces.
+
 
 ### A-08 HVAC Noise Control (NC-25 Maximum in Sensitive Spaces)
 <!-- CON-0008 [HIGH]: A-02/A-08/A-13 acoustic convergence: RT60 + NC-25 + masking prohibition -->
@@ -403,6 +415,9 @@ Post-installation: vibration measurement at sensitive space floors (target: <0.1
 fibromyalgia (Desmeules et al. 2003; Staud 2011); the ≥20dB insertion loss target at these frequencies is derived from the vibration
 
 amplitude required to remain below the sensitisation threshold for users with established widespread pain.
+
+**Jurisdiction comparison:** US ASHRAE Handbook references vibration isolation. UK CIBSE Guide B covers plant vibration. DE VDI 2062 vibration isolation. No code addresses vibration isolation as an accessibility provision — guidebook derives from NDV/NEU sensory sensitivity.
+
 
 ### A-10 Counter Hearing Loop (Induction Loop at Reception/Service Counter)
 <!-- CON-0135 [HIGH]: A-01/A-02/A-08/A-10 acoustic cluster: adjacency + panels + HVAC NC-25 + hearing loop IEC 60118-4 -->
@@ -885,6 +900,18 @@ Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 complianc
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Fluorescent luminaires (magnetic ballast 100Hz flicker; electronic 20--50kHz flicker at visible amplitudes) are documented triggers for migraine, photosensitive epilepsy, and PCS symptom exacerbation; this item implements a categorical prevent intervention by removing the trigger source entirely rather than attempting to mitigate it.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Flicker Limit | Fluorescent Restriction | Notes |
+|---|---|---|---|---|
+| US | IEEE 1789-2015 | Modulation <10% above 90Hz | Recommended | Not mandatory |
+| UK | PAS 6463:2022 | Avoid fluorescent | Recommended | NDV provision |
+| EU | EN 12464-1 | No visible flicker | — | General provision |
+| **Guidebook** | **B-03** | **LED only; SVM ≤0.4** | **No fluorescent** | **NDV/NEU/migraine** |
+
+No code bans fluorescent lighting. IEEE 1789 and PAS 6463 are closest. SVM (Stroboscopic Visibility Measure) ≤0.4 is guidebook-specific.
+
+
 ### B-04 Flicker-Free LED Luminaires [MERGED INTO B-03 per CO-0003/D2-23]
 <!-- CON-0156 [HIGH]: E-03 ramp + C-04 contrast + E-09 TWSI + B-04 flicker — circulation safety cluster -->
 <!-- design_stage_lock: DD -->
@@ -950,6 +977,9 @@ requires circuit separation, dimmer installation, and possible luminaire additio
 **Cross-reference:** B-06 (Dimming); B-09 (Natural Light); E-06 (Level Entry)
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Glare sources in the UGR >19 range constitute a visual trigger that activates threat-detection responses in sensory sensitive users and impairs visual contrast detection in low-vision users; this item prevents the trigger at luminaire-selection stage.
+
+**Jurisdiction comparison:** No code specifies ≥5m lighting transition zones. UK CIBSE SLL Lighting Guide references adaptation. DE DIN EN 12464-1 §5 references illuminance uniformity. Guidebook's 5m transition zone is derived from VIS dark adaptation research (≥3 minutes for rod-cone transition).
+
 
 ### B-06 Individual Dimming Control (≥300 Lux Range)
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
@@ -1032,6 +1062,9 @@ Illuminance: 200--300 lux at task level achieved by indirect strategy
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. Indirect and cove lighting distributes illuminance across the ceiling and upper wall surfaces without creating the high-luminance point sources that trigger hyperarousal in sensory sensitive users; the absence of visible lamp surfaces removes the primary aversive stimulus in the visual field.
 
+**Jurisdiction comparison:** No code mandates indirect lighting in sensitive spaces. DE DIN/TS 67600 recommends indirect component for biological effectiveness. UK PAS 6463 recommends glare-free lighting for NDV. Guidebook specifies indirect/cove as default in sensitive spaces based on NDV/VIS/migraine evidence.
+
+
 ### B-08 Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -1109,6 +1142,17 @@ seated views essential).
 **Cross-reference:** B-01 (Circadian Lighting); BIO-01 (Nature Views); B-05 (Transition Zones)
 
 **Evidence basis (OT):** ART (Attention Restoration Theory); SRT (Stress Recovery Theory). Natural light from windows and skylights is the primary restorative element in the built environment per both ART and SRT; the ≥75% provision ensures that the majority of primary occupied time is spent with access to the visually restorative stimulus, reducing directed attention depletion for NEU, DEM, and OFS users.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Daylight Factor | Window Area | Notes |
+|---|---|---|---|---|
+| US | WELL v2 Feature L01 | ≥2% (WELL) | — | Voluntary |
+| UK | BS 8206-2 / CIBSE LG10 | ≥2% recommended | AD L references | — |
+| DE | DIN 5034 | ≥2% (workplaces) | ASR A3.4 | Mandatory workplace |
+| EU | EN 17037:2018 | Daylight provision | By climate zone | New European standard |
+| **Guidebook** | **B-09** | **Maximise** | **Clerestory, wells, rooflights** | **VIS + circadian benefit** |
+
 
 ### B-10 Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout Building)
 <!-- CON-0042 [HIGH]: Multi-channel alerting: visual + auditory + vibrotactile simultaneously across all alert types -->
@@ -1240,6 +1284,9 @@ D-05 (Enclosed Refuge Spaces)
 
 Model. Muted, low-chroma colours reduce the visual complexity that constitutes an orientation challenge at Allen's cognitive levels 3--5 (DEM) and a sensory overload trigger at Dunn's sensory-avoiding and sensory-sensitive quadrants (NDV, AUT); the non-institutional palette also addresses the PEOP volition subsystem for MH users (non-clinical aesthetics support occupational identity).
 
+**Jurisdiction comparison:** No code specifies colour palette. UK DSDC Stirling and King's Fund provide DEM-specific colour guidance. PAS 6463 recommends muted environments for NDV. Guidebook's muted, low-chroma, non-institutional palette is clinical/research-derived.
+
+
 ### C-02 Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing/Zone)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -1273,6 +1320,9 @@ No more than 5 distinct zone colours per building
 same colour throughout) implements Allen's CDM cognitive level 4 intervention: the environment provides a reliable object-level cue
 
 that substitutes for abstract wayfinding reasoning when cognitive capacity for spatial abstraction is reduced.
+
+**Jurisdiction comparison:** No code mandates colour-coded wayfinding. UK DSDC Stirling recommends distinct colours per wing for DEM orientation. ISO 3864 covers safety colour coding. Guidebook extends to all wayfinding zones based on DEM/NDV/VIS evidence.
+
 
 ### C-03 Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments)
 <!-- design_stage_lock: DD -->
@@ -1409,6 +1459,9 @@ Clearing our path. CNIB.
 
 **Evidence basis (OT):** Allen's CDM. LRV ≤10 between adjacent floor materials prevents the visual signal of a 'step' (high-contrast floor transition) being generated where no step exists; for DEM users at Allen's cognitive levels 3--4, a high-contrast floor transition produces an avoidance response and gait interruption identical to the response to an actual step.
 
+**Jurisdiction comparison:** No code addresses inverse contrast at floor-material junctions. UK BS 8300 addresses standard LRV contrast (≥30 points) but not DEM-specific inverse contrast avoidance. This is a guidebook-specific provision — dark floor strips can be perceived as voids by people with dementia.
+
+
 ### C-06 Plain, Low-Contrast Flooring [MERGED INTO C-03 per CO-0003/D2-22]
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -1481,6 +1534,9 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 
 (continue forward) and eliminates the executive function demand of route selection that exceeds cognitive level 4 capacity.
 
+**Jurisdiction comparison:** No code mandates loop floor plans. UK DSDC Stirling recommends loop layouts for DEM — eliminates dead-end disorientation. Guidebook specifies for all DEM environments.
+
+
 ### D-02 Cognitive Simplicity (Single Primary Route from Entry to Destination)
 <!-- CON-0043 [HIGH]: LRV ≥50% best practice; ≥65% Michelson at critical junctions; 30% = code minimum only -->
 <!-- CON-0115 [HIGH]: D-09 consistent layout + D-02 single primary route — DEM spatial predictability -->
@@ -1524,6 +1580,9 @@ Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 
 **FDR-NDV-02 [THIN — Tier 1 mechanism only]:** Interoceptive processing delay in NDV/AUT (Garfinkel et al. 2016, *Cortex* Tier 1 — mechanism; no built environment RCT) — delayed awareness of bladder urgency increases risk of incontinence incidents in NDV-occupied spaces. WC or water point to be within 20 m one-way of any primary NDV occupied space (classroom, workstation zone, sensory room). ○ [architectural implication — THIN-POPULATION-SPEC; no design standard specifies this distance]
 
+**Jurisdiction comparison:** No code specifies single primary route. UK PAS 6463 recommends simple layouts for NDV. DSDC Stirling addresses for DEM. Guidebook's "single primary route" is design guidance, not a codified standard.
+
+
 ### D-03 Toilet Visibility from Primary Occupied Spaces (No Navigation Required)
 <!-- design_stage_lock: B -->
 <!-- ve_risk: CRITICAL -->
@@ -1554,6 +1613,9 @@ Maximum 20 m from any primary occupied space to nearest toilet (MS bladder urgen
 **Cross-reference:** D-01 (Loop Plan); G-03 (Grab Bars in Bathroom)
 
 **Evidence basis (OT):** Allen's CDM; Life Balance Model. Accessible toilets ≤20m from all primary occupied spaces compensates for the reduced continence planning capacity in DEM (cognitive levels 3--4) and the bladder urgency in MS/NEU users; the Life Balance Model grounds the 20m specification as the exertion budget for OFS and PAIN users for whom further travel to a toilet constitutes a significant energy expenditure.
+
+**Jurisdiction comparison:** No code requires toilet visibility from occupied spaces. UK DSDC Stirling recommends for DEM. Guidebook specifies visual connection or direct sightline — derived from DEM continence management evidence.
+
 
 ### D-04 Landmarks at Every Decision Point
 <!-- design_stage_lock: SD -->
@@ -1587,6 +1649,9 @@ without structural intervention. See Part 12 §12.4.1.
 **Cross-reference:** D-01 (Loop Plan); C-02 (Colour Zoning); BIO-03 (Texture Variety); BIO-04 (Water Features)
 
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. Landmark objects at every decision point implement Allen's CDM level 4 wayfinding principle (concrete, familiar objects as navigational anchors) and compensate for the absent visual environmental information that VIS users would otherwise use for orientation; the specificity requirement (real, familiar, not generic decoration) is derived from CDM level 4 object recognition research.
+
+**Jurisdiction comparison:** No code mandates landmarks at decision points. UK PAS 6463 and DSDC Stirling reference landmarks for NDV/DEM. ISO 21542 §40 references wayfinding landmarks. Guidebook specifies distinctive landmarks at EVERY decision point.
+
 
 ### D-05 Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
@@ -1630,6 +1695,9 @@ Minimum: 1 per 20 open-plan workstations
 
 Sensory Processing Model. Focus rooms create an environmental context that enables sustained cognitive occupation (concentrated work, private communication) that is impossible in open-plan environments for sensory-sensitive and PCS users; the STC ≥35 partition and NC-25 HVAC specification define the minimum acoustic context required for this occupation.
 
+**Jurisdiction comparison:** No code mandates low-stimulation spaces. UK PAS 6463:2022 recommends quiet/calm spaces for NDV. Guidebook specifies enclosed focus rooms, breakout alcoves — derived from NDV/AUT sensory regulation evidence. Cross-reference A-16 (sensory room).
+
+
 ### D-06 Memory Boxes at Private Office and Residential Room Entrances
 <!-- CON-0043 [HIGH]: LRV ≥50% best practice; ≥65% Michelson at critical junctions; 30% = code minimum only -->
 <!-- CON-0123 [HIGH]: D-02/D-06/D-08/C-04 — DEM wayfinding + colour + signage convergence cluster -->
@@ -1669,6 +1737,9 @@ Contrast)
 
 **Evidence basis (OT):** Allen's CDM. Dead-end elimination removes a wayfinding failure mode that is specifically dangerous at Allen's CDM cognitive level 3--4: dead ends are not recognisable as such at these cognitive levels and produce wandering behaviour and distress that orientation-intact users do not experience.
 
+**Jurisdiction comparison:** No code mandates memory boxes. UK DSDC Stirling and Dementia Services Development Centre recommend personalisation cues at room entrances for DEM. Guidebook-specific provision for DEM residential settings.
+
+
 ### D-07 No Blind Corners (Curved or Mirrored at All Hidden Junctions)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: LOW -->
@@ -1699,6 +1770,9 @@ Seating)
 (action-based, visual cues rather than language-dependent abstract text) and compensates for the reduced symbol-reading capacity in
 
 acquired low-literacy disability (VIS, DEM, post-stroke aphasia).
+
+**Jurisdiction comparison:** No code restricts blind corners on accessibility grounds. UK PAS 6463 recommends clear sightlines for NDV. Gallaudet DeafSpace specifies sightlines for DEAF. Guidebook's 45° splay / convex mirror / vision-panel treatment is derived from DEM startle response and DEAF visual connectivity research.
+
 
 ### D-08 Pictogram + Single-Word Signage Throughout
 <!-- CON-0123 [HIGH]: D-02/D-06/D-08/C-04 — DEM wayfinding + colour + signage convergence cluster -->
@@ -1782,6 +1856,9 @@ at any stage. See Part 12 §12.4.1.
 **Cross-reference:** D-04 (Landmarks); D-02 (Cognitive Simplicity)
 
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. Colour-coded floor zones compensate for the abstract spatial memory required to navigate multi-destination buildings at cognitive levels 3--4; the floor colour provides a continuously visible, non-language-dependent cue to location that substitutes for the spatial reasoning that DEM users have lost.
+
+**Jurisdiction comparison:** No code addresses furniture layout consistency. UK DSDC Stirling recommends stable layout for DEM. Guidebook specifies no rearrangement without user consultation — derived from VIS spatial mapping and DEM routine disruption evidence.
+
 
 ### D-10 Transparent Glazed Panels in Internal Partitions
 <!-- design_stage_lock: SD -->
