@@ -5,14 +5,14 @@
 **Action:** Use `luminance-contrast-lrv-evidence-base` for all research retrieval. This file is a redirect only.
 
 jurisdiction_coverage:
-  US: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  UK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA: no specific LRV contrast requirement. A117.1 references visual contrast."}
+  UK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300: LRV contrast ≥30 minimum, ≥70 critical. DfT guidance. PAS 6463 pattern avoidance."}
+  AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §12: luminance contrast ≥30%. AS 4049 covers slip resistance."}
   CA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 32975:2009 visual design of public information — contrast requirements."}
   NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542 §39: visual contrast provisions."}
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -51,3 +51,8 @@ jurisdiction_coverage:
   GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  KEY DIVERGENCE: UK BS 8300 specifies LRV values (≥30 min, ≥70 critical). US ADA has no numeric LRV requirement. AU AS 1428.1 ≥30%. DE DIN 32975 addresses visual design comprehensively.
+
+```
