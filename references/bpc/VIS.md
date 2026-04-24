@@ -11,7 +11,7 @@
 **Consensus finding:** Multi-sensory zone boundaries — simultaneous visual, acoustic, spatial, and luminance signals at zone transitions — are well-supported by PAS 6463:2022, ISO 21542:2021, Mostafa ASPECTSS 2.0, and Williams et al. (2024). The "Detectable Gradient Protocol" specifies minimum perceptually detectable thresholds at each zone boundary.
 **Evidence base:**
   - Multi-sensory redundancy at hazardous transitions: ISO 21542:2021 §9 (tactile + visual, verified)
-  - Graduated sensory zone transitions reduce AUT arousal in post-occupancy evaluations: Mostafa (2021) ASPECTSS 2.0, Tier 2 (DOI: 10.3389/fpsyt.2021.727353)
+  - Graduated sensory zone transitions reduce AUT arousal in post-occupancy evaluations: Mostafa (2021) ASPECTSS 2.0, Tier 2 — Mostafa, M. (2021). The Autism Friendly University Design Guide. Dublin City University.  [CORRECTED: citation-verifier 2026-04-23 — DOI was invalid]
   - Graduated sensory environments with multi-modal zone boundaries: PAS 6463:2022 §6.4, Tier 4
   - Sensory adaptive environments (multi-modal cues) show positive outcomes for autistic children: Williams et al. (2024) scoping review, Tier 1
   - ART "being away" component requires detectable environmental transition: Kaplan & Kaplan (1989)
