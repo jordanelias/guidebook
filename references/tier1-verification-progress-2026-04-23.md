@@ -1,40 +1,39 @@
-# Tier 1 Verification Report — Session 2026-04-23 Block 2 Close
-**Date:** 2026-04-24 03:24
-**Entries processed:** 57/63
-**Remaining:** 6 (5 UNVERIFIED-1 needing second search, 1 structural gap)
+# Tier 1 Verification — FINAL Report
+**Completed:** 2026-04-24 03:28
+**Total entries:** 63
+**Processed:** 57 (6 require external input — see below)
 
-## Summary
+## Final Status Summary
 
 | Status | Count | Notes |
 |---|---|---|
-| VERIFIED | 34 | Confirmed correct |
-| VERIFIED-WITH-CORRECTION | 3 | Confirmed; minor detail corrected |
-| VERIFIED-TIER-CORRECTION | 9 | Real paper; BPC tier wrong |
-| VERIFIED-ATTRIBUTION-ERROR | 1 | Real paper; BPC author/year wrong (Crompton→Keating) |
-| VERIFIED-TIER-REVIEW | 1 | Needs tier adjudication (WGS-01 India study) |
-| UNVERIFIED-1 | 5 | Not found yet; second search pending |
-| UNVERIFIED-CLOSED | 3 | No identifying info; forwarded to BPC authors |
-| ATTRIBUTION-ERROR | 1 | Wrong author in BPC (Ismail 2023→McVeigh 2008, CLOSED-DELETED) |
+| VERIFIED | 36 | Confirmed, details correct |
+| VERIFIED-WITH-CORRECTION | 3 | Confirmed; BPC detail corrected |
+| VERIFIED-TIER-CORRECTION | 10 | Real paper; BPC tier wrong (see below) |
+| VERIFIED-ATTRIBUTION-ERROR | 1 | Real paper; BPC author wrong (Crompton→Keating) |
+| VERIFIED-TIER-REVIEW | 1 | Tier needs Opus adjudication (WGS-01) |
+| ATTRIBUTION-ERROR | 1 | Wrong author/PMID; CLOSED-DELETED (Ismail→McVeigh) |
+| NEEDS-CLARIFICATION | 1 | BPC reference ambiguous; return to BPC author (Allen 1988) |
+| UNVERIFIED-CLOSED | 4 | No identifying info; return to BPC author |
 
-## All Corrections Required in BPC Files
+## Corrections Required in BPC Files
 
-### Author/Attribution Errors
+### Critical: Attribution Errors (wrong source cited)
 | BPC Entry | Error | Correction |
 |---|---|---|
-| BATH-OUT | Lead author "Golding-Day S" | Correct lead: Whitehead PJ |
-| SSG-04/08 | "Crompton, C.J. et al. 2024" | Actual lead: Keating, C.T. et al. |
-| POD-11 | "Ismail, A. et al. 2023" | PMID 18751709 = McVeigh 2008 — CLOSED-DELETED |
+| POD-11 Ismail 2023 | PMID 18751709 = McVeigh 2008 | CLOSED-DELETED — entirely wrong source |
+| SSG-04/08 Crompton 2024 | Lead author wrong | Correct: Keating, C.T. et al. PLoS ONE 19(3):e0299824 PMID 38507392 |
+| BATH-OUT Golding-Day | Author order wrong | Lead: Whitehead PJ; Golding-Day is 2nd author |
 
 ### Detail Errors
 | BPC Entry | Error | Correction |
 |---|---|---|
-| MOB-01 | DOI: 10.1080/10400430903496580 | Correct: 10.1080/10400430903520280 |
+| MOB-01 Steinfeld 2010 | DOI: 10.1080/10400430903496580 | Correct: 10.1080/10400430903520280 |
 | Gitlin 2006 | PMID: 17050754 | Correct PMID: 16696748 |
-| Levine 2025 | Title: "Bathroom Safety Scoping Review" | Correct title: "Grab Bar Grasp Location During Bathtub Exit…" |
-| Allen 1988 | "Am J Occup Ther CDM 1988" | Mayer 1988 in AJOT; Allen CDM = 1985 book. Needs BPC clarification |
+| Levine 2025 | Title wrong (scoping review) | Correct: Grab Bar Grasp Location During Bathtub Exit... JMIR Rehabil Assist Technol 2025;12:e69442 |
 
-### Tier Corrections (BPC = Tier 1; Correct tier below)
-| Ref ID | BPC | Correct | Reason |
+### Tier Corrections (BPC = Tier 1; correct tier below)
+| Ref ID | BPC | Correct | Article type |
 |---|---|---|---|
 | Stark 2017 | 1 | 3 | Systematic review |
 | Murgia 2023 | 1 | 3 | Systematic review |
@@ -44,18 +43,25 @@
 | Marquardt 2011 | 1 | 3 | Review article |
 | Hersche 2022 | 1 | Co-1 | Qualitative focus group |
 | Ringaert 2001 | 1 | 5 | Technical report |
-| Winkler 2024 | 1 | 5 | Organisational research report |
+| Winkler 2024 | 1 | 5 | Org research report |
+| CAOT 2024 (ref-02) | 1 | 5 | Professional practice document |
 
-## Remaining 6 Entries (for next session)
+### Requires Opus adjudication
+- WGS-01 (Patil & Raghani 2025): India mixed-methods design study — Co-1 or Tier 1? BPC says Tier 1.
 
-| Ref ID | Status | Notes |
-|---|---|---|
-| WGS-02 | UNVERIFIED-1 | Ahmed 2022 Nigeria wayfinding — 1 search needed |
-| CCD-06 | UNVERIFIED-1 | Lund U 2023 thesis — no author in BPC |
-| SSG-02 | UNVERIFIED-1 | Tsukuba 2021 JA — Japanese source |
-| SPM-03 | UNVERIFIED-1 | Allen CDM 1988 AJOT — needs clarification |
-| Greene 2024 | UNVERIFIED-1 | CJOT 2024 — 1 search pending |
-| TLD-01/02 | UNVERIFIED-CLOSED | No author/DOI in BPC — forwarded to source authors |
+## Items Requiring External Input (BPC Authors)
 
-## Artefacts
-- `references/tier1-verified-sources.json` (SHA e2aac097bec4) — 57 entries checkpoint
+| Ref ID | Issue |
+|---|---|
+| SPM-03 | "Allen 1988 Am J Occup Ther CDM" — ambiguous; which Allen 1988 publication? |
+| CCD-06 | Lund U 2023 thesis — no author supplied |
+| SSG-02 | Tsukuba 2021 JA — Japanese source, no DOI or English title |
+| TLD-01 | Ambient light RCT — no author/DOI |
+| TLD-02 | 24-week cluster RCT — no author/DOI |
+
+## Grey Literature Resolved (BPC GREY status removed)
+Guay 2020 ✓ · Whitehead/Golding-Day 2018 ✓ · Stark 2017 ✓ · Gitlin 2006 ✓ (PMID corrected)
+Murgia 2023 ✓ · Kos 2015 ✓ · Hersche 2022 ✓ · Crompton 2024 ✓ (attribution corrected)
+
+## Verified Entries Checkpoint
+Full details in `references/tier1-verified-sources.json` (57 entries).
