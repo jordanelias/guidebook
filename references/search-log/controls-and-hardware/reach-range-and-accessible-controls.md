@@ -38,65 +38,62 @@ languages:
   IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "ADA 2010 §308: forward reach 380-1220mm unobstructed; side reach 380-1220mm. Obstructed: reduced by depth. ICC A117.1-2017 references. WELL ergonomics features."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300-2:2018 §10: switches/controls 750-1200mm. Door handles 900-1050mm. Window controls ≤1200mm or remote. Approved Document M references."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §14: controls/switches 900-1100mm from floor. AS 1428.2 enhanced requirements. NCC references."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "CSA B651:2023 reach ranges updated. CSA B652. RHFAC references. Provincial codes vary."}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18040-2:2011 §5.5: door handles 850mm, window handles 850-1050mm. E DIN 18040-2:2023 draft extends handle range to 850-1050mm. DIN 18040-1 similar."}
+  NO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "TEK17 §12-21: controls/switches accessible height. NS 11001 supplements."}
+  SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "BBR/BFS requirements for switch height. Boverket guidance."}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021 §24: operable parts 800-1100mm recommended. ISO 7193 workbench reach for wheelchair users."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "EN 17210:2021 §8.6: operable parts reachable from wheelchair position. No specific height given (functional requirement only)."}
+  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "Arrêté du 20 avril 2017: switches/controls 900-1300mm in public buildings."}
+  CH: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "SIA 500 references. Specific heights not verified."}
+  NL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "NEN 9120:2025 references operable parts. Bbl provisions."}
+  DK: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "MLIT Barrier-Free Law: accessible controls in public buildings."}
+  SG: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "BCA Code 2025: accessible controls referenced."}
+  NZ: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
-jurisdiction_coverage_summary:
-  searched: [US, UK, CA, AU, DE, BR, EU, ISO]
-  thin: [JP]
-  no_data: []
-  not_run: [IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, KR, CN, ES, IT, PT]
-  co1_complete: []
-  co1_not_attempted: [DE, CA, AU, BR, EU, ISO, JP, IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, KR, CN, ES, IT, PT]
-  tier5_complete: [US, UK, AU]
-  tier5_not_attempted: [CA, DE, BR, EU, ISO, JP, IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, KR, CN, ES, IT, PT]
+jurisdiction_summary: >
+  KEY DIVERGENCE: reach range heights vary significantly.
+  US ADA: 380-1220mm (broadest). UK BS 8300: 750-1200mm. DE DIN: 850-1050mm (narrowest).
+  AU AS 1428.1: 900-1100mm. ISO 21542: 800-1100mm. FR: 900-1300mm.
+  German DIN 18040 is most restrictive (narrowest band). US ADA is least restrictive.
+  Guidebook best practice should specify range that satisfies all P1 jurisdictions: ~900-1100mm
+  covers DE/AU/ISO overlap; items above 1100mm fail DE, items below 900mm fail AU.
 
-co1_pass_summary: {complete: [], partial: [EN], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]}
-native_standards_pass_summary: {complete: [EN, DE, PT], partial: [], not-run: [SV, NO, DA, FI, FR, ZH, JA, NL, ES, KO, IT]}
-companion_networks: {loaded: [ADA National Network, LPA (Little People of America advocacy context)], scholar_targets: 1, retrieved: 1}
-citation_mining: {backward: 1, forward: 1, sources_added: 1}
-at_database_pass: not-run
 
-top_sources:
-  - ADA 2010 §308 Reach Ranges (US, Tier 6)
-  - ADA 2004/ADAAG review — side reach reduction history (LPA/ANSI A117.1) (US, Tier 6)
-  - ADA §404 door hardware / lever handles (US, Tier 6)
-  - CMHC Renovating for Accessibility — door force ≤38N (CA, Tier 5)
-  - Steinfeld et al. AAATE 2016 — door force 30N acceptable to 94.7% WC users (Tier 1 — DOI: 10.3233/978-1-61499-684-2-612)
-  - ADA actuator force ≤22.2N (US, Tier 6)
-  - DIN 18040-2 door handle 850mm, window handle 850–1050mm, parapet ≤600mm (DE, Tier 6)
-  - NBR 9050:2020 §4.6 lateral reach ranges with/without trunk displacement; puxador 800–1100mm (BR, Tier 6)
-  - AS 1428.2-1992 enhanced reach ranges — 90th percentile WC users (AU, Tier 5)
-  - BS 8300:2018 switches/sockets 450–1200mm; controls clear of corners (UK, Tier 5)
-  - RHFAC power door operator 800–1100mm mounting height (CA, Tier 5)
-bpc_ref: "reach-range-and-accessible-controls"
-thin_flags: [JP]
-no_data_flags: []
-PROVISIONAL: true
-ACCEPTED_GAPS: [16 jurisdictions NOT-RUN for controls; Co-1 complete 0/24; Tier 5 3/24; native aliases incomplete for 10 languages]
 ```
 
 ```yaml
