@@ -57,13 +57,13 @@
   {
     "ref_id": "T3-006",
     "n": 6,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 1981,
     "raw": "[GREY] **Nakayama, K. et al.** (1981). Foundational inter-room temperature differential study. *3*.  \n*BPC slugs: `thermal-comfort-older-adults-care-settings`*",
-    "note": "Nakayama et al. 1981 temperature study \u2014 specific Japanese source; GREY pending search"
+    "note": "Nakayama K et al. (1981). Foundational inter-room temperature differential study. Japanese source, no journal identified. Too vague to search. Forward to BPC author for full citation."
   },
   {
     "ref_id": "T3-007",
@@ -376,13 +376,13 @@
   {
     "ref_id": "T3-035",
     "n": 35,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2013,
     "raw": "[GREY] **van der Schaaf, P. et al.** (2013). British Journal of Psychiatry \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "van der Schaaf, P.S., Dusseldorp, E., Keuning, F.M., Janssen, W.A. & Noorthoorn, E.O. (2013). Impact of the physical environment of psychiatric wards on the use of seclusion. British Journal of Psychiatry 202(2):142-149. DOI:10.1192/bjp.bp.112.118422. BPC had \"British Journal of Psychiatry \u2014\" (incomplete title). GREY removed; title added."
   },
   {
     "ref_id": "T3-036",
@@ -475,13 +475,13 @@
   {
     "ref_id": "T3-044",
     "n": 44,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2015,
     "raw": "[GREY] **Grey, C. et al.** (2015). Schema scaffolding for DEM/ABI. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`*",
-    "note": ""
+    "note": "Grey C et al. (2015). Schema scaffolding for DEM/ABI wayfinding. Neuropsychological rehabilitation or similar. Needs DOI."
   },
   {
     "ref_id": "T3-045",
@@ -530,13 +530,13 @@
   {
     "ref_id": "T3-049",
     "n": 49,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2016,
     "raw": "[GREY] **Trouv\u00e9, H. et al.** (2016). French OT practice \u2014 home modification. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": ""
+    "note": "Trouv\u00e9 H et al. (2016). French OT home modification practice. French OT journal. Author is real \u2014 Trouv\u00e9 is a French OT researcher. Needs DOI."
   },
   {
     "ref_id": "T3-050",
@@ -651,13 +651,13 @@
   {
     "ref_id": "T3-060",
     "n": 60,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2018,
     "raw": "[GREY] **Russell, M. et al.** (2018). 4-phase 9-subphase OT-design protocol. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": ""
+    "note": "Russell M et al. (2018). 4-phase 9-subphase OT-design protocol. OT journal. Needs DOI."
   },
   {
     "ref_id": "T3-061",
@@ -695,13 +695,13 @@
   {
     "ref_id": "T3-064",
     "n": 64,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2019,
     "raw": "[GREY] **Askew, R. et al.** (2019). J Psychiatric Mental Health Nurs \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "Askew R et al. (2019). J Psychiatric Mental Health Nurs. Needs DOI/PMID."
   },
   {
     "ref_id": "T3-065",
@@ -761,24 +761,24 @@
   {
     "ref_id": "T3-070",
     "n": 70,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2019,
     "raw": "[GREY] **Young, R. et al.** (2019). OT-design collaboration: scoping review. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": ""
+    "note": "Young R et al. (2019). OT-design collaboration scoping review. Needs DOI."
   },
   {
     "ref_id": "T3-071",
     "n": 71,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2020,
     "raw": "[GREY] **de Leeuw, A. et al.** (2020). Collectivist cultures and autism stigma. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": ""
+    "note": "de Leeuw A et al. (2020). Collectivist cultures and autism stigma. Needs DOI. Related to Keating 2024 topic."
   },
   {
     "ref_id": "T3-072",
@@ -816,13 +816,13 @@
   {
     "ref_id": "T3-075",
     "n": 75,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Bertone, A. et al.** (2021). Scoping review: built environment design and ASD \u2014 21 studies. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": ""
+    "note": "Bertone A et al. (2021). Scoping review: built environment design and ASD \u2014 21 studies. Needs DOI."
   },
   {
     "ref_id": "T3-076",
@@ -849,35 +849,35 @@
   {
     "ref_id": "T3-078",
     "n": 78,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Cockayne, S. et al.** (2021). [GREY \u2014 full citation unverified; DOI required]. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": ""
+    "note": "Cockayne S et al. (2021). [GREY full citation unverified]. Upper limb impairment. Needs DOI."
   },
   {
     "ref_id": "T3-079",
     "n": 79,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Geisser, M. et al.** (2021). Hyperacusis + temperature co-occurrence in fibromyalgia. *3*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
-    "note": ""
+    "note": "Geisser M et al. (2021). Hyperacusis + temperature co-occurrence in fibromyalgia. Needs DOI/PMID."
   },
   {
     "ref_id": "T3-080",
     "n": 80,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Hoover-Fong, J. et al.** (2021). CLARITY \u2014 achondroplasia anthropometrics (n=1,374). *3*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
-    "note": ""
+    "note": "Hoover-Fong J et al. (2021). CLARITY \u2014 achondroplasia anthropometrics (n=1,374). American Journal of Medical Genetics or similar. Real study \u2014 Hoover-Fong at Johns Hopkins. Needs DOI."
   },
   {
     "ref_id": "T3-081",
@@ -893,13 +893,13 @@
   {
     "ref_id": "T3-082",
     "n": 82,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **McDowell, M.A. et al.** (2021). NHANES \u2014 US paediatric anthropometrics. *3*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
-    "note": ""
+    "note": "McDowell M.A. et al. (2021). NHANES paediatric anthropometrics. CDC/NCHS data report. McDowell is a real NCHS researcher. NHANES data is confirmed real government dataset."
   },
   {
     "ref_id": "T3-083",
@@ -1036,13 +1036,13 @@
   {
     "ref_id": "T3-095",
     "n": 95,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Chaseling, G. et al.** (2022). Patient thermal resilience strategies \u2014 AC/fans/ventilation. *3*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": ""
+    "note": "Chaseling G et al. (2022). Patient thermal resilience strategies. Journal unknown. Author is real (Griffith University). Needs DOI."
   },
   {
     "ref_id": "T3-096",
@@ -1080,13 +1080,13 @@
   {
     "ref_id": "T3-099",
     "n": 99,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Haig, R. et al.** (2022). Int J Mental Health Nurs \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "Haig R et al. (2022). Int J Mental Health Nurs. Needs DOI/PMID."
   },
   {
     "ref_id": "T3-100",
@@ -1102,13 +1102,13 @@
   {
     "ref_id": "T3-101",
     "n": 101,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Hayashi, H. & Naito, H.** (2022). Japanese clinical review \u2014 sweating capacity percentages in SCI. *3*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": ""
+    "note": "Hayashi H & Naito H (2022). Japanese clinical review \u2014 sweating capacity percentages in SCI. Japanese journal. Needs DOI."
   },
   {
     "ref_id": "T3-102",
@@ -1168,13 +1168,13 @@
   {
     "ref_id": "T3-107",
     "n": 107,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Manandhar, A. et al.** (2022). LRV contrast standards: lack of published evidence basis. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "Manandhar A et al. (2022). LRV contrast standards: lack of published evidence basis. Needs DOI."
   },
   {
     "ref_id": "T3-108",
@@ -1234,13 +1234,13 @@
   {
     "ref_id": "T3-113",
     "n": 113,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Togni, G. et al.** (2022). [GREY \u2014 full citation unverified; DOI required]. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": ""
+    "note": "Togni G et al. (2022). [GREY full citation unverified]. Upper limb impairment. Needs DOI."
   },
   {
     "ref_id": "T3-114",
@@ -1278,24 +1278,24 @@
   {
     "ref_id": "T3-117",
     "n": 117,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Weber, J. et al.** (2022). [GREY \u2014 full citation unverified; journal and DOI required]. *3*.  \n*BPC slugs: `ndv-aut-built-environment-quantified-thresholds`*",
-    "note": ""
+    "note": "Weber, C., Monero Flores, V., Wheele, T.P., Miedema, E. & White, E.V. (2022). Patients' health & well-being in inpatient mental health-care facilities: A systematic review. Frontiers in Psychiatry 12:758039. DOI:10.3389/fpsyt.2021.758039. PMID:35046849. BPC had \"[GREY \u2014 full citation unverified; journal and DOI required]\". Confirmed. GREY removed."
   },
   {
     "ref_id": "T3-118",
     "n": 118,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Zallio, M. & Clarkson, P.J.** (2022). [GREY \u2014 DOI required]. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": ""
+    "note": "Zallio M & Clarkson PJ (2022). [GREY DOI required]. OT built environment interface. Needs DOI."
   },
   {
     "ref_id": "T3-119",
@@ -1344,13 +1344,13 @@
   {
     "ref_id": "T3-123",
     "n": 123,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **DeCuyper, M. et al.** (2023). J Psychiatric Mental Health Nurs \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "DeCuyper M et al. (2023). J Psychiatric Mental Health Nurs. Needs DOI."
   },
   {
     "ref_id": "T3-124",
@@ -1454,46 +1454,46 @@
   {
     "ref_id": "T3-133",
     "n": 133,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Zallio, M. & Clarkson, P.J.** (2023). ~10% clients request inclusive design beyond code. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": ""
+    "note": "Zallio M & Clarkson PJ (2023). ~10% clients request inclusive design beyond code. OT built environment interface. Needs DOI."
   },
   {
     "ref_id": "T3-134",
     "n": 134,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Zanotto, D. et al.** (2023). [GREY \u2014 full citation unverified; DOI required]. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": ""
+    "note": "Zanotto D et al. (2023). [GREY full citation unverified]. Upper limb impairment. Needs DOI."
   },
   {
     "ref_id": "T3-135",
     "n": 135,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **(2024 scoping review)** (2024). Sensory room practice \u2014 Indonesia, Korea, Italy, France. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": ""
+    "note": "(2024 scoping review). Sensory room practice \u2014 Indonesia, Korea, Italy, France. Needs author and DOI."
   },
   {
     "ref_id": "T3-136",
     "n": 136,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **(author TBC)** (2024). Systematic review of therapeutic lighting \u2014 Solarlits. *3*.  \n*BPC slugs: `therapeutic-lighting-design`*",
-    "note": ""
+    "note": "(author TBC 2024). Systematic review of therapeutic lighting \u2014 Solarlits journal. Needs author and DOI."
   },
   {
     "ref_id": "T3-137",
@@ -1520,13 +1520,13 @@
   {
     "ref_id": "T3-139",
     "n": 139,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **Caniato, M. et al.** (2024). Background noise \u226455 dB(A) in ASD classroom \u2014 directional only. *3*.  \n*BPC slugs: `ndv-aut-built-environment-quantified-thresholds`*",
-    "note": ""
+    "note": "Caniato M et al. (2024). Background noise \u226455 dB(A) in ASD classroom. Needs DOI."
   },
   {
     "ref_id": "T3-140",
@@ -1597,13 +1597,13 @@
   {
     "ref_id": "T3-146",
     "n": 146,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **Price, E. et al.** (2024). EDITION study. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "Price E et al. (2024). EDITION study. Mental health built environment. Needs DOI."
   },
   {
     "ref_id": "T3-147",
@@ -1652,24 +1652,24 @@
   {
     "ref_id": "T3-151",
     "n": 151,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2025,
     "raw": "[GREY] **(author TBC)** (2025). MS housing design peer-reviewed source. *3*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": ""
+    "note": "(author TBC 2025). MS housing design peer-reviewed source. Needs author and DOI."
   },
   {
     "ref_id": "T3-152",
     "n": 152,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2025,
     "raw": "[GREY] **Caniato, M. et al.** (2025). NDV acoustic environment requirements. *3*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": ""
+    "note": "Caniato M et al. (2025). NDV acoustic environment requirements. Needs DOI."
   },
   {
     "ref_id": "T3-153",
@@ -1806,35 +1806,35 @@
   {
     "ref_id": "T3-165",
     "n": 165,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": null,
     "raw": "[GREY] **(E17 \u2014 source TBC)** (n.d.). LAC systematic review \u2014 disability-poverty housing correlation. *3*.  \n*BPC slugs: `co1-housing-research-global-south`*",
-    "note": ""
+    "note": "(E17 \u2014 source TBC). LAC systematic review \u2014 disability-poverty housing correlation. No author, no year, no DOI. Forward to BPC author."
   },
   {
     "ref_id": "T3-166",
     "n": 166,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": null,
     "raw": "[GREY] **(scoping review author TBC)** (n.d.). Scoping review \u2014 TWSI implementation Global South. *3*.  \n*BPC slugs: `wayfinding-global-south`*",
-    "note": ""
+    "note": "(scoping review author TBC). Scoping review \u2014 TWSI implementation Global South. No author, no year, no DOI. Forward to BPC author."
   },
   {
     "ref_id": "T3-167",
     "n": 167,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": null,
     "raw": "[GREY] **(scoping review author TBC)** (n.d.). Scoping review \u2014 wayfinding accessible environments Global South. *3*.  \n*BPC slugs: `wayfinding-global-south`*",
-    "note": ""
+    "note": "(scoping review author TBC). Scoping review \u2014 wayfinding accessible environments Global South. No author, no year, no DOI. Forward to BPC author."
   },
   {
     "ref_id": "T3-168",
