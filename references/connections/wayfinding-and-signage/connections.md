@@ -909,3 +909,24 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 
 **Quality assessment:** Strongest specification-convergence connection in this batch. Five independent evidence streams. Actionable. No quality concerns.
 
+
+### CON-0187
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** true
+**Source BPC slug(s):** wayfinding-dementia-spatial-design, visual-impairment-built-environment, intellectual-disability-built-environment-design
+**Target item(s):** D-02 (wayfinding system), D-06 (decision-point design)
+**Target population(s):** DEM, VIS, IntD
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** COMPOUND-INTERACTION
+**Connection:** FDR-CMP-04 compound interaction: DEM + VIS dual loss makes both tactile wayfinding (designed for VIS) and colour-coded wayfinding (designed for DEM) simultaneously inaccessible. BPC wayfinding-dementia confirms that DEM residents navigate via sequential decisions and landmarks, not cognitive maps. When VIS is added, landmark visibility fails. The only design solution that works for the compound case is sequential-decision-point architecture — physical layout that eliminates the need for either cognitive mapping or visual scanning. This principle also serves IntD (simplified decision nodes). MODERATE confidence: theoretical derivation from two verified evidence bases, not directly tested in a compound population study.
+
+**Evidence basis:** BPC wayfinding-dementia consensus (van Buuren 2025 PMC11931140); Marquardt 2011 (T1 verified); ISO 21542:2021 §9 multi-sensory redundancy.
+
+**Action required:** Add compound-interaction note to D-02 and D-06 specs. Specify sequential-decision-point layout as universal fallback for DEM+VIS compound.
+
+**Disposition notes:** —
