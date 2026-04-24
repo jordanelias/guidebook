@@ -134,7 +134,7 @@ jurisdiction_coverage:
   US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  CA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DE: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: complete}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
@@ -147,16 +147,16 @@ jurisdiction_coverage:
   FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

@@ -5,32 +5,32 @@
 **Action:** Use `luminance-contrast-lrv-evidence-base` for all research retrieval. This file is a redirect only.
 
 jurisdiction_coverage:
-  US: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA: no specific LRV contrast requirement. A117.1 references visual contrast."}
-  UK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300: LRV contrast ≥30 minimum, ≥70 critical. DfT guidance. PAS 6463 pattern avoidance."}
-  AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §12: luminance contrast ≥30%. AS 4049 covers slip resistance."}
-  CA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA: no specific LRV contrast requirement. A117.1 references visual contrast."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300: LRV contrast ≥30 minimum, ≥70 critical. DfT guidance. PAS 6463 pattern avoidance."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §12: luminance contrast ≥30%. AS 4049 covers slip resistance."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DE: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: complete}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542 §39: visual contrast provisions."}
-  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542 §39: visual contrast provisions."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
