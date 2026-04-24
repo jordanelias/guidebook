@@ -807,7 +807,7 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 <!-- CON-0182 [HIGH]: NDV/AUT photosensitivity at high melanopic EDI creates compound interaction with DEM/MH circadian needs — added to Applicable Groups with compound-interaction note below. ISW: connection-scout Opus [2026-04-24 15:17] -->
 <!-- CON-0006: CON-0006: circadian lighting supports OFS energy regulation and NEU sleep-wake cycle recovery alongside DEM -->
 
-**Description:** Lighting delivering ≥150 EML at seated eye level (1200 mm AFF) during daytime occupied hours (08:00--18:00). Evening (after 19:00): ≤10 EML with shift to warm 2700 K for sleep preparation.
+**Description:** Lighting delivering ≥250 lux melanopic EDI at seated eye level (1200 mm AFF) during daytime occupied hours (08:00–18:00). Evening (after 19:00): ≤50 lux melanopic EDI with shift to warm 2700 K CCT for sleep preparation. (Legacy EML values — ≥150 daytime, ≤10 evening — are superseded; see METRIC NOTE in item header.)
 
 > **Cross-population compound interaction (CON-0182):** The melanopic EDI ≥250 lux daytime target that serves DEM circadian entrainment and MH therapeutic lighting is contraindicated for NDV/AUT (photosensitivity — high lux triggers sensory overload) and OFS/ME (light-triggered symptom exacerbation in photosensitive ME/CFS). Resolution: circadian-optimised communal lighting applies at full specification; a mandatory low-lux opt-out (A-16 sensory room, ≤50 lux) must be accessible within 25 m of any primary occupancy space. Do not compromise the daytime threshold — spatial zoning is the only solution.
 
@@ -841,7 +841,7 @@ DEM environments: circadian lighting is a clinical requirement, not a comfort en
 | INT | CIE S 026/E:2018 | Metric definition | — | — | No (metric only) |
 | US | UL 24480 | CS ≥0.3 (different model) | — | — | No (voluntary) |
 | All others | — | **No requirement** | — | — | — |
-| **Guidebook** | **B-01** | **≥250 MEDI daytime** | **≤10 MEDI** | **Adjusted for age** | **Recommended** |
+| **Guidebook** | **B-01** | **≥250 MEDI daytime** | **≤50 MEDI evening** | **Adjusted for age** | **Recommended** |
 
 No national building code mandates circadian metrics. US UL 24480 uses Circadian Stimulus (CS) model — NOT equivalent to melanopic EDI.
 
