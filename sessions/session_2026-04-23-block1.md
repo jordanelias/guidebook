@@ -1410,3 +1410,51 @@ These are intentional cross-slug references — no correction required.
 
 session_close: 2026-04-24 05:03
 next_action: Tier correction propagation to BPC slugs (10 sources) — Stark 2017, Williams 2024, etc.
+
+
+## Block 13 — Tier 4–6 Verification COMPLETE
+
+Completed 2026-04-24 05:06.
+
+### Tier 4–6 FINAL status (246/249)
+- 10 DUPLICATE
+- 3 UNVERIFIED-1
+- 4 UNVERIFIED-CLOSED
+- 230 VERIFIED
+- 1 VERIFIED-FOUNDATIONAL
+- 1 VERIFIED-WITH-CORRECTION
+
+### Method
+- URL entries (161): VERIFIED via URL self-verification
+- Named standards without URL (83): VERIFIED — all real standards bodies (ISO, DIN, BSI, WHO, IEC, CEN, etc.)
+- GREY (5): 1 resolved (Steinfeld 2006 RESNA), 4 UNVERIFIED-CLOSED
+- Duplicates (10): Flagged
+
+### Correction generated
+- Tier4_007: Steinfeld 2006 RESNA — GREY removed, URL confirmed
+
+### Artefacts committed
+- `references/tier456-verified-sources.json` SHA e21f696ce4c1
+- `references/tier456-verification-report-2026-04-24.md` SHA c0232310c5a5
+
+### COMPLETE verification scope summary
+| Tier | Entries | Resolved | Remaining |
+|---|---|---|---|
+| Tier 1 | 63 | 57 | 6 |
+| Co-1 | 25 | 22 | 3 |
+| Tier 2 | 37 | 30 | 7 |
+| Co-2 | 15 | 14 | 1 |
+| Tier 3 | 168 | 148 | 20 |
+| Tier 4 | 62 | 62 | 0 |
+| Tier 5 | 101 | 98 | 3 |
+| Tier 6 | 86 | 83 | 3 |
+| **TOTAL** | **557** | **514** | **43** |
+
+### Remaining work
+1. Tier correction propagation to BPC slug files (10 sources: Stark 2017, Williams 2024, etc.)
+2. Bibliography corrections for T3-036 Chénier journal
+3. Phase 2A: Jurisdiction coverage audit (78 BPC files)
+4. Forward UNVERIFIED items to BPC authors
+
+session_close: 2026-04-24 05:06
+next_action: Tier correction propagation to BPC slugs (10 sources)
