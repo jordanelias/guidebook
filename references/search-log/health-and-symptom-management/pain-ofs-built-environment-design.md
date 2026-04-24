@@ -114,3 +114,8 @@ functional_deficit_pass:
   tier0_candidates: 4
   environments_covered: [bathroom, kitchen, circulation, service-point, retreat-space, utility-laundry, outdoor, workplace, bedroom-detailed, entrance]
   environments_remaining: []
+
+jurisdiction_summary: >
+  Combined PAIN+OFS provisions — NO code. Shared needs: rest seating, thermal control, vibration isolation, adjustable workstations. Cross-reference chronic-pain and fatigue-spectrum BPCs.
+
+```
