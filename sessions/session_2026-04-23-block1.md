@@ -877,3 +877,30 @@ commits_block16:
 - 1 appendix chapter created
 
 session_close: 2026-04-23 16:15
+
+
+## Block 7 — BPC Correction Pass
+
+Completed 2026-04-24 04:20.
+
+### Files corrected
+- `references/bibliography-v11-draft.md` — 4 corrections (Levine title+author, Gitlin PMID, Crompton→Keating, Golding-Day→Whitehead)
+- `references/bpc/MOB.md` — Steinfeld 2010 DOI
+- `references/bpc/PAIN.md` — Ismail2023 CLOSED-DELETED
+- `references/bpc/DBL.md` — Clark 2021→2022 essay format
+- `references/bpc/NDV.md` — Mostafa 2021 DOI removed
+- `references/bpc/VIS.md` — Mostafa 2021 DOI removed
+- `references/bpc/ALL-ROOMS.md` — GoldingDay→Whitehead BATH-OUT
+- `references/bpc-corrections-manifest-2026-04-23.md` — NEW: correction tracking manifest
+
+### Corrections applied: 8 files, 10 discrete corrections
+### Remaining: tier corrections (10 entries), duplicate consolidation (8 groups), manual BPC author items (9 entries)
+
+### Artefacts committed SHA
+- bibliography `81d3eb143ba2` + `0ecd49ea71a9` + `6de994a02c09`
+- MOB `b9bbfc4977e9` · PAIN `a21da4a2c2e6` · DBL `dd50d576c821`
+- NDV `de207f5a45d2` · VIS `70b1c083af65` · ALL-ROOMS `b571eeb92f4b`
+- manifest `5acf615c8f5b`
+
+session_close: 2026-04-24 04:20
+next_action: Tier 3 verification (168 systematic reviews) — batch by domain
