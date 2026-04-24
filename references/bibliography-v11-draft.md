@@ -107,7 +107,7 @@
 [GREY] **Stark S et al.** (2017). [GREY — title unverified; DOI required before publication]. *AJOT*.  
 *BPC slugs: `residential-kitchen-and-task-surfaces`*
 
-[GREY] **Golding-Day S et al.** (2018). BATH-OUT: Bathing Out of Tubs study. *[GREY — journal unverified]*.  
+[CORRECTED: citation-verifier 2026-04-23 — lead author wrong: Golding-Day is 2nd author] **Whitehead, P.J., Golding-Day, M.R. et al.** (2018). BATH-OUT: Bathing Out of Tubs. [GREY — journal and DOI unverified; AUTHOR CORRECTED]. *1*.  
 *BPC slugs: `accessible-bathroom-and-grab-bar`*
 
 **(author TBC)** (2019). Impact of room acoustic parameters on speech/music perception among CI participants. Hearing Research. DOI:10.1016/j.heares.2018.12.006. *1*. https://doi.org/10.1016/j.heares.2018.12.006  
@@ -173,7 +173,7 @@
 **(Crompton co-author)** (2024). Cross-cultural camouflaging study. *1*.  
 *BPC slugs: `sensory-space-global-south`*
 
-[GREY] **Crompton, C.J. et al.** (2024). Collectivist cultures, autism camouflaging, and stigma. *1*.  
+[CORRECTED: citation-verifier 2026-04-23 — attribution error: Crompton is NOT the lead author] **Keating, C.T., Crompton, C.J. et al.** (2024). Collectivist cultures, autism camouflaging, and stigma. PLoS ONE 19(3):e0299824. DOI:10.1371/journal.pone.0299824. PMID:38507392. *1*.  
 *BPC slugs: `sensory-space-global-south`*
 
 [GREY] **Greene D et al.** (2024). [GREY — title unverified; DOI required before publication]. *CJOT*.  
