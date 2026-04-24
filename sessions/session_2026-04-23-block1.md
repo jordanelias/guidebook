@@ -286,3 +286,48 @@ next_action: >
   Then Priority 3: OK-language slugs needing jurisdiction tracking upgrade.
 
 session_close: 2026-04-23 10:00
+
+
+## Block 7 — Phase 2B Priority 2 Complete
+
+### 3 Priority 2 slugs enriched with jurisdiction data
+
+| Slug | Items | Key Jurisdiction Divergence |
+|---|---|---|
+| reach-range-and-accessible-controls | H-01–H-04 | US 380-1220mm vs DE 850-1050mm vs AU 900-1100mm vs ISO 800-1100mm. Best practice overlap: ~900-1100mm |
+| sensory-room-user-control | A-16 | NO code mandates sensory rooms. UK PAS 6463:2022 closest. Snoezelen (NL origin 1970s). Clinical evidence only. |
+| residential-entry-and-threshold | E-06 | Threshold: AU ≤5mm, US ≤13mm, DE ≤20mm (draft ≤10mm), FR ≤20mm. DE revision to 10mm is key pending change. |
+
+commits_block7:
+  - 2eb595910bf0: reach-range-and-accessible-controls jurisdiction enrichment
+  - a1154cf7b5a3: sensory-room-user-control jurisdiction enrichment
+  - 71bb167dc885: residential-entry-and-threshold jurisdiction enrichment
+
+## Full Session Scorecard
+
+| Phase | Status | Deliverables |
+|---|---|---|
+| Phase 1 Standards Registry | COMPLETE 46/46 | ~25 commits |
+| Phase 2A Audit | COMPLETE | 1 audit report |
+| Phase 2A Infrastructure | COMPLETE 4,140 entries | ~88 commits |
+| Phase 2B Priority 1 (EMPTY) | COMPLETE 7/7 | 7 search logs |
+| Phase 2B Priority 2 (High NOT-RUN) | COMPLETE 3/3 | 3 search logs enriched |
+| Phase 2B remaining | NOT STARTED | 11 EMPTY + ~40 PARTIAL slugs remain |
+
+### Key Jurisdiction Divergence Findings (actionable for Part 4)
+1. **Reach range**: US 380-1220mm vs DE 850-1050mm — guidebook should target 900-1100mm overlap
+2. **Threshold height**: AU ≤5mm is strictest — guidebook best practice ≤5mm with weather seal detail
+3. **Classroom RT**: US ANSI S12.60 specifies 0.3s for HI children vs 0.6s general — guidebook should adopt 0.3s
+4. **Visual alarm flash**: ≤2 Hz per NFPA 72 resolves DEAF vs NEU conflict
+5. **Hearing loop**: ANSI A117.1 now requires IEC 60118-4 compliance — universal performance standard
+6. **Circadian/therapeutic lighting**: NO mandatory code anywhere — DIN/TS 67600 is Tier 5 only
+7. **PAIN/OFS**: NO code addresses these populations' built environment needs — clinical evidence only
+8. **Sensory rooms**: NO code mandates — PAS 6463 (UK) is closest reference
+
+next_action: >
+  Continue Phase 2B with remaining EMPTY slugs (11) and PARTIAL slugs (~40).
+  Highest impact next: thermoregulation-built-environment (F-07/F-08),
+  hearing-impairment-built-environment (DEAF population),
+  ot-built-environment-interface (Part 9).
+
+session_close: 2026-04-23 10:30
