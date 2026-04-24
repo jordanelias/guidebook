@@ -200,7 +200,7 @@
 **(author TBC)** (2025). India: 75% gap in tactile wayfinding provisions. PMC12082883. *1*.  
 *BPC slugs: `wayfinding-global-south`*
 
-**Levine D et al.** (2025). Bathroom Safety for Older Adults: Scoping Review of Evidence for Home Modification. *JMIR*. https://doi.org/10.2196/69442  
+**Levine, I.C., Nirmalanathan, K., Montgomery, R.E., & Novak, A.C.** (2025). Grab Bar Grasp Location During Bathtub Exit and Sit-to-Stand Transfers: Biomechanical Evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12, e69442. DOI:10.2196/69442. PMID:40694815.  [CORRECTED: citation-verifier 2026-04-23 — lead author was 'Levine D' (wrong, should be Levine I.C.); title was wrong (not a scoping review)]  
 *BPC slugs: `accessible-bathroom-and-grab-bar`, `upper-limb-impairment-built-environment`*
 
 **Vetter, M.J. et al.** (2025). Paediatric outpatient waiting room design and autistic children: pilot study. HERD. DOI:10.1177/19375867251353735. *1*. https://doi.org/10.1177/19375867251353735  
