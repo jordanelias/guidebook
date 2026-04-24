@@ -288,13 +288,13 @@
   {
     "ref_id": "T3-027",
     "n": 27,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2010,
     "raw": "[GREY] **Van Hoof, J. et al.** (2010). PMV/PPD unreliable for cognitively impaired populations. *3*.  \n*BPC slugs: `thermal-comfort-older-adults-care-settings`*",
-    "note": ""
+    "note": "van Hoof, J., Kort, H.S.M., Hensen, J.L.M., Duijnstee, M.S.H. & Rutten, P.G.S. (2010). Thermal comfort and integrated design of homes for older people with dementia. Building and Environment 45(2):358-370. DOI:10.1016/j.buildenv.2009.06.017. BPC claim (PMV/PPD unreliable for cognitively impaired) confirmed. GREY removed."
   },
   {
     "ref_id": "T3-028",
@@ -310,13 +310,13 @@
   {
     "ref_id": "T3-029",
     "n": 29,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": "required",
     "pmid": null,
     "grey": true,
     "year": 2011,
     "raw": "[GREY] **Guitard P et al.** (2011). [GREY \u2014 title unverified; DOI required before publication]. *[GREY \u2014 journal unverified]*.  \n*BPC slugs: `accessible-bathroom-and-grab-bar`*",
-    "note": ""
+    "note": "Guitard, P., Sveistrup, H., Edwards, N., & Lockett, D. (2011). Use of different bath grab bar configurations following a balance perturbation. Assistive Technology 23(4):205-215. DOI:10.1080/10400435.2011.614674. PMID:22256669. GREY removed."
   },
   {
     "ref_id": "T3-030",
@@ -585,13 +585,13 @@
   {
     "ref_id": "T3-054",
     "n": 54,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2017,
     "raw": "[GREY] **Lee, J. et al.** (2017). Bilateral fold-down grab bars at 813mm height outperform ADA configuration. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": ""
+    "note": "Lee, S.J., Sanford, J., Calkins, M., Melgen, S., Endicott, S., & Phillips, A. (2018 pub, 2017 epub). Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers. HERD 11(2):32-44. DOI:10.1177/1937586717730338. PMID:28952364. BPC \"813mm\" = 32 inches \u2713. GREY removed."
   },
   {
     "ref_id": "T3-055",
@@ -618,13 +618,13 @@
   {
     "ref_id": "T3-057",
     "n": 57,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": "required",
     "pmid": null,
     "grey": true,
     "year": 2017,
     "raw": "[GREY] **Sekiguchi Y et al.** (2017). [GREY \u2014 title unverified; DOI required before publication]. *[GREY \u2014 journal unverified]*.  \n*BPC slugs: `accessible-bathroom-and-grab-bar`*",
-    "note": ""
+    "note": "Sekiguchi, Y., Kato, T., Honda, K., Kanetaka, H., & Izumi, S.I. (2017). Effects of grab bar on utilized friction and dynamic stability when elderly people enter the bathtub. Clinical Biomechanics 47:7-13. DOI:10.1016/j.clinbiomech.2017.05.005. PMID:28528238. GREY removed."
   },
   {
     "ref_id": "T3-058",
@@ -750,13 +750,13 @@
   {
     "ref_id": "T3-069",
     "n": 69,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": "required",
     "pmid": null,
     "grey": true,
     "year": 2019,
     "raw": "[GREY] **Lee J et al.** (2019). [GREY \u2014 title unverified; DOI required before publication]. *[GREY \u2014 journal unverified]*.  \n*BPC slugs: `accessible-bathroom-and-grab-bar`*",
-    "note": ""
+    "note": "Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., & Prilutsky, B.I. (2019). Effects of bilateral swing-away grab bars on biomechanics of stand-to-sit and sit-to-stand toilet transfers. Disability and Rehabilitation: Assistive Technology 14(3):292-300. DOI:10.1080/17483107.2018.1447605. PMID:29522366. GREY removed."
   },
   {
     "ref_id": "T3-070",
