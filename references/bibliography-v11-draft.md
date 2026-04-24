@@ -592,7 +592,7 @@
 [GREY] **van der Schaaf, P. et al.** (2013). British Journal of Psychiatry —. *3*.  
 *BPC slugs: `mental-health-built-environment`*
 
-**Chénier, F. & Aissaoui, R.** (2014). Effect of wheelchair frame on vibration transmission. Med Eng Phys 36(7):872–879. *3*.  
+**Chénier, F. & Aissaoui, R.** (2014). Effect of wheelchair frame on vibration transmission. BioMed Research International 2014:609369 [CORRECTED: citation-verifier 2026-04-23 — journal was wrong; actual journal is BioMed Res Int, not Med Eng Phys]–879. *3*.  
 *BPC slugs: `floor-vibration-wheelchair-disability`*
 
 **Edwards, C. & Harold, G.** (2014). DeafSpace and the principles of universal design. Disability and Rehabilitation 36(16):1350–1359. DOI:10.3109/09638288.2014.913710. *3*. https://doi.org/10.3109/09638288.2014.913710  
