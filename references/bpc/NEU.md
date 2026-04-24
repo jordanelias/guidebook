@@ -66,7 +66,7 @@
 2. van der Ham, I. et al. (2021). Navigation ability in patients with ABI: population-wide online study. *Neuropsychological Rehabilitation.* [Tier 3]
 3. Antonakos, C. et al. (2004). Wayfinding with visuo-spatial impairment from stroke and TBI. *Disability Studies Quarterly* 24(3). [Tier Co-1]
 4. Hamre, C., Fure, B., Helbostad, J.L., Wyller, T.B., Ihle-Hansen, H., Vlachos, G., Ursin, M.H. & Tangen, G.G. (2020). Impairments in spatial navigation during walking in patients ≤70 years with mild stroke. *Topics in Stroke Rehabilitation* 27(8):601–609. DOI: 10.1080/10749357.2020.1755814 [Tier 3 — verified; PMID 32316862]
-5. Iwarsson, S. & Ståhl, A. (2003). Accessibility, usability and universal design. *Disability & Rehabilitation* 25(2):57–66. [Tier 1 framework]
+5. Iwarsson, S. & Ståhl, A. (2003). Accessibility, usability and universal design. *Disability & Rehabilitation* 25(2):57–66. [Tier 3 framework]
 6. PMC10621028 (2023). Housing accessibility and rehabilitation outcomes after stroke. *OTJR.* [Tier 3 SV]
 7a. Claessen, M.H.G. & van der Ham, I.J.M. (2017). Classification of navigation impairment: A systematic review of neuropsychological case studies. *Neuroscience & Biobehavioral Reviews* 73:81–97. DOI: 10.1016/j.neubiorev.2016.12.015 [Tier 3 — verified; PMID 27993606]
 7b. Claessen, M.H.G. et al. (2017). A systematic investigation of navigation impairment in chronic stroke patients: Evidence for three distinct types. *Neuropsychologia* 103:154–161. DOI: 10.1016/j.neuropsychologia.2017.07.001 [Tier 3 — verified; PMID 28684296]

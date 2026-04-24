@@ -62,7 +62,7 @@ Not yet run.
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| SPM-01 | Dunn, W. | 1997 | The impact of sensory processing abilities on daily life. Infant Young Child 9(4):23 | 1 | INT | Sensory Processing Model — four profiles |
+| SPM-01 | Dunn, W. | 1997 | The impact of sensory processing abilities on daily life. Infant Young Child 9(4):23 | 3 | INT | Sensory Processing Model — four profiles |
 | SPM-02 | BSI | 2022 | PAS 6463:2022 — Design for the Mind: neurodiversity | 4 | UK | https://www.bsigroup.com/en-GB/standards/pas-6463/ |
 | SPM-03 | Allen, C. | 1988 | Cognitive disabilities framework (CDM). Am J Occup Ther | 1 | INT | Six cognitive levels 0–6 |
 | SPM-04 | Mostafa, M. | 2021 | ASPECTSS 2.0 — Autism ASPECTSS Design Index. Front Psychiatry. DOI:10.3389/fpsyt.2021.727353 | 2 | INT | — |
