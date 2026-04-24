@@ -104,7 +104,7 @@
 **Putthinoi, S. et al.** (2017). ICF-based home modification outcomes. Am J Occup Ther. PMID:28656108. *1*. PMID:28656108  
 *BPC slugs: `threshold-door-hardware`*
 
-[GREY] **Stark S et al.** (2017). [GREY — title unverified; DOI required before publication]. *AJOT*.  
+[GREY] **Stark S et al.** (2017). [GREY — title unverified; DOI required before publication]. *AJOT*. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3]  
 *BPC slugs: `residential-kitchen-and-task-surfaces`*
 
 [CORRECTED: citation-verifier 2026-04-23 — lead author wrong: Golding-Day is 2nd author] **Whitehead, P.J., Golding-Day, M.R. et al.** (2018). BATH-OUT: Bathing Out of Tubs. [GREY — journal and DOI unverified; AUTHOR CORRECTED]. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — systematic review, not primary OT research].  
