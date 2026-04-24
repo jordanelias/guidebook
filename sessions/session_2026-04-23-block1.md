@@ -1043,3 +1043,30 @@ The following 47 GREY entries need targeted searches. Priority by domain:
 
 session_close: 2026-04-24 04:24
 next_action: Tier 3 GREY-PENDING searches — start with bathroom/mobility domain
+
+
+## Block 10 — Tier 3 Verification Passes 3–4
+
+Completed 2026-04-24 04:28.
+
+### New confirmations
+- T3-027 Van Hoof 2010: Building and Environment 45(2):358-370 (PMV/PPD dementia)
+- T3-029 Guitard 2011: Assistive Technology 23(4):205-215, DOI:10.1080/10400435.2011.614674
+- T3-054 Lee 2017: HERD 11(2):32-44, DOI:10.1177/1937586717730338 (bilateral fold-down grab bars)
+- T3-057 Sekiguchi 2017: Clinical Biomechanics 47:7-13, PMID:28528238
+- T3-069 Lee 2019: Disabil Rehabil Assist Technol 14(3):292-300, PMID:29522366
+- T3-083 Oostermeijer 2021: BMJ Open 11(7):e046647, PMID:34233981
+- T3-102/103 "Holohan 2022": ATTRIBUTION ERROR — correct: Owen & Crane 2022, IJERPH 19(21):14279, PMID:36361166
+
+### Correction for BPC
+- "Holohan, E. (2022)" is wrong — correct lead author is Owen, C. & Crane, J.
+  Paper: IJERPH 2022;19(21):14279. DOI:10.3390/ijerph192114279. Entries 102+103 are duplicates.
+
+### Status: 85/168 resolved
+- 32 GREY-PENDING remaining
+- 51 UNVERIFIED-1 remaining
+
+### SHA: c28fa552aa90
+
+session_checkpoint: 2026-04-24 04:28
+next_action: Tier 3 GREY-PENDING — continue Weber 2022, Zallio 2022, Manandhar 2022, Caniato 2024
