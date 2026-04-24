@@ -172,3 +172,24 @@ The practical implication: rest seating (I-03) should be placed AT TWSI attentio
 
 **Action required:** Extend CON-0045 to include UPL. Part 1 methodology: UPL and OFS share the distinction of having zero built-environment-specific primary research in any language. Flag as highest-priority commissioned research for v11.
 
+
+### CON-0184
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** thermoregulation-built-environment, dementia-built-environment, fatigue-spectrum-built-environment, neurological-built-environment
+**Target item(s):** K-05 (thermal comfort assessment)
+**Target population(s):** DEM, NEU, OFS
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Standard thermal comfort models (PMV/PPD per ISO 7730) fail for DEM (cannot self-report thermal discomfort or adjust controls), NEU/MS (thermoregulation impairment invalidates metabolic rate assumptions), and OFS (orthostatic intolerance worsened by ambient temperature). Van Hoof 2010 (confirmed T3-027, Building and Environment 45:358-370) demonstrated PMV/PPD unreliability for cognitively impaired populations. The specification must require objective physiological monitoring or proxy-reported assessment rather than PMV/PPD self-report for all three populations.
+
+**Evidence basis:** Van Hoof et al. 2010 (DOI:10.1016/j.buildenv.2009.06.017, confirmed T3-027); ISO 7730:2005; BPC thermoregulation Cluster 1.
+
+**Action required:** Add DEM/OFS population applicability to thermal comfort assessment spec. Add note: PMV/PPD contraindicated for DEM, NEU, OFS. Specify alternative assessment methods.
+
+**Disposition notes:** —
