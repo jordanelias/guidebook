@@ -2118,3 +2118,48 @@ Completed 2026-04-24 07:34. Model: Opus 4.6 (spec application requires cross-ref
 session_close: 2026-04-24 07:34
 next_action: Part 3 §3.2 Owen/Crane framework note (CON-0188, Part 3 author); GAP-THERMAL-01 spec creation; CON-0187 FDR-CMP-04 compound wayfinding spec
 blockers: none
+
+
+## Block 29 — Throughline and Meta-Throughline Analysis (Opus)
+
+### Task
+Identify throughlines and meta-throughlines across all evidence bases.
+
+### Completed
+- Throughline analysis: 11 throughlines + 6 meta-throughlines identified from synthesis across BPCs, connections, FDR, opus divergence synthesis, jurisdiction audit, search-logs, project standards, Part 1
+- Self-audit: identified 2 corrections, 1 unverified claim, 3 missing throughlines, 1 missing meta-throughline, 3 Parts missing structural implications
+
+### Deliverables
+- `references/throughline-analysis.md` — full analysis
+- `references/throughline-audit-notes.md` — audit findings
+
+### Key Throughlines
+1. Code-as-floor / beyond-code (27% of items have no code equivalent)
+2. Convergent specification from independent clinical mechanisms (strongest Tier 0 candidates)
+3. Harm asymmetry as conflict resolution principle
+4. "Adjustable" operability problem
+5. Physics transfers universally; spatial models don't
+
+### Key Meta-Throughlines
+1. The environment creates disability (Lawton docility-proactivity → three-tier hierarchy)
+2. Convergence as epistemological warrant (independent populations, same spec = strongest evidence)
+3. Precision-universality tension (Tier 1 defaults → Tier 2 OT resolution)
+4. Systematic absence as systematic evidence (46 jurisdictions × 91 items)
+
+### Audit Gaps to Address Next Session
+- Add T-12 (OT as resolution mechanism), T-13 (subsumption), T-14 (DAR temporal)
+- Add M-07 (economic evidence contradicts cost assumptions)
+- Verify M-02 claim against Part 3 text
+- Correct T-02 DEM rest seating overclaim, T-04 kitchen worktop inference
+
+commits_block29:
+  - c5fc44e56c69: throughline analysis + audit notes
+
+next_action: >
+  Produce corrected v2 of throughline analysis incorporating audit findings.
+  Then: Tier 3 UNVERIFIED-1 (9 remaining), Co-1 (3 remaining).
+  Route 7 HIGH-confidence PENDING connections (CON-0181–0188) to ISW.
+
+blockers: none
+
+session_close: 2026-04-24 07:33
