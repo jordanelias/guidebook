@@ -74,3 +74,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  UK CIBSE TM59 overheating. Care Quality Commission thermal comfort requirements. ASHRAE 55 / EN 16798-1. WHO guidelines for care homes. DE DIN/TS 67600 care home lighting (related). No accessibility-specific thermal standard for older adults.
+
+```
