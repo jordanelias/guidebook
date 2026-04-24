@@ -243,7 +243,7 @@
   | ASPECTSS (Mostafa 2008/2021) | Practice-based, emerging evidence | UIA awards; author's own POEs; Black et al. 2022 scoping review; no RCTs |
   | DeafSpace (Gallaudet/Bauman) | Practice-based | IAUD Gold 2015; no formal POEs; no systematic reviews |
   | Sensory Zoning | Practice-based with professional endorsement | PAS 6463:2022 (BSI); RIBA/Sport England/TfL steering group |
-  | Trauma-Informed Design | Practice-based, emerging evidence | Holohan et al. 2022 scoping review; VA MH Design Guide; SAMHSA principles |
+  | Trauma-Informed Design | Practice-based, emerging evidence | Owen/Crane [CORRECTED: citation-verifier 2026-04-23 — correct authors are Owen C. & Crane J., IJERPH 2022;19(21):14279] et al. 2022 scoping review; VA MH Design Guide; SAMHSA principles |
   | OFS/Fatigue Design | Practice-based only | CRITICAL GAP — no validated framework exists |
   | Chronic Pain Design | Practice-based only | CRITICAL GAP — no validated framework exists |
   | Biophilic Design (disability-specific) | Emerging evidence | UNSW 2024 autism/nature; Hutson & Hutson 2023 neuroinclusive workplaces |
