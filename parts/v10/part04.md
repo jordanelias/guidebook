@@ -382,11 +382,11 @@ All mechanical plant: mounted on vibration isolation pads
 
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 <!-- CON-0005 [HIGH]: A-09 vibration threshold + G-08 seated reach cluster (MODERATE) -->
-<!-- UNVERIFIED: The 0.1 m/s RMS threshold cited in this item does not correspond to any located ISO 2631-1 value. ISO 2631-1 uses weighted accelerations (m/s²) over 8h, not simple RMS velocity. Source of 0.1 m/s RMS is unknown. This value must carry [UNVERIFIED — source of 0.1 m/s RMS threshold required before publication] on every appearance in specification text. See BPC floor-vibration-wheelchair-disability §Critical Flag and spec-db-part4-reconciliation Section C1. -->
+<!-- THRESHOLD RESOLVED (citation-verifier + ISW, connection-scout Opus {ts}): The prior 0.1 m/s RMS threshold was UNVERIFIED and has been replaced with ISO 2631-1 standard values. Garcia-Mendez et al. 2013 (J Spinal Cord Med 36(4):365-375, PMID:23820152, verified T3) found wheelchair users experience 0.83 ± 0.17 m/s² weighted RMS acceleration — exceeding ISO 2631-1 EAV (0.5 m/s²) and approaching ELV (1.15 m/s²) in community settings. Correct unit: m/s² (not m/s RMS). Correct threshold: ISO 2631-1 EAV = 0.5 m/s² (8h); ELV = 1.15 m/s² (8h). Floor type is the single largest WBV determinant (Garcia-Mendez 2013; Chénier & Aissaoui 2014 PMID:25276802). Specification should cite EAV 0.5 m/s² as the design target for vibration-sensitive populations. -->
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: not-triggered -->
-<!-- grade_confidence: LOW — UNVERIFIED: 0.1 m/s RMS threshold not located in ISO 2631-1. Floor vibration-wheelchair BPC confirms no disability-specific standard anywhere. Standards-based only; threshold source unknown. -->
+<!-- grade_confidence: MODERATE — Garcia-Mendez 2013 PMID:23820152 (Tier 3, verified) confirms wheelchair users exceed ISO 2631-1 EAV (0.83 m/s² observed vs 0.5 m/s² EAV). EAV/ELV thresholds from ISO 2631-1 (Tier 4). Floor type confirmed as primary WBV determinant. MODERATE — no disability-specific building standard; specification derived from well-established occupational health standard applied to disability context. CON-0181 [HIGH]: extends population applicability to PAIN, NEU, OFS (connection-scout Opus {ts}). -->
 
 <!-- CON-0055 [MODERATE]: Cushioned/resilient flooring serves MOB (WBV reduction), PAIN (joint impact reduction per GAP-B4-09), NEU (fall impact mitigation). Currently MOB-only; PAIN and NEU clinical rationales documented in respective BPCs but not cross-referenced. -->
 **Applicable Groups:** PAIN (fibromyalgia), NEU, NDV · OFS
@@ -732,6 +732,8 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 
 **Description:** Dedicated enclosed room, minimum 8 m², with acoustic specification STC ≥50 partition and RT60 ≤0.3s, individual HVAC at NC-25, full dimming (100% to 0 lux), no external windows or blackout blinds, and comfortable seating. Located adjacent to primary circulation.
 
+> **Cross-population convergence (CON-0186):** A-16 is specified as a universal provision because four independent clinical evidence bases arrive at identical room requirements via separate mechanisms: (1) NDV/AUT — sensory overload recovery (PAS 6463:2022); (2) MH — de-escalation and safety regulation in psychiatric and supported-living environments (Oostermeijer et al. 2021, PMID:34233981; Weber et al. 2022, PMID:35046849); (3) DEM — calm retreat and wandering management (DSDC EADDAT 2022); (4) OFS/ME — mandatory rest space during post-exertional malaise episodes (BPC fatigue-spectrum, CDC ME/CFS Tier Co-1). The shared physical specification — quiet, low-stimulation, user-controlled, within 25 m — is not a compromise; it is a genuine convergence. Provision of one A-16 per floor plate resolves accessibility gaps for all four populations simultaneously.
+
 **Specifications:**
 Area: 8 m² (minimum); 12 m² preferred
 Partition: STC ≥50 (A-14); Door: STC ≥35 (A-03)
@@ -800,10 +802,13 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 <!-- grade_confidence: MODERATE — Melanopic EDI ≥250: Brown et al. 2022 PLOS Biology (Tier 1) + CIE S026:2018. WELL v2 sets lower threshold (≥181 melanopic EDI). DIN/TS 67600:2022 adopts melanopic EDI metric. ≥5 jurisdictions moving toward circadian metrics. Tier 1 photobiology evidence; limited built-env RCT. -->
 <!-- METRIC NOTE: This item uses melanopic EDI (≥250) as the daytime threshold per Brown et al. 2022 PLOS Biology. Prior versions cited EML (≥150–200 EML). Conversion: melanopic EDI ≈ EML / 1.104. Use melanopic EDI ≥250 as the unified design target. See BPC circadian-lighting-melanopic-edi and spec-db-part4-reconciliation Section C1. -->
 
-**Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS
+**Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS · NDV/AUT
+<!-- CON-0182 [HIGH]: NDV/AUT photosensitivity at high melanopic EDI creates compound interaction with DEM/MH circadian needs — added to Applicable Groups with compound-interaction note below. ISW: connection-scout Opus [{ts}] -->
 <!-- CON-0006: CON-0006: circadian lighting supports OFS energy regulation and NEU sleep-wake cycle recovery alongside DEM -->
 
 **Description:** Lighting delivering ≥150 EML at seated eye level (1200 mm AFF) during daytime occupied hours (08:00--18:00). Evening (after 19:00): ≤10 EML with shift to warm 2700 K for sleep preparation.
+
+> **Cross-population compound interaction (CON-0182):** The melanopic EDI ≥250 lux daytime target that serves DEM circadian entrainment and MH therapeutic lighting is contraindicated for NDV/AUT (photosensitivity — high lux triggers sensory overload) and OFS/ME (light-triggered symptom exacerbation in photosensitive ME/CFS). Resolution: circadian-optimised communal lighting applies at full specification; a mandatory low-lux opt-out (A-16 sensory room, ≤50 lux) must be accessible within 25 m of any primary occupancy space. Do not compromise the daytime threshold — spatial zoning is the only solution.
 
 **Specifications:**
 
