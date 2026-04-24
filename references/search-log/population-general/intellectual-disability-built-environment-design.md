@@ -94,3 +94,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  IntD proxied through DEM (wayfinding) and NDV (sensory) per project standards. No code addresses IntD specifically. UK Synergy Housing guidance. NZ Enable NZ. THIN BASE.
+
+```
