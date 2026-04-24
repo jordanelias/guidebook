@@ -29,7 +29,7 @@
 **Key evidence-strong findings (beyond cost data):**
   - Toilet visibility (D-03): Marquardt 2011 (HERD) confirms toilet visibility from primary living area as a key wayfinding design criterion for dementia populations. Quantified incontinence reduction data: [UNVERIFIED-QUANT — original 47%/32 facilities claim removed; not in cited source. Replacement source required.]
   - Loop floor plan: De Hogeweyk (Weesp, NL) demonstrates improved resident autonomy and wayfinding with continuous-loop design. Quantified success rates: [UNVERIFIED-QUANT — original 94%/34% claim removed; no published POE reports these figures. Van Buuren & Mohammadi 2022 (HERD) evaluates Dutch facility floor plans but does not report these percentages.]
-  - Normalised dementia environment: Village Landais Alzheimer (Dax, France, 2020) INSERM evaluation reports encouraging trends including reduced caregiver medication use and slowed cognitive decline at 3-year follow-up (Medscape France, Jan 2024). Specific medication reduction percentage: [UNVERIFIED-QUANT — original 31% claim removed; not in any published INSERM output as of April 2026.]
+  - Normalised dementia environment: Village Landais Alzheimer (Dax, France, 2020) [STRUCK — INSERM source unverifiable] early reports encouraging trends including reduced caregiver medication use and slowed cognitive decline at 3-year follow-up (Medscape France, Jan 2024). Specific medication reduction percentage: [UNVERIFIED-QUANT — original 31% claim removed; not in any published INSERM output as of April 2026.]
   - KfW/Prognos evaluation: average retrofit cost €19,100/dwelling for barrier-reduction measures that did not achieve full DIN 18040-2 compliance (2009–2022, 700,000+ dwellings)
   - Sustainability synergy: bundled energy + accessibility retrofits achieve 21–48% operating cost reduction; payback <20 months
   - Social cost of inaccessibility: extra household expenditure with a disabled member ≈5.7% of total household expenditure across 40 countries (Tibble 2005; Zaidi & Burchardt 2005; Mitra & Jones 2017; Estrada-Mejia et al. 2023)
@@ -91,7 +91,6 @@ Not yet run.
 | ECP-05 | (RHF/HCMA) | 2024 | Rick Hansen Foundation Accessibility Certification cost study — ~1% or zero | 6 | CA | — |
 | ECP-06 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD. | 1 | INT | Toilet visibility finding; quantified % [UNVERIFIED-QUANT — verify before citing] |
 | ECP-07 | Van Buuren, R. & Mohammadi, N. | 2022 | Dutch facility floor plan evaluation. HERD | 3 | NL | Loop floor plan; 94%/34% figures [UNVERIFIED-QUANT] |
-| ECP-08 | INSERM / Medscape France | 2024 | Village Landais Alzheimer 3-year follow-up | 3 | FR | 31% psychotropic reduction [UNVERIFIED-QUANT] |
 | ECP-09 | Tibble, M. | 2005 | Review of extra costs facing disabled people | 3 | INT | 5.7% household expenditure |
 | ECP-10 | Mitra, S. & Jones, N. | 2017 | Extra costs of disability across 40 countries | 3 | INT | Cross-jurisdiction confirmation |
 | ECP-11 | ADA National Network | 2025 | Cost of accessible design — <1% new-build premium | 6 | US | — |

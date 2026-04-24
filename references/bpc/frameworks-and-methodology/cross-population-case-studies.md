@@ -113,7 +113,7 @@ IT: studi di caso progettazione accessibile multipopolazione [PARTIAL]
 - Identify and disclose thin evidence base explicitly: Part 13 methodology note should acknowledge that no existing case study provides rigorous cross-population POE data
 
 **Part 8 §8.4 (Cross-Population Resolutions):**
-- Tenji blocks: document as VIS/MOB conflict with partial design resolution (alternative crossing geometry) — Kapsalis 2024
+- Tenji blocks: document as VIS/MOB conflict with partial design resolution (alternative crossing geometry) — [STRUCK] Kapsalis 2024
 - DeafSpace rounded corners: document as DEAF/MOB design correction — Gallaudet SLCC
 - Thermal conflict: already in §8.4.x — cross-reference Maggie's meta-synthesis for PAIN/OFS thermal sensitivity evidence
 
@@ -143,7 +143,7 @@ tier_4_5:
 
 co_1:
   - Gallaudet University (2010). DeafSpace Design Guidelines Vol 1. Bauman H (ed). [self-reported design corrections including rounded corners]
-  - Inserm / Amieva H, Bordeaux University (2023). Village Landais longitudinal evaluation ongoing. [early results ITV News 2023]
+  - [STRUCK] Inserm / Amieva H, Bordeaux University (2023). Village Landais longitudinal evaluation ongoing. [early results ITV News 2023]
   - The Kelsey (2025). Inclusive Design Standards. Published at thekelsey.org/design.
   - SG Enable (2025). From Testbed to Transformation: 10 Years of Enabling Village. enablingvillage.sg
 
@@ -249,7 +249,6 @@ citation_mining:
 |---|---|---|---|---|---|---|
 | CCS-01 | NDTi / NHS England | 2022 | Autistic-led assessment of NHS CAMHS inpatient environments | 1 | UK | Co-1; sensory design failure |
 | CCS-02 | Gallaudet University | 2008 | DeafSpace SLCC rounded corners self-report (Co-1) | Co-1 | US | Design-provision conflict DEAF vs MOB |
-| CCS-03 | Kapsalis, G. et al. | 2024 | Tenji tactile blocks as MOB hazard: systematic review | 3 | INT | VIS vs MOB cross-population conflict |
 | CCS-04 | Zallio, M. & Clarkson, P.J. | 2021 | Accessible toilet failures: ethnographic study. Build Environ. DOI:10.1016/j.buildenv.2021.108352 | 3 | UK | MOB accessible toilet blockage |
 
 ## Metadata

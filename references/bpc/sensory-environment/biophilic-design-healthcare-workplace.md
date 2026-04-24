@@ -31,7 +31,7 @@
 |---|---|---|---|
 | Biophilic design reduces hospitalisation time, mortality, pain, and provider stress in healthcare settings | EN | Cross-jurisdictional (Al Khatib et al. 2024, 61-source systematic review) | 3 |
 | Nature exposure in workplace shows statistically significant positive restorative outcomes across 16 studies | EN | Cross-jurisdictional (Gonçalves et al. 2023, Tier 3) | 3 |
-| Indoor vegetation produces measurable restorative and cognitive benefits; working memory improved | EN | Cross-jurisdictional (Rhee et al. 2023 EEG study) | 3 |
+| Indoor vegetation produces measurable restorative and cognitive benefits; working memory improved [source Rhee 2023 STRUCK] | EN | Cross-jurisdictional (Rhee et al. 2023 EEG study) | 3 |
 | Restorative effect measurable via HRV and salivary cortisol; blood pressure is inferior proxy | EN | Cross-jurisdictional (Liu Y et al. 2024, 571-source ART review) | 3 |
 | Space typology determines which biophilic element is prioritised; user group stratification confirmed | EN | Cross-jurisdictional (Tekin et al. 2023) | 3 |
 | Biophilic outdoor transitional spaces function as decompression/regulation environments for NDV populations | EN | AU, UK | Co-1 (Latiff et al. 2024) |
@@ -52,7 +52,7 @@
 |---|---|---|
 | Al Khatib et al. (2024) | Backward | Ulrich (1984); Kellert & Calabrese (2015) |
 | Gonçalves et al. (2023) | Forward | Liu Y et al. (2024) |
-| Rhee et al. (2023) | Forward | Latiff et al. (2024) |
+| [STRUCK] | Forward | Latiff et al. (2024) |
 
 ### Key sources
 
@@ -60,7 +60,6 @@
 |---|---|---|---|---|---|---|
 | BDH-01 | Al Khatib, H. et al. | 2024 | Biophilic design in healthcare: systematic review of 61 sources | 3 | INT | Primary SR; use over Ulrich 1984 |
 | BDH-02 | Gonçalves, A. et al. | 2023 | Nature exposure and workplace restorative outcomes: 16 studies | 3 | INT | — |
-| BDH-03 | Rhee, J. et al. | 2023 | Indoor vegetation and cognitive restoration: EEG study | 3 | INT | Working memory improvement |
 | BDH-04 | Tekin, B. et al. | 2023 | User group stratification in biophilic healthcare design | 3 | INT | Space typology differentiation |
 | BDH-05 | Liu, Y. et al. | 2024 | Attention Restoration Theory: 571-source review; HRV/cortisol measurement | 3 | INT | HRV/cortisol preferred over BP as proxy |
 | BDH-06 | Ulrich, R.S. | 1984 | View through a window may influence recovery from surgery. Science 224:420–421 | 3 | US | Historical reference only — single hospital, n=46; cite BDH-01 as primary |

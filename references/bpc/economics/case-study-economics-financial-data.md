@@ -22,7 +22,7 @@ Project-level financial data for all case studies in references/case-study-compe
 | CS-09 | De Hogeweyk | €19.3M total (2009; 4 acres) | Not isolated | PROVISIONAL | €17.8M Dutch govt + €1.5M local; ~€5,000/resident/month |
 | CS-10 | DSDC Audit Programme | N/A (audit programme, not construction) | N/A | N/A | — |
 | CS-11 | ASPECTSS Autism School | Not documented | Not documented | GREY | Egypt; 2001/2014 study |
-| CS-12 | Village Landais Alzheimer | ~€28–36M construction | ~€24,000/resident/year | PROVISIONAL | €7M/year operating; comparable to FR nursing homes; 31% psychotropic med reduction |
+| CS-12 | Village Landais Alzheimer [INSERM source STRUCK] | ~€28–36M construction | ~€24,000/resident/year | PROVISIONAL | €7M/year operating; comparable to FR nursing homes; 31% psychotropic med reduction |
 | CS-13 | Carpe Diem Bærum | Govt-funded; 18,000 m²; not isolated | Not isolated | GREY | — |
 | CS-14 | BC HAFI Programme | Up to CAD $20,000/home (govt max grant) | Not isolated | VERIFIED | Statutory programme data |
 | CS-15 | Enabling Village, Singapore | Govt-funded retrofit; 30,000 m²; not isolated | Not isolated | GREY | — |

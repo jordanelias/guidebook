@@ -871,7 +871,6 @@
 **MSIF** (2023). MS International Federation Atlas 2023 — heat sensitivity 60–80%. *3*. https://www.msif.org/research/ms-atlas/  
 *BPC slugs: `ms-thermal-temperature-conflict-resolution`*
 
-**Rhee, J. et al.** (2023). Indoor vegetation and cognitive restoration: EEG study. *3*.  
 *BPC slugs: `biophilic-design-healthcare-workplace`*
 
 **Tekin, B. et al.** (2023). User group stratification in biophilic healthcare design. *3*.  
@@ -904,13 +903,11 @@
 [GREY] **Caniato, M. et al.** (2024). Background noise ≤55 dB(A) in ASD classroom — directional only. *3*.  
 *BPC slugs: `ndv-aut-built-environment-quantified-thresholds`*
 
-**INSERM / Medscape France** (2024). Village Landais Alzheimer 3-year follow-up. *3*.  
 *BPC slugs: `accessible-design-economics-cost-premium`*
 
 **Jordan, J.B. & Vanderheiden, G.C.** (2024). International Guidelines for Photosensitive Epilepsy. ACM TACCESS 17(3):1–35. DOI:10.1145/3694790. PMC11872230. *3*. https://doi.org/10.1145/3694790  
 *BPC slugs: `visual-fire-alarm-seizure-safety`*
 
-**Kapsalis, G. et al.** (2024). Tenji tactile blocks as MOB hazard: systematic review. *3*.  
 *BPC slugs: `cross-population-case-studies`*
 
 **Larivière, O. et al.** (2024). Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng. *3*.  
