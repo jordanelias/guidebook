@@ -133,4 +133,7 @@ completeness_gate_post_supplement:
   gate_result: PASS
 
 status_post_supplement: COMPLETE
+jurisdiction_summary: >
+  DE DIN 18041 + Two-Senses principle most comprehensive. UK BB93 (schools), BS 8300 hearing enhancement. US ANSI S12.60. NO SINTEF research. Cross-reference acoustics-speech-intelligibility and assistive-listening-systems.
+
 ```
