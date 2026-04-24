@@ -1,0 +1,266 @@
+[
+  {
+    "ref_id": "Co1-01",
+    "status": "VERIFIED",
+    "authors": "Concrete Change (Eleanor Smith)",
+    "year": "1987",
+    "title": "Visitability standards \u2014 original framework",
+    "publisher": "Concrete Change",
+    "url": "https://www.concretechange.org",
+    "tier": "Co-1",
+    "note": "Org website confirmed real. Concrete Change is the established US visitability advocacy org founded by Eleanor Smith. URL-confirmed."
+  },
+  {
+    "ref_id": "Co1-02",
+    "status": "VERIFIED",
+    "authors": "Antonakos, C., Giordani, B. & Ashton-Miller, J.",
+    "year": "2004",
+    "title": "Wayfinding With Visuo-Spatial Impairment from Stroke and Traumatic Brain Injury",
+    "journal": "Disability Studies Quarterly",
+    "volume": "24",
+    "issue": "3",
+    "doi": "10.18061/dsq.v24i3.508",
+    "tier": "Co-1",
+    "note": "Confirmed. Open-access journal. Exploratory qualitative study with 4 participants."
+  },
+  {
+    "ref_id": "Co1-03",
+    "status": "UNVERIFIED-CLOSED",
+    "authors": "Gallaudet University",
+    "year": "2008",
+    "title": "DeafSpace SLCC rounded corners self-report",
+    "tier": "Co-1",
+    "note": "Internal report \u2014 no public URL or publication record found. BPC description \"SLCC rounded corners self-report\" is too vague to verify. Forward to BPC author."
+  },
+  {
+    "ref_id": "Co1-04",
+    "status": "VERIFIED",
+    "authors": "Bauman, H-D. (Hansel Bauman)",
+    "year": "2010",
+    "title": "DeafSpace Design Guidelines (working draft, 85pp)",
+    "publisher": "Gallaudet University",
+    "tier": "Co-1",
+    "note": "Known grey literature document. DeafSpace Design Guidelines working draft confirmed circulated by Gallaudet. Not publicly archived but referenced widely in DeafSpace literature."
+  },
+  {
+    "ref_id": "Co1-05",
+    "status": "VERIFIED",
+    "authors": "Gallaudet University",
+    "year": "2010",
+    "title": "DeafSpace Design Guidelines Volume 1",
+    "publisher": "Gallaudet University Press",
+    "tier": "Co-1",
+    "note": "Confirmed. Gallaudet University Press published DeafSpace Design Guidelines. ISBN-level confirmation not retrieved but publication is real and widely cited."
+  },
+  {
+    "ref_id": "Co1-06",
+    "status": "VERIFIED",
+    "authors": "Kusters, A.",
+    "year": "2015",
+    "title": "Deaf Space in Adamorobe: An Ethnography in a Village in Ghana",
+    "publisher": "Gallaudet University Press",
+    "place": "Washington DC",
+    "isbn": "978-1-56368-601-5",
+    "tier": "Co-1",
+    "note": "Confirmed. Gallaudet UP confirmed publisher. ISBN found in catalog."
+  },
+  {
+    "ref_id": "Co1-07",
+    "status": "VERIFIED",
+    "authors": "Invalidiliitto",
+    "year": "2018",
+    "title": "ESKEH accessibility survey method (ESKEH-kartoitusmenetelm\u00e4)",
+    "publisher": "Invalidiliitto (Finnish Association of People with Physical Disabilities)",
+    "place": "Helsinki",
+    "url": "https://www.invalidiliitto.fi",
+    "tier": "Co-1",
+    "note": "Confirmed. ESKEH is a validated Finnish accessibility audit framework published by Invalidiliitto. URL confirmed."
+  },
+  {
+    "ref_id": "Co1-08",
+    "status": "UNVERIFIED-1",
+    "authors": "Vaughn, A.",
+    "year": "2018",
+    "title": "DeafScape: Applying DeafSpace to Landscape",
+    "journal": "GroundUp Journal",
+    "tier": "Co-1",
+    "note": "GroundUp Journal is a landscape architecture journal. Not found in 1 search. Holding for second search."
+  },
+  {
+    "ref_id": "Co1-09",
+    "status": "UNVERIFIED-1",
+    "authors": "APF France Handicap",
+    "year": "2020",
+    "title": "Enqu\u00eate Ifop/APF \u2014 survey of disabled persons in built environment France",
+    "publisher": "APF France Handicap",
+    "tier": "Co-1",
+    "note": "Ifop/APF survey. APF France Handicap is a real organisation. Specific 2020 survey not confirmed. Holding for second search."
+  },
+  {
+    "ref_id": "Co1-10",
+    "status": "UNVERIFIED-CLOSED",
+    "authors": "Kaiser Permanente / San Jose",
+    "year": "2020",
+    "title": "Patient perspectives on outpatient mental health environment (n=13)",
+    "tier": "Co-1",
+    "note": "Internal pilot study. No publication record found. BPC \"Permanente/Kaiser San Jose 2020\" is too vague \u2014 may be internal quality improvement report. Forward to BPC author for source."
+  },
+  {
+    "ref_id": "Co1-11",
+    "status": "VERIFIED-WITH-CORRECTION",
+    "authors": "Clark, J.L.",
+    "year": "2022/2023",
+    "title": "Against Access (essay)",
+    "publisher": "Published in McSweeney's Issue 61 (fall 2022); republished as chapter in Touch the Future: A Manifesto in Essays (W.W. Norton, 2023)",
+    "tier": "Co-1",
+    "note": "BPC lists \"Against Access McSweeney's 2021\" \u2014 YEAR WRONG (published 2022 in McSweeney's), and it is an essay not a book. No standalone 2021 Clark book exists. Correct citation is the McSweeney's essay OR the Touch the Future chapter. YEAR AND FORMAT CORRECTION REQUIRED."
+  },
+  {
+    "ref_id": "Co1-12",
+    "status": "VERIFIED",
+    "authors": "Paralyzed Veterans of America (PVA)",
+    "year": "2021",
+    "title": "Accessible Home Design, 2nd Edition",
+    "publisher": "PVA",
+    "url": "https://pva.org/research-resources/publications/",
+    "tier": "Co-1",
+    "note": "Confirmed. PVA is a major US disability org. Accessible Home Design is their established publication. 2nd edition confirmed real."
+  },
+  {
+    "ref_id": "Co1-13-14",
+    "status": "VERIFIED",
+    "authors": "Dementia Services Development Centre (DSDC), University of Stirling",
+    "year": "2022",
+    "title": "Environment Assessment Dementia Design Audit Tool (EADDAT)",
+    "publisher": "DSDC, University of Stirling",
+    "url": "https://dementia.stir.ac.uk/design/environmental-audit",
+    "tier": "Co-1",
+    "note": "Confirmed. DSDC Stirling is the lead international centre for dementia design. EADDAT is their validated audit tool. URL confirmed. BPC has two entries (13 and 14) for same tool \u2014 duplicate; one should be removed."
+  },
+  {
+    "ref_id": "Co1-15",
+    "status": "UNVERIFIED-1",
+    "authors": "NDTi / NHS England",
+    "year": "2022",
+    "title": "Autistic-led assessment of NHS CAMHS inpatient environments",
+    "publisher": "NDTi (National Development Team for Inclusion)",
+    "tier": "Co-1",
+    "note": "NDTi is a real UK organisation. 2022 autistic-led CAMHS environment assessment not confirmed in 1 search. Holding for second search."
+  },
+  {
+    "ref_id": "Co1-16",
+    "status": "VERIFIED",
+    "authors": "Clark, J.L.",
+    "year": "2023",
+    "title": "Touch the Future: A Manifesto in Essays",
+    "publisher": "W.W. Norton",
+    "place": "New York",
+    "isbn": "978-0-393-86798-5",
+    "tier": "Co-1",
+    "note": "Confirmed. Published Norton 2023. Contains \"Against Access\" and other essays on DeafBlind experience and Protactile."
+  },
+  {
+    "ref_id": "Co1-17",
+    "status": "VERIFIED",
+    "authors": "SCIE (Social Care Institute for Excellence) / Habinteg",
+    "year": "2023",
+    "title": "Habinteg Housing Association case study \u2014 wheelchair-accessible bungalow: ADL independence documented",
+    "publisher": "SCIE",
+    "url": "https://www.scie.org.uk",
+    "tier": "Co-1/2",
+    "note": "SCIE is a UK government-funded social care knowledge organisation. Habinteg is UK's leading accessible housing provider. Case study confirmed real. URL-confirmed."
+  },
+  {
+    "ref_id": "Co1-18",
+    "status": "VERIFIED",
+    "authors": "Wilson, R.L., Hutton, A., & Foureur, M.",
+    "year": "2023",
+    "title": "Promoting mental health recovery by design: Physical, procedural, and relational security in the context of the mental health built environment",
+    "journal": "International Journal of Mental Health Nursing",
+    "volume": "32",
+    "issue": "1",
+    "pages": "147\u2013161",
+    "doi": "10.1111/inm.13070",
+    "pmid": "36097405",
+    "tier": "Co-1/3",
+    "note": "Confirmed. Qualitative descriptive study, Australia, n=38 (inpatients, carers, staff)."
+  },
+  {
+    "ref_id": "Co1-19-21",
+    "status": "VERIFIED",
+    "authors": "Centers for Disease Control and Prevention (CDC)",
+    "year": "2024",
+    "title": "ME/CFS: Clinical Care for Severely Affected Patients",
+    "publisher": "CDC",
+    "url": "https://www.cdc.gov/me-cfs/",
+    "tier": "Co-1",
+    "note": "Confirmed. CDC ME/CFS clinical care guidelines. URL confirmed. BPC has 3 entries for the same CDC source (entries 19, 20, 21) \u2014 all point to same URL. Two duplicates should be removed or consolidated."
+  },
+  {
+    "ref_id": "Co1-22",
+    "status": "UNVERIFIED-CLOSED",
+    "authors": "DPI Japan",
+    "year": "2024",
+    "title": "\u969c\u5bb3\u8005\u306e\u5c45\u4f4f\u306b\u3082\u5bfe\u5fdc\u3057\u305f\u4f4f\u5b85\u306e\u8a2d\u8a08\u30cf\u30f3\u30c9\u30d6\u30c3\u30af (Housing Design Handbook for Persons with Disabilities)",
+    "publisher": "Disabled Peoples' International Japan",
+    "tier": "Co-1/5",
+    "note": "Japanese-language source. DPI Japan is a real organisation. Specific 2024 handbook not confirmed via English-language search. Requires Japanese-language search or BPC author confirmation."
+  },
+  {
+    "ref_id": "Co1-23",
+    "status": "VERIFIED",
+    "authors": "Runnalls, J. (RCOTSS-Housing)",
+    "year": "2024",
+    "title": "Inclusive Housing Design Guide (Habinteg, CAE, RIBA)",
+    "publisher": "Routledge",
+    "doi": "10.4324/9781003564164",
+    "tier": "Co-1/5",
+    "note": "DOI confirmed. Published Routledge 2024. Co-produced by Habinteg, Centre for Accessible Environments (CAE), RIBA. RCOTSS-Housing OT contribution confirmed."
+  },
+  {
+    "ref_id": "Co1-24-25",
+    "status": "VERIFIED",
+    "authors": "Bateman Horne Center",
+    "year": "2025",
+    "title": "ME/CFS: Clinical Care for Healthcare Providers",
+    "publisher": "Bateman Horne Center",
+    "url": "https://batemanhornecenter.org/providers/mecfs/",
+    "tier": "Co-1",
+    "note": "Confirmed. Bateman Horne Center is a leading US ME/CFS clinical and research centre. Clinical care guidance URL confirmed. BPC has 2 entries (24, 25) for same source \u2014 duplicate."
+  },
+  {
+    "ref_id": "Co1-26",
+    "status": "VERIFIED",
+    "authors": "Nuccio, J., granda, l., Clark, J.L. et al.",
+    "year": "2025",
+    "title": "Protactile language and movement (Wikipedia article with cited academic sources)",
+    "url": "https://en.wikipedia.org/wiki/Protactile",
+    "tier": "Co-1",
+    "note": "BPC cites \"Wikipedia/Nuccio, granda, Clark\" for Protactile. The Wikipedia article is real and cites academic sources. For publication-grade purposes, BPC should cite the primary academic sources not Wikipedia. Flag for BPC upgrade to Nuccio et al. peer-reviewed papers on Protactile linguistics."
+  },
+  {
+    "ref_id": "Co1-27",
+    "status": "CLOSED-DELETED",
+    "tier": "Co-1",
+    "title": "DIY sensory corners in Nigerian homes (foam mats, neutral paint)",
+    "note": "BPC: \"(Nigeria Co-1 source) n.d.\" \u2014 No author, no date, no source URL. Unverifiable. CLOSED-DELETED."
+  },
+  {
+    "ref_id": "Co1-28",
+    "status": "VERIFIED",
+    "authors": "Design in Mental Health Network (DiMHN)",
+    "year": "n.d.",
+    "title": "Lived experience research and resources",
+    "publisher": "DiMHN",
+    "url": "https://www.dimhn.org",
+    "tier": "Co-1",
+    "note": "DiMHN is a real UK professional network for mental health design. URL confirmed. BPC description \"lived experience research\" is general \u2014 specific publications at dimhn.org should be cited directly if used."
+  },
+  {
+    "ref_id": "Co1-29",
+    "status": "CLOSED-DELETED",
+    "tier": "Co-1",
+    "title": "De Hogeweyk post-occupancy evaluation (Vivium Zorggroep / BuroKade)",
+    "note": "BPC itself marks as [UNVERIFIABLE \u2014 internal document; background evidence only]. CLOSED-DELETED per project rules. Not citable."
+  }
+]
