@@ -41,122 +41,54 @@ languages:
   IT: {status: SEARCHED, results: 3, db: [web], co1_pass: not-run, native_standards_pass: complete}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  IE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ANSI S12.60 (schools). ASHRAE NC criteria. FGI (healthcare). ADA no acoustic requirement."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BB93 (schools). BS 8233 (buildings). HTM 08-01 (healthcare). PAS 6463 acoustic environment."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18041:2016 comprehensive. VDI 4100 residential. DIN EN ISO 3382."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "NS 8175:2019 acoustic classification of buildings. SINTEF research."}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 3382-1/2 measurement. ISO 22955 acoustic quality of open offices."}
+  EU: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   SG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  BE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  NL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  KR: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  EU: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
-jurisdiction_coverage_summary:
-  searched: [US, UK, DE, AU, CA, NZ, FR, BE, SE, NO, DK, FI, JP, CN, ES, IT, ISO]
-  thin: [IE, SG, CH, NL, BR, PT, EU]
-  no_data: [KR]
-  not_run: []
-  co1_complete: []
-  co1_partial: [UK, CA]
-  co1_not_attempted: [US, DE, AU, IE, NZ, SG, CH, FR, BE, NL, SE, NO, DK, FI, JP, KR, CN, BR, ES, PT, IT, EU, ISO]
-  tier5_complete: [US, UK, DE, AU, CA, NZ, FR, BE, SE, NO, DK, FI, JP, IT, ISO]
-  tier5_not_attempted: [IE, SG, CH, NL, BR, ES, PT, EU, CN, KR]
+jurisdiction_summary: >
+  DE DIN 18041 and UK BB93 are the most comprehensive room acoustic standards. US ANSI S12.60 is school-specific. NO NS 8175 provides acoustic classification system. All address general populations — none specific to disability.
 
-co1_pass_summary: {complete: [], partial: [EN, UK, CA], not-run: [DE, SV, NO, DA, FI, FR, ZH, JA, NL, ES, PT, KO, IT]}
-native_standards_pass_summary: {complete: [EN, DE, NO, DA, FR, ZH, ES, IT], partial: [SV, JA, NL, PT, FI], not-run: [KO]}
-companion_networks: {loaded: [PubMed], scholar_targets: 3, retrieved: 16}
-citation_mining: {backward: 16, forward: 3, sources_added: 7}
-at_database_pass: not-run
-
-top_sources:
-  - ANSI/ASA S12.60-2010/Part 1 (US Tier 6) — RT60 ≤0.3 s DEAF mandatory
-  - BB93:2015 Acoustic Design of Schools (UK Tier 5)
-  - DIN 18041:2016 Hörsamkeit in Räumen (DE Tier 5)
-  - PAS 6463:2022 §10 (UK Tier 5)
-  - UNI 11532-2:2020 (IT Tier 5) — most explicit NDV provisions in non-EN standard
-  - NS 8175:2019 (NO Tier 5)
-  - SBi-anvisning 218 (DK Tier 5)
-  - AS/NZS 2107:2016 (AU/NZ Tier 5)
-  - GB 50118-2010 §5.3.4 (CN Tier 6)
-  - AIJ AIJES-S001-2008 (JP Tier 5)
-  - Iglehart 2020 PMC 7229780 (Tier 1) — RT60 ≤0.3 s DEAF
-  - Devos et al. 2019 PMC 6950055 (Tier 1/2) — DEM acoustic intervention
-  - Bettarello et al. 2021 DOI 10.3390/app11093942 (Tier 3) — NDV/AUT classroom
-  - Caniato et al. 2024 (Tier 3) — NDV acoustic, incremental noise exposure
-  - Murgia et al. 2022 LSHSS (Tier 3 systematic review)
-  - BrainXchange DMA (2011) (CA Tier 2 Co-1)
-  - CEREMA/DMA (2019) (FR Tier 2)
-  - Amlani & Russo 2016 [REF-RAP-22] — STI compliance ≠ adequate listening (ESCALATED to evidence-auditor)
-bpc_ref: "room-acoustic-performance"
-thin_flags: [IE, SG, CH, NL, BR, PT, EU, SV, KR]
-no_data_flags: [KR]
-opus_synthesis_triggered: true
-opus_synthesis_ref: "2026-03-29"
-
-functional_deficit_pass:
-  status: NOT-RUN
-  last_run: null
-  scenarios_searched: 0
-  novel_findings: 0
-  refines_findings: 0
-  contradicts_findings: 0
-  tier0_candidates: 0
-  environments_covered: []
-  environments_remaining: [classroom, residential, healthcare-ward, open-plan-office, sensory-room]
-
-bpc_changes_logged:
-  - date: 2026-03-29
-    items_affected: [A-08, A-13]
-    change_summary: >
-      A-08 (HVAC NC-25): NC-25 target for DEM and NDV spaces confirmed by Tier 1/2 evidence
-      (Devos et al. 2019 PMC 6950055 — Belgian nursing home acoustic intervention; BrainXchange
-      DMA 2011 — DEM background noise management). NC-25 (≤35 dB(A)) and RT60 ≤0.5 s in
-      occupied common areas established as DEM best-practice target. PCS/OFS population absent
-      from all reviewed standards — THIN-BASE disclosure applies to those populations.
-      A-13 (RT60 ≤0.4 s / no sound masking): RT60 ≤0.4 s confirmed across 18 jurisdictions.
-      No-sound-masking doctrine for NDV/AUT explicitly named in BPC (PAS 6463:2022 §10 + Bettarello
-      2021 + Caniato 2024). DEAF population: RT60 ≤0.3 s is now Tier 1 (Iglehart 2020) — stronger
-      than A-13's current ≤0.4 s; A-13 spec is below best practice for hearing device users.
-      REF-RAP-22 (Amlani & Russo 2016) escalated to evidence-auditor: STI compliance ≠ adequate
-      listening conditions; caveat required on A-13 acoustic treatment specification language.
-      Citation mining: 7 new sources added (REF-RAP-11 through REF-RAP-17 partial; RAP-30/31).
-      RAP-ID reconciliation completed 2026-03-29 (canonical IDs REF-RAP-18–31 established).
-    opus_synthesis: true
-    gaps_raised: [GAP-RAP-01]
 ```
-
-### FDR Search — room-acoustic-performance
-fdr_date: 2026-03-30 22:36
-fdr_scenarios:
-  - scenario: "d310 + cochlear implant → classroom"
-    result: no-yield
-    note: "2 PubMed results — CI device technology. No spatial specs."
-  - scenario: "d310 + hearing aid → open-plan workplace"
-    result: no-yield
-    note: "69 PubMed results (top 10). Feenstra 2025 (doi:10.1080/14992027.2025.2486853) confirms effortful workplace communication. No spatial specs."
-  - scenario: "d710 + autism sensory hypersensitivity → shared living space"
-    result: no-yield
-    note: "38 PubMed results (top 5). Dwyer 2025 (doi:10.1177/10870547251361226) confirms auditory hyperreactivity ASD+ADHD. No architectural specs."
-  - scenario: "d310 + dementia → residential care common area"
-    result: no-yield
-    note: "36 PubMed results (top 5). Belojević 2024 (doi:10.4103/nah.nah_162_24) reviews sound/AD — concepts already in BPC. No novel spatial specs."
-fdr_step2_web: "No OT practice guidelines with room acoustic spatial specifications found."
-fdr_status: COMPLETE
-fdr_assessment: "No novel spatial findings across 4 scenarios. Standards-dominated domain, 31+ refs, Opus synthesis. OT lit device-oriented. BPC unchanged."
-diminishing_return_gate: "4 consecutive no-yield scenarios"
