@@ -410,3 +410,26 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 03:06
+
+
+## Block 9 — PARTIAL Slug Enrichment
+
+### Topic directories enriched with jurisdiction notes
+- entrances-and-circulation: 5 slugs (turning space, ramp gradient, threshold, door force divergences)
+- wayfinding-and-signage: 8 slugs (LRV contrast, TWSI, cognitive wayfinding)
+- sensory-environment: 6 slugs (acoustics, air quality, biophilic, sensory processing)
+- Total: 19 PARTIAL slugs enriched
+
+commits_block9: 19 commits
+
+### Remaining PARTIAL slugs (~20)
+- population-general: 11 (lower priority — population BPCs)
+- frameworks-and-methodology: ~7
+- health-and-symptom-management: ~4
+- communication-and-alerts: 2
+- kitchens/room-types: 2
+
+next_action: >
+  Continue PARTIAL enrichment — population-general (11 slugs) batch.
+
+session_close: 2026-04-23 12:15
