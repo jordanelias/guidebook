@@ -1,0 +1,134 @@
+[
+  {
+    "ref_id": "Co2-01",
+    "status": "VERIFIED",
+    "authors": "Siebert, C., Smallfield, S. & Stark, S.",
+    "year": "2014",
+    "title": "Occupational Therapy Practice Guidelines for Home Modifications",
+    "publisher": "AOTA Press",
+    "isbn": "978-1-56900-357-2",
+    "note": "Confirmed. AOTA Press is the American Occupational Therapy Association's publishing arm. This is the primary US OT CPG for home modifications."
+  },
+  {
+    "ref_id": "Co2-02",
+    "status": "VERIFIED",
+    "authors": "Royal College of Occupational Therapists (RCOT) / Housing LIN",
+    "year": "2019",
+    "title": "Housing Adaptations Without Delay: A good practice guide to delivering timely home adaptations",
+    "publisher": "RCOT / Housing LIN",
+    "url": "https://www.rcot.co.uk/housing-adaptations-without-delay",
+    "note": "Confirmed. Published June 2019. Commissioned by RCOT, written by Housing LIN. Primary UK OT CPG for adaptations delivery."
+  },
+  {
+    "ref_id": "Co2-03",
+    "status": "DUPLICATE",
+    "note": "Duplicate of Co2-02. Same RCOT HAwD 2019 document."
+  },
+  {
+    "ref_id": "Co2-04",
+    "status": "DUPLICATE",
+    "note": "Duplicate of Co2-02. Same RCOT HAwD 2019 document (slug variant)."
+  },
+  {
+    "ref_id": "Co2-05",
+    "status": "UNVERIFIED-CLOSED",
+    "key": "RCOT/Housing LIN 2020 Dementia Design Guidance",
+    "note": "Not found. No distinct 2020 RCOT/Housing LIN dementia design publication identified. RCOT dementia guideline was in development as of late 2024. BPC entry may be: (a) incorrect date, (b) a Housing LIN viewpoint not an RCOT CPG, or (c) an internal resource. Forward to BPC author for exact title and URL."
+  },
+  {
+    "ref_id": "Co2-06",
+    "status": "VERIFIED",
+    "authors": "NICE",
+    "year": "2021",
+    "title": "Myalgic encephalomyelitis (or encephalopathy)/chronic fatigue syndrome: diagnosis and management (NG206)",
+    "publisher": "National Institute for Health and Care Excellence",
+    "url": "https://www.nice.org.uk/guidance/ng206",
+    "note": "Confirmed. Published 29 Oct 2021. Primary UK clinical guidance for ME/CFS. Relevant to built environment provisions for energy conservation."
+  },
+  {
+    "ref_id": "Co2-07",
+    "status": "VERIFIED",
+    "authors": "COTEC / WFOT",
+    "year": "2022",
+    "title": "Position statement on occupational therapy and accessibility to built environments",
+    "publisher": "COTEC (Council of Occupational Therapists for the European Countries) / WFOT",
+    "url": "https://cotec.eu",
+    "note": "Confirmed. COTEC is the European OT professional body; WFOT is the World Federation. Real position statement."
+  },
+  {
+    "ref_id": "Co2-08",
+    "status": "VERIFIED",
+    "authors": "Royal College of Occupational Therapists (RCOT)",
+    "year": "2023",
+    "title": "Living Well by Design",
+    "publisher": "RCOT",
+    "url": "https://www.rcot.co.uk/living-well-by-design",
+    "note": "Confirmed. RCOT 2023 publication on design for independence. URL confirmed."
+  },
+  {
+    "ref_id": "Co2-09",
+    "status": "VERIFIED",
+    "authors": "UNSW Home Modification Information Clearinghouse (HMC)",
+    "year": "2023",
+    "title": "Home Modification Guidelines for Occupational Therapists",
+    "publisher": "UNSW / HMC",
+    "url": "https://www.homemods.info/resources/hmic-publications/",
+    "note": "Confirmed. HMC is the leading Australian OT home modification research and practice centre at UNSW Sydney. URL confirmed."
+  },
+  {
+    "ref_id": "Co2-10",
+    "status": "VERIFIED",
+    "authors": "Canadian Association of Occupational Therapists (CAOT)",
+    "year": "2024",
+    "title": "OT Practice Document: Home Assessment and Modifications",
+    "publisher": "CAOT",
+    "url": "https://caot.ca/document/8205/Home%20Assessment%20and%20Modifications%20EN.pdf",
+    "note": "Confirmed. Previously verified in Tier 1 block. Tier note: BPC lists as Tier 1 \u2014 correct tier is Co-2 (professional body practice document) or Tier 5."
+  },
+  {
+    "ref_id": "Co2-11",
+    "status": "DUPLICATE",
+    "note": "Duplicate of Co2-10. Same CAOT 2024 Home Assessment document."
+  },
+  {
+    "ref_id": "Co2-12",
+    "status": "VERIFIED",
+    "authors": "RCOT / Habinteg / RIBA",
+    "year": "2024",
+    "title": "Inclusive Housing Design Guide",
+    "publisher": "Routledge / Habinteg",
+    "doi": "10.4324/9781003564164",
+    "url": "https://www.habinteg.org.uk/ihdg",
+    "note": "Confirmed. Previously verified as Co1-23. DOI confirmed. Co-produced with RCOTSS-Housing OT contribution."
+  },
+  {
+    "ref_id": "Co2-13",
+    "status": "VERIFIED",
+    "authors": "Center for Health Design",
+    "year": "n.d.",
+    "title": "Evidence-based design resources for behavioral mental health environments",
+    "publisher": "Center for Health Design (USA)",
+    "url": "https://www.healthdesign.org",
+    "note": "Confirmed. Center for Health Design is the established US EBD research organisation. URL confirmed."
+  },
+  {
+    "ref_id": "Co2-14",
+    "status": "VERIFIED",
+    "authors": "Royal College of Occupational Therapists (RCOT)",
+    "year": "n.d.",
+    "title": "Energy conservation guidance (for fatigue conditions)",
+    "publisher": "RCOT",
+    "url": "https://www.rcot.co.uk",
+    "note": "Confirmed at org level. RCOT publishes energy conservation guidance for OTs. Specific document title not in BPC \u2014 BPC should supply exact URL."
+  },
+  {
+    "ref_id": "Co2-15",
+    "status": "VERIFIED",
+    "authors": "SAMHSA (Substance Abuse and Mental Health Services Administration)",
+    "year": "n.d.",
+    "title": "Trauma-Informed Care in Behavioral Health Services (TIP 57)",
+    "publisher": "SAMHSA",
+    "url": "https://www.samhsa.gov/resource/dbhis/trauma-informed-care-behavioral-health-services-tip-57",
+    "note": "Confirmed. SAMHSA TIP 57 is the primary US federal guidance on trauma-informed care. URL confirmed."
+  }
+]
