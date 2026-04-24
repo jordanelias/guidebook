@@ -71,11 +71,11 @@ jurisdiction_coverage:
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -83,9 +83,9 @@ jurisdiction_coverage:
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   KEY DIVERGENCE: opening force — AU ≤20N (strictest) vs US ≤22N (interior) vs UK ≤30N (BS) / ≤20N (best practice) vs ISO ≤25N. Handle height — DE 850mm vs general 900-1100mm.

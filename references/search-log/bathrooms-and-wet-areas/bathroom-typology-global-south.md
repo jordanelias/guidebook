@@ -8,7 +8,7 @@ early_close_triggered: false
 
 languages:
   EN: {status: SEARCHED, results: 3, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  DE: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DE: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: complete}
   SV: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
@@ -47,11 +47,11 @@ jurisdiction_coverage:
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -59,9 +59,9 @@ jurisdiction_coverage:
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   Bathroom typology for Global South contexts — limited building code data. Key: WHO WASH guidelines, CBM inclusive WASH. Most P4/P5 jurisdictions have minimal accessible bathroom specifications. Cross-reference bathroom-typology-global-south BPC.

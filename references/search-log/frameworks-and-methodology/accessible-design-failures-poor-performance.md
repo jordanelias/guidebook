@@ -44,7 +44,7 @@ jurisdiction_coverage:
   UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: complete}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
@@ -75,7 +75,7 @@ jurisdiction_coverage:
   PH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -85,7 +85,7 @@ jurisdiction_coverage:
   MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   Cross-jurisdictional — failures documented in UK (DfT, Habinteg), US (DOJ settlements), AU (Summer Foundation). No jurisdiction-specific code — this is evidence of non-compliance.
