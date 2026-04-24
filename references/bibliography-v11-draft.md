@@ -790,7 +790,7 @@
 [GREY] **Hayashi, H. & Naito, H.** (2022). Japanese clinical review — sweating capacity percentages in SCI. *3*.  
 *BPC slugs: `thermoregulation-built-environment`*
 
-[GREY] **Holohan, E.** (2022). Trauma-informed design scoping review. *3*.  
+[GREY] **Owen [CORRECTED from Holohan: citation-verifier 2026-04-23 — Owen C. & Crane J. are correct authors, IJERPH 2022;19(21):14279, DOI:10.3390/ijerph192114279, PMID:36361166], E.** (2022). Trauma-informed design scoping review. *3*.  
 *BPC slugs: `design-framework-evidence-audit`*
 
 [GREY] **Holohan, E.** (2022). Trauma-informed design. *3*.  
