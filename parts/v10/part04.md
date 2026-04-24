@@ -1638,6 +1638,18 @@ D-04 (Landmarks)
 
 **FDR-IntD-01 [Tier 2 — Silverman 2010; Tier 4 — NDIS SDA]:** Reduced abstract reasoning in IntD — concrete landmark-based wayfinding is the primary system; alphanumeric signage is backup only. Mechanism differs from DEM (which is memory loss): IntD users may not decode abstract symbols or letter-number sequences reliably but can navigate via object landmarks. Concrete 3D landmark objects at every decision point (D-04) are co-primary with pictogram signage (D-08) in IntD-occupied settings. DEM wayfinding provisions (D-02, D-04, D-08) are the strongest available proxy.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Sign Height | Tactile/Braille | Pictogram Standard |
+|---|---|---|---|---|
+| US | ADA 2010 §703 | 1220-1524mm (raised char.) | Yes — Grade 2 Braille | ISA + ADA pictograms |
+| UK | BS 8300-2:2018 §12 | 1400-1700mm | Tactile recommended | BS EN ISO 7010 |
+| AU | AS 1428.1:2021 | 1200-1600mm | Tactile required | AS 1428.1 pictograms |
+| DE | DIN 32975 / DIN 18040 | 1200-1600mm | Tactile per DIN 32986 | DIN EN ISO 7010 |
+| ISO | ISO 21542:2021 §40 | 1200-1600mm | Referenced | ISO 7010 |
+| **Guidebook** | **D-08** | **Per jurisdiction** | **Pictogram + single word** | **ISO 7010 base** |
+
+
 ### D-09 Consistent Furniture Layout (No Rearrangement Without User Consultation)
 <!-- CON-0115 [HIGH]: D-09 consistent layout + D-02 single primary route — DEM spatial predictability -->
 <!-- design_stage_lock: DD -->
@@ -1925,6 +1937,17 @@ Parking)
 point of building approach; inadequate parking or excessive distance forces exertion expenditure before the primary occupation begins. The
 
 ≤50m distance specification reflects the exertion budget for OFS users.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Space Width | Aisle Width | Total Width | Covered | Proximity |
+|---|---|---|---|---|---|---|
+| US | ADA 2010 §502 | 2440mm | 1524mm | 3964mm | Not required | Closest route |
+| UK | BS 8300-1:2018 §5 | 2400mm | 1200mm shared | 3600mm | Not required | ≤50m from entrance |
+| DE | DIN 18040-1 §4.1 | 3500mm (total) | — | 3500mm | Not required | Near entrance |
+| AU | AS 2890.6 / NCC | 2400mm | Shared access | 3200mm min | Not required | — |
+| **Guidebook** | **E-04** | **3600mm total** | **Integrated** | **3600mm** | **Covered** | **Closest to entry** |
+
 
 ### E-05 Weather Protection at Entry (Covered Canopy Minimum 3000×2000 mm)
 <!-- design_stage_lock: SD -->
@@ -2219,6 +2242,19 @@ Institution. (2018). BS 8300:2018. BSI.
 
 
 ---
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Opening Force (manual) | Automatic Door Trigger | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 §404.2.9 | ≤22N (interior); ≤38N (exterior) | Proximity sensor or push plate | — |
+| UK | BS 8300-2:2018 §8 | ≤30N (BS); ≤20N (best practice) | Automatic preferred at main entry | — |
+| AU | AS 1428.1:2021 §13 | **≤20N** | Automatic preferred | Strictest force |
+| DE | DIN 18040-1 §4.3.3 | Not specified in DIN | — | ASR A1.7 for workplaces |
+| NO | TEK17 §12-15 | — | — | — |
+| ISO | ISO 21542:2021 §14.5 | ≤25N preferred | — | — |
+| **Guidebook** | **E-11** | **≤20N** | **Automatic sliding at main entry** | **AU standard** |
+
 
 ### E-15 Changing Places Facility (Height-Adjustable Bench, Overhead Hoist, Peninsular WC)
 <!-- design_stage_lock: B -->
@@ -2841,6 +2877,21 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5kN static/≥2.5kN dynamic load rating, bilateral provision) are derived from transfer biomechanics research; the EHP 'adapt' strategy frames the grab bar as a context modification that enables the occupation of bathing, toileting, and transfer independently — occupations that are impossible without the adapted context.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Horizontal Height | Diameter | Load | Bilateral |
+|---|---|---|---|---|---|
+| US | ADA 2010 §604.5 | 838-914mm (33-36″) | 32-51mm | ≥1112N | Side + rear |
+| UK | BS 8300-2:2018 §18 | 680mm (horizontal) | 32-36mm | — | Both sides recommended |
+| AU | AS 1428.1:2021 §15 | 800-810mm | 30-40mm | ≥1100N | Both sides |
+| DE | DIN 18040-1 §4.3.6 | 850mm | — | — | Both sides |
+| NO | TEK17 | Referenced | — | — | — |
+| ISO | ISO 21542:2021 §20 | 700-800mm | 30-40mm | ≥1100N | Both sides |
+| **Guidebook** | **G-03** | **Clinical positioning** | **32-38mm** | **≥1100N** | **Bilateral** |
+
+**HIGH DIVERGENCE:** Horizontal grab bar heights vary: US 838-914mm vs UK 680mm vs ISO 700-800mm vs DE 850mm.
+
+
 ### G-04 Accessible Bathroom (Wet Room Configuration — Zero Threshold)
 <!-- CON-0041 [HIGH]: Japan heat shock: inter-room thermal differential ≤5°C; F-07 heated bathroom floor as prevention -->
 <!-- CON-0120 [HIGH]: G-03 grab bars bilateral/vertical + G-04 wet room zero-threshold — bathroom safety cluster -->
@@ -2876,6 +2927,18 @@ Slip resistance: PTV ≥36 wet throughout shower area
 **Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance)
 
 **Evidence basis (OT):** EHP Framework (create strategy); Biomechanical FOR. The wet room creates a new environmental context (zero-threshold wash space) that enables the occupation of showering/bathing for users who cannot step over a shower tray; the Biomechanical FOR grounds the fall-prevention specifications (PTV ≥36, fold-down seat, grab bar positions derived from transfer mechanics).
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Min Area | WC Offset | Turning | Shower Threshold |
+|---|---|---|---|---|---|
+| US | ADA 2010 §604 | Per clear floor space | 460-480mm (18-19″) | 1524mm | ≤13mm |
+| UK | BS 8300-2:2018 §18 | Doc M layouts | 500mm | 1500mm | Level |
+| AU | AS 1428.1:2021 §15 | Per clear floor | 450-460mm | 1540mm / 2070mm | Zero |
+| DE | DIN 18040-1 §4.3.6 | Per movement area | — | 1500mm | Zero |
+| ISO | ISO 21542:2021 §20 | Referenced | — | 1500mm | Level |
+| **Guidebook** | **G-04** | **Wet room** | **Per clinical OT** | **By device** | **Zero threshold** |
+
 
 ### G-05 Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range)
 <!-- CON-0151 [HIGH]: G-05 adjustable desk + K-01 intervenor clear floor — reach + proximity cluster -->
