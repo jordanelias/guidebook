@@ -15,14 +15,17 @@
   },
   {
     "ref_id": "02",
-    "status": "UNVERIFIED-1",
-    "authors": "Greene, D. et al.",
+    "status": "VERIFIED-TIER-CORRECTION",
+    "authors": "Canadian Association of Occupational Therapists (CAOT)",
     "year": "2024",
-    "title": "[Title unverified]",
+    "title": "OT Practice Document: Home Assessment and Modifications",
     "journal": "Canadian Journal of Occupational Therapy",
     "doi": "",
-    "tier": "1",
-    "note": "Not found in 1 search. CAOT 2024 Practice Document (Home Assessment and Modifications) found \u2014 may be what is intended. Requires second search."
+    "tier": "5",
+    "note": "Confirmed. BPC lists as Tier 1 \u2014 this is a professional practice document = Tier 5 (guideline/grey literature). Tier correction required.",
+    "publisher": "CAOT",
+    "place": "Ottawa",
+    "url": "https://caot.ca/document/8205/Home%20Assessment%20and%20Modifications%20EN.pdf"
   },
   {
     "ref_id": "07",
@@ -356,13 +359,18 @@
   },
   {
     "ref_id": "Greene-02",
-    "status": "UNVERIFIED-CLOSED",
-    "authors": "Greene, D. et al.",
+    "status": "VERIFIED",
+    "authors": "Greene, R., Levine, I.C., Guay, M., & Novak, A.C.",
     "year": "2024",
     "tier": "1",
-    "note": "Second search not yet run. Holding for next session.",
-    "title": "[GREY \u2014 not found in 1 search]",
-    "journal": "Canadian Journal of Occupational Therapy"
+    "note": "Confirmed. BPC \"Greene 2024 CJOT\" matches exactly. Tier 1 empirical biomechanics study.",
+    "title": "Biomechanical demands and user preference associated with wall-mounted and rim-mounted grab bars",
+    "journal": "Canadian Journal of Occupational Therapy",
+    "volume": "91",
+    "issue": "2",
+    "pages": "183\u2013193",
+    "doi": "10.1177/00084174231186066",
+    "pmid": "37498939"
   },
   {
     "ref_id": "RAP-18",
@@ -617,13 +625,13 @@
   },
   {
     "ref_id": "SPM-03",
-    "status": "UNVERIFIED-1",
+    "status": "NEEDS-CLARIFICATION",
     "authors": "Allen, C.K.",
     "year": "1988",
     "title": "[BPC: Cognitive disabilities framework (CDM) \u2014 specific AJOT 1988 article not confirmed]",
     "journal": "American Journal of Occupational Therapy",
     "tier": "1",
-    "note": "BPC reference imprecise. Multiple Allen CDM publications 1985-1992. Most likely: Allen, C.K. (1988). Occupational therapy: Functional assessment of the severity of mental disorders. Hosp Community Psychiatry 39(2):140-142. Second search needed to confirm specific AJOT 1988 article."
+    "note": "BPC \"Allen 1988 Am J Occup Ther CDM\" is ambiguous. The 1988 AJOT article by Allen is \"Occupational therapy: Functional assessment of the severity of mental disorders\" (Hosp Community Psychiatry 39(2):140-142, 1988), not AJOT. The AJOT 1988 article on CDM validation is Mayer (1988), not Allen. BPC should clarify if they mean: (a) Allen 1985 book (Little Brown), (b) Allen & Allen 1987 J Clin Psychiatry, or (c) Earhart & Allen 1988 USC report. Forward to BPC author for clarification."
   },
   {
     "ref_id": "SSG-04/SSG-08",
@@ -726,33 +734,37 @@
   },
   {
     "ref_id": "WGS-02",
-    "status": "UNVERIFIED-1",
-    "authors": "Ahmed, A. et al.",
+    "status": "VERIFIED",
+    "authors": "Ahmed, S., Muhammad, I.B., Abdulraman, M.E., & Adebisi, G.O.",
     "year": "2022",
-    "title": "Nigeria hospital wayfinding (author TBC)",
-    "journal": "(TBC)",
+    "title": "Visual accessibility and inclusive wayfinding design in hospital environment in Nigeria",
+    "journal": "ICONARP International Journal of Architecture and Planning",
     "tier": "1",
-    "note": "BPC: Ahmed 2022 \u2014 Nigeria hospital wayfinding. One search not yet run. Holding for continuation session."
+    "note": "Confirmed. Full author list retrieved. Note: Salawu 2022 (ETSJ) is a related but different paper on the same topic \u2014 BPC may need to specify which Ahmed 2022 is intended.",
+    "volume": "10",
+    "issue": "1",
+    "pages": "97\u2013114",
+    "doi": "10.15320/ICONARP.2022.195"
   },
   {
     "ref_id": "CCD-06",
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "authors": "(TBC)",
     "year": "2023",
     "title": "Lund University thesis on accessible design (author TBC)",
     "publisher": "Lund University",
     "tier": "1",
-    "note": "BPC: Lund University 2023 thesis. No author supplied. One search not yet run. Holding for continuation session."
+    "note": "Lund University 2023 thesis \u2014 no author in BPC. Cannot search without author. Forward to BPC author."
   },
   {
     "ref_id": "SSG-02",
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "authors": "(TBC)",
     "year": "2021",
     "title": "Tsukuba University 2021 Japanese-language accessible built environment paper",
     "publisher": "Tsukuba University (JA)",
     "tier": "1",
-    "note": "BPC: Japanese-language source from Tsukuba 2021. No DOI or author in English. Not searchable without Japanese-language search. Holding for Phase 2A."
+    "note": "Tsukuba 2021 Japanese-language source \u2014 no DOI or English title in BPC. Cannot verify without Japanese-language search capability. Forward to BPC author."
   },
   {
     "ref_id": "OTF-03",
