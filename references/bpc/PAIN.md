@@ -13,4 +13,4 @@
 
 > **[LANGUAGE GAP]** All PAIN built-environment evidence identified to date is EN-only. Non-EN research passes pending. Confidence reduced for cross-jurisdictional applicability until multilingual retrieval is completed.
 **New item candidates:** Reclining/tilt seating specification; cushioned flooring specification (thin EN-only evidence).
-**SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · · Ismail2023
+**SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · · ~~Ismail2023~~ [CLOSED-DELETED: citation-verifier 2026-04-23 — PMID 18751709 resolves to McVeigh 2008, not Ismail 2023. Wrong source. Remove from BPC.]
