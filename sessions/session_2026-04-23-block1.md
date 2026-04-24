@@ -1999,3 +1999,29 @@ next_action: >
 
 blockers: none
 session_close: 2026-04-24 08:30
+
+
+## Block 19 — ISW Briefing Preparation (Opus)
+
+Completed 2026-04-24 07:28. Model: Opus 4.6.
+
+### 7 ISW briefings drafted and committed
+`references/connections/connection-application-queue.md` SHA 8c4c676eb66a
+
+### Priority routing
+| Priority | Briefing | Spec change | Complexity |
+|---|---|---|---|
+| P1 | ISW-BRIEF-06 (A-16 elevation) | A-16 → cross-population universal | Medium — spec rewrite |
+| P1 | ISW-BRIEF-03 (RT60 convergence) | K-01 population tags | Low — tag addition |
+| P1 | ISW-BRIEF-05 (grab bar extension) | G-03/G-04 population tags | Low — tag addition |
+| P1 | ISW-BRIEF-04 (PMV/PPD contra) | K-05 contraindication note | Low — note addition |
+| P2 | ISW-BRIEF-02 (circadian compound) | K-03 compound annotation | Medium — zoning clause |
+| P2 | ISW-BRIEF-01 (floor vibration) | A-09 population extension | Low — inferred evidence |
+| P3 | ISW-BRIEF-07 (neuroscience framework) | Part 3 methodology | High — chapter-level |
+
+### Opus work complete for this queue
+ISW application is Sonnet-tier work. Switch to Sonnet to execute P1 briefings.
+
+session_close: 2026-04-24 07:28
+next_action: ISW spec updates — execute P1 briefings (Sonnet tier)
+blockers: none
