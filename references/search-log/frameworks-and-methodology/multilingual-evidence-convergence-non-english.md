@@ -23,4 +23,52 @@ top_sources: [Marquardt2011-TUDresden-DE, AIJ-HeatShock-JA, BuroKade-DeHogeweyk-
 bpc_ref: "multilingual-evidence-convergence-non-english"
 thin_flags: [FI, ZH]
 no_data_flags: []
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 ```
