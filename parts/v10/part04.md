@@ -1200,6 +1200,18 @@ G-03 (Grab Bars)
 
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. LRV ≥30 contrast at critical junctions compensates for the reduced visual contrast discrimination that occurs at Allen's CDM cognitive levels 3--4 (DEM) and for the reduced photopic contrast sensitivity of low-vision users (VIS); the 30 LRV threshold is derived from the minimum contrast visible to users in the target population range.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Min Contrast | Critical Contrast | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 | **No numeric** | — | Significant gap |
+| UK | BS 8300 | ≥30 LRV points | ≥70 LRV points | Most developed methodology |
+| AU | AS 1428.1:2021 §12 | ≥30% | — | Aligns with UK minimum |
+| DE | DIN 32975:2009 | Specified | — | Visual design standard |
+| ISO | ISO 21542:2021 §39 | Referenced | — | Defers to national standards |
+| **Guidebook** | **C-04** | **≥30 minimum** | **≥50 best practice** | **UK methodology; target between UK min and critical** |
+
+
 ### C-05 Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -1780,6 +1792,21 @@ Surface: PTV ≥36 wet; non-slip aggregate or profiled surface
 
 Koontz et al. (2012) demonstrated that reducing gradient from 1:12 (code minimum) to 1:20 decreases shoulder propulsive force by approximately 35%, placing self-propelled ramp ascent within the functional capacity range of manual wheelchair users with reduced upper limb endurance. Waters et al. (1985) established the cumulative injury pathway: repeated propulsion at gradients above 1:12 generates shoulder loading that accumulates as rotator cuff pathology over years of daily ramp use. Ramp gradient is therefore a PAIN prevention specification as well as a fatigue management specification — inadequate gradient is a mechanism by which the built environment creates chronic shoulder PAIN as a secondary condition in manual wheelchair users (CON-0093).
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Max Gradient | Notes |
+|---|---|---|---|
+| US | ADA 2010 §405 | 1:12 (8.3%) | Code minimum; rise ≤760mm per run |
+| UK | BS 8300-1:2018 §9 | 1:12 max; 1:20 preferred | Best practice aligns with guidebook |
+| DE | DIN 18040-1 §4.3.8 | 1:16.7 (6%) | Stricter than US/UK |
+| AU | AS 1428.1:2021 §10; NCC | 1:14 (7.1%) | Between US and DE |
+| NO | TEK17 §12-18 | 1:20 outdoor; 1:12 short indoor | Most restrictive outdoor |
+| FR | Arrêté 2017 | 5% preferred; 8% max short | Aligns with DE |
+| CH | SIA 500 | 6% max | Same as DE |
+| ISO | ISO 21542:2021 §10 | 1:20 preferred; 1:12 max | Matches guidebook best practice |
+| **Guidebook** | **E-03** | **1:20 (5%)** | **Aligns with NO/ISO preferred; DE/FR range** |
+
+
 ### E-04 Accessible Parking (3600 mm Width, Covered, Closest to Entry)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
@@ -1892,6 +1919,20 @@ changed (threshold eliminated) to directly expand the performance range, enablin
 
 user whose mobility impairment or energy limitation makes threshold negotiation a barrier.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Max Threshold | Notes |
+|---|---|---|---|
+| US | ADA 2010 §404.2.5 | ≤13mm | Beveled if >6mm |
+| UK | AD M Vol 1 | Level preferred | M4(2) level threshold |
+| DE | DIN 18040-2 §4.3.3 | ≤20mm | Draft revision: ≤10mm |
+| AU | AS 1428.1:2021 | **≤5mm** | Strictest globally |
+| NO | TEK17 §12-4 | Step-free mandatory | For qualifying dwellings |
+| FR | Arrêté 2014 | ≤20mm | Same as current DE |
+| ISO | ISO 21542:2021 §14 | Level preferred | Aligns with guidebook |
+| **Guidebook** | **E-06** | **≤5mm** | **AU standard — weather-sealed level detail** |
+
+
 ### E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)
 <!-- CON-0009 [HIGH]: Threshold items: zero-step + ≤20mm bevelled max confirmed ≥12 jurisdictions -->
 <!-- design_stage_lock: DD -->
@@ -1971,6 +2012,19 @@ biomechanics: corridors narrower than 1200mm force compensatory manoeuvres that 
 
 efficiency, directly restricting the performance range of manual wheelchair users.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Min Width | Passing Width | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 §403 | 915mm | 1524mm | Narrowest minimum |
+| UK | BS 8300-2:2018 §7 | 1200mm | 1800mm | Guidebook aligns |
+| DE | DIN 18040-1 §4.3 | 1500mm | 1800mm | Widest minimum |
+| AU | AS 1428.1:2021 §7 | 1000mm | 1800mm | Between US and UK |
+| NO | TEK17 §12-6 | 1500mm | — | Same as DE |
+| ISO | ISO 21542:2021 | 1200mm | 1800mm | Matches UK/guidebook |
+| **Guidebook** | **E-08** | **≥1200mm** | **≥1800mm** | **UK/ISO standard** |
+
+
 ### E-09 Tactile Walking Surface Indicators (ISO 23599:2019)
 <!-- CON-0156 [HIGH]: E-03 ramp + C-04 contrast + E-09 TWSI + B-04 flicker — circulation safety cluster -->
 <!-- design_stage_lock: DD -->
@@ -2030,6 +2084,19 @@ Lighting: ≥100 lux at entry surface level; night-activated
 **Cross-reference:** E-06 (Level Entry)
 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | System | Notes |
+|---|---|---|---|
+| JP | JIS T 9251 | Originated TWSIs (1965) | Most extensive deployment |
+| ISO | ISO 23599:2019 | International harmonisation | Reference standard |
+| DE | DIN 32984:2020 | Most comprehensive system | Detailed indicator types |
+| AU | AS 1428.4.1:2009 | Comprehensive TWSI | Widely deployed |
+| UK | BS 8300 + DfT guidance | Tactile paving | Colour differentiation |
+| US | ADA §705 | Detectable warnings only | Limited to specific locations |
+| **Guidebook** | **E-09** | **ISO 23599:2019** | **International reference** |
+
 
 ### E-10 Rest Seating on Circulation Routes (≤20m Interval)
 <!-- design_stage_lock: SD -->
@@ -2894,6 +2961,19 @@ Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
 **Cross-reference:** H-02 (Individual Environmental Control); E-11 (Automatic Door); I-01 (UPL Controls)
 
 **Evidence basis (OT):** Biomechanical FOR. The 400--1200 mm AFF reach zone derives from the biomechanical reach envelope of a seated wheelchair user (ISO 26800:2011); the ≤22 N activation force is the UPL threshold from clinical grip strength research; the ≥50 mm dimension for push-pad controls derives from the minimum target size for reliable activation with reduced fine motor control.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Low Reach | High Reach | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 §308 | 380mm | 1220mm | Broadest range |
+| UK | BS 8300-2:2018 §10 | 750mm | 1200mm | Moderate |
+| DE | DIN 18040-2 §5.5 | 850mm | 1050mm | Narrowest band |
+| AU | AS 1428.1:2021 §14 | 900mm | 1100mm | Strict |
+| ISO | ISO 21542:2021 §24 | 800mm | 1100mm | Close to AU |
+| FR | Arrêté 2017 | 900mm | 1300mm | High reach exceeds others |
+| **Guidebook** | **H-01** | **400mm** | **1100mm** | **Title range; functional target 900-1100mm** |
+
 
 ### H-02 Individual Environmental Control — Tier 0 Universal Provision
 <!-- CON-0095 [HIGH]: H-series self-service terminals: voice + tactile + adjustable height for VIS/MOB/NDV -->
