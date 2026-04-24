@@ -35,4 +35,4 @@
 | ZH | Chinese NDV/MH built-environment evidence thin | Yes — scope gate candidate |
 
 ### Key sources
-PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Holohan2022-TID · BuroHappold-2024 · PAS6463-2022
+PMC9658651-TID · PMC10689333-TID-youth · SAMHSA-TIC · Owen/Crane [CORRECTED: citation-verifier 2026-04-23 — correct authors are Owen C. & Crane J., IJERPH 2022;19(21):14279]2022-TID · BuroHappold-2024 · PAS6463-2022
