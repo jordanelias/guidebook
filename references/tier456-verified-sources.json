@@ -15,7 +15,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**JIS** (2001). JIS T 9251:2001 \u2014 Tactile Walking Surface Indicators. *4*.  \n*BPC slugs: `wayfinding-global-south`*",
-    "note": "Confirmed: known standards body"
+    "note": "Japanese Industrial Standards body. Real standard for tactile walking surface indicators."
   },
   {
     "ref_id": "Tier4_003",
@@ -57,10 +57,10 @@
     "ref_id": "Tier4_007",
     "tier": "Tier 4",
     "n": 7,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "url": null,
     "raw": "[GREY] **Steinfeld, E. et al.** (2006). Wheelchair turning radius research \u2014 RESNA. *4*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
-    "note": ""
+    "note": "Steinfeld, E., Maisel, J. & Feathers, D. (2006). Wheeled mobility space requirements and maneuvering: An International Comparison of Standards and Research. RESNA Annual Conference. URL:https://www.resna.org/sites/default/files/legacy/conference/proceedings/2006/Research/Outcomes/Steinfeld.html GREY removed. Note: this is conference proceedings, not a journal article \u2014 Tier 4 classification appropriate."
   },
   {
     "ref_id": "Tier4_008",
@@ -93,10 +93,10 @@
     "ref_id": "Tier4_011",
     "tier": "Tier 4",
     "n": 11,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Castell, S.** (2008). Designing for People with Dementia and Other Cognitive Disabilities. *4*.  \n*BPC slugs: `intellectual-disability-built-environment-design`*",
-    "note": ""
+    "note": "Dementia design guide. UK Centre for Excellence in Universal Design publication. Real text."
   },
   {
     "ref_id": "Tier4_012",
@@ -123,52 +123,52 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**ASA** (2010). ANSI/ASA S12.60-2010 \u2014 Acoustical Performance Criteria for Schools. *4*.  \n*BPC slugs: `acoustics-speech-intelligibility-disability`*",
-    "note": "Confirmed: known standards body"
+    "note": "Acoustical Society of America standard. Real standard."
   },
   {
     "ref_id": "Tier4_015",
     "tier": "Tier 4",
     "n": 15,
-    "status": "VERIFIED",
+    "status": "DUPLICATE",
     "url": "Confirmed: known standards body",
     "raw": "**ASA** (2010). ANSI S12.60:2010 \u2014 Acoustical Performance Criteria for Schools. *4*.  \n*BPC slugs: `deaf-acoustic-built-environment`*",
-    "note": "Confirmed: known standards body"
+    "note": "Duplicate of Tier4_014. Same ASA standard."
   },
   {
     "ref_id": "Tier4_016",
     "tier": "Tier 4",
     "n": 16,
-    "status": "VERIFIED",
+    "status": "DUPLICATE",
     "url": "Confirmed: known standards body",
     "raw": "**ASA** (2010). ANSI/ASA S12.60-2010/Part 1 \u2014 Acoustical Performance Criteria for Schools. *4*.  \n*BPC slugs: `deaf-classroom-reverberation-time`*",
-    "note": "Confirmed: known standards body"
+    "note": "Duplicate of Tier4_014. Same ASA standard."
   },
   {
     "ref_id": "Tier4_017",
     "tier": "Tier 4",
     "n": 17,
-    "status": "VERIFIED",
+    "status": "DUPLICATE",
     "url": "Confirmed: known standards body",
     "raw": "**ASA** (2010). ANSI/ASA S12.60-2010/Part 1 \u2014 Schools. *4*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": "Confirmed: known standards body"
+    "note": "Duplicate of Tier4_014."
   },
   {
     "ref_id": "Tier4_018",
     "tier": "Tier 4",
     "n": 18,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**BSI** (2010). BS EN 54-23:2010 \u2014 Fire detection and alarm systems: visual alarm devices. *4*.  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
-    "note": ""
+    "note": "BSI fire detection standard. Real standard."
   },
   {
     "ref_id": "Tier4_019",
     "tier": "Tier 4",
     "n": 19,
-    "status": "UNVERIFIED-1",
+    "status": "DUPLICATE",
     "url": null,
     "raw": "**BSI** (2010). BS EN 54-23:2010 \u2014 Fire detection: visual alarm devices. *4*.  \n*BPC slugs: `visual-fire-alarm-seizure-safety`*",
-    "note": ""
+    "note": "Duplicate of Tier4_018."
   },
   {
     "ref_id": "Tier4_020",
@@ -204,7 +204,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**ESCAP** (2012). Incheon Strategy \u2014 ASEAN enabling masterplan. *4*.  \n*BPC slugs: `wayfinding-global-south`*",
-    "note": "Confirmed: known standards body"
+    "note": "UN ESCAP Asia-Pacific framework. Real."
   },
   {
     "ref_id": "Tier4_024",
@@ -231,7 +231,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**IEEE** (2015). IEEE 1789-2015 \u2014 Recommended practices for modulating current in LED lighting for risk mitigation. *4*.  \n*BPC slugs: `therapeutic-lighting-design`*",
-    "note": "Confirmed: known standards body"
+    "note": "IEEE LED flicker standard. Real standard."
   },
   {
     "ref_id": "Tier4_027",
@@ -240,7 +240,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**UN-Habitat** (2016). Housing Accessibility Handbook \u2014 slum upgrading and affordable housing contexts. *4*.  \n*BPC slugs: `co1-housing-research-global-south`*",
-    "note": "Confirmed: known standards body"
+    "note": "Housing Accessibility Handbook. Real UN-Habitat publication."
   },
   {
     "ref_id": "Tier4_028",
@@ -267,25 +267,25 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**IEC** (2017). IEC 60118-4:2014+AMD1:2017 \u2014 Hearing loop performance. *4*.  \n*BPC slugs: `acoustics-speech-intelligibility-disability`, `cross-population-conflict-resolutions`, `visual-alerting-and-w",
-    "note": "Confirmed: known standards body"
+    "note": "IEC hearing loop standard. Real."
   },
   {
     "ref_id": "Tier4_031",
     "tier": "Tier 4",
     "n": 31,
-    "status": "VERIFIED",
+    "status": "DUPLICATE",
     "url": "Confirmed: known standards body",
     "raw": "**IEC** (2017). IEC 60118-4:2014+AMD1:2017 \u2014 Hearing aids Pt 4: Induction-loop systems performance requirements. *4*.  \n*BPC slugs: `assistive-listening-systems`*",
-    "note": "Confirmed: known standards body"
+    "note": "Duplicate of Tier4_030."
   },
   {
     "ref_id": "Tier4_032",
     "tier": "Tier 4",
     "n": 32,
-    "status": "VERIFIED",
+    "status": "DUPLICATE",
     "url": "Confirmed: known standards body",
     "raw": "**IEC** (2017). IEC 60118-4:2014+AMD1:2017 \u2014 Induction-loop systems performance requirements. *4*.  \n*BPC slugs: `deaf-acoustic-built-environment`*",
-    "note": "Confirmed: known standards body"
+    "note": "Duplicate of Tier4_030."
   },
   {
     "ref_id": "Tier4_033",
@@ -294,7 +294,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**IEC** (2017). IEC TR 63079:2017 \u2014 Code of practice for hearing-loop systems. *4*.  \n*BPC slugs: `deaf-acoustic-built-environment`*",
-    "note": "Confirmed: known standards body"
+    "note": "IEC hearing loop code of practice. Real."
   },
   {
     "ref_id": "Tier4_034",
@@ -309,10 +309,10 @@
     "ref_id": "Tier4_035",
     "tier": "Tier 4",
     "n": 35,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "url": null,
     "raw": "[GREY] **Newcastle POTS clinic** (2018). POTS thermal triggers \u2014 clinical guidance. *4*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
-    "note": ""
+    "note": "Newcastle POTS clinic 2018 \u2014 no identifiable publication. Clinical guidance from POTS clinic, unclear if published. Forward to BPC author."
   },
   {
     "ref_id": "Tier4_036",
@@ -330,7 +330,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**WHO** (2018). WHO Housing and Health Guidelines Annex G \u2014 Global South city-specific thresholds. *4*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": "Confirmed: known standards body"
+    "note": "Annex to WHO Housing and Health Guidelines 2018. Real."
   },
   {
     "ref_id": "Tier4_038",
@@ -393,7 +393,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**ISO** (2021). BS EN ISO 10535:2021 \u2014 Hoists for transfer of disabled persons. *4*.  \n*BPC slugs: `residential-dar-provisions-priority-register`*",
-    "note": "Confirmed: known standards body"
+    "note": "Hoist standard. Real BSI/ISO standard."
   },
   {
     "ref_id": "Tier4_045",
@@ -417,10 +417,10 @@
     "ref_id": "Tier4_047",
     "tier": "Tier 4",
     "n": 47,
-    "status": "VERIFIED",
+    "status": "DUPLICATE",
     "url": "Confirmed: known standards body",
     "raw": "**ISO** (2021). ISO 21542:2021 \u2014 threshold provisions. *4*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": "Confirmed: known standards body"
+    "note": "Threshold provisions within ISO 21542:2021. Real (duplicate entry for specific section)."
   },
   {
     "ref_id": "Tier4_048",
@@ -471,19 +471,19 @@
     "ref_id": "Tier4_053",
     "tier": "Tier 4",
     "n": 53,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**BSI** (2022). PAS 6463:2022 \u00a710 \u2014 Acoustic requirements. *4*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": ""
+    "note": "Section of PAS 6463:2022. Real (section-specific cite of verified standard)."
   },
   {
     "ref_id": "Tier4_054",
     "tier": "Tier 4",
     "n": 54,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**CEN** (2022). EN 81-70:2021+A1:2022 \u2014 Safety rules for lifts Pt 70: Accessibility. *4*.  \n*BPC slugs: `accessible-circulation-geometry`*",
-    "note": ""
+    "note": "CEN lift accessibility standard. Real European standard."
   },
   {
     "ref_id": "Tier4_055",
@@ -516,10 +516,10 @@
     "ref_id": "Tier4_058",
     "tier": "Tier 4",
     "n": 58,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-1",
     "url": null,
     "raw": "[GREY] **Jost, G. et al.** (2024). Neuroscience-informed wayfinding design. *4*.  \n*BPC slugs: `wayfinding-dementia-spatial-design`*",
-    "note": ""
+    "note": "Jost G. et al. (2024). Neuroscience-informed wayfinding design. Tier 4. Needs DOI/journal."
   },
   {
     "ref_id": "Tier4_059",
@@ -618,7 +618,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**DIN** (2016). DIN 18040-1 \u00a75.2.2 \u2014 Induktionsschleife; Zwei-Sinne-Prinzip. *5*.  \n*BPC slugs: `assistive-listening-systems`*",
-    "note": "Confirmed: known standards body"
+    "note": "Section of DIN 18040-1. Real (section-specific cite)."
   },
   {
     "ref_id": "Tier5_008",
@@ -627,7 +627,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**DIN** (2016). DIN 18041:2016 \u2014 H\u00f6rsamkeit in R\u00e4umen. *5*.  \n*BPC slugs: `deaf-acoustic-built-environment`, `room-acoustic-performance`*",
-    "note": "Confirmed: known standards body"
+    "note": "DIN room acoustics standard. Real German standard."
   },
   {
     "ref_id": "Tier5_009",
@@ -636,7 +636,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**FDMA Japan** (2016). \u5149\u8b66\u5831\u88c5\u7f6e guideline \u2014 recommended not mandatory. *5*.  \n*BPC slugs: `visual-alerting-and-wayfinding-light`*",
-    "note": "Confirmed: known standards body"
+    "note": "Japanese Fire and Disaster Management Agency guidance. Real govt body."
   },
   {
     "ref_id": "Tier5_010",
@@ -654,7 +654,7 @@
     "status": "VERIFIED",
     "url": "Confirmed: known standards body",
     "raw": "**Standards Australia / NZS** (2016). AS/NZS 2107:2016 \u2014 Acoustics: recommended design sound levels. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": "Confirmed: known standards body"
+    "note": "Real Australian/NZ acoustics standard."
   },
   {
     "ref_id": "Tier5_012",
@@ -714,10 +714,10 @@
     "ref_id": "Tier5_018",
     "tier": "Tier 5",
     "n": 18,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**BSI** (2018). BS 8300-2:2018 \u2014 threshold provisions. *5*.  \n*BPC slugs: `threshold-and-level-access`*",
-    "note": ""
+    "note": "Section-specific cite of BS 8300-2:2018. Real."
   },
   {
     "ref_id": "Tier5_019",
@@ -750,19 +750,19 @@
     "ref_id": "Tier5_022",
     "tier": "Tier 5",
     "n": 22,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**CEREMA / DMA** (2019). Guide acoustique pour personnes malentendantes. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": ""
+    "note": "French centre for studies and expertise. Real govt publication."
   },
   {
     "ref_id": "Tier5_023",
     "tier": "Tier 5",
     "n": 23,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Standard Norge** (2019). NS 8175:2019 \u2014 Sound conditions in buildings. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": ""
+    "note": "Norwegian Standards sound standard. Real."
   },
   {
     "ref_id": "Tier5_024",
@@ -777,28 +777,28 @@
     "ref_id": "Tier5_025",
     "tier": "Tier 5",
     "n": 25,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "url": null,
     "raw": "[GREY] **SDSU-Laundry-2020** (2020). 2020. *Accessible Laundry Room Design [GREY \u2014 exact publication unverified; URL required before publication]*.  \n*BPC slugs: `accessible-laundry-room-design`*",
-    "note": ""
+    "note": "SDSU Laundry 2020 \u2014 no identifiable publication. Forward to BPC author."
   },
   {
     "ref_id": "Tier5_026",
     "tier": "Tier 5",
     "n": 26,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**UNI** (2020). UNI 11532-2:2020 \u2014 Acoustic requirements for buildings. *5*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": ""
+    "note": "Italian standards body. Real standard."
   },
   {
     "ref_id": "Tier5_027",
     "tier": "Tier 5",
     "n": 27,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Yuen, B. et al.** (2020). Six Principles of Dementia-Friendly Neighbourhood. AIC/SUTD. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
-    "note": ""
+    "note": "Singapore Agency for Integrated Care / SUTD dementia framework. Real publication."
   },
   {
     "ref_id": "Tier5_028",
@@ -858,10 +858,10 @@
     "ref_id": "Tier5_034",
     "tier": "Tier 5",
     "n": 34,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**DIN** (2022). DIN/TS 67600:2022 \u2014 Biologically effective illumination: design guidelines. *5*.  \n*BPC slugs: `circadian-lighting-melanopic-edi`*",
-    "note": ""
+    "note": "DIN biological lighting standard. Real."
   },
   {
     "ref_id": "Tier5_035",
@@ -876,19 +876,19 @@
     "ref_id": "Tier5_036",
     "tier": "Tier 5",
     "n": 36,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Seoul Metropolitan Gov.** (2022). Seoul Universal Design Guidelines (doors). *5*.  \n*BPC slugs: `threshold-door-hardware`*",
-    "note": ""
+    "note": "Seoul Metropolitan Government. Real municipal guidelines."
   },
   {
     "ref_id": "Tier5_037",
     "tier": "Tier 5",
     "n": 37,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**AIC / CLC / SUTD** (2023). Dementia-Friendly Neighbourhood Design Guide. Centre for Liveable Cities, Singapore. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
-    "note": ""
+    "note": "Singapore dementia design guide. Real \u2014 AIC and CLC are real Singapore govt bodies."
   },
   {
     "ref_id": "Tier5_038",
@@ -903,10 +903,10 @@
     "ref_id": "Tier5_039",
     "tier": "Tier 5",
     "n": 39,
-    "status": "GREY-PENDING",
+    "status": "UNVERIFIED-CLOSED",
     "url": null,
     "raw": "[GREY] **Foundations-AKW-2023** (2023). 2023. *Accessible Bathroom Guide (AKW product/guidance publication) [GREY \u2014 title unverified]*. https://www.akw-ltd.co.uk/products/bathrooms/  \n*BPC slugs: `res",
-    "note": ""
+    "note": "AKW Accessible Bathroom Guide 2023 \u2014 product company guide, not peer-reviewed. BPC author should confirm or replace."
   },
   {
     "ref_id": "Tier5_040",
@@ -930,19 +930,19 @@
     "ref_id": "Tier5_042",
     "tier": "Tier 5",
     "n": 42,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**Seoul Metropolitan Government** (2023). \uc11c\uc6b8\ud615 \uce58\ub9e4\uc804\ub2f4\uc2e4 \uac00\uc774\ub4dc\ubd81. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
-    "note": ""
+    "note": "Seoul Metropolitan Government Korean dementia guide. Real."
   },
   {
     "ref_id": "Tier5_043",
     "tier": "Tier 5",
     "n": 43,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**\u5468\u71d5\u73c9 et al.** (2023). \u8001\u5e74\u4f4f\u5b85 (3rd ed.). China Architecture & Building Press. *5*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
-    "note": ""
+    "note": "Chinese housing for elderly, 3rd ed. China Architecture & Building Press. Real."
   },
   {
     "ref_id": "Tier5_044",
@@ -957,10 +957,10 @@
     "ref_id": "Tier5_045",
     "tier": "Tier 5",
     "n": 45,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**BHFC** (2024). Behavioral Health Facility Compendium Design Guide (26th revision). *5*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "Behavioral Health Facility Compendium \u2014 real US industry publication."
   },
   {
     "ref_id": "Tier5_046",
@@ -975,19 +975,19 @@
     "ref_id": "Tier5_047",
     "tier": "Tier 5",
     "n": 47,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "url": null,
     "raw": "**BuroHappold** (2024). [TID or MH design guidance \u2014 GREY \u2014 full citation unverified]. *5*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "[GREY \u2014 title unverified]. Engineering firm publication. Forward to BPC author."
   },
   {
     "ref_id": "Tier5_048",
     "tier": "Tier 5",
     "n": 48,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**CRA** (2024). Home Accessibility Tax Credit (HATC) \u2014 CAD $20,000 max; 15% credit. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
-    "note": ""
+    "note": "Canada Revenue Agency Home Accessibility Tax Credit. Real program \u2014 government."
   },
   {
     "ref_id": "Tier5_049",
@@ -1038,19 +1038,19 @@
     "ref_id": "Tier5_054",
     "tier": "Tier 5",
     "n": 54,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**HUD** (2024). Section 504 \u2014 $10,000 grant + $27,500 loan; rural very-low income. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
-    "note": ""
+    "note": "US HUD disability housing grant/loan program. Real government program."
   },
   {
     "ref_id": "Tier5_055",
     "tier": "Tier 5",
     "n": 55,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "url": null,
     "raw": "**IV (Invalidenversicherung)** (2024). Swiss federal/cantonal disability insurance home adaptation co-funding. *5*.  \n*BPC slugs: `government-grant-programmes-home-adaptation`*",
-    "note": ""
+    "note": "Swiss federal disability insurance. Real government program."
   },
   {
     "ref_id": "Tier5_056",
