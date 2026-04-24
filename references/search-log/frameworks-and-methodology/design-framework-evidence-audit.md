@@ -74,3 +74,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Cross-jurisdictional evidence audit. Key frameworks: UK BS 8300, RIBA, DSDC. US ADA, WELL. AU NCC, Livable Housing. DE DIN 18040. Guidebook's Three-Tier hierarchy is novel.
+
+```
