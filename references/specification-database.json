@@ -32,8 +32,8 @@
       "communication-and-alerts/deaf-spatial-design"
     ],
     "note": "Batch 1 (5 files): automated regex extraction. Batch 2 (20 files): structured Sonnet reading pass. All entries require Opus synthesis pass for recommendation_strength. item_code assignments for cross-cutting slugs marked [CROSS-CUTTING] or [UNASSIGNED] pending ISW cross-reference validation. Qualitative specs (value_min/max None) record parameter existence without quantified threshold.",
-    "last_jurisdiction_update": "2026-04-23",
-    "jurisdiction_coverage": "Phase 4 — 46 jurisdictions mapped"
+    "last_jurisdiction_update": "2026-04-24",
+    "jurisdiction_coverage": "Phase 4 COMPLETE — 73/73 records with jurisdiction data"
   },
   "specifications": [
     {
@@ -164,9 +164,16 @@
         "OFS",
         "PAIN"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "jurisdictions_supporting": [
+        "DE",
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "DE/UK/AU 850-1100mm range; US 864-1219mm wider",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -193,9 +200,16 @@
         "OFS",
         "PAIN"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "jurisdictions_supporting": [
+        "DE",
+        "UK",
+        "AU",
+        "ISO"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "US max 1219mm (48\"); DE/UK max 1050-1100mm",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -222,9 +236,14 @@
         "OFS",
         "PAIN"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "jurisdictions_supporting": [
+        "AU",
+        "US"
+      ],
+      "jurisdictions_divergent": [
+        "UK"
+      ],
+      "divergence_note": "AU 20N, US 22N (interior); UK 30N; DE 25N",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -250,9 +269,15 @@
         "OFS",
         "PAIN"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "jurisdictions_supporting": [
+        "AU",
+        "US",
+        "DE"
+      ],
+      "jurisdictions_divergent": [
+        "UK"
+      ],
+      "divergence_note": "UK 30N is highest; 50N is exterior/fire door threshold",
       "opus_synthesized": false,
       "bpc_source_slug": "threshold-door-hardware",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -347,9 +372,16 @@
         "VIS",
         "DEM"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "jurisdictions_supporting": [
+        "EU",
+        "DE",
+        "UK",
+        "AU"
+      ],
+      "jurisdictions_divergent": [
+        "US"
+      ],
+      "divergence_note": "EN 81-70 Type 2 1100x1400mm; US varies by config",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -477,9 +509,15 @@
         "VIS",
         "DEM"
       ],
-      "jurisdictions_supporting": [],
-      "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "jurisdictions_supporting": [
+        "DE",
+        "NL"
+      ],
+      "jurisdictions_divergent": [
+        "US",
+        "UK"
+      ],
+      "divergence_note": "DE 1500mm min corridor; UK 1200mm; US 915mm ADA",
       "opus_synthesized": false,
       "bpc_source_slug": "accessible-circulation-geometry",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -503,9 +541,11 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "DSDC (UK) dementia lighting guidance; no code mandates",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -528,9 +568,12 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "DSDC 300 lux min; AU dementia design guidelines similar",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -553,9 +596,11 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "DSDC 500 lux task; clinical recommendation, not code",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -578,9 +623,12 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "UK DSDC + AU dementia design; floor plan is clinical finding",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -603,9 +651,11 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "Literature finding (43% appearance/familiarity); UK DSDC aligns",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -628,9 +678,12 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "Literature finding; UK DSDC + AU dementia guidelines",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
@@ -653,9 +706,12 @@
       "populations": [
         "DEM"
       ],
-      "jurisdictions_supporting": [],
+      "jurisdictions_supporting": [
+        "UK",
+        "AU"
+      ],
       "jurisdictions_divergent": [],
-      "divergence_note": "",
+      "divergence_note": "Same source as SPEC-0020; 58 studies confirm",
       "opus_synthesized": false,
       "bpc_source_slug": "dementia-built-environment",
       "recommendation_strength": "[UNSET — Opus review required]",
