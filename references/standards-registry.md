@@ -942,3 +942,87 @@ key_changes: "Supersedes SABS 0400:1990 and SABS 0246:1993. 51 pages (up from 5 
 last_checked: "2026-04-23 05:45"
 source_url: "https://sans10400.org.za/en/facilities-for-disabled-people/"
 ```
+
+
+---
+<!-- Phase 1C continued — Tier A jurisdictions (MX, CL, CR, ID, BD, NG, PH, EG) — 2026-04-23 -->
+
+```yaml
+jurisdiction: "MX"
+standard_cited: "NMX-R-050-SCFI-2006"
+current_version: "NMX-R-050-SCFI-2006 (voluntary Mexican standard). NMX-R-050-SCFI-2016 update available via ONNCCE. Federal Acuerdo Jan 2022 mandates accessibility criteria for federal government buildings referencing NMX-R-050."
+status: "CURRENT"
+key_changes: "Voluntary standard (Norma Mexicana, not Norma Oficial Mexicana) for accessibility of persons with disabilities in public service spaces. Covers ramps, corridors, signage, accessible toilets. Jan 2022 federal decree (INDAABIN) mandates accessibility for federal public buildings. Also: NOM-008-SEGOB-2015 covers civil protection for PwD. Ley General para la Inclusión de las Personas con Discapacidad provides overarching framework."
+last_checked: "2026-04-23 06:15"
+source_url: "https://onncce.org.mx/?view=article&id=901&catid=84"
+```
+
+```yaml
+jurisdiction: "CL"
+standard_cited: "DS 50/2015 (OGUC modification)"
+current_version: "Decreto Supremo 50/2015 (published Diario Oficial 4 March 2016). Modified by DS 30/2023 (published May 2023). Implements Ley 20.422 (2010) accessibility requirements in Ordenanza General de Urbanismo y Construcciones (OGUC)."
+status: "UPDATED"
+key_changes: "Mandatory universal accessibility for public buildings and public space. DS 30/2023 is latest modification. Existing public buildings had until March 2019 to comply. Municipal building directorates may audit post-occupancy. Illustrated OGUC guide published by Corporación Ciudad Accesible."
+last_checked: "2026-04-23 06:15"
+source_url: "https://www.ciudadaccesible.cl/oguc-ilustrada-accesibilidad/"
+```
+
+```yaml
+jurisdiction: "CR"
+standard_cited: "Ley 7600 (1996) + Reglamento D 26831"
+current_version: "Ley 7600 Ley de Igualdad de Oportunidades para las Personas con Discapacidad (1996). Reglamento D 26831. Amended by Act 9207 (Feb 2014) aligning definitions with CRPD. INTECO technical standards complement."
+status: "CURRENT"
+key_changes: "Mandatory accessibility for public and private buildings serving the public. 10-year compliance deadline for existing buildings (from 1996). 2014 amendment aligned disability definition and accessibility concept with CRPD. CONAPDIS (national disability council) oversees implementation. Sanctions for non-compliance include fines and mandatory retrofitting at constructor's expense."
+last_checked: "2026-04-23 06:15"
+source_url: "https://conapdis.go.cr/download/ley-7600-y-su-reglamento/"
+```
+
+```yaml
+jurisdiction: "ID"
+standard_cited: "Permen PUPR No. 14/PRT/M/2017"
+current_version: "Peraturan Menteri Pekerjaan Umum dan Perumahan Rakyat No. 14/PRT/M/2017 — Persyaratan Kemudahan Bangunan Gedung (Building Ease Requirements). Gazetted 21 Aug 2017."
+status: "CURRENT"
+key_changes: "Replaces Permen PUPR 30/2006. Universal design principles mandated. Covers accessible routes, corridors (min 1400mm), ramps, lifts, toilets, signage. Both mandatory and recommended requirements (matrix-based). Legal basis: UU 28/2002 (Building Law), UU 8/2016 (Disability Law), UU 19/2011 (CRPD ratification). 2024 Jakarta study found 50-83% compliance across public facilities."
+last_checked: "2026-04-23 06:15"
+source_url: "https://peraturan.bpk.go.id/Details/104477/permen-pupr-no-14prtm2017-tahun-2017"
+```
+
+```yaml
+jurisdiction: "BD"
+standard_cited: "Bangladesh National Building Code (BNBC) 2020"
+current_version: "BNBC 2020 — accessibility provisions included. Details of accessibility chapter scope require verification from full text."
+status: "CURRENT"
+key_changes: "Updated from BNBC 2006. Accessibility provisions present but scope and technical detail require verification. Bangladesh ratified CRPD in 2007. Persons with Disabilities Rights and Protection Act 2013 provides legal framework. THIN — detailed technical specifications not verified from available sources."
+last_checked: "2026-04-23 06:15"
+source_url: "https://maftabur.weebly.com/uploads/1/0/6/0/10606953/5._bnbc_2020.pdf"
+```
+
+```yaml
+jurisdiction: "NG"
+standard_cited: "National Building Code 2006 + Disability Act 2018"
+current_version: "National Building Code (NBC) 2006 Section 4.8 (building classification; limited accessibility provisions). Discrimination Against Persons with Disabilities (Prohibition) Act 2018/2019. Person with Disability (Accessibility) Regulations 2023."
+status: "CURRENT"
+key_changes: "NBC 2006 accessibility provisions described as 'vague and inadequate' in peer-reviewed literature. 2018 Act mandates accessible public buildings (ramps, lifts, signage, accessible toilets); 5-year grace period for retrofitting (expired). 2023 Accessibility Regulations gazetted — provide specifications for built environment. Implementation extremely poor: only ~2% of buildings accessible as of 2026. National Commission for Persons with Disabilities established."
+last_checked: "2026-04-23 06:15"
+source_url: "https://disabilityin.org/country/nigeria/"
+```
+
+```yaml
+jurisdiction: "PH"
+standard_cited: "Batas Pambansa Blg. 344 (BP 344)"
+current_version: "BP 344 Accessibility Law (1982). IRR revised 2024 (2024 Revised Implementing Rules and Regulations). Also: RA 7277 Magna Carta for Persons with Disability (as amended by RA 9442 and RA 10754). PD 1096 National Building Code integrates BP 344 compliance."
+status: "UPDATED"
+key_changes: "2024 Revised IRR is a major update: accessible routes min 100 lux illumination; tactile blocks; 1800×1800mm roll-in shower; strobe light alarms in accessible toilets; detectable tapping rail at 400-580mm; updated elevator requirements. IRR review cycle now every 2 years. Jointly promulgated by DPWH and DOTr. Enforcement via building permit and Certificate of Occupancy."
+last_checked: "2026-04-23 06:15"
+source_url: "https://ncda.gov.ph/revised-2024-rules-and-regulations-implementing-batas-pambansa-344/"
+```
+
+```yaml
+jurisdiction: "EG"
+standard_cited: "Egyptian Building Code (accessibility chapter)"
+current_version: "THIN — no standalone accessibility building standard identified. Egyptian Code for Architectural Works includes accessibility provisions but detailed scope not verified from available sources."
+status: "CURRENT"
+key_changes: "Egypt ratified CRPD in 2008. Law 10/2018 on Persons with Disabilities includes built environment accessibility provisions. Egyptian Code for Architectural Works (last major revision ~2009) contains accessibility requirements in specific chapters. Detailed technical specifications require verification from full code text. THIN BASE."
+last_checked: "2026-04-23 06:15"
+source_url: ""
+```
