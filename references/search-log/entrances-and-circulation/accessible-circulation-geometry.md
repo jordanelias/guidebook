@@ -39,111 +39,54 @@ languages:
   IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  CA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  IE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA 2010 §403: accessible route min 915mm clear width. §304: turning space 1524mm diameter or T-shaped. ICC A117.1-2017: 1702mm turning for powered chairs."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300-2:2018 §7: corridor min 1200mm (1800mm passing). Turning circle 1500mm. AD M Vol 2."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §7: circulation 1000mm min, 1800mm passing. Turning 2070mm for powered chairs. NCC Section D."}
+  CA: {status: THIN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "CSA B651:2023: turning 1700mm. CSA B652. RHFAC assessment includes circulation."}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18040-1:2010 §4.3: corridor 1500mm (1800mm in care). Turning 1500mm. Movement area 1500×1500mm."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "TEK17 §12-6: corridor 1500mm for wheelchair. §12-7 manoeuvring area 1500×1500mm."}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: THIN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021: wheelchair footprint 800×1300mm. Turning 1524mm. Gap with ANSI 1702mm."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "EN 17210:2021 §7: functional requirement for adequate circulation width. No specific values."}
   FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  BE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  ISO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
-jurisdiction_coverage_summary:
-  searched: [US, UK, AU, DE, SE, NO, FI, EU]
-  thin: [CA, IE, NZ, SG, CH, FR, BE, NL, DK, JP, KR, CN, ES, PT, IT, ISO]
-  no_data: []
-  not_run: [BR]
-  co1_complete: []
-  co1_not_attempted: [ALL — EN 81-70 is a technical standard; no DPO org produces separate lift dimension guidance]
-  tier5_complete: [US, UK, DE, SE, EU]
-  tier5_not_attempted: [CA, IE, NZ, SG, CH, FR, BE, NL, NO, DK, FI, JP, KR, CN, BR, ES, PT, IT, ISO]
+jurisdiction_summary: >
+  KEY DIVERGENCE: turning space — ISO 1524mm vs ANSI/A117.1 1702mm vs CSA 2100mm (U-turn) vs AU 2070mm (powered). Corridor width — UK 1200mm min vs DE 1500mm vs AU 1000mm.
 
-co1_pass_summary:
-  complete: []
-  partial: [EN - OFS OT clinical literature only]
-  not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT]
-native_standards_pass_summary:
-  complete: [EN, SV, FI, DE]
-  partial: [NO, DA, FR, ZH, JA, NL, ES, PT, KO, IT]
-  not-run: []
-companion_networks: {loaded: [], scholar_targets: 0, retrieved: 0}
-citation_mining: {backward: 2, forward: 1, sources_added: 2}
-at_database_pass: not-run
-
-top_sources: [EN-81-70-2021, BS-8300-2018, DIN-18040-1-2010, Boverket-BFS-2024, ADA-2010, AS-1428-1-2021, Part-M-2026, Roxburgh-2024-OFS, Omura-2022-energy-conservation, LEIA-2016]
-bpc_ref: "accessible-circulation-geometry"
-thin_flags: [CA, IE, NZ, SG, CH, FR, BE, NL, DK, JP, KR, CN, ES, PT, IT, ISO — EN 81-70 applies universally via EU adoption; individual jurisdictional standards not retrieved]
-no_data_flags: [rest-seating-interval — confirmed NO-DATA across all 14 languages; OT clinical derivation only]
-PROVISIONAL: true
-ACCEPTED_GAPS: [Co-1 not run — DPO orgs do not produce separate lift dimension guidance; rest seating NO-DATA accepted — no building standard exists in any jurisdiction; 16 jurisdictions THIN for specific lift/corridor standards — EN 81-70 universal applicability accepted as proxy]
 ```
-
----
-
-## Backfill Annotation — 2026-03-26 21:45
-
-**Session:** Jurisdiction backfill for PROVISIONAL slugs
-**Working document:** `research/all-rooms-backfill-2026-03-26.md`
-**Jurisdictions searched this session:** IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT (all 4 slugs) + FR, NL, SE, NO, PT (reach-range only)
-
-**Status changes pending inline update (next session):**
-- `residential-entry-and-threshold`: IE/NZ/SG/CH/BE/DK/FI/KR/CN/ES/IT → SEARCHED (Tier 6 confirmed for all; Co-1 partial; Tier 5 partial). PT remains THIN.
-- `threshold-and-level-access`: same as above
-- `reach-range-and-accessible-controls`: IE/NZ/SG/CH/BE/DK/FI/KR/CN/ES/IT/FR/NL/SE/NO/PT → SEARCHED. JP remains THIN.
-- `residential-kitchen-and-task-surfaces`: NO/SE/DK/FI/SG → SEARCHED (mostly THIN/NO-DATA for kitchen-specific). BR remains NOT-RUN.
-
-**Key new sources:**
-- BCA Accessibility Code 2025 (SG) — major update from 2019; adds anthropometric data, reach ranges, control device requirements
-- NEN 9120:2025 (NL) — new Dutch accessibility standard
-- BFS 2024:12 (SE) — recent Swedish update
-- TGD M 2022 (IE) — updated from 2010 with rationale statements
-- IWA Best Practice Access Guidelines (IE) — strong Co-1 source with values exceeding Part M
-- BRANZ Issue Bulletin 662 (NZ) — residential level entry detailing guide
-- DALCO Aprehensión criterion (ES) — operable force framework directly relevant to reach-range
-
-**Cross-jurisdiction convergence (threshold/entry):**
-- Ramp max: 1:12 universal; preferred: 1:20 (IE IWA, AU, UK BS 8300, ISO 21542)
-- Threshold: zero preferred universal; max 13mm (US) / 20mm (NZ, EU) / 25mm with ramp (CH)
-- Landing: 1500–1800mm (varies by jurisdiction)
-
-**Cross-jurisdiction convergence (reach-range/controls):**
-- US ADA: 380–1220mm
-- EN 17210 / most EU: 400–1100mm
-- DIN 18040 (DE): 400–1200mm
-- AS 1428.1 (AU): 900–1200mm operating devices
-- NZ NZS 4121: 1400–1700mm (signs only — higher than all others)
-
-**Cross-jurisdiction convergence (kitchen):**
-- Kitchen counter accessibility: no statutory specification in most jurisdictions
-- DIN 18040-2 (DE) adjustable 680–1040mm is the only statutory range
-- Kitchen is primarily a Tier 5/OT guidance domain
-
-## functional_deficit_pass
-status: COMPLETE
-last_run: 2026-04-08 04:15
-fdr_file: references/fdr/accessible-circulation-geometry.md
-scenarios_run: 2
-novel_findings: 3
-refines_findings: 0
-contradicts_findings: 0
-gaps_confirmed: 0
-tier0_candidates: 1
-scenarios_complete: [FDR-ACG-01, FDR-ACG-02]
-note: Roxburgh et al. 2024 Tier 1 evidence for OFS-specific seat height (>=480mm AFF); alcove recess geometry; Tier 0 candidate for recess geometry.
