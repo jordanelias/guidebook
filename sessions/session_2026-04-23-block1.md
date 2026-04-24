@@ -701,3 +701,37 @@ next_action: >
   hearing loops, contrast, reach ranges).
 
 session_close: 2026-04-23 14:30
+
+
+## Block 5 — Tier 2 Verification (28/37) + Co-1 final
+
+Completed 2026-04-24 03:41.
+
+### Co-1 final (2 second searches resolved)
+- APF France 2020 Ifop/APF: VERIFIED (n=11,905, published Jan 2020)
+- NDTi/NHS 2022 CAMHS: VERIFIED ("It's Not Rocket Science", co-produced with autistic YP)
+- Co-1 FINAL: 22/25 resolved (19 VERIFIED + 1 WITH-CORRECTION + 2 UNVERIFIED-CLOSED + 3 UNVERIFIED-CLOSED carryover)
+
+### Tier 2 summary (37 entries)
+- 21 VERIFIED (including Habinteg 2025 resolved mid-session)
+- 3 VERIFIED-WITH-CORRECTION (Woodstock figure mismatch, Mostafa DOI wrong, Mostafa year wrong)
+- 3 DUPLICATES flagged for BPC consolidation
+- 1 CLOSED-DELETED (India Autism Center West Bengal — no source)
+- 9 UNVERIFIED-1 remaining (6 English-searchable, 3 non-English)
+
+### Key corrections generated
+- Mostafa 2021 BPC DOI incorrect — no Frontiers article at 10.3389/fpsyt.2021.727353
+- Mostafa 2023/2024 year wrong
+- Woodstock savings figure "$6,668" doesn't match report figures
+
+### Artefacts committed
+- `references/tier2-verified-sources.json` (SHA 8e7431cc2b4a)
+- `references/tier2-verification-report-2026-04-23.md`
+
+### Next actions
+1. Co-2 verification (18 OT Professional Body CPG entries)
+2. Tier 2 second searches (9 remaining: 6 English + 3 non-English)
+3. BPC correction pass (all Tier 1 + Co-1 + Tier 2 corrections)
+
+session_checkpoint: 2026-04-24 03:41
+next_action: Co-2 verification (18 entries)
