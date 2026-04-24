@@ -1209,13 +1209,17 @@
   {
     "ref_id": "T3-108",
     "n": 108,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "10.1177/20556683221092322",
     "pmid": null,
     "grey": false,
     "year": 2022,
     "raw": "**Misch, A. et al.** (2022). Whole-body vibration and wheelchair users. JRATE. *3*.  \n*BPC slugs: `floor-vibration-wheelchair-disability`*",
-    "note": "Misch A. et al. (2022). Whole-body vibration wheelchair users. J Rehabil Assist Technol Eng. Likely Misch & Sprigle 2022 JRATE. Needs DOI."
+    "note": "Misch A. et al. (2022). Whole-body vibration wheelchair users. J Rehabil Assist Technol Eng. Likely Misch & Sprigle 2022 JRATE. Needs DOI.",
+    "author": "Misch, J. & Sprigle, S.",
+    "title": "Estimating whole-body vibration limits of manual wheelchair mobility over common surfaces",
+    "journal": "J. Rehabil. Assist. Technol. Eng. 9:20556683221092322",
+    "correction_note": "Georgia Tech REAR Lab. 4 floor surfaces tested. Key finding: all tested surfaces well below WBV health risk thresholds."
   },
   {
     "ref_id": "T3-109",
@@ -1455,13 +1459,17 @@
   {
     "ref_id": "T3-130",
     "n": 130,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "10.1177/19375867221118675",
     "pmid": null,
     "grey": false,
     "year": 2023,
     "raw": "**Tekin, B. et al.** (2023). User group stratification in biophilic healthcare design. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`*",
-    "note": "Tekin, B. et al. (2023). User group stratification in biophilic healthcare design. Needs DOI."
+    "note": "Tekin, B. et al. (2023). User group stratification in biophilic healthcare design. Needs DOI.",
+    "author": "Tekin, B.H., Corcoran, R., & Urbano Gutiérrez, R.",
+    "title": "A Systematic Review and Conceptual Framework of Biophilic Design Parameters in Clinical Environments",
+    "journal": "HERD 16(1):233-250",
+    "correction_note": "PMID: 35996349. User group stratification: outpatients, inpatients, staff. University of Liverpool."
   },
   {
     "ref_id": "T3-131",
@@ -1532,13 +1540,17 @@
   {
     "ref_id": "T3-137",
     "n": 137,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "10.3389/fbuil.2024.1467692",
     "pmid": null,
     "grey": false,
     "year": 2024,
     "raw": "**Al Khatib, H. et al.** (2024). Biophilic design in healthcare: systematic review of 61 sources. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`*",
-    "note": "Al Khatib, H. et al. (2024). Biophilic design in healthcare: systematic review of 61 sources. Needs DOI."
+    "note": "Al Khatib, H. et al. (2024). Biophilic design in healthcare: systematic review of 61 sources. Needs DOI.",
+    "author": "Al Khatib, H. et al.",
+    "title": "A systematic review of the impact of therapeutical biophilic design",
+    "journal": "Frontiers in Built Environment",
+    "correction_note": "Systematic review of biophilic design in healthcare. Cites Tekin 2023 framework."
   },
   {
     "ref_id": "T3-138",
@@ -1599,13 +1611,17 @@
   {
     "ref_id": "T3-143",
     "n": 143,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "10.3390/vibration4020029",
     "pmid": null,
     "grey": false,
     "year": 2024,
     "raw": "**Larivière, O. et al.** (2024). Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng. *3*.  \n*BPC slugs: `floor-vibration-wheelchair-disability`*",
-    "note": "Larivière, O. et al. (2024). Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng. Needs DOI."
+    "note": "Larivière, O. et al. (2024). Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng. Needs DOI.",
+    "author": "Larivière, O., Chadefaux, D., Sauret, C., & Thoreux, P.",
+    "title": "Vibration Transmission during Manual Wheelchair Propulsion: A Systematic Review",
+    "journal": "Vibration 2021, 4, 444-481",
+    "correction_note": "BPC says 2024 — actual SR is 2021. Same group published 2023 MDPI paper on vibration response by floor type. Author year may need correction in BPC."
   },
   {
     "ref_id": "T3-144",
