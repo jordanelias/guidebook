@@ -929,3 +929,32 @@ Completed 2026-04-24 04:23.
 
 session_checkpoint: 2026-04-24 04:23
 next_action: Tier 3 GREY-PENDING searches (51 entries) — run targeted searches by domain
+
+
+## Block 17 — Phase 3B Extended (batches 4-6)
+
+### Part 4 jurisdiction comparison tables: 43 total
+
+New divergences catalogued:
+- Anti-scald temp: UK ≤44°C vs DE ≤43°C vs AU ≤45°C vs US ≤49°C (6°C spread)
+- Slip resistance: 4 different test methods (DCOF/PTV/R-value/ramp+pendulum)
+- Rest seating interval: US NONE vs UK ≤50m vs guidebook ≤20m
+- Ceiling hoist: UK ONLY mandatory
+- Video intercom: DE ONLY requires
+- Pattern avoidance: UK PAS 6463 ONLY standard
+- Lip-reading illuminance: NO code specifies
+- Individual env. control: NO code mandates
+- Weather canopy: guidebook 3000×2000mm exceeds all codes
+- Gloss units: NO code specifies max for floors
+- Captioning: NO code mandates real-time in assembly
+- Graduated acoustic zoning: NO code addresses
+
+### Gap Summary: Items where guidebook EXCEEDS ALL codes
+B-01 (circadian), B-02 (lip-reading light), B-06 (individual dimming),
+B-08 (matte floors), C-03 (pattern avoidance), D-10 (DeafSpace glazing),
+E-05 (weather canopy), E-10 (rest seating interval), F-07 (thermal zoning),
+H-02 (individual env. control), H-03 (captioning), I-04 (ceiling hoist scope)
+
+commits_block17: 3 commits (batches 4, 5, 6)
+
+session_close: 2026-04-23 17:30
