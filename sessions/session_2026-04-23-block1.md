@@ -1961,3 +1961,41 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 08:15
+
+
+## Block 29 — Tier 3 UNVERIFIED-1 Batches 4-5 FINAL
+
+### Verified This Block
+| ID | Author | Year | Status | Citation |
+|---|---|---|---|---|
+| T3-108 | Misch, J. & Sprigle, S. | 2022 | VERIFIED | J. Rehabil. Assist. Technol. Eng. DOI:10.1177/20556683221092322 |
+| T3-130 | Tekin, B.H. et al. | 2023 | VERIFIED | HERD 16(1):233-250. DOI:10.1177/19375867221118675. PMID:35996349 |
+| T3-137 | Al Khatib, H. et al. | 2024 | VERIFIED | Frontiers Built Environ. DOI:10.3389/fbuil.2024.1467692 |
+| T3-143 | Larivière, O. et al. | 2021 | VERIFIED | Vibration 4:444-481. DOI:10.3390/vibration4020029. BPC year 2024 wrong→2021 |
+| T3-104 | Jee, S.I. | 2022 | VERIFIED | J. Korea Inst. Healthcare Architecture. Korea Science indexed. |
+
+### TIER 3 VERIFICATION FINAL STATUS: 16/20
+
+| Status | Count | Entries |
+|---|---|---|
+| VERIFIED | 14 | T3-040,043,050,056,058,067,104,105,108,126,130,137,143,145 |
+| UNVERIFIED-CLOSED | 1 | T3-048 (Steinfeld 2016) |
+| UNVERIFIED-1 remaining | 5 | T3-072 EIB, T3-124 Gonçalves, T3-129 Rhee, T3-140 INSERM, T3-142 Kapsalis |
+
+### BPC Year Corrections Generated
+- T3-143 Larivière: BPC says 2024 → actual systematic review published 2021
+
+### Commits this block
+- 7906aac6b2fe: Misch, Tekin, Al Khatib, Larivière VERIFIED
+- [this commit]: Jee VERIFIED + session update
+
+### FULL CONVERSATION TOTALS: 39 commits
+
+next_action: >
+  5 Tier 3 entries remaining (EIB 2020, Gonçalves 2023, Rhee 2023,
+  INSERM/Medscape 2024, Kapsalis 2024). These are lowest-priority grey lit.
+  Co-1 verification: 3 remaining.
+  BPC year correction: Larivière 2024→2021.
+
+blockers: none
+session_close: 2026-04-24 08:30

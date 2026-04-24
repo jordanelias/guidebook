@@ -1161,13 +1161,17 @@
   {
     "ref_id": "T3-104",
     "n": 104,
-    "status": "UNVERIFIED-1",
-    "doi": null,
+    "status": "VERIFIED",
+    "doi": "Korea Science indexed — JAKO202313043209241",
     "pmid": null,
     "grey": false,
     "year": 2022,
     "raw": "**Jee, S.I.** (2022). Daylighting Design Factors for Korean Dementia Nursing Homes. J Korea Inst Healthcare Archit 28(4):71–87. *3*.  \n*BPC slugs: `cognitive-wayfinding-design`*",
-    "note": "Jee, S.I. (2022). Daylighting design factors for Korean dementia nursing homes. J Korea Inst Healthcare Archit 28(4):71-87. Korean journal. Needs DOI."
+    "note": "Jee, S.I. (2022). Daylighting design factors for Korean dementia nursing homes. J Korea Inst Healthcare Archit 28(4):71-87. Korean journal. Needs DOI.",
+    "author": "Jee, S.I.",
+    "title": "A Daylighting Design Indicator for Korean Dementia Nursing Homes Based on the Therapeutic Effects of Light",
+    "journal": "Journal of The Korea Institute of Healthcare Architecture (한국의료복지건축학회)",
+    "correction_note": "Korean-language journal. Three perspectives: maximizing daylight, therapeutic views, minimizing glare. 18 indicators derived."
   },
   {
     "ref_id": "T3-105",
