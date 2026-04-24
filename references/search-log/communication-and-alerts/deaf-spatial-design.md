@@ -126,3 +126,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Gallaudet DeafSpace (US) is primary framework — Bauman & Murray. Architectural provisions: transparency, visual connectivity, spatial awareness. No building code mandates DeafSpace principles. UK RNID guidance. AU Deaf Australia.
+
+```
