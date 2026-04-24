@@ -38,70 +38,61 @@ languages:
   IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  BE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
-  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true}
-  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  US: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "ADA 2010 §404: door thresholds ≤13mm (beveled). Fair Housing Act: zero-step entry or ramp. ICC A117.1 Type A/B/C units differ."}
+  UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "AD M Vol 1: M4(1) level/ramped approach. M4(2) level threshold. BS 8300-1 external approach. RCOT Housing Adaptations Without Delay. Habinteg/CAE Wheelchair Housing Design Guide."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "NCC 2022 Livable Housing: step-free entry, level thresholds for Class 1a+2. AS 1428.1 threshold ≤5mm. Summer Foundation guidance."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "CSA B651:2023. RHFAC. VisitAble Housing Canada advocacy. Provincial codes vary."}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18040-2:2011 §4.3.3: threshold ≤20mm. E DIN 18040-2:2023 draft: threshold reduced to ≤10mm (KEY CHANGE). ift Rosenheim research on weathering vs accessibility trade-off."}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "TEK17 §12-4: step-free access mandatory for dwellings. §12-16: threshold provisions. NS 11001 supplements. DiBK enforcement."}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BFS 2024:12 (ALM 2): step-free entry provisions. BBR mandatory accessibility."}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021 §14: door thresholds. General level access provisions."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "EN 17210:2021: functional requirement for step-free approaches."}
+  FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "Arrêté du 8 décembre 2014: residential accessibility. Threshold ≤20mm. 5% preferred ramp gradient."}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "SIA 500: hindernisfreier Zugang. BehiG framework."}
+  NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true, note: "Bbl art.4.182: residential threshold provisions. NEN 9120:2025: step-free design. Ieder(in) advocacy."}
+  DK: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "BR18: accessible entrance provisions for new dwellings."}
+  FI: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "MLIT バリアフリー法 誘導基準: level entry provisions for qualifying buildings."}
+  SG: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: true, note: "BCA Code: accessible entrance provisions."}
+  NZ: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
-jurisdiction_coverage_summary:
-  searched: [US, UK, CA, AU, DE, FR, NL, SE, NO, JP, BR, EU, ISO]
-  thin: [PT]
-  no_data: []
-  not_run: [IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT]
-  co1_complete: []
-  co1_not_attempted: [DE, FR, SE, NO, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
-  tier5_complete: [US, UK, CA, AU, NL, SE, NO]
-  tier5_not_attempted: [DE, FR, JP, BR, EU, ISO, IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT, PT]
+jurisdiction_summary: >
+  HIGH CONVERGENCE: all P1 jurisdictions require step-free or low-threshold entry for new accessible dwellings.
+  KEY DIVERGENCE: threshold height — AU ≤5mm, US ≤13mm, DE current ≤20mm (draft ≤10mm), FR ≤20mm.
+  DE DIN 18040-2 revision reducing threshold from 20mm to 10mm is the most significant pending change —
+  trade-off between weatherproofing seal performance and step-free access (ift Rosenheim research).
+  Best practice: ≤5mm (AU standard) with weather-sealed level threshold detailing.
 
-co1_pass_summary: {complete: [], partial: [EN, NL], not-run: [SV, NO, DA, FI, FR, DE, ZH, JA, ES, PT, KO, IT]}
-native_standards_pass_summary: {complete: [EN, SV, NO, FR, DE, JA, NL, PT], partial: [], not-run: [DA, FI, ZH, ES, KO, IT]}
-companion_networks: {loaded: [Habinteg/CAE, RCOTSS-Housing, RHFAC/RHF, Physical Disability Australia, DiBK Norway, Boverket Sweden, NEN Netherlands], scholar_targets: 3, retrieved: 7}
-citation_mining: {backward: 2, forward: 1, sources_added: 2}
-at_database_pass: not-run
 
-top_sources:
-  - Habinteg/CAE Inclusive Housing Design Guide 2024 (Runnalls & Walker, OT-authored, UK Tier 5)
-  - RCOT Adaptations Without Delay 2019 (UK, Tier 3/Co-2)
-  - Habinteg Wheelchair Housing Design Guide 3rd ed. 2018 (UK, Tier 5)
-  - RHFAC Rating Survey v4.0 January 2024 (CA, Tier 5)
-  - ADA 2010 §§302-405 (US, Tier 6)
-  - ADA 2010 §404 Entrances, Doors and Gates (US, Tier 6)
-  - DiBK TEK17 §12-4 §12-16 §1-3(m) (NO, Tier 6)
-  - DIN 18040-2 current + draft 2023 (DE, Tier 6+)
-  - Boverket BBR / BFS 2024:12 (SE, Tier 6)
-  - NBR 9050:2020 (BR, Tier 6)
-  - Arrêté 8 décembre 2014 (FR, Tier 6)
-  - NCC 2022 / Livable Housing Design Guidelines Silver (AU, Tier 5-6)
-  - AS 1428.1:2021 (AU, Tier 6)
-  - Bbl art.4.182 + NEN 9120:2025 (NL, Tier 5-6)
-  - MLIT Barrier-Free Law 誘導基準 (JP, Tier 6)
-  - ISO 21542:2021 (ISO, Tier 4)
-bpc_ref: "residential-entry-and-threshold"
-thin_flags: [PT]
-no_data_flags: []
-PROVISIONAL: true
-ACCEPTED_GAPS: [10 jurisdictions NOT-RUN (IE, NZ, SG, CH, BE, DK, FI, KR, CN, ES, IT); Co-1 complete 0/24; Tier 5 complete 7/24; native aliases missing DA/FI/ZH/KO/IT/ES]
 ```
 
 ```yaml
