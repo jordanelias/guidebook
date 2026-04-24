@@ -417,3 +417,24 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 
 **Action required:** Part 1: foundational principle. Part 5: process specification (CAPABLE structure). Cross-reference CON-0163 (OT at RFO).
 
+
+### CON-0188
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** mental-health-built-environment, neurodivergent-built-environment, dementia-built-environment
+**Target item(s):** Multiple (cross-cutting design framework)
+**Target population(s):** MH, NDV, DEM
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Owen & Crane 2022 (IJERPH 19:14279, PMID:36361166 — confirmed by citation-verifier, was misattributed as "Holohan 2022") provides a neuroscience-informed framework for trauma-informed design (TID) in supported housing. The neuroscience lens (threat/safety neural circuits, autonomic regulation, sensory processing) bridges three currently separate design traditions: MH trauma-informed design (control, safety, predictability), NDV sensory-responsive design (predictability, user control, reduced sensory load), and DEM dementia-friendly design (familiarity, predictability, legibility). The shared mechanism — that the built environment modulates threat/safety neural response — unifies the clinical rationale across all three. This is a foundational methodological connection that could restructure how the guidebook presents cross-population design principles.
+
+**Evidence basis:** Owen, C. & Crane, J. (2022). IJERPH 19(21):14279 (DOI:10.3390/ijerph192114279, PMID:36361166). Citation-verified; attribution corrected from "Holohan 2022".
+
+**Action required:** Create cross-cutting design framework note: threat/safety neuroscience as unifying lens for MH+NDV+DEM. Reference Owen & Crane 2022 as the bridge paper. Route to Part 3 compound-functioning chapter.
+
+**Disposition notes:** —
