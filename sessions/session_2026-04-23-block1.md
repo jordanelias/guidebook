@@ -1170,3 +1170,42 @@ Every Part 4 item specification now has one of:
 - Phase 2C-E: Multilingual language backfill
 
 session_close: 2026-04-23 18:45
+
+
+## Block 20 — PHASE 3C COMPLETE
+
+### Opus Divergence Synthesis delivered
+`references/opus-divergence-synthesis.md` — [OPUS-SYNTHESIS]
+13 parameter-level synthesis narratives explaining:
+- Why guidebook selects specific values when jurisdictions conflict
+- Clinical evidence supporting each choice
+- Trade-offs and implementation considerations
+- Cross-population conflict resolutions (VIS vs DEM contrast)
+
+### Cross-Cutting Findings
+1. Strictest code ≠ most inclusive (DE narrow reach range is MORE accessible)
+2. Test method divergence as significant as threshold divergence (slip resistance)
+3. US ADA has most significant gaps (no LRV, no rest seating, no melanopic)
+4. 27% of items (25/91) have NO jurisdiction equivalent — guidebook originals
+
+### ALL PHASES COMPLETE
+
+| Phase | Status |
+|---|---|
+| Phase 1: Standards Registry 46/46 | COMPLETE |
+| Phase 2A: Audit + Infrastructure 4,140 entries | COMPLETE |
+| Phase 2B: Search-log enrichment 90/90 | COMPLETE |
+| Phase 3A: Divergence matrix | COMPLETE |
+| Phase 3B: Part 4 tables 91/91 | COMPLETE |
+| Phase 3C: Opus divergence synthesis 13 parameters | COMPLETE |
+| Phase 5A: Appendix A 10 tables | COMPLETE |
+| Phase 5B: Supersession tracker | COMPLETE |
+| Phase 5C: CRPD map 46 jurisdictions | COMPLETE |
+
+Remaining:
+- Phase 4: Spec database jurisdiction curation — NOT STARTED
+- Phase 2C-E: Multilingual language backfill — NOT STARTED
+
+Total: ~260 commits, 20 blocks
+
+session_close: 2026-04-23 19:15
