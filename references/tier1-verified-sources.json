@@ -687,18 +687,21 @@
   },
   {
     "ref_id": "WGS-01",
-    "status": "VERIFIED-TIER-REVIEW",
+    "status": "VERIFIED-TIER-CORRECTION",
     "authors": "Patil, A. & Raghani, S.",
     "year": "2025",
     "title": "Designing accessible and independent living spaces for visually impaired individuals: a barrier-free approach to interior design",
     "journal": "International Journal for Equity in Health",
-    "tier": "1",
-    "note": "Confirmed. Mixed-methods design study from India \u2014 Co-1 quality (case study + mixed methods), NOT a Tier 1 RCT. BPC description \"75% gap in tactile wayfinding provisions\" is a study finding, not the study type. Tier correction required.",
+    "tier": "Co-1",
+    "note": "OPUS ADJUDICATION: Tier 1 \u2192 Co-1. Patil & Raghani 2025 is a mixed-methods design study (India) examining accessibility barriers for VI users in living spaces. The \"75% gap in tactile wayfinding provisions\" is an observational finding, not an intervention outcome. No OT intervention tested; no controlled/quasi-experimental design; no outcome measurement against baseline. Study draws on lived experience of VI users via participatory methods \u2014 fits Co-1 (CRPD Art. 4.3 lived experience / participatory design). Not Tier 3 (primary research, not a systematic review). Adjudicated: 2026-04-24 07:12M (Opus 4.6).",
     "volume": "24",
     "issue": "1",
     "pages": "137",
     "doi": "10.1186/s12939-025-02503-5",
-    "pmid": "40375267"
+    "pmid": "40375267",
+    "original_tier": "1",
+    "corrected_tier": "Co-1",
+    "opus_synthesized": true
   },
   {
     "ref_id": "MOB-02",
