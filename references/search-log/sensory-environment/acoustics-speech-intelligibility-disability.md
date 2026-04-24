@@ -35,8 +35,8 @@ jurisdiction_coverage:
   DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18041:2016 acoustic quality in rooms. DIN 18040 Two-Senses principle."}
   NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "SINTEF Byggforsk 87-school RT60 study. NS 8175 acoustic classification."}
   SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 3382-2:2008 RT measurement. IEC 60268-16 STI. ISO 21542 references acoustic environment."}
-  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "EN 17210 acoustic environment provisions."}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 3382-2:2008 RT measurement. IEC 60268-16 STI. ISO 21542 references acoustic environment."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "EN 17210 acoustic environment provisions."}
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "Arrêté 25 avril 2003 school acoustics."}
   CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
@@ -50,10 +50,10 @@ jurisdiction_coverage:
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

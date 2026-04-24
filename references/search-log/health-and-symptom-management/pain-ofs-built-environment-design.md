@@ -49,9 +49,9 @@ jurisdiction_coverage:
   UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   CA: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   AU: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DE: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}
   CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: SEARCHED, co1_attempted: true, tier5_attempted: true, tier6_attempted: true}

@@ -66,7 +66,7 @@ jurisdiction_coverage:
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_coverage_summary:
