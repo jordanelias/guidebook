@@ -151,3 +151,110 @@
 3. Where the guidebook target exceeds the strictest jurisdiction, the basis is clinical/OT evidence (Tier 1-3) rather than code compliance.
 4. This appendix should be read alongside Part 4 item-level jurisdiction comparison tables for additional detail and evidence citations.
 5. Standards versions are current as of April 2026 — see `references/standards-registry.md` for supersession tracking.
+
+---
+
+## A.11 Grab Bar Positioning
+
+| Jurisdiction | Standard | Horizontal Height | Vertical Extent | Diameter | Load Capacity |
+|---|---|---|---|---|---|
+| US | ADA 2010 §604.5 | 838–914mm | To 1524mm | 32–51mm | ≥1112N |
+| UK | BS 8300-2:2018 §18 | 680mm | — | 32–36mm | — |
+| AU | AS 1428.1:2021 §15 | 800–810mm | — | 30–40mm | ≥1100N |
+| DE | DIN 18040-1 §4.3.6 | 850mm | — | — | — |
+| ISO | ISO 21542:2021 §20 | 700–800mm | — | 30–40mm | ≥1100N |
+| **Guidebook** | **G-03** | **700–800mm horiz + 900mm vert** | **Both types** | **32–38mm** | **≥1100N** |
+
+**Spread:** 234mm between UK (680mm) and US (914mm). Guidebook specifies composite positioning per clinical transfer type.
+
+---
+
+## A.12 Anti-Scald Temperature Limits
+
+| Jurisdiction | Standard | Max Temperature | Valve Type | Notes |
+|---|---|---|---|---|
+| DE | DIN 18040 / DVGW W 551 | **≤43°C** | TMV required | Strictest |
+| UK | Building Regs Part G / HTM 04-01 | ≤44°C | TMV2/TMV3 | Care/healthcare |
+| AU | AS 1428.1 / AS 4032.1 | ≤45°C | TMV required | — |
+| US | IPC / ADA reference | ≤49°C | Per plumbing code | Least restrictive |
+| **Guidebook** | **I-03** | **≤44°C** | **TMV2 minimum** | **UK standard** |
+
+**Spread:** 6°C between DE (≤43°C) and US (≤49°C). Burns occur in 3 seconds at 49°C vs >60 seconds at 44°C on neuropathic skin.
+
+---
+
+## A.13 Slip Resistance Test Methods
+
+| Jurisdiction | Standard | Test Method | Threshold | Metric |
+|---|---|---|---|---|
+| US | ANSI A326.3 | Wet DCOF | ≥0.42 | Dynamic Coefficient of Friction |
+| UK | BS 7976-2 / HSE | Pendulum test | **PTV ≥36 wet** | Pendulum Test Value |
+| DE | DIN 51130 | Ramp test | R9–R13 | Inclination angle class |
+| AU | AS 4586:2013 | Pendulum + Ramp | P3–P5 / R9–R13 | Dual system |
+| **Guidebook** | **E-07** | **Pendulum PTV** | **PTV ≥36 wet** | **UK methodology** |
+
+**Critical note:** These four test methods are NOT interconvertible. A surface passing DCOF ≥0.42 may fail PTV ≥36. Guidebook specifies both the threshold AND the test method.
+
+---
+
+## A.14 Door Opening Force
+
+| Jurisdiction | Standard | Interior Doors | Exterior Doors | Fire Doors |
+|---|---|---|---|---|
+| AU | AS 1428.1:2021 | **≤20N** | — | Per fire code |
+| US | ADA 2010 §404.2.9 | ≤22N | ≤38N | ≤67N |
+| ISO | ISO 21542:2021 | ≤25N | — | — |
+| UK | BS 8300-2:2018 | ≤30N (code) / ≤20N (BP) | — | Per BS 8300 |
+| **Guidebook** | **I-01** | **≤20N** | **Automatic (E-11)** | **Automatic preferred** |
+
+**Spread:** 10N between AU (≤20N) and UK (≤30N) — a 50% increase in required effort.
+
+---
+
+## A.15 Rest Seating Intervals
+
+| Jurisdiction | Standard | External Routes | Internal Routes | Seat Features |
+|---|---|---|---|---|
+| US | ADA 2010 | **Not specified** | Not specified | — |
+| UK | BS 8300-1:2018 §10 | ≤50m | — | Armrests recommended |
+| DE | DIN 18040-1 | — | — | — |
+| **Guidebook** | **E-10** | **≤20m** | **≤20m** | **Armrests, 450mm, back support** |
+
+**Spread:** US has NO requirement (infinite). UK ≤50m. Guidebook ≤20m — 2.5× stricter than UK, derived from OFS/PAIN fatigue data.
+
+---
+
+## A.16 Classroom Acoustic Standards
+
+| Jurisdiction | Standard | RT (general) | RT (hearing-impaired) | Background Noise | Mandatory |
+|---|---|---|---|---|---|
+| US | ANSI/ASA S12.60-2010 | ≤0.6s (<283m³) | **≤0.3s** | ≤35 dBA | Via IBC/A117.1 |
+| UK | BB93 | By room type | Lower targets | By room type | **Yes (England)** |
+| DE | DIN 18041:2016 | By room type/use | — | By classification | Via Landesbauordnung |
+| NO | NS 8175:2019 | Acoustic classification | — | By class (A–D) | — |
+| AU | AS/NZS 2107:2016 | Recommended levels | — | By space type | — |
+| **Guidebook** | **A-04** | **≤0.6s** | **≤0.3s** | **≤35 dBA** | **Recommended** |
+
+US ANSI S12.60 is the ONLY standard specifying a separate RT target for hearing-impaired children. UK BB93 is the most prescriptive mandatory standard overall.
+
+---
+
+## A.17 Signage & Tactile Requirements
+
+| Jurisdiction | Standard | Sign Height (centre) | Tactile Characters | Braille | Pictogram Standard |
+|---|---|---|---|---|---|
+| US | ADA 2010 §703 | 1220–1524mm | Raised ≥0.8mm | Grade 2 required | ADA pictograms |
+| UK | BS 8300-2:2018 §12 | 1400–1700mm | Recommended | Recommended | BS EN ISO 7010 |
+| AU | AS 1428.1:2021 | 1200–1600mm | Required | Required | AS pictograms |
+| DE | DIN 32975 / DIN 32986 | 1200–1600mm | DIN 32986 | Per DIN | DIN EN ISO 7010 |
+| ISO | ISO 21542:2021 §40 | 1200–1600mm | Referenced | Referenced | ISO 7010 |
+| **Guidebook** | **D-08** | **Per jurisdiction** | **Pictogram + single word** | **Per jurisdiction** | **ISO 7010 base** |
+
+---
+
+## Notes (updated)
+
+6. Tables A.11–A.17 were added in Phase 3B (April 2026) based on divergence findings from the jurisdiction sweep.
+7. Anti-scald temperature (A.12) is the most safety-critical divergence — the 6°C spread between DE and US has direct clinical implications for burn injury risk.
+8. Slip resistance (A.13) is the most methodologically complex divergence — practitioners must specify both the target value AND the test method.
+9. Rest seating (A.15) represents the largest gap between guidebook and any code — no jurisdiction requires what the guidebook specifies.
