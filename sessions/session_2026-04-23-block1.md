@@ -1070,3 +1070,44 @@ Completed 2026-04-24 04:28.
 
 session_checkpoint: 2026-04-24 04:28
 next_action: Tier 3 GREY-PENDING — continue Weber 2022, Zallio 2022, Manandhar 2022, Caniato 2024
+
+
+## Block 11 — Tier 3 Verification COMPLETE (pass 5)
+
+Completed 2026-04-24 04:30.
+
+### Final Tier 3 status (94/168 resolved)
+- 17 VERIFIED-FOUNDATIONAL
+- 35 VERIFIED-DOI
+- 10 VERIFIED-PMID
+- 9 VERIFIED (targeted search)
+- 19 VERIFIED-WITH-CORRECTION (GREY removed/corrected)
+- 74 UNVERIFIED-1 (need DOI/PMID — mostly real papers)
+- 4 UNVERIFIED-CLOSED (no identifying info)
+- 0 GREY-PENDING (all resolved)
+
+### Key corrections generated
+- T3-102/103 "Holohan 2022": ATTRIBUTION ERROR → Owen C. & Crane J. (2022) IJERPH
+- 13+ GREY entries resolved with full citations added
+
+### Artefacts committed
+- `references/tier3-verified-sources.json` SHA dfad8dc26961
+- `references/tier3-verification-report-2026-04-23.md` SHA 9c485ee90e8f
+
+### Total verification scope completed (all tiers)
+- Tier 1: 57/63 entries resolved
+- Co-1: 22/25 entries resolved  
+- Tier 2: 30/37 entries resolved
+- Co-2: 14/15 entries resolved
+- Tier 3: 94/168 entries resolved
+- **Total: ~215/308 entries across 5 tiers resolved**
+
+### Remaining work (next sessions)
+1. Tier 3 UNVERIFIED-1 DOI batch (74 entries — mostly real, need search)
+2. Tier 4–6 verification (~249 entries — largely self-verifying)
+3. Apply Holohan→Owen/Crane attribution correction to BPC slug files
+4. Apply Zallio 2022+2023 DOIs to BPC bibliography
+5. Phase 2A: Jurisdiction coverage audit
+
+session_close: 2026-04-24 04:30
+next_action: Tier 3 UNVERIFIED-1 DOI batch searches — prioritise high-citation/high-specificity entries
