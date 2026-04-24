@@ -74,3 +74,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  UK Lifetime Homes / M4(2). AU Livable Housing (NCC mandatory). US visitability advocacy (Concrete Change). NO TEK17 step-free mandatory. KEY DIVERGENCE: AU mandatory vs US/UK voluntary.
+
+```
