@@ -169,12 +169,12 @@
 ### Citation mining
 | Source | Direction | New sources added |
 |---|---|---|
-| Garcia-Mendez (2013) | Forward | Larivière (2024); Misch (2022) |
+| Garcia-Mendez (2013) | Forward | Larivière (2021); Misch (2022) |
 | ISO 2631-1 | Forward | Chénier & Aissaoui (2014) |
 
 ### Key sources
 1. Garcia-Mendez, Y., et al. (2013). Health risks of vibration exposure to wheelchair users. *Journal of Spinal Cord Medicine*, 36(4), 365–375. [EN, Tier 3]
-2. Larivière, O., et al. (2024). Floor type and WBV in manual wheelchair users. *Journal of Rehabilitation and Assistive Technologies Engineering*. [EN, Tier 3]
+2. Larivière, O., et al. (2021). Vibration transmission during manual wheelchair propulsion: A systematic review. *Vibration*, 4, 444–481. DOI:10.3390/vibration4020029. [YEAR CORRECTED: BPC 2024 → actual 2021] [EN, Tier 3]
 3. Misch, A., et al. (2022). Whole-body vibration and wheelchair users. *JRATE*. [EN, Tier 3]
 4. Chénier, F., & Aissaoui, R. (2014). Effect of wheelchair frame on vibration transmission. *Medical Engineering & Physics*, 36(7), 872–879. [EN, Tier 3]
 5. ISO 2631-1. (1997/2004). *Mechanical Vibration and Shock — Evaluation of Human Exposure to Whole-Body Vibration*. ISO. [Tier 4]

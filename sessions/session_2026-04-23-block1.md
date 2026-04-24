@@ -2163,3 +2163,41 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 07:33
+
+## Block 31 — BPC Year Correction + Co-1 Reconciliation
+
+### Larivière Year Correction
+- File: `references/bpc/MOB.md`
+- Changed: `Larivière (2024)` → `Larivière (2021)` in supersession table
+- Changed: Key Sources entry year 2024 → 2021, title corrected, journal corrected (JRATE → Vibration)
+- DOI: 10.3390/vibration4020029
+
+### Co-1 Verification Reconciliation
+- Co-1 JSON shows 0 UNVERIFIED-1 remaining
+- 19 VERIFIED, 3 UNVERIFIED-CLOSED, 2 CLOSED-DELETED, 1 VERIFIED-WITH-CORRECTION
+- Session notes "3 remaining" was stale — all entries already resolved in prior blocks
+- **Co-1 COMPLETE**
+
+### ALL WORKPLAN PHASES — FINAL STATUS
+
+| Phase | Status |
+|---|---|
+| Phase 1: Standards Registry 46/46 | COMPLETE |
+| Phase 2A-B: Audit + enrichment 90/90 | COMPLETE |
+| Phase 2C-E: Multilingual backfill 76/76 | COMPLETE |
+| Phase 3A-C: Divergence + tables + synthesis | COMPLETE |
+| Phase 4: Spec database 73/73 | COMPLETE |
+| Phase 5A-C: Appendix A (20) + supersession + CRPD | COMPLETE |
+| Bibliography verification Tiers 1–6 | COMPLETE |
+| BPC corrections + tier propagation | COMPLETE |
+| Tier 3 UNVERIFIED-1 | 18/20 resolved (3 forward to BPC author) |
+| Co-1 verification | COMPLETE (25/25) |
+| BPC year/author corrections | COMPLETE (5 corrections applied) |
+
+### Remaining (requires BPC author input only)
+- T3-129 Rhee 2023: DOI needed
+- T3-140 INSERM/Medscape 2024: specific publication needed
+- T3-142 Kapsalis 2024: DOI needed
+
+### FULL CONVERSATION TOTALS: 42 commits
+session_close: 2026-04-24 09:00
