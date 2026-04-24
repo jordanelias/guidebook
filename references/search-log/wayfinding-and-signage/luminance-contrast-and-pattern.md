@@ -9,7 +9,7 @@ jurisdiction_coverage:
   UK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300: LRV contrast ≥30 minimum, ≥70 critical. DfT guidance. PAS 6463 pattern avoidance."}
   AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.1:2021 §12: luminance contrast ≥30%. AS 4049 covers slip resistance."}
   CA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 32975:2009 visual design of public information — contrast requirements."}
+  DE: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: complete}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542 §39: visual contrast provisions."}
@@ -36,11 +36,11 @@ jurisdiction_coverage:
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -48,9 +48,9 @@ jurisdiction_coverage:
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   KEY DIVERGENCE: UK BS 8300 specifies LRV values (≥30 min, ≥70 critical). US ADA has no numeric LRV requirement. AU AS 1428.1 ≥30%. DE DIN 32975 addresses visual design comprehensively.

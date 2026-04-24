@@ -13,7 +13,7 @@ jurisdiction_coverage:
   UK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300: visual contrast provisions. CIBSE LG3 lighting for hospitals."}
   AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 32975: visual design including lighting for wayfinding."}
+  DE: {status: SEARCHED, results: 3, db: [web], co1_pass: partial, native_standards_pass: complete}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -40,11 +40,11 @@ jurisdiction_coverage:
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -52,9 +52,9 @@ jurisdiction_coverage:
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   Visual alerting governed by fire alarm standards (EN 54-23, NFPA 72). Wayfinding light provisions are part of general lighting standards (EN 12464), not accessibility-specific.
