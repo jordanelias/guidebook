@@ -177,3 +177,8 @@ jurisdiction_coverage:
   GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Wayfinding provisions in Global South — minimal code coverage. Most P4/P5 jurisdictions have generic signage requirements only. Pictogram-based wayfinding may have higher value in low-literacy contexts. THIN BASE.
+
+```
