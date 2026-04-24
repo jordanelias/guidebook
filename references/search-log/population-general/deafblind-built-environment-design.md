@@ -156,3 +156,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  DeafBlind provisions sparse in codes. US ADA addresses individually. UK Deafblind guidance (Sense UK). ISO 21542 references. Nordic countries strongest tradition (NUD/Nordic cooperation). DBL ≠ VIS + DEAF per project standards.
+
+```
