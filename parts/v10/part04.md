@@ -330,6 +330,20 @@ All mechanical plant: mounted on vibration isolation pads
 
 **CON-0101 [HIGH]:** HVAC system type is the primary determinant of achievable NC level. NC-25 constrains HVAC system selection — coordinate with F-07 thermal zoning strategy. ● Forced-air systems are contraindicated for NEU/OFS spaces per ms-thermal BPC (acoustic and airborne trigger); radiant heating achieves NC-25 without forced-air noise contribution. For SCI populations, radiant systems additionally avoid ambient heat load increase in cooling-critical environments [thermoregulation-built-environment BPC — PROVISIONAL]. Where F-08 specifies exposed thermal mass (concrete ceiling), additional acoustic absorption is required to maintain NRC ≥0.85 at ceiling — coordinate ceiling treatment zones with thermal mass zones.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Sensitive Spaces | Classrooms | Healthcare | Offices |
+|---|---|---|---|---|---|
+| US | ASHRAE / FGI | NC-25 (healthcare) | ≤35 dBA (ANSI S12.60) | NC-25 to NC-35 | NC-30 to NC-40 |
+| UK | BS 8233:2014 / BB93 | NR 25 | BB93 targets | HTM 08-01 | NR 35-40 |
+| DE | DIN 4109 / VDI 2081 | — | DIN 18041 targets | — | ASR A3.7 |
+| AU | AS/NZS 2107:2016 | — | By space type | — | 40-45 dBA |
+| ISO | ISO 3382 / ISO 16283 | — | — | — | — |
+| **Guidebook** | **A-08** | **NC-25** | **≤35 dBA** | **NC-25** | **NC-30** |
+
+**Note:** NC (Noise Criteria) and NR (Noise Rating) are not directly equivalent — NC tends ~5 points lower than NR at same perceived level.
+
+
 ### A-09 HVAC Vibration Isolation (Floating Plant Room)
 <!-- CON-0005 [HIGH]: A-09 vibration threshold + G-08 seated reach cluster (MODERATE) -->
 <!-- UNVERIFIED: The 0.1 m/s RMS threshold cited in this item does not correspond to any located ISO 2631-1 value. ISO 2631-1 uses weighted accelerations (m/s²) over 8h, not simple RMS velocity. Source of 0.1 m/s RMS is unknown. This value must carry [UNVERIFIED — source of 0.1 m/s RMS threshold required before publication] on every appearance in specification text. See BPC floor-vibration-wheelchair-disability §Critical Flag and spec-db-part4-reconciliation Section C1. -->
@@ -750,6 +764,20 @@ DEM environments: circadian lighting is a clinical requirement, not a comfort en
 **Cross-reference:** B-09 (Natural Light); B-11 (Warm CCT Evening); B-06 (Individual Dimming)
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model. Circadian-appropriate lighting (≥150 EML daytime, ≤10 EML evening) supports the occupation of time-structured daily activity by calibrating the environmental light signal to the neurological systems that regulate alertness and sleep; for DEM and NEU users this is a clinical requirement, not an enhancement.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Daytime Melanopic EDI | Evening | Care Homes | Mandatory |
+|---|---|---|---|---|---|
+| DE | DIN/TS 67600:2022 | ≥250 MEDI at eye (1.2m) | Reduced | Explicitly covered | No (Tier 5) |
+| INT | WELL v2/v6 L03/L07 | ≥150 EML / ≥250 m-EDI | ≤50 EML | — | No (voluntary) |
+| INT | CIE S 026/E:2018 | Metric definition | — | — | No (metric only) |
+| US | UL 24480 | CS ≥0.3 (different model) | — | — | No (voluntary) |
+| All others | — | **No requirement** | — | — | — |
+| **Guidebook** | **B-01** | **≥250 MEDI daytime** | **≤10 MEDI** | **Adjusted for age** | **Recommended** |
+
+No national building code mandates circadian metrics. US UL 24480 uses Circadian Stimulus (CS) model — NOT equivalent to melanopic EDI.
+
 
 ### B-02 Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination)
 <!-- design_stage_lock: DD -->
@@ -2075,6 +2103,20 @@ prevent slip initiation under ambulant and mobility-device loads on wet surfaces
 
 exceeds clinically acceptable thresholds for populations with reduced balance and reaction time.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Test Method | Wet Threshold | Ramp Threshold | Notes |
+|---|---|---|---|---|---|
+| US | ADA / ASTM | DCOF (ANSI A326.3) | ≥0.42 DCOF | — | Dynamic Coefficient of Friction |
+| UK | BS 7976-2 / HSE | Pendulum PTV | **PTV ≥36 wet** | PTV ≥36+ for ramps | Most prescriptive; PTV is reference |
+| AU | AS 4586:2013 | Pendulum + Ramp | P3-P5 (wet pendulum) | R9-R13 (ramp) | Dual-method system |
+| DE | DIN 51130 | Ramp test (R-value) | — | R9-R13 by application | R-value system |
+| ISO | ISO 10545-17 | Referenced | — | — | Ceramic tiles specific |
+| **Guidebook** | **E-07** | **Pendulum PTV** | **PTV ≥36 wet** | **PTV ≥36** | **UK methodology** |
+
+**HIGH DIVERGENCE:** Test methods differ fundamentally — US uses DCOF (friction coefficient), UK uses PTV (pendulum), DE uses R-value (ramp angle), AU uses both. Values are NOT directly comparable across methods.
+
+
 ### E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)
 <!-- CON-0157 [HIGH]: B-10 visual alarm + H-03 captioning + D-08 signage + E-08 corridor — public building cluster -->
 <!-- design_stage_lock: SD -->
@@ -2206,6 +2248,21 @@ Lighting: ≥100 lux at entry surface level; night-activated
 <!-- DUPLICATE RESOLVED 2026-04-19 (A4). This entry superseded by the revised E-10 specification below (L3205+). Canonical specification: see E-10 at end of Category E section. The 20 m interval in this entry has been revised to 25 m per Tier 1 evidence (Roxburgh et al. 2024); alcove geometry and OFS seat height added. Do not use this entry for specification writing. -->
 
 *[See E-10 canonical specification below — resolved per workplan Block 3 A4 2026-04-19]*
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Max Interval | Seat Height | Armrests | Notes |
+|---|---|---|---|---|---|
+| US | ADA 2010 | Not specified (no interval) | — | — | Significant gap |
+| UK | BS 8300-1:2018 §10 | ≤50m (external) | 450-475mm | Both sides recommended | — |
+| DE | DIN 18040-1 | — | — | — | — |
+| AU | AS 1428.2 | Referenced | — | — | — |
+| NO | TEK17 | — | — | — | — |
+| ISO | ISO 21542:2021 §12 | Referenced | — | — | — |
+| **Guidebook** | **E-10** | **≤20m** | **450mm** | **Both sides** | **2.5× stricter than UK** |
+
+**HIGH DIVERGENCE:** US ADA has NO rest seating interval requirement. UK BS 8300 specifies ≤50m. Guidebook specifies ≤20m based on OFS/PAIN fatigue data — 2.5× stricter than UK, infinitely stricter than US.
+
+
 ### E-11 Automatic Sliding Entry and Internal Doors
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
@@ -2539,6 +2596,19 @@ Specifications are derived from MCAS trigger literature and HVAC engineering sta
 
 **Evidence basis (OT):** Compensatory FOR; Dunn's Sensory Processing Model. Air quality provisions implement the Compensatory FOR by removing chemical and particulate environmental triggers that would otherwise require OFS/MCAS and chemically sensitive users to withdraw from the space; the MERV 13 and TVOC ≤0.5 specifications are derived from the trigger thresholds documented in MCAS and chemical sensitivity clinical literature.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Filtration | VOC Limit | Ventilation Rate | Notes |
+|---|---|---|---|---|---|
+| US | ASHRAE 62.1 / WELL Air | MERV 13+ (WELL) | WELL limits | ASHRAE 62.1 rates | ADA has no air quality provision |
+| UK | AD F / CIBSE Guide A | — | — | AD F rates | No BS 8300 air quality provision |
+| EU | EN 16798-1:2019 | — | — | Category I-IV rates | Replaces EN 15251 |
+| DE | ASR A3.6 | — | — | Workplace mandatory | — |
+| **Guidebook** | **F-04** | **MERV 13+** | **Low-VOC spec** | **EN 16798 Cat I** | **MCAS/OFS-driven** |
+
+No accessibility code addresses air quality. WELL Air is closest to disability-specific provisions. MCAS/chemical sensitivity needs exceed any standard.
+
+
 ### F-05 Seated-Task Design [CONTENT MOVED TO G-08 per CO-0003/D2-48]
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -2691,6 +2761,20 @@ accessibility at service/workstation points: distinct, complementary scope)
 **FDR-TCOA-02 [Tier 3 — MHLW Japan 2023]:** Bathroom heat shock is caused by inter-room temperature differential at entry, not absolute temperature. Japanese evidence: 6,073 bathtub deaths annually from heat shock in cold bathroom (MHLW 2023 Tier 3; Nakayama 1981 foundational study). ○ In DEM and older adult residential settings, bathroom pre-heating specification: timer or PIR sensor activates bathroom heating ≥30 min before scheduled bathing; bathroom reaches ≥20°C before occupant entry. Specification to be included in FM commissioning brief and BMS programming.
 
 **FDR-TCOA-03 [Tier 5 — NHS Estates HBN 00-10]:** Reduced peripheral sensation in DEM and older adult populations increases burns risk from hot surfaces. ● Low Surface Temperature (LST) radiators, surface temperature ≤43°C per NHS Estates HBN 00-10, to be specified in all DEM and older adult residential and care bedrooms and bathrooms. Insulated pipework throughout. Thermostatic heated towel rails ≤43°C surface temperature in DEM/older adult settings. These are not comfort specifications — they are burn prevention safety specifications.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Comfort Range | Categories | Individual Control | Notes |
+|---|---|---|---|---|---|
+| US | ASHRAE 55-2023 | PMV ±0.5 (Cat. B) | 3 categories | — | General population only |
+| UK | CIBSE Guide A | 21-23°C (offices) | — | — | CQC for care homes |
+| EU | EN 16798-1:2019 | Cat I-IV | 4 categories | — | Replaces EN 15251 |
+| DE | ASR A3.5 | 20-26°C (workplace) | Mandatory | — | — |
+| ISO | ISO 7730:2005 | PMV-PPD model | A/B/C | — | Reference method |
+| **Guidebook** | **F-07** | **Individual zones** | **Per population** | **Yes — H-02** | **MS heat vs DEM cold conflict** |
+
+**KEY GAP:** No thermal comfort standard addresses disability-specific thermoregulation. MS heat sensitivity (Uhthoff's phenomenon) vs DEM cold sensitivity requires individual zoning beyond any standard.
+
 
 ### F-08 Thermal Transition — Heating and Cooling System Response
 <!-- CON-0102 [HIGH]: F-04/F-06/F-07/F-08 interdependent OFS/MCAS HVAC system — F-category coherence note required -->
@@ -2974,6 +3058,20 @@ Reception counters: accessible height section per G-06
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Height-adjustable desks (660--1200mm range) adapt the workspace context to accommodate the full range of seated and standing working postures; the 660mm lower limit is derived from the minimum clearance required for a powered wheelchair user's knee and footplate height.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Fixed Height | Adjustable Range | Mandatory | Notes |
+|---|---|---|---|---|---|
+| US | ADA §902 | 710-865mm | Not required | No | Work surfaces only |
+| UK | BS 8300 / M4(3) | 720-760mm | Recommended | No | Wheelchair-user dwellings |
+| DE | DIN 18040-2 §5.7 | — | **650-870mm** | **Yes** | Height-adjustable mandatory |
+| AU | AS 1428.1 | Referenced | — | No | — |
+| ISO | ISO 21542 | Referenced | — | No | — |
+| **Guidebook** | **G-05** | — | **650-870mm** | **Recommended** | **DE standard** |
+
+**HIGH DIVERGENCE:** DE DIN 18040-2 is the ONLY jurisdiction requiring height-adjustable work surfaces. Range 650-870mm covers seated wheelchair (650mm) to standing (870mm).
+
+
 ### G-06 Reception Counter (Accessible Height Section — 760--860 mm AFF)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
@@ -3009,6 +3107,18 @@ LRV ≥30 at counter edge vs floor
 **Evidence basis (OT):** Biomechanical FOR. Counter height 760--860mm AFF with ≥690mm knee clearance is derived from the biomechanical requirements of conducting a seated counter interaction: the height enables face-to-face communication at eye level between a seated user and a standing staff member, and the knee clearance allows the wheelchair user to approach flush to the counter without needing to reach across an obstruction.
 
 **FDR-OFS-01 [Tier 1 — Raj 2013; Tier 2 — Stewart 2012]:** Orthostatic intolerance onset time 2–10 minutes from prolonged standing (Raj et al. 2013, *Circulation* — Tier 1). Seated service must be **immediately available** (not on request, not from a separate queue). ● A specification that requires OFS/POTS users to request a chair creates a 2–10 minute standing exposure before accommodation is provided — sufficient to trigger symptom onset. G-06 lowered counter section with knee clearance is the architectural mechanism; the specification requires it to be the default service position, not an adjusted alternative. Add to Specifications: "Lowered counter section to be the default service position for all transactions — not available 'on request' only."
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Accessible Section Height | Width | Knee Clearance | Notes |
+|---|---|---|---|---|---|
+| US | ADA 2010 §904 | 865mm max | ≥915mm | 685mm | Sales/service counters |
+| UK | BS 8300-2:2018 §10 | 760mm | ≥1000mm | — | Lower section required |
+| AU | AS 1428.1:2021 | 850mm | — | — | — |
+| DE | DIN 18040-1 §4.3 | — | — | — | References general reach |
+| ISO | ISO 21542:2021 §24 | 800mm | — | — | — |
+| **Guidebook** | **G-06** | **760-860mm** | **≥900mm** | **685mm min** | **UK/US overlap** |
+
 
 ### G-07 Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)
 <!-- CON-0154 [HIGH]: G-07 waiting seating + H-01 controls — reception zone accessibility -->
@@ -3319,6 +3429,18 @@ Biomechanical FOR: the lever handle converts the grip-rotation motion required b
 closed fist, palm, or prosthetic limb, reducing the motor complexity and peak force requirement to within the functional capacity range of
 
 UPL users.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Handle Type | Max Force | Operation | Notes |
+|---|---|---|---|---|---|
+| US | ADA 2010 §309 | No tight grasp/twist/pinch | ≤22N | One hand | Lever or equivalent |
+| UK | BS 8300-2:2018 | Lever handles; D-pulls | ≤30N (≤20N BP) | One hand | — |
+| AU | AS 1428.1:2021 §13 | D-type or lever | **≤20N** | One hand | Strictest force |
+| DE | DIN 18040-1/2 | Lever handles | — | — | 850mm height |
+| ISO | ISO 21542:2021 §14.5 | Lever or equivalent | ≤25N | One hand | — |
+| **Guidebook** | **I-01** | **Lever, D-pull** | **≤20N** | **One hand, ≤20N** | **AU standard** |
+
 
 ### I-02 Kitchen (One-Handed Operation Throughout)
 <!-- design_stage_lock: DD -->
@@ -3863,6 +3985,18 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Illustration:** [Illustration: to be provided] — Plan view showing 1800 × 1800 mm landing, 500 mm latch-side clearance, and canopy footprint.
 
 ---
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Landing Size | Clear of Door Swing | Notes |
+|---|---|---|---|---|
+| US | ADA 2010 §404.2.4 | 1524×1524mm | Yes | Maneuvering clearance by approach type |
+| UK | BS 8300-2:2018 §8 | 1500×1500mm | Yes | — |
+| DE | DIN 18040-1 §4.3.3 | 1500×1500mm | Yes | Movement area |
+| AU | AS 1428.1:2021 | 1540×1540mm / 2070×2070mm | Yes | Powered chair dimensions |
+| ISO | ISO 21542:2021 §14 | 1500×1500mm | Yes | — |
+| **Guidebook** | **E-12** | **By device type** | **Yes** | **AU dimensions for powered chairs** |
+
 
 ### E-13 Entrance Cognitive Legibility Provisions
 <!-- design_stage_lock: DD -->
