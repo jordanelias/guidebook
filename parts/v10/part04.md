@@ -70,6 +70,20 @@ cost and disruption.
 
 **Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. The buffer zone alters the acoustic context to keep the sound level entering sensitive spaces below the neurological threshold at which sensory avoiding and sensory-sensitive users experience distress; the 3--5m depth and NC-25 target are calibrated to this threshold, not to code minimums.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Buffer Requirement | STC Between Spaces | Notes |
+|---|---|---|---|---|
+| US | ANSI S12.60 | Per STC table | STC ≥50 (classroom-corridor) | Schools only |
+| UK | BB93 | Performance targets by room pair | DnT,w values by room pair | Mandatory England |
+| DE | DIN 4109:2018 | R'w sound reduction index | By building type | — |
+| AU | NCC Section F5 | Referenced | By building class | — |
+| ISO | ISO 16283 | Measurement method | — | — |
+| **Guidebook** | **A-01** | **Graduated zones** | **Beyond code** | **NDV sensory gradient** |
+
+Guidebook's graduated acoustic buffer concept (high→low stimulation) exceeds all codes — no jurisdiction requires graduated sensory zoning.
+
+
 ### A-02 Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces
 <!-- CON-0008 [HIGH]: A-02/A-08/A-13 acoustic convergence: RT60 + NC-25 + masking prohibition -->
 <!-- CON-0039 [HIGH]: RT60 ≤0.3s Tier 0 universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
@@ -132,6 +146,16 @@ full frame and threshold sealing which may require opening up surrounding constr
 **Cross-reference:** A-01 (Buffer Zone); A-14 (Double-Leaf Partition); A-16 (Sensory Room)
 
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. The acoustic door implements EHP's 'prevent' intervention by eliminating the pathway through which auditory triggers travel to sensory sensitive occupants; STC ≥35 is the minimum attenuation required to reduce noise from an adjacent NC-40 zone to the NC-25 target within.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Min STC (sensitive) | Seal | Notes |
+|---|---|---|---|---|
+| US | ANSI S12.60 | STC ≥35 (classroom) | Drop seal recommended | Schools only |
+| UK | BB93 | Rw ≥30 (classroom door) | Perimeter seal | — |
+| DE | DIN 4109 | Rw by application | — | — |
+| **Guidebook** | **A-03** | **STC ≥35** | **Full perimeter seal** | **All sensitive spaces** |
+
 
 ### A-04 Acoustic Zoning: Graduated from Arrival to Primary Occupation
 <!-- design_stage_lock: SD -->
@@ -964,6 +988,18 @@ Where residential occupancy: all bedroom and living room circuits minimum
 **Cross-reference:** B-04 (Flicker-Free LED); B-11 (Warm CCT); H-02 (Individual Environmental Control)
 
 **Evidence basis (OT):** EHP Framework (adapt strategy). Individual dimming control allows each occupant to adapt the environmental lighting to their current sensory capacity; for users whose photosensitivity varies with fatigue state (PCS, OFS/CFS), this adaptive capacity is the difference between being able to occupy the space on a high-sensitivity day and not being able to.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Individual Dimming | Range | Notes |
+|---|---|---|---|---|
+| US | WELL v2 Feature L06 | Yes (WELL) | — | Voluntary |
+| UK | PAS 6463:2022 | Recommended for NDV | — | Guidance only |
+| DE | ASR A3.4 | Workplace lighting adjustable | — | — |
+| **Guidebook** | **B-06** | **Yes — per occupied space** | **≥300 lux range** | **NDV/VIS/migraine** |
+
+No building code mandates individual dimming as an accessibility provision. WELL and PAS 6463 address partially.
+
 
 ### B-07 Indirect and Cove Lighting in Sensitive Spaces
 <!-- CON-0146 [HIGH]: B-06 individual dimming + B-07 indirect lighting — lighting quality convergence -->
@@ -1837,6 +1873,18 @@ Dignified Design. (2024). 22 design elements for permanent supportive housing. R
 
 All entry and circulation provisions address the complete journey from arrival at site boundary to primary occupied space. 'Entry' means the principal entrance — not a secondary 'accessible entrance'.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Garden Provision | Loop Path | Seating Interval | Notes |
+|---|---|---|---|---|---|
+| US | ADA §228 | Accessible route through gardens | — | — | — |
+| UK | BS 8300-1:2018 §10 | Accessible outdoor spaces | — | ≤50m external | — |
+| UK | DSDC Stirling | **Dementia garden design** | Loop recommended | Seating throughout | DEM-specific |
+| **Guidebook** | **D-11** | **All residential settings** | **Yes** | **≤20m** | **Secured perimeter for DEM** |
+
+UK DSDC Stirling is the primary source for dementia-specific garden design. No code mandates loop paths or secured perimeters.
+
+
 ### E-01 Accessible Lift (1400×1100 mm Car, All Floors Served)
 <!-- CON-0116 [HIGH]: E-01 lift ≥1400mm + D-02 cognitive legibility at lift arrival -->
 <!-- CON-0136 [HIGH]: E-01 lift + H-01 controls — mobility access convergence -->
@@ -1926,6 +1974,18 @@ Usage: retrofit/heritage only where E-01 is not achievable
 (E-01) cannot be delivered; its specifications (900×1400mm minimum, 2m maximum travel) represent the minimum context modification that
 
 constitutes an effective compensation, 
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Max Travel | Min Platform | Enclosure | Notes |
+|---|---|---|---|---|---|
+| US | ADA / ASME A18.1 | Various | 915×1220mm | Per ASME | — |
+| UK | BS 6440:2011 | ≤2m (unenclosed) | 1100×1400mm | Required >2m | — |
+| EU | EN 81-41:2010 | ≤3m | 900×1400mm | Per EN 81-41 | — |
+| DE | DIN 18040-1 | Per EN 81-41 | 1100×1400mm | — | Preferred: full lift |
+| AU | AS 1735.14 | Per AS | 1100×1400mm | — | — |
+| **Guidebook** | **E-02** | **Per EN 81-41** | **1100×1400mm** | **As code requires** | **Full lift preferred (E-01)** |
+
 
 ### E-03 Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility)
 <!-- CON-0009 [HIGH]: Threshold items: zero-step + ≤20mm bevelled max confirmed ≥12 jurisdictions -->
