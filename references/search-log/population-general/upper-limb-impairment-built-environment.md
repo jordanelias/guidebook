@@ -103,7 +103,7 @@ jurisdiction_coverage:
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -113,7 +113,7 @@ jurisdiction_coverage:
   MA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   MOB/UPL provisions: reach range, door hardware, controls. US ADA §309 operable parts. UK BS 8300 lever handles. DE DIN 18040 handle heights. Cross-reference reach-range-and-accessible-controls.

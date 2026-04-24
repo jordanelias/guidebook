@@ -113,7 +113,7 @@ jurisdiction_coverage:
   PH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
@@ -123,7 +123,7 @@ jurisdiction_coverage:
   MA: {status: THIN, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   UK strongest: DSDC Stirling, King's Fund EHE, HAPPI. ISO 25552 dementia-inclusive framework. AU HammondCare. NL Hogeweyk model. DE KDA guidelines. No code mandates dementia-specific design except care home regulations.

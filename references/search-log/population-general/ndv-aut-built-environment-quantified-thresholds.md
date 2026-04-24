@@ -89,7 +89,7 @@ jurisdiction_coverage:
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -99,7 +99,7 @@ jurisdiction_coverage:
   MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
   UK PAS 6463:2022 is PRIMARY standard for NDV/AUT. No other code specifically addresses neurodivergent thresholds. Quantified values from research (Tier 3): sensory load limits, acoustic targets, lighting parameters.
