@@ -819,6 +819,19 @@ DeafSpace design guidelines. Gallaudet. British Standards Institution.
 
 **Evidence basis (OT):** Biomechanical FOR. The ≥300 lux vertical illuminance at face level (1500mm AFF) and shadow-free specification are derived from the minimum illuminance required for lip-reading at normal conversational distance (0.5--1.5m) given the visual acuity range of hard-of-hearing users who rely on lip reading as a primary communication supplement.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Face Illuminance | Shadow Control | Vertical Illuminance | Notes |
+|---|---|---|---|---|---|
+| US | ADA | Not specified | — | — | — |
+| UK | BS 8300-2:2018 §12 | Face adequately lit | — | — | General provision |
+| DE | DIN 18041 / DIN 18040 | Acoustic + visual | — | — | — |
+| ISO | ISO 21542:2021 | Referenced | — | — | — |
+| **Guidebook** | **B-02** | **≥300 lux vertical** | **Shadow-free face zone** | **Specified** | **DEAF lip-reading evidence** |
+
+No building code specifies vertical illuminance for lip reading. Guidebook's ≥300 lux at face height is derived from DEAF communication research. Significant gap in all codes.
+
+
 ### B-03 Elimination of Fluorescent Overhead Lighting
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: HIGH -->
@@ -1015,6 +1028,19 @@ DSDC. (2022). EADDAT. University of Stirling.
 **Cross-reference:** C-06 (Plain Low-Contrast Flooring); E-07 (Slip Resistance)
 
 **Evidence basis (OT):** Biomechanical FOR. Floor gloss above 30 gloss units creates specularity that impairs the visual contrast detection ability of low-vision users and creates visual 'noise' that disorients VIS and DEM users navigating by floor-surface differentiation; PTV compatibility requirement ensures that matte specification does not reduce slip resistance below safe threshold.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Gloss Limit | Specular Reflection | Notes |
+|---|---|---|---|---|
+| US | ADA | Not specified | — | — |
+| UK | PAS 6463:2022 | Matte recommended | Avoid glare | NDV provision |
+| BS 8300 | — | Not specified | — | — |
+| ISO | ISO 21542 | Not specified | — | — |
+| **Guidebook** | **B-08** | **≤30 Gloss Units** | **Matte throughout** | **NDV/VIS glare reduction** |
+
+No code specifies maximum gloss units for floor finishes as an accessibility provision. PAS 6463 recommends matte surfaces but without quantified threshold.
+
 
 ### B-09 Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)
 <!-- design_stage_lock: SD -->
@@ -1245,6 +1271,19 @@ replacement without structural works. See Part 12 §12.4.1.
 **Evidence basis (OT):** Dunn's Sensory Processing Model.
 
 High-chroma, saturated patterns at floor level constitute a visual stimulus in the hyperarousal frequency range for sensory-sensitive and sensory-avoiding users; pattern-free or low-pattern floor finishes in primary occupied spaces reduce the visual complexity input to the sensory processing system.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Pattern Restriction | Stripe/Check Limit | Photosensitive | Notes |
+|---|---|---|---|---|---|
+| US | ADA | Not addressed | — | — | — |
+| UK | PAS 6463:2022 | **Plain surfaces recommended** | Avoid strong patterns | Yes | Only standard addressing patterns |
+| UK | BS 8300 | — | — | — | Does not address |
+| ISO | ISO 21542 | Not addressed | — | — | — |
+| **Guidebook** | **C-03** | **Plain in sensitive areas** | **No bold geometric** | **≤3 Hz flicker avoidance** | **NDV/NEU/VIS evidence** |
+
+UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent populations. No other code restricts surface patterns.
+
 
 ### C-04 LRV Contrast (≥30 minimum; ≥50% LRV best practice at critical junctions)
 <!-- CON-0043 [HIGH]: LRV ≥50% best practice; ≥65% Michelson at critical junctions; 30% = code minimum only -->
@@ -1748,6 +1787,20 @@ inside rooms before entry, eliminating the decision uncertainty of
 
 DEM users and a safety concern for MH users who require advance visibility of the space they are entering.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Internal Glazing | Manifestation | DeafSpace | Notes |
+|---|---|---|---|---|---|
+| US | ADA / Gallaudet DeafSpace | Not required | — | Visual connectivity principle | Not codified |
+| UK | BS 8300-2:2018 §8.4 | Vision panels in doors | ≥2 manifestation bands | — | Safety glazing required |
+| DE | DIN 18040 | Vision panels | — | — | — |
+| AU | AS 1428.1 | Referenced | — | — | — |
+| ISO | ISO 21542:2021 §14 | Vision panels in doors | Manifestation | — | — |
+| **Guidebook** | **D-10** | **Internal partitions** | **LRV ≥30 contrast** | **DEAF sightlines** | **Beyond door panels** |
+
+Guidebook extends transparent glazing beyond door vision panels to internal partitions — based on DeafSpace visual connectivity principles (Bauman & Murray, Gallaudet).
+
+
 ### D-11 Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
@@ -2005,6 +2058,19 @@ Lighting: ≥100 lux at entry surface level; night-activated
 **Cross-reference:** E-06 (Level Entry)
 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Canopy Required | Min Size | Notes |
+|---|---|---|---|---|
+| US | ADA | Not required | — | — |
+| UK | BS 8300-1:2018 §8 | Covered approach recommended | — | — |
+| DE | DIN 18040-1 | Weather protection at entry | 1500×1500mm | Movement area protected |
+| NO | TEK17 | Weather protection | — | Climate-driven |
+| **Guidebook** | **E-05** | **Yes** | **3000×2000mm** | **Wheelchair transfer + companion** |
+
+Guidebook specifies significantly larger canopy (3000×2000mm) than any code to accommodate wheelchair transfer with weather protection.
+
 
 ### E-06 Level Entry (Zero Step at All Accessible Entrances)
 <!-- CON-0009 [HIGH]: Threshold items: zero-step + ≤20mm bevelled max confirmed ≥12 jurisdictions -->
@@ -3297,6 +3363,19 @@ Part 12 §12.4.2.
 
 **Evidence basis (OT):** EHP Framework (adapt strategy); Dunn's Sensory Processing Model. Individual environmental control (lighting, temperature, acoustic environment) implements EHP's 'adapt' strategy at the individual level: the context is adaptable to each user's current sensory state rather than fixed at a population average; for OFS/POTS users, individual thermal control is a physiological management tool, not a comfort preference.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Lighting Control | Thermal Control | Acoustic | Mandatory |
+|---|---|---|---|---|---|
+| US | WELL v2 Thermal/Light | Individual dimming | Setpoint adjustment | — | No (voluntary) |
+| UK | PAS 6463:2022 | NDV sensory control | — | — | No (guidance) |
+| DE | ASR A3.5 / ASR A3.4 | — | Window openable | — | Workplace only |
+| EU | EN 16798-1 | — | Category I individual | — | Design parameter only |
+| **Guidebook** | **H-02** | **Yes (B-06)** | **Yes (F-07)** | **Yes (A-04)** | **Recommended** |
+
+No building code mandates individual environmental control as an accessibility provision. WELL and PAS 6463 are closest. This is a guidebook-specific beyond-code provision.
+
+
 ### H-03 Visual Paging and Real-Time Captioning in Assembly Spaces
 <!-- CON-0157 [HIGH]: B-10 visual alarm + H-03 captioning + D-08 signage + E-08 corridor — public building cluster -->
 <!-- design_stage_lock: DD -->
@@ -3338,6 +3417,18 @@ Alarm); H-04 (Accessible Intercom)
 Deaf/HoH users, enabling the occupation of participation in assembly events, announcements, and emergency information that would otherwise
 
 be inaccessible; the speech-to-text accuracy specification (≥98% for prepared speech) ensures the compensation is functionally effective.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Visual Paging | Real-Time Captioning | Display Requirements | Notes |
+|---|---|---|---|---|---|
+| US | ADA §219 / FCC §713 | Assistive listening | CART/captioning in courts | — | FCC broadcast captioning |
+| UK | BS 8300-2 / Equality Act | Visual alerting | Recommended | — | — |
+| EU | EAA (2019/882) | — | Services accessibility | — | From June 2025 |
+| **Guidebook** | **H-03** | **All assembly spaces** | **Real-time captioning** | **Per DEAF BPC** | **Beyond all codes** |
+
+No building code mandates real-time captioning in assembly spaces as a built-in provision. EAA addresses services but not built environment fixtures.
+
 
 ### H-04 Accessible Intercom and Video Door Entry with Visual and Tactile Feedback
 <!-- CON-0042 [HIGH]: Multi-channel alerting: visual + auditory + vibrotactile simultaneously across all alert types -->
@@ -3387,6 +3478,19 @@ compensation channel is available regardless of which sensory impairment is pres
 Category K items address environments specifically for UPL users. All
 
 UPL provisions apply throughout the building where UPL users are anticipated; they are not confined to specialist rooms.
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Visual Indicator | Video | Tactile | Height |
+|---|---|---|---|---|---|
+| US | ADA §230 / A117.1 | Required | — | — | Accessible reach range |
+| UK | BS 8300-2:2018 §11 | Required | Recommended | — | 900-1200mm |
+| DE | DIN 18040-1 §4.4 | Required | Required in DIN 18040-2 | — | 850mm |
+| AU | AS 1428.1 | Referenced | — | — | — |
+| **Guidebook** | **H-04** | **Yes** | **Yes** | **Yes** | **Per H-01 range** |
+
+DE DIN 18040-2 is the ONLY code that specifically requires video intercom for residential accessibility.
+
 
 ### I-01 Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤20 N)
 <!-- design_stage_lock: DD -->
@@ -3531,6 +3635,19 @@ Federation. (2023). Atlas of MS. MSIF. Petajan, J.H., \& White, A.T.
 
 **Evidence basis (OT):** Biomechanical FOR; Compensatory FOR. Anti-scald thermostatic controls at 38°C compensate for the reduced sensation in UPL users with peripheral neuropathy (who cannot detect scalding temperatures by touch) and for the Uhthoff's-sensitive MS users (NEU/PAIN) for whom hot water contact causes acute neurological symptom worsening; the 38°C threshold is derived from the tissue damage threshold at typical exposure durations.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Anti-Scald Max Temp | Thermostatic | Grab Bar Spec | Notes |
+|---|---|---|---|---|---|
+| US | ADA / IPC | ≤49°C (120°F) (plumbing code) | Required | See G-03 | — |
+| UK | BS 8300 / Building Regs G3 | **≤44°C** (care/healthcare) | TMV2/TMV3 required | See G-03 | Strictest temperature |
+| AU | AS 1428.1 / AS 4032.1 | ≤45°C | Required | See G-03 | — |
+| DE | DIN 18040 / DVGW W 551 | ≤43°C (accessible bathrooms) | Required | See G-03 | — |
+| **Guidebook** | **I-03** | **≤44°C** | **TMV2 minimum** | **Bilateral** | **UK standard; UPL one-hand spec** |
+
+**HIGH DIVERGENCE:** Anti-scald temperatures — UK ≤44°C vs DE ≤43°C vs AU ≤45°C vs US ≤49°C. US is 5°C higher than DE — significant burn risk difference.
+
+
 ### H-05 Nurse Call and Personal Emergency Response
 <!-- CON-0114 [HIGH]: Residential care cluster: I-04 hoist + H-05 nurse call + K-04 vibrotactile -->
 <!-- design_stage_lock: DD -->
@@ -3650,6 +3767,20 @@ Threshold drain: if a drain channel at room threshold is unavoidable, maximum 6 
 *Primary evidence sources: DbI (Deafblind International) Nordic Programme guidelines; Sense UK (2022) *Building and Communicating*; ISO 23599:2019 (tactile walking surface indicators); Clark, J.L. (2024) *Touch the Future* (Co-1 — Protactile movement); Nuccio, J. & granda, r. (Protactile documentation — Co-1). These items supplement, and do not replace, the VIS (B, C, D, E items) and DEAF (A, H items) provisions.*
 
 ---
+
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Where Required | SWL | Track | Notes |
+|---|---|---|---|---|---|
+| UK | BS 8300-2 / Building Regs 2021 | **Changing Places (mandatory)** | ≥200kg | Full room coverage | Only mandatory jurisdiction |
+| US | ADA / A117.1 | Not required | — | — | Blocking/conduit for future only |
+| AU | NCC | Recommended | — | — | Adult change facilities |
+| DE | DIN 18040 | Not required | — | — | — |
+| ISO | ISO 21542 | Referenced | — | — | — |
+| **Guidebook** | **I-04** | **All accessible bathrooms** | **≥200kg** | **Full coverage** | **UK spec; universal provision** |
+
+UK is the ONLY jurisdiction mandating ceiling hoists (via Changing Places, mandatory since Sept 2021). Guidebook extends to all accessible bathrooms.
+
 
 ### K-01 Intervenor Adjacency at Service Counters
 <!-- CON-0151 [HIGH]: G-05 adjustable desk + K-01 intervenor clear floor — reach + proximity cluster -->
