@@ -74,3 +74,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Grant programmes by jurisdiction: UK DFG (Disabled Facilities Grant), AU NDIS home modifications, CA provincial programmes, NZ MOH housing modifications. DE KfW Altersgerecht Umbauen. Cross-reference Part 11.
+
+```
