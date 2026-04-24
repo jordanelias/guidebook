@@ -168,3 +168,76 @@
 | GAP-ECON-03 | EC | P3 | OPEN | economics-researcher | Part 11 §11.4 | Emergency egress cost table absent from §11.4. Refuge of rescue is a Brief-stage decision with high retrofit cost. BS 9999, DIN 18040-1 provide evidence. | 2026-04-09 18:03 |
 | GAP-DOI-01 | RP | P2 | OPEN-PARTIAL | jurisdiction-tracker | All BPC Key sources tables | ~45 GREY flags. Session 1: 2 resolved (RAP-12, MST-02). Session 2: 3 resolved (OTI-02 Wellecke, ULB-05 Kennedy, AQV-01 Afrin). Session 3: 2 resolved (TBE-01 Griggs PMID:30610000, TBE-04 Flensner PMID:21352533); 2 annotated ambiguity (POD-04, MST-04/TCO-01). Session 4 (2026-04-19): POD-11 flagged POSSIBLE-ERROR (Ismail 2023 FM hydro SR not locatable). Remaining ~32 non-PubMed items require journal website lookup: Archnet-IJAR (Rashid, Watchorn), AOTJ (OTI-03 Russell), Indoor Air (TCO-02 Van Hoof), J Appl Sci (TCO-04 Nakayama), Architectural Science Review, NAT-07 Weber, ULB-02 Togni, and lighting BPC items (TLD-01/02/03). Recommend desktop session with institutional access. POD-03 PMC6260403 also flagged WRONG-MATCH — correct PMC ID unknown. Total resolved: 7 items. Total flagged errors: 5 items. Remaining genuine GREY: ~28 items. Non-PubMed: OTI-03 Russell AOTJ, TBE-01/04/05 thermoregulation, TCO-01/02/04 thermal comfort, Archnet-IJAR papers. Priority: Tier 1 citations first (OTI-02 Wellecke, OTI-03 Russell, POD-03/04). See phase-b-handoff.md §10 Decision 4. | 2026-04-19 |
 | GAP-CITE-01 | RP | P1 | OPEN-PARTIAL | citation-tagger | Parts 1-12 | Citation tagging Step 2: populate ref_ids for 1,382 claims. Session 1 (2026-04-19): Part 4 Cat A — 45 TAGGED, 17 DEFERRED, 11 ORPHANED. Session 2 (2026-04-19): Part 4 Cat B-C — 38 TAGGED, 6 DEFERRED, 0 ORPHANED. Session 3 (2026-04-19): Part 4 Cat D-E — 164 TAGGED, 29 DEFERRED, 0 ORPHANED. Session 4 (2026-04-19): Part 4 Cat F-G — 139 TAGGED, 15 DEFERRED, 0 ORPHANED. Running total: 386 TAGGED / 67 DEFERRED / 11 ORPHANED / 918 PENDING. Registry gaps (cumulative): CAOT 2018 ABI, IEEE 1789-2015 flicker, CNIB 2024, Invalidiliitto 2022, BS 9999:2017, NAS 2023 autism-friendly, JOTA 2022 grab bar contrast, ADI 2020 World Alzheimer Report; NEW (F-G scope): Krupp 2003 MS fatigue diurnal (F-07 FDR-MST-02), Raj 2013 orthostatic onset (G-06 FDR-OFS-01), Stewart 2012 OI clinical data (G-06 FDR-OFS-01). All tagged with best-available supporting refs. Next: Session 5 Part 4 Cat H-I-K (~94 remaining claims). | 2026-04-19 |
+
+
+---
+
+## Phase 2A — Jurisdiction Coverage Audit P1 Gaps
+**Added:** 2026-04-24 06:32
+**Source:** Phase 2A automated audit — 93 BPC files × 49 registry jurisdictions
+
+### ABSENT jurisdictions (in registry, zero BPC coverage)
+These 24 jurisdictions have standards in the registry but no confirming evidence
+or explicit NO-DATA entries in any BPC slug. Priority for scoping assessment:
+
+| Code | Region | Standards in registry |
+|---|---|---|
+| AR | Latin America | 1 |
+| BD | South/SE Asia | 1 |
+| CL | Latin America | 1 |
+| CO | Latin America | 1 |
+| CR | Latin America | 1 |
+| EC | Latin America | 1 |
+| EG | MENA | 1 |
+| ET | Sub-Saharan Africa | 1 |
+| GH | Sub-Saharan Africa | 1 |
+| GT | Latin America | 1 |
+| ID | South/SE Asia | 1 |
+| IN | South Asia | 2 |
+| INT | International bodies | 16 |
+| KE | Sub-Saharan Africa | 1 |
+| MA | MENA | 1 |
+| MX | Latin America | 1 |
+| NG | Sub-Saharan Africa | 1 |
+| PE | Latin America | 1 |
+| PH | South/SE Asia | 1 |
+| TH | South/SE Asia | 1 |
+| TZ | Sub-Saharan Africa | 1 |
+| UN | International | 1 |
+| UY | Latin America | 1 |
+| ZA | Sub-Saharan Africa | 1 |
+
+**Recommended action:** Scope-gate Latin America (LAC) as a cluster. 
+INT and UN standards should be propagated into relevant domain slugs explicitly.
+South/SE Asia cluster (BD, ID, PH, TH) — assess for wayfinding-global-south slug.
+
+### PARTIAL-THIN jurisdictions (coverage thin, >5 NO-DATA gaps)
+| Code | Confirmed slugs | NO-DATA slugs | Status |
+|---|---|---|---|
+| CN | 2 | 7 | Scope-gate candidate |
+| IT | 9 | 11 | Research priority — AITO outreach needed |
+| NL | 9 | 8 | Confirmed research absence — scope-gate |
+| ES | 5 | 7 | Research priority — LAC evidence may transfer |
+| KR | 7 | 6 | Korean standards present; OT literature needed |
+
+### Slugs with highest jurisdiction gap burden
+| Slug | NO-DATA entries | Action |
+|---|---|---|
+| ALL-ROOMS.md | 49 | FROZEN file — migrate data to topic slugs |
+| residential-entry-and-threshold.md | 11 | Priority for ES/PT/IT/NL research |
+| DEAF.md | 10 | FROZEN — canonical at deaf-spatial-design |
+| reach-range-and-accessible-controls.md | 10 | Priority for JP/KR/CN coverage |
+| residential-kitchen-and-task-surfaces.md | 9 | Priority for ES/IT/PT |
+
+### OPEN P1 items added
+- GAP-JUR-AR: AR — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-BD: BD — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-CL: CL — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-CO: CO — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-CR: CR — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-EC: EC — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-EG: EG — no BPC coverage; assess scope-gate vs targeted research
+- GAP-JUR-ET: ET — no BPC coverage; assess scope-gate vs targeted research
+- GAP-FROZEN: 15 root-level FROZEN slug files — confirm superseded by topic slugs
+- GAP-SCOPE-CN: CN/ZH formally scope-gate in affected slugs (GAP-055 extension)
+- GAP-SCOPE-NL: NL formally scope-gate in affected slugs (GAP-057 extension)
