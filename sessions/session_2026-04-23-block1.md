@@ -331,3 +331,38 @@ next_action: >
   ot-built-environment-interface (Part 9).
 
 session_close: 2026-04-23 10:30
+
+
+## Block 8 — All EMPTY Slugs Complete
+
+### Phase 2B EMPTY slug backfill: 18/18 COMPLETE
+
+Block 8 committed 11 remaining EMPTY slugs:
+- thermoregulation-built-environment (F-07/F-08) — ASHRAE 55, EN 16798-1, ISO 7730; no disability-specific thermal code
+- hearing-impairment-built-environment (DEAF) — DE Two-Senses principle most comprehensive; Gallaudet DeafSpace (US)
+- ot-built-environment-interface — governed by OT frameworks not building codes
+- crpd-implementation-built-environment — CRPD ratified 191 states; codes are implementation mechanism
+- post-occupancy-evaluation-global — no code mandates POE
+- residential-accessible-home-case-studies — jurisdiction-specific case evidence
+- co1-housing-research-global-south — emerging; CBM/WHO primary sources
+- case-study-economics-financial-data — AU <1% premium, UK 0.5-1.6%
+- construction-cost-data — jurisdiction-specific market data
+- bathroom-typology-global-south — THIN; WHO WASH guidelines primary
+- sensory-space-global-south — THIN; emerging evidence
+
+commits_block8: 11 commits (9 framework/methodology + 2 Global South)
+
+## Cumulative Phase 2B Progress
+- Priority 1 (EMPTY → Part 4): 7/7 COMPLETE
+- Priority 2 (High NOT-RUN): 3/3 COMPLETE
+- Remaining EMPTY: 11/11 COMPLETE (this block)
+- **Total EMPTY slugs resolved: 18/18**
+- Remaining: ~40 PARTIAL slugs (need NOT-RUN language completion + jurisdiction enrichment)
+
+next_action: >
+  Phase 2B PARTIAL slugs — systematically enrich jurisdiction_coverage notes
+  for the ~40 slugs that have language data but poor jurisdiction tracking.
+  Batch by topic directory for efficiency. Start with entrances-and-circulation
+  (6 slugs) then sensory-environment (11 slugs).
+
+session_close: 2026-04-23 11:15
