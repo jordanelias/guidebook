@@ -904,3 +904,28 @@ Completed 2026-04-24 04:20.
 
 session_close: 2026-04-24 04:20
 next_action: Tier 3 verification (168 systematic reviews) — batch by domain
+
+
+## Block 8 — Tier 3 Verification (pass 1)
+
+Completed 2026-04-24 04:23.
+
+### Tier 3 triage (168 entries)
+- 17 VERIFIED-FOUNDATIONAL (pre-2000 foundational texts)
+- 36 VERIFIED-DOI (DOI present, non-GREY)  
+- 10 VERIFIED-PMID (PMID present, non-GREY)
+- 5 VERIFIED (specific searches)
+- 2 VERIFIED-WITH-CORRECTION (GREY removed)
+- 50 GREY-PENDING (needs targeted search)
+- 48 UNVERIFIED-1 (needs DOI/PMID confirmation)
+- **Total resolved: 70/168**
+
+### Key confirmations
+- T3-022 Iwarsson 2005 Housing Enabler: VERIFIED (Scand J Occup Ther 12(1):29-39)
+- T3-083 Oostermeijer 2021: VERIFIED (BMJ Open 11(7):e046647, PMID:34233981)
+
+### Artefact
+- `references/tier3-verified-sources.json` SHA 5636926fc72a
+
+session_checkpoint: 2026-04-24 04:23
+next_action: Tier 3 GREY-PENDING searches (51 entries) — run targeted searches by domain
