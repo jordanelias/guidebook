@@ -1,50 +1,45 @@
 # Search Log — post-occupancy-evaluation-global
-**Topic:** frameworks-and-methodology
-**Status:** NOT-RUN
-**GAP:** GAP-LRP-12 (P3)
-**Phase:** 4
-**Created:** 2026-04-05 18:26 (CO-0005 P0-D5)
 
----
+```yaml
+slug: post-occupancy-evaluation-global
+query: "post-occupancy evaluation POE accessibility disability built environment satisfaction"
+last_searched: 2026-04-23 10:45
+early_close_triggered: false
 
-## Coverage
-
-| Axis | Target | Completed |
-|---|---|---|
-| Languages | 19 (SV/NO/DA/FI/FR/DE/ZH/JA/NL/ES/PT/KO/IT/EN/AR/HI/ID/SW/BN) | 0 |
-| Jurisdictions | 46 | 0 |
-
-## Jurisdiction Status
-*To be populated by research-log-manager LOG.*
-
-## Session Log
-*No sessions run.*
+languages:
+  EN: {status: SEARCHED, results: 5, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DE: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  NO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  FR: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  JA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  NL: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  ES: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
 
 jurisdiction_coverage:
-  US: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  UK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  AU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AU: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CA: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NO: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -67,3 +62,7 @@ jurisdiction_coverage:
   GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  No building code mandates POE. UK RIBA Plan of Work Stage 7 references POE. US GSA POE programme. AU Livable Housing POE pilot. WELL Performance Verification. Cross-reference Part 12 (Case Studies).
+```
