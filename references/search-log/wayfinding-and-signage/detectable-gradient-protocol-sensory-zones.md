@@ -28,41 +28,41 @@ no_data_flags: [NO, FR, FI, ZH, JA]
 ```yaml
 
 jurisdiction_coverage:
-  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA §705: detectable warnings. TWSI at platform edges, curb ramps."}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "BS 8300 TWSIs. DfT Guidance on Tactile Paving."}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.4.1:2009 tactile ground surface indicators. AS/NZS 1428.4 series."}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DE: {status: THIN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 32984:2020 tactile indicators (Bodenindikatoren). Comprehensive system."}
   NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 23599:2019 TWSIs — international standard for tactile walking surface indicators."}
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "JIS T 9251 tactile tiles — Japan originated TWSIs (Seiichi Miyake, 1965)."}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -71,6 +71,11 @@ jurisdiction_coverage:
   EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  TWSI systems vary significantly. JP originated concept (1965). ISO 23599:2019 harmonises. DE DIN 32984 most comprehensive. US limited to detectable warnings at specific locations. Sensory gradient concept is guidebook-specific — no code addresses graduated sensory zoning.
+
+```
