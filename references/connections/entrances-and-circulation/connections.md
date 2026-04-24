@@ -1152,3 +1152,24 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 
 **Action required:** Kitchen/laundry flooring specification: water-resistant resilient flooring in wheelchair-primary spaces. Hard tile contraindicated. Cross-reference A-09.
 
+
+### CON-0181
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** true
+**Source BPC slug(s):** floor-vibration-wheelchair-disability, chronic-pain-built-environment, ofs-built-environment
+**Target item(s):** A-09 (floor surface spec)
+**Target population(s):** MOB, PAIN, NEU, OFS
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** WBV evidence (Garcia-Mendez 2013, Koontz 2012, Chénier 2014 — all confirmed by citation-verifier) demonstrates wheelchair users exceed ISO 2631-1 health caution zones on common surfaces. Floor type is the single largest WBV determinant. This evidence is currently siloed in MOB/wheelchair BPC entries but applies directly to: PAIN (WBV increases spinal disorder risk in populations with pre-existing sensitised pain processing), NEU (tremor amplification from surface vibration), and OFS (vibration-induced fatigue compounds reduced activity tolerance in ME/CFS).
+
+**Evidence basis:** Garcia-Mendez et al. 2013 (PMID:23820152); Koontz et al. 2012 (DOI:10.1123/jab.28.4.412); Chénier & Aissaoui 2014 (PMID:25276802). All verified T3.
+
+**Action required:** Extend floor surface specification to include PAIN, NEU, OFS population tags. Add WBV risk note to chronic-pain and fatigue-spectrum slugs.
+
+**Disposition notes:** —
