@@ -86,3 +86,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  Cross-jurisdictional — failures documented in UK (DfT, Habinteg), US (DOJ settlements), AU (Summer Foundation). No jurisdiction-specific code — this is evidence of non-compliance.
+
+```
