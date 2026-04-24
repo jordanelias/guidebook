@@ -32,8 +32,8 @@ jurisdiction_coverage:
   DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

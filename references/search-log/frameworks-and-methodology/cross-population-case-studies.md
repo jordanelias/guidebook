@@ -41,12 +41,12 @@ jurisdiction_coverage:
   UK: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   CA: {status: PARTIAL, co1_attempted: false, tier5_attempted: true, tier6_attempted: false}
   AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN}
+  NZ: {status: SEARCHED}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: false}
   JP: {status: THIN}
   KR: {status: THIN}
   IN: {status: THIN}
-  ZA: {status: NOT-RUN}
+  ZA: {status: THIN}
   BR: {status: THIN}
   MX: {status: THIN}
   NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: false}
@@ -59,8 +59,8 @@ jurisdiction_coverage:
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
   BE: {status: THIN}
-  IE: {status: NOT-RUN}
-  ISO: {status: NOT-RUN}
+  IE: {status: SEARCHED}
+  ISO: {status: SEARCHED}
 
 jurisdiction_coverage_summary:
   searched: [US, UK, AU, SG, NO, FR, NL]
