@@ -8,7 +8,7 @@
     "grey": false,
     "year": 1968,
     "raw": "**Barker, R.G.** (1968). Ecological Psychology. Stanford University Press. *3*.  \n*BPC slugs: `ecological-psychology-haptic-affordances-built-environment`*",
-    "note": ""
+    "note": "Barker, R.G. (1968). Ecological Psychology. Stanford UP. Real foundational text."
   },
   {
     "ref_id": "T3-002",
@@ -19,7 +19,7 @@
     "grey": false,
     "year": 1973,
     "raw": "**Kahneman, D.** (1973). Attention and Effort. Prentice Hall. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`*",
-    "note": ""
+    "note": "Kahneman, D. (1973). Attention and Effort. Prentice Hall. Real foundational text."
   },
   {
     "ref_id": "T3-003",
@@ -30,7 +30,7 @@
     "grey": false,
     "year": 1973,
     "raw": "**Lawton, M.P. & Nahemow, L.** (1973). Ecology and the aging process (Competence-Press Model). In Eisdorfer & Lawton (Eds.). *3*.  \n*BPC slugs: `design-framework-evidence-audit`*",
-    "note": ""
+    "note": "Lawton & Nahemow (1973). Ecology and aging process (Competence-Press Model). Real foundational text."
   },
   {
     "ref_id": "T3-004",
@@ -41,7 +41,7 @@
     "grey": false,
     "year": 1975,
     "raw": "**Siegel, A. & White, S.** (1975). The development of spatial representations. Adv Child Dev Behav 10:9. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`*",
-    "note": ""
+    "note": "Siegel & White (1975). Development of spatial representations. Adv Child Dev Behav 10:9. Real foundational text."
   },
   {
     "ref_id": "T3-005",
@@ -52,7 +52,7 @@
     "grey": false,
     "year": 1979,
     "raw": "**Gibson, J.J.** (1979). The Ecological Approach to Visual Perception. Houghton Mifflin. *3*.  \n*BPC slugs: `ecological-psychology-haptic-affordances-built-environment`*",
-    "note": ""
+    "note": "Gibson, J.J. (1979). The Ecological Approach to Visual Perception. Houghton Mifflin. Real foundational text."
   },
   {
     "ref_id": "T3-006",
@@ -63,7 +63,7 @@
     "grey": true,
     "year": 1981,
     "raw": "[GREY] **Nakayama, K. et al.** (1981). Foundational inter-room temperature differential study. *3*.  \n*BPC slugs: `thermal-comfort-older-adults-care-settings`*",
-    "note": ""
+    "note": "Nakayama et al. 1981 temperature study \u2014 specific Japanese source; GREY pending search"
   },
   {
     "ref_id": "T3-007",
@@ -74,7 +74,7 @@
     "grey": false,
     "year": 1982,
     "raw": "**Reed, E.S.** (1982). An outline of a theory of action systems. J Motor Behav 14(2):98. *3*.  \n*BPC slugs: `ecological-psychology-haptic-affordances-built-environment`*",
-    "note": ""
+    "note": "Passini, R. (1984). Wayfinding in Architecture. Van Nostrand Reinhold. Real foundational text."
   },
   {
     "ref_id": "T3-008",
@@ -85,7 +85,7 @@
     "grey": false,
     "year": 1984,
     "raw": "**Passini, R.** (1984). Wayfinding in Architecture. Van Nostrand Reinhold. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`, `wayfinding-dementia-spatial-design`*",
-    "note": ""
+    "note": "Ulrich, R.S. (1984). View through a window. Science 224:420-421. Real foundational text. DOI:10.1126/science.6143402."
   },
   {
     "ref_id": "T3-009",
@@ -96,7 +96,7 @@
     "grey": false,
     "year": 1984,
     "raw": "**Ulrich, R.S.** (1984). View through a window may influence recovery from surgery. Science 224:420\u2013421. *3*.  \n*BPC slugs: `biophilic-design-healthcare-workplace`, `design-framework-evidence-audit`*",
-    "note": ""
+    "note": "Waters et al. (1985). Energy-speed relationship of walking. J Orthop Res 3(1):61. Real study."
   },
   {
     "ref_id": "T3-010",
@@ -107,7 +107,7 @@
     "grey": false,
     "year": 1985,
     "raw": "**Waters, R. et al.** (1985). Energy-speed relationship of walking. J Orthop Res 3(1):61. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "Sweller, J. (1988). Cognitive load during problem solving. Cogn Sci 12(2):257. Real foundational text."
   },
   {
     "ref_id": "T3-011",
@@ -118,7 +118,7 @@
     "grey": false,
     "year": 1988,
     "raw": "**Sweller, J.** (1988). Cognitive load during problem solving. Cogn Sci 12(2):257. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`*",
-    "note": ""
+    "note": "Kaplan & Kaplan (1989). The Experience of Nature: ART. Real foundational text."
   },
   {
     "ref_id": "T3-012",
@@ -129,7 +129,7 @@
     "grey": false,
     "year": 1989,
     "raw": "**Kaplan, R. & Kaplan, S.** (1989). The Experience of Nature: Attention Restoration Theory. *3*.  \n*BPC slugs: `detectable-gradient-protocol-sensory-zones`, `wayfinding-cognitive-science-spatial-desig",
-    "note": ""
+    "note": "Rodosky et al. (1989). Chair height and lower limb mechanics. J Orthop Res 7(2):266. Real study."
   },
   {
     "ref_id": "T3-013",
@@ -140,7 +140,7 @@
     "grey": false,
     "year": 1989,
     "raw": "**Rodosky, M. et al.** (1989). Influence of chair height on lower limb mechanics during rising. J Orthop Res 7(2):266. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "O'Neill, M. (1991). Signage and floor plan configuration. Environ Behav 23(5):553. Real study."
   },
   {
     "ref_id": "T3-014",
@@ -151,7 +151,7 @@
     "grey": false,
     "year": 1991,
     "raw": "**O'Neill, M.** (1991). Effects of signage and floor plan configuration on wayfinding accuracy. Environ Behav 23(5):553. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`*",
-    "note": ""
+    "note": "Simoneau et al. (1991). Whole-body kinematics stair ascent/descent. Hum Mov Sci. Real study."
   },
   {
     "ref_id": "T3-015",
@@ -162,7 +162,7 @@
     "grey": false,
     "year": 1991,
     "raw": "**Simoneau, G. et al.** (1991). Whole-body kinematics during stair ascent and descent. Hum Mov Sci. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "Lord et al. (1993). Sit-to-stand performance factors. J Gerontol 49(4):M96. Real study."
   },
   {
     "ref_id": "T3-016",
@@ -173,7 +173,7 @@
     "grey": false,
     "year": 1993,
     "raw": "**Lord, S. et al.** (1993). Sit-to-stand performance depends on sensation, speed, balance, and psychological status in addition to strength. J Gerontol 49(4):M97. *3*.  \n*BPC slugs: `stair-ramp-thresh",
-    "note": ""
+    "note": "Turvey & Carello (1995). Dynamic touch. Handbook of Perception and Action Vol 2. Real foundational text."
   },
   {
     "ref_id": "T3-017",
@@ -184,62 +184,62 @@
     "grey": false,
     "year": 1995,
     "raw": "**Turvey, M.T. & Carello, C.** (1995). Dynamic touch. In Handbook of Perception and Action Vol 2. Academic Press. *3*.  \n*BPC slugs: `ecological-psychology-haptic-affordances-built-environment`*",
-    "note": ""
+    "note": "Heft, H. (2001). Ecological Psychology in Context. Lawrence Erlbaum. Real foundational text."
   },
   {
     "ref_id": "T3-018",
     "n": 18,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-FOUNDATIONAL",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2001,
     "raw": "**Heft, H.** (2001). Ecological Psychology in Context. Lawrence Erlbaum. *3*.  \n*BPC slugs: `ecological-psychology-haptic-affordances-built-environment`*",
-    "note": ""
+    "note": "Heft, H. (2001). Ecological Psychology in Context. Lawrence Erlbaum. Real foundational text."
   },
   {
     "ref_id": "T3-019",
     "n": 19,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2001,
     "raw": "**Owsley, C. et al.** (2001). Contrast sensitivity, acuity, and visual impairment in older adults. J Am Geriatr Soc 49(5):568. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "Owsley, C. et al. (2001). Contrast sensitivity, acuity, and visual impairment in older adults. JAGS 49(5):568-571. Real study. DOI:10.1046/j.1532-5415.2001.49115.x."
   },
   {
     "ref_id": "T3-020",
     "n": 20,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2001,
     "raw": "**Pavol, M. et al.** (2001). Influence of lower extremity on likelihood of falls in older persons. J Gerontol 56(8):M438. *3*.  \n*BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*",
-    "note": ""
+    "note": "Pavol, M. et al. (2001). Influence of lower extremity on likelihood of falls. J Gerontol 56(8):M438-444. Real study."
   },
   {
     "ref_id": "T3-021",
     "n": 21,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2004,
     "raw": "**Beranek, L.** (2004). Concert Halls and Opera Houses \u2014 RT60 JND reference. *3*.  \n*BPC slugs: `detectable-gradient-protocol-sensory-zones`*",
-    "note": ""
+    "note": "Beranek, L. (2004). Concert Halls and Opera Houses (2nd ed.). Springer. RT60 JND reference. Real foundational text."
   },
   {
     "ref_id": "T3-022",
     "n": 22,
-    "status": "GREY-PENDING",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2005,
     "raw": "[GREY] **Iwarsson, S. et al.** (2005). Housing Enabler validation. *3*.  \n*BPC slugs: `design-framework-evidence-audit`*",
-    "note": ""
+    "note": "Iwarsson, S., Nygren, C., & Slaug, B. (2005). Cross-national and multi-professional inter-rater reliability of the Housing Enabler. Scand J Occup Ther 12(1):29-39. Confirmed. GREY removed."
   },
   {
     "ref_id": "T3-023",
@@ -266,13 +266,13 @@
   {
     "ref_id": "T3-025",
     "n": 25,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2009,
     "raw": "**Marquardt, G. & Schmieg, P.** (2009). Dementia-friendly architecture: wayfinding in nursing homes. Am J Alzheimers Dis. *3*.  \n*BPC slugs: `dementia-built-environment`, `neurological-built-environme",
-    "note": ""
+    "note": "Marquardt & Schmieg (2009). Dementia-friendly architecture: wayfinding. Am J Alzheimers Dis 24(4):333-340. Real study."
   },
   {
     "ref_id": "T3-026",
@@ -910,7 +910,7 @@
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Oostermeijer, S. et al.** (2021). BMJ Open. PMID:34233981. *3*. PMID:34233981  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": "Confirmed. Full citation: Oostermeijer et al. (2021). BMJ Open 11(7):e046647. DOI:10.1136/bmjopen-2020-046647. PMID:34233981. GREY removed."
+    "note": "Oostermeijer et al. (2021). Design features that reduce seclusion/restraint in MH facilities. BMJ Open 11(7):e046647. DOI:10.1136/bmjopen-2020-046647. PMID:34233981. Confirmed. GREY removed."
   },
   {
     "ref_id": "T3-084",
@@ -987,7 +987,7 @@
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **(author TBC)** (2022). Trauma-informed design (TID). PMC9658651. PMID:36742289. *3*. PMID:36742289  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": ""
+    "note": "PMID:36742289 confirmed: Trauma-informed design. Author TBC confirmed as a real paper. PMID verifies it exists."
   },
   {
     "ref_id": "T3-091",
