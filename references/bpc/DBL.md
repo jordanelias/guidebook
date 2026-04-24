@@ -85,7 +85,7 @@ Tactile wayfinding (directional bars and hazard domes per ISO 23599:2019 / ABNT 
 1. Deafblind International (DbI). (n.d.). Guidelines on Best Practice for Service Provision to Deafblind People. DbI. URL: https://www.deafblindinternational.org/?media_dl=3219 — Tier 2 [EN, global]
 2. Nordic Welfare Centre. (2023). The Deafblind Field. NVC. URL: https://nordicwelfare.org/en/disability-issues/the-deafblind-field/ — Tier 2 [SV/NO/DA/FI]
 3. Clark, J.L. (2023). Touch the Future: A Manifesto in Essays. Norton. — Co-1 [EN]
-4. Clark, J.L. (2021). Against Access. McSweeney's / Jim Cromwell Interpreting. — Co-1 [EN]
+4. Clark, J.L. (2022). Against Access [essay]. McSweeney's Issue 61, fall 2022. Also published as chapter in: Clark, J.L. (2023). Touch the Future: A Manifesto in Essays. Norton. — Co-1 [EN]  [CORRECTED: citation-verifier 2026-04-23 — year was 2021 (wrong); essay not book; 2022 is correct McSweeney's pub date]
 5. Protactile. (2025). Wikipedia. URL: https://en.wikipedia.org/wiki/Protactile — Co-1 (sourced from Nuccio/granda/Clark) [EN]
 6. ABNT NBR 16537:2024. Acessibilidade — Sinalização tátil no piso — Diretrizes para elaboração de projetos. ABNT. — Tier 4 [PT] — only jurisdiction explicitly extending tactile paving to surdo-cegueira
 7. DINF. (n.d.). 盲ろう者のコミュニケーション. DINF Japan. URL: https://www.dinf.ne.jp/doc/japanese/resource/blind/z02002/z0200204.html — Tier 2 [JA]
