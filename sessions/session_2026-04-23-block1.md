@@ -1821,3 +1821,55 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 07:35
+
+
+## Block 27 — Tier 3 UNVERIFIED-1 Batch 2 + BPC Author Corrections
+
+### Verified Entries (this block)
+| ID | Author | Year | Status | Citation |
+|---|---|---|---|---|
+| T3-050 | Al Lawati, Z. et al. | 2017 | VERIFIED | Arch Phys Med Rehabil 98(10):2097-2099.e7. DOI:10.1016/j.apmr.2017.04.023. PMID:28579369 |
+| T3-145 | Liu, Y. et al. | 2024 | VERIFIED | Sustainability 16(9):3639. DOI:10.3390/su16093639. 571 studies screened. |
+
+### Resolved (this block)
+| ID | Status | Note |
+|---|---|---|
+| T3-048 | UNVERIFIED-CLOSED | Steinfeld 2016 — no exact match. Multiple IDEA Center pubs exist but none titled "Experimental Studies of Wheelchair" in 2016. Forward to BPC author. |
+
+### BPC Author Corrections Applied
+- **Kim, W. → Kim, C.S.** in bibliography-v11-draft.md (DOI:10.1016/j.apergo.2014.08.011)
+- **Mitra, S. & Jones, N. → Mitra, S., Palmer, M., Kim, H., Mont, D. & Groce, N.** in bibliography-v11-draft.md (DOI:10.1016/j.dhjo.2017.04.007)
+
+### Cumulative Tier 3 UNVERIFIED-1 Progress
+- Resolved this conversation: 8/20 (T3-040, T3-043, T3-048, T3-050, T3-056, T3-067, T3-126, T3-145)
+- Remaining: 12/20 (T3-058 TERRAGON, T3-072 EIB, T3-104 Jee, T3-105 KfW, T3-108 Misch, T3-124 Gonçalves, T3-129 Rhee, T3-130 Tekin, T3-137 Al Khatib, T3-140 INSERM, T3-142 Kapsalis, T3-143 Larivière)
+
+### Commits this block
+- 5694d8b3ff9e: Al Lawati VERIFIED + Steinfeld CLOSED
+- 5dbc7c0ee0fc: BPC author corrections (Kim, Mitra)
+- 2702398e5c54: Liu 2024 VERIFIED
+
+### FULL CONVERSATION TOTALS
+
+| Task | Commits | Status |
+|---|---|---|
+| Phase 2C-E multilingual backfill | 18 | COMPLETE |
+| Jurisdiction NOT-RUN cleanup | 4 | COMPLETE |
+| Appendix A expansion (A.18–A.20) | 1 | COMPLETE |
+| Phase 4 spec database | 1 | COMPLETE (73/73) |
+| Tier correction propagation | 1 | COMPLETE (10/10) |
+| Tier 3 UNVERIFIED-1 verification | 4 | 8/20 resolved |
+| BPC author corrections | 1 | 2 corrections applied |
+| Session management | 5 | Blocks 23–27 |
+| **Total** | **35** | |
+
+next_action: >
+  Tier 3 UNVERIFIED-1: 12 remaining entries.
+  Co-1 verification: 3 remaining UNVERIFIED-1.
+  Most remaining T3 entries are grey literature or non-English
+  (TERRAGON/DStGB German, EIB European, KfW German, INSERM French,
+  Jee Korean) — may require native-language search or BPC author input.
+
+blockers: none
+
+session_close: 2026-04-24 08:00
