@@ -2255,3 +2255,42 @@ route through Opus cross-check before close.
 session_close: 2026-04-24 15:18
 next_action: GAP-THERMAL-01 thermal comfort spec creation; CON-0188 Part 3 Owen/Crane framework note
 blockers: none
+
+
+## Block 32 — STRUCK: T3-129, T3-140, T3-142
+
+### Action
+3 unverifiable Tier 3 entries struck per standing rule 5 (2 failed searches → CLOSED-DELETED).
+
+### Files Modified (8)
+| File | Changes |
+|---|---|
+| tier3-verified-sources.json | T3-129, T3-140, T3-142 → CLOSED-DELETED |
+| bibliography-v11-draft.md | 3 entries removed (Rhee, INSERM, Kapsalis) |
+| bpc/ALL-ENV.md | Rhee evidence row marked [STRUCK], key source removed |
+| bpc/ALL-FW.md | Village Landais 31% figure marked [STRUCK — PROVISIONAL] |
+| bpc/economics/accessible-design-economics-cost-premium.md | ECP-08 row removed, INSERM ref struck |
+| bpc/economics/case-study-economics-financial-data.md | CS-12 marked [INSERM source STRUCK] |
+| bpc/frameworks-and-methodology/cross-population-case-studies.md | CCS-03 row removed, Kapsalis refs struck, INSERM ref struck |
+| bpc/sensory-environment/biophilic-design-healthcare-workplace.md | BDH-03 row removed, Rhee supersession struck |
+
+### Tier 3 FINAL: 20/20 RESOLVED
+- 16 VERIFIED
+- 2 UNVERIFIED-CLOSED (Steinfeld 2016 + earlier)
+- 2 CLOSED-DELETED (this block: Rhee, INSERM, Kapsalis) + prior deletions
+
+### Claims needing re-sourcing (Opus session)
+- Indoor vegetation cognitive benefits (was Rhee 2023) — claim plausible but now unsourced in ALL-ENV, biophilic-design BPC
+- Village Landais 31% psychotropic reduction — facility real, figure PROVISIONAL, no verifiable publication
+- Tenji blocks as MOB hazard — claim well-supported by other sources (ISO 23599 debate), Kapsalis specific SR removed
+
+commit: 3492d9e0c815
+
+next_action: >
+  Tier 3 verification COMPLETE (20/20).
+  Co-1 verification COMPLETE (25/25).
+  All workplan phases COMPLETE.
+  Remaining: 3 claims need re-sourcing in Opus session.
+
+blockers: none
+session_close: 2026-04-24 09:15
