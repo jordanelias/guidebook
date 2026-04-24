@@ -14,11 +14,11 @@ languages:
   FI: {status: NO-DATA, results: 0, db: [web]}
   ZH: {status: NO-DATA, results: 0, db: [web]}
   JA: {status: NO-DATA, results: 0, db: [web]}
-  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [PAS6463-2022, Mostafa-ASPECTSS-2021, Tola2021-ScopingReview, DSDC-EADDAT-2022, Kaplan1995-JEP]
 bpc_ref: "detectable-gradient-protocol-sensory-zones"
 thin_flags: [DE, SV, DA]
@@ -33,36 +33,36 @@ jurisdiction_coverage:
   AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "AS 1428.4.1:2009 tactile ground surface indicators. AS/NZS 1428.4 series."}
   CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   DE: {status: THIN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 32984:2020 tactile indicators (Bodenindikatoren). Comprehensive system."}
-  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 23599:2019 TWSIs — international standard for tactile walking surface indicators."}
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  FR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "JIS T 9251 tactile tiles — Japan originated TWSIs (Seiichi Miyake, 1965)."}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JP: {status: THIN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "JIS T 9251 tactile tiles — Japan originated TWSIs (Seiichi Miyake, 1965)."}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -70,9 +70,9 @@ jurisdiction_coverage:
   GT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >

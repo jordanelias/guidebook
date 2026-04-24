@@ -9,18 +9,18 @@ early_close_triggered: false
 languages:
   EN: {status: SEARCHED, results: 6, db: [web, NFPA, ADA, BS], co1_pass: not-run, native_standards_pass: complete}
   DE: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  NO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  FR: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  JA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  NL: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  SV: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FR: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ZH: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 
 jurisdiction_coverage:
   US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ADA 2010 Standards §702 — visual alarm appliances required. NFPA 72 specifies strobe flash rate ≤2 Hz to reduce seizure risk. ICC A117.1 references. UL 1971 listed strobes."}
@@ -40,24 +40,24 @@ jurisdiction_coverage:
   JP: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SG: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NZ: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IE: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -65,9 +65,9 @@ jurisdiction_coverage:
   GT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
