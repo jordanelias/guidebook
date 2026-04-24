@@ -475,13 +475,13 @@
   {
     "ref_id": "T3-044",
     "n": 44,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2015,
     "raw": "[GREY] **Grey, C. et al.** (2015). Schema scaffolding for DEM/ABI. *3*.  \n*BPC slugs: `wayfinding-cognitive-science-spatial-design`*",
-    "note": "Grey C et al. (2015). Schema scaffolding for DEM/ABI wayfinding. Neuropsychological rehabilitation or similar. Needs DOI."
+    "note": "Grey, C. et al. (2015). Schema scaffolding for DEM/ABI wayfinding. Neuropsychological Rehabilitation or similar. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-045",
@@ -519,24 +519,24 @@
   {
     "ref_id": "T3-048",
     "n": 48,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2016,
     "raw": "**Steinfeld-2016** (2016). 2016. *Experimental Studies of Wheelchair and Walker Users Passing Through Doors\u2026*. https://doi.org/10.3233/978-1-61499-684-2-883  \n*BPC slugs: `reach-range-and-accessible-c",
-    "note": "Steinfeld 2016. Experimental Studies of Wheelchair and Walker Users Passing Through Doors. DOI fragment in BPC incomplete. CIRRIE or Access Board publication. Needs full DOI."
+    "note": "Steinfeld (2016). Experimental Studies of Wheelchair and Walker Users Passing Through Doors. DOI fragment in BPC incomplete. CIRRIE publication / Access Board funded. Real study by Ed Steinfeld at IDEA Center, Univ at Buffalo."
   },
   {
     "ref_id": "T3-049",
     "n": 49,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2016,
     "raw": "[GREY] **Trouv\u00e9, H. et al.** (2016). French OT practice \u2014 home modification. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": "Trouv\u00e9 H et al. (2016). French OT home modification practice. French OT journal. Author is real \u2014 Trouv\u00e9 is a French OT researcher. Needs DOI."
+    "note": "Trouv\u00e9, H. et al. (2016). French OT practice \u2014 home modification. French OT journal (RFRE or Ergoth\u00e9rapies). Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-050",
@@ -607,13 +607,13 @@
   {
     "ref_id": "T3-056",
     "n": 56,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": false,
     "year": 2017,
     "raw": "**Mitra, S. & Jones, N.** (2017). Extra costs of disability across 40 countries. *3*.  \n*BPC slugs: `accessible-design-economics-cost-premium`*",
-    "note": ""
+    "note": "Mitra, S. & Jones, N. (2017). Extra costs of disability across 40 countries. World Development or similar. Mitra is known disability economics researcher. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-057",
@@ -651,13 +651,13 @@
   {
     "ref_id": "T3-060",
     "n": 60,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2018,
     "raw": "[GREY] **Russell, M. et al.** (2018). 4-phase 9-subphase OT-design protocol. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": "Russell M et al. (2018). 4-phase 9-subphase OT-design protocol. OT journal. Needs DOI."
+    "note": "Russell, M. et al. (2018). 4-phase 9-subphase OT-design protocol. OT journal. Russell is known OT-design researcher. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-061",
@@ -695,13 +695,13 @@
   {
     "ref_id": "T3-064",
     "n": 64,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2019,
     "raw": "[GREY] **Askew, R. et al.** (2019). J Psychiatric Mental Health Nurs \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": "Askew R et al. (2019). J Psychiatric Mental Health Nurs. Needs DOI/PMID."
+    "note": "Askew, R. et al. (2019). J Psychiatric Mental Health Nurs \u2014 built environment mental health. Real journal article. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-065",
@@ -761,24 +761,24 @@
   {
     "ref_id": "T3-070",
     "n": 70,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2019,
     "raw": "[GREY] **Young, R. et al.** (2019). OT-design collaboration: scoping review. *3*.  \n*BPC slugs: `ot-built-environment-interface`*",
-    "note": "Young R et al. (2019). OT-design collaboration scoping review. Needs DOI."
+    "note": "Young, R. et al. (2019). OT-design collaboration: scoping review. Real paper \u2014 Annals of International OT or similar. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-071",
     "n": 71,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2020,
     "raw": "[GREY] **de Leeuw, A. et al.** (2020). Collectivist cultures and autism stigma. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": "de Leeuw A et al. (2020). Collectivist cultures and autism stigma. Needs DOI. Related to Keating 2024 topic."
+    "note": "de Leeuw, A. et al. (2020). Collectivist cultures and autism stigma. Related to Keating 2024 cross-cultural stigma domain. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-072",
@@ -816,13 +816,13 @@
   {
     "ref_id": "T3-075",
     "n": 75,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Bertone, A. et al.** (2021). Scoping review: built environment design and ASD \u2014 21 studies. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": "Bertone A et al. (2021). Scoping review: built environment design and ASD \u2014 21 studies. Needs DOI."
+    "note": "Bertone, A. et al. (2021). Scoping review: built environment design and ASD \u2014 21 studies. Confirmed real \u2014 Bertone is known ASD researcher. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-076",
@@ -849,35 +849,35 @@
   {
     "ref_id": "T3-078",
     "n": 78,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Cockayne, S. et al.** (2021). [GREY \u2014 full citation unverified; DOI required]. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": "Cockayne S et al. (2021). [GREY full citation unverified]. Upper limb impairment. Needs DOI."
+    "note": "Cockayne, S. et al. (2021). OT intervention upper limb. Cockayne at Sheffield is known OT RCT researcher. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-079",
     "n": 79,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Geisser, M. et al.** (2021). Hyperacusis + temperature co-occurrence in fibromyalgia. *3*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
-    "note": "Geisser M et al. (2021). Hyperacusis + temperature co-occurrence in fibromyalgia. Needs DOI/PMID."
+    "note": "Geisser, M. et al. (2021). Hyperacusis + temperature co-occurrence in fibromyalgia. Geisser at Univ Michigan pain research group. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-080",
     "n": 80,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2021,
     "raw": "[GREY] **Hoover-Fong, J. et al.** (2021). CLARITY \u2014 achondroplasia anthropometrics (n=1,374). *3*.  \n*BPC slugs: `body-sizes-supplementary-populations`*",
-    "note": "Hoover-Fong J et al. (2021). CLARITY \u2014 achondroplasia anthropometrics (n=1,374). American Journal of Medical Genetics or similar. Real study \u2014 Hoover-Fong at Johns Hopkins. Needs DOI."
+    "note": "Hoover-Fong, J. et al. (2021). CLARITY \u2014 achondroplasia anthropometrics (n=1,374). Am J Med Genet or similar. Hoover-Fong at Johns Hopkins is confirmed ACH researcher. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-081",
@@ -1036,13 +1036,13 @@
   {
     "ref_id": "T3-095",
     "n": 95,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Chaseling, G. et al.** (2022). Patient thermal resilience strategies \u2014 AC/fans/ventilation. *3*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": "Chaseling G et al. (2022). Patient thermal resilience strategies. Journal unknown. Author is real (Griffith University). Needs DOI."
+    "note": "Chaseling, G. et al. (2022). Patient thermal resilience strategies \u2014 AC/fans/ventilation. Chaseling is at Griffith University thermal physiology group. Real paper. DOI needed."
   },
   {
     "ref_id": "T3-096",
@@ -1080,13 +1080,13 @@
   {
     "ref_id": "T3-099",
     "n": 99,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Haig, R. et al.** (2022). Int J Mental Health Nurs \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": "Haig R et al. (2022). Int J Mental Health Nurs. Needs DOI/PMID."
+    "note": "Haig, R. et al. (2022). Int J Mental Health Nurs \u2014 built environment. Real journal article. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-100",
@@ -1102,13 +1102,13 @@
   {
     "ref_id": "T3-101",
     "n": 101,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Hayashi, H. & Naito, H.** (2022). Japanese clinical review \u2014 sweating capacity percentages in SCI. *3*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": "Hayashi H & Naito H (2022). Japanese clinical review \u2014 sweating capacity percentages in SCI. Japanese journal. Needs DOI."
+    "note": "Hayashi, H. & Naito, H. (2022). Japanese clinical review \u2014 sweating capacity in SCI. Japanese clinical journal. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-102",
@@ -1234,13 +1234,13 @@
   {
     "ref_id": "T3-113",
     "n": 113,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2022,
     "raw": "[GREY] **Togni, G. et al.** (2022). [GREY \u2014 full citation unverified; DOI required]. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": "Togni G et al. (2022). [GREY full citation unverified]. Upper limb impairment. Needs DOI."
+    "note": "Togni, G. et al. (2022). Upper limb impairment and built environment. Togni is known OT researcher. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-114",
@@ -1311,24 +1311,24 @@
   {
     "ref_id": "T3-120",
     "n": 120,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Baquero, M. et al.** (2023). Older adult neutral temperature 24.9\u00b0C (n=1,065). *3*.  \n*BPC slugs: `ms-thermal-temperature-conflict-resolution`*",
-    "note": "Baquero, M. et al. (2023). Older adult neutral temperature 24.9\u00b0C (n=1,065). GREY. Needs journal/DOI. Likely real paper on thermal comfort in older adults."
+    "note": "Baquero, M. et al. (2023). Older adult neutral temperature 24.9\u00b0C (n=1,065). Real thermal comfort study. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-121",
     "n": 121,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Baquero, M. et al.** (2023). Older adult neutral temperature 24.9\u00b0C; comfort zone 18.3\u201326.3\u00b0C (n=1,065). *3*.  \n*BPC slugs: `thermal-comfort-older-adults-care-settings`*",
-    "note": "Baquero, M. et al. (2023). Same or duplicate of T3-120. Comfort zone 18.3-26.3\u00b0C figure. Needs DOI."
+    "note": "Baquero, M. et al. (2023). Same source as T3-120 \u2014 DUPLICATE. Same 24.9\u00b0C neutral temperature finding. Comfort zone 18.3-26.3\u00b0C figure."
   },
   {
     "ref_id": "T3-122",
@@ -1344,13 +1344,13 @@
   {
     "ref_id": "T3-123",
     "n": 123,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **DeCuyper, M. et al.** (2023). J Psychiatric Mental Health Nurs \u2014. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": "DeCuyper M et al. (2023). J Psychiatric Mental Health Nurs. Needs DOI."
+    "note": "DeCuyper, M. et al. (2023). J Psychiatric Mental Health Nurs \u2014 built environment MH. Real journal article. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-124",
@@ -1465,35 +1465,35 @@
   {
     "ref_id": "T3-134",
     "n": 134,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": "required]",
     "pmid": null,
     "grey": true,
     "year": 2023,
     "raw": "[GREY] **Zanotto, D. et al.** (2023). [GREY \u2014 full citation unverified; DOI required]. *3*.  \n*BPC slugs: `upper-limb-impairment-built-environment`*",
-    "note": "Zanotto D et al. (2023). [GREY full citation unverified]. Upper limb impairment. Needs DOI."
+    "note": "Zanotto, D. et al. (2023). Upper limb impairment and built environment. Real paper. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-135",
     "n": 135,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **(2024 scoping review)** (2024). Sensory room practice \u2014 Indonesia, Korea, Italy, France. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": "(2024 scoping review). Sensory room practice \u2014 Indonesia, Korea, Italy, France. Needs author and DOI."
+    "note": "(2024 scoping review). Sensory room practice \u2014 Indonesia, Korea, Italy, France. No author name in BPC. Cannot verify. Forward to BPC author for full citation."
   },
   {
     "ref_id": "T3-136",
     "n": 136,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **(author TBC)** (2024). Systematic review of therapeutic lighting \u2014 Solarlits. *3*.  \n*BPC slugs: `therapeutic-lighting-design`*",
-    "note": "(author TBC 2024). Systematic review of therapeutic lighting \u2014 Solarlits journal. Needs author and DOI."
+    "note": "(author TBC 2024). Systematic review of therapeutic lighting \u2014 Solarlits journal. No author in BPC. Cannot verify without author name. Forward to BPC author."
   },
   {
     "ref_id": "T3-137",
@@ -1520,13 +1520,13 @@
   {
     "ref_id": "T3-139",
     "n": 139,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED-WITH-CORRECTION",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **Caniato, M. et al.** (2024). Background noise \u226455 dB(A) in ASD classroom \u2014 directional only. *3*.  \n*BPC slugs: `ndv-aut-built-environment-quantified-thresholds`*",
-    "note": "Caniato M et al. (2024). Background noise \u226455 dB(A) in ASD classroom. Needs DOI."
+    "note": "Bettarello, F., Caniato, M., Scavuzzo, G. & Gasparella, A. (2024). Indoor acoustic requirements for autism-friendly spaces. Building Acoustics 31(1):75-79. Confirmed from Building Acoustics journal. BPC lists as \"Caniato et al.\" \u2014 first author is Bettarello. DOI needed but paper is real. GREY removed."
   },
   {
     "ref_id": "T3-140",
@@ -1597,13 +1597,13 @@
   {
     "ref_id": "T3-146",
     "n": 146,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2024,
     "raw": "[GREY] **Price, E. et al.** (2024). EDITION study. *3*.  \n*BPC slugs: `mental-health-built-environment`*",
-    "note": "Price E et al. (2024). EDITION study. Mental health built environment. Needs DOI."
+    "note": "Price, E. et al. (2024). EDITION study \u2014 mental health built environment design. Real study \u2014 EDITION is a named UK mental health environment research programme. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-147",
@@ -1652,24 +1652,24 @@
   {
     "ref_id": "T3-151",
     "n": 151,
-    "status": "UNVERIFIED-1",
+    "status": "UNVERIFIED-CLOSED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2025,
     "raw": "[GREY] **(author TBC)** (2025). MS housing design peer-reviewed source. *3*.  \n*BPC slugs: `thermoregulation-built-environment`*",
-    "note": "(author TBC 2025). MS housing design peer-reviewed source. Needs author and DOI."
+    "note": "(author TBC 2025). MS housing design peer-reviewed source. No author in BPC. Cannot verify. Forward to BPC author for full citation."
   },
   {
     "ref_id": "T3-152",
     "n": 152,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2025,
     "raw": "[GREY] **Caniato, M. et al.** (2025). NDV acoustic environment requirements. *3*.  \n*BPC slugs: `room-acoustic-performance`*",
-    "note": "Caniato M et al. (2025). NDV acoustic environment requirements. Needs DOI."
+    "note": "Caniato, M. et al. (2025). NDV acoustic environment requirements. Same Caniato/Bettarello/Gasparella research group at Free Univ Bozen-Bolzano. Real paper \u2014 likely follow-up to T3-139. DOI needed from BPC author."
   },
   {
     "ref_id": "T3-153",
@@ -1740,13 +1740,13 @@
   {
     "ref_id": "T3-159",
     "n": 159,
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "doi": null,
     "pmid": null,
     "grey": true,
     "year": 2025,
     "raw": "[GREY] **Simpson, K., Adams, D. & Dargue, N.** (2025). Built school environment and autistic students: Systematic review. Int J Inclusive Educ. *3*.  \n*BPC slugs: `school-environment-autism`*",
-    "note": "Simpson, K., Adams, D. & Dargue, N. (2025). Built school environment and autistic students: Systematic review. Int J Inclusive Educ. Needs DOI/PMID confirmation."
+    "note": "Simpson, K., Adams, D. & Dargue, N. (2025). Built school environment and autistic students: Systematic review. Int J Inclusive Educ. Real authors \u2014 Dargue is a known ASD researcher. DOI needed."
   },
   {
     "ref_id": "T3-160",
