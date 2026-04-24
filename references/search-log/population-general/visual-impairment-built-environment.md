@@ -14,7 +14,7 @@ languages:
   ZH: {status: SEARCHED, results: 2, db: [web], note: "GB 50763 tactile ground indicators"}
   JA: {status: SEARCHED, results: 3, db: [web], note: "JIS T9251; tenji block research; MLIT 2021"}
   NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  ES: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
   PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
   IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
@@ -77,16 +77,16 @@ jurisdiction_coverage:
   NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ES: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
   IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MX: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -94,12 +94,12 @@ jurisdiction_coverage:
   EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  AR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  GT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EC: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  UY: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
