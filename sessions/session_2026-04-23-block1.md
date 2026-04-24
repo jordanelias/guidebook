@@ -1279,3 +1279,66 @@ commits_block21:
 Total: ~265 commits, 21 blocks, 11 phases
 
 session_close: 2026-04-23 20:00
+
+
+## Block 12 — Tier 3 Verification COMPLETE
+
+Completed 2026-04-24 05:01.
+
+### Final Tier 3 status (148/168)
+- 5 DUPLICATE
+- 20 UNVERIFIED-1
+- 9 UNVERIFIED-CLOSED
+- 48 VERIFIED
+- 35 VERIFIED-DOI
+- 17 VERIFIED-FOUNDATIONAL
+- 10 VERIFIED-PMID
+- 24 VERIFIED-WITH-CORRECTION
+
+### Additional corrections committed
+- `bibliography-v11-draft.md`: Holohan→Owen/Crane attribution fix
+- `bibliography-v11-draft.md`: Chénier 2014 journal corrected (Med Eng Phys → BioMed Res Int)
+- Chénier 2014 correction note: BPC entry T3-036 has wrong journal. Correct: BioMed Res Int 2014:609369
+
+### Key UNVERIFIED-1 remaining (20) — forward to BPC authors
+All need DOI or report URL. Authors/years are all plausible:
+- T3-040: **Kim, W. et al.** (2014). Ramp gradient >6% increases propu
+- T3-043: **Fuglerud, K. et al.** (2015). Benefit-cost ratios for acce
+- T3-048: **Steinfeld-2016** (2016). 2016. *Experimental Studies of Wh
+- T3-050: **Al Lawati, M. et al.** (2017). Impact of doorstep height o
+- T3-056: **Mitra, S. & Jones, N.** (2017). Extra costs of disability 
+- T3-058: **TERRAGON / DStGB** (2017). DIN 18040-2 cost analysis — 130
+- T3-067: **Ghazali, R. et al.** (2019). ASPECTSS application in Malay
+- T3-072: **EIB** (2020). Accessible housing cost analysis — €4,000/ap
+- T3-104: **Jee, S.I.** (2022). Daylighting Design Factors for Korean 
+- T3-105: **KfW / Prognos** (2022). Barrier-reduction programme evalua
+- T3-108: **Misch, A. et al.** (2022). Whole-body vibration and wheelc
+- T3-124: **Gonçalves, A. et al.** (2023). Nature exposure and workpla
+- T3-126: **LSE / Habinteg** (2023). M4(3) Wheelchair Standard Cost St
+- T3-129: **Rhee, J. et al.** (2023). Indoor vegetation and cognitive 
+- T3-130: **Tekin, B. et al.** (2023). User group stratification in bi
+- T3-137: **Al Khatib, H. et al.** (2024). Biophilic design in healthc
+- T3-140: **INSERM / Medscape France** (2024). Village Landais Alzheim
+- T3-142: **Kapsalis, G. et al.** (2024). Tenji tactile blocks as MOB 
+- T3-143: **Larivière, O. et al.** (2024). Floor type and WBV in manua
+- T3-145: **Liu, Y. et al.** (2024). Attention Restoration Theory: 571
+
+### UNVERIFIED-CLOSED (9) — forward to BPC authors
+- T3-006: [GREY] **Nakayama, K. et al.** (1981). Foundational inter-ro
+- T3-096: **Dain, S. (cited in Manandhar 2022)** (2022). ~65% Michelso
+- T3-135: [GREY] **(2024 scoping review)** (2024). Sensory room practi
+- T3-136: [GREY] **(author TBC)** (2024). Systematic review of therape
+- T3-151: [GREY] **(author TBC)** (2025). MS housing design peer-revie
+- T3-165: [GREY] **(E17 — source TBC)** (n.d.). LAC systematic review 
+- T3-166: [GREY] **(scoping review author TBC)** (n.d.). Scoping revie
+- T3-167: [GREY] **(scoping review author TBC)** (n.d.). Scoping revie
+- T3-168: **UAE (case study)** (n.d.). Quiet and simple design — natur
+
+### DUPLICATES identified in T3 (5)
+T3-039=T3-040 | T3-051=T3-050 | T3-059=T3-058 | T3-106=T3-105 | T3-128=T3-127
+
+### Artefact
+`references/tier3-verified-sources.json` SHA 8609d753e18c
+
+session_close: 2026-04-24 05:01
+next_action: Tier 4–6 verification (self-verifying standards body sources)
