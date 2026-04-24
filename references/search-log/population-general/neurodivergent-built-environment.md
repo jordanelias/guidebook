@@ -13,11 +13,11 @@ languages:
   FI: {status: SEARCHED, results: 2, db: [web], note: "Finnish neurodivergent design guidelines"}
   ZH: {status: SEARCHED, results: 1, db: [web], note: "Chinese autism design research (thin)"}
   JA: {status: SEARCHED, results: 2, db: [web], note: "Japanese sensory design; ADHD architecture"}
-  NL: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
-  PT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [PAS6463-2022, Mostafa-ASPECTSS, PMC9658651-TID, PMC10689333-TID-youth, Motionspot-2022, BuroHappold-2024, SAMHSA-TIC, Cuningham-TID]
 bpc_ref: "neurodivergent-built-environment"
 thin_flags: [ZH]
@@ -45,17 +45,17 @@ jurisdiction_coverage:
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NL: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   FI: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  PT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -63,11 +63,11 @@ jurisdiction_coverage:
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

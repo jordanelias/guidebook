@@ -32,16 +32,16 @@ languages:
   DE: {status: SEARCHED, results: 4, db: [web, DIN], co1_pass: not-run, native_standards_pass: complete, note: "DIN/TS 67600:2022 primary source; DIN SPEC 5031-100:2015 action spectra"}
   SV: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  FR: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  JA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  NL: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  DA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FR: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ZH: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
-  IT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run, native_standards_pass: not-run}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 
 jurisdiction_coverage:
   US: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "No ADA/A117.1/IBC circadian requirement. WELL v2/v6 Feature L03/L07 voluntary (Tier 5). UL 24480 uses Circadian Stimulus model."}
@@ -68,17 +68,17 @@ jurisdiction_coverage:
   PT: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false, note: "Not searched."}
   IE: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false, note: "Not searched."}
   CN: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false, note: "Not searched."}
-  IN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -86,9 +86,9 @@ jurisdiction_coverage:
   GT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  MA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   GH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  TZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
 
 jurisdiction_summary: >
