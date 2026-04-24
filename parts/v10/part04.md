@@ -481,6 +481,21 @@ Required: all assembly spaces ≥25 capacity; all consultation/interview rooms
 
 **Evidence basis (OT):** Compensatory FOR. The room perimeter loop compensates for hearing impairment by delivering a direct audio signal to the hearing device, enabling participation in assembly and communal occupations that would otherwise be inaccessible; the commissioning certificate requirement ensures the compensation meets the functional standard, not merely the installation standard.
 
+**Jurisdiction comparison:**
+
+| Jurisdiction | Standard | Assembly Trigger | Technology Specified | Performance |
+|---|---|---|---|---|
+| US | ADA 2010 §219 | ≥50 fixed seats or amplification | "Assistive listening" (choice) | IEC 60118-4 via A117.1 |
+| UK | BS 8300-2:2018 | All meeting/lecture/performance rooms | Induction loop, IR, or radio | BS EN 60118-4 |
+| AU | NCC | Assembly and meeting spaces | Hearing augmentation | AS 60118.4 |
+| DE | DIN 18040-1 | Assembly spaces | Two-Senses principle | DIN EN 60118-4 |
+| FR | Arrêté 2017 | ≥50 seats | Hearing enhancement | NF EN 60118-4 |
+| EU | EN 17210:2021 | Recommended | Hearing enhancement | EN 60118-4 |
+| **Guidebook** | **A-11** | **All assembly/meeting spaces** | **Perimeter induction loop** | **IEC 60118-4** |
+
+Guidebook specifies perimeter induction loop (not just "assistive listening") because telecoil-compatible hearing aids are the most common technology worldwide. Cross-reference A-12 (Auracast readiness) for emerging Bluetooth LE Audio alternative.
+
+
 ### A-12 Auracast Infrastructure Readiness
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
