@@ -828,3 +828,117 @@ key_changes: "Rick Hansen Foundation Accessibility Certification — most compre
 last_checked: "2026-04-19"
 source_url: "https://www.rickhansen.com/make-change/accessibility-certification-rhfac"
 ```
+
+
+---
+<!-- Phase 1A updates + Phase 1B/1C new entries — jurisdiction-tracker 2026-04-23 -->
+
+```yaml
+jurisdiction: "US"
+standard_cited: "ICC A117.1-2017"
+current_version: "ICC A117.1-2017 (current published edition); ICC A117.1-2026 in ANSI approval — publication expected late summer/early fall 2026"
+status: "UPDATED"
+key_changes: "2026 edition (previously referred to as 2025) finalized review of all ballot comments. Being submitted for ANSI approval. Substantive changes published ANSI Standards Action Sept 2025. Key changes: enhanced clear floor spaces, turning spaces, adult changing stations (Supplement 1), EV charging stations, classroom acoustics, sign language interpreter stations."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.iccsafe.org/icc-asc-a117-1/"
+```
+
+```yaml
+jurisdiction: "DE"
+standard_cited: "DIN 18040-1:2010"
+current_version: "DIN 18040-1:2010 (current; legally binding). E DIN 18040-1:2023-02 draft issued; 570+ objections. Revision NOT published as of April 2026."
+status: "UPDATED"
+key_changes: "Revision to harmonise with DIN EN 17210:2021 still not complete. As of Oct 2024, ift Rosenheim confirmed new edition 'will definitely not be this year'. Part 1 near-complete; Part 2 to follow. Key planned change: threshold height reduced to 10mm. Old versions remain legally binding until revised versions adopted by Landesbauordnungen."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.ift-rosenheim.de/en/new-version-din-18040"
+```
+
+```yaml
+jurisdiction: "EU"
+standard_cited: "EN 17210:2021"
+current_version: "EN 17210:2021 (current). Revision Phase 1 (enquiry) complete. Phase 2 started Feb 2026. Drafting finalized by end 2026; publication expected autumn 2027."
+status: "UPDATED"
+key_changes: "Phase 2 of revision funded by European Commission/EFTA. CEN-CLC/JTC 11 finalizing. Revised EN 17210 intended as harmonised standard under EAA (Directive 2019/882) for OJEU citation. Functional requirements to be made objectively verifiable. 2021 edition remains current and binding."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.cencenelec.eu/news-events/news/2026/en-in-the-spotlight/2026-02-26-en-17210-2021/"
+```
+
+```yaml
+jurisdiction: "AU"
+standard_cited: "NCC 2022"
+current_version: "NCC 2022 Amendment 2 (effective 29 July 2025; aligns with updated Disability Access to Premises Standards). NCC 2025 published preview 1 Feb 2026; adoption from 1 May 2026 varies by jurisdiction."
+status: "UPDATED"
+key_changes: "NCC 2022 Amendment 2 updated Disability Access to Premises alignment. NCC 2025 published Feb 2026; ACT adopting May 2026 (transition to Nov 2026/May 2027); NSW/VIC/SA/QLD/NT dates unconfirmed. NCC 2025 focused on commercial: water management, carpark fire safety, commercial energy efficiency, condensation. Residential changes paused until ~2029. Tasmania paused NCC 2025 measures."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.abcb.gov.au/faq/general-ncc"
+```
+
+```yaml
+jurisdiction: "UK"
+standard_cited: "Approved Document M (2015/2024 amendment)"
+current_version: "Approved Document M Volume 1 (2015 with 2016 amendments) and Volume 2 (2024 amendment effective 1 Oct 2024). M4(2) still NOT mandatory nationally — remains optional requirement via planning conditions."
+status: "UPDATED"
+key_changes: "No change since last check. M4(2) mandating proposed in 2020 consultation; not enacted as of April 2026. M4(1) Visitable Dwellings remains the default. M4(2) and M4(3) apply only when imposed via planning permission."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.planningportal.co.uk/applications/building-control-applications/building-control/approved-documents/part-m-access-to-and-use-of-buildings/"
+```
+
+```yaml
+jurisdiction: "BE"
+standard_cited: "Flemish Accessibility Regulation (Besluit 5 juni 2009)"
+current_version: "Besluit van de Vlaamse Regering tot vaststelling van een gewestelijke stedenbouwkundige verordening betreffende toegankelijkheid (5 June 2009; effective 1 March 2010; fully in force since Sept 2011). Update concept note approved by Flemish Government 17 Feb 2023."
+status: "CURRENT"
+key_changes: "Mandatory accessibility evaluation for public building planning permissions in Flanders since 2010. Feb 2023 concept note proposes simplification and improvement; revised regulation not yet published. Advisory role for recognised accessibility bodies (Inter Vlaanderen). Replaces Koninklijk Besluit 9 May 1977."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.toegankelijkgebouw.be/Eng/tabid/371/Default.aspx"
+```
+
+```yaml
+jurisdiction: "BE"
+standard_cited: "Brussels RRU Title IV (Accessibility)"
+current_version: "Règlement Régional d'Urbanisme (RRU) — Title IV: Accessibility of buildings for people with reduced mobility. Brussels-Capital Region."
+status: "CURRENT"
+key_changes: "Regional planning regulation governing accessibility in Brussels. Covers public and certain private buildings. Integration with Brussels Plan for Inclusion of Handicapped People 2022-2025."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.vlaanderen.be/en/inter/toolbox-design-education/accessibility-legislation-in-brussels"
+```
+
+```yaml
+jurisdiction: "BE"
+standard_cited: "Walloon Accessibility Decree"
+current_version: "Walloon decree regulating construction works of public spaces and buildings for accessibility. Walloon Accessibility Plan 2022-2024 adopted Jan 2023 (AVIQ + CAWaB collaboration)."
+status: "CURRENT"
+key_changes: "Nearly 50 short/medium/long-term actions including deaf access to public services. Wallonia has separate decree for public space and building construction accessibility."
+last_checked: "2026-04-23 05:45"
+source_url: "https://accessible-eu-centre.ec.europa.eu/content-corner/news/introduction-accessibility-regulation-belgium-2024-01-23_en"
+```
+
+```yaml
+jurisdiction: "IN"
+standard_cited: "MoHUA Harmonised Guidelines 2021"
+current_version: "Harmonised Guidelines and Space Standards for Universal Accessibility in India 2021 (MoHUA). Amended via RPwD (Amendment) Rules 2023, G.S.R. 413(E) dated 05.06.2023."
+status: "CURRENT"
+key_changes: "Replaces 2016 Barrier-Free guidelines. Shift from barrier-free to universal accessibility. Mandatory for all public buildings under RPwD Act 2016 Section 40. Covers physical environment, transportation, information/communication. 21 disability types recognized under RPwD Act. Accessible India Campaign (Sugamya Bharat Abhiyan) 2015 as implementation vehicle."
+last_checked: "2026-04-23 05:45"
+source_url: "https://depwd.gov.in/en/rpwd-amendment-rules2023-harmonised-guidelines-and-space-standards-for-universal-accessibility-in-india-by-2021-by-mohua/"
+```
+
+```yaml
+jurisdiction: "IN"
+standard_cited: "National Building Code of India 2016"
+current_version: "National Building Code of India 2016 (BIS — Bureau of Indian Standards). Accessibility provisions in Part 3."
+status: "CURRENT"
+key_changes: "Complements MoHUA Harmonised Guidelines. Published by Bureau of Indian Standards under Ministry of Consumer Affairs."
+last_checked: "2026-04-23 05:45"
+source_url: "https://www.cabefoundation.com/p/resources.html"
+```
+
+```yaml
+jurisdiction: "ZA"
+standard_cited: "SANS 10400-S:2011"
+current_version: "SANS 10400-S:2011 — The application of the National Building Regulations Part S: Facilities for persons with disabilities (published April 2011)."
+status: "CURRENT"
+key_changes: "Supersedes SABS 0400:1990 and SABS 0246:1993. 51 pages (up from 5 in previous version). Covers accessible routes, parking, ramps, doors, sanitary facilities, signage. Wheelchair dimensions aligned with self-propelled chairs. Mandatory; compliance via local authority building control. Note: Part S was 'fundamentally rewritten' — comprehensive technical requirements for accessibility."
+last_checked: "2026-04-23 05:45"
+source_url: "https://sans10400.org.za/en/facilities-for-disabled-people/"
+```
