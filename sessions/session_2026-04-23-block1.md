@@ -433,3 +433,36 @@ next_action: >
   Continue PARTIAL enrichment — population-general (11 slugs) batch.
 
 session_close: 2026-04-23 12:15
+
+
+## Block 3b — Tier 1 Verification continued (57/63)
+
+Completed in session 2026-04-23 block 2.
+
+57/63 Tier 1 entries processed:
+- 34 VERIFIED
+- 3 VERIFIED-WITH-CORRECTION 
+- 9 VERIFIED-TIER-CORRECTION
+- 1 VERIFIED-ATTRIBUTION-ERROR (Crompton→Keating)
+- 1 VERIFIED-TIER-REVIEW (WGS-01 India study)
+- 3 UNVERIFIED-CLOSED (TLD-01/02 no ID; SSG-02 Japanese)
+- 5 UNVERIFIED-1 (pending 2nd search)
+
+### Corrections found
+- 3 attribution errors (Crompton, Ismail, Golding-Day)
+- 2 detail errors (MOB-01 DOI, Gitlin PMID)
+- 1 title error (Levine 2025)
+- 9 tier corrections
+- 1 CLOSED-DELETED (POD-11 Ismail)
+
+### Artefacts committed
+- `references/tier1-verified-sources.json` (SHA e2aac097bec4) — 57 entries
+- `references/tier1-verification-progress-2026-04-23.md` — full report
+
+### Next actions
+1. Resolve 5 UNVERIFIED-1 entries (WGS-02, CCD-06, SSG-02, SPM-03, Greene 2024)
+2. Begin Co-1 verification (34 entries)
+3. Apply all BPC corrections found in verification
+4. Phase 2A — jurisdiction coverage audit
+
+session_close: 2026-04-24 03:24
