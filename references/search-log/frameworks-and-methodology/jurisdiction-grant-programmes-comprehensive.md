@@ -12,13 +12,13 @@ languages:
   NO: {status: SEARCHED, results: 2, db: [web], note: "Husbanken; no cap; needs-based"}
   DA: {status: SEARCHED, results: 2, db: [web], note: "§116; no cap; 100% necessary cost"}
   FR: {status: SEARCHED, results: 3, db: [web], note: "MaPrimeAdapt' Jan 2024; PCH; Action Logement"}
-  ZH: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — China excluded from grant matrix (different welfare model)"}
+  ZH: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   JA: {status: SEARCHED, results: 3, db: [web], note: "Care insurance ¥200000; tax credit; fixed asset reduction 2025"}
   FI: {status: THIN, results: 1, db: [web]}
   ES: {status: SEARCHED, results: 2, db: [web], note: "Plan Estatal Programa 11 up to 60%"}
   PT: {status: SEARCHED, results: 2, db: [web], note: "PIH PRR 100% up to €15500"}
   KO: {status: SEARCHED, results: 2, db: [web], note: "주거급여 3-tier; disability add-on"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [MHCLG-DFG-2024, VA-SAH-FY2026, ANAH-MaPrimeAdapt-2024, KfW-159-2025, Husbanken-2025, Bostadsanpassning-2024, Riksdagen-Lov116-2024, HDB-EASE2-2025, NDIS-2025, CRA-HATC-2024]
 bpc_ref: "jurisdiction-grant-programmes-comprehensive"
 thin_flags: [FI]
@@ -48,20 +48,20 @@ jurisdiction_coverage:
   KR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

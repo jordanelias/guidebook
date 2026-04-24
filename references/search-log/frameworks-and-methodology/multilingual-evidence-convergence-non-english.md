@@ -17,8 +17,8 @@ languages:
   NL: {status: SEARCHED, results: 5, db: [web], note: "BuroKade/Vivium De Hogeweyk Dutch-language POE; 94% vs 34% wayfinding; staffing ratio data; Ielegems Vanrie 2024 full Dutch dataset building-type differentiation"}
   ES: {status: SEARCHED, results: 3, db: [web], note: "INE 2019 14% pre-1981 level entry Spain; CTE DB-SUA; ONCE; CERMI"}
   PT: {status: SEARCHED, results: 3, db: [web], note: "NBR 9050:2020; Brazilian tropical PTV ≥40 finding; bariatric prevalence data"}
-  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — 12 languages searched"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered"}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [Marquardt2011-TUDresden-DE, AIJ-HeatShock-JA, BuroKade-DeHogeweyk-NL, TERRAGON-DStGB-2017-DE, SINTEF-87Schools-NO, Boverket2022-SV, NationaltVidenscenter-DA, Ielegems-Vanrie-2024-full-NL-FR, CEREMA-FR, JIS-T9251-JA]
 bpc_ref: "multilingual-evidence-convergence-non-english"
 thin_flags: [FI, ZH]
@@ -42,10 +42,10 @@ jurisdiction_coverage:
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -54,11 +54,11 @@ jurisdiction_coverage:
   MX: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

@@ -26,14 +26,14 @@ languages:
   NO: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: partial, note: Carpe Diem found}
   NL: {status: THIN, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial, note: De Hogeweyk found}
   DE: {status: THIN, results: 3, db: [web], co1_pass: not-run, native_standards_pass: complete, note: Policy/regulatory only; no case studies}
-  SV: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  DA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  FI: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  ZH: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  JA: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  KO: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  ES: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
-  PT: {status: NOT-RUN, results: 0, db: [], co1_pass: not-run}
+  SV: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ZH: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ES: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   IT: {status: THIN, results: 2, db: [web], co1_pass: not-run, native_standards_pass: not-run, note: Springer comparative Alzheimer study found}
 
 jurisdiction_coverage:
@@ -43,22 +43,22 @@ jurisdiction_coverage:
   AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NZ: {status: NOT-RUN}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: false}
-  JP: {status: NOT-RUN}
-  KR: {status: NOT-RUN}
-  IN: {status: NOT-RUN}
+  JP: {status: THIN}
+  KR: {status: THIN}
+  IN: {status: THIN}
   ZA: {status: NOT-RUN}
-  BR: {status: NOT-RUN}
-  MX: {status: NOT-RUN}
+  BR: {status: THIN}
+  MX: {status: THIN}
   NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: false}
-  SE: {status: NOT-RUN}
-  DK: {status: NOT-RUN}
-  FI: {status: NOT-RUN}
+  SE: {status: THIN}
+  DK: {status: THIN}
+  FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DE: {status: PARTIAL, co1_attempted: false, tier5_attempted: true, tier6_attempted: false}
   AT: {status: NOT-RUN}
-  CH: {status: NOT-RUN}
+  CH: {status: THIN}
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NL: {status: SEARCHED, co1_attempted: true, tier5_attempted: false, tier6_attempted: false}
-  BE: {status: NOT-RUN}
+  BE: {status: THIN}
   IE: {status: NOT-RUN}
   ISO: {status: NOT-RUN}
 

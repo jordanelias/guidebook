@@ -10,15 +10,15 @@ languages:
   NL: {status: SEARCHED, results: 2, db: [web], note: "Dutch Implementation Act April 2024; NEN 9120:2025 not EAA; Bbl 2024 built environment separate"}
   FR: {status: SEARCHED, results: 2, db: [web], note: "French EAA transposition; built environment remains Loi 2005-102"}
   SV: {status: THIN, results: 1, db: [web]}
-  NO: {status: NOT-RUN, results: 0, db: [], note: "Norway not EU member; EAA not applicable; early-close gate triggered"}
+  NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   DA: {status: THIN, results: 1, db: [web]}
   FI: {status: THIN, results: 1, db: [web]}
-  ZH: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — EAA is EU-only"}
-  JA: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — EAA is EU-only"}
+  ZH: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  JA: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   ES: {status: SEARCHED, results: 2, db: [web], note: "Spanish EAA transposition; CTE DB-SUA separate; DALCO UNE 41500:2020"}
   PT: {status: THIN, results: 1, db: [web]}
-  KO: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — EAA is EU-only"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — EAA is EU-only"}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [Directive-EU-2019-882, EN17210-2021, accessible-eu-centre, NEN9120-2025, Bbl2024, UNE41500-2020, NZS4121-2001-revision, CRPD-NL-2024]
 bpc_ref: "european-accessibility-act-scope-clarification"
 thin_flags: [SV, DA, FI, PT]
@@ -33,7 +33,7 @@ jurisdiction_coverage:
   AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
@@ -42,26 +42,26 @@ jurisdiction_coverage:
   NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FI: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

@@ -18,7 +18,7 @@ languages:
   ES: {status: SEARCHED, results: 3, db: [web], note: "CTE DB-SUA; LGDPD RD 1/2013; UNE 41500:2020 DALCO; ONCE; 142 actions Documenta 2025"}
   PT: {status: SEARCHED, results: 3, db: [web], note: "DL 163/2006; INR; PRR programme; NBR 9050:2020 Brazil"}
   KO: {status: SEARCHED, results: 3, db: [web], note: "BF certification 94 indicators; KODDI; MOLIT expansion 0.9m door 2024"}
-  IT: {status: NOT-RUN, results: 0, db: [], note: "early-close gate triggered — 13 jurisdictions confirmed coverage"}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
 top_sources: [ADA2010, BS8300-2018, DIN18040-1-2-3, NS11001-2018, BFS2024-12, NCC2022, BCA2025, ISO21542-2021, EN17210-2021, CRPD-Art9, Bbl2024, NEN9120-2025, MLIT2021, GB55019-2021, BF-KO-2024]
 bpc_ref: "jurisdiction-matrix-accessibility-standards"
 thin_flags: []
@@ -48,7 +48,7 @@ jurisdiction_coverage:
   KR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   ES: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
@@ -57,11 +57,11 @@ jurisdiction_coverage:
   MX: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
