@@ -512,3 +512,38 @@ next_action: >
   This feeds directly into Part 4 Evidence Basis table enrichment.
 
 session_close: 2026-04-23 12:45
+
+
+## Block 3c — Tier 1 Verification COMPLETE
+
+Completed 2026-04-24 03:28. All 57 tractable entries resolved; 6 require external input.
+
+### Final summary
+- 36 VERIFIED (correct)
+- 3 VERIFIED-WITH-CORRECTION (detail fixed)
+- 10 VERIFIED-TIER-CORRECTION (wrong tier in BPC)
+- 1 VERIFIED-ATTRIBUTION-ERROR (Crompton→Keating)
+- 1 VERIFIED-TIER-REVIEW (WGS-01 → Opus)
+- 1 ATTRIBUTION-ERROR+CLOSED-DELETED (POD-11 Ismail)
+- 1 NEEDS-CLARIFICATION (Allen 1988 ambiguous)
+- 4 UNVERIFIED-CLOSED (no identifying info)
+
+### Corrections generated (for BPC correction workplan)
+- 3 attribution errors in BPC files
+- 1 CLOSED-DELETED source
+- 2 detail errors (DOI, PMID)
+- 1 title error
+- 10 tier corrections
+- 5 external-input items
+
+### Artefacts committed
+- `references/tier1-verified-sources.json` (FINAL, 57 entries)
+- `references/tier1-verification-progress-2026-04-23.md` (FINAL report)
+
+### Next actions
+1. Begin Co-1 verification (34 entries) — same web-search approach
+2. Apply all BPC corrections from this phase
+3. Phase 2A — jurisdiction coverage audit
+
+session_close: 2026-04-24 03:28
+next_action: Co-1 verification (34 entries), then BPC corrections
