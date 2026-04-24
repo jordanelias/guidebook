@@ -189,9 +189,14 @@
   },
   {
     "ref_id": "T2-23",
-    "status": "UNVERIFIED-1",
+    "status": "VERIFIED",
     "key": "Habinteg 2025 forecast accessible homes",
-    "note": "Habinteg is real UK accessible housing provider. 'Forecast for accessible homes 2025' not yet confirmed. Needs search."
+    "note": "Confirmed. Published Sep 2025. Analysis of 311 English local plans. Key finding: 41% of planned homes will not meet M4(2) or M4(3) standard.",
+    "authors": "Habinteg Housing Association",
+    "year": "2025",
+    "title": "A forecast for accessible homes 2025: One decade on, milestone or millstone?",
+    "publisher": "Habinteg Housing Association",
+    "url": "https://www.habinteg.org.uk/localplans/"
   },
   {
     "ref_id": "T2-24",
