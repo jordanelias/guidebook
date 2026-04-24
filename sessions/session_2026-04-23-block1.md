@@ -547,3 +547,42 @@ Completed 2026-04-24 03:28. All 57 tractable entries resolved; 6 require externa
 
 session_close: 2026-04-24 03:28
 next_action: Co-1 verification (34 entries), then BPC corrections
+
+
+## Block 11 — Phase 3A Complete
+
+### Item-Jurisdiction Divergence Matrix delivered
+`references/item-jurisdiction-divergence-matrix.md` — comprehensive cross-reference of
+jurisdiction-specific values for all Part 4 items, sourced from 69 jurisdiction_summary fields.
+
+### 9 HIGH DIVERGENCE items identified (priority for Phase 3B)
+1. Ramp gradient: US 8.3% vs DE 6% vs FR 5%
+2. Threshold height: AU 5mm vs US 13mm vs DE 20mm
+3. Corridor width: US 915mm vs DE 1500mm
+4. Reach range: US 380-1220mm vs DE 850-1050mm
+5. LRV contrast: US none vs UK ≥30/≥70
+6. Turning space: ISO 1524mm vs AU 2070mm
+7. Classroom RT (HI): US 0.3s vs general 0.6s
+8. TWSI systems: JP/ISO/DE/AU/US all differ
+9. Kitchen worktop: DE adjustable mandatory vs US/UK not
+
+commits_block11:
+  - 6b54bedf47bf: item-jurisdiction-divergence-matrix.md
+
+## FINAL SESSION SUMMARY
+
+### Total commits: ~200+
+### Phases completed: 1, 2A, 2B, 3A
+### Key deliverables:
+1. Standards registry: 46/46 jurisdictions
+2. Jurisdiction coverage infrastructure: 4,140 entries across 90 files
+3. Search-log enrichment: 69 files with jurisdiction summaries
+4. Item-jurisdiction divergence matrix: 9 HIGH DIVERGENCE items mapped
+
+next_action: >
+  Phase 3B: Part 4 Evidence Basis table enrichment.
+  Use the divergence matrix to add jurisdiction-specific code references
+  to each Part 4 item's Evidence Basis table. Start with the 9 HIGH
+  DIVERGENCE items. Estimated 10-13 sessions per workplan.
+
+session_close: 2026-04-23 13:15
