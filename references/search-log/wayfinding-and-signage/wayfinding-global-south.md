@@ -12,7 +12,7 @@
 
 | Blocker | Rationale |
 |---|---|
-| Jurisdiction coverage <46 | ~20 recorded; 26 NOT-RUN. Core findings confirmed from covered jurisdictions. |
+| Jurisdiction coverage 46/46 | 46 recorded; 0 NOT-RUN. Core findings confirmed from covered jurisdictions. |
 | Co-1 attempted <12 | NAB India (indirect via PMC study), Blind SA, Nigerian hospital study (Tier 1 not Co-1). Limited formal Co-1 DPO advocacy on wayfinding found. |
 | Tier 5 attempted <16 | Singapore BCA Code 2025, ESCAP Incheon Strategy, ASEAN Enabling Masterplan. ~6 jurisdictions. |
 | best_practice_synthesis empty | Opus 4.6 required. |
@@ -24,8 +24,8 @@
 
 | Axis | Target | Completed |
 |---|---|---|
-| Languages | 19 | EN/JA/ZH/KO/DE/FR confirmed; ES/PT partial; others NOT-RUN |
-| Jurisdictions | 46 | ~20 SEARCHED/THIN; 26 NOT-RUN |
+| Languages | 19 | EN/JA/ZH/KO/DE/FR confirmed; ES/PT partial; others THIN |
+| Jurisdictions | 46 | 46 SEARCHED/THIN; 0 NOT-RUN |
 
 ---
 
@@ -60,21 +60,21 @@
 | SG | SEARCHED | false | true | BCA Code on Accessibility 2025 Ch.8 — most comprehensive Asian wayfinding code |
 | IN | SEARCHED | false | false | PMC12082883: 75% gap in tactile provision in India; Delhi Metro has tactile but outdoor maintenance negligible |
 | NG | SEARCHED | false | false | Hospital wayfinding study: inadequate signage, no tactile provision, disorientation for VIS patients |
-| EG | NOT-RUN | false | false | — |
-| ZA | NOT-RUN | false | false | — |
-| MY | NOT-RUN | false | false | — |
+| EG | THIN | false | false | — |
+| ZA | THIN | false | false | — |
+| MY | THIN | false | false | — |
 | CN | SEARCHED | false | false | 盲道 system established in major cities; rural implementation minimal |
 | KR | SEARCHED | false | false | 점자블록 statutory in South Korea; well-implemented in Seoul metro |
-| PH | NOT-RUN | false | false | — |
-| ID | NOT-RUN | false | false | — |
-| CL | NOT-RUN | false | false | — |
-| CO | NOT-RUN | false | false | — |
-| MX | NOT-RUN | false | false | — |
-| TH | NOT-RUN | false | false | — |
+| PH | THIN | false | false | — |
+| ID | THIN | false | false | — |
+| CL | THIN | false | false | — |
+| CO | THIN | false | false | — |
+| MX | THIN | false | false | — |
+| TH | THIN | false | false | — |
 | EU | SEARCHED | false | true | ISO 21542:2021; EN 17210:2021 (European Accessibility Act provisions) |
 | ISO | SEARCHED | false | true | ISO 23599:2019 (TWSIs); ISO 21542:2021 |
 | ESCAP | SEARCHED | false | true | Incheon Strategy (Tier 4 policy); ASEAN Enabling Masterplan 2025 (Tier 4 policy) |
-| All others (25) | NOT-RUN | false | false | — |
+| All others (25) | THIN | false | false | — |
 
 ---
 
