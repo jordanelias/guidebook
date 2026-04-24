@@ -1578,3 +1578,50 @@ next_action: >
 blockers: none
 
 session_close: 2026-04-24 06:31
+
+
+## Block 15 — Phase 2A Jurisdiction Coverage Audit COMPLETE
+
+Completed 2026-04-24 06:32.
+
+### Audit scope
+93 BPC slug files × 49 registry jurisdictions — automated extraction of
+NO-DATA/THIN tables and Consensus "Jurisdictions confirming" columns.
+
+### Coverage results
+| Status | Jurisdictions |
+|---|---|
+| COVERED (0 gaps) | AU, CA, EU, ISO, UK, US (6) |
+| PARTIAL (1–4 gap slugs) | BE, BR, CH, DE, DK, FI, FR, IE, JP, NO, NZ, PT, SE, SG (14) |
+| PARTIAL-THIN (5+ gap slugs) | CN, ES, IT, KR, NL (5) |
+| ABSENT (zero BPC coverage) | 24 jurisdictions (mostly Global South + INT) |
+
+### Key findings
+- 15 root-level slug files are FROZEN (historical archives) — their NO-DATA data inflates gap counts
+- ALL-ROOMS.md has 49 NO-DATA entries — highest single-slug burden; FROZEN file
+- INT (16 standards) and UN (1 standard) are ABSENT from BPC confirming evidence — need propagation
+- CN and NL already scope-gated in multiple slugs; formal scope-gate markers needed in remaining slugs
+- Latin America (AR, CL, CO, CR, EC, GT, MX, PE, UY) — 9 absent jurisdictions; cluster scope-gate recommended
+
+### Artefacts committed
+- `references/phase2a-jurisdiction-audit-2026-04-24.md` SHA e062b8b07f8a
+- `gap_register.md` Phase 2A P1 gaps appended SHA 3c59f4aa0380
+
+### All citation verification artefacts (complete)
+- `references/tier1-verified-sources.json`
+- `references/co1-verified-sources.json`
+- `references/tier2-verified-sources.json`
+- `references/co2-verified-sources.json`
+- `references/tier3-verified-sources.json`
+- `references/tier456-verified-sources.json`
+- `references/tier3-verification-report-2026-04-23.md`
+- `references/tier456-verification-report-2026-04-24.md`
+- `references/bpc-corrections-manifest-2026-04-23.md`
+- `references/citation-verification-action-report-2026-04-24.md`
+- `references/phase2a-jurisdiction-audit-2026-04-24.md`
+
+### PROJECT STATUS: Citation verification + Phase 2A COMPLETE
+All planned work is done. Handoff to BPC authors for action report items.
+
+session_close: 2026-04-24 06:32
+next_action: BPC authors to action citation-verification-action-report-2026-04-24.md
