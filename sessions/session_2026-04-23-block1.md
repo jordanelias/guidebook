@@ -2201,3 +2201,57 @@ session_close: 2026-04-24 07:33
 
 ### FULL CONVERSATION TOTALS: 42 commits
 session_close: 2026-04-24 09:00
+
+
+## Block 21 — Opus Cross-Check: ISW Defect Fixes
+
+Completed 2026-04-24 15:18. Model: Opus 4.6.
+
+### Defects identified in Block 20 committed state (673ad6bbc705)
+
+Cross-check revealed 6 defects:
+
+1. **Literal f-string tokens**: 3 instances of `{ts}` appeared as literal text instead of timestamp values.
+   Root cause: Python string mixing — `{ts}` in a regular string was not substituted.
+   **FIXED** in 129cd6dab393.
+
+2. **A-09 unit error**: Specifications still used `0.1 m/s RMS` (velocity) — the exact unit error flagged
+   by prior verification. My threshold-resolved comment correctly cited 0.5 m/s² (acceleration) but the
+   spec body was not updated. **FIXED** — post-installation target now reads "weighted RMS acceleration
+   ≤0.5 m/s² per ISO 2631-1 EAV; older 0.1 m/s RMS superseded".
+
+3. **A-09 threshold contradiction**: Same as defect 2 — resolution comment said one thing, Specifications
+   said another. Resolved in same fix.
+
+4. **B-01 metric inconsistency**: Heading said "≥250 Melanopic EDI" but Specifications still said
+   "EML: ≥150". METRIC NOTE flagged the conversion but spec body was never updated. My compound-interaction
+   note referring to "melanopic EDI ≥250 lux" sat next to a spec saying "EML: ≥150" — made the
+   inconsistency worse. **FIXED** — Specifications, Description, Evidence basis, and jurisdiction
+   comparison row all now use MEDI consistently.
+
+5. **B-01 evening threshold**: Specifications said "≤10 EML" while WELL v2 and correct MEDI practice
+   is ≤50 MEDI. Legacy value retained alongside corrected value for traceability.
+
+6. **No new defect — A-09 Applicable Groups** were already PAIN/NEU/NDV/OFS before my edit
+   (via CON-0005 and CON-0055). My CON-0181 note is additive and accurate but not uniquely new.
+   Cross-check passes: the extension claim in the briefing was confirmatory, not novel.
+
+### Commits
+- 129cd6dab393: Literal timestamp fix + A-09 unit/threshold fix + B-01 EML→MEDI conversion
+- This block commit: B-01 final Description + jurisdiction row consistency
+
+### Verified clean state
+- 0 literal `{ts}` tokens in part04.md
+- 0 active `0.1 m/s RMS` references (2 remain as historical annotations in correction comments)
+- B-01 uses melanopic EDI consistently across heading, Specifications, Description, Evidence basis, jurisdiction table
+- A-09 uses m/s² acceleration consistently; ISO 2631-1 EAV 0.5 m/s² is the unified target
+- A-16 CON-0186 convergence note accurate against BPC evidence (verified T3 + Co-1 sources)
+
+### Opus cross-check skill note
+The defects were introduced in a Sonnet pass. Opus cross-check caught them. This is the intended
+skill separation — Sonnet applies; Opus verifies cross-referentially. Future ISW passes should
+route through Opus cross-check before close.
+
+session_close: 2026-04-24 15:18
+next_action: GAP-THERMAL-01 thermal comfort spec creation; CON-0188 Part 3 Owen/Crane framework note
+blockers: none
