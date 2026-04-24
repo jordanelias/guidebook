@@ -35,8 +35,8 @@ jurisdiction_coverage:
   DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "DIN 18040-1 §4.3.8: ramp max 6% (1:16.7). DIN 18040-2: residential ramp 6%."}
   NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "TEK17 §12-18: ramp max 1:20 outdoor, 1:12 indoor short. Step-free preferred."}
   SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  ISO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021 §10: ramp 1:20 preferred, 1:12 max."}
-  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "ISO 21542:2021 §10: ramp 1:20 preferred, 1:12 max."}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FR: {status: SEARCHED, co1_attempted: false, tier5_attempted: true, tier6_attempted: true, note: "Arrêté: ramp 5% preferred, 8% max for short runs."}
   CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
   NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
@@ -50,10 +50,10 @@ jurisdiction_coverage:
   ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
   IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

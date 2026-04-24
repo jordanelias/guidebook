@@ -48,7 +48,7 @@ jurisdiction_coverage:
   IE: {status: NO-DATA, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

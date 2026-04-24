@@ -53,17 +53,17 @@ jurisdiction_coverage:
   DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   FI: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
-  SG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  NZ: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
   IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
   PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
-  IE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   IN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
-  ZA: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
