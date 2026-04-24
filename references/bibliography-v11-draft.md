@@ -32,13 +32,13 @@
 **Law, M. et al.** (1996). The Person-Environment-Occupation model. Can J Occup Ther 63(1):9. *1*.  
 *BPC slugs: `sensory-processing-model-design-application`*
 
-**Dunn, W.** (1997). The impact of sensory processing abilities on daily life. Infant Young Child 9(4):23. *1*.  
+**Dunn, W.** (1997). The impact of sensory processing abilities on daily life. Infant Young Child 9(4):23. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — conceptual/theoretical article].  
 *BPC slugs: `sensory-processing-model-design-application`*
 
-**Ringaert, L. et al.** (2001). Determination of new dimensions for universal design. UDI, Manitoba. *1*.  
+**Ringaert, L. et al.** (2001). Determination of new dimensions for universal design. UDI, Manitoba. *5* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 5 — grey-lit technical report (UDI Manitoba)].  
 *BPC slugs: `mobility-built-environment`*
 
-**Iwarsson, S. & Ståhl, A.** (2003). Accessibility, usability and universal design. Disabil Rehabil 25(2):57–66. *1*.  
+**Iwarsson, S. & Ståhl, A.** (2003). Accessibility, usability and universal design. Disabil Rehabil 25(2):57–66. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — conceptual/definitional article].  
 *BPC slugs: `neurological-built-environment`*
 
 **Anderson, K.L. & Goldstein, H.** (2004). FM and infrared devices for HH children in classroom. LSHSS 35(2):169–184. PMID:15191328. DOI:10.1044/0161-1461(2004/017). *1*. https://doi.org/10.1044/0161-1461(2004/017  
@@ -68,7 +68,7 @@
 **Steinfeld, E. et al.** (2010). Anthropometry of Wheeled Mobility Project — Final Report. IDeA Center / US Access Board. *1*.  
 *BPC slugs: `mobility-built-environment`*
 
-**Marquardt, G.** (2011). Wayfinding for people with dementia. HERD. *1*.  
+**Marquardt, G.** (2011). Wayfinding for people with dementia. HERD. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — HERD study, not primary OT RCT].  
 *BPC slugs: `accessible-design-economics-cost-premium`, `cognitive-wayfinding-design`, `cross-population-conflict-resolutions`*
 
 **Wroblewski, M. et al.** (2012). Effects of reverberation on speech recognition. Ear Hear 33(6):731–744. PMID:22732772. DOI:10.1097/AUD.0b013e31825aecad. *1*. https://doi.org/10.1097/AUD.0b013e31825aecad  
@@ -107,7 +107,7 @@
 [GREY] **Stark S et al.** (2017). [GREY — title unverified; DOI required before publication]. *AJOT*.  
 *BPC slugs: `residential-kitchen-and-task-surfaces`*
 
-[CORRECTED: citation-verifier 2026-04-23 — lead author wrong: Golding-Day is 2nd author] **Whitehead, P.J., Golding-Day, M.R. et al.** (2018). BATH-OUT: Bathing Out of Tubs. [GREY — journal and DOI unverified; AUTHOR CORRECTED]. *1*.  
+[CORRECTED: citation-verifier 2026-04-23 — lead author wrong: Golding-Day is 2nd author] **Whitehead, P.J., Golding-Day, M.R. et al.** (2018). BATH-OUT: Bathing Out of Tubs. [GREY — journal and DOI unverified; AUTHOR CORRECTED]. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — systematic review, not primary OT research].  
 *BPC slugs: `accessible-bathroom-and-grab-bar`*
 
 **(author TBC)** (2019). Impact of room acoustic parameters on speech/music perception among CI participants. Hearing Research. DOI:10.1016/j.heares.2018.12.006. *1*. https://doi.org/10.1016/j.heares.2018.12.006  
@@ -146,7 +146,7 @@
 **Ahmed, S. et al.** (2022). Hospital wayfinding and VIS patients — Nigeria study. *1*.  
 *BPC slugs: `wayfinding-global-south`*
 
-[GREY] **Hersche, R. et al.** (2022). OT interventions in chronic pain: SR. OT Int. *1*.  
+[GREY] **Hersche, R. et al.** (2022). OT interventions in chronic pain: SR. OT Int. *Co-1* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Co-1 — OT professional practice guidance SR].  
 *BPC slugs: `pain-ofs-built-environment-design`*
 
 **Prodi, N. & Visentin, C.** (2022). Slight RT increase affects performance and listening effort. Ear Hear 43(2):460–476. PMID:34369418. DOI:10.1097/AUD.0000000000001110. *1*. https://doi.org/10.1097/AUD.0000000000001110  
@@ -161,7 +161,7 @@
 [GREY] **Ismail, A. et al.** (2023). Fibromyalgia hydrotherapy SR. Tandfonline. *1*. PMID:18751709  
 *BPC slugs: `pain-ofs-built-environment-design`*
 
-[GREY] **Murgia, A. et al.** (2023). [GREY — full citation unverified; DOI required before publication]. *1*.  
+[GREY] **Murgia, A. et al.** (2023). [GREY — full citation unverified; DOI required before publication]. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — systematic review].  
 *BPC slugs: `acoustics-speech-intelligibility-disability`*
 
 **Newton, C. et al.** (2023). Inclusive Bathroom Design. UTS/Spinal Cord Injuries Australia. *1*.  
@@ -191,7 +191,7 @@
 **Summer Foundation / Winkler** (2024). Supporting accessible housing transitions. Melbourne. *1*.  
 *BPC slugs: `residential-accessible-home-case-studies`*
 
-[GREY] **Williams, A. et al.** (2024). Sensory adaptive environments for autistic children: scoping review. *1*.  
+[GREY] **Williams, A. et al.** (2024). Sensory adaptive environments for autistic children: scoping review. *3* [TIER CORRECTED citation-verifier 2026-04-23: was Tier 1, correct Tier 3 — scoping review].  
 *BPC slugs: `detectable-gradient-protocol-sensory-zones`*
 
 **Winkler, D. et al.** (2024). Supporting design and construction sector for accessible standards. Summer Foundation. *1*.  
@@ -467,7 +467,7 @@
 **UNSW-HMC-OTGuidelines-2023** (2023). 2023. *Home Modification Guidelines for Occupational Therapists*. https://www.homemods.info/resources/hmic-publications/  
 *BPC slugs: `accessible-bathroom-and-grab-bar`*
 
-**CAOT** (2024). Home Assessment and Modifications. *Co-2*. https://caot.ca/document/8205/Home%20Assessment%20and%20Modifications%20EN.pdf  
+**CAOT** (2024). Home Assessment and Modifications. *Co-2*  [TIER CONFIRMED citation-verifier 2026-04-23: Co-2 is correct for CAOT 2024 practice document]. https://caot.ca/document/8205/Home%20Assessment%20and%20Modifications%20EN.pdf  
 *BPC slugs: `ot-cpg-built-environment`*
 
 **CAOT-HomeAssessment-2024** (2024). 2024. *Home Assessment and Modifications*. https://caot.ca/client/product/productDetail.cfm?id=3850  
