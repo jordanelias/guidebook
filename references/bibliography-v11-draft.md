@@ -604,7 +604,7 @@
 **Kim, W. et al.** (2014). Effect of slope on wheelchair users. J Mech Sci Technol. *3*.  
 *BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*
 
-**Kim, W. et al.** (2014). Ramp gradient >6% increases propulsion effort. *3*.  
+**Kim, C.S. et al.** (2014). Effects of ramp slope, ramp height and users' pushing force. Applied Ergonomics. DOI:10.1016/j.apergo.2014.08.011 [AUTHOR CORRECTED: Kim W → Kim CS]lsion effort. *3*.  
 *BPC slugs: `upper-limb-impairment-built-environment`*
 
 **Lucas, R.J. et al.** (2014). Measuring and using light in the melanopsin age. Trends Neurosci 37(1):1–9. *3*.  
@@ -652,7 +652,7 @@
 **Martins da Silva, A. & Leal, B.** (2017). Photosensitivity and epilepsy. Seizure 50:209–218. PMID:28532712. *3*. PMID:28532712  
 *BPC slugs: `visual-fire-alarm-seizure-safety`*
 
-**Mitra, S. & Jones, N.** (2017). Extra costs of disability across 40 countries. *3*.  
+**Mitra, S., Palmer, M., Kim, H., Mont, D. & Groce, N.** (2017). Extra costs of living with a disability. DHJO 10(4):475-484. DOI:10.1016/j.dhjo.2017.04.007 [AUTHOR CORRECTED: Jones → Palmer, Kim, Mont, Groce] across 40 countries. *3*.  
 *BPC slugs: `accessible-design-economics-cost-premium`*
 
 [GREY] **Sekiguchi Y et al.** (2017). [GREY — title unverified; DOI required before publication]. *[GREY — journal unverified]*.  
