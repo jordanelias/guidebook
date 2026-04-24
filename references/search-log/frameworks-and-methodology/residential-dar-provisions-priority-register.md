@@ -74,3 +74,8 @@ jurisdiction_coverage:
   GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
   ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  DAR (Design for Adaptable Readiness) is guidebook-specific. No code uses this terminology. UK Lifetime Homes closest. AU Livable Housing. NO TEK17 visit-ability. Cross-reference Part 10.
+
+```
