@@ -1,3 +1,11 @@
+> **SUPERSEDED 2026-04-25 00:19** by `workplan/workplan-co0007-synthesis.md`.
+>
+> This audit workplan was drafted before the conversation surfaced the architectural shift to structured data and multi-modal navigation. It treats markdown as the deliverable form; the synthesis workplan treats markdown as interim and structured data as the long-term form. The audit-as-byproduct approach in the synthesis subsumes this audit.
+>
+> Retained in repo for traceability and partial reuse (triage method, evidence audit method, propagation thinking, pilot principle). Do not execute as written.
+
+---
+
 # CO-0007 Audit Workplan: Foundational Principles Alignment
 **Created:** 2026-04-24 23:42
 **Triggered by:** Bathroom turning space 1500mm identified as code-consensus value, not best practice
