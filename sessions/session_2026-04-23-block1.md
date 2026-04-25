@@ -2294,3 +2294,75 @@ next_action: >
 
 blockers: none
 session_close: 2026-04-24 09:15
+
+
+## Block 33 — CO-0007 Doctrinal Shift + Synthesis Workplan
+
+**Trigger:** User noted bathroom item specifies 1500×1500mm clear floor space — too small for power wheelchairs and below CA/AU/US code values for powered chairs. Question expanded to: how widespread is the BPC-consensus-as-best-practice error?
+
+### Doctrinal changes committed to project-standards.md Core Doctrine
+
+Three foundational rules added (now precede the Three-Tier Hierarchy in Core Doctrine):
+1. **Purpose:** "THE PURPOSE OF THIS GUIDEBOOK IS TO GET PEOPLE TO ASK THE RIGHT QUESTIONS." Most important governing principle. Guidebook is thinking tool, not prescription manual.
+2. **Non-uniformity:** Disability populations are not uniform. Co-occurrence is the norm. Population codes serve different functions at each tier.
+3. **Best practice positively defined:** "Best practice means the most accommodating, thoughtful, respectful, dignified, and usable condition achievable for the disabled person." Determined by evidence hierarchy, not code consensus.
+
+Evidence hierarchy elevated from separate section into Core Doctrine. Order in Core Doctrine now: Purpose → Non-uniformity → Three-Tier → Evidence Hierarchy → Best Practice → Universal-design-as-floor → Evidence markers → [rest].
+
+Commits:
+- e59c536d9076: project-standards: enshrine foundational principles
+- 2fcfd5ae8cdb: project-standards: restructure Core Doctrine — evidence hierarchy elevated, best practice defined
+
+### Workplans produced
+
+- 898b8f785e59: workplan/workplan-co0007-audit.md (initial audit framing)
+- 4ef8cab2b2fb: workplan/workplan-co0007-synthesis.md + audit marked SUPERSEDED
+
+### Architectural shift identified (NOT YET COMMITTED to architecture/)
+
+Conversation surfaced that the project's current markdown form is the wrong long-term medium. Long-term form: structured-data knowledge resource with multi-modal navigation (item, room, population, design stage, jurisdiction, OT-handoff views). Existing 280+ commits become input data, not deliverables to patch. Synthesis workplan reframes the work as migration with audit-as-byproduct.
+
+### Synthesis workplan structure
+
+3 stages, 26 phases, 180–262 sessions, realistically 12–18 months:
+- **Stage A (Foundations, 18-28 sessions):** A1 audience priority, A2 mission articulation, A3 conceptual model, A4 voice resolution, A5 Co-1 co-author relationship, A6 evidence methodology, A7 population taxonomy, A8 jurisdiction philosophy
+- **Stage B (Architecture and pilot, 22-34 sessions):** B1 schema, B2 tooling, B3 navigation modes, B4 pilot content (G-04 + bathroom + PTSD), B5 pilot rendering, B6 mission validation, B7 architecture lock
+- **Stage C (Migration and scaling, 140-200 sessions):** C1-C11 covering migration tooling, skill rebuild, parameter migration, population migration, item/room composition, conflict combinatorics, evidence library, jurisdiction library, prose migration, validation, maintenance lifecycle
+
+### Critical decision points held for project owner
+
+1. Sit with mission statement (synthesis Part IV) before adopting workplan — mission is load-bearing
+2. A5 Co-1 co-author resourcing — may force methodological-limitation acknowledgment if not resourced
+3. B1 storage form — irreversible; constrains decade of work
+4. C6 conflict combinatorics — 200-400 entries, scope risk
+
+### What is salvageable from prior 280+ commits
+- All research data (jurisdictional values, evidence verified, multilingual coverage, Co-1 corpus)
+- Skill methodologies (structure remains; output target and synthesis logic change)
+- Validators (CI paradigm reusable; validators themselves rewrite)
+- Voice work (partial; A4 may supersede)
+
+### What is superseded
+- BPC best_practice_synthesis where it derived from code consensus (most cases)
+- Part 4 item specs in current form
+- Appendix A tables in current framing
+- Prior CO-0007 audit workplan
+
+### Open standing recommendation
+Open Stage A1 in fresh Opus context with synthesis document as input. Do not extend this conversation further; it has done its job clarifying long-term form.
+
+commits_block33:
+  - e59c536d9076: Core Doctrine — three foundational rules
+  - 2fcfd5ae8cdb: Core Doctrine — evidence hierarchy elevated, best practice defined
+  - 898b8f785e59: workplan-co0007-audit.md (now superseded)
+  - 4ef8cab2b2fb: workplan-co0007-synthesis.md + audit supersession
+
+next_action: >
+  Open Stage A1 (audience priority) in fresh Opus context.
+  Input: workplan/workplan-co0007-synthesis.md.
+  Decision needed: primary, secondary, tertiary audiences and conflict-resolution rules.
+  Do not begin Stage B or any content migration before Stage A completes.
+
+blockers: none
+
+session_close: 2026-04-25 00:19
