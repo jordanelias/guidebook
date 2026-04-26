@@ -50,6 +50,9 @@ DATE: 2026-03-26 16:00
 RULE: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Tier 1 only. At Tier 2, conflict resolution is the domain of the OT and the individual through co-design. The guidebook's Tier 2 role is to equip non-OT professionals with decision frameworks and structured approaches — not prescriptive answers.
 DATE: 2026-03-26 16:00
 
+RULE: The guidebook is an advocacy project, not an authority. It does not teach professional judgment, does not confer competence, and is not a registered body, standard-setting organization, or regulatory instrument. It is derived from comprehensive research and presents its findings in a multimodal manner to equip people who touch the built environment with better questions, better evidence, and better starting points. Readers apply their own professional judgment, informed by this material. The guidebook's value is in the quality and comprehensiveness of the research it synthesizes and the accessibility of its presentation — not in any claim to authority over practice.
+DATE: 2026-04-26 19:25 — enshrined as Core Doctrine; supersedes any language elsewhere that implies institutional authority or mandating power
+
 ---
 
 ## Item Code System
@@ -164,8 +167,8 @@ DATE: 2026-03-28 09:00
 
 ## Specification Process Rules
 
-RULE: item-specification-writer uses 'shall be' constructions. Always run prose-style-checker before vol2-item-formatter.
-DATE: 2026-03-28 18:25
+RULE: Specification language is tier-appropriate and does not claim authority the project does not have. The guidebook is an advocacy project (see Core Doctrine), not a standard-setting body. Specification constructions by tier: Tier 0 — "Code requires [value] per [standard]" (authority is the code, not the guidebook). Tier 1 — "[Evidence tier] evidence supports [value]" or "Best practice based on [N] jurisdictions and [tier] evidence is [value]" (authority is the evidence). Tier 2 — "OT assessment determines position within [range] based on [functional parameter]" (authority is the OT). The former convention of blanket "shall be" constructions is retired — "shall be" implies mandating authority the project does not possess. Always run prose-style-checker before vol2-item-formatter. Existing Part 4 text using "shall be" requires a voice pass (A4 or C-stage find-and-replace).
+DATE: 2026-04-26 19:25 — supersedes "shall be" convention of 2026-03-28; aligned with advocacy identity rule
 
 RULE: "Adjustable" is not a universal conflict resolution. Document operability per population. Flag populations who cannot self-adjust. Route to Tier 2 if ambient parameter irreconcilable.
 DATE: 2026-03-28 23:45
