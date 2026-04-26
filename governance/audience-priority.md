@@ -1,5 +1,5 @@
 # Audience Priority
-**Status:** ITERATION 2 — first canonical-track refinement against `governance/mission-and-epistemics.md` iter 1
+**Status:** CANONICAL — locked at iter 4 cross-test pass (2026-04-26 05:29)
 **Created:** 2026-04-26 03:55 UTC; iter 2 deltas 2026-04-26 04:05 UTC
 **Iteration plan:** `workplan/a1-a2-iteration-plan.md`
 **Operative frame:** Pre-launch solo authorship; partial CRPD Art. 4.3 honoring at evidence level
@@ -13,7 +13,7 @@ This document is the test-target for `governance/mission-and-epistemics.md` §Te
 
 That status carries weight: every downstream content choice in the guidebook is checked against this document. The audience-priority structure must therefore be robust enough to bear the test. Where iter 1's rules do not cover a content choice cleanly, iter 2 either tightens them or routes the choice to A6 (evidence methodology) / A12 (decision-capture protocol) for resolution by domain-specific rule rather than audience-priority extension.
 
-During A1-A2 iteration (iter 1–4), `governance/mission-PROVISIONAL.md` remains the operative governance mission. Iter 4 acceptance produces canonical lock for both this file and `governance/mission-and-epistemics.md`; PROVISIONAL is superseded at that point.
+`governance/mission-PROVISIONAL.md` is superseded as of iter 4 canonical lock (2026-04-26 05:29). This file and `governance/mission-and-epistemics.md` are now the operative governance pair.
 
 ---
 
@@ -151,14 +151,14 @@ When information-finding and decision-frame patterns apply to the same designer 
 
 The following are deferred to subsequent A1-A2 iterations or to later phases:
 
-1. **Volume-specific audience priority weighting.** Should Volume I (conceptual) emphasize representation-checking and decision-frame more than Volume II (item-level), which leans toward information-finding? Iter 2 mission canonical did not force a Volume-specific resolution; deferred to iter 4 cross-test pass against finalized mission, with default = uniform weighting unless cross-test reveals tension.
+1. **Volume-specific audience priority weighting.** **CLOSED — iter 4.** Uniform weighting confirmed. The content-type mapping in §Content production table handles the practical distinction (item specs → information-finding; front matter → decision-frame/representation-checking). If B3 navigation-mode design reveals tension, B3 reopens.
 2. **Audience priority under tight design timeline.** When a designer reader is in genuine time pressure, the layered-content rule may produce a content density they cannot navigate. Should there be a "fast lane" navigation mode? Routes to B3 (navigation mode specification), not A1-A2 — but A1-A2 audience-priority decisions constrain B3 design space.
 3. **Use-pattern → navigation-mode mapping.** The four primary use-patterns plus four secondary use-patterns suggest navigation modes. B3 is the phase that decides this. A1-A2 supplies the audience-priority constraint; B3 supplies the navigation specification.
 4. **Public-facing version of audience priority.** Should there be a one-paragraph version of this document for the guidebook front matter? Defer to iter 5 (optional public-facing pass).
 5. **Citation gap.** **CLOSED — iter 3 (2026-04-25).** Design-pedagogy citations committed in `governance/mission-and-epistemics.md` §Epistemic commitments §Questions-led teaching as testable hypothesis (Schön 1983, DOI: 10.4324/9781315237473; Hmelo-Silver 2004, DOI: 10.1023/B:EDPR.0000034022.16470.f3; Royeen 1995, DOI: 10.5014/ajot.49.4.338). Audience-priority's pedagogical stance is derivative of those foundational references; no independent citation required.
-6. **Tertiary-by-extension acknowledgment.** Should the front matter explicitly name extension users (students, researchers, facility managers, builders, inspectors), or leave them unnamed? Either is defensible. Decide in iter 4 cross-test pass.
-7. **(NEW iter 2)** **Edge-case conflict-resolution rules.** Iter 1 conflict rules cover the common cases (within-primary, within-secondary, primary-vs-secondary, within-audience use-pattern). Less common cases — e.g., OT-clinical-collaboration vs disabled-person-representation-checking on the same content cell, where the OT reads on behalf of a client — are not explicitly covered. Iter 3 either extends the rules or routes such cases to A6 / A12 for resolution by domain-specific protocol rather than audience-priority extension.
-8. **(NEW iter 2)** **Operational definition of "defensible disabled reader"** in within-primary conflict rule 3. The phrase relies on judgment about what counts as defensible representation-check feedback. Iter 4 cross-test should specify either an evaluation procedure or route to a separate governance document (possibly A12 decision-capture protocol).
+6. **Tertiary-by-extension acknowledgment.** **DEFERRED to iter 5** (public-facing pass). This is a front-matter presentation decision, appropriate for the optional public-facing version.
+7. **(NEW iter 2)** **Edge-case conflict-resolution rules.** **ROUTED to A6 — iter 4.** Rare edge cases (e.g., OT reading on behalf of client vs disabled-person representation-checking) are better resolved by evidence-methodology protocol than by extending audience-priority rules. A6 specifies domain-specific conflict resolution for cases not covered by the four common-case rules above.
+8. **(NEW iter 2)** **Operational definition of "defensible disabled reader".** **ROUTED to A12 — iter 4.** Pre-launch solo means no external evaluator exists; an evaluation procedure would be hollow. The phrase retains its current meaning (author judgment). A12 decision-capture protocol specifies the procedure when external Co-1 review becomes available post-launch (contingent per revised D-03).
 
 ---
 
@@ -177,7 +177,7 @@ The following are deferred to subsequent A1-A2 iterations or to later phases:
 
 ## What this file does not do
 
-- **Does not commit canonical audience priority.** Canonical is achieved at iter 4 cross-test pass. This is iter 2.
+- **Canonical audience priority committed** at iter 4 cross-test pass (2026-04-26 05:29).
 - **Does not articulate the mission.** Mission articulation is `governance/mission-and-epistemics.md` iter 1 (this session) and forward.
 - **Does not specify navigation modes.** B3 does that. A1-A2 supplies the audience-priority constraint that B3 must respect.
 - **Does not commit citations.** Iter 3 cites the audience-priority and use-pattern claims against design-pedagogy and accessibility-practice literature.
@@ -188,15 +188,15 @@ The following are deferred to subsequent A1-A2 iterations or to later phases:
 
 ## Status
 
-ITERATION 2. Marked draft. Not canonical.
+CANONICAL. Locked at iter 4 cross-test pass (2026-04-26 05:29).
 
 | Field | Value |
 |---|---|
 | Created | 2026-04-26 03:55 UTC |
 | Iter 2 deltas | 2026-04-26 04:05 UTC |
-| Iteration | 2 of 4–6 (per `workplan/a1-a2-iteration-plan.md`) |
+| Iteration | CANONICAL (iter 4 cross-test pass 2026-04-26 05:29) |
 | Author | Project owner (solo, pre-launch) |
 | Companion (iter 1 of canonical-track) | `governance/mission-and-epistemics.md` |
-| Acceptance test for canonical | Iter 4 cross-test pass against `governance/mission-and-epistemics.md` |
+| Acceptance test for canonical | PASSED — iter 4 cross-test 2026-04-26 05:29 |
 | Doctrinal anchor | `references/project-standards.md` Core Doctrine + 2026-04-26 03:45 RULE |
 | Operational frame | Pre-launch solo synthesis from published Co-1 corpus |

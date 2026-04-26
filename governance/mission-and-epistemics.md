@@ -1,7 +1,7 @@
 # Mission and Epistemic Commitments
-**Status:** CANONICAL-TRACK — ITERATION 1; not yet operative. The operative governance mission remains `governance/mission-PROVISIONAL.md` until this file passes iter 4 acceptance per `workplan/a1-a2-iteration-plan.md`.
+**Status:** CANONICAL — locked at iter 4 cross-test pass (2026-04-26 05:29). Supersedes `governance/mission-PROVISIONAL.md`.
 **Created:** 2026-04-26 04:05 UTC
-**Phase:** A1-A2 iteration 2 (mission articulation against audience-priority iter 1)
+**Phase:** A1-A2 CANONICAL (iter 4 cross-test pass 2026-04-26 05:29)
 **Canonical version of:** `governance/mission-PROVISIONAL.md` (revised 2026-04-26 03:45)
 **Companion deliverable:** `governance/audience-priority.md` (iter 1; iter 2 deltas captured this session)
 **Operative frame:** Pre-launch solo authorship; partial CRPD Art. 4.3 honoring at evidence level
@@ -11,7 +11,7 @@
 
 ## Purpose
 
-The Guidebook for Accessible Built Environments equips designers, policymakers, occupational therapists, and disabled people themselves with the questions they need to ask about how to design for accessibility depending on the circumstance.
+The Guidebook for Accessible Built Environments equips designers, disabled people, occupational therapists, and policymakers with the questions they need to ask about how to design for accessibility depending on the circumstance.
 
 It is not a prescription manual. It does not dictate values. It does not substitute for professional judgment. It is a thinking tool.
 
@@ -181,10 +181,10 @@ CANONICAL-TRACK — ITERATION 1 (= A1-A2 iter 2). Not yet operative.
 
 | Field | Value |
 |---|---|
-| Iteration | 1 of canonical-track (= iter 2 of A1-A2 per `workplan/a1-a2-iteration-plan.md`) |
-| Operative governance mission | `governance/mission-PROVISIONAL.md` (revised 2026-04-26 03:45) — until this file passes iter 4 acceptance |
-| Companion | `governance/audience-priority.md` (iter 2 captured this session) |
-| Acceptance test for canonical lock | Iter 4 cross-test: every claim here is consistent with audience-priority canonical, internally consistent, and fully cited (iter 3 complete) |
+| Iteration | CANONICAL (iter 4 cross-test pass 2026-04-26 05:29) |
+| Operative governance mission | **This file** — supersedes `governance/mission-PROVISIONAL.md` as of 2026-04-26 05:29 |
+| Companion | `governance/audience-priority.md` (CANONICAL — locked with this file) |
+| Acceptance test for canonical lock | PASSED — iter 4 cross-test 2026-04-26 05:29; one tension (T-01 audience ordering) fixed inline |
 | Citation gap | CLOSED — all `[cite — iter 3]` flags resolved with DOI-verified sources (iter 3, 2026-04-25) |
 | Public-facing version | Deferred to iter 5 (optional) per iteration plan |
 
@@ -192,9 +192,9 @@ CANONICAL-TRACK — ITERATION 1 (= A1-A2 iter 2). Not yet operative.
 
 ## What this file does not do
 
-- **Does not yet supersede `mission-PROVISIONAL.md`.** Iter 4 acceptance produces canonical lock; PROVISIONAL is operative until then.
+- **Supersedes `mission-PROVISIONAL.md`** as of iter 4 canonical lock (2026-04-26 05:29).
 - **Citations committed.** Iter 3 closed all `[cite — iter 3]` flags (2026-04-25). Citations are now inline.
 - **Does not specify navigation modes.** B3 does that. This file supplies the audience-priority cross-reference; B3 must respect it.
 - **Does not produce the public-facing mission.** Iter 5 (optional) splits public-facing from internal governance versions.
 - **Does not pretend collaborator structures exist.** Pre-launch solo is the operational reality, declared in §Operational reality.
-- **Does not specify A3 conceptual model.** A3 begins after A1-A2 closes; inputs to A3 are identified in iter 4 or iter 6 close.
+- **Does not specify A3 conceptual model.** A3 begins after A1-A2 closes. Iter 4 identifies A3 inputs: the four-framework layering (ICF, PEO/PEOP, Capability Approach, Kawa) specified in project-standards §2026-04-09 must align with canonical mission commitments.
