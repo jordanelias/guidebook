@@ -58,3 +58,26 @@ jobs:
 
       - name: Validate HEAD commit message format
         run: python3 scripts/ci_helpers/check_commit_msg.py
+
+  # --- CO-0008 additions below ---
+
+  schema:
+    name: Schema validation (entity YAML against Pydantic models)
+    runs-on: ubuntu-latest
+    # Only run when data layer files change
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' &&
+       contains(github.event.pull_request.changed_files, 'data/') ||
+       contains(github.event.pull_request.changed_files, 'schemas/'))
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pydantic pyyaml --quiet
+
+      - name: Validate all entity YAML against schemas
+        run: python3 scripts/validate_schema.py --verbose

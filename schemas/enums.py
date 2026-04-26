@@ -1,0 +1,193 @@
+"""
+schemas/enums.py — Shared enumerations for the guidebook data layer.
+
+These enums encode doctrinal decisions from project-standards.md.
+Changes here require a Change Order (CO) because they affect validation
+across all entity types.
+
+Population codes: workplan-orchestrator §Population Codes (canonical).
+Evidence tiers: project-standards §Core Doctrine (seven-tier hierarchy).
+Jurisdiction codes: jurisdiction-tracker §4.7.3 (24 canonical + meta-codes).
+"""
+
+from enum import Enum
+
+
+class PopulationCode(str, Enum):
+    """Canonical population codes per workplan-orchestrator.
+
+    Top-level codes and sub-codes are both valid enum members.
+    Sub-code implies parent: MOB_AMB implies MOB.
+    VIS, DEAF, DBL are three distinct codes — VIS/DEAF compound is invalid.
+    BAR is NOT main taxonomy (Supp. Part 4 only).
+    IntD proxied through DEM + NDV per project-standards.
+    """
+
+    # Top-level
+    MOB = "MOB"
+    VIS = "VIS"
+    DEAF = "DEAF"
+    NEU = "NEU"
+    DEM = "DEM"
+    NDV = "NDV"
+    NDV_MH = "NDV/MH"
+    PAIN = "PAIN"
+    DBL = "DBL"
+    OFS = "OFS"
+    IntD = "IntD"
+    ALL = "ALL"
+
+    # Sub-codes (MOB)
+    MOB_AMB = "MOB/AMB"
+    MOB_UPL = "MOB/UPL"
+
+    # Sub-codes (NDV)
+    NDV_AUT = "NDV/AUT"
+    NDV_ADHD = "NDV/ADHD"
+    NDV_SENS = "NDV/SENS"
+
+    # Sub-codes (NEU)
+    NEU_PCS = "NEU/PCS"
+
+    # Sub-codes (OFS)
+    OFS_ME = "OFS/ME"
+    OFS_POTS = "OFS/POTS"
+    OFS_MCAS = "OFS/MCAS"
+
+    # Supplementary only (not main taxonomy)
+    CHD = "CHD"
+    LPA = "LPA"
+    EXH = "EXH"
+    BAR = "BAR"
+
+
+class EvidenceTier(int, Enum):
+    """Seven-tier evidence hierarchy per project-standards §Core Doctrine.
+
+    Tier 1 = OT intervention-tested clinical research (highest).
+    Co-1 = Lived experience / participatory design (co-primary with Tier 1).
+    Co-2 = OT professional body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT).
+    Tier 2 = NGO/DPO/advocacy guidelines.
+    Tier 3 = Systematic reviews and meta-analyses.
+    Tier 4 = International standards with evidence basis.
+    Tier 5 = National beyond-code frameworks.
+    Tier 6 = Statutory codes (reference baseline only).
+    """
+
+    TIER_1 = 1
+    CO_1 = 10    # co-primary with Tier 1; int value for ordering only
+    CO_2 = 20    # OT CPGs
+    TIER_2 = 2
+    TIER_3 = 3
+    TIER_4 = 4
+    TIER_5 = 5
+    TIER_6 = 6
+
+
+class ValueType(str, Enum):
+    """Specification value types."""
+    FIXED = "fixed"
+    RANGE = "range"
+    QUALITATIVE = "qualitative"  # presence-only, no numeric value
+
+
+class RecommendationStrength(str, Enum):
+    """Recommendation strength per evidence synthesis.
+
+    UNSET: awaiting Opus synthesis.
+    STRONG_TIER_0: universal design / code compliance — fixed value.
+    CONDITIONAL_TIER_1: population-informed — range with median default.
+    CONDITIONAL: context-dependent without tier assignment.
+    """
+    UNSET = "UNSET"
+    STRONG_TIER_0 = "STRONG_TIER_0"
+    CONDITIONAL_TIER_1 = "CONDITIONAL_TIER_1"
+    CONDITIONAL = "CONDITIONAL"
+
+
+class ItemAssignmentStatus(str, Enum):
+    """Item code assignment state.
+
+    Replaces sentinel strings [UNASSIGNED] and [CROSS-CUTTING] in spec-db.
+    """
+    ASSIGNED = "ASSIGNED"
+    UNASSIGNED = "UNASSIGNED"
+    CROSS_CUTTING = "CROSS_CUTTING"
+
+
+class JurisdictionCode(str, Enum):
+    """Canonical jurisdiction codes.
+
+    24 country codes per jurisdiction-tracker §4.7.3 plus meta-codes.
+    Uses ISO 3166-1 alpha-2 where possible. UK used instead of GB
+    per project convention. Full list confirmed at A3.
+    """
+
+    # Core 24 jurisdictions (alphabetical)
+    AU = "AU"   # Australia
+    BD = "BD"   # Bangladesh
+    BR = "BR"   # Brazil
+    CA = "CA"   # Canada
+    CH = "CH"   # Switzerland
+    CN = "CN"   # China
+    DE = "DE"   # Germany
+    DK = "DK"   # Denmark
+    EG = "EG"   # Egypt
+    FR = "FR"   # France
+    ID = "ID"   # Indonesia
+    IE = "IE"   # Ireland
+    IN = "IN"   # India
+    JP = "JP"   # Japan
+    KE = "KE"   # Kenya
+    KR = "KR"   # South Korea
+    NG = "NG"   # Nigeria
+    NL = "NL"   # Netherlands
+    NO = "NO"   # Norway
+    NZ = "NZ"   # New Zealand
+    SE = "SE"   # Sweden
+    SG = "SG"   # Singapore
+    UK = "UK"   # United Kingdom (project convention, not GB)
+    US = "US"   # United States
+    ZA = "ZA"   # South Africa
+
+    # Meta-codes (not individual countries)
+    ISO = "ISO"   # ISO international standards
+    EU = "EU"     # European Union directives
+
+
+class EvidenceMarker(str, Enum):
+    """Evidence specification markers per project-standards.
+
+    ● (filled) = evidence-based specification (Tier 1–6).
+    ○ (empty) = inferred from clinical reasoning or expert consensus.
+    Every specification sentence carries either ● or ○. Unmarked = error.
+    """
+    EVIDENCE_BASED = "●"
+    INFERRED = "○"
+
+
+class BestPracticeStatus(str, Enum):
+    """T-04 state machine for BPC entries.
+
+    PROVISIONAL: initial extraction, not all 24 jurisdictions recorded.
+    COMPLETE: all 24 jurisdictions + co1_pass ≥ 9 languages.
+    OPUS_SYNTHESIZED: Opus has reviewed and set recommendation_strength.
+    CONSUMED: integrated into item specification.
+    """
+    PROVISIONAL = "PROVISIONAL"
+    COMPLETE = "COMPLETE"
+    OPUS_SYNTHESIZED = "OPUS_SYNTHESIZED"
+    CONSUMED = "CONSUMED"
+
+
+class DesignTier(int, Enum):
+    """Three-Tier Design Hierarchy per project-standards §Core Doctrine.
+
+    Tier 0 = Universal Design / Code Compliance (population-agnostic, fixed).
+    Tier 1 = Population-Informed Inclusive Design (ranges; median default).
+    Tier 2 = Person-Specific Co-Design (OT assessment resolves range).
+    DAR mandatory at all tiers.
+    """
+    TIER_0 = 0
+    TIER_1 = 1
+    TIER_2 = 2
