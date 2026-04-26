@@ -5,7 +5,7 @@
 **Canonical version of:** `governance/mission-PROVISIONAL.md` (revised 2026-04-26 03:45)
 **Companion deliverable:** `governance/audience-priority.md` (iter 1; iter 2 deltas captured this session)
 **Operative frame:** Pre-launch solo authorship; partial CRPD Art. 4.3 honoring at evidence level
-**Citation status:** Iter 3 closes citation gaps in §Epistemic commitments. Claims here are flagged `[cite — iter 3]` where the iter 3 citation work is required.
+**Citation status:** Iter 3 citation gaps CLOSED (2026-04-25). All `[cite — iter 3]` flags resolved with DOI-verified sources.
 
 ---
 
@@ -107,11 +107,11 @@ Each (parameter × population) cell holds one of four states (per Stage 0.5 Deci
 | `pending` | `[BEST-PRACTICE-PENDING]` + gap link | Evidence sparse across all dimensions | Validator requires gap-register entry |
 | `not_applicable` | "Not applicable" | Parameter has no design implication for this population | Validator requires explicit rationale |
 
-**Silence on evidence-thin populations is not the default.** The Cochrane yardstick distinguishing absence-of-evidence from evidence-of-absence from primary-non-clinical-tier evidence is honored at the cell level [cite — iter 3: Cochrane Handbook reference].
+**Silence on evidence-thin populations is not the default.** The Cochrane yardstick distinguishing absence-of-evidence from evidence-of-absence from primary-non-clinical-tier evidence is honored at the cell level (Altman & Bland, 1995, DOI: 10.1136/bmj.311.7003.485; operationalized in Higgins et al., 2024, Cochrane Handbook v6.5, DOI: 10.1002/9781119536604).
 
 ### Questions-led teaching as testable hypothesis
 
-The questions-led pedagogical commitment (Doctrinal commitment 6) is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation [cite — iter 3: design-pedagogy literature; PBL in architecture and OT education]. The hypothesis is that questions-led resources improve designer outcomes more than prescriptive ones.
+The questions-led pedagogical commitment (Doctrinal commitment 6) is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation (Schön, 1983, DOI: 10.4324/9781315237473; Hmelo-Silver, 2004, DOI: 10.1023/B:EDPR.0000034022.16470.f3; Royeen, 1995, DOI: 10.5014/ajot.49.4.338). The hypothesis is that questions-led resources improve designer outcomes more than prescriptive ones.
 
 The hypothesis is the project's distinctive epistemic claim. It is acknowledged as a claim, not asserted as established. Empirical testing is staged in B6 pilot validation; per Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`, B6 pilot validation pre-launch is solo-author cross-checking against committed mission language, which is weaker rigor than external testing would provide. This methodological limit is declared, not papered over.
 
@@ -184,8 +184,8 @@ CANONICAL-TRACK — ITERATION 1 (= A1-A2 iter 2). Not yet operative.
 | Iteration | 1 of canonical-track (= iter 2 of A1-A2 per `workplan/a1-a2-iteration-plan.md`) |
 | Operative governance mission | `governance/mission-PROVISIONAL.md` (revised 2026-04-26 03:45) — until this file passes iter 4 acceptance |
 | Companion | `governance/audience-priority.md` (iter 2 captured this session) |
-| Acceptance test for canonical lock | Iter 4 cross-test: every claim here is consistent with audience-priority canonical, internally consistent, and either cited or `[cite — iter 3]` flagged |
-| Citation gap | `[cite — iter 3]` flags appear in §Epistemic commitments (questions-led teaching literature; Cochrane absence-of-evidence yardstick); iter 3 closes |
+| Acceptance test for canonical lock | Iter 4 cross-test: every claim here is consistent with audience-priority canonical, internally consistent, and fully cited (iter 3 complete) |
+| Citation gap | CLOSED — all `[cite — iter 3]` flags resolved with DOI-verified sources (iter 3, 2026-04-25) |
 | Public-facing version | Deferred to iter 5 (optional) per iteration plan |
 
 ---
@@ -193,7 +193,7 @@ CANONICAL-TRACK — ITERATION 1 (= A1-A2 iter 2). Not yet operative.
 ## What this file does not do
 
 - **Does not yet supersede `mission-PROVISIONAL.md`.** Iter 4 acceptance produces canonical lock; PROVISIONAL is operative until then.
-- **Does not commit citations.** Iter 3 closes the `[cite — iter 3]` flags.
+- **Citations committed.** Iter 3 closed all `[cite — iter 3]` flags (2026-04-25). Citations are now inline.
 - **Does not specify navigation modes.** B3 does that. This file supplies the audience-priority cross-reference; B3 must respect it.
 - **Does not produce the public-facing mission.** Iter 5 (optional) splits public-facing from internal governance versions.
 - **Does not pretend collaborator structures exist.** Pre-launch solo is the operational reality, declared in §Operational reality.
