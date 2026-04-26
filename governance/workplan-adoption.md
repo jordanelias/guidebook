@@ -132,3 +132,29 @@ DECIDED. Adopted as the operative plan, paired with `workplan/workplan-co0007-v3
 | Stage 0 status | CLOSED (9 of 9 sub-phases committed) |
 | Stage A status | GATED on mission sit-with (≥2026-04-27 03:22 UTC) |
 | Operative plan | `workplan/workplan-co0007-v3.md` + `workplan/workplan-co0007-v3-amendments.md` |
+
+
+---
+
+## Waiver record — Mission sit-with (2026-04-26 03:35 UTC)
+
+**Status:** WAIVED by project owner direction.
+
+The Coda's "sit with the mission ≥1 day before adopting" period — declared in the Stage A unblock conditions above as gating until 2026-04-27 03:22 UTC — has been waived. Project owner directed proceeding to Stage A immediately following Stage 0 close.
+
+**Operational consequence:**
+- Stage A is unblocked from this entry forward.
+- `governance/mission-PROVISIONAL.md` retains its PROVISIONAL status until A1-A2 produces the canonical `governance/mission-and-epistemics.md`.
+- The reflective-period methodology declared in the synthesis Coda is documented as not exercised for this transition.
+
+**Rationale captured:** project-owner discretion; no sub-rationale recorded at waiver time.
+
+**Test against mission integrity:** A1-A2 will canonicalize the mission. Any drift from `mission-PROVISIONAL.md` doctrinal commitments will be visible in the canonical version's diff against this file. The sit-with waiver does not bypass that diff visibility.
+
+| Field | Value |
+|---|---|
+| Waived | 2026-04-26 03:35 UTC |
+| Waiver authority | Project owner |
+| Original gate | Mission sit-with ≥2026-04-27 03:22 UTC |
+| Stage A status as of waiver | UNBLOCKED |
+| Doctrinal commitments | Carry forward to A1-A2 canonical version |
