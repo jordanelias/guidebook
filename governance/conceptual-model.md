@@ -161,13 +161,13 @@ tier: int           # 1–6
 evidence_type: EvidenceType
 ```
 
-**Schema impact:** The `EvidenceTierRange` model in schemas/base.py (built in infrastructure pour) uses `floor/ceiling/co1_present`. This needs reconciliation with T-03: the `co1_present` boolean becomes `evidence_type` on the source entity, not on the specification. A specification's evidence tier range describes the tiers of its supporting sources — the evidence_type lives on the individual source records.
+**Schema impact:** ~~The `EvidenceTierRange` model in schemas/base.py (built in infrastructure pour) uses `floor/ceiling/co1_present`. This needs reconciliation with T-03.~~ **RESOLVED (A3 Session 2, 2026-04-26):** EvidenceTier enum simplified to 1–6 (Co-1/Co-2 removed as tier values). EvidenceTierRange.co1_present replaced with evidence_types_present: list[str]. EvidenceType enum added to enums.py. EvidenceSource schema built with tier + evidence_type per T-03. Converter handles all observed tier formats (531/531 pass). Cross-system check: evidence type distribution aligns with tier counts (clinical+co1=91=tier1 ✓).
 
-**Resolution:** Update EvidenceTierRange to drop `co1_present`. Add `evidence_types_present: list[EvidenceType]` instead — derived from the source records that support the specification. This change is Session 2 (when EvidenceSource is schematized).
+**Resolution:** COMPLETE. See schemas/enums.py (EvidenceType), schemas/base.py (EvidenceTierRange), schemas/evidence_source.py (EvidenceSource).
 
 ---
 
-## 5. Decisions Required (for A3 Session 2+)
+## 5. Decisions Required (for A3 Session 3+)
 
 | Decision | Options | Impact |
 |---|---|---|
@@ -185,14 +185,12 @@ Infrastructure pour schemas (CO-0008) must align with A3 entity model:
 | CO-0008 artifact | A3 alignment status |
 |---|---|
 | schemas/enums.py — PopulationCode | ✓ Matches canonical list. Sub-population detail deferred to A7. |
-| schemas/enums.py — EvidenceTier | ⚠ Uses int enum with Co-1=10, Co-2=20. T-03 resolution says tier(1–6) + evidence_type. Reconcile in Session 2. |
+| schemas/enums.py — EvidenceTier | ✓ Simplified to 1–6 per T-03 (Session 2). Co-1/Co-2 are evidence_types. |
+| schemas/enums.py — EvidenceType | ✓ Added Session 2. 9 values: clinical, co1, co2, sr_meta, standard_eb, national_fw, code, grey, unknown. |
 | schemas/enums.py — JurisdictionCode | ✓ 25 countries + 2 meta-codes. Full 24 to confirm at A3. |
-| schemas/specification.py — Specification | ✓ Primary entity. EvidenceTierRange.co1_present to be replaced per §4. |
-| schemas/base.py — EvidenceTierRange | ⚠ co1_present field needs T-03 reconciliation. Session 2 fix. |
-| scripts/validate_schema.py | ✓ ENTITY_REGISTRY extensible — add new entity types as built. |
+| schemas/specification.py — Specification | ✓ Primary entity. EvidenceTierRange updated per T-03. |
+| schemas/base.py — EvidenceTierRange | ✓ co1_present replaced with evidence_types_present (Session 2). |
+| schemas/evidence_source.py — EvidenceSource | ✓ Built Session 2. 531/531 records convert and validate. |
+| scripts/validate_schema.py | ✓ ENTITY_REGISTRY: specifications + sources. 604 files validate. |
 
-**Action items for Session 2:**
-1. Add EvidenceType enum to schemas/enums.py (per T-03)
-2. Replace EvidenceTierRange.co1_present with evidence_types_present: list[EvidenceType]
-3. Re-run convert_spec_db.py to verify no regression
-4. Build EvidenceSource schema + converter
+**Session 2 complete. Next: Session 3 (BPC Metadata) or Session 4 (Connection).**

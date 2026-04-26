@@ -60,33 +60,36 @@ class EvidenceTierRange(BaseModel):
     """Structured representation of an evidence tier range.
 
     Replaces compound strings like "Tier 4-5" or "Co-1/Tier 3".
-    floor and ceiling define the range of evidence supporting a spec.
-    co1_present flags whether lived experience evidence is included.
+    floor and ceiling define the tier range (1–6) of supporting evidence.
+    evidence_types_present lists the kinds of evidence found (per T-03).
 
-    Per project-standards: Co-1 is co-primary with Tier 1.
+    Per T-03: tier is one dimension (1–6), evidence_type is the other.
+    Co-1 is not a tier — it's an evidence_type with tier=1 (co-primary).
     """
 
     model_config = ConfigDict(extra="forbid")
 
-    floor: int  # EvidenceTier int value (1-6, 10 for Co-1, 20 for Co-2)
-    ceiling: int
-    co1_present: bool = False
+    floor: int  # Strongest evidence tier (1–6)
+    ceiling: int  # Weakest evidence tier (1–6)
+    evidence_types_present: list[str] = []  # EvidenceType values found
+
+    @field_validator("floor")
+    @classmethod
+    def valid_floor(cls, v: int) -> int:
+        if v < 1 or v > 6:
+            raise ValueError(f"floor must be 1–6, got {v}")
+        return v
 
     @field_validator("ceiling")
     @classmethod
     def ceiling_gte_floor(cls, v: int, info) -> int:
+        if v < 1 or v > 6:
+            raise ValueError(f"ceiling must be 1–6, got {v}")
         floor = info.data.get("floor")
-        if floor is not None:
-            # For standard tiers (1-6), higher number = weaker evidence
-            # So ceiling (weakest) should be >= floor (strongest)
-            # But Co-1 (10) and Co-2 (20) are special — treated as
-            # co-primary markers, not ranking positions
-            std_floor = floor if floor <= 6 else 1
-            std_ceiling = v if v <= 6 else 6
-            if std_ceiling < std_floor:
-                raise ValueError(
-                    f"ceiling ({v}) cannot be stronger than floor ({floor})"
-                )
+        if floor is not None and v < floor:
+            raise ValueError(
+                f"ceiling ({v}) cannot be stronger than floor ({floor})"
+            )
         return v
 
 

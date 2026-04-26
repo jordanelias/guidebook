@@ -36,15 +36,19 @@ def parse_evidence_tier(raw: str) -> dict:
     """Parse compound evidence tier string into structured form.
 
     Examples:
-        "Tier 4-5" → {"floor": 4, "ceiling": 5, "co1_present": False}
-        "Co-1/Tier 3" → {"floor": 3, "ceiling": 3, "co1_present": True}
-        "Tier 1-3" → {"floor": 1, "ceiling": 3, "co1_present": False}
-        "Tier 3" → {"floor": 3, "ceiling": 3, "co1_present": False}
+        "Tier 4-5" → {"floor": 4, "ceiling": 5, "evidence_types_present": []}
+        "Co-1/Tier 3" → {"floor": 1, "ceiling": 3, "evidence_types_present": ["co1"]}
+        "Tier 1-3" → {"floor": 1, "ceiling": 3, "evidence_types_present": []}
+        "Tier 3" → {"floor": 3, "ceiling": 3, "evidence_types_present": []}
     """
     if not raw or raw.strip() == "":
         return None
 
+    evidence_types = []
     co1 = "Co-1" in raw or "co-1" in raw or "Co1" in raw
+    if co1:
+        evidence_types.append("co1")
+
     # Remove Co-1/ prefix for tier parsing
     tier_part = re.sub(r"Co-?1/?", "", raw).strip()
 
@@ -53,13 +57,17 @@ def parse_evidence_tier(raw: str) -> dict:
     if m:
         floor = int(m.group(1))
         ceiling = int(m.group(2)) if m.group(2) else floor
-        return {"floor": floor, "ceiling": ceiling, "co1_present": co1}
+        # If Co-1 present, floor extends to 1 (co-primary)
+        if co1 and floor > 1:
+            floor = 1
+        return {"floor": floor, "ceiling": ceiling, "evidence_types_present": evidence_types}
 
     # Fallback: try just a number
     m = re.match(r"(\d)", tier_part)
     if m:
         t = int(m.group(1))
-        return {"floor": t, "ceiling": t, "co1_present": co1}
+        floor = 1 if co1 else t
+        return {"floor": floor, "ceiling": t, "evidence_types_present": evidence_types}
 
     print(f"  WARNING: unparseable evidence_tier: '{raw}'", file=sys.stderr)
     return None

@@ -62,21 +62,21 @@ class PopulationCode(str, Enum):
 
 
 class EvidenceTier(int, Enum):
-    """Seven-tier evidence hierarchy per project-standards §Core Doctrine.
+    """Evidence tier per project-standards §Core Doctrine + T-03 resolution.
+
+    Per T-03: tier (1–6) is one dimension; evidence_type (EvidenceType enum)
+    is the other. Co-1 and Co-2 are evidence_types, not tiers.
+    Co-1 sources carry tier=1 (co-primary). Co-2 sources carry tier=3 (CPG marker).
 
     Tier 1 = OT intervention-tested clinical research (highest).
-    Co-1 = Lived experience / participatory design (co-primary with Tier 1).
-    Co-2 = OT professional body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT).
     Tier 2 = NGO/DPO/advocacy guidelines.
-    Tier 3 = Systematic reviews and meta-analyses.
+    Tier 3 = Systematic reviews and meta-analyses (Co-2 CPGs also here).
     Tier 4 = International standards with evidence basis.
     Tier 5 = National beyond-code frameworks.
     Tier 6 = Statutory codes (reference baseline only).
     """
 
     TIER_1 = 1
-    CO_1 = 10    # co-primary with Tier 1; int value for ordering only
-    CO_2 = 20    # OT CPGs
     TIER_2 = 2
     TIER_3 = 3
     TIER_4 = 4
@@ -164,6 +164,27 @@ class EvidenceMarker(str, Enum):
     """
     EVIDENCE_BASED = "●"
     INFERRED = "○"
+
+
+class EvidenceType(str, Enum):
+    """Evidence type taxonomy per T-03 resolution.
+
+    T-03 decided: tier (1–6) + evidence_type. Two orthogonal dimensions.
+    tier encodes the clinical-evidence position (1 = strongest, 6 = baseline).
+    evidence_type encodes the kind of evidence.
+
+    Co-1 records: tier=1, evidence_type=CO1 (co-primary with clinical Tier 1).
+    Co-2 records: tier=2, evidence_type=CO2 (OT body CPGs, rated Tier 3 with marker).
+    """
+    CLINICAL = "clinical"        # OT intervention-tested research
+    CO1 = "co1"                  # Lived experience / participatory design
+    CO2 = "co2"                  # OT professional body CPGs
+    SR_META = "sr_meta"          # Systematic reviews / meta-analyses
+    STANDARD_EB = "standard_eb"  # International standards with evidence basis
+    NATIONAL_FW = "national_fw"  # National beyond-code frameworks
+    CODE = "code"                # Statutory codes
+    GREY = "grey"                # Grey literature, organizational reports
+    UNKNOWN = "unknown"          # Not yet classified
 
 
 class BestPracticeStatus(str, Enum):
