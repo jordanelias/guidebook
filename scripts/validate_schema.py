@@ -30,14 +30,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from schemas.specification import Specification
 from schemas.evidence_source import EvidenceSource
+from schemas.bpc_metadata import BPCMetadata
 
 
 # Registry: maps data/ subdirectory to its Pydantic model
 ENTITY_REGISTRY = {
     "specifications": Specification,
     "sources": EvidenceSource,
+    "bpc-metadata": BPCMetadata,
     # Future entity types registered here during A3+:
-    # "bpc-metadata": BPCMetadata,
     # "connections": Connection,
     # "gaps": Gap,
 }
