@@ -32,6 +32,8 @@ from schemas.specification import Specification
 from schemas.evidence_source import EvidenceSource
 from schemas.bpc_metadata import BPCMetadata
 from schemas.connection import Connection
+from schemas.slug import Slug
+from schemas.gap import Gap
 
 
 # Registry: maps data/ subdirectory to its Pydantic model
@@ -40,10 +42,10 @@ ENTITY_REGISTRY = {
     "sources": EvidenceSource,
     "bpc-metadata": BPCMetadata,
     "connections": Connection,
-    # Future entity types registered here during A3+:
-    # "gaps": Gap,
-    # "slugs": Slug,
+    "slugs": Slug,
+    "gaps": Gap,
 }
+
 
 
 def validate_file(path: str, model_class) -> list:
