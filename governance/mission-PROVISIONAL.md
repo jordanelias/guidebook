@@ -1,10 +1,18 @@
 # Mission Statement (PROVISIONAL)
-**Status:** PROVISIONAL — committed 2026-04-26 02:42 UTC per Stage 0.6
+**Status:** PROVISIONAL — committed 2026-04-26 02:42 UTC per Stage 0.6; revised 2026-04-26 03:45 UTC per pre-launch solo correction
 **Resolves audit finding:** T-01 (mission not committed as artifact)
 **Supersedes:** synthesis Part IV passage (informal embedded text)
 **Canonical version:** A1-A2 (pending)
-**Coda's "sit with the mission" test:** operates on this file
-**Decisions incorporated:** T-03, T-04, D-03 per `governance/pre-stage-a-decisions.md`
+**Coda's "sit with the mission" test:** WAIVED 2026-04-26 03:35 UTC by project owner (recorded in `governance/workplan-adoption.md`)
+**Decisions incorporated:** T-03, T-04, D-03 per `governance/pre-stage-a-decisions.md` (D-03 revised 2026-04-26 03:45 UTC)
+
+---
+
+## Revision note (2026-04-26 03:45 UTC)
+
+§3 of this file originally contained an "Operational declaration on Co-1 collaboration" describing a Reviewer-with-trajectory structure with pending Drafting triggers. That structure does not exist. The project is pre-launch and solo-authored. The original §3 has been replaced with an honest pre-launch operational reality and a post-launch contingency clause. The Co-1 *evidence* commitment (co-primary with Tier 1) is unchanged — it was never an operational claim, only an evidence-type methodology claim.
+
+Original §3 text is preserved in repo history at the prior commit of this file.
 
 ---
 
@@ -45,7 +53,7 @@ The seven-tier hierarchy:
 | Position | Type | Source examples |
 |---|---|---|
 | Tier 1 | OT intervention-tested clinical research | RCTs, intervention trials |
-| **Co-1** | **Lived experience / participatory design (CRPD Art. 4.3)** | DPO research, Co-1 reviewer panels, peer-reviewed lived-experience literature |
+| **Co-1** | **Lived experience / participatory design (CRPD Art. 4.3)** | DPO research, peer-reviewed lived-experience literature, named advocacy organizational positions, Co-1-authored academic narratives |
 | Tier 2 | NGO / DPO / advocacy guidelines | LPA, RNID, HLAA, IDA, Habinteg |
 | **Co-2** | **OT professional body CPGs** | CAOT, AOTA, RCOT, COTEC, WFOT |
 | Tier 3 | Systematic reviews and meta-analyses | Cochrane, JBI, narrative SRs |
@@ -53,28 +61,29 @@ The seven-tier hierarchy:
 | Tier 5 | National beyond-code frameworks | BS 8300-2 Annex G, NL WMO-keuken, RCOTSS-Housing OT |
 | Tier 6 | Statutory codes | Reference baseline only |
 
-Co-1 is co-primary with Tier 1. Co-2 is parallel to Tier 2. Schema encodes both `tier` and `evidence_type` to preserve this parallelism (per Stage 0.5 Decision T-03).
+Co-1 is co-primary with Tier 1 *as evidence*. Co-2 is parallel to Tier 2. Schema encodes both `tier` and `evidence_type` to preserve this parallelism (per Stage 0.5 Decision T-03).
 
 ### 3. Co-1 is co-primary evidence with Tier 1 (clean data + transparent methodology)
 
 Co-1 evidence — lived experience and participatory design (CRPD Art. 4.3) — is not subordinate to clinical research; the two answer different questions. Where lived experience and clinical research converge, the convergence is itself evidence. Where they diverge, the divergence is documented and a synthesis approach is specified per parameter.
 
-#### Operational declaration on Co-1 collaboration
+#### Operational reality (pre-launch)
 
-Co-1 *evidence* (the corpus) is co-primary with Tier 1. The project's *operational* engagement of Co-1 collaborators (people) is currently at the **review** level: Co-1 representatives review and provide approval at key checkpoints, rather than drafting sections of the guidebook directly.
+The project is currently pre-launch and authored by a single person. There are no Co-1 collaborator panels, no DPO partnerships, no recruitment thread, and no compensation infrastructure. Co-1 *evidence* is engaged through the published corpus only:
 
-This declaration is honest about resourcing. Co-1 evidence flows into the guidebook through:
 - Peer-reviewed lived-experience literature (papers embedding Co-1 voice — e.g., Wilson 2023 MH spaces, Kennedy 2015 UPL grab bar preferences)
 - Confirmed Co-1 advocacy positions from named organizations (LPA on reach range, RNID on hearing loops, HLAA on Auracast, IDA on CRPD Art. 9 implementation)
-- Co-1 reviewer consultation at project checkpoints
+- Co-1-authored academic narratives and DPO research outputs
 
-Co-1 evidence is NOT currently synthesized through Co-1 collaborators directly drafting guidebook text under current resourcing.
+This is an **evidence-level** engagement with Co-1, not a **participation-level** engagement. It is partial honoring of CRPD Art. 4.3: the corpus itself was produced through participatory processes, and the synthesis here treats that corpus as co-primary; but direct participation in the synthesis is not happening. That is the methodological limit pre-launch, declared.
 
-#### Trajectory clause
+#### Post-launch contingency
 
-Where DPO partnerships, dedicated funding, and per-collaborator compensation infrastructure can be secured for a given population, the project will expand Co-1 from review to drafting for that population. Trigger conditions are specified in `governance/pre-stage-a-decisions.md` D-03 resolution.
+If the project launches and resources permit, collaboration with disabled people, DPOs, and OT bodies may become possible. The form that collaboration would take — review, co-authorship, decision authority — is itself a question that participatory design principles say should be answered *with* disabled people, not *for* them. Specifying that form pre-launch, in the absence of participants, would reproduce the substantive problem CRPD Art. 4.3 exists to address.
 
-A5 produces operational specifications for both states (Reviewer and Drafting) so transitions are mechanical when triggers fire.
+The project's commitment is therefore: post-launch, *if* feasible, the collaborative form is co-designed with the people it concerns. The methodology pre-launch is solo synthesis from published Co-1 evidence, with the limit declared.
+
+This may never happen. **Solo-only-permanent is a possible end-state for the project.** The methodology must hold integrity in that case as well as in the launched-with-collaboration case. Methodology integrity comes from honest evidence engagement and transparent declaration of limits — not from a fictional operational structure.
 
 ### 4. Best practice for sparse-evidence populations is explicitly stated, not silent (per Stage 0.5 Decision T-04)
 
@@ -101,7 +110,7 @@ DAR (Design for Adaptable Readiness) provisions are mandatory at all tiers — t
 
 The guidebook organizes around questions readers should ask, not around answers they should adopt. **Questions are first-class data, not annotations.** Navigation modes include a questions-led entry surface (per audit v2 §T-02 / D-01 resolution).
 
-The pedagogical hypothesis — that questions-led resources improve designer outcomes more than prescriptive ones — is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation literature. The hypothesis is engaged in A6 evidence methodology and tested empirically in B6 pilot validation with practicing architects.
+The pedagogical hypothesis — that questions-led resources improve designer outcomes more than prescriptive ones — is informed by inquiry-based learning, scaffolded questioning in design education, and problem-based learning in professional formation literature. The hypothesis is engaged in A6 evidence methodology; empirical testing in B6 pilot validation is solo-author cross-checking against committed mission, not external Co-1 review (see §3 operational reality and §B6 in `workplan/workplan-co0007-v3-amendments.md`).
 
 The hypothesis is the project's distinctive epistemic claim. It is acknowledged as a claim, not asserted as established.
 
@@ -123,6 +132,8 @@ The guidebook does **not pursue universal jurisdictional adoption** as its prima
 
 The guidebook **acknowledges the formal/informal city divide** as the meta-barrier to global accessible housing. The project specifies for formal contexts and identifies the informal-context gap as the highest-priority research and policy gap (per project-standards 2026-04-07 00:44).
 
+The guidebook is **a pre-launch single-author synthesis** drawing on published Co-1 evidence, Tier 1–6 literature, and the author's reading and judgment. It is not a produced-by-participation document. Its claim to honor CRPD Art. 4.3 rests on engagement with the Co-1 corpus, which is partial honoring. Full participatory production is contingent on launch and resourcing.
+
 ---
 
 ## Test against which all downstream decisions are evaluated
@@ -133,7 +144,7 @@ Every methodological, architectural, and editorial decision in the project must 
 2. Does it acknowledge non-uniformity — within-population variability and individual specificity?
 3. Does it ground best practice in the evidence hierarchy, not in code consensus?
 4. Does it surface where Co-1 evidence governs, where Tier 1 clinical evidence governs, where they converge, and where they diverge?
-5. Does it respect the operational declaration on Co-1 (Reviewer with trajectory) and document any expansion?
+5. Does it respect the operational reality on Co-1 (pre-launch solo synthesis from published corpus) and document the partial-honoring limit honestly?
 6. Does it teach professional judgment rather than substitute for it?
 7. Is the underlying data verifiable (clean data) and the methodology declared (transparent methodology)?
 
@@ -143,16 +154,17 @@ Decisions that fail this test must be revised, document a justified exception, o
 
 ## Status
 
-PROVISIONAL until A1-A2 canonical version. The Coda's "sit with the mission ≥1 day before adopting" test now operates against this file.
+PROVISIONAL until A1-A2 canonical version. The Coda's "sit with the mission ≥1 day before adopting" test was waived 2026-04-26 03:35 UTC; A1-A2 canonical will produce against this revised file as input.
 
 | Field | Value |
 |---|---|
-| Version | 0.6.PROVISIONAL.20260426 |
-| Supersedes | synthesis Part IV passage (informal) |
+| Version | 0.6.PROVISIONAL.20260426.r1 |
+| Supersedes | synthesis Part IV passage (informal); prior 0.6.PROVISIONAL.20260426 (§3 fictional collaborator framing) |
 | Next revision target | A1-A2 canonical version |
 | Resolution principle | Clean data + transparent methodology |
+| Operational frame | Pre-launch solo synthesis; post-launch collaboration contingent and may never occur |
 | Adoption decision authority | Project owner |
-| Adoption decision pending in | Stage 0.9 (workplan adoption) |
+| Adoption decision pending in | Stage 0.9 (workplan adoption — committed `0d72b35b`) |
 
 ---
 
@@ -160,6 +172,6 @@ PROVISIONAL until A1-A2 canonical version. The Coda's "sit with the mission ≥1
 
 - **Does not commit A1-A2 canonical mission.** That is the next mission revision.
 - **Does not implement schema, validators, or skills.** Implementation is B1, B2, C2.
-- **Does not specify A5 (Co-1 relationship operational specification).** A5 produces that, with Reviewer-state and Drafting-state both specified per D-03 trajectory.
+- **Does not specify A5 in either operational form.** A5 is re-scoped per Amendment 7 in `workplan/workplan-co0007-v3-amendments.md`: pre-launch produces design for post-launch collaborative form (a how-it-would-work specification); recruitment is post-launch only and may never run.
 - **Does not specify A11 (legal/regulatory framework).** Trajectory positioning toward formal adoption is A11 work.
-- **Does not pre-empt the audit-recommended "sit with mission ≥1 day" wait.** This file is the artifact to sit with.
+- **Does not pretend collaborator structures exist.** Pre-launch solo is the operational reality; post-launch collaboration is contingent and may never occur.

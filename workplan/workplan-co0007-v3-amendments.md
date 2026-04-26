@@ -156,6 +156,42 @@ Conflating these three produces incoherent claims (e.g., "the guidebook covers 2
 
 ---
 
+## Amendment 7 · Co-1 collaborator framing — pre-launch solo reality
+
+| Field | v3 value | Amended value |
+|---|---|---|
+| Co-1 operational role across A1-A2, A4, A5, B4, B6 | "Reviewer," "Drafting if recruitment supports," recruitment thread, with triggers | **Pre-launch: inoperative — no Co-1 collaborators exist.** Co-1 *evidence* engagement through published corpus only. **Post-launch contingent**, may never activate. |
+| A5 scope and budget | "Co-1 co-author relationship — operational specification + recruitment thread · 5–7 sessions for design; recruitment is parallel cross-stage thread" | Pre-launch: A5 produces design specification for post-launch collaborative form (a how-it-would-work document) · **~2–3 sessions**. Recruitment thread does not run pre-launch. |
+| CS2 (Co-1 recruitment thread) | "Active from A5 forward. Gates C4 per population." | **Inoperative pre-launch.** Activates only if launch + resources occur. C4 per-population gating becomes per-launch-state, not per-population. |
+| CS5 (Co-1 representation monitoring) | "Dashboard updated as corpus grows. Drift triggers recruitment." | Re-scoped to **corpus-representation monitoring** (is the evidence base drawing from a sufficiently broad range of disabled voices?), distinct from collaborator-representation monitoring. Drift triggers expanded literature search, not recruitment. |
+| B6 (pilot validation against mission) | "4–5 sessions" | Solo-author cross-checking against committed mission language, not external Co-1 review. Validation rigor is correspondingly weaker; **declared in mission §6**, not budgetarily compensated. |
+| B4 multi-pilot construction Co-1 role | "Drafting if recruitment supports; Decision at minimum" | Solo authorship engaging the published Co-1 corpus. No Co-1 collaborator role pre-launch. |
+
+**Source:** Project-owner correction 2026-04-26 03:35–03:45 UTC; new RULE in `references/project-standards.md` 2026-04-26 03:45 UTC; revised D-03 in `governance/pre-stage-a-decisions.md`.
+
+**Rationale:** Workplan v3 was authored under the assumption that the project has a current operational structure (Co-1 collaborators at Reviewer level) with pending triggers for Drafting-state expansion. That structure does not exist. The project is pre-launch and authored by one person. Co-1 *evidence* is engaged through the published corpus — peer-reviewed lived-experience research, DPO position papers, named advocacy organizational positions, Co-1-authored academic narratives. There are no Co-1 collaborator panels, no DPO partnerships, no recruitment thread, no compensation infrastructure. There is no Reviewer state. There is no Drafting state. There are no triggers. Post-launch collaboration is contingent and may never occur. **Solo-only-permanent is a possible end-state.**
+
+The Co-1 *evidence* commitment (co-primary with Tier 1 per the seven-tier hierarchy) is unaffected. That is a methodology commitment about evidence types, valid regardless of solo-vs-team production. T-03 (`tier` + `evidence_type` encoding) and T-04 (sparse-evidence state machine) — both about evidence — remain in effect unchanged.
+
+**What changes operationally:**
+- A5 becomes a 2–3 session design exercise: specify the post-launch collaborative form as a contingency document (how it would work *if* activated), not as an operational specification of current state. The design itself is solo authorship informed by Co-1 evidence on participatory design practice (CRPD Art. 4.3 implementation literature, named DPO position papers on co-design models).
+- A1-A2 produces canonical mission and audience priority documents *as solo work*, with the partial-Art-4.3-honoring limit declared in mission language (per revised mission-PROVISIONAL §3 and the Test §5 update).
+- B4/B6 pilots are solo-authored, validated by solo cross-checking against committed mission. Validation rigor is weaker than external Co-1 review would provide; this is a declared methodological limit, not a budget cost.
+- CS2 and the recruitment-thread coordination overhead drop out pre-launch entirely.
+- CS5 re-scopes to corpus diversity monitoring (an evidence-base question) rather than collaborator-pool monitoring (a participation question that doesn't apply pre-launch).
+
+**Project-total budget impact:** The binding constraint changes. v3 had Co-1 cadence (review windows, DPO recruitment timing, collaborator scheduling) as the binding real-world constraint. With no Co-1 cadence to bind to, single-author pace becomes the binding constraint. Session-count savings: A5 reduces by 3–4 sessions; CS2 coordination overhead drops out (estimated ~0–3 sessions across the project); B6 budget is unchanged in session count but rigor cost is non-budgetary and declared. Net session-count delta: **-3 to -7 sessions** (savings from removed-fictional-coordination overhead). Combined with Amendments 1–6, project total range becomes **220–336 sessions** (was 227–339 under Amendments 1–6 alone; was 224–334 in v3 baseline).
+
+**Real-world months:** the v3 binding range of 15–24 months was set by Co-1 cadence dominance. With Co-1 cadence removed, the binding constraint is the single author's working pace and external research access. The 15–24 month range no longer applies on its original logic. **Re-budgeting is deferred** — pace estimation under solo authorship is not reliably derivable from current materials and is left for a future amendment when working rhythm is established.
+
+**What Amendment 7 does NOT do:**
+- Does not change v3's phase structure (A1-A13, B1-B7, C0-C11). Phases remain.
+- Does not delete A5. A5 is re-scoped, not removed.
+- Does not commit a fictional "post-launch will happen" plan. Post-launch is contingent and may never activate.
+- Does not substitute solo synthesis for Co-1 evidence engagement. The published Co-1 corpus is engaged at evidence level throughout.
+
+---
+
 ## Consolidated budget impact
 
 | Stage / Phase | v3 budget | Amended budget | Delta |
@@ -166,9 +202,12 @@ Conflating these three produces incoherent claims (e.g., "the guidebook covers 2
 | C3 (disposition tracks) | as-is | as-is | 0 (within-scope operational discipline) |
 | A8 (glossary) | as-is | as-is | 0 (within-scope) |
 | A13 (recheck) | as-is | as-is | 0 (within-scope; rechecks paid by drift-detection value) |
-| **Project total** | 224–334 | **227–339** | **+3 to +5** |
+| A5 (Amendment 7 — re-scoped) | 5–7 | **2–3** | **-3 to -4** |
+| CS2 (Amendment 7 — inoperative pre-launch) | recurring overhead | 0 pre-launch | **-0 to -3** (estimated) |
+| B6 (Amendment 7 — solo cross-check) | 4–5 | 4–5 | 0 (rigor cost non-budgetary) |
+| **Project total** | 224–334 | **220–336** | **-4 to +2** |
 
-Real-world months: 15–24 remains the binding range. Co-1 cadence dominates. Within-stage adjustments do not move the binding constraint.
+Real-world months: the v3 binding range of 15–24 months was set by Co-1 cadence dominance. With Amendment 7's removal of Co-1 cadence, the binding constraint shifts to single-author pace. **The 15–24 month range no longer applies on its original logic and is not re-stated here.** Re-budgeting is deferred until working rhythm is established.
 
 ---
 
@@ -185,6 +224,7 @@ Real-world months: 15–24 remains the binding range. Co-1 cadence dominates. Wi
   - Amendment 4 → `workplan/co0007-contamination-sample.md`
   - Amendment 5 → `workplan/co0007-quantitative-verification.md` §M5
   - Amendment 6 → `workplan/co0007-contamination-sample.md` lessons-learned
+  - Amendment 7 → project-owner correction 2026-04-26 03:35–03:45 UTC; new RULE in `references/project-standards.md` 2026-04-26 03:45 UTC; revised D-03 in `governance/pre-stage-a-decisions.md`
 
 ---
 
@@ -192,8 +232,8 @@ Real-world months: 15–24 remains the binding range. Co-1 cadence dominates. Wi
 
 - **Does not supersede v3.** v3 remains the structural plan. This file amends specific cells.
 - **Does not re-issue as v5.** v5 issuance was rejected at 0.9 in favor of adopt-and-amend.
-- **Does not pre-empt the mission sit-with.** Stage A remains gated on the sit-with period (≥2026-04-27 03:22 UTC).
-- **Does not implement the amendments.** Implementation occurs in the named phases (C2, C3, C7, A8, A13). This file specifies what those phases must deliver.
+- **Does not pre-empt the mission sit-with.** Sit-with was WAIVED 2026-04-26 03:35 UTC by project owner (recorded in `governance/workplan-adoption.md`).
+- **Does not implement the amendments.** Implementation occurs in the named phases (A1-A2, A5, A8, A13, B4, B6, C2, C3, C7) and cross-stage threads (CS2, CS5). This file specifies what those phases must deliver.
 
 ---
 
@@ -203,10 +243,11 @@ OPERATIVE. v3 + this file = the operative CO-0007 plan from this commit forward.
 
 | Field | Value |
 |---|---|
-| Adopted | 2026-04-26 03:30 UTC |
+| Adopted | 2026-04-26 03:30 UTC; Amendment 7 added 2026-04-26 03:45 UTC |
 | Adoption record | `governance/workplan-adoption.md` |
 | Operative pair | `workplan/workplan-co0007-v3.md` (this file's companion) |
-| Amendment count | 6 (cell-level; phase structure unchanged) |
-| Net session impact | +3 to +5 sessions (project total 227–339) |
-| Real-world impact | within original 15–24 month range |
+| Amendment count | **7** (cell-level; phase structure unchanged) |
+| Net session impact | **-4 to +2 sessions** (project total **220–336**); was +3 to +5 under Amendments 1–6 alone |
+| Real-world impact | binding constraint shifted from Co-1 cadence to single-author pace; original 15–24 month range no longer applies; re-budgeting deferred |
 | Resolution principle | Clean data + transparent methodology |
+| Operational frame | Pre-launch solo synthesis; post-launch collaboration contingent and may never occur |

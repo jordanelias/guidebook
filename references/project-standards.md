@@ -482,3 +482,11 @@ RULE: GitHub branch protection ruleset stays DISABLED during Phase A. Direct-pus
 CONDITION: Any instruction to "re-enable branch protection" during Phase A.
 ACTION: Do not re-enable. Do not instruct user to re-enable. CI validates without the ruleset.
 DATE: 2026-04-19 02:20
+
+
+---
+
+## Session 2026-04-26 — CO-0007 Stage 0 close + pre-launch operational correction
+
+RULE: Pre-launch operational reality — solo authorship; no collaborator infrastructure. The project is currently a single-author synthesis. No DPO partnerships, no Co-1 collaborator panels, no recruitment thread, no compensation structure exist. Co-1 evidence is engaged through the published corpus (peer-reviewed lived-experience research, DPO position papers, named advocacy organizational positions, Co-1-authored academic narratives) — not through Co-1 collaborators directly. Post-launch collaboration is a contingent future possibility — dependent on launch occurring at all, on resources materialising, and on trajectory holding — and may never occur. Solo-only-permanent is a possible end-state. Governance language must declare this reality, not project a fictional operational structure with pending triggers. The Co-1 *evidence* commitment (co-primary with Tier 1 per the seven-tier evidence hierarchy) is unaffected — that is a methodology commitment about evidence types, valid regardless of solo-vs-team production. CRPD Art. 4.3 is honored in partial form pre-launch (engagement with a corpus that was itself produced through participatory processes); full participatory honoring requires participants and is contingent on launch.
+DATE: 2026-04-26 03:45 — supersedes any prior governance language describing Co-1 collaborators as a current operational structure with pending Drafting triggers; supersedes the original D-03 resolution in `governance/pre-stage-a-decisions.md`

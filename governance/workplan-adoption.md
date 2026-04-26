@@ -13,7 +13,7 @@
 
 **Option B · Adopt workplan v3 with documented amendments — with C2 cut-list applied.**
 
-Workplan v3 (`workplan/workplan-co0007-v3.md`, committed `3385209da72c`) is the operative structural plan. The paired amendments file (`workplan/workplan-co0007-v3-amendments.md`, this commit) records the six budget and methodology adjustments Stage 0 surfaced. The combination — v3 + amendments — is the operative plan from this commit forward.
+Workplan v3 (`workplan/workplan-co0007-v3.md`, committed `3385209da72c`) is the operative structural plan. The paired amendments file (`workplan/workplan-co0007-v3-amendments.md`, this commit) records the seven budget and methodology adjustments Stage 0 surfaced (six committed initially; Amendment 7 added 2026-04-26 03:45 UTC under pre-launch operational correction). The combination — v3 + amendments — is the operative plan from this commit forward.
 
 Rejected options:
 - **Option A (adopt v3 as-is):** rejected because three explicit budget adjustments (C2, C7, salvage matrix) and two methodology refinements (A8 jurisdiction glossary, A13 contamination-sampling cadence) are known and would otherwise be silently absorbed. Audit B-01 surfaced silent compression as a recurring failure mode; carrying it forward defeats the audit's purpose.
@@ -32,7 +32,7 @@ The Option B + cut-list combination satisfies the resolution principle on both a
 - A8 jurisdiction glossary traces to 0.2 §M5 (49 registered / 24 canonical / 46 prior synthesis cite — three undisambiguated denominators).
 - A13 contamination-sampling cadence traces to 0.4 lessons-learned.
 
-**Transparent methodology.** The adopted plan declares what it actually is — v3 plus six amendments — rather than papering over the deltas. A future reader consults two files; the audit trail is intact.
+**Transparent methodology.** The adopted plan declares what it actually is — v3 plus seven amendments — rather than papering over the deltas. A future reader consults two files; the audit trail is intact. Amendment 7 (added 2026-04-26 03:45 UTC) is itself an application of the principle: the v3 + Amendments 1–6 adopted state described a Co-1 collaborator operational structure that did not exist; Amendment 7 corrects the framing to pre-launch solo authorship with post-launch collaboration as contingent possibility.
 
 The C2 cut-list approach is selected over C2-full-build because it preserves the original 12–16 session range while honestly tracking deferral. The deferred renderers are mid-Stage-C concerns, not C2-blocking concerns — this is a sequencing choice, not a scope reduction.
 
@@ -64,9 +64,11 @@ C2 (skill-builds) constructs three renderer skills in C2 proper. Three additiona
 | C2 | 12–16 | 12–16 (with cut-list) | 0 |
 | C7 | 12–17 | 15–22 | +3 to +5 |
 | Mid-Stage-C (cut-list absorption) | implicit in C0–C11 | +6 to +10 absorbed | nominally +0; tracked |
-| **Project total range** | 224–334 | **227–339** | +3 to +5 |
+| A5 (Amendment 7 — re-scoped) | 5–7 | 2–3 | -3 to -4 |
+| CS2 (Amendment 7 — inoperative pre-launch) | recurring overhead | 0 | -0 to -3 |
+| **Project total range** | 224–334 | **220–336** | **-4 to +2** |
 
-Real-world months: 15–24 months remains binding; Co-1 cadence dominates session count regardless of within-stage budget shifts.
+Real-world months: the v3 binding range of 15–24 months was set by Co-1 cadence dominance. With Amendment 7's correction (pre-launch solo authorship), Co-1 cadence is no longer a binding constraint. The original 15–24 month range no longer applies on its original logic. **Re-budgeting is deferred until working rhythm is established.**
 
 ---
 
