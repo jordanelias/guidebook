@@ -1,16 +1,17 @@
-# Session: 2026-04-26 CO-0008 Infrastructure Pour + A3 Session 1
+# Session: 2026-04-26 CO-0008 Infrastructure Pour + A3 Sessions 1-2
 **Model:** Opus 4.6
 **Started:** 2026-04-26 ~18:15 UTC
-**Closed:** 2026-04-26 18:37 UTC
+**Closed:** 2026-04-26 18:46 UTC
 **Predecessor:** session_2026-04-26-co0008-scope.md
 
 ---
 
 ## Task
 
-Two-phase session:
+Three-phase session:
 1. CO-0008 §6 infrastructure pour — all 8 deliverables
-2. A3 Conceptual Model — Session 1: entity inventory and relationship mapping
+2. A3 Session 1: entity inventory and relationship mapping
+3. A3 Session 2: EvidenceSource schema + T-03 reconciliation
 
 ---
 
@@ -18,31 +19,38 @@ Two-phase session:
 
 ### CO-0008 Infrastructure Pour (8/8 deliverables)
 
-1. **Throughline analysis** (workplan/co0008-throughline-analysis.md): Programmatic analysis of 73 spec-db records. 10 findings driving schema design — evidence tier compound strings, recommendation strength free-text, parameter naming inconsistency, vestigial fields, sentinel handling.
+1. **Throughline analysis** — 10 findings from 73 spec-db records driving schema design
+2. **schemas/** — enums.py, base.py, specification.py with cross-field validation
+3. **validate_schema.py** — generic validator runner with ENTITY_REGISTRY
+4. **convert_spec_db.py** — 73/73 records convert and validate
+5. **evidence_auditor_validate.py** — proof-of-concept hybrid skill validator
+6. **CI expansion** — schema job added to ci.yml
+7. **PI update** — delta document for conversation settings
+8. **Orchestrator rewrite** — Stage A workflows, Phase 2B dormant, skill classification
 
-2. **schemas/ scaffolding**: `__init__.py`, `enums.py` (PopulationCode, EvidenceTier, ValueType, RecommendationStrength, ItemAssignmentStatus, JurisdictionCode, EvidenceMarker, BestPracticeStatus, DesignTier), `base.py` (GuidebookEntity, EvidenceTierRange, ConditionValue), `specification.py` (Specification with cross-field validation).
+### A3 Session 1 — Entity Inventory
 
-3. **scripts/validate_schema.py**: Generic validator runner. Walks data/ directories, validates YAML against Pydantic models. Supports --quick (sample 5), --dir, --verbose. ENTITY_REGISTRY extensible for A3+ entity types.
+- governance/conceptual-model.md: 20 entities, 3 categories, relationship graph
+- Schema priority order for Sessions 2-8
+- T-03 reconciliation flagged: EvidenceTierRange.co1_present conflicts with T-03
 
-4. **scripts/convert/convert_spec_db.py**: Converts specification-database.json to validated YAML. 73/73 records pass. 8 sentinel parameter warnings (expected). Handles evidence tier parsing, recommendation strength normalization, item code sentinel replacement.
+### A3 Session 2 — EvidenceSource + T-03 Reconciliation
 
-5. **skills/evidence_auditor_validate.py**: Proof-of-concept hybrid skill. EvidenceAuditOutput + EvidenceAuditClaim Pydantic models. Validates strata, flags, markers, OFS/PAIN consensus disclosure. Tested with sample output.
+**T-03 fixes:**
+- EvidenceTier enum: simplified to 1-6 (Co-1/Co-2 removed as tier values)
+- EvidenceType enum: added 9 values (clinical, co1, co2, sr_meta, standard_eb, national_fw, code, grey, unknown)
+- EvidenceTierRange: co1_present replaced with evidence_types_present
+- convert_spec_db.py: updated parser, 73/73 still pass
 
-6. **CI expansion** (.github/workflows/ci.yml): Added `schema` job — installs pydantic+pyyaml, runs validate_schema.py. Path-filtered to data/ and schemas/ changes. Original 3 jobs unchanged.
+**EvidenceSource entity:**
+- schemas/evidence_source.py: ref_id, authors, year, title, doi, pmid, tier, evidence_type, jurisdiction, used_in_slugs, local_ref_ids, metadata_quality, verification_status
+- scripts/convert/convert_sources.py: handles all observed tier formats
+- 531/531 records convert and validate
 
-7. **PI update** (workplan/pi-update-co0008.md): Delta document specifying changes to conversation PI — model identity, Python tool calling, Stage A workflows, data health check, pip install rule.
-
-8. **Orchestrator rewrite** (skills/workplan-orchestrator_SKILL.md): Stage A workflows added (Governance+Code, Infrastructure Build). Phase 2B workflows marked dormant with reactivation gates. Skill index classified by execution pattern (Python Tool / Hybrid / Prose Only). Stage A build schedule. Session start Step 2b (data health check with pip install note).
-
-### A3 Session 1
-
-**governance/conceptual-model.md** — Entity inventory and relationship mapping:
-- 20 entities identified across 3 categories (existing data, new definition, cross-cutting axes)
-- Entity relationship map with primary content pipeline (Source → BPC → Specification → Item → Room)
-- Schema priority order (Sessions 2–8)
-- T-03 reconciliation identified: EvidenceTierRange.co1_present conflicts with T-03 tier+evidence_type decision
-- 4 deferred decisions (D-A3-01 through D-A3-04)
-- Cross-system coherence audit: 2 issues flagged (EvidenceTier enum, EvidenceTierRange.co1_present)
+**Cross-system check:**
+- 604 total files (73 specs + 531 sources) validate against schemas
+- Evidence type distribution aligns with tier counts
+- 8/21 spec slugs have matching sources; 13 missing are population-level slugs (expected)
 
 ---
 
@@ -56,31 +64,19 @@ None.
 
 ## Rules added
 
-None (governance+code co-production rule added in predecessor session).
+None.
 
 ---
 
 ## Session YAML close block
 
 ```yaml
-session_close: 2026-04-26 18:37
+session_close: 2026-04-26 18:46
 github_writes:
-  - schemas/__init__.py (new)
-  - schemas/enums.py (new)
-  - schemas/base.py (new)
-  - schemas/specification.py (new)
-  - scripts/validate_schema.py (new)
-  - scripts/convert/__init__.py (new)
-  - scripts/convert/convert_spec_db.py (new)
-  - skills/evidence_auditor_validate.py (new)
-  - .github/workflows/ci.yml (updated)
-  - workplan/co0008-throughline-analysis.md (new)
-  - workplan/pi-update-co0008.md (new)
-  - skills/workplan-orchestrator_SKILL.md (updated)
-  - governance/conceptual-model.md (new)
-  - sessions/session_2026-04-26-co0008-pour.md (new)
-  - sessions/LATEST (updated)
-commit_oid: 6d25e712b2fa (pour), pending (A3+session)
+  - commit 6d25e712b2fa: CO-0008 infrastructure pour (12 files)
+  - commit 2855bc984a7b: A3 Session 1 governance doc + session
+  - commit 5c0a3f6b1766: A3 Session 2 (7 files)
+  - commit pending: session update + LATEST
 document: CO-0008 + A3
 skills_run:
   - workplan-orchestrator
@@ -93,19 +89,21 @@ research_log_updated: false
 next_action:
   skill: workplan-orchestrator
   session: >
-    A3 Session 2: Evidence Source schema + conversion.
-    (1) Add EvidenceType enum to schemas/enums.py per T-03 decision.
-    (2) Reconcile EvidenceTierRange — replace co1_present with evidence_types_present.
-    (3) Re-run convert_spec_db.py to verify no regression.
-    (4) Build schemas/evidence_source.py (EvidenceSource model).
-    (5) Build scripts/convert/convert_sources.py — parse global-reference-registry.md + verified-sources JSONs.
-    (6) Extend ENTITY_REGISTRY in validate_schema.py.
-    (7) Cross-system check: REF-IDs in BPC key sources tables resolve to data/sources/.
-    Also: user to apply PI updates from workplan/pi-update-co0008.md to conversation settings.
+    A3 Session 3: BPC Metadata schema + conversion.
+    (1) Read BPC template and sample BPC files to map metadata fields.
+    (2) Build schemas/bpc_metadata.py.
+    (3) Build scripts/convert/convert_bpc_metadata.py.
+    (4) Rewrite scripts/validate_bpc.py to consume Pydantic model.
+    (5) Cross-system check: slug coverage + REF-ID integrity.
+    (6) Extend ENTITY_REGISTRY.
+    Also: user to apply PI updates from workplan/pi-update-co0008.md.
   parameters:
     co0008_status: INFRASTRUCTURE COMPLETE
-    a3_session: 2
+    a3_session: 3
     a3_total_sessions: 6-8
-    t03_reconciliation: PENDING (Session 2 priority)
+    t03_status: RESOLVED
+    entities_schematized: [Specification, EvidenceSource]
+    entities_remaining: [BPCMetadata, Connection, Slug, Gap, Item, Conflict]
+    data_files_validated: 604
 latest_updated: true
 ```
