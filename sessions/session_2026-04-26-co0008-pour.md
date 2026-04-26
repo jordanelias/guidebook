@@ -1,109 +1,78 @@
-# Session: 2026-04-26 CO-0008 Infrastructure Pour + A3 Sessions 1-2
+# Session: 2026-04-26 CO-0008 Pour + A3 Sessions 1-4
 **Model:** Opus 4.6
 **Started:** 2026-04-26 ~18:15 UTC
-**Closed:** 2026-04-26 18:46 UTC
+**Closed:** 2026-04-26 19:00 UTC
 **Predecessor:** session_2026-04-26-co0008-scope.md
-
----
-
-## Task
-
-Three-phase session:
-1. CO-0008 §6 infrastructure pour — all 8 deliverables
-2. A3 Session 1: entity inventory and relationship mapping
-3. A3 Session 2: EvidenceSource schema + T-03 reconciliation
 
 ---
 
 ## Completed
 
-### CO-0008 Infrastructure Pour (8/8 deliverables)
-
-1. **Throughline analysis** — 10 findings from 73 spec-db records driving schema design
-2. **schemas/** — enums.py, base.py, specification.py with cross-field validation
-3. **validate_schema.py** — generic validator runner with ENTITY_REGISTRY
-4. **convert_spec_db.py** — 73/73 records convert and validate
-5. **evidence_auditor_validate.py** — proof-of-concept hybrid skill validator
-6. **CI expansion** — schema job added to ci.yml
-7. **PI update** — delta document for conversation settings
-8. **Orchestrator rewrite** — Stage A workflows, Phase 2B dormant, skill classification
+### CO-0008 Infrastructure Pour (8/8)
+schemas/, validate_schema.py, convert_spec_db.py, evidence_auditor_validate.py, CI expansion, PI update doc, orchestrator rewrite, throughline analysis.
 
 ### A3 Session 1 — Entity Inventory
+governance/conceptual-model.md: 20 entities, 3 categories, relationship graph, schema priority order.
 
-- governance/conceptual-model.md: 20 entities, 3 categories, relationship graph
-- Schema priority order for Sessions 2-8
-- T-03 reconciliation flagged: EvidenceTierRange.co1_present conflicts with T-03
+### A3 Session 2 — EvidenceSource + T-03
+EvidenceTier simplified 1-6. EvidenceType enum added (9 values per T-03). EvidenceSource schema + converter: 531/531.
 
-### A3 Session 2 — EvidenceSource + T-03 Reconciliation
+### A3 Session 3 — BPCMetadata
+BPCMetadata schema + converter: 78/78 active files. Metadata extracted from embedded YAML blocks + headers. 66/78 have key source REF-IDs.
 
-**T-03 fixes:**
-- EvidenceTier enum: simplified to 1-6 (Co-1/Co-2 removed as tier values)
-- EvidenceType enum: added 9 values (clinical, co1, co2, sr_meta, standard_eb, national_fw, code, grey, unknown)
-- EvidenceTierRange: co1_present replaced with evidence_types_present
-- convert_spec_db.py: updated parser, 73/73 still pass
+### A3 Session 4 — Connection
+Connection schema + converter: 191/191. CLOSED status and MEDIUM→MODERATE normalization handled.
 
-**EvidenceSource entity:**
-- schemas/evidence_source.py: ref_id, authors, year, title, doi, pmid, tier, evidence_type, jurisdiction, used_in_slugs, local_ref_ids, metadata_quality, verification_status
-- scripts/convert/convert_sources.py: handles all observed tier formats
-- 531/531 records convert and validate
+---
 
-**Cross-system check:**
-- 604 total files (73 specs + 531 sources) validate against schemas
-- Evidence type distribution aligns with tier counts
-- 8/21 spec slugs have matching sources; 13 missing are population-level slugs (expected)
+## Data Layer Status
+
+| Entity | Schema | Converter | Records | Validated |
+|---|---|---|---|---|
+| Specification | schemas/specification.py | convert_spec_db.py | 73 | ✓ |
+| EvidenceSource | schemas/evidence_source.py | convert_sources.py | 531 | ✓ |
+| BPCMetadata | schemas/bpc_metadata.py | convert_bpc_metadata.py | 78 | ✓ |
+| Connection | schemas/connection.py | convert_connections.py | 191 | ✓ |
+| **Total** | | | **873** | **870 validated** |
+
+Note: 3 records in Specification are sentinel-parameterized (warnings, not failures). Total validates: 870.
 
 ---
 
 ## Skills run
+- workplan-orchestrator
 
-- workplan-orchestrator (session start + rewrite)
-
-## Gaps added
-
-None.
-
-## Rules added
-
+## Gaps/Rules added
 None.
 
 ---
 
-## Session YAML close block
-
 ```yaml
-session_close: 2026-04-26 18:46
+session_close: 2026-04-26 19:00
 github_writes:
-  - commit 6d25e712b2fa: CO-0008 infrastructure pour (12 files)
-  - commit 2855bc984a7b: A3 Session 1 governance doc + session
-  - commit 5c0a3f6b1766: A3 Session 2 (7 files)
-  - commit pending: session update + LATEST
+  - 6d25e712b2fa: infrastructure pour (12 files)
+  - 2855bc984a7b: A3 S1 governance + session
+  - 5c0a3f6b1766: A3 S2 T-03 + EvidenceSource (7 files)
+  - 0a4010cc8247: session update
+  - ba8c1a4e8b38: A3 S3 BPCMetadata (3 files)
+  - pending: A3 S4 Connection + session close
 document: CO-0008 + A3
-skills_run:
-  - workplan-orchestrator
+skills_run: [workplan-orchestrator]
 gaps_added: []
 gaps_resolved: []
-escalations_triggered: 0
-rules_added: []
 blockers: []
 research_log_updated: false
 next_action:
   skill: workplan-orchestrator
   session: >
-    A3 Session 3: BPC Metadata schema + conversion.
-    (1) Read BPC template and sample BPC files to map metadata fields.
-    (2) Build schemas/bpc_metadata.py.
-    (3) Build scripts/convert/convert_bpc_metadata.py.
-    (4) Rewrite scripts/validate_bpc.py to consume Pydantic model.
-    (5) Cross-system check: slug coverage + REF-ID integrity.
-    (6) Extend ENTITY_REGISTRY.
-    Also: user to apply PI updates from workplan/pi-update-co0008.md.
+    A3 Session 5: Slug + Gap schemas (lightweight).
+    Then Session 6: cross-cutting axes + validate_entities.py master runner.
+    Then Sessions 7-8: integration testing + governance sign-off.
+    User action: apply PI updates from workplan/pi-update-co0008.md.
   parameters:
-    co0008_status: INFRASTRUCTURE COMPLETE
-    a3_session: 3
-    a3_total_sessions: 6-8
-    t03_status: RESOLVED
-    entities_schematized: [Specification, EvidenceSource]
-    entities_remaining: [BPCMetadata, Connection, Slug, Gap, Item, Conflict]
-    data_files_validated: 604
+    a3_session: 5
+    entities_schematized: [Specification, EvidenceSource, BPCMetadata, Connection]
+    entities_remaining: [Slug, Gap, Item, Conflict]
+    data_files_validated: 870
 latest_updated: true
 ```
