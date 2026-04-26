@@ -81,3 +81,9 @@ jobs:
 
       - name: Validate all entity YAML against schemas
         run: python3 scripts/validate_schema.py --verbose
+
+      - name: Cross-entity referential integrity
+        run: python3 scripts/validate_schema.py --cross-check
+        # Cross-check currently reports diagnostic issues (not blocking).
+        # Will become blocking after data quality pass resolves known gaps.
+        continue-on-error: true

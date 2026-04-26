@@ -72,6 +72,10 @@ class Specification(GuidebookEntity):
     # Conditional values
     conditions: list[ConditionValue] = []
 
+    # Cross-cutting axes (A3 T-06, N-03)
+    design_stages: list[str] = []  # DesignStage values; empty = all stages
+    project_types: list[str] = []  # ProjectType values; empty = all types
+
     # Metadata
     percentile_basis: Optional[str] = None  # DEPRECATED — vestigial field
     notes: Optional[str] = None

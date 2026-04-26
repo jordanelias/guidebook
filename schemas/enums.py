@@ -212,3 +212,28 @@ class DesignTier(int, Enum):
     TIER_0 = 0
     TIER_1 = 1
     TIER_2 = 2
+
+
+class DesignStage(str, Enum):
+    """Cross-cutting axis: project design stage.
+
+    Specifications may have different applicability at different stages.
+    Per workplan A3 T-06: design stage interacts orthogonally with parameters.
+    """
+    DD = "DD"             # Design Development
+    RFO = "RFO"           # Ready for Occupancy
+    RETROFIT = "retrofit"  # Existing building modification
+    ALL = "all"            # Applies at all stages
+
+
+class ProjectType(str, Enum):
+    """Cross-cutting axis: project type.
+
+    Constraints on achievable specification compliance vary by type.
+    Per workplan A3 N-03: project type interacts orthogonally with parameters.
+    """
+    NEW_CONSTRUCTION = "new_construction"
+    MAJOR_RENOVATION = "major_renovation"
+    MINOR_ADAPTATION = "minor_adaptation"
+    MAINTENANCE = "maintenance"
+    ALL = "all"  # Applies to all project types

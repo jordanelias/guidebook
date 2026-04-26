@@ -1,9 +1,9 @@
 # A3 — Conceptual Model
-**Phase:** A3 (Conceptual model · 6–8 sessions per CO-0008)
-**Session:** 1 of 6–8
-**Status:** DRAFT — entity inventory and relationship mapping
+**Phase:** A3 (Conceptual model)
+**Sessions:** 7 (infrastructure pour + S1–S6 + S7 sign-off)
+**Status:** SIGNED OFF 2026-04-26
 **Resolves:** T-06 (design-stage cross-cutting), T-07 (entity list incomplete), N-03 (cross-cutting axes)
-**Co-production:** governance document + schemas + validators + converters (per CO-0008)
+**Co-production:** governance document + 6 schemas + 6 converters + 1 validator + CI integration (per CO-0008)
 
 ---
 
@@ -11,48 +11,46 @@
 
 ### 1.1 Entities with existing data stores
 
-These entities already have data in the repository. Schema priority is HIGH — converting these to validated YAML proves the data layer and unlocks mechanical validation.
-
-| # | Entity | Current store | Records | Format | Schema priority |
+| # | Entity | Schema | Converter | Records | Status |
 |---|---|---|---|---|---|
-| E-01 | **Specification** | specification-database.json → data/specifications/ | 73 | JSON→YAML | DONE (CO-0008) |
-| E-02 | **Evidence Source** | global-reference-registry.md, tier*-verified-sources.json | 531 | Md table + JSON | HIGH — A3 |
-| E-03 | **BPC Entry** | references/bpc/{topic}/{slug}.md | ~76 | Markdown | HIGH — A3 metadata |
-| E-04 | **Connection** | references/connections/_index.md + per-topic files | 181 | Markdown | HIGH — A3 |
-| E-05 | **Slug** | references/slug-registry.md | ~60 | Md table | MEDIUM — A3 |
-| E-06 | **Search Log** | references/search-log/{topic}/{slug}.md | ~76 | Markdown | LOW — mirrors BPC |
-| E-07 | **Gap** | gap_register.md | variable | Md table | MEDIUM — A3 |
-| E-08 | **Item** | references/part04-item-index.md | ~90 | Md table | MEDIUM — A6 |
-| E-09 | **Conflict** | references/conflict-matrices/ | variable | Markdown | MEDIUM — A6 |
-| E-10 | **FDR Scenario** | references/fdr/ | variable | Markdown | LOW — C-stage |
+| E-01 | **Specification** | specification.py | convert_spec_db.py | 73 | **DONE** (CO-0008 + A3 S2 T-03) |
+| E-02 | **Evidence Source** | evidence_source.py | convert_sources.py | 531 | **DONE** (A3 S2) |
+| E-03 | **BPC Entry** | bpc_metadata.py | convert_bpc_metadata.py | 78 | **DONE** (A3 S3) |
+| E-04 | **Connection** | connection.py | convert_connections.py | 191 | **DONE** (A3 S4) |
+| E-05 | **Slug** | slug.py | convert_slugs.py | 64 | **DONE** (A3 S5) |
+| E-06 | **Search Log** | — | — | ~76 | DEFERRED — mirrors BPC; schema not needed until C-stage |
+| E-07 | **Gap** | gap.py | convert_gaps.py | 161 | **DONE** (A3 S5) |
+| E-08 | **Item** | — | — | ~90 | DEFERRED to A6 |
+| E-09 | **Conflict** | — | — | variable | DEFERRED to A6 |
+| E-10 | **FDR Scenario** | — | — | variable | DEFERRED to C-stage |
+
+**A3 total: 6 entity types schematized, 1098 records, 6 converters, cross-entity integrity checking operational.**
 
 ### 1.2 Entities requiring new definition
 
-These entities are identified in the workplan but have no structured data store yet.
-
-| # | Entity | Source of truth | Schema priority |
+| # | Entity | Status | Deferred to |
 |---|---|---|---|
-| E-11 | **Population** | schemas/enums.py (PopulationCode) | DONE (CO-0008 enum) |
-| E-12 | **Sub-population** | Embedded in population descriptions | MEDIUM — A7 |
-| E-13 | **Jurisdiction** | schemas/enums.py (JurisdictionCode) | DONE (CO-0008 enum) |
-| E-14 | **Audience** | governance/audience-priority.md | LOW — A4 |
-| E-15 | **Co-1 Collaborator** | N/A pre-launch (per D-03 revision) | DEFERRED |
-| E-16 | **Building Type** | Implicit in room matrices (Parts 6/7) | MEDIUM — A6 |
-| E-17 | **Room/Space** | Implicit in room matrices | MEDIUM — A6 |
-| E-18 | **Specialist Handoff** | Part 9 §9.9, §9.10 | LOW — C-stage |
-| E-19 | **Time-Version** | Metadata on all entities | MEDIUM — A9 |
-| E-20 | **Question** | Embedded in Part prose | LOW — B3 |
+| E-11 | **Population** | DONE (enum) | — |
+| E-12 | **Sub-population** | Deferred | A7 |
+| E-13 | **Jurisdiction** | DONE (enum) | — |
+| E-14 | **Audience** | Deferred | A4 |
+| E-15 | **Co-1 Collaborator** | Deferred | Post-launch |
+| E-16 | **Building Type** | Deferred | A6 |
+| E-17 | **Room/Space** | Deferred | A6 |
+| E-18 | **Specialist Handoff** | Deferred | C-stage |
+| E-19 | **Time-Version** | Deferred | A9 |
+| E-20 | **Question** | Deferred | B3 |
 
 ### 1.3 Cross-cutting axes
 
-These are not entities in the data-store sense — they are dimensions that interact orthogonally with specifications, items, and room matrices.
+Implemented as optional list attributes on Specification (A3 S7). Not separate entities — they are filter dimensions.
 
-| Axis | Definition | Interaction |
-|---|---|---|
-| **Design Stage** | DD (Design Development) / RFO (Ready for Occupancy) / retrofit | Specifications may have different values or applicability at different stages |
-| **Project Type** | New construction / major renovation / minor adaptation / maintenance | Constraints on achievable specification compliance vary by type |
+| Axis | Enum | Values | Implementation |
+|---|---|---|---|
+| **Design Stage** | `DesignStage` | DD, RFO, retrofit, all | `design_stages: list[str]` on Specification |
+| **Project Type** | `ProjectType` | new_construction, major_renovation, minor_adaptation, maintenance, all | `project_types: list[str]` on Specification |
 
-These axes produce a **Design Stage × Project Type matrix** that modifies how specifications apply. Not separate entities — they are attributes on Specification and Item entities, plus filter dimensions in Room matrices.
+Empty list = applies to all stages/types. Populated during specification authoring (A6+), not during A3.
 
 ---
 
@@ -178,19 +176,36 @@ evidence_type: EvidenceType
 
 ---
 
-## 6. Audit: Cross-System Coherence Check
+## 6. Final Audit
 
-Infrastructure pour schemas (CO-0008) must align with A3 entity model:
-
-| CO-0008 artifact | A3 alignment status |
+| Component | Status |
 |---|---|
-| schemas/enums.py — PopulationCode | ✓ Matches canonical list. Sub-population detail deferred to A7. |
-| schemas/enums.py — EvidenceTier | ✓ Simplified to 1–6 per T-03 (Session 2). Co-1/Co-2 are evidence_types. |
-| schemas/enums.py — EvidenceType | ✓ Added Session 2. 9 values: clinical, co1, co2, sr_meta, standard_eb, national_fw, code, grey, unknown. |
-| schemas/enums.py — JurisdictionCode | ✓ 25 countries + 2 meta-codes. Full 24 to confirm at A3. |
-| schemas/specification.py — Specification | ✓ Primary entity. EvidenceTierRange updated per T-03. |
-| schemas/base.py — EvidenceTierRange | ✓ co1_present replaced with evidence_types_present (Session 2). |
-| schemas/evidence_source.py — EvidenceSource | ✓ Built Session 2. 531/531 records convert and validate. |
-| scripts/validate_schema.py | ✓ ENTITY_REGISTRY: specifications + sources. 604 files validate. |
+| schemas/enums.py — PopulationCode (24 codes) | ✓ |
+| schemas/enums.py — EvidenceTier (1–6 per T-03) | ✓ |
+| schemas/enums.py — EvidenceType (9 values per T-03) | ✓ |
+| schemas/enums.py — JurisdictionCode (27 codes) | ✓ |
+| schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
+| schemas/specification.py (73 records, cross-cutting fields) | ✓ |
+| schemas/evidence_source.py (531 records) | ✓ |
+| schemas/bpc_metadata.py (78 records) | ✓ |
+| schemas/connection.py (191 records) | ✓ |
+| schemas/slug.py (64 records) | ✓ |
+| schemas/gap.py (161 records) | ✓ |
+| scripts/validate_schema.py (6 entity types + cross-check) | ✓ |
+| CI schema job (validate + cross-entity) | ✓ |
+| T-03 reconciliation (tier + evidence_type) | ✓ |
 
-**Session 2 complete. Next: Session 3 (BPC Metadata) or Session 4 (Connection).**
+**Cross-entity integrity:** 17 diagnostic issues (1 population-code-as-slug, 16 slug registry gaps). All expected — data quality items, not schema errors.
+
+---
+
+## 7. Sign-off
+
+**A3 is SIGNED OFF.** The conceptual model defines 20 entities across three categories. 6 entity types are schematized with Pydantic models, converters, and CI validation. 4 entities are deferred to A6 (Item, Conflict, Room/Space, Building Type). 6 entities are deferred to later phases (A4, A7, A9, B3, C-stage, post-launch). 2 cross-cutting axes are implemented as attributes on Specification.
+
+The data layer pattern is proven: schema → converter → validator → CI. All subsequent governance phases (A6–A13) follow this pattern per CO-0008.
+
+**Resolved findings:** T-06 (design stage cross-cutting — DesignStage enum + Specification attribute), T-07 (entity inventory — 20 entities mapped), N-03 (cross-cutting axes — DesignStage × ProjectType).
+
+**Next phase:** A4 (Voice). Prose-only phase — no schema co-production. Key task: retire "shall be" convention in Part 4 text per advocacy identity rule (project-standards 2026-04-26).
+DATE: 2026-04-26
