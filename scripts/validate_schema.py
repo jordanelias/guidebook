@@ -117,6 +117,11 @@ def main():
         action="store_true",
         help="Print each file as it's validated",
     )
+    parser.add_argument(
+        "--cross-check",
+        action="store_true",
+        help="Run cross-entity referential integrity checks after validation",
+    )
     args = parser.parse_args()
 
     # Determine files to validate
@@ -183,7 +188,94 @@ def main():
             print(f"  {e['file']}: {e['error'][:200]}")
         return 1
 
+    # Cross-entity referential integrity
+    if args.cross_check:
+        cross_errors = run_cross_checks("data")
+        if cross_errors:
+            print(f"\nCross-entity integrity: {len(cross_errors)} issues")
+            for ce in cross_errors[:20]:
+                print(f"  {ce}")
+            if len(cross_errors) > 20:
+                print(f"  ... and {len(cross_errors) - 20} more")
+            return 1
+        else:
+            print("Cross-entity integrity: all checks passed")
+
     return 0
+
+
+def run_cross_checks(base_dir: str = "data") -> list:
+    """Run cross-entity referential integrity checks.
+
+    Returns list of error strings. Empty = all pass.
+    """
+    errors = []
+
+    # Load indices
+    slug_names = _load_field_set(base_dir, "slugs", "slug")
+    source_ref_ids = _load_field_set(base_dir, "sources", "ref_id")
+    con_ids = _load_field_set(base_dir, "connections", "con_id")
+    bpc_slugs = _load_field_set(base_dir, "bpc-metadata", "slug")
+    topic_dirs = _load_field_set(base_dir, "bpc-metadata", "topic_directory")
+
+    # Check 1: Specification.bpc_source_slug → Slug or BPC metadata
+    known_slugs = slug_names | bpc_slugs
+    spec_dir = os.path.join(base_dir, "specifications")
+    if os.path.isdir(spec_dir):
+        for f in glob.glob(os.path.join(spec_dir, "*.yaml")):
+            with open(f) as fh:
+                d = yaml.safe_load(fh)
+            bpc_slug = d.get("bpc_source_slug", "")
+            if bpc_slug and bpc_slug not in known_slugs:
+                # Population-level slugs (MOB, VIS, etc.) won't match — skip
+                if not bpc_slug.isupper() and len(bpc_slug) > 3:
+                    errors.append(
+                        f"SPEC {d.get('spec_id')}: bpc_source_slug '{bpc_slug}' "
+                        f"not found in slugs or bpc-metadata"
+                    )
+
+    # Check 2: Connection.filed_in → topic directory
+    conn_dir = os.path.join(base_dir, "connections")
+    if os.path.isdir(conn_dir) and topic_dirs:
+        for f in glob.glob(os.path.join(conn_dir, "*.yaml")):
+            with open(f) as fh:
+                d = yaml.safe_load(fh)
+            filed = d.get("filed_in", "")
+            if filed and filed not in topic_dirs and filed not in (
+                "cross-cutting", "_frozen", "population-general"
+            ):
+                errors.append(
+                    f"CON {d.get('con_id')}: filed_in '{filed}' "
+                    f"not a known topic directory"
+                )
+
+    # Check 3: BPCMetadata.slug → Slug registry
+    bpc_dir = os.path.join(base_dir, "bpc-metadata")
+    if os.path.isdir(bpc_dir) and slug_names:
+        for f in glob.glob(os.path.join(bpc_dir, "*.yaml")):
+            with open(f) as fh:
+                d = yaml.safe_load(fh)
+            slug = d.get("slug", "")
+            if slug and slug not in slug_names:
+                errors.append(
+                    f"BPC {slug}: not found in slug registry"
+                )
+
+    return errors
+
+
+def _load_field_set(base_dir: str, subdir: str, field: str) -> set:
+    """Load a set of values for a specific field from all YAML in a subdir."""
+    result = set()
+    entity_dir = os.path.join(base_dir, subdir)
+    if not os.path.isdir(entity_dir):
+        return result
+    for f in glob.glob(os.path.join(entity_dir, "*.yaml")):
+        with open(f) as fh:
+            d = yaml.safe_load(fh)
+        if d and field in d:
+            result.add(d[field])
+    return result
 
 
 if __name__ == "__main__":
