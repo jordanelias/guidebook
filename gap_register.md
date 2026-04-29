@@ -260,3 +260,35 @@ Van Hoof et al. 2010 (verified T3, DOI:10.1016/j.buildenv.2009.06.017) demonstra
 - Evidence: van Hoof 2010 (●), WHO HHGL 2018 (●)
 
 **OPEN**
+
+
+---
+
+## GAP-VOICE-01 — Part 4 Mandatory Voice Audit
+**Added:** 2026-04-29 04:22
+**Source:** A4 Session 2 (voice-style advocacy identity propagation)
+**Priority:** P3 — route to C9 prose migration
+**Skill:** voice-style + (future) prose migration tools
+
+A4 Session 2 completed 15 voice-style reframes across Parts 1, 4, 8, 9 (commit 6d40fb3b7fd2) addressing high-confidence advocacy-identity violations: blanket "shall be", unlocated "DAR is mandatory", "operates above the code floor", "this document governs" overreach. 
+
+**Remaining work (Part 4):** 36 instances of "mandatory" detected in Part 4. Sample analysis indicates the **majority are legitimate** — jurisdictional comparison table cells describing external mandates (e.g., "UK is the ONLY jurisdiction where Changing Places are mandatory", "DE | DIN/TS 67600 | Mandatory workplace"). Voice-style §8 explicitly permits "mandatory" when citing external mandates.
+
+**Subset requiring location:** approximately 5–10 instances are Guidebook self-mandates without explicit location, e.g.:
+- "≥30 LRV contrast mandatory at all step edges"
+- "LBD environments: plain matte uniform mandatory"
+- "Vibrotactile alerting is mandatory where DEAF, DBL, or photosensitive populations"
+- "recline capability is mandatory" (item I-XX)
+- "Insulated bar coatings mandatory where PAIN is primary"
+- "PAIN/OFS thermostatic shower mandatory"
+
+These need either: (a) explicit Guidebook-voice locator ("This guidebook treats X as mandatory..."), (b) reframe as evidence-located construction ("Tier 3 evidence supports X as the minimum..."), or (c) downgrade to "required" / "essential" with consequence framing.
+
+**Action (deferred to C9 prose migration):**
+1. Per-instance categorization: external mandate (no action) vs. Guidebook self-mandate (locate)
+2. Apply voice-style §8.1 tier-appropriate construction to self-mandates
+3. Decision protocol per instance — recorded per A12 capture protocol
+
+**Estimate:** Single C9 session, after Part 4 migration to structured data per C5 (items + room set migration). Acting before C5 risks duplicate work — voice review post-migration can apply to the YAML field directly.
+
+**OPEN — routes to C9**
