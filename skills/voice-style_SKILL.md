@@ -1,5 +1,5 @@
 # Writing & Framing Skill — Guidebook for Accessible Design
-*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-04-29 (A4 close + calibration check — added §8.2 voice convention patterns, extended §12 do-not-flag list against false-positive patterns observed in A4 Sessions 1–3).*
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-04-29 (A5 close — added §8.3 Co-1 voice patterns; previously A4 close added §8.2 patterns + §12 false-positive guards).*
 
 ## Purpose
 This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, advocacy-identity-appropriate epistemic authority.
@@ -259,6 +259,41 @@ Use Pattern B for: dense matrix tables where per-cell location would degrade inf
 **Both patterns required across guidebook.** Some sections will use Pattern A in prose and Pattern B in adjacent matrix tables. The two patterns interlock — the umbrella does not replace the inline; it covers the table, the inline covers the prose.
 
 **What Pattern B does not do.** Pattern B does not authorize introducing authority-asserting language inside the umbrella scope. It declares how language *already there* is to be read. Use Pattern B to clarify, not to license.
+
+### §8.3 Co-1 Voice Patterns
+
+Co-1 evidence (lived experience and participatory design research; co-primary with Tier 1 OT clinical research per the Seven-Tier Evidence Hierarchy) requires its own voice patterns within the §8.1 tier-appropriate construction framework. The four canonical patterns are specified in `governance/co1-operational.md` §5; summary below.
+
+**Pattern Co-1-A — Single Co-1 source citation.** Use when one Co-1 source supports the claim.
+
+> "[Source name] documents [finding]." OR "[Source name] ([year/citation]) shows [finding]."
+> Example: "*DSDG* (DeafSpace Design Guidelines, Gallaudet 2010) documents that signing-space corridors should be a minimum 2440 mm wide where ASL signing groups are anticipated."
+
+**Pattern Co-1-B — Multi-source Co-1 synthesis.** Use when the claim is the guidebook's synthesis across multiple Co-1 sources.
+
+> "Co-1 sources document [claim]; sources cited: [list]." OR "Co-1 evidence from [sources] supports [claim]."
+> Example: "Co-1 sources document a population-level preference for matte over glossy surfaces in dementia-primary residential and care settings; sources cited: *DSDC EADDAT* (Stirling 2022); *Dignified Design 22 Elements* (Stirling 2024)."
+
+**Pattern Co-1-C — Tier 1 / Co-1 convergence.** Use when Tier 1 OT clinical research and Co-1 evidence converge on the same value or finding.
+
+> "Tier 1 OT evidence ([sources]) and Co-1 sources ([sources]) converge on [claim]."
+> Example: "Tier 1 OT evidence (Murgia 2023) and Co-1 sources (*DSDG* Gallaudet 2010; *PVA Accessible Home Design* 2021) converge on RT60 ≤0.6 s for shared-use teaching spaces serving DEAF and HoH populations."
+
+**Pattern Co-1-D — Tier 1 / Co-1 divergence.** Use when Tier 1 and Co-1 diverge. Both are presented; divergence is documented; synthesis approach is specified per parameter.
+
+> "Tier 1 OT evidence ([source]) shows [finding-1]. Co-1 sources ([sources]) document [finding-2]. The Tier 1 design range encompasses both: [range]. [Synthesis approach.]"
+
+**Pattern selection rule.** Apply in order; if multiple patterns apply, the one furthest down the list governs (Co-1-D > Co-1-C > Co-1-B > Co-1-A).
+
+**What Co-1 voice rules out:**
+
+| Failure | Replace with |
+|---|---|
+| "Lived experience suggests..." (no source) | Pattern Co-1-A or Co-1-B |
+| "Disabled people prefer..." (aggregate claim, no source) | Pattern Co-1-A or Co-1-B with specific source |
+| "DSDG confirms our recommendation..." (implies Co-1 endorsement of synthesis) | "DSDG documents..." (Pattern Co-1-A) |
+| "Co-1 evidence supports this guidebook's position" (Co-1 endorsement of position) | "Co-1 sources document [finding]; this guidebook's specification is based on [synthesis reasoning]" |
+| Author identity as Co-1 substitute | Remove the identity-as-Co-1-substitute claim entirely (per `governance/co1-operational.md` §3.3) |
 
 ---
 

@@ -1,10 +1,10 @@
 # Co-1 Operational Specification
-**Status:** DRAFT — A5 Session 1 of 2–3 (sections 1–3 below; sections 4–7 in subsequent sessions)
+**Status:** CANONICAL — A5 complete (Session 2 of 2)
 **Phase:** Stage A Phase 5 — Co-1 operational specification
-**Created:** 2026-04-29 14:30 UTC
+**Created:** 2026-04-29 14:30 UTC (S1) · **Closed:** 2026-04-29 15:50 UTC (S2)
 **Doctrinal basis:** D-03 revised (`governance/pre-stage-a-decisions.md` 2026-04-26 03:45) · Amendment 7 (`workplan/workplan-co0007-v3-amendments.md`) · Core Doctrine 2026-04-26 03:45 (`references/project-standards.md`) · Mission §3, §Operational reality, §Epistemic commitments
 **Pattern:** Prose only (no Python; A5 is the second prose-only Stage A phase after A4)
-**Sessions estimated:** 2–3 (Amendment 7-revised; was 5–7 in v3 baseline)
+**Sessions consumed:** 2 of 2–3 budget (Amendment 7 revised)
 
 ---
 
@@ -192,75 +192,327 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 [CONFIDENCE: high — direct entailment of §1.2 distinction (Co-1 = methodological grounding, not identity) + audience-priority canonical text + mission §Operational reality.]
 
-### 3.4 Q3 and Q4 — Deferred to Session 2
+### 3.4 Q3 — What does the guidebook owe Co-1 sources whose work it cites?
 
-Q3 (what the guidebook owes Co-1 sources whose work it cites — attribution and disclosure protocols) and Q4 (Co-1 ↔ Three-Tier Design Hierarchy interaction) are deferred to Session 2 of A5.
+**Resolution:** Three-tier obligation structure, scaled to the nature of the relationship between the guidebook and the cited Co-1 source.
 
-**Reasons for deferring:**
+**Tier 1 obligation — All cited Co-1 sources.** Every Co-1 source cited in the guidebook receives:
 
-- **Q3** requires research into named DPO and Co-1 source organization attribution practices and may interact with A11 (legal and regulatory framework) on notification protocols. Best handled with Session 2's fresh context and possible external research cycle.
-- **Q4** depends on completed §5 voice conventions (Session 2 deliverable) and on the schema specification work that B1 will undertake. Specifying Q4 fully now risks pre-empting B1.
+1. **Full attribution.** Author/organization name, year, title, publisher/journal, DOI or URL. The format already in use across the corpus (per `references/co1-verified-sources.json`) is the operative format.
+2. **Source-type identification.** Whether the source is peer-reviewed literature, DPO research, organizational position, or academic narrative — per the four-type taxonomy in §1.1.
+3. **Verification status.** The 2026-04-23 verification report established a status taxonomy (`VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED`). Any cited Co-1 source must hold one of these statuses; cells citing `UNVERIFIED-CLOSED` or `CLOSED-DELETED` sources are themselves removed or marked `[BEST-PRACTICE-PENDING]` per T-04.
 
-Sessions 2 and possibly 3 of A5 close out Q3, Q4, and §§4–7 of this document.
+**Tier 2 obligation — Co-1 sources whose work the guidebook substantially synthesizes.** Where the guidebook draws on a Co-1 source for multiple cells or builds significant synthesis from a single source, an additional obligation applies:
+
+4. **Synthesis attribution.** The Co-1 source's contribution to the guidebook's synthesis is named, not merely cited. Example: where DSDG (DeafSpace Design Guidelines, Gallaudet 2010) provides the population-level spatial framework that the guidebook's DEAF chapter is built around, the chapter front matter names DSDG as a foundational source, not just a citation. This is editorial transparency: readers see what the synthesis stands on.
+5. **No claim of endorsement.** The guidebook may not claim the Co-1 source has endorsed the synthesis. Citing DSDG is not the same as DSDG approving how the guidebook synthesizes its content. The voice convention §5 below operationalizes this distinction.
+
+**Tier 3 obligation — Co-1 sources whose published work explicitly invites adaptation or implementation.** Some Co-1 sources are published as design tools intended for adaptation (e.g., Invalidiliitto ESKEH audit tool; DSDC EADDAT; Mostafa ASPECTSS). For these, the obligation extends:
+
+6. **Tool-use attribution.** Where the guidebook uses, adapts, or extends such a tool, the adaptation is documented, the original tool's authors are attributed, and any modifications are flagged. Original tool integrity is preserved; the guidebook's adaptation is the guidebook's, not the original authors'.
+7. **Notification (post-launch contingent).** Pre-launch, no notification is feasible — the guidebook is not a public artifact. Post-launch, if the guidebook becomes public, the cited tool authors should receive notification that their tool has been engaged in this synthesis. This is courtesy and traceability, not licensing — most Co-1 design tools are open in their original publication. Specifying notification protocols is deferred to A11 (legal and regulatory framework) where licensing and citation-formality questions are resolved.
+
+**What this resolution does not do:**
+
+- **Does not commit to seeking Co-1 source review pre-launch.** Pre-launch is solo authorship (per §2.1). Post-launch contingent activation may include reviewer/feedback channels with Co-1 sources whose work is foregrounded, but specifying that pre-launch reproduces the substantive problem (D-03 revised).
+- **Does not specify financial compensation.** Compensation infrastructure does not exist pre-launch. Post-launch CS2 activation triggers (§3.2) include compensation as a precondition.
+- **Does not constitute legal opinion on attribution sufficiency.** A11 + counsel review establish the legal sufficiency of attribution. This A5 specification is the methodological obligation; A11 specifies the legal form.
+
+[CONFIDENCE: high — Tiers 1–2 are direct application of existing project practice (per `references/co1-verified-sources.json` + verification report); Tier 3 surfaces a real distinction not previously named; no doctrinal conflict.]
+
+### 3.5 Q4 — How does Co-1 status interact with the Three-Tier Design Hierarchy?
+
+**Resolution:** Co-1 status operates alongside the Three-Tier Design Hierarchy, not within it. The two are orthogonal axes that co-locate authority for any given specification.
+
+**The Three-Tier Design Hierarchy** locates *the kind of design decision*: Tier 0 (universal, code-compliant); Tier 1 (population-informed); Tier 2 (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
+
+**The Seven-Tier Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 OT clinical research, Co-1 lived experience, Co-2 OT CPGs, Tier 3 systematic reviews, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
+
+**The two interact at every cell** in the guidebook's specification matrix. A Tier 1 design specification (population-informed range) may be supported by:
+
+- Tier 1 OT clinical research (e.g., AOTA grab-bar grip-strength studies)
+- Co-1 lived experience (e.g., DSDG signing-space dimensions)
+- Both (convergent evidence)
+- Either alone with the other absent (provisional state per T-04)
+
+**Voice convention for handling the interaction.** Per A4 voice-style §8.1, specification voice locates authority. For specifications where Co-1 evidence is the basis (alone or alongside Tier 1):
+
+- **Tier 1 design + Tier 1 OT evidence (no Co-1):** "Tier 1 evidence supports a grab bar diameter of 32–35 mm (Sanford 2010; AOTA 2018). Tier 1 default: 33 mm."
+- **Tier 1 design + Co-1 evidence (no Tier 1 clinical):** "Co-1 sources document a signing-space corridor width of 2440 mm (DSDG, Gallaudet 2010; DeafScape, Vaughn 2018). The Tier 1 default for DEAF-primary corridors is 2440 mm. *Note: this width is derived from ASL proxemics at Gallaudet; signed-language proxemics vary across BSL, DGS, NGT, LSF, and LIS — see DEAF BPC for jurisdictional variation.*"
+- **Tier 1 design + both Tier 1 OT + Co-1 evidence (convergent):** "Tier 1 OT evidence (Murgia 2023, Iglehart 2020) and Co-1 sources (DSDG; PVA Accessible Home Design 2021) converge on RT60 ≤0.6 s for shared-use teaching spaces. Tier 1 default: 0.5 s."
+- **Tier 1 design + both, divergent:** "Tier 1 OT evidence (Smith 2022) supports threshold height ≤ 6 mm. Co-1 sources (Concrete Change 1987; PVA 2021) document zero-step preference at primary entrances for visitability and aging-in-place. The Tier 1 range is 0–6 mm; the population-informed default for residential primary entrances is 0 mm (zero-step) per Co-1 visitability framework, with the 6 mm Tier 1 OT clinical maximum applying where structural constraints prevent zero-step."
+
+**Tier 2 (person-specific) and Co-1 evidence.** Tier 2 specifications are resolved by OT assessment of the named individual, against the Tier 1 range. Co-1 evidence informs the Tier 1 range but does not override Tier 2 individual assessment. The OT, working with the individual at Tier 2, may consult Co-1 sources as part of clinical reasoning — but the resolution at Tier 2 is the OT's professional judgment plus the individual's assessed values, not a re-application of population-level Co-1 evidence.
+
+**This means:** Co-1 governs at Tier 1 (population-informed) and contributes at Tier 0 (where universal-design choices reflect cumulative Co-1-grounded evidence). Co-1 does not override Tier 2 individual assessment. An individual's clinical-and-lived-experience profile may differ from any single Co-1 source's reported population pattern; that is exactly what Tier 2 OT co-design exists to resolve.
+
+[CONFIDENCE: high — direct entailment of mission §3 (Co-1 co-primary with Tier 1) + Three-Tier Design Hierarchy + voice-style §8.1. Worked examples are derived from existing corpus (DEAF BPC + Co-1-verified-sources.json).]
 
 ---
 
-## 4. Sections deferred
+## 4. CS2 and CS5 trigger specification
 
-§§4–7 of the original handoff §5 plan are deferred to Session 2:
+This section operationalizes §3.2 (Q2 resolution) into a complete activation procedure, decision authority, and timeline form. It is the specification document Amendment 7 calls for: "A5 produces design specification for post-launch collaborative form (a how-it-would-work document)."
 
-- **§4 — CS2 and CS5 trigger specification.** Foundation laid in §3.2 above; full specification with activation procedure, decision authority, and timeline form deferred.
-- **§5 — Voice conventions for Co-1 evidence in guidebook prose.** Foundation laid in §3.1 above; full voice convention spec with worked examples across populations deferred.
-- **§6 — Documentation requirements per Co-1 citation.** Schema implications named (§3.1 Part A); full documentation requirements deferred.
-- **§7 — Schema implications and pointers to B1.** Named in §3.1 Part A and §1.1; full pointer document for B1 deferred.
+### 4.1 CS2 (Co-1 recruitment) — full activation specification
 
-These are not blocked. Session 2 produces them.
+**Pre-launch state:** INOPERATIVE. No coordination overhead. No recruitment activity. No collaborator slots. No compensation budget. No DPO outreach. No representation thread.
 
----
+This is not a deficiency to be fixed; it is the project's truthfully declared operational reality.
 
-## 5. Cross-stage impact recorded by this Session 1 draft
+**Activation triggers (all three must be met):**
 
-| Thread | Effect of this Session |
+| Trigger | Operationalization |
 |---|---|
-| **CS2** (Co-1 recruitment) | Confirmed INOPERATIVE pre-launch. Trigger spec partial (§3.2); full spec Session 2. |
-| **CS5** (Co-1 representation monitoring) | Re-scoped to corpus-representation monitoring (per Amendment 7 + this §3.2). Operational form named: per-population Co-1 corpus inventory + gap-flagging. Implementation deferred to Stage C. |
-| **CS8** (Decision capture) | Three substantive resolutions (Q1, Q2, Q5) captured per §3 with [CONFIDENCE] flags. CS8 doesn't go LIVE until A12, so this capture is provisional in format. |
-| **CS4** (Re-issue cadence) | A5 closure does not trigger synthesis re-issue (CS4 specifies end-of-Stage-A and B7 lock as triggers). |
-| **B1** (schema design) | New `co1_provenance` field required on EvidenceSource entity, with values `published_corpus` / `participatory_synthesis`. Pre-launch: all values are `published_corpus`. |
+| **T-CS2-1: Launch occurs** | The guidebook is published or otherwise becomes a publicly available artifact. Solo synthesis as a private working document does not satisfy this trigger. |
+| **T-CS2-2: Resources committed for compensation** | A specific budget for Co-1 collaborator compensation exists at meaningful rates (referenced against established DPO-research compensation benchmarks at the time of activation, not at the time of this specification). Volunteer-only or token-honorarium frameworks do not satisfy this trigger; CRPD Art. 4.3 requires meaningful participation, which requires meaningful compensation. |
+| **T-CS2-3: Co-design of the recruitment specification itself** | The form CS2 takes is co-designed with disabled people, not pre-specified by the project. Per D-03 revised: "Specifying that form pre-launch, in the absence of participants, would reproduce the substantive problem CRPD Art. 4.3 exists to address." This trigger means: the first Co-1 collaborative engagement is specifying CS2 itself, not delivering on a pre-specified CS2. |
+
+**All three triggers required.** Any one being unmet keeps CS2 inoperative. Particular attention to T-CS2-3: even with launch + compensation, the project may not start CS2 by enacting a pre-specified recruitment plan. The recruitment plan is itself the first co-design output.
+
+**Decision authority for activation:** Project owner, with documented co-design step at T-CS2-3 (i.e., the project owner does not unilaterally specify CS2 form). If post-launch the project transitions to a multi-author or organizational structure, decision authority transitions accordingly; specifying that transition is post-launch work.
+
+**Timeline form:** Indeterminate. The triggers are state-based, not date-based. T-CS2-1 has no deadline because launch is contingent. T-CS2-2 has no deadline because resourcing is contingent. T-CS2-3 has no deadline because it presupposes the prior two.
+
+**If CS2 never activates:** The project's solo-only-permanent end-state (per Amendment 7) is the operative reality. The methodological declaration of partial CRPD Art. 4.3 honoring (corpus engagement only, never full participatory honoring) becomes permanent. This is honest about the project's limit, not a failure.
+
+### 4.2 CS5 (Co-1 representation monitoring) — pre-launch and post-launch forms
+
+**Pre-launch form: Corpus-representation monitoring.**
+
+**Question CS5 answers pre-launch:** Is the Co-1 evidence corpus the project draws on representative across the populations, jurisdictions, and design domains the project serves?
+
+**Operational mechanism:**
+
+1. **Per-population Co-1 source inventory.** For each population code (MOB, VIS, DEAF, DEM, NDV, OFS, PAIN, NEU, UPL, DBL, BAR), enumerate the Co-1 sources currently engaged. Source: `references/co1-verified-sources.json` cross-referenced against population coverage in BPC files.
+2. **Per-domain Co-1 source inventory.** For each major design domain (residential, healthcare, education, workplace, cultural, hospitality, transport, retail), enumerate the Co-1 sources providing evidence for that domain.
+3. **Per-jurisdiction Co-1 source inventory.** For each jurisdiction in the 24-jurisdiction comparative set, identify whether Co-1 sources from that jurisdiction or about that jurisdiction's lived experience are present.
+4. **Gap-flagging.** Where any of (1)–(3) shows thin or absent coverage, an entry is added to `gap_register.md` with priority calibrated to the population's centrality to the guidebook's audience commitments. Gaps trigger expanded literature search, not recruitment.
+5. **Cadence.** CS5 inventory is run at each Stage transition (Stage A → B; B → C) and at any synthesis re-issue per CS4 cadence. Continuous monitoring through Stage C is implicit in C7 evidence migration work.
+
+**Post-launch form: Both corpus-representation and collaborator-representation monitoring.**
+
+If CS2 activates post-launch, CS5 expands to also monitor:
+
+6. **Collaborator-representation.** Are the collaborators participating in the project representative of the populations the project serves? Drift triggers expanded recruitment per the (post-launch co-designed) CS2 form. This is the v3-baseline CS5 form, restored if and when CS2 activates.
+
+**If CS2 never activates:** CS5 stays in corpus-representation form permanently. This is a coherent and methodologically defensible monitoring practice in the solo-only-permanent end-state.
+
+### 4.3 The CS2/CS5 distinction in declarable terms
+
+The guidebook's published documentation (front matter, methodology declarations, future website transparency pages) reflects this distinction. Pre-launch:
+
+> *"This guidebook engages the Co-1 evidence corpus — peer-reviewed lived-experience research, DPO research outputs, named advocacy organizational positions, and Co-1-authored academic narratives — through the synthesis of one author. There are no Co-1 collaborators currently participating in the production of this guidebook. The Co-1 evidence base is monitored for population, domain, and jurisdictional representation; gaps are logged and addressed through expanded literature search. This is partial CRPD Article 4.3 honoring at the evidence level. Full participatory honoring requires people; the project's post-launch trajectory may, contingently, expand to that form."*
+
+This declaration may be revised post-launch as conditions change. The pre-launch form is the operative declaration now.
 
 ---
 
-## 6. Open work for A5 Session 2
+## 5. Voice conventions for Co-1 evidence in guidebook prose
 
-1. Resolve Q3 — attribution and disclosure protocols for cited Co-1 sources
-2. Resolve Q4 — Co-1 ↔ Three-Tier Design Hierarchy interaction in voice conventions
-3. Produce §4 — full CS2 / CS5 trigger specification (activation procedure, decision authority, timeline form)
-4. Produce §5 — full voice convention specification with worked examples across populations
-5. Produce §6 — documentation requirements per Co-1 citation
-6. Produce §7 — schema implications and pointers to B1
-7. Update voice-style §8.1 with Co-1-specific construction patterns from §3.1 (Single Co-1 source citation; Multi-source Co-1 synthesis; Convergence; Divergence)
+This section operationalizes the §3.1 (Q1) and §3.5 (Q4) resolutions into a voice convention specification with worked examples across populations. It updates voice-style §8.1 with Co-1-specific construction patterns.
 
-Session 3 (if needed) handles externally-researchable items in Q3 (DPO attribution practice review).
+### 5.1 The four canonical Co-1 voice patterns
+
+**Pattern Co-1-A — Single Co-1 source citation.**
+
+Use when one Co-1 source supports the claim. Names the source; locates the claim in their authority.
+
+> Construction: "[Source name] documents [finding]." OR "[Source name] ([year/citation]) shows [finding]."
+
+> Example (DEAF): "*DSDG* (DeafSpace Design Guidelines, Gallaudet 2010) documents that signing-space corridors should be a minimum 2440 mm (8 ft) wide where ASL signing groups are anticipated."
+
+> Example (PAIN): "*PVA Accessible Home Design* (2nd edition, 2021) shows a population-level preference for slip-resistant matte flooring in primary circulation, attributed to fall-risk consequences of glare-and-glossy interaction with PAIN-population proprioceptive uncertainty."
+
+**Pattern Co-1-B — Multi-source Co-1 synthesis.**
+
+Use when the claim is the guidebook's synthesis across multiple Co-1 sources. Declares the multi-source nature; lists the sources; leaves synthesis attribution to the guidebook (not to any single source).
+
+> Construction: "Co-1 sources document [claim]; sources cited: [list]." OR "Co-1 evidence from [sources] supports [claim]."
+
+> Example (DEM): "Co-1 sources document a population-level preference for matte over glossy surfaces in dementia-primary residential and care settings; sources cited: *DSDC EADDAT* (Stirling 2022); *Dignified Design 22 Elements* (Stirling 2024); *NDTi/NHS CAMHS environment study* (2022, contingent verification)."
+
+> Example (DEAF): "Co-1 sources converge on visual environments calibrated for sustained ASL conversation: matte mid-tone wall surfaces against skin, diffuse shadow-free lighting at face height, and U-shaped or semicircular movable seating for sightline equity. Sources: *DSDG* (Gallaudet 2010); *DeafScape* (Vaughn 2018); *Kusters Deaf Space in Adamorobe* (Gallaudet UP 2015)."
+
+**Pattern Co-1-C — Tier 1 / Co-1 convergence.**
+
+Use when Tier 1 OT clinical research and Co-1 evidence converge on the same value or finding. Treats convergence as itself evidence per mission §3.
+
+> Construction: "Tier 1 OT evidence ([sources]) and Co-1 sources ([sources]) converge on [claim]."
+
+> Example: "Tier 1 OT evidence (Murgia 2023; Iglehart 2020 SR) and Co-1 sources (*DSDG* Gallaudet 2010; *PVA Accessible Home Design* 2021) converge on reverberation time RT60 ≤0.6 s for shared-use teaching spaces serving DEAF and HoH populations."
+
+**Pattern Co-1-D — Tier 1 / Co-1 divergence.**
+
+Use when Tier 1 and Co-1 diverge on a parameter. Per mission §3, both are presented; divergence is documented; synthesis approach is specified per parameter.
+
+> Construction: "Tier 1 OT evidence ([source]) shows [finding-1]. Co-1 sources ([sources]) document [finding-2]. The Tier 1 design range encompasses both: [range]. [Synthesis approach.]"
+
+> Example: "Tier 1 OT evidence (Smith 2022 SR on threshold-height-and-fall-risk) supports threshold height ≤ 6 mm. Co-1 sources (*Concrete Change* 1987 visitability framework; *PVA Accessible Home Design* 2021; *Habinteg IHDG* 2024) document zero-step preference at primary residential entrances, framed by visitability advocacy and aging-in-place evidence over the building life-cycle. The Tier 1 design range is 0–6 mm. Population-informed default for residential primary entrances: 0 mm (zero-step), per the Co-1 visitability framework's broader claim that any threshold above zero forecloses a substantial population from entering. The 6 mm Tier 1 OT clinical maximum applies where structural constraints prevent zero-step."
+
+### 5.2 What these patterns rule out
+
+The four patterns work together to rule out the following voice failures:
+
+| Failure pattern | Why it fails | Replace with |
+|---|---|---|
+| "Lived experience suggests..." | "Lived experience" with no source named is unfalsifiable and overclaims an undefined Co-1 voice | Pattern Co-1-A or Co-1-B with specific source(s) |
+| "Disabled people prefer..." | Pre-launch, the guidebook has no methodology to claim what disabled people prefer in aggregate | Pattern Co-1-A or Co-1-B with specific Co-1-source-grounded claim |
+| "Studies have shown..." (with no tier or source) | Generic citation hides whether the basis is Tier 1, Co-1, or other | Tier-located construction per voice-style §8.1 |
+| "DSDG (Gallaudet 2010) confirms our recommendation..." | "Confirms" implies Co-1 source endorsement of the synthesis | Pattern Co-1-A: "DSDG (Gallaudet 2010) documents..." |
+| "Co-1 evidence supports this guidebook's position that..." | Implies Co-1 endorsement of position rather than evidence basis | "Co-1 sources document [finding]; this guidebook's specification of [value] is based on [synthesis reasoning]" |
+| Author-identity claims as Co-1 substitute | Per §3.3 (Q5), one disabled author is not Co-1 representation | Remove the identity-as-Co-1-substitute claim entirely |
+
+### 5.3 Pattern selection decision rule
+
+When drafting any specification cell or BPC entry that engages Co-1 evidence:
+
+1. Is the claim drawn from one Co-1 source? → **Pattern Co-1-A.**
+2. Is the claim the guidebook's synthesis across multiple Co-1 sources? → **Pattern Co-1-B.**
+3. Does Tier 1 OT clinical research also bear on the claim, agreeing? → **Pattern Co-1-C.**
+4. Does Tier 1 OT clinical research bear on the claim, disagreeing? → **Pattern Co-1-D.**
+
+Apply in order. If multiple patterns apply, the one furthest down the list governs (Co-1-D > Co-1-C > Co-1-B > Co-1-A).
+
+### 5.4 Voice-style skill update
+
+This A5 specification updates `skills/voice-style_SKILL.md` §8.1 with the four Co-1 patterns above. Update is committed alongside this document. The voice-style skill is the operational instrument; this A5 specification is the doctrinal grounding.
 
 ---
 
-## 7. Status
+## 6. Documentation requirements per Co-1 citation
 
-DRAFT — A5 Session 1 sections 1–3 complete. Sections 4–7 deferred to Session 2.
+This section formalizes the obligations from §3.4 (Q3) into a concrete documentation specification for every Co-1 citation in the guidebook.
+
+### 6.1 Required fields per Co-1 citation
+
+Every Co-1 citation in the corpus carries (in the underlying evidence record, even if not all are surfaced inline):
+
+| Field | Source | Required values |
+|---|---|---|
+| `ref_id` | Project-assigned | `Co1-NN` format per `references/co1-verified-sources.json` |
+| `tier` | Schema | `1` |
+| `evidence_type` | Schema | `co1` |
+| `co1_provenance` | Schema (new, per A5) | `published_corpus` (pre-launch all) or `participatory_synthesis` (post-launch contingent) |
+| `co1_source_type` | A5-defined | One of: `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
+| `verification_status` | Per 2026-04-23 verification report | `VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED` |
+| `authors` | Source | Full attribution |
+| `year` | Source | Publication year |
+| `title` | Source | Full title |
+| `publisher_or_journal` | Source | Publisher or journal name |
+| `doi_or_url` | Source | DOI preferred; URL fallback |
+| `population_codes` | Project synthesis | List of MOB/VIS/DEAF/etc. that the source supports |
+| `parameters_supported` | Project synthesis | List of design parameters drawing on this source |
+| `synthesis_attribution_required` | Project synthesis | Boolean: true if Tier 2 obligation per §3.4 applies (substantial synthesis) |
+
+### 6.2 Inline-rendered fields per citation context
+
+Not all underlying fields surface in every citation. Three contexts:
+
+**Inline text citation (prose):** Authors, year, title (short form). Example: "*DSDG* (Gallaudet 2010)."
+
+**Specification table citation:** Author/source code + tier marker. Example: `EN (DSDG, Gallaudet POE) | Co-1`. (This is the format already in use in `references/bpc/DEAF.md`.)
+
+**Bibliography entry:** All fields surfaced.
+
+### 6.3 Validation
+
+Post-A6 evidence-state validator (per A6 governance + code phase) should:
+
+- Reject any citation lacking required schema fields
+- Flag citations with `verification_status: UNVERIFIED-1` for re-search
+- Block migration of cells whose only Co-1 source is `UNVERIFIED-CLOSED` or `CLOSED-DELETED`
+- Surface `synthesis_attribution_required: true` cells for editorial review of front-matter attribution
+
+This is a B2 / A6 implementation specification; the rules are stated here so A6 design has explicit Co-1 requirements as input.
+
+---
+
+## 7. Schema implications and pointers to B1
+
+This section consolidates schema implications surfaced across §§3–6 as a pointer document for B1 (storage form decision and schema design).
+
+### 7.1 Required EvidenceSource entity fields
+
+Per §6.1, the EvidenceSource entity (already specified at A3 conceptual model level) requires the following fields to support Co-1 evidence handling:
+
+| Field | Type | Source phase | Notes |
+|---|---|---|---|
+| `tier` | int 1–6 | A3 (existing) | Unchanged |
+| `evidence_type` | enum | T-03 (Stage 0.5) | Unchanged; values include `co1` |
+| `co1_provenance` | enum | **A5 (new)** | `published_corpus` or `participatory_synthesis` |
+| `co1_source_type` | enum | **A5 (new)** | `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
+| `verification_status` | enum | 2026-04-23 verification | `VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED` |
+| `synthesis_attribution_required` | bool | A5 (new) | Per Tier 2 obligation §3.4 |
+
+B1 schema design integrates these as part of the EvidenceSource specification. No new entity is required; these are EvidenceSource fields.
+
+### 7.2 Required EvidenceSource methods (B2 validator-time)
+
+Per §6.3, validator behavior:
+
+- Schema-level: required-field check on all six A5-affected fields above
+- Cross-entity: parameter cells citing Co-1 sources must verify `verification_status ∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`
+- State-machine integration: cells with only `UNVERIFIED-CLOSED` or `CLOSED-DELETED` Co-1 sources route to T-04 `pending` state
+
+### 7.3 Voice-style skill integration
+
+Per §5.4, voice-style §8.1 is updated with the four Co-1 voice patterns. This is a parallel deliverable to this document, committed alongside.
+
+### 7.4 Audience-priority and CS5 integration
+
+Per §3.3 (Q5), audience-priority "disabled people" and Co-1 evidence are operationally linked but definitionally distinct. CS5 corpus-representation monitoring (§4.2) operates on Co-1 evidence; audience-priority representation-checking (per `governance/audience-priority.md`) operates on the rendered guidebook prose. Both are operative pre-launch; both feed gap-register entries; both inform synthesis quality. Their distinction is preserved in this document and should be preserved in B1 schema (separate fields, separate gap-register categorization).
+
+### 7.5 A6 evidence methodology dependencies
+
+A6 (next governance+code phase) operationalizes T-03 + T-04 in the evidence-state validator. A6 must:
+
+- Implement the four Co-1 voice patterns from §5 as voice-validator checks (Pattern Co-1-A through Co-1-D detection)
+- Enforce required EvidenceSource fields per §6.1 + §7.1
+- Integrate `co1_provenance` into the evidence-state machine (cells with `participatory_synthesis` flagged separately, post-launch only)
+
+A6 inherits this A5 specification as a binding input.
+
+---
+
+## 8. Sections deferred — none
+
+All §§4–7 deferred at end of Session 1 are now resolved. Q3 and Q4 resolutions in §§3.4–3.5 are complete. No work is deferred to Session 3.
+
+## 9. Cross-stage impact (updated for Session 2 closure)
+
+| Thread | Effect of A5 closure |
+|---|---|
+| **CS2** (Co-1 recruitment) | Specification COMPLETE — INOPERATIVE pre-launch with three-trigger activation specification (§4.1). |
+| **CS5** (Co-1 representation monitoring) | Specification COMPLETE — pre-launch corpus-representation monitoring form fully specified (§4.2); post-launch expansion form documented. |
+| **CS8** (Decision capture) | Five substantive resolutions (Q1–Q5) captured per §§3.1–3.5 with [CONFIDENCE] flags. CS8 LIVE from A12 will retro-format these per protocol; provisional capture is sufficient for now. |
+| **CS4** (Re-issue cadence) | A5 closure does not trigger synthesis re-issue. Full Stage A close (post-A13) does. |
+| **B1** (schema design) | Six new EvidenceSource fields specified (§7.1) as binding input to B1 schema design. |
+| **A6** (evidence methodology — next phase) | Voice-validator pattern specifications (§5), required-field rules (§6.1, §7.1), state-machine integration (§7.5) carried forward as binding input. |
+| **A11** (legal and regulatory framework) | Q3 Tier 3 obligation §3.4(7) — post-launch Co-1 source notification protocols — flagged for A11 + counsel review. Not deferred within A5; resolved here as a forward-pointer. |
+
+
+---
+
+## 10. Status
+
+CANONICAL — A5 complete (Session 2 of 2; no Session 3 needed).
 
 | Field | Value |
 |---|---|
-| Created | 2026-04-29 14:30 UTC |
-| Phase | Stage A Phase 5 (Co-1 operational specification) — Session 1 of 2–3 |
-| Status | DRAFT — not yet canonical; canonical lock at end of A5 final session |
+| Created | 2026-04-29 14:30 UTC (Session 1) |
+| Closed | 2026-04-29 15:50 UTC (Session 2) |
+| Phase | Stage A Phase 5 (Co-1 operational specification) — COMPLETE |
+| Sessions consumed | 2 of 2–3 budget (Amendment 7 revised) |
+| Status | CANONICAL — locked at this commit |
 | Author | Project owner (solo, pre-launch) |
 | Doctrinal anchor | D-03 revised (`pre-stage-a-decisions.md`) + Amendment 7 + Mission §3, §Operational reality, §Epistemic commitments + project-standards 2026-04-26 03:45 |
 | Companion governance | `governance/mission-and-epistemics.md` (canonical) · `governance/audience-priority.md` (canonical) · `governance/pre-stage-a-decisions.md` |
-| Resolves Q's | Q1 (representation honesty); Q2 (CS2/CS5 pre-launch substitute); Q5 (audience ↔ Co-1 distinction) |
-| Defers Q's | Q3 (attribution/disclosure); Q4 (Co-1 ↔ Three-Tier interaction) |
+| Resolves Q's | Q1 (representation honesty); Q2 (CS2/CS5 pre-launch substitute); Q3 (attribution/disclosure); Q4 (Co-1 ↔ Three-Tier interaction); Q5 (audience ↔ Co-1 distinction) — all five resolved |
+| Forward dependencies | A6 evidence methodology (binding input from §§5, 6.1, 7.5); B1 schema design (binding input from §7.1); A11 legal/regulatory (forward pointer from §3.4 Tier 3 §7) |
 
-**Next session entry condition:** confirm Q3 external research scope; load `governance/repo-strategy.md` (B1 schema design implications); load existing Co-1 source samples from BPC files to ground worked-example voice conventions.
+**Next phase entry condition:** A6 starts with this document, the existing T-03/T-04 specifications, and `governance/mission-and-epistemics.md` §Epistemic commitments as binding doctrinal inputs.
 
 ---
 
-**End of A5 Session 1 draft.**
+**End of A5 governance document.**
