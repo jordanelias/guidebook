@@ -37,11 +37,9 @@ jobs:
           python-version: "3.11"
 
       - name: Validate all BPC files
-        # Block 2 complete (2026-04-19) — --warn-only removed. CO-0006 schema enforced.
         run: python3 scripts/validate_bpc.py --all --verbose
 
       - name: Validate cross-references
-        # Block 2 complete (2026-04-19) — --warn-only removed.
         run: python3 scripts/validate_cross_refs.py --repo-root .
 
       - name: Check file thresholds
@@ -59,12 +57,9 @@ jobs:
       - name: Validate HEAD commit message format
         run: python3 scripts/ci_helpers/check_commit_msg.py
 
-  # --- CO-0008 additions below ---
-
   schema:
     name: Schema validation (entity YAML against Pydantic models)
     runs-on: ubuntu-latest
-    # Only run when data layer files change
     if: >-
       github.event_name == 'push' ||
       (github.event_name == 'pull_request' &&
@@ -82,8 +77,9 @@ jobs:
       - name: Validate all entity YAML against schemas
         run: python3 scripts/validate_schema.py --verbose
 
+      - name: Validate evidence states and Co-1 source fields
+        run: python3 scripts/validate_evidence_state.py
+
       - name: Cross-entity referential integrity
         run: python3 scripts/validate_schema.py --cross-check
-        # Cross-check currently reports diagnostic issues (not blocking).
-        # Will become blocking after data quality pass resolves known gaps.
         continue-on-error: true
