@@ -1,12 +1,18 @@
 # Writing & Framing Skill — Guidebook for Accessible Design
-*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-03-31.*
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-04-27 (A4 Session 1 — advocacy identity integration).*
 
 ## Purpose
-This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, and appropriate epistemic authority.
+This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, advocacy-identity-appropriate epistemic authority.
 
 The skill is calibrated for **discursive technical non-fiction** — analytical, argument-driven writing that integrates clinical research, policy, and design thinking. Email-register patterns are excluded as inapplicable to the Guidebook.
 
-**Model:** Sonnet 4.6. Input limit: ≤500 lines. Larger documents → haiku-chunker first.
+**Doctrinal anchors (Core Doctrine, project-standards.md):**
+- *The guidebook is an advocacy project, not an authority* (2026-04-26). It does not teach professional judgment, does not confer competence, and is not a registered body, standard-setting organization, or regulatory instrument.
+- *Specification language is tier-appropriate and does not claim authority the project does not have* (2026-04-26). The blanket "shall be" convention is retired. See §8.1.
+
+**CO-0008 classification:** Prose Only. No Python validator. Judgment guidance for Claude's drafting and review work.
+
+**Model:** Opus 4.6 (primary). Sonnet 4.6 acceptable for short-pass voice review of bounded passages. Input limit: ≤500 lines. Larger documents → process in chunks.
 
 ---
 
@@ -144,11 +150,12 @@ Assert positions. Do not qualify assertions into oblivion, nor overstate them as
 The Guidebook is explicitly about human dignity and access rights — but it does not lecture. The ethical stakes are stated clearly, and then the argument does the work.
 
 ### Soft imperative register
-Specifications and recommendations use consequence-based framing rather than authority-asserting mandates. The Guidebook is not a regulation or a standard; it does not command. It describes what evidence supports and what happens when provisions are omitted.
+Specifications and recommendations use consequence-based framing rather than authority-asserting mandates. The Guidebook is an advocacy project — not a regulation, a standard, or a clinically validated protocol. It does not command; it equips. It describes what evidence supports, what populations require, and what happens when provisions are omitted.
 
 > ✓ "Omitting this provision removes future adaptability at a cost multiplier of 5–20×."
 > ✓ "Where no individual assessment is available, the population-informed median is the appropriate starting point."
-> ✗ "This is mandatory." / "This document governs." / "This is non-negotiable."
+> ✓ "This guidebook treats DAR as mandatory throughout — not because external authority requires it, but because the evidence is unambiguous."
+> ✗ "This is mandatory." / "This document governs." / "This is non-negotiable." / "DAR shall be incorporated."
 
 ### Intellectually generous
 Opposing views and tensions within the argument are acknowledged fairly. Do not strawman or dismiss; engage.
@@ -180,21 +187,48 @@ Access is a right, not an accommodation or a favour. CRPD Article 9 (185 States 
 - Population codes (MOB, VIS, DEM, NDV, etc.) are acceptable throughout.
 
 ### Epistemic authority — do not overclaim
-The Guidebook recommends provisions above the code floor. It is not a regulation, a standard, or a clinically validated protocol. Language that implies otherwise creates liability and undermines credibility.
 
-Replace authority-asserting language with consequence-describing language:
+The Guidebook is an advocacy project. It synthesises evidence and equips readers with the questions they need to ask about how to design for accessibility depending on the circumstance. It is not a regulation, a standard, a clinically validated protocol, or a registered body. Language that implies otherwise creates legal risk and undermines credibility.
+
+Replace authority-asserting language with consequence-describing or evidence-locating language:
 
 | Avoid | Replace with |
 |---|---|
-| "this document governs" (asserting authority over external instruments) | "this guidebook recommends" |
-| "mandatory" (where the Guidebook has no authority to mandate) | describe the consequence of omission |
+| "this document governs" *(asserting authority over external instruments)* | "this guidebook recommends" |
+| "this document governs" *(over statutory requirements)* | "this guidebook recommends provisions above the statutory floor" |
+| "shall be" *(blanket specification voice)* | tier-appropriate construction (see §8.1) |
+| "mandatory" *(where the Guidebook has no authority to mandate)* | describe the consequence of omission, OR "this guidebook treats X as mandatory throughout" (locating the mandate in the Guidebook's recommendation, not in external authority) |
 | "non-negotiable" | describe why the provision matters |
-| "resolution protocol" / "decision framework" (as self-description) | "reasoning guidance" / "reasoning sequence" |
+| "resolution protocol" / "decision framework" *(as self-description)* | "reasoning guidance" / "reasoning sequence" |
 | "best-practice standard set by this guidebook" | "best-practice level recommended by this guidebook" |
 | "authoritative bibliography" | "consolidated bibliography" |
-| "operates above" (the code floor) | "recommends provisions above" |
+| "operates above" *(the code floor)* | "recommends provisions above" |
+| "DAR is mandatory" *(without locating the mandate)* | "this guidebook treats DAR as mandatory at every tier" or "DAR is treated as mandatory throughout this guidebook" |
 
-*Acceptable:* "mandatory" when citing an external mandate (statutory, standards body). "This document governs" when describing internal document hierarchy (e.g. Part 4 governs over Part 8 where they conflict). "Resolution protocol" when referencing an external protocol (PEEP, FM, Motionspot).
+*Acceptable:* "mandatory" when citing an external mandate (statutory, standards body, treaty obligation, including CRPD General Comments). "This document governs" when describing internal document hierarchy (e.g. Part 4 governs over Part 8 where they conflict). "Resolution protocol" when referencing an external protocol (PEEP, FM, Motionspot). "Shall" when quoting code or standard text directly.
+
+### §8.1 Tier-Appropriate Specification Voice
+
+The blanket "shall be" convention is retired (project-standards 2026-04-26). Specification voice locates authority appropriately to the tier of the design hierarchy:
+
+| Tier | Authority | Canonical construction |
+|---|---|---|
+| **Tier 0** (Universal Design / Code Compliance) | The code | "Code requires [value] per [standard]" · "[Standard] specifies [value]" |
+| **Tier 1** (Population-Informed Inclusive Design) | The evidence | "[Evidence tier] evidence supports [value]" · "Best practice based on [N] jurisdictions and [evidence tier] evidence is [value]" · "The Tier 1 range is [value]–[value]; the population-informed median is [value]" |
+| **Tier 2** (Person-Specific Co-Design) | The OT and the individual | "OT assessment determines position within [range] based on [functional parameter]" · "Resolved through co-design with the OT and the occupant against the Tier 1 range" |
+
+**Worked examples:**
+
+| Bad (authority-asserting blanket) | Good (tier-located) |
+|---|---|
+| "Grab bar diameter shall be 32–35 mm." | *Tier 1:* "Tier 3 evidence (Sanford 2010; AOTA 2018) supports a grab bar diameter of 32–35 mm. Tier 1 default: 33 mm. Tier 2: OT assessment resolves position within range based on grip aperture and pinch strength." |
+| "Threshold height shall not exceed 6 mm." | *Tier 0:* "Codes across all 24 jurisdictions reviewed require maximum threshold height ≤13 mm; ISO 21542 specifies ≤6 mm. *Tier 1:* Tier 3 evidence (Pavol et al. 2001) shows thresholds above 6 mm intercept gait trajectory in older adults; this guidebook recommends ≤6 mm." |
+| "Acoustic absorption shall be installed in all dining areas." | *Tier 1:* "Tier 3 evidence supports STI ≥ 0.60 in dining areas serving older adults and HoH populations. Acoustic absorption is the primary delivery mechanism; specific product selection resolves to Tier 2 against the room's acoustic envelope and the operator's maintenance regime." |
+| "DAR shall be incorporated at construction stage." | "This guidebook treats DAR as mandatory at every tier — Tier 0 through Tier 2 — because construction-stage provisions preserve future capacity at negligible cost, whereas retrofit costs are 5–20× higher (see Part 11). The mandate is the guidebook's; it is not external." |
+
+**The tier-located voice is not a length penalty.** It is a precision gain: the reader knows where the value comes from and how much weight to place on it. In tabular Part 4 specifications, the tier locator can be terse — `[Tier 3, GRADE moderate]` after the value, with prose framing in the surrounding text.
+
+**When tier location can be implicit:** within a sustained Tier 1 passage where every value is Tier-1-evidence-located, the construction can compress: "Tier 1 best practice for corridor width is 1500 mm; the population envelope is 1200–1800 mm." The first sentence locates the tier; subsequent sentences can omit the locator without ambiguity.
 
 ---
 
@@ -215,6 +249,9 @@ Replace authority-asserting language with consequence-describing language:
 | Prepositional throat-clearing | Cut phrases that delay the subject |
 | Medical model framing | Disability is not a property of the person |
 | Authority-asserting mandates | The Guidebook recommends; it does not command |
+| **"Shall be" as blanket spec voice** | **Use tier-appropriate construction (§8.1)** |
+| **"X is mandatory" without locating the mandate** | **Either cite the external authority or attribute to the Guidebook explicitly** |
+| **"Operates above the code floor"** | **"Recommends provisions above the code floor"** |
 
 ---
 
@@ -233,6 +270,8 @@ Before finalising any passage, check:
 9. Are specific things named precisely?
 10. Does the framing locate disability in the environment, not the person?
 11. Does the language assert only the authority the Guidebook actually has?
+12. **Is every specification voice tier-located? (Code requires / Evidence supports / OT determines)**
+13. **Are mandate claims either externally cited or explicitly located in the Guidebook's own voice?**
 
 ---
 
@@ -262,8 +301,8 @@ Use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or mo
 
 *Use this section when called as a QA tool — i.e. when asked to check framing, audit language, or run a framing review. Not required for every drafting pass.*
 
-**Intake:** ≤500 lines. Full document → haiku-chunker first.
-**Passes:** 2. After Pass 1: ground in CRPD Article 9 + social model definition before Pass 2.
+**Intake:** ≤500 lines. Full document → process in chunks.
+**Passes:** 2. After Pass 1: ground in CRPD Article 9 + social model definition + advocacy identity Core Doctrine before Pass 2.
 
 ### Flag categories
 
@@ -278,14 +317,15 @@ Use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or mo
 | UNIVERSAL_EROSION | Universal design undermined | "disabled-friendly features", "special accessible route" |
 | BAR_IN_VOLUME_I | BAR reference outside Supplementary Volume | Any BAR, bariatric, or large body size reference in Parts 1–12 or core matrices |
 | MARKER_FRAMING | Evidence marker misuse | ● with no citation; ○ without gap disclosure; marker on non-prescriptive text |
-| AUTHORITY_CLAIM | Guidebook asserts authority it lacks | "mandatory", "non-negotiable", "this document governs", "resolution protocol" as self-description |
+| AUTHORITY_CLAIM | Guidebook asserts authority it lacks | "mandatory" *(unlocated)*, "non-negotiable", "this document governs" *(over external)*, "shall be" *(blanket)*, "operates above the code floor", "resolution protocol" *(as self-description)*, "X is mandatory" *(no external citation, no Guidebook attribution)* |
+| TIER_VOICE | Specification voice does not locate tier | "Grab bar diameter shall be 32–35 mm" *(no tier locator)*; mixing Tier 0 and Tier 1 voice in one sentence |
 
-Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf) · "mandatory" when citing external mandates · internal document hierarchy references.
+Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf) · "mandatory" when citing external mandates · internal document hierarchy references · "shall" when quoting code text directly · "must be" describing design requirements (not Guidebook self-mandates) · negative-example "shall be" used to criticize a vague brief.
 
 ### Steps
 1. Scan for all flag categories. List: exact quote · location · proposed code.
 2. Assign severity: 🔴 HIGH (credibility or legal risk) · 🟡 MED (ambiguous) · 🟢 LOW (editorial). Draft reframe.
-3. Pass 2: re-read CRPD Art.9 + social model definition. Confirm/upgrade/downgrade each Pass 1 flag.
+3. Pass 2: re-read CRPD Art.9 + social model definition + advocacy identity Core Doctrine. Confirm/upgrade/downgrade each Pass 1 flag.
 4. Output:
 
 | ID | Location | Flag | Original Text | Severity | Suggested Reframe |
@@ -302,3 +342,10 @@ Summary: X flags — Y 🔴 / Z 🟡 / W 🟢 · Regression risk: HIGH / MED / L
 - Elias, Jordan. "The Architecture of Domination in Palestine." ARCH 505C paper, University of British Columbia, December 2018.
 - Elias, Jordan. "Spectacularly Bereft Architecture." ARTH 480 paper, University of British Columbia, April 2019.
 - Claude conversation history, Jordan Elias (2025–2026): workflow and project management communications showing consistent register in written instruction
+
+## Doctrinal anchors (operative as of 2026-04-27)
+
+- **Advocacy identity** — Core Doctrine 2026-04-26 19:25. The guidebook is an advocacy project, not an authority. See `references/project-standards.md`.
+- **Tier-appropriate specification language** — Core Doctrine 2026-04-26 19:25. Blanket "shall be" retired. See §8.1 above and `references/project-standards.md`.
+- **Three-Tier Design Hierarchy** — Core Doctrine pre-session. Tier 0 / Tier 1 / Tier 2 with DAR mandatory at every tier (mandate located in this guidebook).
+- **Seven-Tier Evidence Hierarchy** — Core Doctrine 2026-03-19; elevated 2026-04-24. Tier 1 + Co-1 co-primary.
