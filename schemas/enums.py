@@ -66,7 +66,7 @@ class EvidenceTier(int, Enum):
 
     Per T-03: tier (1–6) is one dimension; evidence_type (EvidenceType enum)
     is the other. Co-1 and Co-2 are evidence_types, not tiers.
-    Co-1 sources carry tier=1 (co-primary). Co-2 sources carry tier=3 (CPG marker).
+    Co-1 sources carry tier=1 (co-primary). Co-2 sources carry tier=2 (parallel to Tier 2, per T-03).
 
     Tier 1 = OT intervention-tested clinical research (highest).
     Tier 2 = NGO/DPO/advocacy guidelines.
@@ -185,6 +185,71 @@ class EvidenceType(str, Enum):
     CODE = "code"                # Statutory codes
     GREY = "grey"                # Grey literature, organizational reports
     UNKNOWN = "unknown"          # Not yet classified
+
+
+class EvidenceCellState(str, Enum):
+    """T-04 evidence-state machine for (parameter × population) cells.
+
+    Per governance/evidence-methodology.md §2 (A6):
+    - stated: sufficient evidence (≥Tier 3 OR Co-1 OR Co-2)
+    - provisional: Tier 4–6 only, meets richness threshold
+    - pending: too sparse to synthesize
+    - not_applicable: parameter irrelevant for this population
+    """
+    STATED = "stated"
+    PROVISIONAL = "provisional"
+    PENDING = "pending"
+    NOT_APPLICABLE = "not_applicable"
+
+
+class ConvergenceStatus(str, Enum):
+    """Cross-tier convergence assessment status.
+
+    Per governance/evidence-methodology.md §3.2 (A6):
+    Assessed at the (parameter × population) cell level.
+    """
+    CONVERGENT = "convergent"
+    DIVERGENT = "divergent"
+    SINGLE_AXIS = "single_axis"
+    PENDING_ASSESSMENT = "pending_assessment"
+
+
+class Co1Provenance(str, Enum):
+    """Co-1 evidence provenance per A5 §3.1.
+
+    Pre-launch: all Co-1 citations are published_corpus.
+    participatory_synthesis is post-launch contingent.
+    """
+    PUBLISHED_CORPUS = "published_corpus"
+    PARTICIPATORY_SYNTHESIS = "participatory_synthesis"
+
+
+class Co1SourceType(str, Enum):
+    """Co-1 source type taxonomy per A5 §1.1.
+
+    The four types of Co-1 source plus validated_tool (A5 §6.1).
+    """
+    PEER_REVIEWED_LITERATURE = "peer_reviewed_literature"
+    DPO_RESEARCH = "dpo_research"
+    ADVOCACY_POSITION = "advocacy_position"
+    ACADEMIC_NARRATIVE = "academic_narrative"
+    VALIDATED_TOOL = "validated_tool"
+
+
+class VerificationStatus(str, Enum):
+    """Source verification status per 2026-04-23 verification report.
+
+    Per A5 §6.3 + A6 §2.8:
+    - VERIFIED / VERIFIED_WITH_CORRECTION: no state-machine effect
+    - UNVERIFIED_1: flag, don't downgrade; triggers re-search
+    - UNVERIFIED_CLOSED: sole qualifying source → cell downgrades to pending
+    - CLOSED_DELETED: sole qualifying source → cell downgrades to pending
+    """
+    VERIFIED = "VERIFIED"
+    VERIFIED_WITH_CORRECTION = "VERIFIED-WITH-CORRECTION"
+    UNVERIFIED_1 = "UNVERIFIED-1"
+    UNVERIFIED_CLOSED = "UNVERIFIED-CLOSED"
+    CLOSED_DELETED = "CLOSED-DELETED"
 
 
 class BestPracticeStatus(str, Enum):
