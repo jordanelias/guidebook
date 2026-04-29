@@ -13,7 +13,9 @@
 
 ### §7.0 Universal Non-Residential Provisions (Revised)
 
-The following provisions apply to ALL non-residential buildings regardless of type, size, or occupancy. They are non-negotiable for any new or substantially refurbished building. They must appear on the stated drawing at the stated design stage.
+This guidebook treats the following provisions as required in all non-residential buildings regardless of type, size, or occupancy. The consequence of omission is a building that excludes a substantial proportion of disabled users from one or more of its essential functions. Each provision must appear on the stated drawing at the stated design stage.
+
+**A note on specification voice in Part 7.** Where this Part refers to a provision as "mandatory" — including in the §7.1–§7.7 matrix tables and supporting prose — the mandate is this guidebook's recommendation, not an external regulatory mandate, except where a specific jurisdictional code or standard is cited inline. The basis for these recommendations is the population evidence in Parts 2 and 4 and the conflict resolution methodology in Part 3 §3.8–§3.9. See voice-style guidance and Part 1 §1.9.4 (the guidebook as a framework for professional judgment) for the underlying epistemic position.
 
 **Epistemic disclosure (CON-0047):** The non-residential matrix provisions in this Part are evidence-informed syntheses. They are derived from population-specific design evidence (Parts 2 and 4), conflict resolution methodology (Part 3 §3.8–§3.9), and building-level conflict resolutions (Part 5 §5.2). They have not been empirically validated through dual-population or multi-population post-occupancy evaluation (POE). Where conflicts exist between population specifications in a shared space, the resolution stated in Part 5 §5.2 governs; room-level conflict notes in each matrix identify the specific items and populations involved. The provisions represent the best currently available synthesis of independent population evidence — they are a starting framework for professional judgment, not a substitute for it (Part 1 §1.1).
 
@@ -62,7 +64,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at school principal entrance and library; haptic communication clear floor zone (K-03) at all designated DBL student seating positions in classrooms and assembly — minimum 1200 × 1200 mm clear zone at aisle-end seat; vibrotactile alert infrastructure (K-04 — BMS relay from fire alarm panel) in all classrooms and student areas
 
 
-**Zone 3 sensory retreat and quiet room — mandatory provision (CON-0046):** Sensory gradient (F-01) and sensory retreat/quiet room (A-16) are **mandatory** in all educational settings serving NDV/AUT populations — not optional upgrade provisions. Basis: the NHS CAMHS paradigm failure (documented in Part 12 — Gallaudet DeafSpace failure case and NHS CAMHS case) demonstrates that failure to provide adequate sensory environments in educational and therapeutic settings produces acute clinical harm, not merely comfort reduction. Evidence: Autism Europe 2022 (15–20% NDV/AUT prevalence in school-age population); PAS 6463:2022. ● Minimum provision: ≥1 sensory retreat per 150 students (general); ≥1 per 50 students (autism-specific settings). This is not a best-practice aspiration — it is a harm-prevention specification.
+**Zone 3 sensory retreat and quiet room — provision treated as mandatory by this guidebook (CON-0046):** Sensory gradient (F-01) and sensory retreat/quiet room (A-16) are treated as mandatory by this guidebook in all educational settings serving NDV/AUT populations — not optional upgrade provisions. Basis: the NHS CAMHS paradigm failure (documented in Part 12 — Gallaudet DeafSpace failure case and NHS CAMHS case) demonstrates that failure to provide adequate sensory environments in educational and therapeutic settings produces acute clinical harm, not merely comfort reduction. Evidence: Autism Europe 2022 (15–20% NDV/AUT prevalence in school-age population); PAS 6463:2022. ● Minimum provision: ≥1 sensory retreat per 150 students (general); ≥1 per 50 students (autism-specific settings). This is not a best-practice aspiration — it is a harm-prevention specification.
 
 **DEM/NDV[IntD-proxy] provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving students with intellectual disability: (1) Easy Read format for all public-facing information and signage (D-08 extension); (2) pictogram + single-word room identification throughout; (3) sensory gradient and quiet room per NDV provisions (F-01, A-16) — strongest available proxy evidence; (4) consistent layout with no unexpected spatial changes (D-09); (5) support worker access minimum: 1500 mm corridors throughout and 1500 mm turning circles at all primary destinations.
 **Education schematic checklist:**
@@ -106,10 +108,10 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 
 - Ventilation: full fresh-air supply (no recirculation) in consulting and treatment rooms; minimum 6 ACH fresh air per HTM 03-01:2021. Also eliminates recirculated airborne allergens for OFS/MCAS patients.
 - HEPA filtration (F-04 extended) in all clinical areas; MERV 13 minimum in non-clinical areas
-- Fragrance-free throughout all clinical settings (F-02) as mandatory OFS/MCAS safety provision
+- Fragrance-free throughout all clinical settings (F-02) — treated as mandatory by this guidebook for OFS/MCAS safety
 - Circadian lighting (B-01) in all inpatient and care home settings: ≥150 EML at task height daytime; warm CCT ≤2700 K evening
 - Dementia-friendly environment: D-04 landmarks at all corridor junctions and room entries (DSDC 2024 audit requirement); C-06 plain flooring throughout dementia wards; B-11 warm CCT ≤3000 K
-- Sensory room provision: ≥1 per ward; mandatory in all MH inpatient, CAMHS, and paediatric settings; RT60 ≤0.3 s; NC ≤20
+- Sensory room provision: ≥1 per ward; treated as mandatory by this guidebook in all MH inpatient, CAMHS, and paediatric settings; RT60 ≤0.3 s; NC ≤20
 - Grab bar provisions: G-03 bilateral in all accessible patient bathrooms
 - MS neurology ward: ambient ≤18°C (TC-01); TMV ≤35°C (I-03); personal cooling provision (TC-03)
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at principal entrance; vibrotactile BMS relay at all bed spaces and accessible bathrooms for DBL inpatients (K-04); intervenor adjacency space (K-01) at reception, pharmacy, and all consultation counters — minimum 1500 × 1500 mm clear floor zone; haptic communication clear floor zone (K-03) at all waiting positions designated for DBL patients
@@ -157,7 +159,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 **Workplace-specific enhancements:**
 
 - Open-plan acoustics: no design achieves NC-30 throughout open plan. Specify: (a) acoustic ceiling NRC ≥0.85 throughout; (b) acoustic pods or booths for concentration work (RT60 ≤0.3 s; ≥1 per 20 staff); (c) masking prohibited in NDV workspaces (A-13) — ambient natural sound at ≤40 dBA available at individual desks as alternative
-- Quiet room provision: ≥1 F-03 quiet space per 20 staff — mandatory non-negotiable workplace provision
+- Quiet room provision: ≥1 F-03 quiet space per 20 staff — treated as mandatory by this guidebook in workplace settings (see §7.0 voice note)
 - NDV/AUT staff reasonable adjustment: named sensory-reduced workstation (A-01 buffer, A-06 panels, B-06 individual dimming, F-01 gradient) in workplace reasonable adjustment register
 - Controls: individual window or blind control at each workstation; individual temperature control (TC-02) at each office; no shared thermostat only
 - Fragrance-free policy (F-02): strongly recommended in workplace; specify in FM brief
@@ -251,7 +253,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - Auditorium accessible positions: ≥1% total capacity as wheelchair positions; positions at multiple viewing angles (not only at rear or sides); sightlines equal to ambulant seating (ISO 9386)
 - Deaf/Hard of Hearing position: designated front-third seating with direct sightline to performer and interpreter; face illuminance ≥200 lux at interpreter position (B-02)
 - Library quiet: RT60 ≤0.5 s in reading rooms; no PA announcements in quiet zones; visual display paging (H-03); F-03 quiet zone provision
-- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) mandatory at all cultural venue principal entrances — updated within 90 days of any layout change; haptic communication clear floor zone (K-03) at aisle-end seats throughout auditorium and theatre (minimum ≥1% of total capacity as DBL-designated positions with 1200 × 1200 mm clear zone); gallery tactile models at key exhibits where feasible (cross-reference D-09 consistent placement); vibrotactile alert (K-04) infrastructure at all venues with public assembly spaces
+- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) treated as mandatory by this guidebook at all cultural venue principal entrances — updated within 90 days of any layout change; haptic communication clear floor zone (K-03) at aisle-end seats throughout auditorium and theatre (minimum ≥1% of total capacity as DBL-designated positions with 1200 × 1200 mm clear zone); gallery tactile models at key exhibits where feasible (cross-reference D-09 consistent placement); vibrotactile alert (K-04) infrastructure at all venues with public assembly spaces
 
 **Cultural schematic checklist:**
 
@@ -337,7 +339,7 @@ The following provisions apply to ALL non-residential buildings regardless of ty
 - Sensory room provision: ≥1 per interchange ≥1,000 passengers/hour; recommended at all international terminals
 - DEM wayfinding: two exit routes minimum from all passenger zones (D-01 loop layout without dead ends); landmark at every decision point (D-04)
 - A-12 Auracast: transport interchanges are the primary use case for Auracast — high-ambient-noise environment where hearing loops are ineffective; all new terminal infrastructure should include Auracast readiness
-- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at all interchange entrances and at all platform access points — updated within 90 days of any route or layout change; vibrotactile floor panels or personal pager BMS infrastructure (K-04) mandatory at all platforms and boarding areas — integrated with existing fire alarm and departure alert systems; haptic communication clear floor zone (K-03) at all assistance points and accessible waiting areas; staff assistance points equipped for DBL users: tactile communication materials available, intervenor space 1500 × 1500 mm clear
+- DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at all interchange entrances and at all platform access points — updated within 90 days of any route or layout change; vibrotactile floor panels or personal pager BMS infrastructure (K-04) treated as mandatory by this guidebook at all platforms and boarding areas — integrated with existing fire alarm and departure alert systems; haptic communication clear floor zone (K-03) at all assistance points and accessible waiting areas; staff assistance points equipped for DBL users: tactile communication materials available, intervenor space 1500 × 1500 mm clear
 
 **Transport schematic checklist:**
 

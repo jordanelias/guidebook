@@ -257,7 +257,7 @@ Standards with version-date sensitivity (DIN 18040, AS 1428.1, CAN/ASC 2.8, Appr
 
 ### BIO-02 — Interior Planting Throughout Occupied Spaces
 
-**Applicable Groups:** ALL (especially MH, PCS, DEM, AUT) Live interior planting at minimum density of one substantial element (≥600 mm height) per 15 m² of occupied floor area. Species: low VOC, non-toxic (mandatory in DEM and paediatric settings), no thorns, low maintenance.
+**Applicable Groups:** ALL (especially MH, PCS, DEM, AUT) Live interior planting at minimum density of one substantial element (≥600 mm height) per 15 m² of occupied floor area. Species: low VOC, non-toxic (treated as mandatory by this guidebook in DEM and paediatric settings), no thorns, low maintenance.
 
 **Specifications:** - Minimum density: 1 substantial planting element (≥600 mm) per 15 m² - Species: low-VOC confirmed; non-toxic confirmed (especially DEM/paediatric) - No thorns or sharp edges - Planters: integrated into floor plan; ≥600 mm from circulation edges (see Part 8 §8.4.8) - Maintenance: written into facilities management brief; minimum 12-month maintenance contract **Retrofit cost note:** Retrofit penalty: LOW. Interior planting is a procurement and maintenance specification. Retrofit is planting installation with minor drainage and fixing provision; no structural implications. See Part 11I §8.4. **Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. DSDC. (2022). EADDAT. University of Stirling. Dignified Design. (2024). 22 design elements for permanent supportive housing. *Cross-reference: BIO-01 (Nature Views); D-11 (Safe Garden); B-09 (Natural Light)* *Conflict cross-reference: BIO-02 ↔ VIS circulation navigation: Part 8 §8.4.8 — planters ≥600 mm from circulation edge; strongly contrasting base band LRV ≥30.*
 
@@ -374,7 +374,7 @@ Terms are defined as used in this Guidebook. Where a term has a specific technic
 
 **Adaptable design** Design that can be modified after construction to meet the accessibility requirements of a specific occupant, typically at low cost because structural provisions (blocking, void spaces, reinforced sections) were incorporated at build stage. See also: DAR.
 
-**Code-as-floor principle** The principle that building codes represent legal minimums, not design targets or expressions of best practice. This Guidebook operates above the code floor throughout; statutory requirements are referenced as baselines only.
+**Code-as-floor principle** The principle that building codes represent legal minimums, not design targets or expressions of best practice. This Guidebook recommends provisions above the code floor throughout; statutory requirements are referenced as baselines only.
 
 **DAR — Design for Adaptable Readiness** Construction-stage provisions that enable future accessibility modifications at minimal incremental cost, without structural intervention. The core DAR ratio: modifying an inaccessible space post-construction costs 12× the equivalent provision at construction stage.
 

@@ -7,9 +7,9 @@
 
 ## About This Guidebook
 
-Building codes produce legal minimums, not accessible environments. This guidebook operates above that floor throughout — grounded in Tier 1 occupational therapy research and the best available multilingual evidence — to give architects, access consultants, interior designers, occupational therapists, project managers, developers, and housing authorities the specifications needed to design for the full range of human functional capacity. It covers new construction, major refurbishment, and post-occupancy adaptation across residential, commercial, healthcare, educational, hospitality, and cultural building types.
+Building codes produce legal minimums, not accessible environments. This guidebook recommends provisions above that floor throughout — grounded in Tier 1 occupational therapy research and the best available multilingual evidence — to give architects, access consultants, interior designers, occupational therapists, project managers, developers, and housing authorities the specifications needed to design for the full range of human functional capacity. It covers new construction, major refurbishment, and post-occupancy adaptation across residential, commercial, healthcare, educational, hospitality, and cultural building types.
 
-**The central principle:** Building codes represent legal minimums. This guidebook operates above that floor throughout, calibrated to Tier 1 occupational therapy clinical research and the best available multilingual evidence. Meeting code is necessary; it is not sufficient.
+**The central principle:** Building codes represent legal minimums. This guidebook recommends provisions above that floor throughout, calibrated to Tier 1 occupational therapy clinical research and the best available multilingual evidence. Meeting code is necessary; it is not sufficient.
 
 ## Companion Volumes
 

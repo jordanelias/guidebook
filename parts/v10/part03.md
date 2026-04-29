@@ -137,13 +137,13 @@ Different building types present different co-occurrence profiles. This section 
 
 **Residential care (DEM-primary):** The co-occurrence challenge is DEM+MOB+OFS — the three most prevalent co-occurring conditions in residential care populations. Layer 1 resolution: loop-plan circulation serves all three simultaneously. Layer 2: circadian lighting and HVAC zoning. Layer 3: plain flooring, contrast-band door frames, bilateral grab bars throughout. See Part 5 §5.4.1 worked example.
 
-**Educational:** NDV is the most prevalent population in mainstream education (ADHD prevalence 5–7%; autism 1.5–2%; dyslexia 10%). Co-occurrence challenge: NDV+DEAF (hearing loop vs acoustic quiet). Resolution: independent loop audio input circuit; RT60 ≤0.3 s serves both simultaneously. Sensory quiet room mandatory on every floor plate (A-16).
+**Educational:** NDV is the most prevalent population in mainstream education (ADHD prevalence 5–7%; autism 1.5–2%; dyslexia 10%). Co-occurrence challenge: NDV+DEAF (hearing loop vs acoustic quiet). Resolution: independent loop audio input circuit; RT60 ≤0.3 s serves both simultaneously. Sensory quiet room treated as mandatory by this guidebook on every floor plate (A-16).
 
 **Healthcare:** MOB+DEM+NEU is the dominant co-occurrence in hospital settings. VIS is a significant secondary population in older adult wards. Resolution: plain flooring on primary routes (DEM+VIS alignment); tactile wayfinding on secondary routes (VIS); bilateral grab bars throughout (MOB+NEU/hemiplegia); individual environmental controls in patient rooms (NEU/MS temperature; PAIN warmth; NDV/MH control).
 
 **Co-working/office:** NDV is the fastest-growing primary population in contemporary workplace design (PAS 6463 adoption driving employer provision). DEAF is significant (loop infrastructure increasingly standard). Resolution: graduated sensory zones from open-plan collaboration spine (DEAF sightlines) to enclosed acoustic pods (NDV quiet); independent loop audio.
 
-**Transport:** MOB is the primary population; DEAF and VIS are significant secondaries. All spaces serve transient populations with no opportunity for individual adaptation. Tier 0 provisions govern. Loop infrastructure, TWSI, LRV contrast, and visual fire alarms are mandatory rather than conditional.
+**Transport:** MOB is the primary population; DEAF and VIS are significant secondaries. All spaces serve transient populations with no opportunity for individual adaptation. Tier 0 provisions govern. Loop infrastructure, TWSI, LRV contrast, and visual fire alarms are treated as mandatory by this guidebook rather than conditional.
 
 ---
 
@@ -355,7 +355,7 @@ Layer 1 decisions: Sensory quiet room on every floor plate (NDV — A-16, T0); s
 
 Layer 2 decisions: Hearing loop in every classroom and assembly space (DEAF — IEC 60118-4, TS); RT60 ≤0.3 s in all classrooms (NDV governs over DEAF ≤0.4 s — NDV stricter target is governing); no sound masking (A-13 — NDV, T0); visual fire alarm strobes throughout (DEAF — B-10; NDV seizure risk — vibrotactile in quiet rooms per CON-0014 TS strategy).
 
-Layer 3 decisions: Muted, low-chroma palette in classrooms (NDV — PP); high-contrast TWSI at all stair heads (VIS — mandatory); lever hardware ≤22 N throughout (MOB/UPL — T0).
+Layer 3 decisions: Muted, low-chroma palette in classrooms (NDV — PP); high-contrast TWSI at all stair heads (VIS — treated as mandatory by this guidebook); lever hardware ≤22 N throughout (MOB/UPL — T0).
 
 **Worked Example 4: Hospital Ward — Older Adults Orthopaedic**
 

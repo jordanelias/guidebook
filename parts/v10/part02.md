@@ -199,7 +199,7 @@ Lighting: indirect, dimmable; eliminate fluorescent and stroboscopic sources; no
 
 Visual environment: muted, low-chroma palette (NCS chroma ≤4) in shared spaces for NDV/AUT and NDV/SENS (PAS 6463:2022, Tier 4); reduced visual noise; clear sightlines; minimal signage clutter. This palette is in tension with NDV/MH requirements — see §2.8 below and Part 5 §5.2 VIS-COMPLEX.
 
-Fragrance-free policy (F-06): mandatory in all NDV-designated spaces; chemical fragrance is a sensory trigger for NDV/SENS.
+Fragrance-free policy (F-06): treated as mandatory by this guidebook in all NDV-designated spaces; chemical fragrance is a sensory trigger for NDV/SENS.
 
 User control: individual control over lighting, acoustic, and thermal environment is the single highest-impact NDV provision across all subtypes (PAS 6463; ASPECTSS Design Index — Mostafa 2008/2021).
 
@@ -311,7 +311,7 @@ Rest seating: intervals ≤25–30 m on all primary circulation routes (BS 8300 
 
 Ambient temperature: cool (≤19–21°C in transit spaces); aligns with NEU/MS Uhthoff threshold — no conflict. Hot environments worsen OFS orthostatic intolerance and POTS. Individual supplemental heating for PAIN users sharing OFS spaces (see §2.9 and Part 5 §5.2 TEMP-RANGE).
 
-Fragrance-free policy (F-06): mandatory wherever OFS/MCAS is a primary or significant secondary population. Chemical fragrance is a pathophysiological trigger, not a preference.
+Fragrance-free policy (F-06): treated as mandatory by this guidebook wherever OFS/MCAS is a primary or significant secondary population. Chemical fragrance is a pathophysiological trigger, not a preference.
 
 Low-stimulus rest space: accessible without purchase or payment obligation in public buildings ≥500 m² GFA; minimum 8 m² (aligned with NDV/AUT A-16 provision — shared space valid as no population conflict exists between OFS and NDV/AUT for this provision).
 
