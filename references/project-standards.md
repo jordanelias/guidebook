@@ -516,3 +516,21 @@ CONDITION: Any work touching Co-1 evidence handling, EvidenceSource schema desig
 ACTION: Apply `governance/co1-operational.md` §§3, 5, 6 specifications. Reject any Co-1 citation lacking required schema fields. Honor pre-launch INOPERATIVE state of CS2.
 DATE: 2026-04-29 15:50 — A5 close.
 
+
+
+---
+
+## Session 2026-04-29 — A6 Evidence Methodology
+
+RULE: Values-based conflicts between populations at Tier 1 are resolved by the broadest-benefit assessment mechanism (governance/evidence-methodology.md §4): classify as function-based (→ harm-asymmetry) or values-based (→ broadest-benefit); assess population breadth, irreversibility, supplementary provision feasibility; document both positions with Tier 2 handoff. Values-criteria does not override harm-asymmetry, does not apply at Tier 0, and does not eliminate Tier 2 resolution.
+CONDITION: Any specification, conflict resolution, or BPC synthesis where two populations have evidence-supported preferences that conflict on the same parameter and neither faces disproportionate harm.
+ACTION: Apply §4.2 three-step assessment. Set default per broadest-benefit; provide supplementary provision for alternative; document convergence assessment as divergent with synthesis_approach.
+DATE: 2026-04-29 19:06
+
+RULE: Meta-methodological citations (pedagogy, theoretical framework, methodology design) sit outside the seven-tier evidence hierarchy. They support the guidebook's method, not design parameters. Cited in Part 1/mission/front matter only. No evidence marker (● or ○). Not processed by validate_evidence_state.py. Not stored as EvidenceSource records. Examples: Schön 1983, Hmelo-Silver 2004, Royeen 1995, ICF, PEO/PEOP, Capability Approach, Kawa.
+CONDITION: Any citation classification decision for sources that address the guidebook's pedagogical or methodological approach rather than a design parameter value.
+ACTION: Classify as meta-methodological. Cite with standard academic conventions. Do not assign an evidence tier. Do not include in specification cells.
+DATE: 2026-04-29 19:06
+
+RULE: A6 evidence-methodology.md is CANONICAL. Governs: evidence-state machine (T-04 operationalized), convergence assessment, values-criteria mechanism, design-pedagogy classification, epistemic-defense patterns. Schema: evidence_state.py, updated enums.py, updated evidence_source.py. Validator: validate_evidence_state.py (CI-integrated).
+DATE: 2026-04-29 19:06

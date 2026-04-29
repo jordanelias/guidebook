@@ -1,7 +1,7 @@
 # Evidence Methodology
-**Status:** DRAFT — A6 Session 1
+**Status:** CANONICAL — A6 complete (Sessions 1–3)
 **Phase:** Stage A Phase 6 — Evidence methodology
-**Created:** 2026-04-29 17:35 UTC
+**Created:** 2026-04-29 17:35 UTC · **S2:** 2026-04-29 18:05 · **Closed:** 2026-04-29 19:06
 **Doctrinal basis:** T-03 (`governance/pre-stage-a-decisions.md`) · T-04 (same) · `governance/co1-operational.md` (A5 CANONICAL) · `governance/mission-and-epistemics.md` §Epistemic commitments · voice-style §§8.1, 8.2, 8.3
 **Pattern:** Governance + Code (governance this session; code Session 2)
 
@@ -277,17 +277,154 @@ The convergence assessment interacts with three entity types in the schema:
 
 ---
 
-## 4. Values-criteria assessment mechanism
+## 4. Values-criteria assessment mechanism — resolves Q5
 
-*Deferred to A6 Session 3 per handoff §5 methodology recommendation.*
+### 4.1 The problem
 
-## 5. Design-pedagogy literature engagement
+Two populations may have evidence-supported preferences that conflict on the same design parameter. Neither preference is wrong; both are grounded in legitimate lived experience or clinical evidence. The conflict is not about harm — it is about values.
 
-*Deferred to A6 Session 3 per handoff §5 methodology recommendation.*
+Example: residential primary entrance threshold. The visitability framework (Concrete Change 1987; Co-1) specifies zero-step (0 mm) to ensure any person can enter. Some PAIN-population evidence supports textured threshold landings (≤6 mm, with slip-resistant tactile surface) for proprioceptive feedback at the entrance transition. Both positions have evidence. Neither is harmful. They conflict on the same physical parameter.
 
-## 6. Epistemic-defense skill specification
+Tier 2 OT co-design resolves this at the individual scale — the OT and the occupant determine what is right for this person. But at Tier 1 (population-informed), the guidebook must specify a default and a range. The values-criteria mechanism governs how that default is set.
 
-*Deferred to A6 Session 3 per handoff §5 methodology recommendation.*
+### 4.2 Resolution: three-step values-criteria assessment
+
+When a (parameter × population) synthesis identifies a values-based conflict (as distinct from a function-based harm conflict), the following mechanism applies:
+
+**Step 1 — Classify the conflict type.**
+
+| Type | Definition | Resolution path |
+|---|---|---|
+| Function-based (harm) | One population faces greater physical, neurological, or psychological harm from the wrong default | Harm-asymmetry rule (project-standards, existing). Higher-harm population sets default. |
+| Values-based (preference) | Both populations have evidence-supported preferences; neither faces disproportionate harm from the other's default | Broadest-benefit assessment (this section). |
+| Variable-conflation | Apparent conflict dissolves because opposing needs operate on different physical variables | Step 0 in §3.8 decision tree (project-standards). Not a real conflict. |
+
+If a conflict is function-based, the harm-asymmetry rule governs and this section does not apply. Values-criteria applies only to conflicts classified as values-based.
+
+**Step 2 — Broadest-benefit assessment.**
+
+For values-based conflicts, the Tier 1 default is set by asking: *which default serves the broadest population or the most constrained use case?*
+
+Criteria, applied in order:
+
+1. **Population breadth.** If one preference serves a larger number of affected populations (not just the population that generated the evidence, but all populations in the shared space), that preference is the default. Example: zero-step serves MOB, VIS, DEM, NDV, OFS, PAIN (ambulatory), aging-in-place populations. Textured threshold serves some PAIN individuals. Zero-step is broader.
+
+2. **Irreversibility.** If one preference, once built, forecloses future adaptation and the other preserves it, the preserving option is the default. Example: a zero-step threshold can later receive an applied tactile mat; a 6 mm threshold cannot be reduced to zero without structural modification. Zero-step is more adaptable.
+
+3. **Supplementary provision feasibility.** If the non-default preference can be achieved through supplementary provision (personal aids, surface treatments, staff-operated adjustments) without modifying the built structure, this supports setting the other as the structural default. Example: proprioceptive feedback can be provided via an applied threshold mat or entry-zone flooring change, without requiring a raised threshold.
+
+If all three criteria point the same direction, the default is clear. If they conflict, the specification documents the assessment and routes to Tier 2 for individual resolution, with the broadest-population preference as the nominal default.
+
+**Step 3 — Documentation.**
+
+The specification carries:
+
+- The Tier 1 default with rationale ("Broadest-benefit: zero-step serves [N] populations; proprioceptive feedback achievable via supplementary surface treatment")
+- The alternative preference with its evidence basis
+- The Tier 2 handoff: "OT assessment may specify [alternative] based on individual proprioceptive needs"
+- The convergence assessment (§3.2): `divergent` with synthesis_approach documenting the broadest-benefit reasoning
+
+### 4.3 What the values-criteria mechanism does not do
+
+- **Does not override harm-asymmetry.** If one population faces genuine harm (neurological deterioration, fall risk, entrapment), that is function-based, not values-based. Harm-asymmetry governs.
+- **Does not claim one population's values are more legitimate.** Both preferences are evidence-grounded. The mechanism selects a structural default, not a correct value.
+- **Does not eliminate Tier 2 resolution.** The default is a starting point. Tier 2 OT co-design may override it for an individual whose needs are better served by the alternative.
+- **Does not apply to Tier 0.** Tier 0 (universal design / code compliance) is set by code. Values-criteria applies at Tier 1 only.
+
+## 5. Design-pedagogy literature engagement — resolves Q6
+
+### 5.1 The classification question
+
+The guidebook's questions-led pedagogical commitment (Doctrinal commitment 6; mission §Epistemic commitments §Questions-led teaching) cites three foundational sources:
+
+- Schön, D.A. (1983). *The Reflective Practitioner.* DOI: 10.4324/9781315237473
+- Hmelo-Silver, C.E. (2004). Problem-Based Learning: What and How Do Students Learn? *Educational Psychology Review* 16(3). DOI: 10.1023/B:EDPR.0000034022.16470.f3
+- Royeen, C.B. (1995). A Problem-Based Learning Curriculum for Occupational Therapists. *AJOT* 49(4). DOI: 10.5014/ajot.49.4.338
+
+Q6 asks: how do these citations operate in the evidence base? What tier are they?
+
+### 5.2 Resolution: meta-methodological citations — outside the evidence hierarchy
+
+These three sources are **meta-methodological citations**. They provide evidence for the guidebook's pedagogical approach — how the guidebook teaches — not evidence for any design parameter. The seven-tier evidence hierarchy governs evidence about built environment design. Pedagogy literature addresses a different question: *does questions-led resource design improve outcomes for the people who use the resource?*
+
+**Classification:** meta-methodological citations sit outside the seven-tier hierarchy. They are not Tier 3 (they are not systematic reviews of design evidence), not Tier 5 (they are not national beyond-code frameworks for accessible design), and not any other tier. Forcing them into the hierarchy conflates two distinct evidence questions — "what should the design parameter be?" and "how should the guidebook present design parameters?"
+
+### 5.3 Operational treatment
+
+| Aspect | Treatment |
+|---|---|
+| **Citation location** | Part 1 (methodology declaration), mission document, front matter. Not in Part 4 specification cells. |
+| **Evidence marker** | No ● or ○ marker. Evidence markers govern design parameter specifications; pedagogy citations are not design specifications. |
+| **Rendering** | Standard academic citation. Author (Year), title, DOI. No tier badge. |
+| **Validator handling** | `validate_evidence_state.py` does not process meta-methodological citations. They do not appear in EvidenceSource records (which are for design parameter evidence). They appear in the bibliography as standard academic references. |
+| **Testability** | The questions-led hypothesis is acknowledged as a claim, not established fact (mission §Epistemic commitments). Empirical testing is staged at B6 pilot validation (solo-author cross-checking pre-launch; weaker rigor than external testing). |
+
+### 5.4 Boundary: what qualifies as meta-methodological
+
+A citation is meta-methodological when it provides evidence about the guidebook's method (its pedagogical approach, its evidence synthesis methodology, its theoretical framework) rather than about a design parameter's value. The four-framework theoretical layering (ICF, PEO/PEOP, Capability Approach, Kawa — per project-standards 2026-04-09) is also meta-methodological: these frameworks structure the guidebook's approach, not individual specifications.
+
+Citations that inform both the method and a design parameter — for example, OT clinical reasoning literature that both shapes the guidebook's Tier 2 co-design approach and provides evidence about assessment protocols — carry their design-parameter tier (typically Tier 1 or Co-2) for the parameter evidence and are additionally cited as methodological basis where relevant. The tier governs the parameter cell; the methodological citation is supplementary.
+
+## 6. Epistemic-defense specification — resolves Q7
+
+### 6.1 Purpose
+
+The epistemic-defense specification defines how guidebook prose handles challenges to the guidebook's evidence basis. This is a requirements specification for a future skill (C2 build); A6 defines *what* the skill must do, not *how* it is implemented.
+
+The need: readers, reviewers, and practitioners encountering the guidebook will challenge its evidence claims. Some challenges are legitimate (evidence gaps exist; the guidebook should acknowledge them). Some challenges rest on misunderstanding the evidence hierarchy or the guidebook's epistemic position. The epistemic-defense skill equips the author (and future contributors) with structured response patterns.
+
+### 6.2 Challenge categories and response patterns
+
+| Challenge | Example | Response pattern |
+|---|---|---|
+| **Evidence-tier challenge** | "Where's the RCT for that threshold value?" | Cite the evidence chain with tier location. If no Tier 1 clinical evidence exists: state the tier that does exist; name the gap per T-04 state; explain that Co-1 or Co-2 evidence is co-primary, not subordinate. Never fabricate a higher-tier basis. |
+| **Co-1 legitimacy challenge** | "That's just opinion, not evidence." | Cite CRPD Art. 4.3 grounding. Explain that Co-1 is methodologically grounded (peer review, organizational accountability, scholarly authorship per A5 §1.2), not aggregated opinion. Name the specific sources. |
+| **Code-sufficiency challenge** | "Building codes don't require that." | Explain the Tier 0 / Tier 1 distinction. Codes (Tier 6) are the compliance floor, not the aspiration. The guidebook recommends provisions above the code floor where higher-tier evidence supports them. The code floor is already met; the question is what the evidence supports beyond it. |
+| **Economic challenge** | "Show me the cost-benefit." | Route to Part 11 evidence. If Part 11 does not cover the specific parameter: acknowledge the gap, note that absence of economic evidence does not invalidate the design evidence, and flag for future Part 11 expansion. |
+| **Jurisdictional challenge** | "That's not how we do it here." | Present the jurisdictional comparison from the BPC. Note that best practice is determined by the evidence hierarchy, not by code consensus (project-standards Core Doctrine). Acknowledge legitimate jurisdictional differences in regulatory context. |
+| **Authority challenge** | "Who says this is best practice?" | The guidebook is an advocacy project (Core Doctrine). It does not claim mandating authority. Its recommendations are grounded in the evidence hierarchy it discloses. The reader applies professional judgment informed by this evidence. The value is in the comprehensiveness and transparency of the synthesis, not in institutional authority. |
+| **Gap challenge** | "You don't have evidence for that." | If the challenge is correct: acknowledge the gap. Cite the T-04 state (`pending` or `provisional` with confidence flag). Route to gap_register.md. If the challenge is incorrect (evidence exists but was not visible to the challenger): cite the evidence with tier and source. |
+
+### 6.3 Decision rules
+
+When a section of prose or a specification cell faces an evidence-basis challenge, the response follows this decision sequence:
+
+1. **Is the challenge factually correct?** Does a gap exist? Is the tier lower than claimed? Is the source unverified?
+   - If yes: acknowledge. Update the T-04 state if needed. Route to gap_register. Do not defend a claim that is not defensible.
+   - If no: proceed to step 2.
+
+2. **Is the challenge based on a misunderstanding of the evidence hierarchy?**
+   - If yes: explain the hierarchy. Most common: confusion between "no RCT" and "no evidence" (Co-1 and Co-2 are evidence); confusion between "not in the code" and "not best practice" (codes are Tier 6).
+   - If no: proceed to step 3.
+
+3. **Is the challenge about the guidebook's authority?**
+   - If yes: apply the advocacy-identity response (§6.2 authority challenge). The guidebook does not claim authority it does not have.
+
+4. **Is the challenge about economic feasibility?**
+   - If yes: route to Part 11. Acknowledge limitations if Part 11 coverage is thin.
+
+5. **Is the challenge irresolvable with current evidence?**
+   - If yes: document the challenge as an open question. Add to gap_register if not already there. The epistemic-defense skill does not resolve all challenges — it ensures they are handled honestly.
+
+### 6.4 Voice conventions for epistemic defense
+
+The response voice follows §8.1 (tier-appropriate specification voice) and §8 framing standards (epistemic authority — do not overclaim). Specific patterns:
+
+- **Never claim the guidebook "proves" or "establishes" a design parameter.** The guidebook synthesizes evidence and recommends. The evidence establishes; the guidebook presents.
+- **Never dismiss a challenge as uninformed.** Explain the basis. If the challenger's understanding of the hierarchy differs from the guidebook's, present the guidebook's framework transparently.
+- **Always name the evidence tier when defending a claim.** "This specification is based on Tier 3 evidence (Sanford 2010 SR)" — not "research supports this."
+- **Acknowledge gaps immediately when they exist.** The guidebook's credibility rests on honesty about what it does and does not know. A defended gap is worse than a disclosed one.
+
+### 6.5 Skill build specification (forward to C2)
+
+The `epistemic-defense` skill, when built at C2, implements:
+
+- **Input:** a prose passage or specification cell + the challenge text
+- **Processing:** classify the challenge per §6.2 categories; apply §6.3 decision sequence; select response pattern
+- **Output:** a draft response with tier-located evidence citations and, if applicable, an updated T-04 state or gap_register entry
+- **Validation:** response must not overclaim (per §8 framing standards); response must cite specific sources (no generic "research shows"); response must acknowledge gaps where they exist
+
+The skill is prose-only (no Python validator). Its quality depends on the author's judgment informed by the patterns above. The patterns are the specification; the skill operationalizes them.
 
 ---
 
@@ -299,35 +436,45 @@ The convergence assessment interacts with three entity types in the schema:
 | Q2 — Cross-tier convergence encoding | Convergence assessment is a structured property of the synthesis cell (not of individual sources); four statuses: convergent, divergent, single_axis, pending_assessment | high — follows from mission §3 convergence-as-evidence principle | §3.2 |
 | Q3 — Fifth state for divergent evidence? | No. Cell is `stated`; divergence is synthesis metadata via convergence assessment, not a state-machine state. Four states preserved per T-04. | high — separates evidence sufficiency from evidence agreement; T-04 unchanged | §3.3 |
 | Q4 — Co-2 alone as "rich" for `stated` | Yes. Co-2 alone satisfies `stated` per T-04 OR clause. OT professional body CPGs carry sufficient epistemic weight. | high — literal application of T-04 definition | §2.6 |
+| Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Tier 2 handoff. Applies at Tier 1 only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
+| Q6 — Design-pedagogy tier classification | Meta-methodological: outside the seven-tier hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
+| Q7 — Epistemic-defense skill specification | Seven challenge categories with response patterns; five-step decision sequence; voice conventions; C2 skill build forward spec. Requirements only — C2 builds implementation. | high — direct application of advocacy identity + evidence hierarchy + framing standards | §6 |
 | Q8 — Verification status interaction (partial) | `UNVERIFIED-1`: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |
 
 ---
 
-## 8. Forward specifications for Session 2
+## 8. Forward specifications
 
-Session 2 (schema + validator implementation) inherits these binding specifications:
+### Session 2 deliverables (COMPLETE)
 
-1. **`schemas/evidence_state.py`** — Pydantic model encoding the four T-04 states, the convergence assessment, and the richness thresholds from §§2.2–2.5.
-2. **`scripts/validate_evidence_state.py`** — CI validator enforcing:
-   - `pending` cells reference `gap_register.md`
-   - `provisional` cells carry confidence flag with named dimensions
-   - `not_applicable` cells carry rationale
-   - `stated` cells cite ≥1 source at Tier 1–3 OR Co-1 OR Co-2
-   - Verification-status downgrade logic per §2.8
-   - Convergence assessment completeness for `stated` cells with multi-axis evidence
-3. **`scripts/convert/convert_sources.py`** — sample converter taking existing BPC/source data and producing validated EvidenceSource records per the A5 six-field specification + A6 convergence assessment.
+Delivered in A6 Session 2 (2026-04-29 18:05):
+
+1. **`schemas/evidence_state.py`** — EvidenceStateRecord, ConvergenceAssessment, ProvisionalConfidenceFlag models.
+2. **`schemas/enums.py`** — EvidenceCellState, ConvergenceStatus, Co1Provenance, Co1SourceType, VerificationStatus enums. Co-2 tier corrected to 2 per T-03.
+3. **`schemas/evidence_source.py`** — A5 Co-1 fields added; Co-1 field consistency model validator.
+4. **`scripts/validate_evidence_state.py`** — CI validator for evidence states and Co-1 source fields.
+5. **`scripts/convert/convert_sources.py`** — Updated with Co-1 field population, Co-2 tier fix, `--co1` mode.
+
+### Remaining forward items
+
+- **Multilingual-research output validator** — wrapper validator for Co-1 provenance on non-English literature review outputs. Deferred: may fold into C-stage multilingual-research skill rebuild. Not blocking A6 closure.
+- **B1 schema design** — inherits convergence assessment specification (§3.2) and Co-1 field requirements (§1.3, A5 §7.1) as binding input.
+- **C2 skill builds** — epistemic-defense skill (§6.5 forward spec) and values-criteria integration into cross-population-conflict-mapper.
+- **C7 evidence migration** — 584 sources + 81 unverified residual disposition bound to A6 schema and validator.
 
 ### Status
 
 | Field | Value |
 |---|---|
-| Created | 2026-04-29 17:35 UTC |
-| Phase | Stage A Phase 6 (Evidence methodology) — Session 1 of 3–5 |
-| Status | DRAFT — §§1–3 complete; §§4–6 deferred to Session 3; §§7–8 are registers |
-| Resolves | Q1, Q2, Q3, Q4, Q8 (partial) |
-| Defers | Q5 (values-criteria), Q6 (design-pedagogy), Q7 (epistemic-defense) |
-| Forward dependencies | Session 2 (schema + validator); Session 3 (values-criteria + design-pedagogy + epistemic-defense) |
+| Created | 2026-04-29 17:35 UTC (S1) |
+| Session 2 | 2026-04-29 18:05 UTC (schema + validator) |
+| Session 3 | 2026-04-29 19:06 UTC (§§4–6 complete) |
+| Phase | Stage A Phase 6 (Evidence methodology) — COMPLETE |
+| Status | CANONICAL — all 8 questions resolved; all sections complete |
+| Resolves | Q1 (provisional threshold), Q2 (convergence encoding), Q3 (no fifth state), Q4 (Co-2 = stated), Q5 (values-criteria), Q6 (design-pedagogy), Q7 (epistemic-defense), Q8 (verification interaction) |
+| Sessions consumed | 3 of 3–5 budget |
+| Forward dependencies | B1 (schema design), C2 (epistemic-defense skill build), C7 (evidence migration) |
 
 ---
 
-**End of A6 Session 1 governance draft.**
+**End of A6 governance document.**
