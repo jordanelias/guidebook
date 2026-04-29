@@ -1,5 +1,5 @@
 # Writing & Framing Skill — Guidebook for Accessible Design
-*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-04-27 (A4 Session 1 — advocacy identity integration).*
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-04-29 (A4 close + calibration check — added §8.2 voice convention patterns, extended §12 do-not-flag list against false-positive patterns observed in A4 Sessions 1–3).*
 
 ## Purpose
 This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, advocacy-identity-appropriate epistemic authority.
@@ -205,7 +205,7 @@ Replace authority-asserting language with consequence-describing or evidence-loc
 | "operates above" *(the code floor)* | "recommends provisions above" |
 | "DAR is mandatory" *(without locating the mandate)* | "this guidebook treats DAR as mandatory at every tier" or "DAR is treated as mandatory throughout this guidebook" |
 
-*Acceptable:* "mandatory" when citing an external mandate (statutory, standards body, treaty obligation, including CRPD General Comments). "This document governs" when describing internal document hierarchy (e.g. Part 4 governs over Part 8 where they conflict). "Resolution protocol" when referencing an external protocol (PEEP, FM, Motionspot). "Shall" when quoting code or standard text directly.
+*Acceptable:* "mandatory" when citing an external mandate (statutory, standards body, treaty obligation, including CRPD General Comments). "This document governs" when describing internal document hierarchy (e.g. Part 4 governs over Part 8 where they conflict). "Resolution protocol" when referencing an external protocol (PEEP, FM, Motionspot). "Shall" when quoting code or standard text directly. **Cross-references that locate a mandate elsewhere in the guidebook** (e.g. "OT assessment mandatory (Part 9 §9.10 trigger)") do not require local location — the cross-reference itself locates the mandate, provided the destination section locates it correctly.
 
 ### §8.1 Tier-Appropriate Specification Voice
 
@@ -229,6 +229,36 @@ The blanket "shall be" convention is retired (project-standards 2026-04-26). Spe
 **The tier-located voice is not a length penalty.** It is a precision gain: the reader knows where the value comes from and how much weight to place on it. In tabular Part 4 specifications, the tier locator can be terse — `[Tier 3, GRADE moderate]` after the value, with prose framing in the surrounding text.
 
 **When tier location can be implicit:** within a sustained Tier 1 passage where every value is Tier-1-evidence-located, the construction can compress: "Tier 1 best practice for corridor width is 1500 mm; the population envelope is 1200–1800 mm." The first sentence locates the tier; subsequent sentences can omit the locator without ambiguity.
+
+### §8.2 Voice Convention Patterns
+
+Two patterns honor the advocacy identity rule without sacrificing prose voice or table information density. The choice between them is a question of locality, not of doctrinal weight — both are valid.
+
+**Pattern A — Inline location.** Locate the mandate or recommendation directly in the sentence or table cell where it appears.
+
+> "This guidebook treats DAR as mandatory at every tier."
+> "Sensory quiet room treated as mandatory by this guidebook on every floor plate (A-16)."
+> "Fragrance-free policy: treated as mandatory by this guidebook in all NDV-designated spaces."
+
+Two equivalent constructions exist:
+- "This guidebook treats X as mandatory" — subject-driven; preferred for opening statements and prose where the Guidebook's voice is foregrounded
+- "X, treated as mandatory by this guidebook" / "X treated as mandatory by this guidebook" — appositive or compressed; preferred for inline mid-sentence location and dense table cells
+
+Use Pattern A for: prose passages; short table cells; bullet lists; inline annotations within longer sentences.
+
+**Pattern B — Umbrella convention.** A single voice convention note covering an entire section or matrix, declaring how authority-claim language operates throughout. Per-cell or per-line location is then unnecessary within that scope.
+
+> Example — Part 1 §1.4.3 table column header: change `"DAR"` to `"DAR (this guidebook)"`. The column header locates the mandate for every row in the column.
+>
+> Example — Part 7 §7.0 voice note: "Where this Part refers to a provision as 'mandatory' — including in the §7.1–§7.7 matrix tables and supporting prose — the mandate is this guidebook's recommendation, not an external regulatory mandate, except where a specific jurisdictional code or standard is cited inline."
+
+Use Pattern B for: dense matrix tables where per-cell location would degrade information density; section openings governing many subordinate claims; opening statements of a structured part.
+
+**Density argument for choosing Pattern B over Pattern A.** Per-cell location in a matrix table forces every cell to carry a location phrase, reducing table density and making cells unreadable at scan speed. The umbrella convention preserves table density, locates the authority claim at the appropriate scope (section or matrix), and gives the reader a single trustworthy framing. Apply Pattern B whenever a matrix or table contains 5+ instances of the same authority-claim category.
+
+**Both patterns required across guidebook.** Some sections will use Pattern A in prose and Pattern B in adjacent matrix tables. The two patterns interlock — the umbrella does not replace the inline; it covers the table, the inline covers the prose.
+
+**What Pattern B does not do.** Pattern B does not authorize introducing authority-asserting language inside the umbrella scope. It declares how language *already there* is to be read. Use Pattern B to clarify, not to license.
 
 ---
 
@@ -320,7 +350,7 @@ Use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or mo
 | AUTHORITY_CLAIM | Guidebook asserts authority it lacks | "mandatory" *(unlocated)*, "non-negotiable", "this document governs" *(over external)*, "shall be" *(blanket)*, "operates above the code floor", "resolution protocol" *(as self-description)*, "X is mandatory" *(no external citation, no Guidebook attribution)* |
 | TIER_VOICE | Specification voice does not locate tier | "Grab bar diameter shall be 32–35 mm" *(no tier locator)*; mixing Tier 0 and Tier 1 voice in one sentence |
 
-Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf) · "mandatory" when citing external mandates · internal document hierarchy references · "shall" when quoting code text directly · "must be" describing design requirements (not Guidebook self-mandates) · negative-example "shall be" used to criticize a vague brief.
+Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf) · "mandatory" when citing external mandates · internal document hierarchy references · "shall" when quoting code text directly · "must be" describing design requirements (not Guidebook self-mandates) · negative-example "shall be" used to criticize a vague brief · negative-example "non-negotiable" used in scare quotes or to criticize an over-claim · "mandatory" when followed by an explicit cross-reference to another guidebook section that locates the mandate (e.g. "OT assessment mandatory (Part 9 §9.10)") · "mandatory" when describing a determination or selection process rather than a mandate (e.g. "which Part 4 items are mandatory") · "mandatory" in jurisdictional comparison table cells alongside a jurisdiction code · "mandatory" inside a properly-applied Pattern B umbrella scope (see §8.2).
 
 ### Steps
 1. Scan for all flag categories. List: exact quote · location · proposed code.
