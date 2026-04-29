@@ -35,7 +35,7 @@ The Three-Tier Design Hierarchy (Volume 1, §1.6.3) governs when specialist cons
 | Tier 1 | Population-Informed Inclusive Design | Identified population (not individual) | Required where the building's primary population includes NDV, DEM, NEU, OFS, or DBL, or where two or more primary populations are present. Required where co-occurrence patterns produce conflicts that population-level medians cannot resolve. Recommended for all other Tier 1 projects. |
 | Tier 2 | Person-Specific Inclusive Design | Named individual | OT assessment mandatory. Design cannot proceed to Tier 2 specification without a completed functional capacity assessment for the named person. Co-design process required. |
 
-DAR (Design for Adaptable Readiness) is mandatory at all three tiers regardless of specialist involvement. DAR provisions, once confirmed in the structural and engineering briefs, do not require specialist sign-off — they are standard construction-stage provisions documented in Part 9.
+This guidebook treats DAR (Design for Adaptable Readiness) as mandatory at all three tiers regardless of specialist involvement. DAR provisions, once confirmed in the structural and engineering briefs, do not require specialist sign-off — they are standard construction-stage provisions documented in Part 9.
 
 The boundary between tiers is a project decision, not an option. A residential commission for a named client with a known disability is Tier 2 by definition. A dementia care facility serving an identified population is Tier 1. A speculative apartment building where no user population can be characterised is Tier 0. Misclassifying a project at a lower tier than the evidence warrants is a design failure, not a cost saving.
 
@@ -55,7 +55,7 @@ The OT does not produce drawings or engineering specifications. The OT produces 
 
 Appoint an OT when any of the following conditions apply:
 
-- **Tier 2 project** — a named individual is the primary occupant or user. Mandatory. OT assessment is the mechanism by which Tier 1 specification ranges are resolved to person-specific values. Without OT assessment, Tier 2 design is not achievable; median Tier 1 values must be used instead, with explicit documentation that individual assessment has not been completed.
+- **Tier 2 project** — a named individual is the primary occupant or user. OT assessment is mandatory in this guidebook's framework: it is the mechanism by which Tier 1 specification ranges are resolved to person-specific values. Without OT assessment, Tier 2 design is not achievable; median Tier 1 values must be used instead, with explicit documentation that individual assessment has not been completed.
 - **Residential adaptations to an occupied dwelling** — where a current occupant has a disability and the design brief is to improve that person's independence in their own home. OT referral may precede architectural involvement; the OT assessment report is the primary brief document.
 - **Tier 1 project with NDV, DEM, NEU, OFS, or DBL as a primary population** — these populations require environmental calibration beyond the standard design library medians. Sensory zoning (F-01 through F-07), acoustic environment, and individual control provisions (H-01, H-02) require OT review of the proposed environment against population-specific functional profiles before technical design is finalised.
 - **Healthcare, supported housing, or specialist education environments** — where the gap between code compliance and genuine occupational independence is at its greatest, and where OT involvement is standard professional practice in most jurisdictions.
@@ -296,9 +296,9 @@ The co-occurrence resolution register is a live project document maintained from
 
 ### §9.10 OT Threshold — When OT Assessment Becomes Mandatory
 
-This section defines the conditions under which OT assessment transitions from recommended best practice to a mandatory project requirement. The OT threshold is distinct from the OT appointment triggers in §9.2.2, which identify when OT involvement adds value. The OT threshold identifies when a project cannot proceed to construction without OT input.
+This section defines the conditions under which OT assessment transitions from recommended best practice to a project requirement that this guidebook treats as mandatory. The OT threshold is distinct from the OT appointment triggers in §9.2.2, which identify when OT involvement adds value. The OT threshold identifies when, in this guidebook's view, a project cannot proceed to construction without OT input.
 
-**OT assessment is mandatory (not advisory) in the following conditions:**
+**This guidebook treats OT assessment as mandatory (not advisory) in the following conditions:**
 
 1. **Individual-specific residential commission.** The building is designed for or occupied by a named individual with a known disability profile. Tier 2 applies. OT assessment of the specific person's functional capacity is the mechanism by which Tier 1 specification ranges are resolved to specific values. Without OT assessment, no valid Tier 2 specification exists.
 

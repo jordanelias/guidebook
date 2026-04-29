@@ -29,7 +29,7 @@ Part 8 is not a substitute for engineering design. It is the architect's instrum
 
 ### 9.0.2 Engineering Coordination Doctrine
 
-**Parallel specification is mandatory.** Every engineering-dependent accessibility item must appear in two documents simultaneously: the architect's construction specification or room data sheet, and the relevant consultant's brief at the appropriate design stage. Failure at either location is a coordination failure.
+**This guidebook treats parallel specification as mandatory.** Every engineering-dependent accessibility item must appear in two documents simultaneously: the architect's construction specification or room data sheet, and the relevant consultant's brief at the appropriate design stage. Failure at either location is a coordination failure.
 
 **Stage sequencing is non-negotiable.** Several items are irreversible once past schematic design. These are flagged NOT-RETROFITTABLE in the tables below. No value engineering, scope reduction, or programme pressure justifies deferring these items past their declared stage gate.
 

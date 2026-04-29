@@ -47,7 +47,7 @@ True accessibility encompasses:
 
 ### §1.2 The Code-as-Floor Principle
 
-Building codes represent legal minimums — not design targets, not expressions of best practice, and not statements about what constitutes a good environment for disabled people. This document operates above the code floor throughout. Statutory requirements are referenced as baselines only (Evidence Tier 6). Where codes conflict with higher-tier evidence, higher-tier evidence governs. The multilingual endorsements of the code-as-floor principle confirm that this position is not a minority view, but the unanimous position of every major national accessibility body and advocacy organisation reviewed across 17 jurisdictions.
+Building codes represent legal minimums — not design targets, not expressions of best practice, and not statements about what constitutes a good environment for disabled people. This guidebook recommends provisions above the code floor throughout. Statutory requirements are referenced as baselines only (Evidence Tier 6). Where codes conflict with higher-tier evidence, higher-tier evidence governs. The multilingual endorsements of the code-as-floor principle confirm that this position is not a minority view, but the unanimous position of every major national accessibility body and advocacy organisation reviewed across 17 jurisdictions.
 
 The logical implication: meeting building code is necessary and insufficient for producing an accessible environment. Every specification in this document is calibrated above code, based on the best available evidence, primarily Tier 1 occupational therapy clinical research.
 
@@ -95,15 +95,15 @@ This guidebook is written for Tier 1 and Tier 2 practice. All specifications, ev
 
 #### §1.4.3 The Three-Tier Hierarchy
 
-This guidebook applies a three-tier design hierarchy. DAR (Design for Adaptable Readiness, §1.6) is mandatory at every tier without exception.
+This guidebook applies a three-tier design hierarchy. DAR (Design for Adaptable Readiness, §1.6) is treated as mandatory at every tier of this guidebook — not because external authority requires it, but because the construction-stage evidence is unambiguous (see §1.6 and Part 11).
 
-| **Tier** | **Standard** | **Context** | **Specification form** | **DAR** |
+| **Tier** | **Standard** | **Context** | **Specification form** | **DAR (this guidebook)** |
 | --- | --- | --- | --- | --- |
 | **Tier 0** | **Universal Design / Code Compliance** | No specific population can be anticipated. Averaged, anonymous user. | Range of values calibrated to an abstractly disabled non-existent person. | Mandatory |
 | **Tier 1** | **Population-Informed Inclusive Design** | Identifiable disability populations among regular users. This guidebook's primary domain. | Ranges. Median is the population-informed default. Range encodes functional capacity distribution across the identified population. | Mandatory |
 | **Tier 2** | **Person-Specific Inclusive Design** | Individual occupant or named user is known. OT assessment available. | Position within the Tier 1 range, resolved by the individual's functional capacity assessment. | Mandatory |
 
-**Tier 0 — Universal Design / Code Compliance** is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Tier 0, DAR is mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
+**Tier 0 — Universal Design / Code Compliance** is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Tier 0, this guidebook treats DAR as mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
 
 The following specifications have convergent evidence support across five or more disability populations and are designated **Tier 0 Universal Specifications** — required at all tiers regardless of user population:
 
@@ -147,7 +147,7 @@ Wherever a range appears in Part 4, the following framing applies: the range is 
 
 #### §1.4.6 Why Universal Design Alone Is Insufficient
 
-Universal design produces a single solution optimised for a statistical average across the widest possible population. This guidebook operates above that standard for reasons inherent to its scope.
+Universal design produces a single solution optimised for a statistical average across the widest possible population. This guidebook recommends provisions above that standard for reasons inherent to its scope.
 
 **Fixed values vs. functional capacity ranges.**
 
@@ -169,9 +169,9 @@ The aspiration of universality — that environments should work for everyone �
 
 #### §1.4.7 Application to Residential Design
 
-New residential construction where the eventual occupant is unknown at construction stage operates at Tier 0 as its legal baseline. DAR is mandatory above that baseline, since future occupants will include people with disabilities whose specific needs cannot be anticipated. The Lifetime Homes standard (Joseph Rowntree Foundation, 1999) and CAN/ASC 2.8:2025 represent the minimum DAR threshold for speculative residential construction; both are below the best-practice level recommended by this guidebook.
+New residential construction where the eventual occupant is unknown at construction stage operates at Tier 0 as its legal baseline. This guidebook treats DAR as mandatory above that baseline, since future occupants will include people with disabilities whose specific needs cannot be anticipated. The Lifetime Homes standard (Joseph Rowntree Foundation, 1999) and CAN/ASC 2.8:2025 represent the minimum DAR threshold for speculative residential construction; both are below the best-practice level recommended by this guidebook.
 
-Where an individual occupant is known — a custom build, an adaptations commission, or a specialist residential environment — Tier 2 applies. Design is calibrated to that person's documented functional profile and OT assessment. DAR remains mandatory to preserve adaptability for future occupants and for changes in the current occupant's functional capacity over time.
+Where an individual occupant is known — a custom build, an adaptations commission, or a specialist residential environment — Tier 2 applies. Design is calibrated to that person's documented functional profile and OT assessment. DAR remains mandatory in this guidebook's recommendation, to preserve adaptability for future occupants and for changes in the current occupant's functional capacity over time.
 
 **Key references:** Mace, Hardie & Place (1991); BS 7000-6:2005; RIBA (2022); CAN/ASC 2.8:2025; Joseph Rowntree Foundation Lifetime Homes (1999); Imrie (2012); Hamraie (2017).
 
@@ -310,7 +310,7 @@ Designers, planners, and regulators using this guidebook retain full professiona
 
 #### §1.9.5 Conflict With Statutory Requirements
 
-Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document requires more than statutory requirements, this document governs.
+Where this document conflicts with statutory requirements, comply with the statutory requirement and document the conflict as a Tier 6 baseline limitation. Where this document recommends more than statutory requirements, this guidebook's recommendation should be followed in addition to the statutory baseline.
 
 *Next: Part 2 — Disability Categories*
 
