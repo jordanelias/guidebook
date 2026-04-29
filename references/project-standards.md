@@ -499,3 +499,20 @@ RULE: Governance+code co-production. Every Stage A governance phase that defines
 CONDITION: Any Stage A phase (A3–A13) that defines or refines an entity, taxonomy, or state machine.
 ACTION: Phase deliverables include governance document AND working code. Neither is complete without the other. CI must pass before session close.
 DATE: 2026-04-26 06:20
+
+
+---
+
+## Session 2026-04-29 — A4 close + A5 close
+
+RULE: Specification voice is tier-located and authority-located throughout the guidebook. Per voice-style §8.1, Tier 0 specifications cite the code; Tier 1 specifications cite the evidence; Tier 2 specifications locate authority in OT assessment plus the individual. Per §8.2, two patterns operationalize this: Pattern A (inline location) for prose and short table cells; Pattern B (umbrella convention) for dense matrix tables. Per §8.3, four canonical Co-1 voice patterns govern Co-1 evidence citation: Co-1-A (single-source), Co-1-B (multi-source synthesis), Co-1-C (Tier 1/Co-1 convergence), Co-1-D (Tier 1/Co-1 divergence).
+CONDITION: Any drafting, revision, or audit of guidebook prose, BPC entries, item specifications, or governance documents producing prose that will surface in the guidebook.
+ACTION: Apply voice-style §§8.1, 8.2, 8.3 patterns. Categorical authority claims ("shall be" as blanket spec, "operates above the code floor", "this document governs" over external instruments, "non-negotiable" as Guidebook self-claim, unlocated "X is mandatory") are voice failures and route to remediation.
+DATE: 2026-04-29 14:04 — A4 close (categorical patterns eliminated guidebook-wide); 2026-04-29 15:50 — A5 close (Co-1 voice patterns added to skill).
+
+
+RULE: Co-1 evidence citations carry six required schema fields per `governance/co1-operational.md` §6.1: `tier`, `evidence_type`, `co1_provenance`, `co1_source_type`, `verification_status`, `synthesis_attribution_required`. Pre-launch all `co1_provenance` values are `published_corpus`; `participatory_synthesis` is post-launch contingent. CS2 (Co-1 recruitment) requires three triggers to activate (launch + resources + co-designed recruitment specification); pre-launch INOPERATIVE. CS5 pre-launch operates as corpus-representation monitoring (per-population, per-domain, per-jurisdiction Co-1 source inventories with gap-flagging via `gap_register.md`).
+CONDITION: Any work touching Co-1 evidence handling, EvidenceSource schema design (B1), evidence-state validation (A6, B2), or Co-1 source curation.
+ACTION: Apply `governance/co1-operational.md` §§3, 5, 6 specifications. Reject any Co-1 citation lacking required schema fields. Honor pre-launch INOPERATIVE state of CS2.
+DATE: 2026-04-29 15:50 — A5 close.
+
