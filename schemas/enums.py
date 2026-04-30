@@ -302,3 +302,81 @@ class ProjectType(str, Enum):
     MINOR_ADAPTATION = "minor_adaptation"
     MAINTENANCE = "maintenance"
     ALL = "all"  # Applies to all project types
+
+
+class StandardStatus(str, Enum):
+    """Standard edition status per A8 §3.2 / A9 §2.
+
+    CURRENT: this edition is the current legally-enforceable version
+    UPDATED: a newer edition exists and may be partially in effect
+    SUPERSEDED: a newer edition has fully replaced this one
+    WITHDRAWN: standard withdrawn without replacement
+    """
+    CURRENT = "CURRENT"
+    UPDATED = "UPDATED"
+    SUPERSEDED = "SUPERSEDED"
+    WITHDRAWN = "WITHDRAWN"
+
+
+class SupersedenceType(str, Enum):
+    """Categories of supersedence relationship per governance/time-model.md §4.
+
+    rule: project-standards RULE block superseded by a later RULE
+    standard: standards edition superseded by a later edition (same family)
+    version: guidebook version superseded by a later release
+    decision: governance decision (e.g. T-04 lock) supersedes prior draft
+    source: a newer publication supersedes an older one (rare, optional)
+    """
+    RULE = "rule"
+    STANDARD = "standard"
+    VERSION = "version"
+    DECISION = "decision"
+    SOURCE = "source"
+
+
+class SupersedenceLinkStatus(str, Enum):
+    """SupersedenceLink record status.
+
+    ACTIVE: link is authoritative
+    PROVISIONAL: link detected by textual cue, awaits human review
+    RETIRED: link superseded by a newer link or invalidated
+    """
+    ACTIVE = "ACTIVE"
+    PROVISIONAL = "PROVISIONAL"
+    RETIRED = "RETIRED"
+
+
+class GuidebookVersionStatus(str, Enum):
+    """Lifecycle status of a guidebook version.
+
+    IN_PREP: in preparation, not effective
+    ACTIVE: the current effective version (exactly one record at a time)
+    ARCHIVED: prior version, no longer effective
+    """
+    IN_PREP = "IN_PREP"
+    ACTIVE = "ACTIVE"
+    ARCHIVED = "ARCHIVED"
+
+
+class ProjectRuleStatus(str, Enum):
+    """Lifecycle status of a project-standards RULE.
+
+    ACTIVE: rule is in force
+    SUPERSEDED: replaced by a later rule (named successor)
+    RETIRED: removed without a named successor
+    """
+    ACTIVE = "ACTIVE"
+    SUPERSEDED = "SUPERSEDED"
+    RETIRED = "RETIRED"
+
+
+class LaunchPhase(str, Enum):
+    """Project launch phase per governance/time-model.md §5.
+
+    pre_launch: solo authorship, published-corpus Co-1 only (current)
+    launched: initial public release, post-launch posture begins
+    maintained: ongoing edition cycle, participatory synthesis may engage
+    """
+    PRE_LAUNCH = "pre_launch"
+    LAUNCHED = "launched"
+    MAINTAINED = "maintained"
