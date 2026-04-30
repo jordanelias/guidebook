@@ -538,3 +538,6 @@ DATE: 2026-04-29 19:06
 
 RULE: A7 population-taxonomy.md is CANONICAL. Consolidates all population code rules. Governs: taxonomy structure, sub-code hierarchy and inheritance, VIS/DEAF/DBL distinctness, IntD proxying, BAR containment, co-occurrence notation, one-slug-one-population, conflict domain resolution. Validator: validate_population.py (CI-integrated).
 DATE: 2026-04-29 19:30
+
+RULE: A8 jurisdiction-philosophy.md is CANONICAL. Governs: 24-jurisdiction approach, jurisdiction-evidence tier relationship (codes=Tier 6, standards=Tier 4-5), standards currency tracking, GB→UK enforcement. Validators: validate_jurisdiction.py, convert_jurisdictions.py (CI-integrated).
+DATE: 2026-04-29 19:50

@@ -83,6 +83,9 @@ jobs:
       - name: Validate population codes
         run: python3 scripts/validate_population.py
 
+      - name: Validate jurisdiction codes and standards-registry
+        run: python3 scripts/validate_jurisdiction.py
+
       - name: Cross-entity referential integrity
         run: python3 scripts/validate_schema.py --cross-check
         continue-on-error: true
