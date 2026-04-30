@@ -178,25 +178,44 @@ def check_rule_coverage(register: DecisionRegister) -> list[str]:
         return warnings
 
     # Check whether each CANONICAL rule has at least one decision artifact
-    # referencing it. Match on substring of the artifact path.
+    # referencing it. The rule summary may contain either an explicit
+    # 'governance/X.md' path or a bare filename like 'time-model.md is CANONICAL'.
+    # Match either form, then check artifact path substring.
     covered_count = 0
+    uncovered_rules: list[str] = []
     for rule_summary in canonical_rules:
-        # Attempt to extract a governance-doc path from the rule summary
-        m = re.search(r"governance/[\w\-]+\.md", rule_summary)
+        # Attempt to extract a governance-doc filename from the rule summary
+        m = re.search(r"governance/([\w\-]+\.md)", rule_summary)
+        if not m:
+            # Try bare filename form: "X.md is CANONICAL"
+            m = re.search(r"([\w\-]+\.md)\s+is\s+CANONICAL", rule_summary)
         if not m:
             continue
-        rule_path = m.group(0)
+        # Extract the bare filename (last group)
+        filename = m.group(1) if "/" not in m.group(0) else m.group(0).split("/")[-1]
+        # Match against any artifact path that ends with this filename
+        # (governance/{filename} or {filename} alone)
+        matched = False
         for d in register.decisions:
-            if any(rule_path in art for art in d.decision_artifacts):
-                covered_count += 1
+            for art in d.decision_artifacts:
+                if art == filename or art.endswith("/" + filename) or filename in art:
+                    matched = True
+                    break
+            if matched:
                 break
+        if matched:
+            covered_count += 1
+        else:
+            uncovered_rules.append(filename)
 
     uncovered = len(canonical_rules) - covered_count
     if uncovered > 0:
+        sample = ", ".join(uncovered_rules[:5])
+        suffix = f" (e.g., {sample})" if uncovered_rules else ""
         warnings.append(
             f"C7: {uncovered} of {len(canonical_rules)} CANONICAL rules have no "
-            f"matching Decision record (heuristic: governance/*.md path in "
-            f"decision_artifacts). Run seeding extraction per A12 Session 2."
+            f"matching Decision record{suffix}. Add the governance file path to "
+            f"decision_artifacts in the relevant Decision record."
         )
 
     return warnings

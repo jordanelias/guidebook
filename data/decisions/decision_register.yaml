@@ -1,3 +1,2477 @@
 register_version: 1
-last_updated: 2026-04-30 03:00
-decisions: []
+last_updated: 2026-04-30 13:20
+decisions:
+- decision_id: D-0001
+  category: D-DOCT
+  delegation: DG-NON
+  summary: THE PURPOSE OF THIS GUIDEBOOK IS TO GET PEOPLE TO ASK THE RIGHT QUESTIONS
+  outcome: THE PURPOSE OF THIS GUIDEBOOK IS TO GET PEOPLE TO ASK THE RIGHT QUESTIONS
+  rationale: 'THE PURPOSE OF THIS GUIDEBOOK IS TO GET PEOPLE TO ASK THE RIGHT QUESTIONS. This is the most important principle
+    governing the entire project. The guidebook is not a prescription manual. It is not an authority on measurements. It does
+    not dictate values that designers, policymakers, or practitioners must apply. It is a thinking tool that equips people
+    to ask the right questions about how to design for accessibility depending on the circumstance. Measurements, ranges,
+    and reference data exist to support this process — they serve the questions, not the other way around. Every item specification,
+    every BPC synthesis, every piece of guidebook prose must be evaluated against this standard: does it help the reader ask
+    better questions about this design element? Does it surface considerations they would not have encountered otherwise?
+    Does it make them think more critically about the specific situation they face? When you know better, you do better. A
+    designer who knows what questions to ask will produce a better outcome than one who does not — even without perfection,
+    even without specialist input. The guidebook aims to raise the floor of understanding for everyone who touches the built
+    environment.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-24 23:38
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0002
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Disability populations are not uniform
+  outcome: Disability populations are not uniform
+  rationale: 'Disability populations are not uniform. Every person within a population code has a unique experience and unique
+    functional limitations, even where there is significant overlap with others who share the same condition. There are different
+    ways to struggle with mobility, different ways to be blind, different ways to have MS, different ways to be autistic,
+    different ways to have dementia, different ways to experience PTSD. There is no generic ideal for any population. Specifications
+    provide ranges and starting points — not definitive answers. It is rare for a disability to be experienced in isolation;
+    co-occurring conditions are the norm. Every item specification must acknowledge functional variability within the population
+    and discuss how co-occurrence affects the design parameter, because that is the lived reality of the people the guidebook
+    serves. Population codes are a high-level organizing principle: at Tier 0 they are comprehensive (mapping all considerations);
+    at Tier 1 they offer insight (what to think about for a known population); at Tier 2 they step aside because a person
+    is not defined by their disabilities — OT works bottom-up from functional impairments because everything must be uniquely
+    tailored to the individual.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-24 23:38
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0003
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Three-Tier Design Hierarchy governs all specifications
+  outcome: Three-Tier Design Hierarchy governs all specifications
+  rationale: Three-Tier Design Hierarchy governs all specifications. Tier 0 = Universal Design / Code Compliance (population-agnostic,
+    fixed values). Tier 1 = Population-Informed Inclusive Design (ranges; median as default). Tier 2 = Person-Specific Co-Design
+    (OT assessment resolves position within Tier 1 range). DAR mandatory at all tiers.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0004
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Evidence hierarchy is seven tiers
+  outcome: Evidence hierarchy is seven tiers
+  rationale: Evidence hierarchy is seven tiers. Tier 1 = OT intervention-tested clinical research; Co-1 = lived experience
+    / participatory design (CRPD Art. 4.3, co-primary with Tier 1); Tier 2 = NGO/DPO/advocacy guidelines; Co-2 = OT professional
+    body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT); Tier 3 = systematic reviews and meta-analyses; Tier 4 = international standards
+    with evidence basis; Tier 5 = national beyond-code frameworks; Tier 6 = statutory codes (reference baseline only). OT
+    body guidelines = Tier 3 with [Tier 3 — CPG] marker. The evidence hierarchy determines what constitutes best practice.
+    Codes (Tier 6) inform us in situations where nothing else can. Where higher-tier evidence exists, it governs.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-19 19:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0005
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Best practice means the most accommodating, thoughtful, respectful, dignified, and usable condition achievable
+    for th...
+  outcome: Best practice means the most accommodating, thoughtful, respectful, dignified, and usable condition achievable
+    for th...
+  rationale: 'Best practice means the most accommodating, thoughtful, respectful, dignified, and usable condition achievable
+    for the disabled person. Best practice is determined by the evidence hierarchy — Tier 1 clinical research, Co-1 lived
+    experience, Co-2 OT CPGs, Tier 3 systematic reviews — not by code consensus. Codes are Tier 6: the compliance floor, not
+    the aspiration. Code consensus across jurisdictions establishes what most codes agree on; it does not establish what is
+    most accommodating or most dignified. A BPC best_practice_synthesis that derives its value solely from code consensus
+    is in error. The test: does this specification provide the most accommodating, dignified, usable condition the evidence
+    supports — or does it merely reflect what codes agree on?'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-24 23:46
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0006
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Universal design is co-extensive with code compliance — the floor, not an aspiration
+  outcome: Universal design is co-extensive with code compliance — the floor, not an aspiration
+  rationale: Universal design is co-extensive with code compliance — the floor, not an aspiration. Inclusive design is the
+    positive aspiration.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0007
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Evidence specification markers
+  outcome: Evidence specification markers
+  rationale: Evidence specification markers. ● (filled circle) = evidence-based specification (Tier 1–6). ○ (empty circle)
+    = inferred from clinical reasoning or expert consensus (gap disclosed). Every specification sentence carries either ●
+    or ○. Unmarked = error.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-20 21:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0008
+  category: D-DOCT
+  delegation: DG-NON
+  summary: BAR is not a main taxonomy code
+  outcome: BAR is not a main taxonomy code
+  rationale: BAR is not a main taxonomy code. Large body size is not a disability. BAR provisions belong in Supplementary
+    Volume Supp. Part 4 only. No BAR reference, cross-reference, heading, or J-code is permitted in Volumes I–II. Delete on
+    sight without replacement or pointer. Category J (J-01–J-05) is struck from Volume II Part 4.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0009
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Specification ranges are not expressions of uncertainty
+  outcome: Specification ranges are not expressions of uncertainty
+  rationale: Specification ranges are not expressions of uncertainty. They are the designed-in bridge between Tier 1 and Tier
+    2. At Tier 1 use median. At Tier 2 resolve through co-design. Never write a range without specifying which end applies
+    at which tier.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0010
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Lived experience evidence is co-primary at Tier 3–4 where no clinical trial is feasible.
+  outcome: Lived experience evidence is co-primary at Tier 3–4 where no clinical trial is feasible.
+  rationale: Lived experience evidence is co-primary at Tier 3–4 where no clinical trial is feasible.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0011
+  category: D-DOCT
+  delegation: DG-NON
+  summary: VIS, DEAF, DBL are three distinct independent population codes
+  outcome: VIS, DEAF, DBL are three distinct independent population codes
+  rationale: VIS, DEAF, DBL are three distinct independent population codes. VIS/DEAF as a compound code is an error. DBL
+    ≠ VIS + DEAF. See workplan-orchestrator §Population Codes for full canonical list.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0012
+  category: D-DOCT
+  delegation: DG-NON
+  summary: IntD (Intellectual Disability) is not a standalone population code
+  outcome: IntD (Intellectual Disability) is not a standalone population code
+  rationale: IntD (Intellectual Disability) is not a standalone population code. IntD provisions are proxied through DEM (wayfinding,
+    cognitive simplicity) and NDV (sensory environment, Easy Read signage). No §2.12, no IntD matrix column, no IntD population
+    code table entry. All IntD specifications carry THIN-BASE disclosure.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-25 19:35
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0013
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Biophilic Design (BIO-01–BIO-05) and Thermal Comfort (TC-01–TC-05) are in Appendices B and C respectively
+  outcome: Biophilic Design (BIO-01–BIO-05) and Thermal Comfort (TC-01–TC-05) are in Appendices B and C respectively
+  rationale: Biophilic Design (BIO-01–BIO-05) and Thermal Comfort (TC-01–TC-05) are in Appendices B and C respectively. Supplementary
+    Resources A and B struck from Volume II body. No inline BIO- or TC- cross-references in Part 4 specs or room matrices.
+    Single opening notice permitted in volume front matter.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-18 20:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0014
+  category: D-DOCT
+  delegation: DG-NON
+  summary: The guidebook is a starting framework for professional judgment, not a substitute for it
+  outcome: The guidebook is a starting framework for professional judgment, not a substitute for it
+  rationale: The guidebook is a starting framework for professional judgment, not a substitute for it. Population-level specifications
+    (Tier 0 and Tier 1) are necessary but insufficient. Part 1 must state this explicitly as a foundational principle.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-26 16:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0015
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Tier 1 only
+  outcome: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Tier 1 only
+  rationale: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Tier 1 only. At Tier 2, conflict
+    resolution is the domain of the OT and the individual through co-design. The guidebook's Tier 2 role is to equip non-OT
+    professionals with decision frameworks and structured approaches — not prescriptive answers.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-26 16:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0016
+  category: D-DOCT
+  delegation: DG-NON
+  summary: The guidebook is an advocacy project, not an authority
+  outcome: The guidebook is an advocacy project, not an authority
+  rationale: The guidebook is an advocacy project, not an authority. It does not teach professional judgment, does not confer
+    competence, and is not a registered body, standard-setting organization, or regulatory instrument. It is derived from
+    comprehensive research and presents its findings in a multimodal manner to equip people who touch the built environment
+    with better questions, better evidence, and better starting points. Readers apply their own professional judgment, informed
+    by this material. The guidebook's value is in the quality and comprehensiveness of the research it synthesizes and the
+    accessibility of its presentation — not in any claim to authority over practice.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-26 19:25
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Core Doctrine (locked)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Core Doctrine (locked) at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0017
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: Item codes use bare category prefix only (A-01, B-06, etc.)
+  outcome: Item codes use bare category prefix only (A-01, B-06, etc.)
+  rationale: Item codes use bare category prefix only (A-01, B-06, etc.). No volume-part prefix (V2-P8-, V2-PV-, etc.). Item
+    codes are Part-independent and do not change with renumbering.
+  alternatives_considered: []
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Item Code System
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Item Code System at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0018
+  category: D-METH
+  delegation: DG-NON
+  summary: All sources must be confirmed real
+  outcome: All sources must be confirmed real
+  rationale: All sources must be confirmed real. Unverified claims → [UNVERIFIED — DOI/URL required before publication]. citation-verifier
+    defaults to PROVISIONAL mode.
+  alternatives_considered: []
+  decision_date: 2026-03-15 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Citation and Evidence Standards
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Citation and Evidence Standards at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0019
+  category: D-METH
+  delegation: DG-NON
+  summary: G-03 cites Levine 2023 (Human Factors, doi:10.1177/00187208211059860) AND Levine 2025 (JMIR, doi:10.2196/69442)
+  outcome: G-03 cites Levine 2023 (Human Factors, doi:10.1177/00187208211059860) AND Levine 2025 (JMIR, doi:10.2196/69442)
+  rationale: G-03 cites Levine 2023 (Human Factors, doi:10.1177/00187208211059860) AND Levine 2025 (JMIR, doi:10.2196/69442).
+    Both required. Replace any "Levine 2024" with both.
+  alternatives_considered: []
+  decision_date: 2026-03-17 21:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Citation and Evidence Standards
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Citation and Evidence Standards at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0020
+  category: D-METH
+  delegation: DG-NON
+  summary: 2 failed independent searches → delete the unverifiable value (CLOSED-DELETED)
+  outcome: 2 failed independent searches → delete the unverifiable value (CLOSED-DELETED)
+  rationale: 2 failed independent searches → delete the unverifiable value (CLOSED-DELETED). Do not accumulate unresolvable
+    UNVERIFIED flags.
+  alternatives_considered: []
+  decision_date: 2026-03-18 19:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Citation and Evidence Standards
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Citation and Evidence Standards at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0021
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: 'AOTA Home Modification Practice Guidelines: confirmed edition is Siebert, Smallfield & Stark (2014)'
+  outcome: 'AOTA Home Modification Practice Guidelines: confirmed edition is Siebert, Smallfield & Stark (2014)'
+  rationale: 'AOTA Home Modification Practice Guidelines: confirmed edition is Siebert, Smallfield & Stark (2014). Verify
+    if 2023 revision exists before citing as 2023.'
+  alternatives_considered: []
+  decision_date: 2026-03-28 18:25
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Citation and Evidence Standards
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Citation and Evidence Standards at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0022
+  category: D-OP
+  delegation: DG-NON
+  summary: references/toc.md on GitHub is canonical structural record
+  outcome: references/toc.md on GitHub is canonical structural record
+  rationale: references/toc.md on GitHub is canonical structural record. Structural changes → toc-editor → Change Order →
+    find-and-replace + cross-reference-resolver.
+  alternatives_considered: []
+  decision_date: 2026-03-18 19:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/toc.md
+  - references/project-standards.md §Structural Decisions
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Structural Decisions at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0023
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: CO-0004 Volume Merge and Part renumbering
+  outcome: CO-0004 Volume Merge and Part renumbering
+  rationale: 'CO-0004 Volume Merge and Part renumbering. 2 Volumes: Volume I (Parts 1–9), Volume II (Parts 10–12). Appendices,
+    Bibliography, and Glossary follow Volume II but are not part of it. Supplementary unchanged. See workplan-orchestrator
+    §CO-0004 for Part Map. CO-0004 supersedes CO-0003 structural provisions; CO-0003 terminology changes remain in full effect.
+    SIGNED OFF 2026-03-30.'
+  alternatives_considered: []
+  decision_date: 2026-03-29 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0024
+  category: D-DOCT
+  delegation: DG-NON
+  summary: '"Cross-population" retired per CO-0003'
+  outcome: '"Cross-population" retired per CO-0003'
+  rationale: '"Cross-population" retired per CO-0003. Use "co-occurring disability" (intra-individual) or "multi-population"
+    (inter-group). Population code notation: `+` = co-occurring in one person; `/` = different people same space.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-28 21:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0025
+  category: D-METH
+  delegation: DG-NON
+  summary: Part 5 (Building-Level Co-Occurrence Resolution) owns building-wide system conflicts
+  outcome: Part 5 (Building-Level Co-Occurrence Resolution) owns building-wide system conflicts
+  rationale: Part 5 (Building-Level Co-Occurrence Resolution) owns building-wide system conflicts. Room-level conflicts →
+    Parts 6/7 inline annotations. Methodology → Part 3 §3.8–§3.9. Items → Part 4. Engineering → Part 8. Consultants → Part
+    9.
+  alternatives_considered: []
+  decision_date: 2026-03-29 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0026
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: Parts 6/7 matrices include inline conflict notes
+  outcome: Parts 6/7 matrices include inline conflict notes
+  rationale: 'Parts 6/7 matrices include inline conflict notes. Format: "Conflict note — [code]: Items [X-NN] and [Y-NN] conflict
+    for [POP+POP]: [description]. Resolution: Part 3 §3.9.N. See Part 5 if building-wide."'
+  alternatives_considered: []
+  decision_date: 2026-03-29 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0027
+  category: D-METH
+  delegation: DG-NON
+  summary: Part 9 §9.9 and §9.10 contain co-occurrence collaboration protocol and OT appointment threshold
+  outcome: Part 9 §9.9 and §9.10 contain co-occurrence collaboration protocol and OT appointment threshold
+  rationale: Part 9 §9.9 and §9.10 contain co-occurrence collaboration protocol and OT appointment threshold. Route there,
+    not Part 5.
+  alternatives_considered: []
+  decision_date: 2026-03-29 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0028
+  category: D-OP
+  delegation: DG-NON
+  summary: Slug names are frozen path identifiers — never renamed by CO-0003
+  outcome: Slug names are frozen path identifiers — never renamed by CO-0003
+  rationale: Slug names are frozen path identifiers — never renamed by CO-0003. Content adopts new terminology; paths unchanged.
+  alternatives_considered: []
+  decision_date: 2026-03-28 21:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0029
+  category: D-METH
+  delegation: DG-NON
+  summary: Part 7 conflict entries tagged [INTRA-INDIVIDUAL], [INTER-GROUP], or [BOTH]
+  outcome: Part 7 conflict entries tagged [INTRA-INDIVIDUAL], [INTER-GROUP], or [BOTH]
+  rationale: Part 7 conflict entries tagged [INTRA-INDIVIDUAL], [INTER-GROUP], or [BOTH]. Intra → Tier 2 OT resolution. Inter
+    → Tier 0/1 architectural. Both → state both pathways.
+  alternatives_considered: []
+  decision_date: 2026-03-28 21:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §CO-0003 + CO-0004 Structural Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0030
+  category: D-METH
+  delegation: DG-NON
+  summary: Each slug covers exactly one population
+  outcome: Each slug covers exactly one population
+  rationale: Each slug covers exactly one population. Combined slugs not permitted.
+  alternatives_considered: []
+  decision_date: 2026-03-18 23:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Research and Evidence Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Research and Evidence Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0031
+  category: D-DOCT
+  delegation: DG-NON
+  summary: 24 jurisdictions canonical (per jurisdiction-tracker §4.7.3)
+  outcome: 24 jurisdictions canonical (per jurisdiction-tracker §4.7.3)
+  rationale: '24 jurisdictions canonical (per jurisdiction-tracker §4.7.3). Language and jurisdiction coverage are distinct
+    axes — both satisfied independently. Per-jurisdiction tier coverage record required: status (SEARCHED|THIN|NO-DATA|NOT-RUN),
+    co1_attempted, tier5_attempted, tier6_attempted. Pre-LOG completeness check mandatory (24 jurisdictions, co1_pass_summary,
+    best_practice_synthesis, citation_mining, native_aliases for 14 languages) — fail = BLOCKER. BPC entry PROVISIONAL until
+    all 24 recorded + co1_pass ≥9 languages.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-03-19 19:28
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Research and Evidence Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Research and Evidence Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0032
+  category: D-METH
+  delegation: DG-NON
+  summary: Forward + backward citation mining mandatory for every confirmed Tier 1-2 source
+  outcome: Forward + backward citation mining mandatory for every confirmed Tier 1-2 source
+  rationale: Forward + backward citation mining mandatory for every confirmed Tier 1-2 source. Use citation-miner skill (inline
+    = fallback only).
+  alternatives_considered: []
+  decision_date: 2026-03-18 23:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Research and Evidence Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Research and Evidence Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0033
+  category: D-METH
+  delegation: DG-NON
+  summary: Early-close gate permanently removed
+  outcome: Early-close gate permanently removed
+  rationale: 'Early-close gate permanently removed. All 14 languages searched to completion on every run. Exception: IntD
+    only — early-close active (literature confirmed absent in non-English).'
+  alternatives_considered: []
+  decision_date: 2026-03-18 23:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Research and Evidence Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Research and Evidence Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0034
+  category: D-METH
+  delegation: DG-NON
+  summary: PICO framing begins with population need and functional outcome evidence — not standard values
+  outcome: PICO framing begins with population need and functional outcome evidence — not standard values
+  rationale: PICO framing begins with population need and functional outcome evidence — not standard values. Standards at
+    Step 2.
+  alternatives_considered: []
+  decision_date: 2026-03-19 04:08
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Research and Evidence Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Research and Evidence Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0035
+  category: D-METH
+  delegation: DG-NON
+  summary: 'Standards registry: BCA Accessibility Code 2025 (SG), NEN 9120:2025 (NL), BFS 2024:12 / ALM 2 (SE) are current
+    editions'
+  outcome: 'Standards registry: BCA Accessibility Code 2025 (SG), NEN 9120:2025 (NL), BFS 2024:12 / ALM 2 (SE) are current
+    editions'
+  rationale: 'Standards registry: BCA Accessibility Code 2025 (SG), NEN 9120:2025 (NL), BFS 2024:12 / ALM 2 (SE) are current
+    editions. Prior editions superseded.'
+  alternatives_considered: []
+  decision_date: 2026-03-26 16:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Research and Evidence Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Research and Evidence Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0036
+  category: D-METH
+  delegation: DG-NON
+  summary: 'Evidence Priority: BPC best_practice_synthesis governs as primary evidence basis'
+  outcome: 'Evidence Priority: BPC best_practice_synthesis governs as primary evidence basis'
+  rationale: 'Evidence Priority: BPC best_practice_synthesis governs as primary evidence basis. Raw search results supplement
+    but never override. Contradictions → evidence-auditor.'
+  alternatives_considered: []
+  decision_date: 2026-03-27 14:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Endnote and Source Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Endnote and Source Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0037
+  category: D-METH
+  delegation: DG-NON
+  summary: 'Source Propagation: Every cited source → in-text [REF:{slug}:{NN}] marker → bibliography-compiler → superscript
+    endno...'
+  outcome: 'Source Propagation: Every cited source → in-text [REF:{slug}:{NN}] marker → bibliography-compiler → superscript
+    endno...'
+  rationale: 'Source Propagation: Every cited source → in-text [REF:{slug}:{NN}] marker → bibliography-compiler → superscript
+    endnote + volume-end endnote list. No source without endnote; no endnote without citation.'
+  alternatives_considered: []
+  decision_date: 2026-03-27 14:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Endnote and Source Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Endnote and Source Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0038
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: PROVISIONAL-REF pattern — assign REF-ID positions only after BPC Key sources updated
+  outcome: PROVISIONAL-REF pattern — assign REF-ID positions only after BPC Key sources updated
+  rationale: PROVISIONAL-REF pattern — assign REF-ID positions only after BPC Key sources updated. Never emit final text with
+    provisional positions.
+  alternatives_considered: []
+  decision_date: 2026-03-28 18:25
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Endnote and Source Pipeline
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Endnote and Source Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0039
+  category: D-OP
+  delegation: DG-NON
+  summary: Flat BPC/SL files frozen — 15 population-level flat files are frozen archives
+  outcome: Flat BPC/SL files frozen — 15 population-level flat files are frozen archives
+  rationale: Flat BPC/SL files frozen — 15 population-level flat files are frozen archives. New research creates per-slug
+    directory entries.
+  alternatives_considered: []
+  decision_date: 2026-03-27 15:45
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session and Process Management
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session and Process Management at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0040
+  category: D-METH
+  delegation: DG-NON
+  summary: FDR CONTRADICTS resolution — do not delete original BPC claim
+  outcome: FDR CONTRADICTS resolution — do not delete original BPC claim
+  rationale: FDR CONTRADICTS resolution — do not delete original BPC claim. Append [CONTRADICTED BY FDR]. Route to evidence-auditor
+    for adjudication.
+  alternatives_considered: []
+  decision_date: 2026-03-27 15:45
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Functional Deficit Research
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Functional Deficit Research at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0041
+  category: D-METH
+  delegation: DG-NON
+  summary: PubMed MeSH "dressing" → "bandages" conflict
+  outcome: PubMed MeSH "dressing" → "bandages" conflict
+  rationale: PubMed MeSH "dressing" → "bandages" conflict. Skip PubMed Step 1 for d540/ADL/bedroom scenarios. Go direct to
+    Step 2 (OT practice guidelines).
+  alternatives_considered: []
+  decision_date: 2026-03-28 09:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Functional Deficit Research
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Functional Deficit Research at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0042
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Specification language is tier-appropriate and does not claim authority the project does not have
+  outcome: Specification language is tier-appropriate and does not claim authority the project does not have
+  rationale: 'Specification language is tier-appropriate and does not claim authority the project does not have. The guidebook
+    is an advocacy project (see Core Doctrine), not a standard-setting body. Specification constructions by tier: Tier 0 —
+    "Code requires [value] per [standard]" (authority is the code, not the guidebook). Tier 1 — "[Evidence tier] evidence
+    supports [value]" or "Best practice based on [N] jurisdictions and [tier] evidence is [value]" (authority is the evidence).
+    Tier 2 — "OT assessment determines position within [range] based on [functional parameter]" (authority is the OT). The
+    former convention of blanket "shall be" constructions is retired — "shall be" implies mandating authority the project
+    does not possess. Always run prose-style-checker before vol2-item-formatter. Existing Part 4 text using "shall be" requires
+    a voice pass (A4 or C-stage find-and-replace).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-26 19:25
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Specification Process Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Specification Process Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0043
+  category: D-METH
+  delegation: DG-NON
+  summary: '"Adjustable" is not a universal conflict resolution'
+  outcome: '"Adjustable" is not a universal conflict resolution'
+  rationale: '"Adjustable" is not a universal conflict resolution. Document operability per population. Flag populations who
+    cannot self-adjust. Route to Tier 2 if ambient parameter irreconcilable.'
+  alternatives_considered: []
+  decision_date: 2026-03-28 23:45
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Specification Process Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Specification Process Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0044
+  category: D-METH
+  delegation: DG-NON
+  summary: Cross-population conflicts searched by CONFLICT DOMAIN (12 environmental parameter conflicts), not by population
+    pair
+  outcome: Cross-population conflicts searched by CONFLICT DOMAIN (12 environmental parameter conflicts), not by population
+    pair
+  rationale: Cross-population conflicts searched by CONFLICT DOMAIN (12 environmental parameter conflicts), not by population
+    pair. Aged care POEs richest evidence source.
+  alternatives_considered: []
+  decision_date: 2026-03-28 23:45
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Specification Process Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Specification Process Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0045
+  category: D-METH
+  delegation: DG-NON
+  summary: Population-specific design guideline sets developed independently and do not cross-reference conflict points
+  outcome: Population-specific design guideline sets developed independently and do not cross-reference conflict points
+  rationale: Population-specific design guideline sets developed independently and do not cross-reference conflict points.
+    Check cross-population-conflict-mapper §1 before finalising any single-population spec in shared spaces.
+  alternatives_considered: []
+  decision_date: 2026-03-28 23:45
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Specification Process Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Specification Process Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0046
+  category: D-METH
+  delegation: DG-NON
+  summary: Tier 0 rejection test — provisions creating emergency communication isolation incompatible with Tier 0 for DEAF
+  outcome: Tier 0 rejection test — provisions creating emergency communication isolation incompatible with Tier 0 for DEAF
+  rationale: Tier 0 rejection test — provisions creating emergency communication isolation incompatible with Tier 0 for DEAF.
+    Check DEAF population before assigning Tier 0 to acoustic isolation specs.
+  alternatives_considered: []
+  decision_date: 2026-03-28 18:25
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Specification Process Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Specification Process Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0047
+  category: D-METH
+  delegation: DG-NON
+  summary: Acoustic panel NRC is not standalone performance criterion
+  outcome: Acoustic panel NRC is not standalone performance criterion
+  rationale: Acoustic panel NRC is not standalone performance criterion. STI is correct criterion. STI ≥ 0.60 (general) /
+    STI ≥ 0.75 (DEAF/CI). NRC is means, not end.
+  alternatives_considered: []
+  decision_date: 2026-03-27 12:20
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Specification Process Rules
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Specification Process Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0048
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: Case study deduplication requires checking name variants, date variants, building vs programme level
+  outcome: Case study deduplication requires checking name variants, date variants, building vs programme level
+  rationale: Case study deduplication requires checking name variants, date variants, building vs programme level. Programme-level
+    entries (CAPABLE, DFG, BATH-OUT) use programme-level format.
+  alternatives_considered: []
+  decision_date: 2026-03-27 22:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0049
+  category: D-PRES
+  delegation: DG-NON
+  summary: Part 4 holds sole specification authority for all performance targets
+  outcome: Part 4 holds sole specification authority for all performance targets
+  rationale: Part 4 holds sole specification authority for all performance targets. Anything distinctly spatial is architectural;
+    engineers support execution. Part 8 is a coordination register mapping architect-specified targets to engineering briefs
+    for delivery — not a parallel specification. Where Part 8 currently restates Part 4 values, replace with cross-reference.
+    Where values contradict, Part 4 governs. Performance targets (RT60, STI, NC, STC, melanopic EDI, MERV, etc.) are architect
+    specifications derived from population evidence; engineers design systems to achieve them.
+  alternatives_considered: []
+  decision_date: 2026-03-30 03:42
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0050
+  category: D-METH
+  delegation: DG-NON
+  summary: Every Part 4 specification using "adjustable", "individual control", or "user-operated" must include a population
+    ope...
+  outcome: Every Part 4 specification using "adjustable", "individual control", or "user-operated" must include a population
+    ope...
+  rationale: 'Every Part 4 specification using "adjustable", "individual control", or "user-operated" must include a population
+    operability note: (1) populations who can self-adjust, (2) populations requiring carer/staff operation, (3) default setting
+    when no individual present with harm-asymmetry rationale. "Adjustable" is not a universal conflict resolution — per conflict-matrices
+    SYNTHESIS.'
+  alternatives_considered: []
+  decision_date: 2026-03-30 03:42
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0051
+  category: D-METH
+  delegation: DG-NON
+  summary: Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference...
+  outcome: Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference...
+  rationale: 'Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference)
+    carries a Tier 2 handoff flag: "Tier 1 default: [median]. Tier 2: OT assessment resolves position within range based on
+    [functional parameter]." Ranges are the designed-in bridge between Tier 1 and Tier 2 — restatement of existing project-standards
+    rule with explicit format requirement.'
+  alternatives_considered: []
+  decision_date: 2026-03-30 03:42
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0052
+  category: D-METH
+  delegation: DG-NON
+  summary: 'Cross-population conflict analysis: check for variable conflation before asserting a conflict'
+  outcome: 'Cross-population conflict analysis: check for variable conflation before asserting a conflict'
+  rationale: 'Cross-population conflict analysis: check for variable conflation before asserting a conflict. Three domains
+    (CORRIDOR-W, COLOUR-CONT, PREDICT) had apparent conflicts that dissolved because two independent variables were treated
+    as one (width ≠ sensory load; LRV contrast ≠ chroma; adequate space ≠ reconfiguration). Step 0 in §3.8 decision tree:
+    verify that opposing needs operate on the same physical variable.'
+  alternatives_considered: []
+  decision_date: 2026-03-30 23:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0053
+  category: D-METH
+  delegation: DG-NON
+  summary: Harm asymmetry governs divergent conflict domain defaults
+  outcome: Harm asymmetry governs divergent conflict domain defaults
+  rationale: 'Harm asymmetry governs divergent conflict domain defaults. Where no single specification serves all populations:
+    (1) identify which population experiences greater harm from the wrong default; (2) set default to protect the higher-harm
+    population; (3) provide individual supplemental provision for the lower-harm population. Examples: dim lighting default
+    (NDV pain > DEM reduced benefit); cool temperature default (NEU/MS neurological deterioration > PAIN discomfort).'
+  alternatives_considered: []
+  decision_date: 2026-03-30 23:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0054
+  category: D-METH
+  delegation: DG-NON
+  summary: DEM olfactory wayfinding is NOT an evidence-based built environment specification
+  outcome: DEM olfactory wayfinding is NOT an evidence-based built environment specification
+  rationale: DEM olfactory wayfinding is NOT an evidence-based built environment specification. Aromatherapy is a clinical
+    care intervention delivered by staff, not an architectural specification. No BPC, standard, or design guideline recommends
+    embedding scented cues as a built environment wayfinding mechanism. Fragrance-free is the universal built environment
+    specification.
+  alternatives_considered: []
+  decision_date: 2026-03-30 23:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Case Studies
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0055
+  category: D-PRES
+  delegation: DG-NON
+  summary: skills/voice-style_SKILL.md is MANDATORY for all prose writing and all framing/language review in this project
+  outcome: skills/voice-style_SKILL.md is MANDATORY for all prose writing and all framing/language review in this project
+  rationale: 'skills/voice-style_SKILL.md is MANDATORY for all prose writing and all framing/language review in this project.
+    It supersedes and replaces both the former voice-style skill and the former framing-checker skill. Load before drafting,
+    revising, reviewing, or auditing any guidebook prose. Apply the 11-point calibration test before finalising any passage.
+    For framing audits, invoke §12 Framing Audit Protocol. Scope: all body text in Parts 0–12, supplementary volumes, appendices,
+    and front matter. Does not govern tables, reference lists, abbreviation registers, or amendment registers.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:23
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0056
+  category: D-PRES
+  delegation: DG-NON
+  summary: 'Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements sentence...'
+  outcome: 'Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements sentence...'
+  rationale: 'Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements
+    sentence references a list that does not follow — either append the 17-jurisdiction endorsement list or remove the sentence.
+    (2) §1.5 Co-primary Tier 2 header has no body text — content drafted and committed 2026-03-31; verify on next Part 1 review
+    pass.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:23
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0057
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: Never use jq in bash_tool
+  outcome: Never use jq in bash_tool
+  rationale: 'Never use jq in bash_tool. Container state does not persist between conversations; jq installed in session N
+    is absent in session N+1. Use python3 json module exclusively for all JSON parsing in bash_tool calls. Never call jq,
+    install jq, or pip/apt install jq. Condition for application: Every bash_tool call that needs to parse JSON output. Required
+    action: Use `python3 -c "import sys,json; d=json.load(sys.stdin); ..."` pattern without exception.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0058
+  category: D-OP
+  delegation: DG-NON
+  summary: 'Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator, then session file,
+    th...'
+  outcome: 'Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator, then session file,
+    th...'
+  rationale: 'Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator, then session
+    file, then gap register P1 filter) is mandatory before any GitHub write, regardless of how a conversation opened. Direct
+    user questions and handoff messages are not exemptions. Condition for application: Any turn where a GitHub write operation
+    (batch_commit, github_append, REST PUT) is planned. Required action: If session start has not yet been run in the current
+    conversation, run it before the first write. Applies even to single-question conversations that escalate to writing.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0059
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: '"Start a new conversation" in next_action YAML is reserved for context-boundary situations only'
+  outcome: '"Start a new conversation" in next_action YAML is reserved for context-boundary situations only'
+  rationale: '"Start a new conversation" in next_action YAML is reserved for context-boundary situations only. Do not write
+    it when context remaining is ≥20% and the next task is a direct continuation of the current workflow. Condition for application:
+    Writing next_action field during session close. Required action: Omit "start a new conversation" unless (a) context is
+    ≥85% consumed, OR (b) the next task requires a materially different workflow type (e.g., switching from Phase 2B research
+    to Phase 3 writing). Sim'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0060
+  category: D-OP
+  delegation: DG-NON
+  summary: No & (background processes) in bash_tool for any GitHub API call
+  outcome: No & (background processes) in bash_tool for any GitHub API call
+  rationale: 'No & (background processes) in bash_tool for any GitHub API call. All GitHub reads and writes must be sequential.
+    Condition for application: Every bash_tool call involving curl to api.github.com or api.github.com/graphql. Required action:
+    Write all curl calls sequentially. Concurrent calls risk 429 rate limits and silent SHA staleness on writes.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0061
+  category: D-OP
+  delegation: DG-NON
+  summary: Stale blockers must not be carried forward in session YAML
+  outcome: Stale blockers must not be carried forward in session YAML
+  rationale: 'Stale blockers must not be carried forward in session YAML. Before writing next_action blockers, verify each
+    blocker''s gap ID is still OPEN in gap_register.md. If CLOSED: remove it. If no gap ID exists for a blocker: create one
+    or drop the blocker. Condition for application: session-consolidator Pre-Close step — writing the blockers: field. Required
+    action: GET gap_register.md and cross-check every prior-session blocker before writing the new YAML.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0062
+  category: D-OP
+  delegation: DG-NON
+  summary: Never use conversation_search or project_knowledge_search to answer questions about current project state (what
+    phase...
+  outcome: Never use conversation_search or project_knowledge_search to answer questions about current project state (what
+    phase...
+  rationale: 'Never use conversation_search or project_knowledge_search to answer questions about current project state (what
+    phase are we in, what is next_action, what blockers exist, what has been completed). These tools return stale or partial
+    snapshots. Use GitHub GET of the session file instead. Condition for application: Any question about current workplan
+    position, session state, blocker status, or recent completion status. Required action: Run session start protocol (GET
+    LATEST → GET session file) to get accurate state. conversation_search is for retrieving past conversation context only,
+    not current project state.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0063
+  category: D-OP
+  delegation: DG-NON
+  summary: When reading more than 3 BPC or search-log files in a single session, use GraphQL multi-alias batch_read rather
+    than ...
+  outcome: When reading more than 3 BPC or search-log files in a single session, use GraphQL multi-alias batch_read rather
+    than ...
+  rationale: 'When reading more than 3 BPC or search-log files in a single session, use GraphQL multi-alias batch_read rather
+    than sequential individual calls. Condition for application: Any loop or sequence of >3 BPC/SL file reads. Required action:
+    Batch up to 20 files per GraphQL call using aliased object() queries. See github-io batch_read() pattern. Sequential reads
+    for >3 files waste ~600 tokens per extra call.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0064
+  category: D-OP
+  delegation: DG-NON
+  summary: Read connection-register.md at most once per session
+  outcome: Read connection-register.md at most once per session
+  rationale: 'Read connection-register.md at most once per session. Cache the content in a local variable or file. Do not
+    re-read it per synthesis batch or per skill invocation. Condition for application: Any session running connection-scout,
+    item-specification-writer, or Opus synthesis batches. Required action: Read connection-register.md once at the start of
+    the relevant workflow. Reference the cached content for all subsequent operations in the same session.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0065
+  category: D-OP
+  delegation: DG-NON
+  summary: Do not re-read workplan-orchestrator_SKILL.md mid-session
+  outcome: Do not re-read workplan-orchestrator_SKILL.md mid-session
+  rationale: 'Do not re-read workplan-orchestrator_SKILL.md mid-session. It is loaded at session start (Step 1a). A mid-session
+    re-read is only justified if the skill file was updated during the current session. Condition for application: Any bash_tool
+    call fetching workplan-orchestrator_SKILL.md after session start. Required action: Reference the already-loaded skill
+    content. If the skill was not updated this session, skip the re-read.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0066
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: session-consolidator must record the commit OID returned by batch_commit() in the github_writes field of the session
+    ...
+  outcome: session-consolidator must record the commit OID returned by batch_commit() in the github_writes field of the session
+    ...
+  rationale: 'session-consolidator must record the commit OID returned by batch_commit() in the github_writes field of the
+    session YAML. Format: `commit_oid: {first 12 chars of OID}` as a field alongside github_writes. Condition for application:
+    Writing session YAML after any batch_commit() call. Required action: Capture the OID from the batch_commit() return value
+    and include it. Without this, commit claim verification is impossible for that session.'
+  alternatives_considered: []
+  decision_date: 2026-03-31 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0067
+  category: D-PRES
+  delegation: DG-NON
+  summary: Before adding an "item creation" task to any gap register entry or workplan item, verify the target item does not
+    alr...
+  outcome: Before adding an "item creation" task to any gap register entry or workplan item, verify the target item does not
+    alr...
+  rationale: 'Before adding an "item creation" task to any gap register entry or workplan item, verify the target item does
+    not already exist in the relevant part05-* file. False "create" tasks waste session tokens and generate incorrect gap
+    entries. Condition for application: Any gap_register entry with action "create item" or "write item specification" for
+    a specific item code. Required action: GET the relevant part05-* file and grep for the item heading (e.g. "### I-04")
+    before raising the gap. If found, change action to "verify/update" and note pre-existence in the gap entry.'
+  alternatives_considered: []
+  decision_date: 2026-04-02 23:17
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0068
+  category: D-METH
+  delegation: DG-NON
+  summary: XREF-PENDING tags and Part stub content live in versions/current/Guidebook_for_Accessible_Design_v9-0_2026-03-20.md,
+    ...
+  outcome: XREF-PENDING tags and Part stub content live in versions/current/Guidebook_for_Accessible_Design_v9-0_2026-03-20.md,
+    ...
+  rationale: 'XREF-PENDING tags and Part stub content live in versions/current/Guidebook_for_Accessible_Design_v9-0_2026-03-20.md,
+    NOT in individual part05-* files. When a gap item references XREF-PENDING resolution, always check the consolidated file
+    first. Condition for application: Any gap item referencing "XREF-PENDING", "stub content", or cross-reference resolution
+    tasks. Required action: GET versions/current/ file and search for the tag pattern before checking individual part05 files.
+    The consolidated file is the primary location for stub markers.'
+  alternatives_considered: []
+  decision_date: 2026-04-02 23:17
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0069
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: 'Connection register entry IDs use 4-digit zero-padded format: CON-0001 through CON-0099, then CON-0100+'
+  outcome: 'Connection register entry IDs use 4-digit zero-padded format: CON-0001 through CON-0099, then CON-0100+'
+  rationale: 'Connection register entry IDs use 4-digit zero-padded format: CON-0001 through CON-0099, then CON-0100+. Search
+    patterns must match exactly: CON-0093 not CON-093. Condition for application: Any script, search, or verification that
+    references connection register entry IDs. Required action: Always format as CON-0NNN (4 digits, zero-padded). Verification
+    scripts: use f"CON-0{i:03d}" for i in range(1,N+1).'
+  alternatives_considered: []
+  decision_date: 2026-04-02 23:17
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0070
+  category: D-METH
+  delegation: DG-NON
+  summary: After CO-0004, part file names (part00–part14 in 88_to_90/) do not correspond 1:1 to document part numbers
+  outcome: After CO-0004, part file names (part00–part14 in 88_to_90/) do not correspond 1:1 to document part numbers
+  rationale: 'After CO-0004, part file names (part00–part14 in 88_to_90/) do not correspond 1:1 to document part numbers.
+    Mapping: part08=Part 9 Engineering; part03=Part 3 Multiple Categories; part04=Part 4 Synthesis Matrices; part05-a through
+    k=Item Specifications (no single part number). Always verify document heading (## Part N:) before assuming file-part correspondence.
+    Condition for application: Any task requiring navigation to a specific document Part (e.g. "edit Part 9"). Required action:
+    Read the first heading line of the candidate file to confirm it is the correct Part before making edits.'
+  alternatives_considered: []
+  decision_date: 2026-04-02 23:17
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0071
+  category: D-OP
+  delegation: DG-NON
+  summary: When Part 5 content is added to parts/v10/part05_v10-0_draft.md, the corresponding stub in versions/current/ must
+    als...
+  outcome: When Part 5 content is added to parts/v10/part05_v10-0_draft.md, the corresponding stub in versions/current/ must
+    als...
+  rationale: 'When Part 5 content is added to parts/v10/part05_v10-0_draft.md, the corresponding stub in versions/current/
+    must also be updated within the same session. These are two separate stores of the same content. A commit to one without
+    updating the other leaves the consolidated file stale. Condition for application: Any write to parts/v10/part05_v10-0_draft.md
+    or any other part file in parts/v10/. Required action: After committing to parts/v10/, also update versions/current/ consolidated
+    file in the same session. Use targeted string replacement on the stub content.'
+  alternatives_considered: []
+  decision_date: 2026-04-02 23:17
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Writing Style
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending.
+- decision_id: D-0072
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: Always retrieve full 40-char OIDs via GraphQL `oid` field before any REST PUT operation
+  outcome: Always retrieve full 40-char OIDs via GraphQL `oid` field before any REST PUT operation
+  rationale: 'Always retrieve full 40-char OIDs via GraphQL `oid` field before any REST PUT operation. The REST API sha display
+    truncates. Pattern: GraphQL `object(expression: "main:path") { ... on Blob { oid } }`. Never use a 12-char truncated sha
+    for a PUT. Condition for application: Any bash_tool call preparing a GitHub REST PUT (file update). Required action: Run
+    GraphQL batch query for all target file OIDs first. Use those full OIDs in the PUT payload sha field.'
+  alternatives_considered: []
+  decision_date: 2026-04-06 06:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2 at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0073
+  category: D-DOCT
+  delegation: DG-NON
+  summary: ZH disability housing evidence is policy/statistical dominant
+  outcome: ZH disability housing evidence is policy/statistical dominant
+  rationale: 'ZH disability housing evidence is policy/statistical dominant. Peer-reviewed Co-1 narrative housing accounts
+    are not available in ZH-indexed or English-indexed literature. Do not allocate search budget expecting ZH Co-1 housing
+    narrative. CDPF statistical bulletins and Wuzhang''ai Lanpishu are the ceiling for Chinese evidence. Condition for application:
+    Any research session targeting ZH lived experience in housing or built environment. Required action: Accept CDPF/Wuzhang''ai
+    Lanpishu as the ZH evidence ceiling. Flag as statistical-only in BPC co1_pass_summary. Do not extend search.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-06 06:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2 at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0074
+  category: D-DOCT
+  delegation: DG-NON
+  summary: IDA compilations of CRPD concluding observations (by article) are the most efficient route to cross-jurisdictional
+    tr...
+  outcome: IDA compilations of CRPD concluding observations (by article) are the most efficient route to cross-jurisdictional
+    tr...
+  rationale: 'IDA compilations of CRPD concluding observations (by article) are the most efficient route to cross-jurisdictional
+    treaty evidence. Single source covering 100+ countries. Always search IDA before individual OHCHR country pages when gathering
+    Art. 9 or Art. 19 evidence. Condition for application: Any research session targeting CRPD implementation evidence across
+    multiple jurisdictions. Required action: Search internationaldisabilityalliance.org for article-specific compilation first.
+    Use individual OHCHR country pages only for jurisdictions not covered in the IDA compilation.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-06 06:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2 at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0075
+  category: D-METH
+  delegation: DG-NON
+  summary: UN-Habitat Housing Accessibility Handbook (2016) is the only identified design-level guidance for accessible housing
+    ...
+  outcome: UN-Habitat Housing Accessibility Handbook (2016) is the only identified design-level guidance for accessible housing
+    ...
+  rationale: 'UN-Habitat Housing Accessibility Handbook (2016) is the only identified design-level guidance for accessible
+    housing in slum upgrading, affordable housing, and reconstruction contexts globally. Cite as Tier 4 source when addressing
+    accessible design outside formal new-construction contexts. Condition for application: Any BPC entry, specification, or
+    scope discussion involving informal settlements, slum upgrading, or affordable housing contexts. Required action: Reference
+    UN-Habitat Housing Accessibility Handbook (2016). Do not treat formal new-construction standards as applicable to informal
+    contexts without this bridge source.'
+  alternatives_considered: []
+  decision_date: 2026-04-06 06:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2 at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0076
+  category: D-METH
+  delegation: DG-NON
+  summary: Thermoregulation-impaired populations require a narrower ambient temperature range than general accessible building
+    s...
+  outcome: Thermoregulation-impaired populations require a narrower ambient temperature range than general accessible building
+    s...
+  rationale: 'Thermoregulation-impaired populations require a narrower ambient temperature range than general accessible building
+    standards. Working target: 18–22°C. Floor: 18°C (WHO minimum; FMS cold threshold). Ceiling: 22°C (MS Uhthoff onset; SCI
+    heat risk begins). Above 24°C exceeds WHO vulnerable individual threshold — not acceptable for thermoregulation-impaired
+    occupants at rest. Condition for application: Any specification, conflict resolution, or design guidance involving indoor
+    thermal environment for NEU (MS, SCI), OFS (POTS, MCAS), or PAIN (FMS) populations. Required action: Apply 18–22°C as
+    the working target range. Flag it as derived from clinical evidence synthesis, not from any single accessible building
+    standard or OT CPG (none addresses this specifically).'
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:22
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0077
+  category: D-METH
+  delegation: DG-NON
+  summary: FMS thermal profile is opposite to MS/SCI
+  outcome: FMS thermal profile is opposite to MS/SCI
+  rationale: 'FMS thermal profile is opposite to MS/SCI. FMS has cold pain hypersensitivity (reduced CPT in 14/17 studies);
+    warmth relieves FMS pain. MS/SCI require cool ambient. This is a confirmed co-occurrence conflict. Resolution: cool default
+    (18–20°C) protects higher-harm population (neurological deterioration > pain exacerbation); individual local warmth provision
+    for FMS occupants. Condition for application: Any co-occurrence conflict analysis, Part 5 resolution, or Part 7 conflict
+    note involving FMS + MS or FMS + SCI in shared spaces. Required action: Apply harm-asymmetry rule: neurological deterioration
+    (MS/SCI) is the higher-harm outcome. Set ambient default to 18–20°C. Provide individual local warmth provision for FMS
+    (heated seating, radiant pa'
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:22
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0078
+  category: D-METH
+  delegation: DG-NON
+  summary: No OT CPG (AOTA, RCOT, CAOT, OT Australia, or any other confirmed body) addresses indoor thermal environment control
+    ...
+  outcome: No OT CPG (AOTA, RCOT, CAOT, OT Australia, or any other confirmed body) addresses indoor thermal environment control
+    ...
+  rationale: 'No OT CPG (AOTA, RCOT, CAOT, OT Australia, or any other confirmed body) addresses indoor thermal environment
+    control as a home modification domain. When citing OT evidence for thermal environment specifications, this gap must be
+    disclosed. Specifications in this domain are derived from clinical neurology/rehabilitation evidence (Tier 1–3) and WHO
+    housing standards (Tier 4), not from OT practice guidelines. Condition for application: Any BPC entry, item specification,
+    or clinical guidance citing OT support for thermal environment home modification. Required action: Note: "No OT CPG addresses
+    thermal environment as a home modification domain [confirmed GAP-LRP-01 Phase 1-A search 2026-04-07]. Specifications derived
+    from clinical evidence and WHO housing standards'
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:22
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0079
+  category: D-METH
+  delegation: DG-NON
+  summary: In hot-humid tropical contexts (ambient >32°C, relative humidity >70%), passive cooling alone cannot maintain ambient...
+  outcome: In hot-humid tropical contexts (ambient >32°C, relative humidity >70%), passive cooling alone cannot maintain ambient...
+  rationale: 'In hot-humid tropical contexts (ambient >32°C, relative humidity >70%), passive cooling alone cannot maintain
+    ambient ≤22°C for thermoregulation-impaired occupants. Mechanical cooling or dehumidification + fan is medically necessary
+    for SCI tetraplegia (≥C8) in these conditions — not a comfort option. Accessible housing specifications in tropical/subtropical
+    contexts must include mechanical cooling capability as a designed-in feature. Condition for application: Any Part 4 specification,
+    item code, or DAR provision for thermoregulation or climate control in tropical or subtropical jurisdictions (IN, ZA,
+    NG, KE, ID, PH, TH, BD, SG, BR coastal, CO/EC coastal, E Required action: State that mechanical cooling capability is
+    required as a designed-in feature, not an optional retrofit, for SCI tetraplegia and heat-sensitive MS populations in
+    hot-humid tropical contexts. Cross-ref'
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:22
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0080
+  category: D-METH
+  delegation: DG-NON
+  summary: The formal/informal city divide is the meta-barrier to accessible housing globally
+  outcome: The formal/informal city divide is the meta-barrier to accessible housing globally
+  rationale: The formal/informal city divide is the meta-barrier to accessible housing globally. The guidebook specifies for
+    formal new construction and planned retrofit only. Informal settlement housing is out of specification scope. Part 1 must
+    state this explicitly and identify it as the highest-priority research and policy gap.
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:44
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0081
+  category: D-METH
+  delegation: DG-NON
+  summary: ISO wayfinding specifications (23599, 21542) are physically determined and transfer universally without cultural
+    or c...
+  outcome: ISO wayfinding specifications (23599, 21542) are physically determined and transfer universally without cultural
+    or c...
+  rationale: ISO wayfinding specifications (23599, 21542) are physically determined and transfer universally without cultural
+    or climate adaptation. The Global South wayfinding gap is implementation and maintenance, not specification design.
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:44
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0082
+  category: D-DOCT
+  delegation: DG-NON
+  summary: 'PAS 6463 sensory space principles separate into two layers: physics-based (acoustic, lighting, visual complexity)
+    whi...'
+  outcome: 'PAS 6463 sensory space principles separate into two layers: physics-based (acoustic, lighting, visual complexity)
+    whi...'
+  rationale: 'PAS 6463 sensory space principles separate into two layers: physics-based (acoustic, lighting, visual complexity)
+    which transfer universally, and spatial-model (private individual retreat) which does not transfer to collectivist cultures.
+    Specify the physics; flag the spatial model for Tier 2 co-design.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-07 00:44
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0083
+  category: D-METH
+  delegation: DG-NON
+  summary: The FMS vs MS/SCI thermal conflict resolves to cool ambient default (18–20°C) + local warmth for FMS
+  outcome: The FMS vs MS/SCI thermal conflict resolves to cool ambient default (18–20°C) + local warmth for FMS
+  rationale: 'The FMS vs MS/SCI thermal conflict resolves to cool ambient default (18–20°C) + local warmth for FMS. Severity
+    asymmetry: neurological deterioration (MS/SCI) > pain exacerbation (FMS, reversible). Do not treat any single thermal
+    standard as universally applicable across all disability populations.'
+  alternatives_considered: []
+  decision_date: 2026-04-07 00:44
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0084
+  category: D-DOCT
+  delegation: DG-NON
+  summary: CRPD treaty-body evidence mandates obligations, not specifications
+  outcome: CRPD treaty-body evidence mandates obligations, not specifications
+  rationale: CRPD treaty-body evidence mandates obligations, not specifications. The guidebook fills the specification gap
+    that treaty bodies leave unfilled. Part 1 must state this relationship explicitly.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-07 00:44
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-07 — Phase 1-A thermoregulation-built-environment at A12 Session
+    2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0085
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Four-framework theoretical layering governs Part 1 and Part 3
+  outcome: Four-framework theoretical layering governs Part 1 and Part 3
+  rationale: 'Four-framework theoretical layering governs Part 1 and Part 3. ICF = taxonomy. PEO/PEOP = practice model. Capability
+    Approach = justice framework. Kawa = cultural lens. No single framework is sufficient. All four are required. See Part
+    3 §3.2.4. Condition for application: Any drafting, revision, or review of Part 1 §1.4 theoretical framework, Part 3 §3.2,
+    or any framing that positions the guidebook''s intellectual basis. Required action: Reference all four frameworks. Do
+    not position the guidebook as "ICF-based" alone.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-09 04:58
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0086
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Compound functioning principle
+  outcome: Compound functioning principle
+  rationale: 'Compound functioning principle. Co-occurring conditions produce supra-additive disability (MWI: ~16% per additional
+    condition; Clarke: 4.52x environment-impairment interaction). Pairwise population conflict resolution (Part 3 §3.8, Part
+    5) is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Tier 2 OT co-design.
+    The guidebook equips professionals; it does not prescribe compound resolutions. Condition for application: Any specification,
+    conflict resolution, or synthesis task involving two or more population codes applying to a single individual. Required
+    action: Apply §3.8 Step 0 compound functioning check. If non-additive interaction identified, route to Tier 2 with documented
+    interaction mechanism. Do not apply pairwise resolution as if it were sufficient.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-09 04:58
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0087
+  category: D-DOCT
+  delegation: DG-NON
+  summary: 'FDR skill now supports four scenario types: granular (ICF), compound [COMPOUND], occupation [OCCUPATION], environment...'
+  outcome: 'FDR skill now supports four scenario types: granular (ICF), compound [COMPOUND], occupation [OCCUPATION], environment...'
+  rationale: 'FDR skill now supports four scenario types: granular (ICF), compound [COMPOUND], occupation [OCCUPATION], environment
+    [ENVIRONMENT]. Token weights: compound = 2x, occupation = 3x, environment = 2x. Compound and occupation synthesis requires
+    Opus. Research slug registry: references/fdr/fdr-slug-registry-v2.md (supersedes §9 priority targets). Condition for application:
+    Any FDR session. Required action: Consult fdr-slug-registry-v2.md for scenario selection and priority. Apply §11 protocols
+    for compound/occupation/environment scenarios.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-09 04:58
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/fdr/fdr-slug-registry-v2.md
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0088
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Kawa model informs non-Western sensory space specification
+  outcome: Kawa model informs non-Western sensory space specification
+  rationale: 'Kawa model informs non-Western sensory space specification. PAS 6463 private individual retreat model does not
+    transfer to collectivist cultures. Kawa-informed specification designs for shared calm (collective flow) rather than individual
+    withdrawal. Physics-based sensory parameters (acoustic, lighting, visual complexity) transfer universally; spatial model
+    (private vs shared) requires cultural adaptation. Condition for application: Any specification, BPC entry, or item-specification-writer
+    task for sensory rooms (A-16), retreat spaces, or NDV/MH provisions intended for non-Western or collectivist contexts.
+    Required action: State that the private retreat spatial model is culturally specific. Specify physics-based parameters
+    universally. Flag spatial model for Tier 2 co-design with cultural context input. Reference Kawa ('
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-09 04:58
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0089
+  category: D-METH
+  delegation: DG-NON
+  summary: 'connection-scout entry schema includes connection_type field: CROSS-POPULATION, CROSS-ITEM, COMPOUND-INTERACTION,
+    or ...'
+  outcome: 'connection-scout entry schema includes connection_type field: CROSS-POPULATION, CROSS-ITEM, COMPOUND-INTERACTION,
+    or ...'
+  rationale: 'connection-scout entry schema includes connection_type field: CROSS-POPULATION, CROSS-ITEM, COMPOUND-INTERACTION,
+    or METHODOLOGY. Compound interaction connections (type COMPOUND-INTERACTION) are generated from FDR compound scenarios
+    (fdr-slug-registry-v2.md §C) and flag non-additive effects when two individually correct specifications apply to the same
+    person. These route to ISW with compound-synthesis brief (Opus required). Condition for application: Any connection-scout
+    session (internal or external mode). Required action: Run Step 2b (compound interaction scan) after standard Step 2. Check
+    FDR registry §C compound scenarios against available individual FDR findings. Flag identified interactions as COMPOUND-INTERACTION'
+  alternatives_considered: []
+  decision_date: 2026-04-09 05:10
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0090
+  category: D-DOCT
+  delegation: DG-NON
+  summary: MH de-escalation room is distinct from A-16 (sensory quiet room)
+  outcome: MH de-escalation room is distinct from A-16 (sensory quiet room)
+  rationale: 'MH de-escalation room is distinct from A-16 (sensory quiet room). They serve different clinical functions through
+    different mechanisms: MH requires exit sightline (PTSD anti-entrapment) and staff access; A-16 requires acoustic isolation
+    without staff presence. Wilson 2023 (Co-1) documents failure of combined rooms. Both are required in healthcare, psychiatric,
+    and supported housing settings. CON-0002 multi-population expansion of A-16 (NDV, OFS, PAIN) is correct; CON-0002 retirement
+    of separate MH room is incorrect per CON-0131 (Opus synthesis 2026-03-30). Faerden 2022 d=2.0 for user control in MH room
+    is contingent on MH-specific parameters.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-09 19:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0091
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Quantified outcome claims (specific percentages, n= facility/participant counts, reduction/increase figures) in
+    BPC f...
+  outcome: Quantified outcome claims (specific percentages, n= facility/participant counts, reduction/increase figures) in
+    BPC f...
+  rationale: 'Quantified outcome claims (specific percentages, n= facility/participant counts, reduction/increase figures)
+    in BPC files require DOI + page/table reference, or failing that, a direct URL to the source document. Claims without
+    verifiable source detail carry [UNVERIFIED-QUANT] flag and must not be used in Part 4 specifications or Part 11 economic
+    arguments without verification. The pattern "X% across N facilities (Author Year)" is the highest-risk hallucination template
+    — verify the specific number against the actual paper before committing. Hallucination audit 2026-04-09 found 3 instances
+    of fabricated quantified findings attributed to real papers, all in the economics BPC. Condition for application: Any
+    BPC entry, item specification, or economics argument containing a specific percentage, facility count, or quantified outcome
+    attributed to a named source. Required action: Before committing: verify the specific number appears in the cited source.
+    If unverifiable after 2 search attempts, apply [UNVERIFIED-QUANT] flag. Do not delete the directional claim — flag the
+    number'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-09 00:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-09 — Framework Review + Compound Functioning at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending.
+- decision_id: D-0092
+  category: D-OP
+  delegation: DG-NON
+  summary: GitHub branch protection ruleset stays DISABLED during Phase A
+  outcome: GitHub branch protection ruleset stays DISABLED during Phase A
+  rationale: 'GitHub branch protection ruleset stays DISABLED during Phase A. Direct-push via GraphQL createCommitOnBranch
+    is the session workflow. Ruleset blocks direct pushes entirely — incompatible with current workflow. CI still runs on
+    every push (validates retroactively). Re-enable only when transitioning to PR-based workflow in Phase B. Condition for
+    application: Any instruction to "re-enable branch protection" during Phase A. Required action: Do not re-enable. Do not
+    instruct user to re-enable. CI validates without the ruleset.'
+  alternatives_considered: []
+  decision_date: 2026-04-19 02:20
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Enforcement Gates
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Enforcement Gates at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending.
+- decision_id: D-0093
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Pre-launch operational reality — solo authorship; no collaborator infrastructure
+  outcome: Pre-launch operational reality — solo authorship; no collaborator infrastructure
+  rationale: Pre-launch operational reality — solo authorship; no collaborator infrastructure. The project is currently a
+    single-author synthesis. No DPO partnerships, no Co-1 collaborator panels, no recruitment thread, no compensation structure
+    exist. Co-1 evidence is engaged through the published corpus (peer-reviewed lived-experience research, DPO position papers,
+    named advocacy organizational positions, Co-1-authored academic narratives) — not through Co-1 collaborators directly.
+    Post-launch collaboration is a contingent future possibility — dependent on launch occurring at all, on resources materialising,
+    and on trajectory holding — and may never occur. Solo-only-permanent is a possible end-state. Governance language must
+    declare this reality, not project a fictional operational structure with pending triggers. The Co-1 *evidence* commitment
+    (co-primary with Tier 1 per the seven-tier evidence hierarchy) is unaffected — that is a methodology commitment about
+    evidence types, valid regardless of solo-vs-team production. CRPD Art. 4.3 is honored in partial form pre-launch (engagement
+    with a corpus that was itself produced through participatory processes); full participatory honoring requires participants
+    and is contingent on launch.
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-26 03:45
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-26 — CO-0007 Stage 0 close + pre-launch operational correction
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-26 — CO-0007 Stage 0 close + pre-launch operational correction
+    at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0094
+  category: D-METH
+  delegation: DG-NON
+  summary: Governance+code co-production
+  outcome: Governance+code co-production
+  rationale: 'Governance+code co-production. Every Stage A governance phase that defines an entity type, taxonomy, or state
+    machine co-produces: (1) a Pydantic schema in `schemas/`, (2) a CI validator in `scripts/`, and (3) a sample conversion
+    script in `scripts/convert/` — as session deliverables alongside the governance document. Python-backed skills are called
+    via bash_tool and enforce constraints mechanically. Prose SKILL.md files provide judgment guidance only; output validation
+    is mechanical. This is the CO-0008 execution methodology. Condition for application: Any Stage A phase (A3–A13) that defines
+    or refines an entity, taxonomy, or state machine. Required action: Phase deliverables include governance document AND
+    working code. Neither is complete without the other. CI must pass before session close.'
+  alternatives_considered: []
+  decision_date: 2026-04-26 06:20
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-26 — CO-0007 Stage 0 close + pre-launch operational correction
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-26 — CO-0007 Stage 0 close + pre-launch operational correction
+    at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review pending.
+- decision_id: D-0095
+  category: D-PRES
+  delegation: DG-NON
+  summary: Specification voice is tier-located and authority-located throughout the guidebook
+  outcome: Specification voice is tier-located and authority-located throughout the guidebook
+  rationale: 'Specification voice is tier-located and authority-located throughout the guidebook. Per voice-style §8.1, Tier
+    0 specifications cite the code; Tier 1 specifications cite the evidence; Tier 2 specifications locate authority in OT
+    assessment plus the individual. Per §8.2, two patterns operationalize this: Pattern A (inline location) for prose and
+    short table cells; Pattern B (umbrella convention) for dense matrix tables. Per §8.3, four canonical Co-1 voice patterns
+    govern Co-1 evidence citation: Co-1-A (single-source), Co-1-B (multi-source synthesis), Co-1-C (Tier 1/Co-1 convergence),
+    Co-1-D (Tier 1/Co-1 divergence). Condition for application: Any drafting, revision, or audit of guidebook prose, BPC entries,
+    item specifications, or governance documents producing prose that will surface in the guidebook. Required action: Apply
+    voice-style §§8.1, 8.2, 8.3 patterns. Categorical authority claims ("shall be" as blanket spec, "operates above the code
+    floor", "this document governs" over external instruments, "non-negotiabl'
+  alternatives_considered: []
+  decision_date: 2026-04-29 14:04
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - references/project-standards.md §Session 2026-04-29 — A4 close + A5 close
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A4 close + A5 close at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0096
+  category: D-DOCT
+  delegation: DG-NON
+  summary: 'Co-1 evidence citations carry six required schema fields per `governance/co1-operational.md` §6.1: `tier`, `evidence_...'
+  outcome: 'Co-1 evidence citations carry six required schema fields per `governance/co1-operational.md` §6.1: `tier`, `evidence_...'
+  rationale: 'Co-1 evidence citations carry six required schema fields per `governance/co1-operational.md` §6.1: `tier`, `evidence_type`,
+    `co1_provenance`, `co1_source_type`, `verification_status`, `synthesis_attribution_required`. Pre-launch all `co1_provenance`
+    values are `published_corpus`; `participatory_synthesis` is post-launch contingent. CS2 (Co-1 recruitment) requires three
+    triggers to activate (launch + resources + co-designed recruitment specification); pre-launch INOPERATIVE. CS5 pre-launch
+    operates as corpus-representation monitoring (per-population, per-domain, per-jurisdiction Co-1 source inventories with
+    gap-flagging via `gap_register.md`). Condition for application: Any work touching Co-1 evidence handling, EvidenceSource
+    schema design (B1), evidence-state validation (A6, B2), or Co-1 source curation. Required action: Apply `governance/co1-operational.md`
+    §§3, 5, 6 specifications. Reject any Co-1 citation lacking required schema fields. Honor pre-launch INOPERATIVE state
+    of CS2.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-29 15:50
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/co1-operational.md
+  - references/project-standards.md §Session 2026-04-29 — A4 close + A5 close
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A4 close + A5 close at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending.
+- decision_id: D-0097
+  category: D-METH
+  delegation: DG-NON
+  summary: Values-based conflicts between populations at Tier 1 are resolved by the broadest-benefit assessment mechanism
+    (gover...
+  outcome: Values-based conflicts between populations at Tier 1 are resolved by the broadest-benefit assessment mechanism
+    (gover...
+  rationale: 'Values-based conflicts between populations at Tier 1 are resolved by the broadest-benefit assessment mechanism
+    (governance/evidence-methodology.md §4): classify as function-based (→ harm-asymmetry) or values-based (→ broadest-benefit);
+    assess population breadth, irreversibility, supplementary provision feasibility; document both positions with Tier 2 handoff.
+    Values-criteria does not override harm-asymmetry, does not apply at Tier 0, and does not eliminate Tier 2 resolution.
+    Condition for application: Any specification, conflict resolution, or BPC synthesis where two populations have evidence-supported
+    preferences that conflict on the same parameter and neither faces disproportionate harm. Required action: Apply §4.2 three-step
+    assessment. Set default per broadest-benefit; provide supplementary provision for alternative; document convergence assessment
+    as divergent with synthesis_approach.'
+  alternatives_considered: []
+  decision_date: 2026-04-29 19:06
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/evidence-methodology.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0098
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Meta-methodological citations (pedagogy, theoretical framework, methodology design) sit outside the seven-tier
+    eviden...
+  outcome: Meta-methodological citations (pedagogy, theoretical framework, methodology design) sit outside the seven-tier
+    eviden...
+  rationale: 'Meta-methodological citations (pedagogy, theoretical framework, methodology design) sit outside the seven-tier
+    evidence hierarchy. They support the guidebook''s method, not design parameters. Cited in Part 1/mission/front matter
+    only. No evidence marker (● or ○). Not processed by validate_evidence_state.py. Not stored as EvidenceSource records.
+    Examples: Schön 1983, Hmelo-Silver 2004, Royeen 1995, ICF, PEO/PEOP, Capability Approach, Kawa. Condition for application:
+    Any citation classification decision for sources that address the guidebook''s pedagogical or methodological approach
+    rather than a design parameter value. Required action: Classify as meta-methodological. Cite with standard academic conventions.
+    Do not assign an evidence tier. Do not include in specification cells.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-29 19:06
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/evidence-methodology.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0099
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A6 evidence-methodology.md is CANONICAL
+  outcome: A6 evidence-methodology.md is CANONICAL
+  rationale: 'A6 evidence-methodology.md is CANONICAL. Governs: evidence-state machine (T-04 operationalized), convergence
+    assessment, values-criteria mechanism, design-pedagogy classification, epistemic-defense patterns. Schema: evidence_state.py,
+    updated enums.py, updated evidence_source.py. Validator: validate_evidence_state.py (CI-integrated).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-29 19:06
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/evidence-methodology.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0100
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A7 population-taxonomy.md is CANONICAL
+  outcome: A7 population-taxonomy.md is CANONICAL
+  rationale: 'A7 population-taxonomy.md is CANONICAL. Consolidates all population code rules. Governs: taxonomy structure,
+    sub-code hierarchy and inheritance, VIS/DEAF/DBL distinctness, IntD proxying, BAR containment, co-occurrence notation,
+    one-slug-one-population, conflict domain resolution. Validator: validate_population.py (CI-integrated).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-29 19:30
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/population-taxonomy.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0101
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A8 jurisdiction-philosophy.md is CANONICAL
+  outcome: A8 jurisdiction-philosophy.md is CANONICAL
+  rationale: 'A8 jurisdiction-philosophy.md is CANONICAL. Governs: 24-jurisdiction approach, jurisdiction-evidence tier relationship
+    (codes=Tier 6, standards=Tier 4-5), standards currency tracking, GB→UK enforcement. Validators: validate_jurisdiction.py,
+    convert_jurisdictions.py (CI-integrated).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-29 19:50
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/jurisdiction-philosophy.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0102
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A9 time-model.md is CANONICAL
+  outcome: A9 time-model.md is CANONICAL
+  rationale: 'A9 time-model.md is CANONICAL. Governs: five temporal axes (document version, standards edition, project-rule
+    effective date, source publication/verification, launch phase); SupersedenceLink primitive (5 types: rule/standard/version/decision/source);
+    date-format normalisation (`YYYY-MM-DD HH:MM` canonical, pre-session anchor at `2026-03-15 00:00`); freshness windows
+    per evidence tier. Schema: temporal.py (new), enums.py (+6 enums). Validators: validate_temporal.py (12 checks T-01–T-12),
+    version_retrofit.py (idempotent retrofit to `data/temporal/`).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-30 02:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/time-model.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0103
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A10 adversarial-use-framework.md is CANONICAL
+  outcome: A10 adversarial-use-framework.md is CANONICAL
+  rationale: 'A10 adversarial-use-framework.md is CANONICAL. Governs: 9 catalogued misuse vectors (V-01 minimum-compliance
+    weaponization, V-02 exclusionary ROI, V-03 surveillance via inferred functional needs, V-04 selective citation, V-05 Co-1
+    instrumentalization, V-06 evidence-tier laundering, V-07 anti-DAR deferral, V-08 adversarial litigation citation, V-09
+    population-proxy denial); pre-public-release review gate (C1 catalogue well-formed, C2 review coverage complete, C3 review
+    entries well-formed); CS9 periodic review cadence (per-release plus Stage C periodic plus retroactive coverage on catalogue
+    extensions); release-override path for ESCALATE reviews. Schema: adversarial_use.py (new), enums.py (+3 enums: MisuseVectorSeverity,
+    MisuseReviewStatus, MisuseVectorStatus). Validator: audit_adversarial_use.py (release-gate checklist runner; not auto-detection
+    — most vectors are not mechanically detectable in prose). Catalogue data: data/adversarial_use/catalog.yaml. base.py patched
+    (mode python→json) — fixes latent enum-default round-trip bug also affecting A9 SupersedenceLink.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-30 02:35
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/adversarial-use-framework.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0104
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A11 legal-regulatory.md is CANONICAL (with §3.3 provisional pending counsel review)
+  outcome: A11 legal-regulatory.md is CANONICAL (with §3.3 provisional pending counsel review)
+  rationale: 'A11 legal-regulatory.md is CANONICAL (with §3.3 provisional pending counsel review). Governs: teaches-not-prescribes
+    posture (§1); liability framing across four risk vectors with framework mitigations (§2 misuse-of-recommendation, V-08
+    adversarial-citation, currency, mis-jurisdiction); five-element front-matter disclaimer structure (§3.2 not-legal-authority
+    + not-professional-advice + synthesis-state-transparency + currency-notice + jurisdictional-scope) with provisional wording
+    at §3.3; CC BY-SA 4.0 licensing decision (§4.3) with carve-outs for Co-1 sources and standards/codes; decline-pursuit
+    / accept-invitation trajectory positioning (§5.3) ruling out active jurisdictional adoption pursuit and any certification
+    system; 10-question counsel review queue (§6); §7 review cadence on major release / jurisdictional law change / material
+    methodology change. Closes A10 V-08 mitigation pathway: V-08 release-gate reviews now status=cleared_with_notes pending
+    counsel completion (was: escalate-with-override). Pattern: governance-only (no schema, no Python tool); counsel review
+    external. Catalog update: data/adversarial_use/catalog.yaml v1→v2 with V-08 mitigations rewritten to reference landed
+    A11.'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-30 03:00
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/legal-regulatory.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0105
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A12 decision-protocol.md is CANONICAL
+  outcome: A12 decision-protocol.md is CANONICAL
+  rationale: 'A12 decision-protocol.md is CANONICAL. Governs: 5 decision categories (D-DOCT doctrinal, D-METH methodological,
+    D-SCHEMA schema, D-OP operational, D-PRES presentation); 3 delegation categories (DG-NON non-delegable, DG-REVIEW delegable-with-review,
+    DG-AUTO automatic) with category-default delegation table and 10 always-DG-NON decision types named explicitly (mission/CRPD;
+    population taxonomy; evidence-tier definitions; jurisdiction inclusion; major work-products; Co-1 corpus; licensing per
+    A11 §4; trajectory per A11 §5; misuse-vector retirement per A10 §5.4; counsel-queue resolution per A11 §6); 16-field capture
+    protocol with §3.3 rationale-length norms per category and §3.4 three rationale anti-patterns (tautology, authority-without-content,
+    outcome-as-rationale); standardised model-routing notation `{tier}/{effort}/{modifier}` resolving L-05 (deprecates "Opus
+    session", "best-practice synthesis", and other ad hoc forms); decision register at data/decisions/decision_register.yaml
+    (legacy workplan/v10-1-decision-register.md superseded); CS8 cross-stage activation — every new RULE in project-standards
+    pairs with a Decision record from this point forward. Schema: decision.py (new), enums.py (+4 enums: DecisionCategory,
+    DelegationCategory, DecisionStatus, DecisionReviewStatus). Validator: decision_capture.py (8 checks C1-C8; CLI --register-only
+    / --decision-id / --report). Sessions remaining in A12: Session 2 (seeding extraction ~80-120 records + session-consolidator
+    wiring + C7 tightening); Sessions 3-4 (armature presentation-layer expansion: role-based content variants, plain-language
+    register, variable conflation, etc).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-30 02:55
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/decision-protocol.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
+- decision_id: D-0106
+  category: D-DOCT
+  delegation: DG-NON
+  summary: A13 doctrine-recheck.md is CANONICAL
+  outcome: A13 doctrine-recheck.md is CANONICAL
+  rationale: 'A13 doctrine-recheck.md is CANONICAL. Governs: 3 cadence triggers (PERIODIC every 25 working sessions / STAGE_TRANSITION
+    at A->B and B->C / RULE_REVISION targeted on doctrinal-rule revision; non-triggers: new RULE without supersession, new
+    governance doc for new phase, skill or operational change); 5-pass procedure (2.2 doctrine inventory; 2.3 cross-reference
+    consistency; 2.4 drift detection; 2.5 decision-register cross-check post-A12-S2; 2.6 contamination resampling); contamination
+    resampling per Stage 0.4 / Amendment 6 methodology with 4-state classification rubric (CLEAN / AMBIGUOUS / STUB / MERGED);
+    fresh-context decision-checking for B-06 long-context drift mitigation; record format (RecheckSession + RecheckFinding
+    + ContaminationSample + DoctrineSnapshot). Schema: doctrine_recheck.py (new), enums.py (+4 enums: RecheckTrigger, RecheckFindingSeverity,
+    RecheckFindingStatus, ContaminationDisposition). Validators: doctrine_recheck.py (mechanical passes 2.2-2.5; CLI --snapshot-only
+    / --cross-ref / --baseline-against / --report; exit 0/1/2), contamination_sampler.py (deterministic stratified selection;
+    --n with floor 15; outputs sampling manifest with disposition: PENDING placeholders for human classification). CS1 LIVE:
+    doctrine-recheck cadence active from this commit forward. Closes Stage A done criterion ("Doctrine-recheck cadence operational;
+    CS1 LIVE"). Resolves B-06 long-context drift; partial D-04 epistemic defense (structural portion; epistemic-defense skill
+    itself builds at C2).'
+  alternatives_considered:
+  - (seeded record; original alternatives not captured at rule authoring; reviewable)
+  decision_date: 2026-04-30 03:15
+  decided_by: solo_author_pre_launch
+  model_routing: legacy/none/none
+  effort_level: 100
+  decision_artifacts:
+  - governance/doctrine-recheck.md
+  - references/project-standards.md §Session 2026-04-29 — A6 Evidence Methodology
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
+    Classification heuristic; review pending.
