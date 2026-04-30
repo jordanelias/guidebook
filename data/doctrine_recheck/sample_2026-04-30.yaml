@@ -1,0 +1,154 @@
+sample_date: 2026-04-30 13:30
+recheck_id: RC-001
+sample_size_requested: 15
+sample_size_actual: 15
+stratification_method: first-alphabetical within topic group; proportional allocation with floor=1 per group
+samples:
+- recheck_id: RC-001
+  bpc_path: references/bpc/bathrooms-and-wet-areas/accessible-bathroom-and-grab-bar.md
+  topic_group: bathrooms-and-wet-areas
+  disposition: CLEAN
+  disposition_rationale: Tier 1 + Co-1 evidence with clear convergence assessment; 23K substantive content; populations correctly
+    assigned; convergence_status visible per cell.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/communication-and-alerts/assistive-listening-systems.md
+  topic_group: communication-and-alerts
+  disposition: CLEAN
+  disposition_rationale: 'Status: COMPLETE (9 core languages + NL extended); IEC 60118-4 Tier 4 + advocacy Tier 2 cited; Opus
+    synthesis present with explicit confidence note (HIGH for loops, MODERATE for Auracast); jurisdictional gaps surfaced
+    (Japan, ZH).'
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/controls-and-hardware/reach-range-and-accessible-controls.md
+  topic_group: controls-and-hardware
+  disposition: AMBIGUOUS
+  disposition_rationale: Self-flagged PROVISIONAL — 16/24 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 only 3/24. Explicit warning
+    'Do not use as sole basis for specification writing' is honest disclosure but the BPC is below evidence-density threshold
+    for unflagged best-practice synthesis.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/economics/accessible-design-economics-cost-premium.md
+  topic_group: economics
+  disposition: CLEAN
+  disposition_rationale: Tier 1-5 evidence cited; cost premium synthesis with convergent findings across NSW Treasury, BCA
+    Productivity Commission, RICS, multiple Tier 1 studies; aligns with A11 §2.2 Part 11 framing as enabling-budget evidence
+    (not threshold-justifying).
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/entrances-and-circulation/accessible-circulation-geometry.md
+  topic_group: entrances-and-circulation
+  disposition: AMBIGUOUS
+  disposition_rationale: Self-flagged PARTIAL (PROVISIONAL); Tier 3-6 only with explicit Co-1 partial pass; OFS rest-seating
+    evidence noted as OT-clinical only with no built-environment standard. Honest disclosure but provisional state warrants
+    AMBIGUOUS classification.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/frameworks-and-methodology/accessible-design-failures-poor-performance.md
+  topic_group: frameworks-and-methodology
+  disposition: STUB
+  disposition_rationale: 'Status: PARTIAL — ''Opus synthesis pending for §8.5 input''; multiple [STUB — Opus synthesis pending]
+    markers; non-EN failure/litigation evidence explicitly NOT retrieved; resolution hierarchy not yet synthesised. Synthesis
+    is incomplete by author''s own marking.'
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/frameworks-and-methodology/body-sizes-supplementary-populations.md
+  topic_group: frameworks-and-methodology
+  disposition: CLEAN
+  disposition_rationale: Tier 1-5 evidence cited; Steinfeld 2010 IDeA Anthropometry of Wheeled Mobility cited as primary Tier
+    1; jurisdictional standards (FR ED 6121, AS/NZS 1428.1, BS 8300) cited at Tier 4; 6K substantive synthesis with clear
+    best-practice statements.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/health-and-symptom-management/chronic-pain-built-environment.md
+  topic_group: health-and-symptom-management
+  disposition: MERGED
+  disposition_rationale: 'Status: MERGED — explicit redirect to pain-ofs-built-environment-design per CO-0006 migration. Metadata
+    block confirms co0006_migration: true. This is exactly the MERGED state per Amendment 3 rubric.'
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/kitchens-and-workspaces/residential-kitchen-and-task-surfaces.md
+  topic_group: kitchens-and-workspaces
+  disposition: AMBIGUOUS
+  disposition_rationale: Self-flagged PROVISIONAL — 19/24 jurisdictions searched (5 NOT-RUN); Tier 5 only 8/24; structural
+    gap explicitly accepted. Opus synthesis present and substantive but the PROVISIONAL self-flag warrants AMBIGUOUS classification
+    per Amendment 3.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/population-general/deafblind-built-environment-design.md
+  topic_group: population-general
+  disposition: CLEAN
+  disposition_rationale: Tier 1-5 evidence cited; HKNC, ICEVI, IDA Co-1 sources confirmed; multilingual native-alias verification
+    complete; Opus synthesis present with population-specific spec recommendations; convergence assessment per cell visible.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/population-general/dementia-built-environment.md
+  topic_group: population-general
+  disposition: CLEAN
+  disposition_rationale: Tier 3-5 SR base + DSDC Stirling quantified lighting (Tier 1); Opus synthesis present; one source
+    PROVISIONAL but cell-level not BPC-level (KDA Wohnkonzepte verification pending — narrow gap, not a BPC-wide PROVISIONAL
+    state).
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/room-types/accessible-laundry-room-design.md
+  topic_group: room-types
+  disposition: CLEAN
+  disposition_rationale: Tier 1-5 evidence; Opus synthesis present; populations correctly assigned (MOB, VIS); jurisdictions
+    enumerated; substantive content with clear best-practice statements per population.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/seating-and-rest/bariatric-turning-radius-built-environment.md
+  topic_group: seating-and-rest
+  disposition: STUB
+  disposition_rationale: 'Synthesis substantive but explicit ''[STUB — this BPC file is a deferred non-standard file. Full
+    research pass pending (Block 5 decision required)]''. Metadata: status: DEFERRED-NON-STANDARD. Synthesis is operational
+    but research pass is pending; this matches STUB per Amendment 3 (synthesis pending pass).'
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/sensory-environment/acoustics-speech-intelligibility-disability.md
+  topic_group: sensory-environment
+  disposition: CLEAN
+  disposition_rationale: Tier 4 standards (BS 8233, ANSI S12.60, AS 2107) + Tier 1 research (Hodgson, Crandell); best_practice_synthesis
+    field present with convergent findings across populations; aligns with A6 evidence-state machine.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+- recheck_id: RC-001
+  bpc_path: references/bpc/wayfinding-and-signage/cognitive-wayfinding-design.md
+  topic_group: wayfinding-and-signage
+  disposition: CLEAN
+  disposition_rationale: Tier 1-5 evidence; Opus synthesis present with population-specific recommendations (NEU, DEM, IntD
+    via proxy per A7 §1.1); convergence assessment per cell visible; substantive content above provisional threshold.
+  reviewer: opus_4.6_session_2026-04-30
+  review_date: 2026-04-30 13:35
+contamination_summary:
+  classifications:
+    CLEAN: 9
+    AMBIGUOUS: 3
+    STUB: 2
+    MERGED: 1
+  total: 15
+  baseline_distribution:
+    CLEAN: 78
+    AMBIGUOUS: 7
+    STUB: 7
+    MERGED: 7
+  drift_pp:
+    CLEAN: -18.0
+    AMBIGUOUS: 13.0
+    STUB: 6.3
+    MERGED: -0.3
+  material_divergence:
+  - CLEAN

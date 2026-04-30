@@ -1,4 +1,5 @@
 # Pre-Stage-A Doctrinal Decisions
+**Status:** CANONICAL — retroactively marked at A12 S2 finding RC-001 resolution (2026-04-30)
 **Created:** 2026-04-26 02:42 UTC; **D-03 revised:** 2026-04-26 03:45 UTC
 **Stage:** 0.5 (Pre-Stage-A doctrinal decisions)
 **Decision authority:** Project owner
