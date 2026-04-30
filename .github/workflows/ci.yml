@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --quiet
 
       - name: Check all .md files are valid UTF-8
         run: |
@@ -24,7 +30,6 @@ jobs:
 
       - name: Check all .yaml/.yml files parse
         run: |
-          pip install pyyaml --quiet
           python3 scripts/ci_helpers/check_yaml.py
 
   structure:
@@ -35,6 +40,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --quiet
 
       - name: Validate all BPC files
         run: python3 scripts/validate_bpc.py --all --verbose
@@ -72,7 +80,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install pydantic pyyaml --quiet
+        run: pip install -r requirements.txt --quiet
 
       - name: Validate all entity YAML against schemas
         run: python3 scripts/validate_schema.py --verbose
@@ -86,6 +94,53 @@ jobs:
       - name: Validate jurisdiction codes and standards-registry
         run: python3 scripts/validate_jurisdiction.py
 
+      - name: Validate temporal records (A9)
+        run: python3 scripts/validate_temporal.py
+
       - name: Cross-entity referential integrity
         run: python3 scripts/validate_schema.py --cross-check
         continue-on-error: true
+
+  governance:
+    name: Governance validation (A10/A12/A13 — adversarial-use, decisions, doctrine)
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' &&
+       (contains(github.event.pull_request.changed_files, 'data/') ||
+        contains(github.event.pull_request.changed_files, 'governance/') ||
+        contains(github.event.pull_request.changed_files, 'references/project-standards.md') ||
+        contains(github.event.pull_request.changed_files, 'schemas/')))
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --quiet
+
+      # A10 — Adversarial-use review framework.
+      # Catalogue must always be well-formed. Per-version review coverage runs only
+      # when a guidebook version YAML is committed alongside its review_log; pre-launch
+      # the review_log files are not yet in the repo, so --catalog-only is the
+      # operative mode for now. When a version moves to ACTIVE/IN_PREP and its
+      # review_log lands, switch this step to a full audit.
+      - name: A10 adversarial-use catalogue (well-formed)
+        run: python3 scripts/audit_adversarial_use.py --catalog-only
+
+      # A12 — Decision protocol.
+      # Register format + rationale norms + anti-pattern checks always run.
+      # C7 RULE-coverage runs against project-standards.md; pre-seeding it produces
+      # an INFO suppression. Post-seeding (lands at A12 S2) it enforces every
+      # CANONICAL RULE has a Decision record.
+      - name: A12 decision register (full audit)
+        run: python3 scripts/decision_capture.py
+
+      # A13 — Doctrine recheck.
+      # Mechanical passes 2.2-2.5 always run on every commit (cheap; surfaces
+      # cross-reference breaks immediately). Pass 2.6 (contamination resampling)
+      # is not in CI — it requires human judgment per A13 §2.6 / §6.5 and runs
+      # only at scheduled rechecks (every 25 working sessions or stage transition).
+      - name: A13 doctrine snapshot + cross-references
+        run: python3 scripts/doctrine_recheck.py --cross-ref

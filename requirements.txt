@@ -1,0 +1,9 @@
+# Python dependencies for Guidebook validators and tooling.
+#
+# Pinned at A12 S2 follow-up CI sweep (2026-04-30) per A12 §2 D-OP DG-REVIEW protocol.
+# All scripts under scripts/ and the schemas/ package depend only on these two.
+#
+# To update: bump versions, run the full validator suite locally, commit.
+
+pydantic==2.13.3
+PyYAML==6.0.3
