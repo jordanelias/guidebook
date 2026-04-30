@@ -470,3 +470,43 @@ class DecisionReviewStatus(str, Enum):
     PENDING = "PENDING"
     CONFIRMED = "CONFIRMED"
     NA = "NA"
+
+
+class RecheckTrigger(str, Enum):
+    """Recheck trigger per governance/doctrine-recheck.md §1.
+
+    PERIODIC: every 25 working sessions
+    STAGE_TRANSITION: A->B, B->C
+    RULE_REVISION: targeted recheck on doctrinal-rule revision
+    """
+    PERIODIC = "PERIODIC"
+    STAGE_TRANSITION = "STAGE_TRANSITION"
+    RULE_REVISION = "RULE_REVISION"
+
+
+class RecheckFindingSeverity(str, Enum):
+    """Severity of a RecheckFinding."""
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+
+
+class RecheckFindingStatus(str, Enum):
+    """Lifecycle status of a RecheckFinding."""
+    OPEN = "OPEN"
+    RESOLVED = "RESOLVED"
+    DEFERRED = "DEFERRED"
+
+
+class ContaminationDisposition(str, Enum):
+    """Four-state classification per Amendment 3 / Stage 0.4 contamination sample.
+
+    CLEAN: doctrinally aligned with Core Doctrine and A6/A7 methodology
+    AMBIGUOUS: Tier-5-only or self-flagged PROVISIONAL; needs confidence-flag review
+    STUB: synthesis pending Opus pass; placeholder content
+    MERGED: CO-0006 redirect file; substantive BPC is at redirect target
+    """
+    CLEAN = "CLEAN"
+    AMBIGUOUS = "AMBIGUOUS"
+    STUB = "STUB"
+    MERGED = "MERGED"
