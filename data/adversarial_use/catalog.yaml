@@ -1,5 +1,5 @@
-catalog_version: 1
-last_updated: 2026-04-30 02:11
+catalog_version: 2
+last_updated: 2026-04-30 02:45
 vectors:
 - vector_id: V-01
   name: Minimum-compliance weaponization
@@ -138,15 +138,19 @@ vectors:
     humility about evidence state is recast as denial of entitlement.
   severity: HIGH
   primary_mitigations:
-  - A11 (legal/regulatory framework — pending phase)
-  - 'Front-matter disclaimer: guidebook is design guidance, not legal authority'
-  - Disclaimer states pending/provisional cells reflect synthesis status, not entitlement status
+  - A11 governance/legal-regulatory.md §3.3 (provisional disclaimer language; pending counsel review per §6)
+  - A11 §3.2 five-element disclaimer structure (not-legal-authority, not-professional-advice, synthesis-state-transparency,
+    currency-notice, jurisdictional-scope)
+  - A11 §1 teaches-not-prescribes liability framing
   doctrinal_basis:
   - governance/adversarial-use-framework.md §2.5
+  - governance/legal-regulatory.md §1, §2.2, §3, §7.1
   status: ACTIVE
   introduced_date: 2026-04-30 02:11
-  notes: Primary mitigation depends on A11 (front-matter disclaimer wording). A10 records the vector; A11 produces the disclaimer
-    language. Until A11 lands, V-08 should be reviewed at each release with notes indicating the disclaimer is provisional.
+  notes: A11 landed 2026-04-30 with provisional §3.3 disclaimer language. Until counsel review completes (questions L-Q1,
+    L-Q2, L-Q7 per legal-regulatory.md §6.2), V-08 release-gate reviews carry status=cleared_with_notes recording 'disclaimer
+    wording provisional pending counsel'. On counsel completion, V-08 transitions to fully cleared per legal-regulatory.md
+    §7.1.
 - vector_id: V-09
   name: Population-proxy denial
   mechanism: The guidebook proxies IntD (intellectual disability) coverage through DEM (wayfinding/cognitive simplicity) and
