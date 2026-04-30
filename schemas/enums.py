@@ -418,3 +418,55 @@ class MisuseVectorStatus(str, Enum):
     """
     ACTIVE = "ACTIVE"
     RETIRED = "RETIRED"
+
+
+class DecisionCategory(str, Enum):
+    """Decision category per governance/decision-protocol.md §1.
+
+    D-DOCT: doctrinal (mission, CRPD posture, taxonomy, evidence-tier hierarchy)
+    D-METH: methodological (evidence-state machine, convergence rules, freshness windows)
+    D-SCHEMA: schema/data-structure (Pydantic entities, enum values, format patterns)
+    D-OP: operational (branch protection, commit conventions, CI matrix, PAT scope)
+    D-PRES: presentation (voice patterns, section ordering, plain-language register)
+    """
+    D_DOCT = "D-DOCT"
+    D_METH = "D-METH"
+    D_SCHEMA = "D-SCHEMA"
+    D_OP = "D-OP"
+    D_PRES = "D-PRES"
+
+
+class DelegationCategory(str, Enum):
+    """Delegation category per governance/decision-protocol.md §2.
+
+    DG-NON: non-delegable; project owner alone decides
+    DG-REVIEW: agent decides; project owner reviews before canonical
+    DG-AUTO: agent decides; no review gate; logged
+    """
+    DG_NON = "DG-NON"
+    DG_REVIEW = "DG-REVIEW"
+    DG_AUTO = "DG-AUTO"
+
+
+class DecisionStatus(str, Enum):
+    """Lifecycle status of a Decision record.
+
+    ACTIVE: decision in force
+    SUPERSEDED: replaced by a later decision (named successor)
+    RETIRED: removed without a named successor
+    """
+    ACTIVE = "ACTIVE"
+    SUPERSEDED = "SUPERSEDED"
+    RETIRED = "RETIRED"
+
+
+class DecisionReviewStatus(str, Enum):
+    """Review status of a Decision record.
+
+    PENDING: DG-REVIEW awaiting review
+    CONFIRMED: DG-REVIEW reviewed and confirmed
+    NA: not applicable (DG-NON or DG-AUTO)
+    """
+    PENDING = "PENDING"
+    CONFIRMED = "CONFIRMED"
+    NA = "NA"
