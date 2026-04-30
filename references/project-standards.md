@@ -534,3 +534,7 @@ DATE: 2026-04-29 19:06
 
 RULE: A6 evidence-methodology.md is CANONICAL. Governs: evidence-state machine (T-04 operationalized), convergence assessment, values-criteria mechanism, design-pedagogy classification, epistemic-defense patterns. Schema: evidence_state.py, updated enums.py, updated evidence_source.py. Validator: validate_evidence_state.py (CI-integrated).
 DATE: 2026-04-29 19:06
+
+
+RULE: A7 population-taxonomy.md is CANONICAL. Consolidates all population code rules. Governs: taxonomy structure, sub-code hierarchy and inheritance, VIS/DEAF/DBL distinctness, IntD proxying, BAR containment, co-occurrence notation, one-slug-one-population, conflict domain resolution. Validator: validate_population.py (CI-integrated).
+DATE: 2026-04-29 19:30

@@ -80,6 +80,9 @@ jobs:
       - name: Validate evidence states and Co-1 source fields
         run: python3 scripts/validate_evidence_state.py
 
+      - name: Validate population codes
+        run: python3 scripts/validate_population.py
+
       - name: Cross-entity referential integrity
         run: python3 scripts/validate_schema.py --cross-check
         continue-on-error: true
