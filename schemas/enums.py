@@ -380,3 +380,41 @@ class LaunchPhase(str, Enum):
     PRE_LAUNCH = "pre_launch"
     LAUNCHED = "launched"
     MAINTAINED = "maintained"
+
+
+class MisuseVectorSeverity(str, Enum):
+    """Severity of harm magnitude per A10 §1.
+
+    LOW: harm is real but contained / single-instance
+    MEDIUM: harm scales but mitigations exist within project methodology
+    HIGH: harm scales and primary mitigations are external to project (require
+          legal/regulatory framework or post-launch enforcement)
+    """
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+
+
+class MisuseReviewStatus(str, Enum):
+    """Status of a release-gate review per A10 §4.4.
+
+    CLEARED: vector reviewed, no new exposure, mitigations operative
+    CLEARED_WITH_NOTES: vector reviewed; non-blocking observations recorded
+    ESCALATE: vector reviewed; concern requires attention before/at release
+              (release proceeds only via ReleaseOverride)
+    """
+    CLEARED = "CLEARED"
+    CLEARED_WITH_NOTES = "CLEARED_WITH_NOTES"
+    ESCALATE = "ESCALATE"
+
+
+class MisuseVectorStatus(str, Enum):
+    """Lifecycle status of a catalogue vector.
+
+    ACTIVE: vector is currently catalogued and reviewed at each release
+    RETIRED: vector is no longer applicable (e.g., obsolete due to methodology
+             change, or merged into another vector); retained in catalogue for
+             historical record but not reviewed at release
+    """
+    ACTIVE = "ACTIVE"
+    RETIRED = "RETIRED"

@@ -1,0 +1,165 @@
+catalog_version: 1
+last_updated: 2026-04-30 02:11
+vectors:
+- vector_id: V-01
+  name: Minimum-compliance weaponization
+  mechanism: 'The guidebook publishes specifications above the regulatory floor (Tier 1–5 evidence-based ranges; best-practice
+    synthesis). An adversarial reader cites the guidebook to argue that a Tier 0 (code-floor) compliant design is adequate
+    because the guidebook acknowledges Tier 0 exists. Variant: citing the conditional language of Tier 1 to argue that the
+    lower bound of a range is an acceptable default rather than the median.'
+  harm: Disabled people receive code-floor environments where evidence supports better design. The guidebook's existence is
+    used as cover.
+  severity: HIGH
+  primary_mitigations:
+  - project-standards Core Doctrine ('Codes are Tier 6 — the compliance floor, not the aspiration')
+  - project-standards L20 (no best_practice_synthesis from code-only consensus)
+  - voice-style §8.1 (tier-located authority — Tier 0 cites code; Tier 1 cites evidence)
+  - Three-Tier Design Hierarchy (Tier 0 = universal/code; never best practice)
+  doctrinal_basis:
+  - workplan-co0007-v3 §A10
+  - governance/adversarial-use-framework.md §1.1
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+  notes: Mitigations are structural, not absolute. A determined adversarial citation can extract Tier 0 values; the mitigation
+    makes the citation visibly inconsistent with the guidebook's own language.
+- vector_id: V-02
+  name: Exclusionary ROI
+  mechanism: 'The guidebook''s Part 11 (Economics of Accessible Construction) catalogues cost data, ROI evidence, and economic
+    arguments. An adversarial reader inverts the direction: citing the cost data to argue that a specific provision exceeds
+    an acceptable ROI threshold for the projected disabled population at a site. Variant: using prevalence figures to argue
+    against population-specific provisions.'
+  harm: Accessibility provisions are reduced or eliminated based on prevalence calculations that disregard cumulative lifecycle
+    effect, selection-effect bias in prevalence figures, and the dignity-rights basis of accessibility (which is not contingent
+    on prevalence).
+  severity: HIGH
+  primary_mitigations:
+  - Mission-and-epistemics §Mission (CRPD Art. 9 + Art. 5 grounding)
+  - DAR principle (Design for Adaptable Readiness — current accessibility plus future adaptability)
+  - Part 11 framing as enabling-budget evidence, not threshold-justifying evidence
+  - A7 §3.4 (population variability — prevalence-at-this-site is the wrong denominator)
+  doctrinal_basis:
+  - workplan-co0007-v3 §A10
+  - governance/adversarial-use-framework.md §1.2
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+- vector_id: V-03
+  name: Surveillance via inferred functional needs
+  mechanism: 'The functional-axes taxonomy (per A7 expanded scope) is a navigation aid for design. An adversarial third party
+    — an employer, insurer, landlord, or government — could use the same taxonomy to infer disability status from observable
+    behaviour or environmental needs, and discriminate accordingly. Variant: requiring a person to declare a population code
+    to access an accommodation, creating a registry.'
+  harm: The guidebook's classifications, designed to inform building design, become a vocabulary for unwanted disability classification
+    of individuals. Accommodation requests become disability disclosures. Surveillance enables discrimination.
+  severity: HIGH
+  primary_mitigations:
+  - A7 §3.4 (population codes are organising principles, not definitions of people)
+  - A7 §3.3 (one-slug-one-population — codes apply to specifications, not to people)
+  - Voice-style §1.3 (specifications are about environments, not people)
+  - No person-assessment instrument published (Tier 2 = OT-assessed in confidence, not by code inventory)
+  doctrinal_basis:
+  - workplan-co0007-v3 §A10
+  - governance/adversarial-use-framework.md §1.3
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+  notes: The functional-axes taxonomy is publishable knowledge; anyone can use it for surveillance regardless of intent. The
+    mitigation is that the guidebook does not provide instrumentation for surveillance.
+- vector_id: V-04
+  name: Selective citation
+  mechanism: 'The evidence-state machine (A6) records convergence assessment for each cell — convergent, divergent, single-axis,
+    pending. An adversarial reader cites only the evidence supporting their preferred value, ignoring the divergence assessment.
+    Variant: citing one Tier 1 study while suppressing a Tier 1 study that contradicts it.'
+  harm: Apparent strong-evidence basis for a value that is in fact divergent in the evidence base. Decision-makers misled
+    about the strength of the recommendation.
+  severity: MEDIUM
+  primary_mitigations:
+  - A6 §3.2 (convergence is recorded explicitly per cell)
+  - Divergent assessment names the synthesis_approach
+  - 'Selective citation is detectable: cited source list vs. cell convergence record'
+  doctrinal_basis:
+  - governance/adversarial-use-framework.md §2.1
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+- vector_id: V-05
+  name: Co-1 instrumentalization
+  mechanism: 'Citing a Co-1 source (lived-experience research, DPO position) as endorsement of a design when the source''s
+    actual position diverges from the citation. Variant: paraphrasing a Co-1 source in a way that flattens or inverts its
+    argument.'
+  harm: Lived-experience authority is appropriated to legitimise a design the source would not endorse. Co-1 voice is silenced
+    through misappropriation.
+  severity: HIGH
+  primary_mitigations:
+  - A5 §3.4 (synthesis_attribution_required field on EvidenceSource)
+  - A5 §6.1 (six required schema fields including verification_status)
+  - A5 §6.3 (verification report records faithfulness to source)
+  doctrinal_basis:
+  - governance/adversarial-use-framework.md §2.2
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+- vector_id: V-06
+  name: Evidence-tier laundering
+  mechanism: 'Claiming Tier 4–5 (international standards / national framework) status for what is properly Tier 6 (statutory
+    code), or claiming Tier 3 (systematic review) for a non-systematic narrative review. The intent: dodge code-floor accountability
+    by relabeling the source.'
+  harm: Best-practice synthesis is built on misclassified evidence; readers trust the synthesis based on its declared tier;
+    downstream design decisions inherit the misclassification.
+  severity: MEDIUM
+  primary_mitigations:
+  - A6 §1 (tier and evidence_type mechanically validated against source)
+  - EvidenceSource.tier bounded 1–6; evidence_type uses canonical enum
+  - A6 validators check tier-type consistency
+  - project-standards L20 (Tier 6 source cannot underpin best_practice_synthesis)
+  doctrinal_basis:
+  - governance/adversarial-use-framework.md §2.3
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+- vector_id: V-07
+  name: Anti-DAR deferral
+  mechanism: 'Citing DAR (Design for Adaptable Readiness, Part 10) to defer accessibility: ''the building is DAR-ready, we''ll
+    add accessibility when needed.'' This inverts DAR''s intent — DAR is current-accessibility plus future-adaptability, not
+    future-accessibility instead of current-accessibility.'
+  harm: Accessibility provisions are deferred indefinitely. Disabled people are excluded now, with a vague promise of future
+    accommodation that may never arrive.
+  severity: MEDIUM
+  primary_mitigations:
+  - 'Part 10 framing: DAR is additive, not substitutive (when written)'
+  - framing-checker is the validator at draft time
+  doctrinal_basis:
+  - governance/adversarial-use-framework.md §2.4
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+  notes: Part 10 is in Vol II; not yet drafted at A10. The mitigation matures when Part 10 is written. V-07 review at the
+    v10.x release should re-assess once Part 10 prose lands.
+- vector_id: V-08
+  name: Adversarial litigation citation
+  mechanism: 'A defendant in a disability-discrimination case cites the guidebook''s Tier 2 (person-specific, OT-resolved)
+    language to argue that a contested provision is ''discretionary'' and the plaintiff''s preferences are not entitled. Variant:
+    citing pending/provisional cells to argue the evidence is too thin to compel provision.'
+  harm: Disabled plaintiffs face the project's own language used against them in legal proceedings. The guidebook's epistemic
+    humility about evidence state is recast as denial of entitlement.
+  severity: HIGH
+  primary_mitigations:
+  - A11 (legal/regulatory framework — pending phase)
+  - 'Front-matter disclaimer: guidebook is design guidance, not legal authority'
+  - Disclaimer states pending/provisional cells reflect synthesis status, not entitlement status
+  doctrinal_basis:
+  - governance/adversarial-use-framework.md §2.5
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11
+  notes: Primary mitigation depends on A11 (front-matter disclaimer wording). A10 records the vector; A11 produces the disclaimer
+    language. Until A11 lands, V-08 should be reviewed at each release with notes indicating the disclaimer is provisional.
+- vector_id: V-09
+  name: Population-proxy denial
+  mechanism: The guidebook proxies IntD (intellectual disability) coverage through DEM (wayfinding/cognitive simplicity) and
+    NDV (sensory environment / Easy Read). An adversarial reader argues that IntD does not need separate advocacy because
+    the guidebook covers it through proxy.
+  harm: IntD-specific advocacy is undercut by appeal to the guidebook's coverage map. The proxy decision (a coverage-strategy
+    admission) is rhetorically weaponised against the population it was meant to include.
+  severity: MEDIUM
+  primary_mitigations:
+  - A7 §1.1 (IntD proxy decision documented with rationale)
+  - Proxy described as coverage-strategy admission, not denial of distinctness
+  - THIN-BASE disclosure attached to all IntD-relevant specifications
+  doctrinal_basis:
+  - governance/adversarial-use-framework.md §2.6
+  status: ACTIVE
+  introduced_date: 2026-04-30 02:11

@@ -275,6 +275,7 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 | A7 (Population taxonomy) | validate_population.py | — |
 | A8 (Jurisdiction philosophy) | validate_jurisdiction.py, convert_jurisdictions.py | jurisdiction-tracker output validator |
 | A9 (Time model) | validate_temporal.py, version_retrofit.py | — |
+| A10 (Adversarial-use review) | audit_adversarial_use.py | — |
 | A12 (Decision protocol) | decision_capture.py | — |
 | A13 (Doctrine recheck) | doctrine_recheck.py, contamination_sampler.py | — |
 

@@ -40,7 +40,7 @@ class GuidebookEntity(BaseModel):
         """Write entity to a YAML file."""
         import yaml
 
-        data = self.model_dump(mode="python", exclude_none=True)
+        data = self.model_dump(mode="json", exclude_none=True)
         with open(path, "w", encoding="utf-8") as f:
             yaml.dump(
                 data,
@@ -53,7 +53,7 @@ class GuidebookEntity(BaseModel):
 
     def to_dict(self) -> dict:
         """Serialize to dict, excluding None values."""
-        return self.model_dump(mode="python", exclude_none=True)
+        return self.model_dump(mode="json", exclude_none=True)
 
 
 class EvidenceTierRange(BaseModel):
