@@ -1,0 +1,52 @@
+SPEC SCHEMA — architect-facing fields
+======================================
+
+cd          string   "A-02"
+t           string   declarative title
+q           string   investigative question
+cat         string   category letter
+tr          int      tier 0/1/2
+p           array    population codes
+topics      array    topic ids
+rooms       array    room codes (or "ALL")
+
+ARCHITECT DATA:
+dimensions  array    { dim, value, unit, note }
+              — e.g. { dim:"Clear width", value:"≥1200", unit:"mm", note:"Primary routes" }
+performance array    { metric, target, measure }
+              — e.g. { metric:"NRC", target:"≥0.85", measure:"Avg 250-2000Hz per ASTM C423" }
+codes       array    { ref, clause, jurisdiction }
+              — e.g. { ref:"AS 1428.1:2021", clause:"§13", jurisdiction:"AU" }
+products    array    string product types (manufacturer-neutral)
+              — e.g. ["Mineral fibre tile", "Perforated metal pan with backing", "Wood wool panel"]
+schedule    string   ready-to-paste schedule language
+detail      array    { title, items[] } detail-item callouts
+diagram     object   { type:"plan"|"section"|"isometric", svg:"<svg>...</svg>" }
+install     array    installation notes
+failures    array    common failure patterns
+
+OT/NARRATIVE DATA (already exists):
+s           string   short summary
+body        string   long-form description
+why         string   why it matters
+popReasons  object   per-population specific rationale
+evidence    array    { tier, source }
+related     array    { cd, why }
+
+
+ROOM SCHEMA — synthesis-facing fields
+======================================
+
+code        string   "R-BA"
+name        string
+note        string   short note
+body        string   character prose
+
+NEW: SYNTHESIS DATA:
+synthesis   string   how the applicable specs integrate into a coherent design
+sequence    array    { step, focus, why } — order of design decisions
+interactions array   { specs[], note } — where specs constrain each other
+zones       array    { name, dims, includes[] } — functional zones with dimensions
+clearances  array    { what, dim, ref } — clear-zone dimensions
+failures    array    common failure patterns
+diagram     object   { svg } — schematic plan with zones
