@@ -541,3 +541,7 @@ DATE: 2026-04-29 19:30
 
 RULE: A8 jurisdiction-philosophy.md is CANONICAL. Governs: 24-jurisdiction approach, jurisdiction-evidence tier relationship (codes=Tier 6, standards=Tier 4-5), standards currency tracking, GB→UK enforcement. Validators: validate_jurisdiction.py, convert_jurisdictions.py (CI-integrated).
 DATE: 2026-04-29 19:50
+
+RULE: A9 time-model.md is CANONICAL. Governs: five temporal axes (document version, standards edition, project-rule effective date, source publication/verification, launch phase); SupersedenceLink primitive (5 types: rule/standard/version/decision/source); date-format normalisation (`YYYY-MM-DD HH:MM` canonical, pre-session anchor at `2026-03-15 00:00`); freshness windows per evidence tier. Schema: temporal.py (new), enums.py (+6 enums). Validators: validate_temporal.py (12 checks T-01–T-12), version_retrofit.py (idempotent retrofit to `data/temporal/`).
+DATE: 2026-04-30 02:00
+
