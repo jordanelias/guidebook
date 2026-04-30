@@ -45,7 +45,7 @@ findings:
     marking note ("retroactively marked at A12 S2 finding RC-001 resolution (2026-04-30)"). No content change to pre-stage-a-decisions.md
     beyond the header.
   status: RESOLVED
-  resolution_commit: pending_in_recheck_commit
+  resolution_commit: 251acd9c8d48093134913cffc757e3bda605e4ef
 contamination_samples:
 - recheck_id: RC-001
   bpc_path: references/bpc/bathrooms-and-wet-areas/accessible-bathroom-and-grab-bar.md
