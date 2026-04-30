@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-04-30 13:20
+last_updated: 2026-04-30 14:25
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -2475,3 +2475,40 @@ decisions:
   review_status: NA
   notes: Seeded from project-standards.md §Session 2026-04-29 — A6 Evidence Methodology at A12 Session 2 (2026-04-30 13:20).
     Classification heuristic; review pending.
+- decision_id: D-0107
+  category: D-OP
+  delegation: DG-REVIEW
+  delegation_rationale: First-of-kind CI integration for the new validator suite (A9/A10/A12/A13). Per A12 §2.2 default delegation
+    table, first-of-kind operational changes are DG-REVIEW. Routine subsequent CI changes (e.g., adding a new validator step
+    on the same pattern) will default to DG-AUTO.
+  summary: Integrate validator suite (A9 temporal, A10 adversarial-use, A12 decisions, A13 doctrine) into .github/workflows/ci.yml;
+    add pinned requirements.txt
+  outcome: 'ci.yml gains 5 new validator invocations across schema and new governance jobs; install steps standardise on `pip
+    install -r requirements.txt --quiet` (was: ad-hoc pydantic+pyyaml per job); requirements.txt pins pydantic==2.13.3, PyYAML==6.0.3.'
+  rationale: Every governance doc shipped at A9/A10/A12/A13 references its validator as "CI-integrated" but only the A6/A7/A8
+    validators were actually called by ci.yml. The new validators ran successfully in their commit-time smoke tests but were
+    not enforced on push. This commit closes the gap. A10 catalog runs in --catalog-only mode pre-launch (full coverage check
+    requires per-version review_log files which arrive when the first vN.0 release is prepared). A13 doctrine_recheck runs
+    in --cross-ref mode in CI (mechanical passes only); pass 2.6 contamination resampling stays out of CI per A13 §6.5 (human
+    judgment runs at scheduled rechecks per cadence triggers, not on every push). Pinning dependencies makes builds reproducible.
+  alternatives_considered:
+  - 'Add validators to existing schema job (rejected: muddles separation between data-shape and governance-state validation;
+    would force the schema job to depend on more files than its current scope)'
+  - 'Add a separate job per validator (rejected: 4 jobs of overhead for related concerns; runner cost without benefit)'
+  - 'Skip CI integration; rely on commit-time author smoke tests (rejected: A9 closed without CI integration and the gap was
+    invisible until A12 S2; CI is the operative reproducibility floor)'
+  decision_date: 2026-04-30 14:25
+  decided_by: sonnet_4_6_session_2026-04-30
+  model_routing: sonnet/100/route
+  effort_level: 100
+  decision_artifacts:
+  - .github/workflows/ci.yml
+  - requirements.txt
+  - governance/decision-protocol.md §2.2
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: First Decision record produced through CS8 wiring at session_2026-04-30-ci-s1.md. Per A12 §3 the record was written
+    before the implementing commit; the implementing commit OID is recorded in decision_artifacts as a downstream cross-reference
+    at session close.

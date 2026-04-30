@@ -1,19 +1,11 @@
-# Working-session counter for A13 doctrine-recheck cadence
-# Per governance/doctrine-recheck.md §1.1 (PERIODIC trigger every 25 working sessions)
-# Per skills/session-consolidator_SKILL.md §1c (CS8 decision capture + counter increment)
-#
-# A "working session" produces or substantively modifies project content.
-# Sessions that only adjust skills, fix typos, or rebase commits do not count.
-#
-# When counter reaches a multiple of 25, session-consolidator includes
-# `recheck_due: PERIODIC` in session close YAML; next session's first
-# action runs scripts/doctrine_recheck.py.
+counter: 1
+last_updated: 2026-04-30 14:25
+last_session: session_2026-04-30-ci-s1.md
+notes: 'Counter increments per session-consolidator §1c. First increment after A12
+  S2 initialisation (counter started at 0 there). This session shipped CI integration
+  + requirements.txt; produced project content (workflow + dep file); counts as a
+  working session. RC-001 (parallel Opus session that ran the doctrine recheck) was
+  not counted because its output was the recheck record itself, not project content
+  per §1c definition. Next periodic recheck at counter == 25.
 
-counter: 0
-last_updated: 2026-04-30 13:20
-last_session: session_2026-04-30-a13-s1.md
-notes: >
-  Counter initialised at A12 Session 2. Pre-A12-S2 session count not retroactively
-  reconstructed — counter starts at zero. First periodic recheck due at
-  counter == 25. The Stage A→B transition (whenever it happens) triggers a
-  STAGE_TRANSITION recheck independent of the counter.
+  '
