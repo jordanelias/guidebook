@@ -1,11 +1,12 @@
-counter: 1
-last_updated: 2026-04-30 14:25
-last_session: session_2026-04-30-ci-s1.md
-notes: 'Counter increments per session-consolidator §1c. First increment after A12
-  S2 initialisation (counter started at 0 there). This session shipped CI integration
-  + requirements.txt; produced project content (workflow + dep file); counts as a
-  working session. RC-001 (parallel Opus session that ran the doctrine recheck) was
-  not counted because its output was the recheck record itself, not project content
-  per §1c definition. Next periodic recheck at counter == 25.
+counter: 2
+last_updated: 2026-05-01 02:35
+last_session: session_2026-05-01-b1-s1.md
+notes: 'Counter increments per session-consolidator §1c. Second increment after A12
+  S2 initialisation (counter started at 0 there, incremented to 1 at the CI-integration
+  sub-session, now 2 at B1 Session 1). This session shipped the B1 derivation framework
+  (workplan/b1-derivation-framework.md) plus two Decision records (D-0108 D-METH/DG-REVIEW
+  framework; D-0109 D-OP/DG-AUTO session arc); produced project content (workplan
+  document + decision register additions); counts as a working session per §1c definition.
+  Next periodic recheck at counter == 25.
 
   '

@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-04-30 14:25
+last_updated: 2026-05-01 02:35
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -2512,3 +2512,104 @@ decisions:
   notes: First Decision record produced through CS8 wiring at session_2026-04-30-ci-s1.md. Per A12 §3 the record was written
     before the implementing commit; the implementing commit OID is recorded in decision_artifacts as a downstream cross-reference
     at session close.
+- decision_id: D-0108
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Adopt 4-candidate × 30-criterion derivation framework for B1 storage-form selection
+  outcome: >
+    B1 evaluates four storage-form candidates (Markdown+YAML status-quo-extended; Relational; Graph/triplestore;
+    Hybrid) against 30 criteria clustered in 10 bands (Entity & relationship; Cell-level state; Co-1 schema
+    discipline; Synthesis metadata; Verification; Cross-cutting axes; Navigation/audience; Time model;
+    Operational; Sustainability) using a uniform 4-question template per cell (native/adapted/absent;
+    adaptation cost; operational risk; downstream binding). Session 2 weights criteria; Sessions 3-6 evaluate
+    candidates; Sessions 7-9 select and write architecture/.
+  rationale: >
+    Per workplan-co0007-v3 §B1 (operative plan), B1 evaluates ≥3 storage forms against requirements before
+    committing. The framework operationalises that mandate. Four candidates instead of three because the floor
+    is ≥3 and the four named candidates each map to a distinct repo-strategy revisit trigger in
+    governance/repo-strategy.md (no migration; same repo plus DB; sibling repo for graph; per-component
+    decision). 30 criteria because Session-1 sourcing against doctrinal anchors (mission §Doctrinal commitments
+    1, 3, 6; A6 §§1-4; A5 §6.1; A7; A9; A10; A12; A13) produced 36 distinct requirements across 4 bands;
+    clustering reduced to 30 criteria across 10 evaluable surfaces. Per-criterion 4-question template keeps
+    cross-candidate comparison legible (the alternative — bespoke evaluation per candidate — invites the
+    prejudgment failure mode the framework is designed to prevent). Weighting is deferred to Session 2
+    deliberately — weighting after candidates are sketched introduces post-hoc bias toward whichever candidate
+    scored well on lightly-considered criteria. The first-pass candidate × cluster sketch in §7 of the
+    framework document is calibration only and is explicitly barred from citation in the eventual selection
+    rationale (§7.2). The framework binds the rest of B1: Sessions 3-6 cannot adopt new criteria without
+    amending this decision.
+  alternatives_considered:
+  - >-
+    Adopt v3's named 3-candidate set verbatim (graph DB / RDF triplestore / hybrid) — rejected: omits
+    Markdown+YAML status-quo-extended which is the lowest-migration-cost candidate and the doctrinal default
+    any storage-form selection must beat to justify its switching cost. The omission would have been a silent
+    prejudgment.
+  - >-
+    Single-pass evaluation in one session — rejected: 4 candidates × 30 criteria × 4 questions = 480
+    evaluations. One session cannot do justice to that volume; compression invites superficial reads of
+    candidates that warrant scrutiny.
+  - >-
+    No criteria-weighting at all (treat all criteria as equal) — rejected: doctrinal-anchor criteria (sourced
+    from mission/A6 commitments) are not equivalent in importance to operational-convenience criteria. Equal
+    weighting silently flattens the doctrinal anchor. Session 2 commits the weighting scheme explicitly.
+  - >-
+    Skip the first-pass calibration sketch (§7) — rejected: without a first-pass surface of where each
+    candidate strains, Sessions 3-6 budget effort uniformly; that wastes sessions on candidate-criterion cells
+    where the answer is already visible. The sketch is bounded by §7.2 to prevent it from becoming
+    prejudgment.
+  decision_date: 2026-05-01 02:35
+  decided_by: opus_4_7_session_2026-05-01
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-derivation-framework.md
+  - sessions/session_2026-05-01-b1-s1.md
+  - data/decisions/decision_register.yaml
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    First Decision record under Stage B. The framework binds Sessions 2-9; amending it during Sessions 3-6
+    requires a superseding D-METH record (e.g., addition of a fifth candidate per §8.2 expansion trigger, or
+    revision of the criterion clusters). The framework explicitly defers (a) weighting scheme to Session 2,
+    (b) selection to Sessions 7-9. This decision is review-pending because the framework is the spine of B1;
+    later sessions inherit its commitments.
+- decision_id: D-0109
+  category: D-OP
+  delegation: DG-AUTO
+  summary: B1 session arc — Sessions 2-9 plan with compression and expansion triggers
+  outcome: >
+    Session 2 = requirements lock + criteria weighting; Sessions 3-6 = per-candidate evaluation (one session
+    per candidate); Session 7 = comparative scoring + dismissed-alternatives drafting; Session 8 = selection +
+    derivation writeup (architecture/storage-derivation.md); Session 9 = schema spec + repo-strategy revisit
+    (architecture/schema-spec.md + architecture/storage-decision.md + revision to
+    governance/repo-strategy.md). Compression permitted if a candidate's strain pattern collapses early (e.g.,
+    Candidate D shown strictly dominated). Expansion (one extra session) triggered if Sessions 3-6 surface a
+    credible fifth candidate satisfying a requirement no listed candidate satisfies. Total budget remains 6-9
+    sessions per workplan-co0007-v3 §B1.
+  rationale: >
+    Routine sequencing under the framework established by D-0108. The arc follows the standard Stage A pattern
+    (governance + code per CO-0008) adapted for B1's derive-then-implement structure (derive in workplan/,
+    implement in architecture/). DG-AUTO because once D-0108 is reviewed and confirmed, the session arc is
+    mechanical application — the compression and expansion triggers are explicit rules, not discretionary
+    judgments. Each session's primary output is named to keep the arc auditable; deviation from named outputs
+    requires a superseding D-OP record.
+  alternatives_considered: []
+  decision_date: 2026-05-01 02:35
+  decided_by: opus_4_7_session_2026-05-01
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - workplan/b1-derivation-framework.md §8
+  - sessions/session_2026-05-01-b1-s1.md
+  predecessors:
+  - D-0108
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    D-OP/DG-AUTO does not require alternatives_considered per schema. The arc is mechanical under D-0108; if
+    D-0108 is revised in review, this decision is reviewed as a downstream consequence. Compression and
+    expansion triggers are explicit (§8.1, §8.2 of the framework document) so subsequent sessions can apply
+    them without further capture.
