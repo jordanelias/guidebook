@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-01 03:50
+last_updated: 2026-05-01 04:30
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -2516,47 +2516,38 @@ decisions:
   category: D-METH
   delegation: DG-REVIEW
   summary: Adopt 4-candidate × 30-criterion derivation framework for B1 storage-form selection
-  outcome: >
-    B1 evaluates four storage-form candidates (Markdown+YAML status-quo-extended; Relational; Graph/triplestore;
-    Hybrid) against 30 criteria clustered in 10 bands (Entity & relationship; Cell-level state; Co-1 schema
-    discipline; Synthesis metadata; Verification; Cross-cutting axes; Navigation/audience; Time model;
-    Operational; Sustainability) using a uniform 4-question template per cell (native/adapted/absent;
-    adaptation cost; operational risk; downstream binding). Session 2 weights criteria; Sessions 3-6 evaluate
-    candidates; Sessions 7-9 select and write architecture/.
-  rationale: >
-    Per workplan-co0007-v3 §B1 (operative plan), B1 evaluates ≥3 storage forms against requirements before
-    committing. The framework operationalises that mandate. Four candidates instead of three because the floor
-    is ≥3 and the four named candidates each map to a distinct repo-strategy revisit trigger in
-    governance/repo-strategy.md (no migration; same repo plus DB; sibling repo for graph; per-component
-    decision). 30 criteria because Session-1 sourcing against doctrinal anchors (mission §Doctrinal commitments
-    1, 3, 6; A6 §§1-4; A5 §6.1; A7; A9; A10; A12; A13) produced 36 distinct requirements across 4 bands;
-    clustering reduced to 30 criteria across 10 evaluable surfaces. Per-criterion 4-question template keeps
-    cross-candidate comparison legible (the alternative — bespoke evaluation per candidate — invites the
-    prejudgment failure mode the framework is designed to prevent). Weighting is deferred to Session 2
-    deliberately — weighting after candidates are sketched introduces post-hoc bias toward whichever candidate
-    scored well on lightly-considered criteria. The first-pass candidate × cluster sketch in §7 of the
-    framework document is calibration only and is explicitly barred from citation in the eventual selection
-    rationale (§7.2). The framework binds the rest of B1: Sessions 3-6 cannot adopt new criteria without
-    amending this decision.
+  outcome: 'B1 evaluates four storage-form candidates (Markdown+YAML status-quo-extended; Relational; Graph/triplestore; Hybrid)
+    against 30 criteria clustered in 10 bands (Entity & relationship; Cell-level state; Co-1 schema discipline; Synthesis
+    metadata; Verification; Cross-cutting axes; Navigation/audience; Time model; Operational; Sustainability) using a uniform
+    4-question template per cell (native/adapted/absent; adaptation cost; operational risk; downstream binding). Session 2
+    weights criteria; Sessions 3-6 evaluate candidates; Sessions 7-9 select and write architecture/.
+
+    '
+  rationale: 'Per workplan-co0007-v3 §B1 (operative plan), B1 evaluates ≥3 storage forms against requirements before committing.
+    The framework operationalises that mandate. Four candidates instead of three because the floor is ≥3 and the four named
+    candidates each map to a distinct repo-strategy revisit trigger in governance/repo-strategy.md (no migration; same repo
+    plus DB; sibling repo for graph; per-component decision). 30 criteria because Session-1 sourcing against doctrinal anchors
+    (mission §Doctrinal commitments 1, 3, 6; A6 §§1-4; A5 §6.1; A7; A9; A10; A12; A13) produced 36 distinct requirements across
+    4 bands; clustering reduced to 30 criteria across 10 evaluable surfaces. Per-criterion 4-question template keeps cross-candidate
+    comparison legible (the alternative — bespoke evaluation per candidate — invites the prejudgment failure mode the framework
+    is designed to prevent). Weighting is deferred to Session 2 deliberately — weighting after candidates are sketched introduces
+    post-hoc bias toward whichever candidate scored well on lightly-considered criteria. The first-pass candidate × cluster
+    sketch in §7 of the framework document is calibration only and is explicitly barred from citation in the eventual selection
+    rationale (§7.2). The framework binds the rest of B1: Sessions 3-6 cannot adopt new criteria without amending this decision.
+
+    '
   alternatives_considered:
-  - >-
-    Adopt v3's named 3-candidate set verbatim (graph DB / RDF triplestore / hybrid) — rejected: omits
-    Markdown+YAML status-quo-extended which is the lowest-migration-cost candidate and the doctrinal default
-    any storage-form selection must beat to justify its switching cost. The omission would have been a silent
-    prejudgment.
-  - >-
-    Single-pass evaluation in one session — rejected: 4 candidates × 30 criteria × 4 questions = 480
-    evaluations. One session cannot do justice to that volume; compression invites superficial reads of
-    candidates that warrant scrutiny.
-  - >-
-    No criteria-weighting at all (treat all criteria as equal) — rejected: doctrinal-anchor criteria (sourced
-    from mission/A6 commitments) are not equivalent in importance to operational-convenience criteria. Equal
-    weighting silently flattens the doctrinal anchor. Session 2 commits the weighting scheme explicitly.
-  - >-
-    Skip the first-pass calibration sketch (§7) — rejected: without a first-pass surface of where each
-    candidate strains, Sessions 3-6 budget effort uniformly; that wastes sessions on candidate-criterion cells
-    where the answer is already visible. The sketch is bounded by §7.2 to prevent it from becoming
-    prejudgment.
+  - 'Adopt v3''s named 3-candidate set verbatim (graph DB / RDF triplestore / hybrid) — rejected: omits Markdown+YAML status-quo-extended
+    which is the lowest-migration-cost candidate and the doctrinal default any storage-form selection must beat to justify
+    its switching cost. The omission would have been a silent prejudgment.'
+  - 'Single-pass evaluation in one session — rejected: 4 candidates × 30 criteria × 4 questions = 480 evaluations. One session
+    cannot do justice to that volume; compression invites superficial reads of candidates that warrant scrutiny.'
+  - 'No criteria-weighting at all (treat all criteria as equal) — rejected: doctrinal-anchor criteria (sourced from mission/A6
+    commitments) are not equivalent in importance to operational-convenience criteria. Equal weighting silently flattens the
+    doctrinal anchor. Session 2 commits the weighting scheme explicitly.'
+  - 'Skip the first-pass calibration sketch (§7) — rejected: without a first-pass surface of where each candidate strains,
+    Sessions 3-6 budget effort uniformly; that wastes sessions on candidate-criterion cells where the answer is already visible.
+    The sketch is bounded by §7.2 to prevent it from becoming prejudgment.'
   decision_date: 2026-05-01 02:35
   decided_by: opus_4_7_session_2026-05-01
   model_routing: opus/150/synth
@@ -2569,32 +2560,31 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: PENDING
-  notes: >
-    First Decision record under Stage B. The framework binds Sessions 2-9; amending it during Sessions 3-6
-    requires a superseding D-METH record (e.g., addition of a fifth candidate per §8.2 expansion trigger, or
-    revision of the criterion clusters). The framework explicitly defers (a) weighting scheme to Session 2,
-    (b) selection to Sessions 7-9. This decision is review-pending because the framework is the spine of B1;
-    later sessions inherit its commitments.
+  notes: 'First Decision record under Stage B. The framework binds Sessions 2-9; amending it during Sessions 3-6 requires
+    a superseding D-METH record (e.g., addition of a fifth candidate per §8.2 expansion trigger, or revision of the criterion
+    clusters). The framework explicitly defers (a) weighting scheme to Session 2, (b) selection to Sessions 7-9. This decision
+    is review-pending because the framework is the spine of B1; later sessions inherit its commitments.
+
+    '
 - decision_id: D-0109
   category: D-OP
   delegation: DG-AUTO
   summary: B1 session arc — Sessions 2-9 plan with compression and expansion triggers
-  outcome: >
-    Session 2 = requirements lock + criteria weighting; Sessions 3-6 = per-candidate evaluation (one session
-    per candidate); Session 7 = comparative scoring + dismissed-alternatives drafting; Session 8 = selection +
-    derivation writeup (architecture/storage-derivation.md); Session 9 = schema spec + repo-strategy revisit
-    (architecture/schema-spec.md + architecture/storage-decision.md + revision to
-    governance/repo-strategy.md). Compression permitted if a candidate's strain pattern collapses early (e.g.,
-    Candidate D shown strictly dominated). Expansion (one extra session) triggered if Sessions 3-6 surface a
-    credible fifth candidate satisfying a requirement no listed candidate satisfies. Total budget remains 6-9
-    sessions per workplan-co0007-v3 §B1.
-  rationale: >
-    Routine sequencing under the framework established by D-0108. The arc follows the standard Stage A pattern
-    (governance + code per CO-0008) adapted for B1's derive-then-implement structure (derive in workplan/,
-    implement in architecture/). DG-AUTO because once D-0108 is reviewed and confirmed, the session arc is
-    mechanical application — the compression and expansion triggers are explicit rules, not discretionary
-    judgments. Each session's primary output is named to keep the arc auditable; deviation from named outputs
-    requires a superseding D-OP record.
+  outcome: 'Session 2 = requirements lock + criteria weighting; Sessions 3-6 = per-candidate evaluation (one session per candidate);
+    Session 7 = comparative scoring + dismissed-alternatives drafting; Session 8 = selection + derivation writeup (architecture/storage-derivation.md);
+    Session 9 = schema spec + repo-strategy revisit (architecture/schema-spec.md + architecture/storage-decision.md + revision
+    to governance/repo-strategy.md). Compression permitted if a candidate''s strain pattern collapses early (e.g., Candidate
+    D shown strictly dominated). Expansion (one extra session) triggered if Sessions 3-6 surface a credible fifth candidate
+    satisfying a requirement no listed candidate satisfies. Total budget remains 6-9 sessions per workplan-co0007-v3 §B1.
+
+    '
+  rationale: 'Routine sequencing under the framework established by D-0108. The arc follows the standard Stage A pattern (governance
+    + code per CO-0008) adapted for B1''s derive-then-implement structure (derive in workplan/, implement in architecture/).
+    DG-AUTO because once D-0108 is reviewed and confirmed, the session arc is mechanical application — the compression and
+    expansion triggers are explicit rules, not discretionary judgments. Each session''s primary output is named to keep the
+    arc auditable; deviation from named outputs requires a superseding D-OP record.
+
+    '
   alternatives_considered: []
   decision_date: 2026-05-01 02:35
   decided_by: opus_4_7_session_2026-05-01
@@ -2608,67 +2598,51 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: >
-    D-OP/DG-AUTO does not require alternatives_considered per schema. The arc is mechanical under D-0108; if
-    D-0108 is revised in review, this decision is reviewed as a downstream consequence. Compression and
-    expansion triggers are explicit (§8.1, §8.2 of the framework document) so subsequent sessions can apply
-    them without further capture.
+  notes: 'D-OP/DG-AUTO does not require alternatives_considered per schema. The arc is mechanical under D-0108; if D-0108
+    is revised in review, this decision is reviewed as a downstream consequence. Compression and expansion triggers are explicit
+    (§8.1, §8.2 of the framework document) so subsequent sessions can apply them without further capture.
+
+    '
 - decision_id: D-0110
   category: D-METH
   delegation: DG-REVIEW
-  summary: B1 derivation criteria weighted via tiered scheme (3/2/1) with source-anchored
-    assignment rules
-  outcome: >
-    All 30 derivation criteria from b1-derivation-framework.md §6.2 are weighted under
-    a tiered scheme. Weight 3 (critical-binding) is assigned to criteria sourced directly to
-    mission §Doctrinal commitments 1, 3, or 6 (within-population variability first-class;
-    Co-1 co-primary; questions-led teaching) — 3 criteria: C-1.3, C-3.1, C-7.4. Weight 2
-    (important-binding) is assigned to criteria sourced to operationalization-binding governance
-    (T-03, T-04, A3, A5, A6, A7, A8, A9, A10, A12, A13, audience-priority, project-standards)
-    — 21 criteria. Weight 1 (operational-preference) is assigned to criteria sourced to
-    operational convenience or sustainability concerns — 6 criteria. Sum of weights = 57; max
-    candidate score (every criterion native, score 3) = 171. Per-criterion weight assignments
-    are listed in workplan/b1-criteria-weighting.md §§4.1–4.3.
-  rationale: >
-    The framework's §6.3 specifies that weighting must precede candidate evaluation —
-    weighting after candidates are sketched introduces post-hoc bias toward whichever
-    candidate scored well on lightly-considered criteria. Tiered (3/2/1) was chosen over
-    all-equal because all-equal silently flattens the doctrinal anchor: mission §Doctrinal
-    commitments 1, 3, 6 are foundational claims; T-03/T-04/A6/A9/A10/A12/A13 operationalize
-    them; CI tractability is project survival but not doctrinal. Treating all 30 criteria as
-    equal would silently de-prioritize the mission's foundational claims relative to operational
-    convenience — the audit-B-01 silent-compression failure mode. Tiered (3/2/1) was chosen over
-    pure doctrinal-anchor-only because pure doctrinal-anchor would assign higher weight only
-    to criteria sourced from mission §Doctrinal commitments and 1 to everything else, which is
-    too coarse — operationalization-binding criteria (e.g., A6 §1.2's tier+evidence_type
-    orthogonal encoding) are not optional; they are locked governance. The tiered scheme makes
-    the distinction visible: foundational doctrinal (3) > operationalization-binding (2) >
-    operational-preference (1). The assignment rules are mechanical — anyone can audit a
-    weight by reading the criterion's source citation in §4 of the framework and applying the
-    rule in §3.1 of the weighting document. Rules do not invite per-criterion judgment, which
-    forecloses the failure mode of bespoke weight-creep.
+  summary: B1 derivation criteria weighted via tiered scheme (3/2/1) with source-anchored assignment rules
+  outcome: 'All 30 derivation criteria from b1-derivation-framework.md §6.2 are weighted under a tiered scheme. Weight 3 (critical-binding)
+    is assigned to criteria sourced directly to mission §Doctrinal commitments 1, 3, or 6 (within-population variability first-class;
+    Co-1 co-primary; questions-led teaching) — 3 criteria: C-1.3, C-3.1, C-7.4. Weight 2 (important-binding) is assigned to
+    criteria sourced to operationalization-binding governance (T-03, T-04, A3, A5, A6, A7, A8, A9, A10, A12, A13, audience-priority,
+    project-standards) — 21 criteria. Weight 1 (operational-preference) is assigned to criteria sourced to operational convenience
+    or sustainability concerns — 6 criteria. Sum of weights = 57; max candidate score (every criterion native, score 3) =
+    171. Per-criterion weight assignments are listed in workplan/b1-criteria-weighting.md §§4.1–4.3.
+
+    '
+  rationale: 'The framework''s §6.3 specifies that weighting must precede candidate evaluation — weighting after candidates
+    are sketched introduces post-hoc bias toward whichever candidate scored well on lightly-considered criteria. Tiered (3/2/1)
+    was chosen over all-equal because all-equal silently flattens the doctrinal anchor: mission §Doctrinal commitments 1,
+    3, 6 are foundational claims; T-03/T-04/A6/A9/A10/A12/A13 operationalize them; CI tractability is project survival but
+    not doctrinal. Treating all 30 criteria as equal would silently de-prioritize the mission''s foundational claims relative
+    to operational convenience — the audit-B-01 silent-compression failure mode. Tiered (3/2/1) was chosen over pure doctrinal-anchor-only
+    because pure doctrinal-anchor would assign higher weight only to criteria sourced from mission §Doctrinal commitments
+    and 1 to everything else, which is too coarse — operationalization-binding criteria (e.g., A6 §1.2''s tier+evidence_type
+    orthogonal encoding) are not optional; they are locked governance. The tiered scheme makes the distinction visible: foundational
+    doctrinal (3) > operationalization-binding (2) > operational-preference (1). The assignment rules are mechanical — anyone
+    can audit a weight by reading the criterion''s source citation in §4 of the framework and applying the rule in §3.1 of
+    the weighting document. Rules do not invite per-criterion judgment, which forecloses the failure mode of bespoke weight-creep.
+
+    '
   alternatives_considered:
-  - >-
-    All-equal weighting (each criterion 1/30) — rejected: silently flattens the
-    distinction between foundational doctrinal claims and operational convenience criteria.
-    Would, for example, give mission §3 Co-1 co-primary and "CI validation tractability" the
-    same weight in storage selection. The audit-B-01 silent-compression failure mode applies
-    to weights as much as to wording.
-  - >-
-    Pure doctrinal-anchor-only (mission-sourced weight 3; everything else weight 1) —
-    rejected: too coarse. Operationalization-binding criteria sourced to T-03, T-04, A6, A9
-    are LOCKED governance, not preferences. They are not optional in the way that audit-trail
-    preservation across migration is optional. Treating them at weight 1 would
-    misrepresent their force.
-  - >-
-    Per-criterion bespoke weights (every criterion gets a discrete numeric weight per
-    judgment) — rejected: invites weight-creep over Sessions 3–6 as evaluations surface
-    new considerations. The mechanical assignment rule prevents this — weights are functions
-    of source citations, not of candidate-evaluation findings.
-  - >-
-    Weighting deferred to Session 7 (after candidate evaluation) — rejected: explicitly
-    forbidden by the framework's §6.3. Weighting after candidates are sketched introduces
-    post-hoc bias.
+  - 'All-equal weighting (each criterion 1/30) — rejected: silently flattens the distinction between foundational doctrinal
+    claims and operational convenience criteria. Would, for example, give mission §3 Co-1 co-primary and "CI validation tractability"
+    the same weight in storage selection. The audit-B-01 silent-compression failure mode applies to weights as much as to
+    wording.'
+  - 'Pure doctrinal-anchor-only (mission-sourced weight 3; everything else weight 1) — rejected: too coarse. Operationalization-binding
+    criteria sourced to T-03, T-04, A6, A9 are LOCKED governance, not preferences. They are not optional in the way that audit-trail
+    preservation across migration is optional. Treating them at weight 1 would misrepresent their force.'
+  - 'Per-criterion bespoke weights (every criterion gets a discrete numeric weight per judgment) — rejected: invites weight-creep
+    over Sessions 3–6 as evaluations surface new considerations. The mechanical assignment rule prevents this — weights are
+    functions of source citations, not of candidate-evaluation findings.'
+  - 'Weighting deferred to Session 7 (after candidate evaluation) — rejected: explicitly forbidden by the framework''s §6.3.
+    Weighting after candidates are sketched introduces post-hoc bias.'
   decision_date: 2026-05-01 03:50
   decided_by: opus_4_7_session_2026-05-01
   model_routing: opus/150/synth
@@ -2682,65 +2656,52 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: PENDING
-  notes: >
-    Sub-clause: C-8.4 (stale-evidence detection at query time) is downgraded from weight 2
-    (the §3.1 rule's default for an A9-sourced criterion) to weight 1, because the storage-layer
-    prerequisite is light enough that no candidate's satisfaction differentiates from another's
-    — the differentiation happens at the query layer (B2), not the storage layer (B1). The
-    downgrade is captured in §3.2 of the weighting document and reflected in the §4.3
-    weight-1 listing.
+  notes: 'Sub-clause: C-8.4 (stale-evidence detection at query time) is downgraded from weight 2 (the §3.1 rule''s default
+    for an A9-sourced criterion) to weight 1, because the storage-layer prerequisite is light enough that no candidate''s
+    satisfaction differentiates from another''s — the differentiation happens at the query layer (B2), not the storage layer
+    (B1). The downgrade is captured in §3.2 of the weighting document and reflected in the §4.3 weight-1 listing.
+
+    '
 - decision_id: D-0111
   category: D-METH
   delegation: DG-REVIEW
-  summary: S-05 migration-out specification — five-deliverable exit standard with binary
-    pass/fail at the criterion level
-  outcome: >
-    Each candidate's S-05 satisfaction is judged against five concrete export deliverables:
-    (1) full data export of all 20 entity types to a generic interchange format (CSV, JSON,
-    JSON-LD, RDF/Turtle, or markdown); (2) relationship preservation (N:N, polymorphic,
-    inheritance) in export, even where the format does not natively express them;
-    (3) state preservation for cell-level state-machine values, verification statuses,
-    supersedence chains, and audit trails; (4) a schema mapping document specifying how the
-    candidate's storage primitives map to a target form's primitives such that re-import into
-    any of the other three candidates is mechanically tractable (lossless re-import not
-    required; documented losses are); (5) export tooling cost ≤ 2 sessions, matching the
-    scale of one Stage A converter (e.g., A6's convert_sources.py). All five deliverables
-    must be satisfied — a candidate satisfying four of five fails S-05 (binary pass/fail; no
-    partial scoring).
-  rationale: >
-    S-05 from b1-derivation-framework.md §4.4 specified "Migration-out cost is bounded and
-    documented: if B1's choice is later overturned, the corpus can leave with its semantics
-    intact." That wording is correct as a principle but not evaluable as written. This decision
-    operationalizes the principle into five deliverables that each candidate must demonstrate
-    in Sessions 3–6. Binary pass/fail prevents the failure mode where a candidate scores 4/5
-    on partial credit and is treated as comparable to a candidate scoring 5/5 — the missing
-    deliverable could be the one that traps the project (e.g., a candidate that exports records
-    but loses cell-level state machine values when overturned silently traps the synthesis
-    work). The 2-session budget for export tooling is anchored to the observed scale of Stage
-    A converters; if a candidate's export tooling cannot fit in that budget, the migration-out
-    cost is by definition unbounded relative to the project's normal session economics.
+  summary: S-05 migration-out specification — five-deliverable exit standard with binary pass/fail at the criterion level
+  outcome: 'Each candidate''s S-05 satisfaction is judged against five concrete export deliverables: (1) full data export
+    of all 20 entity types to a generic interchange format (CSV, JSON, JSON-LD, RDF/Turtle, or markdown); (2) relationship
+    preservation (N:N, polymorphic, inheritance) in export, even where the format does not natively express them; (3) state
+    preservation for cell-level state-machine values, verification statuses, supersedence chains, and audit trails; (4) a
+    schema mapping document specifying how the candidate''s storage primitives map to a target form''s primitives such that
+    re-import into any of the other three candidates is mechanically tractable (lossless re-import not required; documented
+    losses are); (5) export tooling cost ≤ 2 sessions, matching the scale of one Stage A converter (e.g., A6''s convert_sources.py).
+    All five deliverables must be satisfied — a candidate satisfying four of five fails S-05 (binary pass/fail; no partial
+    scoring).
+
+    '
+  rationale: 'S-05 from b1-derivation-framework.md §4.4 specified "Migration-out cost is bounded and documented: if B1''s
+    choice is later overturned, the corpus can leave with its semantics intact." That wording is correct as a principle but
+    not evaluable as written. This decision operationalizes the principle into five deliverables that each candidate must
+    demonstrate in Sessions 3–6. Binary pass/fail prevents the failure mode where a candidate scores 4/5 on partial credit
+    and is treated as comparable to a candidate scoring 5/5 — the missing deliverable could be the one that traps the project
+    (e.g., a candidate that exports records but loses cell-level state machine values when overturned silently traps the synthesis
+    work). The 2-session budget for export tooling is anchored to the observed scale of Stage A converters; if a candidate''s
+    export tooling cannot fit in that budget, the migration-out cost is by definition unbounded relative to the project''s
+    normal session economics.
+
+    '
   alternatives_considered:
-  - >-
-    Weighted partial scoring (candidate scores 0–5 on the deliverables, with weighted sum)
-    — rejected: invites the trap where a 4/5 candidate looks comparable to 5/5 but the
-    missing deliverable is the binding-constraint one. Binary pass/fail forces the candidate
-    to satisfy all five.
-  - >-
-    Less stringent 3-deliverable standard (full export + relationship preservation + schema
-    mapping) — rejected: state preservation is not optional. A candidate that exports records
-    but loses verification statuses or state-machine values traps the synthesis work; the
-    project's epistemic commitments live in those states.
-  - >-
-    More stringent (lossless re-import required for all three other candidates) — rejected:
-    lossless re-import across substrate boundaries (e.g., relational → graph → markdown) is
-    not generally achievable; requiring it would dismiss all four candidates by construction.
-    Documented losses are sufficient.
-  - >-
-    No 2-session budget cap on export tooling (any tooling cost acceptable as long as
-    documented) — rejected: a candidate whose export tooling would take 8 sessions to write
-    has effectively unbounded migration-out cost relative to the project's session economics.
-    The 2-session bound matches the scale of Stage A converters, which is the empirical
-    reference for "tractable converter complexity."
+  - 'Weighted partial scoring (candidate scores 0–5 on the deliverables, with weighted sum) — rejected: invites the trap where
+    a 4/5 candidate looks comparable to 5/5 but the missing deliverable is the binding-constraint one. Binary pass/fail forces
+    the candidate to satisfy all five.'
+  - 'Less stringent 3-deliverable standard (full export + relationship preservation + schema mapping) — rejected: state preservation
+    is not optional. A candidate that exports records but loses verification statuses or state-machine values traps the synthesis
+    work; the project''s epistemic commitments live in those states.'
+  - 'More stringent (lossless re-import required for all three other candidates) — rejected: lossless re-import across substrate
+    boundaries (e.g., relational → graph → markdown) is not generally achievable; requiring it would dismiss all four candidates
+    by construction. Documented losses are sufficient.'
+  - 'No 2-session budget cap on export tooling (any tooling cost acceptable as long as documented) — rejected: a candidate
+    whose export tooling would take 8 sessions to write has effectively unbounded migration-out cost relative to the project''s
+    session economics. The 2-session bound matches the scale of Stage A converters, which is the empirical reference for "tractable
+    converter complexity."'
   decision_date: 2026-05-01 03:50
   decided_by: opus_4_7_session_2026-05-01
   model_routing: opus/150/synth
@@ -2754,57 +2715,48 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: PENDING
-  notes: >
-    Operationalizes criterion C-10.3 (migration-out cost bounded). C-10.3 holds weight 2 under
-    D-0110 because S-05 is binding under S-05 itself (the requirement is doctrinally privileged
-    insofar as the project's resolution principle of "clean data + transparent methodology"
-    requires that the corpus not be trapped in a chosen storage form). Sessions 3–6 evaluate
-    each candidate against the five deliverables; the schema mapping document of §4 is itself
-    a deliverable artifact each candidate produces during its evaluation session.
+  notes: 'Operationalizes criterion C-10.3 (migration-out cost bounded). C-10.3 holds weight 2 under D-0110 because S-05 is
+    binding under S-05 itself (the requirement is doctrinally privileged insofar as the project''s resolution principle of
+    "clean data + transparent methodology" requires that the corpus not be trapped in a chosen storage form). Sessions 3–6
+    evaluate each candidate against the five deliverables; the schema mapping document of §4 is itself a deliverable artifact
+    each candidate produces during its evaluation session.
+
+    '
 - decision_id: D-0112
   category: D-METH
   delegation: DG-REVIEW
-  summary: Hybrid eliminator test — Candidate D dismissed if and only if no criterion shows
-    it satisfying the requirement strictly better than max(A, B, C)
-  outcome: >
-    Sessions 3–5 produce per-candidate per-criterion scores 0–3 for Candidates A, B, C
-    (0 = absent; 1 = adapted with high cost; 2 = adapted with moderate cost; 3 = native).
-    Session 6 evaluates Candidate D against the same 30 criteria, producing scores D_i for
-    each criterion i. For each criterion i, compute M_i = max(A_i, B_i, C_i). Candidate D
-    survives elimination iff there exists at least one criterion i such that D_i > M_i
-    (strict inequality). If for all 30 criteria D_i ≤ M_i, Candidate D is strictly dominated
-    and dismissed without further evaluation. If D survives, the criteria where D outscores
-    its competitors are recorded as the candidate's distinguishing strengths and feed into
-    Session 7 comparative scoring normally.
-  rationale: >
-    The framework's §7.1 conjectured that Candidate D's hybrid burden may make it strictly
-    dominated by either A-with-query-layer or B-with-prose-as-files. This decision specifies
-    the test that establishes dominance — or fails to. Strict dominance (no criterion where
-    D outscores) was chosen over weighted-sum dominance because a weighted-sum test could
-    eliminate D when D loses on weight-1 criteria but uniquely wins on a weight-3 criterion.
-    That is the wrong dismissal — it would dismiss a candidate that uniquely satisfies a
-    doctrinal-binding criterion. The strict-dominance test ensures D is dismissed only when
-    no single criterion shows it as the best satisfier. The threshold uses strict
-    inequality (D_i > M_i) — a tie does not count as material betterment because the simpler
-    form satisfies equivalently and Candidate D's hybrid complexity is not justified by
-    tie-equivalent satisfaction.
+  summary: Hybrid eliminator test — Candidate D dismissed if and only if no criterion shows it satisfying the requirement
+    strictly better than max(A, B, C)
+  outcome: 'Sessions 3–5 produce per-candidate per-criterion scores 0–3 for Candidates A, B, C (0 = absent; 1 = adapted with
+    high cost; 2 = adapted with moderate cost; 3 = native). Session 6 evaluates Candidate D against the same 30 criteria,
+    producing scores D_i for each criterion i. For each criterion i, compute M_i = max(A_i, B_i, C_i). Candidate D survives
+    elimination iff there exists at least one criterion i such that D_i > M_i (strict inequality). If for all 30 criteria
+    D_i ≤ M_i, Candidate D is strictly dominated and dismissed without further evaluation. If D survives, the criteria where
+    D outscores its competitors are recorded as the candidate''s distinguishing strengths and feed into Session 7 comparative
+    scoring normally.
+
+    '
+  rationale: 'The framework''s §7.1 conjectured that Candidate D''s hybrid burden may make it strictly dominated by either
+    A-with-query-layer or B-with-prose-as-files. This decision specifies the test that establishes dominance — or fails to.
+    Strict dominance (no criterion where D outscores) was chosen over weighted-sum dominance because a weighted-sum test could
+    eliminate D when D loses on weight-1 criteria but uniquely wins on a weight-3 criterion. That is the wrong dismissal —
+    it would dismiss a candidate that uniquely satisfies a doctrinal-binding criterion. The strict-dominance test ensures
+    D is dismissed only when no single criterion shows it as the best satisfier. The threshold uses strict inequality (D_i
+    > M_i) — a tie does not count as material betterment because the simpler form satisfies equivalently and Candidate D''s
+    hybrid complexity is not justified by tie-equivalent satisfaction.
+
+    '
   alternatives_considered:
-  - >-
-    Weighted-sum dominance (D dismissed if sum(weight_i × D_i) < max sum across A, B, C)
-    — rejected: a candidate uniquely satisfying a weight-3 criterion (e.g., questions-led
-    query mode) but losing on many weight-1 criteria could be wrongly dismissed despite its
-    unique value on the doctrinal-binding criterion.
-  - >-
-    Threshold-based dominance (D dismissed if D's average score < 0.8 × average max-of-ABC)
-    — rejected: same failure mode as weighted-sum, with an arbitrary 0.8 threshold to boot.
-  - >-
-    Tie counts as material betterment (D survives if D_i ≥ M_i for some i) — rejected:
-    a tie means the simpler form satisfies equivalently. Candidate D's hybrid burden is not
-    justified by tie-equivalent satisfaction.
-  - >-
-    Defer the elimination test to Session 7 (evaluate all four candidates, then decide on
-    methodology) — rejected: post-hoc elimination methodology design is exactly the failure
-    mode the framework's §6.3 forbids. The test is specified before evaluation runs.
+  - 'Weighted-sum dominance (D dismissed if sum(weight_i × D_i) < max sum across A, B, C) — rejected: a candidate uniquely
+    satisfying a weight-3 criterion (e.g., questions-led query mode) but losing on many weight-1 criteria could be wrongly
+    dismissed despite its unique value on the doctrinal-binding criterion.'
+  - 'Threshold-based dominance (D dismissed if D''s average score < 0.8 × average max-of-ABC) — rejected: same failure mode
+    as weighted-sum, with an arbitrary 0.8 threshold to boot.'
+  - 'Tie counts as material betterment (D survives if D_i ≥ M_i for some i) — rejected: a tie means the simpler form satisfies
+    equivalently. Candidate D''s hybrid burden is not justified by tie-equivalent satisfaction.'
+  - 'Defer the elimination test to Session 7 (evaluate all four candidates, then decide on methodology) — rejected: post-hoc
+    elimination methodology design is exactly the failure mode the framework''s §6.3 forbids. The test is specified before
+    evaluation runs.'
   decision_date: 2026-05-01 03:50
   decided_by: opus_4_7_session_2026-05-01
   model_routing: opus/150/synth
@@ -2818,30 +2770,30 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: PENDING
-  notes: >
-    The eliminator test is specific to Candidate D (Hybrid). Candidates A, B, C are not
-    subject to this test in Sessions 3–5 — they all proceed to Session 7 comparative scoring
-    regardless of their per-criterion scores. The asymmetry is deliberate — the framework
-    §5.4 noted that Candidate D was included because v3's named candidate set includes
-    hybrid-as-option, but its complexity (two stores' worth of operational burden against one
-    author) is the explicit reason the framework called it out for an eliminator test.
+  notes: 'The eliminator test is specific to Candidate D (Hybrid). Candidates A, B, C are not subject to this test in Sessions
+    3–5 — they all proceed to Session 7 comparative scoring regardless of their per-criterion scores. The asymmetry is deliberate
+    — the framework §5.4 noted that Candidate D was included because v3''s named candidate set includes hybrid-as-option,
+    but its complexity (two stores'' worth of operational burden against one author) is the explicit reason the framework
+    called it out for an eliminator test.
+
+    '
 - decision_id: D-0113
   category: D-OP
   delegation: DG-AUTO
   summary: B1 derivation requirements inventory locked under D-0108 framework for Sessions 3–6
-  outcome: >
-    The 36 requirements specified in workplan/b1-derivation-framework.md §4 (12 functional,
-    9 epistemic, 10 operational, 5 sustainability) are locked as the input set for Sessions
-    3–6 candidate evaluation. Sessions 3–6 may not silently drop, reframe, or add to the
-    inventory; addition during evaluation requires a superseding D-METH record amending
-    D-0108. Removals are not permitted (silent compression failure mode per audit B-01).
-  rationale: >
-    Routine confirmation under the framework established by D-0108. Session 2 reviewed §4
-    of the framework against the governance set already in context (mission, audience-priority,
-    A3, A5, A6, A7, A8, A9, A10, A12, A13, project-standards) and identified no additions or
-    removals warranted by the read. The lock is the procedural commitment that Sessions 3–6
-    operate against this set; the principle is that frozen requirements force evaluation to
-    confront the actual set rather than a moving target.
+  outcome: 'The 36 requirements specified in workplan/b1-derivation-framework.md §4 (12 functional, 9 epistemic, 10 operational,
+    5 sustainability) are locked as the input set for Sessions 3–6 candidate evaluation. Sessions 3–6 may not silently drop,
+    reframe, or add to the inventory; addition during evaluation requires a superseding D-METH record amending D-0108. Removals
+    are not permitted (silent compression failure mode per audit B-01).
+
+    '
+  rationale: 'Routine confirmation under the framework established by D-0108. Session 2 reviewed §4 of the framework against
+    the governance set already in context (mission, audience-priority, A3, A5, A6, A7, A8, A9, A10, A12, A13, project-standards)
+    and identified no additions or removals warranted by the read. The lock is the procedural commitment that Sessions 3–6
+    operate against this set; the principle is that frozen requirements force evaluation to confront the actual set rather
+    than a moving target.
+
+    '
   alternatives_considered: []
   decision_date: 2026-05-01 03:50
   decided_by: opus_4_7_session_2026-05-01
@@ -2855,7 +2807,193 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: >
-    DG-AUTO because the lock is mechanical confirmation under D-0108. The lock principle is
-    the substantive commitment; the act of confirming a particular review found no additions
-    is routine.
+  notes: 'DG-AUTO because the lock is mechanical confirmation under D-0108. The lock principle is the substantive commitment;
+    the act of confirming a particular review found no additions is routine.
+
+    '
+- decision_id: D-0114
+  category: D-METH
+  delegation: DG-REVIEW
+  delegation_rationale: Independent second-eyes recheck of RC-001 sample is methodology-load-bearing for stage-transition
+    rechecks. Per A12 §2.2 default delegation table, methodology-load-bearing decisions are DG-REVIEW. Project-owner review
+    confirms whether second-eyes ratios become canonical baseline for Stage B drift detection.
+  summary: Issue RC-002 second-eyes recheck of RC-001 N=15 contamination sample per audit_2026-04-30 R2; record findings;
+    no remediation actions
+  outcome: 'data/doctrine_recheck/recheck_2026-04-30_second-eyes.yaml committed as RC-002. 3/15 (20%) classification disagreements
+    with RC-001, all shifting toward AMBIGUOUS. Distribution: CLEAN 53% / AMBIGUOUS 33% / STUB 7% / MERGED 7%. RC-002-001
+    reports the disagreement detail; RC-002-002 reinforces RC-001-01 finding (drift mostly virtuous discipline) with a 20%
+    qualification (some new AMBIGUOUS markings reflect contamination-correction in progress, not virtuous discipline); RC-002-003
+    reports systematic shift direction (3/3 toward AMBIGUOUS) consistent with fresh-context-bias prediction. Project owner
+    decides whether to re-baseline future drift detection against RC-002 ratios (53/33/7/7) or retain RC-001 baseline (60/20/13/7).'
+  rationale: audit_2026-04-30 R2 found that RC-001 was conducted by the same Opus session that authored A10–A13, partially
+    violating A13 §4.2 fresh-context principle. This recheck is one external mitigation step short of the fully fresh-context
+    recheck recommended for the next periodic cycle. The reviewer (this conversation) authored the audit document itself,
+    so the context is not strictly fresh — only different from the RC-001 authoring context. The 80% inter-reviewer agreement
+    is reasonable for a four-state rubric; the systematic 3/3 disagreement direction (all toward AMBIGUOUS) is small but in
+    the direction predicted by fresh-context principle.
+  alternatives_considered:
+  - 'Skip second-eyes recheck and rely on the next periodic recheck (counter==25) to surface any miscalibration (rejected:
+    counter==25 lands deep in Stage B, by which time post-Stage-A governance is load-bearing on B-stage decisions; verification
+    cost rises)'
+  - 'Run a fully fresh-context recheck (rejected: not available in this session; the conversation that authored the audit
+    cannot also be the fully-fresh-context reviewer)'
+  decision_date: 2026-05-01 04:30
+  decided_by: opus_4_7_session_2026-05-01_audit-remediation
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - data/doctrine_recheck/recheck_2026-04-30_second-eyes.yaml
+  - references/audits/process-audit_2026-04-30.md
+  - governance/doctrine-recheck.md §3.2
+  predecessors:
+  - D-0093
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: RC-002 marked extra-fields parent_recheck/audit_basis/distribution_comparison/agreement in YAML body — these are
+    display fields, not RecheckSession schema fields, and are ignored by validate_schema.py. Schema validation passed on the
+    schema-required subset.
+- decision_id: D-0115
+  category: D-OP
+  delegation: DG-AUTO
+  delegation_rationale: Author-script addition for window-audit of commit messages. Existing scripts/ci_helpers/check_commit_msg.py
+    covers HEAD; this script complements it for historical-window audits. Mechanical paradigm; DG-AUTO appropriate per A12
+    §2.2.
+  summary: Add scripts/validate_commits.py per audit_2026-04-30 R7 for historical commit-message audit
+  outcome: 'scripts/validate_commits.py (247 lines) shipped. Five checks V1-V5: headline regex, skill-name validation, timestamp
+    validity, not-future, known-author. CLI: --since/--until/--tolerance/--strict/--report/--json. Tested against audit window
+    (393 commits, 80 failures = 20.4%, matches audit estimate of 19%). Not wired to CI by default; project owner can opt-in
+    as follow-up.'
+  rationale: audit_2026-04-30 R7 recommended a window-audit commit validator. The existing scripts/ci_helpers/check_commit_msg.py
+    runs on HEAD per push but does not provide window-audit visibility. This new script fills that gap as a standalone audit
+    tool.
+  alternatives_considered:
+  - 'Modify check_commit_msg.py to add V2-V5 checks (rejected: scope-creep on a HEAD-only validator; new checks would also
+    require a known-skills allowlist that does not belong in the CI gate)'
+  - 'Add a new CI job invoking validate_commits.py weekly (rejected for this session: requires a separate D-OP/DG-REVIEW decision
+    on CI cron infrastructure; ship the script first and integrate as follow-up)'
+  decision_date: 2026-05-01 04:30
+  decided_by: opus_4_7_session_2026-05-01_audit-remediation
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - scripts/validate_commits.py
+  - scripts/ci_helpers/check_commit_msg.py
+  predecessors:
+  - D-0107
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: V2_UNKNOWN_SKILL hits 3 mobile-app-prototype commits in the audit window. Project owner can add mobile-app-prototype
+    to KNOWN_NON_SKILL_PREFIXES if those commits should validate.
+- decision_id: D-0116
+  category: D-DOCT
+  delegation: DG-REVIEW
+  delegation_rationale: Migration-survival register is a doctrinal classification document that governs Stage C migration-scope
+    reasoning. Per A12 §2.4 always-DG-NON list, this is on the boundary of "major work-products" but stops short of being
+    a foundational doctrinal document. PROVISIONAL status is appropriate; conversion to CANONICAL requires project-owner adoption
+    (DG-NON authority on canonical conversion); the PROVISIONAL issuance itself is DG-REVIEW (agent decides; owner reviews).
+    A12 §2.4 always-DG-NON applies on adoption.
+  summary: Issue governance/migration-survival.md PROVISIONAL per audit_2026-04-30 R1
+  outcome: 'governance/migration-survival.md committed PROVISIONAL (314 lines). 14 categories registered across 5 dispositions
+    (SURVIVES_AS_IS, SURVIVES_WITH_REDERIVATION, SURVIVES_CONDITIONALLY, SUPERSEDED, OPEN). §5 per-file decision rules for
+    the 78-BPC SURVIVES_CONDITIONALLY case. §6 [STRUCK] claim block with C-stage migration-block until residue resolves. §7
+    forward-dependency hooks. §9 new cross-stage thread CS-MIG. Doctrinal basis: workplan-co0007-v3.md §Salvage matrix (existing
+    5-row matrix expanded to 14 categories with per-file specificity).'
+  rationale: audit_2026-04-30 R1 found that Block 33 supersession created a kept-research / retired-form overhang with no
+    canonical "what survives migration" register. The salvage matrix in workplan v3 is a 5-row summary; this document is the
+    per-category register that reduces silent re-use of retired content and makes Stage C scope auditable. PROVISIONAL status
+    reflects that this conversation also authored audit_2026-04-30 (R4 single-context risk applies to this very document);
+    project-owner adoption converts to CANONICAL.
+  alternatives_considered:
+  - 'Author migration-survival.md as CANONICAL directly (rejected: same-conversation single-context governance authoring is
+    exactly the R4 risk the audit identified; PROVISIONAL is the structural-honest issuance state)'
+  - 'Defer migration-survival.md until project-owner can author it (rejected: B1 is currently in progress and B1-S7-S8 will
+    select the storage form; the register needs to land before B1 storage form is fixed; PROVISIONAL issuance unblocks downstream
+    while preserving owner authority)'
+  decision_date: 2026-05-01 04:30
+  decided_by: opus_4_7_session_2026-05-01_audit-remediation
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - governance/migration-survival.md
+  - workplan/workplan-co0007-v3.md §Salvage matrix
+  - references/audits/process-audit_2026-04-30.md
+  predecessors:
+  - D-0086
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: Marked PROVISIONAL pending project-owner CANONICAL adoption. CS-MIG cross-stage thread activates on adoption. The
+    14-category register supersedes (informally) the 5-row workplan v3 salvage matrix as the operative reference; the workplan
+    v3 row remains the doctrinal source.
+- decision_id: D-0117
+  category: D-OP
+  delegation: DG-NON
+  delegation_rationale: PI text edits are project-owner authority by definition. The Change Order is a proposal; application
+    is DG-NON.
+  summary: Issue governance/pi-revision-co.md as Change Order proposal for PI staleness sweep per audit_2026-04-30 R6
+  outcome: 'governance/pi-revision-co.md committed as proposal-of-record. Three items proposed: PI-CO-01 add references/connections/_index.md
+    to start-protocol read list; PI-CO-02 replace "Sonnet 4.6"/"Opus 4.6" with family-only naming; PI-CO-03 replace co0007-audit-2.md
+    reference with workplan/workplan-co0007-v3.md reference. Application by project owner in claude.ai project settings.'
+  rationale: 'audit_2026-04-30 R6 identified three PI staleness items: D-01-A start-protocol omits _index.md (silent CON-ID
+    resolution failure at session start); D-01-F model-identity pin "Sonnet 4.6/Opus 4.6" creates schema/practice mismatch
+    with Decision register family-only model_routing; D-01-D audit-v2 reference is a broken pointer (file uploaded but never
+    committed; Stage 0 noted this). Single revision sweep proposed via Change Order document because PI is project-owner-owned.'
+  alternatives_considered:
+  - 'Edit project-standards.md to mirror PI revisions (rejected: PI lives in claude.ai project settings; project-standards.md
+    is in repo; mirroring would create inconsistency rather than eliminate it)'
+  - 'Defer PI sweep to next periodic recheck (rejected: silent CON-ID failure is operational cost incurred each session; addressing
+    now reduces ongoing cost)'
+  decision_date: 2026-05-01 04:30
+  decided_by: opus_4_7_session_2026-05-01_audit-remediation
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - governance/pi-revision-co.md
+  - references/audits/process-audit_2026-04-30.md
+  - references/project-standards.md line 451 (CON-NNNN resolution authority)
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'Proposal-of-record pattern: PI does not version inside claude.ai. The Change Order document + this Decision record
+    together create the audit trail for the eventual PI revision.'
+- decision_id: D-0118
+  category: D-OP
+  delegation: DG-AUTO
+  delegation_rationale: Decision-support documents are not decisions per A12 §1; they are inputs to project-owner decisions.
+    Authorship is DG-AUTO (mechanical assembly from audit findings).
+  summary: Issue four decision-support documents per audit_2026-04-30 R3, R8, R10, R11, R12
+  outcome: 'Four decision-support documents committed: workplan/placeholder-review-triage.md (R3 — 106 placeholder Decision
+    records; tiered review sequencing); workplan/external-review-queue.md (R10/R11 — 20 review items mapped to 5 reviewer
+    types; 6 review engagements proposed via batching); workplan/gap-p1-reclassification-recommendation.md (R8 — recommend
+    GAP-079 + GAP-CITE-01 reclassify P1→P2 with Stage C dependency annotation); workplan/struck-claim-research-attempt_2026-05-01.md
+    (R12 — three [STRUCK] claims researched; replacement sources identified for indoor vegetation (Han 2022 SR+MA) and tenji
+    blocks (Ormerod 2015 + Thies 2011); Village Landais 31% claim cannot be re-sourced as stated, recommend Path A directional-finding
+    replacement or CLOSED-DELETED).'
+  rationale: audit_2026-04-30 R3, R8, R10, R11, R12 each ask for project-owner decisions that benefit from prepared analysis.
+    These four documents reduce decision burden by providing the materials needed to decide quickly. None of them make decisions
+    for the project owner.
+  alternatives_considered:
+  - 'Combine all four into a single recommendations document (rejected: each document targets a different decision domain
+    and reviewer; separate documents reduce reading-cost when only one decision is being made)'
+  - 'Defer authorship until project owner requests recommendations on each item (rejected: this audit-remediation session
+    has the context to produce them efficiently; deferral creates re-context-loading cost on the project owner)'
+  decision_date: 2026-05-01 04:30
+  decided_by: opus_4_7_session_2026-05-01_audit-remediation
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - workplan/placeholder-review-triage.md
+  - workplan/external-review-queue.md
+  - workplan/gap-p1-reclassification-recommendation.md
+  - workplan/struck-claim-research-attempt_2026-05-01.md
+  - references/audits/process-audit_2026-04-30.md
+  predecessors:
+  - D-0107
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: These are recommendations, not decisions. Each will pair with one or more downstream Decision records when the project
+    owner adopts/declines/amends.
