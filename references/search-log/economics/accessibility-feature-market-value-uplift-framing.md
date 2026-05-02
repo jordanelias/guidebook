@@ -136,3 +136,32 @@ Accessibility's measurable market premium is captured through co-bundled feature
 3. 12 of 14 languages NOT-RUN.
 4. Co-1 / Tier 2 disability advocacy economic publications NOT-RUN.
 5. Citation mining for all 5+ Tier 3 anchor sources NOT-RUN.
+
+---
+
+## Session 2 update — 2026-05-02 21:00 (alternative-channels investigation)
+
+**Disposition:** PARTIAL → continued PARTIAL. 21 new sources added (REF-IDs 14–34). Channel-decomposed synthesis written (Channels 1, 2, 3a–3h).
+
+**New jurisdictions added (substantively touched):** EU (via Eichhorn et al. 2014, Buhalis-Eichhorn 2015 JTF), NL (via Hogeweyk corpus), CA (via RHFAC documentation review).
+
+**Sub-channels investigated this session:**
+- 3a Dementia village private-pay premium — STRONG evidence (Avandell NJ $12K vs US $7.5K avg = 60% premium; Hogeweyk parity in NL universal coverage)
+- 3b Curbless shower / wet room product-level relabel — STRONG evidence (industry-grey only)
+- 3c Disability-inclusion brand premium — STRONG evidence (Accenture 2018, 2023 — DEI 1.6× revenue, 2× economic profit; selection-bias caveat)
+- 3d Accessible tourism uplift — STRONG evidence (EU 2014 €786B; BMWA 2004 1.16× spend; Open Doors $17B)
+- 3e Purple Pound capture — STRONG evidence (UK Scope £274B; Click-Away £11.75–17.1B annual web inaccessibility loss)
+- 3f Healthcare avoided-cost dividend (CAPABLE) — STRONG evidence (Tier 1 RCT, $30K savings/participant, 45% ADL reduction)
+- 3g Commercial accessibility certification (RHFAC) — empirical gap; descriptive only
+- 3h Sensory-room competitive amenity — descriptive industry trend, no isolated rent uplift
+
+**Major analytic correction:** Session 1 evaluated only Channel 2 (property-as-whole hedonic WTP) and concluded the framing-effect hypothesis was largely refuted. Session 2 has identified 8 alternative channels, of which 6 produce strong empirical signals supporting the hypothesis. The hypothesis is therefore best characterised as multi-channel — strongly supported across product/feature, service/destination, brand/firm, and public-payer levels, but NOT at the property-as-whole level.
+
+**Outstanding work (revised list of 18 items in BPC).** Major new items added:
+- Hospitality chain branding (Marriott/Hilton/IHG/cruise)
+- Equity release / reverse mortgage capitalisation
+- Insurance / litigation avoided-cost capitalisation
+- Per-employee workforce productivity studies (beyond Accenture aggregate)
+- Time-on-market signal (same-price-faster-sale)
+
+**Status of A/B framing experiment hypothesis:** confirmed NOT FOUND across two sessions of targeted searches. ONE more targeted search recommended before declaring NO-DATA.
