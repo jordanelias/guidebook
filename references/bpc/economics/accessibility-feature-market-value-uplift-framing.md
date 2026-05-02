@@ -184,3 +184,61 @@ Not yet run.
 
 ### Bibliographic placeholders
 [REF:accessibility-feature-market-value-uplift-framing:01] through [REF:accessibility-feature-market-value-uplift-framing:34] are PROVISIONAL.
+
+---
+
+## Session 3 addendum — 2026-05-02 22:00
+
+**Disposition update:** PROVISIONAL (3-session corpus). 8 additional method-axes investigated; 6 provided substantive findings; 2 declared LIKELY NO-DATA.
+
+### New consensus findings (Session 3)
+
+| Finding | Languages | Jurisdictions | Tier | Channel |
+|---|---|---|---|---|
+| DE industry-grey claim: barrier-free properties exhibit 5–15% Wertsteigerung; lower vacancy rates | DE | DE | 5 | 2/3 |
+| JP 住宅性能表示制度 高齢者等への配慮 等級1–5 framework provides institutional infrastructure for elderly-care tier system; market-effect signal: "significantly affects contract rate, financial evaluation, and sale speed" (general performance, not isolated to elderly grades) | JA | JP | 5 | 1/2 |
+| KR BF인증 mandatory for new public buildings via 「장애인·노인·임산부 등의 편의증진 보장에 관한 법률」; 한국부동산원 (Korea Real Estate Board) is itself a certifier — institutional infrastructure exists for empirical study | KO | KR | 6 | 1 |
+| Visitability ordinances (Atlanta 1992, Pima 2000, Bolingbrook 2003) created 30,000+ visitable homes nationwide; AZ Court upheld Pima ordinance against builder challenge | EN | US | 6 | 1 |
+| Voluntary visitability uptake systematically fails (Bolingbrook initial voluntary failure); mandatory succeeds — same pattern as LHA Australia 2011→2020 voluntary failure | EN | US, AU | 5 | 1 |
+| Hartford avg slip-fall claim ~$20,000; 8.8M ER fall injuries 2023 US; >25% bar liability claims are slip-fall — accessibility features priced as risk-reducers in commercial premiums | EN | US | 5 | 3f' (insurance avoided cost) |
+| HECM 2026 cap $1,249,125; ~50% equity threshold; 40-60% LTV access — accessibility-feature LTV effect not directly studied (gap) | EN | US | 6 | 3? (equity release) |
+
+### Critical research opportunities surfaced
+
+The visitability ordinance natural experiment is the **single highest-value empirical opportunity** in the entire research space. Atlanta (1992), Austin (1998), Pima County (2000), Bolingbrook (2003), Tucson (2008), and ~50 other ordinances of varying coverage create **multiple difference-in-differences candidate settings** with 25+ years of post-treatment data, all of which involve precisely the framing-effect hypothesis (mandatory accessibility integrated into general housing stock without "accessibility" branding). **No published hedonic identification has exploited this natural experiment.**
+
+The JP 住宅性能表示制度 等級1–5 system and KR BF인증 system both provide regulatory tier-systems that map directly to accessibility levels and are administered by institutions (CEEC; 한국부동산원/KOREB) with property-market data infrastructure. Both could support empirical hedonic identification of accessibility-feature value premium. **No published study identified.**
+
+### Newly identified empirical gaps (declared LIKELY NO-DATA after 3-session search)
+
+1. **Direct A/B framing experiment** with controlled feature sets across accessibility-vs-UD-vs-AIP labels — three sessions of targeted searches, not found.
+2. **NLP listing-text hedonic test on accessibility-substitute keywords** ("single-level," "no-step entry," "open concept," "wide doorways," "curbless," "wet room") — method exists; not applied to this hypothesis.
+3. **RHFAC certification → commercial property value/rent premium** — no rigorous study identified (gap also flagged in Session 2).
+4. **Visitability ordinance hedonic identification** — natural experiment exists; not published.
+
+### Updated key sources (Session 3 additions)
+
+| REF-ID | Short-key | Authors | Year | Title | Source | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|
+| 35 | KfW-IWU-Eval-2022 | KfW Research / IWU | 2022 | Evaluation des KfW-Förderprogramms „Altersgerecht Umbauen (Barrierereduzierung – Einbruchschutz)" | KfW Bankengruppe | Tier 4 | DE | DE |
+| 36 | bau.de-2026 | bau.de | 2026 | Barrierefrei: Neueste Trends in der Außengestaltung — 5–15% Wertsteigerung claim | Industry trade | Tier 5 | DE | DE |
+| 37 | KODDI-BF-2026 | Korea Disabled people's Development Institute (KODDI) | 2026 | 장애물없는 생활환경(BF)인증 제도 | KODDI | Tier 6 | KO | KR |
+| 38 | CEEC-Jutaku-2025 | CEEC (Environment & Energy Saving Calculation Center) | 2025 | 住宅性能評価 完全ガイド | Industry trade | Tier 5 | JA | JP |
+| 39 | NCIL-Visitability | NCIL (National Council on Independent Living) | n.d. | About Visitability — Atlanta 1992; Pima 2000; Bolingbrook 2003 | NCIL | Tier 5 | EN | US |
+| 40 | RZLaw-Visitability-2022 | RZ Law | 2022 | Visitability: A Way of Thinking About Aging and Design — Pima County litigation | RZ Law | Tier 5 | EN | US |
+| 41 | CGA-CT-Visitability-2010 | Connecticut General Assembly Office of Legislative Research | 2010 | Federal, State, and Town Visitability Laws and Initiatives | CGA-CT | Tier 6 | EN | US |
+| 42 | WBDG-Visitability | Whole Building Design Guide | n.d. | Visitability — design guide and ordinance overview | NIBS / WBDG | Tier 5 | EN | US |
+| 43 | NSC-Falls-2023 | US National Safety Council | 2023 | 8.8M ER visits for fall-related injuries — Injury Facts | National Safety Council | Tier 6 | EN | US |
+| 44 | Hartford-SlipFall-2024 | The Hartford / Insureon | 2024 | Average slip-and-fall claim $20,000 (industry data) | The Hartford | Tier 5 | EN | US |
+| 45 | HECM-2026-Limits | HUD / FHA | 2026 | HECM lending limit $1,249,125 in 2026 | reverse.mortgage / Finance of America | Tier 6 | EN | US |
+| 46 | CongressCRS-R44128 | Congressional Research Service | (recurring) | HUD's Reverse Mortgage Insurance Program: Home Equity Conversion Mortgages | Library of Congress | Tier 6 | EN | US |
+| 47 | Abdallah-2015-arXiv | Abdallah S | 2015 | Using Text Mining To Analyze Real Estate Classifieds | arXiv:1511.04674 | Tier 3 (preprint) | EN | INT |
+
+### Multi-session synthesis position
+
+After three Opus sessions, the operational position remains:
+- The framing-effect hypothesis is **multi-channel** — strongly supported across product-feature, service/destination, brand/firm, and public-payer channels; weakly supported at the property-as-whole level.
+- The most important methodological upgrade for future work is the **visitability ordinance hedonic identification**, which represents the single most rigorous empirical opportunity that has not been exploited.
+- The Accenture/Disability:IN evidence base, accessible-tourism EU 2014 evidence base, dementia-village payer-structure-bounded relabeling, and CAPABLE Tier-1 RCT evidence form the load-bearing empirical anchors.
+- Industry-grey signals (DE 5–15% Wertsteigerung; US Cost vs Value 68–70% bathroom ROI; curbless-shower luxury rebrand) are consistent across multiple jurisdictions but require academic citation mining for rigorous underpinning.
+
