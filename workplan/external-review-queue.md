@@ -39,6 +39,7 @@ This document combines both: a single queryable register of (a) which items need
 | EQ-18 | A12 / decision-protocol §1 | Categories (D-DOCT/D-METH/D-OP/D-SCHEMA/D-PRES) classification scheme — external review of taxonomy choices | LOW | Methodology reviewer (E1) |
 | EQ-19 | A13 / doctrine-recheck §3.2 | Four-state contamination rubric (CLEAN/AMBIGUOUS/STUB/MERGED) — external review of rubric clarity | LOW | Methodology reviewer (E1) — see RC-002 finding RC-002-001 |
 | EQ-20 | Audit / R12 | Three [STRUCK] claim residue — re-source attempt or removal-with-rationale | non-review | Internal Opus session (per Block 32 protocol) — not external review |
+| EQ-21 | Audit / R1 + R4 + D-0120 | governance/migration-survival.md (CANONICAL 2026-05-02) — single-context governance authored alongside its recommending audit; external review queued non-blocking per D-0120 adoption framing | MEDIUM | Methodology reviewer (E1) + disability-studies reviewer (cross-cut); see workplan/external-review-outreach-drafts.md Batch 6 |
 
 ---
 

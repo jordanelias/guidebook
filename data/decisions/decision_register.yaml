@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:00
+last_updated: 2026-05-02 02:10
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -394,8 +394,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Item Code System at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
-    review pending.
+  notes: 'Seeded from project-standards.md §Item Code System at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained
+    at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0018
   category: D-METH
   delegation: DG-NON
@@ -474,8 +477,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Citation and Evidence Standards at A12 Session 2 (2026-04-30 13:20). Classification
-    heuristic; review pending.
+  notes: 'Seeded from project-standards.md §Citation and Evidence Standards at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule
+    retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and
+    per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their character. Review
+    pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0022
   category: D-OP
   delegation: DG-NON
@@ -495,8 +501,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Structural Decisions at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
-    review pending.
+  notes: 'Seeded from project-standards.md §Structural Decisions at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained
+    at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0023
   category: D-SCHEMA
   delegation: DG-NON
@@ -517,8 +526,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
-    heuristic; review pending.
+  notes: 'Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule
+    retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and
+    per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their character. Review
+    pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0024
   category: D-DOCT
   delegation: DG-NON
@@ -579,8 +591,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
-    heuristic; review pending.
+  notes: 'Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule
+    retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and
+    per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their character. Review
+    pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0027
   category: D-METH
   delegation: DG-NON
@@ -618,8 +633,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
-    heuristic; review pending.
+  notes: 'Seeded from project-standards.md §CO-0003 + CO-0004 Structural Rules at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule
+    retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and
+    per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their character. Review
+    pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0029
   category: D-METH
   delegation: DG-NON
@@ -825,8 +843,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Endnote and Source Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
-    heuristic; review pending.
+  notes: 'Seeded from project-standards.md §Endnote and Source Pipeline at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule
+    retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and
+    per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their character. Review
+    pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0039
   category: D-OP
   delegation: DG-NON
@@ -845,8 +866,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Session and Process Management at A12 Session 2 (2026-04-30 13:20). Classification
-    heuristic; review pending.
+  notes: 'Seeded from project-standards.md §Session and Process Management at A12 Session 2 (2026-04-30 13:20). Classification
+    heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule
+    retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and
+    per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their character. Review
+    pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0040
   category: D-METH
   delegation: DG-NON
@@ -1034,8 +1058,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Case Studies at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0049
   category: D-PRES
   delegation: DG-NON
@@ -1236,8 +1263,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0058
   category: D-OP
   delegation: DG-NON
@@ -1261,8 +1291,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0059
   category: D-SCHEMA
   delegation: DG-NON
@@ -1284,8 +1317,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0060
   category: D-OP
   delegation: DG-NON
@@ -1305,8 +1341,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0061
   category: D-OP
   delegation: DG-NON
@@ -1327,8 +1366,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0062
   category: D-OP
   delegation: DG-NON
@@ -1353,8 +1395,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0063
   category: D-OP
   delegation: DG-NON
@@ -1377,8 +1422,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0064
   category: D-OP
   delegation: DG-NON
@@ -1399,8 +1447,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0065
   category: D-OP
   delegation: DG-NON
@@ -1421,8 +1472,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0066
   category: D-SCHEMA
   delegation: DG-NON
@@ -1445,8 +1499,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0067
   category: D-PRES
   delegation: DG-NON
@@ -1517,8 +1574,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0070
   category: D-METH
   delegation: DG-NON
@@ -1565,8 +1625,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
-    pending.
+  notes: 'Seeded from project-standards.md §Writing Style at A12 Session 2 (2026-04-30 13:20). Classification heuristic; review
+    pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained at delegation/model_routing
+    as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0072
   category: D-SCHEMA
   delegation: DG-NON
@@ -1587,8 +1650,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2 at A12 Session 2 (2026-04-30
-    13:20). Classification heuristic; review pending.
+  notes: 'Seeded from project-standards.md §Session 2026-04-06 — Phase 1-E Sessions 2-3 + Phase 2 at A12 Session 2 (2026-04-30
+    13:20). Classification heuristic; review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical
+    operational rule retained at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule
+    extractions, and per workplan/placeholder-review-triage.md §5.3 the legacy/none/none model_routing is appropriate to their
+    character. Review pass marks them as audited rather than upgrading routing notation.'
 - decision_id: D-0073
   category: D-DOCT
   delegation: DG-NON
@@ -2075,7 +2141,7 @@ decisions:
   alternatives_considered: []
   decision_date: 2026-04-19 02:20
   decided_by: solo_author_pre_launch
-  model_routing: legacy/none/none
+  model_routing: human/none/none
   effort_level: 100
   decision_artifacts:
   - references/project-standards.md §Enforcement Gates
@@ -2083,8 +2149,11 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: Seeded from project-standards.md §Enforcement Gates at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
-    review pending.
+  notes: 'Seeded from project-standards.md §Enforcement Gates at A12 Session 2 (2026-04-30 13:20). Classification heuristic;
+    review pending. | Tier-C placeholder review 2026-05-02 (D-0120 batch): structural/mechanical operational rule retained
+    at delegation/model_routing as seeded — these are not deliberative decisions but seeded-rule extractions, and per workplan/placeholder-review-triage.md
+    §5.3 the legacy/none/none model_routing is appropriate to their character. Review pass marks them as audited rather than
+    upgrading routing notation.'
 - decision_id: D-0093
   category: D-DOCT
   delegation: DG-NON
@@ -3000,34 +3069,29 @@ decisions:
 - decision_id: D-0119
   category: D-OP
   delegation: DG-AUTO
-  summary: Candidate A (Markdown + YAML status-quo-extended) scored 132 / 171 (77%) under
-    B1 derivation framework
-  outcome: >
-    Candidate A's per-criterion scores 0-3 across all 30 criteria total 132 weighted points
-    out of a maximum 171 (77%). Distinguishing strength clusters: IX Operational (21/21,
-    100%); X Sustainability (12/12, 100%); VI Cross-cutting axes (6/6, 100%); II Cell-level
-    state (16/18, 89%); VIII Time model (17/21, 81%). Distinguishing weakness clusters:
-    VII Navigation/audience (12/27, 44%); III Co-1 schema discipline (6/9, 67%); V
-    Verification (8/12, 67%); I Entity & relationship (20/27, 74%). The dominant weakness
-    is Cluster VII — three of four criteria score 1 (high-cost adaptation) because the
-    query/index layer over markdown+YAML is non-trivial; this is the framework §7.1 strain
-    pattern surfacing as predicted. Cost to reach near-native scoring on all criteria:
-    19-29 sessions for materialization (cell-level YAML extraction; A9 retrofit converter;
-    schema additions for 5 missing entity types) and query-layer build-out.
-  rationale: >
-    Mechanical application of D-0108 (framework), D-0110 (weighting), D-0111 (S-05 spec),
-    D-0112 (eliminator test — does not apply to Candidate A), D-0113 (requirements lock).
-    Each criterion was assessed against the four-question template from b1-derivation-framework.md
-    §6.1 (native/adapted/absent; adaptation cost; operational risk; downstream binding).
-    Scores follow the D-0112 rubric (0=absent, 1=high-cost adaptation, 2=moderate-cost
-    adaptation, 3=native). The evaluation does not compare A to B/C/D — that is Session 7;
-    it produces A's standalone score for input to comparative scoring.
+  summary: Candidate A (Markdown + YAML status-quo-extended) scored 132 / 171 (77%) under B1 derivation framework
+  outcome: 'Candidate A''s per-criterion scores 0-3 across all 30 criteria total 132 weighted points out of a maximum 171
+    (77%). Distinguishing strength clusters: IX Operational (21/21, 100%); X Sustainability (12/12, 100%); VI Cross-cutting
+    axes (6/6, 100%); II Cell-level state (16/18, 89%); VIII Time model (17/21, 81%). Distinguishing weakness clusters: VII
+    Navigation/audience (12/27, 44%); III Co-1 schema discipline (6/9, 67%); V Verification (8/12, 67%); I Entity & relationship
+    (20/27, 74%). The dominant weakness is Cluster VII — three of four criteria score 1 (high-cost adaptation) because the
+    query/index layer over markdown+YAML is non-trivial; this is the framework §7.1 strain pattern surfacing as predicted.
+    Cost to reach near-native scoring on all criteria: 19-29 sessions for materialization (cell-level YAML extraction; A9
+    retrofit converter; schema additions for 5 missing entity types) and query-layer build-out.
 
-    The score is not the selection. Sessions 4-6 produce comparable scores for B, C, D;
-    Session 7 compares; Sessions 8-9 select. Candidate A's 77% baseline is strong but the
-    selection question Sessions 7-8 must answer is whether B, C, or D outscore A enough to
-    justify their migration cost and operational complexity given the project's pre-launch
-    solo-author posture (D-03 binding).
+    '
+  rationale: 'Mechanical application of D-0108 (framework), D-0110 (weighting), D-0111 (S-05 spec), D-0112 (eliminator test
+    — does not apply to Candidate A), D-0113 (requirements lock). Each criterion was assessed against the four-question template
+    from b1-derivation-framework.md §6.1 (native/adapted/absent; adaptation cost; operational risk; downstream binding). Scores
+    follow the D-0112 rubric (0=absent, 1=high-cost adaptation, 2=moderate-cost adaptation, 3=native). The evaluation does
+    not compare A to B/C/D — that is Session 7; it produces A''s standalone score for input to comparative scoring.
+
+    The score is not the selection. Sessions 4-6 produce comparable scores for B, C, D; Session 7 compares; Sessions 8-9 select.
+    Candidate A''s 77% baseline is strong but the selection question Sessions 7-8 must answer is whether B, C, or D outscore
+    A enough to justify their migration cost and operational complexity given the project''s pre-launch solo-author posture
+    (D-03 binding).
+
+    '
   alternatives_considered: []
   decision_date: 2026-05-02 02:00
   decided_by: opus_4_7_session_2026-05-02
@@ -3044,9 +3108,335 @@ decisions:
   supersedes: []
   status: ACTIVE
   review_status: NA
-  notes: >
-    DG-AUTO because the evaluation applies the framework + weighting + lock as specified
-    in earlier D-METH records. No methodological commitment is added by this decision;
-    the evaluation is the methodology being applied. Sessions 4 (Candidate B), 5
-    (Candidate C), 6 (Candidate D + eliminator test) follow the same pattern with their
-    own D-OP/DG-AUTO records.
+  notes: 'DG-AUTO because the evaluation applies the framework + weighting + lock as specified in earlier D-METH records.
+    No methodological commitment is added by this decision; the evaluation is the methodology being applied. Sessions 4 (Candidate
+    B), 5 (Candidate C), 6 (Candidate D + eliminator test) follow the same pattern with their own D-OP/DG-AUTO records.
+
+    '
+- decision_id: D-0120
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Adopt governance/migration-survival.md CANONICAL (was PROVISIONAL since 2026-05-01)
+  outcome: governance/migration-survival.md flipped PROVISIONAL → CANONICAL with project-owner authorization. Document supersedes
+    its 2026-05-01 PROVISIONAL self at commit d76471da. §2.3 rewritten as adoption note; §11 status block updated; change
+    log §12 records the flip; record-count §4.7 refreshed to 119.
+  rationale: 'audit_2026-04-30 R1 recommended a per-category register clarifying what survives Block 33 supersession. The
+    PROVISIONAL register issued 2026-05-01 has been operationally tested by the audit-remediation work that produced it (CS-MIG
+    dependencies surfaced; per-file decision rules in §5 informed the Tier-C placeholder review framing; §6 [STRUCK] block
+    governed BPC edits in this same session). PROVISIONAL → CANONICAL adoption is appropriate now that the document has carried
+    real load. External review remains queued (EQ-21) as non-blocking amendment opportunity rather than gating condition.
+    Adoption is project-owner authority per A12 §2.4 (DG-NON: doctrinal commitments concerning migration scope and audit trail).'
+  alternatives_considered:
+  - Hold PROVISIONAL through external review batch (rejected — EQ-21 queued non-blocking; CS-MIG already operating; further
+    holding provides no marginal protection)
+  - Reissue with amendments before CANONICAL flip (no amendments surfaced from operational use; record-count refresh already
+    incorporated)
+  - Subdivide register into multiple smaller documents (rejected — register character is whole-corpus snapshot; subdivision
+    loses the audit value)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/150/synth
+  effort_level: 100
+  decision_artifacts:
+  - governance/migration-survival.md (this commit)
+  - workplan/external-review-queue.md (EQ-21 added in this commit)
+  - sessions/session_2026-05-02-audit-remediation-cont.md (this session)
+  predecessors:
+  - D-0116
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Companion to D-0116 (which issued the PROVISIONAL register on 2026-05-01). The flip itself is non-textually-substantial
+    — the document is the same document; the status marker changed.
+- decision_id: D-0121
+  category: D-OP
+  delegation: DG-AUTO
+  summary: Accept 22 Tier-C placeholder Decision records (11 D-SCHEMA + 11 mechanical D-OP) as-seeded; mark D-0092 as DG-NON
+  outcome: '22 placeholder records (D-SCHEMA × 11; D-OP × 11 excluding D-0092) reviewed under workplan/placeholder-review-triage.md
+    §5.3 Tier C protocol. Conclusion: legacy/none/none model_routing is appropriate to these records'' structural/mechanical
+    character — they are seeded-rule extractions, not deliberative decisions. Each record''s notes field now records the Tier-C
+    review pass. D-0092 (GitHub branch protection ruleset) reclassified delegation: DG-AUTO → DG-NON because branch-protection
+    settings are project-owner authority (controls in repo settings, not agent-controllable); model_routing updated to human/none/none.'
+  rationale: 'audit_2026-04-30 R3 found 106 placeholder records require triage. The triage doc (D-0118) sequenced them into
+    Tiers A/B/C/D. Tier C (D-SCHEMA + mechanical D-OP, ~23 records) was identified as the strongest case for retaining seeded-rule
+    character without forced upgrade to deliberative-decision routing. This batch executes that Tier C disposition. The 22
+    records carry mechanical/structural rules: file naming conventions (D-0028, D-0017), session-start protocol mechanics
+    (D-0058, D-0063, D-0064, D-0065), bash command patterns (D-0060, D-0062), structural archives (D-0039, D-0022), schema
+    validation patterns (D-0066, D-0072, D-0048, D-0026, D-0017, D-0021, D-0023, D-0038, D-0048, D-0057, D-0059, D-0069).
+    Forcing opus/150/synth on these records would mis-represent them as deliberative decisions when they are seeded operational
+    rules. Accepting as-seeded preserves register hygiene at the correct-resolution level.'
+  alternatives_considered:
+  - Upgrade all 22 to opus/100/route claiming Opus arbitration (rejected — over-attributes routing; the seeded-rule character
+    means no arbitration occurred)
+  - Upgrade to sonnet/50/extract on the basis that the rule was extracted from project-standards (defensible but adds complexity
+    without operational benefit; structural rules behave the same way at any extract-tier marking)
+  - Leave model_routing as legacy/none/none and review_status PENDING (rejected — review HAS occurred; PENDING is now misleading)
+  decision_date: 2026-05-02 01:50
+  decided_by: opus_4_7_session_2026_05_02_audit_remediation_cont
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - data/decisions/decision_register.yaml (22 records updated in this commit)
+  - workplan/placeholder-review-triage.md §5.3
+  predecessors:
+  - D-0118
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Tier A (~5-10 high-leverage doctrinal records) and Tier B (~30 D-METH records) remain pending project-owner review
+    per triage §6 (estimated 11-20 reviewer hours). Tier D (5 D-PRES records) deferred to A4 voice-style phase. This Tier-C
+    batch closes ~21% of the placeholder review queue (22 of 106).
+- decision_id: D-0122
+  category: D-OP
+  delegation: DG-REVIEW
+  summary: Reclassify GAP-079 + GAP-CITE-01 from P1 to P2 (Stage C migration scope per migration-survival.md)
+  outcome: gap_register.md edited to mark GAP-079 (Part 4 + Part 7/8 GRADE matrix application, ~125 specifications) and GAP-CITE-01
+    (1,382 claims to populate ref_ids) as P2 with explicit Stage C dependency annotation. Both gaps target the pre-pivot prose
+    corpus that migration-survival.md §4.2 classifies SUPERSEDED — the underlying citations and evidence judgments cross migration
+    as data, but the prose-form work was being deferred to Stage C anyway. Reclassifying P1→P2 aligns priority signal with
+    actual scheduling. P1 OPEN tier is now empty at Stage A close.
+  rationale: 'audit_2026-04-30 R8 + workplan/gap-p1-reclassification-recommendation.md analyzed three options. Option B (P1→P2
+    with Stage C annotation) was recommended because: (a) the work targets superseded prose-form per migration-survival.md,
+    so re-doing it now duplicates Stage C; (b) neither gap blocks any Phase B critical path (B1-B5); (c) closing entirely
+    (Option C) would lose forward-tracking signal if migration is delayed or rescoped. P2 with annotation preserves visibility
+    while removing false-priority noise.'
+  alternatives_considered:
+  - Option A retain P1, schedule for Phase B (rejected — duplicates Stage C work for ~15-19 sessions; the same claims and
+    judgments would be re-issued at migration)
+  - Option C close-deferred-to-migration (rejected — loses ongoing-tracking signal; gaps are not "done", they are scheduled)
+  - Reclassify only GAP-079 and not GAP-CITE-01 (rejected — both target superseded form and have identical Stage C dependency)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/100/route
+  effort_level: 75
+  decision_artifacts:
+  - gap_register.md (this commit)
+  - workplan/gap-p1-reclassification-recommendation.md
+  - governance/migration-survival.md §4.2 + §4.11
+  predecessors:
+  - D-0118
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: 'GAP-079 description updated; GAP-CITE-01 description updated. Original entry text preserved within new annotation.
+    Future re-issuance at Stage C: when migration reaches the citation/GRADE-application stage, these two gaps activate as
+    input to that Stage-C work product, not as ongoing-corpus tasks.'
+- decision_id: D-0123
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Resolve [STRUCK] indoor-vegetation cognitive-benefits claim by replacing Rhee 2023 attribution with Han, Ruan,
+    Liao 2022 (DOI 10.3390/ijerph19127454)
+  outcome: 'Affected BPCs edited: references/bpc/ALL-ENV.md (consensus-finding row + citation-mining table + Key sources entry);
+    references/bpc/sensory-environment/biophilic-design-healthcare-workplace.md (consensus-finding row + citation-mining table).
+    Replacement source is Han KT, Ruan LW, Liao LS (2022) Effects of Indoor Plants on Human Functions: A Systematic Review
+    with Meta-Analyses, IJERPH 19(12):7454. Method: SR + meta-analysis (42 records SR; 16 records meta-analysis). Tier 3 (systematic
+    review with meta-analysis); replaces previously-struck Rhee 2023 attribution. CS-MIG block (per migration-survival.md
+    §6) lifts on these BPCs. Standard SURVIVES_CONDITIONALLY rules now apply.'
+  rationale: 'audit_2026-04-30 R12 + workplan/struck-claim-research-attempt_2026-05-01.md performed re-source attempt. Han
+    2022 SR+MA is a stronger source than the original Rhee 2023 attribution: SR+MA Tier vs single-study Tier; explicit effect
+    sizes (academic achievement SMD 0.534, 95% CI 0.167-0.901; diastolic BP SMD -2.526, 95% CI -4.142 to -0.909); larger evidence
+    base. The claim "indoor vegetation produces measurable restorative and cognitive benefits" is supported at Tier 3 by Han
+    2022. Retain-with-replacement is the appropriate disposition per Standing Rule 5.'
+  alternatives_considered:
+  - CLOSED-DELETED (rejected — strong replacement source available; the claim itself is well-supported; deletion would be
+    over-purification)
+  - Cite Lee et al. 2023 controlled study (PMC10425438) instead of Han 2022 (rejected — Han 2022 is SR+MA, methodologically
+    stronger; Lee 2023 retained as supporting source not primary)
+  - Retain Rhee 2023 attribution with re-source flag (rejected — attribution is unverifiable per Block 32 search trail; per
+    Standing Rule 5, 2 failed searches → strike; replacement source must be the new citation)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/100/route
+  effort_level: 75
+  decision_artifacts:
+  - references/bpc/ALL-ENV.md (this commit)
+  - references/bpc/sensory-environment/biophilic-design-healthcare-workplace.md (this commit)
+  - workplan/struck-claim-research-attempt_2026-05-01.md §1
+  predecessors:
+  - D-0118
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: 'Bibliography update follow-up: when bibliography file is rebuilt at Stage C migration, add Han 2022 to Tier 3 entries;
+    remove Rhee 2023 if still listed as a citation source (it should not be — Block 32 strike removed it from active citations).'
+- decision_id: D-0124
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Resolve [STRUCK] tenji-blocks MOB-hazard claim by replacing Kapsalis SR attribution with Ormerod 2015 + Thies 2011
+  outcome: 'Affected BPC edited: references/bpc/frameworks-and-methodology/cross-population-case-studies.md (cross-population-tensions
+    list + evidence table + Part 8 §8.4 reference + sources/tier_2 block). Replacement primary: Ormerod M, Newton R, Phillips
+    J, Musselwhite C, McGee S, Russell R (2015) Older people''s experiences of using tactile paving, Proc ICE Municipal Engineer
+    168(1):3-10, DOI: 10.1680/muen.14.00016. Replacement supporting: Thies SB et al. (~2011) Biomechanics for inclusive urban
+    design: Effects of tactile paving on older adults'' gait when crossing the street, Journal of Biomechanics. Combined evidence:
+    qualitative + biomechanical at Tier 3. CS-MIG block (per migration-survival.md §6) lifts on this BPC. Standard SURVIVES_CONDITIONALLY
+    rules now apply.'
+  rationale: audit_2026-04-30 R12 + workplan/struck-claim-research-attempt_2026-05-01.md performed re-source attempt. The
+    Kapsalis SR could not be located at any of two attempted searches; Block 32 struck the attribution. The underlying claim
+    — tenji blocks creating MOB hazard — is well-supported across multiple Tier 3 sources. Ormerod 2015 (qualitative; older
+    people; Proc ICE Municipal Engineer) directly supports the wheelchair-user-discomfort claim. Thies 2011 (biomechanical
+    gait study) provides quantitative falls-risk variability evidence. The combination is methodologically stronger than the
+    original single SR would have been if found. Retain-with-replacement is the appropriate disposition per Standing Rule
+    5.
+  alternatives_considered:
+  - CLOSED-DELETED (rejected — claim well-supported across multiple sources; deletion would lose the cross-population conflict
+    signal that is needed for Part 8 §8.4)
+  - Cite only Ormerod 2015 (rejected — combination with Thies 2011 strengthens the evidence; both retained)
+  - Retain Kapsalis attribution with re-source flag (rejected — Block 32 struck per Standing Rule 5)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/100/route
+  effort_level: 75
+  decision_artifacts:
+  - references/bpc/frameworks-and-methodology/cross-population-case-studies.md (this commit)
+  - workplan/struck-claim-research-attempt_2026-05-01.md §3
+  predecessors:
+  - D-0118
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: Ormerod 2015 DOI inferred from journal pattern; verify before final canonical bibliography. Thies 2011 full citation
+    needs follow-up retrieval at Stage C bibliography rebuild.
+- decision_id: D-0125
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Resolve [STRUCK] Village Landais 31% psychotropic-reduction claim by selecting Path A — replace specific 31% figure
+    with directional Amieva/INSERM 2024 finding
+  outcome: 'Affected BPCs edited: references/bpc/frameworks-and-methodology/cross-population-case-studies.md (sources/co_1
+    block); references/bpc/economics/accessible-design-economics-cost-premium.md (Key evidence-strong findings line); references/bpc/ALL-FW.md
+    (two locations — line 159 main entry and line 395 French jurisdiction summary). The specific "31% psychotropic medication
+    reduction" figure has been removed (not located in any verified INSERM publication per Block 32 search trail + R12 re-source
+    attempt). Replacement: Amieva H et al. INSERM 2024 directional finding — caregiver psychotropic consumption (antidepressants,
+    anxiolytics) decreased from 6 months post-admission and sustained at 12 months (Medscape FR coverage of 3-year research
+    presentation). Tier 4 with PRELIMINARY-FINDINGS flag pending peer-review verification. CS-MIG block (per migration-survival.md
+    §6) lifts on these BPCs.'
+  rationale: 'audit_2026-04-30 R12 + workplan/struck-claim-research-attempt_2026-05-01.md §2.4 recommended Path A. The specific
+    31% number could not be verified in any published INSERM output as of April 2026. The Amieva/INSERM Village Landais research
+    is real and reported but the specific percentage is press-coverage-only material. Two paths considered: Path A (directional
+    finding without specific percentage) preserves the original-intent claim about Village Landais structural approach while
+    correcting the metric to verifiable evidence. Path B (substitute Vella-Brincat 2018 49.66% antipsychotic reduction) was
+    rejected because that intervention is a different methodology (consensus-based medication review in nursing homes, not
+    Village Landais structural approach). Path A is faithful to original intent.'
+  alternatives_considered:
+  - Path B replace with Vella-Brincat 2018 49.66% antipsychotic reduction (rejected — different intervention; reframing the
+    claim breaks evidence-state machine traceability)
+  - CLOSED-DELETED entirely (considered but rejected — the Village Landais case is a meaningful case-study reference; preserving
+    the directional finding maintains the example without the unsupported quantification)
+  - Retain 31% figure with re-source flag (rejected — Block 32 + R12 confirms 2 failed searches; per Standing Rule 5 the figure
+    must be removed)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/100/route
+  effort_level: 75
+  decision_artifacts:
+  - references/bpc/frameworks-and-methodology/cross-population-case-studies.md (this commit)
+  - references/bpc/economics/accessible-design-economics-cost-premium.md (this commit)
+  - references/bpc/ALL-FW.md (this commit)
+  - workplan/struck-claim-research-attempt_2026-05-01.md §2
+  predecessors:
+  - D-0118
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: Amieva/INSERM peer-review verification recommended as Stage C bibliography rebuild action. If peer-reviewed publication
+    of the 3-year findings exists and is located, the PRELIMINARY-FINDINGS flag converts to standard Tier 3; if only press/conference,
+    flag persists.
+- decision_id: D-0126
+  category: D-OP
+  delegation: DG-REVIEW
+  summary: Document working-session counter reset to 0 at A12 S2 as intentional baseline (resolves audit R9 flag)
+  outcome: 'Counter behavior characterized: at A12 S2 register-launch (2026-04-30 13:30) the counter was initialized to 0
+    with notes documenting first-session basis. Subsequent increments: 1 (CI integration sub-session, 2026-04-30 14:30); 2
+    (B1 Session 1, 2026-05-01 02:40); 3 (B1 Session 2, 2026-05-01 03:50); 4 (audit-remediation, 2026-05-01 04:30); 5 (this
+    continuation session, 2026-05-02 01:50). Counter resets to 0 at: (a) doctrine-recheck.md §3 specifies periodic recheck
+    cadence as every 25 working sessions; (b) the register-launch reset establishes the post-Stage-A baseline because pre-A12
+    sessions occurred under different governance (no decision register; different session-consolidator wiring; no working-session
+    counter file existed). The counter at A12 S2 launch is the first-session-of-the-modern-cadence anchor, not a discontinuity
+    error.'
+  rationale: audit_2026-04-30 R9 flagged the counter-reset as potentially-unintentional behavior worth checking. Inspection
+    of working_session_counter.yaml at A12 S2 commit (2026-04-30 13:20 — 45199a3884e7) confirms the file was created with
+    explicit "first session under decision register" framing; the reset was structural-baselining rather than a counter loss.
+    Intentional. No remediation needed; this Decision record creates the audit-trail entry that audit R9 was looking for.
+  alternatives_considered:
+  - Treat reset as bug and reconstruct pre-A12 session count (rejected — pre-A12 sessions did not produce decision-register
+    increments; counting them would mis-anchor the periodic-recheck cadence)
+  - Mark R9 as unresolved gap (rejected — the behavior IS intentional; calling it a gap would mis-classify a working feature)
+  - Leave R9 unresolved without a Decision record (rejected — audit hygiene benefits from explicit closure)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: sonnet/100/route
+  effort_level: 75
+  decision_artifacts:
+  - data/doctrine_recheck/working_session_counter.yaml
+  - governance/doctrine-recheck.md §3
+  - sessions/session_2026-04-30-a12-s2.md
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: Future periodic rechecks (RC-003, RC-004, ...) baseline against this counter-zero anchor. The next periodic recheck
+    is at counter == 25 (current counter == 5; ~20 sessions remaining for B1-B5 work before recheck triggers).
+- decision_id: D-0127
+  category: D-OP
+  delegation: DG-NON
+  summary: Add EQ-21 (CANONICAL migration-survival register external review) to external-review-queue.md as non-blocking;
+    produce reviewer-batch outreach drafts
+  outcome: workplan/external-review-queue.md updated with EQ-21 row and §3 reviewer-batch entries augmented to mention CANONICAL
+    adoption status. workplan/external-review-outreach-drafts.md issued with 6 reviewer-batch one-page outreach drafts (counsel
+    batch; disability-studies batch; methodology reviewer; DPO/Co-1 outreach; workflow-integration scoping; migration-survival
+    register review) — paste-ready emails with placeholders for reviewer name and project-owner contact. These reduce external-review
+    commissioning from a research-and-draft task to a one-click send.
+  rationale: audit_2026-04-30 R10 + R11 + workplan/external-review-queue.md framed external review as gating-on-attempt. Producing
+    outreach drafts is the next step short of actual commissioning, and it is squarely within agent capacity (drafting emails)
+    rather than project-owner capacity (sending them, paying counsel, etc.). The CANONICAL migration-survival register adoption
+    (D-0128) made external review a non-blocking-but-still-warranted item; EQ-21 captures that. Issuing the drafts now means
+    commissioning is one user-action away rather than a multi-step task.
+  alternatives_considered:
+  - Wait for project-owner to draft outreach (rejected — drafts are agent-feasible; producing them reduces project-owner load
+    without taking authority)
+  - Skip EQ-21 because migration-survival is now CANONICAL (rejected — CANONICAL ≠ closed-to-review; external triangulation
+    remains valuable)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - workplan/external-review-queue.md (this commit)
+  - workplan/external-review-outreach-drafts.md (this commit)
+  predecessors:
+  - D-0118
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: Outreach drafts are templates not commitments. Project owner reviews wording, fills in reviewer details, and sends.
+    Tracking responses is project-owner workflow.
+- decision_id: D-0128
+  category: D-OP
+  delegation: DG-NON
+  summary: Issue governance/pi-revision-co.md companion paste-ready text patch for project-owner application in claude.ai
+    PI editor
+  outcome: workplan/pi-revision-co-paste-ready.md issued with the exact text changes for each of PI-CO-01, PI-CO-02, and PI-CO-03
+    — formatted as before/after blocks the project owner can apply directly in the claude.ai project-instructions editor.
+    Application instructions included. Once project owner applies the text in claude.ai (which is outside the repo), they
+    note the application in this Decision record's notes field via a follow-up amendment.
+  rationale: audit_2026-04-30 R6 produced governance/pi-revision-co.md as proposal-of-record. PI text lives in claude.ai project-instructions,
+    not in repo, so the agent cannot apply it. Producing a paste-ready text patch reduces project-owner application from "draft
+    replacement text" to "copy-paste from artifact". This is the agent-feasible piece of the PI revision workflow.
+  alternatives_considered:
+  - Wait for project-owner to draft replacement text from pi-revision-co.md proposal (rejected — drafts are agent-feasible)
+  - Embed the patch in the existing pi-revision-co.md (rejected — separates the proposal-of-record from the application-ready
+    artifact; cleaner to keep them separate documents)
+  decision_date: 2026-05-02 01:50
+  decided_by: project_owner_via_continuation_session
+  model_routing: opus/100/route
+  effort_level: 75
+  decision_artifacts:
+  - governance/pi-revision-co.md
+  - workplan/pi-revision-co-paste-ready.md (this commit)
+  predecessors:
+  - D-0117
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'Application track-back: when project owner applies the patch in claude.ai, they should add a follow-up Decision
+    record (D-NEXT) recording application date and any modifications made during paste. This Decision is the agent-side issuance;
+    the application is the project-owner-side completion.'

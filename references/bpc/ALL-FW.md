@@ -156,7 +156,7 @@
 **Key evidence-strong findings (beyond cost data):**
   - Toilet visibility (D-03): 47% reduction in incontinence events across 32 dementia care facilities (Marquardt 2011, Tier 3; "strongest single empirical finding for any spatial provision in this Guidebook")
   - Loop floor plan: 94% vs. 34% wayfinding success rate (De Hogeweyk POE, 2012–2019, Tier 3)
-  - Normalised dementia environment: 31% psychotropic medication reduction (Village Landais Alzheimer, 2020) [STRUCK — INSERM source unverifiable; figure PROVISIONAL]
+  - Normalised dementia environment: Village Landais Alzheimer (Dax, 2020) — caregiver psychotropic consumption decreased from 6 months and sustained at 12 months (Amieva et al. INSERM 2024 directional finding via Medscape FR coverage); the previously-cited specific "31% reduction" figure was removed per audit_2026-04-30 R12 + D-0125 (not located in any verified INSERM publication). Tier 4 PRELIMINARY-FINDINGS pending peer-review verification.
   - KfW/Prognos evaluation: average retrofit cost €19,100/dwelling for barrier-reduction measures that did not achieve full DIN 18040-2 compliance (2009–2022, 700,000+ dwellings)
   - Sustainability synergy: bundled energy + accessibility retrofits achieve 21–48% operating cost reduction; payback <20 months
   - Social cost of inaccessibility: extra household expenditure with a disabled member ≈5.7% of total household expenditure across 40 countries (Tibble 2005; Zaidi & Burchardt 2005; Mitra & Jones 2017; Estrada-Mejia et al. 2023)
@@ -392,7 +392,7 @@
   - Norwegian SINTEF: 87 schools acoustic data confirming Category A RT60 targets (larger sample than English-language cited studies)
   - Swedish Boverket: covered entrance canopy ≥3000×2000 mm (E-05) climate-specific rationale for Nordic winter
   - French CEREMA: hearing loop >50 seats and all service counters (more comprehensive than UK specification)
-  - French: Village Landais 31% psychotropic medication reduction [STRUCK — INSERM source unverifiable; figure PROVISIONAL, do not cite]sh)
+  - French: Village Landais Alzheimer (Dax, 2020) caregiver-psychotropic-consumption directional finding (Amieva et al. INSERM 2024 — Medscape FR coverage of 3-year findings; Tier 4 PRELIMINARY-FINDINGS pending peer-review verification; replaces previously-struck "31% reduction" attribution per audit_2026-04-30 R12 + D-0125)
   - Japanese: JIS T9251 TWSI dot/bar pattern preceded ISO 23599; >95% detection rate in urban environments
   - Japanese: PTV ≥40 wet for external surfaces (more stringent than E-07 ≥36; relevant in high-rainfall climates)
   - Spanish INE (2019): only 14% of pre-1981 Spanish dwellings have level entry — lowest compliance rate Western Europe

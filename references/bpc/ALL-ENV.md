@@ -38,7 +38,7 @@
 |---|---|---|---|
 | Biophilic design reduces hospitalisation time, mortality, pain, and provider stress in healthcare settings | EN | Cross-jurisdictional (Al Khatib et al. 2024, 61-source systematic review) | 3 |
 | Nature exposure in workplace shows statistically significant positive restorative outcomes across 16 studies | EN | Cross-jurisdictional (Gonçalves et al. 2023, Tier 3) | 3 |
-| Indoor vegetation produces measurable restorative and cognitive benefits; working memory improved [source Rhee 2023 STRUCK — claim needs re-sourcing] | EN | Cross-jurisdictional (Rhee et al. 2023 EEG study) | 3 |
+| Indoor vegetation produces measurable restorative and cognitive benefits; working memory improved | EN | Cross-jurisdictional (Han, Ruan, Liao 2022 — SR + meta-analysis, 42 records SR / 16 records meta-analysis; replaces struck Rhee 2023 attribution per audit_2026-04-30 R12 + D-0123) | 3 |
 | Restorative effect measurable via HRV and salivary cortisol; blood pressure is inferior proxy | EN | Cross-jurisdictional (Liu Y et al. 2024, 571-source ART review) | 3 |
 | Space typology determines which biophilic element is prioritised; user group stratification confirmed | EN | Cross-jurisdictional (Tekin et al. 2023) | 3 |
 | Biophilic outdoor transitional spaces function as decompression/regulation environments for NDV populations | EN | AU, UK | Co-1 (Latiff et al. 2024) |
@@ -59,11 +59,12 @@
 |---|---|---|
 | Al Khatib et al. (2024) | Backward | Ulrich (1984); Kellert & Calabrese (2015) |
 | Gonçalves et al. (2023) | Forward | Liu Y et al. (2024) |
-| [STRUCK] | Forward | Latiff et al. (2024) |
+| Han, Ruan, Liao (2022) | Forward | Latiff et al. (2024) |
 
 ### Key sources
 1. Al Khatib, H., et al. (2024). Biophilic design in healthcare: systematic review, 61 sources. [EN, Tier 3]
 2. Gonçalves, A., et al. (2023). Nature exposure and workplace restorative outcomes: 16 studies. [EN, Tier 3]
+3. Han, K. T., Ruan, L. W., & Liao, L. S. (2022). Effects of Indoor Plants on Human Functions: A Systematic Review with Meta-Analyses. *International Journal of Environmental Research and Public Health*, 19(12), 7454. DOI: 10.3390/ijerph19127454. [EN, Tier 3 — replaces struck Rhee 2023 attribution per audit_2026-04-30 R12 + D-0123]
 4. Tekin, B., et al. (2023). User group stratification in biophilic healthcare design. [EN, Tier 3]
 5. Liu, Y., et al. (2024). Attention Restoration Theory: 571-source review; HRV/cortisol measurement. [EN, Tier 3]
 6. Ulrich, R. S. (1984). View through a window may influence recovery from surgery. *Science*, 224, 420–421. [EN, historical reference only — Tier 3/single study]

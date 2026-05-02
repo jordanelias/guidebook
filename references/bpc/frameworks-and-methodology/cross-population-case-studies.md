@@ -52,7 +52,7 @@ IT: studi di caso progettazione accessibile multipopolazione [PARTIAL]
 
 ### Cross-Population Tensions Documented in Built Evidence
 
-1. **Tactile walking surface indicators (VIS) vs mobility device users (MOB/PAIN)** ● Tenji blocks documented as causing fatigue and instability for MobAD users (Kapsalis et al. 2024, systematic review). Classic cross-population conflict. Partial resolution: alternative crossing design enabling both populations. [§8.4 candidate]
+1. **Tactile walking surface indicators (VIS) vs mobility device users (MOB/PAIN)** ● Tenji blocks documented as causing fatigue and instability for MobAD users (Ormerod et al. 2015 qualitative + Thies et al. 2011 biomechanical; replaces previously-struck Kapsalis attribution per audit_2026-04-30 R12 + D-0124). Classic cross-population conflict. Partial resolution: alternative crossing design enabling both populations. [§8.4 candidate]
 
 2. **DeafSpace wider sightlines (DEAF) vs acoustic management (NDV/AUT/PAIN)** ○ DeafSpace principles require open space and visual connectivity; autism and noise-sensitivity populations benefit from acoustic separation and smaller enclosed spaces. Tension unresolved in existing literature; no built example of explicit resolution documented.
 
@@ -70,7 +70,7 @@ IT: studi di caso progettazione accessibile multipopolazione [PARTIAL]
 |---|---|---|---|
 | NHS CAMHS inpatient environments (UK) | NDV/AUT + NDV/MH | Systematic sensory design failure for autistic patients in mental health wards | NDTi / NHS England 2022 (Tier 1 autistic-led) |
 | DeafSpace SLCC rounded corners (US, 2008) | DEAF vs MOB | Design provision for DEAF created MOB collision hazard; corrected post-occupancy | Gallaudet self-report (Co-1) |
-| Tenji tactile blocks (cross-jurisdiction) | VIS vs MOB | Tactile guidance for VIS documented as fatigue/instability hazard for MOB aid users | Kapsalis et al. 2024 systematic review (Tier 3) |
+| Tenji tactile blocks (cross-jurisdiction) | VIS vs MOB | Tactile guidance for VIS documented as fatigue/instability hazard for MOB aid users | Ormerod et al. 2015 qualitative (Proc ICE Municipal Engineer 168(1):3-10, DOI 10.1680/muen.14.00016) + Thies et al. 2011 biomechanical (Tier 3 — replaces struck Kapsalis attribution per D-0124) |
 | NHS accessible toilets (UK, ongoing) | MOB | "Accessible" toilet frequently blocked by cleaning equipment, bins, highchairs | Zallio & Clarkson 2021 ethnographic study (Co-1 adjacent) |
 
 ---
@@ -113,7 +113,7 @@ IT: studi di caso progettazione accessibile multipopolazione [PARTIAL]
 - Identify and disclose thin evidence base explicitly: Part 13 methodology note should acknowledge that no existing case study provides rigorous cross-population POE data
 
 **Part 8 §8.4 (Cross-Population Resolutions):**
-- Tenji blocks: document as VIS/MOB conflict with partial design resolution (alternative crossing geometry) — [STRUCK] Kapsalis 2024
+- Tenji blocks: document as VIS/MOB conflict with partial design resolution (alternative crossing geometry) — Ormerod et al. 2015 + Thies et al. 2011 (replaces previously-struck Kapsalis attribution per D-0124)
 - DeafSpace rounded corners: document as DEAF/MOB design correction — Gallaudet SLCC
 - Thermal conflict: already in §8.4.x — cross-reference Maggie's meta-synthesis for PAIN/OFS thermal sensitivity evidence
 
@@ -131,7 +131,8 @@ tier_1:
   - NDTi / NHS England (2022). Improving the Sensory Environments of Mental Health Inpatient Facilities for Autistic Children and Young People. Tandfonline DOI: 10.1080/13575279.2022.2126437
 
 tier_2:
-  - Kapsalis E et al. (2024). Disabled-by-design: Effects of inaccessible urban public spaces on users of mobility assistive devices — systematic review. Disabil Rehabil Assist Technol 19:604-622.
+  - Ormerod M, Newton R, Phillips J, Musselwhite C, McGee S, Russell R (2015). Older people's experiences of using tactile paving. Proc ICE Municipal Engineer 168(1):3-10. DOI: 10.1680/muen.14.00016. [Replaces Kapsalis 2024 attribution per audit_2026-04-30 R12 + D-0124 — qualitative research with older people about tactile paving experiences; documents tactile paving hazard for manual wheelchair users.]
+  - Thies SB et al. (~2011). Biomechanics for inclusive urban design: Effects of tactile paving on older adults' gait when crossing the street. Journal of Biomechanics. [Replaces Kapsalis 2024 attribution — biomechanical gait study; tactile blister paving increases step width and step time variability vs smooth pavement.]
 
 tier_3:
   - Liu L et al. (2022). The impact of biophilic design in Maggie's Centres: A meta-synthesis analysis. Building and Environment. ScienceDirect. [Maggie's Centres thermal, sensory outcomes]
@@ -143,7 +144,7 @@ tier_4_5:
 
 co_1:
   - Gallaudet University (2010). DeafSpace Design Guidelines Vol 1. Bauman H (ed). [self-reported design corrections including rounded corners]
-  - [STRUCK] Inserm / Amieva H, Bordeaux University (2023). Village Landais longitudinal evaluation ongoing. [early results ITV News 2023]
+  - Amieva H et al. / INSERM (2024). Village Landais Alzheimer 3-year findings: caregiver psychotropic consumption (antidepressants, anxiolytics) decreased from 6 months post-admission and sustained at 12 months; caregiver burden score decreased from admission to 6 months and maintained. [Per audit_2026-04-30 R12 Path A + D-0125 — replaces previously-struck "31% psychotropic reduction" attribution; directional finding only; verify against peer-reviewed publication when available. Tier 4 with PRELIMINARY-FINDINGS flag pending peer-review verification.]
   - The Kelsey (2025). Inclusive Design Standards. Published at thekelsey.org/design.
   - SG Enable (2025). From Testbed to Transformation: 10 Years of Enabling Village. enablingvillage.sg
 

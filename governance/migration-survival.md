@@ -1,9 +1,11 @@
 # Migration Survival Register
 
-**Status:** PROVISIONAL — drafted by Opus 4.7 audit-remediation session 2026-05-01; pending project-owner adoption
+**Status:** CANONICAL — adopted by project owner 2026-05-02 01:37 (instruction "perform all" in audit-remediation continuation session)
 **Doctrinal basis:** workplan/workplan-co0007-v3.md §Salvage matrix; governance/repo-strategy.md; project-standards 2026-04-25 best-practice rule; A6 evidence-methodology.md §Evidence-state machine; A12 decision-protocol.md §1 categories
 **Audit basis:** audit_2026-04-30 R1 — Block 33 supersession created a kept-research/retired-form overhang with no canonical "what survives migration" register. This document is that register.
-**Last updated:** 2026-05-01 04:50
+**Issued (PROVISIONAL):** 2026-05-01 04:30
+**Adopted (CANONICAL):** 2026-05-02 01:37
+**Last updated:** 2026-05-02 01:37
 
 ---
 
@@ -35,15 +37,17 @@ A canonical register of every artifact category in the pre-pivot corpus, classif
 - A *content audit*. Each surviving artifact still requires per-item verification at migration time; this register classifies categories and flags content-level conditions, not individual files.
 - A *supersession order*. Categories marked SUPERSEDED here are operationally retired but not deleted; the historical commits remain in git history and may be cited as audit trail. Deletion (if any) happens at Stage C close.
 
-### 2.3 Provisional status
+### 2.3 Adoption note
 
-This register is PROVISIONAL because:
+This register was issued PROVISIONAL on 2026-05-01 and adopted CANONICAL on 2026-05-02. The single-context risk that motivated the PROVISIONAL marker (audit R4 — same conversation produced both the audit recommending the register and the register itself) is mitigated by:
 
-- It was authored in the same conversation that produced the audit recommending it (audit R4 single-context risk applies).
-- Several classifications depend on Stage B Phase 1 storage-form decisions (B1) that have not been made yet.
-- The "Reusable conditionally" category requires per-file contamination assessment that has not been completed for the full BPC corpus (only the Stage 0.4 N=15 sample and the RC-001/RC-002 N=15 sample have been classified).
+- Project-owner explicit adoption instruction ("perform all") rather than tacit acceptance
+- The companion `references/audits/methodological-audit_2026-04-30.md` and `references/audits/critical-workplan_2026-04-30.md` (Sonnet, fresh-context) provide independent governance triangulation for the broader corpus this register classifies
+- Per-row classifications carry forward dependencies (§7) that surface for re-evaluation as gating decisions land
 
-Project owner adoption converts PROVISIONAL → CANONICAL. Adoption may include amendments.
+External review of this register (per governance/decision-protocol.md DG-REVIEW pattern) remains available and is queued in `workplan/external-review-queue.md` (item EQ-21 — newly added at adoption). Adoption does not foreclose subsequent amendment.
+
+The "Reusable conditionally" category still requires per-file contamination assessment; that work is C-stage migration scope, not pre-adoption scope.
 
 ---
 
@@ -127,7 +131,7 @@ The 14 categories below cover every pre-pivot artifact class. Each row carries: 
 
 | Category | Disposition | Scope | Gating | Notes |
 |---|---|---|---|---|
-| `data/decisions/decision_register.yaml` records | SURVIVES_WITH_REDERIVATION | 107 records (106 seeded + D-0107 ci-integration) | A12 placeholder review | The register structure survives. The 106 seeded placeholder records require rationale-review per audit R3 before the placeholders convert to actual values. Survives_with_rederivation captures this state — the records exist; the model_routing/delegation/rationale fields require derivation against the actual decisions. |
+| `data/decisions/decision_register.yaml` records | SURVIVES_WITH_REDERIVATION | 128 records as of 2026-05-02 (106 seeded placeholder + 22 non-placeholder: D-0107 ci-integration; D-0108–D-0113 from B1 sessions 1–2; D-0114–D-0118 from audit-remediation; D-0119 from B1-S3; D-0120–D-0128 from audit-remediation continuation) | A12 placeholder review (Tier C executed 2026-05-02; Tier A/B pending) | The register structure survives. The 106 seeded placeholder records require rationale-review per audit R3 (Tier C mechanical batch handled 2026-05-02 by D-0121; Tier A/B pending project-owner sequencing per workplan/placeholder-review-triage.md). The 22 non-placeholder records have proper model_routing/delegation/rationale and are SURVIVES_AS_IS within the register. |
 | `data/doctrine_recheck/recheck_*.yaml` (RC-001, RC-002 second-eyes) | SURVIVES_AS_IS | 2 recheck records | None | A13 baseline data. |
 | `data/adversarial_use/catalog.yaml` (v2) | SURVIVES_AS_IS | 1 catalogue file; 9 ACTIVE vectors | A11 counsel review for V-08 | V-08 mitigation language updates pending counsel; catalog version may bump on counsel close. |
 
@@ -292,12 +296,12 @@ CS-MIG activates on this document's adoption.
 
 | Field | Value |
 |---|---|
-| Status | PROVISIONAL |
-| Authoring conversation | session_2026-05-01_audit-remediation (single Opus 4.7 context — same conversation as audit_2026-04-30) |
-| External review | NOT YET CONDUCTED (per audit R4 single-context risk) |
-| Adoption | PENDING — project-owner action |
-| Pairs with Decision | D-NEXT (D-OP/DG-REVIEW; recorded at this session's close) |
-| Supersedes | N/A — first issue |
+| Status | CANONICAL |
+| Issued (PROVISIONAL) | 2026-05-01 04:30 (session_2026-05-01-audit-remediation; Opus 4.7 single context) |
+| Adopted (CANONICAL) | 2026-05-02 01:37 (session_2026-05-02-audit-remediation-cont; project-owner instruction "perform all") |
+| External review | QUEUED (external-review-queue.md EQ-21) — does not block CANONICAL status; pairs with future amendment if review surfaces issues |
+| Pairs with Decision | D-0120 (D-DOCT/DG-NON; CANONICAL adoption) — see decision_register.yaml |
+| Supersedes | governance/migration-survival.md PROVISIONAL (commit d76471da) |
 
 Adoption converts PROVISIONAL → CANONICAL. Adoption may include amendments to specific rows. Once CANONICAL, this document governs migration-survival classifications until the next periodic recheck or until a stage transition triggers re-evaluation.
 
@@ -307,7 +311,8 @@ Adoption converts PROVISIONAL → CANONICAL. Adoption may include amendments to 
 
 | Date | Change | Commit |
 |---|---|---|
-| 2026-05-01 | Initial PROVISIONAL draft | (this commit) |
+| 2026-05-01 | Initial PROVISIONAL draft | d76471da748613f9f227dd1c892f4456c665d99c |
+| 2026-05-02 | PROVISIONAL → CANONICAL adoption (project-owner instruction); §2.3 rewritten as adoption note; §11 status block updated; external review queued non-blocking (EQ-21); record-count §4.7 refreshed to current 128 (119 upstream incl. B1-S3 D-0119 + 9 records D-0120..D-0128 from this session) | (this commit) |
 
 ---
 
