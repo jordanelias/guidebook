@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:35
+last_updated: 2026-05-02 02:55
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -3552,6 +3552,133 @@ decisions:
   - D-0110
   - D-0113
   - D-0129
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    DG-AUTO because the evaluation applies the framework + weighting + lock + substrate
+    choice as specified in earlier D-METH records.
+- decision_id: D-0131
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Within-Candidate-C substrate selection — RDF/Apache Jena (TDB embedded mode)
+    operative; Blazegraph, Neo4j, Memgraph, TigerGraph dismissed within Candidate C
+  outcome: >
+    For B1 Session 5's evaluation of Candidate C (Graph/triplestore), the operative
+    sub-substrate is RDF/Apache Jena in TDB embedded mode. Four alternative
+    sub-substrates are dismissed within Candidate C: Blazegraph (deprecated 2020;
+    vendor risk unacceptable); Neo4j (single-vendor steward; Cypher partial
+    standardization; on-disk format proprietary); Memgraph and TigerGraph (vendor risk
+    too high for 12+ year horizon). Selection rationale: (a) RDF format longevity is
+    highest of the four sub-substrates given W3C standardization (Turtle, N-Triples,
+    JSON-LD, SPARQL all W3C-standardized); (b) Apache Foundation steward eliminates
+    single-vendor risk; (c) TDB embedded mode runs as a library against a directory of
+    files, closer to SQLite's solo-author profile than Neo4j's server requirement;
+    (d) JSON-LD compatibility bridges to JSON tooling for consumers who do not speak
+    SPARQL. If Sessions 7-9 select Candidate C and a non-RDF sub-substrate's properties
+    later dominate, this decision can be revisited — but the operative substrate for
+    Session 5's evaluation is RDF/Apache Jena.
+  rationale: >
+    The framework §5.3 named two graph sub-substrate families (RDF triplestore;
+    property graph) and deferred the within-Candidate-C sub-decision to Session 5 if
+    Candidate C survives Session 1's calibration sketch. Session 5 must commit to one
+    sub-substrate to evaluate against the 30 criteria — evaluating against the union
+    of sub-substrates would conflate candidates. RDF/Jena is selected because format
+    longevity dominates other concerns at the 12+ year horizon (S-01 binding):
+    W3C-standardized RDF outlives any specific engine; data is portable across
+    Jena/RDF4J/Virtuoso/Stardog/Blazegraph regardless of which engine processes it.
+    Apache Foundation stewardship eliminates the single-vendor risk that disqualifies
+    Blazegraph (deprecated 2020) and constrains Neo4j (single-steward Neo4j Inc.).
+    TDB embedded mode addresses the solo-author posture concern (D-03 binding) by
+    avoiding a server process — Jena runs as a JVM library against a TDB directory,
+    operationally closer to SQLite than to Neo4j or Fuseki server mode.
+  alternatives_considered:
+  - >-
+    Apache Jena Fuseki (server mode) — rejected: server process adds operational
+    discipline that solo-author pre-launch posture (D-03) does not need. Embedded TDB
+    achieves the same query power without the server.
+  - >-
+    Blazegraph — rejected: project deprecated 2020 (Amazon acquired/forked into
+    Neptune); no active maintenance on the open-source codebase. RDF data would
+    survive (W3C-standardized format), but operating against an unmaintained engine
+    creates compounding risk.
+  - >-
+    Neo4j Community Edition — rejected: single-vendor steward (Neo4j Inc.); Cypher's
+    openCypher standardization is partial; on-disk format proprietary. Format
+    longevity materially weaker than RDF. Operationally simpler than RDF in some ways
+    but worse on the doctrinal-binding concerns (longevity, vendor independence).
+  - >-
+    Memgraph or TigerGraph — rejected: vendor risk too high for a 12+ year horizon.
+    Both are newer projects with smaller ecosystems and vendor-dependent toolchains.
+  decision_date: 2026-05-02 02:55
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-c-graph.md §1.3
+  - sessions/session_2026-05-02-b1-s5.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    Sub-decision under D-0108. If Candidate C is selected at Sessions 7-9 and a
+    different sub-substrate's properties later dominate (e.g., Stage C scope reveals
+    a need for property-graph traversal patterns that property-graph engines optimize
+    better than RDF), this decision can be superseded. The selection is for B1
+    evaluation purposes; downstream stages may revisit.
+- decision_id: D-0132
+  category: D-OP
+  delegation: DG-AUTO
+  summary: Candidate C (Graph/RDF, Apache Jena TDB embedded) scored 155 / 171 (91%)
+    under B1 derivation framework
+  outcome: >
+    Candidate C's per-criterion scores 0-3 across all 30 criteria total 155 weighted
+    points out of a maximum 171 (91%). Distinguishing characteristic: 8 of 10 clusters
+    at 100% — the most clusters at full score of any candidate evaluated so far.
+    Strength clusters: I Entity & relationship (27/27, 100%); II Cell-level state
+    (18/18, 100%); III Co-1 schema discipline (9/9, 100%); IV Synthesis metadata
+    (18/18, 100%); VI Cross-cutting axes (6/6, 100%); VII Navigation/audience (27/27,
+    100%); VIII Time model (21/21, 100%); X Sustainability (12/12, 100%). Weakness
+    cluster: IX Operational (7/21, 33%) — the dominant Candidate C weakness, materially
+    worse than Candidate B's 48%. Drivers: JVM dependency in CI (C-9.1=1); ontology +
+    SHACL + SPARQL cognitive load for solo author (C-9.2=1); migration cost is highest
+    of three substrates evaluated (C-9.3=1, C-9.4=1); A10/A12/A13 integration requires
+    SPARQL validator rewrites (C-9.5=1). Cost to reach near-native scoring: 34-50
+    sessions, materially higher than Candidate B (27-42) and substantially higher than
+    Candidate A (19-29). Cost-to-score ratio: 91% at 34-50 sessions vs Candidate B's
+    89% at 27-42 — the 2-percentage-point gain costs ~7 additional sessions, plus
+    a substantial increase in solo-author cognitive load.
+  rationale: >
+    Mechanical application of D-0108 (framework), D-0110 (weighting), D-0111 (S-05
+    spec), D-0112 (eliminator test — does not apply to Candidate C), D-0113
+    (requirements lock), D-0131 (within-C substrate = RDF/Apache Jena). Each criterion
+    was assessed against the four-question template from b1-derivation-framework.md
+    §6.1. The evaluation does not compare C to A/B/D — that is Session 7. Standalone
+    score for input to comparative scoring.
+
+    Notable observation: Cluster IX's 33% score understates the doctrinal weight of
+    the solo-author operability concern. C-9.2 is weight-2; if it were weight-3
+    (sourced to D-03 directly rather than to A5+D-03 operationalization), Candidate
+    C's score would drop ~4 weighted points further. Sessions 7-9 must weigh the
+    Cluster I and VIII strengths against the Cluster IX concern with explicit
+    attention to D-03's binding force.
+  alternatives_considered: []
+  decision_date: 2026-05-02 02:55
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-c-graph.md
+  - sessions/session_2026-05-02-b1-s5.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  - D-0110
+  - D-0113
+  - D-0131
   supersedes: []
   status: ACTIVE
   review_status: NA

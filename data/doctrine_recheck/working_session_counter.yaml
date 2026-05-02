@@ -1,19 +1,14 @@
-counter: 7
-last_updated: 2026-05-02 02:35
-last_session: session_2026-05-02-b1-s4.md
-notes: 'Counter increments per session-consolidator §1c. Seventh increment after A12
-  S2 initialisation. Sequence: A12-S2 launch (counter set to 0), CI integration sub-session
-  (->1), B1 Session 1 (->2), B1 Session 2 (->3), audit-remediation (->4), B1 Session 3
-  (->5), audit-remediation continuation (->6), B1 Session 4 (->7). This session shipped
-  the Candidate B evaluation deliverable (workplan/b1-candidate-b-relational.md) plus
-  two Decision records (D-0129 D-METH/DG-REVIEW within-Candidate-B substrate=SQLite;
-  D-0130 D-OP/DG-AUTO Candidate B scored 152/171 (89%)). Counts as a working session
-  per §1c. Next periodic recheck at counter == 25.
-
-  Concurrent context: Sessions 4 and audit-remediation-cont ran nearly simultaneously
-  in parallel conversations. audit-remediation-cont landed first (commit 33efc0a3 at
-  01:54 UTC; took D-0120..D-0128) and B1-S4 committed second (renumbered its drafted
-  D-0120/D-0121 to D-0129/D-0130 to avoid collision). Both sessions' decision records
-  rebase against the common ancestor B1-S3 (D-0119, commit 7b57eca4).
+counter: 8
+last_updated: 2026-05-02 02:55
+last_session: session_2026-05-02-b1-s5.md
+notes: 'Counter increments per session-consolidator §1c. Eighth increment after A12
+  S2 initialisation. Sequence: A12-S2 launch (counter set to 0), CI integration
+  sub-session (->1), B1 Session 1 (->2), B1 Session 2 (->3), audit-remediation (->4),
+  B1 Session 3 (->5), audit-remediation continuation (->6), B1 Session 4 (->7), B1
+  Session 5 (->8). This session shipped the Candidate C evaluation deliverable
+  (workplan/b1-candidate-c-graph.md) plus two Decision records (D-0131 D-METH/DG-REVIEW
+  within-Candidate-C substrate=RDF/Apache Jena; D-0132 D-OP/DG-AUTO Candidate C scored
+  155/171 (91%)). Counts as a working session per §1c. Next periodic recheck at
+  counter == 25.
 
   '
