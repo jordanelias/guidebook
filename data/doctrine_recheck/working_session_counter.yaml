@@ -1,16 +1,20 @@
-counter: 11
-last_updated: 2026-05-02 02:40
-last_session: session_2026-05-02-b1-s8.md
-notes: 'Counter increments per session-consolidator §1c. Eleventh increment after
+counter: 12
+last_updated: 2026-05-02 02:50
+last_session: session_2026-05-02-b1-s9.md
+notes: 'Counter increments per session-consolidator §1c. Twelfth increment after
   A12 S2 initialisation. Sequence: A12-S2 launch (counter set to 0), CI integration
   sub-session (->1), B1 Session 1 (->2), B1 Session 2 (->3), audit-remediation
   (->4), B1 Session 3 (->5), audit-remediation continuation (->6), B1 Session 4
   (->7), B1 Session 5 (->8), B1 Session 6 (->9), B1 Session 7 (->10), B1 Session 8
-  (->11). This session shipped architecture/storage-derivation.md (PROVISIONAL,
-  333 lines, the canonical B1 deliverable per workplan v3 §B1) plus one Decision
-  record (D-0138 D-DOCT/DG-NON storage-form selection — Candidate B / SQLite
-  proposed; PENDING project-owner adoption). The architecture/ directory is created
-  by this session. Counts as a working session per §1c. Next periodic recheck at
-  counter == 25.
+  (->11), B1 Session 9 (->12). This session shipped architecture/schema-spec.md
+  (PROVISIONAL, 990 lines, the final B1 schema specification translating 14
+  Pydantic modules to SQL DDL + 5 new entity types + 13-phase migration tooling
+  outline) and governance/repo-strategy-revision-co.md (PROPOSED, the Change
+  Order proposal-of-record revising the Stage 0.8 repo-strategy with terminal-state
+  outcome). Two Decision records: D-0139 D-SCHEMA/DG-REVIEW PROVISIONAL schema
+  spec issuance; D-0140 D-OP/DG-REVIEW PROPOSED repo-strategy revision. B1 Phase
+  1 substantively COMPLETE pending project-owner adoptions of D-0138 (storage
+  form), D-0139 (schema spec), D-0140 (repo-strategy revision). Counts as a
+  working session per §1c. Next periodic recheck at counter == 25.
 
   '

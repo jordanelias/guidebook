@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:40
+last_updated: 2026-05-02 02:55
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -4179,3 +4179,146 @@ decisions:
     of this session — the selection rationale integrates 7 prior sessions of evidence
     + 5 prior decisions + the framework + the weighting + the doctrinal anchors into
     a defensible commitment. This is the highest-effort session of B1.
+- decision_id: D-0139
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: architecture/schema-spec.md issued — SQL DDL specification for SQLite storage
+    form covering 14 existing Pydantic schema modules + 5 new entity-type modules +
+    13-phase migration tooling outline
+  outcome: >
+    The schema specification translates the existing 14 Pydantic schema modules into
+    SQL DDL form (column types, constraints, indexes, FK relationships, triggers).
+    It enumerates the 5 entity types currently un-schemed that complete the 20-entity
+    A3 inventory (Population/Sub-population, Item, Conflict, Question deferred to B3,
+    FDR Scenario + Specialist Handoff). It states the polymorphic FK pattern, JSON-column
+    usage criteria, indexing strategy, and trigger-based state-machine enforcement
+    (cell-state transitions per A6 §2.7, Co-1 6-field write-time enforcement per A5 §6.1).
+    It outlines 13-phase migration tooling that B2 detail-implements. The document is
+    PROVISIONAL because D-0138 (storage form selection) is itself PROVISIONAL pending
+    project-owner adoption; schema spec becomes operative in lockstep.
+  rationale: >
+    B1 Session 9 is the final B1 session per workplan v3 §B1. It produces the schema
+    specification that translates D-0138's selected form (SQLite) into actionable SQL
+    DDL. The document is structured as: §1 purpose · §2 entity-table mapping for 14
+    existing modules · §3 5 new entity-type modules · §4 cross-cutting structural notes
+    (polymorphic FK pattern, JSON columns, indexes, triggers, Co-1 enforcement) · §5
+    migration tooling outline · §6 decision-capture · §7 status + B1 Phase 1 completion
+    summary.
+
+    Cluster-by-cluster mapping to D-0138 selection rationale: §2.1 (evidence_source
+    Co-1 CHECK) closes the C-3.1 gap that disqualified A; §2.2 (cell + cell_evidence_source
+    + cell_state_transition) operationalizes DC-1 and DC-3; §3.4 (question table)
+    operationalizes DC-6; §4.4 (state-machine triggers) earns C-2.1 score 3 under B;
+    §5.4 (migration-out tooling) satisfies S-05 5-deliverable standard; §5.1 (13-phase
+    migration order) operationalizes the 27-42 session cost-to-near-native trajectory
+    from D-0121 §4.3.
+
+    DG-REVIEW per A12 §2: schema decisions reach all entity types and validators. The
+    schema spec accurately translates the Pydantic schemas, captures the 5 missing types
+    correctly, and outlines the migration phasing soundly — but project-owner review
+    confirms before B2 builds against the spec.
+  alternatives_considered:
+  - >-
+    Wait for D-0138 project-owner adoption before issuing schema spec — rejected: B1
+    Session 9 is the final B1 session and must produce the canonical B1 deliverable
+    set per workplan v3 §B1. PROVISIONAL status accurately captures the dependency
+    on D-0138 adoption.
+  - >-
+    Produce SQL DDL files (.sql artifacts) at this session — rejected: DDL files are
+    a B2 deliverable. The DDL is specified in this document for B2 to operationalize.
+    Issuing both spec and DDL files at once would conflate B1 and B2 scopes.
+  - >-
+    Produce SQLAlchemy ORM models at this session — rejected: same scope reasoning.
+    B2 produces the Pydantic↔SQLAlchemy mapping using this document as input.
+  - >-
+    Defer the 5 new entity types (Population, Item, Conflict, Question, FDR Scenario,
+    Specialist Handoff) to B2 — rejected: B1's scope per workplan v3 §B1 is "Schema
+    design with architectural derivation"; the 5 missing types are part of the schema
+    design. B2 is tooling design.
+  decision_date: 2026-05-02 02:50
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - architecture/schema-spec.md
+  - sessions/session_2026-05-02-b1-s9.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  - D-0119
+  - D-0121
+  - D-0132
+  - D-0138
+  supersedes: []
+  status: PROVISIONAL
+  review_status: PENDING
+  notes: >
+    Schema spec is PROVISIONAL pending D-0138 adoption. On D-0138 adoption (PROVISIONAL
+    -> CANONICAL), D-0139 follows automatically (PROVISIONAL -> CANONICAL) unless
+    project-owner amendment requires re-spec.
+- decision_id: D-0140
+  category: D-OP
+  delegation: DG-REVIEW
+  summary: governance/repo-strategy-revision-co.md issued — Change Order proposal-of-record
+    revising the original Stage 0.8 repo-strategy with terminal-state outcome (same
+    repo, SQLite at data/db/guidebook.db)
+  outcome: >
+    The repo-strategy original document (CO-0007 Stage 0.8, decided 2026-04-26) explicitly
+    deferred final repo decision to B1 (storage-form decision). With B1 Session 8's
+    selection of SQLite as the operative storage form (D-0138 PROVISIONAL), the
+    deferred trigger has resolved. The revision proposal records: (1) Decision: same
+    repo, same main branch — SQLite's single-file form does not warrant repo separation;
+    (2) Operative artifacts: architecture/ directory, data/db/guidebook.db SQLite file,
+    scripts/migrate/ migration tooling; (3) Trigger for revisit: superseded with
+    terminal-state record + future-revisit triggers (storage-form change; project-posture
+    change). The CO is PROPOSED; project-owner adoption applies the revisions to the
+    original document.
+  rationale: >
+    The original repo-strategy.md anticipated this revision in its "Trigger for revisit"
+    table. The pattern follows pi-revision-co.md (audit-remediation R6): a Change Order
+    proposal-of-record creates the audit trail without amending the original document
+    until project-owner adoption. The original's prediction "Likely sibling repo or
+    sub-directory (`db/`) for the database; markdown corpus stays as input" is partially
+    held: the sub-directory pattern is operative (data/db/), but the sibling repo
+    alternative is rejected because SQLite's single-file form makes it overhead without
+    benefit.
+
+    DG-REVIEW per A12. The revision is mechanical given D-0138's selection but project-
+    owner adoption is the appropriate locus for the canonical change to the original
+    document.
+  alternatives_considered:
+  - >-
+    Apply the revisions directly to governance/repo-strategy.md without a CO — rejected:
+    the predecessor document was committed by project owner (Stage 0.8 audit trail)
+    and the revision pattern in pi-revision-co.md is the established pattern for governance
+    document revisions.
+  - >-
+    Recommend a sibling repo for SQL DDL + database — rejected: SQLite's single-file
+    form makes a sibling repo overhead without benefit; the audit trail of decisions
+    and migrations belongs alongside the corpus.
+  - >-
+    Recommend a `rebuild` branch (the predecessor's deferred alternative) — rejected:
+    the migration is incremental within main per A1 v3 phasing; a rebuild branch would
+    fork the audit trail without value.
+  - >-
+    Wait for D-0138 adoption before issuing this CO — rejected: the CO is itself PROPOSED;
+    it adopts when D-0138 adopts. Issuing it now creates the audit trail at the natural
+    B1 close.
+  decision_date: 2026-05-02 02:50
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - governance/repo-strategy-revision-co.md
+  - sessions/session_2026-05-02-b1-s9.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0138
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    PROPOSED. Adoption applies the §3.1-§3.4 revisions to governance/repo-strategy.md
+    and archives this CO. If D-0138 is amended in adoption, this CO is amended
+    correspondingly.
