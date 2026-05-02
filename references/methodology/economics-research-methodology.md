@@ -1,8 +1,8 @@
 # Economics Research Methodology — Accessible Built Environments
 
-**Status:** DRAFT v1.1 — pre-canonical reference document, post-verification-pass
+**Status:** DRAFT v1.2 — pre-canonical reference document, post-perceptual-value-crossover-integration
 **Authored:** 2026-05-02 (consolidated from three methodology consultation turns in session 2026-05-01-audit-remediation conversation)
-**Revised:** 2026-05-02 02:30 — verification-pass remediation: fabricated source names corrected, evidence tiers marked, voice register declared, Verified Citation Register added (§15)
+**Revised:** 2026-05-02 — v1.2 adds §15 Perceptual-Value Crossover framework (curb-cut effect at residential built-artefact level); existing Verified Citation Register renumbered §15→§16. v1.1 (2026-05-02 02:30) — verification-pass remediation: fabricated source names corrected, evidence tiers marked, voice register declared, Verified Citation Register added.
 **Project stage at authoring:** Stage A close / Stage B Phase 1 in progress
 **Decision record:** None assigned. Recommended D-METH/DG-REVIEW per A12 protocol if adopted as canonical methodology.
 **Connects to:** Dormant `economics-researcher` skill (Hybrid, Sonnet 4.6, To-build at C-stage). This document is the scaffolding the skill build will need.
@@ -710,11 +710,165 @@ Pre-canonical, this document serves as research methodology guidance only. Speci
 
 ---
 
-## 15. Verified Citation Register
+## 15. Perceptual-Value Crossover: The Built-Artefact Argument
+
+[Tier: methodology-foundational. This section operates at the same epistemic level as §3–§5, framing how the methodology should treat the relationship between accessibility specifications and residential market value.]
+
+### 15.1 Concept
+
+The V1–V5 vendor-economics framework in §5 asks whether residential markets price accessibility features under accessibility framing. The empirical answer across most jurisdictions is that they do not — peer-reviewed hedonic regressions isolating accessibility-feature premiums in MLS-comparable transaction data are essentially absent (the central research gap of this methodology, §13). However, that absence does not mean the techniques produce no market value. It means the techniques are not priced *under accessibility framing*. The actual mechanism of value transfer in residential markets is different.
+
+This section names that mechanism. The perceptual-value crossover argument states that accessibility specifications systematically produce built artefacts that residential markets read as generous, well-built, carefully detailed, or aesthetically contemporary — independent of any accessibility framing, marketing language, or buyer awareness. The argument decouples market response from marketing claim and grounds value transfer in what the built thing physically is.
+
+The traditional curb-cut effect describes the broadening of beneficiary populations beyond the originally-targeted disabled population — wheelchairs and strollers and luggage rolling over the same sloped concrete. The perceptual-value crossover extends the curb-cut concept by adding a value-cognition layer: not only does the spec serve broader populations, but those populations' valuation of the spec runs through aesthetic, dimensional, hospitality, and quality-construction reading rather than through accessibility recognition.
+
+The practical consequence is that the developer / vendor / specifier audiences for the Guidebook can be addressed without overstating evidence that does not exist (residential hedonic premium for accessibility-as-such) and without understating evidence that does exist (residential market valuation of dimensional generosity, build quality, design coherence, and hospitality finishes — features that accessibility specifications systematically produce).
+
+### 15.2 Distinction from V1–V5 framework
+
+The V1–V5 vendor-economics framework in §5 operates at the level of market-participant rationality: hedonic premium, days on market, buyer-pool expansion, financing access, warranty/litigation reduction. It asks what the buyer or developer can be shown to value when accessibility is the named variable.
+
+The perceptual-value crossover operates at the level of built-artefact reception: what the dwelling physically is when the accessibility specifications are applied, and how the residential market reads that artefact under the frames it actually uses (spaciousness, build quality, design contemporaneity, hospitality finish). It does not require accessibility to be the named variable; in fact, it generally works better when accessibility is unnamed and the artefact speaks for itself.
+
+The two frameworks are complementary, not competing:
+- V1–V5 governs the explicit pitch when the developer audience accepts accessibility framing
+- §15 governs the implicit pitch when the developer audience does not accept accessibility framing, or when the market participant is the buyer rather than the developer
+
+For most of the project's 24 jurisdictions, §15 is the stronger framework because it does not require evidence that does not exist (jurisdiction-specific hedonic regressions on accessibility features) and does not require any market participant to assent to disability framing. It requires only that the built artefact be specified honestly and the buyer walk through.
+
+### 15.3 The four mechanisms of perceptual-value crossover
+
+#### 15.3.1 Dimensional generosity
+
+Wheelchair clearances and accessible turning radii systematically produce dimensions that read as generous in residential market reception:
+
+- 1200mm corridor minimum reads as code-comfortable; 1500mm reads as generous; 1800mm reads as gallery-quality; 2100mm reads as premium-builder.
+- 1500mm clear bathroom floor area (turning circle) produces a primary bath that reads as hotel-grade.
+- 1500×1500mm entry landing produces a foyer with proper arrival sequence rather than a door punched into a wall.
+- Accessible kitchen clearances produce a working kitchen with proper aisle widths between counter and island.
+- Multi-height wardrobe accessibility produces multi-zone closet organisation at custom-closet-vendor quality.
+
+The perceptual reading happens within seconds of walkthrough and does not require the buyer to identify any accessibility justification. The dimension itself is what is read.
+
+Registry items where this mechanism operates: E-08 (corridor width), E-12 (entry landing), G-04 (wet-room floor area), G-08 (wardrobe reach configuration), kitchen aspects of H-01, bathroom aspects of I-03.
+
+#### 15.3.2 Build-quality side effects
+
+Several accessibility specifications cannot be met without producing build-quality artefacts that residential markets read as proper construction:
+
+- Acoustic specifications (STC ratings on doors and partitions) require solid-core doors, proper seals, mass-loaded assemblies. Buyers test door weight unconsciously on walkthrough; solid doors register as quality construction. Hollow-core builder-grade doors produce the negative of this signal.
+- Grab-bar load capacity requires structural blocking behind tile around shower and bath. Even buyers who never install a grab bar register that the walls are solid where they push on them. Tile that flexes registers as a problem.
+- Slip-resistance specifications (PTV ≥36 wet) require quality tile material and proper installation. Cheap glossy tile reads as both a slip hazard and a finish corner-cut.
+- Air-quality specifications (MERV 13+, low-VOC, thermal stability) produce homes that smell like nothing on walkthrough. New-construction VOC odour is a major negative; well-built envelope with multi-zone control produces even temperatures that read as well-built.
+- Multi-zone thermal control reads as a real house rather than apartment-grade single-zone. Temperature variation between zones is read by buyers as proper system sizing.
+
+The buyer typically cannot name these signals as the source of their quality assessment, but the assessment is consistent and rapid.
+
+Registry items where this mechanism operates: A-03 and A-14 (acoustic doors and partitions), E-07 (slip resistance), F-04 (air quality), F-07 (thermal zoning), F-08 (HVAC response), G-03 (the blocking technique, distinct from the visible fixture), H-01 (control placement consistency).
+
+#### 15.3.3 Design-language convergence
+
+A subset of accessibility specifications has, over the past three decades, converged with the design language of contemporary and luxury residential design. The accessibility specification and the design-language signal are now physically the same artefact:
+
+- Lever and D-pull hardware (originally UPL/MOB) is now contemporary residential default; round knobs read as dated.
+- Single-lever pull-down kitchen faucets (originally one-hand operation) are now contemporary residential default; two-handle faucets read as 1990s.
+- Flush thresholds (originally zero-step access) are now a modernist / contemporary architectural quality signal; transitioned thresholds read as builder-grade.
+- Glazed interior partitions (originally DEM supervision and light penetration) are now a luxury-residential design language; steel-frame interior glass is a marketed feature.
+- Indirect / cove lighting (originally NDV/AUT glare reduction) is now a primary signal of considered lighting design.
+- Sensor-activated low-level pathway lighting (originally MOB/VIS/DEM safety) is now a hospitality-grade smart-home feature.
+
+In each case, the accessibility-justified specification produces precisely the artefact that residential design culture now reads as contemporary or upmarket. The accessibility origin is invisible to most market participants because the design-language reading carries the entire perceptual signal.
+
+Registry items where this mechanism operates: E-06 (level entry), E-11 (automatic doors at residential scale), B-07 (indirect lighting), B-12 (sensor pathway lighting), D-10 (glazed partitions), I-01 (lever hardware), I-02 (single-lever faucets).
+
+#### 15.3.4 Hospitality reading
+
+Hotel and spa design have systematically incorporated accessibility features over the past two decades — wet rooms, level entries, hands-free fixtures, sensor lighting, generous bathrooms, integrated grab-bar-and-towel-bar fixtures. Residential markets now read these features as hospitality-grade signals because the cross-pollination has been so consistent. The route is: accessibility code drove hotel implementation; hotel implementation produced the design language; residential markets price the design language.
+
+This mechanism is particularly strong for primary bathrooms and entry sequences. A residential primary bathroom reading as "spa-like" or "hotel-like" is a current marketing premium across price tiers; the underlying physical specifications are largely accessibility-derived.
+
+Registry items where this mechanism operates: G-04 (wet room reads as spa), B-12 (pathway lighting reads as hotel-room toe-kick illumination), E-05 (covered entry reads as hospitality-grade arrival), E-11 (auto doors read as hotel-entrance), G-03 design-finish grab-bar/towel-bar fixtures reading as hotel-spa.
+
+### 15.4 The "completed migration" recognition
+
+For several registry items, the perceptual-value crossover is so complete that the residential market no longer prices the feature as a premium — its absence is what is penalised. The accessibility origin is fully invisible. These items document the curb-cut effect in its mature state and serve as the empirical case for the framework as a whole:
+
+- I-01 lever and D-pull hardware
+- I-02 single-lever pull-down kitchen faucets
+- I-03 anti-scald bathroom mixing valves (mostly code-driven now)
+- H-02 occupant environmental control (smart-thermostat / smart-switch market)
+- H-04 video door entry (Ring / Nest mass market)
+- B-12 motion-sensor pathway lighting (consumer-electronics commodity)
+- F-07 multi-zone HVAC (mid-market default)
+- E-06 level entry / zero step in modernist residential idiom
+
+These cases demonstrate the framework retrospectively: features that were once accessibility-specific niche have become so universal in residential default that the absence of the feature is the market negative. This is what successful curb-cut transitions look like in the mature phase. They also serve as the predictive base for the framework: features currently positioned analogously (currently niche, currently accessibility-justified, currently producing the same perceptual signals as the items above) are candidates for the same migration in the next decade.
+
+### 15.5 Items where the framework does not apply
+
+To avoid the overstatement that would discredit the items where it does apply, the methodology must name registry items where perceptual-value crossover is weak, absent, or negative:
+
+- C-05 (Low LRV Differential, DEM Inverse Contrast Rule) — runs opposite to general residential preference for visual differentiation between materials.
+- D-01, D-02, D-03, D-06, D-07, D-08, D-09 — DEM-specific cognitive provisions that do not produce mainstream-readable architectural features and in some cases run opposite to residential preference (D-03 toilet visibility in particular).
+- E-03 (Ramp Gradient ≤1:20) — externally visible accessibility ramps signal disability presence; residential perceptual reading is negative in non-aging-in-place markets. The accessibility solution at residential scale is generally E-06 (no step required), which has positive perceptual reading.
+- E-09 (TWSI / tactile walking surface indicators) — institutional / public-realm feature; not residential.
+- A-13 (no sound masking) — operational specification, not a built feature.
+- D-08 pictogram signage — residential dwellings do not carry signage.
+- G-09 bedroom PERS (visible aging-in-place equipment) — negative perceptual reading; the smart-speaker / H-04 form-factor is what crosses over, not the visible PERS readout.
+
+The honest accounting is that approximately 18 of the ~30 residential-applicable registry items show meaningful perceptual-value crossover; approximately 12 do not. The framework strengthens, rather than weakens, by acknowledging which items are which.
+
+### 15.6 Implications for methodology and downstream skill build
+
+For the dormant economics-researcher skill (Hybrid, Sonnet 4.6, To-build at C-stage):
+
+1. The skill build should treat §15 as a co-equal framework with §5, not a subordinate one. For most jurisdictions and most registry items, §15 is the better-supported framework because it does not require hedonic-premium evidence that does not exist.
+
+2. Research targets under §15 differ from research targets under §5. §15 research locates evidence on:
+   - Generic dimensional / spaciousness premium in residential transactions (well-established in hedonic literature, transferable to project specifications)
+   - Build-quality assessment heuristics in residential market reception (real-estate-marketing literature, walkthrough psychology)
+   - Design-language adoption tracking (architectural and interior-design publications; trade-press feature surveys)
+   - Hospitality-residential cross-pollination patterns (hotel design literature; luxury residential reception)
+   These bodies of evidence are abundant, peer-reviewed in adjacent fields, and transferable.
+
+3. For Part 11 specifications, the §15 framework allows BPC entries to argue value transfer without the project needing to overstate accessibility-framed market data. The argument runs through what the specification physically produces, not through how it might be marketed.
+
+4. The §15 framework is consistent across the project's 24 jurisdictions because dimensional generosity, build quality, design contemporaneity, and hospitality finish are read as positive in residential markets across common-law, civil-law, and mixed jurisdictions. The accessibility-as-named-feature framing varies sharply by jurisdiction; the perceptual-reading framing is more universal.
+
+### 15.7 Voice register for §15 findings entering Guidebook proper
+
+Per §0 voice register declaration, findings derived under this framework that enter the Guidebook proper (Part 11 specifications, BPC entries) should be voiced as:
+
+- *"The [specification] produces [physical attribute] that residential markets read as [perceptual signal]."*
+
+Not as:
+- *"The [specification] adds [premium percentage] to home value."* — overstates evidence.
+- *"Buyers value [accessibility framing]."* — asserts buyer cognition that is not measured.
+
+The procedural voice should describe what the built artefact is and what it physically produces, leaving the market participant's cognition outside the claim. This is consistent with A4 voice-style §8.1 Tier 1 evidence framing.
+
+### 15.8 Connection to V1–V5
+
+The §15 perceptual-value crossover and the §5 V1–V5 vendor-economics framework together form a two-part developer / specifier pitch:
+
+- §5 V1–V5 — applies where jurisdiction has measurable accessibility-priced market data, where developer accepts accessibility framing, and where vendor decision is between an accessible and non-accessible build of equivalent dimensional and quality specification.
+- §15 — applies where the above conditions do not hold. Argues that the accessibility-driven specification produces dimensional generosity, build quality, design coherence, and hospitality finish that residential markets read as positive without accessibility framing. Does not require the developer or buyer to accept any accessibility argument.
+
+In practice, §15 is the dominant framework for the majority of the project's specification work because the conditions for §5 V1–V5 are met in only a minority of cases. The methodology should foreground §15 in early-stage developer engagement and reserve §5 V1–V5 for jurisdictions and contexts where the explicit accessibility-framing argument has measurable support.
+
+[CONFIDENCE: high on the framework. The mechanism is consistent with how accessibility features have historically migrated into residential default over the past three decades — flush thresholds, lever hardware, single-lever faucets, wet rooms, motion-sensor lighting, acoustic doors, multi-zone HVAC, video doorbells, anti-scald valves all migrated through perceptual reading rather than accessibility marketing. The framework explains these migrations and predicts which current accessibility specifications are likely to follow the same path.]
+
+[GAP: §15 has not been formally tested against quantitative residential transaction data because the necessary dataset (item-level specification × transaction price across the 24 project jurisdictions) does not exist. The framework rests on the convergence of three established evidence bodies — hedonic literature on dimensional and quality features, design-history literature on accessibility-feature migration, and hospitality-residential cross-pollination literature — none of which directly tests the §15 mechanism but each of which independently supports a component of it.]
+
+[GAP: per-item perceptual-value evidence is uneven across the registry. The strongest cases (G-04 wet room, E-06 level entry, I-01 lever hardware, F-04 air quality) have multiple converging evidence streams. The weakest applicable cases (E-08 corridor width above code minimum, A-03 acoustic doors as quality signal) have weaker direct evidence and rest more on the framework's general logic. Future research should tier the registry items by §15 evidence strength.]
+
+---
+
+## 16. Verified Citation Register
 
 This section consolidates citations that have passed the §7 verification chain (DOI / stable URL located, specific number located in source, methodology section confirmed). Each entry is evidence-tier-marked per project hierarchy. **These are citation-ready** under RULE 2026-04-09. All other figures in this document remain illustrative until they pass the same verification process.
 
-### 15.1 Q1–Q3 first-cost (verified)
+### 16.1 Q1–Q3 first-cost (verified)
 
 **[Tier 5 — advocacy-network synthesis]**
 **ADA National Network** (2025). *Is it expensive to make all newly constructed places of public accommodation and commercial facilities accessible?* — establishes "less than 1%" added cost for new construction with accessible features, and "2% to 20%" cost increase for retrofitting features later. Authoritative US synthesis; methodology-opaque (synthesis of underlying studies not consolidated). URL: ADA National Network knowledge base.
@@ -740,7 +894,7 @@ This section consolidates citations that have passed the §7 verification chain 
 **[Tier 4 — research-institute report]**
 **Rick Hansen Foundation** (2024). *RHFAC Retrofits and Upgrades Cost Study.* Canada. — Recent Canadian retrofit cost data linked to the RHFAC accessibility certification.
 
-### 15.2 Q5 cost-effectiveness (verified)
+### 16.2 Q5 cost-effectiveness (verified)
 
 **[Tier 1 — RCT-derived health economics]**
 **Florence, C. S., Bergen, G., Atherly, A., Burns, E., Stevens, J., & Drake, C.** (2018). *Medical Costs of Fatal and Nonfatal Falls in Older Adults.* Journal of the American Geriatrics Society 66(4):693–698. **DOI: 10.1111/jgs.15304** — In 2015, total medical costs of older adult falls in the US: **$50.0 billion** (Medicare $28.9B; Medicaid $8.7B; private $12.0B). Methodology applicable globally; figures US-only.
@@ -751,7 +905,7 @@ This section consolidates citations that have passed the §7 verification chain 
 **[Tier 5 — peer-reviewed literature review]**
 **Terashima, M., & Clark, K.** (2021). *Measuring economic benefits of accessible spaces to achieve "meaningful" access in the built environment: A review of recent literature.* Journal of Accessibility and Design for All 11(2):195–231. — Literature review structuring Q6 economic-benefit measurement methodology.
 
-### 15.3 V4 financing programmes (verified)
+### 16.3 V4 financing programmes (verified)
 
 **[Tier 6 — statutory programme operational data]**
 **NDIS Specialist Disability Accommodation (Australia).** SDA Design Standard + NDIS Pricing Arrangements for Specialist Disability Accommodation 2025–26 v2.0; SDA Rules 2021. National Disability Insurance Agency. — Direct payment stream for SDA-certified dwellings (~20-year horizon); converts accessibility from cost-centre to revenue-centre for participating providers. Four design categories (Improved Liveability, Fully Accessible, Robust, High Physical Support).
@@ -768,7 +922,7 @@ This section consolidates citations that have passed the §7 verification chain 
 **[Tier 6 — statutory programme operational data]**
 **CMHC MLI Select (Canada).** Multi-Unit Mortgage Loan Insurance with points-based scoring across affordability + accessibility + energy-efficiency criteria; preferential LTV / amortisation / premium terms based on points achieved.
 
-### 15.4 Demographic + multi-generational baseline (verified)
+### 16.4 Demographic + multi-generational baseline (verified)
 
 **[Tier 5 — advocacy / NGO research]**
 **Generations United** (2021). *Family Matters: Multigenerational Living Is on the Rise and Here to Stay.* — US data: 26% of Americans live in multi-generational households (2021), up from 7% (2011). 271% increase in three-or-more-generation households 2011–2021.
@@ -779,7 +933,7 @@ This section consolidates citations that have passed the §7 verification chain 
 **[Tier 5 — advocacy / NGO research]**
 **Pew Research Center** (2022). *Multigenerational households methodology.* Multi-jurisdictional reports series.
 
-### 15.5 Methodology-foundational references (verified)
+### 16.5 Methodology-foundational references (verified)
 
 **[Tier 3 — book / canonical reference]**
 **Steinfeld, E., & Maisel, J. L.** (2012). *Universal Design: Creating Inclusive Environments.* Hoboken, NJ: Wiley. ISBN 9780470399132. — Canonical English-language UD reference; chapter on cost contains the analysis many downstream "0.5–1%" claims trace to.
@@ -790,12 +944,12 @@ This section consolidates citations that have passed the §7 verification chain 
 **[Tier 3 — peer-reviewed cost methodology]**
 **Eichholtz, P., Kok, N., & Quigley, J. M.** (2010, 2013, et seq.). Series on green-building hedonics, Maastricht School. — Methodology framework directly transferable to accessibility hedonics (the "green premium" methodology is the closest empirical analogue to a future "accessibility premium" methodology).
 
-### 15.6 Falls-cost projection (verified)
+### 16.6 Falls-cost projection (verified)
 
 **[Tier 4 — government statistical projection]**
 **Houry, D., Florence, C., Baldwin, G., Stevens, J., & McClure, R.** (2016). *The CDC Injury Center's Response to the Growing Public Health Problem of Falls Among Older Adults.* American Journal of Lifestyle Medicine 10(1):74–77. — Projection: lifetime medical cost of treating older adult falls (US) increases from $35B (2012) to over $101B (2030) in 2012 USD.
 
-### 15.7 Aging-in-place lived-experience (verified Co-1 layer absent)
+### 16.7 Aging-in-place lived-experience (verified Co-1 layer absent)
 
 The current methodology does not yet have a verified Co-1 (lived-experience) citation register for accessibility economics specifically. This is a gap. Co-1 evidence in this domain is most likely to be found in:
 - Disability-led housing co-operatives' published reports (Habinteg, UK; CCD-equivalent in other jurisdictions)
@@ -826,10 +980,12 @@ The current methodology does not yet have a verified Co-1 (lived-experience) cit
 
 ## Changelog
 
+**v1.2 — 2026-05-02 — Perceptual-Value Crossover integration.** Added §15 Perceptual-Value Crossover: The Built-Artefact Argument. Introduces a co-equal framework to §5 V1–V5 that decouples market response from accessibility marketing framing. Identifies four mechanisms of perceptual-value crossover (dimensional generosity, build-quality side effects, design-language convergence, hospitality reading), maps them to specific registry items, names items where the framework does not apply, and documents the "completed migration" cases (lever handles, single-lever faucets, anti-scald valves, multi-zone HVAC, video doorbells, motion-sensor lighting) as empirical evidence for the framework. Closes audit C.4 finding (residential value-transfer mechanism not addressed in v1.0/v1.1). Existing §15 Verified Citation Register renumbered to §16.
+
 **v1.1 — 2026-05-02 02:30 UTC** — Verification-pass remediation. Added §0 Voice Register Declaration (closes audit C.5). Added §15 Verified Citation Register (16+ verified entries with DOI / programme citations and evidence-tier marking — closes audit C.8 V-06). Corrected source-name fabrications: Sirim QAS Malaysia → CIDB N3C / BCISM; Mexican Federal Civil Engineering Institute → CMIC + CEESCO; Plan International multi-gen research → Generations United / ILC Global Alliance / Pew; INECC + INSEE + CTAC + IFL pairing → INSEE + CSTB (France) + IPEA (Brazil); Korean LHI clarified as research arm of LH Corporation. Updated "0.5–1% UD premium" claim with verified ADA National Network attribution; noted "5–25× retrofit premium" is downstream corruption of ADA National Network's "2%–20%" figure.
 
 **v1.0 — 2026-05-02 02:04 UTC** — Initial commit (`e226c36c524a08f62c6844d5264c5bdda07f2d9b`). Consolidated three methodology consultation turns. Identified at same-session audit as containing pattern-matched fabrications in source-name layer (audit findings §C.1).
 
 ---
 
-**End of DRAFT methodology document v1.1.**
+**End of DRAFT methodology document v1.2.**
