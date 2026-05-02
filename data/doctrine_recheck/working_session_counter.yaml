@@ -1,19 +1,11 @@
-counter: 4
-last_updated: 2026-05-01 04:32
-last_session: session_2026-05-01-audit-remediation.md
-notes: 'Counter increments per session-consolidator §1c. Fourth increment after A12 S2 initialisation.
-  Counter started at 0 there, incremented to 1 at the CI-integration sub-session (2026-04-30),
-  to 2 at B1 Session 1 (2026-05-01 02:40), to 3 at B1 Session 2 (2026-05-01 03:50), now 4 at
-  this audit-remediation session (2026-05-01 04:30). This session produced the audit-remediation
-  package: process audit filed at references/audits/process-audit_2026-04-30.md;
-  RC-002 second-eyes recheck at data/doctrine_recheck/recheck_2026-04-30_second-eyes.yaml;
-  governance/migration-survival.md PROVISIONAL issued; governance/pi-revision-co.md Change Order
-  proposal; scripts/validate_commits.py window-audit tool; four decision-support documents in
-  workplan/; and 5 Decision records D-0114 through D-0118. Counts as a working session per
-  §1c definition. Next periodic recheck at counter == 25.
+counter: 5
+last_updated: 2026-05-02 02:00
+last_session: session_2026-05-02-b1-s3.md
+notes: 'Counter increments per session-consolidator §1c. Fifth increment after A12
+  S2 initialisation. Sequence: A12-S2 (counter→1), CI integration sub-session (→1),
+  B1-S1 (→2), B1-S2 (→3), audit-remediation parallel (→4), B1-S3 (→5). This session
+  shipped Candidate A evaluation deliverable (workplan/b1-candidate-a-markdown-yaml.md)
+  + 1 Decision record (D-0119 D-OP/DG-AUTO Candidate A scored 132/171). Counts as
+  a working session per §1c. Next periodic recheck at counter == 25.
 
-  Note on parallelism: this session ran in parallel with B1-S1/S2 in another conversation.
-  Both touched data/decisions/decision_register.yaml and sessions/LATEST. Coordination via
-  HEAD pinning at commit time; HEAD did not change between B1-S2 close and this session''s
-  commit.
-'
+  '

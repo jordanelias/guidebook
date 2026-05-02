@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-01 04:30
+last_updated: 2026-05-02 02:00
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -2997,3 +2997,56 @@ decisions:
   review_status: NA
   notes: These are recommendations, not decisions. Each will pair with one or more downstream Decision records when the project
     owner adopts/declines/amends.
+- decision_id: D-0119
+  category: D-OP
+  delegation: DG-AUTO
+  summary: Candidate A (Markdown + YAML status-quo-extended) scored 132 / 171 (77%) under
+    B1 derivation framework
+  outcome: >
+    Candidate A's per-criterion scores 0-3 across all 30 criteria total 132 weighted points
+    out of a maximum 171 (77%). Distinguishing strength clusters: IX Operational (21/21,
+    100%); X Sustainability (12/12, 100%); VI Cross-cutting axes (6/6, 100%); II Cell-level
+    state (16/18, 89%); VIII Time model (17/21, 81%). Distinguishing weakness clusters:
+    VII Navigation/audience (12/27, 44%); III Co-1 schema discipline (6/9, 67%); V
+    Verification (8/12, 67%); I Entity & relationship (20/27, 74%). The dominant weakness
+    is Cluster VII — three of four criteria score 1 (high-cost adaptation) because the
+    query/index layer over markdown+YAML is non-trivial; this is the framework §7.1 strain
+    pattern surfacing as predicted. Cost to reach near-native scoring on all criteria:
+    19-29 sessions for materialization (cell-level YAML extraction; A9 retrofit converter;
+    schema additions for 5 missing entity types) and query-layer build-out.
+  rationale: >
+    Mechanical application of D-0108 (framework), D-0110 (weighting), D-0111 (S-05 spec),
+    D-0112 (eliminator test — does not apply to Candidate A), D-0113 (requirements lock).
+    Each criterion was assessed against the four-question template from b1-derivation-framework.md
+    §6.1 (native/adapted/absent; adaptation cost; operational risk; downstream binding).
+    Scores follow the D-0112 rubric (0=absent, 1=high-cost adaptation, 2=moderate-cost
+    adaptation, 3=native). The evaluation does not compare A to B/C/D — that is Session 7;
+    it produces A's standalone score for input to comparative scoring.
+
+    The score is not the selection. Sessions 4-6 produce comparable scores for B, C, D;
+    Session 7 compares; Sessions 8-9 select. Candidate A's 77% baseline is strong but the
+    selection question Sessions 7-8 must answer is whether B, C, or D outscore A enough to
+    justify their migration cost and operational complexity given the project's pre-launch
+    solo-author posture (D-03 binding).
+  alternatives_considered: []
+  decision_date: 2026-05-02 02:00
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-a-markdown-yaml.md
+  - sessions/session_2026-05-02-b1-s3.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  - D-0110
+  - D-0113
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    DG-AUTO because the evaluation applies the framework + weighting + lock as specified
+    in earlier D-METH records. No methodological commitment is added by this decision;
+    the evaluation is the methodology being applied. Sessions 4 (Candidate B), 5
+    (Candidate C), 6 (Candidate D + eliminator test) follow the same pattern with their
+    own D-OP/DG-AUTO records.
