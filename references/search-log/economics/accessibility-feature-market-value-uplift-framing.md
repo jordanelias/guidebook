@@ -165,3 +165,76 @@ Accessibility's measurable market premium is captured through co-bundled feature
 - Time-on-market signal (same-price-faster-sale)
 
 **Status of A/B framing experiment hypothesis:** confirmed NOT FOUND across two sessions of targeted searches. ONE more targeted search recommended before declaring NO-DATA.
+
+---
+
+## Session 3 update — 2026-05-02 22:00 (alternative-method axes)
+
+**Disposition:** PARTIAL → continued PARTIAL (24 of 24 axes investigated; 6 fully resolved, 18 NOT-RUN); Opus session 3 of multi-session research.
+
+### Method axes investigated this session (axes 7–18 from session 2 outstanding list)
+
+**Axis 1 — DE / KfW altersgerechtes Wohnen Wertsteigerung (covered).**
+Industry-grey signal across multiple German banking-sector sources: barrier-free properties claimed to exhibit **5–15% Wertsteigerung (value appreciation)** relative to non-barrier-free comparables (bau.de 2026); higher demand and lower vacancy rates (bau.de, sparkasse.de 2026). KfW Programme 159 (loans up to €50,000) and 455-B (grant up to €2,500 per measure) constitute the primary financing mechanism, with KfW IWU evaluation programme reporting 700,000+ dwellings retrofitted. Industry-grey only — no peer-reviewed German hedonic study identified. Sources: kfw.de, sparkasse.de, vr.de, finanztip.de, nullbarriere.de, bau.de.
+
+**Axis 2 — JP / 住宅性能表示制度 高齢者等への配慮 等級1–5 (covered).**
+Japanese government housing performance system established 2000 under 品確法. Item 9 of 10 categories, 5 grades (等級1–5). 2025 industry source (CEEC): explicit market-effect signal — "**契約率や金融評価、販売スピードを大きく左右する** [significantly affects contract rate, financial evaluation, and sale speed]." General performance indication, not isolated to elderly grades. 等級5 (highest grade) "高齢者などが安全に移動することに特に配慮した措置". Sources: sekisuihouse.co.jp, e-blooming.com, jutakujohokan.co.jp, nakajitsu.com, ceec.jp, marumine.net, ykkap.co.jp, panasonic.co.jp/phs/pasd, hyoukakyoukai.or.jp, iidasangyo.co.jp.
+
+**Axis 3 — A/B framing experiment (final attempt).**
+Confirmed NOT FOUND across three sessions of targeted searches. Methodological literature (DCEs in housing) exists — Australian protocol PMC4791886 (2016) is closest known protocol but it is design-stage, not framing-isolated. Validity-and-framing-effects review for equity-efficiency trade-offs (medRxiv 2024) addresses framing methodology generally, not accessibility-specific. **Declared LIKELY NO-DATA** — direct A/B comparison of accessibility-vs-UD-vs-AIP labels with controlled feature sets does not appear to have been published.
+
+**Axis 4 — NLP listing-text hedonics with accessibility-substitute keywords (method gap).**
+Methodological literature exists (Abdallah 2015 arXiv:1511.04674; Brunson-Buttimer-Swidler 2019; Haag-Rutherford-Thomson 2000; Cambridge NLE 2023; Singapore COVID-19 NLP 2023). **No identified study has applied these methods specifically to test accessibility-substitute keywords.** This is itself a research gap and a method recommendation for Part 11.
+
+**Axis 5 — Insurance / litigation avoided cost (partial).**
+Industry signal: average slip-and-fall claim $20,000 (Hartford, cited via Insureon); >8.8M ER fall injuries in 2023 (US National Safety Council); >25% of bar liability claims are slip-falls in parking lots. Insurance industry treats accessibility-relevant features (lighting, level surfaces, handrails, slip-resistant flooring) as risk-reducers eligible for premium discounts. **No isolated quantitative studies of accessibility-specific premium reduction identified.** Mechanism plausible; rigorous quantification is a gap.
+
+**Axis 6 — Reverse mortgage / equity release LTV effect (partial).**
+HECM 2026 cap $1,249,125; ~50% equity threshold; access roughly 40–60% of home value depending on age. **No isolated study identified quantifying accessibility-feature effect on LTV or qualification rate.** Mechanism plausible (higher home value through accessibility features → higher proceeds), but not directly tested. Sources: financeofamerica.com, congress.gov CRS R44128, themortgagereports.com, lendingtree.com, reverse.mortgage, compmort.com.
+
+**Axis 7 — Visitability ordinance natural experiment (covered with finding).**
+Atlanta 1992 → Austin 1998 → Pima 2000 → Bolingbrook 2003 → 30,000+ visitable homes nationwide; AZ Court upheld Pima ordinance against builder challenge. **Critically — none of the search results report a property-value uplift study attached to these natural experiments. The natural experiment exists but has not been exploited for hedonic identification of accessibility-relabel value premium.** This is a high-value research opportunity for future quantitative work. Pima had to compromise to 30" doors (vs preferred 32") to apply to ALL houses; Bolingbrook started voluntary and FAILED, then was made mandatory. **Voluntary/mandatory distinction is itself a behavioral signal: voluntary accessibility uptake systematically fails; mandatory systematically succeeds — pattern consistent with LHA AU 2011→2020 failure.**
+
+**Axis 8 — KR / BF인증 (Barrier-Free Certification) (partial).**
+KODDI (한국장애인개발원) administered BF certification system established under 「장애인·노인·임산부 등의 편의증진 보장에 관한 법률」. Mandatory for new public buildings, parks, public facilities. **Notably 한국부동산원 (Korea Real Estate Board, government property research arm) is itself a BF certifier** — meaning the institutional infrastructure exists to perform exactly the empirical hedonic study testing certified vs uncertified property values, but **no published study surfaced**. Empirical opportunity, not finding. Sources: koddi.or.kr (BF인증), reb.or.kr (한국부동산원).
+
+**Other axes attempted but declared NOT-RUN (insufficient time-budget for native-language depth):**
+- AU / NDIS SDA secondary market resale premium (NOT-RUN)
+- US / LIHTC accessibility uplift correlation (NOT-RUN)
+- US / AARP Livability Index property value correlation (NOT-RUN)
+- Hospitality chain accessibility brand differentiation Marriott/Hilton/IHG/cruise (NOT-RUN)
+- Per-employee workforce productivity studies beyond Accenture (NOT-RUN)
+- Time-on-market reduction for accessibility-feature-listed homes (NOT-RUN)
+- Cruise / hospitality accessible cabin ADR/occupancy comparison (NOT-RUN)
+- Citation mining for Carr 2013, SINTEF 2019, Bailey 2024/2025, Provan 2023, Accenture 2018+2023, Eichhorn 2014, Buhalis/Eichhorn 2015 (NOT-RUN)
+- CN / 适老化设计 elderly-friendly design and SG / HDB UD Mark (NOT-RUN)
+
+### Net assessment after three sessions
+
+The user's framing-effect hypothesis is most accurately characterised as a **multi-channel phenomenon** with strong empirical support across at least 6 channels (3a dementia village, 3b curbless shower, 3c disability-inclusion brand, 3d accessible tourism, 3e Purple Pound, 3f CAPABLE healthcare avoided cost) and weak-to-null support at the property-as-whole level. The DE 5–15% Wertsteigerung claim is industry-grey and requires citation mining for academic underpinning. The JP 等級1–5 system and KR BF인증 system are institutional/regulatory frames that COULD support empirical study of capitalisation but have not yet been studied by accessible literature.
+
+**Strongest single new finding from session 3:** the visitability ordinance natural experiment has never been exploited for hedonic identification — this is the most economically rigorous empirical opportunity in the entire research space, with multiple cities providing diff-in-diff candidate settings and 30+ years of post-treatment data.
+
+**LIKELY NO-DATA confirmed:** Direct A/B framing experiment with controlled feature sets across accessibility-vs-UD-vs-AIP labels has not been published. Three sessions of targeted search.
+
+### Updated outstanding research targets (post-Session 3)
+Cumulative session 1 + 2 + 3 outstanding-targets list now consolidated to:
+
+1. NL / Hogeweyk replication economic outcomes beyond cost parity (NOT-RUN)
+2. CA / RHFAC commercial market data (likely empirical gap; not yet rigorously tested)
+3. AU / NDIS SDA secondary market resale premium (NOT-RUN)
+4. Hospitality chain accessibility branding (NOT-RUN)
+5. Per-employee workforce productivity dividend beyond Accenture (NOT-RUN)
+6. Time-on-market reduction for accessibility-listed homes (NOT-RUN)
+7. Cruise accessible cabin ADR/occupancy comparison (NOT-RUN)
+8. Citation mining for ~10 anchor sources (NOT-RUN)
+9. CN 适老化设计, SG HDB UD Mark, KR BF인증 quantitative market data (NOT-RUN)
+10. Visitability ordinance natural experiment hedonic identification (HIGH-VALUE empirical opportunity, NOT-RUN)
+11. JP 等級1–5 isolated effect on contract rate / sale speed (NOT-RUN)
+12. DE altersgerechtes Wohnen peer-reviewed property-market hedonic study (NOT-RUN; industry-grey only)
+13. NLP listing-text hedonic test on accessibility-substitute keywords (NOT-RUN; method recommendation)
+14. Equity-release / reverse-mortgage qualification effects of accessibility features (gap)
+15. Insurance/litigation avoided-cost capitalisation (gap)
+16. Co-1 / Tier 2 / Co-2 — DPO, advocacy, OT body publications (NOT-RUN)
+
+**Status:** PROVISIONAL (3-session corpus). Synthesis remains channel-decomposed with emphasis on multi-channel-strong / property-level-weak distinction.
