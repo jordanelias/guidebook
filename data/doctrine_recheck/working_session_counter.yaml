@@ -1,14 +1,16 @@
-counter: 10
-last_updated: 2026-05-02 02:35
-last_session: session_2026-05-02-b1-s7.md
-notes: 'Counter increments per session-consolidator §1c. Tenth increment after A12
-  S2 initialisation. Sequence: A12-S2 launch (counter set to 0), CI integration
-  sub-session (->1), B1 Session 1 (->2), B1 Session 2 (->3), audit-remediation (->4),
-  B1 Session 3 (->5), audit-remediation continuation (->6), B1 Session 4 (->7), B1
-  Session 5 (->8), B1 Session 6 (->9), B1 Session 7 (->10). This session shipped
-  the comparative-scoring deliverable (workplan/b1-comparative-scoring.md) plus two
-  Decision records (D-0136 D-OP/DG-AUTO comparative matrix produced; D-0137
-  D-METH/DG-REVIEW selection rule = Rule 3 tradeoff-aware). Counts as a working
-  session per §1c. Next periodic recheck at counter == 25.
+counter: 11
+last_updated: 2026-05-02 02:40
+last_session: session_2026-05-02-b1-s8.md
+notes: 'Counter increments per session-consolidator §1c. Eleventh increment after
+  A12 S2 initialisation. Sequence: A12-S2 launch (counter set to 0), CI integration
+  sub-session (->1), B1 Session 1 (->2), B1 Session 2 (->3), audit-remediation
+  (->4), B1 Session 3 (->5), audit-remediation continuation (->6), B1 Session 4
+  (->7), B1 Session 5 (->8), B1 Session 6 (->9), B1 Session 7 (->10), B1 Session 8
+  (->11). This session shipped architecture/storage-derivation.md (PROVISIONAL,
+  333 lines, the canonical B1 deliverable per workplan v3 §B1) plus one Decision
+  record (D-0138 D-DOCT/DG-NON storage-form selection — Candidate B / SQLite
+  proposed; PENDING project-owner adoption). The architecture/ directory is created
+  by this session. Counts as a working session per §1c. Next periodic recheck at
+  counter == 25.
 
   '

@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:35
+last_updated: 2026-05-02 02:40
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -4001,3 +4001,181 @@ decisions:
     structure. Project-owner review confirms Rule 3 is the appropriate frame for the
     final selection. If review surfaces concerns, the rule can be amended before
     Session 8 commits to a candidate.
+- decision_id: D-0138
+  category: D-DOCT
+  delegation: DG-NON
+  summary: Operative storage form selection — Candidate B (Relational / SQLite) PROPOSED
+    by B1 Session 8; PENDING project-owner adoption per A12 §2.2 D-DOCT default
+    delegation
+  outcome: >
+    Candidate B (Relational / SQLite) is PROPOSED as the operative storage form for
+    the guidebook project. The selection is PROVISIONAL pending project-owner adoption.
+    Per A12 §2.2, D-DOCT decisions default to DG-NON ("Doctrinal decisions reach into
+    all downstream work; they cannot be delegated") — the project owner alone makes
+    the canonical commitment. This decision record captures the proposal-of-record;
+    adoption converts PROVISIONAL → CANONICAL.
+
+    Selection rationale walks four steps under D-0137's Rule 3 (tradeoff-aware
+    selection): (1) Candidate A is eliminated because it scores 2/2/2 on the three
+    weight-3 doctrinal criteria operationalizing mission §Doctrinal commitments 1, 3, 6
+    — adaptation closes the quantitative gap (19-29 sessions of cell materialization,
+    pre-commit hook, query-layer build) but leaves the corpus structure as
+    markdown+YAML with custom Python query code, accumulating project-specific
+    technical debt over 12+ year horizon; doctrine should be embodied by the form,
+    not adapted to. (2) Candidates B (152/171, 89%) and C (155/171, 91%) both natively
+    satisfy doctrine (3/3/3 on weight-3 criteria); selection is operational not
+    doctrinal. (3) The B-vs-C Cluster IX gap (B 48% vs C 33%) is structural and
+    recurring — CI tractability (B's SQLite build vs C's JVM+Jena+SHACL toolchain),
+    solo-author operability (SQL broadly known vs SPARQL+SHACL+ontology specialized),
+    A10/A12/A13 integration (mechanical SQL migration vs ontology-design methodological
+    work). (4) Recurring costs (paid daily over 12+ year horizon) outweigh structural
+    advantages (paid once-per-feature) under D-03's "solo-only-permanent is a possible
+    end-state" binding; the framework's weighting captures decision priority but not
+    temporal frequency. The 3-weighted-point gap C-over-B is at the noise floor of
+    weighting precision (1.7% of max) and is correctly broken in B's favor by the
+    recurring-cost analysis.
+
+    Selection: B (Relational / SQLite). Within-B sub-substrate: SQLite per D-0120.
+    Storage form decision is irrevocable in the sense that synthesis structure for
+    12+ years is what's being committed; revisable via formal D-METH amendment if
+    the project's posture changes materially. Migration-out cost is bounded per
+    D-0111's 5-deliverable standard (PASS).
+  rationale: >
+    The full rationale is the proposal-of-record document at
+    architecture/storage-derivation.md (333 lines, 9 sections). Summary by section:
+
+    §2 Doctrinal foundations: Three weight-3 doctrinal commitments (DC-1
+    within-population variability; DC-3 Co-1 evidence co-primacy; DC-6 questions-led
+    teaching) + one operational binding (D-03 pre-launch solo, solo-only-permanent
+    end-state) + one sustainability commitment (S-01 12+ year horizon). The doctrine
+    pulls toward expressive richness; the operational binding pulls toward minimum
+    cognitive surface. The framework's tiered weighting (3/2/1) is the priority
+    structure that walks this tension.
+
+    §3 Candidate inventory: Three single-substrate candidates (A markdown+YAML, B
+    relational/SQLite, C graph/RDF) plus dismissed hybrid (D, dismissed under D-0134).
+    Within-B: SQLite (D-0120 dismissed PostgreSQL, DuckDB). Within-C: RDF/Apache Jena
+    (D-0131 dismissed Blazegraph, Neo4j, Memgraph, TigerGraph).
+
+    §4 Evaluation outcome: A 132/171 (77%); B 152/171 (89%); C 155/171 (91%);
+    D dismissed (143/171 informational). Cost-to-near-native: A 19-29 sessions; B
+    27-42; C 34-50. Critical observations: B has zero unique wins (B never strictly
+    outscores both A and C on any criterion); A has 5 unique wins (all Cluster IX
+    operational, +11 weighted advantage); C has 1 unique win (C-8.1 A9 versioning,
+    +2 weighted advantage). On the three weight-3 doctrinal criteria: A 2/2/2; B
+    3/3/3; C 3/3/3.
+
+    §5 Selection rationale: Four-step Rule 3 walk producing selection of B.
+
+    §6 Dismissed alternatives: Each candidate's dismissal reason; sub-substrate
+    dismissals within Candidates B and C.
+
+    §7 Scope limits: Eight explicit non-decisions deferred to Sessions 9, B2-B5,
+    Stage C, or future amendment — schema spec details, tooling design, pilot
+    construction, migration phase ordering, sub-substrate re-evaluation conditions,
+    Candidate C re-evaluation conditions, fate of pre-pivot markdown specs,
+    long-horizon doctrinal revision.
+
+    §8 Status and adoption: PROVISIONAL pending project-owner DG-NON adoption.
+    Adoption converts to CANONICAL; denial reverts to status-quo. Triggers CS-MIG
+    cross-stage thread for migration-survival.md reclassification under the SQLite
+    target.
+  alternatives_considered:
+  - >-
+    Candidate A (Markdown + YAML status-quo-extended) — rejected: scores 2/2/2 on
+    the three weight-3 doctrinal criteria; the form does not natively satisfy mission
+    §Doctrinal commitments 1, 3, 6. Adaptation cost (19-29 sessions) closes the gap
+    quantitatively but leaves project-specific custom query code as the access layer,
+    accumulating maintenance burden over 12+ year horizon. The form should embody
+    doctrine, not adapt to it.
+  - >-
+    Candidate C (Graph / RDF / Apache Jena) — rejected: natively satisfies doctrine
+    (3/3/3 on weight-3 criteria) but Cluster IX 33% vs B's 48% reflects structural
+    recurring costs in CI tractability, solo-author operability, and A10/A12/A13
+    integration. SPARQL + SHACL + ontology semantics impose specialized cognitive load
+    that "solo-only-permanent" maintenance cannot reliably absorb. C's structural
+    advantages on Clusters I/VIII/X (named graphs, RDFS subclass, W3C standardization)
+    total +6 weighted points over B but are paid once-per-feature; B's Cluster IX
+    advantage (-3 weighted points C-over-B in IX) is paid daily for 12+ years. The
+    3-point weighted gap is at the noise floor of weighting precision and is broken
+    in B's favor by the recurring-cost analysis.
+  - >-
+    Candidate D (Hybrid, H1 = SQLite + Markdown + YAML) — dismissed under D-0134
+    strict-dominance test (0 wins, 18 ties, 12 losses against max(A,B,C)). The
+    pivotal criterion C-5.2 showed the hybrid form does not provide structural
+    advantage over Candidate B alone or Candidate A with structured-marker
+    convention; structured-marker convention is form-agnostic.
+  - >-
+    Defer the storage-form decision to a later stage (e.g., post-Stage-A close, after
+    A11 counsel review) — rejected: workplan v3 §B1 specifies the storage-form
+    decision as the gating commitment for B2-B7 and Stage C. Deferring leaves Stages
+    B and C with no operative form to design tooling against. The PROVISIONAL status
+    of this proposal does the deferring properly: project owner adopts when ready;
+    until adoption, no downstream session commits to the form.
+  - >-
+    Apply Rule 1 (highest weighted total wins → C) — rejected by D-0137 in Session 7.
+    Mechanical highest-total selection collapses the question into a numeric
+    comparison; ignores doctrinal binding force beyond what weights captured; selects
+    on a 3-point margin (1.7% of max) that is at the noise floor of weighting
+    precision. Rule 3 (tradeoff-aware) was committed by D-0137 specifically to
+    prevent Rule 1's mechanical resolution of a genuinely contested selection.
+  decision_date: 2026-05-02 02:40
+  decided_by: opus_4_7_session_2026-05-02_proposal
+  model_routing: opus/200/synth
+  effort_level: 200
+  decision_artifacts:
+  - architecture/storage-derivation.md
+  - sessions/session_2026-05-02-b1-s8.md
+  - data/decisions/decision_register.yaml
+  - workplan/b1-derivation-framework.md
+  - workplan/b1-criteria-weighting.md
+  - workplan/b1-candidate-a-markdown-yaml.md
+  - workplan/b1-candidate-b-relational.md
+  - workplan/b1-candidate-c-graph.md
+  - workplan/b1-candidate-d-hybrid.md
+  - workplan/b1-comparative-scoring.md
+  predecessors:
+  - D-0108
+  - D-0110
+  - D-0111
+  - D-0112
+  - D-0113
+  - D-0119
+  - D-0120
+  - D-0121
+  - D-0131
+  - D-0132
+  - D-0133
+  - D-0134
+  - D-0135
+  - D-0136
+  - D-0137
+  supersedes: []
+  status: PROVISIONAL
+  review_status: PENDING
+  notes: >
+    DG-NON per A12 §2.2 D-DOCT default delegation. Storage form is doctrinal because it
+    governs synthesis structure for 12+ years and reaches into all downstream work
+    (B2 tooling, B3 navigation, B4 pilot, B5 rendering, B6 validation, B7 architecture
+    lock, all of Stage C). The proposal-of-record at architecture/storage-derivation.md
+    is the audit trail for this decision; project-owner adoption converts PROVISIONAL
+    -> CANONICAL.
+
+    Adoption may include amendments — the proposed selection may be modified, the
+    rationale refined, or alternatives reconsidered. Amendments are not failures of
+    the proposal; they are how D-DOCT/DG-NON works.
+
+    If adoption is denied or deferred, the project remains in Candidate A's
+    status-quo-extended form as the de facto storage; B1 Session 9 (schema spec +
+    repo strategy revision) proceeds only after adoption. Sessions B2-B7 schedule
+    depends on adoption status.
+
+    CS-MIG cross-stage thread (governance/migration-survival.md §9) triggers on
+    adoption: migration-survival.md §7 forward-dependency table reclassifies all
+    "SURVIVES_AS_IS" mechanical-conversion estimates under the SQLite target. This
+    is a follow-up reclassification, not a B1 deliverable.
+
+    The model_routing notation opus/200/synth reflects the substantive synthesis load
+    of this session — the selection rationale integrates 7 prior sessions of evidence
+    + 5 prior decisions + the framework + the weighting + the doctrinal anchors into
+    a defensible commitment. This is the highest-effort session of B1.
