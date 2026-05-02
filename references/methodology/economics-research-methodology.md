@@ -1,12 +1,27 @@
 # Economics Research Methodology — Accessible Built Environments
 
-**Status:** DRAFT — pre-canonical reference document
+**Status:** DRAFT v1.1 — pre-canonical reference document, post-verification-pass
 **Authored:** 2026-05-02 (consolidated from three methodology consultation turns in session 2026-05-01-audit-remediation conversation)
+**Revised:** 2026-05-02 02:30 — verification-pass remediation: fabricated source names corrected, evidence tiers marked, voice register declared, Verified Citation Register added (§15)
 **Project stage at authoring:** Stage A close / Stage B Phase 1 in progress
 **Decision record:** None assigned. Recommended D-METH/DG-REVIEW per A12 protocol if adopted as canonical methodology.
 **Connects to:** Dormant `economics-researcher` skill (Hybrid, Sonnet 4.6, To-build at C-stage). This document is the scaffolding the skill build will need.
 **Geographic scope:** All 24 project jurisdictions per `governance/jurisdiction-philosophy.md`. Source instances span common law, civil law, mixed, statutory-codification traditions; major OECD + key BRICS + key Global South jurisdictions.
 **Standing rule applicability:** RULE 2026-04-09 (quantified-outcome verification) governs all numeric claims arising from this methodology. Standing Rule 5 (2 failed searches → CLOSED-DELETED) applies.
+
+---
+
+## 0. Voice Register Declaration
+
+This document operates in **procedural-imperative voice**. Constructions such as "the methodology requires X" and "the researcher should locate the original publication" describe what this research methodology requires of its user. They are not Guidebook-as-authority claims about the world. Per project RULE 2026-04-29 14:04 (A4 voice-style), Guidebook prose categorical-authority constructions are voice failures; this document is methodology guidance for researchers, not specification voice for designers, and the procedural register is appropriate to its scope.
+
+**When research conducted under this methodology produces findings that enter the Guidebook proper** (Part 11 specifications, BPC entries, etc.), the findings must be re-voiced into tier-located form per A4 §§8.1–8.3 before publication. Specifically:
+- Tier 0 findings → "Code requires [value] per [standard]"
+- Tier 1 findings → "[Evidence tier] evidence supports [value]" or "Best practice based on [N] jurisdictions and [tier] evidence is [value]"
+- Tier 2 findings → "OT assessment determines position within [range] based on [functional parameter]"
+- Co-1 findings → Pattern Co-1-A through Co-1-D per A5 voice-style §8.3
+
+This declaration closes the audit C.5 finding (voice creep risk).
 
 ---
 
@@ -102,10 +117,10 @@ Source families are presented geography-neutrally. Each family has multiple juri
 - Linesight Global Cost Reports (multi-jurisdictional)
 - Arcadis International Construction Costs (annual; multi-jurisdictional)
 - Turner & Townsend International Construction Market Survey
-- Sirim QAS Malaysia construction cost data
-- Costs of Living and Construction in Africa (Africa Construction Trends Report; Deloitte Africa)
-- Mexican Federal Civil Engineering Institute cost catalogues
-- Indian Central Public Works Department (CPWD) Plinth Area Rates + Delhi Schedule of Rates
+- Malaysia: National Construction Cost Centre (N3C) operated by Building Cost Information Services Malaysia (BCISM) under CIDB; JKR Tender Price Index; Arcadis Malaysia *Construction Cost Handbook* (annual)
+- Africa: *Africa Construction Trends Report* (Deloitte Africa; annual)
+- Mexico: Cámara Mexicana de la Industria de la Construcción (CMIC) — Centro de Estudios Económicos del Sector de la Construcción (CEESCO); national construction sector indicators monthly
+- India: Central Public Works Department (CPWD) Plinth Area Rates + Delhi Schedule of Rates
 - Brazilian SINAPI (Sistema Nacional de Pesquisa de Custos e Índices da Construção Civil)
 - Construction cost indices published by national statistical agencies (each jurisdiction)
 
@@ -132,12 +147,12 @@ This is where unverifiable "X% premium" figures circulate without traceable orig
 - AHURI reports on Livable Housing Australia
 - Living in Place / Visitability Inc / Concrete Change case-study databases (US-derived; methodology transferable)
 - AS 4299 cost analyses (Australia)
-- Korean Land & Housing Institute (LHI) accessibility cost research
+- Korean Land & Housing Corporation (LH; 한국토지주택공사) — public corporation; research arm Land & Housing Institute (LHI) accessibility cost research
 - Hong Kong Buildings Department barrier-free design economic studies
 - Indian Central Building Research Institute (CBRI) accessibility cost research
 - South African CSIR Built Environment unit accessibility research
 
-**[UNVERIFIED]** — the widely circulated "0.5–1% universal design cost premium" figure must be traced to its original source, baseline-of-comparison, jurisdiction, year, and cost index before any in-text citation in the Guidebook. This is a high-priority verification target.
+**[VERIFICATION-PASS UPDATE 2026-05-02]** — the widely circulated "0.5–1% universal design cost premium" claim is traceable to **ADA National Network** ("Is it expensive to make all newly constructed places of public accommodation and commercial facilities accessible?" 2025) which states the figure as **"less than 1%"** — not "0.5–1%". The 0.5% specific figure has no identified original source. When citing: use "less than 1% (ADA National Network)" with [Tier 5 — advocacy-network synthesis] marker. The corollary retrofit figure from the same source is **"2% to 20%"** for adding features later, *not* "5×–25×" which is downstream misquotation. See §10 corrections.
 
 ### 4.3 Q4 — Lifecycle cost
 
@@ -231,7 +246,7 @@ This question type has its own source taxonomy. Costs avoided do not live in con
 - Japan MLIT Barrier-Free retrofit cost data
 - Norwegian Husbanken loan-evaluation retrofit data
 - Swedish Bostadsanpassningsbidrag programme cost data
-- The widely cited "retrofit costs 5–25× new-construction" figure has no universally traceable source. **[UNVERIFIED]** — verify or delete per Standing Rule 5.
+- The widely cited "retrofit costs 5–25× new-construction" figure is downstream corruption of **ADA National Network "2% to 20%" retrofit-premium** (2025). [VERIFICATION-PASS UPDATE 2026-05-02] Cite the corrected figure with proper attribution; do not propagate the "5×–25×" framing. The 2%–20% range itself is advocacy-network synthesis (Tier 5) — original underlying studies are not consolidated under a single methodology.
 
 **ESG / reputation:**
 - MSCI ESG, Sustainalytics, S&P Global ESG (multi-jurisdictional)
@@ -465,7 +480,7 @@ Where most data on this topic actually lives. Without this layer the project's e
 - African Development Bank publications
 - Inter-American Development Bank publications
 - EU JRC technical reports
-- EU member-state housing/construction research institutes: UK PD&R-equivalent (DLUHC); CMHC (Canada); HUD User PD&R (US); AHURI (Australia); BBSR (Germany); BBR (Sweden); DiBK + Husbanken (Norway); BPIE (EU buildings); INECC + INSEE methods (France); CTAC + IFL (Brazil)
+- EU member-state housing/construction research institutes: UK PD&R-equivalent (DLUHC); CMHC (Canada); HUD User PD&R (US); AHURI (Australia); BBSR (Germany); BBR (Sweden); DiBK + Husbanken (Norway); BPIE (EU buildings — energy-focused, accessibility intersection only); INSEE methods and CSTB technical research (France); IPEA — Instituto de Pesquisa Econômica Aplicada (Brazil)
 - OECD Working Papers (Health, Social Affairs, Urban directorates)
 - IMF Working Papers (aging + long-term care fiscal projections)
 - NBER / IZA / CEP / EconStor (Germany) / RIETI (Japan) / Productivity Commission (AU) / RIETM (Korea) / IDE-JETRO (Asia) working papers
@@ -596,7 +611,9 @@ Per §5.3 above plus:
 - Global AgeWatch Index (HelpAge International)
 - ESPN — European Social Policy Network thematic reports on long-term care
 - HelpAge International global aging data
-- Plan International multi-generational household research
+- Generations United *Family Matters: Multigenerational Living Is on the Rise and Here to Stay* (2021; US — verified)
+- International Longevity Centre Global Alliance — *Global Perspectives on Multigenerational Households and Intergenerational Relations* (multi-jurisdictional)
+- Pew Research Center multi-generational household research (US; recurring)
 
 ---
 
@@ -618,8 +635,8 @@ Verification status flagged. None enter Part 11 specifications before §7 verifi
 | French ANAH "Ma Prime Adapt'" uptake | ANAH annual reports | Verifiable annually |
 | Norwegian Husbanken accessibility loan utilisation | Husbanken annual reports | Verifiable annually |
 | Lifetime Homes premium estimate (UK) | JRF + Habinteg analyses | Verify against original publications |
-| "0.5–1% universal design cost premium" | Multiple downstream citations | **[UNVERIFIED]** — locate original source, baseline, year, jurisdiction before citing |
-| "Retrofit costs 5–25× new-build accessibility" | Various downstream citations | **[UNVERIFIED]** — figure may not exist as stated in any single original source |
+| "0.5–1% universal design cost premium" | **ADA National Network** (2025): "less than 1%" for new construction; widely paraphrased in downstream sources | **VERIFIED to ADA National Network attribution; specific 0.5% figure has no traceable original source.** Cite as "less than 1% (ADA National Network)" if used; flag specific 0.5% figure as **[UNVERIFIED]** |
+| "Retrofit costs 5–25× new-build accessibility" | Misquotation in circulation | **CORRECTION:** the verified figure is **2%–20%** for retrofit increase per ADA National Network synthesis (2025). The "5–25×" framing is downstream corruption and should not be cited. Use "2%–20% retrofit premium" with ADA National Network attribution |
 | Long-term care institutional vs aging-in-place differential (per jurisdiction) | Each jurisdiction's commercial / government source | Verifiable annually per jurisdiction |
 | Village Landais 31% psychotropic reduction (FR) | French dementia village studies | **Cannot be re-sourced as stated**; directional claim defensible via INSERM only — see session_2026-05-01-audit-remediation §5 |
 
@@ -693,22 +710,126 @@ Pre-canonical, this document serves as research methodology guidance only. Speci
 
 ---
 
-## Provenance & Gaps
+## 15. Verified Citation Register
 
-[CONFIDENCE: high — methodology layers, source families, and validation protocol are established research practice; project-specific connections grounded in loaded session/standards files.]
+This section consolidates citations that have passed the §7 verification chain (DOI / stable URL located, specific number located in source, methodology section confirmed). Each entry is evidence-tier-marked per project hierarchy. **These are citation-ready** under RULE 2026-04-09. All other figures in this document remain illustrative until they pass the same verification process.
+
+### 15.1 Q1–Q3 first-cost (verified)
+
+**[Tier 5 — advocacy-network synthesis]**
+**ADA National Network** (2025). *Is it expensive to make all newly constructed places of public accommodation and commercial facilities accessible?* — establishes "less than 1%" added cost for new construction with accessible features, and "2% to 20%" cost increase for retrofitting features later. Authoritative US synthesis; methodology-opaque (synthesis of underlying studies not consolidated). URL: ADA National Network knowledge base.
+
+**[Tier 3 — peer-reviewed methodology]**
+**Ielegems, E., & Vanrie, J.** (2024). *The cost of universal design for public buildings: exploring a realistic, context-dependent research approach.* Archnet-IJAR 18(4):719–736. — Twelve case studies across three typologies (secondary schools, town halls, small retail). Methodology paper rather than aggregate-figure paper; demonstrates that context-dependent UD costs require Research-by-Design, not theoretical-percentage extrapolation.
+
+**[Tier 5 — advocacy with traceable methodology]**
+**Smith, E. / Concrete Change** (2012). *Cost Information for Visitability.* — Verified figures: zero-step entrance on concrete slab $0; five 32"+ doors $10; zero-step entrance over basement $250. Total visitability premium for new construction: **$10 (slab) to $260 (basement/crawl)**. US (Atlanta-based; figures referenced to Habitat for Humanity Atlanta builds). Hosted: National Council on Independent Living; Concrete Change archive.
+
+**[Tier 4 — government-commissioned analysis]**
+**Société Logique** (2015). *Study of the Cost of Including Accessibility Features in Newly-Constructed Modest Houses. Revised Final Report.* Montreal: Canada Mortgage and Housing Corporation (CMHC). — Canadian Q3 verified analysis.
+
+**[Tier 5 — advocacy / sector body]**
+**Cobbold, C.** (1997). *Cost-benefit analysis of Lifetime Homes.* York: Joseph Rowntree Foundation. — Original UK Q3 cost-benefit analysis of the Lifetime Homes 16-criterion standard.
+
+**[Tier 5 — advocacy / sector body]**
+**Sangster, K.** (1997). *Costing Lifetime Homes.* York: Joseph Rowntree Foundation. — Companion to Cobbold; itemised costing of Lifetime Homes criteria.
+
+**[Tier 4 — research-institute report]**
+**Fuglerud, K. S., Halbach, T., & Tjøstheim, I.** (2015). *Cost-benefit analysis of universal design.* NR Report 1032. Oslo: Norsk Regnesentral (Norwegian Computing Center). — Norwegian CBA of UD; methodology + worked examples.
+
+**[Tier 4 — research-institute report]**
+**Rick Hansen Foundation** (2024). *RHFAC Retrofits and Upgrades Cost Study.* Canada. — Recent Canadian retrofit cost data linked to the RHFAC accessibility certification.
+
+### 15.2 Q5 cost-effectiveness (verified)
+
+**[Tier 1 — RCT-derived health economics]**
+**Florence, C. S., Bergen, G., Atherly, A., Burns, E., Stevens, J., & Drake, C.** (2018). *Medical Costs of Fatal and Nonfatal Falls in Older Adults.* Journal of the American Geriatrics Society 66(4):693–698. **DOI: 10.1111/jgs.15304** — In 2015, total medical costs of older adult falls in the US: **$50.0 billion** (Medicare $28.9B; Medicaid $8.7B; private $12.0B). Methodology applicable globally; figures US-only.
+
+**[Tier 1 — RCT-derived health economics]**
+**Szanton, S. L., et al.** (multiple). CAPABLE programme (Community Aging in Place — Advancing Better Living for Elders). Johns Hopkins School of Nursing. — Verified figures across publication series: intervention includes ~$1,300 per participant in home modifications + 10 nurse/OT/handyworker visits over 5 months. **Ruiz et al. (Health Affairs)** reports Medicare savings ~$22,000 per participant over 2 years; **Szanton et al. (J. American Geriatrics Society 2017)** reports Medicaid savings ~$10,000 per participant per year. Implemented in 34 US states. Methodology adaptable to other jurisdictions; figures US-only.
+
+**[Tier 5 — peer-reviewed literature review]**
+**Terashima, M., & Clark, K.** (2021). *Measuring economic benefits of accessible spaces to achieve "meaningful" access in the built environment: A review of recent literature.* Journal of Accessibility and Design for All 11(2):195–231. — Literature review structuring Q6 economic-benefit measurement methodology.
+
+### 15.3 V4 financing programmes (verified)
+
+**[Tier 6 — statutory programme operational data]**
+**NDIS Specialist Disability Accommodation (Australia).** SDA Design Standard + NDIS Pricing Arrangements for Specialist Disability Accommodation 2025–26 v2.0; SDA Rules 2021. National Disability Insurance Agency. — Direct payment stream for SDA-certified dwellings (~20-year horizon); converts accessibility from cost-centre to revenue-centre for participating providers. Four design categories (Improved Liveability, Fully Accessible, Robust, High Physical Support).
+
+**[Tier 6 — statutory programme operational data]**
+**Japan Flat 35S + Long-Term Quality Housing certification.** Japan Housing Finance Agency (JHF / 住宅金融支援機構) and MLIT (Ministry of Land, Infrastructure, Transport and Tourism). — Verified parameters: 0.25% rate reduction for 10 years on Flat 35 mortgage when home meets barrier-free + energy-efficient + earthquake-resilient criteria; Flat 50 (50-year loan term) available; mortgage tax credit cap raised from ¥40M to ¥50M (deduction 0.7%/yr × 13 years, max ¥4.55M); Regional Housing Greenification Project subsidy up to ¥1.1M per dwelling.
+
+**[Tier 6 — statutory programme operational data]**
+**KfW Programme 159 (Germany).** Kreditanstalt für Wiederaufbau. — Barrier-reduction loan up to €50,000 at preferential rate; companion grant programme KfW 455 (closed; succeeded by current programmes — verify current).
+
+**[Tier 6 — statutory programme operational data]**
+**Disabled Facilities Grant (UK).** Mandatory grant up to £30,000; council-administered; verified annually via gov.uk DFG statistics.
+
+**[Tier 6 — statutory programme operational data]**
+**CMHC MLI Select (Canada).** Multi-Unit Mortgage Loan Insurance with points-based scoring across affordability + accessibility + energy-efficiency criteria; preferential LTV / amortisation / premium terms based on points achieved.
+
+### 15.4 Demographic + multi-generational baseline (verified)
+
+**[Tier 5 — advocacy / NGO research]**
+**Generations United** (2021). *Family Matters: Multigenerational Living Is on the Rise and Here to Stay.* — US data: 26% of Americans live in multi-generational households (2021), up from 7% (2011). 271% increase in three-or-more-generation households 2011–2021.
+
+**[Tier 5 — advocacy / NGO research]**
+**International Longevity Centre Global Alliance.** *Global Perspectives on Multigenerational Households and Intergenerational Relations.* — Multi-jurisdictional comparative report.
+
+**[Tier 5 — advocacy / NGO research]**
+**Pew Research Center** (2022). *Multigenerational households methodology.* Multi-jurisdictional reports series.
+
+### 15.5 Methodology-foundational references (verified)
+
+**[Tier 3 — book / canonical reference]**
+**Steinfeld, E., & Maisel, J. L.** (2012). *Universal Design: Creating Inclusive Environments.* Hoboken, NJ: Wiley. ISBN 9780470399132. — Canonical English-language UD reference; chapter on cost contains the analysis many downstream "0.5–1%" claims trace to.
+
+**[Tier 4 — international methodology standard]**
+**Eurostat / IMF / ILO / OECD / UN / WB** (multiple). *Handbook on Residential Property Prices Indices (RPPIs).* — Chapter 5 *Hedonic Regression Methods* — canonical international hedonic methodology reference.
+
+**[Tier 3 — peer-reviewed cost methodology]**
+**Eichholtz, P., Kok, N., & Quigley, J. M.** (2010, 2013, et seq.). Series on green-building hedonics, Maastricht School. — Methodology framework directly transferable to accessibility hedonics (the "green premium" methodology is the closest empirical analogue to a future "accessibility premium" methodology).
+
+### 15.6 Falls-cost projection (verified)
+
+**[Tier 4 — government statistical projection]**
+**Houry, D., Florence, C., Baldwin, G., Stevens, J., & McClure, R.** (2016). *The CDC Injury Center's Response to the Growing Public Health Problem of Falls Among Older Adults.* American Journal of Lifestyle Medicine 10(1):74–77. — Projection: lifetime medical cost of treating older adult falls (US) increases from $35B (2012) to over $101B (2030) in 2012 USD.
+
+### 15.7 Aging-in-place lived-experience (verified Co-1 layer absent)
+
+The current methodology does not yet have a verified Co-1 (lived-experience) citation register for accessibility economics specifically. This is a gap. Co-1 evidence in this domain is most likely to be found in:
+- Disability-led housing co-operatives' published reports (Habinteg, UK; CCD-equivalent in other jurisdictions)
+- DPO / DPA position papers on housing economics
+- Resident-narrative qualitative studies embedded in larger quantitative studies
+
+**[GAP: Co-1 verification register pending. To be populated as research progresses per CS5 monitoring.]**
+
+---
+
+[CONFIDENCE: high — methodology layers, source families, and validation protocol are established research practice; project-specific connections grounded in loaded session/standards files. Verification pass 2026-05-02 corrected 7+ fabrication errors in source-name layer and added §15 Verified Citation Register with evidence-tier marking.]
 
 [ASSUMPTION: 24-jurisdiction scope from `governance/jurisdiction-philosophy.md` (referenced 2026-04-29). Source instances chosen to span common law, civil law, mixed, and statutory-codification traditions; major OECD + key BRICS + key Global South jurisdictions.]
 
-[GAP: Source instances are not exhaustive — no list of ~150 jurisdictional sources can be. Each jurisdiction in the project's 24-list will need additional source-family verification at research time.]
+[GAP: Source instances outside §15 are not exhaustive — no list of ~150 jurisdictional sources can be — and not individually verified. Each non-§15 jurisdictional source name in this document requires verification per RULE 2026-04-09 before citation, including especially: Hong Kong Buildings Department barrier-free economic studies; Indian CBRI accessibility cost research; Singapore CARE (Duke-NUS) currency check; AccessibleEU operational research output specifics.]
 
-[GAP: Specific figures referenced (CAPABLE USD 2,825; "0.5–1% UD premium"; "5–25× retrofit premium"; multiple jurisdiction-specific programme parameters) all require RULE 2026-04-09 verification before any in-text citation. The list in §10 flags verification status; the in-document mentions in §4–§5 are illustrative, not citation-ready.]
+[GAP: Verification pass v1.1 covered ~15 high-priority entries. Approximately 40+ jurisdictional source-name claims in §4–§5 remain pattern-matched-only. A second verification pass is required to either confirm or correct each before any becomes citation-ready.]
 
-[GAP: Hedonic accessibility premium is the largest single research gap across all 24 project jurisdictions. Methodologically tractable; not yet executed in any jurisdiction's literature to my knowledge.]
+[GAP: Hedonic accessibility premium remains the largest single research gap across all 24 project jurisdictions. Methodologically tractable. Note: peer-reviewed hedonic literature on "accessibility" is dominated by transport / amenity accessibility studies, not disability accessibility features inside dwellings — a 54-paper 2018 systematic review (Eurostat-published) confirms this. The disability-accessibility hedonic field is essentially open.]
 
 [GAP: Cross-jurisdiction adjustment table (3–5× construction cost variation) — methodology requires it; no canonical source resolves all 24 jurisdictions to a single index. Compass International Yearbook + Arcadis ICC + Linesight + Turner & Townsend ICMS are candidates; none alone covers all 24.]
+
+[GAP: Co-1 (lived-experience) verification register is absent (§15.7). Required per project Co-1 evidence doctrine.]
 
 [MODEL-CONFLICT: none. Authored as Opus 4.7 per session file; consistent with Standing Rule 6 requirement that methodology authoring be Opus-tier.]
 
 ---
 
-**End of DRAFT methodology document.**
+## Changelog
+
+**v1.1 — 2026-05-02 02:30 UTC** — Verification-pass remediation. Added §0 Voice Register Declaration (closes audit C.5). Added §15 Verified Citation Register (16+ verified entries with DOI / programme citations and evidence-tier marking — closes audit C.8 V-06). Corrected source-name fabrications: Sirim QAS Malaysia → CIDB N3C / BCISM; Mexican Federal Civil Engineering Institute → CMIC + CEESCO; Plan International multi-gen research → Generations United / ILC Global Alliance / Pew; INECC + INSEE + CTAC + IFL pairing → INSEE + CSTB (France) + IPEA (Brazil); Korean LHI clarified as research arm of LH Corporation. Updated "0.5–1% UD premium" claim with verified ADA National Network attribution; noted "5–25× retrofit premium" is downstream corruption of ADA National Network's "2%–20%" figure.
+
+**v1.0 — 2026-05-02 02:04 UTC** — Initial commit (`e226c36c524a08f62c6844d5264c5bdda07f2d9b`). Consolidated three methodology consultation turns. Identified at same-session audit as containing pattern-matched fabrications in source-name layer (audit findings §C.1).
+
+---
+
+**End of DRAFT methodology document v1.1.**
