@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:55
+last_updated: 2026-05-02 02:30
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -3685,3 +3685,186 @@ decisions:
   notes: >
     DG-AUTO because the evaluation applies the framework + weighting + lock + substrate
     choice as specified in earlier D-METH records.
+- decision_id: D-0133
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Within-Candidate-D substrate selection — H1 (SQLite + Markdown + YAML) operative
+    for evaluation; H2 (RDF + SQLite) dismissed by transitivity if H1 strictly dominated
+  outcome: >
+    For B1 Session 6's evaluation of Candidate D (Hybrid), the operative configuration is
+    H1 (SQLite for cells/sources/governance + Markdown for specifications + YAML for
+    configuration). Cross-store boundary: spec_id on the relational side references markdown
+    filename; markdown frontmatter references spec_id; cross-store integrity is application-enforced.
+    H1 was selected because it preserves markdown's editing affordance for the highest-volume
+    content type (specifications), is the most solo-author-tractable hybrid, and represents
+    Candidate D's strongest argument for survival because it could plausibly score 3 on
+    C-5.2 (the eliminator test's pivotal criterion) if a structured-marker convention provides
+    regex-clean enforcement. H2 (RDF/Jena for relationships+cells + SQLite for tabular records)
+    is dismissed by transitivity if H1 fails the eliminator test — H2 doubles up on
+    database-substrate operational burden without preserving the markdown editing workflow,
+    so its operational scores can only worsen and it cannot satisfy any criterion H1 cannot.
+  rationale: >
+    The framework §5.4 named "hybrid" generically. Session 6 must commit to one configuration
+    to evaluate against the 30 criteria — evaluating against the union of configurations would
+    conflate the candidate's per-criterion scores. H1 was selected over H2 because: (a) H1
+    aligns with the project's actual current structure (markdown specifications + structured
+    data); (b) H1's hybrid-coordination overhead is lowest among hybrid configurations; (c)
+    H1 plausibly tests the eliminator's pivotal criterion (C-5.2 sentence-level marker
+    enforcement) at score 3 via structured-marker convention, where H2 cannot. The transitivity
+    argument (H2 dismissed if H1 dismissed) is not arbitrary — it follows from the structural
+    fact that operational cost compounds with substrate count and that no criterion in the
+    framework's §4 inventory uniquely favors RDF-style semantic markup for prose handling.
+  alternatives_considered:
+  - >-
+    H2 (RDF + SQLite) — rejected: doubles up on database-substrate operational burden;
+    does not preserve markdown editing workflow; cannot score 3 on C-5.2 (the elimination
+    pivot) any more than H1 can.
+  - >-
+    H3 (Markdown + YAML primary + SQLite read-only mirror auto-generated) — rejected: this
+    is essentially Candidate A with a derived index, not a hybrid storage form; the storage
+    of record remains markdown+YAML and the SQLite mirror is a query-layer artifact, not
+    architectural.
+  - >-
+    Defer the within-D substrate decision to Session 7 (evaluate hybrid abstractly) —
+    rejected: hybrid abstraction is underspecified for per-criterion evaluation. Sessions
+    7-9 can revisit only if Candidate D survives elimination.
+  decision_date: 2026-05-02 02:25
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-d-hybrid.md §1.3
+  - sessions/session_2026-05-02-b1-s6.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    This decision becomes operationally moot once D-0134 dismisses Candidate D, but is
+    captured for evaluation-trail completeness. The eliminator test outcome depends on
+    which hybrid configuration was tested.
+- decision_id: D-0134
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Candidate D dismissed under D-0112 strict-dominance test (0 wins, 18 ties,
+    12 losses across 30 criteria); Sessions 7-9 input set reduced to {A, B, C}
+  outcome: >
+    Per-criterion strict-dominance test applied to Candidate D's H1 configuration produced:
+    0 criteria where D > max(A, B, C); 18 criteria where D ties max(A, B, C); 12 criteria
+    where D loses to max(A, B, C). By D-0112's strict-dominance specification ("Candidate D
+    survives elimination iff there exists at least one criterion i such that D_i > max(A_i,
+    B_i, C_i)"), Candidate D is strictly dominated and dismissed without proceeding to
+    Session 7 comparative scoring. Transitivity dismisses Candidate D's H2 alternative
+    configuration: H2's operational scores can only be worse than H1's (two databases vs
+    SQLite + markdown), and H2 cannot satisfy any criterion H1 cannot satisfy. Sessions 7-9
+    proceed with three candidates only: A (Markdown + YAML), B (Relational/SQLite), C
+    (Graph/RDF).
+  rationale: >
+    The pivotal criterion was C-5.2 (evidence markers ●/○ enforced per specification
+    sentence) — the only criterion where max(A, B, C) = 2 rather than 3 and thus the only
+    criterion where D could exceed by scoring 3. D scored 2 on C-5.2 because the hybrid form
+    does not provide a structural advantage on sentence-level marker enforcement: spec text
+    is markdown either way, and sentence-level enforcement is determined by how prose is
+    processed and what marker convention is mandated, not by which substrate non-prose data
+    lives in. The structured-marker convention (H1' variant) that could plausibly achieve
+    score 3 on C-5.2 is form-agnostic — it works in plain markdown (Candidate A) as well
+    as in any hybrid containing markdown. Therefore the structured-marker advantage cannot
+    uniquely belong to the hybrid form.
+
+    Three structural observations about hybrid forms (framework §7.1) are confirmed
+    mechanically by this evaluation: (1) a hybrid is bounded above by the best of its
+    constituent substrates on most criteria; (2) operational criteria compound the hybrid
+    burden — D's Cluster IX scored 33%, at the candidate-set floor; (3) solo-author posture
+    (D-03 binding) is hostile to hybrids because cognitive overhead of two stores is itself
+    a binding constraint. The eliminator test is functioning as designed: D is not dismissed
+    because its weighted total is low (it's 84%, between A's 77% and B's 89%); D is dismissed
+    because no single criterion uniquely favors the hybrid form over the best singleton.
+  alternatives_considered:
+  - >-
+    Survive D on tie-equivalence (D survives if D_i >= M_i for some i) — rejected by
+    D-0112 itself: a tie means the simpler form satisfies equivalently and the hybrid's
+    coordination burden is not justified by tie-equivalent satisfaction. The strict-inequality
+    threshold was chosen specifically to dismiss D under exactly these conditions.
+  - >-
+    Re-evaluate H1 with structured-marker convention to push C-5.2 to score 3 — rejected:
+    structured-marker convention is form-agnostic. Applying it to Candidate A would push
+    A's C-5.2 score from 1 to 3 as well, restoring the dominance. The hybrid does not
+    structurally enable structured markers.
+  - >-
+    Test H2 (RDF + SQLite) before dismissing D entirely — rejected by transitivity: H2's
+    operational scores are necessarily worse than H1's; H2 cannot score 3 on C-5.2 because
+    RDF does not natively express sentence-level prose markers; therefore H2 cannot satisfy
+    any criterion H1 cannot satisfy.
+  - >-
+    Defer dismissal to Session 7 with all four candidates compared — rejected: D-0112
+    explicitly specified "dismissed without further evaluation" precisely to prevent
+    weighted-total smuggling of strictly-dominated candidates into selection comparisons.
+  decision_date: 2026-05-02 02:25
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-d-hybrid.md §4
+  - sessions/session_2026-05-02-b1-s6.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  - D-0110
+  - D-0112
+  - D-0113
+  - D-0119
+  - D-0121
+  - D-0132
+  - D-0133
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    DG-REVIEW because dismissal of a framework-named candidate is a methodological commitment
+    binding Sessions 7-9's input set. Project-owner review confirms the eliminator test
+    applied correctly. The dismissal does NOT mean hybrid storage architectures are
+    universally inferior — it means: for THIS framework, THESE 30 criteria, with THESE
+    weights, the hybrid form Candidate D evaluated produces no per-criterion score that
+    beats the best-of-the-singletons. If a future framework expansion adds a criterion that
+    only a hybrid satisfies, Candidate D should be re-evaluated under a superseding D-METH
+    amendment.
+- decision_id: D-0135
+  category: D-OP
+  delegation: DG-AUTO
+  summary: Candidate D (Hybrid, H1 configuration) scored 143 / 171 (84%) — informational
+    only; D is dismissed regardless of weighted total per D-0134
+  outcome: >
+    Candidate D's per-criterion scores under H1 configuration total 143 weighted points
+    out of maximum 171 (84%). Score is informational only because the dismissal under
+    D-0134 is per-criterion strict-dominance, not weighted-total comparison. For
+    completeness, D's cluster-level distribution: II/III/IV/VI/VII at 100%; VIII at 90%;
+    V at 83%; I at 78%; X at 67%; IX at 33%. The 33% Cluster IX is the structural cost
+    of operating two substrates (markdown + SQLite) plus their cross-store boundary —
+    materially worse than B's 48% (single SQLite) and A's 100% (single markdown+YAML).
+  rationale: >
+    Mechanical application of D-0108 (framework), D-0110 (weighting), D-0113 (lock),
+    D-0133 (within-D substrate = H1), D-0134 (dismissal). Score recorded for evaluation-trail
+    completeness; the 84% total sits between A's 77% and B's 89% but the dismissal is
+    independent of this comparison.
+  alternatives_considered: []
+  decision_date: 2026-05-02 02:25
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-d-hybrid.md §3
+  - sessions/session_2026-05-02-b1-s6.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  - D-0110
+  - D-0113
+  - D-0133
+  - D-0134
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    DG-AUTO. Score recorded; D is dismissed.
