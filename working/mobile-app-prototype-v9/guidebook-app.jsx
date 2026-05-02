@@ -2444,6 +2444,386 @@ const itemsForPopulation = (code) => ITEMS.filter(i => i.p.includes(code) || i.p
 const headingFor = (item, mode) => mode === "question" && item.q ? item.q : item.t;
 
 /* ════════════════════════════════════════════════════════════════════
+   DOCTRINE — frameworks, approaches, foundational concepts
+   Placeholder seed entries. Schema mirrors ITEMS for future migration.
+   ════════════════════════════════════════════════════════════════════ */
+
+const DOCTRINE_GROUPS = [
+  { id: "models", label: "Models of disability" },
+  { id: "approaches", label: "Approaches to design" },
+  { id: "concepts", label: "Foundational concepts" },
+];
+
+const DOCTRINE = [
+  {
+    cd: "DOC-01",
+    group: "models",
+    t: "Social model of disability",
+    s: "Disability is produced by environments and structures that exclude bodies and minds outside an assumed norm. The impairment is a fact; the disability is the gap between that body and a world built without it.",
+    body: "The social model — articulated by Mike Oliver and others through the UK disability movement of the 1970s–80s — separates impairment (a feature of the body or mind) from disability (the social and built consequences of how environments are organised). The implication for design is direct: designers do not 'help disabled people'; they remove or fail to remove the architectural conditions that disable them. Stairs disable wheelchair users; harsh fluorescent light disables people with sensory differences; impossible cognitive interfaces disable people with intellectual disabilities. The intervention point is the building, not the body.",
+    why: "Without this distinction, design conversations slide back into framing access as charity or accommodation rather than as the default condition of a competent building.",
+    points: [
+      { t: "Impairment vs disability", note: "Impairment is bodily fact; disability is environmental consequence. Design acts on the second." },
+      { t: "Origin", note: "UK disability movement, 1970s–80s. Mike Oliver, Vic Finkelstein, UPIAS." },
+      { t: "Design implication", note: "The unit of analysis is the building, not the user." },
+    ],
+    related: ["DOC-02", "DOC-03", "DOC-05"],
+    topics: ["framework", "ethics", "history"],
+  },
+  {
+    cd: "DOC-02",
+    group: "models",
+    t: "Medical model of disability",
+    s: "The dominant pre-1970s framing: disability is a deficit located in the individual body, to be diagnosed, treated, cured, or rehabilitated.",
+    body: "The medical model frames disability as pathology. It is the model embedded in most insurance systems, much rehabilitation practice, and a great deal of older accessibility legislation. It is not wrong about everything — medical care matters, treatments matter — but as a framework for the built environment it produces predictable failures: 'special' rooms, segregated entrances, retrofitted ramps as afterthoughts, designs that treat disabled occupants as exceptions to a default of able-bodiedness.",
+    why: "Most accessibility failures architects encounter — the lift around the side, the accessible toilet that doubles as a storeroom — are medical-model thinking expressed in plan.",
+    points: [
+      { t: "Locus", note: "Disability located in the body, not the environment." },
+      { t: "Frame", note: "Pathology, deficit, treatment." },
+      { t: "Built-environment expression", note: "Segregation, retrofit, exception-handling rather than default provision." },
+    ],
+    related: ["DOC-01", "DOC-04"],
+    topics: ["framework", "history", "critique"],
+  },
+  {
+    cd: "DOC-03",
+    group: "models",
+    t: "Relational / interactional model",
+    s: "A synthesis: disability emerges from the interaction between specific bodies and specific environments, both of which can be acted upon.",
+    body: "The relational model — sometimes called the Nordic or interactional model — holds that the social model's clean separation between impairment and environment is useful but incomplete. Some impairments produce real difficulty regardless of environment; some environments produce real difficulty regardless of impairment. Most accessibility outcomes are the joint product. For designers this is liberating: it means design does not have to pretend it can dissolve impairment in order to take environmental design seriously.",
+    why: "Lets design hold both 'this person has a real impairment' and 'this room is genuinely badly built' without forcing a choice.",
+    points: [
+      { t: "Synthesis", note: "Body and environment together produce disability outcomes." },
+      { t: "Origin", note: "Scandinavian disability research, 1990s–2000s." },
+    ],
+    related: ["DOC-01", "DOC-02"],
+    topics: ["framework", "synthesis"],
+  },
+  {
+    cd: "DOC-04",
+    group: "models",
+    t: "Disability justice",
+    s: "A framework developed by queer disabled people of colour that centres collective access, intersectionality, anti-capitalism, and the leadership of the most affected.",
+    body: "Disability justice — articulated by Patty Berne, Mia Mingus, Sins Invalid and others — extends the social model by insisting that disability cannot be addressed in isolation from race, class, gender, sexuality, and capitalism's organisation of bodies as productive or disposable. For built-environment work this raises practical questions about who commissions, who designs, who occupies, and whose access is treated as default versus exception. It is a stance, not a checklist.",
+    why: "Many access failures are not technical — they are political. Disability justice names that.",
+    points: [
+      { t: "Origin", note: "Sins Invalid, Patty Berne, 2000s–present." },
+      { t: "10 Principles", note: "Intersectionality, leadership of the most impacted, anti-capitalism, cross-movement solidarity, recognising wholeness, sustainability, cross-disability solidarity, interdependence, collective access, collective liberation." },
+      { t: "Design implication", note: "Question who commissions and who is consulted before specifying anything." },
+    ],
+    related: ["DOC-01"],
+    topics: ["framework", "ethics", "politics"],
+  },
+  {
+    cd: "DOC-05",
+    group: "approaches",
+    t: "Universal design",
+    s: "Design that, to the greatest extent possible, works for everyone without requiring adaptation or specialised design.",
+    body: "Universal design (UD) — Ron Mace, North Carolina State, 1980s — proposes seven principles: equitable use, flexibility in use, simple and intuitive use, perceptible information, tolerance for error, low physical effort, size and space for approach and use. UD aspires to a single design that works across the population. It is not the same as compliance, which is a floor; UD is a direction of travel. Critics note that UD can flatten differences and presume a universal user that does not exist. Proponents counter that the goal is mainstream provision, not exceptional handling.",
+    why: "Most strong accessibility outcomes are reached through UD thinking — broader doors, lever handles, generous turning circles — rather than through compliant minima.",
+    points: [
+      { t: "Seven principles", note: "Equitable, flexible, simple, perceptible, tolerant, low-effort, sized for use." },
+      { t: "Origin", note: "Ron Mace, NC State, 1980s." },
+      { t: "Distinction", note: "UD is a direction; compliance is a minimum. The two are not interchangeable." },
+    ],
+    related: ["DOC-01", "DOC-06", "DOC-07"],
+    topics: ["approach", "method"],
+  },
+  {
+    cd: "DOC-06",
+    group: "approaches",
+    t: "Inclusive design",
+    s: "Design that explicitly addresses the diversity of users by designing for and with people excluded by mainstream design.",
+    body: "Inclusive design — strongly associated with Kat Holmes (Mismatch, 2018) and the UK Design Council — overlaps with universal design but emphasises process. The core moves: recognise exclusion, learn from human diversity, solve for one and extend to many. Where UD aspires to single solutions, inclusive design accepts that no single solution suits everyone and asks designers to build a portfolio of access strategies, often co-designed with affected communities.",
+    why: "Most useful when paired with co-design (DOC-08) — the process is the deliverable as much as the building is.",
+    points: [
+      { t: "Core moves", note: "Recognise exclusion. Learn from diversity. Solve for one, extend to many." },
+      { t: "Distinction from UD", note: "Inclusive design accepts a portfolio of solutions; UD aspires to one." },
+    ],
+    related: ["DOC-05", "DOC-08"],
+    topics: ["approach", "process"],
+  },
+  {
+    cd: "DOC-07",
+    group: "approaches",
+    t: "Visitability",
+    s: "A minimal floor for new residential construction: zero-step entrance, wide enough doors, an accessible bathroom on the entry level. Just enough that a disabled visitor can enter and use a toilet.",
+    body: "Visitability — Eleanor Smith, Concrete Change, 1980s Atlanta — argues that almost every house can be built visitable at little or no extra cost if planned from the start. It is not a substitute for full accessibility; it is a refusal to build new housing that excludes disabled visitors entirely from the day it is built. The standard has been adopted in legislation in several US cities and parts of the UK.",
+    why: "A useful baseline argument in residential briefs where 'full accessibility' is being negotiated down. Visitability is the floor below which negotiation should not go.",
+    points: [
+      { t: "Three requirements", note: "Zero-step entry. Doors clear ≥815 mm on the entry level. A toilet a wheelchair user can use." },
+      { t: "Cost", note: "Near-zero at design stage; expensive only as retrofit." },
+    ],
+    related: ["DOC-05"],
+    topics: ["approach", "residential", "advocacy"],
+  },
+  {
+    cd: "DOC-08",
+    group: "approaches",
+    t: "Co-design with disabled people",
+    s: "Disabled people are present in the design process from brief through to post-occupancy, with decision-making weight, paid for their time and expertise.",
+    body: "Co-design — variously called participatory design, user-led design, lived-experience design — moves disabled people from 'consulted' to 'designing'. The minimum honest practice: disabled co-designers are paid at professional rates; their input shapes the brief, not just the finishes; their contribution is credited; they are present at handover, not just at the launch event. Tokenism — one consultation workshop, no influence on the spec — is worse than nothing because it produces design legitimacy without design accountability.",
+    why: "Many of the design errors documented in this guidebook would not survive ten minutes with a co-designer who actually has to use the room.",
+    points: [
+      { t: "Paid", note: "Time and expertise are remunerated at professional rates. No exceptions." },
+      { t: "Influence on the brief", note: "Co-design starts at the brief stage, not at finishes." },
+      { t: "Through to post-occupancy", note: "Co-designers are present at handover and POE, not only at launch." },
+    ],
+    related: ["DOC-06", "RES-01"],
+    topics: ["approach", "process", "ethics"],
+  },
+  {
+    cd: "DOC-09",
+    group: "concepts",
+    t: "Cognitive accessibility",
+    s: "Designing the building so people with cognitive, intellectual, learning, or developmental differences can find, understand, and use it independently.",
+    body: "Cognitive accessibility is the most under-specified domain in mainstream accessibility codes. Most regulation addresses physical and sensory access in detail and cognitive access in passing or not at all. The practical questions: Can someone find their way without reading complex signage? Are routine tasks (toilet, exit, reception, payment) legible without instruction? Are sensory loads (light, sound, smell, crowding) within tolerable ranges? Are choices reduced to manageable counts? Cognitive accessibility overlaps with neurodivergent design and trauma-informed design.",
+    why: "Tier 0 in this guidebook for any public building. Most real-world failures of inclusion are cognitive failures, not physical ones.",
+    points: [
+      { t: "Wayfinding", note: "Findable without complex reading." },
+      { t: "Task legibility", note: "Toilet, exit, payment all evident without instruction." },
+      { t: "Sensory load", note: "Light, sound, crowd density within tolerance." },
+      { t: "Choice architecture", note: "Few clear choices, not many overwhelming ones." },
+    ],
+    related: ["DOC-10"],
+    topics: ["concept", "cognitive", "neurodivergence"],
+  },
+  {
+    cd: "DOC-10",
+    group: "concepts",
+    t: "Sensory design",
+    s: "Treating light, sound, smell, texture, and thermal qualities as primary design variables rather than as finishes.",
+    body: "Sensory design takes seriously that buildings are encountered through bodies that vary widely in sensory processing. The same space that a typical user finds 'fine' is, for a person with sensory processing differences, sensory illness from overhead fluorescents, HVAC hum, and reflective hard floors. Sensory design responds with light that can be modulated, acoustic absorption that holds reverb under control, refuge spaces that genuinely refuge, and surface qualities that do not blast the body with reflected energy.",
+    why: "Most 'inclusive' buildings still fail at the sensory level. Mainstream architectural training under-attends to it.",
+    points: [
+      { t: "Light", note: "Modulable. CCT and intensity controllable, glare controlled." },
+      { t: "Acoustic", note: "Reverb under 0.6 s for speech-priority rooms." },
+      { t: "Refuge", note: "A small enclosed quiet space within reach in any large public building." },
+    ],
+    related: ["DOC-09"],
+    topics: ["concept", "sensory", "neurodivergence"],
+  },
+];
+
+const getDoctrine = (cd) => DOCTRINE.find(d => d.cd === cd);
+
+/* ════════════════════════════════════════════════════════════════════
+   RESOURCES — collaborators, organisations, methods, references
+   Placeholder seed. Future migration: split into people/orgs/methods/refs.
+   ════════════════════════════════════════════════════════════════════ */
+
+const RESOURCE_GROUPS = [
+  { id: "collaborators", label: "Bring into your team" },
+  { id: "orgs", label: "Organisations" },
+  { id: "methods", label: "Engagement methods" },
+  { id: "refs", label: "Further reading" },
+];
+
+const RESOURCES = [
+  {
+    cd: "RES-01",
+    group: "collaborators",
+    t: "Disability co-designers",
+    s: "Disabled people engaged at professional rates from brief through to post-occupancy. Recruited via local disability organisations, not via personal networks.",
+    body: "The single highest-leverage addition to a project team. Co-designers are not 'users' or 'consultees' — they are paid contributors with sign-off on items in their domain. Build the role into the fee proposal, not into a separate engagement budget that gets cut. Recruit through disability-led organisations (DPOs) rather than service providers; the difference is whether disabled people set the terms or someone speaks for them. Compensate at professional rates that match what an architect on the project would receive for equivalent time.",
+    why: "Without co-designers the architectural team is making access decisions on behalf of people none of whom are in the room. That is the structural fault behind most failed accessible buildings.",
+    points: [
+      { t: "When to engage", note: "Brief stage, not finishes." },
+      { t: "Compensation", note: "Professional rates. Build into fee proposal." },
+      { t: "Recruitment", note: "Through DPOs (disabled people's organisations), not service providers." },
+      { t: "Sign-off", note: "Decision rights on items in their domain." },
+    ],
+    related: ["DOC-08", "RES-04"],
+    topics: ["team", "process", "ethics"],
+  },
+  {
+    cd: "RES-02",
+    group: "collaborators",
+    t: "Occupational therapist (OT)",
+    s: "A clinician with training in functional assessment of how individuals interact with environments. Brought in for residential adaptations, healthcare, and education projects.",
+    body: "OTs translate between the medical model (clinical assessment of impairment) and the social model (assessment of environments). For a single-occupant residential adaptation, the OT's home assessment is often the single most useful document the architect will work from. For larger projects (clinics, schools, supported housing) OT input on activity sequences — what someone actually does, in what order, with what support — sharpens room programming.",
+    why: "Architects are not trained to do functional assessment. OTs are. Use them.",
+    points: [
+      { t: "Best for", note: "Residential adaptations. Healthcare. Education. Supported housing." },
+      { t: "Deliverable", note: "Functional assessment, activity sequences, equipment specifications." },
+      { t: "Limitations", note: "Trained in clinical model. Pair with disability co-designer for full coverage." },
+    ],
+    related: ["RES-01"],
+    topics: ["team", "clinical"],
+  },
+  {
+    cd: "RES-03",
+    group: "collaborators",
+    t: "Access consultant",
+    s: "A specialist (often a registered access consultant or RAC) who reviews drawings against codes and best practice. Compliance check, not design substitute.",
+    body: "Access consultants do code review and compliance audit. The good ones go further — flagging where compliance produces poor design, where best practice exceeds code, where competing codes conflict. The role is essential but limited: an access consultant cannot replace co-designers, OTs, or the architect's own judgement. Used as a final code check it works; used as the entirety of the access strategy it produces compliance-only buildings.",
+    why: "Most projects need this role. Most projects also misuse it as a substitute for the others.",
+    points: [
+      { t: "Scope", note: "Compliance and code-conflict review." },
+      { t: "Engagement", note: "DD and pre-CC stages typically. Earlier engagement for complex projects." },
+      { t: "Limitation", note: "Compliance is a floor. Consultant should not be the only access input." },
+    ],
+    related: ["RES-01", "RES-02"],
+    topics: ["team", "compliance"],
+  },
+  {
+    cd: "RES-04",
+    group: "orgs",
+    t: "Disabled People's Organisations (DPOs)",
+    s: "Membership organisations led by disabled people, distinct from service providers. The first call for recruiting co-designers and for community consultation.",
+    body: "A DPO is led and controlled by disabled people. Most jurisdictions have national and local DPOs across disability categories (mobility, vision, hearing, cognitive, mental health, intersectional). Service providers — charities or NGOs that deliver services to disabled people — are a different category and should not be substituted for DPOs in consultation. The distinction matters: DPOs speak for; service providers speak about.",
+    why: "Many design briefs route consultation through whichever disability charity is locally visible. That charity may be a service provider, not a DPO. The output is different.",
+    points: [
+      { t: "Definition", note: "Led and controlled by disabled people." },
+      { t: "Distinct from", note: "Service providers, charities, professional bodies." },
+      { t: "Use for", note: "Co-designer recruitment, community consultation, advocacy." },
+    ],
+    related: ["RES-01"],
+    topics: ["organisation"],
+  },
+  {
+    cd: "RES-05",
+    group: "methods",
+    t: "Walking interviews / site walks with disabled co-designers",
+    s: "Co-designers walk (or roll, or are guided through) the existing site or a reference building, narrating what works and what doesn't.",
+    body: "A short, high-yield method: rather than reviewing drawings, walk the actual or comparable space with disabled co-designers as the primary instrument. Record (with consent) — audio is enough; video is intrusive. Capture both the route and the running commentary. The output is more useful than a workshop transcript because it is anchored in space.",
+    why: "Drawings under-represent the experience of moving through a building. Walking the building with someone who would actually use it brings invisible problems to the surface.",
+    points: [
+      { t: "Setup", note: "1–2 hours. Audio recording with consent. Co-designer paid for time." },
+      { t: "Output", note: "Annotated route + running commentary. Translated into the design log." },
+      { t: "When", note: "Existing site analysis. Reference-building visits during DD." },
+    ],
+    related: ["RES-01", "RES-06"],
+    topics: ["method"],
+  },
+  {
+    cd: "RES-06",
+    group: "methods",
+    t: "Post-occupancy evaluation (POE) with affected occupants",
+    s: "Structured review 6–18 months after handover, asking actual occupants — including disabled occupants — what works.",
+    body: "Most practices do not run POEs. Of those that do, most do not include disabled occupants as a distinct sample. POE is the single mechanism by which design errors get fed back into design knowledge. Without it, the same errors are repeated for decades. A minimum honest POE samples disabled occupants explicitly, pays them for their time, and produces a report that returns to the design team and is read.",
+    why: "If your practice does not do POE on accessible buildings, your practice does not actually know whether they work.",
+    points: [
+      { t: "Timing", note: "6–18 months post-handover. Long enough that occupants have settled, short enough that memory is fresh." },
+      { t: "Sampling", note: "Disabled occupants as distinct sample, not folded into general user research." },
+      { t: "Output", note: "Report + lessons-learned register that survives across projects." },
+    ],
+    related: ["RES-05"],
+    topics: ["method", "evaluation"],
+  },
+  {
+    cd: "RES-07",
+    group: "refs",
+    t: "Mismatch — Kat Holmes (2018)",
+    s: "A short and readable book on inclusive design from a Microsoft accessibility lead. Best one-volume primer.",
+    body: "Holmes was a director of inclusive design at Microsoft and wrote Mismatch as the introductory text she wished existed. It is structured around the idea that exclusion is a 'mismatch' between bodies and environments, and that designers can recognise, learn from, and design out mismatches. Short, well-written, suitable for a project team that has not previously engaged with the topic.",
+    why: "Hand it to a client team who say 'we want this to be inclusive' and watch the conversation become much more useful in two weeks.",
+    points: [
+      { t: "Length", note: "200 pages. A weekend read." },
+      { t: "Audience", note: "Designers, project teams, clients new to inclusive design." },
+    ],
+    related: ["DOC-06"],
+    topics: ["reading", "primer"],
+  },
+];
+
+const getResource = (cd) => RESOURCES.find(r => r.cd === cd);
+
+/* ════════════════════════════════════════════════════════════════════
+   ECONOMICS — cost data, lifecycle, retrofit-vs-new, the case
+   Placeholder seed. Numbers carry [UNVERIFIED] until sourced; treat as
+   illustrative until economics-research pass.
+   ════════════════════════════════════════════════════════════════════ */
+
+const ECON_GROUPS = [
+  { id: "case", label: "The economic case" },
+  { id: "costs", label: "Cost data" },
+  { id: "lifecycle", label: "Lifecycle & retrofit" },
+  { id: "incentives", label: "Incentives & funding" },
+];
+
+const ECONOMICS = [
+  {
+    cd: "ECN-01",
+    group: "case",
+    t: "Marginal cost of designing-in vs retrofitting",
+    s: "Designing accessibility from the start typically adds <1% of construction cost in residential, ~0.5–2% in commercial. Retrofitting costs an order of magnitude more.",
+    body: "The most consistent finding in cost research on accessible buildings: the marginal cost of designing accessibility into a project from the brief stage is small or negligible. The marginal cost of retrofitting after construction is large — typically 5–10× the design-in cost, sometimes more. This is the single strongest economic argument and the one that consistently fails to move clients because it appears as a percentage on construction cost in year zero, while retrofit costs land on someone else's budget years later. Externality, not actual saving, from the client's perspective.",
+    why: "Architects need this number to defend accessibility provision in value-engineering exercises. Clients need it to make decisions that are not optimised against the wrong baseline.",
+    points: [
+      { t: "Residential design-in", note: "<1% of construction cost when integrated from brief. [UNVERIFIED — citation pending economics pass]" },
+      { t: "Commercial design-in", note: "~0.5–2% depending on building type. [UNVERIFIED]" },
+      { t: "Retrofit multiplier", note: "5–10× design-in cost typical. Higher for structural changes (lifts, level changes, structural openings). [UNVERIFIED]" },
+      { t: "Whose budget", note: "Design-in cost lands on the developer's P&L; retrofit cost lands on the building owner or occupier's. Different decision-makers." },
+    ],
+    related: ["ECN-02", "ECN-04"],
+    topics: ["economics", "case"],
+  },
+  {
+    cd: "ECN-02",
+    group: "case",
+    t: "Total addressable market: disability + ageing",
+    s: "Roughly 15% of the global population has a disability. The over-65 share is forecast to roughly double by 2050 in most developed economies. The combined demographic is decisive at point of sale.",
+    body: "Most accessibility briefs are framed as serving a minority. They are not. The combined population of disabled people, older people, parents with prams, people recovering from temporary injury, and people travelling with luggage covers the great majority of the population over a normal occupancy lifecycle. Buildings that work for this population work for the whole population; buildings that don't, exclude most of their potential occupants at some point in those occupants' lives.",
+    why: "The single number that consistently changes commercial conversations: a building that is hostile to a wheelchair user is also hostile to a parent with a pram and a person on crutches.",
+    points: [
+      { t: "Disability prevalence", note: "~15% global, WHO World Report on Disability 2011 — outdated, replacement pending. [UNVERIFIED]" },
+      { t: "Over-65 forecast", note: "Doubling by 2050 in most OECD economies. UN World Population Prospects. [UNVERIFIED]" },
+      { t: "Practical addressable", note: "Add temporary injury, parents with prams, travellers with luggage. Most of the population on most days." },
+    ],
+    related: ["ECN-01"],
+    topics: ["economics", "demographic", "case"],
+  },
+  {
+    cd: "ECN-03",
+    group: "costs",
+    t: "Bathroom: accessible vs minimum-spec — cost delta",
+    s: "Designed-in accessible bathroom in new residential adds approximately AUD 2–5k per bathroom over a minimum-spec equivalent.",
+    body: "The added cost is principally: (a) larger floor area to provide turning circles and clear floor spaces, (b) waterproofing extension under any future grab-bar locations, (c) noggings/structural backing in the right walls, (d) a level-entry shower base. None of these is individually expensive at design stage. All of them, retrofitted later, are expensive — particularly waterproofing, which generally cannot be added without removing finishes. [UNVERIFIED — pending costing pass against current AU rates.]",
+    why: "Concrete number to bring to value-engineering meetings. The next-cheapest option (no provision, retrofit-if-needed) is more expensive in lifecycle terms by a wide margin.",
+    points: [
+      { t: "Cost delta", note: "AUD 2–5k per bathroom. [UNVERIFIED]" },
+      { t: "Components", note: "Area, waterproofing zone, structural backing, level-entry shower base." },
+      { t: "Retrofit equivalent", note: "AUD 15–40k typical. [UNVERIFIED]" },
+    ],
+    related: ["ECN-01"],
+    topics: ["economics", "residential", "bathroom"],
+  },
+  {
+    cd: "ECN-04",
+    group: "lifecycle",
+    t: "Aging-in-place value to homeowner",
+    s: "An accessible home can support its occupants through aging and through unforeseen disability without forced relocation. Relocation costs (financial and human) are large.",
+    body: "From the homeowner's lifecycle perspective, the design-in cost of accessibility competes against the eventual cost of either retrofit or relocation. Forced relocation in late life — to assisted living or to a smaller accessible home — typically costs the household tens to hundreds of thousands of dollars in transaction costs alone, before the human cost of dislocation. Aging-in-place provision changes the curve. This is the strongest single argument for visitability in residential briefs. [UNVERIFIED — pending lifecycle modelling pass.]",
+    why: "Most residential clients are commissioning the building they will live in for decades. They are pricing the wrong scenario.",
+    points: [
+      { t: "Forced relocation cost", note: "Transaction costs, fit-out, human dislocation. Order of tens of thousands. [UNVERIFIED]" },
+      { t: "Time horizon", note: "Most clients commission a 20–50 year tenure; aging-in-place is in scope by definition." },
+    ],
+    related: ["ECN-01", "DOC-07"],
+    topics: ["economics", "lifecycle", "residential"],
+  },
+  {
+    cd: "ECN-05",
+    group: "incentives",
+    t: "Funding sources and incentives (jurisdiction-dependent)",
+    s: "Many jurisdictions have grants, tax offsets, or funding schemes that subsidise accessible design or retrofit. Not consistent across jurisdictions. Verify locally.",
+    body: "Examples include AUS NDIS Specialist Disability Accommodation (SDA) payments for purpose-built accessible housing, US Section 504 funds, UK Disabled Facilities Grants, and various energy-efficiency-and-accessibility joint schemes. The schemes shift constantly; their availability is local and time-bound. This entry exists as a placeholder pointer — actual figures and current schemes need a jurisdiction-specific research pass at brief stage.",
+    why: "Many clients do not know these exist. The architect who flags them shifts the cost calculation materially.",
+    points: [
+      { t: "AU example", note: "NDIS SDA: per-dwelling payments for purpose-built accessible housing meeting category criteria. [UNVERIFIED — current rates pending]" },
+      { t: "US example", note: "Section 504 housing funding. ADA-related tax credits for small business retrofits." },
+      { t: "UK example", note: "Disabled Facilities Grants for residential retrofit." },
+      { t: "Note", note: "Verify current schemes at brief stage; they change." },
+    ],
+    related: [],
+    topics: ["economics", "funding", "jurisdiction"],
+  },
+];
+
+const getEconomics = (cd) => ECONOMICS.find(e => e.cd === cd);
+
+/* ════════════════════════════════════════════════════════════════════
    BASE COMPONENTS
    ════════════════════════════════════════════════════════════════════ */
 
@@ -2563,6 +2943,103 @@ function Accordion({ title, count, defaultOpen = false, children }) {
       {open && <div className="acc-body">{children}</div>}
     </section>
   );
+}
+
+// ─── Point: drop-down for any single design point ─────────────────────
+// One row per point. Head = headline + value/tag. Body = optional
+// note/why/method/ref + Evidence + Relates + Conflicts + child content.
+// Keeps every detail addressable individually, no leading prose dump.
+function Point({ label, value, tag, note, evidence, relates, conflicts, goSpec, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const hasBody = note || (evidence && evidence.length) || (relates && relates.length) || (conflicts && conflicts.length) || children;
+  return (
+    <li className={"pt" + (open ? " pt-open" : "")}>
+      <button className="pt-head" onClick={() => hasBody && setOpen(o => !o)} aria-expanded={hasBody ? open : undefined} disabled={!hasBody}>
+        <span className="pt-label">{label}</span>
+        {value !== undefined && value !== null && value !== "" && <span className="pt-value">{value}</span>}
+        {tag && <span className="pt-tag">{tag}</span>}
+        {hasBody && <span className="pt-tog" aria-hidden="true">{open ? "−" : "+"}</span>}
+      </button>
+      {open && hasBody && (
+        <div className="pt-body">
+          {note && <p className="pt-note">{note}</p>}
+          {children}
+          {relates && relates.length > 0 && (
+            <div className="pt-meta">
+              <p className="pt-meta-l">Relates to</p>
+              <ul className="pt-meta-list">
+                {relates.map((r, i) => (
+                  <li key={i}>
+                    {r.cd && goSpec ? (
+                      <button className="pt-rel-btn" onClick={() => goSpec(r.cd)}>
+                        <span className="pt-rel-cd">{r.cd}</span>
+                        {r.why && <span className="pt-rel-why">{r.why}</span>}
+                      </button>
+                    ) : (
+                      <span className="pt-rel-static">{r.cd ? r.cd + (r.why ? " — " + r.why : "") : (r.why || "")}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {conflicts && conflicts.length > 0 && (
+            <div className="pt-meta pt-meta-warn">
+              <p className="pt-meta-l">Conflicts &amp; trade-offs</p>
+              <ul className="pt-meta-list">
+                {conflicts.map((c, i) => (
+                  <li key={i} className="pt-conf">{c}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {evidence && evidence.length > 0 && (
+            <div className="pt-meta">
+              <p className="pt-meta-l">Evidence</p>
+              <ul className="pt-meta-list">
+                {evidence.map((e, i) => (
+                  <li key={i} className="pt-evid">
+                    <span className="pt-evid-tier">Tier {e.tier}</span>
+                    <span className="pt-evid-source">{e.source}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </li>
+  );
+}
+
+// Extract spec codes (A-02, NR-12, etc.) from any string, return unique array.
+function extractSpecCodes(text, excludeCd) {
+  if (!text) return [];
+  const out = new Set();
+  const re = /\b([A-K])-(\d{2})\b/g;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const cd = m[1] + "-" + m[2];
+    if (cd !== excludeCd && getItem && getItem(cd)) out.add(cd);
+  }
+  return [...out];
+}
+
+// Build the "relates" array for a point by scanning its text for spec refs.
+function relatesFrom(text, excludeCd) {
+  return extractSpecCodes(text, excludeCd).map(cd => {
+    const ref = getItem(cd);
+    return { cd, why: ref ? ref.t : "" };
+  });
+}
+
+// Conflict heuristic: split a "related" entry's `why` field on conflict
+// keywords; keep entries that read as conflicts (stricter, differs, exception,
+// etc.). Honest about provenance — these come from the data, not invention.
+function conflictsFromRelated(related) {
+  if (!related) return [];
+  const KW = /(stricter|loosens|differ|exception|conflict|vs\.?|however|tension|trade-off|inverse|opposite|but |unless |except )/i;
+  return related.filter(r => r.why && KW.test(r.why)).map(r => `${r.cd} — ${r.why}`);
 }
 
 function ToggleBar({ mode, setMode }) {
@@ -3178,17 +3655,22 @@ function SpecDetail({ cd, mode, goBack, goSpec, goPop, goRoom, goCat }) {
   const cat = getCategory(item.cat);
   const heading = headingFor(item, mode);
   const counterpart = mode === "spec" ? item.q : item.t;
+
   const roomsByBld = useMemo(() => {
     const out = { res: [], nres: [] };
-    if (item.rooms.includes("ALL")) {
-      return { all: true };
-    }
-    item.rooms.forEach(rc => {
+    if (item.rooms && item.rooms.includes("ALL")) return { all: true };
+    (item.rooms || []).forEach(rc => {
       const r = ALL_ROOMS.find(x => x.code === rc);
       if (r) out[r.building].push(r);
     });
     return out;
   }, [item.rooms]);
+
+  // Confliction surface — drawn from related entries' why-text. Honest:
+  // these are the project's own related-entry rationales, filtered for
+  // language that reads as conflict/trade-off. Not synthesised here.
+  const itemConflicts = useMemo(() => conflictsFromRelated(item.related), [item.related]);
+  const itemEvidence = item.evidence || [];
 
   return (
     <div className="screen detail">
@@ -3213,188 +3695,309 @@ function SpecDetail({ cd, mode, goBack, goSpec, goPop, goRoom, goCat }) {
         </div>
       </header>
 
-      {item.s && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Summary</h2>
-          <p className="detail-prose">{item.s}</p>
+      {/* About — first row carries the overview prose, expanded by default */}
+      {(item.s || item.body || item.why) && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">About</h2>
+          <ul className="pt-list">
+            {item.s && (
+              <Point label="Summary" defaultOpen={true} note={item.s}/>
+            )}
+            {item.body && (
+              <Point label="Specification in detail" note={item.body}/>
+            )}
+            {item.why && (
+              <Point label="Why it matters" note={item.why} evidence={itemEvidence} conflicts={itemConflicts}/>
+            )}
+          </ul>
         </section>
       )}
 
-      {item.body && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Specification in detail</h2>
-          <p className="detail-prose">{item.body}</p>
-        </section>
-      )}
-
-      {item.why && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Why it matters</h2>
-          <p className="detail-prose">{item.why}</p>
-        </section>
-      )}
-
+      {/* Dimensions — one Point per row */}
       {item.dimensions && item.dimensions.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Dimensions</h2>
-          <DimTable rows={item.dimensions}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Dimensions <span className="detail-h2-c">{item.dimensions.length}</span></h2>
+          <ul className="pt-list">
+            {item.dimensions.map((d, i) => (
+              <Point
+                key={i}
+                label={d.dim}
+                value={`${d.value}${d.unit ? " " + d.unit : ""}`}
+                note={d.note}
+                evidence={itemEvidence}
+                relates={relatesFrom(d.note, item.cd)}
+                conflicts={itemConflicts}
+                goSpec={goSpec}
+              />
+            ))}
+          </ul>
         </section>
       )}
 
+      {/* Performance criteria — one Point per metric */}
       {item.performance && item.performance.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Performance criteria</h2>
-          <PerfTable rows={item.performance}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Performance criteria <span className="detail-h2-c">{item.performance.length}</span></h2>
+          <ul className="pt-list">
+            {item.performance.map((p, i) => (
+              <Point
+                key={i}
+                label={p.metric}
+                value={p.target}
+                note={p.measure ? "Measurement: " + p.measure : null}
+                evidence={itemEvidence}
+                relates={relatesFrom((p.measure || "") + " " + (p.metric || ""), item.cd)}
+                conflicts={itemConflicts}
+                goSpec={goSpec}
+              />
+            ))}
+          </ul>
         </section>
       )}
 
-      {item.codes && item.codes.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Codes and standards</h2>
-          <CodesByJurisdiction rows={item.codes}/>
-        </section>
-      )}
+      {/* Codes & standards — grouped by jurisdiction; each clause is a Point */}
+      {item.codes && item.codes.length > 0 && (() => {
+        const byJur = {};
+        item.codes.forEach(r => { (byJur[r.jurisdiction || "OTHER"] = byJur[r.jurisdiction || "OTHER"] || []).push(r); });
+        const jurOrder = ["AU", "AU/NZ", "US", "UK", "EU", "INTL", "OTHER"];
+        const sorted = jurOrder.filter(j => byJur[j]);
+        return (
+          <section className="detail-section detail-pts-section">
+            <h2 className="detail-h2-sm">Codes &amp; standards <span className="detail-h2-c">{item.codes.length}</span></h2>
+            {sorted.map(j => (
+              <div key={j} className="pt-jur">
+                <p className="pt-jur-l">{j}</p>
+                <ul className="pt-list">
+                  {byJur[j].map((r, i) => (
+                    <Point
+                      key={i}
+                      label={r.ref}
+                      value={r.clause}
+                      note={r.note}
+                      evidence={itemEvidence}
+                      conflicts={itemConflicts}
+                      goSpec={goSpec}
+                    />
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </section>
+        );
+      })()}
 
+      {/* Products — one Point per product type */}
       {item.products && item.products.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Product types</h2>
-          <p className="detail-prose-sm">Manufacturer-neutral product types. Verify performance per the criteria above on actual products at submittal.</p>
-          <ProductsList items={item.products}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Product types <span className="detail-h2-c">{item.products.length}</span></h2>
+          <p className="detail-prose-xs">Manufacturer-neutral. Verify on actual products at submittal.</p>
+          <ul className="pt-list">
+            {item.products.map((p, i) => (
+              <Point key={i} label={p}/>
+            ))}
+          </ul>
         </section>
       )}
 
+      {/* Schedule language — one Point with copy block in body */}
       {item.schedule && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Schedule language</h2>
-          <p className="detail-prose-sm">Drop-in language for project schedules. Adjust references to suit jurisdiction.</p>
-          <ScheduleBlock text={item.schedule}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Schedule language</h2>
+          <ul className="pt-list">
+            <Point label="Drop-in schedule clause" tag="copy">
+              <ScheduleBlock text={item.schedule}/>
+            </Point>
+          </ul>
         </section>
       )}
 
+      {/* Detail items — flatten existing groups: each group → one Point with its items in body */}
       {item.detail && item.detail.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Detail items</h2>
-          <DetailAccordion groups={item.detail}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Detail items <span className="detail-h2-c">{item.detail.reduce((n,g)=>n+g.items.length,0)}</span></h2>
+          <ul className="pt-list">
+            {item.detail.map((g, i) => (
+              <Point
+                key={i}
+                label={g.title}
+                value={String(g.items.length) + (g.items.length === 1 ? " item" : " items")}
+                evidence={itemEvidence}
+                conflicts={itemConflicts}
+                goSpec={goSpec}
+              >
+                <ul className="pt-sublist">
+                  {g.items.map((it, j) => <li key={j} className="pt-subitem">{it}</li>)}
+                </ul>
+              </Point>
+            ))}
+          </ul>
         </section>
       )}
 
+      {/* Diagram — one Point */}
       {item.diagram && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Diagram</h2>
-          <SvgDiagram diagram={item.diagram}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Diagram</h2>
+          <ul className="pt-list">
+            <Point label={
+              item.diagram.type === "plan" ? "Plan diagram" :
+              item.diagram.type === "section" ? "Section diagram" :
+              item.diagram.type === "elevation" ? "Elevation diagram" :
+              item.diagram.type === "isometric" ? "Isometric diagram" :
+              item.diagram.type === "chart" ? "Reference chart" : "Diagram"
+            } defaultOpen={false}>
+              <SvgDiagram diagram={item.diagram}/>
+            </Point>
+          </ul>
         </section>
       )}
 
+      {/* Install notes — one Point per note */}
       {item.install && item.install.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Installation notes</h2>
-          <InstallList items={item.install}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Installation notes <span className="detail-h2-c">{item.install.length}</span></h2>
+          <ul className="pt-list">
+            {item.install.map((it, i) => (
+              <Point
+                key={i}
+                label={String(i + 1).padStart(2, "0")}
+                value={it.length > 80 ? it.slice(0, 78) + "…" : it}
+                note={it.length > 80 ? it : null}
+                relates={relatesFrom(it, item.cd)}
+                evidence={itemEvidence}
+                goSpec={goSpec}
+              />
+            ))}
+          </ul>
         </section>
       )}
 
+      {/* Failure patterns — one Point per failure, conflicts surfaced */}
       {item.failures && item.failures.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Common failures</h2>
-          <FailurePatterns items={item.failures}/>
-        </section>
-      )}
-
-      <section className="detail-section">
-        <h2 className="detail-h2">Relevant populations</h2>
-        <ul className="pop-reasons">
-          {item.p.map(code => {
-            const pop = code === "ALL" ? null : getPop(code);
-            const reason = item.popReasons?.[code];
-            return (
-              <li key={code} className="pop-reason">
-                <p className="pop-reason-h">
-                  <Cite code={code} onJump={goPop}/>
-                  <span className="pop-reason-name">{code === "ALL" ? "Universal" : pop?.label}</span>
-                </p>
-                {reason && <p className="pop-reason-t">{reason}</p>}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-
-      {!roomsByBld.all && (roomsByBld.res?.length > 0 || roomsByBld.nres?.length > 0) && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Where it applies</h2>
-          {roomsByBld.res?.length > 0 && (
-            <div className="rooms-by-bld">
-              <h3 className="rooms-bld-h">Residential</h3>
-              <ul className="rooms-bld-list">
-                {roomsByBld.res.map(r => (
-                  <li key={r.code}>
-                    <button className="rooms-bld-row" onClick={() => goRoom(r.code)}>
-                      <span className="rooms-bld-code">{r.code}</span>
-                      <span className="rooms-bld-name">{r.name}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {roomsByBld.nres?.length > 0 && (
-            <div className="rooms-by-bld">
-              <h3 className="rooms-bld-h">Non-Residential</h3>
-              <ul className="rooms-bld-list">
-                {roomsByBld.nres.map(r => (
-                  <li key={r.code}>
-                    <button className="rooms-bld-row" onClick={() => goRoom(r.code)}>
-                      <span className="rooms-bld-code">{r.code}</span>
-                      <span className="rooms-bld-name">{r.name}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </section>
-      )}
-      {roomsByBld.all && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Where it applies</h2>
-          <p className="detail-prose">Applies in all room types — universal provision.</p>
-        </section>
-      )}
-
-      {item.related && item.related.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Related entries</h2>
-          <ul className="rel-list">
-            {item.related.map(r => {
-              const ref = getItem(r.cd);
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Common failures <span className="detail-h2-c">{item.failures.length}</span></h2>
+          <ul className="pt-list">
+            {item.failures.map((f, i) => {
+              const head = f.length > 70 ? f.slice(0, 68) + "…" : f;
               return (
-                <li key={r.cd}>
-                  <button className="rel-row" onClick={() => goSpec(r.cd)}>
-                    <p className="rel-row-h">
-                      <span className="rel-row-cd">{r.cd}</span>
-                      {ref && <span className="rel-row-t">{ref.t}</span>}
-                    </p>
-                    <p className="rel-row-why">{r.why}</p>
-                  </button>
-                </li>
+                <Point
+                  key={i}
+                  label={head}
+                  tag="failure"
+                  note={f.length > 70 ? f : null}
+                  relates={relatesFrom(f, item.cd)}
+                  evidence={itemEvidence}
+                  goSpec={goSpec}
+                />
               );
             })}
           </ul>
         </section>
       )}
 
-      {item.evidence && item.evidence.length > 0 && (
-        <Accordion title="Evidence and references" count={item.evidence.length}>
-          <ul className="evid-list">
-            {item.evidence.map((e, i) => (
-              <li key={i} className="evid-row">
-                <span className="evid-tier">Tier {e.tier}</span>
-                <span className="evid-source">{e.source}</span>
-              </li>
-            ))}
+      {/* Populations — one Point per relevant population */}
+      {item.p && item.p.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Relevant populations <span className="detail-h2-c">{item.p.length}</span></h2>
+          <ul className="pt-list">
+            {item.p.map(code => {
+              const pop = code === "ALL" ? null : getPop(code);
+              const reason = item.popReasons?.[code];
+              return (
+                <Point
+                  key={code}
+                  label={code === "ALL" ? "Universal" : (pop?.label || code)}
+                  value={code}
+                  note={reason}
+                  evidence={itemEvidence}
+                  goSpec={goSpec}
+                >
+                  <button className="pt-jump" onClick={() => goPop(code === "ALL" ? "ALL" : code)}>
+                    Open population →
+                  </button>
+                </Point>
+              );
+            })}
           </ul>
-        </Accordion>
+        </section>
       )}
 
+      {/* Where applies — one Point per room */}
+      {(roomsByBld.all || roomsByBld.res?.length > 0 || roomsByBld.nres?.length > 0) && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Where it applies {!roomsByBld.all && <span className="detail-h2-c">{(roomsByBld.res?.length || 0) + (roomsByBld.nres?.length || 0)}</span>}</h2>
+          {roomsByBld.all ? (
+            <ul className="pt-list">
+              <Point label="All room types" tag="universal" note="Universal provision."/>
+            </ul>
+          ) : (
+            <>
+              {roomsByBld.res?.length > 0 && (
+                <div className="pt-jur">
+                  <p className="pt-jur-l">Residential</p>
+                  <ul className="pt-list">
+                    {roomsByBld.res.map(r => (
+                      <Point key={r.code} label={r.name} value={r.code} note={r.note}>
+                        <button className="pt-jump" onClick={() => goRoom(r.code)}>Open room →</button>
+                      </Point>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {roomsByBld.nres?.length > 0 && (
+                <div className="pt-jur">
+                  <p className="pt-jur-l">Non-Residential</p>
+                  <ul className="pt-list">
+                    {roomsByBld.nres.map(r => (
+                      <Point key={r.code} label={r.name} value={r.code} note={r.note}>
+                        <button className="pt-jump" onClick={() => goRoom(r.code)}>Open room →</button>
+                      </Point>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
+        </section>
+      )}
+
+      {/* Related entries — one Point per related, conflicts auto-flagged */}
+      {item.related && item.related.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Related entries <span className="detail-h2-c">{item.related.length}</span></h2>
+          <ul className="pt-list">
+            {item.related.map(r => {
+              const ref = getItem(r.cd);
+              const isConflict = /(stricter|loosens|differ|exception|conflict|vs\.?|however|tension|trade-off|inverse|opposite)/i.test(r.why || "");
+              return (
+                <Point
+                  key={r.cd}
+                  label={r.cd}
+                  value={ref ? ref.t : null}
+                  tag={isConflict ? "conflict" : null}
+                  note={r.why}
+                >
+                  <button className="pt-jump" onClick={() => goSpec(r.cd)}>Open spec →</button>
+                </Point>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {/* Evidence — one Point per source */}
+      {item.evidence && item.evidence.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Evidence base <span className="detail-h2-c">{item.evidence.length}</span></h2>
+          <ul className="pt-list">
+            {item.evidence.map((e, i) => (
+              <Point key={i} label={e.source} value={"Tier " + e.tier} note={e.note}/>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Topics tags — non-collapsible row */}
       {item.topics && item.topics.length > 0 && (
         <section className="detail-section detail-topics">
           <p className="detail-topics-l">Topics</p>
@@ -3414,7 +4017,6 @@ function SpecDetail({ cd, mode, goBack, goSpec, goPop, goRoom, goCat }) {
 function RoomDetail({ code, mode, goBack, goSpec, goPop }) {
   const room = getRoom(code);
   const items = useMemo(() => itemsForRoom(code), [code]);
-  const [expanded, setExpanded] = useState({});
 
   if (!room) return (
     <div className="screen">
@@ -3440,6 +4042,9 @@ function RoomDetail({ code, mode, goBack, goSpec, goPop }) {
   const t0Items = items.filter(i => i.tr === 0);
   const buildingLabel = room.building === "res" ? "Residential" : "Non-Residential";
 
+  // Synthesis prose split into paragraphs so each paragraph is its own Point.
+  const synthParas = (room.synthesis || "").split("\n\n").filter(p => p.trim());
+
   return (
     <div className="screen detail">
       <CrumbBar trail={[
@@ -3452,44 +4057,6 @@ function RoomDetail({ code, mode, goBack, goSpec, goPop }) {
         <p className="detail-cat">{room.code}</p>
         <h1 className="detail-h">{room.name}</h1>
         <p className="detail-prose-lead">{room.note}</p>
-      </header>
-
-      {room.body && (
-        <section className="detail-section">
-          <p className="detail-prose">{room.body}</p>
-        </section>
-      )}
-
-      {room.synthesis ? (
-        <section className="detail-section">
-          <h2 className="detail-h2">Design synthesis</h2>
-          <SynthesisSection prose={room.synthesis}/>
-        </section>
-      ) : (
-        <section className="detail-section detail-pending">
-          <h2 className="detail-h2">Design synthesis</h2>
-          <p className="detail-pending-t">Synthesis content for this room is not yet authored. The list of applicable specifications below is complete.</p>
-        </section>
-      )}
-
-      {room.sequence && room.sequence.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Sequence of design decisions</h2>
-          <p className="detail-prose-sm">Order matters. These decisions constrain each other; addressing them in this order avoids the most common integration failures.</p>
-          <SequenceList steps={room.sequence}/>
-        </section>
-      )}
-
-      {room.interactions && room.interactions.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Critical interactions</h2>
-          <p className="detail-prose-sm">Where one specification's resolution constrains another. Tap a code to view the spec.</p>
-          <InteractionsList items={room.interactions} goSpec={goSpec}/>
-        </section>
-      )}
-
-      <section className="detail-section">
-        <h2 className="detail-h2">Applicable entries</h2>
         <div className="room-stats">
           <div className="rs-box">
             <p className="rs-num">{stats.total}</p>
@@ -3508,92 +4075,182 @@ function RoomDetail({ code, mode, goBack, goSpec, goPop }) {
             <p className="rs-l">T2 person</p>
           </div>
         </div>
-      </section>
+      </header>
 
-      {t0Items.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Critical entries (Tier 0)</h2>
-          <p className="detail-prose-sm">These are non-negotiable in this room — code compliance and the floor of accessibility.</p>
-          <ul className="critical-list">
-            {t0Items.map(it => (
-              <li key={it.cd}>
-                <button className="critical-row" onClick={() => goSpec(it.cd)}>
-                  <span className="critical-cd">{it.cd}</span>
-                  <span className="critical-t">{headingFor(it, mode)}</span>
-                </button>
-              </li>
+      {/* About — orientation + synthesis paragraphs */}
+      {(room.body || synthParas.length > 0) && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">About this room</h2>
+          <ul className="pt-list">
+            {room.body && (
+              <Point label="Orientation" defaultOpen={true} note={room.body}/>
+            )}
+            {synthParas.map((p, i) => {
+              const head = p.length > 90 ? p.slice(0, 88) + "…" : p;
+              return (
+                <Point
+                  key={"s"+i}
+                  label={"Synthesis · " + String(i + 1).padStart(2, "0")}
+                  value={head.length < p.length ? head : null}
+                  note={p}
+                  relates={relatesFrom(p, null).map(r => ({ ...r }))}
+                  goSpec={goSpec}
+                />
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {/* Sequence — one Point per step */}
+      {room.sequence && room.sequence.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Sequence of design decisions <span className="detail-h2-c">{room.sequence.length}</span></h2>
+          <p className="detail-prose-xs">Order matters — each step constrains the next.</p>
+          <ul className="pt-list">
+            {room.sequence.map(s => (
+              <Point
+                key={s.step}
+                label={String(s.step).padStart(2, "0") + " · " + s.focus}
+                note={s.why}
+                relates={relatesFrom(s.why + " " + s.focus, null)}
+                goSpec={goSpec}
+              />
             ))}
           </ul>
         </section>
       )}
 
-      <section className="detail-section">
-        <h2 className="detail-h2">All entries by category</h2>
+      {/* Interactions — one Point per interaction */}
+      {room.interactions && room.interactions.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Critical interactions <span className="detail-h2-c">{room.interactions.length}</span></h2>
+          <p className="detail-prose-xs">Where one specification's resolution constrains another.</p>
+          <ul className="pt-list">
+            {room.interactions.map((it, i) => {
+              const head = it.specs.join(" + ");
+              return (
+                <Point
+                  key={i}
+                  label={head}
+                  tag="interaction"
+                  note={it.note + "."}
+                  relates={it.specs.map(cd => {
+                    const ref = getItem(cd);
+                    return { cd, why: ref ? ref.t : "" };
+                  })}
+                  conflicts={[]}
+                  goSpec={goSpec}
+                />
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {/* Clearances — one Point per clearance */}
+      {room.clearances && room.clearances.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Clearances <span className="detail-h2-c">{room.clearances.length}</span></h2>
+          <p className="detail-prose-xs">Room-specific clear-zone dimensions.</p>
+          <ul className="pt-list">
+            {room.clearances.map((c, i) => (
+              <Point
+                key={i}
+                label={c.what}
+                value={c.dim}
+                note={c.ref}
+                relates={relatesFrom(c.ref, null)}
+                goSpec={goSpec}
+              />
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Critical Tier 0 entries — one Point per spec */}
+      {t0Items.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Tier 0 critical entries <span className="detail-h2-c">{t0Items.length}</span></h2>
+          <p className="detail-prose-xs">Non-negotiable in this room.</p>
+          <ul className="pt-list">
+            {t0Items.map(it => (
+              <Point
+                key={it.cd}
+                label={it.cd}
+                value={headingFor(it, mode)}
+                tag="T0"
+                note={it.s}
+              >
+                <button className="pt-jump" onClick={() => goSpec(it.cd)}>Open full entry →</button>
+              </Point>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* All applicable entries — grouped by category, each spec is a Point */}
+      <section className="detail-section detail-pts-section">
+        <h2 className="detail-h2-sm">All applicable entries <span className="detail-h2-c">{items.length}</span></h2>
         {CATEGORIES.map(cat => {
           const inCat = byCat[cat.letter];
           if (!inCat || inCat.length === 0) return null;
           return (
-            <div key={cat.letter} className="cat-group cat-group-room">
-              <h3 className="cat-h-room">
-                <span className="cat-letter">{cat.letter}</span>
-                <span className="cat-name">{cat.name}</span>
-                <span className="cat-count">{inCat.length}</span>
-              </h3>
-              <ul className="spec-list">
-                {inCat.map(it => {
-                  const isExp = !!expanded[it.cd];
-                  return (
-                    <li key={it.cd}>
-                      <div className={"room-spec-row" + (isExp ? " is-expanded" : "")}>
-                        <button
-                          className="room-spec-head"
-                          onClick={() => setExpanded(e => ({...e, [it.cd]: !e[it.cd]}))}
-                          aria-expanded={isExp}>
-                          <div className="room-spec-l">
-                            <span className="spec-row-cd">{it.cd}</span>
-                            <TierTag tier={it.tr}/>
-                          </div>
-                          <p className="room-spec-t">{headingFor(it, mode)}</p>
-                          <span className="room-spec-tog" aria-hidden="true">{isExp ? "−" : "+"}</span>
-                        </button>
-                        {isExp && (
-                          <div className="room-spec-body">
-                            <p className="room-spec-s">{it.s}</p>
-                            <button className="room-spec-go" onClick={() => goSpec(it.cd)}>
-                              Open full entry →
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </li>
-                  );
-                })}
+            <div key={cat.letter} className="pt-jur">
+              <p className="pt-jur-l">
+                <span className="pt-jur-letter">{cat.letter}</span>
+                <span>{cat.name}</span>
+                <span className="pt-jur-count">{inCat.length}</span>
+              </p>
+              <ul className="pt-list">
+                {inCat.map(it => (
+                  <Point
+                    key={it.cd}
+                    label={it.cd}
+                    value={headingFor(it, mode)}
+                    tag={"T" + it.tr}
+                    note={it.s}
+                  >
+                    <button className="pt-jump" onClick={() => goSpec(it.cd)}>Open full entry →</button>
+                  </Point>
+                ))}
               </ul>
             </div>
           );
         })}
       </section>
 
-      {room.clearances && room.clearances.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Clearances</h2>
-          <p className="detail-prose-sm">Room-specific clear-zone dimensions. Coordinate with applicable specifications above.</p>
-          <ClearancesTable rows={room.clearances}/>
-        </section>
-      )}
-
+      {/* Failure patterns — one Point per failure */}
       {room.failures && room.failures.length > 0 && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Common failure patterns</h2>
-          <p className="detail-prose-sm">Where rooms typically fail to integrate the applicable specifications.</p>
-          <FailurePatterns items={room.failures}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Common failure patterns <span className="detail-h2-c">{room.failures.length}</span></h2>
+          <ul className="pt-list">
+            {room.failures.map((f, i) => {
+              const head = f.length > 70 ? f.slice(0, 68) + "…" : f;
+              return (
+                <Point
+                  key={i}
+                  label={head}
+                  tag="failure"
+                  note={f.length > 70 ? f : null}
+                  relates={relatesFrom(f, null)}
+                  goSpec={goSpec}
+                />
+              );
+            })}
+          </ul>
         </section>
       )}
 
+      {/* Diagram — one Point */}
       {room.diagram && (
-        <section className="detail-section">
-          <h2 className="detail-h2">Schematic plan</h2>
-          <SvgDiagram diagram={room.diagram}/>
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Schematic plan</h2>
+          <ul className="pt-list">
+            <Point label="Plan diagram" defaultOpen={false}>
+              <SvgDiagram diagram={room.diagram}/>
+            </Point>
+          </ul>
         </section>
       )}
     </div>
@@ -3601,13 +4258,239 @@ function RoomDetail({ code, mode, goBack, goSpec, goPop }) {
 }
 
 /* ════════════════════════════════════════════════════════════════════
+   DOCTRINE / RESOURCES / ECONOMICS / PRACTICE — new screens
+   ════════════════════════════════════════════════════════════════════ */
+
+// Generic detail page for a doctrine/resource/economics entry.
+// Uses the Point pattern. All data is auto-related: any related[] codes
+// are resolved across DOCTRINE, RESOURCES, ECONOMICS, ITEMS — single
+// click jumps to the right detail.
+function DocResEconDetail({ entry, kind, goBack, goSpec, goDoctrine, goResource, goEconomics, getCrumb }) {
+  if (!entry) return (
+    <div className="screen">
+      <p>Entry not found.</p>
+      <button onClick={goBack} className="back-btn">← Back</button>
+    </div>
+  );
+
+  const resolveCode = (cd) => {
+    if (getDoctrine(cd)) return { kind: "doctrine", t: getDoctrine(cd).t };
+    if (getResource(cd)) return { kind: "resource", t: getResource(cd).t };
+    if (getEconomics(cd)) return { kind: "economics", t: getEconomics(cd).t };
+    const it = getItem(cd);
+    if (it) return { kind: "spec", t: it.t };
+    return null;
+  };
+
+  const goByKind = (cd, k) => {
+    if (k === "doctrine") goDoctrine(cd);
+    else if (k === "resource") goResource(cd);
+    else if (k === "economics") goEconomics(cd);
+    else if (k === "spec") goSpec(cd);
+  };
+
+  const rels = (entry.related || []).map(cd => {
+    const r = resolveCode(cd);
+    return r ? { cd, ...r } : null;
+  }).filter(Boolean);
+
+  const groupLabel = (() => {
+    if (kind === "doctrine") return DOCTRINE_GROUPS.find(g => g.id === entry.group)?.label;
+    if (kind === "resource") return RESOURCE_GROUPS.find(g => g.id === entry.group)?.label;
+    if (kind === "economics") return ECON_GROUPS.find(g => g.id === entry.group)?.label;
+    return null;
+  })();
+
+  return (
+    <div className="screen detail">
+      <CrumbBar trail={[
+        { label: getCrumb.section, go: goBack },
+        { label: groupLabel || entry.group },
+        { label: entry.cd }
+      ]}/>
+
+      <header className="detail-head">
+        <p className="detail-cat">{groupLabel || entry.group}</p>
+        <h1 className="detail-h">{entry.t}</h1>
+        {entry.s && (
+          <blockquote className="detail-counter">
+            <p className="detail-counter-l">In short</p>
+            <p>{entry.s}</p>
+          </blockquote>
+        )}
+      </header>
+
+      {/* About — core prose as Points */}
+      {(entry.body || entry.why) && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">About</h2>
+          <ul className="pt-list">
+            {entry.body && <Point label="Detail" defaultOpen={true} note={entry.body}/>}
+            {entry.why && <Point label="Why it matters" note={entry.why}/>}
+          </ul>
+        </section>
+      )}
+
+      {/* Key points — each as its own drop-down */}
+      {entry.points && entry.points.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Key points <span className="detail-h2-c">{entry.points.length}</span></h2>
+          <ul className="pt-list">
+            {entry.points.map((p, i) => (
+              <Point key={i} label={p.t} note={p.note}/>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Related — across all four domains */}
+      {rels.length > 0 && (
+        <section className="detail-section detail-pts-section">
+          <h2 className="detail-h2-sm">Related <span className="detail-h2-c">{rels.length}</span></h2>
+          <ul className="pt-list">
+            {rels.map(r => (
+              <Point
+                key={r.cd}
+                label={r.cd}
+                value={r.t}
+                tag={r.kind}
+              >
+                <button className="pt-jump" onClick={() => goByKind(r.cd, r.kind)}>Open →</button>
+              </Point>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Topics */}
+      {entry.topics && entry.topics.length > 0 && (
+        <section className="detail-section detail-topics">
+          <p className="detail-topics-l">Topics</p>
+          <ul className="topics-tags">
+            {entry.topics.map(t => <li key={t} className="topic-tag">{t}</li>)}
+          </ul>
+        </section>
+      )}
+    </div>
+  );
+}
+
+// Generic list screen for doctrine/resource/economics — grouped, lightweight.
+function DocResEconList({ title, lead, groups, entries, onOpen }) {
+  return (
+    <div className="screen">
+      <header className="screen-head">
+        <h1 className="screen-h">{title}</h1>
+        <p className="screen-sub">{lead}</p>
+      </header>
+
+      {groups.map(g => {
+        const inGroup = entries.filter(e => e.group === g.id);
+        if (inGroup.length === 0) return null;
+        return (
+          <section key={g.id} className="bld-group">
+            <h2 className="bld-h">{g.label}</h2>
+            <ul className="bld-rooms">
+              {inGroup.map(e => (
+                <li key={e.cd}>
+                  <button className="bld-room" onClick={() => onOpen(e.cd)}>
+                    <div className="bld-room-head">
+                      <span className="bld-room-code">{e.cd}</span>
+                      <span className="bld-room-name">{e.t}</span>
+                    </div>
+                    {e.s && <p className="bld-room-note">{e.s}</p>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+function DoctrineScreen({ goDoctrine }) {
+  return (
+    <DocResEconList
+      title="Doctrine"
+      lead="Frameworks, approaches, and foundational concepts. The why behind the how."
+      groups={DOCTRINE_GROUPS}
+      entries={DOCTRINE}
+      onOpen={goDoctrine}
+    />
+  );
+}
+
+function ResourcesScreen({ goResource }) {
+  return (
+    <DocResEconList
+      title="Resources"
+      lead="Who to bring into your team. Where to find them. How to engage them."
+      groups={RESOURCE_GROUPS}
+      entries={RESOURCES}
+      onOpen={goResource}
+    />
+  );
+}
+
+function EconomicsScreen({ goEconomics }) {
+  return (
+    <DocResEconList
+      title="Economics"
+      lead="The cost case, lifecycle, retrofit-vs-design-in, and incentives. Numbers marked [UNVERIFIED] await an economics-research pass."
+      groups={ECON_GROUPS}
+      entries={ECONOMICS}
+      onOpen={goEconomics}
+    />
+  );
+}
+
+// Practice — wraps Buildings / Specs / Populations under a sub-tab.
+function PracticeScreen({ subtab, setSubtab, mode, goSpec, goRoom, focusCat, popInitial }) {
+  const SUB = [
+    { id: "buildings", label: "Buildings" },
+    { id: "specs", label: "Specs" },
+    { id: "people", label: "Populations" },
+  ];
+  let inner;
+  if (subtab === "buildings") inner = <BuildingsScreen goRoom={goRoom}/>;
+  else if (subtab === "specs") inner = <SpecsScreen mode={mode} goSpec={goSpec} focusCat={focusCat}/>;
+  else if (subtab === "people") inner = <PopulationsScreen goSpec={goSpec} initialOpen={popInitial}/>;
+
+  return (
+    <div className="practice-wrap">
+      <div className="practice-subnav" role="tablist" aria-label="Practice section">
+        {SUB.map(s => (
+          <button
+            key={s.id}
+            role="tab"
+            aria-selected={subtab === s.id}
+            onClick={() => setSubtab(s.id)}
+            className={"practice-sub-btn" + (subtab === s.id ? " practice-sub-btn-on" : "")}>
+            {s.label}
+          </button>
+        ))}
+      </div>
+      {inner}
+    </div>
+  );
+}
+
+
+/* ════════════════════════════════════════════════════════════════════
    APP
    ════════════════════════════════════════════════════════════════════ */
 
 export default function App() {
-  const [tab, setTab] = useState("preface"); // preface | buildings | specs | people | index
+  // Top-level tabs: doctrine | practice | resources | economics | index
+  // (cover/preface reachable from elsewhere; not in the bottom nav at v9.)
+  const [tab, setTab] = useState("practice");
+  const [practiceSub, setPracticeSub] = useState("buildings"); // buildings | specs | people
   const [mode, setMode] = useState("spec"); // spec | question
-  const [view, setView] = useState({ kind: "tab" }); // tab | spec | room
+  // view: { kind: "tab" } | { kind: "spec", cd } | { kind: "room", code }
+  //     | { kind: "doctrine", cd } | { kind: "resource", cd } | { kind: "economics", cd }
+  const [view, setView] = useState({ kind: "tab" });
   const [popInitial, setPopInitial] = useState(null);
   const [catFocus, setCatFocus] = useState(null);
 
@@ -3619,42 +4502,74 @@ export default function App() {
   const goTab = (t) => { setTab(t); go({ kind: "tab" }); setPopInitial(null); setCatFocus(null); };
   const goSpec = (cd) => go({ kind: "spec", cd });
   const goRoom = (code) => go({ kind: "room", code });
-  const goPop = (code) => { setTab("people"); setPopInitial(code); go({ kind: "tab" }); };
-  const goCat = (letter) => { setTab("specs"); setCatFocus(letter); go({ kind: "tab" }); };
+  const goPop = (code) => { setTab("practice"); setPracticeSub("people"); setPopInitial(code); go({ kind: "tab" }); };
+  const goCat = (letter) => { setTab("practice"); setPracticeSub("specs"); setCatFocus(letter); go({ kind: "tab" }); };
+  const goDoctrine = (cd) => go({ kind: "doctrine", cd });
+  const goResource = (cd) => go({ kind: "resource", cd });
+  const goEconomics = (cd) => go({ kind: "economics", cd });
 
-  // Scroll to category when focused
+  // Scroll to category when focused (Practice→Specs sub-route)
   useEffect(() => {
-    if (catFocus && tab === "specs" && view.kind === "tab") {
+    if (catFocus && tab === "practice" && practiceSub === "specs" && view.kind === "tab") {
       const el = typeof document !== "undefined" ? document.getElementById(`cat-${catFocus}`) : null;
       if (el && el.scrollIntoView) {
         setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
       }
     }
-  }, [catFocus, tab, view.kind]);
+  }, [catFocus, tab, practiceSub, view.kind]);
 
   let body;
   if (view.kind === "spec") {
     body = <SpecDetail
-      cd={view.cd}
-      mode={mode}
-      goBack={() => { setView({ kind: "tab" }); setTab("specs"); }}
+      cd={view.cd} mode={mode}
+      goBack={() => { setView({ kind: "tab" }); setTab("practice"); setPracticeSub("specs"); }}
       goSpec={goSpec} goPop={goPop} goRoom={goRoom} goCat={goCat}/>;
   } else if (view.kind === "room") {
     body = <RoomDetail
-      code={view.code}
-      mode={mode}
-      goBack={() => { setView({ kind: "tab" }); setTab("buildings"); }}
+      code={view.code} mode={mode}
+      goBack={() => { setView({ kind: "tab" }); setTab("practice"); setPracticeSub("buildings"); }}
       goSpec={goSpec} goPop={goPop}/>;
-  } else if (tab === "preface") {
-    body = <PrefaceScreen mode={mode} goPop={goPop} goCat={goCat} goRoom={goRoom}/>;
-  } else if (tab === "buildings") {
-    body = <BuildingsScreen goRoom={goRoom}/>;
-  } else if (tab === "specs") {
-    body = <SpecsScreen mode={mode} goSpec={goSpec} focusCat={catFocus}/>;
-  } else if (tab === "people") {
-    body = <PopulationsScreen goSpec={goSpec} initialOpen={popInitial}/>;
+  } else if (view.kind === "doctrine") {
+    body = <DocResEconDetail
+      entry={getDoctrine(view.cd)}
+      kind="doctrine"
+      goBack={() => { setView({ kind: "tab" }); setTab("doctrine"); }}
+      goSpec={goSpec} goDoctrine={goDoctrine} goResource={goResource} goEconomics={goEconomics}
+      getCrumb={{ section: "Doctrine" }}/>;
+  } else if (view.kind === "resource") {
+    body = <DocResEconDetail
+      entry={getResource(view.cd)}
+      kind="resource"
+      goBack={() => { setView({ kind: "tab" }); setTab("resources"); }}
+      goSpec={goSpec} goDoctrine={goDoctrine} goResource={goResource} goEconomics={goEconomics}
+      getCrumb={{ section: "Resources" }}/>;
+  } else if (view.kind === "economics") {
+    body = <DocResEconDetail
+      entry={getEconomics(view.cd)}
+      kind="economics"
+      goBack={() => { setView({ kind: "tab" }); setTab("economics"); }}
+      goSpec={goSpec} goDoctrine={goDoctrine} goResource={goResource} goEconomics={goEconomics}
+      getCrumb={{ section: "Economics" }}/>;
+  } else if (tab === "doctrine") {
+    body = <DoctrineScreen goDoctrine={goDoctrine}/>;
+  } else if (tab === "resources") {
+    body = <ResourcesScreen goResource={goResource}/>;
+  } else if (tab === "economics") {
+    body = <EconomicsScreen goEconomics={goEconomics}/>;
+  } else if (tab === "practice") {
+    body = <PracticeScreen
+      subtab={practiceSub} setSubtab={setPracticeSub}
+      mode={mode} goSpec={goSpec} goRoom={goRoom}
+      focusCat={catFocus} popInitial={popInitial}/>;
   } else if (tab === "index") {
     body = <MasterIndexScreen mode={mode} goSpec={goSpec} goRoom={goRoom}/>;
+  } else if (tab === "preface") {
+    body = <PrefaceScreen mode={mode} goPop={goPop} goCat={goCat} goRoom={goRoom}/>;
+  } else {
+    body = <PracticeScreen
+      subtab={practiceSub} setSubtab={setPracticeSub}
+      mode={mode} goSpec={goSpec} goRoom={goRoom}
+      focusCat={catFocus} popInitial={popInitial}/>;
   }
 
   return (
@@ -3668,10 +4583,10 @@ export default function App() {
       </main>
       <nav className="app-nav" aria-label="Primary navigation">
         {[
-          { id: "preface", label: "Preface" },
-          { id: "buildings", label: "Buildings" },
-          { id: "specs", label: "Specs" },
-          { id: "people", label: "People" },
+          { id: "doctrine", label: "Doctrine" },
+          { id: "practice", label: "Practice" },
+          { id: "resources", label: "Resources" },
+          { id: "economics", label: "Economics" },
           { id: "index", label: "Index" },
         ].map(t => (
           <button
@@ -4118,6 +5033,329 @@ function Style() {
       }
       .acc-body {
         padding: 4px 20px 20px;
+      }
+
+      /* ─── Point: drop-down for any single design point ─────────── */
+      .pt-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--line);
+      }
+      .pt {
+        border-bottom: 1px solid var(--line-soft);
+        background: transparent;
+      }
+      .pt-open {
+        background: var(--bone-soft);
+      }
+      .pt-head {
+        width: 100%;
+        background: transparent;
+        border: 0;
+        padding: 12px 14px;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+        color: var(--ink);
+        min-height: 44px;
+      }
+      .pt-head:hover:not(:disabled) { background: var(--bone-soft); }
+      .pt-head:disabled { cursor: default; }
+      .pt-head:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: -2px;
+      }
+      .pt-label {
+        flex: 1 1 auto;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: var(--ink);
+      }
+      .pt-value {
+        flex: 0 0 auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        color: var(--ink-soft);
+        text-align: right;
+        white-space: nowrap;
+        max-width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .pt-tag {
+        flex: 0 0 auto;
+        font-family: 'Inter', sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        color: var(--ink-soft);
+        background: var(--bone-light);
+        white-space: nowrap;
+      }
+      .pt-tog {
+        flex: 0 0 auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 16px;
+        color: var(--ink-soft);
+        width: 16px;
+        text-align: center;
+      }
+      .pt-body {
+        padding: 4px 14px 18px 14px;
+        background: var(--bone-soft);
+      }
+      .pt-note {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: var(--ink);
+        margin: 0 0 12px 0;
+      }
+      .pt-meta {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--line-soft);
+      }
+      .pt-meta-warn {
+        background: rgba(180, 90, 40, 0.05);
+        margin: 10px -8px 0 -8px;
+        padding: 10px 8px 8px 8px;
+        border-top: 1px dashed rgba(180, 90, 40, 0.3);
+        border-radius: 4px;
+      }
+      .pt-meta-l {
+        font-family: 'Inter', sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-soft);
+        margin: 0 0 6px 0;
+      }
+      .pt-meta-warn .pt-meta-l {
+        color: rgb(140, 70, 30);
+      }
+      .pt-meta-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .pt-meta-list li {
+        margin: 0;
+        padding: 0;
+      }
+      .pt-meta-list li + li {
+        margin-top: 4px;
+      }
+      .pt-rel-btn {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        background: transparent;
+        border: 0;
+        padding: 4px 0;
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+        color: var(--ink);
+        width: 100%;
+      }
+      .pt-rel-btn:hover { text-decoration: underline; text-decoration-color: var(--ink-faint); }
+      .pt-rel-btn:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+      .pt-rel-cd {
+        flex: 0 0 auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .pt-rel-why {
+        flex: 1 1 auto;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 13.5px;
+        color: var(--ink-soft);
+      }
+      .pt-rel-static {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 13.5px;
+        color: var(--ink-soft);
+        display: block;
+        padding: 4px 0;
+      }
+      .pt-conf {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 13.5px;
+        line-height: 1.45;
+        color: rgb(80, 40, 15);
+        padding: 2px 0;
+      }
+      .pt-evid {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 3px 0;
+      }
+      .pt-evid-tier {
+        flex: 0 0 auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 700;
+        background: var(--ink);
+        color: var(--bone);
+        padding: 1px 6px;
+        border-radius: 2px;
+      }
+      .pt-evid-source {
+        flex: 1 1 auto;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 13px;
+        color: var(--ink);
+        line-height: 1.45;
+      }
+      .pt-jump {
+        margin-top: 10px;
+        background: transparent;
+        border: 1px solid var(--ink);
+        color: var(--ink);
+        padding: 8px 14px;
+        font: 500 13px 'Inter', sans-serif;
+        cursor: pointer;
+        border-radius: 2px;
+      }
+      .pt-jump:hover { background: var(--ink); color: var(--bone); }
+      .pt-jump:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
+      }
+      .pt-sublist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .pt-subitem {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 13.5px;
+        line-height: 1.5;
+        color: var(--ink);
+        padding: 5px 0;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .pt-subitem:last-child { border-bottom: none; }
+      .pt-jur {
+        margin-top: 14px;
+      }
+      .pt-jur:first-child { margin-top: 0; }
+      .pt-jur-l {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-soft);
+        margin: 0 0 4px 0;
+      }
+      .pt-jur-letter {
+        flex: 0 0 auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        background: var(--ink);
+        color: var(--bone);
+        padding: 1px 6px;
+        border-radius: 2px;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .pt-jur-count {
+        flex: 0 0 auto;
+        margin-left: auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        color: var(--ink-faint);
+      }
+      .detail-pts-section {
+        padding: 18px 0;
+      }
+      .detail-h2-sm {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink);
+        margin: 0 0 10px 0;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+      .detail-h2-c {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--ink-faint);
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .detail-prose-xs {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-style: italic;
+        font-size: 13px;
+        color: var(--ink-soft);
+        margin: 0 0 10px 0;
+        line-height: 1.5;
+      }
+
+      /* ─── Practice sub-nav ─── */
+      .practice-wrap {
+        display: flex;
+        flex-direction: column;
+      }
+      .practice-subnav {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        background: var(--bone);
+        border-bottom: 1px solid var(--line);
+        padding: 0 16px;
+      }
+      .practice-sub-btn {
+        flex: 1 1 0;
+        background: transparent;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        padding: 12px 8px;
+        font: 600 12px 'Inter', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-soft);
+        cursor: pointer;
+        min-height: 44px;
+      }
+      .practice-sub-btn:hover { color: var(--ink); }
+      .practice-sub-btn:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: -2px;
+      }
+      .practice-sub-btn-on {
+        color: var(--ink);
+        border-bottom-color: var(--ink);
       }
 
       /* ─── Buildings ─── */
