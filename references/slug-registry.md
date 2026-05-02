@@ -125,3 +125,5 @@
 
 **Flat files retired:** All `references/bpc/{POPULATION}.md` and `references/search-log/{POPULATION}.md` files are frozen archives. Do not read or write them.
 | `construction-cost-data` | `economics` | `references/search-log/economics/construction-cost-data.md` | `references/bpc/economics/construction-cost-data.md` | ACTIVE |
+
+| `accessibility-feature-market-value-uplift-framing` | `economics` | `references/search-log/economics/accessibility-feature-market-value-uplift-framing.md` | `references/bpc/economics/accessibility-feature-market-value-uplift-framing.md` | PROVISIONAL — Session 2026-05-02 partial run; 4/24 jurisdictions; 2/14 languages |
