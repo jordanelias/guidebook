@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:10
+last_updated: 2026-05-02 02:35
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -3440,3 +3440,121 @@ decisions:
   notes: 'Application track-back: when project owner applies the patch in claude.ai, they should add a follow-up Decision
     record (D-NEXT) recording application date and any modifications made during paste. This Decision is the agent-side issuance;
     the application is the project-owner-side completion.'
+- decision_id: D-0129
+  category: D-METH
+  delegation: DG-REVIEW
+  summary: Within-Candidate-B substrate selection — SQLite is operative; PostgreSQL and
+    DuckDB dismissed within Candidate B
+  outcome: >
+    For B1 Session 4's evaluation of Candidate B (Relational), the operative sub-substrate
+    is SQLite. PostgreSQL and DuckDB are dismissed within Candidate B. SQLite is the
+    lowest-risk choice for the project's pre-launch solo-author posture (D-03 binding):
+    single-file format; CLI ubiquitous; format documented; SQLite Archive Format is a
+    Library of Congress preservation recommendation. PostgreSQL adds operational complexity
+    (server process, backup discipline) without a corresponding improvement on solo-author
+    binding requirements. DuckDB's analytical-query strength is appealing for audience modes
+    but its file format longevity is materially weaker than SQLite (younger project, format
+    breaks have occurred). If Sessions 7-9 select Candidate B, this sub-decision can be
+    revisited if a different sub-substrate's properties dominate at that point — but the
+    operative substrate for Session 4's evaluation is SQLite.
+  rationale: >
+    The framework §5.2 named three relational sub-substrates (SQLite, PostgreSQL, DuckDB)
+    and deferred the within-Candidate-B sub-decision to Session 4 if Candidate B survives
+    Session 3's calibration sketch. Session 4 must commit to one sub-substrate to evaluate
+    against the 30 criteria — evaluating against the union of sub-substrates would conflate
+    candidates. SQLite is selected because (a) format longevity is the strongest of the
+    three; (b) solo-author operability matches D-03's pre-launch binding (no server process,
+    no infrastructure ops); (c) the project's volume (1,098 records, expected to grow into
+    Stage C but bounded) is well within SQLite's operational sweet spot — single-file
+    databases up to terabytes are routine for SQLite; the project corpus is megabytes; (d)
+    CI integration cost is lowest (regenerate .db on each push from canonical SQL fixtures);
+    (e) tool independence is high (any SQLite library in any language reads the format).
+    PostgreSQL would be selected if the project required multi-user concurrent writes
+    (it does not — solo-author), or schema-level features SQLite lacks (it does not — A6
+    state machines, constraints, triggers all available in SQLite). DuckDB would be
+    selected if analytical query performance dominated other concerns (it does not — the
+    audience-priority modes are well-served by indexed SQLite queries given the corpus
+    size).
+  alternatives_considered:
+  - >-
+    PostgreSQL — rejected: server process adds operational discipline that solo-author
+    pre-launch posture (D-03) does not need. PostgreSQL's ecosystem advantages (replication,
+    extensions, advanced features) are post-launch concerns at best; pre-launch they are
+    operational overhead without value-add.
+  - >-
+    DuckDB — rejected: file format longevity is materially weaker than SQLite (younger
+    project, single steward); analytical-query strength does not compensate at the
+    project's data volume; the audience-priority modes are well-served by indexed SQLite.
+  - >-
+    Defer the substrate decision to Session 7 (evaluate Candidate B at the abstract
+    "relational" level then pick a substrate after) — rejected: the within-substrate
+    differences are large enough that "relational" without a specified substrate is
+    underspecified for evaluation. Sessions 7-9 can revisit if the candidate is selected.
+  decision_date: 2026-05-02 02:30
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-b-relational.md §1.2
+  - sessions/session_2026-05-02-b1-s4.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    Sub-decision under D-0108. If Candidate B is selected at Sessions 7-9 and a different
+    sub-substrate's properties later dominate (e.g., Stage C scope reveals a need for
+    analytical queries at scale), this decision can be superseded. The selection is for
+    B1 evaluation purposes; downstream stages may revisit.
+- decision_id: D-0130
+  category: D-OP
+  delegation: DG-AUTO
+  summary: Candidate B (Relational, SQLite) scored 152 / 171 (89%) under B1 derivation
+    framework
+  outcome: >
+    Candidate B's per-criterion scores 0-3 across all 30 criteria total 152 weighted points
+    out of a maximum 171 (89%). Distinguishing strength clusters: VII Navigation/audience
+    (27/27, 100%) — inverts Candidate A's 44%; III Co-1 schema discipline (9/9, 100%);
+    II Cell-level state (18/18, 100%); IV Synthesis metadata (18/18, 100%); VI Cross-cutting
+    axes (6/6, 100%); I Entity & relationship (25/27, 93%); VIII Time model (19/21, 90%).
+    Distinguishing weakness cluster: IX Operational (10/21, 48%) — migration cost from
+    current 1,098 records (C-9.3, C-9.4) and A10/A12/A13 integration cost (C-9.5) are the
+    load-bearing one-time investments. Cost to reach near-native scoring on all criteria:
+    27-42 sessions, materially higher than Candidate A's 19-29 because Candidate B has
+    migration-from-current cost on top.
+  rationale: >
+    Mechanical application of D-0108 (framework), D-0110 (weighting), D-0111 (S-05 spec),
+    D-0112 (eliminator test — does not apply to Candidate B), D-0113 (requirements lock),
+    D-0129 (within-B substrate = SQLite). Each criterion was assessed against the
+    four-question template from b1-derivation-framework.md §6.1. Scores follow the D-0112
+    rubric (0=absent, 1=high-cost adaptation, 2=moderate-cost adaptation, 3=native). The
+    evaluation does not compare B to A/C/D — that is Session 7; it produces B's standalone
+    score for input to comparative scoring.
+
+    The score is not the selection. Session 7 compares; Sessions 8-9 select. Candidate B's
+    89% is materially higher than Candidate A's 77%, but the comparison is decisive only
+    against weighted-difference thresholds Session 7 must specify. The 12-point gap reflects
+    Cluster VII (+15 points), III (+3), and II/IV (+5 combined) gains for B over A, partially
+    offset by Cluster IX (-11 points) loss for B vs A.
+  alternatives_considered: []
+  decision_date: 2026-05-02 02:30
+  decided_by: opus_4_7_session_2026-05-02
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - workplan/b1-candidate-b-relational.md
+  - sessions/session_2026-05-02-b1-s4.md
+  - data/decisions/decision_register.yaml
+  predecessors:
+  - D-0108
+  - D-0110
+  - D-0113
+  - D-0129
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    DG-AUTO because the evaluation applies the framework + weighting + lock + substrate
+    choice as specified in earlier D-METH records.
