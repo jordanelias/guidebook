@@ -1,15 +1,14 @@
-counter: 9
-last_updated: 2026-05-02 02:25
-last_session: session_2026-05-02-b1-s6.md
-notes: 'Counter increments per session-consolidator §1c. Ninth increment after A12
+counter: 10
+last_updated: 2026-05-02 02:35
+last_session: session_2026-05-02-b1-s7.md
+notes: 'Counter increments per session-consolidator §1c. Tenth increment after A12
   S2 initialisation. Sequence: A12-S2 launch (counter set to 0), CI integration
   sub-session (->1), B1 Session 1 (->2), B1 Session 2 (->3), audit-remediation (->4),
   B1 Session 3 (->5), audit-remediation continuation (->6), B1 Session 4 (->7), B1
-  Session 5 (->8), B1 Session 6 (->9). This session shipped the Candidate D evaluation
-  + eliminator test deliverable (workplan/b1-candidate-d-hybrid.md) plus three Decision
-  records (D-0133 D-METH/DG-REVIEW within-D substrate=H1; D-0134 D-METH/DG-REVIEW
-  Candidate D dismissed under strict-dominance; D-0135 D-OP/DG-AUTO Candidate D
-  scored 143/171 informational). Counts as a working session per §1c. Next periodic
-  recheck at counter == 25.
+  Session 5 (->8), B1 Session 6 (->9), B1 Session 7 (->10). This session shipped
+  the comparative-scoring deliverable (workplan/b1-comparative-scoring.md) plus two
+  Decision records (D-0136 D-OP/DG-AUTO comparative matrix produced; D-0137
+  D-METH/DG-REVIEW selection rule = Rule 3 tradeoff-aware). Counts as a working
+  session per §1c. Next periodic recheck at counter == 25.
 
   '
