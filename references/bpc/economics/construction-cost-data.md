@@ -46,7 +46,7 @@ Forward/backward citation mining not yet performed. Priority targets: Ielegems 2
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| CCD-01 | TERRAGON / DStGB | 2017 | DIN 18040-2 cost analysis | 3 | DE | 138/148 criteria zero cost; 0.54–1.26% premium |
+| CCD-01 | TERRAGON / DStGB | 2017 | DIN 18040-2 cost analysis | 3 | DE | 138/148 criteria zero cost; 0.54–1.26% premium. **Commercial interest: TERRAGON is a developer of barrier-free housing (~2,000 units built); study supports their business model. Critique: Ulrike Jocham (Die Frau Nullschwelle) flags unsubstantiated threshold-tolerance claims. Scope: basic barrierefrei only, excludes R-marked wheelchair provisions. Compare CMHC/Société Logique 6-12% for comprehensive 60-feature scope.** |
 | CCD-02 | Ielegems, B. & Vanrie, J. | 2024 | Cost premiums by building type. Archnet-IJAR 18(4) | 1 | BE | 0.94–3.92% new-build; 2.24–14.9% renovation |
 | CCD-03 | HUD / Woodstock Institute | 2020 | Accessible housing costs and savings | 2 | US | $12,200–$15,150/unit avg; $6,668 savings/participant |
 | CCD-04 | ADA National Network | 2025 | Cost of accessible design | 6 | US | <1% new-build premium |
