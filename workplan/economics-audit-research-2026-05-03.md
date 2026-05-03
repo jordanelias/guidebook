@@ -627,3 +627,127 @@ The discrepancy may reflect: (a) different EHS survey years, (b) different defin
 | Tsuchiya-Ito 2024 | Forward | Chandola & Rouxel 2022 (Lancet Regional Health Europe — home modifications + disability outcomes in England — NEW UK data) |
 | Tsuchiya-Ito 2019 | Backward | Japan-Sweden comparative environmental challenges — connects to Swedish Bostadsanpassningsbidrag data |
 | All | Lateral | Carnemolla & Bridge 2018 scoping review of home modification interventions (Australian — methodology reference) |
+
+
+---
+
+## I. Session 2 Findings (2026-05-03 continued)
+
+### I.1 Habinteg £27,000 — primary source traced
+
+**Source:** Habinteg Housing Association news release, September 2024. "Adaptations to older homes could cost households thousands."
+
+**The £27,000 figure is the cumulative cost of 3 most common adaptations in an M4(1) home:**
+
+| Adaptation | M4(1) cost | M4(2) cost | Differential |
+|---|---|---|---|
+| Grab rail (with wall strengthening) | ~£270 | ~£125 (walls already reinforced) | £145 saved |
+| Stairlift (narrow/curved stairs) | £9,000–£10,000 | £2,500–£4,000 (accessible staircase) | £5,000–£7,500 saved |
+| Wet room conversion (full structural) | £6,500+ | ~£4,700 (pre-existing drainage) | £1,800 saved (37% cheaper) |
+| **Total 3 adaptations** | **~£27,000** | **~£7,325–£8,825** | **~£18,175–£19,675 saved** |
+
+**Evidence tier:** Tier 5 — housing association contractor estimates, not independently commissioned study.
+
+**Note:** In some M4(1) homes, stairlifts cannot be fitted due to stair narrowness → through-floor lift needed at £18,000–£20,000. This would push M4(1) total above £27,000.
+
+**DFG context:** UK DFG allocation 2024/25 = £625 million (185% increase over 10 years). Source: Foundations, the National Body for DFGs.
+
+### I.2 LSE/Habinteg "Living not Existing" (2023) — NEW Q6 DATA
+
+**Source:** Provan, J.A. & Lane, L. (2023). "The social and economic value of wheelchair user homes." LSE Housing and Communities / STICERD. Commissioned by Habinteg. LSE Research Online: eprints.lse.ac.uk/121508/
+
+**Methodology:** Cost-benefit analysis using evidence review + 17 qualitative interviews with wheelchair users. Three household-type models.
+
+**M4(3) wheelchair user homes — cost-benefit over 10 years (vs M4(2) baseline):**
+
+| Household type | Additional build cost | 10-year benefit | BCR | Annual LA saving |
+|---|---|---|---|---|
+| Working-age adult | ~£22,000 | ~£94,000 | 4.3:1 | ~£5,000/yr |
+| Later years (65+) | ~£18,000 | ~£101,000 | 5.6:1 | ~£9,000/yr |
+| Child wheelchair user | ~£26,000 | ~£67,000 | 2.6:1 | Not specified |
+
+**Eight social benefit areas:** independence, safety, parenting, family cohesion, employment, community engagement, physical/mental wellbeing, reduced care needs.
+
+**Evidence tier:** Tier 2-3 (LSE academic research group, published via LSE Research Online, cited in UK parliamentary written evidence). CBA methodology, not RCT.
+
+**Co-1 content:** 17 wheelchair user interviews providing qualitative lived-experience data. Pseudonymized. Covers impact on independence, employment, relationships.
+
+**Significance:** This is the strongest Q6 (cost-benefit/cost-of-inaction) evidence the project has for wheelchair-accessible housing. The 4.3:1 to 5.6:1 BCR is compelling because it measures total social value including reduced care costs, not just construction economics. The annual LA savings of £5-9K per wheelchair user are directly policy-relevant.
+
+### I.3 DCWC/ABCB — per-dwelling cost data CORRECTED
+
+**Source:** Donald Cant Watts Corke (DCWC), quantity surveyors, for ABCB. Cited in CIE Decision Regulation Impact Statement 2021.
+
+**Per-dwelling additional cost estimates:**
+
+| Standard | Building type | Additional cost (AUD) | As % of dwelling price |
+|---|---|---|---|
+| Silver | Separate house | $3,874 | 0.5–1.9% |
+| Silver | Other types | Higher | Up to 1.9% |
+| Gold | Various | Range | 1.4–9.0% |
+| Gold+ | Apartment | Up to $37,742 | 1.9–11.6% |
+
+**CORRECTION from prior session:** The "$538 break-even" figure was the sensitivity threshold, not the actual cost. The DCWC QS estimate for Silver separate house is AUD $3,874. The CIE noted Option 1 (Silver) would break even if costs were overstated by $538 — meaning net cost is approximately the DCWC estimate minus $538 adjustment in sensitivity.
+
+**Builder-perceived vs QS cost gap:** A builder quoted AUD $15,000 for Silver on a new house (Disability Support Guide article), nearly 4× the DCWC QS estimate. This gap between industry-perceived cost and professional quantity-surveyor estimate is itself a finding — it demonstrates the "perceived additional cost" barrier that Ielegems 2024 identifies as the primary barrier to UD adoption.
+
+**Evidence tier:** Tier 4 — government-commissioned QS analysis.
+
+### I.4 DaltonCarter counter-analysis (2020) — ABCB RIS methodology critique
+
+**Source:** Dalton, A. & Carter, R. (2020). "Economic advice prepared to assist with responses to the Consultation Regulation Impact Statement on minimum accessibility standards for housing in the National Construction Code." Deakin University / AdHealth Consulting. Prepared for Summer Foundation + Melbourne Disability Institute.
+
+**Key finding:** CIE's CBA methodology had "important methodological issues" that systematically understated benefits. Specifically:
+- The "problem reduction approach" (CIE's preferred method) narrowly defines beneficiaries
+- The willingness-to-pay approach (broader) produced more favorable results
+- Social justice and equity considerations are inadequately weighted in CBA
+- Discount rate selection (7%) disadvantages long-lived benefits
+
+**Significance:** This is a peer critique of the government CBA that produced the "costs exceed benefits" headline. The DaltonCarter analysis supports the finding that Option 1 (Silver) is closer to net-positive than the CIE central estimate suggests.
+
+### I.5 Spanish Law 6/2022 on Cognitive Accessibility
+
+**Source:** González Alonso, M.Y. & González Lozano, B. (2024). "Challenges in Housing Accessibility Towards Universal Design." Architecture (MDPI), 4(4), 917-929. doi:10.3390/architecture4040048
+
+**Spanish regulatory landscape:**
+- Three laws (1960, 1999, 2022), three decrees (2006, 2013, 2015), one national plan
+- Main regulation: Technical Building Code (Código Técnico de la Edificación)
+- **Law 6/2022 on Cognitive Accessibility** — amends General Law on Rights of Persons with Disabilities to define and regulate cognitive accessibility requirements. Spain is one of few jurisdictions with explicit cognitive accessibility legislation.
+- Royal Legislative Decree 1/2013 — unifies disability rights regulations; introduces discrimination by association
+
+**For the project:** Law 6/2022 is relevant to NDV and DEM population codes. Connection to Part 1 §1.6 regulatory landscape and Part 4 D-series cognitive wayfinding items.
+
+**No cost data** — regulatory review only. Tier 6 (regulatory analysis).
+
+### I.6 UK accessibility stock data discrepancy
+
+Two figures in circulation:
+- 9% of English homes meet basic accessibility standard (Centre for Ageing Better, State of Ageing 2020, citing English Housing Survey)
+- 12% current housing stock with basic accessibility features (Habinteg December 2025 NPPF response)
+
+The discrepancy may reflect: (a) different EHS survey years, (b) different definitions of "basic accessibility," or (c) updated data. The 9% figure uses a 4-feature test (level access to entrance, flush threshold, wide doorframes, entrance-level toilet). The 12% figure may use a different threshold. [UNVERIFIED — confirm which EHS methodology each uses]
+
+### I.7 Cross-jurisdictional cost synthesis — final revision
+
+| Jurisdiction | Standard | QS/Research cost | Builder-perceived cost | Source | Tier |
+|---|---|---|---|---|---|
+| AU | Silver (separate house) | AUD $3,874 (0.5-1.9%) | AUD $15,000 (builder quote) | DCWC/ABCB 2021 | 4 |
+| UK | M4(2) | £1,387–£1,400 (~0.4%) | Not separately measured | Centre for Ageing Better 2020 | 4 |
+| UK | M4(3) vs M4(2) | £18,000–£26,000 | Not separately measured | LSE/Habinteg 2023 | 2-3 |
+| DE | DIN 18040-2 basic | €1,600/75m² apt (1.26%) | Not separately measured | TERRAGON/DStGB 2017 | 4 (commercial) |
+| CA | 60-feature comprehensive | 6-12% per dwelling | Not separately measured | CMHC/Société Logique 2015 | 4 |
+| BE | 119-criteria public buildings | 0.54-9.16% new-build | Not separately measured | Ielegems et al. 2019/2024 | 1 |
+| NO | TEK10 bathroom UD | ~0.8m² increase | Not separately measured | SINTEF 2010 | 4 |
+
+**The builder-perceived vs QS gap:** The Australian data reveals a ~4× gap between QS-estimated cost and builder-quoted cost for the same standard. This gap is the "perceived additional cost" that all studies identify as the primary barrier. If this gap exists across jurisdictions (likely), then the cost-premium debate is partly a perception problem, not just an evidence problem.
+
+### I.8 Citation mining conducted this session
+
+| Source | Direction | Yield |
+|---|---|---|
+| Habinteg £27K | Backward | Contractor estimates traced; 3-adaptation breakdown recovered |
+| Habinteg | Forward | LSE "Living not Existing" 2023 — major new Q6 data |
+| ABCB/CIE RIS | Backward | DCWC QS cost study; DaltonCarter counter-analysis |
+| ABCB/CIE RIS | Forward | Summer Foundation submission; Building Better Homes campaign |
+| Spanish MDPI 2024 | Backward | Law 6/2022 Cognitive Accessibility; Technical Building Code |
+| Sirmans 2006 | Forward | Confirmed: zero disability-accessibility hedonic papers in citation network |
