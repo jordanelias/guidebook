@@ -994,3 +994,70 @@ ABCB RIS 2021 (AU) ──backward──→ DCWC QS cost study
 6. **Szanton CAPABLE studies** — US home modification + behavioral intervention (partially in project, needs update)
 7. **DCLG English Housing Survey 2014-15** — adaptations and accessibility data
 8. **§15 extraction** — methodology doc structural edit, needs Change Order
+
+
+---
+
+## N. Mackintosh + Session 2 Close (2026-05-03)
+
+### N.1 Mackintosh (2020) — UK DFG policy trajectory
+
+**Source:** Mackintosh, S. (2020). "Putting Home Adaptations on the Policy Agenda in England." Journal of Aging and Environment, 34(2), 126-140. DOI: 10.1080/26892618.2020.1743511
+
+**Key findings:**
+- UK DFG funding trajectory: £56M (1997/98) → £185M (2013/14) → £625M (2024/25) — 10× increase over 25 years
+- "Reform is hampered by a lack of robust data about the financial benefits of adaptations"
+- Service pathways are complex and vary regionally across England
+- Part of special issue on cross-cultural comparison of housing modification impact
+
+**Related sources mined:**
+- Mackintosh & Heywood (2015): "The structural neglect of disabled housing association tenants in England" — coined the term "structural neglect" used in subsequent literature
+- Proven et al. (2016): 1.8 million households (1 in 12) need accessible housing; 0.7 million (1 in 30) have "more significant needs"
+- McCall et al. (2022), Buildings & Cities: "Inclusive Living: ageing, adaptations and future-proofing homes"
+
+**Evidence tier:** Tier 3 — peer-reviewed policy analysis in specialist journal.
+
+### N.2 Session 2 cumulative totals
+
+**10 commits this session:**
+1. `7efb82a` — Habinteg/LSE CBA + DCWC correction + DaltonCarter + Spanish regulatory
+2. `ab750c6` — Research log: session 2 citation mining
+3. `faf4bbf` — Japanese housing adaptation economics (3 peer-reviewed studies)
+4. `67c5d31` — Research log: Japanese studies
+5. `414806e` — Chandola/Lancet + Carnemolla/Hutchinson citation chain
+6. `69787db` — Research log: Chandola/Carnemolla chain
+7. `69f47c3` — Keall NZ RCT chain (gold standard Q5 evidence)
+8. `3d7859c` — Cochrane review + complete evidence hierarchy
+9. This commit — Mackintosh + session close
+10. Research log update (next commit)
+
+**New sources verified this session:** 15 peer-reviewed papers + 3 government/institutional reports
+
+**New jurisdictions added:** New Zealand (Keall RCT chain)
+
+**Evidence hierarchy now complete:**
+- 1 Cochrane systematic review (21% falls risk reduction)
+- 3 RCTs (2 in Lancet journals: 26% and 31% fall injury reduction; 9:1 BCR)
+- 3 longitudinal/retrospective cohorts (Chandola ELSA, Tsuchiya-Ito JAMDA, Carnemolla care reduction)
+- 2 scoping reviews (Carnemolla 2020, Hutchinson 2025)
+- 1 CBA from academic research group (LSE/Habinteg, 4.3-5.6:1 BCR)
+- 6 construction cost studies across AU/UK/DE/CA/BE/NZ
+
+### N.3 Remaining leads (lower priority)
+
+1. **Whitehead et al. 2018** — BATH-OUT UK feasibility RCT (bathing adaptations)
+2. **Fänge & Iwarsson** — Swedish housing adaptation longitudinal studies (ADL dependence changes)
+3. **Szanton CAPABLE studies** — US home modification + behavioral (partially in project)
+4. **Ishikawa & Koike 2008** — Japanese-language LTC renovation (requires multilingual skill)
+5. **DCLG English Housing Survey 2014-15** — adaptations and accessibility data
+6. **Hollinghurst et al. 2022** — referenced in Hutchinson, not yet retrieved
+7. **§15 extraction** — methodology doc structural edit, needs Change Order
+
+### N.4 Integration work needed (next session)
+
+All findings from sessions 1+2 need to be written into:
+1. **Methodology doc** — v1.9: add Keall RCT chain, Chandola curb-cut data, Cochrane review, Tsuchiya-Ito LTCF data, LSE CBA, complete evidence hierarchy table
+2. **Part 11** — §11.3 value of accessible design: incorporate Q5 evidence (falls reduction, care reduction, LTCF avoidance, social participation improvement)
+3. **BPC economics files** — update construction-cost-data.md with DCWC correction, add new entries for Keall/Chandola/Tsuchiya-Ito/LSE
+4. **Government grant programmes BPC** — add Japanese LTC ¥200,000, UK DFG £625M trajectory, NZ ACC data
+5. **Economics sources BPC** — add all new verified sources to citation register
