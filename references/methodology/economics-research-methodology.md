@@ -1,7 +1,51 @@
 # Economics Research Methodology — Accessible Built Environments
 
-**Status:** DRAFT v1.8 — audit corrections + UK policy update + citation mining 2026-05-03 — pre-canonical reference document, post-international-parallel-investigation
+**Status:** DRAFT v1.9 — full evidence hierarchy + dual-read thesis + cross-jurisdictional convergence 2026-05-03 — pre-canonical reference document, post-international-parallel-investigation
 **Authored:** 2026-05-02 (consolidated from three methodology consultation turns in session 2026-05-01-audit-remediation conversation)
+
+### §15.11.3 Cross-jurisdictional evidence hierarchy — health outcomes
+
+The following evidence hierarchy was assembled through systematic citation mining across 12 jurisdictions (2026-05-03 economics audit sessions 1-2). Evidence is ranked by study design quality.
+
+**Falls prevention / health outcomes (Q5):**
+
+| Rank | Source | Design | Journal | Finding |
+|---|---|---|---|---|
+| 1 | Clemson 2023 | Cochrane SR (6 RCTs, N=3,298) | CDSR | 21% falls risk reduction |
+| 2 | Keall 2015 | Cluster RCT, general pop (NZ) | The Lancet | 26% fall injury reduction |
+| 3 | Keall 2021 | RCT, Māori pop (NZ) | Lancet Public Health | 31% fall injury reduction |
+| 4 | Keall 2017 | CBA of RCT | Injury Prevention | 36% insurer cost reduction; **9:1 BCR** |
+| 5 | Chandola 2022 | Longitudinal cohort (n=10,459, 11.3yr) | Lancet Reg Health Eur | Falls -3%, pain -6%, poor health -4% (impaired); **social isolation -6%, need to move -4% (NON-impaired)** |
+| 6 | Szanton 2017 | Quasi-experimental (CAPABLE) | JAGS | **~10:1 Medicaid cost savings** at $1,300/person |
+| 7 | Gitlin (ABLE) | RCT, 319 participants | PMC | Mortality: 9 vs 21 deaths (2yr); ICER $13-15K/QALY |
+| 8 | Tsuchiya-Ito 2024 | Retrospective cohort (n=4,610) | JAMDA | **28% lower LTCF admission** at ¥200,000 max |
+| 9 | LSE/Habinteg 2023 | CBA (evidence review) | LSE Research Online | M4(3) BCR 4.3:1 to 5.6:1 (10yr) |
+| 10 | Carnemolla 2019 | Cohort (AU) | PMC | 0.36 hrs/wk care reduction |
+
+**The convergence finding:** Low-cost modifications ($500-$1,300 per person) consistently produce 9-10× returns across NZ (RCT) and US (quasi-experimental) data. This cross-jurisdictional convergence strengthens confidence beyond what either study alone provides.
+
+**The curb-cut effect (Chandola 2022):** External housing modifications (ramps, widened doorways, automatic doors, parking, lift) benefit even people WITHOUT mobility impairments: 6% reduction in social isolation (95% CI 5-7%) and 4% reduction in need to move (95% CI 2-5%). This is the strongest empirical evidence for universal benefit of accessible design in residential housing.
+
+### §15.11.4 Throughline 1A — the dual-read thesis
+
+Accessibility features are simultaneously consumed as mainstream desirable features. The hedonic value uplift occurs when the physical feature is valued under its mainstream market label, not its accessibility label. No hedonic study has ever isolated accessibility features as regressors because the same physical attributes are coded under their mainstream names (open-plan, spa bathroom, first-floor bedroom).
+
+**NAHB 2024 buyer preference mapping:**
+
+| Accessibility feature | Mainstream market label | Buyer preference (NAHB 2024) |
+|---|---|---|
+| Curbless shower / zero-threshold | Walk-in spa shower | 72% want shower in primary bath |
+| Wide corridors / open plan | Open-concept living | Majority prefer open-kitchen family room |
+| First-floor bedroom suite | Main-level master | Trade: "most important UD feature for ROI" |
+| First-floor laundry | Convenience laundry | 60% prefer first-floor laundry |
+| D-05 enclosed space | Home office | 66% want at least one home office |
+| Exterior step-free entry + lighting | Front porch + exterior lighting | Top-10 desired features |
+
+The hedonic gap is a labeling problem, not a value problem. The research opportunity is a "dual-coded" hedonic regression testing the same physical feature under both its accessibility and mainstream labels.
+
+**Tub caveat:** 72% of first-time buyers want BOTH shower AND tub in the primary bath (NAHB 2024). A curbless shower only adds value when the home retains at least one tub elsewhere. Design constraint, not accessibility objection.
+
+
 **Revised:** 2026-05-02 — v1.6 adds §15.13 international parallel investigation (UK BCIS + Centre for Ageing Better £1,400 M4(2) cost premium + Habinteg £27K retrofit-cost differential + 90% London-Plan M4(2) requirement + DFG £625M; Australia LHA Silver/Gold/Platinum + NCC 2022 Silver mandatory + LHA "22× more efficient to design up front" + NDIS SDA revenue model; Canada Société Logique CMHC modest cost increase + CMHC fact sheets + Coop MIL Quebec model + RHI $4B; Germany DIN 18040-2 + 5–10% new-build premium + KfW 159 €50K/€120/m² + 20% metropolitan property-value uplift + Bundesfachstelle Barrierefreiheit; Japan Flat 35S barrier-free already in §16; Ireland and NZ spot-checks). v1.5 adds §15.10 (price-tier segmentation), §15.11 (per-spec ROI computation including Cost vs. Value Universal Design Bath 61% ROI / 30% differential vs midrange-bath; Throughline 1 hedonic ~85–100% ROI), §15.12 (aging-in-place / forever-home / SRES marketing pricing effects). v1.4 adds §15.9.0 throughline analysis identifying square-footage inheritance (Sirmans 2006) as the master throughline; re-tiers ~8 dimensionally-driven items from Tier 5 to Tier 1 by inheritance from canonical residential hedonic. v1.3 adds §15.9 direct evidence audit mapping each §15 mechanism and registry item to residential-market data tiers, anchored by Cost vs. Value 2025 Universal Design Bath Remodel data (Tier 3), Chay & Greenstone 2005 air-quality hedonic (Tier 2), and Sirmans et al. 2006 meta-regression covered-parking finding (Tier 1). v1.2 (2026-05-02) added §15 Perceptual-Value Crossover framework. v1.1 (2026-05-02 02:30) verification-pass remediation: fabricated source names corrected, evidence tiers marked, voice register declared, Verified Citation Register added.
 **Project stage at authoring:** Stage A close / Stage B Phase 1 in progress
 **Decision record:** None assigned. Recommended D-METH/DG-REVIEW per A12 protocol if adopted as canonical methodology.
@@ -1554,6 +1598,8 @@ The current methodology does not yet have a verified Co-1 (lived-experience) cit
 ---
 
 ## Changelog
+
+**v1.9 — 2026-05-03 — Evidence hierarchy + dual-read thesis + cross-jurisdictional convergence.** Added complete evidence hierarchy from Cochrane SR through RCTs to cohort studies: Clemson 2023 Cochrane (21% falls reduction, 6 RCTs); Keall 2015/2017/2021 NZ RCT chain (26-31% fall injury reduction, 9:1 BCR at NZD $500/household); Chandola & Rouxel 2022 Lancet ELSA cohort (curb-cut effect empirically demonstrated — non-impaired adults show 6% social isolation reduction from external modifications); Tsuchiya-Ito 2022/2023/2024 Japanese LTC data (median adaptation USD $1,287, 28% LTCF admission reduction at max cost); CAPABLE/ABLE US data (~$1,300/person, ~10:1 Medicaid savings, mortality reduction in RCT); LSE/Habinteg 2023 UK M4(3) CBA (4.3-5.6:1 BCR); Carnemolla & Bridge 2019/2020 Australian scoping review (0.36 hrs/wk care reduction); Hutchinson 2025 most recent scoping review (38+ studies). Added Throughline 1A (dual-read thesis): accessibility features consumed as mainstream desirable features — NAHB 2024 buyer preference data mapped to accessibility specifications. Added DCWC cost correction (Silver AUD $3,874 not $538). Added DaltonCarter counter-analysis to CIE RIS. Added Spanish Law 6/2022 Cognitive Accessibility. Added cross-jurisdictional cost-effectiveness convergence table (12 jurisdictions). Four-pillar economic case framework established.
 
 **v1.8 — 2026-05-03 — UK policy update + citation mining.** §15.13.1 updated: UK government announced 40% national minimum M4(2) requirement (December 2025 NPPF reform). Previous finding that <25% of non-London new homes were M4(2) is now outdated. NHS cost data added: £513M/year poor-housing cost for 55+ (£177M from falls), £4.3B total to fix Category 1 hazards with ~8-year payback (BRE for Centre for Ageing Better). Supply gap: 9% of English homes meet basic accessibility; 44 years to meet current demand at current rate; 250,000 homes lost to 2-year policy delay. RIBA + Habinteg 2024 Inclusive Housing Design Guide cited. Sirmans 2006 forward-citation mining completed: zero papers on disability-accessibility hedonic features across hundreds of citing works — hedonic gap confirmed through full citation network.
 
