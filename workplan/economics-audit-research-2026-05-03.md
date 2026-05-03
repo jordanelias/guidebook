@@ -913,3 +913,84 @@ The Keall RCT chain occupies a unique position in the evidence hierarchy:
 | LSE/Habinteg 2023 | CBA (evidence review) | LSE Research Online | 4.3:1 to 5.6:1 BCR | £18-26K per home |
 
 The Keall studies are the only RCTs in the entire evidence base. Everything else is observational. The 9:1 BCR from RCT data is methodologically superior to the LSE 4.3:1-5.6:1 BCR from evidence review.
+
+
+---
+
+## M. Cochrane Review + Complete Evidence Hierarchy (2026-05-03 session 2 final)
+
+### M.1 Clemson et al. (2023) — Cochrane Systematic Review
+
+**Source:** Clemson, L., Stark, S., Pighills, A.C., Fairhall, N.J., Lamb, S.E., Ali, J., & Sherrington, C. (2023). "Environmental interventions for preventing falls in older people living in the community." Cochrane Database of Systematic Reviews, 3(3), CD013258. DOI: 10.1002/14651858.CD013258.pub2
+
+- Updated from 2019 protocol; searches to January 2021
+- Earlier meta-analysis (Clemson 2008): 6 RCTs (N=3,298), **21% reduction in falls risk** (RR 0.79, 95% CI 0.65-0.97)
+- ProFaNE taxonomy categories: home fall-hazard reduction, assistive technology, home modifications, education
+
+**Evidence tier:** Tier 1 — Cochrane systematic review (highest level of evidence synthesis)
+
+### M.2 Complete Evidence Hierarchy — Falls Prevention Through Housing Modifications
+
+| Rank | Source | Design | Journal | Sample | Finding | Cost data |
+|---|---|---|---|---|---|---|
+| 1 | Clemson 2023 | Cochrane SR | CDSR | 6 RCTs, N=3,298 | 21% falls risk reduction | — |
+| 2 | Keall 2015 | RCT | The Lancet | General pop, NZ | 26% fall injury reduction | NZD $500/household |
+| 3 | Keall 2021 | RCT | Lancet Public Health | Māori pop, NZ | 31% fall injury reduction | Same package |
+| 4 | Keall 2017 | CBA of RCT | Injury Prevention | Same as 2015 | 36% insurer cost reduction | **9:1 BCR** |
+| 5 | Chandola 2022 | Longitudinal cohort | Lancet Reg Health Eur | n=10,459, 11.3yr | 3% falls, 6% pain, 4% health (impaired); **6% social isolation, 4% need to move (non-impaired)** | — |
+| 6 | Tsuchiya-Ito 2024 | Retrospective cohort | JAMDA | n=4,610, 51mo | 28% lower LTCF admission | ¥200,000 max |
+| 7 | LSE/Habinteg 2023 | CBA (evidence review) | LSE Research Online | 3 household models | 4.3:1 to 5.6:1 BCR | £18-26K per M4(3) home |
+| 8 | Carnemolla 2019 | Cohort | PMC | Australian sample | 0.36 hrs/week care reduction | — |
+| 9 | Carnemolla 2020 | Scoping review | Indoor Built Environ | 77 studies, 16 countries | 7 outcome themes; strongest evidence for falls | — |
+| 10 | Hutchinson 2025 | Scoping review | SAGE | 38+ studies | 15/38 show fall reduction; 3/38 show reduced formal care | — |
+
+### M.3 Construction Cost Evidence Hierarchy (separate from health outcomes)
+
+| Rank | Source | Jurisdiction | Standard/Scope | Cost premium | Building type | Tier |
+|---|---|---|---|---|---|---|
+| 1 | CMHC/Société Logique 2015 | Canada | 60-feature comprehensive | 6-12% per dwelling | 5 dwelling types, 5 cities | 4 |
+| 2 | Ielegems et al. 2019 | Belgium | 119-criteria integral | 0.54-9.16% new-build (scale-dependent) | Schools, town halls, retail | 1 |
+| 3 | DCWC/ABCB 2021 | Australia | NCC Silver/Gold | AUD $3,874-$37,742 (0.5-11.6%) | Houses, apartments | 4 |
+| 4 | Centre for Ageing Better 2020 | UK | M4(2) | £1,387 (~0.4%) | Per dwelling | 4 |
+| 5 | TERRAGON/DStGB 2017 | Germany | DIN 18040-2 basic | 0.35-1.26% | Apartments | 4 (commercial) |
+| 6 | Habinteg 2024 | UK | M4(1)→M4(2) retrofit | ~£27,000 (3 adaptations) | Per dwelling | 5 |
+
+### M.4 Complete session 2 citation mining map
+
+```
+Tsuchiya-Ito 2022 (JP) ──backward──→ Ishikawa & Koike 2008 (JP-language, deferred)
+    │                    ──forward───→ Tsuchiya-Ito 2024 JAMDA (28% LTCF reduction)
+    │                    ──lateral───→ Chandola & Rouxel 2022 (Lancet)
+    │
+Chandola 2022 (UK) ────backward──→ Mackintosh 2020 (deferred)
+    │                   ──backward──→ Centre for Ageing Better 2020
+    │                   ──forward───→ Hutchinson 2025 (SAGE scoping review)
+    │
+Carnemolla 2020 (AU) ──forward───→ Carnemolla 2019 (care reduction 0.36 hrs/wk)
+    │                   ──forward───→ Hutchinson 2025
+    │
+Hutchinson 2025 ────backward──→ Keall 2015/2017/2021 (NZ RCT chain)
+    │                ──backward──→ Clemson 2023 Cochrane review
+    │                ──backward──→ Whitehead 2018 BATH-OUT (UK, deferred)
+    │
+Keall 2015 (NZ) ────forward───→ Keall 2017 CBA (9:1 BCR)
+    │                ──forward───→ Keall 2021 Māori (31% reduction)
+    │
+Habinteg 2024 (UK) ──forward───→ LSE "Living not Existing" 2023 (4.3:1 BCR)
+    │                  ──backward──→ DFG £625M allocation data
+    │
+ABCB RIS 2021 (AU) ──backward──→ DCWC QS cost study
+    │                  ──backward──→ DaltonCarter counter-analysis
+    │                  ──forward───→ Building Better Homes campaign
+```
+
+### M.5 Remaining leads (deferred)
+
+1. **Mackintosh 2020** — "Putting Home Adaptations on the Policy Agenda in England" — UK policy analysis
+2. **Whitehead et al. 2018** — BATH-OUT UK feasibility RCT
+3. **Fänge & Iwarsson** — Swedish housing adaptation longitudinal studies
+4. **Ishikawa & Koike 2008** — Japanese-language LTC renovation fact-finding
+5. **MHLW subcommittee documents** — Japanese government LTC benefit data
+6. **Szanton CAPABLE studies** — US home modification + behavioral intervention (partially in project, needs update)
+7. **DCLG English Housing Survey 2014-15** — adaptations and accessibility data
+8. **§15 extraction** — methodology doc structural edit, needs Change Order
