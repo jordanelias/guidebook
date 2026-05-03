@@ -37,3 +37,30 @@
   - Forward-cite Sirmans 2006 in Scopus
   - Japanese J-STAGE barrier-free cost studies (multilingual research)
   - Spanish MDPI 2024 regulatory review (Challenges in Housing Accessibility)
+
+
+### Additional findings (session continued 2026-05-03 20:15)
+
+**Sirmans 2006 forward-citation mining:** Hundreds of citing papers, none address disability-accessibility features. Confirms the hedonic gap extends through the full citation network of the most-cited residential hedonic meta-regression.
+
+**CMHC Housing Design Catalogue (Q1-2025 Class B cost estimates):** Ontario data fetched. Total hard costs per unit (Toronto basis):
+- ADU 01 (1BR, 535 sq ft): CAD $251K-$314K ($396-$495/sq ft)
+- Stacked Townhouse (6 units): CAD $329K-$471K/unit ($296-$379/sq ft)
+- Fourplex (4 units): CAD $277K-$367K/unit ($302-$425/sq ft)
+- Sixplex (6 units): CAD $252K-$315K/unit ($312-$390/sq ft)
+
+Designs embed accessible-ready features by default (aligned with CSA B652:23 and CAN/ASC-2.8:2025). No non-accessible baseline version exists in the catalogue — the accessibility cost premium is invisible because there is no non-accessible comparison. This is methodologically important: it demonstrates the thesis that when accessibility is designed in from the start, the cost question dissolves.
+
+**Ielegems et al. 2019 UHasselt full report:** Retrieved from documentserver.uhasselt.be (hdl.handle.net/1942/36702). Key data added to workplan/economics-audit-research-2026-05-03.md §E.1. Scale-dependent cost findings confirm the journal article's range:
+- Large buildings (schools >€8M): 0.54-0.64% new-build
+- Mid-scale (town halls ~€950K): 4.24-9.16% new-build
+- Small (retail ~€55K): 2.09-2.70% new-build
+- Renovation always 5-10× more expensive than new-build at same scale
+
+### Corrections applied to methodology doc (committed as v1.7)
+
+1. CMHC/Société Logique: "few hundred to few thousand" → 6-12% per dwelling (primary source)
+2. Throughline 1: E-08, E-12, G-08, kitchen clearances re-tiered to Tier 2; D-05 and accessible bedroom retained at Tier 1-2
+3. CvV ROI: absolute comparison added as lead paragraph
+4. Developer pitch line: updated with primary-source figure
+5. TERRAGON: commercial interest flag added to construction-cost-data.md
