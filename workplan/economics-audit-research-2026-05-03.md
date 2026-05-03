@@ -1061,3 +1061,92 @@ All findings from sessions 1+2 need to be written into:
 3. **BPC economics files** — update construction-cost-data.md with DCWC correction, add new entries for Keall/Chandola/Tsuchiya-Ito/LSE
 4. **Government grant programmes BPC** — add Japanese LTC ¥200,000, UK DFG £625M trajectory, NZ ACC data
 5. **Economics sources BPC** — add all new verified sources to citation register
+
+
+---
+
+## O. Hedonic / Value Uplift Investigation — COMPLETE (2026-05-03 session 2)
+
+### O.1 The hedonic gap — confirmed through exhaustive search
+
+**Searches conducted:**
+1. Sirmans 2006 forward-citation mining (hundreds of citing papers) → zero accessibility-feature regressors
+2. Direct search for hedonic studies with "universal design" OR "accessible" OR "visitability" + "property value" → no academic results
+3. Search for accessible home resale value premium studies → no peer-reviewed evidence found
+4. Search for revealed-preference studies on accessible housing valuation → none exist
+
+**Conclusion:** No peer-reviewed hedonic study isolates disability-accessibility features as regressors in a residential property price model. The hedonic gap is not an artifact of incomplete searching — it is a genuine absence in the published literature.
+
+### O.2 What DOES exist for value/WTP
+
+**Revealed-preference (market) data:**
+- CvV 2025 UD Bath Remodel: 61% ROI ($25,732 recovered on $42,183) vs midrange 80% ROI ($20,910 on $26,138). The UD bath LOSES MORE at sale — it is not a market premium. However, the +12 pp YoY gain suggests improving market valuation.
+- No hedonic regression has ever included grab rail reinforcement, turning circle clearance, zero-threshold entry, accessible bathroom, or similar features as independent variables.
+
+**Stated-preference (WTP/conjoint) data:**
+- ABCB CIE RIS (2021): conjoint analysis measuring general public's WTP for others to have accessible housing ("altruism" framing). DaltonCarter critiqued this as too narrow — the WTP benefit should include self-interest (own future aging needs), not just altruism toward current disabled population.
+- Fänge et al. (Sweden, protocol 2022): simulation model using WTP + Markov analysis for housing accessibility — methodology paper, not yet results.
+
+**Industry claims (not peer-reviewed):**
+- "Universal design adds value" claims from real estate industry (Kukun, aging-in-place blogs, realtors) cite CvV data or AARP survey preferences — no independent market evidence
+- First-floor primary suite claimed as highest-ROI UD feature (trade press, not verified)
+- Aging-in-place renovation market: $74B (2024) → $113B projected by 2033 (BusinessWire)
+- 75% of adults 50+ want to age in place (AARP survey)
+- 66% of homeowners incorporating accessibility features (Kukun 2026)
+
+### O.3 The four pillars of the economic case — what CAN be said
+
+The economic case for accessible housing rests on four distinct pillars, ranked by evidence strength:
+
+**Pillar 1 (strongest): Health outcomes**
+- Falls reduction: 21-31% (Cochrane SR + Lancet RCTs)
+- Pain reduction: 6% (Chandola ELSA cohort)
+- LTCF admission reduction: 28% (Tsuchiya-Ito JAMDA cohort)
+- Care needs deterioration prevention (Tsuchiya-Ito BMC HSR)
+- Social isolation reduction in non-impaired: 6% (Chandola — curb-cut effect)
+- BCR: 9:1 from RCT data (Keall 2017); 4.3-5.6:1 from CBA (LSE/Habinteg)
+
+**Pillar 2 (strong): Cost-of-inaction / retrofit penalty**
+- Retrofit 5-20× more expensive than design-in (Ielegems 2019)
+- UK: M4(1)→M4(2) retrofit ~£27,000 for 3 common adaptations vs ~£1,400 design-in (Habinteg)
+- AU: builder-perceived cost ~4× QS estimate (perception problem)
+- UK DFG allocation £625M/yr and rising (taxpayer cost of not designing in)
+
+**Pillar 3 (moderate): Construction cost is low when designed in**
+- Basic visitability new-build multi-unit: 0.4-1.9% across all jurisdictions
+- Comprehensive new-build: 6-12% (scope-dependent)
+- NZD $500/household for safety modification package (Keall RCT)
+- When accessibility is embedded from design stage (CMHC Catalogue), premium is invisible
+
+**Pillar 4 (weakest): Market value / hedonic uplift**
+- No revealed-preference evidence for market premium
+- CvV UD bath shows net loss relative to midrange (though improving YoY)
+- WTP/conjoint data exists but measures altruism, not market behavior
+- Throughline 1 (floor area → hedonic value) is INDIRECT — corridor/landing space has lower hedonic value than living space
+- Industry claims of "adds value" are not supported by academic evidence
+
+### O.4 Implications for the methodology doc
+
+Throughline 1 (§15.9.0) should be reframed:
+- The strongest items (accessible bedroom adding room count, D-05 adding enclosed room) remain Tier 1-2
+- The weaker items (corridor width, entry landing, closet configuration) are correctly Tier 2 after re-tiering
+- The overall Throughline 1 argument should be presented as "accessibility features map to SOME of the same attributes that hedonic models show drive property values" — NOT as "accessibility features increase property value" (which has no direct evidence)
+- The absence of hedonic evidence is itself a finding: no researcher has tested whether accessibility features are positively or negatively capitalized in property prices. The question is unanswered, not answered negatively.
+
+### O.5 Swedish WTP simulation study (forward lead)
+
+**Source:** Fänge, A. et al. (2022). "Enabling Long-term Predictions and Cost-benefit Analysis Related to Housing Adaptation Needs for a Population Aging in Place: Protocol for a Simulation Study." PMC9419049.
+
+- Methodology: WTP estimation + Markov cohort analysis for housing accessibility interventions across 5 Swedish municipalities
+- Uses Housing Enabler assessment tool (283 items in Japanese version, 161 in Swedish)
+- Status: protocol published, results not yet available [as of search date]
+- When results publish, this will be the first WTP-based CBA for housing accessibility at population level
+
+### O.6 ABCB CIE conjoint analysis — DaltonCarter critique
+
+The CIE used conjoint analysis to measure WTP for accessibility. DaltonCarter's critique was that the CIE's WTP measure captured only "altruism" (how much non-disabled people would pay for disabled people to have accessible housing). This excludes:
+- Self-interest WTP (own future aging needs)
+- Curb-cut benefit WTP (benefits to non-disabled from accessible environments)
+- Family/caregiver WTP (reduced burden on family members)
+
+DaltonCarter argued the problem-reduction and WTP approaches are **complementary, not alternative** — and should be combined (with overlap adjustment), not treated as competing estimates. If combined, the benefit-cost ratio improves substantially.
