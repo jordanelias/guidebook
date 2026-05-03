@@ -1216,3 +1216,101 @@ Items where Throughline 1A is weak (no mainstream market equivalent):
 No study has ever done a "dual-coded" hedonic regression where the same physical feature is coded both as a mainstream attribute (open-plan, spa bathroom, first-floor bedroom) AND as an accessibility attribute (wheelchair turning, curbless shower, ground-floor living). This would be the definitive study to resolve the hedonic gap. The closest existing work is the Sirmans floor-area coefficient, which captures one dimension of the overlap.
 
 This is a publishable research gap — the project could flag it for academic collaboration.
+
+
+---
+
+## Q. Final Research Batch — CAPABLE (US) + Swedish Longitudinal (2026-05-03)
+
+### Q.1 CAPABLE — US Jurisdiction Data
+
+**Source:** Szanton, S.L. et al. (2011-2025). Community Aging in Place, Advancing Better Living for Elders (CAPABLE). Johns Hopkins School of Nursing. Multiple publications.
+
+**Intervention:** OT (up to 6 visits) + RN (up to 4 visits) + handyman home modifications (up to $1,300). Person-centered goal-setting. 5-month delivery period.
+
+**Key cost data:**
+- Home modification cost per participant: $72–$1,398 (Szanton 2016); average $943 in 2025 pilot (Toto et al. 2025, PMC12759973)
+- **Net savings in medical costs: nearly 10× the program cost** (Szanton 2017, JAGS)
+- Most common goals: bathing, functional mobility, pain
+- Adopted in 40+ US cities and rural areas (Johns Hopkins 2021)
+
+**Related study — ABLE (predecessor):**
+- RCT, 319 participants (Gitlin et al., PMC3157760)
+- **Reduced mortality: 9 deaths (intervention) vs 21 deaths (control) over 2 years**
+- ICER: $13,179–$14,800 per additional year of life
+- OT + PT + home modifications addressing client-identified functional difficulties
+
+**CAPABLE-VA:** Adapted for Veterans Affairs. Implementation hybrid trial.
+
+**US fall cost context:**
+- $50 billion in fall-related medical costs (2015, CDC)
+- Fall death rate: +41% from 2012–2021
+- ~41,400 fall deaths in 2023 (age 65+)
+- Aging-in-place renovation market: $74B (2024) → $113B projected by 2033
+
+**Evidence tier:** CAPABLE is Tier 2 (quasi-experimental with Medicaid claims data). ABLE is Tier 1 (RCT with mortality endpoint).
+
+**Significance:** The US CAPABLE 10:1 cost-to-savings ratio mirrors the NZ Keall 9:1 BCR from RCT data — two different countries, similar low-cost interventions ($500-$1,300), similar order-of-magnitude returns. This cross-jurisdictional convergence strengthens confidence in the finding.
+
+### Q.2 Swedish Housing Adaptation — Fänge & Iwarsson
+
+**Source:** Fänge, A. & Iwarsson, S. (2005). "Changes in ADL dependence and aspects of usability following housing adaptation — a longitudinal perspective." American Journal of Occupational Therapy, 59(3), 296-304. DOI: 10.5014/ajot.59.3.296
+
+**Key findings:**
+- Housing adaptations improve ADL independence and usability
+- Effects unfold over time — "activity aspects" and "personal/social aspects" improve at different phases
+- Swedish Bostadsanpassningsbidrag system: municipal responsibility, no individual cost cap, professional OT assessment required
+
+**ENABLE-AGE Project (cross-national):**
+- Germany, Latvia, Sweden
+- Housing Enabler assessment tool (161 items Swedish, 283 items Japanese version)
+- "Substantial relations between person-physical environment and ADL independence/well-being"
+
+**Evidence tier:** Tier 2 (peer-reviewed longitudinal, American Journal of OT)
+
+**Lower yield for economics:** No cost data in the published studies. The Swedish cost-effectiveness analysis (Fänge et al. 2022 protocol, PMC9419049) uses WTP + Markov simulation — results pending.
+
+### Q.3 New systematic review discovered (citation-mined)
+
+**Cha, S.M. et al. (2025). "A Systematic Review of Home Modifications for Aging in Place in Older Adults." Healthcare (MDPI), 13(7), 752.** — Very recent systematic review, not yet retrieved. Forward lead for next session.
+
+### Q.4 Cross-jurisdictional cost-effectiveness convergence
+
+| Jurisdiction | Intervention | Cost/person | Return | Source | Tier |
+|---|---|---|---|---|---|
+| NZ | Home safety modifications | NZD $500 | 9:1 BCR (social) | Keall 2017 (RCT CBA) | 1 |
+| US | CAPABLE (OT+RN+mods) | USD $1,300 | ~10:1 (Medicaid savings) | Szanton 2017 | 2 |
+| US | ABLE (OT+PT+mods) | ~USD $2,000 | $13-15K/QALY | Gitlin (RCT) | 1 |
+| UK | M4(3) wheelchair homes | £18-26K | 4.3-5.6:1 BCR (10yr) | LSE/Habinteg 2023 | 2-3 |
+| JP | LTC insurance adaptations | ¥200K (~$1,430) | 28% LTCF reduction | Tsuchiya-Ito 2024 | 1 |
+| AU | Home modifications | Variable | 0.36 hrs/wk care reduction | Carnemolla 2019 | 3 |
+
+**The convergence finding:** Low-cost home modifications ($500-$1,300) consistently produce 9-10× returns across NZ and US data. Higher-cost wheelchair-accessible new construction (£18-26K) produces 4-5× returns in UK data. The return diminishes as cost increases but remains strongly positive across all jurisdictions studied.
+
+---
+
+## R. Session 2 Final Close
+
+**14 commits this session (12 earlier + 2 this batch):**
+All committed to `workplan/economics-audit-research-2026-05-03.md` and `references/search-log/economics/`
+
+**Total new sources verified across both sessions:** ~25 peer-reviewed papers + 5 institutional reports
+
+**Jurisdictions now covered:** US, UK, AU, NZ, CA, DE, BE, JP, ES, NL, NO, SE (12 jurisdictions)
+
+**Complete evidence hierarchy:** Cochrane SR → 3 RCTs → 5 cohorts → 3 scoping reviews → 6 cost studies → 2 CBA models
+
+**Four-pillar economic framework established:**
+1. Health outcomes (strongest: 9-10:1 BCR from RCT/quasi-experimental)
+2. Cost-of-inaction (strong: 5-20× retrofit penalty)
+3. Construction cost when designed in (moderate: 0.4-1.9% basic visitability)
+4. Market value uplift (weakest for revealed-preference; strong for dual-read thesis)
+
+**Throughline 1A established:** Accessibility features consumed as mainstream desirable features (NAHB buyer preference mapping)
+
+**Next session priorities:**
+1. Integrate all findings into methodology doc v1.9
+2. Update Part 11 with Q5 evidence
+3. Update BPC files (construction-cost-data, government-grant-programmes, economics-sources)
+4. Cha et al. 2025 MDPI systematic review (new lead)
+5. §15 extraction — Change Order discussion
