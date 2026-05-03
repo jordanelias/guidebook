@@ -751,3 +751,95 @@ The discrepancy may reflect: (a) different EHS survey years, (b) different defin
 | ABCB/CIE RIS | Forward | Summer Foundation submission; Building Better Homes campaign |
 | Spanish MDPI 2024 | Backward | Law 6/2022 Cognitive Accessibility; Technical Building Code |
 | Sirmans 2006 | Forward | Confirmed: zero disability-accessibility hedonic papers in citation network |
+
+
+---
+
+## K. Citation Mining — Chandola/Rouxel + Carnemolla/Bridge Chain (2026-05-03 session 2)
+
+### K.1 Chandola & Rouxel (2022) — LANDMARK STUDY
+
+**Source:** Chandola, T. & Rouxel, P. (2022). "Home modifications and disability outcomes: A longitudinal study of older adults living in England." Lancet Regional Health – Europe, 18, 100397. DOI: 10.1016/j.lanepe.2022.100397. Open access (CC BY 4.0).
+
+**Data:** English Longitudinal Study of Ageing (ELSA). 32,126 repeated observations, 10,459 individuals, 6 waves, 11.3 years average follow-up. Two-way fixed effect models.
+
+**Modifications examined:**
+- External: widened doorways, ramps, automatic doors, parking, lift
+- Internal: rails, bathroom/kitchen modifications, chair lift
+
+**Key findings — external housing modifications:**
+
+| Population | Outcome | Reduction | 95% CI |
+|---|---|---|---|
+| Severe mobility impairment | Falls | 3% | 1-6% |
+| Severe mobility impairment | Pain | 6% | 4-8% |
+| Severe mobility impairment | Poor self-rated health | 4% | 2-5% |
+| **No mobility impairment** | **No social activities** | **6%** | **5-7%** |
+| **No mobility impairment** | **Moving home within 2 years** | **4%** | **2-5%** |
+
+**Evidence tier:** Tier 1 — peer-reviewed (Lancet journal), longitudinal cohort, large sample, fixed-effect models.
+
+**Critical significance for the project:**
+1. **Q5 data** — housing modifications produce measurable health outcomes across 11 years
+2. **The finding that modifications benefit even NON-impaired people** is the strongest empirical support found for the curb-cut effect in residential housing
+3. The 6% reduction in social isolation for non-impaired people directly supports the §15 framework's claim that accessibility features have universal value
+4. Lancet journal — highest-credibility medical publication brand
+
+**Backward citations mined:**
+- Centre for Ageing Better, "Homes, health and COVID-19" (2020)
+- Mackintosh, S. (2020) "Putting Home Adaptations on the Policy Agenda in England." J Aging and Environment, 34(2):126-140
+- DCLG English Housing Survey: Adaptations and Accessibility Report, 2014-15
+
+### K.2 Carnemolla & Bridge (2020) — Australian scoping review
+
+**Source:** Carnemolla, P. & Bridge, C. (2020). "A scoping review of home modification interventions – Mapping the evidence base." Indoor and Built Environment, 29(3), 299-310. DOI: 10.1177/1420326X18761112
+
+- PRISMA-P methodology, 77 studies, 1990-2015, 16 countries
+- 21 potential outcomes identified across 7 themes:
+  1. Injury and falls prevention (strongest evidence)
+  2. Improved function/self-care/independence
+  3. Physical health and well-being
+  4. Caregiving
+  5. Economic effectiveness
+  6. Aging process
+  7. Social participation
+
+**Evidence tier:** Tier 3 — peer-reviewed systematic scoping review.
+
+### K.3 Carnemolla & Bridge (2019) — Care reduction quantification
+
+**Source:** Carnemolla, P. & Bridge, C. (2019). "Housing Design and Community Care." PMC6604004.
+
+- **Mean care reduction: 0.36 hours/week** through home modifications (Australian data)
+- This is Q5 cost-effectiveness evidence: quantified care-hour reduction per modification
+
+### K.4 Hutchinson et al. (2025) — Most recent comprehensive scoping review
+
+**Source:** Hutchinson, C., Block, H., Dymmott, A., Gough, C., Laver, K., Walker, R., Xiao, L., & George, S. (2025). "Home Modification Outcomes for Adults Aged 50 Years and Over and Their Relatives: A Scoping Review." SAGE. DOI: 10.1177/15394492251361086
+
+- Updates Carnemolla & Bridge 2020
+- 38+ studies reviewed
+- 18 studies with modified vs unmodified comparison groups
+- **15 studies (39%) reported fall reduction**
+- 6 studies (16%) reported enhanced physical health
+- 3 studies (8%) reported reduced need for formal carers
+- Cites both Chandola & Rouxel 2022 AND Tsuchiya-Ito 2023 — connects UK and Japan evidence
+
+**Evidence tier:** Tier 3 — peer-reviewed scoping review (most recent in the field).
+
+### K.5 Citation chain summary
+
+The Carnemolla → Chandola → Tsuchiya-Ito → Hutchinson chain connects:
+- **Australia** (Carnemolla scoping review + care reduction)
+- **UK/England** (Chandola ELSA longitudinal — curb-cut effect empirically demonstrated)
+- **Japan** (Tsuchiya-Ito LTC insurance adaptation costs + LTCF admission reduction)
+- **International synthesis** (Hutchinson 2025 scoping review covering all three + more)
+
+This chain provides the strongest cross-jurisdictional evidence base for Q5 (cost-effectiveness) that the project has found. It connects:
+- Q5 falls reduction (Chandola 3%, multiple studies in Hutchinson)
+- Q5 care reduction (Carnemolla 0.36 hrs/week)
+- Q5 institutional care avoidance (Tsuchiya-Ito 28% lower LTCF admission at max cost)
+- Q5 social participation improvement (Chandola 6% for non-impaired)
+- Universal benefit beyond disability population (Chandola — non-impaired people benefit)
+
+All of this feeds directly into Part 11 §11.3 (value of accessible design) and supports the economic case from the health-outcomes side rather than the construction-cost side.
