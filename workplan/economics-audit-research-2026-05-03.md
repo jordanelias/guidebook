@@ -361,3 +361,58 @@ Sources still requiring citation mining:
 - Habinteg retrofit cost studies — primary source for £27,000 figure
 - ABCB/CIE RIS 2021 — bibliography contains Australian cost study references
 - Szanton CAPABLE publications — already well-mined but forward-cite for recent replication studies
+
+
+---
+
+## G. Final Findings (2026-05-03 session close)
+
+### G.1 NEN 9120:2025 — CONFIRMED PUBLISHED
+
+**Published:** January 1, 2025. Presented to Dutch Minister of Housing (Mona Keijzer) on February 3, 2025.
+**Full title:** NEN 9120:2025 nl — Nederlandse uitwerking van NEN-EN 17210: Prestatie-eisen voor toegankelijkheid en bruikbaarheid van gebouwen (Dutch national application document for EN 17210: Performance requirements for accessibility and usability of the built environment)
+**Replaces:** NEN 1814:2001
+**Based on:** EN 17210:2021 (European standard)
+**Access:** Freely available via NEN Connect (free account)
+**Status:** Platform31 conducting national evaluation of application
+**Scope:** Design, construction, refurbishment, adaptation, and maintenance of built environments. Covers wayfinding, circulation, sanitary facilities, interfaces/controls, emergency exits.
+**Key position:** Accessibility consultants advocate that "merely applying this standard is not enough" — accessibility advisors and people with lived experience should be involved from the beginning of construction projects (AccessibleEU, April 2025). Aligns with project Co-1 doctrine.
+
+The methodology doc's [UNVERIFIED] flag on NEN 9120 can now be removed. Economic appendix content requires NEN Connect access — deferred.
+
+### G.2 Fuglerud, Halbach & Tjøstheim 2015 — citation mining completed
+
+NR Report 1032 is a 37-page literature review + methodology framework for CBA of universal design. Forward citations (Halbach & Fuglerud 2016, 2024 Springer chapter) are all **ICT-focused** — workplace digital accessibility, not built environment. The report's built-environment content is a literature review citing the same sources the project already holds. Low additional yield for built-environment economics.
+
+### G.3 UK December 2025 40% M4(2) mandate — committed to methodology doc v1.8
+
+§15.13.1 updated to reflect that the UK government announced a national minimum of 40% of new homes must be M4(2), replacing the previous finding that <25% of non-London new homes were required to meet M4(2).
+
+---
+
+## H. Session close — handoff
+
+**10 commits this session:**
+1. `720e296` — workplan/economics-audit-research-2026-05-03.md (initial audit)
+2. `07557a3` — references/economics/canadian-provincial-accessibility-programmes.md
+3. `998af01` — references/search-log/economics/... (research log initial)
+4. `8776fda` — references/methodology/economics-research-methodology.md v1.7 (CMHC + Throughline 1 + CvV)
+5. `25a2628` — references/bpc/economics/construction-cost-data.md (TERRAGON flag)
+6. `cf3ad4f` — workplan/economics-audit-research-2026-05-03.md (Ielegems + synthesis)
+7. `f493437` — references/search-log/economics/... (research log update)
+8. `cee469e` — workplan/economics-audit-research-2026-05-03.md (citation mining)
+9. `6ebaa2f` — references/methodology/economics-research-methodology.md v1.8 (UK policy)
+10. This commit
+
+**Remaining for next session (ordered):**
+1. §15 extraction to separate analytical document — needs Change Order discussion with project owner
+2. Habinteg £27,000 retrofit cost — trace to primary source
+3. ABCB/CIE RIS bibliography mining — Australian cost study references
+4. Ielegems 2019 full report PDF retrieval (have abstract from UHasselt)
+5. Japanese J-STAGE barrier-free cost studies (multilingual research)
+6. Spanish MDPI 2024 regulatory review (Challenges in Housing Accessibility)
+7. NEN 9120:2025 economic appendix extraction (requires NEN Connect)
+8. Remove [UNVERIFIED] flag on NEN 9120 in methodology doc
+9. Citation mining as ongoing process for every new verified source
+
+**Process improvement identified:** Citation mining should be integrated into research workflow from the start, not treated as separate task. Every verified source triggers backward + forward mining before committing.
