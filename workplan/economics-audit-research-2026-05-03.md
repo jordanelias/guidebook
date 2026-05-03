@@ -843,3 +843,73 @@ This chain provides the strongest cross-jurisdictional evidence base for Q5 (cos
 - Universal benefit beyond disability population (Chandola — non-impaired people benefit)
 
 All of this feeds directly into Part 11 §11.3 (value of accessible design) and supports the economic case from the health-outcomes side rather than the construction-cost side.
+
+
+---
+
+## L. Keall et al. NZ RCT Chain — GOLD STANDARD EVIDENCE (2026-05-03 session 2)
+
+### L.1 Keall et al. (2015) — HIPI RCT, The Lancet
+
+**Source:** Keall, M.D., Pierse, N., Howden-Chapman, P., Cunningham, C., Cunningham, M., Guria, J., & Baker, M.G. (2015). "Home modifications to reduce injuries from falls in the Home Injury Prevention Intervention (HIPI) study: a cluster-randomised controlled trial." The Lancet, 385(9964), 231-238. DOI: 10.1016/S0140-6736(14)61006-0
+
+**Methodology:** Cluster-randomized controlled trial, general population (not limited to elderly or disabled), He Kāinga Oranga/Housing and Health Research Programme, University of Otago, Wellington, NZ.
+
+**Modifications tested:** Handrails for outside steps and internal stairs, grab rails for bathrooms, outside lighting, edging for outside steps, slip-resistant surfacing for outside areas (decks, porches).
+
+**Key finding:** **26% of medically treated home fall injuries prevented** by the modification package.
+
+**Evidence tier:** Tier 1 — RCT published in The Lancet.
+
+**Significance:** This is the first RCT to demonstrate that simple, low-cost home modifications reduce fall injuries in the general population (not just targeted at elderly or people with disability). Published in the world's most prestigious general medical journal.
+
+### L.2 Keall et al. (2017) — Cost-benefit analysis of HIPI
+
+**Source:** Keall, M.D., Pierse, N., Howden-Chapman, P., Guria, J., Cunningham, C.W., & Baker, M.G. (2017). "Cost-benefit analysis of fall injuries prevented by a programme of home modifications: a cluster randomised controlled trial." Injury Prevention, 23(1), 22-26. DOI: 10.1136/injuryprev-2015-041947
+
+**Key findings:**
+- **36% reduction in insurer costs** of home fall injuries (95% CI: 5-59%)
+- **Social benefits at least 9× the costs of intervention** (BCR ≥ 9:1)
+- BCR at least doubled for older people and those with prior fall history
+- **Average cost: ~NZD $500 per household** for entire modification package
+- First RCT-based CBA of home modification for fall injury costs in general population
+
+**Evidence tier:** Tier 1 — CBA based on RCT data.
+
+**Q5 significance:** NZD $500/household → 9:1 BCR. This is the strongest cost-effectiveness evidence for home modifications in any jurisdiction. The modification package overlaps substantially with M4(2) / NCC Silver / universal design provisions.
+
+### L.3 Keall et al. (2021) — MHIPI RCT, Lancet Public Health
+
+**Source:** Keall, M.D., Tupara, H., Pierse, N., Wilkie, M., Baker, M.G., Howden-Chapman, P., & Cunningham, C. (2021). "Home modifications to prevent home fall injuries in houses with Māori occupants (MHIPI): a randomised controlled trial." Lancet Public Health, 6(9). DOI: 10.1016/S2468-2667(21)00135-3. Open access CC BY 4.0.
+
+**Key findings:**
+- 254 households (126 intervention, 128 control)
+- **31% reduction in rate of fall injuries** at home (adjusted RR 0.69, 95% CI 0.47-1.00)
+- "Low-cost home modifications and repairs can be an effective means to reduce injury disparities"
+- High prevalence of modifiable safety issues in Māori homes
+
+**Evidence tier:** Tier 1 — RCT published in Lancet Public Health.
+
+**Indigenous health equity significance:** Demonstrates that home modifications reduce injury disparities for indigenous populations — connects to project Co-1 and health equity doctrine.
+
+### L.4 NZ national injury cost context (citation-mined)
+
+- NZ Accident Compensation Corporation (ACC): NZD $1.4 billion of harm from slips, trips and falls within NZ homes (2020)
+- Direct public sector costs of adverse housing: ~NZD $141 million annually (~USD $100 million)
+- 229 deaths annually attributable to adverse housing conditions
+- Total societal cost: ~NZD $1 billion (~USD $715 million)
+
+### L.5 Evidence hierarchy position
+
+The Keall RCT chain occupies a unique position in the evidence hierarchy:
+
+| Study | Evidence level | Journal | Finding | Cost |
+|---|---|---|---|---|
+| Keall 2015 | RCT | The Lancet | 26% fall injury reduction | ~NZD $500/household |
+| Keall 2017 | CBA of RCT | Injury Prevention | 9:1 BCR (social benefits) | Same |
+| Keall 2021 | RCT (indigenous) | Lancet Public Health | 31% fall injury reduction (Māori) | Same |
+| Chandola 2022 | Longitudinal cohort | Lancet Regional Health | 3-6% outcome reductions | Not costed |
+| Tsuchiya-Ito 2024 | Retrospective cohort | JAMDA | 28% LTCF admission reduction | ¥200,000 max |
+| LSE/Habinteg 2023 | CBA (evidence review) | LSE Research Online | 4.3:1 to 5.6:1 BCR | £18-26K per home |
+
+The Keall studies are the only RCTs in the entire evidence base. Everything else is observational. The 9:1 BCR from RCT data is methodologically superior to the LSE 4.3:1-5.6:1 BCR from evidence review.
