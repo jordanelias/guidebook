@@ -67,3 +67,10 @@ co0006_migration: true
 opus_synthesis: true
 ```
 
+
+
+| CCD-07 | DCWC/ABCB | 2021 | NCC Silver/Gold QS estimates | 4 | AU | Silver house AUD $3,874 (0.5-1.9%); Gold apartment up to AUD $37,742 (1.9-11.6%). Builder-perceived cost ~4× QS estimate. |
+| CCD-08 | Keall et al. | 2017 | NZ home safety modification package | 1 (RCT CBA) | NZ | NZD $500/household average; 9:1 BCR (social benefits); 26% fall injury reduction. Lancet RCT + Injury Prevention CBA. |
+| CCD-09 | Szanton/CAPABLE | 2017 | US home modification + OT/RN intervention | 2 | US | USD $72-$1,398/participant (avg ~$1,300); ~10:1 Medicaid cost savings. Johns Hopkins/JAGS. |
+| CCD-10 | LSE/Habinteg | 2023 | UK M4(3) wheelchair user homes CBA | 2-3 | UK | Working-age: £22K cost → £94K benefit (4.3:1); Later-years: £18K → £101K (5.6:1); Child: £26K → £67K (2.6:1). Annual LA savings £5-9K/wheelchair user. |
+| CCD-11 | Tsuchiya-Ito et al. | 2022/2024 | Japanese LTC insurance adaptations | 1 | JP | Median USD $1,287 (¥200K max lifetime); 28% lower LTCF admission at max cost. BMC Geriatrics + JAMDA. |
