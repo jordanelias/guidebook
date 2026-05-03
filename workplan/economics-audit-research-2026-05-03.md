@@ -1150,3 +1150,69 @@ The CIE used conjoint analysis to measure WTP for accessibility. DaltonCarter's 
 - Family/caregiver WTP (reduced burden on family members)
 
 DaltonCarter argued the problem-reduction and WTP approaches are **complementary, not alternative** — and should be combined (with overlap adjustment), not treated as competing estimates. If combined, the benefit-cost ratio improves substantially.
+
+
+---
+
+## P. The Dual-Read Thesis — Accessibility Features as Mainstream Desirable Features (2026-05-03)
+
+### P.1 The labeling problem
+
+The hedonic gap is partly a labeling problem, not a value problem. No hedonic researcher has coded "accessible bathroom" as a regressor because the feature is sold, marketed, and consumed under its mainstream label:
+
+| Accessibility feature | Mainstream market label | NAHB buyer preference |
+|---|---|---|
+| Zero-threshold / curbless shower | Walk-in spa shower | 72% want shower in primary bath (NAHB 2024) |
+| Wide corridors / open plan | Open-concept living | Majority prefer open-kitchen family room (NAHB 2024) |
+| First-floor bedroom suite | Main-level master / aging-in-place suite | Trade press: "most important UD feature for ROI" |
+| First-floor laundry | Convenience laundry | 60% prefer first-floor laundry (NAHB 2024) |
+| D-05 enclosed low-stimulation space | Home office | 66% want at least one home office (NAHB 2024) |
+| Reinforced bathroom walls | N/A (invisible feature) | Not separately valued but enables grab rail + shelving |
+| Exterior step-free entry with lighting | Front porch with exterior lighting | Top-10 desired features (NAHB 2024) |
+| 1500mm kitchen aisle clearance | Spacious kitchen | Open floor plan preference captures this |
+| Lever handles | Contemporary hardware | Standard in new construction |
+| Accessible wardrobe/closet reach | Walk-in closet organization | Consistently top-desired feature |
+
+### P.2 Where the value is consumed
+
+The value uplift occurs when the accessibility feature IS the mainstream-desirable feature — it is consumed as the latter. A buyer paying a premium for a "luxury spa bathroom" with a large tiled walk-in shower is paying for what IS an accessible wet room. The premium is captured in the hedonic model under "bathroom quality" or "bathroom count" or "separate shower stall" — not under "accessibility."
+
+This means:
+1. The hedonic gap does not prove accessibility features have no market value — it proves they haven't been ISOLATED as a separate regressor
+2. The value may already be partially captured in existing hedonic coefficients for open plan, bathroom quality, first-floor bedroom, etc.
+3. A properly designed hedonic study would need to code BOTH the mainstream label AND the accessibility function of the same physical feature
+4. The CvV UD bath 61% ROI includes a premium tile+fixture package that accounts for some of the cost — the "accessibility" component is embedded in the "luxury" component
+
+### P.3 The tub caveat
+
+NAHB data shows 72% of first-time buyers want BOTH shower and tub in the primary bath. This means:
+- Converting the only tub to a curbless shower CAN reduce value
+- The accessible wet room adds value only when the home retains at least one tub elsewhere
+- This is a design constraint, not an accessibility objection — two-bathroom homes can have one with tub, one with curbless shower
+- In new construction, this is trivially accommodated; in retrofit of single-bath homes, it's a genuine trade-off
+
+### P.4 Implications for Throughline 1
+
+Throughline 1 (accessibility feature → floor area → hedonic value) should be supplemented with a parallel throughline:
+
+**Throughline 1A: Physical feature → mainstream market label → hedonic value**
+
+This recognizes that the value transmission isn't only through floor area (Sirmans) but also through feature quality and buyer preference alignment (NAHB). The accessible bathroom isn't valued because it adds 2 sq ft — it's valued because it IS the premium spa bathroom that buyers want.
+
+Items where Throughline 1A applies most strongly:
+- **Accessible bathroom / curbless shower** → premium spa bathroom → bathroom quality coefficient
+- **Open-plan living** → modern open-concept → consistently positive in hedonic models
+- **First-floor bedroom** → main-level living → buyer preference for convenience/aging
+- **Home office / D-05** → dedicated workspace → post-pandemic premium
+- **Exterior lighting + step-free entry** → curb appeal + safety → among top-10 buyer preferences
+
+Items where Throughline 1A is weak (no mainstream market equivalent):
+- **Corridor width ≥1200mm** — wider corridors are not specifically valued by mainstream buyers (captured only through "spacious feel" which is diffuse)
+- **Entry landing 1500mm²** — foyer space has some value but isn't a premium feature
+- **Wardrobe reach configuration** — closet organization is valued but the specific seated-access configuration doesn't map to mainstream preferences
+
+### P.5 Research opportunity identified
+
+No study has ever done a "dual-coded" hedonic regression where the same physical feature is coded both as a mainstream attribute (open-plan, spa bathroom, first-floor bedroom) AND as an accessibility attribute (wheelchair turning, curbless shower, ground-floor living). This would be the definitive study to resolve the hedonic gap. The closest existing work is the Sirmans floor-area coefficient, which captures one dimension of the overlap.
+
+This is a publishable research gap — the project could flag it for academic collaboration.
