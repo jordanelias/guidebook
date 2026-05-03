@@ -311,9 +311,9 @@ For each jurisdiction, retrieve the primary beyond-code framework if one exists.
 
 | BASE | multi | Multi-language synthesis |
 
-**Step 4 — Citation mining (mandatory for every confirmed Tier 1–2 source)**  
+**Step 4 — Citation mining (mandatory — invoke `citation-miner` skill)**  
 
-Backward: mine reference list. Forward: Google Scholar "cited by". Log counts in BPC `citation_mining` block. Until `citation-miner` skill is built: perform inline.
+For every confirmed Tier 1–2 source found in Steps 1–3: invoke `citation-miner`. Do not perform inline — the skill is built and must be used. Backward: mine reference list. Forward: Google Scholar "cited by". Log backward/forward counts and sources added in BPC `citation_mining` block per citation-miner §4 output format. Complete Steps 1–3 for a slug first, then mine all confirmed Tier 1–2 sources as a batch before writing the LOG.
 
 **Step 5 — `research-log-manager LOG`**  
 

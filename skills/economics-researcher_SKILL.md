@@ -98,6 +98,19 @@ All numeric claims carry inline citation. Unverified claims carry `[UNVERIFIED �
 ### Step 6 — Citation-verifier handoff
 Pass all new citations to citation-verifier before the evidence brief is closed.
 
+### Step 7 — Citation mining
+
+For every E-1 or E-2 source confirmed in this run: invoke `citation-miner` (backward + forward). Run mining before finalising the evidence brief YAML. Add discovered sources to the `sources:` block in the evidence brief at the appropriate tier. Log counts in the evidence brief YAML:
+
+```yaml
+citation_mining:
+  sources_mined: [N]
+  backward_new: [N]
+  forward_new: [N]
+```
+
+Discovered sources at E-1/E-2 tier that pass the §Scope Boundary are added to the evidence brief and passed to citation-verifier (Step 6). E-7 tier discoveries are flagged `[PROVISIONAL]` per framing rules.
+
 ---
 
 ## Reference File

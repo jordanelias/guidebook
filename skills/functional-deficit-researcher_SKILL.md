@@ -133,6 +133,10 @@ Priority languages by OT tradition strength:
 
 **Diminishing-return gate:** If 3 consecutive scenarios in the same environment context yield no new spatial specifications beyond existing BPC content → stop that environment context, move to next.
 
+**Step 4b — Citation mining (mandatory for confirmed Tier 1–2 sources)**
+
+After completing Steps 1–3 for a scenario batch: collect all confirmed Tier 1–2 sources. Invoke `citation-miner` for each (backward + forward). Do not defer to inline execution. Log backward/forward counts in the FDR findings file under a `citation_mining` block per scenario. Sources discovered via citation mining that pass the §4 Step 1 spatial filter are extracted using the standard §5 template with `discovery_method: citation_mining`.
+
 ### Checkpoint (after each scenario):
 ```
 CHECKPOINT [YYYY-MM-DD HH:MM] — scenario: {scenario} — sources found: {N} — novel: {N} — refines: {N} — contradicts: {N}

@@ -17,6 +17,8 @@ description: >
 
 **PICO sequence (mandatory):** Begin with population need and functional outcome (optimal first) — not standard values. Standards appear at Step 2 as minimum baseline only.
 
+**Citation mining (mandatory):** For every Tier 1–2 source confirmed during plan scoping (from BPC, gap register, existing research logs, or background search): invoke `citation-miner` before writing the plan. Inline execution is not permitted — the skill is built and must be called. Log backward/forward counts in the session record.
+
 ---
 
 ## Plan Structure
@@ -44,7 +46,7 @@ Cluster name: [term A OR term B] AND [term C OR term D] NOT [term E]
 `Topic | English | DE | FR | NO | JA | PT | NL`
 
 ### Section 3 — PRISMA-Aligned Protocol
-- Identification: databases + grey literature + forward/backward citation mining
+- Identification: databases + grey literature + forward/backward citation mining (mandatory — invoke `citation-miner` for every Tier 1–2 source confirmed; not deferred to execution phase)
 - Screening: title/abstract criteria
 - Eligibility: full-text criteria (study design, population, outcome, date)
 - Inclusion: final criteria with justification
