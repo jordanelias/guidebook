@@ -988,3 +988,15 @@ Total: **23 Decision records** (D-0108..D-0140 contiguous; D-0122..D-0128 are un
 ## 8. Change log
 
 - **2026-05-02 02:50** — Created at B1 Session 9. PROVISIONAL pending D-0138 adoption.
+
+
+---
+
+## 9. D-0139 Amendment 1 (2026-05-03)
+
+**See:** `architecture/d0139-amendment-1.md` for full specification.
+
+**Summary:** 21 new columns added to specification table (16 atomic + 5 JSON). 3 new tables created (measurement, jurisdictional_value, performance_criterion). specification_population join table amended with role column. Schema reconciliation document at `architecture/schema-reconciliation.md` resolves all 5 parallel schema representations into this canonical DDL.
+
+**Columns added to specification:**
+question_heading, question_summary, summary, evidence_summary, tier_2_note, why_md, schedule_md, diagram_svg, diagram_type, dar_relevant, dar_note, structural_backing_required, retrofit_category, ot_evidence_basis, curation_status, item_code, bpc_source_slug, recommendation_strength, percentile_basis, conflict_domains, failures_json, install_notes_json, detail_groups_json, pop_reasons_json, topics_json.
