@@ -1,0 +1,89 @@
+section: A.20
+title: TWSI Detail Patterns
+item_code: E-09
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-09
+  jurisdiction: JP
+  standard_name: JIS T 9251:2014
+  value_text: 'Warning Pattern: Truncated dome (点状ブロック); Guidance/Directional Pattern: Linear bar (線状ブロック); Dome/Bar Height:
+    5mm; Dome Diameter (base): 22–25mm; Colour Contrast: Yellow (70% contrast)'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null
+- spec_id: null
+  item_code: E-09
+  jurisdiction: US
+  standard_name: ADA 2010 §705 / PROWAG
+  value_text: 'Warning Pattern: Truncated dome only; Guidance/Directional Pattern: Not specified; Dome Diameter (base): 23mm
+    base, 0.9mm truncation; Colour Contrast: 70% LRV contrast'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null
+- spec_id: null
+  item_code: E-09
+  jurisdiction: GB
+  standard_name: DfT Guidance 2021
+  value_text: 'Warning Pattern: Blister (offset rows); Guidance/Directional Pattern: Corduroy (hazard); Lozenge (guidance);
+    Dome/Bar Height: 5mm; Dome Diameter (base): 25mm (blister); Colour Contrast: Red/buff (warning); Not specified (guidance)'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null
+- spec_id: null
+  item_code: E-09
+  jurisdiction: AU
+  standard_name: AS/NZS 1428.4.1:2009
+  value_text: 'Warning Pattern: Truncated dome; Guidance/Directional Pattern: Directional bars; Dome/Bar Height: 4–5mm; Dome
+    Diameter (base): 25–35mm; Colour Contrast: 30% LRV contrast'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null
+- spec_id: null
+  item_code: E-09
+  jurisdiction: DE
+  standard_name: DIN 32984:2020
+  value_text: 'Warning Pattern: Truncated dome (Noppenplatte); Guidance/Directional Pattern: Ribbed (Rippenplatte); Dome/Bar
+    Height: 3–5mm; Dome Diameter (base): 18–25mm; Colour Contrast: Luminance contrast ≥0.4'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null
+- spec_id: null
+  item_code: E-09
+  jurisdiction: ISO
+  standard_name: ISO 23599:2019
+  value_text: 'Warning Pattern: Truncated dome/cone; Guidance/Directional Pattern: Flat-top elongated bar; Dome/Bar Height:
+    4–5mm; Dome Diameter (base): 25mm ±2mm; Colour Contrast: 0.45 min contrast ratio'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null
+- spec_id: null
+  item_code: E-09
+  jurisdiction: SG
+  standard_name: BCA Code 2019
+  value_text: 'Warning Pattern: Truncated dome (per ISO); Guidance/Directional Pattern: Per ISO 23599; Dome/Bar Height: Per
+    ISO; Dome Diameter (base): Per ISO; Colour Contrast: Yellow preferred'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.20
+  notes: null

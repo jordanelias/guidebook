@@ -1,0 +1,60 @@
+section: A.11
+title: Grab Bar Positioning
+item_code: G-03
+spec_id: SPEC-0064
+records:
+- spec_id: SPEC-0064
+  item_code: G-03
+  jurisdiction: US
+  standard_name: ADA 2010 §604.5
+  value_text: 'Horizontal Height: 838–914mm; Vertical Extent: To 1524mm; Diameter: 32–51mm; Load Capacity: ≥1112N'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.11
+  notes: null
+- spec_id: SPEC-0064
+  item_code: G-03
+  jurisdiction: GB
+  standard_name: BS 8300-2:2018 §18
+  value_text: 'Horizontal Height: 680mm; Diameter: 32–36mm'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.11
+  notes: null
+- spec_id: SPEC-0064
+  item_code: G-03
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021 §15
+  value_text: 'Horizontal Height: 800–810mm; Diameter: 30–40mm; Load Capacity: ≥1100N'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.11
+  notes: null
+- spec_id: SPEC-0064
+  item_code: G-03
+  jurisdiction: DE
+  standard_name: DIN 18040-1 §4.3.6
+  value_text: ''
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.11
+  notes: null
+- spec_id: SPEC-0064
+  item_code: G-03
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021 §20
+  value_text: 'Horizontal Height: 700–800mm; Diameter: 30–40mm; Load Capacity: ≥1100N'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.11
+  notes: null

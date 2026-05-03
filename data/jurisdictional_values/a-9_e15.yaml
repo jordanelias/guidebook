@@ -1,0 +1,49 @@
+section: A.9
+title: Changing Places / Adult Changing Facilities
+item_code: E-15
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-15
+  jurisdiction: GB
+  standard_name: Building Regs 2021
+  value_text: 'Mandatory: YES (since Sept 2021); Min Area: ≥12m²; Key Features: Hoist, height-adj bench, peninsular WC'
+  value_numeric: 2021.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.9
+  notes: null
+- spec_id: null
+  item_code: E-15
+  jurisdiction: US
+  standard_name: IBC 2024 / A117.1
+  value_text: 'Mandatory: Supplement 1 (2024); Key Features: Adult changing stations'
+  value_numeric: 1.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.9
+  notes: null
+- spec_id: null
+  item_code: E-15
+  jurisdiction: AU
+  standard_name: NCC
+  value_text: 'Mandatory: Partial; Key Features: Accessible adult change facility'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.9
+  notes: null
+- spec_id: null
+  item_code: E-15
+  jurisdiction: DE
+  standard_name: DIN 18040-1
+  value_text: 'Mandatory: No; Key Features: "Toilette für alle" voluntary'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.9
+  notes: null

@@ -1,0 +1,38 @@
+section: A.8
+title: Visual Fire Alarm
+item_code: B-10
+spec_id: null
+records:
+- spec_id: null
+  item_code: B-10
+  jurisdiction: US
+  standard_name: NFPA 72 / ADA §702
+  value_text: 'Flash Rate: ≤2 Hz; Coverage: Per NFPA 72; Seizure Consideration: Yes — ≤2 Hz limit'
+  value_numeric: 2.0
+  unit: Hz
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.8
+  notes: null
+- spec_id: null
+  item_code: B-10
+  jurisdiction: GB
+  standard_name: BS 5839-1 / EN 54-23
+  value_text: 'Flash Rate: Per EN 54-23; Coverage: W/C/O categories; Seizure Consideration: Implicit'
+  value_numeric: 54.0
+  unit: Hz
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.8
+  notes: null
+- spec_id: null
+  item_code: B-10
+  jurisdiction: EU
+  standard_name: EN 54-23:2010
+  value_text: 'Flash Rate: ≤2 Hz; Coverage: Categories by area; Seizure Consideration: Yes'
+  value_numeric: 2.0
+  unit: Hz
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.8
+  notes: null

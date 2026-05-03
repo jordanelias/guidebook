@@ -1,0 +1,49 @@
+section: A.13
+title: Slip Resistance Test Methods
+item_code: E-07
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-07
+  jurisdiction: US
+  standard_name: ANSI A326.3
+  value_text: 'Test Method: Wet DCOF; Threshold: ≥0.42; Metric: Dynamic Coefficient of Friction'
+  value_numeric: 0.42
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.13
+  notes: null
+- spec_id: null
+  item_code: E-07
+  jurisdiction: GB
+  standard_name: BS 7976-2 / HSE
+  value_text: 'Test Method: Pendulum test; Threshold: PTV ≥36 wet; Metric: Pendulum Test Value'
+  value_numeric: 36.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.13
+  notes: null
+- spec_id: null
+  item_code: E-07
+  jurisdiction: DE
+  standard_name: DIN 51130
+  value_text: 'Test Method: Ramp test; Threshold: R9–R13; Metric: Inclination angle class'
+  value_numeric: 9.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.13
+  notes: null
+- spec_id: null
+  item_code: E-07
+  jurisdiction: AU
+  standard_name: AS 4586:2013
+  value_text: 'Test Method: Pendulum + Ramp; Threshold: P3–P5 / R9–R13; Metric: Dual system'
+  value_numeric: 3.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.13
+  notes: null

@@ -1,0 +1,82 @@
+section: A.4
+title: Lift Car Dimensions
+item_code: E-01
+spec_id: SPEC-0044
+records:
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: US
+  standard_name: ADA / A117.1
+  value_text: 'Min Car (W×D): 1730×1370mm; Door Width: 915mm; Notes: Largest car'
+  value_numeric: 1370.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: GB
+  standard_name: BS EN 81-70 Type 2
+  value_text: 'Min Car (W×D): 1100×1400mm; Door Width: 900mm; Notes: European standard'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: DE
+  standard_name: DIN 18040 / EN 81-70
+  value_text: 'Min Car (W×D): 1100×1400mm; Door Width: 900mm; Notes: Same as UK'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: AU
+  standard_name: AS 1735 / NCC
+  value_text: 'Min Car (W×D): 1400×1600mm; Notes: Larger than EN 81-70'
+  value_numeric: 1600.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: 'NO'
+  standard_name: TEK17 / EN 81-70
+  value_text: 'Min Car (W×D): 1100×1400mm; Door Width: 900mm; Notes: EN 81-70 adopted'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: 'Min Car (W×D): 1100×1400mm; Door Width: 900mm; Notes: Reference'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null
+- spec_id: SPEC-0044
+  item_code: E-01
+  jurisdiction: EU
+  standard_name: EN 81-70:2021+A1:2022
+  value_text: 'Min Car (W×D): 1100×1400mm (Type 2); Door Width: 900mm; Notes: Harmonised'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.4
+  notes: null

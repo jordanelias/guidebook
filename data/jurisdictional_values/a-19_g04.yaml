@@ -1,0 +1,87 @@
+section: A.19
+title: Accessible Bathroom Minimum Dimensions
+item_code: G-04
+spec_id: null
+records:
+- spec_id: null
+  item_code: G-04
+  jurisdiction: US
+  standard_name: ADA 2010 §604–608
+  value_text: 'Min. Floor Area (approx.): ~4.2 m² (varies by config); Turning Circle: 1524mm (60″); WC Transfer Space: 1524mm
+    clear alongside; Door Width: 815mm (32″); Grab Bar Height: 838–914mm (33–36″)'
+  value_numeric: 4.2
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null
+- spec_id: null
+  item_code: G-04
+  jurisdiction: GB
+  standard_name: BS 8300-2:2018 / Part M
+  value_text: 'Min. Floor Area (approx.): ~4.7 m² (2200×1500mm+); Turning Circle: 1500mm; WC Transfer Space: 1000mm clear
+    alongside; Door Width: 800mm; Grab Bar Height: 680mm (BS 8300)'
+  value_numeric: 1500.0
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null
+- spec_id: null
+  item_code: G-04
+  jurisdiction: DE
+  standard_name: DIN 18040-1 (public)
+  value_text: 'Min. Floor Area (approx.): ~5.3 m²; Turning Circle: 1500×1500mm; WC Transfer Space: 950mm alongside; 700mm
+    front; Door Width: 900mm; Grab Bar Height: 850mm'
+  value_numeric: 5.3
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null
+- spec_id: null
+  item_code: G-04
+  jurisdiction: DE
+  standard_name: DIN 18040-2 R (residential, wheelchair)
+  value_text: 'Min. Floor Area (approx.): ~4.7 m²; Turning Circle: 1500×1500mm; WC Transfer Space: 900mm alongside; Door Width:
+    800mm; Grab Bar Height: 850mm'
+  value_numeric: 4.7
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null
+- spec_id: null
+  item_code: G-04
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021
+  value_text: 'Min. Floor Area (approx.): ~5.0 m²; Turning Circle: 1950mm (ambulant + WC) or 2070×1600mm; WC Transfer Space:
+    1200mm alongside; Door Width: 850mm; Grab Bar Height: 800–810mm'
+  value_numeric: 5.0
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null
+- spec_id: null
+  item_code: G-04
+  jurisdiction: FR
+  standard_name: Arrêté 2014
+  value_text: 'Min. Floor Area (approx.): ~3.6 m² (1300×1300mm + fixtures); Turning Circle: 1500mm; Door Width: 800mm'
+  value_numeric: 1300.0
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null
+- spec_id: null
+  item_code: G-04
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: 'Min. Floor Area (approx.): References national; Turning Circle: 1500mm; Door Width: 800mm min'
+  value_numeric: null
+  unit: m²
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.19
+  notes: null

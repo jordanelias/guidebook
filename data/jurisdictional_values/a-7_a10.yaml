@@ -1,0 +1,82 @@
+section: A.7
+title: Assistive Listening Systems
+item_code: A-10
+spec_id: null
+records:
+- spec_id: null
+  item_code: A-10
+  jurisdiction: US
+  standard_name: ADA §219
+  value_text: 'Trigger: ≥50 occupants or amplification; Technology: Choice (loop/IR/FM); Performance: IEC 60118-4 via A117.1'
+  value_numeric: 50.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null
+- spec_id: null
+  item_code: A-10
+  jurisdiction: GB
+  standard_name: BS 8300-2:2018
+  value_text: 'Trigger: ALL counters + assembly spaces; Technology: Induction loop specified; Performance: BS EN 60118-4'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null
+- spec_id: null
+  item_code: A-10
+  jurisdiction: AU
+  standard_name: NCC
+  value_text: 'Trigger: Assembly/meeting; Technology: Hearing augmentation; Performance: AS 60118.4'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null
+- spec_id: null
+  item_code: A-10
+  jurisdiction: DE
+  standard_name: DIN 18040-1
+  value_text: 'Trigger: Assembly + Two-Senses; Technology: Visual+auditory; Performance: DIN EN 60118-4'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null
+- spec_id: null
+  item_code: A-10
+  jurisdiction: FR
+  standard_name: Arrêté 2017
+  value_text: 'Trigger: ≥50 seats; Technology: Hearing enhancement; Performance: NF EN 60118-4'
+  value_numeric: 50.0
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null
+- spec_id: null
+  item_code: A-10
+  jurisdiction: EU
+  standard_name: EN 17210:2021
+  value_text: 'Trigger: Recommended; Technology: Hearing enhancement; Performance: EN 60118-4'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null
+- spec_id: null
+  item_code: A-10
+  jurisdiction: ISO
+  standard_name: IEC 60118-4:2018
+  value_text: 'Technology: Performance standard; Performance: Universal reference'
+  value_numeric: null
+  unit: null
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.7
+  notes: null

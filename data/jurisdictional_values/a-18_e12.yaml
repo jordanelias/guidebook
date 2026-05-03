@@ -1,0 +1,75 @@
+section: A.18
+title: Platform Lift Dimensions
+item_code: E-12
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-12
+  jurisdiction: US
+  standard_name: ADA §410 / ASME A18.1
+  value_text: 'Min. Platform (W×D): 915×1220mm (narrow end entry); 915×1524mm (side entry); Door Width: 915mm; Max Speed:
+    0.15 m/s; Max Travel: 3.66m (12 ft); Notes: Unassisted operation required'
+  value_numeric: 1220.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.18
+  notes: null
+- spec_id: null
+  item_code: E-12
+  jurisdiction: GB
+  standard_name: BS 6440:2011
+  value_text: 'Min. Platform (W×D): 1100×1400mm (adjacent entry); 800×1400mm (straight); 750×1250mm (domestic); Door Width:
+    800mm min; Max Speed: 0.15 m/s; Notes: Three size tiers by context'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.18
+  notes: null
+- spec_id: null
+  item_code: E-12
+  jurisdiction: EU
+  standard_name: EN 81-41:2010
+  value_text: 'Min. Platform (W×D): By wheelchair type; ≥900×1400mm typical; Door Width: 900mm; Max Speed: 0.15 m/s; Notes:
+    Harmonised with EN 81-70 elevator types'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.18
+  notes: null
+- spec_id: null
+  item_code: E-12
+  jurisdiction: DE
+  standard_name: DIN 18040 + DIN EN 81-41
+  value_text: 'Min. Platform (W×D): 1100×1400mm (Type 2); Door Width: 900mm; Max Speed: 0.15 m/s; Notes: Landesbauordnung
+    may add requirements'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.18
+  notes: null
+- spec_id: null
+  item_code: E-12
+  jurisdiction: AU
+  standard_name: AS 1735.12
+  value_text: 'Min. Platform (W×D): 1100×1400mm; Door Width: 850mm; Max Speed: 0.15 m/s; Notes: NCC 2022 references'
+  value_numeric: 1400.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.18
+  notes: null
+- spec_id: null
+  item_code: E-12
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: 'Min. Platform (W×D): References EN 81-41; Notes: Defers to regional standards'
+  value_numeric: 81.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.18
+  notes: null

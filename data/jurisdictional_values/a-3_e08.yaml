@@ -1,0 +1,82 @@
+section: A.3
+title: Corridor & Circulation Widths
+item_code: E-08
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-08
+  jurisdiction: US
+  standard_name: ADA 2010 §403
+  value_text: 'Min Width: 915mm; Passing Width: 1524mm; Turning: 1524mm (ADA) / 1702mm (A117.1)'
+  value_numeric: 915.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
+- spec_id: null
+  item_code: E-08
+  jurisdiction: GB
+  standard_name: BS 8300-2:2018
+  value_text: 'Min Width: 1200mm; Passing Width: 1800mm; Turning: 1500mm'
+  value_numeric: 1200.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
+- spec_id: null
+  item_code: E-08
+  jurisdiction: DE
+  standard_name: DIN 18040-1
+  value_text: 'Min Width: 1500mm; Passing Width: 1800mm; Turning: 1500mm'
+  value_numeric: 1500.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
+- spec_id: null
+  item_code: E-08
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021
+  value_text: 'Min Width: 1000mm; Passing Width: 1800mm; Turning: 1540mm / 2070mm (powered)'
+  value_numeric: 1000.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
+- spec_id: null
+  item_code: E-08
+  jurisdiction: 'NO'
+  standard_name: TEK17 §12-6
+  value_text: 'Min Width: 1500mm; Turning: 1500mm'
+  value_numeric: 1500.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
+- spec_id: null
+  item_code: E-08
+  jurisdiction: CA
+  standard_name: CSA B651:2023
+  value_text: —
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
+- spec_id: null
+  item_code: E-08
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: 'Min Width: 1200mm; Passing Width: 1800mm; Turning: 1524mm'
+  value_numeric: 1200.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.3
+  notes: null
