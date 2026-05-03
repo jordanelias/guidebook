@@ -540,3 +540,90 @@ The discrepancy may reflect: (a) different EHS survey years, (b) different defin
 | ABCB/CIE RIS | Forward | Summer Foundation submission; Building Better Homes campaign |
 | Spanish MDPI 2024 | Backward | Law 6/2022 Cognitive Accessibility; Technical Building Code |
 | Sirmans 2006 | Forward | Confirmed: zero disability-accessibility hedonic papers in citation network |
+
+
+---
+
+## J. Japanese Housing Adaptation Economics (2026-05-03 session 2 continued)
+
+### J.1 Tsuchiya-Ito et al. (2022) — Japanese LTC insurance housing adaptation costs
+
+**Source:** Tsuchiya-Ito, R., Hamada, S., Slaug, B., Ninomiya, A., Uda, K., & Ishibashi, T. (2022). "Implementation and costs of housing adaptations among older adults with different functional limitations in Japan." BMC Geriatrics, 22, 444. DOI: 10.1186/s12877-022-03100-9
+
+**Methodology:** Retrospective cohort, suburban Tokyo municipality, 10,372 participants certified for care support (2010-2018), 12-month follow-up.
+
+**Key findings:**
+- 15.6% (n=1,622) implemented housing adaptations within 12 months
+- **Median cost per individual: USD $1,287 (~¥180,000)**
+- Maximum LTC insurance coverage: ¥200,000 (~USD $1,430) per lifetime
+- Copayment: 10-20% depending on income
+- 6 adaptation types covered: handrails, height differences, floor materials, doors, lavatory basins, other
+- **Only 8.8% of Japanese households have "high level" barrier-free design** (handrails at 2+ places, no level difference indoors, corridors wide enough for wheelchair)
+- Lower-extremity impairment and poor balance most associated with adaptation use
+
+**Evidence tier:** Tier 1 (peer-reviewed, BMC Geriatrics, DOI-verifiable, insurance claims data)
+
+### J.2 Tsuchiya-Ito et al. (2024) — Housing adaptations reduce LTCF admissions
+
+**Source:** Tsuchiya-Ito, R., Mitsutake, S., Kitamura, S., et al. (2024). "Housing Adaptations and Long-Term Care Facility Admissions among Older Adults with Care Needs in Japan." JAMDA. DOI: S1525-8610(24)00712-6
+
+**Key findings:**
+- 4,610 participants; 27.3% implemented housing adaptations
+- Follow-up median: 51 months
+- **LTCF admission rates:**
+  - Non-implementation: 3.9/1000 person-months
+  - Sub-maximum cost group: 3.8/1000 person-months
+  - **Maximum cost group (¥200,000): 2.8/1000 person-months** — 28% lower admission rate
+
+**Evidence tier:** Tier 1 (peer-reviewed, JAMDA, retrospective cohort with competing-risk analysis)
+
+**Q5 significance:** This is cost-effectiveness data. Housing adaptations at ¥200,000 (~USD $1,430) maximum are associated with 28% reduction in LTCF admissions. Given that institutional care in Japan costs approximately ¥300,000-500,000/month, even a modest delay in institutional admission generates savings that far exceed the ¥200,000 adaptation cost.
+
+### J.3 Tsuchiya-Ito et al. (2023) — Housing adaptations prevent care needs deterioration
+
+**Source:** Tsuchiya-Ito, R., Hamada, S., Iwagami, M., et al. (2023). "Association of housing adaptation services with the prevention of care needs level deterioration for older adults with frailty in Japan." BMC Health Services Research, 23, 916. DOI: 10.1186/s12913-023-09890-x
+
+**Key finding:** Housing adaptations associated with prevention of care needs level deterioration among frail older adults.
+
+**Evidence tier:** Tier 1 (peer-reviewed, BMC Health Services Research)
+
+### J.4 Japan-Sweden comparison (citation-mined)
+
+**Source:** Tsuchiya-Ito, R., Iwarsson, S., & Slaug, B. (2019). "Environmental Challenges in the Home for Ageing Societies: a comparison of Sweden and Japan." J Cross-Cultural Gerontology, 34(3).
+
+- 2050: Japan 39% aged 65+ vs Sweden 23%
+- Swedish housing stock older (80% pre-1980) vs Japanese (65% post-1980)
+- Housing adaptations less frequent in Japan than Sweden
+- Procedure for adaptations more complicated in Japan
+- Fatal indoor accidents: Sweden dominated by falls; Japan by falls + drowning + suffocation
+
+### J.5 Japanese Housing Enabler (citation-mined)
+
+283-item assessment tool (vs 161 in Swedish original) adapted for Japanese housing specifics including genkan (entrance step), shoji screen doors, tatami rooms, narrow staircases. Content validity study with 13 OT/architect/care manager experts.
+
+### J.6 Japan financing infrastructure (DLA Piper 2023, citation-mined)
+
+- Serviced residences for elderly must be barrier-free
+- Government subsidies for new construction/renovation of registered serviced elderly residences
+- Tax benefits: fixed asset tax abatement, real estate transfer tax abatement
+- Japan Housing Finance Agency (JHF) loans for registered facilities
+- This complements the Flat 35S barrier-free data already in the methodology doc
+
+### J.7 Government grant data update for Japan
+
+| Programme | Max funding | Coverage | Notes |
+|---|---|---|---|
+| LTC Insurance housing adaptation | ¥200,000 lifetime (~USD $1,430) | 90% (10-20% copay) | 6 adaptation types; requires care certification |
+| Flat 35S barrier-free | 0.25% rate reduction × 10 years | N/A (financing benefit) | Already in methodology doc |
+| Long-Life Quality Housing certification | Tax credit up to ¥4.55M + ¥1.1M subsidy | N/A (certification benefit) | Already in methodology doc |
+| Serviced elderly residence subsidies | Government subsidies (amount varies) | New construction + renovation | Tax benefits + JHF loans |
+
+### J.8 Citation mining chain from Tsuchiya-Ito
+
+| Source | Direction | New lead |
+|---|---|---|
+| Tsuchiya-Ito 2022 | Backward | Ishikawa & Koike 2008 (Japanese-language fact-finding study of home renovation via LTC insurance, Josai International University) |
+| Tsuchiya-Ito 2022 | Backward | MHLW subcommittee on LTC benefits documentation (Japanese-language government data) |
+| Tsuchiya-Ito 2024 | Forward | Chandola & Rouxel 2022 (Lancet Regional Health Europe — home modifications + disability outcomes in England — NEW UK data) |
+| Tsuchiya-Ito 2019 | Backward | Japan-Sweden comparative environmental challenges — connects to Swedish Bostadsanpassningsbidrag data |
+| All | Lateral | Carnemolla & Bridge 2018 scoping review of home modification interventions (Australian — methodology reference) |
