@@ -9,8 +9,8 @@ description: >
   any multi-step guidebook task, or resuming work after a session gap.
 ---
 
-<!-- Updated: CO-0008 2026-04-26 — Stage A workflows, Python-backed skill classification, Phase 2B dormant -->
-<!-- Prior: CO-0006 2026-04-08 — connection register restructured -->
+<!-- Updated: 2026-05-03 — Workplan v4 (Amendment 8), roadmap display on bootstrap, Stage B2 NEXT -->
+<!-- Prior: CO-0008 2026-04-26 — Stage A workflows, Python-backed skill classification, Phase 2B dormant -->
 
 **Model:** Opus 4.6 (primary for all work per CO-0008 PI update)
 **GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
@@ -36,6 +36,36 @@ Fetch the session file identified in LATEST AND `references/connections/_index.m
 Report: session_close, next_action, blockers. Confirm with user before resuming. Do not auto-resume.
 
 From `_index.md`: note count of PENDING HIGH-confidence connections — these are the highest-priority integration targets for any ISW session.
+
+### 1c — Workplan roadmap (on any workplan-related bootstrap)
+
+When the user's opening message mentions "workplan", "bootstrap", "roadmap", "where are we", "what's left", or similar — display this compact roadmap after reporting session state. Read `workplan/workplan-co0007-v4.md` §Budget arithmetic table and render:
+
+```
+ROADMAP — Accessible Built Environments Guidebook
+══════════════════════════════════════════════════
+Stage 0  Verification + decision freeze     ████████████████████ COMPLETE  (9 sessions)
+Stage A  Foundations (A1-A13)                ████████████████████ COMPLETE  (24 sessions)
+B1       Schema design                      ████████████████████ COMPLETE  (9 sessions)
+─────────────────────────────────────────────────────────────────
+B2       Schema impl + audit remediation    ░░░░░░░░░░░░░░░░░░░░ NEXT     (0/6-8)
+B3       Navigation + website entities      ░░░░░░░░░░░░░░░░░░░░          (0/4-5)
+B4       Pilot construction                 ░░░░░░░░░░░░░░░░░░░░          (0/6-10)
+B5       Rendering layer                    ░░░░░░░░░░░░░░░░░░░░          (0/3-4)
+B6       Pilot validation                   ░░░░░░░░░░░░░░░░░░░░          (0/3-4)
+B7       Architecture lock                  ░░░░░░░░░░░░░░░░░░░░          (0/2)
+─────────────────────────────────────────────────────────────────
+C0-C11   Content migration + population     ░░░░░░░░░░░░░░░░░░░░          (0/121-177)
+═════════════════════════════════════════════════════════════════
+CONSUMED: 42 sessions  |  REMAINING: 146-211  |  TOTAL: 188-253
+```
+
+**Update rules for this roadmap:**
+- As sessions complete within a sub-stage, update consumed count and fill bars proportionally
+- When a sub-stage completes, mark it COMPLETE and fill the bar
+- The roadmap is a rendering of the workplan budget table — it does not store independent state
+- If the workplan is amended, the roadmap auto-reflects the new budget table
+- For Stage C, show sub-stage breakdown only when C-stage work begins; until then, show as single line
 
 ### 2 — Load gap register (filtered bash)
 
