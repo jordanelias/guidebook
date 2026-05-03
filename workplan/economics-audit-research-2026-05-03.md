@@ -296,3 +296,68 @@ The Ielegems data refines the cross-jurisdictional picture:
 - UK retrofit vs designed-in: ~19× ratio (Habinteg)
 
 **The two variables that drive cost:** (1) scope of standard (basic vs comprehensive) and (2) building scale (large vs small). Jurisdiction is a distant third factor.
+
+
+---
+
+## F. Citation Mining Findings (systematic, 2026-05-03 continued)
+
+### F.1 UK — Centre for Ageing Better citation chain
+
+**£1,387 M4(2) cost figure provenance:**
+- Centre for Ageing Better (2020), "State of Ageing" — cites £1,387 per dwelling for M4(2)
+- Earlier figure: 2014 estimate of £521 for M4(2) on a 3-bed semi-detached house
+- Both figures government-cited; the £1,387 is the current reference figure
+
+**Major UK policy update (December 2025) — NOT IN METHODOLOGY DOC:**
+- UK government announced **minimum 40% of new homes must be M4(2)** — national planning policy
+- Previous position: M4(2) optional, set by local planning authorities
+- London Plan remains at 90% M4(2) + 10% M4(3)
+- This is a significant regulatory change that updates the methodology doc's §15.13.1 finding that "outside London, less than 25% of new homes are required to meet M4(2)"
+
+**NHS cost data (citation-mined):**
+- £513 million/year — NHS cost of poor housing for 55+ households
+- £177 million of that from falls in homes
+- £4.3 billion total to fix all Category 1 hazards in older people's homes → payback in ~8 years
+- Source: Building Research Establishment (BRE) modelling for Centre for Ageing Better
+
+**Supply gap data (citation-mined):**
+- 9% of English homes meet basic accessibility standard (English Housing Survey)
+- 1.8 million people currently need accessible/adaptable home
+- 44 years to meet current demand at current building rate
+- 250,000 additional accessible homes could have been built if M4(2) was mandatory from 2022
+
+**RIBA + Habinteg Inclusive Housing Design Guide (2024):**
+- "Minimal or no additional cost if considered from the outset"
+- HoME coalition now 11 organizations (Centre for Ageing Better, Habinteg, Age UK, Disability Rights UK, HousingLin, RIBA, NHF, CIH, TCPA + 2 more)
+
+**Evidence tier:** The £1,387 figure is Tier 4 (government-cited via Centre for Ageing Better, a charitable foundation). The NHS cost figures are Tier 4 (BRE modelling). The RIBA claim of "minimal or no additional cost" is Tier 5 (advocacy body position statement, not independently verified).
+
+### F.2 CMHC/Société Logique 2015 — backward mining
+
+The full report methodology cites:
+- www.costtobuild.net (Canadian construction cost estimator)
+- RSMeans Contractor's Pricing Guide: Residential Repair & Remodeling 2015
+- Specialized manufacturers for specific accessibility items
+- Rate schedules for construction trades in each city
+- Municipal construction regulations for each of 5 cities
+
+No academic references cited. This is a practitioner cost study, not an academic paper. The reference chain terminates at trade cost sources — which is appropriate for a Q1/Q2 first-cost study.
+
+### F.3 Sirmans 2006 — forward citation mining (completed)
+
+Hundreds of citing papers examined via IDEAS/RePEc and Semantic Scholar. Zero papers apply hedonic regression to disability-accessibility features in residential dwellings. Citations are entirely standard hedonic methodology — lot size, age, garages, pools, neighborhood characteristics. Confirms the hedonic gap is not an artifact of incomplete searching but a genuine absence in the published literature.
+
+### F.4 Citation mining process note
+
+Citation mining should be conducted for every verified new source. The pattern:
+1. Backward: what does the source cite that we don't have?
+2. Forward: what cites the source that we don't have?
+3. If the source is a practitioner study (like CMHC), the backward chain terminates at trade cost databases — no further academic mining needed
+4. If the source is an academic paper (like Ielegems 2024), both directions are productive
+
+Sources still requiring citation mining:
+- Fuglerud, Halbach & Tjøstheim 2015 (Norwegian CBA) — backward + forward
+- Habinteg retrofit cost studies — primary source for £27,000 figure
+- ABCB/CIE RIS 2021 — bibliography contains Australian cost study references
+- Szanton CAPABLE publications — already well-mined but forward-cite for recent replication studies
