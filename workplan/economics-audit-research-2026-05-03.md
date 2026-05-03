@@ -226,3 +226,73 @@ This is the single largest evidence gap across all 24 project jurisdictions. Met
 ---
 
 **End of interim findings. Research continuing.**
+
+
+---
+
+## E. Additional Research Findings (2026-05-03 session continued)
+
+### E.1 Ielegems, Vanrie & Herssens (2019) — Full Report Retrieved
+
+**Source:** Ielegems, E., Vanrie, J., & Herssens, J. (2019). "Rapport: Directe Kosten en Baten van Integrale Toegankelijkheid voor Publieke Gebouwen in Vlaanderen." UHasselt Document Server. hdl.handle.net/1942/36702
+
+**Note:** This is the full report underlying the Ielegems & Vanrie 2024 Archnet-IJAR journal article. The report predates the journal article and contains more detailed findings. The ResearchGate "Dec 2024" date appears to be the dataset upload date, not the report date.
+
+**Methodology:** 12 case studies, 3 typologies (secondary schools, town halls, small retail shops), Limburg province (Belgium). 119 accessibility criteria — broader than wheelchair access, includes color contrast, wayfinding, acoustics. Three scenarios per case: (1) current state, (2) renovation to 100% integral accessibility, (3) new build at 100% integral accessibility. Research-by-Design methodology. Independent contractor cost estimation based on concrete case context.
+
+**Cost findings by typology (new build vs renovation):**
+
+| Typology | Scale (avg cost) | Renovation additional cost | New-build additional cost |
+|---|---|---|---|
+| Secondary schools | >€8M | 1.44–2.34% | **0.54–0.64%** |
+| Town halls | ~€950K | 8.58–17.67% | **4.24–9.16%** |
+| Small retail shops | ~€55K | 20.48–26.32% | **2.09–2.70%** |
+
+**Critical insight — scale dependency:** The relative cost of accessibility is strongly scale-dependent. Large buildings (schools) approach negligible cost at <1%. Small buildings (retail) show 2-3% for new build and 20-26% for renovation. The scale dependency explains the wide range in the journal article (0.94-3.92%).
+
+**Building element cost distribution:**
+- Cheapest elements (together ~5% of total accessibility budget): electrical controls & lighting, interior floors, color contrast, signage, fixed interior furniture
+- Most expensive elements: lifts and interior stairs/ramps
+- "Circulation" element: expensive to renovate but minimal additional cost if designed from start
+
+**Benefit analysis:** 15 of 16 examined building elements contain criteria that improve comfort for everyone (not just persons with disability). Quantifying population benefit proved difficult due to lack of regional demographic data.
+
+**Evidence tier:** Tier 1 (peer-reviewed methodology — Research-by-Design with independent contractor verification, published through university document server, later published in Archnet-IJAR)
+
+**Significance for project:** This is the most detailed European cost study on accessible construction, using broader criteria (119 vs TERRAGON's 148 but including sensory and cognitive provisions TERRAGON excludes). Confirms that new-build accessibility at large scale is near-negligible (<1%); renovation is 5-20× more expensive; and small-scale buildings face proportionally higher costs.
+
+### E.2 Dutch NEN 9120 / RIGO Research data
+
+From the Dutch government document (zoek.officielebekendmakingen.nl), RIGO Research (Netherlands) found:
+- Accessible toilet addition: €3,000–€5,000
+- Lift over 2 stories: additional investment (figure truncated in search result)
+- Cost-benefit distribution is "skewed": benefits concentrate in large buildings with many visitors at relatively low cost, while costs are proportionally high in small buildings
+
+NEN 9120:2025 (new Dutch accessibility standard) was under development as of late 2023, expected publication early 2024. This replaces/supplements NEN 1814. [UNVERIFIED — confirm current status of NEN 9120]
+
+### E.3 Cross-jurisdictional cost synthesis — revised with Ielegems detail
+
+The Ielegems data refines the cross-jurisdictional picture:
+
+**Basic visitability / Silver / M4(2) — multi-unit new construction:**
+- UK M4(2): ~£1,400/dwelling (~0.4%)
+- DE DIN 18040-2 basic: 0.35-1.26% (TERRAGON, commercial interest flagged)
+- AU NCC 2022 Silver: ~AUD $538 break-even
+- BE large public buildings: 0.54-0.64% (Ielegems)
+- NO TEK10: ~0.8m² increase, "not so expensive" (SINTEF)
+- US public accommodation: <1% (ADA National Network, Tier 5)
+
+**Comprehensive accessibility — new construction:**
+- CA 60-feature residential: 6-12% (CMHC/Société Logique)
+- DE DIN 18040-2 R-marked: 5-10% (bau.de trade-press)
+- BE small retail (119 criteria): 2.09-2.70% (Ielegems)
+- BE town halls (119 criteria): 4.24-9.16% (Ielegems)
+
+**Renovation (always dramatically more expensive):**
+- BE schools: 1.44-2.34% (low because large scale)
+- BE town halls: 8.58-17.67%
+- BE small retail: 20.48-26.32%
+- DE retrofit: €19,100/dwelling avg (KfW/Prognos)
+- UK retrofit vs designed-in: ~19× ratio (Habinteg)
+
+**The two variables that drive cost:** (1) scope of standard (basic vs comprehensive) and (2) building scale (large vs small). Jurisdiction is a distant third factor.
