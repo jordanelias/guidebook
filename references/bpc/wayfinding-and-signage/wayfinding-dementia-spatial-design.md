@@ -6,7 +6,7 @@
   - Navigation progression: allocentric (cognitive map) impaired earliest → route knowledge → landmark knowledge (most preserved) (PMC8545728, 2021, Tier 3)
   - Behavioural pattern study: DEM residents can navigate using sequential decision-making and landmarks; large-scale cognitive map formation is not preserved (van Buuren et al. 2025, PMC11931140, Tier 3)
   - Wayfinding requires integration of digital technologies, consistent multi-sensory cues, and neuroscience-informed design for hospitals, transit, and large institutions (Jost et al. 2024, Tier 4)
-  - Scoping review: wayfinding misconceived as signage only; spatial planning for intuitive navigation equally important; VIS and hearing-impaired populations face design-addressable challenges (Ilegems & Vanrie 2025, Tier 3–4) [⚠ date: 2024 vs 2025 — citation verifier required]
+  - Scoping review: wayfinding misconceived as signage only; spatial planning for intuitive navigation equally important; VIS and hearing-impaired populations face design-addressable challenges (Zali et al. 2025, DOI:10.1177/19375867251391361, Tier 3–4) [CORRECTED: was "Ilegems & Vanrie 2025" — wrong attribution]
 **Design implications:**
   - Sequential decision-making support — one choice point at a time
   - Landmark-based navigation — distinctive features at key nodes
@@ -38,7 +38,7 @@
 |---|---|---|---|
 | Allocentric navigation impaired earliest in Alzheimer's; landmark navigation most preserved | EN | Cross-jurisdictional (PMC8545728 2021) | 3 |
 | DEM residents navigate using sequential decisions and landmarks, not cognitive maps | EN | Cross-jurisdictional (van Buuren 2025) | 3 |
-| Spatial planning more important than signage for intuitive navigation | EN | Cross-jurisdictional (Ilegems & Vanrie 2025) | 3–4 |
+| Spatial planning more important than signage for intuitive navigation | EN | Cross-jurisdictional (Zali et al. 2025) | 3–4 |
 
 ### Divergent findings
 | Topic | Position A | Position B | Cause |
@@ -53,7 +53,12 @@
 | All 24 | — | No jurisdiction has DEM-specific wayfinding standard; EADDAT is sole validated tool | — | — |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 08:00
+| Source | Direction | New sources added |
+|---|---|---|
+| Marquardt 2011 (WDS-05) | Forward | Shabha 2022 integrated design review (WDS-08); Tao 2018 Hong Kong floor plans (WDS-09); Davis & Weisbeck 2016 environmental cues (WDS-10) |
+| WDS-04 GREY correction | — | Corrected: "Ilegems & Vanrie 2025" → Zali, McElroy, Giardini, Chaiyawat & Watson (2025). DOI: 10.1177/19375867251391361. HERD scoping review on wayfinding for sensory impairment |
+**Notes:** Tao 2018 provides non-Western evidence (Hong Kong care homes). Shabha 2022 provides integrated operational design review. Davis & Weisbeck 2016 provides US evidence on environmental cues. WDS-04 author correction is critical — publish with correct attribution.
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
@@ -65,10 +70,13 @@ Not yet run.
 | WDS-01 | Wiener, J.M. & Pazzaglia, F. | 2021 | Ageing- and dementia-friendly design. Cogn Process. PMC8545728 | 3 | INT | Cognitive map progression |
 | WDS-02 | van Buuren, L.P.G. et al. | 2025 | DEM residents navigate via sequential decisions. PMC11931140 | 3 | NL | Supersedes van Buuren 2023 |
 | WDS-03 | Jost, G. et al. | 2024 | Neuroscience-informed wayfinding design. [GREY — full citation unverified; DOI required] | 4 | INT | ⚠ verify |
-| WDS-04 | Ilegems, B. & Vanrie, J. | 2025 | Wayfinding as spatial planning not signage. [GREY — date unverified; may be 2024; citation verifier required] | 3/4 | INT | ⚠ date verify before publication |
+| WDS-04 | Zali, P., McElroy, L.B., Giardini, M.E., Chaiyawat, K. & Watson, M. | 2025 | A Scoping Review of the Impact of Environmental Design on Wayfinding for People With Sensory Impairment. HERD. DOI:10.1177/19375867251391361 | 3/4 | INT | ⚠ CORRECTED: was "Ilegems & Vanrie" — wrong attribution fixed 2026-05-04 |
 | WDS-05 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD 4(2):75–90. DOI:10.1177/193758671100400207 | 3 | INT | — |
 | WDS-06 | Passini, R. | 1984 | Wayfinding in Architecture. Van Nostrand Reinhold | 3 | INT | Decision theory |
 | WDS-07 | DSDC, University of Stirling | 2022 | EADDAT — sole validated DEM wayfinding assessment tool | Co-1 | UK | https://dementia.stir.ac.uk/design/environmental-audit |
+| WDS-08 | Shabha, G., Edwards, D.J., Gaines, K. & Laycok, P. | 2022 | Toward an Integrated Context-Based Design Approach for Dementia Residential Care Homes: A Review of Key Operational Design Problems. HERD 15(4):323-342. DOI:10.1177/19375867221100210. PMID:35833917 | 3 | UK | Integrated operational + design review |
+| WDS-09 | Tao, Y., Gou, Z., Lau, S.S., Lu, Y. & Fu, J. | 2018 | Legibility of floor plans and wayfinding satisfaction of residents in Care and Attention homes in Hong Kong. Australas J Ageing 37(4):E139-E143. DOI:10.1111/ajag.12574. PMID:30098224 | 3 | HK | Non-Western evidence; floor plan legibility |
+| WDS-10 | Davis, R. & Weisbeck, C. | 2016 | Creating a Supportive Environment Using Cues for Wayfinding in Dementia. J Gerontol Nurs 42(3):36-44. DOI:10.3928/00989134-20160212-07. PMID:26934972 | 3 | US | Environmental cues for DEM wayfinding |
 
 **⚠ DO NOT CITE:** van Buuren & Mohammadi 2023 — superseded by van Buuren et al. 2025 (WDS-02).
 
@@ -77,6 +85,7 @@ Not yet run.
 ```yaml
 slug: wayfinding-dementia-spatial-design
 population: DEM
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```

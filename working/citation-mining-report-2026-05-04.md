@@ -133,3 +133,38 @@ Kolberg 2022 provides evidence that should cross-reference to the DEM population
 **New sources discovered:** 16 (backward: 3, forward: 13)
 **Systematic reviews found:** 2 (Rouvier 2022, Leonardi 2025)
 **Commits:** 2
+
+---
+
+## 5. wayfinding-dementia-spatial-design
+
+### Forward mining
+| Input source | Citing papers | Relevant found | New to BPC |
+|---|---|---|---|
+| Marquardt 2011 (WDS-05) | ~100+ | 3 | 3 |
+
+### GREY source correction
+| Original | Corrected |
+|---|---|
+| WDS-04: "Ilegems, B. & Vanrie, J. (2025)" | Zali, P., McElroy, L.B., Giardini, M.E., Chaiyawat, K. & Watson, M. (2025). DOI: 10.1177/19375867251391361 |
+
+### New sources
+| # | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI | Discovery |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Shabha G, Edwards DJ, Gaines K, Laycok P | 2022 | Toward an Integrated Context-Based Design Approach for Dementia Residential Care Homes | HERD 15(4):323-342 | EN | UK | 3 | 10.1177/19375867221100210 | Forward from Marquardt 2011 |
+| 2 | Tao Y, Gou Z, Lau SS, Lu Y, Fu J | 2018 | Legibility of floor plans and wayfinding satisfaction in Hong Kong care homes | Australas J Ageing 37(4):E139-E143 | EN | HK | 3 | 10.1111/ajag.12574 | Forward from Marquardt 2011 |
+| 3 | Davis R, Weisbeck C | 2016 | Creating a Supportive Environment Using Cues for Wayfinding in Dementia | J Gerontol Nurs 42(3):36-44 | EN | US | 3 | 10.3928/00989134-20160212-07 | Forward from Marquardt 2011 |
+
+### Impact assessment
+- **Tao 2018** provides non-Western evidence (Hong Kong) — important for jurisdiction coverage
+- **WDS-04 correction** prevents a hallucinated citation from reaching publication
+- Combined: evidence base expands from UK/NL to UK/NL/US/HK
+
+---
+
+## Final totals
+**Sources mined:** 12 (across 5 slugs)
+**New sources discovered:** 19 (backward: 3, forward: 16)
+**GREY sources corrected:** 2 (ULB-04 DOI confirmed; WDS-04 wrong attribution fixed)
+**Systematic reviews found:** 2 (Rouvier 2022, Leonardi 2025)
+**Commits:** 3
