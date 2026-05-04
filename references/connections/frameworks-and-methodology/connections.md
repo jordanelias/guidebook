@@ -747,3 +747,49 @@ These programme models demonstrate that the highest-quality national systems sti
 **Action required:** Part 9 §9.5: cite OT-delivery evidence chain as mandatory delivery specification. G-03: note that grab bar efficacy evidence is conditional on OT-specified placement. Part 4: general note that environmental modification evidence is delivery-mechanism dependent.
 
 **Disposition notes:** —
+
+---
+
+## CON-0230
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar
+**Target item(s):** Part 11, G-03
+**Target population(s):** ALL (economics)
+**Evidence tier:** 1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Crosby et al. 2026 (PMID:41525145): secure rails significantly reduce fall-related HOSPITAL ADMISSIONS, not just fall incidence. Hospital admission cost is the dominant economic variable in home modification cost-benefit. CON-0203 captures clinical evidence. CON-0225 captures Keall cost-benefit chain. Neither captures hospital-admission-avoidance as INDEPENDENT economics data. Combined: Keall 2017 (RCT cost-benefit: intervention cost recovered via reduced injury costs) + Crosby 2026 (hospital admission OR reduction) = two strongest economics inputs for Part 11 G-03 cost-effectiveness modelling.
+
+**Evidence basis:** Crosby et al. 2026 (PMID:41525145); Keall et al. 2017 Injury Prevention; CON-0203; CON-0225.
+
+**Action required:** Part 11: add Crosby 2026 hospital admission reduction as economics evidence for G-03. Combine with Keall 2017 for complete cost-benefit model. Flag as strongest combined economics case.
+
+**Disposition notes:** —
+
+---
+
+## CON-0234
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment, accessible-bathroom-and-grab-bar, residential-kitchen-and-task-surfaces
+**Target item(s):** Part 9 §9.5
+**Target population(s):** ALL
+**Evidence tier:** Co-2
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** RCOT Housing Adaptations Without Delay 2019 appears across BATH, CIRC, and KITCHEN as source — it provides cross-room specifications. But HAwD itself is a PROCESS framework: OT assessment drives adaptation specification, which drives construction. Its six-stage process (referral → assessment → specification → procurement → installation → follow-up) should be the Part 9 reference adaptation pathway. CON-0228 captures OT-delivery evidence from Clemson/Gillespie. This extends: HAwD provides the specific PROCESS SEQUENCE, not just the evidence that OT delivery works. Part 9 references OT assessment but not the full HAwD pathway.
+
+**Evidence basis:** RCOT Housing Adaptations Without Delay 2019 (Co-2); CON-0228 (OT delivery evidence).
+
+**Action required:** Part 9 §9.5: adopt HAwD six-stage process as reference adaptation pathway. Cross-reference CON-0228 (evidence that OT delivery is prerequisite for efficacy).
+
+**Disposition notes:** —

@@ -461,3 +461,26 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 **Action required:** H-05: create multi-position table (6 positions). G-09: cross-reference. DAR: all 6 positions at construction.
 
 **Disposition notes:** —
+
+---
+
+## CON-0232
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** biophilic-design-healthcare-workplace
+**Target item(s):** BIO-01, Part 11
+**Target population(s):** ALL (healthcare settings)
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Al Khatib et al. 2024 (61-source SR): biophilic design reduces hospitalisation time, mortality, pain, and provider stress. The ONLY SR quantifying biophilic outcomes at healthcare system level. BIO BPC has the finding. No connection links BIO-01 through BIO-05 to Part 11 economics. If biophilic design reduces hospitalisation time, there is a direct cost-benefit calculation for healthcare settings. Distinct from general economics connections — this is biophilic-specific economics evidence with an SR base.
+
+**Evidence basis:** Al Khatib et al. 2024 (61-source SR); BIO BPC synthesis.
+
+**Action required:** BIO-01: flag healthcare system-level evidence. Part 11: add biophilic economics section with Al Khatib 2024 as primary source for healthcare cost-benefit.
+
+**Disposition notes:** —

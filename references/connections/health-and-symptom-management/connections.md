@@ -216,3 +216,26 @@ The practical implication: rest seating (I-03) should be placed AT TWSI attentio
 **Action required:** F-07: add OFS/MS vs DEM thermal conflict with resolution (ambient 18-20°C + local warmth). K-05: cross-reference. Part 5: document as second thermal conflict exemplar alongside MS-vs-FMS.
 
 **Disposition notes:** —
+
+---
+
+## CON-0233
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** thermoregulation-built-environment
+**Target item(s):** K-05, H-04, H-02
+**Target population(s):** SCI (≥C4)
+**Evidence tier:** 1-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** SCI tetraplegia (≥C4) persons CANNOT perceive thermal strain subjectively — Tcore rises to 37.7°C at 23.9°C indoor without awareness (PMC5798926 2018; Griggs 2019). Distinct from CON-0224 (ambient temperature conflict). The PERCEPTION ABSENCE creates a specification: SCI-designated settings require objective temperature monitoring/display (H-04) and automatic cooling trigger (H-02 environmental control). The occupant cannot sense the need to adjust. Analogous to CO detector principle: when hazard is imperceptible, building system must detect and respond autonomously. This is NOT a thermostat — it is a safety-critical monitoring system for an occupant who lacks thermal interoception.
+
+**Evidence basis:** Griggs 2019 (SCI exercise thermoregulation); PMC5798926 2018 (case series: Tcore 37.7°C at 23.9°C); thermoregulation BPC.
+
+**Action required:** K-05: add SCI thermal perception absence as safety-critical specification. H-04: require objective room temperature display in SCI settings. H-02: automatic cooling trigger at ≥23°C in SCI settings. Frame as life-safety system.
+
+**Disposition notes:** —

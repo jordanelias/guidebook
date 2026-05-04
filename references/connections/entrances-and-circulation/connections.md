@@ -1265,3 +1265,26 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 **Action required:** E-08: add overhead obstacle base-detectability specification. A-02: cross-reference for wall-mounted elements.
 
 **Disposition notes:** —
+
+---
+
+## CON-0229
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment
+**Target item(s):** A-02, A-07, A-09, E-07
+**Target population(s):** MOB
+**Evidence tier:** 1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Sawatzky et al. 2015 (Tier 1, AJPMR): upper limb overuse is the PRIMARY health risk for manual wheelchair users. Environment must reduce propulsion effort. Existing connections cover ramp gradient and door force. But propulsion-reduction is BUILDING-WIDE: A-09 corridor surface friction (carpet vs hard — rolling resistance), A-02 corridor distance (shorter routes reduce cumulative shoulder load), A-07 cross-slope (any deviation increases unilateral shoulder load), E-07 threshold transitions (each bump is bilateral force spike). Currently specified for wheelchair ACCESS not INJURY PREVENTION. The specification framing changes: A-02 minimum corridor width is not 'can a wheelchair fit?' but 'does the corridor minimise propulsion effort over repeated daily use?' MOB BPC explicitly flagged Sawatzky as 'Not yet mined — deferred citation-miner.'
+
+**Evidence basis:** Sawatzky et al. 2015 AJPMR (Tier 1); MOB BPC deferred flag.
+
+**Action required:** A-02/A-07/A-09/E-07: reframe specifications from access to injury prevention. Add propulsion effort as specification rationale alongside dimensional access. Part 3: add wheelchair propulsion effort as building-level specification principle.
+
+**Disposition notes:** —

@@ -1114,3 +1114,26 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Action required:** D-05: add dual-rationale note (VIS compensatory + NDV graduated management). F-03: cross-reference. C-04: multi-sensory zone boundary LRV specification serves both populations.
 
 **Disposition notes:** —
+
+---
+
+## CON-0231
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** cognitive-wayfinding-design, wayfinding-dementia-spatial-design, dementia-built-environment
+**Target item(s):** D-02, Part 3 §3.2
+**Target population(s):** DEM, NEU, IntD
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Wiener & Pazzaglia 2021 (PMC8545728): cognitive map progression — allocentric (survey/map-based) impaired EARLIEST → route knowledge (turn-by-turn) next → landmark knowledge (recognition) most preserved. Validated by van Buuren et al. 2025 (PMC11931140): DEM residents navigate via sequential decision-making; cognitive map NOT preserved. Specification principle: D-02 wayfinding systems must support SEQUENTIAL navigation (each cue leads to next) rather than MAP-BASED (you-are-here plans, overview maps). Overview maps are the LEAST accessible wayfinding format for DEM/NEU — they rely on allocentric processing which fails first. Complements CON-0189 (NEU sub-typing → DEM staging) — this is the cognitive PROGRESSION model that determines wayfinding FORMAT hierarchy: (1) landmark → (2) sequential route → (3) map-based, ordered by preservation.
+
+**Evidence basis:** Wiener & Pazzaglia 2021 (PMC8545728); van Buuren et al. 2025 (PMC11931140); CWF BPC; DEM-WF BPC.
+
+**Action required:** D-02: specify wayfinding format hierarchy (landmark-first, sequential-second, map-last). Remove or deprioritise overview maps as primary wayfinding device. Part 3 §3.2: cite as cognitive progression exemplar.
+
+**Disposition notes:** —

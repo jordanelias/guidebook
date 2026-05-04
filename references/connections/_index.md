@@ -5,15 +5,15 @@
 
 **Last migration:** 2026-04-19 (Block 4 B1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
-**Total connections migrated:** 221
-**Next CON-ID:** CON-0229
+**Total connections migrated:** 227
+**Next CON-ID:** CON-0235
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 140 |
 | CONSUMED-DEFERRED | 42 |
-| PENDING | 45 |
+| PENDING | 51 |
 | CONSUMED (this session) | 3 |
 
 ## Index
@@ -251,3 +251,9 @@
 | CON-0226 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0227 | PENDING | D-05, C-04, F-03 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0228 | PENDING | Part 9 §9.5, G-03 | frameworks-and-methodology | HIGH | false | — |
+| CON-0229 | PENDING | A-02, A-07, A-09, E-07 | entrances-and-circulation | HIGH | false | — |
+| CON-0230 | PENDING | Part 11, G-03 | frameworks-and-methodology | HIGH | false | — |
+| CON-0231 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
+| CON-0232 | PENDING | BIO-01, Part 11 | cross-cutting | MODERATE | false | — |
+| CON-0233 | PENDING | K-05, H-04, H-02 | health-and-symptom-management | HIGH | false | — |
+| CON-0234 | PENDING | Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
