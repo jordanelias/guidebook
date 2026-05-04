@@ -542,6 +542,62 @@ def verify(conn):
     print(f"  Conflicts: {resolved} resolved + {unresolvable} unresolvable")
 
 
+def migrate_evidence_sources(conn):
+    """C7: Migrate evidence sources from global-reference-registry.md."""
+    registry_path = REPO_ROOT / "references" / "global-reference-registry.md"
+    if not registry_path.exists():
+        return 0
+
+    with open(registry_path, "r") as f:
+        lines = f.readlines()
+
+    count = 0
+    for line in lines:
+        line = line.strip()
+        if not line.startswith("| REF-"):
+            continue
+
+        cells = [c.strip() for c in line.split("|")[1:-1]]
+        if len(cells) < 8:
+            continue
+
+        ref_id = cells[0]
+        authors = cells[1] or None
+        year_str = cells[2]
+        title = cells[3] or None
+        doi = cells[4] if cells[4] else None
+        pmid = cells[5] if len(cells) > 5 and cells[5] else None
+        tier_str = cells[6] if len(cells) > 6 else None
+        jurisdiction = cells[7] if len(cells) > 7 and cells[7] else None
+        used_in = cells[8] if len(cells) > 8 else None
+
+        year = None
+        if year_str:
+            m = re.search(r"(\d{4})", year_str)
+            if m:
+                year = int(m.group(1))
+
+        tier = None
+        if tier_str:
+            m = re.search(r"(\d)", tier_str)
+            if m:
+                tier = int(m.group(1))
+
+        if doi and not doi.startswith("10."):
+            doi_match = re.search(r"(10\.\S+)", doi)
+            doi = doi_match.group(1) if doi_match else None
+
+        conn.execute("""
+            INSERT OR REPLACE INTO evidence_source (
+                ref_id, authors, year, title, doi, evidence_tier, jurisdiction, notes
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (ref_id, authors, year, title, doi, tier, jurisdiction, used_in))
+        count += 1
+
+    conn.commit()
+    return count
+
+
 def extract_part4_content(conn):
     """C3: Extract specification content fields from Part 4 prose."""
     import yaml
@@ -681,6 +737,10 @@ def main():
     print("Migrating economics...")
     econ_count = migrate_economics(conn)
     print(f"  → {econ_count} economics entries")
+
+    print("Migrating evidence sources...")
+    evidence_count = migrate_evidence_sources(conn)
+    print(f"  → {evidence_count} evidence sources")
 
     print("Creating item stubs from Part 4...")
     stub_count = create_item_stubs(conn)
