@@ -73,7 +73,7 @@ FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tie
 | MST-01 | MSIF | 2023 | MS International Federation Atlas 2023 — heat sensitivity 60–80% | 3 | INT | https://www.msif.org/research/ms-atlas/ |
 | MST-02 | Staud, R. | 2011 | Evidence for shared pain mechanisms in OA, LBP, and fibromyalgia. Curr Rheumatol Rep 13(6):513–520. PMID:21833699. DOI:10.1007/s11926-011-0206-6 | 3 | INT | Central sensitization + cold hypersensitivity in FM |
 | MST-03 | Geisser, M. et al. | 2021 | Hyperacusis + temperature co-occurrence in fibromyalgia. [GREY — DOI required] | 3 | INT | — |
-| MST-04 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C (n=1,065). [GREY — 5 ambiguous PubMed candidates in Sci Rep 2023; verify via DOI.org search 'Baquero 2023 thermal comfort older adults neutral temperature'] | 3 | INT | DEM/older adults thermal comfort |
+| MST-04 | Baquero Larriva, M.T. & Forcada, N. | 2023 | A Field Investigation of the Thermal Comfort of Older Adults in Cold Winter Climates. Indoor Air 2023:9185216. DOI:10.1155/2023/9185216 | 3 | ES | n=1,065; neutral temp 24.9°C; PMV underpredicts by 2.3°C — GREY RESOLVED 2026-05-04 |
 | MST-05 | CDC | 2024 | ME/CFS Clinical Care — cool environment requirement | Co-1 | US | https://www.cdc.gov/me-cfs/ |
 | MST-06 | Newcastle POTS clinic | 2018 | POTS thermal triggers — clinical guidance. [GREY — specific publication unverified] | 4 | UK | — |
 | MST-07 | ISO | 2005 | ISO 7730:2005 — Ergonomics of the thermal environment (PMV/PPD) | 4 | INT | https://www.iso.org/standard/39155.html |

@@ -49,7 +49,12 @@
 | All 24 | All 14 | No jurisdiction specifies age-differentiated thermal targets in building code | — | — |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 08:45
+| Source | Direction | New sources added |
+|---|---|---|
+| Baquero 2023 (TCO-01) | GREY resolved | Indoor Air (Wiley), DOI:10.1155/2023/9185216 — was ambiguous PubMed, now confirmed |
+| Baquero 2023 (TCO-01) | Forward | Baquero & Forcada 2022 summer companion (TCO-06); Systematic review indoor thermal comfort + ageing 2024 (TCO-07) |
+**Notes:** TCO-01 GREY resolved — confirmed Indoor Air journal, not Sci Rep. n=1,065, Continental Mediterranean climate. Also resolves MST-04 (same source, same GREY flag). Systematic review TCO-07 is comprehensive meta-analysis of indoor thermal comfort and ageing, confirming older occupants express neutral thermal sensation more frequently (OR 1.83, 95% CI 1.53-2.19).
 
 ### Bottom-up findings (functional deficit pass)
 FDR-TCOA-01: Thermoregulatory unawareness in DEM (van Hoof 2010 Tier 3) — wardrobe specification for carer-managed dressing: full-width opening, adjustable rail 1050-1200mm, shelf 600-900mm, visual display of clothing options. G-08 addition. FDR-TCOA-02: Heat shock is differential-at-entry, not absolute temp — bathroom pre-heating specification: ≥30 min pre-heat activation (timer/sensor/carer) before bathing. F-07 commissioning addition. FDR-TCOA-03: Reduced peripheral sensation — LST radiators ≤43C surface temp (NHS Estates HBN 00-10 Tier 5), insulated pipework, thermostatic heated towel rails ≤43C in DEM/older adult settings. F-07 addition. Items affected: G-08, F-07, Part 6 residential bathroom matrices.
@@ -58,17 +63,20 @@ FDR-TCOA-01: Thermoregulatory unawareness in DEM (van Hoof 2010 Tier 3) — ward
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| TCO-01 | Baquero, M. et al. | 2023 | Older adult neutral temperature 24.9°C; comfort zone 18.3–26.3°C (n=1,065). [GREY — ambiguous PubMed; verify via DOI.org 'Baquero 2023 thermal comfort older adults neutral temperature'; Sci Rep likely] | 3 | INT | Primary thermal comfort source for older adults |
+| TCO-01 | Baquero Larriva, M.T. & Forcada, N. | 2023 | A Field Investigation of the Thermal Comfort of Older Adults in Cold Winter Climates. Indoor Air 2023:9185216. DOI:10.1155/2023/9185216 | 3 | ES | n=1,065; neutral temp 24.9°C; PMV underpredicts by 2.3°C |
 | TCO-02 | Van Hoof, J. et al. | 2010 | PMV/PPD unreliable for cognitively impaired populations. [GREY — DOI required] | 3 | INT | — |
 | TCO-03 | MHLW Japan | 2023 | 6,073 bathtub drowning deaths from heat shock — official statistics | 5 | JP | https://www.mhlw.go.jp |
 | TCO-04 | Nakayama, K. et al. | 1981 | Foundational inter-room temperature differential study. [GREY — DOI required; JA journal] | 3 | JP | Heat shock physics basis |
 | TCO-05 | MS Society | n.d. | MS heat sensitivity guidance (cross-reference only — see MST-01/hs3) | 2 | UK | https://www.mssociety.org.uk |
+| TCO-06 | Baquero Larriva, M.T. & Forcada, N. | 2022 | Thermal comfort of older people during summer in the continental Mediterranean climate. Energy Build. | 3 | ES | Summer companion to TCO-01; neutral temp 25.6°C summer |
+| TCO-07 | [Authors TBC] | 2024 | Indoor thermal comfort and ageing: A systematic review. J Build Eng. | 3 (SR) | INT | Meta-analysis; older occupants neutral sensation OR=1.83 (1.53-2.19) |
 
 ## Metadata
 
 ```yaml
 slug: thermal-comfort-older-adults-care-settings
 population: DEM, NEU, OFS
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```

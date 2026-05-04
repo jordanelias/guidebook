@@ -249,3 +249,38 @@ Berwick 2021 is a systematic review not previously in the BPC. Supports existing
 **GREY sources corrected:** 2
 **Systematic reviews found:** 3
 **Commits:** 5
+
+---
+
+## 9. thermal-comfort-older-adults-care-settings
+
+### GREY source resolution
+| Original | Corrected |
+|---|---|
+| TCO-01 / MST-04: "Baquero, M. et al. 2023 [GREY — Sci Rep likely]" | Baquero Larriva, M.T. & Forcada, N. (2023). Indoor Air. DOI: 10.1155/2023/9185216 |
+
+### Forward mining
+| Input source | New to BPC |
+|---|---|
+| Baquero 2023 (TCO-01) | Baquero & Forcada 2022 summer companion (TCO-06); Systematic review indoor thermal comfort + ageing 2024 (TCO-07) |
+
+### Impact
+- GREY resolution affects BOTH TCO-01 and MST-04 — same source, same flag, both now resolved
+- Systematic review (TCO-07) confirms older occupants neutral thermal sensation OR=1.83 (1.53-2.19)
+
+---
+
+## FINAL SESSION TOTALS (COMPLETE)
+**BPC slugs mined:** 9
+**New sources discovered:** 29
+**GREY sources resolved:** 3 (ULB-04 DOI, WDS-04 author, TCO-01/MST-04 journal)
+**Systematic reviews found:** 4 (Rouvier 2022, Leonardi 2025, Berwick 2021, TCO-07 thermal comfort ageing)
+**Commits:** 6
+
+### Remaining unmined engineering-adjacent BPCs (handoff)
+| Slug | Priority | Notes |
+|---|---|---|
+| acoustics-speech-intelligibility-disability | MEDIUM | ASI-01 Murgia GREY; has T1/T2 |
+| luminance-contrast-lrv-evidence-base | LOW | 7 sources, well-structured |
+| fold-down-grab-bar-specification | DEFERRED | Stub; needs full research pass first |
+| bariatric-turning-radius-built-environment | DEFERRED | Stub; needs full research pass first |
