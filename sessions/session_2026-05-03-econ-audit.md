@@ -100,8 +100,32 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - 7 escalation flags raised for evidence-auditor review
 - Report filed: research/citation-mining-economics_2026-05-04.md
 
+### Citation mining complete
+- Mined all 8/8 target sources
+- Goodwin + Wiesel mining discovered 7 more (cumulative: 23 new sources)
+- Co-1 network fully mapped: Wiesel→Goodwin→Wellecke→Winkler (4-study AU cluster)
+- 7 Tier 1, 6 Tier 2, 8 Tier 3-4, 4 Co-1 sources discovered
+
 ## session_close
-2026-05-04 02:15
+2026-05-04 02:30
+
+## next_action
+1. Evidence-auditor review of 7 escalation flags (Lewis 2024, Colón-Emeric 2024, Hollinghurst 2022)
+2. Full-text retrieval: Hollinghurst 2022 (n=657K), Lewis 2024 Cochrane
+3. German-language citation networks (TERRAGON, Bundesfachstelle)
+4. Part 11 §11.3 update with expanded health evidence (16 sources now available)
+5. Source verification sweep — GAP-ECON-04 (deferred, ~40 entries)
+6. Populate new sources into throughline-health-outcomes.md verified citations
+
+## decisions
+- D-0147: Economics methodology partitioned by economic throughlines
+- D-0148: TERRAGON AG commercial-interest disclosure added
+- D-0149: Website data integration via schema-aligned JSON (not Wix)
+- D-0150: Entity 5 expanded from 3 to 7 sub-entities
+- D-0151: GAP-ECON-05 resolved — Part 11 v10 has cost tables
+- D-0152: All 11 economics gaps resolved/closed/deferred
+- D-0153: Szanton citation corrected 2017→2018 (JAGS doi:10.1111/jgs.15143)
+- D-0154: Citation mining complete — 23 new sources across 8 mined inputs
 
 ## next_action
 1. Unverified source-name sweep (~40 entries) — deferred verification task (GAP-ECON-04)
