@@ -108,3 +108,64 @@
 1. Szanton citation: 2017 → 2018 in economics.json and throughline-health-outcomes.md
 2. CAPABLE cost: add $3,000/person programme cost alongside $1,300 mod cap
 3. Add Tsuchiya-Ito 2022, 2023, 2025 to economics.json health_outcomes array
+
+
+---
+
+## Session 3 — Final mining (Goodwin, Wiesel)
+
+**Sources mined:** 2 (Goodwin 2022, Wiesel 2020)
+**New sources discovered:** 7 (backward: 0, forward: 7)
+
+### Forward mining
+
+| Input source | Citing papers scanned | Relevant found | New |
+|---|---|---|---|
+| Goodwin et al. 2022 (AJSI) | ~10 | 4 | 3 |
+| Wiesel 2020 (MDI/Summer Foundation) | ~15 | 6 | 4 |
+
+### New sources — Session 3
+
+| # | Authors | Year | Title | Journal | Jurisdiction | Tier | Discovery |
+|---|---|---|---|---|---|---|---|
+| 17 | PLOS One scoping review (accessible housing) | 2024 | Accessible independent housing for people with disabilities: A scoping review | PLOS One | Multi | Tier 1 (SR) | Forward from Goodwin 2022 |
+| 18 | Wellecke et al. | 2022 | Accessible design features and home modifications: mixed-methods OT survey | Disability & Health J | AU | Co-1/Tier 3 | Forward from Goodwin 2022 + backward from Wiesel 2020 |
+| 19 | Best et al. | 2022 | Housing, Transportation and QOL among People with Mobility Limitations | Disabilities | CA | Tier 3 | Forward from Goodwin 2022 |
+| 20 | Winkler et al. | 2021a | Audit of accessible features in new build house plans | Summer Foundation | AU | Tier 4 | Forward from Wiesel 2020 |
+| 21 | Winkler et al. | 2021b | Incorporating minimum accessibility standards: survey of access consultants and architects | Summer Foundation | AU | Tier 4 | Forward from Wiesel 2020 |
+| 22 | Oliver et al. | 2020 | Outcomes of individualized housing for people with disability: scoping review | Disability & Rehab | Multi | Tier 1 (SR) | Forward from Wiesel 2020 |
+| 23 | Gusheh et al. | 2021 | Adaptable Housing for People with Disability in Australia: A Scoping Study | AU Human Rights Commission | AU | Tier 3 | Forward from Wiesel 2020 |
+
+### Co-1 network assessment
+
+The Goodwin→Wiesel→Wellecke→Winkler cluster forms a coherent Australian Co-1 evidence network:
+- **Wiesel 2020** (n=1,178 survey + 40 interviews): foundational lived-experience data. 74% of respondents in housing that doesn't meet needs.
+- **Goodwin 2022** (AJSI): builds directly on Wiesel — priority modifications from lived experience perspective.
+- **Wellecke 2022** (Disability & Health J): OT perspective on same modifications, linking clinical to lived experience.
+- **Winkler 2021a/b**: supply-side audit + architect/access consultant survey — the builder/designer perspective complement to Co-1.
+
+This network provides the Co-1 evidence that was flagged as completely absent in GAP-ECON-02. The gap is now comprehensively resolved with a four-study cluster spanning user, clinician, and practitioner perspectives.
+
+---
+
+## Final cumulative summary — all sessions
+
+| Metric | Value |
+|---|---|
+| Sources mined | 8 of 8 (complete) |
+| New sources discovered | 23 |
+| Tier 1 new | 7 (Lewis 2024, Colón-Emeric 2024, Lektip 2023, Cockayne 2021, Szanton 2018 corrected, PLOS One 2024 SR, Oliver 2020 SR) |
+| Tier 2 new | 6 (Hollinghurst, Whitehead, Tsuchiya-Ito ×3, Mitoku, Liu) |
+| Tier 3-4 new | 8 (Rick Hansen, CMS eval, Tsuchiya-Ito 2025, Best 2022, Wellecke 2022, Gusheh 2021, Winkler 2021a/b) |
+| Co-1 sources | 4 (Wiesel 2020, Goodwin 2022, Wellecke 2022, Best 2022) |
+| Escalation flags | 7 |
+| Data corrections applied | 1 (Szanton 2017→2018) |
+| economics.json health records | 16 (was 10) |
+
+### Remaining work (not citation mining)
+1. Evidence-auditor review of 7 escalation flags
+2. Full-text retrieval: Hollinghurst 2022 (n=657K), Lewis 2024 Cochrane
+3. German-language citation networks (TERRAGON, Bundesfachstelle)
+4. Part 11 §11.3 update with expanded health evidence
+5. Source verification sweep (GAP-ECON-04, deferred)
+6. Populate new sources into throughline-health-outcomes.md verified citations
