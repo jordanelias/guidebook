@@ -409,6 +409,101 @@ def migrate_economics(conn):
     return count
 
 
+def create_item_stubs(conn):
+    """Create stub specs for Part 4 items not yet in specification table."""
+    import yaml
+
+    existing = set(r[0] for r in conn.execute(
+        "SELECT DISTINCT item_code FROM specification"
+    ).fetchall())
+
+    with open(REPO_ROOT / "parts" / "v10" / "part04.md", "r") as f:
+        part4_lines = f.readlines()
+
+    with open(REPO_ROOT / "references" / "part04-item-index.md", "r") as f:
+        index_content = f.read()
+
+    items = {}
+    for line in index_content.split("\n"):
+        m = re.match(r"\|\s*([A-K]-\d{2})\s*\|\s*(.+?)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|", line)
+        if m:
+            code, title = m.group(1), m.group(2).strip()
+            start, end = int(m.group(3)), int(m.group(4))
+            if "MERGED" not in title.upper() and "ABSORBED" not in title.upper():
+                items[code] = {"title": title, "start": start, "end": end}
+
+    with open(REPO_ROOT / "data" / "question-headings.yaml", "r") as f:
+        qh = yaml.safe_load(f)
+
+    count = 0
+    for code in sorted(items):
+        if code in existing:
+            continue
+
+        item = items[code]
+        content = "".join(part4_lines[item["start"] - 1 : item["end"]])
+
+        # Extract populations
+        pop_match = re.search(r"\*\*Applicable Groups:\*\*\s*(.+)", content)
+        populations = []
+        if pop_match:
+            populations = re.findall(
+                r"\b(MOB|VIS|DEAF|NEU|DEM|NDV|PAIN|DBL|OFS|IntD|ALL"
+                r"|MOB/UPL|NDV/AUT|NDV/ADHD|NDV/SENS|NDV/MH"
+                r"|NEU/PCS|OFS/ME|OFS/POTS|OFS/MCAS)\b",
+                pop_match.group(1),
+            )
+
+        # Evidence tier from grade_confidence
+        tier = None
+        tier_match = re.search(r"grade_confidence:\s*(HIGH|MODERATE|LOW)", content)
+        if tier_match:
+            tier = {"HIGH": 2, "MODERATE": 3, "LOW": 4}.get(tier_match.group(1), 4)
+
+        # Retrofit category
+        retrofit = None
+        retro_match = re.search(r"Retrofit penalty:\s*(LOW|MODERATE|HIGH|STRUCTURAL)", content, re.IGNORECASE)
+        if retro_match:
+            retrofit = retro_match.group(1).upper()
+
+        # Question heading
+        qh_entry = qh.get(code, {})
+        question = qh_entry.get("question_heading") if isinstance(qh_entry, dict) else None
+
+        # DAR and structural
+        dar = 1 if "dar" in content.lower() or "structural blocking" in content.lower() else 0
+        structural = 1 if re.search(r"structural.{0,20}backing|structural.{0,20}blocking|STRUCTURAL", content) else 0
+
+        spec_id = f"SPEC-{code.replace('-', '')}-001"
+        conn.execute("""
+            INSERT OR REPLACE INTO specification (
+                spec_id, item_code, title, parameter,
+                evidence_tier, question_heading,
+                dar_relevant, structural_backing_required,
+                retrofit_category, curation_status, status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'automated', 'active')
+        """, (spec_id, code, item["title"], item["title"], tier, question, dar, structural, retrofit))
+
+        for pop in populations:
+            conn.execute(
+                "INSERT OR REPLACE INTO specification_population (spec_id, population_code, role) VALUES (?, ?, 'primary')",
+                (spec_id, pop),
+            )
+
+        count += 1
+
+    # Backfill question headings for specs that have them in YAML but not in DB
+    for code, entry in qh.items():
+        if isinstance(entry, dict) and "question_heading" in entry:
+            conn.execute(
+                'UPDATE specification SET question_heading = ? WHERE item_code = ? AND question_heading IS NULL',
+                (entry["question_heading"], code),
+            )
+
+    conn.commit()
+    return count
+
+
 def verify(conn):
     """Print verification report."""
     tables = [
@@ -497,6 +592,10 @@ def main():
     print("Migrating economics...")
     econ_count = migrate_economics(conn)
     print(f"  → {econ_count} economics entries")
+
+    print("Creating item stubs from Part 4...")
+    stub_count = create_item_stubs(conn)
+    print(f"  → {stub_count} item stubs")
 
     verify(conn)
     conn.close()
