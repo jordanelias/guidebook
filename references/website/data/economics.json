@@ -159,7 +159,10 @@
     "co1_sources": [
       "Goodwin et al. 2022 \u2014 AJSI \u2014 lived experience perspective, AU, peer-reviewed",
       "Wiesel 2020 \u2014 Melbourne Disability Institute \u2014 social/health/economic impacts of inaccessible housing"
-    ]
+    ],
+    "citation_mining_date": "2026-05-04",
+    "citation_mining_sources_mined": 6,
+    "citation_mining_new_discovered": 16
   },
   "cost_premiums": [
     {
@@ -718,14 +721,14 @@
     },
     {
       "health_id": "HEALTH-006",
-      "source": "Szanton et al. 2017 (CAPABLE)",
+      "source": "Szanton et al. 2018 (CAPABLE)",
       "study_design": "Quasi-experimental (multiple US sites)",
       "sample": "Multiple US sites, low-income older adults",
       "journal": "Journal of the American Geriatrics Society",
       "jurisdiction": "US",
-      "finding": "~10:1 Medicaid cost savings at $1,300/person",
+      "finding": "~10:1 combined Medicare/Medicaid savings; $20,000/person Medicare savings over 2 years",
       "bcr": 10.0,
-      "cost_per_person": 1300,
+      "cost_per_person": 3000,
       "cost_currency": "USD",
       "evidence_tier": "Tier 1",
       "evidence_rank": 6,
@@ -742,7 +745,10 @@
         "C-04",
         "E-08"
       ],
-      "last_updated": "2026-05-04"
+      "last_updated": "2026-05-04",
+      "cost_note": "$3,000/person programme cost (Baltimore); $1,300 cap for home modifications (St. Louis Medicare Advantage)",
+      "doi": "10.1111/jgs.15143",
+      "citation_correction": "Was cited as 2017; actual publication 2018 in JAGS"
     },
     {
       "health_id": "HEALTH-007",
@@ -844,6 +850,139 @@
         "E-06",
         "E-04"
       ],
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-011",
+      "source": "Tsuchiya-Ito et al. 2022",
+      "study_design": "Retrospective cohort (linked claims data)",
+      "sample": "Japanese municipality, older adults with LTC certification",
+      "journal": "BMC Geriatrics",
+      "jurisdiction": "JP",
+      "finding": "Detailed cost data by functional limitation type for insurance-covered housing adaptations",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 2",
+      "evidence_rank": 11,
+      "pillar": "health",
+      "doi": "10.1186/s12877-022-03100-9",
+      "spec_cross_refs": [
+        "G-03",
+        "G-05",
+        "E-06",
+        "E-04",
+        "H-01"
+      ],
+      "discovery": "Backward from Tsuchiya-Ito 2024 (citation mining 2026-05-04)",
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-012",
+      "source": "Tsuchiya-Ito et al. 2023",
+      "study_design": "Retrospective cohort",
+      "sample": "Frail older adults with care needs, JP municipality",
+      "journal": "BMC Health Services Research",
+      "jurisdiction": "JP",
+      "finding": "Housing adaptation services associated with prevention of care needs level deterioration for frail older adults",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 2",
+      "evidence_rank": 12,
+      "pillar": "health",
+      "doi": "10.1186/s12913-023-09890-x",
+      "spec_cross_refs": [
+        "G-03",
+        "G-05",
+        "E-06",
+        "E-04"
+      ],
+      "discovery": "Backward from Tsuchiya-Ito 2024 (citation mining 2026-05-04)",
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-013",
+      "source": "Tsuchiya-Ito et al. 2025",
+      "study_design": "Retrospective cohort (3-year follow-up)",
+      "sample": "Older adults with care needs, JP municipality",
+      "journal": "Gerontologist (conference abstract)",
+      "jurisdiction": "JP",
+      "finding": "Annual medical and LTC expenditures three years after home adaptations \u2014 extends economic analysis to 3-year horizon",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 3",
+      "evidence_rank": 13,
+      "pillar": "health",
+      "doi": "10.1093/geroni/igaf122.3280",
+      "spec_cross_refs": [
+        "G-03",
+        "G-05",
+        "E-06",
+        "E-04",
+        "H-01"
+      ],
+      "discovery": "Forward from Tsuchiya-Ito 2024 (citation mining 2026-05-04)",
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-014",
+      "source": "Lewis et al. 2024",
+      "study_design": "Cochrane Systematic Review",
+      "sample": "Population-based interventions",
+      "journal": "Cochrane Database Syst Rev",
+      "jurisdiction": "Multi-jurisdictional",
+      "finding": "Population-based interventions for preventing falls and fall-related injuries in older people",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "evidence_rank": 14,
+      "pillar": "health",
+      "doi": "10.1002/14651858.CD013789.pub2",
+      "spec_cross_refs": [],
+      "discovery": "Forward from Keall 2015 (citation mining 2026-05-04)",
+      "escalation": "Newer Cochrane SR than Clemson 2023 \u2014 may update evidence hierarchy",
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-015",
+      "source": "Col\u00f3n-Emeric et al. 2024",
+      "study_design": "Review",
+      "sample": "Falls in older adults",
+      "journal": "JAMA",
+      "jurisdiction": "Multi-jurisdictional",
+      "finding": "Comprehensive falls review \u2014 high-authority synthesis",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "evidence_rank": 15,
+      "pillar": "health",
+      "doi": "10.1001/jama.2024.1416",
+      "spec_cross_refs": [],
+      "discovery": "Forward from Keall 2015 (citation mining 2026-05-04)",
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-016",
+      "source": "Cockayne et al. 2021 (OTIS RCT)",
+      "study_design": "RCT",
+      "sample": "Adults 65+, UK",
+      "journal": "Health Technology Assessment",
+      "jurisdiction": "UK",
+      "finding": "OT-delivered home environmental assessments for falls prevention in community-dwelling older adults",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "evidence_rank": 16,
+      "pillar": "health",
+      "spec_cross_refs": [
+        "G-03",
+        "G-05",
+        "E-06",
+        "E-04",
+        "B-02",
+        "B-03",
+        "C-04"
+      ],
+      "discovery": "Forward from Clemson 2023 / Keall 2015 (citation mining 2026-05-04)",
       "last_updated": "2026-05-04"
     }
   ],
