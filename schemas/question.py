@@ -25,12 +25,11 @@ class Question(GuidebookEntity):
     """A question entity for the questions-led navigation mode.
 
     Questions are the primary entry surface for the questions-led
-    teaching mode. Each question maps to specifications that answer it,
-    with an answer_role indicating whether the spec is primary, partial,
-    or related.
+    teaching mode (Door 2). Each question maps to specifications
+    that answer it, with an answer_role indicating whether the spec
+    is primary, partial, or related.
 
-    B3 will specify: question taxonomy, question-to-audience mapping,
-    question ordering per design stage, and question-mode page template.
+    Per D-0139 §3.4, navigation-modes.md §2.2, and B3.2 (E-20).
     """
 
     # Identity
@@ -41,6 +40,12 @@ class Question(GuidebookEntity):
     applies_to_population: Optional[str] = None  # PopulationCode or None (universal)
     parameter_class: Optional[str] = None  # A3 §1.4 hierarchical class
     design_stage: Optional[str] = None  # When in design this question arises
+    audience: Optional[str] = None  # "architect", "disabled-person", "OT", "policymaker"
+    category: Optional[str] = None  # A-K category letter
+
+    # Navigation
+    navigation_group: Optional[str] = None  # Grouping for question explorer
+    display_order: Optional[int] = None  # Sort order within group
 
     # Status
     status: str = "DRAFT"  # DRAFT, ACTIVE, RETIRED

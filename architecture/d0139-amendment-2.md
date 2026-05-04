@@ -219,3 +219,135 @@ CREATE TABLE specialist_population (
 | Date | Change |
 |---|---|
 | 2026-05-04 07:30 | D-0139 Amendment 2 issued. 3 entity tables, 8 sub/join tables. |
+
+---
+
+## 7. Table: `economics_entry` (Amendment 2b)
+
+```sql
+CREATE TABLE economics_entry (
+  entry_id         TEXT PRIMARY KEY,           -- ECON-NNNN
+  pillar           TEXT NOT NULL CHECK (pillar IN ('health','inaction','construction','market')),
+  entry_type       TEXT NOT NULL,
+  source           TEXT NOT NULL,
+  jurisdiction     TEXT,
+  finding          TEXT NOT NULL,
+  study_design     TEXT,
+  sample           TEXT,
+  value_numeric    REAL,
+  value_unit       TEXT,
+  currency         TEXT,
+  bcr              TEXT,
+  evidence_tier    INTEGER,
+  confidence       TEXT,
+  year             INTEGER,
+  journal          TEXT,
+  status           TEXT CHECK (status IN ('active','retired')) DEFAULT 'active',
+  notes            TEXT,
+  created_at       TEXT NOT NULL,
+  modified_at      TEXT NOT NULL
+);
+
+CREATE INDEX idx_economics_pillar (pillar);
+CREATE INDEX idx_economics_type (entry_type);
+CREATE INDEX idx_economics_jurisdiction (jurisdiction);
+```
+
+## 8. Table: `case_study` (Amendment 2b)
+
+```sql
+CREATE TABLE case_study (
+  case_study_id    TEXT PRIMARY KEY,           -- CS-NNNN
+  slug             TEXT NOT NULL UNIQUE,
+  title            TEXT NOT NULL,
+  building_type    TEXT NOT NULL,
+  location         TEXT NOT NULL,
+  architect        TEXT,
+  year             INTEGER,
+  setting          TEXT,
+  population_description TEXT,
+  evidence_quality_tier INTEGER CHECK (evidence_quality_tier IN (1, 2, 3)),
+  cost_data        TEXT,
+  cost_data_quality TEXT CHECK (cost_data_quality IN ('VERIFIED','PROVISIONAL','GREY')),
+  part_section     TEXT,
+  limitations      TEXT,
+  status           TEXT CHECK (status IN ('active','retired')) DEFAULT 'active',
+  notes            TEXT,
+  created_at       TEXT NOT NULL,
+  modified_at      TEXT NOT NULL
+);
+
+CREATE INDEX idx_case_study_slug (slug);
+CREATE INDEX idx_case_study_type (building_type);
+```
+
+### Join table: `case_study_population`
+
+```sql
+CREATE TABLE case_study_population (
+  case_study_id    TEXT NOT NULL,
+  population_code  TEXT NOT NULL,
+  PRIMARY KEY (case_study_id, population_code),
+  FOREIGN KEY (case_study_id) REFERENCES case_study(case_study_id),
+  FOREIGN KEY (population_code) REFERENCES population(code)
+);
+```
+
+### Join table: `case_study_specification`
+
+```sql
+CREATE TABLE case_study_specification (
+  case_study_id    TEXT NOT NULL,
+  item_code        TEXT NOT NULL,
+  PRIMARY KEY (case_study_id, item_code),
+  FOREIGN KEY (case_study_id) REFERENCES case_study(case_study_id)
+);
+```
+
+## 9. Table: `throughline` (Amendment 2b)
+
+```sql
+CREATE TABLE throughline (
+  throughline_id   TEXT PRIMARY KEY,           -- T-NN
+  title            TEXT NOT NULL,
+  slug             TEXT UNIQUE,
+  description      TEXT NOT NULL,
+  implications     TEXT,
+  body_md          TEXT,
+  category         TEXT,
+  status           TEXT CHECK (status IN ('active','retired')) DEFAULT 'active',
+  notes            TEXT,
+  created_at       TEXT NOT NULL,
+  modified_at      TEXT NOT NULL
+);
+
+CREATE INDEX idx_throughline_slug (slug);
+```
+
+### Join table: `throughline_specification`
+
+```sql
+CREATE TABLE throughline_specification (
+  throughline_id   TEXT NOT NULL,
+  item_code        TEXT NOT NULL,
+  description      TEXT,
+  PRIMARY KEY (throughline_id, item_code),
+  FOREIGN KEY (throughline_id) REFERENCES throughline(throughline_id)
+);
+```
+
+## 10. Updated D-SCHEMA records (Amendment 2b)
+
+| ID | Entity | Decision | Delegation |
+|---|---|---|---|
+| D-SCHEMA-022 | economics_entry | New entity table | DG-REVIEW |
+| D-SCHEMA-023 | case_study | New entity table + 2 join tables | DG-REVIEW |
+| D-SCHEMA-024 | throughline | New entity table + 1 join table | DG-REVIEW |
+| D-SCHEMA-025 | question (E-20) | Add audience, category, navigation_group, display_order fields | DG-AUTO |
+
+## 11. Updated change log
+
+| Date | Change |
+|---|---|
+| 2026-05-04 07:30 | Amendment 2 issued. Doctrine + Room + Specialist (3 tables, 8 sub/join). |
+| 2026-05-04 07:45 | Amendment 2b appended. Economics + Case Study + Throughline (3 tables, 3 join). Question E-20 updated. |
