@@ -87,7 +87,7 @@
 | Oven door height | Door opens ≥760mm AFF; side-opening preferred | Prevent reach over hot surface from seated position | First in Architecture (UK) | Co-2 / 5 | CONFIRMS — adds side-opening rationale | MOB |
 | Minimum kitchen clear width | 1200mm between unit fronts and fixed obstruction | Single wheelchair L/U-shaped layout | RCOT / Approved Doc M (UK) | 5–6 | CONFIRMS | MOB |
 
-**Tier 0 candidates:** Worktop adjustability (760–900mm), toe recess, ≥400mm prep zone each side — universal benefit, no population conflict.
+**Universal Mode candidates:** Worktop adjustability (760–900mm), toe recess, ≥400mm prep zone each side — universal benefit, no population conflict.
 
 #### Scenario 5 — d440 + unilateral UPL → food prep
 | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
@@ -106,7 +106,7 @@
 | Storage organisation configuration | U-shape or L-shape where possible | Reduces travel distance; shelf edges provide incidental bracing surface for trunk instability | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL — layout type as fall-risk mitigation spec | MOB→NEU/PAIN |
 | Fold-down ironing board (wall-mounted) | Surface height 760mm; fold clearance ≥450mm when folded | WC user — ironing at seated height; fold clearance to avoid obstruction when not in use | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB→OFS |
 
-**Population mapping:** Primary MOB/UPL; secondary NEU, OFS, PAIN. Storage layout (U/L bracing) extends scenario 9 Tier 0 candidate — confirms ≥3 population codes.
+**Population mapping:** Primary MOB/UPL; secondary NEU, OFS, PAIN. Storage layout (U/L bracing) extends scenario 9 Universal Mode candidate — confirms ≥3 population codes.
 **DAR provision:** Laundry appliance pedestal provision (300–400mm raise, structural support) should be specified as DAR rough-in; pedestal retrofittable without structural work.
 
 ## Metadata

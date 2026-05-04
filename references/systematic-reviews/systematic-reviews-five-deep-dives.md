@@ -144,7 +144,7 @@ Five systematic reviews conducted using PRISMA-lite methodology. Databases searc
 **Meta-analysis feasibility:** MARGINAL. The studies use different outcome measures (detection %, gait speed, fall rate, OR). A limited meta-analysis of detection rate vs LRV differential might be feasible from Dain + Thompson data, but the study count is too low for robust pooling.
 
 **Specification impact:** The project should adopt a **two-tier LRV specification:**
-- Tier 0/1 minimum: ≥30 LRV difference (code compliance floor)
+- Universal Mode/1 minimum: ≥30 LRV difference (code compliance floor)
 - Recommended: ≥65% Michelson contrast / maximum achievable (evidence-based optimum)
 - DEM environments: ≥50 LRV difference minimum (compound contrast sensitivity loss)
 

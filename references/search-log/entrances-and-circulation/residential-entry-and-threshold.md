@@ -105,4 +105,4 @@ novel_findings: 7
 refines: 4
 contradicts: 0
 tier0_candidates: 3
-note: Power WC turning spec (>=1800mm) prior session. This session adds canopy, latch-side, landing differentiation, cognitive legibility. Three Tier 0 candidates: PIR lighting, luminance contrast, address signage.
+note: Power WC turning spec (>=1800mm) prior session. This session adds canopy, latch-side, landing differentiation, cognitive legibility. Three Universal Mode candidates: PIR lighting, luminance contrast, address signage.

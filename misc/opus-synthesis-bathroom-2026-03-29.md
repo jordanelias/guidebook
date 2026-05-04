@@ -21,19 +21,19 @@ The current synthesis states 700mm median (650–800mm range). FDR finding from 
 
 Nakamura et al. 2009 (JA, Tier 1): paralysis-side vertical support bar 5cm from WC side edge, 15cm from front, 70–140cm height. Yamashita (JA, Co-2): 45–50cm lateral clearance from WC centreline each side. These are clinically grounded specifications for NEU→MOB/UPL co-occurrence that the current G-03 item does not address. The current item specifies only "bilateral horizontal bars" without distinguishing transfer biomechanics by impairment type.
 
-**Opus resolution:** G-03 should add a NEU/hemiplegic sub-specification or conflict note. Horizontal bilateral bars serve MOB (general wheelchair transfer). Vertical bars serve NEU/hemiplegic transfer (Kennedy et al. 2015 confirms smallest COP deviation). Both bar types are required in settings where both populations are anticipated — this is a Tier 0 resolution (additive, no conflict).
+**Opus resolution:** G-03 should add a NEU/hemiplegic sub-specification or conflict note. Horizontal bilateral bars serve MOB (general wheelchair transfer). Vertical bars serve NEU/hemiplegic transfer (Kennedy et al. 2015 confirms smallest COP deviation). Both bar types are required in settings where both populations are anticipated — this is a Universal Mode resolution (additive, no conflict).
 
 **3. Power wheelchair turning circle exposes a specification gap.**
 
 FDR Scenario 7: BS 8300-2:2018 Annex G documents ≥1800×1800mm turning for powered wheelchairs. The current BPC states ø1500mm turning circle as universal. This is manual-chair calibrated and insufficient for power WC users.
 
-**Opus resolution:** The 1500mm turning circle is the Tier 0 (universal/code) provision. Power wheelchair users require 1800mm. This is a Tier 1 specification: where powered wheelchair users are anticipated (aged care, SCI rehabilitation, motor neurone disease), the turning circle must be 1800mm. The G-04 wet room item's "1200×900mm preferred" shower area is also undersized for power WC — should be 1500×1500mm minimum with power WC sub-spec at 1800×1800mm.
+**Opus resolution:** The 1500mm turning circle is the Universal Mode (universal/code) provision. Power wheelchair users require 1800mm. This is a Tier 1 specification: where powered wheelchair users are anticipated (aged care, SCI rehabilitation, motor neurone disease), the turning circle must be 1800mm. The G-04 wet room item's "1200×900mm preferred" shower area is also undersized for power WC — should be 1500×1500mm minimum with power WC sub-spec at 1800×1800mm.
 
 **4. Bidet/wash-dry spatial envelope is a novel provision.**
 
 FDR Scenario 3 resolved a GAP FLAG. Electrical outlet ≤1500mm from WC, GFCI/RCD, side wall preferred. No separate water supply needed for seat-attachment type. This is a DAR provision (rough-in at DD stage) that enables future bidet retrofit for UPL and MOB users without wall demolition.
 
-**Opus resolution:** This should become a DAR provision in G-04 or a new G-04a item. It is a Tier 0 candidate (benefits MOB, UPL, NEU, OFS, PAIN — no population conflicts). Low cost at DD stage; prohibitively expensive as retrofit.
+**Opus resolution:** This should become a DAR provision in G-04 or a new G-04a item. It is a Universal Mode candidate (benefits MOB, UPL, NEU, OFS, PAIN — no population conflicts). Low cost at DD stage; prohibitively expensive as retrofit.
 
 **5. Bedroom emergency and overnight provisions (Scenario 14) belong in G-09, not G-03/G-04.**
 
@@ -51,7 +51,7 @@ The FDR Scenario 14 findings (bed-head emergency cord, bedside light switch posi
 - Power WC users: 1800×1800mm turning, 1500×1500mm shower clear area — Tier 5 (BS 8300-2 Annex G)
 - UPL bilateral: Kennedy et al. 2015 vertical bar preference (smallest COP deviation) — Tier 1
 
-**Conflict resolution:** Grab bar height range 650–900mm — wide range is not uncertainty; it reflects jurisdictional anthropometric calibration (KR 650mm seated transfer; UK/AU 900mm standing support). At Tier 1, 700mm median. At Tier 2, OT determines via transfer biomechanics assessment. Seat-relative formulation (280mm above seat surface) is the Tier 2 standard. Turning circle: 1500mm is Tier 0 (code); 1800mm is Tier 1 (where powered WC anticipated). WC seat height: 450mm median (400–500mm range per jurisdiction).
+**Conflict resolution:** Grab bar height range 650–900mm — wide range is not uncertainty; it reflects jurisdictional anthropometric calibration (KR 650mm seated transfer; UK/AU 900mm standing support). At Tier 1, 700mm median. At Tier 2, OT determines via transfer biomechanics assessment. Seat-relative formulation (280mm above seat surface) is the Tier 2 standard. Turning circle: 1500mm is Universal Mode (code); 1800mm is Tier 1 (where powered WC anticipated). WC seat height: 450mm median (400–500mm range per jurisdiction).
 
 **Highest-ambition actionable specification:** Room ≥2200×2200mm (dual-transfer) / ≥1650×2200mm (single, absolute minimum); turning ø1500mm standard / ≥1800mm powered WC; WC seat 450mm (400–500 range); bilateral fold-down grab bars ≥200 kg SWL, height 650–900mm (700mm Tier 1 median; 280mm above seat at Tier 2); bar cross-section ø32–45mm oval/circular; vertical bars additionally for NEU/hemiplegic (70–140cm, ≤5cm from WC edge); shower fold-down seat 450mm; horizontal shower bar 700–850mm; vertical shower entry bar; zero-threshold wet room; linear drain within 1200mm; floor slope ≤1:80; anti-slip PTV≥36 throughout; lever/thermostatic controls ≤1200mm; emergency call 400–500mm; LRV contrast ≥30 (bar vs wall AND floor); continuous structural blocking full toilet wall length both sides; DAR electrical rough-in ≤1500mm from WC (GFCI/RCD) for future bidet; door ≥900mm clear outward/sliding.
 

@@ -19,7 +19,7 @@ Every asset in the project evaluated against the five foundational principles:
 
 1. **Purpose:** Does it help people ask the right questions?
 2. **Non-uniformity:** Does it acknowledge that disability populations are not uniform?
-3. **Three-Tier Hierarchy:** Does it differentiate Tier 0/1/2?
+3. **Three-Tier Hierarchy:** Does it differentiate Universal Mode/1/2?
 4. **Evidence Hierarchy:** Is the value derived from the correct evidence tier?
 5. **Best Practice:** Does it provide the most accommodating, thoughtful, respectful, dignified, usable condition?
 
@@ -57,7 +57,7 @@ Every asset in the project evaluated against the five foundational principles:
 - Reframe specification output: values serve the questions, not the other way around
 - Add tier differentiation requirement to every measurable parameter
 - Update best-practice derivation rule: most accommodating/dignified/usable, not code consensus
-- Update population code guidance: comprehensive at Tier 0, insight at Tier 1, step aside at Tier 2
+- Update population code guidance: comprehensive at Universal Mode, insight at Tier 1, step aside at Tier 2
 
 ### 0C: Supporting skills audit
 - evidence-auditor: add [CODE-FLOOR-NOT-BP] check
@@ -84,7 +84,7 @@ Read every item specification. For each, classify:
 | functional_variability | PRESENT/ABSENT/PARTIAL | Does the spec discuss how the population varies for this parameter? |
 | co_occurrence | PRESENT/ABSENT/PARTIAL | Does the spec discuss co-occurring conditions? |
 | questions_for_designer | PRESENT/ABSENT | Does the spec guide the designer to ask the right questions? |
-| tier_differentiation | PRESENT/ABSENT/PARTIAL | Does the spec differentiate Tier 0/1/2 values? |
+| tier_differentiation | PRESENT/ABSENT/PARTIAL | Does the spec differentiate Universal Mode/1/2 values? |
 | risk_level | CRITICAL/HIGH/MEDIUM/LOW | Overall audit priority |
 
 ### Risk classification rules
@@ -172,7 +172,7 @@ Read every item specification. For each, classify:
 1. Add functional variability narrative to best_practice_synthesis
 2. Describe the range of experience within the population for this parameter
 3. Identify what drives variation (device type, strength, cognition, fatigue, co-occurrence)
-4. State the Tier 0 value (widest reasonable range) vs Tier 1 range vs Tier 2 trigger
+4. State the Universal Mode value (widest reasonable range) vs Tier 1 range vs Tier 2 trigger
 
 **For [UPGRADE-NEEDED] verdicts:**
 1. Add missing sections (variability, co-occurrence, tier differentiation)
@@ -198,7 +198,7 @@ Batch by BPC file, not by item — a single BPC file may feed multiple items. Pr
 
 **Step 1: Correct values** where Phase 2 identified [CODE-FLOOR]
 - Replace code-consensus value with evidence-supported best practice
-- Add tier differentiation: Tier 0 value, Tier 1 range, Tier 2 trigger
+- Add tier differentiation: Universal Mode value, Tier 1 range, Tier 2 trigger
 
 **Step 2: Add "Questions for the designer"**
 - What non-obvious considerations does this element require?

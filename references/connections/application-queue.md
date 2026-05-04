@@ -60,7 +60,7 @@ These three F-category it
 **Connection:** Four independent evidence streams converge on RT60 ≤0.3 s as the specification ceiling for speech-critical rooms:
 
 - **DEAF/hearing device users:** Iglehart 2020 (Tier 1 AJA), ANSI/ASA S12.60 Footnote e — 0.3 s for classrooms ≤283 m³. Speech perception scores significantly better at 0.3 s than 0.6 s
-**ISW action:** Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI pe
+**ISW action:** Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Universal Mode universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI pe
 
 ### frameworks-and-methodology
 

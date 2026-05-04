@@ -32,7 +32,7 @@
 | **GRADE** | Grading of Recommendations Assessment, Development and Evaluation — evidence confidence framework |
 | **Co-1** | First-tier lived experience evidence (CRPD Art. 4.3 aligned) |
 | **DAR** | Design for Adaptable Readiness |
-| **Tier 0/1/2** | Universal / Population-informed / Person-specific design hierarchy |
+| **Universal Mode/1/2** | Universal / Population-informed / Person-specific design hierarchy |
 | **Parser source** | A file in `guidebook` repo that Phase B parsers read |
 
 ---

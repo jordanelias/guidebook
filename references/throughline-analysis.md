@@ -36,7 +36,7 @@ Multiple populations arrive at the same built environment specification via enti
 - CON-0182 — circadian lighting: DEM (sundowning), MH (mood regulation), NEU (fatigue cycles), OFS (circadian disruption) all converge on the same melanopic EDI specifications
 - Rest seating interval — OFS (fatigue), PAIN (pain-limited walking), MOB (reduced endurance), DEM (disorientation) all benefit from ≤20m seating, each for distinct functional reasons
 
-**Implication for the guidebook:** Convergent specification from independent mechanisms is epistemically stronger than any single-population evidence claim. These convergences are the strongest candidates for elevation to Tier 0 universal provisions. The guidebook has not yet systematically exploited this — most convergences are documented in the connection register but not yet surfaced in Part 3 as a methodological principle.
+**Implication for the guidebook:** Convergent specification from independent mechanisms is epistemically stronger than any single-population evidence claim. These convergences are the strongest candidates for elevation to Universal Mode universal provisions. The guidebook has not yet systematically exploited this — most convergences are documented in the connection register but not yet surfaced in Part 3 as a methodological principle.
 
 ---
 
@@ -61,7 +61,7 @@ When two populations require opposing environmental parameters, the population e
 
 **Where it appears:**
 - Project standards — "Adjustable is not a universal conflict resolution. Document operability per population. Flag populations who cannot self-adjust."
-- CON-0017 — H-02 (Individual Environmental Control) proposed as Tier 0, but requires per-population operability assessment
+- CON-0017 — H-02 (Individual Environmental Control) proposed as Universal Mode, but requires per-population operability assessment
 - FDR-NEW-15 — tremor (PD/MS): touchscreen inaccessible, toggle/rocker preferred
 - FDR-NEW-16 — tetraplegia (C4-C5): no hand function, requires sip-and-puff/eye-gaze/voice
 - Kitchen worktop (I-02) — DE mandates height-adjustable, but electric height-adjustment requires fine motor to operate controls
@@ -95,7 +95,7 @@ Co-occurring conditions produce effects that exceed the sum of individual impair
 - FDR registry §C — 7 compound scenarios (DEM+VIS wayfinding, MOB+PAIN grab bar, DEM+DEAF communication, etc.)
 - CON-0187 — FDR-CMP-04 sequential wayfinding: DEM+VIS+IntD compound is qualitatively different from any pairwise combination
 - CON-0182 — circadian lighting compound: DEM+MH vs NDV+OFS produce different interaction effects on the same lighting specification
-- Project standards — "Pairwise population conflict resolution is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Tier 2 OT co-design."
+- Project standards — "Pairwise population conflict resolution is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Mode S OT co-design."
 
 **Implication for the guidebook:** The pairwise conflict resolution framework in Part 3 §3.8 and Part 5 handles inter-population conflicts (different people in the same space). Compound functioning (multiple conditions in the same person) is acknowledged but not yet operationalised beyond "route to Tier 2." The FDR compound scenarios provide the evidence basis for a more structured compound assessment protocol.
 
@@ -107,11 +107,11 @@ Ranges in specifications are not expressions of uncertainty — they are the des
 
 **Where it appears:**
 - Project standards — explicit doctrine
-- Opus divergence synthesis §4 (reach range) — 900-1100mm functional target with "Tier 1 default: median. Tier 2: OT assessment resolves position within range"
+- Opus divergence synthesis §4 (reach range) — 900-1100mm functional target with "Mode P default: median. Tier 2: OT assessment resolves position within range"
 - Opus §9 (grab bar height) — no single height optimal; composite specification (700-800mm horizontal + 900mm vertical) needed because optimal height depends on transfer type
 - Turning space (E-01) — graduated values by device type (1500mm manual, 1700mm powered, 2100mm complex)
 
-**Implication for the guidebook:** This principle is stated in project standards and applied in the opus synthesis. The Part 4 format rule (every range carries a Tier 2 handoff flag) exists but has not been systematically applied across all items.
+**Implication for the guidebook:** This principle is stated in project standards and applied in the opus synthesis. The Part 4 format rule (every range carries a Mode S handoff flag) exists but has not been systematically applied across all items.
 
 ---
 
@@ -171,7 +171,7 @@ Measurable environmental parameters (acoustic, lighting, thermal, contrast) are 
 - Thermoregulation — 18–22°C working target is clinically determined (physics); room zoning patterns are culturally variable
 - ISO wayfinding (23599, 21542) — "physically determined and transfer universally"
 
-**Implication for the guidebook:** Every specification should be examinable through this lens: is this a physics parameter or a spatial model? Physics parameters go into Tier 0/1 with universal application. Spatial models go into Tier 1 with a Tier 2 cultural adaptation flag. The guidebook does not yet apply this systematically.
+**Implication for the guidebook:** Every specification should be examinable through this lens: is this a physics parameter or a spatial model? Physics parameters go into Universal Mode/1 with universal application. Spatial models go into Tier 1 with a Tier 2 cultural adaptation flag. The guidebook does not yet apply this systematically.
 
 ---
 
@@ -189,7 +189,7 @@ Lawton's docility-proactivity continuum (CON-0028), the ICF model, the Part 1 de
 
 Every throughline derives from this meta-throughline. Code-as-floor (T-01) exists because codes set the environmental modification threshold too low. Standards archaeology (T-08) exists because codes were calibrated to a narrow population model. Fluctuating capacity (T-05) exists because codes assume a stable person interacting with a fixed environment. The Global South gap (T-10) exists because the enabling environment has not been built at all.
 
-**Structural role in the guidebook:** This is the intellectual foundation. Part 1 §1.1 states it. The three-tier design hierarchy operationalises it (Tier 0 = anti-docility floor, Tier 1 = population-calibrated press reduction, Tier 2 = proactive person-environment optimisation). The four-framework layering (ICF + PEO/PEOP + Capability Approach + Kawa) provides the theoretical scaffolding.
+**Structural role in the guidebook:** This is the intellectual foundation. Part 1 §1.1 states it. The three-tier design hierarchy operationalises it (Universal Mode = anti-docility floor, Tier 1 = population-calibrated press reduction, Tier 2 = proactive person-environment optimisation). The four-framework layering (ICF + PEO/PEOP + Capability Approach + Kawa) provides the theoretical scaffolding.
 
 ---
 
@@ -203,7 +203,7 @@ The guidebook has not yet articulated this as a methodological principle. The co
 
 This meta-throughline has practical consequences:
 - Convergent specifications should be identified, labelled, and elevated in the evidence hierarchy
-- They are the strongest candidates for Tier 0 universal provisions
+- They are the strongest candidates for Universal Mode universal provisions
 - They resolve the "thin evidence base" problem for populations where single-population evidence is limited (PAIN, OFS) — if the specification converges with NDV and DEM evidence, the thin individual base is compensated by convergent confirmation
 
 ---
@@ -212,7 +212,7 @@ This meta-throughline has practical consequences:
 
 **Constituent throughlines:** T-04 (adjustable operability), T-05 (fluctuating capacity), T-06 (compound functioning), T-07 (ranges as bridges)
 
-The guidebook must be simultaneously universal (Tier 0/1 population-level specifications that any architect can apply without OT involvement) and precise (Tier 2 individual co-design that accommodates the specific person). Every throughline contains this tension:
+The guidebook must be simultaneously universal (Universal Mode/1 population-level specifications that any architect can apply without OT involvement) and precise (Tier 2 individual co-design that accommodates the specific person). Every throughline contains this tension:
 
 - Grab bars: a universal height is clinically impossible → composite specification (horizontal + vertical) resolves at Tier 1; OT clinical positioning resolves at Tier 2
 - Thermal environment: a universal temperature is physiologically impossible → cool default via harm asymmetry at Tier 1; individual local warmth provision at Tier 2
@@ -285,7 +285,7 @@ The guidebook is not an alternative to codes. It is not a wish list. It is the s
 
 ### For Part 4 (Item Specifications)
 - Systematic application of population operability notes to all "adjustable" items
-- Systematic application of Tier 2 handoff flags to all range specifications
+- Systematic application of Mode S handoff flags to all range specifications
 - Convergence labels where 3+ populations independently require the same specification
 - Test-method specification for all quantified performance criteria
 

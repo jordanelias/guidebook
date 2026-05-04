@@ -37,7 +37,7 @@ This problem is named here because it cannot be neutralised by acknowledgement a
 
 **Evidence stratification.** Seven-tier hierarchy with Co-1 (lived experience) elevated to co-primary alongside Tier 1 OT clinical RCTs; codes demoted to Tier 6 floor. The explicit rejection of code-consensus as best practice is the most consequential single methodological move in the doctrine. The treatment of code minima as "informative where nothing else can be" rather than as gold standards is uncommon in the field.
 
-**Three-tier design hierarchy.** Tier 0 universal/code, Tier 1 inclusive ranges with median default, Tier 2 OT-and-individual co-design. The explicit modeling of the bridge between population-level data and individual variation is uncommon. The "range = bridge between Tier 1 and Tier 2, not expression of uncertainty" rule is a real correction of a common ambiguity in design specifications.
+**Three-tier design hierarchy.** Universal Mode universal/code, Tier 1 inclusive ranges with median default, Mode S OT-and-individual co-design. The explicit modeling of the bridge between population-level data and individual variation is uncommon. The "range = bridge between Tier 1 and Tier 2, not expression of uncertainty" rule is a real correction of a common ambiguity in design specifications.
 
 **Anti-essentialism in doctrine.** Population codes "step aside at Tier 2" because a person is not defined by their disabilities. Compound-functioning rule (≈16% per added condition; non-additive interactions). Variable-conflation Step 0 check before asserting cross-population conflicts. These are correctives to the field's pairwise-population framing, present at the doctrinal level.
 
@@ -57,7 +57,7 @@ The list below consolidates and deduplicates issues raised across the four prior
 
 **3.2.3 ICF retained without engagement of its critique.** Hughes & Paterson (1997), Shakespeare (2006, ch. 2), Mitra (2006), Imrie (2004) and others have substantial published critique of ICF as carrying residual individual-pathology framing despite biopsychosocial branding. The four-framework layering (ICF + PEO + Capability + Kawa) names ICF as taxonomy; the critique is absent. Importing ICF without engaging the critique imports its baked-in normativity (impairment as deviation from a typical body) into the corpus.
 
-**3.2.4 Capability Approach version unspecified.** Sen (open-list, locally determined) and Nussbaum (fixed list of central capabilities) are operationally different commitments. The project's three-tier hierarchy aligns with Sen; Nussbaum would push toward Tier 0 universalism for a wider set of capabilities. The project should commit to Sen's version explicitly. This is a governance decision, not a literature-review decision.
+**3.2.4 Capability Approach version unspecified.** Sen (open-list, locally determined) and Nussbaum (fixed list of central capabilities) are operationally different commitments. The project's three-tier hierarchy aligns with Sen; Nussbaum would push toward Universal Mode universalism for a wider set of capabilities. The project should commit to Sen's version explicitly. This is a governance decision, not a literature-review decision.
 
 **3.2.5 Disability justice framework not engaged.** Sins Invalid / Berne ten principles is the framework most directly critical of the professionalised infrastructure (codes, OT-centred Tier 2, expert specifications) the project relies on. The project is not incompatible with disability justice but does not name it. Where the project draws from it (intersectionality through compound functioning; cross-disability solidarity through unified hierarchy; refusal of generic ideal) and where it diverges (reliance on professional gatekeeping; potential commercial-development use cases) should be stated openly.
 
@@ -85,8 +85,8 @@ The list below consolidates and deduplicates issues raised across the four prior
 
 The project's reconciliation moves are real and largely sound at the doctrinal level:
 
-- **Three-tier hierarchy** mediates architects/policymakers (Tier 0 = code) and OTs/disabled people (Tier 2 = co-design); Tier 1 negotiates the middle.
-- **Voice rule (2026-04-26)** retires "shall be" and locates authority by tier: code at Tier 0, evidence at Tier 1, OT and individual at Tier 2.
+- **Three-tier hierarchy** mediates architects/policymakers (Universal Mode = code) and OTs/disabled people (Tier 2 = co-design); Tier 1 negotiates the middle.
+- **Voice rule (2026-04-26)** retires "shall be" and locates authority by tier: code at Universal Mode, evidence at Tier 1, OT and individual at Tier 2.
 - **Co-1 elevation** to co-primary with Tier 1 RCTs treats lived experience as primary evidence.
 - **"Population codes step aside at Tier 2"** refuses essentialist reduction.
 - **"Advocacy project, not authority"** disclaims displacement of architect, OT, or policymaker professional roles.
@@ -117,11 +117,11 @@ The audit's earlier narrowing was convenient and reproduced the failure mode it 
 
 ### 3.4 Three lenses
 
-**Repository as medium.** A repository is a fixed artifact that gets queried. The Core Doctrine asserts the document is question-asking. The data structure (BPC files, item codes, validators, schemas) trends toward database. The Tier 2 handoff is the bridge — the repository prepares the question; the responsive resolution happens in the room with the OT and the person. The repository is appropriate to its mission *if and only if* the prose consistently surfaces the Tier 2 handoff at the point of use, not only in front matter.
+**Repository as medium.** A repository is a fixed artifact that gets queried. The Core Doctrine asserts the document is question-asking. The data structure (BPC files, item codes, validators, schemas) trends toward database. The Mode S handoff is the bridge — the repository prepares the question; the responsive resolution happens in the room with the OT and the person. The repository is appropriate to its mission *if and only if* the prose consistently surfaces the Mode S handoff at the point of use, not only in front matter.
 
 The medium also raises sustained-artifact concerns: decay (a 2026 evidence synthesis needs review by 2028–2030); maintenance ownership (solo-author production scales poorly to revision cycles); discoverability (a markdown corpus on GitHub is not findable through architectural design tools, OT clinical references, code-authority resources, or general web search by typical users); citation (DOI assignment, version-tagged permalinks); license and forking (CC-BY-SA-4.0 or equivalent governs whether jurisdictional adaptations and translations can exist); accessibility of the rendering itself (see §3.2.13). None of these are addressed in doctrine.
 
-**Capability approach.** Sen's open-list version maps cleanly onto Tier 1 ranges + Tier 2 individual resolution. *Conversion factors* are engaged through harm-asymmetry and compound-functioning rules. *Adaptive preference* (disabled people having adapted to inaccessible environments may underestimate need when asked) is partially handled by Tier 1 RCT + Co-1 dual evidence base but not discussed explicitly. *Threshold capabilities* map to Tier 0 as code-floor.
+**Capability approach.** Sen's open-list version maps cleanly onto Tier 1 ranges + Tier 2 individual resolution. *Conversion factors* are engaged through harm-asymmetry and compound-functioning rules. *Adaptive preference* (disabled people having adapted to inaccessible environments may underestimate need when asked) is partially handled by Tier 1 RCT + Co-1 dual evidence base but not discussed explicitly. *Threshold capabilities* map to Universal Mode as code-floor.
 
 The biggest capability-approach gap: the project taxonomy is environment-organised (Categories A–K, room types R-) rather than capability-organised (capability-to-bathe, capability-to-leave-home-unaccompanied, capability-to-host-family, capability-to-work-from-home). A capability-axis cross-cut over the existing taxonomy would close this. The Connection Register has the raw material.
 
@@ -196,7 +196,7 @@ Consolidated and deduplicated from prior turns. 12 items in 4 tiers.
 
 **G5. Disability justice engagement.** Name Sins Invalid / Berne framework. State where the project draws from it (intersectionality, cross-disability solidarity, refusal of generic ideal) and where it diverges (reliance on professional gatekeeping, possible commercial-development use cases). RULE + queued for Part 1.
 
-**G6. Tier 2 geographic contingency.** State that where Tier 2 OT co-design is structurally unavailable, Tier 1 ranges remain in force with harm-asymmetry default. Equivalent in scope-honesty to the formal/informal city divide rule. RULE.
+**G6. Tier 2 geographic contingency.** State that where Mode S OT co-design is structurally unavailable, Tier 1 ranges remain in force with harm-asymmetry default. Equivalent in scope-honesty to the formal/informal city divide rule. RULE.
 
 **G7. IntD proxying reframing.** Amend existing rule. Frame the early-close exception as research-system gap, not population fact. RULE amendment.
 
@@ -208,7 +208,7 @@ Consolidated and deduplicated from prior turns. 12 items in 4 tiers.
 
 **W2. Capability-organised cross-cut.** A view layer over existing Categories A–K and room-type taxonomy: capability-to-bathe, capability-to-prepare-food, capability-to-leave-home, capability-to-work, capability-to-host-family. Maps to existing items. Could be Appendix E or a separate digest deliverable. Connection Register has the raw material.
 
-**W3. Tier 2 visibility audit.** Read every Tier 1 specification in Part 4. Confirm Tier 2 handoff at point of use, not only in front matter. Add to voice-style skill as calibration test.
+**W3. Tier 2 visibility audit.** Read every Tier 1 specification in Part 4. Confirm Mode S handoff at point of use, not only in front matter. Add to voice-style skill as calibration test.
 
 **W4. Artifact accessibility commitments.** WCAG 2.2 AA conformance for any web rendering. Plain-language version commitment (which Parts? which audience?). Alternative-format commitments (audio, large-print PDF, Easy Read summary, braille policy). Translation policy (which jurisdictions get full versus summary translations?). Governance + Phase B deliverable list.
 
@@ -252,7 +252,7 @@ The remaining items are real and worth doing. They are not what the project owne
 
 This audit cannot validate the following without input from the named reviewers. Each is a question the auditor cannot answer.
 
-- **Disabled-person review of doctrine and Part 1 prose.** Specifically: does the document address disabled people as readers? Does the framing of population codes feel respectful or reductive at point of use? Is the Tier 2 handoff vivid in prose? Does the prose serve disabled readers or use them?
+- **Disabled-person review of doctrine and Part 1 prose.** Specifically: does the document address disabled people as readers? Does the framing of population codes feel respectful or reductive at point of use? Is the Mode S handoff vivid in prose? Does the prose serve disabled readers or use them?
 - **OT clinician review of Tier 2 mechanism.** Does the workflow assumption (architect → OT consultation → individual co-design) match how OT environmental modification actually happens in practice, or does it project a workflow that does not exist for most clients?
 - **Architect review of usability at design moment.** Is the document usable in practice or only in theory? What digest or reference layer would make it usable at design moment?
 - **Policymaker / code authority review of authority signal.** Does the "advocacy not authority" framing serve their roles or obstruct them? What signal would help code-development cycles incorporate the document's findings?

@@ -75,7 +75,7 @@ Summary: X issues — Y 🔴 / Z 🟡 / W 🟢
 
 ### 2.3 Sequencing
 - Specifications follow: Ideal → Best Practice → Acceptable → Minimum
-- Tier identification required per item: Tier 0 / Tier 1 / Tier 2
+- Tier identification required per item: Universal Mode / Tier 1 / Tier 2
 
 ### 2.4 Prohibited Language
 - Medical model framing (deficits, impairments as primary lens)
@@ -160,7 +160,7 @@ Usage: append after the closing punctuation of the claim — e.g. `The corridor 
 
 ### 5.2 Three-Tier Identification
 Each item must state which tier(s) it addresses:
-- Tier 0: fixed value, no range
+- Universal Mode: fixed value, no range
 - Tier 1: range with stated median
 - Tier 2: co-designed; resolves within Tier 1 range; DAR note mandatory
 

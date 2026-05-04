@@ -48,9 +48,9 @@ populations ←→ conflicts (many-to-many via conflict participants)
   "unit": "mm",
   "unit_display": "3–5 m",
 
-  "tier_0_value": null,
-  "tier_1_value": {"min": 3000, "max": 5000, "median": 4000},
-  "tier_2_note": "OT assessment resolves position within range based on adjacency noise level and population sensitivity",
+  "universal_value": null,
+  "population_value": {"min": 3000, "max": 5000, "median": 4000},
+  "person_specific_note": "OT assessment resolves position within range based on adjacency noise level and population sensitivity",
 
   "evidence_tier": "Tier 4–5",
   "evidence_marker": "◐",
@@ -104,7 +104,7 @@ populations ←→ conflicts (many-to-many via conflict participants)
 | `category_name` | YES | Human-readable category label |
 | `parameter_label` | YES | Human-readable parameter name |
 | `unit_display` | YES | Formatted display string |
-| `tier_0_value` / `tier_1_value` / `tier_2_note` | YES | Three-tier hierarchy values for interactive display |
+| `universal_value` / `population_value` / `person_specific_note` | YES | Three-tier hierarchy values for interactive display |
 | `evidence_marker` | YES | ● / ◐ / ○ for visual display |
 | `evidence_summary` | YES | Short citation string for card view |
 | `population_primary` / `population_secondary` | YES | Distinguishes design-driver populations from beneficiary populations |
@@ -451,7 +451,7 @@ populations ←→ conflicts (many-to-many via conflict participants)
   "confidence": "HIGH",
   "primary_targets": ["A-01", "A-02", "A-08"],
   "topic_file": "sensory-environment",
-  "description": "RT60 ≤0.3 s mid-frequency Tier 0 for speech-critical rooms",
+  "description": "RT60 ≤0.3 s mid-frequency Universal Mode for speech-critical rooms",
   "opus_reviewed": true,
   "session_applied": "2026-04-03",
   "last_updated": "2026-04-09"

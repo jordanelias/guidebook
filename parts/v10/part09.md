@@ -27,17 +27,17 @@ Other specialist consultants addressed in this Part — dementia design speciali
 
 ## 9.1 The Three-Tier Hierarchy and Specialist Consultant Appointment
 
-The Three-Tier Design Hierarchy (Volume 1, §1.6.3) governs when specialist consultant input is required and what its scope must be.
+The Design Modes (Volume 1, §1.6.3) governs when specialist consultant input is required and what its scope must be.
 
 | Tier | Standard | User Knowledge | Specialist Requirement |
 |---|---|---|---|
-| Tier 0 | Universal Design / Code Compliance | Anonymous | None required. Design from this guidebook's library items at their stated medians. |
+| Universal Mode | Universal Design / Code Compliance | Anonymous | None required. Design from this guidebook's library items at their stated medians. |
 | Tier 1 | Population-Informed Inclusive Design | Identified population (not individual) | Required where the building's primary population includes NDV, DEM, NEU, OFS, or DBL, or where two or more primary populations are present. Required where co-occurrence patterns produce conflicts that population-level medians cannot resolve. Recommended for all other Tier 1 projects. |
 | Tier 2 | Person-Specific Inclusive Design | Named individual | OT assessment mandatory. Design cannot proceed to Tier 2 specification without a completed functional capacity assessment for the named person. Co-design process required. |
 
 This guidebook treats DAR (Design for Adaptable Readiness) as mandatory at all three tiers regardless of specialist involvement. DAR provisions, once confirmed in the structural and engineering briefs, do not require specialist sign-off — they are standard construction-stage provisions documented in Part 9.
 
-The boundary between tiers is a project decision, not an option. A residential commission for a named client with a known disability is Tier 2 by definition. A dementia care facility serving an identified population is Tier 1. A speculative apartment building where no user population can be characterised is Tier 0. Misclassifying a project at a lower tier than the evidence warrants is a design failure, not a cost saving.
+The boundary between tiers is a project decision, not an option. A residential commission for a named client with a known disability is Tier 2 by definition. A dementia care facility serving an identified population is Tier 1. A speculative apartment building where no user population can be characterised is Universal Mode. Misclassifying a project at a lower tier than the evidence warrants is a design failure, not a cost saving.
 
 ---
 

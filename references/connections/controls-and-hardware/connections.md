@@ -29,7 +29,7 @@
 | Nordic ledsagarservice statutes | 5 | DBL | DBL |
 | DbI World Access guidelines | 2 | DBL | DBL, DEM |
 
-**Action required:** Create Tier 0 companion-width specification: primary routes ≥1500mm clear (best practice 2440mm where DEAF primary). Unifies siloed specifications; resolves GAP-STEP6-03.
+**Action required:** Create Universal Mode companion-width specification: primary routes ≥1500mm clear (best practice 2440mm where DEAF primary). Unifies siloed specifications; resolves GAP-STEP6-03.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 
@@ -47,16 +47,16 @@
 **Filed:** 2026-03-28
 **Applied:** —
 
-**Connection:** Entrance recline seating within 5 m of all accessible entrances (GAP-FDR-T0-04) serves four populations: OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause point). Documented as Tier 0 candidate in gap register; not yet in guidebook item specifications.
+**Connection:** Entrance recline seating within 5 m of all accessible entrances (GAP-FDR-T0-04) serves four populations: OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause point). Documented as Universal Mode candidate in gap register; not yet in guidebook item specifications.
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| pain-ofs-built-environment-design BPC | 2 | OFS, PAIN | Tier 0 universal |
+| pain-ofs-built-environment-design BPC | 2 | OFS, PAIN | Universal Mode universal |
 | mobility-built-environment BPC | 2 | MOB/AMB | entrance seating |
 | dementia-built-environment BPC | 2 | DEM | entrance seating |
 
-**Action required:** Create new item: entrance recline seating ≤5 m from accessible entrance (E-14). Specify as Tier 0 universal provision — essential for OFS/PAIN/MOB/AMB/DEM; beneficial for all.
+**Action required:** Create new item: entrance recline seating ≤5 m from accessible entrance (E-14). Specify as Universal Mode universal provision — essential for OFS/PAIN/MOB/AMB/DEM; beneficial for all.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
@@ -105,7 +105,7 @@
 **Filed:** 2026-03-28
 **Applied:** —
 
-**Connection:** Entrance recline seating within 5 m of all accessible entrances serves OFS, PAIN, MOB/AMB, and DEM with no identified conflicts. More stringent than existing E-10 (≤25 m interval) and complements E-05 (weather protection). PARTIAL Tier 0 status confirmed for entrance-specific application; neutral for VIS, DEAF, NEU, NDV.
+**Connection:** Entrance recline seating within 5 m of all accessible entrances serves OFS, PAIN, MOB/AMB, and DEM with no identified conflicts. More stringent than existing E-10 (≤25 m interval) and complements E-05 (weather protection). PARTIAL Universal Mode status confirmed for entrance-specific application; neutral for VIS, DEAF, NEU, NDV.
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -113,9 +113,9 @@
 | PAIN/OFS FDR 2026-03-26 | THIN (expert consensus) | OFS, PAIN | MOB/AMB, DEM |
 | RCOT HAwD 2019 + Roxburgh 2024 BJOT | Co-2 / Tier 1 | MOB, OFS, PAIN | Entrance-specific recline requirement |
 
-**Action required:** Create new Tier 0 item **E-14 Entrance Rest Seating** — reclinable or tilt-capable seating within 5 m of threshold, seat height ≥480 mm AFF, arms both sides, alcove ≥900 mm wide, ≥200 mm recess from circulation path. Cross-reference E-05 and E-10. Evidence tier: THIN pending empirical validation.
+**Action required:** Create new Universal Mode item **E-14 Entrance Rest Seating** — reclinable or tilt-capable seating within 5 m of threshold, seat height ≥480 mm AFF, arms both sides, alcove ≥900 mm wide, ≥200 mm recess from circulation path. Cross-reference E-05 and E-10. Evidence tier: THIN pending empirical validation.
 
-**Disposition notes:** - [x] Draft E-14 as new Tier 0 item — parts/v10/e14-entrance-rest-seating.md
+**Disposition notes:** - [x] Draft E-14 as new Universal Mode item — parts/v10/e14-entrance-rest-seating.md
 - [x] Cross-reference E-05 and E-10
 - [x] Update GAP-FDR-T0-04 → CONSUMED (gap_register.md updated 2026-03-28)
 
@@ -159,7 +159,7 @@
 
 **Connection:** Faerden 2022 reports Cohen's d = 2.0 for patient support and d = 1.7 for staff support when sensory modulation rooms are available in psychiatric inpatient settings. This is the largest single effect size for any built-environment intervention in the entire BPC corpus — larger than Clemson 2023 (fall prevention, 38% reduction), larger than CAPABLE (hospitalisation 0.43→0.23/year), larger than Sheffield (39% care hour reduction).
 
-H-02 is already Tier 0 (CON-0017) but the MH evidence provides the strongest quantified justification for user environmental control of any population. The MH-specific additions not in H-02's current specification: (a) exit sightline from every occupied space — user must see the exit route at all times (anti-entrapment); (b) no locked-in perception — door latches must be user-operable from inside even in secure settings; (c) user control of door to own space (can close, can lock from inside).
+H-02 is already Universal Mode (CON-0017) but the MH evidence provides the strongest quantified justification for user environmental control of any population. The MH-specific additions not in H-02's current specification: (a) exit sightline from every occupied space — user must see the exit route at all times (anti-entrapment); (b) no locked-in perception — door latches must be user-operable from inside even in secure settings; (c) user control of door to own space (can close, can lock from inside).
 
 van der Schaaf 2013 (n=23,868 across 199 wards) confirms private space per patient as the largest-effect design variable for reducing coercive measures — larger than staffing ratio, larger than therapeutic programme type.
 
@@ -191,7 +191,7 @@ van der Schaaf 2013 (n=23,868 across 199 wards) confirms private space per patie
 
 **Connection:** Faerden 2022 reports Cohen's d = 2.0 for patient support and d = 1.7 for staff support when sensory modulation rooms are available in psychiatric inpatient settings. This is the largest single effect size for any built-environment intervention in the entire BPC corpus — larger than Clemson 2023 (fall prevention, 38% reduction), larger than CAPABLE (hospitalisation 0.43→0.23/year), larger than Sheffield (39% care hour reduction).
 
-H-02 is already Tier 0 (CON-0017) but the MH evidence provides the strongest quantified justification for user environmental control of any population. The MH-specific additions not in H-02's current specification: (a) exit sightline from every occupied space — user must see the exit route at all times (anti-entrapment); (b) no locked-in perception — door latches must be user-operable from inside even in secure settings; (c) user control of door to own space (can close, can lock from inside).
+H-02 is already Universal Mode (CON-0017) but the MH evidence provides the strongest quantified justification for user environmental control of any population. The MH-specific additions not in H-02's current specification: (a) exit sightline from every occupied space — user must see the exit route at all times (anti-entrapment); (b) no locked-in perception — door latches must be user-operable from inside even in secure settings; (c) user control of door to own space (can close, can lock from inside).
 
 van der Schaaf 2013 (n=23,868 across 199 wards) confirms private space per patient as the largest-effect design variable for reducing coercive measures — larger than staffing ratio, larger than therapeutic programme type.
 

@@ -36,4 +36,4 @@
 
 **Clinical reasoning (DEM anti-wandering vs fire egress):** Entry security for dementia conflicts with fire egress. OT solution is layered: camouflage + high-mounted latch + alert sensor — none violating egress code. PMC10852902 found devices altering home appearance were rejected by carers. Tier 2 co-design domain.
 
-**Clinical reasoning (multi-population entry):** Single entry must serve VIS (audio+tactile), DEAF (visual+loop), DEM (simplified+anti-wandering), MOB (height-accessible). Specification: every entry intercom provides audio + visual + tactile + loop as simultaneous parallel channels. Tier 0 convergence.
+**Clinical reasoning (multi-population entry):** Single entry must serve VIS (audio+tactile), DEAF (visual+loop), DEM (simplified+anti-wandering), MOB (height-accessible). Specification: every entry intercom provides audio + visual + tactile + loop as simultaneous parallel channels. Universal Mode convergence.

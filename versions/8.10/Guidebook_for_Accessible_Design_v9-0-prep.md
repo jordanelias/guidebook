@@ -219,11 +219,11 @@ This guidebook applies a three-tier design hierarchy. DAR (Design for Adaptable 
 
 |  **Tier**    |  **Standard**                               |  **Context**                                                                                |  **Specification   form**                                                                                                              |  **DAR**   |
 | --------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-|  **Tier 0**  |  **Universal  Design / Code Compliance**    |  No specific  population can be anticipated. Averaged, anonymous user.                       |  Range of values calibrated to an abstractly disabled non-existent person.                                                                            |  Mandatory  |
+|  **Universal Mode**  |  **Universal  Design / Code Compliance**    |  No specific  population can be anticipated. Averaged, anonymous user.                       |  Range of values calibrated to an abstractly disabled non-existent person.                                                                            |  Mandatory  |
 |  **Tier 1**  |  **Population-Informed  Inclusive Design**  |  Identifiable  disability populations among regular users. This guidebook's primary domain.  |  Ranges.  Median is the population-informed default. Range encodes functional capacity  distribution across the identified population.  |  Mandatory  |
 |  **Tier 2**  |  **Person-Specific  Inclusive Design**      |  Individual  occupant or named user is known. OT assessment available.                       |  Position  within the Tier 1 range, resolved by the individual's functional capacity  assessment.                                      |  Mandatory  |
 
-**Tier 0 — Universal Design / Code Compliance ​**is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Tier 0, DAR is mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
+**Universal Mode — Universal Design / Code Compliance ​**is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Universal Mode, DAR is mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
 
 **Tier 1 — Population-Informed Inclusive Design ​**is the primary domain of this guidebook. It applies wherever an identifiable disability population can be reasonably anticipated among the building's regular users. The overwhelming majority of buildings fall into this tier: every public institution, workplace, health facility, transit hub, educational building, housing development, and civic space will serve people across the MOB, VIS, NEU, DEM, NDV, BAR, OFS and related population categories.
 
@@ -243,7 +243,7 @@ The ranges appearing throughout Part V of this guidebook are not expressions of 
 
 **The range boundary: ​**values outside the stated range fall outside the evidence base for the identified population. Departures from the range require documented clinical justification.
 
-Wherever a range appears in Part V, the following framing applies: the range is the Tier 1 population envelope; the median is the Tier 1 default; the specific value within the range is determined by Tier 2 OT assessment. This framing should be treated as implicit throughout the guidebook and is made explicit in Part V items where the clinical stakes are highest.
+Wherever a range appears in Part V, the following framing applies: the range is the Tier 1 population envelope; the median is the Tier 1 default; the specific value within the range is determined by Mode S OT assessment. This framing should be treated as implicit throughout the guidebook and is made explicit in Part V items where the clinical stakes are highest.
 
 #### §1.4.5 Why Universal Design Alone Is Insufficient
 
@@ -269,7 +269,7 @@ The aspiration of universality — that environments should work for everyone �
 
 #### §1.4.6 Application to Residential Design
 
-New residential construction where the eventual occupant is unknown at construction stage operates at Tier 0 as its legal baseline. DAR is mandatory above that baseline, since future occupants will include people with disabilities whose specific needs cannot be anticipated. The Lifetime Homes standard (Joseph Rowntree Foundation, 1999) and CAN/ASC 2.8:2025 represent the minimum DAR threshold for speculative residential construction; both are below the best-practice standard set by this guidebook.
+New residential construction where the eventual occupant is unknown at construction stage operates at Universal Mode as its legal baseline. DAR is mandatory above that baseline, since future occupants will include people with disabilities whose specific needs cannot be anticipated. The Lifetime Homes standard (Joseph Rowntree Foundation, 1999) and CAN/ASC 2.8:2025 represent the minimum DAR threshold for speculative residential construction; both are below the best-practice standard set by this guidebook.
 
 Where an individual occupant is known — a custom build, an adaptations commission, or a specialist residential environment — Tier 2 applies. Design is calibrated to that person's documented functional profile and OT assessment. DAR remains mandatory to preserve adaptability for future occupants and for changes in the current occupant's functional capacity over time.
 
@@ -1181,7 +1181,7 @@ Name every disability population the building has an obligation to serve. For ea
 For each population in the brief, write the sequence: arrival → approach → entry → orient → move → use → secondary facilities (toilet, rest) → depart → emergency egress. The purpose is not to produce a document — it is to force the question of which transitions carry the highest failure risk before the floor plan constrains the answer. The four highest-risk transitions in most building types are: public realm to entry; entry to vertical circulation; vertical circulation to destination; destination to sanitary facilities. If any of these cannot yet be traced on the proposed layout, that is a design problem, not a documentation gap. [Vol 1 §1.4a; Synthesis Principle 4, §I.3]
 
 **Decision 3 — Tier.**
-Confirm whether this project operates at Tier 0 (unknown occupancy — apply maximum DAR, use matrices as population coverage check), Tier 1 (identified population — matrix medians as working specification), or Tier 2 (named individual — OT assessment governs, matrices used for cross-check). Different parts of the same project may operate at different tiers. Commission OT assessment before technical design begins if Tier 2. [Vol 1 §1.4.3, §1.3]
+Confirm whether this project operates at Universal Mode (unknown occupancy — apply maximum DAR, use matrices as population coverage check), Tier 1 (identified population — matrix medians as working specification), or Tier 2 (named individual — OT assessment governs, matrices used for cross-check). Different parts of the same project may operate at different tiers. Commission OT assessment before technical design begins if Tier 2. [Vol 1 §1.4.3, §1.3]
 
 **Decision 4 — NOT-RETROFITTABLE commitment.**
 Before schematic design is fixed, every applicable NOT-RETROFITTABLE item [Vol 2 NOT-RETROFITTABLE table] must be committed to the structural and spatial brief. This is Synthesis Principle 1 (§I.3) applied at the earliest possible stage. The minimum commitment before schematic: E-01 (lift shaft), D-01 (loop floor plan, DEM buildings), D-03 (toilet visibility, DEM buildings), E-06 (level entry), A-08/A-09 (HVAC plant location), I-03/I-04 (grab bar blocking and wet room drainage). If the client brief makes any item impossible, escalate before schematic design — not after. An item identified as impossible after schematic is a cost and programme risk; before schematic it is a brief negotiation.
@@ -6087,17 +6087,17 @@ Other specialist consultants addressed in this Part — dementia design speciali
 
 ## VI.1 The Three-Tier Hierarchy and Specialist Consultant Appointment
 
-The Three-Tier Design Hierarchy (Volume 1, §1.6.3) governs when specialist consultant input is required and what its scope must be.
+The Design Modes (Volume 1, §1.6.3) governs when specialist consultant input is required and what its scope must be.
 
 | Tier | Standard | User Knowledge | Specialist Requirement |
 |---|---|---|---|
-| Tier 0 | Universal Design / Code Compliance | Anonymous | None required. Design from this guidebook's library items at their stated medians. |
+| Universal Mode | Universal Design / Code Compliance | Anonymous | None required. Design from this guidebook's library items at their stated medians. |
 | Tier 1 | Population-Informed Inclusive Design | Identified population (not individual) | Required where the building's primary population includes NDV, DEM, NEU, OFS, or DBL, or where two or more primary populations are present. Required where co-occurrence patterns produce conflicts that population-level medians cannot resolve. Recommended for all other Tier 1 projects. |
 | Tier 2 | Person-Specific Inclusive Design | Named individual | OT assessment mandatory. Design cannot proceed to Tier 2 specification without a completed functional capacity assessment for the named person. Co-design process required. |
 
 DAR (Design for Adaptable Readiness) is mandatory at all three tiers regardless of specialist involvement. DAR provisions, once confirmed in the structural and engineering briefs, do not require specialist sign-off — they are standard construction-stage provisions documented in Part VII.
 
-The boundary between tiers is a project decision, not an option. A residential commission for a named client with a known disability is Tier 2 by definition. A dementia care facility serving an identified population is Tier 1. A speculative apartment building where no user population can be characterised is Tier 0. Misclassifying a project at a lower tier than the evidence warrants is a design failure, not a cost saving.
+The boundary between tiers is a project decision, not an option. A residential commission for a named client with a known disability is Tier 2 by definition. A dementia care facility serving an identified population is Tier 1. A speculative apartment building where no user population can be characterised is Universal Mode. Misclassifying a project at a lower tier than the evidence warrants is a design failure, not a cost saving.
 
 ---
 

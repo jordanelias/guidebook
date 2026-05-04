@@ -29,9 +29,9 @@ Current `evidence_tier` values use free-text compound strings:
 
 ### F-02: Recommendation strength is free-text with embedded semantics
 
-21 records: `[UNSET — Opus review required]`. 27 records: `Conditional at Tier 1`. 17 records: `Strong at Tier 0`. Remaining 8 use compound descriptions with parenthetical qualifiers.
+21 records: `[UNSET — Opus review required]`. 27 records: `Conditional at Tier 1`. 17 records: `Strong at Universal Mode`. Remaining 8 use compound descriptions with parenthetical qualifiers.
 
-**Schema implication:** Enum with values {UNSET, STRONG_TIER_0, CONDITIONAL_TIER_1, CONDITIONAL} plus optional `qualifier` text field. Parenthetical detail moves to qualifier.
+**Schema implication:** Enum with values {UNSET, STRONG_UNIVERSAL, CONDITIONAL_POPULATION, CONDITIONAL} plus optional `qualifier` text field. Parenthetical detail moves to qualifier.
 
 ### F-03: Parameter naming is inconsistent
 
@@ -45,9 +45,9 @@ Three variants for door width: `door_clear_width`, `door_clear_width_minimum`, `
 
 **Schema implication:** Include as Optional[str] with deprecation note. Do not require. Flag for removal at A3 review.
 
-### F-05: conditions and tier_2_note are sparse
+### F-05: conditions and person_specific_note are sparse
 
-`conditions`: 70/73 empty. `tier_2_note`: 62/73 empty. `divergence_note`: 50/73 empty.
+`conditions`: 70/73 empty. `person_specific_note`: 62/73 empty. `divergence_note`: 50/73 empty.
 
 **Schema implication:** All Optional. Sparsity is not an error — these fields carry signal when present (conditions capture context-dependent applicability).
 
@@ -88,7 +88,7 @@ UK, AU, ISO, DE, US, FR, NO, CA, IN, EU, NL, NZ, ID, BD, NG. Mix of ISO 3166-1 a
 Based on findings:
 
 1. **EvidenceTierRange** model: `floor: EvidenceTier`, `ceiling: EvidenceTier`, `co1_present: bool` — replaces compound string (F-01)
-2. **RecommendationStrength** enum: UNSET, STRONG_TIER_0, CONDITIONAL_TIER_1, CONDITIONAL — with qualifier text (F-02)
+2. **RecommendationStrength** enum: UNSET, STRONG_UNIVERSAL, CONDITIONAL_POPULATION, CONDITIONAL — with qualifier text (F-02)
 3. **Parameter names:** Accept current values; reject "unclassified" sentinel; normalize in A3 (F-03)
 4. **percentile_basis:** Optional, deprecated (F-04)
 5. **item_code + assignment_status:** Decouple code from state (F-07)

@@ -200,7 +200,7 @@ FDR findings feed `item-specification-writer` and Opus synthesis independently o
 
 Population codes are **not assigned during collection**. After FDR evidence is assembled, an Opus synthesis pass may annotate findings with applicable population codes where the functional deficit profile overlaps a defined population. This annotation is optional and does not constrain what evidence is collected.
 
-**Tier 0 Escalation:** Same spatial specification converging from ≥3 functional scenarios with no cross-functional conflict → `TIER-0-CANDIDATE`. Route to connection-scout. Population codes not required for Tier 0 nomination.
+**Universal Mode Escalation:** Same spatial specification converging from ≥3 functional scenarios with no cross-functional conflict → `TIER-0-CANDIDATE`. Route to connection-scout. Population codes not required for Universal Mode nomination.
 
 
 ## 7. Post-Run (mandatory)

@@ -131,13 +131,13 @@ topics_json         TEXT            -- JSON array of topic strings
 **Tasks:**
 1. Rename `DesignTier` → `DesignMode` in `schemas/enums.py` (values: UNIVERSAL, POPULATION_BASED, PERSON_SPECIFIC)
 2. Safe pattern-replace across all files:
-   - `Tier 0` → `Universal Mode` (safe — evidence tiers start at 1)
-   - `Three-Tier Design Hierarchy` → `Design Modes` (safe exact phrase)
-   - `Tier 1 default:` / `Tier 1 median:` → `Mode P default:` / `Mode P median:` (safe)
-   - `Tier 2 OT` / `Tier 2 handoff` → `Mode S OT` / `Mode S handoff` (safe)
+   - `Universal Mode` → `Universal Mode` (safe — evidence tiers start at 1)
+   - `Design Modes` → `Design Modes` (safe exact phrase)
+   - `Mode P default:` / `Mode P median:` → `Mode P default:` / `Mode P median:` (safe)
+   - `Mode S OT` / `Mode S handoff` → `Mode S OT` / `Mode S handoff` (safe)
 3. Manual discrimination pass on `references/project-standards.md` + `skills/voice-style_SKILL.md` (~42 instances requiring judgment — mixed evidence/design tier usage)
 4. Part 8 §9.x → §8.x renumbering (same find-and-replace session)
-5. Update `references/website/schema/unified-data-schema.md`: `tier_0_value` → `universal_value`, `tier_1_value` → `population_value`, `tier_2_note` → `person_specific_note`
+5. Update `references/website/schema/unified-data-schema.md`: `universal_value` → `universal_value`, `population_value` → `population_value`, `person_specific_note` → `person_specific_note`
 
 **Scope:** ~200+ instances across 14 part files, 5 skill files, 10+ governance files. Part 4 (~57 instances) requires manual review because "Tier 1" is used for both evidence and design.
 **Output:** All files updated; commit message: `find-and-replace: DesignMode rename + Part 8 renumbering`
@@ -217,7 +217,7 @@ topics_json         TEXT            -- JSON array of topic strings
 
 - [ ] D-0139 Amendment 1 applied (11 fields, 3 tables)
 - [ ] Five schema representations reconciled; `architecture/schema-reconciliation.md` committed
-- [ ] DesignMode rename complete across all files; zero "Tier 0/1/2" design references remaining
+- [ ] DesignMode rename complete across all files; zero "Universal Mode/1/2" design references remaining
 - [ ] Part 8 §9.x → §8.x renumbering complete
 - [ ] 5 new Pydantic modules built and CI-validated (population, item, conflict, fdr_specialist + question stub)
 - [ ] Appendix A migrated to ~150-200 jurisdictional_value records
@@ -531,7 +531,7 @@ The largest content authoring block. All Opus-required.
 ### C10. Quality gates and validation · 5–8 sessions
 
 All original validators plus:
-- DesignMode terminology check (zero "Tier 0/1/2" design refs remaining)
+- DesignMode terminology check (zero "Universal Mode/1/2" design refs remaining)
 - Question heading coverage (91/91 specs have question_heading populated)
 - Cell record coverage (all spec × population pairs have cell state assigned)
 - Jurisdictional value coverage (top 6 jurisdictions have values for all 91+ specs)
@@ -559,7 +559,7 @@ All original criteria, plus:
 - [ ] Economics pages render with verified cost data
 - [ ] Throughline pages render with cross-linked specs and connections
 - [ ] Specialist consultant pages render from Part 9 content
-- [ ] DesignMode terminology used throughout — zero "Tier 0/1/2" design refs
+- [ ] DesignMode terminology used throughout — zero "Universal Mode/1/2" design refs
 - [ ] Cell records populated for all spec × population pairs
 
 ---

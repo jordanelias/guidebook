@@ -143,7 +143,7 @@ From DD-3 (LRV deep-dive) and BPC:
 
 **C-04 — LRV Contrast at All Critical Junctions**
 
-**Tier 0 (code compliance minimum):** ≥30% LRV difference between adjacent surfaces at all critical junctions, circulation boundaries, and hazard locations. ●
+**Universal Mode (code compliance minimum):** ≥30% LRV difference between adjacent surfaces at all critical junctions, circulation boundaries, and hazard locations. ●
 
 **Tier 1 (guidebook best-practice target):** ≥50% LRV difference at all critical junctions, zone boundaries, and wayfinding decision points. Contrast strip width ≥50mm. ○ [evidence supports direction but specific threshold not validated by RCT]
 
@@ -179,7 +179,7 @@ From DD-3 (LRV deep-dive) and BPC:
 
 5. **C:** Building is designed with accessibility from brief stage → **M:** Accessibility provisions are planning decisions (zero marginal cost) rather than additions → **O:** 0.94-3.92% cost premium vs 10-40× retrofit (Ielegems 2024)
 
-6. **C:** Occupant has co-occurring conditions (e.g., MOB+PAIN) → **M:** Individual specifications may conflict; compound functional impact is supra-additive → **O:** Resolution requires Tier 2 OT co-design; Tier 1 pairwise resolution is necessary but insufficient
+6. **C:** Occupant has co-occurring conditions (e.g., MOB+PAIN) → **M:** Individual specifications may conflict; compound functional impact is supra-additive → **O:** Resolution requires Mode S OT co-design; Tier 1 pairwise resolution is necessary but insufficient
 
 ### Search strategy
 - **Theory-driven:** Search for evidence that confirms, refutes, or refines each CMO configuration

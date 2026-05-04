@@ -15,7 +15,7 @@ A wide corridor can have low sensory load (plain walls, even lighting, consisten
 
 DEAF ≥2440 mm width requirement and NDV/AUT low-sensory-load requirement are compatible in the same corridor. No zoning, no adjustment, no tier escalation needed.
 
-**Resolution:** Remove from conflict domain table. Specify DEAF width (≥2440 mm) as Tier 0 with NDV/AUT sensory treatment (wall finish, lighting uniformity, signage density) as a complementary — not competing — specification layer. Both are served simultaneously.
+**Resolution:** Remove from conflict domain table. Specify DEAF width (≥2440 mm) as Universal Mode with NDV/AUT sensory treatment (wall finish, lighting uniformity, signage density) as a complementary — not competing — specification layer. Both are served simultaneously.
 
 **Implication for Part 5 §5.2:** Do not list CORRIDOR-W as a conflict. If referenced elsewhere as a conflict example, correct to note that width and sensory load are independent parameters.
 

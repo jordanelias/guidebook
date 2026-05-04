@@ -82,7 +82,7 @@ Confidence HIGH justified: OR 9.50 is a large effect size from Tier 1 quasi-expe
 Confidence HIGH justified: four sources including two Tier 1 qualitative studies + Co-1. See cluster note above.
 
 ### CON-0039 — CORRECT
-Confidence HIGH justified: strongest multi-stream convergence in the register (DEAF Tier 1, NDV/AUT Tier 1, DEM Tier 2, NEU Tier 3). Routing to entrances-and-circulation acceptable — Category A items are housed there. ISW action (Tier 0 elevation of RT60 ≤0.3 s) is correct.
+Confidence HIGH justified: strongest multi-stream convergence in the register (DEAF Tier 1, NDV/AUT Tier 1, DEM Tier 2, NEU Tier 3). Routing to entrances-and-circulation acceptable — Category A items are housed there. ISW action (Universal Mode elevation of RT60 ≤0.3 s) is correct.
 
 ### CON-0040 — CORRECT
 Confidence HIGH justified. Cross-cutting routing correct (spans 4+ categories). The ○ marker disclosure for the synthesised zone matrix is the right call — no single study validates the complete matrix.
@@ -178,10 +178,10 @@ Spot-checked 10 CONSUMED entries for obvious errors: CON-0001, CON-0010, CON-001
 
 | CON-ID | Finding |
 |---|---|
-| CON-0001 | Correct. Tier 0 circulation legibility supported by 5-population convergence. |
+| CON-0001 | Correct. Universal Mode circulation legibility supported by 5-population convergence. |
 | CON-0010 | Correct. Biophilic outdoor convergence across DEM/OFS/NDV/MH. |
-| CON-0017 | Correct. H-02 Tier 0 user control supported by 5+ BPC entries. |
-| CON-0019 | Correct. Environmental refuge Tier 0 supported by 4-population convergence + PAS 6463 + ASPECTSS. |
+| CON-0017 | Correct. H-02 Universal Mode user control supported by 5+ BPC entries. |
+| CON-0019 | Correct. Environmental refuge Universal Mode supported by 4-population convergence + PAS 6463 + ASPECTSS. |
 | CON-0023 | Correct. Al-Harasis 2025 taxonomy is a significant addition to NDV evidence base. |
 | CON-0024 | Correct. Prospect-refuge theory provides non-disability-specific grounding. |
 | CON-0052 | Correct. DBL residual hearing → hearing loop cross-reference. |

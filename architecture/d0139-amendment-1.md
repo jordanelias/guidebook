@@ -25,7 +25,7 @@ question_summary             TEXT,           -- question-mode summary variant
 -- Display atoms
 summary                      TEXT,           -- spec-mode one-sentence summary (card view)
 evidence_summary             TEXT,           -- short citation string for card view
-tier_2_note                  TEXT,           -- person-specific mode note (OT handoff)
+person_specific_note                  TEXT,           -- person-specific mode note (OT handoff)
 
 -- Authored prose sections
 why_md                       TEXT,           -- "Why it matters" authored prose
@@ -239,7 +239,7 @@ CREATE TABLE specification (
   -- Display atoms (Amendment 1)
   summary                      TEXT,
   evidence_summary             TEXT,
-  tier_2_note                  TEXT,
+  person_specific_note                  TEXT,
 
   -- Authored prose (Amendment 1)
   why_md                       TEXT,

@@ -60,7 +60,7 @@ The hedonic gap is a labeling problem, not a value problem. The research opportu
 This document operates in **procedural-imperative voice**. Constructions such as "the methodology requires X" and "the researcher should locate the original publication" describe what this research methodology requires of its user. They are not Guidebook-as-authority claims about the world. Per project RULE 2026-04-29 14:04 (A4 voice-style), Guidebook prose categorical-authority constructions are voice failures; this document is methodology guidance for researchers, not specification voice for designers, and the procedural register is appropriate to its scope.
 
 **When research conducted under this methodology produces findings that enter the Guidebook proper** (Part 11 specifications, BPC entries, etc.), the findings must be re-voiced into tier-located form per A4 §§8.1–8.3 before publication. Specifically:
-- Tier 0 findings → "Code requires [value] per [standard]"
+- Universal Mode findings → "Code requires [value] per [standard]"
 - Tier 1 findings → "[Evidence tier] evidence supports [value]" or "Best practice based on [N] jurisdictions and [tier] evidence is [value]"
 - Tier 2 findings → "OT assessment determines position within [range] based on [functional parameter]"
 - Co-1 findings → Pattern Co-1-A through Co-1-D per A5 voice-style §8.3
@@ -978,7 +978,7 @@ The completed-migration items (lever handles, single-lever pull-down faucets, an
 This throughline is invisible in transaction-price hedonic regression by construction — there's nothing to measure when the feature is universal — but it's overwhelmingly visible in:
 - **Mass-market product-line defaults** at major manufacturers (Schlage, Kwikset, Emtek, Moen, Delta default to lever / single-lever — Tier 4)
 - **Consumer-electronics market data** (video doorbell market $63.8B 2025 → $152.4B 2035 at 9.2% CAGR — Tier 4)
-- **Code adoption** for some items (anti-scald valves, accessible-height outlets in some jurisdictions — Tier 0)
+- **Code adoption** for some items (anti-scald valves, accessible-height outlets in some jurisdictions — Universal Mode)
 
 The evidence is the migration itself. The hedonic invisibility is itself the evidence: the feature became universal, so there is no premium to measure, but there is also no comparable feature-absent dwelling to price below it. For developer-pitch purposes, throughline 5 is the *downside-avoidance* argument: "without these features, the home reads as dated and prices as builder-grade or worse."
 
@@ -992,7 +992,7 @@ The five throughlines have different evidence strength, applicability, and pitch
 | 2 — Cubic volume | Trade-press 5–25% ceiling-height premium — Tier 4–5 | B-09 (clerestory/rooflight), I-04 (hoist clearance) — narrow set | "Vertical generosity prices independently of floor area" | Architecturally-ambitious specs |
 | 3 — Bedroom / bathroom count | Sirmans 2006 canonical regressors — Tier 1 | G-04 conversions adding full-bath; E-15 adding accessible WC; ground-floor accessible bedroom additions | "This specification adds priced room count" | Renovation cases that change room count |
 | 4 — Build quality at constant size | Tier 2 (outdoor-air transferable) + Tier 4 (market-adoption tier-segmentation) | A-03/14, F-04, F-07, F-08, E-07, G-03 blocking, H-01 | "These features push the dwelling into the next price-tier band" | Quality-segmentation argument; not isolated-hedonic argument |
-| 5 — Completed migration | Tier 4 market-adoption; Tier 0 code-adoption | I-01, I-02, I-03, B-12, F-07, H-02, H-04 | "Without these features, the home prices as builder-grade or dated" | Downside-avoidance argument |
+| 5 — Completed migration | Tier 4 market-adoption; Universal Mode code-adoption | I-01, I-02, I-03, B-12, F-07, H-02, H-04 | "Without these features, the home prices as builder-grade or dated" | Downside-avoidance argument |
 
 **Implication for §15 framework strength.** Throughline 1 is the strongest by an order of magnitude over the previous v1.2 framing of these items as Tier 5–6. The dimensional-generosity mechanism doesn't need its own peer-reviewed regression to justify economic value — it inherits the most-priced residential hedonic variable in the literature. Throughline 1 alone elevates the framework's evidence base from "good adjacent inference" to "Tier 1 by direct inheritance from canonical hedonic regression."
 
@@ -1028,7 +1028,7 @@ The strongest Tier 1–2 evidence in this mechanism is the **air-quality hedonic
 - F-07 multi-zone HVAC — **Tier 4** market-adoption data (mid-market new-construction default); **Tier 5** trade-press discourse
 - F-08 HVAC response speed — **Tier 5** (comfort discourse only)
 - G-03 grab-bar blocking technique (distinct from the visible fixture) — **Tier 6** (inspector / build-quality discourse only)
-- H-01 control-placement consistency — **Tier 3** (bundled in Cost vs. Value Universal Design Bath); **Tier 0** in jurisdictions where code-mandated (CA Title 24)
+- H-01 control-placement consistency — **Tier 3** (bundled in Cost vs. Value Universal Design Bath); **Universal Mode** in jurisdictions where code-mandated (CA Title 24)
 
 #### 15.9.3 Mechanism C — Design-language convergence
 
@@ -1067,7 +1067,7 @@ For the §15.4 completed-migration items, the evidence pattern is consistent: **
 |---|---|---|
 | I-01 lever and D-pull hardware | Schlage / Kwikset / Emtek / Moen / Delta default product lines lever-first; round knobs are the discount-tier choice | Tier 4 |
 | I-02 single-lever pull-down kitchen faucets | Mass-market default; two-handle faucets read as 1990s | Tier 4 |
-| I-03 anti-scald bathroom mixing valve | US plumbing code requirement (most jurisdictions); migration code-driven | Tier 0 (code) |
+| I-03 anti-scald bathroom mixing valve | US plumbing code requirement (most jurisdictions); migration code-driven | Universal Mode (code) |
 | H-02 occupant environmental control | Smart-thermostat market: ecobee / Nest / Honeywell mass-market; smart-switch market growing | Tier 4 |
 | H-04 video door entry | Global market USD $63.8B (2025) → $152.4B (2035), 9.2% CAGR; 36% of US smart-home households (Strategy Analytics 2019); Ring acquired by Amazon (2018); smart-home features add up to 5% to home resale value per real-estate-agent surveys | Tier 4 |
 | B-12 motion-sensor pathway lighting | Mass-market consumer-electronics commodity | Tier 4 |
@@ -1115,12 +1115,12 @@ Items with Throughline 1 (square-footage) inheritance are re-tiered to Tier 1 be
 | G-03 Grab-bar blocking technique | B | 4 | Tier 6 | Inspector / build-quality discourse only |
 | G-04 Wet room (curbless tiled walk-in) | A, C, D | **1 + 3 (where adds bath count)** | **Tier 1 + Tier 3** | Cost vs. Value Universal Design Bath Remodel — 61% ROI national 2025; turning-circle adds ~3–4m² at Sirmans $/m²; full-bath conversion adds priced room count |
 | G-08 Wardrobe reach configuration | A | 1 | **Tier 2 by transferable inference** | Multi-height seated-access zone adds ~0.8–1.5m² closet area; counts as conditioned floor area |
-| H-01 Accessible-height controls | B | 4 + 5 | **Tier 3** | Bundled in Cost vs. Value UD Bath; Tier 0 in jurisdictions where code-mandated; Tier 5 downside-avoidance argument |
+| H-01 Accessible-height controls | B | 4 + 5 | **Tier 3** | Bundled in Cost vs. Value UD Bath; Universal Mode in jurisdictions where code-mandated; Tier 5 downside-avoidance argument |
 | H-02 Individual environmental control | C | 5 | Tier 4 | Smart-thermostat / smart-switch market completed-migration |
 | H-04 Video door entry | C | 5 | Tier 4 | $63.8B market 2025 → $152.4B 2035, 9.2% CAGR; smart-home features +5% home value (agent surveys); completed-migration |
 | I-01 Lever / D-pull hardware | C | 5 | Tier 4 | Completed migration; mass-market default — downside-avoidance argument |
 | I-02 Single-lever pull-down kitchen faucet | C | 5 | Tier 4 | Completed migration; mass-market default — downside-avoidance argument |
-| I-03 Anti-scald mixing valve | C | 5 | Tier 0 | Code-mandated in most US jurisdictions |
+| I-03 Anti-scald mixing valve | C | 5 | Universal Mode | Code-mandated in most US jurisdictions |
 | F-04 Air quality (MERV 13+, low-VOC) | B | 4 | **Tier 2** | Transferable from outdoor-air hedonic (Chay & Greenstone 2005, JPE 113(2) elasticity −0.20 to −0.35); indoor IAQ post-COVID market emerging |
 | F-07 Multi-zone HVAC | B, C | 4 + 5 | Tier 4 | Mid-market default; price-tier-segmentation evidence |
 | F-08 HVAC response speed | B | 4 | Tier 5 | Comfort discourse only |
@@ -1204,7 +1204,7 @@ The §15 framework's economic argument is incomplete without comparing the cost 
 | Visitability total (E-06 + 32"+ doors I-01 doorway component) — new construction | $0 (standard build) | $10 (slab build) to $260 (basement build) | **+$10 to +$260** | Strong throughline-1 inheritance of dimensional generosity if doorway widening also widens corridors; otherwise pure cost-of-build with no isolated ROI data | Smith / Concrete Change 2012 |
 | Lever vs round-knob hardware (I-01) — completed migration | $15–$50 round knob (older stock; rarely current new construction) | $25–$80 lever | **+$10–$30 per door** ($100–$300 per dwelling at 10 doors) | Tier 4 / Tier 5 downside-avoidance: round knobs read as dated; market discount avoided | Hardware retailer pricing (Schlage, Kwikset 2026) |
 | Single-lever vs two-handle kitchen faucet (I-02) — completed migration | $80–$200 two-handle (older stock; rarely current new construction) | $150–$500 single-lever pull-down | **+$70–$300** | Tier 4 / Tier 5 downside-avoidance | Big-box retailer pricing 2026 |
-| Anti-scald valve (I-03) — code-mandated | $0 (code requires) | $0 (code requires) | **+$0** | Tier 0 — code, not premium | US plumbing codes most jurisdictions |
+| Anti-scald valve (I-03) — code-mandated | $0 (code requires) | $0 (code requires) | **+$0** | Universal Mode — code, not premium | US plumbing codes most jurisdictions |
 
 #### 15.11.2 ROI computation — Universal Design Bath Remodel as the framework's anchor case
 

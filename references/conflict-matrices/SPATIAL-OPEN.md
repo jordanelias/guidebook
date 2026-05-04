@@ -30,7 +30,7 @@
 - Mechanism: Provide BOTH prospect (open, visually connected social spaces with signing sightlines) AND refuge (enclosed, compartmentalised low-stimulation spaces with transition zones). These are not alternative room types — they are complementary zones within a single building, connected by graduated transition zones (≥3 m decompression; PAS 6463).
 - Assessment: This is the spatial equivalent of the LIGHT-INT three-zone model. Zone 1 (social/prospect): open, visually connected, ≥2440 mm paths, conversation circles, ≥300 lux. Zone 2 (transition): graduated sensory change (≥0.2 s RT60 change, ≥50 lux change, ≥30 LRV change between zones per detectable-gradient-protocol BPC). Zone 3 (refuge): enclosed, compartmentalised, user-controlled sensory environment (A-16 spec).
 - Outcome data: No POE of integrated prospect-refuge zoning in a multi-population facility. Individual components have evidence: DeafSpace at Gallaudet (Co-1), ASPECTSS with POE data (Mostafa 2021, Tier 3), sensory relief spaces (Unwin 2022/2023, Tier 3), prospect-refuge validation for NDV museum visitors (Granland et al. 2025, Tier 3).
-- Guidebook implication: Tier 0 requires BOTH open/prospect AND enclosed/refuge zones on every floor plate. Neither alone is sufficient. The building must provide equivalent functional access in both zone types — a building with only open-plan spaces excludes NDV/AUT; a building with only enclosed spaces excludes DEAF signing communication.
+- Guidebook implication: Universal Mode requires BOTH open/prospect AND enclosed/refuge zones on every floor plate. Neither alone is sufficient. The building must provide equivalent functional access in both zone types — a building with only open-plan spaces excludes NDV/AUT; a building with only enclosed spaces excludes DEAF signing communication.
 - Status: **RESOLUTION-PROPOSED** · Confidence: **MEDIUM** — theoretical framework is strong (prospect-refuge); individual components have evidence; integrated system untested
 
 **Resolution 2 — Anti-reflective glazed junctions (for glazing conflict)**
@@ -67,7 +67,7 @@ The skill's domain table lists DEAF (wide, ≥2400 mm) vs NDV/AUT (narrow, reduc
 | Transition zones | ≥3 m graduated sensory transition at zone boundaries | NDV/AUT, DEM (PAS 6463; ASPECTSS) | MEDIUM |
 | Loop/single-path circulation | No dead-ends; continuous circuit | DEM, VIS, DBL, IntD, NDV/AUT (CON-0001) | HIGH |
 
-### Tier 0 Specification Summary
+### Universal Mode Specification Summary
 
 SPATIAL-OPEN is a mixed domain — partially convergent, partially requiring zoning:
 

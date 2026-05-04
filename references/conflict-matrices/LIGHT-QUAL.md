@@ -24,7 +24,7 @@ Corrected opposition map:
 ### Domain Classification: MIXED
 
 **Flicker sub-parameter: CONVERGENT**
-Universal elimination of flicker serves all populations. No population requires or benefits from flicker. This is a genuine Tier 0 universal specification. Specify: no fluorescent sources (T8, T12, CFL); LED sources with flicker index ≤0.05 and flicker percentage ≤5%; no visible PWM dimming.
+Universal elimination of flicker serves all populations. No population requires or benefits from flicker. This is a genuine Universal Mode universal specification. Specify: no fluorescent sources (T8, T12, CFL); LED sources with flicker index ≤0.05 and flicker percentage ≤5%; no visible PWM dimming.
 
 **CCT daytime sub-parameter: CONVERGENT**
 DEM (≥4000K circadian), NDV/AUT (consistent 4000K), and VIS (cooler light for contrast) all align on daytime ≥4000K. No conflict during occupied daytime hours.
@@ -57,8 +57,8 @@ The genuine conflict is between **automated dynamic CCT** (which DEM and NDV/MH 
 
 | Specification | Tier | Note |
 |---|---|---|
-| Flicker elimination (all sources) | Tier 0 | Universal. No conflicts. |
-| Daytime CCT ≥4000K in all primary occupied spaces | Tier 0 | Convergent across DEM, NDV/AUT, VIS |
+| Flicker elimination (all sources) | Universal Mode | Universal. No conflicts. |
+| Daytime CCT ≥4000K in all primary occupied spaces | Universal Mode | Convergent across DEM, NDV/AUT, VIS |
 | Automated circadian CCT programme in DEM-designated spaces | Tier 1 (DEM) | B-01/B-06 specification |
 | Manual CCT control in NDV/AUT-designated spaces | Tier 1 (NDV/AUT) | H-02 cross-reference |
 | Shared spaces: circadian programme as default + graduated transition ≤50K/hr | Tier 1 (harm asymmetry) | Part 5 §5.2 conflict entry |

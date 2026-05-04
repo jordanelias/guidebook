@@ -43,12 +43,12 @@ Five populations converge on consistent, legible, loop-based circulation with no
 - **IntD:** One-way legible routes with ≤3 decision points per segment; colour-zone wayfinding; pictogram + single-word signage (expert consensus, no quantified standard).
 - **NDV/AUT:** Sequential/one-directional circulation preferred; compartmentalised zones; transition alcoves at zone boundaries (Mostafa 2023; Black et al. 2022).
 
-Convergence is strong enough — five populations, 10+ jurisdictions, Tier 2–5 evidence — to warrant a Tier 0 universal specification.
+Convergence is strong enough — five populations, 10+ jurisdictions, Tier 2–5 evidence — to warrant a Universal Mode universal specification.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| Marquardt 2011 | 3 | DEM | ALL (Tier 0 universal) |
+| Marquardt 2011 | 3 | DEM | ALL (Universal Mode universal) |
 | DSDC EADDAT 2022 | 5 | DEM | ALL |
 | ISO 23599:2019 | 4 | VIS, DBL | ALL |
 | DbI World Access guidelines | 2 | DBL | ALL |
@@ -57,7 +57,7 @@ Convergence is strong enough — five populations, 10+ jurisdictions, Tier 2–5
 | Black, Sharma & Roberts 2022 | 3 | NDV/AUT | ALL |
 
 ### Proposed synthesis direction
-Create Tier 0 universal circulation legibility specification: all buildings to provide consistent, predictable circulation geometry (loop or single-path, no dead-ends); consistent furniture arrangement within room types (no mirror-image pairs); 3D object landmarks at every decision point. Population-specific overlays at Tier 1. Resolves root cause of 8+ gap items.
+Create Universal Mode universal circulation legibility specification: all buildings to provide consistent, predictable circulation geometry (loop or single-path, no dead-ends); consistent furniture arrangement within room types (no mirror-image pairs); 3D object landmarks at every decision point. Population-specific overlays at Tier 1. Resolves root cause of 8+ gap items.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -241,7 +241,7 @@ Three populations require circulation wide enough for two people side-by-side (o
 | DbI World Access guidelines | 2 | DBL | DBL, DEM |
 
 ### Proposed synthesis direction
-Create Tier 0 companion-width specification: primary routes ≥1500mm clear (best practice 2440mm where DEAF primary). Unifies siloed specifications; resolves GAP-STEP6-03.
+Create Universal Mode companion-width specification: primary routes ≥1500mm clear (best practice 2440mm where DEAF primary). Unifies siloed specifications; resolves GAP-STEP6-03.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -342,7 +342,7 @@ Cross-reference biophilic outdoor items with DEM garden loop, OFS rest provision
 **Gap register items:** GAP-S4-R01 through GAP-S4-N07, REVIEW-S4-01  
 
 ### Connection description
-15 OPEN gap items share single root cause: DBL and IntD not in population framework when room matrices were written. Both populations' requirements now documented in BPC. Single systematic insertion pass resolves all 15 gaps. Shared requirement (consistent layout) overlaps with CON-0001, strengthening Tier 0 case.
+15 OPEN gap items share single root cause: DBL and IntD not in population framework when room matrices were written. Both populations' requirements now documented in BPC. Single systematic insertion pass resolves all 15 gaps. Shared requirement (consistent layout) overlaps with CON-0001, strengthening Universal Mode case.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -353,7 +353,7 @@ Cross-reference biophilic outdoor items with DEM garden loop, OFS rest provision
 | NICE NG93 | 5 | IntD (healthcare) | IntD (all rooms) |
 
 ### Proposed synthesis direction
-Single systematic item-specification-writer pass inserting DBL and IntD into all 16 room matrices using CON-0001 Tier 0 anchor. Resolves all 15 gaps in one operation.
+Single systematic item-specification-writer pass inserting DBL and IntD into all 16 room matrices using CON-0001 Universal Mode anchor. Resolves all 15 gaps in one operation.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -502,15 +502,15 @@ Cross-reference note in C-04: DEM floor treatment and VIS TWSI contrast are comp
 **Type:** BOTH
 **Populations involved:** NDV/AUT, NDV/MH, OFS, DEM, NEU, DEAF, VIS
 **Items involved:** H-02 (Individual Environmental Control), A-16, B-06, B-07
-**Gap register items:** NONE (new Tier 0 candidate)
+**Gap register items:** NONE (new Universal Mode candidate)
 
 ### Connection description
-"User control over environment" is documented as the single highest-impact provision across NDV subtypes (NDV BPC), the primary design requirement for sensory rooms (sensory-room-user-control BPC), a core requirement for NDV/MH retreat rooms, and essential for OFS temperature/lighting management. DEM benefits from consistent but adjustable environments. DEAF users benefit from lighting control for sign language visibility. The pattern repeats in 5+ population BPCs but is never synthesized into a cross-population design principle. No specification currently states that occupant environmental control is a Tier 0 universal provision. It is siloed as population-specific within each category. This is arguably the strongest Tier 0 candidate in the guidebook — evidenced across more populations than any other single provision.
+"User control over environment" is documented as the single highest-impact provision across NDV subtypes (NDV BPC), the primary design requirement for sensory rooms (sensory-room-user-control BPC), a core requirement for NDV/MH retreat rooms, and essential for OFS temperature/lighting management. DEM benefits from consistent but adjustable environments. DEAF users benefit from lighting control for sign language visibility. The pattern repeats in 5+ population BPCs but is never synthesized into a cross-population design principle. No specification currently states that occupant environmental control is a Universal Mode universal provision. It is siloed as population-specific within each category. This is arguably the strongest Universal Mode candidate in the guidebook — evidenced across more populations than any other single provision.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| NDV BPC — "single highest-impact provision" | Co-1, Tier 4 | NDV/AUT, NDV/ADHD, NDV/SENS | ALL — Tier 0 candidate |
+| NDV BPC — "single highest-impact provision" | Co-1, Tier 4 | NDV/AUT, NDV/ADHD, NDV/SENS | ALL — Universal Mode candidate |
 | Sensory room user control BPC — H-02 PRIMARY | Co-1 | NDV/AUT | ALL |
 | OFS BPC — adjustable seating/temperature/lighting | Co-1/Tier 3 | OFS | ALL |
 | NDV/MH BPC — user-adjustable lighting/acoustics | Tier 2–4 | NDV/MH | ALL |
@@ -518,7 +518,7 @@ Cross-reference note in C-04: DEM floor treatment and VIS TWSI contrast are comp
 | DeafSpace — lighting control for signing | Co-1/Tier 2 | DEAF | ALL |
 
 ### Proposed synthesis direction
-Elevate H-02 (Individual Environmental Control) to Tier 0 universal design. Specification: all primary occupied spaces to provide occupant-adjustable lighting (level and CCT), acoustic management (operable panels or zones), and local thermal control. Population-specific overlays at Tier 1 define parameter ranges. This does not increase cost significantly — dimmer switches and local thermostats are standard building components. The specification change is from "optional upgrade" to "baseline provision."
+Elevate H-02 (Individual Environmental Control) to Universal Mode universal design. Specification: all primary occupied spaces to provide occupant-adjustable lighting (level and CCT), acoustic management (operable panels or zones), and local thermal control. Population-specific overlays at Tier 1 define parameter ranges. This does not increase cost significantly — dimmer switches and local thermostats are standard building components. The specification change is from "optional upgrade" to "baseline provision."
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -536,7 +536,7 @@ Elevate H-02 (Individual Environmental Control) to Tier 0 universal design. Spec
 **Type:** BOTH
 **Populations involved:** DEM, NEU, NDV/AUT, OFS
 **Items involved:** Cognitive wayfinding BPC, DEM BPC, NEU BPC
-**Gap register items:** NONE (new Tier 0 candidate)
+**Gap register items:** NONE (new Universal Mode candidate)
 
 ### Connection description
 "Toilet visible from primary occupied space" is independently evidenced for DEM (Marquardt 2011 — reduces distress and incontinence; Davis & Weisbeck 2016), confirmed in cognitive wayfinding BPC for DEM and NDV, and functionally relevant for NEU (landmark-based navigation is the most effective compensatory strategy — Claessen & van der Ham 2017). OFS benefits from reduced navigation distance when symptomatic. The principle generalises: "essential facility visibility from primary occupation point" is a spatial planning principle serving DEM, NEU, NDV, and OFS simultaneously. It is currently documented only as a DEM-specific wayfinding provision in care settings. In residential settings, it would mean every dwelling's primary living area has direct sightline to the bathroom door — a provision that constitutes good spatial design for all occupants.
@@ -553,7 +553,7 @@ Note: CON-0001 covers loop circulation and legible layout; this connection is sp
 | Cognitive wayfinding BPC | Synthesis | DEM, NDV | NEU, OFS |
 
 ### Proposed synthesis direction
-Elevate "essential facility sightline" to a Tier 0 residential design principle: WC/bathroom door visible from main living area without navigational decision points. In care settings, this is already standard for DEM; in residential design, it is not specified. The evidence supports it as a universal benefit.
+Elevate "essential facility sightline" to a Universal Mode residential design principle: WC/bathroom door visible from main living area without navigational decision points. In care settings, this is already standard for DEM; in residential design, it is not specified. The evidence supports it as a universal benefit.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -574,7 +574,7 @@ Elevate "essential facility sightline" to a Tier 0 residential design principle:
 **Gap register items:** GAP-NEW-11, GAP-B4-08
 
 ### Connection description
-Extends CON-0002 (sensory/MH overlap) and CON-0004 (seated/reclined provision). Four populations independently require a low-stimulation refuge space: NDV/AUT (sensory quiet room A-16), NDV/MH (de-escalation/safe retreat ≥9 m²), OFS (low-stimulation rest space), PAIN (energy conservation rest point). These share overlapping functional requirements: low acoustic load (RT60 ≤0.4 s), user-controlled lighting, no through-traffic, accessible location. Currently specified as four distinct room types across four BPC entries. The synthesis: a single "environmental refuge" at Tier 0 — every occupied floor plate includes one refuge room — with population-specific overlays at Tier 1 (NDV/AUT: sensory equipment + blackout; NDV/MH: de-escalation furnishing; OFS: reclined seating + semi-recumbent positioning; PAIN: cushioned seating + thermal control). This resolves GAP-NEW-11 and GAP-B4-08 simultaneously within a unified spatial provision.
+Extends CON-0002 (sensory/MH overlap) and CON-0004 (seated/reclined provision). Four populations independently require a low-stimulation refuge space: NDV/AUT (sensory quiet room A-16), NDV/MH (de-escalation/safe retreat ≥9 m²), OFS (low-stimulation rest space), PAIN (energy conservation rest point). These share overlapping functional requirements: low acoustic load (RT60 ≤0.4 s), user-controlled lighting, no through-traffic, accessible location. Currently specified as four distinct room types across four BPC entries. The synthesis: a single "environmental refuge" at Universal Mode — every occupied floor plate includes one refuge room — with population-specific overlays at Tier 1 (NDV/AUT: sensory equipment + blackout; NDV/MH: de-escalation furnishing; OFS: reclined seating + semi-recumbent positioning; PAIN: cushioned seating + thermal control). This resolves GAP-NEW-11 and GAP-B4-08 simultaneously within a unified spatial provision.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -586,7 +586,7 @@ Extends CON-0002 (sensory/MH overlap) and CON-0004 (seated/reclined provision). 
 | ASPECTSS escape space (Mostafa 2014) | Tier 1 | NDV/AUT | Cross-population |
 
 ### Proposed synthesis direction
-Specify "environmental refuge space" as Tier 0 universal provision: one per occupied floor plate; user-controlled lighting (2700–5000 K dimmable); RT60 ≤0.4 s; no through-traffic; accessible without passing through high-stimulation zones. Population overlays added at Tier 1 per OT assessment.
+Specify "environmental refuge space" as Universal Mode universal provision: one per occupied floor plate; user-controlled lighting (2700–5000 K dimmable); RT60 ≤0.4 s; no through-traffic; accessible without passing through high-stimulation zones. Population overlays added at Tier 1 per OT assessment.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -636,11 +636,11 @@ Document as a conflict requiring resolution. Possible mitigations: anti-reflecti
 **Confidence:** HIGH
 **Type:** INTER-GROUP
 **Populations involved:** ALL
-**Items involved:** Part III (design hierarchy), Tier 0 doctrine
+**Items involved:** Part III (design hierarchy), Universal Mode doctrine
 **Gap register items:** NONE (new theoretical framework connection)
 
 ### Connection description
-UD2024 (Oslo, November 2024) proposed "Reduction of Fear" as an 8th Universal Design principle, arguing that Ron Mace's Principle 5 ("Tolerance for Error") places blame on the user ("error") rather than the environment. The paper documents fear of falling (DEM, MOB, NEU), fear of not finding a toilet (DEM, OFS), fear of forgetting procedures (DEM, NEU), and fear of being made to feel incapable (NDV/MH, all populations) as design-relevant concerns that current UD principles do not address. This maps directly onto the guidebook's Tier 0 provisions: the environmental refuge (CON-0019), essential facility sightline (CON-0018), and rest seating intervals (CON-0014) all reduce fear as their primary mechanism of action, but the guidebook does not frame them this way. Naming "fear reduction" as a design principle would unify multiple Tier 0 provisions under a single theoretical justification from environmental psychology.
+UD2024 (Oslo, November 2024) proposed "Reduction of Fear" as an 8th Universal Design principle, arguing that Ron Mace's Principle 5 ("Tolerance for Error") places blame on the user ("error") rather than the environment. The paper documents fear of falling (DEM, MOB, NEU), fear of not finding a toilet (DEM, OFS), fear of forgetting procedures (DEM, NEU), and fear of being made to feel incapable (NDV/MH, all populations) as design-relevant concerns that current UD principles do not address. This maps directly onto the guidebook's Universal Mode provisions: the environmental refuge (CON-0019), essential facility sightline (CON-0018), and rest seating intervals (CON-0014) all reduce fear as their primary mechanism of action, but the guidebook does not frame them this way. Naming "fear reduction" as a design principle would unify multiple Universal Mode provisions under a single theoretical justification from environmental psychology.
 
 ### Evidence basis
 | Source | Tier | Field | Not yet in guidebook? |
@@ -650,7 +650,7 @@ UD2024 (Oslo, November 2024) proposed "Reduction of Fear" as an 8th Universal De
 | NDA Ireland research on fall detection technologies | Tier 5 | Gerontology/UD | YES — not cited |
 
 ### Proposed synthesis direction
-Cite the "Reduction of Fear" proposal in Part III as theoretical support for the guidebook's Tier 0 provisions. Frame environmental refuge, facility sightline, rest seating, and consistent spatial layout as fear-reduction provisions, not merely functional accommodations. This shifts the framing from "compensating for deficit" to "designing environments that do not generate fear" — which aligns with the social model.
+Cite the "Reduction of Fear" proposal in Part III as theoretical support for the guidebook's Universal Mode provisions. Frame environmental refuge, facility sightline, rest seating, and consistent spatial layout as fear-reduction provisions, not merely functional accommodations. This shifts the framing from "compensating for deficit" to "designing environments that do not generate fear" — which aligns with the social model.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -736,7 +736,7 @@ Use the Al-Harasis taxonomy to audit the guidebook's NDV item specifications for
 **Gap register items:** NONE (new theoretical connection)
 
 ### Connection description
-Prospect-refuge theory (Appleton 1975; Hildebrand 1991) — the human need for environments providing both clear outward views (prospect) and sheltered protected spaces (refuge) — provides theoretical grounding from environmental psychology for several of the guidebook's cross-population provisions. The "environmental refuge" room (CON-0019) is literally a refuge space. The facility sightline principle (CON-0018) is a prospect provision. The biophilic outdoor space with looped path and seating (CON-0015) combines prospect (garden views) and refuge (sheltered seating). The guidebook currently derives these provisions from disability-specific clinical evidence but does not cite the environmental psychology framework that explains why they work for ALL populations — including non-disabled occupants. Connecting to prospect-refuge theory strengthens the Tier 0 argument: these are not disability accommodations but fundamental human spatial needs that disability populations make visible.
+Prospect-refuge theory (Appleton 1975; Hildebrand 1991) — the human need for environments providing both clear outward views (prospect) and sheltered protected spaces (refuge) — provides theoretical grounding from environmental psychology for several of the guidebook's cross-population provisions. The "environmental refuge" room (CON-0019) is literally a refuge space. The facility sightline principle (CON-0018) is a prospect provision. The biophilic outdoor space with looped path and seating (CON-0015) combines prospect (garden views) and refuge (sheltered seating). The guidebook currently derives these provisions from disability-specific clinical evidence but does not cite the environmental psychology framework that explains why they work for ALL populations — including non-disabled occupants. Connecting to prospect-refuge theory strengthens the Universal Mode argument: these are not disability accommodations but fundamental human spatial needs that disability populations make visible.
 
 ### Evidence basis
 | Source | Tier | Field | Not yet in guidebook? |
@@ -747,7 +747,7 @@ Prospect-refuge theory (Appleton 1975; Hildebrand 1991) — the human need for e
 | Frontiers in Psychology 2025 — healing landscape prospect-refuge balance | Tier 3 | Environmental psychology | YES — not cited |
 
 ### Proposed synthesis direction
-Cite prospect-refuge theory in Part III (design hierarchy) as theoretical support for the guidebook's Tier 0 provisions. The theory provides a non-disability-specific explanation for why environmental refuge, facility sightline, and biophilic outdoor spaces are universal human needs — not disability-specific accommodations. This strengthens the social model framing: disability populations do not need "special" spaces; they need spaces that fulfil fundamental human needs which conventional design has neglected.
+Cite prospect-refuge theory in Part III (design hierarchy) as theoretical support for the guidebook's Universal Mode provisions. The theory provides a non-disability-specific explanation for why environmental refuge, facility sightline, and biophilic outdoor spaces are universal human needs — not disability-specific accommodations. This strengthens the social model framing: disability populations do not need "special" spaces; they need spaces that fulfil fundamental human needs which conventional design has neglected.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -799,7 +799,7 @@ Extend the guidebook's outdoor design provisions beyond biophilic and DEM secure
 **Gap register items:** NONE (methodological connection)
 
 ### Connection description
-Van Doorn et al. 2024 (Research in Autism Spectrum Disorders 113:102350) — scoping review of sensory adaptive environments (SAEs) for autistic children — finds "mixed evidence" and a critical methodological gap: "sensory adaptive environments are not tailored to the sensory needs of each child." This finding independently validates the guidebook's three-tier hierarchy: Tier 0/1 specifications are population-informed defaults that must be resolved through Tier 2 co-design for individual users. The SAE review confirms that generic sensory rooms (equivalent to Tier 1) have limited evidence; individualised sensory environments (equivalent to Tier 2) are more effective but under-researched. Piller et al. 2025 (Frontiers in Pediatrics 13:1720179) systematic review of sensory-based interventions confirms: "targeting a variety of sensory systems is more effective than targeting only one system" — supporting the guidebook's multi-sensory approach. Both reviews note "a lack of evidence on the impact of sensory environmental modifications" — confirming the guidebook's THIN-BASE flags on sensory room specifications are appropriate.
+Van Doorn et al. 2024 (Research in Autism Spectrum Disorders 113:102350) — scoping review of sensory adaptive environments (SAEs) for autistic children — finds "mixed evidence" and a critical methodological gap: "sensory adaptive environments are not tailored to the sensory needs of each child." This finding independently validates the guidebook's three-tier hierarchy: Universal Mode/1 specifications are population-informed defaults that must be resolved through Tier 2 co-design for individual users. The SAE review confirms that generic sensory rooms (equivalent to Tier 1) have limited evidence; individualised sensory environments (equivalent to Tier 2) are more effective but under-researched. Piller et al. 2025 (Frontiers in Pediatrics 13:1720179) systematic review of sensory-based interventions confirms: "targeting a variety of sensory systems is more effective than targeting only one system" — supporting the guidebook's multi-sensory approach. Both reviews note "a lack of evidence on the impact of sensory environmental modifications" — confirming the guidebook's THIN-BASE flags on sensory room specifications are appropriate.
 
 ### Evidence basis
 | Source | Tier | Field | Not yet in guidebook? |
@@ -863,7 +863,7 @@ Part 1 theoretical framework: cite Housing Enabler as the recommended Tier 2 ass
 Lawton (1989, 1990) distinguished environmental docility from environmental proactivity. Docility: declining personal competence → behaviour increasingly dictated by environment. Proactivity: higher competence → person actively shapes environment to match needs. A 2024 P-E fit scoping review (Journal of Asian Architecture and Building Engineering, 10.1080/13467581.2024.2373824) confirms these concepts remain foundational but identifies a knowledge gap: the lack of proactive and dynamic views in current P-E fit research.
 
 The guidebook's three-tier hierarchy maps directly onto this continuum but does not name it:
-- Tier 0 = reducing environmental press universally (docility mitigation — ensures environment does not overwhelm any user's competence)
+- Universal Mode = reducing environmental press universally (docility mitigation — ensures environment does not overwhelm any user's competence)
 - Tier 1 = population-informed press calibration (intermediate — reduces press for identified population groups)
 - Tier 2 = person-specific co-design (proactivity — individual actively shapes environment with OT support)
 
@@ -877,7 +877,7 @@ This mapping is not stated in the guidebook. Making it explicit provides non-dis
 | Struckmeyer & Rice 2025 (Routledge chapter: EP-CM in OT) | Co-2 | OT practice | ALL |
 
 ### Proposed synthesis direction
-Part 1 theoretical framework: add explicit mapping of three-tier hierarchy to Lawton's docility-proactivity continuum. Frame: Tier 0 = anti-docility floor; Tier 1 = population-calibrated press reduction; Tier 2 = proactive P-E optimisation through co-design. This reframes the entire hierarchy from accessibility levels to universal person-environment fit optimisation — non-disability-specific.
+Part 1 theoretical framework: add explicit mapping of three-tier hierarchy to Lawton's docility-proactivity continuum. Frame: Universal Mode = anti-docility floor; Tier 1 = population-calibrated press reduction; Tier 2 = proactive P-E optimisation through co-design. This reframes the entire hierarchy from accessibility levels to universal person-environment fit optimisation — non-disability-specific.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -901,7 +901,7 @@ Two independent research programmes have developed inclusive-design-specific POE
 
 2. A.U.D.I.T. (Mosca & Capolongo, Acta Biomedica 94(S3):e2023124, 2023): Assessment Universal Design & Inclusion Tool for healthcare facilities — evaluates physical, sensory-cognitive, and social quality dimensions.
 
-Zallio & Clarkson (2023, Architectural Science Review 67:268-279) found that only 10.6% of architectural practitioners reported clients seeking sensory and cognitive inclusion beyond physical accessibility, and that POE tools for inclusive design are almost nonexistent in practice. The guidebook covers design stages up to RFO but has no specification for post-occupancy evaluation. This is a gap: without POE, there is no feedback loop between design intent (Tier 0/1 specifications) and actual occupant experience.
+Zallio & Clarkson (2023, Architectural Science Review 67:268-279) found that only 10.6% of architectural practitioners reported clients seeking sensory and cognitive inclusion beyond physical accessibility, and that POE tools for inclusive design are almost nonexistent in practice. The guidebook covers design stages up to RFO but has no specification for post-occupancy evaluation. This is a gap: without POE, there is no feedback loop between design intent (Universal Mode/1 specifications) and actual occupant experience.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -912,7 +912,7 @@ Zallio & Clarkson (2023, Architectural Science Review 67:268-279) found that onl
 | Zallio & Clarkson 2023 (practitioner survey, n=114) | 3 | Building industry professionals | ALL |
 
 ### Proposed synthesis direction
-Add RFO-stage POE specification to Part 5 (or equivalent practice guidance): recommend IDEA Audit framework (or adaptation) as post-occupancy feedback instrument. Components: physical accessibility audit, sensory environment assessment, neurodivergent comfort evaluation, people-space engagement survey. Link POE findings back to Tier 0/1 specifications for iterative improvement. This closes the design-occupy-evaluate loop currently missing from the guidebook.
+Add RFO-stage POE specification to Part 5 (or equivalent practice guidance): recommend IDEA Audit framework (or adaptation) as post-occupancy feedback instrument. Components: physical accessibility audit, sensory environment assessment, neurodivergent comfort evaluation, people-space engagement survey. Link POE findings back to Universal Mode/1 specifications for iterative improvement. This closes the design-occupy-evaluate loop currently missing from the guidebook.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -1105,7 +1105,7 @@ Part 5 residential matrices must include support framework items — not just bu
 **Type:** [BOTH] — intra-individual (one person benefits from RT60 ≤0.3 s for multiple co-occurring conditions) and inter-group (building serves DEAF + NDV/AUT + DEM occupants)
 **Populations involved:** DEAF, NDV/AUT, DEM, NEU/PCS
 **Items involved:** A-02, A-08, A-13, all Category A items
-**Gap register items:** NONE (new Tier 0 candidate)
+**Gap register items:** NONE (new Universal Mode candidate)
 
 ### Connection description
 Four independent evidence streams converge on RT60 ≤0.3 s as the specification ceiling for speech-critical rooms:
@@ -1122,7 +1122,7 @@ The 0.3 s ceiling is a strict subset of the 0.6 s general-population ceiling —
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| Iglehart 2020 (AJA) | 1 | DEAF (hearing device users) | ALL — Tier 0 acoustic ceiling |
+| Iglehart 2020 (AJA) | 1 | DEAF (hearing device users) | ALL — Universal Mode acoustic ceiling |
 | ANSI/ASA S12.60-2010 Footnote e | 4 | DEAF | ALL |
 | Bettarello et al. 2021 (Applied Sciences) | 1 | NDV/AUT | ALL |
 | Caniato et al. 2024 | 1 | NDV/AUT | ALL |
@@ -1130,7 +1130,7 @@ The 0.3 s ceiling is a strict subset of the 0.6 s general-population ceiling —
 | Murgia et al. 2023 (systematic review) | 1 | DEAF | ALL |
 
 ### Proposed synthesis direction
-Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI per Iglehart 2020). Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
+Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Universal Mode universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI per Iglehart 2020). Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
 
 ### Disposition
 - [ ] HIGH → item-specification-writer briefing for all Category A items
@@ -1303,7 +1303,7 @@ Two specific actionable findings:
 
 1. **Misaffordance concept:** Environments signalling an action that doesn't exist. High-gloss floor appearing wet to DEM user = misaffordance. Glazed junction (CON-0020) creating reflection = misaffordance for DEM. Names the mechanism behind several existing conflicts.
 
-2. **Haptic pathway continuity:** Handrail/grab bar interruptions at doorways break the tactile route for VIS and DBL users. Continuous handrail = continuous haptic pathway. Not connected to CON-0003 (grab bars) or CON-0001 (circulation legibility). Actionable: specify continuous haptic pathway as Tier 0 circulation requirement.
+2. **Haptic pathway continuity:** Handrail/grab bar interruptions at doorways break the tactile route for VIS and DBL users. Continuous handrail = continuous haptic pathway. Not connected to CON-0003 (grab bars) or CON-0001 (circulation legibility). Actionable: specify continuous haptic pathway as Universal Mode circulation requirement.
 
 ### Evidence basis
 | Source | Tier | Framework | Application |
@@ -1313,7 +1313,7 @@ Two specific actionable findings:
 | Turvey & Carello 1995 (haptic) | Foundational | Haptic psychology | Handrail = haptic navigation structure |
 
 ### Proposed synthesis direction
-Part 1 §1.4: cite ecological affordance framework as theoretical foundation. Specification = threshold at which affordance becomes available/unavailable. Misaffordance = actively harmful design (not just absence of accessibility). Haptic continuity: specify continuous handrail as Tier 0 on primary circulation routes — interruption at doors, corners, or landings is a haptic pathway break.
+Part 1 §1.4: cite ecological affordance framework as theoretical foundation. Specification = threshold at which affordance becomes available/unavailable. Misaffordance = actively harmful design (not just absence of accessibility). Haptic continuity: specify continuous handrail as Universal Mode on primary circulation routes — interruption at doors, corners, or landings is a haptic pathway break.
 
 ### Disposition
 - [ ] MODERATE → P2 gap item for theoretical framing
@@ -1536,19 +1536,19 @@ Specify bariatric-rated fold-down grab bars (≥300 kg SWL) where BAR provision 
 **Gap register items:** GAP-CON-02
 
 ### Connection description
-Loop/linear circulation with no dead-ends serves five populations from independent clinical rationales: DEAF (visual field scan), VIS (tactile route memorisation), DBL (tactile navigation without choice points), DEM (prevents disorientation), IntD (reduces cognitive load). All five BPCs specify this geometry; currently siloed. This is a Tier 0 universal candidate.
+Loop/linear circulation with no dead-ends serves five populations from independent clinical rationales: DEAF (visual field scan), VIS (tactile route memorisation), DBL (tactile navigation without choice points), DEM (prevents disorientation), IntD (reduces cognitive load). All five BPCs specify this geometry; currently siloed. This is a Universal Mode universal candidate.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| deaf-spatial-design BPC | 2 | DEAF | Tier 0 universal |
-| visual-impairment-built-environment BPC | 2 | VIS | Tier 0 universal |
-| wayfinding-dementia-spatial-design BPC | 2 | DEM | Tier 0 universal |
-| deafblind-built-environment-design BPC | 4-5 | DBL | Tier 0 universal |
-| intellectual-disability-built-environment-design BPC | 4-5 | IntD | Tier 0 universal |
+| deaf-spatial-design BPC | 2 | DEAF | Universal Mode universal |
+| visual-impairment-built-environment BPC | 2 | VIS | Universal Mode universal |
+| wayfinding-dementia-spatial-design BPC | 2 | DEM | Universal Mode universal |
+| deafblind-built-environment-design BPC | 4-5 | DBL | Universal Mode universal |
+| intellectual-disability-built-environment-design BPC | 4-5 | IntD | Universal Mode universal |
 
 ### Proposed synthesis direction
-Elevate loop/linear circulation to Tier 0 universal provision (D-02 revision). Mechanism: reduces wayfinding cognitive load for all users; essential for DEAF/VIS/DBL/DEM/IntD; neutral for others.
+Elevate loop/linear circulation to Universal Mode universal provision (D-02 revision). Mechanism: reduces wayfinding cognitive load for all users; essential for DEAF/VIS/DBL/DEM/IntD; neutral for others.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -1631,17 +1631,17 @@ Recode D-09 as multi-population provision (DEM, VIS, DBL, IntD). Mechanism: spat
 **Gap register items:** GAP-FDR-T0-04
 
 ### Connection description
-Entrance recline seating within 5 m of all accessible entrances (GAP-FDR-T0-04) serves four populations: OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause point). Documented as Tier 0 candidate in gap register; not yet in guidebook item specifications.
+Entrance recline seating within 5 m of all accessible entrances (GAP-FDR-T0-04) serves four populations: OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause point). Documented as Universal Mode candidate in gap register; not yet in guidebook item specifications.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| pain-ofs-built-environment-design BPC | 2 | OFS, PAIN | Tier 0 universal |
+| pain-ofs-built-environment-design BPC | 2 | OFS, PAIN | Universal Mode universal |
 | mobility-built-environment BPC | 2 | MOB/AMB | entrance seating |
 | dementia-built-environment BPC | 2 | DEM | entrance seating |
 
 ### Proposed synthesis direction
-Create new item: entrance recline seating ≤5 m from accessible entrance (E-14). Specify as Tier 0 universal provision — essential for OFS/PAIN/MOB/AMB/DEM; beneficial for all.
+Create new item: entrance recline seating ≤5 m from accessible entrance (E-14). Specify as Universal Mode universal provision — essential for OFS/PAIN/MOB/AMB/DEM; beneficial for all.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing
@@ -2570,7 +2570,7 @@ Flag cross-population conflict resolution as under-researched domain. Note guide
 **Gap register items:** NONE
 
 ### Connection description
-Salutogenic architecture systematic review (Rakhshani & Khakzand 2025, SAGE HERD) identifies architectural elements in non-therapeutic settings that promote health for elderly populations. Sense of Coherence framework (comprehensibility, manageability, meaningfulness) maps to guidebook's three-tier hierarchy: comprehensibility = Tier 0 legibility; manageability = Tier 1 population-adjusted; meaningfulness = Tier 2 co-designed. Not currently in guidebook theoretical framework.
+Salutogenic architecture systematic review (Rakhshani & Khakzand 2025, SAGE HERD) identifies architectural elements in non-therapeutic settings that promote health for elderly populations. Sense of Coherence framework (comprehensibility, manageability, meaningfulness) maps to guidebook's three-tier hierarchy: comprehensibility = Universal Mode legibility; manageability = Tier 1 population-adjusted; meaningfulness = Tier 2 co-designed. Not currently in guidebook theoretical framework.
 
 ### Evidence basis
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -2799,7 +2799,7 @@ Review for jurisdiction-specific residential accessibility data. Potential updat
 
 | Connection | Status update | Consumed by |
 |---|---|---|
-| CON-0005 (H-02 user control as Tier 0) | Referenced | LIGHT-INT matrix Resolution 2; ACOUSTIC-LVL aligned parameters |
+| CON-0005 (H-02 user control as Universal Mode) | Referenced | LIGHT-INT matrix Resolution 2; ACOUSTIC-LVL aligned parameters |
 | CON-0016 (zone-parameter model) | CONSUMED | LIGHT-INT matrix Resolution 1 (three-zone illuminance values) |
 | CON-0030 (glazed junction four-way conflict) | CONSUMED | SPATIAL-OPEN matrix Resolution 2 |
 | CON-0037 (prospect-refuge theory) | CONSUMED | SPATIAL-OPEN matrix Resolution 1 |
@@ -3352,7 +3352,7 @@ Guidebook gap: No Part 4 item specifies smart-home-ready infrastructure (wiring,
 | Lee et al. 2025 (Disability & Rehab AT) | 2 | Not cited | Part 9 §9.5 — population-differentiated technology prescription |
 
 ### Proposed synthesis direction
-Create DAR provision for smart-home-ready infrastructure: (1) conduit from distribution board to all primary occupied rooms, (2) Wi-Fi AP position at ceiling level in circulation hub, (3) power outlet at smart speaker mounting height (1200 mm AFF) in kitchen, bedroom, living room, (4) structured cabling to entrance intercom position for future video door integration. Tier 1 evidence supports OT-led prescription model. Infrastructure is architectural; devices are Tier 2 OT-prescribed.
+Create DAR provision for smart-home-ready infrastructure: (1) conduit from distribution board to all primary occupied rooms, (2) Wi-Fi AP position at ceiling level in circulation hub, (3) power outlet at smart speaker mounting height (1200 mm AFF) in kitchen, bedroom, living room, (4) structured cabling to entrance intercom position for future video door integration. Tier 1 evidence supports OT-led prescription model. Infrastructure is architectural; devices are Mode S OT-prescribed.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing (H-02, Part 10 DAR)

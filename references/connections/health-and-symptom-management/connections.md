@@ -44,7 +44,7 @@ The guidebook's evidence hierarchy does not weight "never tested in a built envi
 **Filed:** 2026-03-28
 **Applied:** —
 
-**Connection:** Salutogenic architecture systematic review (Rakhshani & Khakzand 2025, SAGE HERD) identifies architectural elements in non-therapeutic settings that promote health for elderly populations. Sense of Coherence framework (comprehensibility, manageability, meaningfulness) maps to guidebook's three-tier hierarchy: comprehensibility = Tier 0 legibility; manageability = Tier 1 population-adjusted; meaningfulness = Tier 2 co-designed. Not currently in guidebook theoretical framework.
+**Connection:** Salutogenic architecture systematic review (Rakhshani & Khakzand 2025, SAGE HERD) identifies architectural elements in non-therapeutic settings that promote health for elderly populations. Sense of Coherence framework (comprehensibility, manageability, meaningfulness) maps to guidebook's three-tier hierarchy: comprehensibility = Universal Mode legibility; manageability = Tier 1 population-adjusted; meaningfulness = Tier 2 co-designed. Not currently in guidebook theoretical framework.
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -98,9 +98,9 @@ The guidebook's evidence hierarchy does not weight "never tested in a built envi
 
 **Connection:** Rest provision scales through three tiers — seated rest (I-03, every 50m on primary routes), enclosed low-stimulation space (D-05, one per floor), full sensory room (A-16, one per building) — but the scaling relationship is not specified. A practitioner does not know: (a) at what building occupancy does each tier become mandatory? (b) what is the distance/time threshold between tiers? (c) can D-05 substitute for A-16 in smaller buildings? These three items are specified independently. The scaling hierarchy is implicit in the BPC evidence (PAS 6463 recommends quiet spaces at building scale; OFS BPC specifies rest points at 50m intervals) but never codified.
 
-**Evidence basis:** PAS 6463:2022 §6.4 (quiet space provision by building type). pain-ofs BPC (rest point intervals). CON-0019 (environmental refuge as Tier 0 — one per floor). sensory-relief-space-design BPC (A-16 specification).
+**Evidence basis:** PAS 6463:2022 §6.4 (quiet space provision by building type). pain-ofs BPC (rest point intervals). CON-0019 (environmental refuge as Universal Mode — one per floor). sensory-relief-space-design BPC (A-16 specification).
 
-**Action required:** Create rest provision scaling table in Part 4 preamble or Part 3 §3.x: I-03 (≤50m intervals, all buildings) → D-05 (per floor, buildings >500m² GFA or >2 storeys) → A-16 (per building, buildings >2000m² GFA or where NDV/MH populations primary). Tier thresholds: I-03 = Tier 0; D-05 = Tier 0 (>500m²) / Tier 1 (<500m²); A-16 = Tier 1 for most buildings / mandatory for healthcare + education per CON-0046.
+**Action required:** Create rest provision scaling table in Part 4 preamble or Part 3 §3.x: I-03 (≤50m intervals, all buildings) → D-05 (per floor, buildings >500m² GFA or >2 storeys) → A-16 (per building, buildings >2000m² GFA or where NDV/MH populations primary). Tier thresholds: I-03 = Universal Mode; D-05 = Universal Mode (>500m²) / Tier 1 (<500m²); A-16 = Tier 1 for most buildings / mandatory for healthcare + education per CON-0046.
 
 **Disposition notes:** — Codifies implicit hierarchy. High practitioner value.
 

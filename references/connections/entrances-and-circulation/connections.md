@@ -144,7 +144,7 @@
 **Filed:** 2026-03-26
 **Applied:** —
 
-**Connection:** Extends CON-0002 (sensory/MH overlap) and CON-0004 (seated/reclined provision). Four populations independently require a low-stimulation refuge space: NDV/AUT (sensory quiet room A-16), NDV/MH (de-escalation/safe retreat ≥9 m²), OFS (low-stimulation rest space), PAIN (energy conservation rest point). These share overlapping functional requirements: low acoustic load (RT60 ≤0.4 s), user-controlled lighting, no through-traffic, accessible location. Currently specified as four distinct room types across four BPC entries. The synthesis: a single "environmental refuge" at Tier 0 — every occupied floor plate includes one refuge room — with population-specific overlays at Tier 1 (NDV/AUT: sensory e…
+**Connection:** Extends CON-0002 (sensory/MH overlap) and CON-0004 (seated/reclined provision). Four populations independently require a low-stimulation refuge space: NDV/AUT (sensory quiet room A-16), NDV/MH (de-escalation/safe retreat ≥9 m²), OFS (low-stimulation rest space), PAIN (energy conservation rest point). These share overlapping functional requirements: low acoustic load (RT60 ≤0.4 s), user-controlled lighting, no through-traffic, accessible location. Currently specified as four distinct room types across four BPC entries. The synthesis: a single "environmental refuge" at Universal Mode — every occupied floor plate includes one refuge room — with population-specific overlays at Tier 1 (NDV/AUT: sensory e…
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -155,7 +155,7 @@
 | Sensory room user control BPC | Co-1 | NDV/AUT | All four |
 | ASPECTSS escape space (Mostafa 2014) | Tier 1 | NDV/AUT | Cross-population |
 
-**Action required:** Specify "environmental refuge space" as Tier 0 universal provision: one per occupied floor plate; user-controlled lighting (2700–5000 K dimmable); RT60 ≤0.4 s; no through-traffic; accessible without passing through high-stimulation zones. Population overlays added at Tier 1 per OT assessment.
+**Action required:** Specify "environmental refuge space" as Universal Mode universal provision: one per occupied floor plate; user-controlled lighting (2700–5000 K dimmable); RT60 ≤0.4 s; no through-traffic; accessible without passing through high-stimulation zones. Population overlays added at Tier 1 per OT assessment.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
@@ -247,7 +247,7 @@
 | UD2024 Carpe Diem dementia village presentation (Bærum, Norway) — prospect-refuge in dementia care | Tier 5 / Co-1 | Architecture + dementia care | YES — not cited |
 | Frontiers in Psychology 2025 — healing landscape prospect-refuge balance | Tier 3 | Environmental psychology | YES — not …
 
-**Action required:** Cite prospect-refuge theory in Part III (design hierarchy) as theoretical support for the guidebook's Tier 0 provisions. The theory provides a non-disability-specific explanation for why environmental refuge, facility sightline, and biophilic outdoor spaces are universal human needs — not disability-specific accommodations. This strengthens the social model framing: disability populations do not n…
+**Action required:** Cite prospect-refuge theory in Part III (design hierarchy) as theoretical support for the guidebook's Universal Mode provisions. The theory provides a non-disability-specific explanation for why environmental refuge, facility sightline, and biophilic outdoor spaces are universal human needs — not disability-specific accommodations. This strengthens the social model framing: disability populations do not n…
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
@@ -298,7 +298,7 @@
 **Filed:** 2026-03-26
 **Applied:** —
 
-**Connection:** Van Doorn et al. 2024 (Research in Autism Spectrum Disorders 113:102350) — scoping review of sensory adaptive environments (SAEs) for autistic children — finds "mixed evidence" and a critical methodological gap: "sensory adaptive environments are not tailored to the sensory needs of each child." This finding independently validates the guidebook's three-tier hierarchy: Tier 0/1 specifications are population-informed defaults that must be resolved through Tier 2 co-design for individual users. The SAE review confirms that generic sensory rooms (equivalent to Tier 1) have limited evidence; individualised sensory environments (equivalent to Tier 2) are more effective but under-researched. Pille…
+**Connection:** Van Doorn et al. 2024 (Research in Autism Spectrum Disorders 113:102350) — scoping review of sensory adaptive environments (SAEs) for autistic children — finds "mixed evidence" and a critical methodological gap: "sensory adaptive environments are not tailored to the sensory needs of each child." This finding independently validates the guidebook's three-tier hierarchy: Universal Mode/1 specifications are population-informed defaults that must be resolved through Tier 2 co-design for individual users. The SAE review confirms that generic sensory rooms (equivalent to Tier 1) have limited evidence; individualised sensory environments (equivalent to Tier 2) are more effective but under-researched. Pille…
 
 **Evidence basis:**
 | Source | Tier | Field | Not yet in guidebook? |
@@ -368,14 +368,14 @@
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| Iglehart 2020 (AJA) | 1 | DEAF (hearing device users) | ALL — Tier 0 acoustic ceiling |
+| Iglehart 2020 (AJA) | 1 | DEAF (hearing device users) | ALL — Universal Mode acoustic ceiling |
 | ANSI/ASA S12.60-2010 Footnote e | 4 | DEAF | ALL |
 | Bettarello et al. 2021 (Applied Sciences) | 1 | NDV/AUT | ALL |
 | Caniato et al. 2024 | 1 | NDV/AUT | ALL |
 | Devos et al. 2019 (PMC) | 2 | DEM | ALL |
 | Murgia et al. 2023 (systematic review) | 1 | DEAF | ALL |
 
-**Action required:** Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Tier 0 universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI per Iglehart 2020). Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
+**Action required:** Elevate RT60 ≤0.3 s (mid-frequency average 500–2000 Hz) to Universal Mode universal specification for all speech-critical rooms. Frame 0.6 s explicitly as outer failure boundary, not compliant specification. Background noise ≤35 dBA; STI ≥0.60 at furthest listener position (BPC minimum; ≥0.75 for DEAF/CI per Iglehart 2020). Sound masking conflict with NDV/AUT documented separately in Part 7 §7.3.
 
 **Disposition notes:** - [ ] HIGH → item-specification-writer briefing for all Category A items
 
@@ -406,7 +406,7 @@ Two specific actionable findings:
 | Heft 2001 (nested hierarchies) | Foundational | Environmental psychology | Wayfinding = affordance assemblage |
 | Turvey & Carello 1995 (haptic) | Foundational | Haptic psychology | Handrail = haptic navigation structure |
 
-**Action required:** Part 1 §1.4: cite ecological affordance framework as theoretical foundation. Specification = threshold at which affordance becomes available/unavailable. Misaffordance = actively harmful design (not just absence of accessibility). Haptic continuity: specify continuous handrail as Tier 0 on primary circulation routes — interruption at doors, corners, or landings is a haptic pathway break.
+**Action required:** Part 1 §1.4: cite ecological affordance framework as theoretical foundation. Specification = threshold at which affordance becomes available/unavailable. Misaffordance = actively harmful design (not just absence of accessibility). Haptic continuity: specify continuous handrail as Universal Mode on primary circulation routes — interruption at doors, corners, or landings is a haptic pathway break.
 
 **Disposition notes:** - [ ] MODERATE → P2 gap item for theoretical framing
 - [ ] HIGH → item-specification-writer briefing for G-item haptic continuity

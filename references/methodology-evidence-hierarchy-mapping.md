@@ -207,7 +207,7 @@ Multi-grade recommendation systems (GRADE's Strong/Conditional, SIGN's A–D) ar
 
 1. A building element is either specified or not specified. There is no "conditional specification" — a door either has a minimum clear width or it does not.
 2. The consequence of a specification is borne by the population, not an individual patient. A weak recommendation in clinical practice means "consider on a case-by-case basis." In built environment design, a specification either applies to the building or it does not; case-by-case decisions occur at Tier 2 (co-design), not at Tier 1 (population-level specification).
-3. The project's three-tier design hierarchy (Tier 0 Universal/Code, Tier 1 Population-Informed, Tier 2 Person-Specific) already captures the strong-to-conditional spectrum. Tier 0 specifications are mandatory (analogous to Strong recommendation). Tier 1 specifications use median values with ranges (analogous to Conditional — apply with adjustment). Tier 2 specifications defer to OT co-design (analogous to "insufficient evidence for population-level recommendation").
+3. The project's three-tier design hierarchy (Universal Mode Universal/Code, Tier 1 Population-Informed, Tier 2 Person-Specific) already captures the strong-to-conditional spectrum. Universal Mode specifications are mandatory (analogous to Strong recommendation). Tier 1 specifications use median values with ranges (analogous to Conditional — apply with adjustment). Tier 2 specifications defer to OT co-design (analogous to "insufficient evidence for population-level recommendation").
 
 The ●/○ system therefore captures the one distinction that matters at the specification level: whether a specification has an evidence basis or is inferred from reasoning.
 
@@ -237,7 +237,7 @@ The ●/○ system therefore captures the one distinction that matters at the sp
 
 | Design hierarchy tier | Typical evidence pattern | Marker |
 |---|---|---|
-| Tier 0 (Universal / Code) | Tier 6 (statutory) + usually Tier 4/5 (international/national standards) | ● — code compliance is inherently evidence-based (the evidence being the code itself) |
+| Universal Mode (Universal / Code) | Tier 6 (statutory) + usually Tier 4/5 (international/national standards) | ● — code compliance is inherently evidence-based (the evidence being the code itself) |
 | Tier 1 (Population-Informed) | Tier 1 + Co-1 + Tier 3 + Co-2 (the specification is derived from population-level evidence) | ● or ○ depending on evidence availability per population |
 | Tier 2 (Person-Specific) | Co-1 + OT assessment (the specification is resolved through co-design for an individual) | Not marked — Tier 2 specifications are process descriptions, not fixed values |
 

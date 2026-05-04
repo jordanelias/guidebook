@@ -111,7 +111,7 @@ These are interface design requirements that the physical-access specification d
 
 **Connection:** Faerden 2022 reports Cohen's d = 2.0 for patient support and d = 1.7 for staff support when sensory modulation rooms are available in psychiatric inpatient settings. This is the largest single effect size for any built-environment intervention in the entire BPC corpus — larger than Clemson 2023 (fall prevention, 38% reduction), larger than CAPABLE (hospitalisation 0.43→0.23/year), larger than Sheffield (39% care hour reduction).
 
-H-02 is already Tier 0 (CON-0017) but the MH evidence provides the strongest quantified justification for user environmental control of any population. The MH-specific additions not in H-02's current specification: (a) exit sightline from every occupied space — user must see the exit route at all times (anti-entrapment); (b) no locked-in perception — door latches must be user-operable from inside even in secure settings; (c) user control of door to own space (can close, can lock from inside).
+H-02 is already Universal Mode (CON-0017) but the MH evidence provides the strongest quantified justification for user environmental control of any population. The MH-specific additions not in H-02's current specification: (a) exit sightline from every occupied space — user must see the exit route at all times (anti-entrapment); (b) no locked-in perception — door latches must be user-operable from inside even in secure settings; (c) user control of door to own space (can close, can lock from inside).
 
 van der Schaaf 2013 (n=23,868 across 199 wards) confirms private space per patient as the largest-effect design variable for reducing coercive measures — larger than staffing ratio, larger than therapeutic programme type.
 
@@ -213,17 +213,17 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 **Filed:** 2026-04-09
 **Applied:** —
 
-**Connection:** CON-0039 proposes RT60 ≤0.3 s as Tier 0 universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
+**Connection:** CON-0039 proposes RT60 ≤0.3 s as Universal Mode universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
 
 This creates a population-within-specification hierarchy for acoustic items:
 - General population: 0.6 s (code compliance, Tier 6)
-- DEAF/hearing devices: 0.3 s (Tier 0 per CON-0039)
+- DEAF/hearing devices: 0.3 s (Universal Mode per CON-0039)
 - NDV/AUT primary spaces: <0.3 s (Tier 1 — specific value unquantified; ○ marker)
 
-The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Tier 0 of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
+The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Universal Mode of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
 
 **Evidence basis:** room-acoustic-performance BPC: Bettarello 2021 (Tier 1), Caniato 2024 (Tier 1) — autistic populations significantly more affected by modest noise increases. NDV BPC Opus synthesis: "no internationally agreed quantified RT60 target specific to autistic users."
 
-**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Tier 0) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
+**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Universal Mode) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
 
 **Disposition notes:** — MODERATE because no quantified NDV/AUT-specific target exists. The direction is clear; the value is not.

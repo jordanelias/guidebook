@@ -17,7 +17,7 @@
 **Jurisdictions confirmed:** All frameworks internationally applied (PEOP: confirmed Tier 1 systematic review evidence)
 **Early-close:** Yes  **Thin/No-data:** None
 **Key sources:** TownsendPolatajko2007 · Kielhofner2008 · BaumEtal2015 · Iwama2006 · Siu2024-PMC
-**Notes:** CRPD General Comment No. 2 (2014) provides the normative basis. Kawa Model is recommended as primary framing language for guidebook item writing — barriers are external, not intrinsic. All frameworks support the Three-Tier Design Hierarchy position that the built environment is the primary variable.
+**Notes:** CRPD General Comment No. 2 (2014) provides the normative basis. Kawa Model is recommended as primary framing language for guidebook item writing — barriers are external, not intrinsic. All frameworks support the Design Modes position that the built environment is the primary variable.
 
 ## jurisdiction-matrix-accessibility-standards
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 4–5 (standards and regulatory documents)

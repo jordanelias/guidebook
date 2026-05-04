@@ -47,7 +47,7 @@
 
 ● Seating with bilateral fixed arms, seat height 440–480 mm AFF, within 5 m of accessible entrance threshold, in alcove ≥1200 mm wide recessed ≥200 mm from the main accessible route, under weather protection (E-05).¹ ⁵ ⁶
 
-○ Recline capability recommended at Tier 0 (tilt-in-space or backrest recline ≥110° from vertical preferred; fixed upright seating acceptable).² At Tier 1 where OFS or PAIN populations are identified, recline capability is mandatory.² ³
+○ Recline capability recommended at Universal Mode (tilt-in-space or backrest recline ≥110° from vertical preferred; fixed upright seating acceptable).² At Tier 1 where OFS or PAIN populations are identified, recline capability is mandatory.² ³
 
 ● Arms: both fixed, extending ≥200 mm forward of seat front edge, height 180–250 mm above compressed seat surface, minimum 40 mm graspable diameter or equivalent profile.¹
 

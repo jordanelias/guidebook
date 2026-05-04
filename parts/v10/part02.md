@@ -191,7 +191,7 @@ Stage-aware provisions: early-to-moderate dementia benefits from distinctive lan
 
 **Key design provisions.**
 
-Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K, 10–500 lux dimmable); acoustic attenuation ≤30 dBA; RT60 ≤0.3 s (stricter than the general ≤0.4 s — where NDV and DEAF share the same space, the NDV target governs); no fluorescent or stroboscopic lighting. The sensory quiet room is a Tier 0 provision — it benefits all NDV subtypes and has no population conflicts.
+Sensory quiet room (A-16): accessible within 25 m of any primary occupancy space; user-controlled lighting (2700–5000 K, 10–500 lux dimmable); acoustic attenuation ≤30 dBA; RT60 ≤0.3 s (stricter than the general ≤0.4 s — where NDV and DEAF share the same space, the NDV target governs); no fluorescent or stroboscopic lighting. The sensory quiet room is a Universal Mode provision — it benefits all NDV subtypes and has no population conflicts.
 
 Acoustic: background noise <55 dB(A) in focused-attention spaces (directional only — Caniato et al. 2024, single classroom study; PROVISIONAL, pending replication). RT60 ≤0.3 s in NDV-designated spaces. No sound masking (A-13) in any space where NDV is a primary population. All acoustic thresholds for NDV carry standing caveat: `[TIER 4–5 — no RCT-level study has validated built environment acoustic thresholds for NDV; all specifications are practitioner consensus pending peer-reviewed validation; March 2026]`.
 

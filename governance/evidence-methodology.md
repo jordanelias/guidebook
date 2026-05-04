@@ -50,11 +50,11 @@ Per A5 (`governance/co1-operational.md`, CANONICAL), every Co-1 citation carries
 
 Co-2 records carry `tier: 2, evidence_type: co2`. They do not require the Co-1-specific fields (`co1_provenance`, `co1_source_type`, `synthesis_attribution_required`). Co-2 records do require `verification_status`.
 
-### 1.4 Relationship to the Three-Tier Design Hierarchy
+### 1.4 Relationship to the Design Modes
 
-The Seven-Tier Evidence Hierarchy and the Three-Tier Design Hierarchy are orthogonal axes (per A5 §3.5). They co-locate authority for any specification:
+The Seven-Tier Evidence Hierarchy and the Design Modes are orthogonal axes (per A5 §3.5). They co-locate authority for any specification:
 
-- **Design Hierarchy** locates the *kind of design decision*: Tier 0 (universal, code-compliant); Tier 1 (population-informed, ranges with median); Tier 2 (person-specific, OT-resolved).
+- **Design Hierarchy** locates the *kind of design decision*: Universal Mode (universal, code-compliant); Tier 1 (population-informed, ranges with median); Tier 2 (person-specific, OT-resolved).
 - **Evidence Hierarchy** locates *what evidence supports the value*: what tier, what type, how strong.
 
 Every cell in the specification matrix sits at an intersection of both axes. A Design Tier 1 specification (population-informed range) may be supported by evidence at any Evidence Tier — clinical, Co-1, Co-2, standards, or a combination. The evidence tier does not determine the design tier; the design tier does not constrain which evidence tiers are consulted.
@@ -223,7 +223,7 @@ This section specifies how convergence is encoded, assessed, and rendered.
 - **`single_axis`**: Evidence exists in only one dimension (clinical only, or Co-1 only, or Co-2 only, or Tier 4–6 only). No convergence or divergence assessment is possible. Rendered per voice pattern Co-1-A or Co-1-B as appropriate.
 - **`pending_assessment`**: Evidence exists in multiple dimensions but the convergence assessment has not yet been performed (transitional state during migration).
 
-**The convergence assessment is not a confidence score.** It does not produce a number. It produces a categorical status with documented sources and rationale. The reason: confidence scores imply a false precision about the probability of correctness. The convergence assessment says what the evidence profile is and how the sources relate — the reader (and the Tier 2 OT) applies judgment.
+**The convergence assessment is not a confidence score.** It does not produce a number. It produces a categorical status with documented sources and rationale. The reason: confidence scores imply a false precision about the probability of correctness. The convergence assessment says what the evidence profile is and how the sources relate — the reader (and the Mode S OT) applies judgment.
 
 ### 3.3 Divergence within `stated` — resolves Q3
 
@@ -262,7 +262,7 @@ The convergence assessment determines which voice pattern governs the specificat
 | `single_axis` (Co-1 only) | Co-1-A or Co-1-B | "[Source] documents [finding]." or "Co-1 sources document [claim]; sources: [list]." |
 | `single_axis` (clinical only) | §8.1 Tier 1 construction | "[Evidence tier] evidence supports [value]." |
 | `single_axis` (Co-2 only) | §8.1 adapted | "OT professional body guidance ([CPG]) recommends [value]." |
-| `single_axis` (Tier 4–6 only) | §8.1 Tier 0/1 construction | "Code requires [value] per [standard]." or "[N] jurisdictions' standards converge on [value]." |
+| `single_axis` (Tier 4–6 only) | §8.1 Universal Mode/1 construction | "Code requires [value] per [standard]." or "[N] jurisdictions' standards converge on [value]." |
 | `pending_assessment` | Not rendered | Cell is flagged for assessment before publication |
 
 ### 3.5 Cross-entity integration
@@ -285,7 +285,7 @@ Two populations may have evidence-supported preferences that conflict on the sam
 
 Example: residential primary entrance threshold. The visitability framework (Concrete Change 1987; Co-1) specifies zero-step (0 mm) to ensure any person can enter. Some PAIN-population evidence supports textured threshold landings (≤6 mm, with slip-resistant tactile surface) for proprioceptive feedback at the entrance transition. Both positions have evidence. Neither is harmful. They conflict on the same physical parameter.
 
-Tier 2 OT co-design resolves this at the individual scale — the OT and the occupant determine what is right for this person. But at Tier 1 (population-informed), the guidebook must specify a default and a range. The values-criteria mechanism governs how that default is set.
+Mode S OT co-design resolves this at the individual scale — the OT and the occupant determine what is right for this person. But at Tier 1 (population-informed), the guidebook must specify a default and a range. The values-criteria mechanism governs how that default is set.
 
 ### 4.2 Resolution: three-step values-criteria assessment
 
@@ -303,7 +303,7 @@ If a conflict is function-based, the harm-asymmetry rule governs and this sectio
 
 **Step 2 — Broadest-benefit assessment.**
 
-For values-based conflicts, the Tier 1 default is set by asking: *which default serves the broadest population or the most constrained use case?*
+For values-based conflicts, the Mode P default is set by asking: *which default serves the broadest population or the most constrained use case?*
 
 Criteria, applied in order:
 
@@ -319,17 +319,17 @@ If all three criteria point the same direction, the default is clear. If they co
 
 The specification carries:
 
-- The Tier 1 default with rationale ("Broadest-benefit: zero-step serves [N] populations; proprioceptive feedback achievable via supplementary surface treatment")
+- The Mode P default with rationale ("Broadest-benefit: zero-step serves [N] populations; proprioceptive feedback achievable via supplementary surface treatment")
 - The alternative preference with its evidence basis
-- The Tier 2 handoff: "OT assessment may specify [alternative] based on individual proprioceptive needs"
+- The Mode S handoff: "OT assessment may specify [alternative] based on individual proprioceptive needs"
 - The convergence assessment (§3.2): `divergent` with synthesis_approach documenting the broadest-benefit reasoning
 
 ### 4.3 What the values-criteria mechanism does not do
 
 - **Does not override harm-asymmetry.** If one population faces genuine harm (neurological deterioration, fall risk, entrapment), that is function-based, not values-based. Harm-asymmetry governs.
 - **Does not claim one population's values are more legitimate.** Both preferences are evidence-grounded. The mechanism selects a structural default, not a correct value.
-- **Does not eliminate Tier 2 resolution.** The default is a starting point. Tier 2 OT co-design may override it for an individual whose needs are better served by the alternative.
-- **Does not apply to Tier 0.** Tier 0 (universal design / code compliance) is set by code. Values-criteria applies at Tier 1 only.
+- **Does not eliminate Tier 2 resolution.** The default is a starting point. Mode S OT co-design may override it for an individual whose needs are better served by the alternative.
+- **Does not apply to Universal Mode.** Universal Mode (universal design / code compliance) is set by code. Values-criteria applies at Tier 1 only.
 
 ## 5. Design-pedagogy literature engagement — resolves Q6
 
@@ -379,7 +379,7 @@ The need: readers, reviewers, and practitioners encountering the guidebook will 
 |---|---|---|
 | **Evidence-tier challenge** | "Where's the RCT for that threshold value?" | Cite the evidence chain with tier location. If no Tier 1 clinical evidence exists: state the tier that does exist; name the gap per T-04 state; explain that Co-1 or Co-2 evidence is co-primary, not subordinate. Never fabricate a higher-tier basis. |
 | **Co-1 legitimacy challenge** | "That's just opinion, not evidence." | Cite CRPD Art. 4.3 grounding. Explain that Co-1 is methodologically grounded (peer review, organizational accountability, scholarly authorship per A5 §1.2), not aggregated opinion. Name the specific sources. |
-| **Code-sufficiency challenge** | "Building codes don't require that." | Explain the Tier 0 / Tier 1 distinction. Codes (Tier 6) are the compliance floor, not the aspiration. The guidebook recommends provisions above the code floor where higher-tier evidence supports them. The code floor is already met; the question is what the evidence supports beyond it. |
+| **Code-sufficiency challenge** | "Building codes don't require that." | Explain the Universal Mode / Tier 1 distinction. Codes (Tier 6) are the compliance floor, not the aspiration. The guidebook recommends provisions above the code floor where higher-tier evidence supports them. The code floor is already met; the question is what the evidence supports beyond it. |
 | **Economic challenge** | "Show me the cost-benefit." | Route to Part 11 evidence. If Part 11 does not cover the specific parameter: acknowledge the gap, note that absence of economic evidence does not invalidate the design evidence, and flag for future Part 11 expansion. |
 | **Jurisdictional challenge** | "That's not how we do it here." | Present the jurisdictional comparison from the BPC. Note that best practice is determined by the evidence hierarchy, not by code consensus (project-standards Core Doctrine). Acknowledge legitimate jurisdictional differences in regulatory context. |
 | **Authority challenge** | "Who says this is best practice?" | The guidebook is an advocacy project (Core Doctrine). It does not claim mandating authority. Its recommendations are grounded in the evidence hierarchy it discloses. The reader applies professional judgment informed by this evidence. The value is in the comprehensiveness and transparency of the synthesis, not in institutional authority. |
@@ -436,7 +436,7 @@ The skill is prose-only (no Python validator). Its quality depends on the author
 | Q2 — Cross-tier convergence encoding | Convergence assessment is a structured property of the synthesis cell (not of individual sources); four statuses: convergent, divergent, single_axis, pending_assessment | high — follows from mission §3 convergence-as-evidence principle | §3.2 |
 | Q3 — Fifth state for divergent evidence? | No. Cell is `stated`; divergence is synthesis metadata via convergence assessment, not a state-machine state. Four states preserved per T-04. | high — separates evidence sufficiency from evidence agreement; T-04 unchanged | §3.3 |
 | Q4 — Co-2 alone as "rich" for `stated` | Yes. Co-2 alone satisfies `stated` per T-04 OR clause. OT professional body CPGs carry sufficient epistemic weight. | high — literal application of T-04 definition | §2.6 |
-| Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Tier 2 handoff. Applies at Tier 1 only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
+| Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Mode S handoff. Applies at Tier 1 only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
 | Q6 — Design-pedagogy tier classification | Meta-methodological: outside the seven-tier hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
 | Q7 — Epistemic-defense skill specification | Seven challenge categories with response patterns; five-step decision sequence; voice conventions; C2 skill build forward spec. Requirements only — C2 builds implementation. | high — direct application of advocacy identity + evidence hierarchy + framing standards | §6 |
 | Q8 — Verification status interaction (partial) | `UNVERIFIED-1`: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |

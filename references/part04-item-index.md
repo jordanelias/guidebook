@@ -80,7 +80,7 @@
 | G-06 | Reception Counter (Accessible Height Section — 760--860 mm A | 2409 | 2440 | 32 |
 | G-07 | Waiting Area Seating (Accessible Configuration — Adjacent to | 2441 | 2482 | 42 |
 | H-01 | All Controls at Accessible Height (400--1100 mm AFF, One-Fis | 2483 | 2531 | 49 |
-| H-02 | Individual Environmental Control — Tier 0 Universal Provisio | 2532 | 2582 | 51 |
+| H-02 | Individual Environmental Control — Universal Mode Universal Provisio | 2532 | 2582 | 51 |
 | H-03 | Visual Paging and Real-Time Captioning in Assembly Spaces | 2583 | 2619 | 37 |
 | H-04 | Accessible Intercom and Video Door Entry with Visual and Tac | 2620 | 2662 | 43 |
 | I-01 | Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤20 N | 2663 | 2700 | 38 |

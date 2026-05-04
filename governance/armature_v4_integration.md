@@ -15,7 +15,7 @@
 | T-03: tier + evidence_type encoding | Armature adds synthesis_method_indicator as a third evidence dimension. Orthogonal to T-03 — does not change tier or evidence_type semantics. | No |
 | T-04: sparse-evidence state machine (stated/provisional/pending/not_applicable) | Armature's evidence markers (●/○) are a user-facing presentation of the state machine. ● maps to `stated`. ○ maps to `provisional` or `pending` depending on evidence basis. Consistent. | No |
 | D-03 revised: pre-launch solo; Co-1 at evidence level only | Armature §9 (Authority and validation) is directly consistent. Three-tier validation framework (A: published literature / B: clinical specialist / C: PWLE/DPO) aligns with D-03's pre-launch solo + post-launch contingent structure. Tier A = D-03 pre-launch. Tier C = D-03 post-launch contingent. | No |
-| Three-Tier Design Hierarchy | Armature carries Tier 0/1/2 throughout. Maps to CRPD Art 9 / Art 5. Consistent. | No |
+| Design Modes | Armature carries Universal Mode/1/2 throughout. Maps to CRPD Art 9 / Art 5. Consistent. | No |
 | Seven-Tier Evidence Hierarchy | Armature references without modification. Synthesis method indicator is additive, not conflicting. | No |
 | Best practice = most accommodating evidence-supported condition | Armature output schema carries recommendation_strength. Consistent. | No |
 | Advocacy identity | Armature §7.1 carries advocacy-not-authority framing. Tier-appropriate specification language. Consistent. | No |
@@ -37,7 +37,7 @@ A3 signed off 2026-04-26 with 6 entity types schematized, 1098 records, Pydantic
 | **axes_applicable** array on Specification | A3 has `populations: list[str]` + cross-cutting `design_stages` and `project_types`. No functional-axis attributes. | Schema extension at A7 (when axis set is finalized). |
 | **jurisdiction_scope** structured array | A3 has `jurisdictions_supporting: list[str]` + `jurisdictions_divergent: list[str]` + `divergence_note: Optional[str]`. Armature proposes richer structure with per-jurisdiction compliance status. | Schema extension at A8 (when jurisdiction philosophy is settled). |
 | **synthesis_method_indicator** + **inference_basis** | Not in current schema. | Schema extension at A6 (evidence methodology). |
-| **tier2_handoff** structure | A3 has `tier_2_note: Optional[str]` — free text. Armature proposes structured handoff with parameter, range, referral threshold. | Schema extension at A6 or A7. |
+| **tier2_handoff** structure | A3 has `person_specific_note: Optional[str]` — free text. Armature proposes structured handoff with parameter, range, referral threshold. | Schema extension at A6 or A7. |
 | **adjustability_metadata** structure | Not in current schema. | Schema extension at A7 or later. |
 | **physical_variable** identifier | Not in current schema. Needed for variable conflation check algorithm. | Schema extension — timing TBD. |
 | **cultural_context** array | Not in current schema. | Schema extension at A8 or later. |
@@ -122,7 +122,7 @@ Some of this was already implicit in A8's scope ("specify what jurisdictional co
 
 **A10 (Adversarial-use — 1–2 sessions):** No armature impact.
 
-**A11 (Legal/regulatory — 1–2 sessions):** Armature's CRPD mapping (Tier 0 → Art 9, Tier 2 → Art 5) and methodology statement requirements overlap. Minor scope addition. **Impact: +0–1 sessions.**
+**A11 (Legal/regulatory — 1–2 sessions):** Armature's CRPD mapping (Universal Mode → Art 9, Tier 2 → Art 5) and methodology statement requirements overlap. Minor scope addition. **Impact: +0–1 sessions.**
 
 **A12 (Decision protocol — 1 session):** Armature adds:
 - Role-based delivery mechanism decision
@@ -255,7 +255,7 @@ The armature adds 7–10 sessions to Stage A but removes ~3 from Stage B and pro
 - Jurisdiction comparison feature specification
 
 **A11 (legal/regulatory):** Add:
-- CRPD Tier 0/1/2 mapping to Art 9 / Art 5 (resolved in armature v4 §7.3) — document in legal framework
+- CRPD Universal Mode/1/2 mapping to Art 9 / Art 5 (resolved in armature v4 §7.3) — document in legal framework
 - Methodology statement template including authority disclosure (resolved in armature v4 §9)
 
 **A12 (decision protocol):** Add to A12 scope:
@@ -280,7 +280,7 @@ Create `workplan/a3-amendment-register.md` to track scoped schema extensions acr
 | A3-AM-03 | A6 | BPCMetadata | synthesis_method, quality_summary, last_review_date, review_cycle | Pending A6 |
 | A3-AM-04 | A7 | NEW: PopulationCategory | Full entity (see Q2 resolution) | Pending A7 |
 | A3-AM-05 | A7 | Specification | axes_applicable | Pending A7 |
-| A3-AM-06 | A7 | Specification | tier2_handoff (structured, replacing tier_2_note) | Pending A7 |
+| A3-AM-06 | A7 | Specification | tier2_handoff (structured, replacing person_specific_note) | Pending A7 |
 | A3-AM-07 | A7 | Specification | adjustability_metadata | Pending A7 |
 | A3-AM-08 | A7 | enums.py | FunctionalAxis enum, MappingConfidence enum, CommunicationMode (add sign_language_user) | Pending A7 |
 | A3-AM-09 | A8 | Specification | jurisdiction_scope (structured, replacing flat lists) | Pending A8 |

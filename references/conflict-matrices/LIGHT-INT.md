@@ -3,7 +3,7 @@
 **Domain:** LIGHT-INT — Daytime illuminance (lux / melanopic EDI)
 **Populations served:** DEM, NEU, NDV/AUT, NDV/SENS, NDV/MH, PAIN, OFS, VIS, DEAF
 **Classification:** [BOTH] — inter-group AND intra-individual
-**Overall status:** UNRESOLVED at Tier 0 · RESOLUTION-PROPOSED at Tier 1 (zoning + individual control) · TIER-2-ONLY for intra-individual co-occurrence
+**Overall status:** UNRESOLVED at Universal Mode · RESOLUTION-PROPOSED at Tier 1 (zoning + individual control) · TIER-2-ONLY for intra-individual co-occurrence
 
 ### Active Conflicts
 
@@ -11,7 +11,7 @@
 |---|---|---|---|---|---|---|---|
 | LIGHT-INT (daytime) | DEM, VIS, DEAF | NDV/AUT, NDV/SENS, NEU(migraine), PAIN(fibro), OFS/MCAS | ≥300 lux / ≥250 melanopic EDI / ≥4000 K | ≤200 lux ambient preferred; user-controlled to 0 lux; ≤3000 K; no fluorescent | Zoning + individual control + temporal dosing | RESOLUTION-PROPOSED (Tier 1) | ◐ |
 | LIGHT-INT (evening) | DEM | NDV/AUT, NEU, PAIN, OFS | ≤2700 K / ≤10 melanopic EDI | ≤2700 K / dim | Non-conflicting — parameters aligned | RESOLVED-CONSENSUS | ● |
-| LIGHT-INT (intra-individual) | NEU/MH/OFS circadian need | NEU/MH/OFS photosensitivity | ≥250 melanopic EDI for sleep-wake | Blue-enriched spectrum (480nm) triggers pain via shared ipRGC pathway | Temporal dosing; Tier 2 OT assessment | TIER-2-ONLY | ◐ |
+| LIGHT-INT (intra-individual) | NEU/MH/OFS circadian need | NEU/MH/OFS photosensitivity | ≥250 melanopic EDI for sleep-wake | Blue-enriched spectrum (480nm) triggers pain via shared ipRGC pathway | Temporal dosing; Mode S OT assessment | TIER-2-ONLY | ◐ |
 
 ### Mechanistic Finding
 
@@ -30,7 +30,7 @@ The ipRGC/melanopsin pathway (peak ~480nm) mediates BOTH circadian entrainment A
 - Source: circadian-lighting-melanopic-edi BPC; NDV BPC; CON-0005; PAS 6463:2022; Unwin et al. 2022/2023
 - Mechanism: Occupant-controlled dimming 0–100%, CCT 2700–5000 K, at individual position within ambient environment.
 - Outcome data: Unwin et al. 2022/2023 (Tier 3, n=41): user control is primary design variable for self-regulation. Convergent evidence across NDV, DEM, DEAF, OFS populations.
-- Guidebook implication: Tier 0 mandatory infrastructure. No fluorescent/stroboscopic sources anywhere in building. Individual control does not resolve shared ambient parameters (corridors, dining rooms, open-plan spaces).
+- Guidebook implication: Universal Mode mandatory infrastructure. No fluorescent/stroboscopic sources anywhere in building. Individual control does not resolve shared ambient parameters (corridors, dining rooms, open-plan spaces).
 - Operability limitation: DEM late stage cannot operate. IntD without support cannot operate. Adjustment requiring disability disclosure is exclusionary.
 - Status: **RESOLVED-CONSENSUS** (infrastructure) · Confidence: **HIGH** for principle; **MEDIUM** for shared-ambient limitation
 
@@ -63,13 +63,13 @@ The ipRGC/melanopsin pathway (peak ~480nm) mediates BOTH circadian entrainment A
 - Status: **EMERGING** · Confidence: **LOW** — Tier 3, pre-commercial, single-pathway
 
 **Resolution 7 — Tier escalation**
-- The conflict is irreconcilable at Tier 0 for shared ambient spaces. At Tier 1, architect zones based on identified populations. At Tier 2, OT assessment resolves individual placement.
+- The conflict is irreconcilable at Universal Mode for shared ambient spaces. At Tier 1, architect zones based on identified populations. At Tier 2, OT assessment resolves individual placement.
 - For intra-individual co-occurrence (NEU/MH/OFS): circadian lighting and photosensitivity management are competing clinical objectives. The guidebook states the trade-off explicitly; neither takes priority without individual assessment.
 - Status: **TIER-2-ONLY** for intra-individual · Confidence: **HIGH** — this is the honest answer
 
-### Tier 0 Default Specification
+### Universal Mode Default Specification
 
-Tier 0 cannot specify a single lux value for shared spaces. Tier 0 specifies:
+Universal Mode cannot specify a single lux value for shared spaces. Universal Mode specifies:
 
 1. Individual lighting control (H-02) mandatory in all primary occupied spaces — dimmable 0–100%, CCT 2700–5000 K, zero fluorescent/stroboscopic sources building-wide
 2. Zoning infrastructure — electrical and spatial capacity for ≥2 distinct illuminance zones per floor plate, with DAR for post-occupancy zone boundary adjustment

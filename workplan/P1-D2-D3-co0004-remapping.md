@@ -140,7 +140,7 @@ These are distinct from the P1-D3 editorial decisions above.
 ## Phase 3 Session Assignment Summary (v10.5)
 | Session | Parts written | D2/D3 decisions executed |
 |---|---|---|
-| 10 | Part 1 | D2-49, D2-42; CON-0024, CON-0027; Tier 0 cluster |
+| 10 | Part 1 | D2-49, D2-42; CON-0024, CON-0027; Universal Mode cluster |
 | 11 | Part 2 | CO-0002; D2-43 |
 | 12 | Part 3 | D2-01–09; DEC-11 (§3.11 worked examples); §3.8 decision tree; §3.9 strategies |
 | 13 | Part 6 | D2-10–16; D2-12, D2-13, D2-16, D2-45 |

@@ -158,16 +158,16 @@
 **Filed:** 2026-03-28
 **Applied:** —
 
-**Connection:** Storage layout as incidental bracing surface (U-shape or L-shape, shelf edges at waist height) serves MOB, NEU, and PAIN in residential bedrooms with no identified conflicts. Passive provision (no energy/maintenance cost), enables future tailoring. Tier 0 status confirmed; neutral for VIS, DEAF, DEM.
+**Connection:** Storage layout as incidental bracing surface (U-shape or L-shape, shelf edges at waist height) serves MOB, NEU, and PAIN in residential bedrooms with no identified conflicts. Passive provision (no energy/maintenance cost), enables future tailoring. Universal Mode status confirmed; neutral for VIS, DEAF, DEM.
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| AOTA Home Modification Guidelines 2023 | Co-2 (single source) | MOB, NEU, PAIN | Tier 0 universal specification for residential bedrooms |
+| AOTA Home Modification Guidelines 2023 | Co-2 (single source) | MOB, NEU, PAIN | Universal Mode universal specification for residential bedrooms |
 
-**Action required:** Elevate the U/L-shape shelf configuration bullet in G-08 from population-tagged to Tier 0 specification. Add explicit Tier 0 label within G-08. Flag for empirical validation (single Co-2 source). No separate item required — G-08 already covers the provision.
+**Action required:** Elevate the U/L-shape shelf configuration bullet in G-08 from population-tagged to Universal Mode specification. Add explicit Universal Mode label within G-08. Flag for empirical validation (single Co-2 source). No separate item required — G-08 already covers the provision.
 
-**Disposition notes:** - [x] Elevate G-08 U/L-shape storage bullet to Tier 0 scope — DONE 2026-03-28 17:05
+**Disposition notes:** - [x] Elevate G-08 U/L-shape storage bullet to Universal Mode scope — DONE 2026-03-28 17:05
 - [x] GAP-FDR-T0-05 CLOSED 2026-03-28 17:00
 
 ---

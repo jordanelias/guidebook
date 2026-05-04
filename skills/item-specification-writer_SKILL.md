@@ -40,12 +40,12 @@ The built environment creates barriers. People are not the problem.
 - State the ideal built environment first. Note constraints only where genuinely necessary.
 - Never: "to help users with X", "to accommodate disability". Always: "to remove the barrier", "to provide equivalent access".
 
-### Three-Tier Design Hierarchy
+### Design Modes
 Every item must identify which tier it serves and apply the tier's specification standard:
 
 | Tier | Context | Specification standard |
 |---|---|---|
-| Tier 0: Universal Design, improvable floor | No particular disability population is a predominant user (e.g. public institutional spaces) | Above code minimum — executed in a way that allows tailoring and improvement for specific people as required |
+| Universal Mode: Universal Design, improvable floor | No particular disability population is a predominant user (e.g. public institutional spaces) | Above code minimum — executed in a way that allows tailoring and improvement for specific people as required |
 | Tier 1: Population-Informed Inclusive Design | Identified disability population(s) most likely to use the building | Ranges; median is the population-informed default. Core question: what works best for this population? |
 | Tier 2: Person-Specific Co-Design | Named client/person; specific building | Co-design: OT establishes functional capacity; client expresses own preferences. Specifications uniquely tailored to the person |
 

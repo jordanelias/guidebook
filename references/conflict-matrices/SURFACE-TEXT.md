@@ -23,8 +23,8 @@
 - MOB BPC Opus synthesis: "No cross-population conflict identified for MOB provisions. MOB turning circles, ramp gradients, and door widths are beneficial or neutral for all other populations. MOB is the only population code with zero conflict flags."
 - DBL BPC Opus synthesis: vibrotactile floor panels vs TWSI resolved (TWSI takes precedence; vibrotactile via wearable pager).
 
-### Tier 0 specification
-Single Tier 0 value viable: ISO 23599:2019 TWSI (directional ribbed + attention domed) on all primary circulation routes. Profile ≥4 mm. No population conflict.
+### Universal Mode specification
+Single Universal Mode value viable: ISO 23599:2019 TWSI (directional ribbed + attention domed) on all primary circulation routes. Profile ≥4 mm. No population conflict.
 
 ### Secondary conflict: TWSI colour vs DEM plain flooring
 **Populations:** VIS (yellow TWSI standard) vs DEM (plain, low-pattern flooring)

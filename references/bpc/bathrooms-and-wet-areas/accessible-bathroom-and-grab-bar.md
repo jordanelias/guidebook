@@ -17,7 +17,7 @@
 - Power WC users: 1800×1800mm turning, 1500×1500mm shower clear area — Tier 5 (BS 8300-2 Annex G)
 - UPL bilateral: Kennedy et al. 2015 vertical bar preference (smallest COP deviation) — Tier 1
 
-**Conflict resolution:** Grab bar height range 650–900mm — wide range is not uncertainty; it reflects jurisdictional anthropometric calibration (KR 650mm seated transfer; UK/AU 900mm standing support). At Tier 1, 700mm median. At Tier 2, OT determines via transfer biomechanics assessment. Seat-relative formulation (280mm above seat surface) is the Tier 2 standard. Turning circle: 1500mm is Tier 0 (code); 1800mm is Tier 1 (where powered WC anticipated). WC seat height: 450mm median (400–500mm range per jurisdiction). Dual-transfer vs constrained: 2200×2200 preferred; 1650×2200 (BE) / 1600×1700 (PT) minimum with choice of side.
+**Conflict resolution:** Grab bar height range 650–900mm — wide range is not uncertainty; it reflects jurisdictional anthropometric calibration (KR 650mm seated transfer; UK/AU 900mm standing support). At Tier 1, 700mm median. At Tier 2, OT determines via transfer biomechanics assessment. Seat-relative formulation (280mm above seat surface) is the Tier 2 standard. Turning circle: 1500mm is Universal Mode (code); 1800mm is Tier 1 (where powered WC anticipated). WC seat height: 450mm median (400–500mm range per jurisdiction). Dual-transfer vs constrained: 2200×2200 preferred; 1650×2200 (BE) / 1600×1700 (PT) minimum with choice of side.
 
 **Highest-ambition actionable specification:** Room ≥2200×2200mm (dual-transfer) / ≥1650×2200mm (single, absolute minimum); turning ø1500mm standard / ≥1800mm powered WC; WC seat 450mm (400–500 range); bilateral fold-down grab bars ≥200 kg SWL, height 650–900mm (700mm Tier 1 median; 280mm above seat at Tier 2); bar cross-section ø32–45mm oval/circular; vertical bars additionally for NEU/hemiplegic (70–140cm, ≤5cm from WC edge); shower fold-down seat 450mm; horizontal shower bar 700–850mm; vertical shower entry bar; zero-threshold wet room; linear drain within 1200mm; floor slope ≤1:80; anti-slip PTV≥36 throughout; lever/thermostatic controls ≤1200mm; emergency call 400–500mm; LRV contrast ≥30 (bar vs wall AND floor); continuous structural blocking full toilet wall length both sides; DAR electrical rough-in ≤1500mm from WC (GFCI/RCD) for future bidet; door ≥900mm clear outward/sliding.
 
@@ -113,7 +113,7 @@
 |---|---|---|---|---|---|---|
 | Closet rod height (seated reach) | ≤1200mm AFF | Wheelchair user or seated dressing | AOTA Home Modification Guidelines; RCOT Housing Adaptations Without Delay | Co-2 | CONFIRMS | MOB→NEU/OFS |
 
-No novel spatial specifications. Dressing bench height = popliteal height (Tier 2 OT assessment only). Clear floor space beside bed = ≥760mm × 1200mm alongside long edge.
+No novel spatial specifications. Dressing bench height = popliteal height (Mode S OT assessment only). Clear floor space beside bed = ≥760mm × 1200mm alongside long edge.
 
 #### Scenario 7 — d465 + powered wheelchair → entrance threshold
 | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
@@ -139,7 +139,7 @@ Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FD
 | Wardrobe door type | Sliding or bi-fold preferred; swing door requires clear floor space ≥door width + manoeuvre | Eliminates door arc intrusion into limited dressing space | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB→NEU/OFS |
 | Low storage base fitting | ≤500mm AFF | Trunk instability: items below 500mm require >30° lean — fall risk threshold | UNSW Home Mod Clearinghouse (AU) | Co-2 | REFINES — adds trunk-instability biomechanical rationale to existing reach-range guidance | MOB→NEU/PAIN |
 
-**Population mapping:** Primary MOB (trunk instability); secondary NEU, OFS, PAIN (shared trunk instability profile). Storage layout (U/L-shape bracing) = Tier 0 candidate (≥3 populations, no conflicts).
+**Population mapping:** Primary MOB (trunk instability); secondary NEU, OFS, PAIN (shared trunk instability profile). Storage layout (U/L-shape bracing) = Universal Mode candidate (≥3 populations, no conflicts).
 
 #### Scenario 14 — d570 + emergency/medication → bedroom emergency alert + overnight lighting
 | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
@@ -152,8 +152,8 @@ Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FD
 | Bedside medication storage | Lockable; ≤1200mm AFF; ≤500mm horizontal reach from bed-seated position | Overnight medication access without standing | AOTA Fall Prevention in Bedroom (2023) | Co-2 | NOVEL | MOB→NEU/DEM/OFS/PAIN |
 | Bed clearance — foot | ≥1000mm at foot of bed | Emergency responder access path; paramedic equipment approach | AOTA Fall Prevention in Bedroom (2023) | Co-2 | REFINES — prior 760mm each side retained; adds 1000mm foot dimension | MOB→ALL |
 
-**Population mapping:** Primary MOB, DEM; secondary NEU, OFS, PAIN, NDV. Overnight path lighting = Tier 0 candidate (applies ≥6 codes, no population conflicts).
-**Tier 0 candidates:** (1) storage layout as bracing surface (≥3 codes); (2) overnight path lighting (≥6 codes) → append to gap register.
+**Population mapping:** Primary MOB, DEM; secondary NEU, OFS, PAIN, NDV. Overnight path lighting = Universal Mode candidate (applies ≥6 codes, no population conflicts).
+**Universal Mode candidates:** (1) storage layout as bracing surface (≥3 codes); (2) overnight path lighting (≥6 codes) → append to gap register.
 ### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
 
 **Crosby, Rodriguez, Canas et al. 2026** — "Home modifications for older adults: systematic review." Assist Technol 38(2):176-186. DOI: 10.1080/10400435.2025.2596022. PMID 41525145. 9 RCTs of community-dwelling adults ≥60. **Key finding:** Secure rails reduce fallers and fall rates; combination of home mods may reduce fallers. Moderate-high risk of bias noted. **Tier 3.**

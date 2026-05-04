@@ -110,8 +110,8 @@
 | Rest seating alcove width | ≥900mm per person | Allows seating plus companion standing alongside | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — companion space spec | OFS→ALL |
 | Rest seat height — OFS/POTS | ≥480mm AFF | POTS: standard bench at 420mm promotes hip flexion angle that exacerbates venous pooling; ≥480mm reduces pooling risk | Roxburgh et al. 2024, British Journal of Occupational Therapy (OFS/ME/CFS) | 1 | NOVEL — OFS-specific seat height rationale; distinguishes from standard 420mm bench | OFS→MOB/PAIN |
 
-**Population mapping:** Primary OFS; secondary MOB/AMB, PAIN, DEM, NEU. Alcove geometry (recess + width) spans ≥5 codes → Tier 0 candidate.
-**Tier 0 candidate:** Rest seating alcove recess geometry (≥6 population codes benefit; no conflicts).
+**Population mapping:** Primary OFS; secondary MOB/AMB, PAIN, DEM, NEU. Alcove geometry (recess + width) spans ≥5 codes → Universal Mode candidate.
+**Universal Mode candidate:** Rest seating alcove recess geometry (≥6 population codes benefit; no conflicts).
 
 ## Metadata
 

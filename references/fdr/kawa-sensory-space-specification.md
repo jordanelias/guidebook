@@ -69,7 +69,7 @@ This layer specifies the arrangement, sizing, and social configuration of the sp
 
 - Physics layer (§2.1): Tier 1 — population-informed, evidence-based, applies universally.
 - Spatial model selection (§2.2): Tier 2 — determined by cultural context of occupants and building programme. OT and design team resolve in co-design with user community.
-- Model C is the Tier 1 default for new construction where cultural context is unknown or diverse.
+- Model C is the Mode P default for new construction where cultural context is unknown or diverse.
 
 ### 2.4 Population Applicability
 

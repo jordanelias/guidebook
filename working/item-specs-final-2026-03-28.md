@@ -16,7 +16,7 @@
 - ● Where wardrobe depth permits, a dual-rod configuration to be provided — upper rod at 1000–1100 mm AFF, lower rod at 600 mm AFF [REF:accessible-bathroom-and-grab-bar:18]
 - ● Fixed shelf depth not to exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18] *(single Co-2 source)*
 - ● Where deeper storage is required, full-extension pull-out drawers to be provided, drawer depth not to exceed 600 mm [REF:accessible-bathroom-and-grab-bar:18]
-- ● Shelf units to be arranged in a U-shape or L-shape configuration where practicable [REF:accessible-bathroom-and-grab-bar:19] *(Tier 0 provision — CON-0038; serves MOB, NEU, PAIN; neutral for VIS, DEAF, DEM)*
+- ● Shelf units to be arranged in a U-shape or L-shape configuration where practicable [REF:accessible-bathroom-and-grab-bar:19] *(Universal Mode provision — CON-0038; serves MOB, NEU, PAIN; neutral for VIS, DEAF, DEM)*
 - ● Fixed storage below 500 mm AFF to be provided with a pull-out mechanism only [REF:accessible-bathroom-and-grab-bar:18]
 - ○ Wardrobe doors to be sliding or bi-fold; outward-swing doors to be used only where clear floor space ≥ door-width plus 600 mm is available adjacent to the door arc [REF:accessible-bathroom-and-grab-bar:18]
 - ● A turning and manoeuvre space of no less than 1500 mm × 1500 mm to be maintained clear of fixed furniture throughout the dressing area [REF:accessible-bathroom-and-grab-bar:18]
@@ -132,7 +132,7 @@
 | REF:residential-entry-and-threshold:04 | Standards Australia | 2021 | AS 1428.1:2021 | Standards Australia | 6 | EN | AU |
 | REF:residential-entry-and-threshold:05 | Putthinoi et al. | 2017 | ICF-based home modification outcomes | American Journal of OT | 1 | EN | TH/AU |
 
-**Cross-reference:** E-06 (Level Entry — Tier 0 floor); E-05 (Weather protection at entry — NR canopy spec); G-04 (Accessible Bathroom — turning space differential)
+**Cross-reference:** E-06 (Level Entry — Universal Mode floor); E-05 (Weather protection at entry — NR canopy spec); G-04 (Accessible Bathroom — turning space differential)
 
 **Illustration:** [Illustration: to be provided] — Plan view showing 1800 × 1800 mm landing, 500 mm latch-side clearance, and canopy footprint.
 
@@ -199,6 +199,6 @@
 | REF:accessible-circulation-geometry:12 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
 | REF:accessible-circulation-geometry:02 | BSI | 2018 | BS 8300-2:2018 | BSI | 5 | EN | UK |
 
-**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Tier 0 candidate — pending connection-scout)
+**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Universal Mode candidate — pending connection-scout)
 
 **Illustration:** [Illustration: to be provided] — Plan of alcove showing 900 mm width, 200 mm recess from circulation path, and 450 mm seat depth. Section showing 480 mm AFF seat height and arm projection.

@@ -95,13 +95,13 @@ class RecommendationStrength(str, Enum):
     """Recommendation strength per evidence synthesis.
 
     UNSET: awaiting Opus synthesis.
-    STRONG_TIER_0: universal design / code compliance — fixed value.
-    CONDITIONAL_TIER_1: population-informed — range with median default.
-    CONDITIONAL: context-dependent without tier assignment.
+    STRONG_UNIVERSAL: universal design / code compliance — fixed value.
+    CONDITIONAL_POPULATION: population-informed — range with median default.
+    CONDITIONAL: context-dependent without mode assignment.
     """
     UNSET = "UNSET"
-    STRONG_TIER_0 = "STRONG_TIER_0"
-    CONDITIONAL_TIER_1 = "CONDITIONAL_TIER_1"
+    STRONG_UNIVERSAL = "STRONG_UNIVERSAL"
+    CONDITIONAL_POPULATION = "CONDITIONAL_POPULATION"
     CONDITIONAL = "CONDITIONAL"
 
 
@@ -266,17 +266,17 @@ class BestPracticeStatus(str, Enum):
     CONSUMED = "CONSUMED"
 
 
-class DesignTier(int, Enum):
-    """Three-Tier Design Hierarchy per project-standards §Core Doctrine.
+class DesignMode(int, Enum):
+    """Design Modes per project-standards §Core Doctrine.
 
-    Tier 0 = Universal Design / Code Compliance (population-agnostic, fixed).
-    Tier 1 = Population-Informed Inclusive Design (ranges; median default).
-    Tier 2 = Person-Specific Co-Design (OT assessment resolves range).
-    DAR mandatory at all tiers.
+    Universal Mode = Universal Design / Code Compliance (population-agnostic, fixed).
+    Mode P = Population-Informed Inclusive Design (ranges; median default).
+    Mode S = Person-Specific Co-Design (OT assessment resolves range).
+    DAR mandatory at all modes.
     """
-    TIER_0 = 0
-    TIER_1 = 1
-    TIER_2 = 2
+    UNIVERSAL = 0
+    POPULATION_BASED = 1
+    PERSON_SPECIFIC = 2
 
 
 class DesignStage(str, Enum):

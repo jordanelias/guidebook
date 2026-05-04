@@ -90,13 +90,13 @@ def parse_recommendation_strength(raw: str) -> tuple:
         m = re.search(r"\((.+)\)", raw)
         if m:
             qualifier = m.group(1)
-        return (RecommendationStrength.STRONG_TIER_0, qualifier)
+        return (RecommendationStrength.STRONG_UNIVERSAL, qualifier)
 
     if "conditional at tier 1" in low:
         m = re.search(r"\((.+)\)", raw)
         if m:
             qualifier = m.group(1)
-        return (RecommendationStrength.CONDITIONAL_TIER_1, qualifier)
+        return (RecommendationStrength.CONDITIONAL_POPULATION, qualifier)
 
     if "conditional" in low:
         return (RecommendationStrength.CONDITIONAL, None)

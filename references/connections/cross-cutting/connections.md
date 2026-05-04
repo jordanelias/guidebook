@@ -13,19 +13,19 @@
 **Filed:** 2026-03-26
 **Applied:** —
 
-**Connection:** "User control over environment" is documented as the single highest-impact provision across NDV subtypes (NDV BPC), the primary design requirement for sensory rooms (sensory-room-user-control BPC), a core requirement for NDV/MH retreat rooms, and essential for OFS temperature/lighting management. DEM benefits from consistent but adjustable environments. DEAF users benefit from lighting control for sign language visibility. The pattern repeats in 5+ population BPCs but is never synthesized into a cross-population design principle. No specification currently states that occupant environmental control is a Tier 0 universal provision. It is siloed as population-specific within each category. Thi…
+**Connection:** "User control over environment" is documented as the single highest-impact provision across NDV subtypes (NDV BPC), the primary design requirement for sensory rooms (sensory-room-user-control BPC), a core requirement for NDV/MH retreat rooms, and essential for OFS temperature/lighting management. DEM benefits from consistent but adjustable environments. DEAF users benefit from lighting control for sign language visibility. The pattern repeats in 5+ population BPCs but is never synthesized into a cross-population design principle. No specification currently states that occupant environmental control is a Universal Mode universal provision. It is siloed as population-specific within each category. Thi…
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| NDV BPC — "single highest-impact provision" | Co-1, Tier 4 | NDV/AUT, NDV/ADHD, NDV/SENS | ALL — Tier 0 candidate |
+| NDV BPC — "single highest-impact provision" | Co-1, Tier 4 | NDV/AUT, NDV/ADHD, NDV/SENS | ALL — Universal Mode candidate |
 | Sensory room user control BPC — H-02 PRIMARY | Co-1 | NDV/AUT | ALL |
 | OFS BPC — adjustable seating/temperature/lighting | Co-1/Tier 3 | OFS | ALL |
 | NDV/MH BPC — user-adjustable lighting/acoustics | Tier 2–4 | NDV/MH | ALL |
 | PAS 6463:2022 | Tier 5 | NDV, DEM | ALL |
 | DeafSpace — lighting control for signing | Co-1/Tier 2 | DEAF | ALL |
 
-**Action required:** Elevate H-02 (Individual Environmental Control) to Tier 0 universal design. Specification: all primary occupied spaces to provide occupant-adjustable lighting (level and CCT), acoustic management (operable panels or zones), and local thermal control. Population-specific overlays at Tier 1 define parameter ranges. This does not increase cost significantly — dimmer switches and local thermostats are…
+**Action required:** Elevate H-02 (Individual Environmental Control) to Universal Mode universal design. Specification: all primary occupied spaces to provide occupant-adjustable lighting (level and CCT), acoustic management (operable panels or zones), and local thermal control. Population-specific overlays at Tier 1 define parameter ranges. This does not increase cost significantly — dimmer switches and local thermostats are…
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item

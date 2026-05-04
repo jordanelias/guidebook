@@ -38,7 +38,7 @@ What this document does not do: specify the final axis set, the population taxon
 
 **Mapping confidence.** The degree to which a population category predicts a functional-axis profile, derived from clinical evidence on diagnosis-function relationships. Ranges from high-predictive (complete SCI at a named level) to minimal-predictive (IntD spectrum). A property of each population, not an architectural setting.
 
-**Design hierarchy.** Tier 0 (Universal Design / Code Compliance — baseline, all profiles). Tier 1 (Population-Informed Inclusive Design — surfaced by axis match, evidence-graded ranges). Tier 2 (Individual Assessment — the system identifies the functional parameter requiring OT/specialist assessment and the range within which resolution occurs, but does not resolve).
+**Design hierarchy.** Universal Mode (Universal Design / Code Compliance — baseline, all profiles). Tier 1 (Population-Informed Inclusive Design — surfaced by axis match, evidence-graded ranges). Tier 2 (Individual Assessment — the system identifies the functional parameter requiring OT/specialist assessment and the range within which resolution occurs, but does not resolve).
 
 **PWLE.** Person With Lived Experience (of disability).
 **BPC.** Best Practice Compendium — population-organized evidence synthesis files.
@@ -120,7 +120,7 @@ Role determines how query results are presented. Same specifications, different 
 
 | Role | Emphasis | Register |
 |---|---|---|
-| Designer / architect | Specifications, conflict notes, code references, Tier 0/1 values, detail-level guidance | Technical |
+| Designer / architect | Specifications, conflict notes, code references, Universal Mode/1 values, detail-level guidance | Technical |
 | OT / healthcare professional | Functional ranges, Tier 2 resolution parameters, assessment frameworks | Clinical |
 | Policymaker / regulator | Code compliance mapping, jurisdiction comparison, evidence grading, economic evidence | Policy |
 | Disabled person / advocate | Plain-language specifications, rights framework, what to ask for, evidence strength disclosure | Plain-language |
@@ -135,7 +135,7 @@ Role determines how query results are presented. Same specifications, different 
 The armature returns evidence-graded specifications. Each specification surfaced carries:
 
 **Visible in the specification matrix:**
-- Design hierarchy tier (Tier 0 / 1 / 2)
+- Design hierarchy tier (Universal Mode / 1 / 2)
 - Evidence marker (● / ○)
 - Specification value or range
 - Jurisdiction scope (which code frameworks address this element)
@@ -154,7 +154,7 @@ The armature returns evidence-graded specifications. Each specification surfaced
 **Cross-specification features:**
 - Compound functioning flag (§3.8 Step 0) where multiple non-baseline axes interact non-additively
 - Variable conflation check applied before surfacing apparent conflicts
-- Tier 2 handoff with the functional parameter driving assessment named and the resolution range specified
+- Mode S handoff with the functional parameter driving assessment named and the resolution range specified
 - "Adjustable" provisions carrying population operability notes per project-standards rule
 
 **Export:** specification matrix exportable as PDF, plain text, and accessible HTML. Shareable query URLs preserving query state.
@@ -169,7 +169,7 @@ Each entry shows the specification value/range, design tier, evidence marker, an
 
 Drill-down on any specification shows: evidence sources, synthesis method, BPC entry, last-review date. Link to CP population page for CP-specific design considerations (fatigue management in bathroom design, fall-risk considerations specific to CP gait patterns).
 
-**Same profile, disabled-person output:** same specifications, plain-language register. "For a bathroom designed for someone who walks with crutches or a walker and has reduced hand control: the door needs to be wide enough to walk through with your mobility aid, the toilet needs grab rails positioned for how you transfer, taps need to work without gripping, and lighting should be adjustable if you're sensitive to bright light." Evidence markers translated: "This recommendation is supported by direct research evidence" (●) or "This recommendation is based on clinical reasoning — research evidence is not yet available for this specific point" (○). Specifications as ranges with context rather than bare values. "Questions to raise with your architect" and "questions to raise with your OT" lists generated from Tier 2 handoff flags.
+**Same profile, disabled-person output:** same specifications, plain-language register. "For a bathroom designed for someone who walks with crutches or a walker and has reduced hand control: the door needs to be wide enough to walk through with your mobility aid, the toilet needs grab rails positioned for how you transfer, taps need to work without gripping, and lighting should be adjustable if you're sensitive to bright light." Evidence markers translated: "This recommendation is supported by direct research evidence" (●) or "This recommendation is based on clinical reasoning — research evidence is not yet available for this specific point" (○). Specifications as ranges with context rather than bare values. "Questions to raise with your architect" and "questions to raise with your OT" lists generated from Mode S handoff flags.
 
 ---
 
@@ -294,9 +294,9 @@ These are metadata extensions to existing entity types, not new entities.
 
 **"Disability populations are not uniform."** The two-layer architecture respects this: population categories organize the research base, functional axes capture individual variation within populations.
 
-**"The guidebook is a starting framework for professional judgment, not a substitute for it."** The armature surfaces specifications and evidence; Tier 2 handoff flags where individual assessment is required. The tool does not replace OT assessment, designer judgment, or co-design.
+**"The guidebook is a starting framework for professional judgment, not a substitute for it."** The armature surfaces specifications and evidence; Mode S handoff flags where individual assessment is required. The tool does not replace OT assessment, designer judgment, or co-design.
 
-**"The purpose of this guidebook is to get people to ask the right questions."** The armature surfaces the questions (via Tier 2 handoff flags, conflict notes, and gap disclosures), not just the answers. Each Tier 2 flag names the functional parameter that drives the assessment and the range within which resolution occurs.
+**"The purpose of this guidebook is to get people to ask the right questions."** The armature surfaces the questions (via Mode S handoff flags, conflict notes, and gap disclosures), not just the answers. Each Tier 2 flag names the functional parameter that drives the assessment and the range within which resolution occurs.
 
 **"The guidebook is an advocacy project, not an authority."** Specification language throughout is tier-appropriate: "Tier 1 evidence supports..." not "the specification is..." The armature presents evidence and surfaces questions — it does not prescribe.
 
@@ -310,7 +310,7 @@ These are metadata extensions to existing entity types, not new entities.
 ### 7.3 Design hierarchy and CRPD mapping
 
 Design hierarchy is what the armature returns:
-- **Tier 0** (UD/Code Compliance) → CRPD Art 9 universal accessibility floor
+- **Universal Mode** (UD/Code Compliance) → CRPD Art 9 universal accessibility floor
 - **Tier 1** (Population-Informed Inclusive Design) → CRPD Art 9 group-level accessibility
 - **Tier 2** (Individual Assessment) → CRPD Art 5 reasonable accommodation
 

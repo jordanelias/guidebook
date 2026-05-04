@@ -397,7 +397,7 @@ Render each pilot track through every navigation mode and in markdown form. Veri
 Per synthesis core plus expanded criteria:
 - Does the pilot help the reader ask better questions? (Tested with practicing architects at programming AND DD stages) — **directly tests N-08 hypothesis**
 - Does the pilot acknowledge non-uniformity visibly?
-- Does the pilot differentiate Tier 0 / 1 / 2 in ways that change reader behavior?
+- Does the pilot differentiate Universal Mode / 1 / 2 in ways that change reader behavior?
 - Does the pilot ground best practice in evidence, not codes?
 - Does the pilot meet the most-accommodating / dignified / usable standard? (Co-1 review decisive)
 - Does the pilot allow each prioritized audience to do their work?

@@ -18,10 +18,10 @@ M-02 states the guidebook "has not yet articulated [convergence as epistemologic
 ## Missing Throughlines (3)
 
 ### T-12: OT as Universal Resolution Mechanism
-OT assessment is the Tier 2 resolution for every conflict, range, and compound scenario. Appears in Part 1, Housing Enabler (CON-0027), grab bars (Opus §9), project standards (thermal OT CPG gap), every Tier 2 handoff flag. Its absence leaves a structural gap: the analysis describes what Tier 2 resolves but not who resolves it and how. Maps to Part 9.
+OT assessment is the Tier 2 resolution for every conflict, range, and compound scenario. Appears in Part 1, Housing Enabler (CON-0027), grab bars (Opus §9), project standards (thermal OT CPG gap), every Mode S handoff flag. Its absence leaves a structural gap: the analysis describes what Tier 2 resolves but not who resolves it and how. Maps to Part 9.
 
 ### T-13: Subsumption as Conflict Pre-Resolution
-Where the stricter population specification automatically satisfies the weaker one, apparent conflict dissolves. CON-0122 (DEAF 2440mm corridor subsumes MOB 1800mm), CON-0183 (RT60 ≤0.3s for DEAF subsumes general ≤0.6s). Distinct from convergence (T-02): convergence = same spec independently; subsumption = one spec contains another. Convergence elevates to Tier 0; subsumption governs by stricter requirement.
+Where the stricter population specification automatically satisfies the weaker one, apparent conflict dissolves. CON-0122 (DEAF 2440mm corridor subsumes MOB 1800mm), CON-0183 (RT60 ≤0.3s for DEAF subsumes general ≤0.6s). Distinct from convergence (T-02): convergence = same spec independently; subsumption = one spec contains another. Convergence elevates to Universal Mode; subsumption governs by stricter requirement.
 
 ### T-14: DAR as Temporal Provision
 DAR addresses declining capacity over years/decades; T-05 addresses fluctuating capacity over hours/days. Distinct temporal scales with distinct specification implications. T-05 demands daily-variation accommodation; DAR demands construction-stage provisions for future modification.

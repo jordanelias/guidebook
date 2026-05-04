@@ -30,7 +30,7 @@ On examination, ACOUSTIC-LVL decomposes into five sub-parameters with distinct c
 - Source: Anderson & Goldstein 2004 (REF-RAP-21, Tier 1); Iglehart 2004 (REF-RAP-19, Tier 1)
 - Mechanism: Personal FM/DM remote microphone transmits directly to hearing device. No ambient sound increase. In high-reverberation rooms, personal FM provides substantial benefit while ceiling SFA provides none (Anderson & Goldstein 2004). Desktop FM provides intermediate benefit.
 - Outcome data: Tier 1 — controlled comparison, hearing-impaired children. Personal FM significantly outperforms SFA in reverberant conditions.
-- Guidebook implication: Tier 0 specifies FM/DM infrastructure (charging, transmitter at lectern/service counter). SFA remains appropriate as supplementary provision where NDV/SENS population is not primary (e.g., general assembly halls) but is contraindicated in NDV-designated spaces.
+- Guidebook implication: Universal Mode specifies FM/DM infrastructure (charging, transmitter at lectern/service counter). SFA remains appropriate as supplementary provision where NDV/SENS population is not primary (e.g., general assembly halls) but is contraindicated in NDV-designated spaces.
 - Operability: FM/DM requires no action from non-DEAF occupants. No ambient impact.
 - Status: **RESOLVED-EVIDENCE** · Confidence: **HIGH**
 
@@ -38,14 +38,14 @@ On examination, ACOUSTIC-LVL decomposes into five sub-parameters with distinct c
 - Source: PAS 6463:2022 §10; A-13 doctrine (this guidebook); Bettarello et al. 2021; room-acoustic-performance BPC
 - Mechanism: Achieve speech privacy through RT60 design (absorption placement), spatial layout (no direct sound paths between private/public zones), and partition STC rather than acoustic masking. Sound masking adds noise floor that NDV/AUT, NEU, DEM populations cannot filter.
 - Outcome data: No controlled comparison of masking vs no-masking for NDV populations. PAS 6463 guidance (Tier 5). NDV evidence base documents harm from unpredictable background noise (Bettarello 2021, Caniato 2024).
-- Guidebook implication: Tier 0 prohibition of sound masking in all spaces serving NDV/AUT, NEU, or DEM populations. In buildings where population is unidentified (Tier 0), default to no sound masking — the harm asymmetry favours quiet.
+- Guidebook implication: Universal Mode prohibition of sound masking in all spaces serving NDV/AUT, NEU, or DEM populations. In buildings where population is unidentified (Universal Mode), default to no sound masking — the harm asymmetry favours quiet.
 - Status: **RESOLVED-CONSENSUS** · Confidence: **MEDIUM** — Tier 5 guidance + clinical plausibility without controlled comparison
 
 **Resolution 3 — RT60 ≤ 0.3 s as universal target (alignment, not conflict)**
 - Source: Iglehart 2020 (Tier 1, PMID 31835909); ANSI/ASA S12.60-2010; Murgia et al. 2022 (Tier 3, systematic review)
 - Mechanism: The DEAF/CI-driven 0.3 s target is a strict subset of the general 0.6 s target. Reducing RT60 from 0.6 to 0.3 s provides additional benefit to CI users and no harm to any other population (Iglehart 2016/2020). NDV/AUT evidence supports ≤ 0.3–0.4 s. DEM evidence supports ≤ 0.5 s. The strictest target serves all.
 - Outcome data: Tier 1 controlled studies (Iglehart 2016, 2020; Wroblewski 2012; Neuman 2010).
-- Guidebook implication: Tier 0 default RT60 ≤ 0.3 s in all speech-critical rooms. This is not a conflict resolution — it is an alignment finding. The 0.6 s code value is the failure threshold, not a design target (per Opus note in acoustics-speech-intelligibility-disability BPC).
+- Guidebook implication: Universal Mode default RT60 ≤ 0.3 s in all speech-critical rooms. This is not a conflict resolution — it is an alignment finding. The 0.6 s code value is the failure threshold, not a design target (per Opus note in acoustics-speech-intelligibility-disability BPC).
 - Status: **RESOLVED-EVIDENCE** (alignment) · Confidence: **HIGH**
 
 ### Aligned Parameters (No Conflict)
@@ -58,9 +58,9 @@ On examination, ACOUSTIC-LVL decomposes into five sub-parameters with distinct c
 | STI | ≥ 0.60 general; ≥ 0.75 DEAF/CI; measured at furthest seat | Iglehart 2020; room-acoustic-performance BPC + Opus adjudication | HIGH |
 | NRC | ≥ 0.85 with spectral balance 250 Hz–4 kHz; high-frequency-dominant panels contraindicated | Amlani & Russo 2016 caveat; GAP-RAP-01-b Opus adjudication | HIGH |
 
-### Tier 0 Specification Summary
+### Universal Mode Specification Summary
 
-ACOUSTIC-LVL is one of the few domains where a genuine Tier 0 specification is possible because the strictest targets serve all populations:
+ACOUSTIC-LVL is one of the few domains where a genuine Universal Mode specification is possible because the strictest targets serve all populations:
 
 1. RT60 ≤ 0.3 s (mid-frequency average 500–2000 Hz) in all speech-critical rooms
 2. Background noise ≤ 35 dB(A) (unoccupied, HVAC operating); aspiration ≤ 30 dB(A)

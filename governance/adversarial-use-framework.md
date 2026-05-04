@@ -20,17 +20,17 @@ Three vectors were named at workplan-v3 as the project's minimum adversarial-use
 
 ### 1.1 Minimum-compliance weaponization (V-01)
 
-**Mechanism.** The guidebook publishes specifications above the regulatory floor (Tier 1–5 evidence-based ranges; best-practice synthesis). An adversarial reader cites the guidebook to argue that a Tier 0 (code-floor) compliant design is *adequate because the guidebook acknowledges Tier 0 exists* — using the guidebook's own structure to justify floor-only design. A variant: citing the conditional language of Tier 1 ("range with median default") to argue that the lower bound of the range is acceptable as a default rather than the median.
+**Mechanism.** The guidebook publishes specifications above the regulatory floor (Tier 1–5 evidence-based ranges; best-practice synthesis). An adversarial reader cites the guidebook to argue that a Universal Mode (code-floor) compliant design is *adequate because the guidebook acknowledges Universal Mode exists* — using the guidebook's own structure to justify floor-only design. A variant: citing the conditional language of Tier 1 ("range with median default") to argue that the lower bound of the range is acceptable as a default rather than the median.
 
 **Harm.** Disabled people receive code-floor environments where evidence supports better design. The guidebook's existence is used as cover.
 
 **Mitigation in the guidebook's structure.**
 - Project-standards Core Doctrine: "Codes are Tier 6 — the compliance floor, not the aspiration." Every code-only specification is explicitly the floor.
 - Project-standards L20: a best_practice_synthesis derived solely from code consensus is in error. The guidebook does not offer code values as best practice.
-- Voice-style §8.1: Tier 0 specifications cite the code; Tier 1 specifications cite the evidence; Tier 2 specifications locate authority in OT assessment plus the individual. A reader cannot extract a code-floor range while reading the evidence-citing prose.
-- Three-tier design hierarchy: Tier 0 is *universal design / code compliance*, never *best practice*. The hierarchy makes the distinction between floor and aspiration unmistakable.
+- Voice-style §8.1: Universal Mode specifications cite the code; Tier 1 specifications cite the evidence; Tier 2 specifications locate authority in OT assessment plus the individual. A reader cannot extract a code-floor range while reading the evidence-citing prose.
+- Three-tier design hierarchy: Universal Mode is *universal design / code compliance*, never *best practice*. The hierarchy makes the distinction between floor and aspiration unmistakable.
 
-**Mitigation residue.** The mitigations are structural, not absolute. A reader determined to cite Tier 0 as adequate can do so. The mitigation makes that citation visibly inconsistent with the guidebook's own language.
+**Mitigation residue.** The mitigations are structural, not absolute. A reader determined to cite Universal Mode as adequate can do so. The mitigation makes that citation visibly inconsistent with the guidebook's own language.
 
 ### 1.2 Exclusionary ROI (V-02)
 

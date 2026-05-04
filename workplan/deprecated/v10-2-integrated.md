@@ -14,7 +14,7 @@
 | Phase 0 | 2 sessions (build 6 skills, update 10) | **1 session** — reconciliation + cleanup only. 6 skills already built. Remaining: verify 10 updates, reconcile inventories, migrate BPC/SL storage. | 11 sessions of work completed Phase 0 builds. Remaining is infrastructure cleanup, not builds. |
 | Slug storage | Dual architecture: 14 flat files + 2 directory-structure slugs | **Single canonical architecture:** per-slug directory structure. Flat files migrated, then frozen. | Dual structure creates CHECK/LOG path ambiguity and reconciliation debt. One architecture. |
 | `connection-scout` | Mentioned at edition boundary only | **Integrated at three points:** (1) pre-Phase 2B scan of completed BPC corpus; (2) post-Phase 2B re-scan after new research; (3) post-Phase 3 edition boundary. External mode runs twice. Skill file to be built. | 32 connections already discovered; methodology proven. Must be systematically scheduled, not ad hoc. |
-| `functional-deficit-researcher` | Not in session plan | **Integrated:** runs after each `multilingual-research` COMPLETE slug with ≥2 THIN flags or thin-base population. 12 scenarios already completed for PAIN/OFS; remaining slugs scheduled. | Methodology validated: 18 NOVEL findings, 4 Tier 0 candidates from PAIN/OFS run alone. |
+| `functional-deficit-researcher` | Not in session plan | **Integrated:** runs after each `multilingual-research` COMPLETE slug with ≥2 THIN flags or thin-base population. 12 scenarios already completed for PAIN/OFS; remaining slugs scheduled. | Methodology validated: 18 NOVEL findings, 4 Universal Mode candidates from PAIN/OFS run alone. |
 | Out-of-sequence research | Not acknowledged | **Acknowledged and credited.** Bathroom (COMPLETE), kitchen (PROVISIONAL), threshold-door-hardware (PARTIAL), PAIN/OFS FDR (COMPLETE), 8 targeted gap resolutions, 32 connections — all credited. Phase 2B scope reduced accordingly. | ~6 sessions of research already done. Workplan must reflect actual state, not re-plan completed work. |
 | Phase 1 | 3 sessions (D1/D2/D3) | **2 sessions** (D2/D3 combined — D1 already done). | P1-D1 complete with 34 decisions recorded. Only D2 and D3 remain. |
 | Gap register triage | Phase 2A Session 6 | **Moved to Phase 0** reconciliation session — 127 OPEN items need triage against Decision Register before research planning. | Triage is infrastructure, not content. Must happen before Phase 1 resumes. |
@@ -36,7 +36,7 @@
 | **Bathroom slug** (accessible-bathroom-and-grab-bar) | 24/24 jurisdictions COMPLETE. BPC logged. | 2026-03-26 |
 | **Kitchen slug** (residential-kitchen-and-task-surfaces) | 19/24 jurisdictions PROVISIONAL (accepted gaps). BPC logged. | 2026-03-26 |
 | **Threshold slug** (threshold-door-hardware) | PARTIAL — 24/24 Tier 6, 12 SEARCHED + 13 THIN, Co-1 0/24, citation mining 0. | 2026-03-26–27 |
-| **PAIN/OFS slug** (pain-ofs-built-environment-design) | PARTIAL — 10/24 jurisdictions (accepted gaps). FDR COMPLETE (12/12 scenarios, 18 NOVEL, 4 Tier 0 candidates). | 2026-03-26 |
+| **PAIN/OFS slug** (pain-ofs-built-environment-design) | PARTIAL — 10/24 jurisdictions (accepted gaps). FDR COMPLETE (12/12 scenarios, 18 NOVEL, 4 Universal Mode candidates). | 2026-03-26 |
 | **8 targeted gap resolutions** | B-10 seizure, DEAF RT60, sensory room, circadian lighting, Rajotte, NCSE, Guay biomechanics, NC-25 equivalence — all RESOLVED. | 2026-03-26 |
 | **Connection discovery** | 32 connections (CON-0001–0032). 20 internal, 12 external. 19 HIGH, 9 MODERATE, 4 SPECULATIVE. | 2026-03-26 |
 | **functional-deficit-researcher** | Built, validated, PAIN/OFS run COMPLETE. | 2026-03-26 |
@@ -358,7 +358,7 @@ This phase is new in v10.2. It runs after Phase 2B because both `connection-scou
 **Process:**
 1. GET all BPC entries via slug registry.
 2. GET connection register (CON-0001–0032).
-3. Run `connection-scout` internal mode — skip population pairs already covered in CON-0001–0020. Focus on: newly completed slugs, economics evidence, case study outcomes, FDR Tier 0 candidates.
+3. Run `connection-scout` internal mode — skip population pairs already covered in CON-0001–0020. Focus on: newly completed slugs, economics evidence, case study outcomes, FDR Universal Mode candidates.
 4. Expected: 5–10 new connections (diminishing returns from broad scan; targeted by new content).
 
 ### 2C-2: `connection-scout` External Targeted Scan (~20% of session)
@@ -389,7 +389,7 @@ This phase is new in v10.2. It runs after Phase 2B because both `connection-scou
 
 **Cap:** ≤24 scenarios total in this session (2 slugs × 12 scenarios, or 3 slugs × 8 scenarios).
 
-**Output:** Updated connection register. Updated BPC entries with FDR findings. Gap register updated with Tier 0 candidates and SPECULATIVE connections.
+**Output:** Updated connection register. Updated BPC entries with FDR findings. Gap register updated with Universal Mode candidates and SPECULATIVE connections.
 
 **Phase 2C gate:** Connection register current (all Phase 2B content scanned). FDR complete for all COMPLETE slugs with thin evidence. HIGH-confidence connections briefed into item-specification-writer input queue.
 
@@ -433,7 +433,7 @@ Per v10.1 plan. Additional input:
 
 Per v10.1 plan. Additional inputs:
 - GAP-S4-R01 through R09 (DBL/IntD room-level gaps — Phase 3 insertion pass).
-- FDR Tier 0 candidates (universal reach zone 380–1220 mm; rest seating on circulation routes).
+- FDR Universal Mode candidates (universal reach zone 380–1220 mm; rest seating on circulation routes).
 - Case study evidence upgrades from Phase 2A evidence map.
 - GAP-CO02-01 execution: delete IntD column from residential matrices.
 
@@ -451,7 +451,7 @@ Per v10.1 plan. Additional inputs:
 
 Per v10.1 plan. Additional inputs:
 - EXEC-READY specification resolutions: GAP-STEP5-01 (B-10 seizure), GAP-RAP-06 (DEAF RT60), GAP-SRS-01 (A-16 user control), GAP-034 (B-01 circadian), GAP-RAP-03 (A-08 NC-25 equivalence), GAP-059 (CHD-10 Rajotte), GAP-060 (A-16 NCSE), GAP-063 (G-03/G-04 Guay biomechanics).
-- Connection register HIGH findings: CON-0001 (Tier 0 circulation legibility), CON-0002 (sensory relief room), CON-0003 (thermal comfort), CON-0007 (grab bar universal), CON-0010 (loop circulation DEM/NEU/NDV), CON-0011 (DBL hearing loop), CON-0014 (bedroom privacy/refuge), CON-0017–0019 (additional internal connections).
+- Connection register HIGH findings: CON-0001 (Universal Mode circulation legibility), CON-0002 (sensory relief room), CON-0003 (thermal comfort), CON-0007 (grab bar universal), CON-0010 (loop circulation DEM/NEU/NDV), CON-0011 (DBL hearing loop), CON-0014 (bedroom privacy/refuge), CON-0017–0019 (additional internal connections).
 - External connections: CON-0021–0024 (TID validation, prospect-refuge, sensory taxonomy).
 - FDR novel spatial parameters (PAIN/OFS: counter heights, storage zones, seating intervals, temperature ranges).
 - Add `bpc_slugs` field to each item (BPC↔Item traceability).
@@ -474,7 +474,7 @@ Additional inputs — substantially richer than v10.1 anticipated:
 - CON-0024 (trauma-informed design) → §8.1 theoretical framing.
 - CON-0026 (SAE/SBI validation of three-tier approach) → §8.2 methodology grounding.
 - FDR PAIN/OFS thermal conflict finding → §8.5 thermal zoning.
-- FDR Tier 0 candidates → §8.2 resolution methodology (Tier 0 as resolution strategy for multi-population convergence).
+- FDR Universal Mode candidates → §8.2 resolution methodology (Universal Mode as resolution strategy for multi-population convergence).
 
 §8.4 target now achievable: 12 from §3.4 + 5–8 from connection register + 3–5 from item conflict notes = 20–25 documented resolutions.
 
@@ -581,7 +581,7 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 
 | Phase | Target slug(s) | Trigger | Scenarios | Session |
 |---|---|---|---|---|
-| Already done | pain-ofs-built-environment-design | Thin-base population | 12/12 COMPLETE (18 NOVEL, 4 Tier 0) | Completed 2026-03-26 |
+| Already done | pain-ofs-built-environment-design | Thin-base population | 12/12 COMPLETE (18 NOVEL, 4 Universal Mode) | Completed 2026-03-26 |
 | Phase 2C | mental-health-built-environment | ≥2 THIN flags expected | ≤12 | Session 9 |
 | Phase 2C | neurological-built-environment | NEU/PCS thin provisions | ≤12 | Session 9 |
 | Phase 2C | cross-population-conflict-resolution | New slug, thin by definition | ≤8 | Session 9 |
@@ -591,7 +591,7 @@ Per v10.1 plan. Resolves GAP-CR-03 (phantom cross-references), GAP-CR-04 (duplic
 - FDR NOVEL findings → add to item's evidence table with Tier classification.
 - FDR REFINES findings → update specification value within item.
 - FDR CONTRADICTS findings → route to `evidence-auditor` before inclusion.
-- FDR TIER-0-CANDIDATE findings → propose for Tier 0 universal specification in Part 1/Part 8.
+- FDR TIER-0-CANDIDATE findings → propose for Universal Mode universal specification in Part 1/Part 8.
 - FDR cross-pop findings → route to `connection-scout` for register.
 
 ---

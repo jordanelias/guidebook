@@ -36,7 +36,7 @@ Each carries: dimensions table, performance table with measurement methods, code
 ### 14 rooms with synthesis content
 Priority (R-BA, R-KIT, R-BED, R-LIV, R-HAL, R-ENT, NR-EDU, NR-HLT, NR-WRK) include synthesis prose, sequence, interactions, clearances, failures, and SVG diagram. Compact (R-LAU, NR-RET, NR-CUL, NR-HOS, NR-TRP) include synthesis without diagram.
 
-Each carries: design synthesis prose, sequence of design decisions, critical interactions (cross-linking specs), stats panel, critical Tier 0 callout, all entries grouped by category with inline expansion, clearances table, common failure patterns, schematic plan diagram.
+Each carries: design synthesis prose, sequence of design decisions, critical interactions (cross-linking specs), stats panel, critical Universal Mode callout, all entries grouped by category with inline expansion, clearances table, common failure patterns, schematic plan diagram.
 
 ### Persistent toggle
 "Specifications | Questions" at top of every screen. `role="radiogroup"`. Same content, two reading voices.

@@ -425,7 +425,7 @@ Easy Read formatted content is a distinct content variant requiring specific aut
 
 **Age:** a scope modifier (not an axis) with three values: `child (0–17)` | `adult (18–64)` | `older adult (65+)`. Age modifies specifications in ways the axis system cannot capture: child-height controls, child-scaled grab rails, playground-specific specifications, age-appropriate wayfinding. Older adult provisions overlap substantially with DEM and MOB axis-derived specifications but include age-specific considerations (falls prevention literature, age-related sensory decline patterns). The modifier adjusts the specification set — it doesn't replace axis-driven retrieval but adds age-specific specifications where they exist.
 
-CRPD Art 7 alignment: children with disabilities have specific rights. The age modifier surfaces child-specific provisions. Art 7.3 (evolving capacity of children) is addressed in Tier 2 handoff notes for pediatric specifications.
+CRPD Art 7 alignment: children with disabilities have specific rights. The age modifier surfaces child-specific provisions. Art 7.3 (evolving capacity of children) is addressed in Mode S handoff notes for pediatric specifications.
 
 **Gender:** a scope modifier for building types where gendered specifications exist: bathroom design (menstrual hygiene facilities, gender-neutral bathroom design, changing places), breastfeeding/lactation spaces in non-residential buildings, domestic violence refuge design. Not a universal modifier — for most specifications, gender is irrelevant. Active only when `spatial_context` includes building types where gendered specifications apply.
 
@@ -547,7 +547,7 @@ This is simpler than the 7-tier specification-level hierarchy because population
 
 **Designer / OT / policymaker** roles view the same specification set with different emphasis:
 - Designer sees: all specifications, full technical detail, conflict notes prominent, code references prominent
-- OT sees: all specifications, Tier 2 handoff parameters prominent, assessment frameworks linked, clinical reasoning visible
+- OT sees: all specifications, Mode S handoff parameters prominent, assessment frameworks linked, clinical reasoning visible
 - Policymaker sees: all specifications, compliance status prominent, jurisdiction comparison available, evidence grading prominent
 
 These are filter + emphasis adjustments on the same specification records. No separate content authoring required per role.
@@ -555,7 +555,7 @@ These are filter + emphasis adjustments on the same specification records. No se
 **Disabled person / carer** roles receive a content variant: the specification data is the same, but the presentation includes authored plain-language framing that is not auto-generated from technical register. Each specification set, when presented in the disabled-person or carer role, is accompanied by:
 - A plain-language summary of what the specifications mean in practice
 - "Questions to ask your architect/designer" generated from Tier 1 specifications
-- "Questions to ask your OT" generated from Tier 2 handoff parameters
+- "Questions to ask your OT" generated from Mode S handoff parameters
 - Evidence strength disclosure in plain language
 - Rights framework reference (jurisdiction-dependent)
 
@@ -602,7 +602,7 @@ When the specification set contains apparent conflicts (two specifications for t
 - Both specifications with their axis basis and evidence
 - The conflict type (dimensional, sensory, operational)
 - The harm asymmetry if documented (which population is harmed more by the other's specification prevailing)
-- The resolution pathway (Tier 2 handoff to OT/specialist with the specific conflict named)
+- The resolution pathway (Mode S handoff to OT/specialist with the specific conflict named)
 
 **Implementation:** Steps 1 and 2 require structured metadata on specifications: `physical_variable` (what the specification acts on — corridor width, wall surface, lighting level, temperature, etc.) and `value` as a range rather than a point. Step 3 requires conflict-resolution metadata (harm asymmetry records, resolution pathways) stored on Connection entities or a dedicated conflict-resolution data structure.
 
@@ -752,7 +752,7 @@ Parameters are human-readable slug values, not opaque IDs. This means URLs are p
 
 **Resolution: Three formats, all accessible.**
 
-**PDF:** specification matrix formatted for print and filing. Includes: full specification set, evidence markers with text equivalents, jurisdiction references, Tier 2 handoff notes. Accessible PDF (tagged, reading-order correct, alt text on visual elements). Generated server-side.
+**PDF:** specification matrix formatted for print and filing. Includes: full specification set, evidence markers with text equivalents, jurisdiction references, Mode S handoff notes. Accessible PDF (tagged, reading-order correct, alt text on visual elements). Generated server-side.
 
 **Plain text / Markdown:** specification set as structured text. Suitable for pasting into documents, emails, reports. No visual formatting dependencies.
 

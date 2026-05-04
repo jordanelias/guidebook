@@ -41,7 +41,7 @@ This is defensible, multi-source, and avoids the trap of a single headline figur
 **Part 4 `Retrofit cost note:` fields** should contain qualitative retrofit penalty ratings (the existing LOW/MEDIUM/HIGH — PLANNING/STRUCTURAL/SYSTEMS taxonomy already scaffolded in A-01) with a brief explanatory sentence. They should NOT contain specific cost figures in any currency. The reasons:
 
 1. Cost figures are jurisdiction-specific, date-sensitive, and require annual verification. Part 4 items are designed to be jurisdiction-agnostic.
-2. The three-tier hierarchy means a given item's cost depends on tier: Tier 0 (code compliance) is already priced into standard construction; Tier 1 (population-informed) adds the UD premium; Tier 2 (person-specific) adds the OT-assessed modification. A single dollar figure collapses this distinction.
+2. The three-tier hierarchy means a given item's cost depends on tier: Universal Mode (code compliance) is already priced into standard construction; Tier 1 (population-informed) adds the UD premium; Tier 2 (person-specific) adds the OT-assessed modification. A single dollar figure collapses this distinction.
 3. The economics-researcher skill scope boundary explicitly excludes "product pricing or equipment market data." Part 4 retrofit cost notes that contain product prices would violate this boundary and create a maintenance burden.
 
 **A standalone economics section** (likely in the Supplementary Volume or as an Appendix to Part 10) should contain:
@@ -61,7 +61,7 @@ This is defensible, multi-source, and avoids the trap of a single headline figur
 
 Yes — the three-tier hierarchy maps naturally to a cost-benefit framework, and doing so strengthens both the economic argument and the conceptual architecture. But with a critical caveat.
 
-**Tier 0 (Universal Design / Code Compliance):**
+**Universal Mode (Universal Design / Code Compliance):**
 - Capital cost: Near-zero marginal at design stage (0.5%–2%)
 - Benefit: Population-wide falls prevention, independent living, code compliance
 - ROI: Effectively infinite — the cost is absorbed into standard construction

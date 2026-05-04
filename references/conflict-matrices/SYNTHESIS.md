@@ -5,7 +5,7 @@
 
 ### Domain Classification Summary
 
-| Domain | Classification | Tier 0 viable? | Key finding |
+| Domain | Classification | Universal Mode viable? | Key finding |
 |---|---|---|---|
 | LIGHT-INT | **DIVERGENT** | No | Shared ipRGC pathway serves opposing clinical objectives; harm asymmetry favours dim default |
 | LIGHT-QUAL | **MIXED** | Yes (flicker + daytime CCT) | Flicker convergent; daytime CCT convergent (all align ~4000K); evening CCT divergent (dynamic vs static). Original table corrected: NDV/AUT = 4000K, not ≤3000K. |
@@ -31,7 +31,7 @@
 The three-way classification from the original synthesis (LIGHT-INT, ACOUSTIC-LVL, SPATIAL-OPEN) holds across all domains. The §3.8 decision tree should ask:
 1. Is the parameter convergent? → Adopt strictest target (serves all)
 2. Is the parameter divergent? → Individual control feasible? → Zoning feasible? → Harm asymmetry default
-3. Is it mixed? → Convergent sub-parameters get Tier 0; divergent sub-parameters get zoning/control
+3. Is it mixed? → Convergent sub-parameters get Universal Mode; divergent sub-parameters get zoning/control
 
 **3. "Adjustable" is confirmed as an inadequate universal resolution:**
 Every domain confirms the skill's constraint. "Adjustable" fails when:
@@ -78,7 +78,7 @@ Where no single specification serves all populations, the default favours the po
 | Entry | Update |
 |---|---|
 | CON-0016 (zone-parameter model) | CONSUMED → LIGHT-INT matrix Resolution 1 |
-| CON-0005 (H-02 as Tier 0) | Referenced in LIGHT-INT, LIGHT-QUAL, TEMP-RANGE |
+| CON-0005 (H-02 as Universal Mode) | Referenced in LIGHT-INT, LIGHT-QUAL, TEMP-RANGE |
 | CON-0030 (glazed junction conflict) | CONSUMED → SPATIAL-OPEN matrix Resolution 2 |
 | CON-0037 (prospect-refuge) | CONSUMED → SPATIAL-OPEN matrix Resolution 1 |
 | CON-0038 (circadian multi-population) | CONSUMED → LIGHT-QUAL Resolution 2 |
@@ -87,7 +87,7 @@ Where no single specification serves all populations, the default favours the po
 
 Part 5 §5.2 must present:
 
-1. **Convergent domains** (ACOUSTIC-LVL, SURFACE-TEXT, flicker elimination, daytime CCT, pattern elimination, fragrance elimination) — strictest target serves all. Single Tier 0 value.
+1. **Convergent domains** (ACOUSTIC-LVL, SURFACE-TEXT, flicker elimination, daytime CCT, pattern elimination, fragrance elimination) — strictest target serves all. Single Universal Mode value.
 
 2. **Divergent domains** (LIGHT-INT, TEMP-RANGE, evening CCT, SPATIAL-OPEN openness) — no single value possible. Specify: zoning infrastructure + harm-asymmetry default + individual control. Operability audit required.
 

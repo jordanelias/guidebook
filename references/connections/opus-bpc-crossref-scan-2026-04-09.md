@@ -113,7 +113,7 @@ Additionally, NEU Opus synthesis notes: "wayfinding provisions (D-02, D-04, D-08
 
 **Evidence basis:** NEU BPC Opus synthesis: bilateral redundancy is Tier 1 for unilateral neglect. VIS BPC: signage on both sides is standard practice (BS 8300, ISO 21542). The convergence is mechanistically different (NEU = compensating for perceptual deletion; VIS = compensating for approach uncertainty) but specificationally identical.
 
-**Action required:** (1) Add NEU as co-population for D-02, D-06, D-08. (2) Add "bilateral placement" as explicit specification requirement for all wayfinding cues — currently implicit in VIS practice but not codified. (3) Note: bilateral placement serves NEU (hemispatial neglect), VIS (approach-direction coverage), and DEM (reinforcement) — Tier 0 candidate.
+**Action required:** (1) Add NEU as co-population for D-02, D-06, D-08. (2) Add "bilateral placement" as explicit specification requirement for all wayfinding cues — currently implicit in VIS practice but not codified. (3) Note: bilateral placement serves NEU (hemispatial neglect), VIS (approach-direction coverage), and DEM (reinforcement) — Universal Mode candidate.
 
 **Disposition notes:** — NEU is under-represented in wayfinding items despite NEU Opus synthesis explicitly flagging this gap.
 
@@ -243,12 +243,12 @@ Additionally, DEM shares this mechanism: DEM users who cannot remember where ite
 
 All three specifications use the same spatial mechanism: **critical facility sightline** — a person in a primary occupation zone can visually locate the critical facility without navigation or search. DEM: toilet. IntD: assistance point. OFS: nearest rest provision.
 
-This should be generalised as a Tier 0 spatial planning principle: **critical facilities shall be visible from primary occupation zones.** Facilities qualifying as "critical": toilet/bathroom, reception/assistance, exit, rest provision, environmental refuge (A-16). The sightline requirement eliminates the search/navigation burden that DEM, IntD, NEU, and OFS populations all experience from different clinical causes.
+This should be generalised as a Universal Mode spatial planning principle: **critical facilities shall be visible from primary occupation zones.** Facilities qualifying as "critical": toilet/bathroom, reception/assistance, exit, rest provision, environmental refuge (A-16). The sightline requirement eliminates the search/navigation burden that DEM, IntD, NEU, and OFS populations all experience from different clinical causes.
 
 CON-0018 partially captures this for DEM+toilet. CON-0068 extends to NEU/NDV/OFS. This connection adds IntD reception sightline and generalises the principle beyond toilet to all critical facilities.
 
 **Evidence basis:** DEM BPC: Marquardt 2011 (toilet visibility strongest environmental factor). IntD BPC: CSA B651 §4.7 (reception within sight of entrance). OFS BPC: rest provision intervals. CON-0018: toilet sightline for DEM. CON-0068: toilet visibility for DEM/NEU/NDV/OFS.
 
-**Action required:** Elevate "critical facility sightline" to Tier 0 spatial planning principle in Part 3 §3.x or Part 1 §1.4: all primary occupation zones shall provide unobstructed sightline to at least one of: toilet door, reception/assistance, building exit, rest seating. In healthcare settings (Part 7 NR-HLT): nurse station visible from all patient positions.
+**Action required:** Elevate "critical facility sightline" to Universal Mode spatial planning principle in Part 3 §3.x or Part 1 §1.4: all primary occupation zones shall provide unobstructed sightline to at least one of: toilet door, reception/assistance, building exit, rest seating. In healthcare settings (Part 7 NR-HLT): nurse station visible from all patient positions.
 
-**Disposition notes:** — Generalises CON-0018/CON-0068 from toilet-specific to facility-class principle. Tier 0 candidate.
+**Disposition notes:** — Generalises CON-0018/CON-0068 from toilet-specific to facility-class principle. Universal Mode candidate.

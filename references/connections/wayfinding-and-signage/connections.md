@@ -23,7 +23,7 @@
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| Marquardt 2011 | 3 | DEM | ALL (Tier 0 universal) |
+| Marquardt 2011 | 3 | DEM | ALL (Universal Mode universal) |
 | DSDC EADDAT 2022 | 5 | DEM | ALL |
 | ISO 23599:2019 | 4 | VIS, DBL | ALL |
 | DbI World Access guidelines | 2 | DBL | ALL |
@@ -31,7 +31,7 @@
 | Bowes, Dawson, Greasley-Adams 2019 | 3 | DEM | ALL |
 | Black, Sharma & Roberts 2022 | 3 | NDV/AUT | ALL |
 
-**Action required:** Create Tier 0 universal circulation legibility specification: all buildings to provide consistent, predictable circulation geometry (loop or single-path, no dead-ends); consistent furniture arrangement within room types (no mirror-image pairs); 3D object landmarks at every decision point. Population-specific overlays at Tier 1. Resolves root cause of 8+ gap items.
+**Action required:** Create Universal Mode universal circulation legibility specification: all buildings to provide consistent, predictable circulation geometry (loop or single-path, no dead-ends); consistent furniture arrangement within room types (no mirror-image pairs); 3D object landmarks at every decision point. Population-specific overlays at Tier 1. Resolves root cause of 8+ gap items.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 
@@ -86,7 +86,7 @@
 | DSDC EADDAT 2022 | Tier 5 | DEM | Cross-population |
 | Cognitive wayfinding BPC | Synthesis | DEM, NDV | NEU, OFS |
 
-**Action required:** Elevate "essential facility sightline" to a Tier 0 residential design principle: WC/bathroom door visible from main living area without navigational decision points. In care settings, this is already standard for DEM; in residential design, it is not specified. The evidence supports it as a universal benefit.
+**Action required:** Elevate "essential facility sightline" to a Universal Mode residential design principle: WC/bathroom door visible from main living area without navigational decision points. In care settings, this is already standard for DEM; in residential design, it is not specified. The evidence supports it as a universal benefit.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
@@ -101,13 +101,13 @@
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
-**Target item(s):** Part III (design hierarchy), Tier 0 doctrine
+**Target item(s):** Part III (design hierarchy), Universal Mode doctrine
 **Target population(s):** ALL
 **Evidence tier:** —
 **Filed:** 2026-03-26
 **Applied:** —
 
-**Connection:** UD2024 (Oslo, November 2024) proposed "Reduction of Fear" as an 8th Universal Design principle, arguing that Ron Mace's Principle 5 ("Tolerance for Error") places blame on the user ("error") rather than the environment. The paper documents fear of falling (DEM, MOB, NEU), fear of not finding a toilet (DEM, OFS), fear of forgetting procedures (DEM, NEU), and fear of being made to feel incapable (NDV/MH, all populations) as design-relevant concerns that current UD principles do not address. This maps directly onto the guidebook's Tier 0 provisions: the environmental refuge (CON-0019), essential facility sightline (CON-0018), and rest seating intervals (CON-0014) all reduce fear as their primar…
+**Connection:** UD2024 (Oslo, November 2024) proposed "Reduction of Fear" as an 8th Universal Design principle, arguing that Ron Mace's Principle 5 ("Tolerance for Error") places blame on the user ("error") rather than the environment. The paper documents fear of falling (DEM, MOB, NEU), fear of not finding a toilet (DEM, OFS), fear of forgetting procedures (DEM, NEU), and fear of being made to feel incapable (NDV/MH, all populations) as design-relevant concerns that current UD principles do not address. This maps directly onto the guidebook's Universal Mode provisions: the environmental refuge (CON-0019), essential facility sightline (CON-0018), and rest seating intervals (CON-0014) all reduce fear as their primar…
 
 **Evidence basis:**
 | Source | Tier | Field | Not yet in guidebook? |
@@ -116,7 +116,7 @@
 | Norway Declaration on UD 2024 | Policy | Universal design | YES — not cited |
 | NDA Ireland research on fall detection technologies | Tier 5 | Gerontology/UD | YES — not cited |
 
-**Action required:** Cite the "Reduction of Fear" proposal in Part III as theoretical support for the guidebook's Tier 0 provisions. Frame environmental refuge, facility sightline, rest seating, and consistent spatial layout as fear-reduction provisions, not merely functional accommodations. This shifts the framing from "compensating for deficit" to "designing environments that do not generate fear" — which aligns wit…
+**Action required:** Cite the "Reduction of Fear" proposal in Part III as theoretical support for the guidebook's Universal Mode provisions. Frame environmental refuge, facility sightline, rest seating, and consistent spatial layout as fear-reduction provisions, not merely functional accommodations. This shifts the framing from "compensating for deficit" to "designing environments that do not generate fear" — which aligns wit…
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
@@ -182,7 +182,7 @@
 | Mosca & Capolongo 2023 (A.U.D.I.T.) | 3 | ALL (healthcare) | ALL |
 | Zallio & Clarkson 2023 (practitioner survey, n=114) | 3 | Building industry professionals | ALL |
 
-**Action required:** Add RFO-stage POE specification to Part 5 (or equivalent practice guidance): recommend IDEA Audit framework (or adaptation) as post-occupancy feedback instrument. Components: physical accessibility audit, sensory environment assessment, neurodivergent comfort evaluation, people-space engagement survey. Link POE findings back to Tier 0/1 specifications for iterative improvement. This closes the des…
+**Action required:** Add RFO-stage POE specification to Part 5 (or equivalent practice guidance): recommend IDEA Audit framework (or adaptation) as post-occupancy feedback instrument. Components: physical accessibility audit, sensory environment assessment, neurodivergent comfort evaluation, people-space engagement survey. Link POE findings back to Universal Mode/1 specifications for iterative improvement. This closes the des…
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 
@@ -227,18 +227,18 @@ These seven principles map directly onto the guidebook's existing item categorie
 **Filed:** 2026-03-28
 **Applied:** —
 
-**Connection:** Loop/linear circulation with no dead-ends serves five populations from independent clinical rationales: DEAF (visual field scan), VIS (tactile route memorisation), DBL (tactile navigation without choice points), DEM (prevents disorientation), IntD (reduces cognitive load). All five BPCs specify this geometry; currently siloed. This is a Tier 0 universal candidate.
+**Connection:** Loop/linear circulation with no dead-ends serves five populations from independent clinical rationales: DEAF (visual field scan), VIS (tactile route memorisation), DBL (tactile navigation without choice points), DEM (prevents disorientation), IntD (reduces cognitive load). All five BPCs specify this geometry; currently siloed. This is a Universal Mode universal candidate.
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| deaf-spatial-design BPC | 2 | DEAF | Tier 0 universal |
-| visual-impairment-built-environment BPC | 2 | VIS | Tier 0 universal |
-| wayfinding-dementia-spatial-design BPC | 2 | DEM | Tier 0 universal |
-| deafblind-built-environment-design BPC | 4-5 | DBL | Tier 0 universal |
-| intellectual-disability-built-environment-design BPC | 4-5 | IntD | Tier 0 universal |
+| deaf-spatial-design BPC | 2 | DEAF | Universal Mode universal |
+| visual-impairment-built-environment BPC | 2 | VIS | Universal Mode universal |
+| wayfinding-dementia-spatial-design BPC | 2 | DEM | Universal Mode universal |
+| deafblind-built-environment-design BPC | 4-5 | DBL | Universal Mode universal |
+| intellectual-disability-built-environment-design BPC | 4-5 | IntD | Universal Mode universal |
 
-**Action required:** Elevate loop/linear circulation to Tier 0 universal provision (D-02 revision). Mechanism: reduces wayfinding cognitive load for all users; essential for DEAF/VIS/DBL/DEM/IntD; neutral for others.
+**Action required:** Elevate loop/linear circulation to Universal Mode universal provision (D-02 revision). Mechanism: reduces wayfinding cognitive load for all users; essential for DEAF/VIS/DBL/DEM/IntD; neutral for others.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 - [ ] MODERATE → P2 gap item
@@ -682,17 +682,17 @@ Part 12 Economics covers international grant programmes (UK DFG, AU NDIS, Nordic
 **Filed:** 2026-03-28
 **Applied:** —
 
-**Connection:** Retreat/reset room overlaps substantively with D-05 (Enclosed Low-Stimulation Spaces) but proposes universal requirement for public buildings >500 m². Sound attenuation specification creates emergency egress and communication isolation risk for DEAF population. Universal (Tier 0) adoption rejected; retreat/reset provisions remain Tier 1.
+**Connection:** Retreat/reset room overlaps substantively with D-05 (Enclosed Low-Stimulation Spaces) but proposes universal requirement for public buildings >500 m². Sound attenuation specification creates emergency egress and communication isolation risk for DEAF population. Universal (Universal Mode) adoption rejected; retreat/reset provisions remain Tier 1.
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
 |---|---|---|---|
-| PAIN/OFS FDR session 2026-03-26 | THIN (expert consensus) | OFS, PAIN, NDV/AUT, NDV/SENS, NEU, DEM, NDV/MH | REJECTED for Tier 0 due to DEAF conflict |
+| PAIN/OFS FDR session 2026-03-26 | THIN (expert consensus) | OFS, PAIN, NDV/AUT, NDV/SENS, NEU, DEM, NDV/MH | REJECTED for Universal Mode due to DEAF conflict |
 
-**Action required:** Maintain D-05 as Tier 1. Annotate: where retreat/reset spaces serve DEAF population, specify visual emergency alerts, transparent sidelights, or communication pass-through to mitigate isolation risk. Do not elevate to Tier 0.
+**Action required:** Maintain D-05 as Tier 1. Annotate: where retreat/reset spaces serve DEAF population, specify visual emergency alerts, transparent sidelights, or communication pass-through to mitigate isolation risk. Do not elevate to Universal Mode.
 
 **Disposition notes:** - [x] Annotate D-05 with DEAF accommodation requirement for sound-attenuated spaces — DONE 2026-03-28 18:00
-- [x] Reject GAP-FDR-T0-03 for Tier 0 status — DONE 2026-03-28 17:00
+- [x] Reject GAP-FDR-T0-03 for Universal Mode status — DONE 2026-03-28 17:00
 
 ---
 
@@ -793,7 +793,7 @@ Additionally, NEU Opus synthesis notes: "wayfinding provisions (D-02, D-04, D-08
 
 **Evidence basis:** NEU BPC Opus synthesis: bilateral redundancy is Tier 1 for unilateral neglect. VIS BPC: signage on both sides is standard practice (BS 8300, ISO 21542). The convergence is mechanistically different (NEU = compensating for perceptual deletion; VIS = compensating for approach uncertainty) but specificationally identical.
 
-**Action required:** (1) Add NEU as co-population for D-02, D-06, D-08. (2) Add "bilateral placement" as explicit specification requirement for all wayfinding cues — currently implicit in VIS practice but not codified. (3) Note: bilateral placement serves NEU (hemispatial neglect), VIS (approach-direction coverage), and DEM (reinforcement) — Tier 0 candidate.
+**Action required:** (1) Add NEU as co-population for D-02, D-06, D-08. (2) Add "bilateral placement" as explicit specification requirement for all wayfinding cues — currently implicit in VIS practice but not codified. (3) Note: bilateral placement serves NEU (hemispatial neglect), VIS (approach-direction coverage), and DEM (reinforcement) — Universal Mode candidate.
 
 **Disposition notes:** — NEU is under-represented in wayfinding items despite NEU Opus synthesis explicitly flagging this gap.
 
@@ -815,15 +815,15 @@ Additionally, NEU Opus synthesis notes: "wayfinding provisions (D-02, D-04, D-08
 
 All three specifications use the same spatial mechanism: **critical facility sightline** — a person in a primary occupation zone can visually locate the critical facility without navigation or search. DEM: toilet. IntD: assistance point. OFS: nearest rest provision.
 
-This should be generalised as a Tier 0 spatial planning principle: **critical facilities shall be visible from primary occupation zones.** Facilities qualifying as "critical": toilet/bathroom, reception/assistance, exit, rest provision, environmental refuge (A-16). The sightline requirement eliminates the search/navigation burden that DEM, IntD, NEU, and OFS populations all experience from different clinical causes.
+This should be generalised as a Universal Mode spatial planning principle: **critical facilities shall be visible from primary occupation zones.** Facilities qualifying as "critical": toilet/bathroom, reception/assistance, exit, rest provision, environmental refuge (A-16). The sightline requirement eliminates the search/navigation burden that DEM, IntD, NEU, and OFS populations all experience from different clinical causes.
 
 CON-0018 partially captures this for DEM+toilet. CON-0068 extends to NEU/NDV/OFS. This connection adds IntD reception sightline and generalises the principle beyond toilet to all critical facilities.
 
 **Evidence basis:** DEM BPC: Marquardt 2011 (toilet visibility strongest environmental factor). IntD BPC: CSA B651 §4.7 (reception within sight of entrance). OFS BPC: rest provision intervals. CON-0018: toilet sightline for DEM. CON-0068: toilet visibility for DEM/NEU/NDV/OFS.
 
-**Action required:** Elevate "critical facility sightline" to Tier 0 spatial planning principle in Part 3 §3.x or Part 1 §1.4: all primary occupation zones shall provide unobstructed sightline to at least one of: toilet door, reception/assistance, building exit, rest seating. In healthcare settings (Part 7 NR-HLT): nurse station visible from all patient positions.
+**Action required:** Elevate "critical facility sightline" to Universal Mode spatial planning principle in Part 3 §3.x or Part 1 §1.4: all primary occupation zones shall provide unobstructed sightline to at least one of: toilet door, reception/assistance, building exit, rest seating. In healthcare settings (Part 7 NR-HLT): nurse station visible from all patient positions.
 
-**Disposition notes:** — Generalises CON-0018/CON-0068 from toilet-specific to facility-class principle. Tier 0 candidate.
+**Disposition notes:** — Generalises CON-0018/CON-0068 from toilet-specific to facility-class principle. Universal Mode candidate.
 
 ---
 

@@ -24,7 +24,7 @@
 
 **Opus synthesis note:** Evidence base is internally consistent despite PROVISIONAL status. Key judgments:
 (1) PAIN warmth vs OFS cool conflict resolution (default cool 18–21°C + individual supplemental heating) is the only viable approach — clinically sound.
-(2) Tier 0 candidates require qualification: storage zone 380–1220 mm and circulation rest seating are genuine Tier 0 (multi-population, evidence-supported). Retreat room 500 m² threshold and entrance seating 5 m distance are Co-1/Co-2 derived — mark as Tier 0 CANDIDATE pending higher-tier validation.
+(2) Universal Mode candidates require qualification: storage zone 380–1220 mm and circulation rest seating are genuine Universal Mode (multi-population, evidence-supported). Retreat room 500 m² threshold and entrance seating 5 m distance are Co-1/Co-2 derived — mark as Universal Mode CANDIDATE pending higher-tier validation.
 (3) FDR pass produced 18 novel findings — notably OFS shower temperature (≤37°C), bathroom ventilation mandate, and head-up tilt bed capacity. These are clinically grounded and should proceed to item specification.
 (4) 10/24 jurisdictions NOT-RUN is a significant gap — complete before elevating from PROVISIONAL.
 
@@ -91,7 +91,7 @@
 ### Bottom-up findings (functional deficit pass)
 **Status:** COMPLETE — 12/12 scenarios searched
 **Last run:** 2026-03-26 23:00
-**Scenarios searched:** 12 | **Novel:** 18 | **Refines:** 8 | **Contradicts:** 0 | **Tier 0 candidates:** 4
+**Scenarios searched:** 12 | **Novel:** 18 | **Refines:** 8 | **Contradicts:** 0 | **Universal Mode candidates:** 4
 
 | Scenario | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
 |---|---|---|---|---|---|---|---|
@@ -103,12 +103,12 @@
 | d530+PEM→bathroom | Bedroom-bathroom distance | ≤5 m recommended | PEM: any unnecessary exertion must be eliminated | OT energy conservation; CDC 2024 | 4 | NOVEL — no standard specifies this | DEM |
 | d630+pain/fatigue→kitchen | Seated work counter height | 813 mm (32 in) for seated prep; standard 914 mm (36 in) | Seated meal preparation mandatory for PAIN/OFS | OT home mod guides; aging-in-place literature | Co-2 | NOVEL — seated counter height not specified for PAIN/OFS | MOB |
 | d630+pain/fatigue→kitchen | Knee clearance under counter | ≥686 mm (27 in); 762 mm (30 in) preferred | Seated work at kitchen counter | ADA; OT home mod guides | 5 | REFINES (existing MOB spec; extend to PAIN/OFS rationale) | MOB |
-| d630+pain/fatigue→kitchen | Storage zone | 380–1220 mm (15–48 in) "universal reach range"; optimal 750–1050 mm | Avoid bending and overhead reaching | NIOSH; OT energy conservation; aging-in-place guides | 4 | REFINES — confirms and tightens NIOSH range | ALL (Tier 0 candidate) |
+| d630+pain/fatigue→kitchen | Storage zone | 380–1220 mm (15–48 in) "universal reach range"; optimal 750–1050 mm | Avoid bending and overhead reaching | NIOSH; OT energy conservation; aging-in-place guides | 4 | REFINES — confirms and tightens NIOSH range | ALL (Universal Mode candidate) |
 | d450+OI→circulation | Rest seating interval | Every 25–30 m (vs BS 8300 50 m for MOB) | Prolonged standing 5–30 min triggers OI symptoms | Strassheim 2018; CDC 2024 | 3 | NOVEL — OFS-specific interval not in any standard | MOB, DEM |
 | d450+pain→circulation | Anti-fatigue flooring | Cushioned/resilient flooring on primary routes | Reduces joint impact for chronic pain users | OT energy conservation; anti-fatigue mat literature | 4 | NOVEL — no standard specifies impact absorption for PAIN | — |
 | d620+OI→service point | Seated service option | Seating at all service counters (counter-height stool or adjacent seating) | OFS users cannot stand in queues | JAN POTS accommodations; Dochod 2019 | 5 | NOVEL — no standard requires seated option at service counters for OFS | MOB |
 
-**Tier 0 candidates:**
+**Universal Mode candidates:**
 1. Storage zone 380–1220 mm — serves ALL populations (MOB, PAIN, OFS, aging, UPL)
 2. Rest seating on circulation routes — serves MOB, OFS, PAIN, DEM, aging (universal benefit; only interval differs by population)
 
@@ -129,7 +129,7 @@
 | d465+OFS→entrance | Vestibule cooling | Climate-controlled transition zone | Temp change triggers OI | Inferential from OI evidence | 4 | NOVEL | — |
 | d465+OFS→entrance | Auto doors primary entrance | Power-assisted | Energy depletion from door force | ADA; OT energy conservation | 5-6 | REFINES | MOB |
 
-**Tier 0 candidates (cumulative):**
+**Universal Mode candidates (cumulative):**
 1. Storage zone 380–1220 mm — serves ALL populations
 2. Rest seating on circulation routes — serves MOB, OFS, PAIN, DEM, aging
 3. Retreat/reset room in public buildings >500 m² — serves OFS, PAIN, NDV, NEU, DEM, NDV/MH (6+ codes)

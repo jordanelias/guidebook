@@ -22,7 +22,7 @@ Each role prioritizes different aspects of the same underlying data.
 
 | Role | Prioritizes |
 |---|---|
-| Designer | Specifications, conflict notes, detail drawings, Tier 0/1 values |
+| Designer | Specifications, conflict notes, detail drawings, Universal Mode/1 values |
 | OT | Ranges, Tier 2 resolution guidance, functional profiles, co-occurrence |
 | Policymaker | Compliance mapping, jurisdiction comparisons, economic case |
 | Person with lived experience | Plain language, what to ask for, what good looks like, rights |

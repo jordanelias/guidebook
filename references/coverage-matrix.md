@@ -93,7 +93,7 @@ Format: `N slugs (O opus)` — N = BPC files mentioning this population, O = Opu
 
 ## Hub items (from connection network — Phase 2B)
 
-Items with highest connection degree (Tier 0 candidates):
+Items with highest connection degree (Universal Mode candidates):
 
 | Item | Category | Connection degree |
 |---|---|---|
@@ -105,7 +105,7 @@ Items with highest connection degree (Tier 0 candidates):
 | F-07 | Communication/Alerts | 5 |
 | D-02 | Wayfinding/Signage | 5 |
 
-High connection degree = strong candidate for Tier 0 universal specification (multiple populations converge on same item).
+High connection degree = strong candidate for Universal Mode universal specification (multiple populations converge on same item).
 
 ---
 

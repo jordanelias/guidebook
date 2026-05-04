@@ -19,7 +19,7 @@
 | Lever handle grip diameter | ≥19mm | Reduced grip span; permits wrap-grip without fine-motor engagement | BS 8300 (UK advisory) | Tier 5 | **NOVEL** — grip diameter spec absent from BPC |
 | Hardware shape | Closed-fist or loose-grip operable; no tight pinch, wrist twist, or simultaneous multi-action | All grip-deficit functional profiles | ADA §309.4; ICC A117.1 | Tier 5 | CONFIRMS existing BPC prose — no new spatial parameter |
 
-**Tier 0 candidates:** Rotational torque ≤28 in-lb; knuckle clearance ≥38mm. Both apply across grip-deficit functional profiles with no known counter-indication. Route to connection-scout.
+**Universal Mode candidates:** Rotational torque ≤28 in-lb; knuckle clearance ≥38mm. Both apply across grip-deficit functional profiles with no known counter-indication. Route to connection-scout.
 
 ---
 
@@ -31,7 +31,7 @@ No built environment literature identified specifying laterality-sensitive switc
 
 The design problem cannot be resolved at a population level: the functional side varies per individual and is not predictable at design stage. This is a Tier 2 individual-assessment problem, not a Tier 5/6 architectural specification problem.
 
-[GAP: laterality-specific control positioning — inherently individualized; architectural standardisation not possible without individual assessment; Tier 2 OT prescription only]
+[GAP: laterality-specific control positioning — inherently individualized; architectural standardisation not possible without individual assessment; Mode S OT prescription only]
 
 ---
 

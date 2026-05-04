@@ -107,8 +107,8 @@
 | House number/address signage | ≥150mm numeral height; high-contrast; backlit or reflective | Cognitive orientation to own property; low-light legibility | AOTA Cognitive Impairment Home Modification (2023) | Co-2 | NOVEL — dimensional signage spec not in existing BPC | DEM→NEU/NDV |
 | Property boundary demarcation | Clear visual boundary at property edge; gate ≥1200mm visible from street; distinctive colour | Reduces wayfinding error and unsafe egress (wandering) for DEM users | Dementia Australia Built Environment Guidelines (2022) | 2 | NOVEL — property boundary as cognitive orientation spec | DEM |
 
-**Population mapping (Sc.12):** Primary DEM; secondary NEU, NDV/AUT, VIS. Entrance legibility provisions (contrast, lighting, signage) converge across ≥4 codes → Tier 0 candidates for all 3 items.
-**Tier 0 candidates:** Entrance PIR lighting; entrance luminance contrast; house address signage (≥4 population codes, no conflicts).
+**Population mapping (Sc.12):** Primary DEM; secondary NEU, NDV/AUT, VIS. Entrance legibility provisions (contrast, lighting, signage) converge across ≥4 codes → Universal Mode candidates for all 3 items.
+**Universal Mode candidates:** Entrance PIR lighting; entrance luminance contrast; house address signage (≥4 population codes, no conflicts).
 
 ## Metadata
 

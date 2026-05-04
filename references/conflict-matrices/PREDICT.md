@@ -75,10 +75,10 @@ Status: **RESOLVED-CONSENSUS** (DAR framework is a core guidebook principle)
 
 | Specification | Tier | Note |
 |---|---|---|
-| Consistent furniture layout within room types | Tier 0 | NDV/AUT + DEM + MOB all benefit from predictable space |
-| Adequate clear floor space for MOB equipment access | Tier 0 | Fixed spatial provision, not reconfiguration |
+| Consistent furniture layout within room types | Universal Mode | NDV/AUT + DEM + MOB all benefit from predictable space |
+| Adequate clear floor space for MOB equipment access | Universal Mode | Fixed spatial provision, not reconfiguration |
 | Standard layout documented for multi-use rooms | Tier 1 | Reset protocol for clinics/community spaces |
-| DAR latent adaptability | Tier 0 | Invisible future-proofing; no spatial change until needed |
+| DAR latent adaptability | Universal Mode | Invisible future-proofing; no spatial change until needed |
 | Tier 2 one-time OT-directed furniture placement | Tier 2 | After setup, layout is fixed for occupant |
 
 ### Unresolved Gaps

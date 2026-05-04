@@ -96,11 +96,11 @@ Each (parameter × population) cell holds one of four states:
 
 **Silence on evidence-thin populations is not the default.** The audit v2 §T-04 yardstick (Cochrane: absence-of-evidence vs evidence-of-absence vs primary-non-clinical-tier) is honored at the cell level.
 
-### 5. Three-Tier Design Hierarchy operationalizes the doctrine
+### 5. Design Modes operationalizes the doctrine
 
 | Tier | Function | Resolution |
 |---|---|---|
-| Tier 0 | Universal Design / Code Compliance | Population-agnostic; fixed values |
+| Universal Mode | Universal Design / Code Compliance | Population-agnostic; fixed values |
 | Tier 1 | Population-Informed Inclusive Design | Ranges; median as default |
 | Tier 2 | Person-Specific Co-Design | OT assessment resolves position within Tier 1 range |
 
@@ -116,7 +116,7 @@ The hypothesis is the project's distinctive epistemic claim. It is acknowledged 
 
 ### 7. Universal design is co-extensive with code compliance — the floor, not an aspiration
 
-Inclusive design is the positive aspiration. Tier 0 is the compliance baseline. Best practice exceeds Tier 0 wherever evidence supports.
+Inclusive design is the positive aspiration. Universal Mode is the compliance baseline. Best practice exceeds Universal Mode wherever evidence supports.
 
 ---
 
@@ -124,7 +124,7 @@ Inclusive design is the positive aspiration. Tier 0 is the compliance baseline. 
 
 The guidebook specifies for **formal new construction and planned retrofit**. Informal settlement housing is out of specification scope (per project-standards 2026-04-07 00:44, recorded as the project's most significant scope-shaped exclusion).
 
-The guidebook is **not a substitute for professional judgment**. Population-level specifications (Tier 0 and Tier 1) are necessary but insufficient. Tier 2 person-specific co-design with an occupational therapist resolves the individual case.
+The guidebook is **not a substitute for professional judgment**. Population-level specifications (Universal Mode and Tier 1) are necessary but insufficient. Tier 2 person-specific co-design with an occupational therapist resolves the individual case.
 
 The guidebook is **not a legal authority**. It does not replace jurisdictional code compliance (which is Tier 6 — the floor). Where evidence-based best practice exceeds code, the guidebook specifies the evidence-based value and notes the code value as the regulatory minimum.
 

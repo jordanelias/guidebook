@@ -27,8 +27,8 @@
    - State that pre-launch, the project does not yet meet Art 4.3 standards for participatory development of provisions affecting disabled people.
    - Specify what minimum participatory threshold must be met before launch (not after), even if that threshold is provisional.
 
-**3. Art 9 (Accessibility) vs reasonable accommodation — Tier hierarchy unmapped.** The Tier 0 / 1 / 2 design hierarchy is not explicitly mapped to CRPD's foundational distinction between accessibility (Art 9, anticipatory, group-level) and reasonable accommodation (Art 5, responsive, individual-level). The mapping is implicit:
-   - Tier 0 (UD/Code Compliance) ≈ Art 9 universal accessibility floor
+**3. Art 9 (Accessibility) vs reasonable accommodation — Tier hierarchy unmapped.** The Universal Mode / 1 / 2 design hierarchy is not explicitly mapped to CRPD's foundational distinction between accessibility (Art 9, anticipatory, group-level) and reasonable accommodation (Art 5, responsive, individual-level). The mapping is implicit:
+   - Universal Mode (UD/Code Compliance) ≈ Art 9 universal accessibility floor
    - Tier 1 (Population-informed inclusive design) ≈ Art 9 group-level accessibility
    - Tier 2 (OT/individual co-design) ≈ Art 5 reasonable accommodation
    
@@ -126,7 +126,7 @@ Armature defines query input but not output presentation. Key UX decisions:
 - How are 50+ specifications presented for one query? List, grouped by category, filterable, searchable within results?
 - How is evidence marker (●/○) communicated to screen readers? Symbols alone are inaccessible. Text equivalent required.
 - How are conflict notes surfaced? Inline with each spec? Banner at top? Separate panel?
-- How is Tier 2 handoff visually distinct from Tier 1? (Cannot rely on color alone — WCAG 1.4.1.)
+- How is Mode S handoff visually distinct from Tier 1? (Cannot rely on color alone — WCAG 1.4.1.)
 - Tables vs cards vs lists for specs?
 - Print / save / share output? Critical for designers integrating into deliverables, OTs into reports, disabled people into advocacy.
 
@@ -308,7 +308,7 @@ Some review findings affect the armature directly. Others are website-build or d
 
 ### Should be incorporated into armature v4
 
-1. **§5.2 mapping addition:** explicit Tier 0 / 1 / 2 mapping to CRPD Art 9 (accessibility) vs Art 5 (reasonable accommodation).
+1. **§5.2 mapping addition:** explicit Universal Mode / 1 / 2 mapping to CRPD Art 9 (accessibility) vs Art 5 (reasonable accommodation).
 2. **§3.2 framing fix:** remove "natural workflow" language describing top-down-first; reframe as parallel directions.
 3. **§3.4 carer role:** rewrite to align with CRPD Art 12 supported-decision-making, not substituted-decision-making language.
 4. **§4.1 IntD note expansion:** acknowledge Art 12 capacity assumption affecting tool autonomy and supported-use mode requirement.

@@ -58,7 +58,7 @@ language_count: {N}
 ### Bottom-up findings (functional deficit pass)
 | Scenario | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
 |---|---|---|---|---|---|---|---|
-| {scenario} | {parameter} | {value} | {condition} | {source} | {tier} | {delta vs Tier 0} | {populations} |
+| {scenario} | {parameter} | {value} | {condition} | {source} | {tier} | {delta vs Universal Mode} | {populations} |
 
 *If FDR pass not yet run: `{Not yet run — schedule functional deficit pass}`*
 

@@ -29,7 +29,7 @@
 
 <!-- CON-0011 [HIGH]: Systematic pass required — insert DBL and DEM/NDV[IntD-proxy] (via DEM/NDV proxy per CO-0002) into all applicable room matrix items. Resolves 15+ gaps in single operation. Execute in Part 6/7 matrix edit pass. -->
 
-<!-- CON-0018 [HIGH]: Essential facility sightline → Tier 0 residential provision. WC/bathroom door visible from main living area without navigational decision points. Add to D-03 (Toilet Visibility). -->
+<!-- CON-0018 [HIGH]: Essential facility sightline → Universal Mode residential provision. WC/bathroom door visible from main living area without navigational decision points. Add to D-03 (Toilet Visibility). -->
 
 <!-- D2-41 STANDING INSTRUCTION: Every Part 4 item requires PAIN/OFS population audit. Where PAIN or OFS applies based on mechanism (heat, cold, vibration, exertion, fragrance sensitivity), add population code + THIN-POPULATION-SPEC disclosure. Item-specification-writer pass required for all 85 items. -->
 
@@ -45,7 +45,7 @@ All RT60 specifications are for the 500 Hz octave band in the occupied condition
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU -->
 <!-- grade_confidence: LOW — Standards convergence (PAS 6463, AS/NZS 2107, BB93); no RCT on adjacency planning. NC-25 target derives from Tier 5-6 standards. ≥10 jurisdictions confirm direction. -->
 
-<!-- CON-0039 [HIGH]: RT60 ≤0.3 s (mid-frequency 500–2000 Hz) to be elevated to Tier 0 universal specification for all speech-critical rooms. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Frame ≤0.6 s as outer failure boundary, not a compliant specification. Populations: ALL (DEAF speech intelligibility, NDV acoustic calm, DEM communication, NEU/PCS cognitive load). -->
+<!-- CON-0039 [HIGH]: RT60 ≤0.3 s (mid-frequency 500–2000 Hz) to be elevated to Universal Mode universal specification for all speech-critical rooms. Background noise ≤35 dBA; STI ≥0.5 at furthest listener position. Frame ≤0.6 s as outer failure boundary, not a compliant specification. Populations: ALL (DEAF speech intelligibility, NDV acoustic calm, DEM communication, NEU/PCS cognitive load). -->
 
 **Applicable Groups:** ALL (especially NDV, PCS, AUT, NDV/SENS, DEM) · OFS · PAIN
 <!-- CON-0069: acoustic buffer reduces noise load — OFS/PAIN energy conservation -->
@@ -86,7 +86,7 @@ Guidebook's graduated acoustic buffer concept (high→low stimulation) exceeds a
 
 ### A-02 Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces
 <!-- CON-0008 [HIGH]: A-02/A-08/A-13 acoustic convergence: RT60 + NC-25 + masking prohibition -->
-<!-- CON-0039 [HIGH]: RT60 ≤0.3s Tier 0 universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
+<!-- CON-0039 [HIGH]: RT60 ≤0.3s Universal Mode universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
 <!-- CON-0122 [HIGH]: A-02 NRC ≥0.85 → STI ≥0.60 performance criterion (NRC = procurement proxy only) -->
 <!-- CON-0135 [HIGH]: A-01/A-02/A-08/A-10 acoustic cluster: adjacency + panels + HVAC NC-25 + hearing loop IEC 60118-4 -->
@@ -99,7 +99,7 @@ Guidebook's graduated acoustic buffer concept (high→low stimulation) exceeds a
 <!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (central sensitisation → auditory hyperalgesia). Mark ○ THIN-POPULATION-SPEC per D2-41. Evidence: pain-ofs-built-environment-design BPC FDR + acoustic sensitivity literature. -->
 
 **Applicable Groups:** ALL (especially NDV, DEM, MH, PAIN, OFS) · DEAF · NEU/PCS
-<!-- CON-0039: CON-0039: RT60 ≤0.3 s mid-frequency Tier 0 for speech-critical rooms — serves DEAF/NDV/DEM/NEU simultaneously -->
+<!-- CON-0039: CON-0039: RT60 ≤0.3 s mid-frequency Universal Mode for speech-critical rooms — serves DEAF/NDV/DEM/NEU simultaneously -->
 
 **Description:** Acoustic ceiling panels with NRC ≥0.85 installed in all primary occupied spaces — open-plan offices, classrooms, therapy rooms, communal areas, circulation corridors. Combined with A-01, A-05, and A-17 to achieve target RT60.
 
@@ -328,7 +328,7 @@ BSI.
 
 ### A-08 HVAC Noise Control (NC-25 Maximum in Sensitive Spaces)
 <!-- CON-0008 [HIGH]: A-02/A-08/A-13 acoustic convergence: RT60 + NC-25 + masking prohibition -->
-<!-- CON-0039 [HIGH]: RT60 ≤0.3s Tier 0 universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
+<!-- CON-0039 [HIGH]: RT60 ≤0.3s Universal Mode universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
 <!-- CON-0135 [HIGH]: A-01/A-02/A-08/A-10 acoustic cluster: adjacency + panels + HVAC NC-25 + hearing loop IEC 60118-4 -->
 <!-- CON-0138 [HIGH]: A-01/A-02/A-08 acoustic — MODERATE annotation; additional convergence evidence -->
@@ -595,7 +595,7 @@ International hearing access committee. IFHOH.
 
 ### A-13 No Sound Masking in Neurological Population Environments
 <!-- CON-0008 [HIGH]: A-02/A-08/A-13 acoustic convergence: RT60 + NC-25 + masking prohibition -->
-<!-- CON-0039 [HIGH]: RT60 ≤0.3s Tier 0 universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
+<!-- CON-0039 [HIGH]: RT60 ≤0.3s Universal Mode universal for speech-critical rooms; background noise ≤35dBA; STI ≥0.60 -->
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
@@ -724,7 +724,7 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 <!-- grade_confidence: LOW — Sensory room ≥8m²: PAS 6463 §14.1 (Tier 4). No RCT on room size for NDV outcomes. Wilson 2023 PMID (Co-1) documents failure modes. Caldwell 2025 qualitative. No validated threshold. -->
 
 <!-- CON-0046 [HIGH]: CS-17 (NHS CAMHS, NDTi 2022) documents NDV/MH ward environments actively harmful to NDV/AUT co-occupants. Sensory rooms in MH settings must be distinct from MH de-escalation rooms — different clinical purpose, different specification. -->
-<!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Tier 0 universal — one per occupied floor plate. -->
+<!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Universal Mode universal — one per occupied floor plate. -->
 <!-- CON-0023 [HIGH]: Audit against Al-Harasis taxonomy — spatial configuration (layout topology) is underspecified relative to finish materials. Add note on approach route (no high-stimulation zones on path to A-16). --> (≥8 m², one per floor or per 500 m² GFA)
 
 **Applicable Groups:** AUT, ADHD, PCS, DEM, MH, OFS · NDV/MH · PAIN · NEU/PCS
@@ -945,7 +945,7 @@ No code bans fluorescent lighting. IEEE 1789 and PAS 6463 are closest. SVM (Stro
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|NEU -->
-<!-- grade_confidence: HIGH — IEEE 1789-2015 flicker-free spec: same evidence as B-03. MERGED into B-03 per CO-0003. Rating inherited. VE-protected per Part 8 §9.3.3. -->
+<!-- grade_confidence: HIGH — IEEE 1789-2015 flicker-free spec: same evidence as B-03. MERGED into B-03 per CO-0003. Rating inherited. VE-protected per Part 8 §8.3.3. -->
 <!-- CO-0003: B-04 content absorbed into B-03. B-03 now covers: elimination of fluorescent + flicker-free LED specification (IEEE 1789-2015 / IEC TR 61547-1). Applicable Groups: NDV · NEU/PCS · OFS · DEM · VIS · ALL. -->
 
 **Applicable Groups:** PCS, AUT, PAIN, DEM · OFS · NEU
@@ -1417,7 +1417,7 @@ UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent
 <!-- grade_confidence: MODERATE — LRV ≥30% contrast: BS 8300 + CNIB + AS 1428.2 + multiple jurisdictions (≥10). Dain/Manandhar (Ophthalmic Physiol Opt, Tier 3) — computational + observational study on contrast ratios for VIS navigation. Note: GRADE framework document rates LRV ≥30% as LOW (standards convergence, no empirical validation). MODERATE assigned here given jurisdictional convergence ≥10. -->
 <!-- CON-0043: ≥30 LRV = code-compliance minimum only. Best practice: ≥50% LRV at all contrast-dependent provisions. At platform edges, stair nosings, kerb lines: ≥65% Michelson. Pops: VIS · DEM · NDV/AUT · DBL. -->
 
-<!-- CON-0060 [HIGH]: C-04 LRV ≥30 at critical junctions is Tier 0 (VIS, DEM — both require this for safety). NDV/SENS muted palette preference must not reduce safety contrast at critical junctions. Zone-based resolution applies: ≥30 LRV contrast mandatory at all step edges, door frames, and critical junctions regardless of zone. Muted palette applies to non-safety surfaces only. -->
+<!-- CON-0060 [HIGH]: C-04 LRV ≥30 at critical junctions is Universal Mode (VIS, DEM — both require this for safety). NDV/SENS muted palette preference must not reduce safety contrast at critical junctions. Zone-based resolution applies: ≥30 LRV contrast mandatory at all step edges, door frames, and critical junctions regardless of zone. Muted palette applies to non-safety surfaces only. -->
 
 **Applicable Groups:** VIS, DEM, MOB (fall prevention)
 
@@ -1545,7 +1545,7 @@ Wayfinding is the ability to determine one's location, plan a route, and navigat
 <!-- grade_confidence: MODERATE — Loop floor plan for DEM environments: Marquardt & Schmieg 2009 (AJAD Tier 3) + Bowes et al. 2019 Stirling SR (429 items, Tier 3). PMC8725382 (NL floorplan study, Tier 3). Floor plan configuration confirmed as most influential factor. ≥5 jurisdictions reference loop plans for DEM care. MODERATE — multiple Tier 3 studies converge; no RCT. -->
 
 **Applicable Groups:** DEM · VIS · DBL · NDV/AUT
-<!-- CON-0001: Tier 0: 5 populations require consistent loop/single-path circulation from independent clinical rationales -->
+<!-- CON-0001: Universal Mode: 5 populations require consistent loop/single-path circulation from independent clinical rationales -->
 
 **Description:** All circulation designed as continuous loops from entry through primary spaces. No dead-end corridors. If structural constraints require dead-ends: end wall treated as a landmark (artwork, window, planting) with return route clearly signed.
 
@@ -1588,7 +1588,7 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 <!-- ot_appointment_trigger: conditional:DEM|NEU|NDV -->
 <!-- grade_confidence: MODERATE — Cognitive simplicity / single primary route: Passini 1984 (wayfinding theory, Tier 3 equivalent) + Iwarsson & Ståhl 2003 (Disabil Rehabil framework). ≥6 jurisdictions reference. Tier 3 + standards convergence. -->
 
-<!-- CON-0001 [HIGH]: Tier 0 convergence — DEM, VIS, DBL, DEM/NDV[IntD-proxy], NDV/AUT all require consistent, predictable circulation. Synthesis: add Tier 0 universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
+<!-- CON-0001 [HIGH]: Universal Mode convergence — DEM, VIS, DBL, DEM/NDV[IntD-proxy], NDV/AUT all require consistent, predictable circulation. Synthesis: add Universal Mode universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
 
 **Applicable Groups:** DEM, NDV, VIS (cognitive) · DBL · NDV/AUT · DEM/NDV[IntD proxy] proxy→DEM/NDV
 <!-- CON-0001: CON-0001: ≤2 route choices per decision point; consistent furniture arrangement (CON-0067) -->
@@ -1702,7 +1702,7 @@ without structural intervention. See Part 12 §12.4.1.
 <!-- grade_confidence: LOW — Enclosed low-stimulation spaces: PAS 6463 (Tier 4) + Wilson 2023 PMID (Co-1, AU mental health service user). No RCT on quiet room provision for NDV/MH outcomes. VERY LOW on room size threshold; LOW overall. -->
 
 <!-- CON-0046 [HIGH]: In MH inpatient settings, D-05 low-stimulation spaces are critical for NDV/AUT patients. MH de-escalation rooms do not meet NDV/AUT sensory needs (CS-17 NDTi 2022). -->
-<!-- CON-0051 [HIGH]: Loop/linear circulation with no dead-ends serves DEAF (visual scan), VIS (tactile memorisation), DBL (tactile navigation), DEM (disorientation prevention), IntD (cognitive load reduction). Tier 0 candidate — see CON-0001. -->
+<!-- CON-0051 [HIGH]: Loop/linear circulation with no dead-ends serves DEAF (visual scan), VIS (tactile memorisation), DBL (tactile navigation), DEM (disorientation prevention), IntD (cognitive load reduction). Universal Mode candidate — see CON-0001. -->
 **Applicable Groups:** NDV, PCS, MH, OFS · PAIN
 <!-- D2-41: D2-41: low-stimulation retreat reduces exertion load for OFS; pain flare prevention -->
 
@@ -1871,7 +1871,7 @@ D-04 (Landmarks)
 <!-- ot_appointment_trigger: conditional:DEM -->
 <!-- grade_confidence: LOW — Consistent furniture layout: DSDC EADDAT + CNIB guidance. DEM/VIS spatial predictability — Tier 4-5 consensus. No RCT. -->
 
-<!-- CON-0001 [HIGH]: Tier 0 convergence — DBL and NDV/AUT depend on spatial consistency for tactile wayfinding and sensory predictability respectively. Add to Applicable Groups: DBL, NDV/AUT, VIS (in addition to DEM). Specification to note: furniture rearrangement protocols required; prior notification to DBL occupants mandatory. -->
+<!-- CON-0001 [HIGH]: Universal Mode convergence — DBL and NDV/AUT depend on spatial consistency for tactile wayfinding and sensory predictability respectively. Add to Applicable Groups: DBL, NDV/AUT, VIS (in addition to DEM). Specification to note: furniture rearrangement protocols required; prior notification to DBL occupants mandatory. -->
 
 **Applicable Groups:** DEM, VIS, NDV · OFS · PAIN · DBL
 <!-- CON-0053: CON-0053: furniture permanence is safety requirement for DBL; reduces OFS exertion from navigating obstacles -->
@@ -2256,7 +2256,7 @@ Guidebook specifies significantly larger canopy (3000×2000mm) than any code to 
 <!-- CON-0056 [HIGH]: Zero-threshold (13-15 mm max) specified for MOB caster wheels also serves OFS (step-elimination prevents PEM) and PAIN (reduces joint loading). Add OFS, PAIN to Applicable Groups. -->
 **Applicable Groups:** MOB, VIS, DEM, OFS · DEAF · DBL · NDV/MH · PAIN
 <!-- CON-0009: Zero threshold eliminates exertion barrier and PAIN vibration trigger at each entry -->
-<!-- CON-0007: CON-0007: Tier 0 companion-width at entries: primary routes ≥1500mm clear. Level entry + wide path = universal. -->
+<!-- CON-0007: CON-0007: Universal Mode companion-width at entries: primary routes ≥1500mm clear. Level entry + wide path = universal. -->
 
 **Description:** Zero step (≤4 mm threshold) at all accessible entrances. Where site topography requires raised threshold: ramped approach ≤1:20 (E-03). No stepped entry at any accessible entrance.
 
@@ -2364,7 +2364,7 @@ exceeds clinically acceptable thresholds for populations with reduced balance an
 <!-- ot_appointment_trigger: conditional:MOB -->
 <!-- grade_confidence: MODERATE — Corridor ≥1200mm: BS 8300, ADA, DIN 18040, TEK17, NCC 2022, NBR 9050, AS 1428. Koontz 2010 PMID:20434614 (Tier 1): corridor width affects propulsion biomechanics. ≥10 jurisdictions confirm 1200mm minimum. MODERATE — Tier 1 biomechanical + strong standards convergence. -->
 
-<!-- CON-0007 [HIGH]: Create Tier 0 companion-width specification. Primary routes ≥1500 mm clear (best practice); ≥2440 mm where DEAF is primary population (DeafSpace signed-conversation standard, Co-1 ASL-derived). Resolves siloed MOB/DEAF specifications into unified tier-ladder: 1200 mm minimum / 1500 mm best practice / 2440 mm DEAF-primary. --> (≥1200 mm Minimum on All Primary Routes)
+<!-- CON-0007 [HIGH]: Create Universal Mode companion-width specification. Primary routes ≥1500 mm clear (best practice); ≥2440 mm where DEAF is primary population (DeafSpace signed-conversation standard, Co-1 ASL-derived). Resolves siloed MOB/DEAF specifications into unified tier-ladder: 1200 mm minimum / 1500 mm best practice / 2440 mm DEAF-primary. --> (≥1200 mm Minimum on All Primary Routes)
 
 **Applicable Groups:** MOB, VIS, DEM · DEAF · DBL
 <!-- CON-0061: CON-0061: ≥1500 mm is multi-population (DEAF signing pairs, VIS cane sweep, DBL intervenor, DEM wandering freedom, MOB turning). Best practice 1800 mm on all primary routes. -->
@@ -2571,7 +2571,7 @@ Institution. (2018). BS 8300:2018. BSI.
 
 ● Height-adjustable changing bench: 1800 × 800 mm clear surface; height-adjustable 450–1000 mm; rated ≥250 kg; wall-mounted fold-flat or fixed (depending on hoist track configuration); anti-slip surface; wipe-clean material
 
-● Overhead hoist and ceiling track: continuous H-track (or XY gantry) covering bench, WC transfer position, and door entry/exit arc; minimum rated load 250 kg; commissioning load test before occupation; SE coordination required for ceiling reinforcement (see §9.5)
+● Overhead hoist and ceiling track: continuous H-track (or XY gantry) covering bench, WC transfer position, and door entry/exit arc; minimum rated load 250 kg; commissioning load test before occupation; SE coordination required for ceiling reinforcement (see §8.5)
 
 ● Peninsular WC: minimum 600 mm clear on each side; 700 mm preferred; WC height 450–500 mm; bilateral grab bars (G-03)
 
@@ -2603,7 +2603,7 @@ British Standards Institution. (2018). BS 8300:2018 — Design of an accessible 
 
 #### Cross-references
 
-G-03 (Grab Bars — bilateral at peninsular WC); G-04 (Wet Room Configuration — floor gradient and drainage apply); H-05 (Nurse Call/Emergency Pull Cord — floor-level cord required); K-04 (Vibrotactile Alert — where DBL occupants); §9.5 (Structural Engineer — ceiling hoist track)
+G-03 (Grab Bars — bilateral at peninsular WC); G-04 (Wet Room Configuration — floor gradient and drainage apply); H-05 (Nurse Call/Emergency Pull Cord — floor-level cord required); K-04 (Vibrotactile Alert — where DBL occupants); §8.5 (Structural Engineer — ceiling hoist track)
 
 ---
 
@@ -3150,7 +3150,7 @@ Partitions); C-01 (Palette)
 <!-- CON-0003/A-17 absorbed: G-02 now includes upholstered seating throughout occupied spaces as an acoustic absorption and PAIN/OFS comfort provision. -->
 
 **Applicable Groups:** MOB, PAIN, AUT, DEM, ALL · OFS
-<!-- D2-41: D2-41: reclined/tilt seating required for OFS; cushioned for PAIN; three heights = Tier 0 -->
+<!-- D2-41: D2-41: reclined/tilt seating required for OFS; cushioned for PAIN; three heights = Universal Mode -->
 
 **Description:** Every primary seating area provides minimum three seating types simultaneously: (a) standard chair with armrests, 430--450 mm seat height; (b) higher chair or stool, 550--600 mm; (c) soft/padded lower chair, 380--400 mm. Co-located; no segregation.
 
@@ -3193,11 +3193,11 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 **Applicable Groups:** MOB, DEM, PAIN, UPL · OFS · NEU
 <!-- CON-0003: CON-0003: insulated bar coatings mandatory where PAIN is primary (cold metal triggers allodynia); DEM/NEU co-population rationale added -->
 
-**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surface per OT assessment — KR/JA Tier 1 biomechanical evidence governs lower bound); angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
+**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Mode P median: 700 mm; Tier 2: 280 mm above seat surface per OT assessment — KR/JA Tier 1 biomechanical evidence governs lower bound); angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
 
 **Specifications:**
 
-Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Tier 1 median: 700 mm; Tier 2: 280 mm above seat surface, resolved by OT assessment)
+Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Mode P median: 700 mm; Tier 2: 280 mm above seat surface, resolved by OT assessment)
 
 Angled bar at cistern wall
 
@@ -3511,7 +3511,7 @@ Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
 | **Guidebook** | **H-01** | **400mm** | **1100mm** | **Title range; functional target 900-1100mm** |
 
 
-### H-02 Individual Environmental Control — Tier 0 Universal Provision
+### H-02 Individual Environmental Control — Universal Mode Universal Provision
 <!-- CON-0095 [HIGH]: H-series self-service terminals: voice + tactile + adjustable height for VIS/MOB/NDV -->
 <!-- CON-0118 [HIGH]: H-01 controls + H-02 individual environmental control — reach + control convergence -->
 <!-- CON-0133 [HIGH]: H-01 controls + H-02 environmental control + E-01 door hardware — access cluster -->
@@ -3519,10 +3519,10 @@ Standards Institution. (2018). BS 8300:2018. BSI. ISO. (2021). ISO
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS -->
-<!-- grade_confidence: MODERATE — Individual environmental control — Tier 0 universal: CAOT CPG (Tier Co-2) + BS 8300 + WELL v2. Control provision for DEM/NDV/NEU/OFS. Tier 1 clinical evidence for individual control in NDV/NEU (sensory processing model). ≥8 jurisdictions. MODERATE. -->
-<!-- CON-0017: H-02 elevated to Tier 0. ALL primary occupied spaces to provide occupant-adjustable lighting (level + CCT) and local thermal control. Acoustic management: (a) sound-absorbing treatment to achieve RT60 target without reliance on operable panel configuration; (b) operable partitions or doors allowing users to close off their space from adjacent noise sources. Operable acoustic panels are not the standard mechanism — partition/door closure is. Population-specific overlays at Tier 1. Governs B-06, F-07, F-08. Populations: NDV/AUT · NDV/MH · OFS · DEM · NEU · DEAF · VIS · ALL. -->
+<!-- grade_confidence: MODERATE — Individual environmental control — Universal Mode universal: CAOT CPG (Tier Co-2) + BS 8300 + WELL v2. Control provision for DEM/NDV/NEU/OFS. Tier 1 clinical evidence for individual control in NDV/NEU (sensory processing model). ≥8 jurisdictions. MODERATE. -->
+<!-- CON-0017: H-02 elevated to Universal Mode. ALL primary occupied spaces to provide occupant-adjustable lighting (level + CCT) and local thermal control. Acoustic management: (a) sound-absorbing treatment to achieve RT60 target without reliance on operable panel configuration; (b) operable partitions or doors allowing users to close off their space from adjacent noise sources. Operable acoustic panels are not the standard mechanism — partition/door closure is. Population-specific overlays at Tier 1. Governs B-06, F-07, F-08. Populations: NDV/AUT · NDV/MH · OFS · DEM · NEU · DEAF · VIS · ALL. -->
 
-<!-- CON-0002 [HIGH] + CON-0017 [HIGH]: Elevate H-02 to Tier 0 universal provision. All primary occupied spaces to provide occupant-adjustable lighting (level and CCT), local acoustic management, and local thermal control. This is the highest-impact single provision for NDV, MH, OFS, PAIN, DEM conflict resolution. Item-specification-writer pass required. --> (Lighting and Temperature Per Space)
+<!-- CON-0002 [HIGH] + CON-0017 [HIGH]: Elevate H-02 to Universal Mode universal provision. All primary occupied spaces to provide occupant-adjustable lighting (level and CCT), local acoustic management, and local thermal control. This is the highest-impact single provision for NDV, MH, OFS, PAIN, DEM conflict resolution. Item-specification-writer pass required. --> (Lighting and Temperature Per Space)
 
 **Applicable Groups:** AUT, PCS, DEM, MH, PAIN, OFS
 
@@ -3809,7 +3809,7 @@ KEY DIVERGENCE: DE DIN 18040-2 is the ONLY jurisdiction requiring height-adjusta
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:MOB -->
-<!-- grade_confidence: HIGH — TMV ≤38°C anti-scald: MS Trust thermal guidance + RCOT OT CPG + NHS requirements. VE-protected per Part 8 §9.3.3. ≥8 jurisdictions mandate TMV in care settings. OFS water temperature evidence: CDC ME/CFS (Tier Co-1) — hot water contraindicated. HIGH — clinical safety mandate + VE protection. -->
+<!-- grade_confidence: HIGH — TMV ≤38°C anti-scald: MS Trust thermal guidance + RCOT OT CPG + NHS requirements. VE-protected per Part 8 §8.3.3. ≥8 jurisdictions mandate TMV in care settings. OFS water temperature evidence: CDC ME/CFS (Tier Co-1) — hot water contraindicated. HIGH — clinical safety mandate + VE protection. -->
 
 **Applicable Groups:** UPL, PAIN (MS heat sensitivity) · DEM · NEU · OFS
 <!-- CON-0057: CON-0057: thermostatic shower valve serves dual mechanism — OFS therapeutic temperature control AND DEM/NEU/PAIN anti-scald safety -->
@@ -3916,7 +3916,7 @@ Guidebook extends nurse call to all care settings and specifies floor-level acti
 
 ### I-04 Ceiling Hoist Provision
 <!-- CON-0114 [HIGH]: Residential care cluster: I-04 hoist + H-05 nurse call + K-04 vibrotactile -->
-<!-- CON-0140 [HIGH]: I-04 ceiling hoist floor recess — structural coordination with SE brief (Part 8 §9.5) -->
+<!-- CON-0140 [HIGH]: I-04 ceiling hoist floor recess — structural coordination with SE brief (Part 8 §8.5) -->
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: CRITICAL -->
 <!-- ot_appointment_trigger: conditional:MOB -->
@@ -4007,7 +4007,7 @@ UK is the ONLY jurisdiction mandating ceiling hoists (via Changing Places, manda
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: LOW -->
 <!-- ot_appointment_trigger: conditional:DBL -->
-<!-- grade_confidence: VERY LOW — Intervenor adjacency ≥900×1500mm at service counters: deafblind-built-environment BPC (DBL specialist guidance, Tier 2 Co-1). Novel specification — no standard in any jurisdiction. Part 8 §9.6.3 flags as requiring DBL specialist verification at Stage 3. VERY LOW — evidence base is practitioner guidance only. -->
+<!-- grade_confidence: VERY LOW — Intervenor adjacency ≥900×1500mm at service counters: deafblind-built-environment BPC (DBL specialist guidance, Tier 2 Co-1). Novel specification — no standard in any jurisdiction. Part 8 §8.6.3 flags as requiring DBL specialist verification at Stage 3. VERY LOW — evidence base is practitioner guidance only. -->
 
 <!-- CON-0050 [HIGH]: Fold-down grab bar 200 kg SWL (MOB) conflicts with bariatric 300 kg requirement. BAR → Supp. Part 4 only per project-standards. Note structural mounting for future load upgrade as DAR provision. -->
 
@@ -4139,7 +4139,7 @@ Zone adjacency: haptic communication zones are within the primary circulation ro
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEAF|DBL -->
-<!-- grade_confidence: MODERATE — Vibrotactile alert provision: BS EN 54-23 (Tier 4) + NFPA 72 + Assistive Listening Systems BPC. Vibrotactile alerting is mandated for DEAF in ≥6 jurisdictions. DeafBlind extension requires specialist input (Part 8 §9.6). MODERATE on DEAF mandate; VERY LOW on DBL-specific parameters. -->
+<!-- grade_confidence: MODERATE — Vibrotactile alert provision: BS EN 54-23 (Tier 4) + NFPA 72 + Assistive Listening Systems BPC. Vibrotactile alerting is mandated for DEAF in ≥6 jurisdictions. DeafBlind extension requires specialist input (Part 8 §8.6). MODERATE on DEAF mandate; VERY LOW on DBL-specific parameters. -->
 
 
 > **THIN-BASE DISCLOSURE:** Specifications in this item derive from Tier 2 sources (DbI guidelines, Sense UK) and Tier 4 (ISO 23599:2019) only. No Tier 1 OT clinical research on DBL-specific built environment spatial provisions has been identified in any reviewed language. Specifications reflect expert consensus and DeafBlind-led guidance, not randomised or controlled evidence. Apply with co-design. See GAP-DBL-BE-01.
@@ -4194,7 +4194,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 - ● Where wardrobe depth permits, a dual-rod configuration to be provided — upper rod at 1000–1100 mm AFF, lower rod at 600 mm AFF [REF:accessible-bathroom-and-grab-bar:18]
 - ● Fixed shelf depth not to exceed 380 mm [REF:accessible-bathroom-and-grab-bar:18] *(single Co-2 source)*
 - ● Where deeper storage is required, full-extension pull-out drawers to be provided, drawer depth not to exceed 600 mm [REF:accessible-bathroom-and-grab-bar:18]
-- ● Shelf units to be arranged in a U-shape or L-shape configuration where practicable [REF:accessible-bathroom-and-grab-bar:19] *(Tier 0 provision — CON-0038; serves MOB, NEU, PAIN; neutral for VIS, DEAF, DEM)*
+- ● Shelf units to be arranged in a U-shape or L-shape configuration where practicable [REF:accessible-bathroom-and-grab-bar:19] *(Universal Mode provision — CON-0038; serves MOB, NEU, PAIN; neutral for VIS, DEAF, DEM)*
 - ● Fixed storage below 500 mm AFF to be provided with a pull-out mechanism only [REF:accessible-bathroom-and-grab-bar:18]
 - ○ Wardrobe doors to be sliding or bi-fold; outward-swing doors to be used only where clear floor space ≥ door-width plus 600 mm is available adjacent to the door arc [REF:accessible-bathroom-and-grab-bar:18]
 - ● A turning and manoeuvre space of no less than 1500 mm × 1500 mm to be maintained clear of fixed furniture throughout the dressing area [REF:accessible-bathroom-and-grab-bar:18]
@@ -4359,7 +4359,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:residential-entry-and-threshold:04 | Standards Australia | 2021 | AS 1428.1:2021 | Standards Australia | 6 | EN | AU |
 | REF:residential-entry-and-threshold:05 | Putthinoi et al. | 2017 | ICF-based home modification outcomes | American Journal of OT | 1 | EN | TH/AU |
 
-**Cross-reference:** E-06 (Level Entry — Tier 0 floor); E-05 (Weather protection at entry — NR canopy spec); G-04 (Accessible Bathroom — turning space differential)
+**Cross-reference:** E-06 (Level Entry — Universal Mode floor); E-05 (Weather protection at entry — NR canopy spec); G-04 (Accessible Bathroom — turning space differential)
 
 **Illustration:** [Illustration: to be provided] — Plan view showing 1800 × 1800 mm landing, 500 mm latch-side clearance, and canopy footprint.
 
@@ -4449,7 +4449,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:accessible-circulation-geometry:12 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
 | REF:accessible-circulation-geometry:02 | BSI | 2018 | BS 8300-2:2018 | BSI | 5 | EN | UK |
 
-**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Tier 0 candidate — pending connection-scout)
+**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Universal Mode candidate — pending connection-scout)
 
 **Illustration:** [Illustration: to be provided] — Plan of alcove showing 900 mm width, 200 mm recess from circulation path, and 450 mm seat depth. Section showing 480 mm AFF seat height and arm projection.
 
@@ -4458,7 +4458,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 ## E-14 Entrance Rest Seating
 
-<!-- CON-0054 [HIGH]: Entrance rest seating serves OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause). Tier 0 candidate per GAP-FDR-T0-04. Four populations, independent clinical rationales. -->
+<!-- CON-0054 [HIGH]: Entrance rest seating serves OFS (orthostatic recovery), PAIN (joint relief), MOB/AMB (rest before walking), DEM (orientation pause). Universal Mode candidate per GAP-FDR-T0-04. Four populations, independent clinical rationales. -->
 # E-14 — Entrance Rest Seating
 
 **Category:** E — Entrances and Circulation  
@@ -4508,7 +4508,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 ● Seating with bilateral fixed arms, seat height 440–480 mm AFF, within 5 m of accessible entrance threshold, in alcove ≥1200 mm wide recessed ≥200 mm from the main accessible route, under weather protection (E-05).¹ ⁵ ⁶
 
-○ Recline capability recommended at Tier 0 (tilt-in-space or backrest recline ≥110° from vertical preferred; fixed upright seating acceptable).² At Tier 1 where OFS or PAIN populations are identified, recline capability is mandatory.² ³
+○ Recline capability recommended at Universal Mode (tilt-in-space or backrest recline ≥110° from vertical preferred; fixed upright seating acceptable).² At Tier 1 where OFS or PAIN populations are identified, recline capability is mandatory.² ³
 
 ● Arms: both fixed, extending ≥200 mm forward of seat front edge, height 180–250 mm above compressed seat surface, minimum 40 mm graspable diameter or equivalent profile.¹
 

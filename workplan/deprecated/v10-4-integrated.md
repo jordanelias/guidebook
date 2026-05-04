@@ -33,7 +33,7 @@
 | Category G | 7 items | **8 items** — G-08 Seated-Task Design (relocated from F-05). | F-05 is ergonomic/postural, not sensory. Category F post-TC-absorption is now purely sensory-modality zoning; F-05 breaks the pattern. |
 | Appendix C | TC-01–TC-05 | **RETIRED** — empty. TC-02+TC-03 combined in Part 9 Mechanical Engineering; TC-01→F-06; TC-04→F-04; TC-05→F-07. | No content remains. |
 | Part 9 | Existing mechanical engineering items | **+1 combined item** (TC-02+TC-03: Thermal Envelope and Mass — Passive Thermal Performance). Cross-references F-06 and F-07 as design-facing specs this engineering item enables. | Building physics specifications belong with engineering, not design zoning. |
-| Retreat/reset convergence | Deferred to Phase 2C (D2-37) | **Elevated to PROVISIONAL** (D2-47). A-16 substantive revision in Phase 3: recumbent configuration, WC adjacency ≤5 m, Tier 0 candidacy note. 9 independent convergence signals. | Strongest cross-analysis signal. 6+ populations converge. Deferral was too conservative. |
+| Retreat/reset convergence | Deferred to Phase 2C (D2-37) | **Elevated to PROVISIONAL** (D2-47). A-16 substantive revision in Phase 3: recumbent configuration, WC adjacency ≤5 m, Universal Mode candidacy note. 9 independent convergence signals. | Strongest cross-analysis signal. 6+ populations converge. Deferral was too conservative. |
 | PAIN/OFS population coding | Individual population additions per HIGH connection | **Systematic audit instruction** (D2-41). Every Cat A–M item assessed for PAIN/OFS applicability during Phase 3. 7 MODERATE connections + 18 FDR NOVEL findings provide assessment framework. | PAIN and OFS are systematically under-coded across Part 7. Item-by-item approach misses the structural pattern. |
 | Item mergers | 3 proposed | **3 confirmed** + 1 absorption (TC-04→F-04). |  |
 | Item count | 88 (with L + M) | **85** Part 7 proper. +5 BIO in Appendix B. +1 combined TC in Part 9. | Tighter. No new categories. |
@@ -220,11 +220,11 @@ Per v10.2 plan — unchanged in scope. Resolves DEC-08 through DEC-20.
 **Additional inputs from D2 (new since v10.2):**
 
 **Part 8:**
-- D2 Pattern 2B: 3 HIGH connections feed §8.4 directly (CON-0001 Tier 0 circulation, CON-0014 strobe/seizure, CON-0024 prospect-refuge)
+- D2 Pattern 2B: 3 HIGH connections feed §8.4 directly (CON-0001 Universal Mode circulation, CON-0014 strobe/seizure, CON-0024 prospect-refuge)
 - D2 §1.2: F-06 thermal conflict resolution cross-reference to §8.4
 - D2 §4.2: H-02 user-control hierarchy → §8.2 methodology or Part 1
 - CON-0020 (DEAF glazed junction four-way conflict) → §8.5 unresolvable register
-- Tier 0 candidates cluster (5 provisions from FDR + CON-0001) → §8.2
+- Universal Mode candidates cluster (5 provisions from FDR + CON-0001) → §8.2
 
 **Part 9:**
 - TC-02+TC-03 combined item to be written into §9.1.4 Mechanical Engineering Items
@@ -310,7 +310,7 @@ Per v10.2 plan. **D2-specific refinements:**
 ### Session 5: Foundations + Slug Backfill + Threshold Completion
 
 **Additional from D2:**
-- Retrieve OT literature on recumbent/recovery space design for A-16 revision (D2-47). Target: identify specification parameters (minimum room dimension for recumbent provision, adjacency requirements, Tier 0 candidacy evidence).
+- Retrieve OT literature on recumbent/recovery space design for A-16 revision (D2-47). Target: identify specification parameters (minimum room dimension for recumbent provision, adjacency requirements, Universal Mode candidacy evidence).
 - Verify PAIN/OFS population applicability for acoustic items (A-02, A-08, A-13) per D2-41. Targeted — not full multilingual-research, just population-applicability check against FDR PAIN/OFS BPC findings.
 
 ### Sessions 6–8
@@ -351,7 +351,7 @@ All sessions carry the **D2-41 standing instruction:** PAIN/OFS systematic popul
 
 Per v10.2 + D2 additions:
 - D2-49: Articulate H-02 user-control hierarchy (governing principle for B-06, F-06, A-16, BIO-04, D-09) in §1.4 or §1.5.
-- Tier 0 candidates cluster (5 provisions from §4.3 synergies) → §1.4 Universal Design doctrine.
+- Universal Mode candidates cluster (5 provisions from §4.3 synergies) → §1.4 Universal Design doctrine.
 - CON-0027 (Lawton docility-proactivity) for §1.4 theoretical framing.
 - GAP-CR-14 (Co-2 tier populated).
 - D2-42: delete VI-xx references in Part 1 text (if any).
@@ -394,7 +394,7 @@ Per v10.2 + D2 item-level changes:
 - D2-43: replace "MIS" → "NDV/SENS" in A-01, BIO-04.
 - All EXEC-READY gap resolutions per v10.2 list.
 - CON-0017 user-control elevation: H-02 → PRIMARY cross-ref in A-16 (D2-47 + GAP-SRS-01).
-- **A-16 substantive revision** (D2-47): add recumbent configuration option; WC adjacency ≤5 m; Tier 0 candidacy note; expanded population list (add PAIN, OFS).
+- **A-16 substantive revision** (D2-47): add recumbent configuration option; WC adjacency ≤5 m; Universal Mode candidacy note; expanded population list (add PAIN, OFS).
 - Connection register population additions (Pattern 2A): CON-0003→G-03/G-04/G-05; CON-0007→E-01/E-06/E-08; CON-0011→A-10/A-11; CON-0018→D-03.
 - D2-41 PAIN/OFS systematic audit: every Cat A–E item assessed.
 
@@ -420,7 +420,7 @@ Per v10.2 + D2 item-level changes:
 Per v10.2. Additional D2 inputs:
 - F-06/F-07 thermal conflict cross-reference to §8.4 (§1.2 audit finding).
 - H-02 user-control hierarchy reference in §8.2 methodology (if not placed in Part 1 per D2-49).
-- Tier 0 candidates as §8.2 resolution methodology (FDR-T0-01–04, CON-0001).
+- Universal Mode candidates as §8.2 resolution methodology (FDR-T0-01–04, CON-0001).
 - CON-0020 (DEAF glazed junction four-way conflict) → §8.5 with mitigation options from audit.
 
 ### P3-W09: Parts 9–13 + Appendices + Bibliography (Session 18)
@@ -457,7 +457,7 @@ Per v10.2. **Additional D2-informed checks:**
 - Verify F-category coherence: all items are sensory-modality zoning; no ergonomic/postural items remain.
 - Verify Appendix C is fully retired (no orphan references).
 - Verify all VI-xx, MIS, R-STA-02 references eliminated.
-- Verify retreat/reset provision in A-16 (D2-47) includes recumbent, WC adjacency, Tier 0 note.
+- Verify retreat/reset provision in A-16 (D2-47) includes recumbent, WC adjacency, Universal Mode note.
 - Verify TC-02+TC-03 combined item in Part 9 cross-references F-06/F-07.
 
 ### P5-Q2: Assembly + Final (Session 22)
@@ -483,7 +483,7 @@ A-16 Sensory Room specification must be revised in Phase 3 Session 15 to include
 - Recumbent rest configuration option (fold-flat seating or day-bed)
 - WC adjacency requirement (≤5 m for OFS/PEM populations)
 - Minimum occupancy time allowance (not a "10-minute break room")
-- Tier 0 candidacy note (6+ populations converge: OFS, PAIN, NDV, NEU, DEM, NDV/MH)
+- Universal Mode candidacy note (6+ populations converge: OFS, PAIN, NDV, NEU, DEM, NDV/MH)
 - Expanded population list: add PAIN, OFS explicitly
 
 If Phase 2C research confirms parameters for a standalone retreat/reset item, upgrade to new item and split from A-16 at Phase 3 writing. If A-16 revision absorbs the need, close D2-47.
@@ -507,7 +507,7 @@ Articulate in Part 1 or Part 8: H-02 (Individual Environmental Control) is the g
 | 7 | P2B | Cross-population conflict evidence + economics deep-dive + **`case-study-economics-financial-data` slug (new)** — financial fields populated in compendium for all case studies | |
 | 8 | P2B | Case study sourcing + **`accessible-design-failures-poor-performance` slug (new, full run)** + failure cases + remediation costs → compendium + remaining SUPPLEMENT/RE-RUN slugs | |
 | 9 | P2C | connection-scout re-scan (internal + targeted external; F-category coherence check) + FDR for newly COMPLETE slugs (retreat/reset scenarios if needed) | |
-| 10 | P3 | Write: Front matter + Part 1 (+ H-02 hierarchy, Tier 0 cluster) | |
+| 10 | P3 | Write: Front matter + Part 1 (+ H-02 hierarchy, Universal Mode cluster) | |
 | 11 | P3 | Write: Part 2 (disability categories + CO-0002 + MIS→NDV/SENS) | |
 | 12 | P3 | Write: Parts 3 + 4 (+ DD/RFO terminology, worked example updates) | |
 | 13 | P3 | Write: Part 5 (residential matrices + BAR deletion + code fixes + PAIN/OFS audit) | |

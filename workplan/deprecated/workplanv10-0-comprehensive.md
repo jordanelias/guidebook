@@ -61,7 +61,7 @@ All author directives from this session, assigned tracking codes.
 | DIR-23 | Author (session) | No BAR mentions in Volume I | P3 |
 | DIR-24 | Author (session) | Quote CRPD Article 3, Article 4.3, Article 9 in Volume I (§1.7) | P1 |
 | DIR-25 | Author (session) | Evidence bullet (●) vs inferred bullet (○) — note distinction at beginning of each volume | P3 |
-| DIR-26 | Author (session) | Tier clarification: public unknown = Tier 0, public known disabled populations = Tier 1, residential = Tier 2 | P3 |
+| DIR-26 | Author (session) | Tier clarification: public unknown = Universal Mode, public known disabled populations = Tier 1, residential = Tier 2 | P3 |
 | DIR-27 | Author (session) | Specify provisions with clinical reasoning/expert consensus where evidence absent; disclose with ○ marker | P3 |
 | DIR-28 | Author (session) | Make document more concise; consolidate sections wherever possible to increase usability | P3 |
 | DIR-29 | Author (session) | Note that all items will be accompanied by diagram/drawing/illustration | P3 |
@@ -299,7 +299,7 @@ Content revision within the new structure. Each Part is its own work unit.
 2. Eliminate §1.9 Scope (one-sentence summary absorbed into §1.1)
 3. §1.5 Evidence Hierarchy: populate Co-2 with CAOT, AOTA, RCOT, COTEC CPG sources from P1-R2
 4. §1.7 CRPD Alignment: insert quoted text of Article 3 (principles), Article 4.3 (participation), Article 9 (accessibility) from P1-R1
-5. §1.4.3 Three-Tier Hierarchy: clarify — public building unknown population = Tier 0; public building known disabled populations = Tier 1; residential home = Tier 2
+5. §1.4.3 Three-Tier Hierarchy: clarify — public building unknown population = Universal Mode; public building known disabled populations = Tier 1; residential home = Tier 2
 6. Remove all BAR mentions from Volume I text (DIR-23)
 7. §1.4.6 Application to Residential Design: strengthen with residential primacy framing — "every person lives somewhere; every residence should be able to tailor itself to the people who live there"
 8. Cross-reference §1.8 → "See Appendix E: Evidence Frameworks" (one sentence)
@@ -575,7 +575,7 @@ The following PI sections require amendment after v10.0 completion:
 | Section | Change |
 |---|---|
 | Population Codes table | Reflect alphabetical ordering |
-| Three-Tier Design Hierarchy | Add residential Tier 2 default |
+| Design Modes | Add residential Tier 2 default |
 | Standing Rules §15 | Already correct (DD, RFO) |
 | Skill Registry | Update Part numbers in trigger descriptions |
 | Workflow Reference | Update skill sequences for new Part numbering |

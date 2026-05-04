@@ -4,7 +4,7 @@
 > **Evidence density: ▓ Moderate** — Engineering performance targets (RT60, STI, NC-25, STC, melanopic EDI ≥250, MERV 13+) are derived from Part 4 specifications and their underlying BPC evidence. Part 8 is a coordination register and engineering brief framework, not an independent evidence source. Engineering coordination protocol and stage-gating are procedural (expert consensus + professional practice standards). VE Protection Register items are supported by verified retrofit cost multipliers (TERRAGON/DStGB 2017 Tier 3; RHF 2023).
 
 
-<!-- v10.0 scaffold — CO-0004: was Part 8. Section numbering renumbered §8.x → §8.x.
+<!-- v10.0 scaffold — CO-0004: was Part 9. Section numbering renumbered §9.x → §8.x (B2.2 2026-05-03).
      PENDING:
      - §8.1.4: Write TC-02+TC-03 combined item (Thermal Envelope and Mass — Passive Thermal Performance)
        Cross-reference F-07 and F-08. Source: ms-thermal-temperature-conflict-resolution BPC.
@@ -14,9 +14,9 @@
 
 ---
 
-## 9.0 Overview and Operating Principle
+## 8.0 Overview and Operating Principle
 
-### 9.0.1 Purpose
+### 8.0.1 Purpose
 
 Part 8 provides the coordination interface between the architect and the engineering consultancy team for accessibility provisions in the design library. It performs two functions:
 
@@ -27,7 +27,7 @@ Part 8 provides the coordination interface between the architect and the enginee
 
 Part 8 is not a substitute for engineering design. It is the architect's instrument for ensuring that accessibility requirements are activated within each consultant's scope at the right stage. An accessibility provision that appears only in the architect's specification but is absent from the relevant consultant's brief is not specified — it is a wish.
 
-### 9.0.2 Engineering Coordination Doctrine
+### 8.0.2 Engineering Coordination Doctrine
 
 **This guidebook treats parallel specification as mandatory.** Every engineering-dependent accessibility item must appear in two documents simultaneously: the architect's construction specification or room data sheet, and the relevant consultant's brief at the appropriate design stage. Failure at either location is a coordination failure.
 
@@ -35,7 +35,7 @@ Part 8 is not a substitute for engineering design. It is the architect's instrum
 
 **Ready for Occupancy is specification.** A specification without a commissioning test is aspirational. Every engineering item with a measurable performance target carries a commissioning requirement, to be included in the commissioning schedule issued at technical design stage.
 
-### 9.0.3 Engineering Disciplines in This Part
+### 8.0.3 Engineering Disciplines in This Part
 
 | Code | Discipline | Scope in this Part |
 |---|---|---|
@@ -46,9 +46,9 @@ Part 8 is not a substitute for engineering design. It is the architect's instrum
 
 ---
 
-## 9.1 Engineering Coordination Register
+## 8.1 Engineering Coordination Register
 
-### 9.1.1 How to Read This Register
+### 8.1.1 How to Read This Register
 
 The register identifies design library items (Part 7, Categories A–J) that require a brief instruction to at least one engineering consultant. Items with no such dependency are excluded.
 
@@ -67,7 +67,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-### 9.1.2 Acoustic Engineering Items
+### 8.1.2 Acoustic Engineering Items
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
@@ -92,7 +92,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-### 9.1.3 Electrical Engineering Items
+### 8.1.3 Electrical Engineering Items
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
@@ -133,7 +133,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-### 9.1.4 Mechanical Engineering Items
+### 8.1.4 Mechanical Engineering Items
 
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
@@ -157,11 +157,11 @@ The register identifies design library items (Part 7, Categories A–J) that req
 
 ---
 
-## 9.2 Engineering Brief Templates
+## 8.2 Engineering Brief Templates
 
 *Quick-reference: use when drafting or reviewing each consultant's brief.*
 
-### 9.2.1 Acoustic Engineer
+### 8.2.1 Acoustic Engineer
 
 The acoustic brief must be issued before ME ductwork design and EE ceiling/lighting design are finalised. Both affect acoustic outcomes and cannot be adjusted once committed.
 
@@ -184,7 +184,7 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 ---
 
-### 9.2.2 Electrical Engineer
+### 8.2.2 Electrical Engineer
 
 #### Lighting
 
@@ -231,7 +231,7 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 ---
 
-### 9.2.3 Mechanical Engineer
+### 8.2.3 Mechanical Engineer
 
 | Item | Core Requirement | Stage | Performance Target | Ready for Occupancy |
 |---|---|---|---|---|
@@ -255,9 +255,9 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 ---
 
-## 9.3 Stage-Gated Coordination Protocol
+## 8.3 Stage-Gated Coordination Protocol
 
-### 9.3.1 Schematic Design Gate
+### 8.3.1 Schematic Design Gate
 
 The following items must be confirmed — in writing and on named drawings — before schematic design is signed off. Items not confirmed at SD are to be recorded in the project risk register with the retrofit cost multiplier stated.
 
@@ -274,7 +274,7 @@ The following items must be confirmed — in writing and on named drawings — b
 | F-04 | High-stimulation zone containment strategy confirmed | AC; ME | ×3–6 |
 | I-04 | Floor drainage channel route confirmed; slab recess initiated with SE | ME | ×20–40 |
 
-### 9.3.2 Technical Design Gate — Brief Issue
+### 8.3.2 Technical Design Gate — Brief Issue
 
 At technical design commencement, the architect is to issue updated consultant briefs incorporating all items from §8.2. The gate is not complete until:
 
@@ -283,7 +283,7 @@ At technical design commencement, the architect is to issue updated consultant b
 - EE brief issued covering: all B-category items, D-09, D-11, E-01, E-04, E-11, E-12, G-04/G-05, all H-category items, I-05, I-06
 - SE brief issued covering: all items in §8.5
 
-### 9.3.3 VE Protection Register
+### 8.3.3 VE Protection Register
 
 The following specifications are not to be value-engineered without written agreement of the lead architect. Issue to the contractor at Stage 3.
 
@@ -299,7 +299,7 @@ The following specifications are not to be value-engineered without written agre
 
 ---
 
-## 9.4 O&M Manual — Engineering Accessibility Systems
+## 8.4 O&M Manual — Engineering Accessibility Systems
 
 Include the following in the Operations and Maintenance manual in addition to standard engineering maintenance schedules.
 
@@ -318,7 +318,7 @@ Include the following in the Operations and Maintenance manual in addition to st
 
 ---
 
-## 9.5 Structural Engineer Coordination
+## 8.5 Structural Engineer Coordination
 
 Structural engineering operates under a distinct scope from acoustic, mechanical, and electrical engineering. The items below are collected separately because structural accessibility provisions are among the highest-cost items to retrofit, are frequently missing from SE briefs, and must be confirmed on structural drawings — not only in the specification text. Structural drawings are the confirmation document; a specification entry without a corresponding structural drawing is not a structural commitment.
 
@@ -339,9 +339,9 @@ Structural engineering operates under a distinct scope from acoustic, mechanical
 
 ---
 
-## 9.6 DeafBlind (DBL) Specialist Consultant
+## 8.6 DeafBlind (DBL) Specialist Consultant
 
-### 9.6.1 When DBL Specialist Input Is Required
+### 8.6.1 When DBL Specialist Input Is Required
 
 DeafBlind design provisions cannot be derived by combining DEAF specifications with VIS specifications. The compound impairment produces distinct spatial, navigational, and communication requirements — among them tactile communication protocols (Protactile, hand-under-hand, close-range signing) with specific spatial clearance demands that appear in neither the DEAF nor the VIS literature. A building intended to serve DBL occupants without DBL specialist input will produce environments calibrated to two single-category populations rather than to the compound DBL condition.
 
@@ -356,7 +356,7 @@ Where DBL occupancy is incidental (a DBL visitor to a general-purpose building),
 
 ---
 
-### 9.6.2 DBL Specialist Coordination Register
+### 8.6.2 DBL Specialist Coordination Register
 
 The following K-category items require DBL specialist input for their specification and delivery. The specialist's scope at each stage is noted.
 
@@ -369,7 +369,7 @@ The following K-category items require DBL specialist input for their specificat
 
 ---
 
-### 9.6.3 Novel Spatial Specifications Requiring DBL Specialist Verification
+### 8.6.3 Novel Spatial Specifications Requiring DBL Specialist Verification
 
 Five spatial specifications in the DBL evidence base have no equivalent in DEAF or VIS single-category guidance. Each requires DBL specialist verification before appearing in construction documents.
 
@@ -385,7 +385,7 @@ Five spatial specifications in the DBL evidence base have no equivalent in DEAF 
 
 ---
 
-### 9.6.4 DBL Specialist Brief Template
+### 8.6.4 DBL Specialist Brief Template
 
 The following minimum scope language is to be inserted in the DBL specialist consultant's appointment letter and terms of reference:
 
@@ -393,7 +393,7 @@ The following minimum scope language is to be inserted in the DBL specialist con
 
 ---
 
-### 9.6.5 DBL Specialist Stage Coordination
+### 8.6.5 DBL Specialist Stage Coordination
 
 | Stage | DBL Specialist Action | Output |
 |---|---|---|

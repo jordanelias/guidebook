@@ -93,7 +93,7 @@
 | Area of refuge communication | Two-way communication at ≤1200mm, hands-free, with two-way texting (ITU V.18), clear space 900×1500mm, connected to backup power | CAN/ASC 2.2: explicit specification for deafblind communication in refuge areas. Must support non-visual, non-auditory communication. | **NOVEL** — current refuge specification does not address DBL communication |
 | Tactile wayfinding along evacuation route | TWSI (tactile walking surface indicator) continuous along evacuation route, distinct from general TWSI pattern | ISO 23599 TWSI spec exists but is not explicitly required on evacuation routes. DBL requires tactile ground surface differentiation to distinguish evacuation route from general circulation. | **REFINES** E-09 (extend TWSI to evacuation routes for DBL) |
 
-**ISW brief:** LIFE SAFETY GAP. Create DBL evacuation specification package: vibrotactile alarm (H-04 extension), continuous guidance rail (E-08), tactile evacuation signage (D-06), refuge communication with texting (new). Cross-ref CAN/ASC 2.2 throughout. Flag as safety-critical Tier 0 provision.
+**ISW brief:** LIFE SAFETY GAP. Create DBL evacuation specification package: vibrotactile alarm (H-04 extension), continuous guidance rail (E-08), tactile evacuation signage (D-06), refuge communication with texting (new). Cross-ref CAN/ASC 2.2 throughout. Flag as safety-critical Universal Mode provision.
 
 ---
 

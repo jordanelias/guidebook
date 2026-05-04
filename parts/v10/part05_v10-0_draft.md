@@ -22,7 +22,7 @@ The resolution hierarchy for this guidebook is:
 
 5. **Zoning separates irreconcilable conflicts.** Where no single parameter value serves all populations, spatial separation — assigning zones with distinct parameter sets — is the resolution mechanism. The three-zone sensory gradient (F-01) is the primary zoning tool for illuminance, acoustic level, and olfactory provision.
 
-6. **Irresolvable conflicts are documented, not hidden.** Where a conflict cannot be resolved at Tier 0 or Tier 1 for a shared ambient parameter, this section records it as a Tier 2 conflict — resolvable only through individual co-design. The absence of a Tier 0–1 resolution does not mean the space cannot be designed; it means the OT assessment is mandatory.
+6. **Irresolvable conflicts are documented, not hidden.** Where a conflict cannot be resolved at Universal Mode or Tier 1 for a shared ambient parameter, this section records it as a Tier 2 conflict — resolvable only through individual co-design. The absence of a Universal Mode–1 resolution does not mean the space cannot be designed; it means the OT assessment is mandatory.
 
 ---
 
@@ -50,7 +50,7 @@ Resolution evidence quality is marked: ● = Tier 1–3 OT clinical or post-occu
 
 ### §5.3 Unresolvable Conflicts Register
 
-Three conflict types remain unresolvable at Tier 0–1 for shared ambient environments. Each is recorded here with its Tier 2 requirement and the specific condition that triggers mandatory individual co-design.
+Three conflict types remain unresolvable at Universal Mode–1 for shared ambient environments. Each is recorded here with its Tier 2 requirement and the specific condition that triggers mandatory individual co-design.
 
 **CONF-UNRESOLV-01 — Ambient temperature (OFS/NEU/MS vs PAIN/fibromyalgia in a non-zoned space)**
 

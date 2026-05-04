@@ -220,11 +220,11 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 [CONFIDENCE: high — Tiers 1–2 are direct application of existing project practice (per `references/co1-verified-sources.json` + verification report); Tier 3 surfaces a real distinction not previously named; no doctrinal conflict.]
 
-### 3.5 Q4 — How does Co-1 status interact with the Three-Tier Design Hierarchy?
+### 3.5 Q4 — How does Co-1 status interact with the Design Modes?
 
-**Resolution:** Co-1 status operates alongside the Three-Tier Design Hierarchy, not within it. The two are orthogonal axes that co-locate authority for any given specification.
+**Resolution:** Co-1 status operates alongside the Design Modes, not within it. The two are orthogonal axes that co-locate authority for any given specification.
 
-**The Three-Tier Design Hierarchy** locates *the kind of design decision*: Tier 0 (universal, code-compliant); Tier 1 (population-informed); Tier 2 (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
+**The Design Modes** locates *the kind of design decision*: Universal Mode (universal, code-compliant); Tier 1 (population-informed); Tier 2 (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
 
 **The Seven-Tier Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 OT clinical research, Co-1 lived experience, Co-2 OT CPGs, Tier 3 systematic reviews, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
 
@@ -237,16 +237,16 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 **Voice convention for handling the interaction.** Per A4 voice-style §8.1, specification voice locates authority. For specifications where Co-1 evidence is the basis (alone or alongside Tier 1):
 
-- **Tier 1 design + Tier 1 OT evidence (no Co-1):** "Tier 1 evidence supports a grab bar diameter of 32–35 mm (Sanford 2010; AOTA 2018). Tier 1 default: 33 mm."
-- **Tier 1 design + Co-1 evidence (no Tier 1 clinical):** "Co-1 sources document a signing-space corridor width of 2440 mm (DSDG, Gallaudet 2010; DeafScape, Vaughn 2018). The Tier 1 default for DEAF-primary corridors is 2440 mm. *Note: this width is derived from ASL proxemics at Gallaudet; signed-language proxemics vary across BSL, DGS, NGT, LSF, and LIS — see DEAF BPC for jurisdictional variation.*"
-- **Tier 1 design + both Tier 1 OT + Co-1 evidence (convergent):** "Tier 1 OT evidence (Murgia 2023, Iglehart 2020) and Co-1 sources (DSDG; PVA Accessible Home Design 2021) converge on RT60 ≤0.6 s for shared-use teaching spaces. Tier 1 default: 0.5 s."
+- **Tier 1 design + Tier 1 OT evidence (no Co-1):** "Tier 1 evidence supports a grab bar diameter of 32–35 mm (Sanford 2010; AOTA 2018). Mode P default: 33 mm."
+- **Tier 1 design + Co-1 evidence (no Tier 1 clinical):** "Co-1 sources document a signing-space corridor width of 2440 mm (DSDG, Gallaudet 2010; DeafScape, Vaughn 2018). The Mode P default for DEAF-primary corridors is 2440 mm. *Note: this width is derived from ASL proxemics at Gallaudet; signed-language proxemics vary across BSL, DGS, NGT, LSF, and LIS — see DEAF BPC for jurisdictional variation.*"
+- **Tier 1 design + both Tier 1 OT + Co-1 evidence (convergent):** "Tier 1 OT evidence (Murgia 2023, Iglehart 2020) and Co-1 sources (DSDG; PVA Accessible Home Design 2021) converge on RT60 ≤0.6 s for shared-use teaching spaces. Mode P default: 0.5 s."
 - **Tier 1 design + both, divergent:** "Tier 1 OT evidence (Smith 2022) supports threshold height ≤ 6 mm. Co-1 sources (Concrete Change 1987; PVA 2021) document zero-step preference at primary entrances for visitability and aging-in-place. The Tier 1 range is 0–6 mm; the population-informed default for residential primary entrances is 0 mm (zero-step) per Co-1 visitability framework, with the 6 mm Tier 1 OT clinical maximum applying where structural constraints prevent zero-step."
 
 **Tier 2 (person-specific) and Co-1 evidence.** Tier 2 specifications are resolved by OT assessment of the named individual, against the Tier 1 range. Co-1 evidence informs the Tier 1 range but does not override Tier 2 individual assessment. The OT, working with the individual at Tier 2, may consult Co-1 sources as part of clinical reasoning — but the resolution at Tier 2 is the OT's professional judgment plus the individual's assessed values, not a re-application of population-level Co-1 evidence.
 
-**This means:** Co-1 governs at Tier 1 (population-informed) and contributes at Tier 0 (where universal-design choices reflect cumulative Co-1-grounded evidence). Co-1 does not override Tier 2 individual assessment. An individual's clinical-and-lived-experience profile may differ from any single Co-1 source's reported population pattern; that is exactly what Tier 2 OT co-design exists to resolve.
+**This means:** Co-1 governs at Tier 1 (population-informed) and contributes at Universal Mode (where universal-design choices reflect cumulative Co-1-grounded evidence). Co-1 does not override Tier 2 individual assessment. An individual's clinical-and-lived-experience profile may differ from any single Co-1 source's reported population pattern; that is exactly what Mode S OT co-design exists to resolve.
 
-[CONFIDENCE: high — direct entailment of mission §3 (Co-1 co-primary with Tier 1) + Three-Tier Design Hierarchy + voice-style §8.1. Worked examples are derived from existing corpus (DEAF BPC + Co-1-verified-sources.json).]
+[CONFIDENCE: high — direct entailment of mission §3 (Co-1 co-primary with Tier 1) + Design Modes + voice-style §8.1. Worked examples are derived from existing corpus (DEAF BPC + Co-1-verified-sources.json).]
 
 ---
 

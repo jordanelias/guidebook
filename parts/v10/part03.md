@@ -51,7 +51,7 @@ This guidebook integrates four complementary frameworks:
 
 1. **ICF (WHO 2001)** provides the classification infrastructure — activity codes, environmental factors, the taxonomy of functioning. It is the shared language between this guidebook and the international disability research and policy community.
 
-2. **Person-Environment-Occupation models (PEO, Law et al. 1996; PEOP, Baum et al. 2015; CMOP-E)** provide the theoretical model. Functioning is not person-minus-impairment but person-environment-occupation *fit*. The guidebook's specifications aim to optimise this fit. The three-tier design hierarchy maps directly onto the PEO congruence model: Tier 0 = universal fit floor; Tier 1 = population-informed fit optimisation; Tier 2 = individual co-design for maximum congruence.
+2. **Person-Environment-Occupation models (PEO, Law et al. 1996; PEOP, Baum et al. 2015; CMOP-E)** provide the theoretical model. Functioning is not person-minus-impairment but person-environment-occupation *fit*. The guidebook's specifications aim to optimise this fit. The three-tier design hierarchy maps directly onto the PEO congruence model: Universal Mode = universal fit floor; Tier 1 = population-informed fit optimisation; Tier 2 = individual co-design for maximum congruence.
 
 3. **The Capability Approach (Sen 1999; Nussbaum 2006)** provides the justice framework. Accessible design expands the *capability set* of occupants — the real freedoms and opportunities they have to do and be what they value. The built environment is a *conversion factor* that transforms personal resources into capabilities. A wheelchair user with an accessible bathroom has a larger capability set than the same person with an inaccessible one, even though the impairment is unchanged.
 
@@ -101,7 +101,7 @@ The layered environment model organises accessible design provisions by their ph
 
 1. **Resolve at the earliest layer.** Conflicts that require a structural resolution cannot be addressed by signage or fit-out. Identify conflicts at Layer 1 and resolve them there. A conflict left to Layer 3 will either be unresolved or require expensive structural remediation.
 
-2. **Converging specifications produce Tier 0 provisions.** Where five or more populations require the same or compatible provisions independently, the specification becomes a Tier 0 universal: loop circulation geometry (DEM, VIS, DBL, NDV/AUT, DEM/NDV[IntD-proxy] — CON-0001); quiet retreat space (NDV/AUT, NDV/MH, OFS — CON-0002); fragrance-free policy (OFS/MCAS, NDV/SENS — CON-0007). These should be specified as universal provisions without population conditioning.
+2. **Converging specifications produce Universal Mode provisions.** Where five or more populations require the same or compatible provisions independently, the specification becomes a Universal Mode universal: loop circulation geometry (DEM, VIS, DBL, NDV/AUT, DEM/NDV[IntD-proxy] — CON-0001); quiet retreat space (NDV/AUT, NDV/MH, OFS — CON-0002); fragrance-free policy (OFS/MCAS, NDV/SENS — CON-0007). These should be specified as universal provisions without population conditioning.
 
 3. **Safety-critical provisions establish the floor.** Where one population's provision addresses a safety outcome (fall, scald, fire evacuation, Uhthoff's neurological worsening) and another population's provision addresses a comfort or preference outcome, the safety provision governs the shared environment. Comfort requirements are met through individual supplemental provision.
 
@@ -143,7 +143,7 @@ Different building types present different co-occurrence profiles. This section 
 
 **Co-working/office:** NDV is the fastest-growing primary population in contemporary workplace design (PAS 6463 adoption driving employer provision). DEAF is significant (loop infrastructure increasingly standard). Resolution: graduated sensory zones from open-plan collaboration spine (DEAF sightlines) to enclosed acoustic pods (NDV quiet); independent loop audio.
 
-**Transport:** MOB is the primary population; DEAF and VIS are significant secondaries. All spaces serve transient populations with no opportunity for individual adaptation. Tier 0 provisions govern. Loop infrastructure, TWSI, LRV contrast, and visual fire alarms are treated as mandatory by this guidebook rather than conditional.
+**Transport:** MOB is the primary population; DEAF and VIS are significant secondaries. All spaces serve transient populations with no opportunity for individual adaptation. Universal Mode provisions govern. Loop infrastructure, TWSI, LRV contrast, and visual fire alarms are treated as mandatory by this guidebook rather than conditional.
 
 ---
 
@@ -194,7 +194,7 @@ Step 0: Preliminary checks
       (same person experiences both populations)?
       ├── YES, and the functional interaction is non-additive
       │     → This conflict cannot be resolved by pairwise population logic.
-      │       Route to Tier 2 OT co-design assessment.
+      │       Route to Mode S OT co-design assessment.
       │       Document: "Compound profile — Tier 2 resolution required.
       │       Individual specifications: [A-spec], [B-spec].
       │       Interaction mechanism: [brief clinical reasoning].
@@ -290,10 +290,10 @@ Build in the structural, services, or fit-out provisions that allow future indiv
 Apply the safety-critical provision to the shared environment without compromise; deliver the comfort/preference provision to the non-safety-critical population through individual supplemental means. Example: ambient temperature ≤18°C (Uhthoff's safety-critical floor); individual radiant panels at fixed seating for PAIN users. This is the most commonly applied strategy for TEMP-RANGE conflicts.
 
 **PP — Plain Provision.**
-Where a single plain/undecorated/unstructured specification serves the most constrained population without violating other populations' evidence basis, specify it universally. Example: plain flooring on primary routes (DEM fall prevention, VIS orientation via perimeter contrast rather than floor pattern, NDV/SENS reduced visual noise). Plain provision is a Tier 0 strategy — it produces the simplest specification that satisfies the maximum number of populations simultaneously.
+Where a single plain/undecorated/unstructured specification serves the most constrained population without violating other populations' evidence basis, specify it universally. Example: plain flooring on primary routes (DEM fall prevention, VIS orientation via perimeter contrast rather than floor pattern, NDV/SENS reduced visual noise). Plain provision is a Universal Mode strategy — it produces the simplest specification that satisfies the maximum number of populations simultaneously.
 
-**T0 — Tier 0 Universal Specification.**
-Where five or more populations require the same or compatible provisions from independent clinical rationales, designate the provision as a Tier 0 universal and specify it without population conditioning. This eliminates the need for conflict resolution because the convergence is genuine. Tier 0 candidates identified from the connection register: loop circulation geometry (CON-0001); sensory quiet room (CON-0002); fragrance-free policy (CON-0007); prospect-refuge spatial balance (CON-0024). See §1.4.3 for the three-tier hierarchy.
+**T0 — Universal Mode Universal Specification.**
+Where five or more populations require the same or compatible provisions from independent clinical rationales, designate the provision as a Universal Mode universal and specify it without population conditioning. This eliminates the need for conflict resolution because the convergence is genuine. Universal Mode candidates identified from the connection register: loop circulation geometry (CON-0001); sensory quiet room (CON-0002); fragrance-free policy (CON-0007); prospect-refuge spatial balance (CON-0024). See §1.4.3 for the three-tier hierarchy.
 
 **RS — Range Specification.**
 Specify a parameter range that falls within the acceptable zone for both populations, rather than selecting a point value that favours one. The range boundaries are set by the evidence-based limits of each population. Example: grab bar diameter 32–45 mm serves both MOB standard grip (minimum 32 mm) and UPL pathological grip (maximum 45 mm before grip degrades). Range specification eliminates the conflict without compromise to either population. Best applied where: both populations have empirically defined tolerance ranges that overlap. Items: G-03 (grab bar diameter), reach-range items.
@@ -307,7 +307,7 @@ Where population-level resolution is not achievable (Steps 1–5 of §3.8 produc
 
 The following pairs share provisions that are compatible or reinforcing rather than conflicting. These are not conflicts requiring resolution; they are convergences that can be specified as single provisions serving multiple populations.
 
-| Pair | Shared domain | Converging specification | Tier 0 candidate? |
+| Pair | Shared domain | Converging specification | Universal Mode candidate? |
 |---|---|---|---|
 | MOB + OFS | Rest seating | ≤25 m interval (OFS governs — stricter than MOB 50 m); seat 430–480 mm; armrests | YES (5+ populations benefit) |
 | MOB + DEM | Plain flooring | Plain, non-patterned flooring on primary routes; flush thresholds | YES |
@@ -385,7 +385,7 @@ This question has two forms:
 
 - **New construction for a known client group:** The client can identify specific populations (a dementia care home; a DEAF-majority workplace; a supported living scheme for residents with complex needs). Part 4 items are selected, conflicts resolved, and specifications calibrated to those populations. OT assessment is triggered where individual users are known.
 
-- **Speculative construction for an unknown user group:** The population cannot be specified. Tier 0 provisions apply universally (see §1.4.3). DAR provisions preserve the building's ability to be adapted when users become known. The matrix rows for ALL apply to every speculative building; population-specific rows apply where the eventual user profile is anticipated.
+- **Speculative construction for an unknown user group:** The population cannot be specified. Universal Mode provisions apply universally (see §1.4.3). DAR provisions preserve the building's ability to be adapted when users become known. The matrix rows for ALL apply to every speculative building; population-specific rows apply where the eventual user profile is anticipated.
 
 #### §3.12.2 Before the Entry Paths: Four Decisions
 
@@ -395,9 +395,9 @@ Before using the entry paths (§3.12.3), make four decisions that establish the 
 
 **Decision 2: Co-occurrence profile.** What population pairs are present? Cross-reference §3.3. Identify all active conflict domains. Record the resolution strategy to be applied to each (§3.9).
 
-**Decision 3: Design tier.** Is this Tier 0 (speculative, unknown user), Tier 1 (population-identified), or Tier 2 (individual-specific)? Most institutional buildings are Tier 1; speculative residential is Tier 0 with DAR; individual commissions and specialist residential are Tier 2.
+**Decision 3: Design tier.** Is this Universal Mode (speculative, unknown user), Tier 1 (population-identified), or Tier 2 (individual-specific)? Most institutional buildings are Tier 1; speculative residential is Universal Mode with DAR; individual commissions and specialist residential are Tier 2.
 
-**Decision 4: OT appointment.** Is OT assessment required? Use Part 9 §9.2 appointment triggers. For Tier 2 buildings, OT assessment is mandatory. For Tier 1 buildings with complex co-occurrence profiles, OT input at schematic design is best practice. For Tier 0 buildings, OT is not required at design stage but DAR provisions must preserve the building's ability to accommodate OT-assessed modifications later.
+**Decision 4: OT appointment.** Is OT assessment required? Use Part 9 §9.2 appointment triggers. For Tier 2 buildings, OT assessment is mandatory. For Tier 1 buildings with complex co-occurrence profiles, OT input at schematic design is best practice. For Universal Mode buildings, OT is not required at design stage but DAR provisions must preserve the building's ability to accommodate OT-assessed modifications later.
 
 #### §3.12.3 Using the Entry Paths and Matrices with the Approach Brief
 

@@ -89,7 +89,7 @@ Complete current stage. Commit all work. Invoke `session-consolidator`. Bullet-p
 | Workflow Reference | `workplan-orchestrator` §Workflows |
 | Evidence Hierarchy | `multilingual-research` + guidebook §1.5 |
 | Population Codes + BAR rule | `workplan-orchestrator` (new §Population Codes) |
-| Three-Tier Design Hierarchy | `item-specification-writer` |
+| Design Modes | `item-specification-writer` |
 | Endnote System | `bibliography-compiler` + `item-specification-writer` |
 | Session-Close YAML schema | `session-consolidator` |
 | Prose Register | `prose-style-checker` |

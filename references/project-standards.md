@@ -8,10 +8,10 @@
 RULE: THE PURPOSE OF THIS GUIDEBOOK IS TO GET PEOPLE TO ASK THE RIGHT QUESTIONS. This is the most important principle governing the entire project. The guidebook is not a prescription manual. It is not an authority on measurements. It does not dictate values that designers, policymakers, or practitioners must apply. It is a thinking tool that equips people to ask the right questions about how to design for accessibility depending on the circumstance. Measurements, ranges, and reference data exist to support this process — they serve the questions, not the other way around. Every item specification, every BPC synthesis, every piece of guidebook prose must be evaluated against this standard: does it help the reader ask better questions about this design element? Does it surface considerations they would not have encountered otherwise? Does it make them think more critically about the specific situation they face? When you know better, you do better. A designer who knows what questions to ask will produce a better outcome than one who does not — even without perfection, even without specialist input. The guidebook aims to raise the floor of understanding for everyone who touches the built environment.
 DATE: 2026-04-24 23:38 — enshrined as foundational principle; governs all other rules
 
-RULE: Disability populations are not uniform. Every person within a population code has a unique experience and unique functional limitations, even where there is significant overlap with others who share the same condition. There are different ways to struggle with mobility, different ways to be blind, different ways to have MS, different ways to be autistic, different ways to have dementia, different ways to experience PTSD. There is no generic ideal for any population. Specifications provide ranges and starting points — not definitive answers. It is rare for a disability to be experienced in isolation; co-occurring conditions are the norm. Every item specification must acknowledge functional variability within the population and discuss how co-occurrence affects the design parameter, because that is the lived reality of the people the guidebook serves. Population codes are a high-level organizing principle: at Tier 0 they are comprehensive (mapping all considerations); at Tier 1 they offer insight (what to think about for a known population); at Tier 2 they step aside because a person is not defined by their disabilities — OT works bottom-up from functional impairments because everything must be uniquely tailored to the individual.
+RULE: Disability populations are not uniform. Every person within a population code has a unique experience and unique functional limitations, even where there is significant overlap with others who share the same condition. There are different ways to struggle with mobility, different ways to be blind, different ways to have MS, different ways to be autistic, different ways to have dementia, different ways to experience PTSD. There is no generic ideal for any population. Specifications provide ranges and starting points — not definitive answers. It is rare for a disability to be experienced in isolation; co-occurring conditions are the norm. Every item specification must acknowledge functional variability within the population and discuss how co-occurrence affects the design parameter, because that is the lived reality of the people the guidebook serves. Population codes are a high-level organizing principle: at Universal Mode they are comprehensive (mapping all considerations); at Mode P they offer insight (what to think about for a known population); at Mode S they step aside because a person is not defined by their disabilities — OT works bottom-up from functional impairments because everything must be uniquely tailored to the individual.
 DATE: 2026-04-24 23:38
 
-RULE: Three-Tier Design Hierarchy governs all specifications. Tier 0 = Universal Design / Code Compliance (population-agnostic, fixed values). Tier 1 = Population-Informed Inclusive Design (ranges; median as default). Tier 2 = Person-Specific Co-Design (OT assessment resolves position within Tier 1 range). DAR mandatory at all tiers.
+RULE: Design Modes governs all specifications. Universal Mode = Universal Design / Code Compliance (population-agnostic, fixed values). Mode P = Population-Informed Inclusive Design (ranges; median as default). Mode S = Person-Specific Co-Design (OT assessment resolves position within Mode P range). DAR mandatory at all modes.
 DATE: Established — pre-session
 
 RULE: Evidence hierarchy is seven tiers. Tier 1 = OT intervention-tested clinical research; Co-1 = lived experience / participatory design (CRPD Art. 4.3, co-primary with Tier 1); Tier 2 = NGO/DPO/advocacy guidelines; Co-2 = OT professional body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT); Tier 3 = systematic reviews and meta-analyses; Tier 4 = international standards with evidence basis; Tier 5 = national beyond-code frameworks; Tier 6 = statutory codes (reference baseline only). OT body guidelines = Tier 3 with [Tier 3 — CPG] marker. The evidence hierarchy determines what constitutes best practice. Codes (Tier 6) inform us in situations where nothing else can. Where higher-tier evidence exists, it governs.
@@ -29,7 +29,7 @@ DATE: 2026-03-20 21:00
 RULE: BAR is not a main taxonomy code. Large body size is not a disability. BAR provisions belong in Supplementary Volume Supp. Part 4 only. No BAR reference, cross-reference, heading, or J-code is permitted in Volumes I–II. Delete on sight without replacement or pointer. Category J (J-01–J-05) is struck from Volume II Part 4.
 DATE: Established — pre-session; consolidated 2026-03-29
 
-RULE: Specification ranges are not expressions of uncertainty. They are the designed-in bridge between Tier 1 and Tier 2. At Tier 1 use median. At Tier 2 resolve through co-design. Never write a range without specifying which end applies at which tier.
+RULE: Specification ranges are not expressions of uncertainty. They are the designed-in bridge between Mode P and Mode S. At Mode P use median. At Mode S resolve through co-design. Never write a range without specifying which end applies at which mode.
 DATE: Established — pre-session
 
 RULE: Lived experience evidence is co-primary at Tier 3–4 where no clinical trial is feasible.
@@ -44,10 +44,10 @@ DATE: 2026-03-25 19:35; consolidated 2026-03-29
 RULE: Biophilic Design (BIO-01–BIO-05) and Thermal Comfort (TC-01–TC-05) are in Appendices B and C respectively. Supplementary Resources A and B struck from Volume II body. No inline BIO- or TC- cross-references in Part 4 specs or room matrices. Single opening notice permitted in volume front matter.
 DATE: 2026-03-18 20:10; consolidated 2026-03-29
 
-RULE: The guidebook is a starting framework for professional judgment, not a substitute for it. Population-level specifications (Tier 0 and Tier 1) are necessary but insufficient. Part 1 must state this explicitly as a foundational principle.
+RULE: The guidebook is a starting framework for professional judgment, not a substitute for it. Population-level specifications (Universal Mode and Mode P) are necessary but insufficient. Part 1 must state this explicitly as a foundational principle.
 DATE: 2026-03-26 16:00
 
-RULE: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Tier 1 only. At Tier 2, conflict resolution is the domain of the OT and the individual through co-design. The guidebook's Tier 2 role is to equip non-OT professionals with decision frameworks and structured approaches — not prescriptive answers.
+RULE: Conflict resolution protocol (Part 5 and cross-synthesis escalation) operates at Mode P only. At Mode S, conflict resolution is the domain of the OT and the individual through co-design. The guidebook's Mode S role is to equip non-OT professionals with decision frameworks and structured approaches — not prescriptive answers.
 DATE: 2026-03-26 16:00
 
 RULE: The guidebook is an advocacy project, not an authority. It does not teach professional judgment, does not confer competence, and is not a registered body, standard-setting organization, or regulatory instrument. It is derived from comprehensive research and presents its findings in a multimodal manner to equip people who touch the built environment with better questions, better evidence, and better starting points. Readers apply their own professional judgment, informed by this material. The guidebook's value is in the quality and comprehensiveness of the research it synthesizes and the accessibility of its presentation — not in any claim to authority over practice.
@@ -108,7 +108,7 @@ DATE: 2026-03-29 00:00
 RULE: Slug names are frozen path identifiers — never renamed by CO-0003. Content adopts new terminology; paths unchanged.
 DATE: 2026-03-28 21:30
 
-RULE: Part 7 conflict entries tagged [INTRA-INDIVIDUAL], [INTER-GROUP], or [BOTH]. Intra → Tier 2 OT resolution. Inter → Tier 0/1 architectural. Both → state both pathways.
+RULE: Part 7 conflict entries tagged [INTRA-INDIVIDUAL], [INTER-GROUP], or [BOTH]. Intra → Mode S OT resolution. Inter → Universal Mode/Mode P architectural. Both → state both pathways.
 DATE: 2026-03-28 21:30
 
 ---
@@ -167,10 +167,10 @@ DATE: 2026-03-28 09:00
 
 ## Specification Process Rules
 
-RULE: Specification language is tier-appropriate and does not claim authority the project does not have. The guidebook is an advocacy project (see Core Doctrine), not a standard-setting body. Specification constructions by tier: Tier 0 — "Code requires [value] per [standard]" (authority is the code, not the guidebook). Tier 1 — "[Evidence tier] evidence supports [value]" or "Best practice based on [N] jurisdictions and [tier] evidence is [value]" (authority is the evidence). Tier 2 — "OT assessment determines position within [range] based on [functional parameter]" (authority is the OT). The former convention of blanket "shall be" constructions is retired — "shall be" implies mandating authority the project does not possess. Always run prose-style-checker before vol2-item-formatter. Existing Part 4 text using "shall be" requires a voice pass (A4 or C-stage find-and-replace).
+RULE: Specification language is tier-appropriate and does not claim authority the project does not have. The guidebook is an advocacy project (see Core Doctrine), not a standard-setting body. Specification constructions by mode: Universal Mode — "Code requires [value] per [standard]" (authority is the code, not the guidebook). Mode P — "[Evidence tier] evidence supports [value]" or "Best practice based on [N] jurisdictions and [tier] evidence is [value]" (authority is the evidence). Mode S — "OT assessment determines position within [range] based on [functional parameter]" (authority is the OT). The former convention of blanket "shall be" constructions is retired — "shall be" implies mandating authority the project does not possess. Always run prose-style-checker before vol2-item-formatter. Existing Part 4 text using "shall be" requires a voice pass (A4 or C-stage find-and-replace).
 DATE: 2026-04-26 19:25 — supersedes "shall be" convention of 2026-03-28; aligned with advocacy identity rule
 
-RULE: "Adjustable" is not a universal conflict resolution. Document operability per population. Flag populations who cannot self-adjust. Route to Tier 2 if ambient parameter irreconcilable.
+RULE: "Adjustable" is not a universal conflict resolution. Document operability per population. Flag populations who cannot self-adjust. Route to Mode S if ambient parameter irreconcilable.
 DATE: 2026-03-28 23:45
 
 RULE: Cross-population conflicts searched by CONFLICT DOMAIN (12 environmental parameter conflicts), not by population pair. Aged care POEs richest evidence source.
@@ -179,7 +179,7 @@ DATE: 2026-03-28 23:45
 RULE: Population-specific design guideline sets developed independently and do not cross-reference conflict points. Check cross-population-conflict-mapper §1 before finalising any single-population spec in shared spaces.
 DATE: 2026-03-28 23:45
 
-RULE: Tier 0 rejection test — provisions creating emergency communication isolation incompatible with Tier 0 for DEAF. Check DEAF population before assigning Tier 0 to acoustic isolation specs.
+RULE: Universal Mode rejection test — provisions creating emergency communication isolation incompatible with Universal Mode for DEAF. Check DEAF population before assigning Universal Mode to acoustic isolation specs.
 DATE: 2026-03-28 18:25
 
 RULE: Acoustic panel NRC is not standalone performance criterion. STI is correct criterion. STI ≥ 0.60 (general) / STI ≥ 0.75 (DEAF/CI). NRC is means, not end.
@@ -199,7 +199,7 @@ DATE: 2026-03-30 03:42
 RULE: Every Part 4 specification using "adjustable", "individual control", or "user-operated" must include a population operability note: (1) populations who can self-adjust, (2) populations requiring carer/staff operation, (3) default setting when no individual present with harm-asymmetry rationale. "Adjustable" is not a universal conflict resolution — per conflict-matrices SYNTHESIS.
 DATE: 2026-03-30 03:42
 
-RULE: Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference) carries a Tier 2 handoff flag: "Tier 1 default: [median]. Tier 2: OT assessment resolves position within range based on [functional parameter]." Ranges are the designed-in bridge between Tier 1 and Tier 2 — restatement of existing project-standards rule with explicit format requirement.
+RULE: Every Part 4 specification with a range (where the range reflects individual variation, not jurisdictional difference) carries a Mode S handoff flag: "Mode P default: [median]. Tier 2: OT assessment resolves position within range based on [functional parameter]." Ranges are the designed-in bridge between Mode P and Mode S — restatement of existing project-standards rule with explicit format requirement.
 DATE: 2026-03-30 03:42
 
 RULE: Cross-population conflict analysis: check for variable conflation before asserting a conflict. Three domains (CORRIDOR-W, COLOUR-CONT, PREDICT) had apparent conflicts that dissolved because two independent variables were treated as one (width ≠ sensory load; LRV contrast ≠ chroma; adequate space ≠ reconfiguration). Step 0 in §3.8 decision tree: verify that opposing needs operate on the same physical variable.
@@ -218,7 +218,7 @@ DATE: 2026-03-30 23:30
 RULE: skills/voice-style_SKILL.md is MANDATORY for all prose writing and all framing/language review in this project. It supersedes and replaces both the former voice-style skill and the former framing-checker skill. Load before drafting, revising, reviewing, or auditing any guidebook prose. Apply the 11-point calibration test before finalising any passage. For framing audits, invoke §12 Framing Audit Protocol. Scope: all body text in Parts 0–12, supplementary volumes, appendices, and front matter. Does not govern tables, reference lists, abbreviation registers, or amendment registers.
 DATE: 2026-03-31 00:23 (updated: framing-checker consolidated into voice-style_SKILL.md 2026-03-31)
 
-RULE: Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements sentence references a list that does not follow — either append the 17-jurisdiction endorsement list or remove the sentence. (2) §1.5 Co-primary Tier 2 header has no body text — content drafted and committed 2026-03-31; verify on next Part 1 review pass.
+RULE: Two structural gaps flagged during voice-style review of part01 — track as open items: (1) §1.2 endorsements sentence references a list that does not follow — either append the 17-jurisdiction endorsement list or remove the sentence. (2) §1.5 Co-primary Mode S header has no body text — content drafted and committed 2026-03-31; verify on next Part 1 review pass.
 DATE: 2026-03-31 00:23
 
 RULE: Never use jq in bash_tool. Container state does not persist between conversations; jq installed in session N is absent in session N+1. Use python3 json module exclusively for all JSON parsing in bash_tool calls. Never call jq, install jq, or pip/apt install jq.
@@ -374,7 +374,7 @@ DATE: 2026-04-07 00:44
 RULE: ISO wayfinding specifications (23599, 21542) are physically determined and transfer universally without cultural or climate adaptation. The Global South wayfinding gap is implementation and maintenance, not specification design.
 DATE: 2026-04-07 00:44
 
-RULE: PAS 6463 sensory space principles separate into two layers: physics-based (acoustic, lighting, visual complexity) which transfer universally, and spatial-model (private individual retreat) which does not transfer to collectivist cultures. Specify the physics; flag the spatial model for Tier 2 co-design.
+RULE: PAS 6463 sensory space principles separate into two layers: physics-based (acoustic, lighting, visual complexity) which transfer universally, and spatial-model (private individual retreat) which does not transfer to collectivist cultures. Specify the physics; flag the spatial model for Mode S co-design.
 DATE: 2026-04-07 00:44
 
 RULE: The FMS vs MS/SCI thermal conflict resolves to cool ambient default (18–20°C) + local warmth for FMS. Severity asymmetry: neurological deterioration (MS/SCI) > pain exacerbation (FMS, reversible). Do not treat any single thermal standard as universally applicable across all disability populations.
@@ -392,9 +392,9 @@ CONDITION: Any drafting, revision, or review of Part 1 §1.4 theoretical framewo
 ACTION: Reference all four frameworks. Do not position the guidebook as "ICF-based" alone.
 DATE: 2026-04-09 04:58
 
-RULE: Compound functioning principle. Co-occurring conditions produce supra-additive disability (MWI: ~16% per additional condition; Clarke: 4.52x environment-impairment interaction). Pairwise population conflict resolution (Part 3 §3.8, Part 5) is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Tier 2 OT co-design. The guidebook equips professionals; it does not prescribe compound resolutions.
+RULE: Compound functioning principle. Co-occurring conditions produce supra-additive disability (MWI: ~16% per additional condition; Clarke: 4.52x environment-impairment interaction). Pairwise population conflict resolution (Part 3 §3.8, Part 5) is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Mode S OT co-design. The guidebook equips professionals; it does not prescribe compound resolutions.
 CONDITION: Any specification, conflict resolution, or synthesis task involving two or more population codes applying to a single individual.
-ACTION: Apply §3.8 Step 0 compound functioning check. If non-additive interaction identified, route to Tier 2 with documented interaction mechanism. Do not apply pairwise resolution as if it were sufficient.
+ACTION: Apply §3.8 Step 0 compound functioning check. If non-additive interaction identified, route to Mode S with documented interaction mechanism. Do not apply pairwise resolution as if it were sufficient.
 DATE: 2026-04-09 04:58
 
 RULE: FDR skill now supports four scenario types: granular (ICF), compound [COMPOUND], occupation [OCCUPATION], environment [ENVIRONMENT]. Token weights: compound = 2x, occupation = 3x, environment = 2x. Compound and occupation synthesis requires Opus. Research slug registry: references/fdr/fdr-slug-registry-v2.md (supersedes §9 priority targets).
@@ -404,7 +404,7 @@ DATE: 2026-04-09 04:58
 
 RULE: Kawa model informs non-Western sensory space specification. PAS 6463 private individual retreat model does not transfer to collectivist cultures. Kawa-informed specification designs for shared calm (collective flow) rather than individual withdrawal. Physics-based sensory parameters (acoustic, lighting, visual complexity) transfer universally; spatial model (private vs shared) requires cultural adaptation.
 CONDITION: Any specification, BPC entry, or item-specification-writer task for sensory rooms (A-16), retreat spaces, or NDV/MH provisions intended for non-Western or collectivist contexts.
-ACTION: State that the private retreat spatial model is culturally specific. Specify physics-based parameters universally. Flag spatial model for Tier 2 co-design with cultural context input. Reference Kawa (Iwama 2006) and framework review.
+ACTION: State that the private retreat spatial model is culturally specific. Specify physics-based parameters universally. Flag spatial model for Mode S co-design with cultural context input. Reference Kawa (Iwama 2006) and framework review.
 DATE: 2026-04-09 04:58
 RULE: connection-scout entry schema includes connection_type field: CROSS-POPULATION, CROSS-ITEM, COMPOUND-INTERACTION, or METHODOLOGY. Compound interaction connections (type COMPOUND-INTERACTION) are generated from FDR compound scenarios (fdr-slug-registry-v2.md §C) and flag non-additive effects when two individually correct specifications apply to the same person. These route to ISW with compound-synthesis brief (Opus required).
 CONDITION: Any connection-scout session (internal or external mode).
@@ -505,7 +505,7 @@ DATE: 2026-04-26 06:20
 
 ## Session 2026-04-29 — A4 close + A5 close
 
-RULE: Specification voice is tier-located and authority-located throughout the guidebook. Per voice-style §8.1, Tier 0 specifications cite the code; Tier 1 specifications cite the evidence; Tier 2 specifications locate authority in OT assessment plus the individual. Per §8.2, two patterns operationalize this: Pattern A (inline location) for prose and short table cells; Pattern B (umbrella convention) for dense matrix tables. Per §8.3, four canonical Co-1 voice patterns govern Co-1 evidence citation: Co-1-A (single-source), Co-1-B (multi-source synthesis), Co-1-C (Tier 1/Co-1 convergence), Co-1-D (Tier 1/Co-1 divergence).
+RULE: Specification voice is tier-located and authority-located throughout the guidebook. Per voice-style §8.1, Universal Mode specifications cite the code; Mode P specifications cite the evidence; Mode S specifications locate authority in OT assessment plus the individual. Per §8.2, two patterns operationalize this: Pattern A (inline location) for prose and short table cells; Pattern B (umbrella convention) for dense matrix tables. Per §8.3, four canonical Co-1 voice patterns govern Co-1 evidence citation: Co-1-A (single-source), Co-1-B (multi-source synthesis), Co-1-C (Tier 1/Co-1 convergence), Co-1-D (Tier 1/Co-1 divergence).
 CONDITION: Any drafting, revision, or audit of guidebook prose, BPC entries, item specifications, or governance documents producing prose that will surface in the guidebook.
 ACTION: Apply voice-style §§8.1, 8.2, 8.3 patterns. Categorical authority claims ("shall be" as blanket spec, "operates above the code floor", "this document governs" over external instruments, "non-negotiable" as Guidebook self-claim, unlocated "X is mandatory") are voice failures and route to remediation.
 DATE: 2026-04-29 14:04 — A4 close (categorical patterns eliminated guidebook-wide); 2026-04-29 15:50 — A5 close (Co-1 voice patterns added to skill).
@@ -522,7 +522,7 @@ DATE: 2026-04-29 15:50 — A5 close.
 
 ## Session 2026-04-29 — A6 Evidence Methodology
 
-RULE: Values-based conflicts between populations at Tier 1 are resolved by the broadest-benefit assessment mechanism (governance/evidence-methodology.md §4): classify as function-based (→ harm-asymmetry) or values-based (→ broadest-benefit); assess population breadth, irreversibility, supplementary provision feasibility; document both positions with Tier 2 handoff. Values-criteria does not override harm-asymmetry, does not apply at Tier 0, and does not eliminate Tier 2 resolution.
+RULE: Values-based conflicts between populations at Mode P are resolved by the broadest-benefit assessment mechanism (governance/evidence-methodology.md §4): classify as function-based (→ harm-asymmetry) or values-based (→ broadest-benefit); assess population breadth, irreversibility, supplementary provision feasibility; document both positions with Mode S handoff. Values-criteria does not override harm-asymmetry, does not apply at Universal Mode, and does not eliminate Mode S resolution.
 CONDITION: Any specification, conflict resolution, or BPC synthesis where two populations have evidence-supported preferences that conflict on the same parameter and neither faces disproportionate harm.
 ACTION: Apply §4.2 three-step assessment. Set default per broadest-benefit; provide supplementary provision for alternative; document convergence assessment as divergent with synthesis_approach.
 DATE: 2026-04-29 19:06

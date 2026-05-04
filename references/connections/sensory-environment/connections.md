@@ -212,18 +212,18 @@ Additionally, Auracast serves not only DEAF but also NDV (personal audio stream 
 **Filed:** 2026-04-09
 **Applied:** —
 
-**Connection:** CON-0039 proposes RT60 ≤0.3 s as Tier 0 universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
+**Connection:** CON-0039 proposes RT60 ≤0.3 s as Universal Mode universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
 
 This creates a population-within-specification hierarchy for acoustic items:
 - General population: 0.6 s (code compliance, Tier 6)
-- DEAF/hearing devices: 0.3 s (Tier 0 per CON-0039)
+- DEAF/hearing devices: 0.3 s (Universal Mode per CON-0039)
 - NDV/AUT primary spaces: <0.3 s (Tier 1 — specific value unquantified; ○ marker)
 
-The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Tier 0 of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
+The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Universal Mode of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
 
 **Evidence basis:** room-acoustic-performance BPC: Bettarello 2021 (Tier 1), Caniato 2024 (Tier 1) — autistic populations significantly more affected by modest noise increases. NDV BPC Opus synthesis: "no internationally agreed quantified RT60 target specific to autistic users."
 
-**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Tier 0) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
+**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Universal Mode) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
 
 **Disposition notes:** — MODERATE because no quantified NDV/AUT-specific target exists. The direction is clear; the value is not.
 
@@ -411,18 +411,18 @@ Additionally, Auracast serves not only DEAF but also NDV (personal audio stream 
 **Filed:** 2026-04-09
 **Applied:** —
 
-**Connection:** CON-0039 proposes RT60 ≤0.3 s as Tier 0 universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
+**Connection:** CON-0039 proposes RT60 ≤0.3 s as Universal Mode universal for speech-critical rooms, based on DEAF evidence (Iglehart 2020). The room-acoustic-performance BPC documents that NDV/AUT evidence (Bettarello 2021, Caniato 2024) indicates existing standards (calibrated to neurotypical populations) are insufficient and that autistic users are "significantly more affected by modest background noise increases (52→55 dBA)." The BPC suggests sub-0.3s RT60 may be needed for NDV/AUT but no quantified target exists.
 
 This creates a population-within-specification hierarchy for acoustic items:
 - General population: 0.6 s (code compliance, Tier 6)
-- DEAF/hearing devices: 0.3 s (Tier 0 per CON-0039)
+- DEAF/hearing devices: 0.3 s (Universal Mode per CON-0039)
 - NDV/AUT primary spaces: <0.3 s (Tier 1 — specific value unquantified; ○ marker)
 
-The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Tier 0 of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
+The practical implication: in NDV-primary spaces (autism schools, sensory rooms, A-16), the DEAF Universal Mode of 0.3 s is a floor, not a ceiling. Additional acoustic treatment beyond what satisfies DEAF requirements may be needed. Background noise threshold for NDV/AUT is also more stringent: the 3 dBA increase (52→55) that is perceptually negligible for neurotypical and minimally impactful for DEAF is functionally significant for NDV/AUT.
 
 **Evidence basis:** room-acoustic-performance BPC: Bettarello 2021 (Tier 1), Caniato 2024 (Tier 1) — autistic populations significantly more affected by modest noise increases. NDV BPC Opus synthesis: "no internationally agreed quantified RT60 target specific to autistic users."
 
-**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Tier 0) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
+**Action required:** Add NDV/AUT acoustic annotation to A-01/A-02: "In NDV/AUT-primary spaces, RT60 ≤0.3 s (Universal Mode) is a floor. Additional acoustic treatment to achieve lowest practicable RT60 and background noise level is recommended (○ — no quantified NDV/AUT-specific target; gap flagged for v11 research)." Cross-reference CON-0039.
 
 **Disposition notes:** — MODERATE because no quantified NDV/AUT-specific target exists. The direction is clear; the value is not.
 

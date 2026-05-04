@@ -2091,7 +2091,7 @@ Completed 2026-04-24 07:34. Model: Opus 4.6 (spec application requires cross-ref
 
 ### Findings from cross-checking (Opus judgment)
 
-**CON-0183 already exists as CON-0039:** RT60 ≤0.3s Tier 0 universal already noted in part04 comments at L48, L89, L102 — "serves DEAF/NDV/DEM/NEU simultaneously." No new spec change needed; CON-0183 is confirmatory.
+**CON-0183 already exists as CON-0039:** RT60 ≤0.3s Universal Mode universal already noted in part04 comments at L48, L89, L102 — "serves DEAF/NDV/DEM/NEU simultaneously." No new spec change needed; CON-0183 is confirmatory.
 
 **CON-0185 already captured as CON-0003:** G-03 Applicable Groups already include MOB, DEM, PAIN, UPL, OFS, NEU. CON-0003 comment already present. No change needed.
 
@@ -2135,7 +2135,7 @@ Identify throughlines and meta-throughlines across all evidence bases.
 
 ### Key Throughlines
 1. Code-as-floor / beyond-code (27% of items have no code equivalent)
-2. Convergent specification from independent clinical mechanisms (strongest Tier 0 candidates)
+2. Convergent specification from independent clinical mechanisms (strongest Universal Mode candidates)
 3. Harm asymmetry as conflict resolution principle
 4. "Adjustable" operability problem
 5. Physics transfers universally; spatial models don't
@@ -2143,7 +2143,7 @@ Identify throughlines and meta-throughlines across all evidence bases.
 ### Key Meta-Throughlines
 1. The environment creates disability (Lawton docility-proactivity → three-tier hierarchy)
 2. Convergence as epistemological warrant (independent populations, same spec = strongest evidence)
-3. Precision-universality tension (Tier 1 defaults → Tier 2 OT resolution)
+3. Precision-universality tension (Tier 1 defaults → Mode S OT resolution)
 4. Systematic absence as systematic evidence (46 jurisdictions × 91 items)
 
 ### Audit Gaps to Address Next Session

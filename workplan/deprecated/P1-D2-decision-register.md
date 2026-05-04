@@ -116,7 +116,7 @@ Before presenting decisions per-Part, these are the structural patterns identifi
 
 | CON | Action |
 |---|---|
-| CON-0001 | D-02, D-06, D-08, D-09, C-04 → add Tier 0 circulation legibility note |
+| CON-0001 | D-02, D-06, D-08, D-09, C-04 → add Universal Mode circulation legibility note |
 | CON-0014 | B-10 ↔ Part 8 §8.5 unresolvable conflict (DEAF strobe vs NEU/NDV seizure) |
 | CON-0024 | Prospect-refuge theory as unifying principle for A-16, D-05, G-01, D-11 → Part 1 §1.4 |
 

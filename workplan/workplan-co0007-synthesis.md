@@ -60,7 +60,7 @@ Six consistent threads run through every layer of the analysis.
 
 **T3: Single sources of truth resolve propagation problems.** Every place the same value lives in multiple files creates correction debt. Every place one source can be referenced by many views resolves it. This is true at the atom level (parameter values) and at the methodology level (a single voice rule referenced by every prose decision).
 
-**T4: Three tiers describe the gradient of context-specificity.** Tier 0 = no person known (universal). Tier 1 = some context known (population). Tier 2 = full context known (person). The same parameter shows up at all three; what changes is what we can responsibly say about it at each level.
+**T4: Three tiers describe the gradient of context-specificity.** Universal Mode = no person known (universal). Tier 1 = some context known (population). Tier 2 = full context known (person). The same parameter shows up at all three; what changes is what we can responsibly say about it at each level.
 
 **T5: Co-occurrence is the norm.** Every artifact that handles populations one at a time fails the lived reality of users. The structured form must default to combinatorial views, not single-population views.
 
@@ -297,7 +297,7 @@ Render the pilot through every navigation mode (B3) AND in markdown form. Verify
 Validate the pilot against the mission statement. Test:
 - Does the pilot help the reader ask better questions? (Specifically test with one architect at programming stage and one at design development stage)
 - Does the pilot acknowledge non-uniformity visibly?
-- Does the pilot differentiate Tier 0/1/2 in ways that change the reader's behavior?
+- Does the pilot differentiate Universal Mode/1/2 in ways that change the reader's behavior?
 - Does the pilot ground best practice in evidence, not codes?
 - Does the pilot meet the most-accommodating/dignified/usable standard? (Co-1 review is decisive here)
 - Does the pilot allow each prioritized audience to do their work?

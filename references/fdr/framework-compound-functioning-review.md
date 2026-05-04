@@ -56,7 +56,7 @@ This review identifies frameworks that address these gaps and assesses their imp
 - **Participation and well-being** as the ultimate outcome, moving beyond occupational performance.
 - **Enablers and barriers** framework that maps directly to the guidebook's facilitator/barrier language.
 
-**Guidebook implication:** Part 1 should cite PEO/PEOP as the theoretical model that best justifies the guidebook's approach. The three-tier hierarchy (Tier 0/1/2) maps onto PEO's congruence model: Tier 0 = universal person-environment fit floor; Tier 1 = population-informed fit optimisation; Tier 2 = individual co-design for maximum congruence.
+**Guidebook implication:** Part 1 should cite PEO/PEOP as the theoretical model that best justifies the guidebook's approach. The three-tier hierarchy (Universal Mode/1/2) maps onto PEO's congruence model: Universal Mode = universal person-environment fit floor; Tier 1 = population-informed fit optimisation; Tier 2 = individual co-design for maximum congruence.
 
 ### 2.3 Kawa Model (Iwama 2006)
 
@@ -84,7 +84,7 @@ This review identifies frameworks that address these gaps and assesses their imp
 - **Built environment as multimorbidity mediator** — Clarke et al. (PMC2727170) demonstrated a 4.52× interaction effect: poor street conditions amplified the disability impact of lower-extremity impairment. The built environment is not additive with impairment — it is multiplicative.
 - **Adults aging with disability (AAwPD)** — PMC10961975 (2024) identifies that age-related secondary conditions compound with primary disability, producing accelerated functional decline. The guidebook's population codes do not capture this temporal dimension.
 
-**Guidebook implication:** Part 3 §3.8 needs a compound functioning principle: when multiple population codes apply to a single occupant, the specification response is not the union of individual population specifications but a compound assessment (Tier 2 OT) that addresses interaction effects. Part 5 should state explicitly that pairwise conflict resolution is necessary but insufficient — compound profiles require holistic assessment.
+**Guidebook implication:** Part 3 §3.8 needs a compound functioning principle: when multiple population codes apply to a single occupant, the specification response is not the union of individual population specifications but a compound assessment (Mode S OT) that addresses interaction effects. Part 5 should state explicitly that pairwise conflict resolution is necessary but insufficient — compound profiles require holistic assessment.
 
 ### 2.5 Mitra & Shakespeare (2019) — Remodelling the ICF
 

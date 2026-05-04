@@ -52,7 +52,7 @@ Describe the key spatial relationships shown (e.g., clearance zones, circulation
 ### 4. Accessibility gap assessment (if guidebook item specified)
 Compare Neufert dimensions against the corresponding guidebook item specification:
 
-| Dimension | Neufert value | Guidebook Tier 0 | Guidebook Tier 1 (range) | Gap | Action |
+| Dimension | Neufert value | Guidebook Universal Mode | Guidebook Tier 1 (range) | Gap | Action |
 |---|---|---|---|---|---|
 
 Gap codes:

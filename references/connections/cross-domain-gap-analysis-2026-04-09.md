@@ -57,7 +57,7 @@ Each gap below has been checked against all BPC files, all 155 connections, Part
 - Fire door hold-open device strategy and locations
 
 **Confidence:** HIGH — verified structural absence in Part 8.
-**Action:** Add FE (Fire Safety Engineer) as fifth discipline in Part 8 §9.0.3 and create §9.1.6 Fire Safety Engineering Items table.
+**Action:** Add FE (Fire Safety Engineer) as fifth discipline in Part 8 §8.0.3 and create §8.1.6 Fire Safety Engineering Items table.
 
 ---
 

@@ -26,7 +26,7 @@ The resolution hierarchy for this guidebook is:
 
 5. **Zoning separates irreconcilable conflicts.** Where no single parameter value serves all populations, spatial separation — assigning zones with distinct parameter sets — is the resolution mechanism. The three-zone sensory gradient (F-01) is the primary zoning tool for illuminance, acoustic level, and olfactory provision.
 
-6. **Irresolvable conflicts are documented, not hidden.** Where a conflict cannot be resolved at Tier 0 or Tier 1 for a shared ambient parameter, this section records it as a Tier 2 conflict — resolvable only through individual co-design. The absence of a Tier 0–1 resolution does not mean the space cannot be designed; it means the OT assessment is mandatory.
+6. **Irresolvable conflicts are documented, not hidden.** Where a conflict cannot be resolved at Universal Mode or Tier 1 for a shared ambient parameter, this section records it as a Tier 2 conflict — resolvable only through individual co-design. The absence of a Universal Mode–1 resolution does not mean the space cannot be designed; it means the OT assessment is mandatory.
 
 **Compound intra-individual profiles.** The resolution hierarchy above addresses inter-group conflicts — different people in the same space. For intra-individual compound profiles — a single person who is simultaneously MOB + PAIN + DEM, for example — pairwise resolution is necessary but insufficient. The compound functional impact of co-occurring conditions is supra-additive: the person's functional profile cannot be predicted from the sum of individual population specifications (BMC Geriatrics 2022, Multimorbidity-Weighted Index; Clarke et al., American Journal of Epidemiology, 4.52x environment-impairment interaction). For these occupants, Part 5's building-level resolution provides the environmental baseline, but the final specification is a Tier 2 domain. The OT co-design assessment addresses the interaction between conditions for the individual, using the compound evidence base where it exists and clinical reasoning where it does not. The guidebook equips the OT with the specification parameters (Part 4), the conflict identification (Part 5), and the co-design methodology (Part 9) — but does not prescribe the compound resolution.
 
@@ -40,7 +40,7 @@ Eleven environmental parameters produce direct conflicts between population-spec
 
 Resolution evidence quality is marked: ● = Tier 1–3 OT clinical or post-occupancy evidence; ◐ = Tier 3–5 consensus or standards; ○ = Tier 5–6 expert consensus with no outcome data.
 
-Strategy codes (§3.9): **IEC** = Individual Environmental Control; **SZ** = Sensory Zoning; **TS** = Technical Specification; **DAR** = Design for Adaptable Readiness; **SRW** = Shared Route/Space with modifications; **PP** = Parallel Provision; **T0** = Tier 0 Safety-Critical Governs; **OT-REF** = OT Assessment Required; **RS** = Range Specification (serves both populations within a defined range).
+Strategy codes (§3.9): **IEC** = Individual Environmental Control; **SZ** = Sensory Zoning; **TS** = Technical Specification; **DAR** = Design for Adaptable Readiness; **SRW** = Shared Route/Space with modifications; **PP** = Parallel Provision; **T0** = Universal Mode Safety-Critical Governs; **OT-REF** = OT Assessment Required; **RS** = Range Specification (serves both populations within a defined range).
 
 | Domain | Pop A | Pop B (and others) | Pop A specification | Pop B specification | Resolution | Status | Evidence |
 |---|---|---|---|---|---|---|---|
@@ -60,7 +60,7 @@ Strategy codes (§3.9): **IEC** = Individual Environmental Control; **SZ** = Sen
 
 ### §5.3 Unresolvable Conflicts Register
 
-Three conflict types remain unresolvable at Tier 0–1 for shared ambient environments. Each is recorded here with its Tier 2 requirement and the specific condition that triggers mandatory individual co-design.
+Three conflict types remain unresolvable at Universal Mode–1 for shared ambient environments. Each is recorded here with its Tier 2 requirement and the specific condition that triggers mandatory individual co-design.
 
 **CONF-UNRESOLV-01 — Ambient temperature (OFS/NEU/MS vs PAIN/fibromyalgia in a non-zoned space)**
 
@@ -172,7 +172,7 @@ The CAPABLE model establishes that residential accessibility outcomes require th
 
 For residential projects, the process specification is:
 
-1. **OT assessment precedes specification.** The OT assessment determines which guidebook provisions apply to the individual. Part 9 §9.2 defines the OT scope. The assessment must precede the architectural brief for Tier 2 residential work. For Tier 0–1 provisions, the assessment confirms the baseline is correct; for Tier 2 provisions, it resolves the individual's position within specification ranges.
+1. **OT assessment precedes specification.** The OT assessment determines which guidebook provisions apply to the individual. Part 9 §9.2 defines the OT scope. The assessment must precede the architectural brief for Tier 2 residential work. For Universal Mode–1 provisions, the assessment confirms the baseline is correct; for Tier 2 provisions, it resolves the individual's position within specification ranges.
 
 2. **Assessment uses validated instruments.** Malmgren Fänge et al. (2019, PMID 31684916) demonstrated that standardised OT housing assessment produces measurable functional outcomes — OR 9.50 for wheelchair mobility improvement. Unstandardised assessment produces unquantifiable outcomes. The Housing Enabler (Iwarsson & Slaug 2001) and CAPABLE assessment protocol are the validated instruments with the strongest evidence base.
 

@@ -84,7 +84,7 @@ The guidebook draws on ~15+ Co-1 source organizations (Kelsey IDS, DeafSpace, Mo
 - Should Co-1 sources be notified (pre-launch or at launch) that their work has been synthesized? (Outside A5 scope; flag for A11 legal/regulatory framework.)
 - Is there an operational difference between citing a Co-1 source (one citation, attributed) and synthesizing across Co-1 sources (multi-source claim, no individual organizational endorsement)? (Provisional: yes — synthesis requires explicit multi-source labeling.)
 
-### Q4 — How does Co-1 status interact with the Three-Tier Design Hierarchy?
+### Q4 — How does Co-1 status interact with the Design Modes?
 
 Tier 1 and Tier 2 design specifications use Co-1 evidence alongside OT evidence. A4 §8.1 worked examples used "Tier 3 evidence (Sanford 2010; AOTA 2018) supports..." constructions, which assumes Tier 1 OT evidence underlies the spec.
 

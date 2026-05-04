@@ -54,8 +54,8 @@ The conflict domain table (cross-population-conflict-mapper §1) should be annot
 
 | Specification | Tier | Note |
 |---|---|---|
-| Fragrance-free policy (F-02) in all enclosed spaces | Tier 0 | Universal. No population requires architectural fragrance. |
-| No fragrance diffusers (F-04) | Tier 0 | Universal elimination. |
+| Fragrance-free policy (F-02) in all enclosed spaces | Universal Mode | Universal. No population requires architectural fragrance. |
+| No fragrance diffusers (F-04) | Universal Mode | Universal elimination. |
 | Low-scent, low-pollen indoor planting | Tier 1 (OFS/MCAS) | Compatible with biophilic design goals. |
 | Outdoor aromatic planting permitted in gardens | Tier 1 (DEM) | Open-air dissipation mitigates OFS triggers. |
 | Clinical aromatherapy: operational protocol, not design item | N/A | Outside architectural scope. Part 9 §9.x care protocol note. |

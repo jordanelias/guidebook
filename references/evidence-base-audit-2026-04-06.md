@@ -39,7 +39,7 @@
 
 **Gaps:** No population-specific RT60 data for OFS or PAIN users (low research priority — these populations' acoustic needs are subsumed by NDV/SENS targets). No non-EN language-specific acoustic standard has substantively different provisions from ISO/EN framework.
 
-**Item completeness:** A-01 (buffer zones) drafted. Pending: full edit pass applying CON-0039 (RT60 ≤0.3 s elevation to Tier 0 universal).
+**Item completeness:** A-01 (buffer zones) drafted. Pending: full edit pass applying CON-0039 (RT60 ≤0.3 s elevation to Universal Mode universal).
 
 ---
 
@@ -64,13 +64,13 @@
 ---
 
 ### Category D — Internal Circulation and Wayfinding
-**BPC coverage:** Strong. Slugs: `cognitive-wayfinding-design`, `wayfinding-dementia-spatial-design`, `wayfinding-cognitive-science-spatial-design`, `wayfinding-global-south`. Cross-population convergence documented in CON-0001 (five populations, 10+ jurisdictions, loop circulation as Tier 0 universal).
+**BPC coverage:** Strong. Slugs: `cognitive-wayfinding-design`, `wayfinding-dementia-spatial-design`, `wayfinding-cognitive-science-spatial-design`, `wayfinding-global-south`. Cross-population convergence documented in CON-0001 (five populations, 10+ jurisdictions, loop circulation as Universal Mode universal).
 
 **Evidence quality:** DEM wayfinding: Tier 2–3 (Marquardt 2011, van Buuren 2025 PMC11931140, DSDC EADDAT validated tool). VIS: ISO 23599:2019 Tier 4 (international standard). DBL: Tier 2 (DbI World Access guidelines). NDV/AUT: Tier 2–3 (Mostafa ASPECTSS 2.0, Black et al. 2022). IntD: Tier 4–5 (expert consensus only — no quantified standard in any jurisdiction). Global South: ISO 23599/21542 transfer confirmed (implementation gap, not specification gap); India 75% policy compliance gap documented (PMC12082883 Tier 1).
 
 **Synthesis status:** Opus complete (wayfinding slugs in O4/O5 sessions per queue; CO-0005 wayfinding-global-south Opus complete 2026-04-07).
 
-**Gaps:** Easy Read signage flagged as P3 gap (no built-environment standard). No DEM-specific wayfinding standard exists in any jurisdiction — DSDC EADDAT is the sole validated assessment tool. CON-0001 (loop circulation Tier 0) is PENDING application to Part 4.
+**Gaps:** Easy Read signage flagged as P3 gap (no built-environment standard). No DEM-specific wayfinding standard exists in any jurisdiction — DSDC EADDAT is the sole validated assessment tool. CON-0001 (loop circulation Universal Mode) is PENDING application to Part 4.
 
 ---
 
@@ -229,7 +229,7 @@ The BPC covers functional deficits as follows:
 
 **Conflict synthesis verdict:** The 12-domain synthesis (Opus 2026-03-30) is the most rigorous cross-population conflict resolution framework in the accessible design field. No comparable published methodology exists in ISO, EN, or national standard bodies. The structural finding that "adjustable" is an inadequate universal resolution (valid for 4 identified failure modes) is a significant original contribution.
 
-**Remaining conflict gap:** TEMP-RANGE is the most intractable — cool ambient default + supplemental individual warmth is the recommended resolution but is not fully specifiable at Tier 0 without individual accommodation mechanisms. This is a genuine design-physics limitation, not a research gap.
+**Remaining conflict gap:** TEMP-RANGE is the most intractable — cool ambient default + supplemental individual warmth is the recommended resolution but is not fully specifiable at Universal Mode without individual accommodation mechanisms. This is a genuine design-physics limitation, not a research gap.
 
 ### Connections (CON register)
 - **105 active connections** identified (CON-0001 to CON-0108)
@@ -295,7 +295,7 @@ The BPC covers functional deficits as follows:
 
 ### Synthesis quality strengths vs. field
 
-1. **Three-Tier Design Hierarchy** is the guidebook's most original contribution to the field. No published standard or framework distinguishes universal design (code floor), population-informed inclusive design (Tier 1), and person-specific co-design (Tier 2) as structurally distinct commitment levels. This resolves the field's persistent tension between "design for all" and "design for individuals" — which no existing standard resolves.
+1. **Design Modes** is the guidebook's most original contribution to the field. No published standard or framework distinguishes universal design (code floor), population-informed inclusive design (Tier 1), and person-specific co-design (Tier 2) as structurally distinct commitment levels. This resolves the field's persistent tension between "design for all" and "design for individuals" — which no existing standard resolves.
 
 2. **Cross-population conflict resolution methodology** (12 domains, convergent/divergent/mixed, harm asymmetry rationale) is more systematic than any published standard. ISO 21542 and EN 17210 note that provisions may conflict between populations but provide no methodology for resolution. This guidebook does.
 

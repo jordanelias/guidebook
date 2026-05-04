@@ -116,7 +116,7 @@ Six consistent threads. Wording largely as v1; clarification on T2.
 
 **T3: Single sources of truth resolve propagation problems.** Audit v2 §D-02 noted SSoT holds at edit time but not at read time without explicit refresh policy. workplan v3 §B5 adds rendering-refresh-coordinator skill and policy decision (continuous-deploy / periodic-snapshot / versioned-release).
 
-**T4: Three tiers describe the gradient of context-specificity.** Tier 0 (universal), Tier 1 (population), Tier 2 (person). DAR mandatory at all tiers.
+**T4: Three tiers describe the gradient of context-specificity.** Universal Mode (universal), Tier 1 (population), Tier 2 (person). DAR mandatory at all tiers.
 
 **T5: Co-occurrence is the norm.** Default to combinatorial views, not single-population views. Workplan v3 §C6 (conflict migration) addresses combinatorial entries explicitly (estimated 200–400 actual entries from 55 pairs × ~60 parameters).
 

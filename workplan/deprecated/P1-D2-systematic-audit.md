@@ -40,8 +40,8 @@
 | GAP-NEW-11 | Same finding, independently |
 | GAP-FDR-06 | Adjustable bed elevation for OFS |
 | GAP-FDR-07 | Supine recovery space (lie-down room) in workplaces |
-| GAP-FDR-T0-03 | Retreat/reset room — Tier 0 candidate, 6+ populations |
-| GAP-FDR-T0-04 | Entrance recline seating — Tier 0 candidate |
+| GAP-FDR-T0-03 | Retreat/reset room — Universal Mode candidate, 6+ populations |
+| GAP-FDR-T0-04 | Entrance recline seating — Universal Mode candidate |
 
 **That's 9 independent signals.** D2-37 defers the reclining provision to Phase 2C. D2-38 treats the retreat/reset room as "just add PAIN/OFS to A-16."
 
@@ -51,7 +51,7 @@
 - Recumbent rest configuration option (fold-flat seating or day-bed)
 - WC adjacency requirement (per GAP-FDR-02: ≤5 m for OFS)
 - Minimum occupancy time allowance (not a "10-minute break room")
-- Tier 0 candidacy note (6+ populations converge)
+- Universal Mode candidacy note (6+ populations converge)
 
 If Phase 2C research confirms specification parameters, upgrade to standalone item. If A-16 revision absorbs the need, close.
 
@@ -150,9 +150,9 @@ CON-0017 identified "user control over environment" as the single highest-impact
 
 H-02 is the governing principle; the others are modality-specific implementations. This hierarchy is implicit but never stated. Part 8 or Part 1 should articulate it: "Individual Environmental Control (H-02) is the governing design principle. Items B-06, F-06, A-16, BIO-04, and D-09 are modality-specific implementations. Where any of these items conflicts with a fixed environmental parameter, the user-control provision takes precedence at Tier 2."
 
-### 4.3 The Tier 0 candidates cluster
+### 4.3 The Universal Mode candidates cluster
 
-FDR identified 4 Tier 0 candidates. CON-0001 identified a fifth. These are specifications where ≥5 population codes converge — candidates for universal application regardless of identified population:
+FDR identified 4 Universal Mode candidates. CON-0001 identified a fifth. These are specifications where ≥5 population codes converge — candidates for universal application regardless of identified population:
 
 | Source | Provision | Populations |
 |---|---|---|
@@ -162,9 +162,9 @@ FDR identified 4 Tier 0 candidates. CON-0001 identified a fifth. These are speci
 | FDR-T0-04 | Entrance recline seating ≤5 m | OFS, PAIN, MOB, DEM, aging |
 | CON-0001 | Loop circulation legibility | DEM, VIS, DBL, IntD, NDV/AUT |
 
-E-10 (rest seating ≤20 m) is already a Part 7 item — FDR-T0-02 confirms it as Tier 0. H-01 (controls 400–1100 mm) partially covers FDR-T0-01 but the universal reach zone is broader (includes storage, shelving, display).
+E-10 (rest seating ≤20 m) is already a Part 7 item — FDR-T0-02 confirms it as Universal Mode. H-01 (controls 400–1100 mm) partially covers FDR-T0-01 but the universal reach zone is broader (includes storage, shelving, display).
 
-**Synergy:** These 5 provisions should be flagged in Part 1 as Tier 0 universal specifications — items that apply regardless of whether any disability population is identified, because convergence across 5+ populations makes population-specific justification unnecessary. This strengthens the Three-Tier Hierarchy doctrine with concrete examples.
+**Synergy:** These 5 provisions should be flagged in Part 1 as Universal Mode universal specifications — items that apply regardless of whether any disability population is identified, because convergence across 5+ populations makes population-specific justification unnecessary. This strengthens the Three-Tier Hierarchy doctrine with concrete examples.
 
 ### 4.4 Part 9 gains thermal engineering content
 
@@ -208,7 +208,7 @@ Two entries share the ID `GAP-CON-05` (one for Part E conflict formalisation, on
 | D2-44 | E-12 is a reference code, not a Part 7 item — add one-line definition | LOW |
 | D2-45 | Remove R-STA-02 from Universal Residential Provisions table | LOW |
 | D2-46 | A-12 Auracast technology-currency disclosure | LOW |
-| D2-47 (revised D2-37) | Retreat/reset/recline: elevate from DEFER to PROVISIONAL — substantive A-16 revision in Phase 3 with recumbent, adjacency, and Tier 0 note | HIGH |
+| D2-47 (revised D2-37) | Retreat/reset/recline: elevate from DEFER to PROVISIONAL — substantive A-16 revision in Phase 3 with recumbent, adjacency, and Universal Mode note | HIGH |
 | D2-48 (from §1.1) | F-05 → G-08 relocation (seated-task is furniture/ergonomic, not sensory zoning) | MODERATE |
 | D2-49 (from §4.2) | Articulate H-02 user-control hierarchy in Part 1 or Part 8 — governing principle for B-06, F-06, A-16, BIO-04, D-09 | MODERATE (Phase 3 Part 1 writing) |
 | — | Fix duplicate GAP IDs (GAP-CON-05, GAP-FDR-01) | Housekeeping |

@@ -326,7 +326,7 @@ known_patterns:
   - scope_table: "Stage | Tier 1 Min Scope | Tier 2 Min Scope (6 stages)"
   - co_occurrence_protocol: "§9.9 (L266-292)"
   - ot_threshold: "§9.10 (L293-317)"
-  - dbl_specialist: "§9.11 (L318-363) — duplicate of Part 8 §9.6 DBL section"
+  - dbl_specialist: "§9.11 (L318-363) — duplicate of Part 8 §8.6 DBL section"
 edge_cases:
   - "§9.9 and §9.10 are new sections (CO-0004) — may not be in all file versions"
   - "§9.11 DBL specialist content appears to duplicate Part 8 §9.6 — reconciliation needed"

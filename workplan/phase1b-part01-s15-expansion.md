@@ -84,7 +84,7 @@ Practitioners need to know whether a specification is evidence-based or inferred
 
 #### §1.5.4 Scope, Limitations, and the Guidebook's Relationship to Professional Judgment
 
-This guidebook is a starting framework for professional judgment, not a substitute for it. Population-level specifications — at Tier 0 and Tier 1 — are necessary but insufficient. They establish the evidence-informed envelope within which design decisions are made. They do not replace the assessment of a specific building, a specific site, or a specific person.
+This guidebook is a starting framework for professional judgment, not a substitute for it. Population-level specifications — at Universal Mode and Tier 1 — are necessary but insufficient. They establish the evidence-informed envelope within which design decisions are made. They do not replace the assessment of a specific building, a specific site, or a specific person.
 
 At Tier 2, conflict resolution is the domain of the OT and the individual through co-design. The guidebook's Tier 2 role is to equip non-OT professionals with decision frameworks and structured approaches, not prescriptive answers.
 

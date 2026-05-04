@@ -66,9 +66,9 @@ Status: **RESOLVED-CONSENSUS** (De Hogeweyk POE; Helsedirektoratet; DSDC)
 
 | Specification | Tier | Note |
 |---|---|---|
-| Loop-path circulation in DEM residential care | Tier 0 (DEM + MOB compatible) | No conflict with fall prevention |
-| Level floors throughout primary circulation | Tier 0 | Universal — DEM, MOB, VIS all benefit |
-| Continuous handrails both sides of circulation | Tier 0 (MOB primary) | Also serves DEM steadying |
+| Loop-path circulation in DEM residential care | Universal Mode (DEM + MOB compatible) | No conflict with fall prevention |
+| Level floors throughout primary circulation | Universal Mode | Universal — DEM, MOB, VIS all benefit |
+| Continuous handrails both sides of circulation | Universal Mode (MOB primary) | Also serves DEM steadying |
 | Rest seating every 25–30 m | Tier 1 (OFS/PAIN) | Benefits DEM fatigue |
 | No locked internal doors in residential circulation | Tier 1 (DEM, CRPD) | Secure perimeter substitutes |
 | Secure building perimeter with free garden access | Tier 1 (DEM residential) | De Hogeweyk model |

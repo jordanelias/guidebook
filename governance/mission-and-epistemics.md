@@ -51,11 +51,11 @@ Co-1 evidence — lived experience and participatory design (CRPD Art. 4.3) — 
 
 This is a commitment about evidence types, not about operations. The project's pre-launch solo operational reality is specified separately in §Operational reality.
 
-### 4. Three-Tier Design Hierarchy operationalizes the doctrine
+### 4. Design Modes operationalizes the doctrine
 
 | Tier | Function | Resolution |
 |---|---|---|
-| Tier 0 | Universal Design / Code Compliance | Population-agnostic; fixed values |
+| Universal Mode | Universal Design / Code Compliance | Population-agnostic; fixed values |
 | Tier 1 | Population-Informed Inclusive Design | Ranges; median as default |
 | Tier 2 | Person-Specific Co-Design | OT assessment resolves position within Tier 1 range |
 
@@ -63,7 +63,7 @@ DAR (Design for Adaptable Readiness) provisions are mandatory at all tiers — t
 
 ### 5. Universal design is co-extensive with code compliance — the floor, not an aspiration
 
-Inclusive design is the positive aspiration. Tier 0 is the compliance baseline. Best practice exceeds Tier 0 wherever evidence supports.
+Inclusive design is the positive aspiration. Universal Mode is the compliance baseline. Best practice exceeds Universal Mode wherever evidence supports.
 
 ### 6. Questions-led teaching is the project's pedagogical commitment
 
@@ -73,7 +73,7 @@ This commitment has both a doctrinal and an epistemic character. As doctrine: th
 
 ### 7. The guidebook teaches professional judgment, it does not substitute for it
 
-Population-level specifications (Tier 0 and Tier 1) are necessary but insufficient. Tier 2 person-specific co-design with an occupational therapist resolves the individual case. The guidebook equips professionals to ask better questions; it does not pretend to deliver final answers.
+Population-level specifications (Universal Mode and Tier 1) are necessary but insufficient. Tier 2 person-specific co-design with an occupational therapist resolves the individual case. The guidebook equips professionals to ask better questions; it does not pretend to deliver final answers.
 
 ---
 
@@ -134,7 +134,7 @@ Where they diverge, the divergence is itself evidence about how the parameter op
 
 The guidebook specifies for **formal new construction and planned retrofit**. Informal settlement housing is out of specification scope (per project-standards 2026-04-07 00:44, recorded as the project's most significant scope-shaped exclusion). The formal/informal city divide is the meta-barrier to global accessible housing; the guidebook acknowledges this as the highest-priority research and policy gap in its domain.
 
-The guidebook is **not a substitute for professional judgment**. Population-level specifications (Tier 0 and Tier 1) are necessary but insufficient. Tier 2 person-specific co-design with an occupational therapist resolves the individual case.
+The guidebook is **not a substitute for professional judgment**. Population-level specifications (Universal Mode and Tier 1) are necessary but insufficient. Tier 2 person-specific co-design with an occupational therapist resolves the individual case.
 
 The guidebook is **not a legal authority**. It does not replace jurisdictional code compliance (which is Tier 6 — the floor). Where evidence-based best practice exceeds code, the guidebook specifies the evidence-based value and notes the code value as the regulatory minimum.
 

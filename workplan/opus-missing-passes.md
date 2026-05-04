@@ -52,12 +52,12 @@ Switch model picker to **Opus 4.6** before each session. No programmatic escalat
 
 | CON | Synthesis direction | Items to review |
 |---|---|---|
-| CON-0001 | Tier 0 circulation legibility — 5 populations | D-01, D-02 |
+| CON-0001 | Universal Mode circulation legibility — 5 populations | D-01, D-02 |
 | CON-0002 | A-16 multi-population expansion; retire separate MH room concept | A-16 description + Applicable Groups |
 | CON-0004 | New item: Adjustable Posture Seating with recline | G-08 seated-task section |
-| CON-0017 | H-02 elevated to Tier 0; governs B-06/F-07/F-08 | H-02 heading and Tier 0 designation |
-| CON-0019 | Environmental refuge as Tier 0; one per floor plate | A-16 + G-08 |
-| CON-0039 | RT60 <= 0.3 s Tier 0 for speech-critical rooms; 0.6 s = failure boundary | A-01, A-02 |
+| CON-0017 | H-02 elevated to Universal Mode; governs B-06/F-07/F-08 | H-02 heading and Universal Mode designation |
+| CON-0019 | Environmental refuge as Universal Mode; one per floor plate | A-16 + G-08 |
+| CON-0039 | RT60 <= 0.3 s Universal Mode for speech-critical rooms; 0.6 s = failure boundary | A-01, A-02 |
 | CON-0040 | Unified sensory environment specification matrix | F-01, A-16, D-05 |
 | CON-0042 | Multi-channel alerting: every alert through all three channels | B-10, K-04 |
 | CON-0046 | Zone 3 + refuge mandatory (not recommended) in healthcare/education | Part 7 NR-HLT, NR-EDU |

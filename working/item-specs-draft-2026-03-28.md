@@ -179,10 +179,10 @@ This item specifies a lighting provision in the ≤3000 K warm range specificall
 | 1 | Putthinoi et al. (2017) | Threshold >6 mm + landing <1800 mm = combined barrier preventing independent entry |
 
 #### Conflict notes
-E-12 produces a higher specification than E-06 (Level Entry) for power wheelchair populations. E-06 minimum 1500 × 1500 mm landing applies at Tier 0 (general accessible); E-12 applies at Tier 1 where power wheelchair use is the identified population. No irresolvable conflict — tier hierarchy governs.
+E-12 produces a higher specification than E-06 (Level Entry) for power wheelchair populations. E-06 minimum 1500 × 1500 mm landing applies at Universal Mode (general accessible); E-12 applies at Tier 1 where power wheelchair use is the identified population. No irresolvable conflict — tier hierarchy governs.
 
 #### Cross-references
-— E-06 (Level Entry): E-12 is a Tier 1 upspecification; E-06 remains the Tier 0 floor  
+— E-06 (Level Entry): E-12 is a Tier 1 upspecification; E-06 remains the Universal Mode floor  
 — E-05 (Weather protection at entry — 3000 × 2000 mm canopy): E-05 is the general NR canopy spec; E-12 sets the residential minimum (1800 × 2000 mm); E-05 governs for NR  
 — G-04 (Accessible Bathroom): the turning space differential between manual WC (ø1500 mm) and power WC (≥1800 × 1800 mm) applies throughout; cross-reference for all turning-space items
 
@@ -290,7 +290,7 @@ E-13 PIR entrance lighting (≥150 lux) interacts with B-01 (Circadian Lighting)
 #### Cross-references
 — D-11 (Safe Accessible Garden — seating every 20 m): outdoor seating interval more frequent than interior; D-11 governs outdoor; E-10 governs interior  
 — G-02 (Variety of seating types — three heights at every seating area): G-02 provides the general principle; E-10 provides the specific height floor (480 mm) for OFS populations  
-— GAP-FDR-T0-09: Alcove geometry Tier 0 candidate — confirm universal design status at connection-scout pass
+— GAP-FDR-T0-09: Alcove geometry Universal Mode candidate — confirm universal design status at connection-scout pass
 
 #### Retrofit note
 **Retrofit:** MODERATE penalty — alcove integration requires spatial planning. Individual seating units with 480 mm seat height and arms are LOW penalty retrofit.

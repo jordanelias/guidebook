@@ -53,10 +53,10 @@ The apparent opposition dissolves when wayfinding strategy shifts from blanket w
 
 | Specification | Tier | Note |
 |---|---|---|
-| 3D object landmark at every circulation decision point | Tier 0 | Serves DEM, IntD, NDV/SENS, VIS simultaneously |
-| Suspended signage ≥2250mm AFF at junctions | Tier 0 | Compatible with all populations |
-| Single-word + pictogram format at all fixed signs | Tier 0 | DEM/IntD/NDV all benefit |
-| Consistent sign format (size, font, position, background) throughout building | Tier 0 | Predictability serves all |
+| 3D object landmark at every circulation decision point | Universal Mode | Serves DEM, IntD, NDV/SENS, VIS simultaneously |
+| Suspended signage ≥2250mm AFF at junctions | Universal Mode | Compatible with all populations |
+| Single-word + pictogram format at all fixed signs | Universal Mode | DEM/IntD/NDV all benefit |
+| Consistent sign format (size, font, position, background) throughout building | Universal Mode | Predictability serves all |
 | No ad-hoc signage, bulletin boards, or posters in primary circulation | Tier 1 | DEM + NDV; may need staff communication alternative |
 | Clean wall surfaces between decision points (no decorative graphics, murals, or pattern in circulation) | Tier 1 | NDV primary; DEM secondary (reduces corridor repetition) |
 

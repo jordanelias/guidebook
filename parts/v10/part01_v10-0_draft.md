@@ -95,13 +95,13 @@ This guidebook applies a three-tier design hierarchy. DAR (Design for Adaptable 
 
 | **Tier** | **Standard** | **Context** | **Specification form** | **DAR** |
 | --- | --- | --- | --- | --- |
-| **Tier 0** | **Universal Design / Code Compliance** | No specific population can be anticipated. Averaged, anonymous user. | Range of values calibrated to an abstractly disabled non-existent person. | Mandatory |
+| **Universal Mode** | **Universal Design / Code Compliance** | No specific population can be anticipated. Averaged, anonymous user. | Range of values calibrated to an abstractly disabled non-existent person. | Mandatory |
 | **Tier 1** | **Population-Informed Inclusive Design** | Identifiable disability populations among regular users. This guidebook's primary domain. | Ranges. Median is the population-informed default. Range encodes functional capacity distribution across the identified population. | Mandatory |
 | **Tier 2** | **Person-Specific Inclusive Design** | Individual occupant or named user is known. OT assessment available. | Position within the Tier 1 range, resolved by the individual's functional capacity assessment. | Mandatory |
 
-**Tier 0 — Universal Design / Code Compliance** is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Tier 0, DAR is mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
+**Universal Mode — Universal Design / Code Compliance** is the appropriate standard only where no specific user population can be identified or reasonably anticipated. It uses single fixed specification values calibrated to a statistical average user. Even at Universal Mode, DAR is mandatory: future occupants cannot be anticipated at construction stage, and construction-stage provisions must preserve the building's ability to accommodate future accessibility modifications.
 
-The following specifications have convergent evidence support across five or more disability populations and are designated **Tier 0 Universal Specifications** — required at all tiers regardless of user population:
+The following specifications have convergent evidence support across five or more disability populations and are designated **Universal Mode Universal Specifications** — required at all tiers regardless of user population:
 
 - Consistent, predictable circulation geometry (loop or single-path; no dead-ends) — CON-0001
 - 3D landmark objects at all decision points — CON-0001
@@ -139,7 +139,7 @@ The ranges appearing throughout Part 4 of this guidebook are not expressions of 
 
 **The range boundary:** values outside the stated range fall outside the evidence base for the identified population. Departures from the range require documented clinical justification.
 
-Wherever a range appears in Part 4, the following framing applies: the range is the Tier 1 population envelope; the median is the Tier 1 default; the specific value within the range is determined by Tier 2 OT assessment. This framing should be treated as implicit throughout the guidebook and is made explicit in Part 4 items where the clinical stakes are highest.
+Wherever a range appears in Part 4, the following framing applies: the range is the Tier 1 population envelope; the median is the Tier 1 default; the specific value within the range is determined by Mode S OT assessment. This framing should be treated as implicit throughout the guidebook and is made explicit in Part 4 items where the clinical stakes are highest.
 
 #### §1.4.6 Why Universal Design Alone Is Insufficient
 
@@ -165,7 +165,7 @@ The aspiration of universality — that environments should work for everyone �
 
 #### §1.4.7 Application to Residential Design
 
-New residential construction where the eventual occupant is unknown at construction stage operates at Tier 0 as its legal baseline. DAR is mandatory above that baseline, since future occupants will include people with disabilities whose specific needs cannot be anticipated. The Lifetime Homes standard (Joseph Rowntree Foundation, 1999) and CAN/ASC 2.8:2025 represent the minimum DAR threshold for speculative residential construction; both are below the best-practice level recommended by this guidebook.
+New residential construction where the eventual occupant is unknown at construction stage operates at Universal Mode as its legal baseline. DAR is mandatory above that baseline, since future occupants will include people with disabilities whose specific needs cannot be anticipated. The Lifetime Homes standard (Joseph Rowntree Foundation, 1999) and CAN/ASC 2.8:2025 represent the minimum DAR threshold for speculative residential construction; both are below the best-practice level recommended by this guidebook.
 
 Where an individual occupant is known — a custom build, an adaptations commission, or a specialist residential environment — Tier 2 applies. Design is calibrated to that person's documented functional profile and OT assessment. DAR remains mandatory to preserve adaptability for future occupants and for changes in the current occupant's functional capacity over time.
 
@@ -179,7 +179,7 @@ This guidebook draws on four complementary frameworks. Each does different work.
 
 **Person-Environment-Occupation models as practice theory.** The Person-Environment-Occupation (PEO) model (Law et al., 1996), its successor the Person-Environment-Occupation-Performance model (PEOP; Baum, Christiansen & Bass, 2015), and the Canadian Model of Occupational Performance and Engagement (CMOP-E) provide the theoretical model that explains what the guidebook's specifications are designed to achieve. In these models, functioning is not a property of the person diminished by impairment. It is the fit between the person, the environment, and the occupation the person is trying to perform. A wheelchair user in an accessible bathroom has good person-environment-occupation fit; the same person in an inaccessible bathroom has poor fit. The impairment has not changed. The fit has.
 
-The three-tier design hierarchy in §1.4.3 maps directly onto this model. Tier 0 establishes the minimum environmental contribution to fit for an anonymous user. Tier 1 optimises fit for an identified population using the best available evidence about that population's functional capacity distribution. Tier 2 resolves fit for a specific individual through OT co-design. At every tier, the design target is congruence — the overlap between person, environment, and occupation — not compensation for deficit.
+The three-tier design hierarchy in §1.4.3 maps directly onto this model. Universal Mode establishes the minimum environmental contribution to fit for an anonymous user. Tier 1 optimises fit for an identified population using the best available evidence about that population's functional capacity distribution. Tier 2 resolves fit for a specific individual through OT co-design. At every tier, the design target is congruence — the overlap between person, environment, and occupation — not compensation for deficit.
 
 **The Capability Approach as justice framework.** The Capability Approach (Sen, 1999; Nussbaum, 2006) provides the ethical grounding for the guidebook's work. In capability terms, accessible design does not restore function or compensate for loss. It expands the capability set — the real freedoms and opportunities a person has to do and be what they have reason to value. The built environment is a conversion factor: it transforms personal resources (physical capacity, cognitive capacity, sensory capacity) into capabilities (the real ability to cook a meal, leave the house, use a bathroom independently). A person with identical impairment has a larger capability set in an accessible environment than in an inaccessible one. The impairment converts differently depending on the environment.
 

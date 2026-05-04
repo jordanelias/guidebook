@@ -6,7 +6,7 @@ description: >
   CONFLICT DOMAIN (environmental parameter) rather than population pair. Retrieves
   resolution evidence from fragmented single-population literatures that do not
   cross-reference each other. Outputs a conflict matrix with resolution status
-  and evidence quality. ALWAYS use this skill when: writing Tier 0 or Tier 1
+  and evidence quality. ALWAYS use this skill when: writing Universal Mode or Tier 1
   specifications for shared spaces; item-specification-writer encounters a space
   serving multiple populations; sensory-coherence-checker finds an unresolved conflict
   needing evidence; connection-scout identifies a cross-population tension; any
@@ -93,7 +93,7 @@ For each active conflict:
 | RESOLVED-CONSENSUS | Expert/standards consensus without outcome data (e.g., zoned lighting) |
 | RESOLUTION-PROPOSED | Resolution exists in guidelines but untested (e.g., adjustable everything) |
 | UNRESOLVED | No resolution found; populations cannot share identical specification |
-| TIER-2-ONLY | Conflict irreconcilable at Tier 0–1; requires individual co-design |
+| TIER-2-ONLY | Conflict irreconcilable at Universal Mode–1; requires individual co-design |
 
 ### Step 4: Output conflict matrix
 
@@ -115,7 +115,7 @@ For each RESOLVED or RESOLUTION-PROPOSED conflict:
 - Source(s) with citation
 - Resolution mechanism
 - Outcome data (if any)
-- Guidebook implication (Tier 0 default, Tier 1 range, Tier 2 requirement)
+- Guidebook implication (Universal Mode default, Tier 1 range, Tier 2 requirement)
 
 ### Unresolved Conflicts → Gap Register
 
@@ -139,7 +139,7 @@ Known resolution archetypes (apply where evidence supports):
 | **Temporal** | Time-based alternation | Populations use space at different times |
 | **Graduated** | Transition zones between opposing states | Adjacent spaces with gradual parameter change |
 | **Layered** | Multiple modalities serving same function | Information via visual + tactile + auditory redundantly |
-| **Tier escalation** | Irreconcilable at Tier 0; resolved at Tier 1–2 | Populations identified; co-design available |
+| **Tier escalation** | Irreconcilable at Universal Mode; resolved at Tier 1–2 | Populations identified; co-design available |
 | **Dimensional** | Parameter optimised at intersection of acceptable ranges | Ranges overlap even if optima differ |
 
 **CRITICAL:** "Adjustable" is not a universal resolution. It fails when:

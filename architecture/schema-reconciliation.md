@@ -38,9 +38,9 @@ For each display field in R2 (unified-data-schema), this table resolves whether 
 | 2 | `category_name` | Render-time computed | Derive from `item_code` prefix via static lookup | 11 categories (A–K); lookup table or code constant. Not worth a column. |
 | 3 | `parameter_label` | SQL column | `specification.parameter` (existing, rename display) | `parameter` column holds the slug; display label computed by replacing hyphens with spaces + title case. No new column needed. |
 | 4 | `unit_display` | Render-time computed | Format from `measurement.unit` + values | e.g., "3–5 m" from min=3000, max=5000, unit=mm. Rendering logic. |
-| 5 | `tier_0_value` / `universal_value` | Join query | `measurement` table WHERE `design_mode = 'universal'` | **New table** (Amendment 8). One measurement row per (spec × design_mode). |
-| 6 | `tier_1_value` / `population_value` | Join query | `measurement` table WHERE `design_mode = 'population_based'` | Same table, different design_mode. |
-| 7 | `tier_2_note` / `person_specific_note` | SQL column | `specification.tier_2_note` (new) | Single text field per spec. Already in R3; add to R1. |
+| 5 | `universal_value` / `universal_value` | Join query | `measurement` table WHERE `design_mode = 'universal'` | **New table** (Amendment 8). One measurement row per (spec × design_mode). |
+| 6 | `population_value` / `population_value` | Join query | `measurement` table WHERE `design_mode = 'population_based'` | Same table, different design_mode. |
+| 7 | `person_specific_note` / `person_specific_note` | SQL column | `specification.person_specific_note` (new) | Single text field per spec. Already in R3; add to R1. |
 | 8 | `evidence_marker` | Render-time computed | Derive from `evidence_state_record.state` for this spec | ● = stated, ◐ = provisional, ○ = pending. No storage needed. |
 | 9 | `evidence_summary` | SQL column | `specification.evidence_summary` (new) | Short citation string for card view. Authored, not derived. |
 | 10 | `population_primary` | Join query | `specification_population` join table with `role = 'primary'` | Extend existing `specification_population` with `role` column. |
@@ -63,8 +63,8 @@ For each display field in R2 (unified-data-schema), this table resolves whether 
 
 | Resolution type | Count | Fields |
 |---|---|---|
-| Existing SQL column | 4 | title, parameter, modified_at, (tier_2_note via R3) |
-| New SQL column | 9 | tier_2_note, evidence_summary, retrofit_category, dar_relevant, dar_note, ot_evidence_basis, curation_status, + Amendment 8 cols |
+| Existing SQL column | 4 | title, parameter, modified_at, (person_specific_note via R3) |
+| New SQL column | 9 | person_specific_note, evidence_summary, retrofit_category, dar_relevant, dar_note, ot_evidence_basis, curation_status, + Amendment 8 cols |
 | New JSON column | 1 | conflict_domains |
 | Join query | 7 | universal/population values, population roles, jurisdiction count, cross_references, connection_ids, fdr_findings, citations |
 | Render-time computed | 4 | category_name, unit_display, evidence_marker, language_count |
@@ -81,7 +81,7 @@ Each display field resolution is a D-SCHEMA decision per A12 protocol.
 | D-SCHEMA-002 | category_name | Render-time computed from item_code prefix | D-PRES | DG-AUTO |
 | D-SCHEMA-003 | parameter_label | Render-time computed from parameter slug | D-PRES | DG-AUTO |
 | D-SCHEMA-004 | unit_display | Render-time formatted from measurement values | D-PRES | DG-AUTO |
-| D-SCHEMA-005 | tier values (universal/population/person) | New `measurement` table + `tier_2_note` column | D-SCHEMA | DG-REVIEW |
+| D-SCHEMA-005 | tier values (universal/population/person) | New `measurement` table + `person_specific_note` column | D-SCHEMA | DG-REVIEW |
 | D-SCHEMA-006 | evidence_marker | Render-time from evidence_state_record | D-PRES | DG-AUTO |
 | D-SCHEMA-007 | evidence_summary | New column on specification | D-SCHEMA | DG-AUTO |
 | D-SCHEMA-008 | population roles | Add `role` to specification_population join | D-SCHEMA | DG-REVIEW |
@@ -129,7 +129,7 @@ The 11 new columns and 5 JSON columns specified in Amendment 8 serve the website
 
 ### 5.1 `measurement` table
 
-Replaces R2's inline `tier_0_value`, `tier_1_value` on the specification record. One row per (spec × design_mode × optional population). Enables multi-value specifications with different measurements per design mode.
+Replaces R2's inline `universal_value`, `population_value` on the specification record. One row per (spec × design_mode × optional population). Enables multi-value specifications with different measurements per design mode.
 
 ```sql
 CREATE TABLE measurement (
@@ -238,7 +238,7 @@ How spec-db JSON (R3) fields map to the canonical DDL (R1) post-amendment:
 | `opus_synthesized` | `specification.curation_status` | Map: true → 'opus_synthesized' |
 | `bpc_source_slug` | `specification.bpc_source_slug` (add column) | Direct copy |
 | `recommendation_strength` | `specification.recommendation_strength` (add column) | Direct copy |
-| `tier_2_note` | `specification.tier_2_note` (add column) | Direct copy |
+| `person_specific_note` | `specification.person_specific_note` (add column) | Direct copy |
 | `percentile_basis` | `specification.percentile_basis` (add column) | Direct copy |
 | `notes` | `specification.body_md` or separate notes | Merge with body_md |
 | `conditions` | `measurement` rows with `condition_text` | Expand array to measurement rows |

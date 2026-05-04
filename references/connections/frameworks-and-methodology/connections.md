@@ -44,7 +44,7 @@
 **Connection:** Lawton (1989, 1990) distinguished environmental docility from environmental proactivity. Docility: declining personal competence → behaviour increasingly dictated by environment. Proactivity: higher competence → person actively shapes environment to match needs. A 2024 P-E fit scoping review (Journal of Asian Architecture and Building Engineering, 10.1080/13467581.2024.2373824) confirms these concepts remain foundational but identifies a knowledge gap: the lack of proactive and dynamic views in current P-E fit research.
 
 The guidebook's three-tier hierarchy maps directly onto this continuum but does not name it:
-- Tier 0 = reducing environmental press universally (docility mitigation — ensur…
+- Universal Mode = reducing environmental press universally (docility mitigation — ensur…
 
 **Evidence basis:**
 | Source | Tier | Population currently cited for | Proposed extension to |
@@ -53,7 +53,7 @@ The guidebook's three-tier hierarchy maps directly onto this continuum but does 
 | P-E fit scoping review 2024 | 3 | Built environment (general) | ALL |
 | Struckmeyer & Rice 2025 (Routledge chapter: EP-CM in OT) | Co-2 | OT practice | ALL |
 
-**Action required:** Part 1 theoretical framework: add explicit mapping of three-tier hierarchy to Lawton's docility-proactivity continuum. Frame: Tier 0 = anti-docility floor; Tier 1 = population-calibrated press reduction; Tier 2 = proactive P-E optimisation through co-design. This reframes the entire hierarchy from accessibility levels to universal person-environment fit optimisation — non-disability-specific.
+**Action required:** Part 1 theoretical framework: add explicit mapping of three-tier hierarchy to Lawton's docility-proactivity continuum. Frame: Universal Mode = anti-docility floor; Tier 1 = population-calibrated press reduction; Tier 2 = proactive P-E optimisation through co-design. This reframes the entire hierarchy from accessibility levels to universal person-environment fit optimisation — non-disability-specific.
 
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 

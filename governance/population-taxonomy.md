@@ -43,7 +43,7 @@ Four additional codes exist for supplementary content only. They do NOT appear i
 
 ### 1.3 The ALL code
 
-`ALL` is not a population — it is a scope marker meaning "this specification applies to all populations." Typical uses: Tier 0 code compliance values (e.g., minimum corridor width per code); universal design principles that do not vary by population. `ALL` specifications do not have population-specific columns in the matrix — they have a single value that applies universally.
+`ALL` is not a population — it is a scope marker meaning "this specification applies to all populations." Typical uses: Universal Mode code compliance values (e.g., minimum corridor width per code); universal design principles that do not vary by population. `ALL` specifications do not have population-specific columns in the matrix — they have a single value that applies universally.
 
 `ALL` must not be combined with specific population codes on the same specification. A specification is either `ALL` or it is population-specific. The validator rejects `populations: [ALL, MOB]` — this is incoherent.
 
@@ -121,7 +121,7 @@ Per project-standards: "Each slug covers exactly one population." A BPC slug add
 
 Per project-standards Core Doctrine: "Disability populations are not uniform." Every item specification must acknowledge functional variability within the population and discuss how co-occurrence affects the design parameter. Population codes are organizing principles, not definitions of people:
 
-- At **Tier 0**: comprehensive (mapping all considerations for a parameter)
+- At **Universal Mode**: comprehensive (mapping all considerations for a parameter)
 - At **Tier 1**: insight-providing (what to think about for a known population)
 - At **Tier 2**: they step aside — OT works bottom-up from functional impairments
 

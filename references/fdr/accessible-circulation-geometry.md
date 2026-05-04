@@ -19,7 +19,7 @@
 
 **Clinical reasoning (venous pooling at 420mm):** Roxburgh et al. 2024 documents that standard bench seating at 420mm AFF creates a hip flexion angle that exacerbates venous pooling in orthostatic hypotension and POTS — conditions common in OFS/ME/CFS. The mechanism: seated hip flexion compresses the femoral veins and reduces venous return to the heart, worsening symptoms in an already-compromised orthostatic regulation system. ≥480mm AFF reduces this flexion angle sufficiently to reduce pooling while still allowing comfortable seated rest. This is the only Tier 1 evidence found in all FDR runs to date for a seat-height specification derived from a specific functional deficit mechanism rather than from transfer ergonomics.
 
-**Tier 0 candidate:** Rest seating alcove recess geometry (≥200mm recess + ≥900mm width) — applies across fatigue, mobility, pain, dementia, and neurological populations with no cross-population conflicts. Route to connection-scout.
+**Universal Mode candidate:** Rest seating alcove recess geometry (≥200mm recess + ≥900mm width) — applies across fatigue, mobility, pain, dementia, and neurological populations with no cross-population conflicts. Route to connection-scout.
 
 ---
 
