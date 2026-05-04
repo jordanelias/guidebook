@@ -284,3 +284,57 @@ Berwick 2021 is a systematic review not previously in the BPC. Supports existing
 | luminance-contrast-lrv-evidence-base | LOW | 7 sources, well-structured |
 | fold-down-grab-bar-specification | DEFERRED | Stub; needs full research pass first |
 | bariatric-turning-radius-built-environment | DEFERRED | Stub; needs full research pass first |
+
+---
+
+## 10. acoustics-speech-intelligibility-disability
+
+### GREY source resolution
+| Original | Corrected |
+|---|---|
+| ASI-01: "Murgia, A. et al. 2023 [GREY]" | Murgia, S., Webster, J., Cantor Cutiva, L.C. & Bottalico, P. (2023). Lang Speech Hear Serv Sch 54(1):322-335. DOI:10.1044/2022_LSHSS-21-00181. PMID:36260411 |
+
+### Forward mining
+| Input source | New to BPC |
+|---|---|
+| ASI-01 Murgia 2023 | Cueille 2022 HI reverberation penalty (ASI-06); Korean elderly learning RT60 (ASI-07) |
+| ASI-02 | Adaptation to reverberation SR 2024 (ASI-08) |
+
+### Impact
+- Cueille 2022 quantifies HI penalty: 18dB SRT increase (RT 0→1s) vs 10dB for NH
+- ASI-08 confirms NH adapt to reverberation but HI do not — supports fixed RT specification
+- ASI-01 first author corrected: Silvia, not "A."
+
+---
+
+## 11. luminance-contrast-lrv-evidence-base
+
+### GREY source resolution
+| Original | Corrected |
+|---|---|
+| LCL-04: "Dain, S. (cited in Manandhar 2022)" | Manandhar, S. et al. (2022). Work 73(4):1265-1278. DOI:10.3233/WOR-210997. PMID:36093666 |
+
+### Author corrections
+| Source | Original | Corrected |
+|---|---|---|
+| LCL-01 | "Harper, B." | Harper, S.A. |
+| LCL-02 | "Brown, C." | Brown, C.B. |
+
+### Forward mining
+| Input source | New to BPC |
+|---|---|
+| LCL-01 Harper 2022 | Harper 2025 interstep variations (LCL-08) |
+
+### Impact
+- Manandhar 2022 is the definitive evidence source for the 30% LRV gap thesis — 30% = "poorly visible" at severe VI
+- Harper research chain (3 papers) now complete in BPC
+
+---
+
+## FINAL SESSION TOTALS (COMPLETE)
+**BPC slugs mined:** 11
+**New sources discovered:** 35
+**GREY sources resolved:** 5 (ULB-04, WDS-04, TCO-01/MST-04, ASI-01, LCL-04)
+**Author corrections:** 3 (ASI-01, LCL-01, LCL-02)
+**Systematic reviews found:** 5 (Rouvier 2022, Leonardi 2025, Berwick 2021, TCO-07, ASI-08)
+**Commits:** 7

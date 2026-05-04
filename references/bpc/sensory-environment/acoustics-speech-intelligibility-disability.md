@@ -38,19 +38,32 @@
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| ASI-01 | Murgia, A. et al. | 2023 | [GREY — full citation unverified; DOI required before publication] | 1 | INT | Systematic review; RT60 0.3s for hearing-impaired |
+| ASI-01 | Murgia, S., Webster, J., Cantor Cutiva, L.C. & Bottalico, P. | 2023 | Systematic Review of Literature on Speech Intelligibility and Classroom Acoustics in Elementary Schools. Lang Speech Hear Serv Sch 54(1):322-335. DOI:10.1044/2022_LSHSS-21-00181. PMID:36260411 | 1 | INT | Systematic review; RT60 >0.6s prevents 100% speech perception even at high SNR — GREY RESOLVED 2026-05-04 |
 | ASI-02 | (author TBC) | 2025 | Binaural study: hearing-impaired listeners and reverberation. PLOS ONE. DOI:10.1371/journal.pone.0317266 | 2 | INT | Temporal smearing mechanism |
 | ASI-03 | ISO | 2009 | ISO 3382-1:2009 — Measurement of room acoustic parameters | 4 | INT | https://www.iso.org/standard/40979.html |
 | ASI-04 | ASA | 2010 | ANSI/ASA S12.60-2010 — Acoustical Performance Criteria for Schools | 4 | US | ≤35 dBA; RT ≤0.3s for HI |
 | ASI-05 | IEC | 2017 | IEC 60118-4:2014+AMD1:2017 — Hearing loop performance | 4 | INT | See ALS-01 / DAB-01 |
+| ASI-06 | Cueille, R., Lavandier, M. & Grimault, N. | 2022 | Effects of reverberation on speech intelligibility in noise for hearing-impaired listeners. R Soc Open Sci 9:210342. DOI:10.1098/rsos.210342. PMC9428532 | 3 | FR | HI listeners: SRT increase 18dB (RT 0→1s) vs 10dB NH; quantifies HI penalty |
+| ASI-07 | [Authors TBC — Korean] | 2022 | Investigation of the Appropriate Reverberation Time in Learning Spaces for Elderly People Using Speech Intelligibility Tests. Buildings 12(11):1943 | 3 | KR | Elderly incomplete-hearing: RT60 >0.6s degrades scores; suggests ≤0.4s for elderly learning |
+| ASI-08 | [Authors TBC] | 2024 | Adaptation to Reverberation for Speech Perception: A Systematic Review. PMC11384524 | 3 (SR) | INT | 23 studies; NH adapt to reverberation, HI do not — supports fixed RT specification |
 **Divergent findings:** Standards specify RT60 ≤0.6 s for classrooms generally; hearing-impaired evidence base requires ≤0.3 s — a 2× difference not reflected in most regulatory documents
 **Notes:** RT differentiation (hearing-impaired vs general) is well-evidenced but absent from most national building codes. Cross-reference A-items with VIS/DEAF BPC entry for hearing loop integration. NDV/ASD and NEU/ABI populations also benefit from RT ≤0.3 s — see NDV/MH BPC entry.
+
+### Citation mining
+**Date:** 2026-05-04 09:00
+| Source | Direction | New sources added |
+|---|---|---|
+| ASI-01 Murgia 2023 | GREY resolved | Lang Speech Hear Serv Sch, DOI confirmed, first author Silvia (not "A.") |
+| ASI-01 Murgia 2023 | Forward | Cueille 2022 (ASI-06); Korean elderly learning RT60 study 2022 (ASI-07) |
+| ASI-02 | Forward | Adaptation to reverberation SR 2024 (ASI-08) |
+**Notes:** Cueille 2022 quantifies the HI penalty: 18dB SRT increase (RT 0→1s) vs 10dB for NH — the most precise quantification of the hearing-impaired reverberation penalty. ASI-08 confirms that NH listeners adapt to reverberation but HI listeners do not — supports fixed RT specification rather than adaptive approach. Korean study adds non-Western evidence for elderly populations.
 
 ## Metadata
 
 ```yaml
 slug: acoustics-speech-intelligibility-disability
 population: DEAF, NEU, NDV
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```

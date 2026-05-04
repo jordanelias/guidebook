@@ -26,21 +26,33 @@
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| LCL-01 | Harper, B. et al. | 2022 | Step-face and edge contrast enhancement reduces fall events. J Ergonomics. DOI:10.35248/2165-7556-22.12.303 | 3 | INT | OR=2.87, p=.023 |
-| LCL-02 | Brown, C. et al. | 2023 | High-contrast nosing reduces descending gait speed. Ergonomics. DOI:10.1080/00140139.2022.2141347 | 3 | INT | coeff −0.07, p=.010 |
+| LCL-01 | Harper, S.A. et al. | 2022 | Stairway Visual Contrast Enhancement to Reduce Fall-Related Events. J Ergonomics 12:303. DOI:10.35248/2165-7556-22.12.303 | 3 | US | OR=2.87, p=.023; n=2,500 observations |
+| LCL-02 | Brown, C.B. et al. | 2023 | Step edge highlighters and illuminance changes influence stair descent in a real-world setting. Ergonomics 66(9):1219-1228. DOI:10.1080/00140139.2022.2141347 | 3 | US | n=5,824; coeff −0.07, p=.010 |
 | LCL-03 | Thompson, D. | 2022 | Computational modelling: low-contrast nosings at 30% LRV become invisible at moderate VI. PMC PMC8993136 | 3 | INT | — |
-| LCL-04 | Dain, S. (cited in Manandhar 2022) | 2022 | ~65% Michelson contrast needed for reliable surface boundary detection at severe VI | 3 | INT | ~2.5× current 30% standard |
+| LCL-04 | Manandhar, S., Lukman, A., Dain, S.J., Bridge, C.E., Relf, M. & Boon, M.Y. | 2022 | Luminance contrast preferences of people with a vision impairment for elements in the built environment. Work 73(4):1265-1278. DOI:10.3233/WOR-210997. PMID:36093666 | 3 | AU | 30% Michelson = "poorly visible" at severe VI; ~65% needed for reliable detection — GREY RESOLVED 2026-05-04 |
 | LCL-05 | CNIB | 2024 | 30% LRV is regulatory floor not functional optimum; recommend maximum achievable contrast | 2 | CA | https://www.cnib.ca/en/accessibility-standards |
 | LCL-06 | Standards Australia | 2021 | AS 1428.1:2021 — luminance contrast provisions | 6 | AU | https://www.standards.org.au/standards-catalogue/sa-snz/building/me-064/as--1428-dot-1-2021 |
 | LCL-07 | BSI | 2018 | BS 8300:2018 — luminance contrast provisions | 5 | UK | https://www.bsigroup.com/en-GB/standards/bs-8300/ |
+| LCL-08 | Harper, S.A., Brown, C.B., Poulsen, S.L., Barrett, T.S. & Dakin, C.J. | 2025 | Interstep Variations of Stairways and Associations of High-Contrast Striping and Fall-Related Events. Interact J Med Res 14:e60622. DOI:10.2196/60622. PMC11754982 | 3 | US | 80% fall events at ≥14mm riser variation; contrast striping reduces events; cross-ref SRB-14 |
 **Divergent findings:** —
 **Notes:** Decision D-03 confirmed: all C-items must carry the regulatory-floor caveat. This is one of the most significant evidence-standards gaps in the entire guidebook. DO NOT cite 30% as an evidence-based optimum. Cite it as a regulatory minimum and recommend highest achievable contrast as design intent.
+
+### Citation mining
+**Date:** 2026-05-04 09:10
+| Source | Direction | New sources added |
+|---|---|---|
+| LCL-01 Harper 2022 | Forward | Harper 2025 interstep variations (LCL-08) |
+| LCL-04 Manandhar 2022 | GREY resolved | Work journal, DOI confirmed, full author list recovered |
+| LCL-01 Harper 2022 | Author corrected | Harper SA (not "B") |
+| LCL-02 Brown 2023 | Author corrected | Brown CB; full journal citation added |
+**Notes:** The Harper/Dakin group at Utah State is the primary active research group on stair contrast enhancement. Three papers (LCL-01, LCL-02, LCL-08) form a coherent evidence chain: contrast striping reduces fall-related events (OR=2.87), reduces descent speed (coeff -0.07), and 80% of fall events cluster at ≥14mm interstep variation.
 
 ## Metadata
 
 ```yaml
 slug: luminance-contrast-lrv-evidence-base
 population: VIS
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```
