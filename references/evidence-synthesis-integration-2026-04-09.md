@@ -149,7 +149,7 @@ From DD-3 (LRV deep-dive) and BPC:
 
 **Stair nosings and platform edges (enhanced specification per CON-0161):** ≥65% Michelson contrast (approximately ≥75% LRV difference). Width ≥50mm. This is the highest-risk feature in the built environment (stair descent fall risk = 3× ascent, Simoneau 1991). The general 30% LRV floor is empirically insufficient at this location. ○
 
-**Tier 2:** OT assessment resolves specific contrast levels based on individual visual profile. The 30% regulatory floor may be substantially insufficient for the most severely impaired users.
+**Mode S:** OT assessment resolves specific contrast levels based on individual visual profile. The 30% regulatory floor may be substantially insufficient for the most severely impaired users.
 
 **Evidence disclosure:** The 30% LRV minimum adopted by six national standards (UK BS 8300, DIN 18040-2, CEREMA France, Swedish BFS, Norwegian TEK17, Japanese MLIT) derives from UK Disability Discrimination Act guidance. No peer-reviewed study has validated 30% as sufficient for people with visual impairment. Emerging evidence suggests it is substantially insufficient for moderate-to-severe VI. This guidebook recommends exceeding the 30% floor wherever achievable.
 

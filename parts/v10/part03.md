@@ -261,7 +261,7 @@ Step 6: Irresolvable conflict
 If Steps 1–5 produce no resolution for a shared non-zoned ambient parameter:
 → IRRESOLVABLE at Tier 1.
 → Record in project conflict register.
-→ Flag as Tier 2: OT assessment mandatory (Part 9 §9.10 trigger).
+→ Flag as Mode S: OT assessment mandatory (Part 9 §9.10 trigger).
 → Enter in Part 5 §5.3 register if it is a known systemic conflict.
 ```
 

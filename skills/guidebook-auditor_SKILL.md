@@ -161,8 +161,8 @@ Usage: append after the closing punctuation of the claim — e.g. `The corridor 
 ### 5.2 Three-Tier Identification
 Each item must state which tier(s) it addresses:
 - Universal Mode: fixed value, no range
-- Tier 1: range with stated median
-- Tier 2: co-designed; resolves within Tier 1 range; DAR note mandatory
+- Mode P: range with stated median
+- Mode S: co-designed; resolves within Mode P range; DAR note mandatory
 
 ---
 

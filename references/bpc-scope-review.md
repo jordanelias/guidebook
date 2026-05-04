@@ -199,7 +199,7 @@ The BPC evidence supports approximately 40 engineering performance targets. For 
 
 Every specification where the BPC provides a range rather than a point value — and where the range reflects individual variation rather than jurisdictional difference — should carry:
 
-> **Mode P default: [median value]. Tier 2: OT assessment resolves position within range based on [specific functional assessment parameter].**
+> **Mode P default: [median value]. Mode S: OT assessment resolves position within range based on [specific functional assessment parameter].**
 
 The BPC evidence already supplies the functional assessment parameter in most cases (transfer method, trunk stability, sensory profile, cognitive stage, communication method).
 

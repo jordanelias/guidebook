@@ -257,7 +257,7 @@ The individual's own functional capacity is the answer. The range is the envelop
 
 The ranges appearing throughout Part 4 of this guidebook are not expressions of uncertainty or imprecision. They are the designed-in mechanism that allows a single specification item to serve both Tier 1 and Tier 2 practice simultaneously.
 
-**At Tier 1: ​**use the median of the stated range as the population-informed default. The median represents the best-evidence value for the identified population in the absence of individual assessment data.
+**At Mode P: ​**use the median of the stated range as the population-informed default. The median represents the best-evidence value for the identified population in the absence of individual assessment data.
 
 **At Tier 2: ​**use the individual's OT functional capacity assessment to locate the appropriate position within the range. The person's own capabilities, preferences, and functional variation over time determine the specific value.
 

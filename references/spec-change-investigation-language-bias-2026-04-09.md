@@ -14,7 +14,7 @@
 
 **Current Part 4 (G-03):** "bilateral horizontal bars at 800–900 mm AFF both sides"
 
-**BPC synthesis (Opus-reviewed):** "height range 650–900 mm AFF (median 700 mm; Tier 2: 280 mm above seat surface per OT assessment)"
+**BPC synthesis (Opus-reviewed):** "height range 650–900 mm AFF (median 700 mm; Mode S: 280 mm above seat surface per OT assessment)"
 
 **Evidence:**
 - KR: 650–700 mm — derived from wheelchair armrest-height match; biomechanically grounded (Tier 1)
@@ -25,7 +25,7 @@
 
 **Diagnosis:** The BPC synthesis already corrected this. The Opus synthesis note explicitly states: "Grab bar height widened to 650–900 mm with seat-relative Tier 2 formulation." But Part 4 G-03 was not updated to match. The Part 4 spec retains the UK/AU 800–900 mm range, which is the standing-support-derived English-language value.
 
-**What would change:** G-03 specification text changes from `800–900 mm AFF` to `650–900 mm AFF (Mode P median: 700 mm; Tier 2: 280 mm above seat surface, resolved by OT assessment)`. This is a meaningful change: it lowers the bottom of the range by 150 mm, which matters for seated transfer biomechanics and for users in wheelchairs with lower seat heights (common in KR/JA contexts).
+**What would change:** G-03 specification text changes from `800–900 mm AFF` to `650–900 mm AFF (Mode P median: 700 mm; Mode S: 280 mm above seat surface, resolved by OT assessment)`. This is a meaningful change: it lowers the bottom of the range by 150 mm, which matters for seated transfer biomechanics and for users in wheelchairs with lower seat heights (common in KR/JA contexts).
 
 **Tier analysis:** KR/JA evidence is Tier 1 (biomechanical, intervention-tested). UK/AU evidence is Tier 5–6 (code/guidance). Under the project's own hierarchy, Tier 1 governs.
 

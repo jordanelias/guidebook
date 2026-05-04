@@ -111,7 +111,7 @@ The following specifications have convergent evidence support across five or mor
 
 **Tier 1 — Population-Informed Inclusive Design** is the primary domain of this guidebook. It applies wherever an identifiable disability population can be reasonably anticipated among the building's regular users. The overwhelming majority of buildings fall into this tier: every public institution, workplace, health facility, transit hub, educational building, housing development, and civic space will serve people across the MOB, VIS, NEU, DEM, NDV, OFS and related population categories.
 
-*At Tier 1, specifications are expressed as ranges.* The range is derived from the functional capacity distribution across the identified population. The median of the range is the population-informed default — the best single value for a designer or practitioner working without a specific individual's assessment. The full range exists because the population is not homogeneous: functional capacity varies within every disability category, and the specification must accommodate that variation.
+*At Mode P, specifications are expressed as ranges.* The range is derived from the functional capacity distribution across the identified population. The median of the range is the population-informed default — the best single value for a designer or practitioner working without a specific individual's assessment. The full range exists because the population is not homogeneous: functional capacity varies within every disability category, and the specification must accommodate that variation.
 
 **Tier 2 — Person-Specific Inclusive Design** applies where the individual occupant or primary user is known: a residential commission for a named person, a workplace adjustment for a specific employee, or a specialist care environment designed around a defined client. At Tier 2, the practitioner's task is not to select the median value but to determine where within the Tier 1 range the specification should land, based on that individual's functional capacity assessment, OT findings, and personal preferences.
 
@@ -133,9 +133,9 @@ The user control hierarchy applies across lighting (B-category items), acoustic 
 
 The ranges appearing throughout Part 4 of this guidebook are not expressions of uncertainty or imprecision. They are the designed-in mechanism that allows a single specification item to serve both Tier 1 and Tier 2 practice simultaneously.
 
-**At Tier 1:** use the median of the stated range as the population-informed default. The median represents the best-evidence value for the identified population in the absence of individual assessment data.
+**At Mode P:** use the median of the stated range as the population-informed default. The median represents the best-evidence value for the identified population in the absence of individual assessment data.
 
-**At Tier 2:** use the individual's OT functional capacity assessment to locate the appropriate position within the range. The person's own capabilities, preferences, and functional variation over time determine the specific value.
+**At Mode S:** use the individual's OT functional capacity assessment to locate the appropriate position within the range. The person's own capabilities, preferences, and functional variation over time determine the specific value.
 
 **The range boundary:** values outside the stated range fall outside the evidence base for the identified population. Departures from the range require documented clinical justification.
 

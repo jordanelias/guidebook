@@ -107,7 +107,7 @@ Ranges in specifications are not expressions of uncertainty — they are the des
 
 **Where it appears:**
 - Project standards — explicit doctrine
-- Opus divergence synthesis §4 (reach range) — 900-1100mm functional target with "Mode P default: median. Tier 2: OT assessment resolves position within range"
+- Opus divergence synthesis §4 (reach range) — 900-1100mm functional target with "Mode P default: median. Mode S: OT assessment resolves position within range"
 - Opus §9 (grab bar height) — no single height optimal; composite specification (700-800mm horizontal + 900mm vertical) needed because optimal height depends on transfer type
 - Turning space (E-01) — graduated values by device type (1500mm manual, 1700mm powered, 2100mm complex)
 

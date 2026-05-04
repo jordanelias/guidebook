@@ -46,15 +46,15 @@ Every item must identify which tier it serves and apply the tier's specification
 | Tier | Context | Specification standard |
 |---|---|---|
 | Universal Mode: Universal Design, improvable floor | No particular disability population is a predominant user (e.g. public institutional spaces) | Above code minimum — executed in a way that allows tailoring and improvement for specific people as required |
-| Tier 1: Population-Informed Inclusive Design | Identified disability population(s) most likely to use the building | Ranges; median is the population-informed default. Core question: what works best for this population? |
-| Tier 2: Person-Specific Co-Design | Named client/person; specific building | Co-design: OT establishes functional capacity; client expresses own preferences. Specifications uniquely tailored to the person |
+| Mode P: Population-Informed Inclusive Design | Identified disability population(s) most likely to use the building | Ranges; median is the population-informed default. Core question: what works best for this population? |
+| Mode S: Person-Specific Co-Design | Named client/person; specific building | Co-design: OT establishes functional capacity; client expresses own preferences. Specifications uniquely tailored to the person |
 
 The Tier 1 range is the population evidence envelope. At Tier 2, co-design between OT and client resolves the specific value within that range.
 
 ### Specification Range Doctrine
 Ranges appearing in specifications are not expressions of uncertainty. They are the mechanism that allows a single item to serve both Tier 1 and Tier 2 practice simultaneously.
 
-- At Tier 1 (identified population): use the median value as the population-informed default.
+- At Mode P (identified population): use the median value as the population-informed default.
 - At Tier 2 (named person/client): the position within the range is determined through co-design — OT establishes functional capacity; client expresses own preferences. Both are required inputs.
 - Never: "between X and Y" without specifying which end applies at which tier.
 - Priority populations for range framing: MOB/AMB, MOB/UPL, OFS, and any population where functional variation is high.

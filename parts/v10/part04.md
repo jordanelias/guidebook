@@ -3193,11 +3193,11 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 **Applicable Groups:** MOB, DEM, PAIN, UPL · OFS · NEU
 <!-- CON-0003: CON-0003: insulated bar coatings mandatory where PAIN is primary (cold metal triggers allodynia); DEM/NEU co-population rationale added -->
 
-**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Mode P median: 700 mm; Tier 2: 280 mm above seat surface per OT assessment — KR/JA Tier 1 biomechanical evidence governs lower bound); angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
+**Description:** Toilet: bilateral horizontal bars at 650--900 mm AFF on both sides of WC centre line (Mode P median: 700 mm; Mode S: 280 mm above seat surface per OT assessment — KR/JA Tier 1 biomechanical evidence governs lower bound); angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
 
 **Specifications:**
 
-Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Mode P median: 700 mm; Tier 2: 280 mm above seat surface, resolved by OT assessment)
+Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Mode P median: 700 mm; Mode S: 280 mm above seat surface, resolved by OT assessment)
 
 Angled bar at cistern wall
 
