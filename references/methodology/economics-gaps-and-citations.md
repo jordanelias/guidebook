@@ -58,11 +58,11 @@ Five gaps where the project either commissions analysis or flags as research pri
 - Source files: `throughline-construction-cost.md`, `throughline-cost-of-inaction.md`
 
 **GAP-ECON-05: Missing Part 11 cost tables**
-- Status: OPEN (4 categories)
+- Status: **RESOLVED** (2026-05-04)
 - Throughline: Construction Cost
-- Description: Kitchen (H-01), bedroom, emergency egress, and controls/hardware categories have no cost table in Part 11 despite being in the Part 4 specification library.
+- Description: Kitchen (H-01), bedroom, emergency egress, and controls/hardware categories now have cost tables in Part 11 v10 §11.4.9–§11.4.12. All four tables include NC premium, retrofit multiplier, and decision-stage data.
 - Source file: `throughline-construction-cost.md`
-- Reference: `references/economics-gap-analysis-2026-04-09.md` §1A-1E
+- Resolution: Tables populated in Part 11 v10; cross-referenced in `economics.json` via `part11_cost_table_map`
 
 **GAP-ECON-06: Cross-jurisdiction cost adjustment table**
 - Status: OPEN
