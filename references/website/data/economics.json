@@ -1,0 +1,535 @@
+{
+  "meta": {
+    "version": "2.0",
+    "created": "2026-05-04",
+    "source": "references/methodology/ throughline files",
+    "pillars": [
+      {"id": "health", "label": "Health Outcomes", "rank": 1, "strength": "strong"},
+      {"id": "inaction", "label": "Cost of Inaction", "rank": 2, "strength": "strong"},
+      {"id": "construction", "label": "Construction Cost", "rank": 3, "strength": "moderate-strong"},
+      {"id": "market", "label": "Market Value", "rank": 4, "strength": "weak-direct"}
+    ]
+  },
+
+  "health_outcomes": [
+    {
+      "study_id": "HO-001",
+      "source": "Clemson et al. 2023",
+      "design": "Cochrane Systematic Review",
+      "sample": "6 RCTs, N=3,298",
+      "journal": "Cochrane Database of Systematic Reviews",
+      "jurisdiction": "Multi-jurisdictional",
+      "finding": "21% falls risk reduction from home modifications",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "rank": 1
+    },
+    {
+      "study_id": "HO-002",
+      "source": "Keall et al. 2015",
+      "design": "Cluster RCT",
+      "sample": "General population, NZ",
+      "journal": "The Lancet",
+      "jurisdiction": "NZ",
+      "finding": "26% fall injury reduction",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "rank": 2
+    },
+    {
+      "study_id": "HO-003",
+      "source": "Keall et al. 2021",
+      "design": "RCT",
+      "sample": "Māori population, NZ",
+      "journal": "Lancet Public Health",
+      "jurisdiction": "NZ",
+      "finding": "31% fall injury reduction",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "rank": 3
+    },
+    {
+      "study_id": "HO-004",
+      "source": "Keall et al. 2017",
+      "design": "CBA of RCT",
+      "sample": "NZ RCT cohort",
+      "journal": "Injury Prevention",
+      "jurisdiction": "NZ",
+      "finding": "36% insurer cost reduction; 9:1 BCR",
+      "bcr": 9.0,
+      "cost_per_person": 500,
+      "cost_currency": "NZD",
+      "evidence_tier": "Tier 1",
+      "rank": 4
+    },
+    {
+      "study_id": "HO-005",
+      "source": "Chandola & Rouxel 2022",
+      "design": "Longitudinal cohort",
+      "sample": "n=10,459, 11.3 years",
+      "journal": "Lancet Regional Health – Europe",
+      "jurisdiction": "UK",
+      "finding": "Curb-cut effect: non-impaired adults show 6% social isolation reduction, 4% reduced need to move from external housing modifications",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "rank": 5,
+      "note": "Strongest empirical evidence for universal benefit of accessible residential design"
+    },
+    {
+      "study_id": "HO-006",
+      "source": "Szanton et al. 2017 (CAPABLE)",
+      "design": "Quasi-experimental",
+      "sample": "Multiple US sites",
+      "journal": "Journal of the American Geriatrics Society",
+      "jurisdiction": "US",
+      "finding": "~10:1 Medicaid cost savings at $1,300/person",
+      "bcr": 10.0,
+      "cost_per_person": 1300,
+      "cost_currency": "USD",
+      "evidence_tier": "Tier 1",
+      "rank": 6
+    },
+    {
+      "study_id": "HO-007",
+      "source": "Gitlin et al. (ABLE)",
+      "design": "RCT",
+      "sample": "319 participants",
+      "journal": "PMC",
+      "jurisdiction": "US",
+      "finding": "Mortality: 9 vs 21 deaths at 2 years; ICER $13-15K/QALY",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 1",
+      "rank": 7
+    },
+    {
+      "study_id": "HO-008",
+      "source": "Tsuchiya-Ito 2024",
+      "design": "Retrospective cohort",
+      "sample": "n=4,610",
+      "journal": "JAMDA",
+      "jurisdiction": "JP",
+      "finding": "28% lower long-term care facility admission at ¥200,000 max adaptation cost",
+      "bcr": null,
+      "cost_per_person": 1287,
+      "cost_currency": "USD",
+      "evidence_tier": "Tier 2",
+      "rank": 8
+    },
+    {
+      "study_id": "HO-009",
+      "source": "LSE/Habinteg 2023",
+      "design": "Cost-benefit analysis",
+      "sample": "Evidence review",
+      "journal": "LSE Research Online",
+      "jurisdiction": "UK",
+      "finding": "M4(3) wheelchair-accessible standard BCR 4.3:1 to 5.6:1 over 10 years",
+      "bcr_min": 4.3,
+      "bcr_max": 5.6,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 3",
+      "rank": 9
+    },
+    {
+      "study_id": "HO-010",
+      "source": "Carnemolla & Bridge 2019",
+      "design": "Cohort study",
+      "sample": "Australian cohort",
+      "journal": "PMC",
+      "jurisdiction": "AU",
+      "finding": "0.36 hours/week care reduction from home modifications",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 3",
+      "rank": 10
+    }
+  ],
+
+  "cost_premiums": [
+    {
+      "cost_id": "CP-001",
+      "source": "TERRAGON/DStGB 2017",
+      "jurisdiction": "DE",
+      "building_type": "Residential (5-storey, 20 units)",
+      "standard": "DIN 18040-2",
+      "premium_pct_min": 0.54,
+      "premium_pct_max": 1.26,
+      "premium_per_sqm": 21.50,
+      "currency": "EUR",
+      "year": 2017,
+      "key_finding": "138 of 148 criteria produce zero additional cost",
+      "evidence_tier": "E-3/E-4",
+      "commercial_interest": true,
+      "commercial_note": "TERRAGON AG is a residential developer with commercial interest in demonstrating low costs"
+    },
+    {
+      "cost_id": "CP-002",
+      "source": "Ielegems & Vanrie 2024",
+      "jurisdiction": "BE",
+      "building_type": "Public buildings (12 case studies)",
+      "standard": "Universal Design",
+      "premium_pct_min": 0.94,
+      "premium_pct_max": 3.92,
+      "premium_per_sqm": null,
+      "currency": "EUR",
+      "year": 2024,
+      "key_finding": "Average 1.19% for large projects; renovation 2.24-14.9%",
+      "evidence_tier": "E-1",
+      "commercial_interest": false
+    },
+    {
+      "cost_id": "CP-003",
+      "source": "Schroeder & Steinfeld (HUD) 1979",
+      "jurisdiction": "US",
+      "building_type": "Multiple (shopping centre, college, residential)",
+      "standard": "Barrier-free design",
+      "premium_pct_min": 0.006,
+      "premium_pct_max": 3.0,
+      "premium_per_sqm": null,
+      "currency": "USD",
+      "year": 1979,
+      "key_finding": "Range from 0.006% (shopping centre) to 3.0% (single-family)",
+      "evidence_tier": "E-1",
+      "commercial_interest": false,
+      "note": "Foundational study; 47 years old with no equivalent-scale replication"
+    },
+    {
+      "cost_id": "CP-004",
+      "source": "CMHC/Société Logique 2015",
+      "jurisdiction": "CA",
+      "building_type": "Modest housing",
+      "standard": "60-feature comprehensive accessibility",
+      "premium_pct_min": 6.0,
+      "premium_pct_max": 12.0,
+      "premium_per_sqm": null,
+      "currency": "CAD",
+      "year": 2015,
+      "key_finding": "6-12% per dwelling for 60-feature comprehensive accessibility",
+      "evidence_tier": "E-2",
+      "commercial_interest": false
+    },
+    {
+      "cost_id": "CP-005",
+      "source": "Centre for Ageing Better / UK Government 2020",
+      "jurisdiction": "UK",
+      "building_type": "Residential new-build",
+      "standard": "M4(2) Accessible and Adaptable",
+      "premium_pct_min": 0.4,
+      "premium_pct_max": 0.5,
+      "premium_per_unit": 1400,
+      "currency": "GBP",
+      "year": 2020,
+      "key_finding": "£1,387-£1,400 per dwelling to meet M4(2)",
+      "evidence_tier": "E-4",
+      "commercial_interest": false
+    },
+    {
+      "cost_id": "CP-006",
+      "source": "Smith/Concrete Change 2012",
+      "jurisdiction": "US",
+      "building_type": "Single-family (Habitat for Humanity)",
+      "standard": "Basic visitability (3 criteria)",
+      "premium_pct_min": 0,
+      "premium_pct_max": 0.1,
+      "premium_per_unit_min": 10,
+      "premium_per_unit_max": 260,
+      "currency": "USD",
+      "year": 2012,
+      "key_finding": "$10 (slab) to $260 (basement) for basic visitability",
+      "evidence_tier": "E-5",
+      "commercial_interest": false
+    },
+    {
+      "cost_id": "CP-007",
+      "source": "Armani 1993 (French study)",
+      "jurisdiction": "FR",
+      "building_type": "Multi-family housing",
+      "standard": "Loi Handicap accessibility",
+      "premium_pct_min": 0.5,
+      "premium_pct_max": 1.0,
+      "currency": "EUR",
+      "year": 1993,
+      "evidence_tier": "E-1",
+      "commercial_interest": false
+    },
+    {
+      "cost_id": "CP-008",
+      "source": "Swedish Building Research Council",
+      "jurisdiction": "SE",
+      "building_type": "Multi-family housing",
+      "standard": "Swedish accessibility standards",
+      "premium_pct_min": 0.5,
+      "premium_pct_max": 1.0,
+      "currency": "SEK",
+      "year": 1993,
+      "evidence_tier": "E-2",
+      "commercial_interest": false
+    }
+  ],
+
+  "retrofit_multipliers": [
+    {
+      "id": "RM-001",
+      "jurisdiction": "DE",
+      "source": "TERRAGON/KfW/Prognos",
+      "multiplier": 12,
+      "new_build_cost": 1600,
+      "retrofit_cost": 19100,
+      "currency": "EUR",
+      "unit": "per 75m² apartment",
+      "year": 2017,
+      "evidence_tier": "E-3"
+    },
+    {
+      "id": "RM-002",
+      "jurisdiction": "UK",
+      "source": "Habinteg Housing Association",
+      "multiplier": 19,
+      "new_build_cost": 1400,
+      "retrofit_cost": 27000,
+      "currency": "GBP",
+      "unit": "per dwelling (3 most common modifications)",
+      "year": 2023,
+      "evidence_tier": "E-4"
+    },
+    {
+      "id": "RM-003",
+      "jurisdiction": "AU",
+      "source": "Livable Housing Australia",
+      "multiplier": 22,
+      "new_build_cost": null,
+      "retrofit_cost": null,
+      "currency": "AUD",
+      "unit": "ratio claim",
+      "year": null,
+      "evidence_tier": "E-5",
+      "note": "Primary research source not traceable from LHA website"
+    },
+    {
+      "id": "RM-004",
+      "jurisdiction": "US",
+      "source": "ADA National Network 2025",
+      "multiplier_range": "2-20% retrofit premium over new-build",
+      "evidence_tier": "E-5",
+      "note": "Widely cited '5-25×' figure is downstream corruption of this source"
+    }
+  ],
+
+  "grant_programmes": [
+    {
+      "id": "GP-001",
+      "programme": "Disabled Facilities Grant (DFG)",
+      "jurisdiction": "UK",
+      "max_funding": 30000,
+      "currency": "GBP",
+      "annual_budget": 761000000,
+      "budget_year": 2025,
+      "eligibility": "Means-tested adults; not means-tested for children",
+      "status": "Active"
+    },
+    {
+      "id": "GP-002",
+      "programme": "KfW Programme 159 (Altersgerecht Umbauen)",
+      "jurisdiction": "DE",
+      "max_funding": 50000,
+      "currency": "EUR",
+      "subsidy_per_sqm": 120,
+      "eligibility": "Any age; barrier-reduction or barrier-free new construction",
+      "status": "Active"
+    },
+    {
+      "id": "GP-003",
+      "programme": "Kaigo Hoken (Long-term Care Insurance)",
+      "jurisdiction": "JP",
+      "max_funding": 200000,
+      "currency": "JPY",
+      "coverage_pct": 90,
+      "eligibility": "Care-level certified individuals",
+      "status": "Active"
+    },
+    {
+      "id": "GP-004",
+      "programme": "Flat 35S Barrier-Free",
+      "jurisdiction": "JP",
+      "type": "Preferential mortgage",
+      "rate_reduction_pct": 0.25,
+      "duration_years": 10,
+      "tax_credit_max": 4550000,
+      "currency": "JPY",
+      "status": "Active"
+    },
+    {
+      "id": "GP-005",
+      "programme": "NDIS Specialist Disability Accommodation (SDA)",
+      "jurisdiction": "AU",
+      "type": "Direct payment stream (~20 year)",
+      "categories": ["Improved Liveability", "Fully Accessible", "Robust", "High Physical Support"],
+      "status": "Active",
+      "note": "Converts accessibility from cost-centre to revenue-centre"
+    },
+    {
+      "id": "GP-006",
+      "programme": "HATC (Home Accessibility Tax Credit)",
+      "jurisdiction": "CA",
+      "max_credit": 3000,
+      "currency": "CAD",
+      "calculation": "15% of up to $20,000 expenses",
+      "eligibility": "Persons with disability or age 65+",
+      "status": "Active"
+    },
+    {
+      "id": "GP-007",
+      "programme": "CMHC MLI Select — Accessibility Bucket",
+      "jurisdiction": "CA",
+      "type": "Financing benefit",
+      "benefit": "Up to 40-year amortization; reduced insurance premiums",
+      "eligibility": "Multi-unit rental projects; points-based",
+      "status": "Active"
+    },
+    {
+      "id": "GP-008",
+      "programme": "MaPrimeAdapt'",
+      "jurisdiction": "FR",
+      "status": "Active",
+      "note": "New programme — funding details require verification"
+    },
+    {
+      "id": "GP-009",
+      "programme": "Husbanken tilskudd/lån",
+      "jurisdiction": "NO",
+      "type": "Means-tested grant/loan",
+      "ltv_max_pct": 85,
+      "eligibility": "Livsløpsbolig (lifetime homes) standard",
+      "status": "Active"
+    }
+  ],
+
+  "housing_deficit": [
+    {
+      "jurisdiction": "US",
+      "accessible_pct": 5,
+      "accessible_label": "<5% moderate mobility accessible; <1% wheelchair-accessible",
+      "source": "HUD USER/AHS 2011",
+      "year": 2015,
+      "gap_units": 300000,
+      "gap_label": "300,000+ HUD-assisted households with mobility devices in inaccessible units"
+    },
+    {
+      "jurisdiction": "DE",
+      "existing_units": 560000,
+      "needed_units": 3000000,
+      "projected_need_2035": 3700000,
+      "source": "KfW 2020",
+      "year": 2020
+    },
+    {
+      "jurisdiction": "NO",
+      "failure_pct": 92,
+      "failure_label": "92% of housing fails basic accessibility; 90% low-rise lacks lifts",
+      "source": "Husbanken"
+    },
+    {
+      "jurisdiction": "UK",
+      "accessible_pct": 9,
+      "accessible_label": "9% of English housing meets basic visitability",
+      "public_preference_pct": 72,
+      "public_preference_label": "72% want all new homes built suitable for all ages and abilities",
+      "source": "English Housing Survey / Centre for Ageing Better 2019"
+    },
+    {
+      "jurisdiction": "FR",
+      "gap_households": 220000,
+      "gap_label": "220,000+ households with disabled member in inaccessible housing",
+      "source": "Fondation logement 2025",
+      "year": 2025
+    }
+  ],
+
+  "market_value": {
+    "hedonic_gap": "No peer-reviewed hedonic regression isolates an accessibility premium in residential transaction data in any of the 24 project jurisdictions",
+    "framework": "Perceptual-Value Crossover (§15)",
+    "throughlines": [
+      {
+        "id": 1,
+        "label": "Square-footage inheritance",
+        "evidence_tier": "Tier 1 (by inheritance from Sirmans 2006)",
+        "description": "Accessibility minimums are dimensional minimums. Floor area is the most consistently priced residential hedonic variable.",
+        "items_covered": ["E-04", "E-08", "E-12", "G-04", "G-08", "D-05"],
+        "strength": "strongest"
+      },
+      {
+        "id": 2,
+        "label": "Cubic volume",
+        "evidence_tier": "Tier 4-5",
+        "description": "Ceiling height premium 5-25% (trade-press). Connects to B-09, I-04.",
+        "items_covered": ["B-09", "I-04"],
+        "strength": "moderate"
+      },
+      {
+        "id": 3,
+        "label": "Bedroom/bathroom count",
+        "evidence_tier": "Tier 1 (where applicable)",
+        "description": "Both are canonical Sirmans regressors. Applies when accessibility specs change room count.",
+        "items_covered": ["G-04", "E-15"],
+        "strength": "strong-limited"
+      },
+      {
+        "id": 4,
+        "label": "Build quality at constant size",
+        "evidence_tier": "Tier 4-5",
+        "description": "Acoustic doors, MERV 13+, slip-resistant tile push dwelling into next price-tier band.",
+        "items_covered": ["A-03", "F-04", "F-07", "E-07", "G-03"],
+        "strength": "moderate"
+      },
+      {
+        "id": 5,
+        "label": "Completed migration (downside-avoidance)",
+        "evidence_tier": "Tier 4",
+        "description": "Features that became universal. No premium to measure; absence is the market negative.",
+        "items_covered": ["I-01", "I-02", "I-03", "H-02", "H-04", "B-12", "F-07"],
+        "strength": "structural"
+      }
+    ],
+    "anchor_data": {
+      "source": "Cost vs. Value 2025 Universal Design Bath Remodel",
+      "publisher": "Zonda Media / Journal of Light Construction",
+      "scope": "115 US markets, 38th annual report",
+      "cost": 42183,
+      "roi_pct": 61,
+      "yoy_change_pp": 12,
+      "currency": "USD",
+      "evidence_tier": "Tier 3",
+      "items_bundled": ["E-06", "G-04", "I-01", "I-03", "H-01", "G-03"]
+    },
+    "dual_read_thesis": {
+      "concept": "Accessibility features are simultaneously consumed as mainstream desirable features under non-accessibility labels",
+      "mappings": [
+        {"accessibility": "Curbless shower / zero-threshold", "mainstream": "Walk-in spa shower", "preference_pct": 72},
+        {"accessibility": "Wide corridors / open plan", "mainstream": "Open-concept living", "preference_pct": null},
+        {"accessibility": "First-floor bedroom suite", "mainstream": "Main-level master", "preference_pct": null},
+        {"accessibility": "First-floor laundry", "mainstream": "Convenience laundry", "preference_pct": 60},
+        {"accessibility": "Enclosed low-stim space", "mainstream": "Home office", "preference_pct": 66},
+        {"accessibility": "Step-free entry + lighting", "mainstream": "Front porch + exterior lighting", "preference_pct": null}
+      ],
+      "source": "NAHB 2024 What Home Buyers Really Want"
+    }
+  },
+
+  "gaps": [
+    {"id": "GAP-ECON-01", "priority": "critical", "pillar": "market", "label": "Peer-reviewed hedonic accessibility premium", "status": "open"},
+    {"id": "GAP-ECON-02", "priority": "critical", "pillar": "health", "label": "Co-1 lived-experience economic evidence", "status": "open"},
+    {"id": "GAP-ECON-03", "priority": "critical", "pillar": "market", "label": "Non-US Cost vs. Value equivalent", "status": "open"},
+    {"id": "GAP-ECON-04", "priority": "high", "pillar": "all", "label": "~40 unverified jurisdictional source names", "status": "open"},
+    {"id": "GAP-ECON-05", "priority": "high", "pillar": "construction", "label": "Missing Part 11 cost tables (kitchen, bedroom, egress, controls)", "status": "open"},
+    {"id": "GAP-ECON-06", "priority": "high", "pillar": "construction", "label": "Cross-jurisdiction cost adjustment table", "status": "open"},
+    {"id": "GAP-ECON-07", "priority": "moderate", "pillar": "inaction", "label": "SROI, WTP, contingent valuation methodologies", "status": "open"},
+    {"id": "GAP-ECON-08", "priority": "moderate", "pillar": "market", "label": "Days-on-market differential by accessibility features", "status": "open"},
+    {"id": "GAP-ECON-09", "priority": "moderate", "pillar": "market", "label": "Buyer-pool exclusion quantification", "status": "open"},
+    {"id": "GAP-ECON-10", "priority": "moderate", "pillar": "inaction", "label": "LHA 22× primary source traceability", "status": "open"},
+    {"id": "GAP-ECON-11", "priority": "moderate", "pillar": "market", "label": "14+ jurisdictions need deep investigation", "status": "open"}
+  ]
+}
