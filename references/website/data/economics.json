@@ -2,7 +2,15 @@
   "_meta": {
     "entity": "economics",
     "schema_version": "2.0",
-    "sub_entities": ["5a_cost_premiums", "5b_retrofit_multipliers", "5c_grant_programmes", "5d_health_outcomes", "5e_market_value", "5f_housing_deficit", "5g_research_gaps"],
+    "sub_entities": [
+      "5a_cost_premiums",
+      "5b_retrofit_multipliers",
+      "5c_grant_programmes",
+      "5d_health_outcomes",
+      "5e_market_value",
+      "5f_housing_deficit",
+      "5g_research_gaps"
+    ],
     "interface": "Economics Engine",
     "source_files": [
       "references/methodology/throughline-health-outcomes.md",
@@ -14,36 +22,186 @@
     "pillar_framework": {
       "description": "Four-pillar economic case, ranked by evidence strength",
       "pillars": [
-        {"rank": 1, "id": "health", "label": "Health Outcomes", "strength": "strong", "throughline_file": "throughline-health-outcomes.md"},
-        {"rank": 2, "id": "inaction", "label": "Cost of Inaction", "strength": "strong", "throughline_file": "throughline-cost-of-inaction.md"},
-        {"rank": 3, "id": "construction", "label": "Construction Cost", "strength": "moderate-strong", "throughline_file": "throughline-construction-cost.md"},
-        {"rank": 4, "id": "market", "label": "Market Value", "strength": "weak-direct/framework-strong", "throughline_file": "throughline-market-value.md"}
+        {
+          "rank": 1,
+          "id": "health",
+          "label": "Health Outcomes",
+          "strength": "strong",
+          "throughline_file": "throughline-health-outcomes.md"
+        },
+        {
+          "rank": 2,
+          "id": "inaction",
+          "label": "Cost of Inaction",
+          "strength": "strong",
+          "throughline_file": "throughline-cost-of-inaction.md"
+        },
+        {
+          "rank": 3,
+          "id": "construction",
+          "label": "Construction Cost",
+          "strength": "moderate-strong",
+          "throughline_file": "throughline-construction-cost.md"
+        },
+        {
+          "rank": 4,
+          "id": "market",
+          "label": "Market Value",
+          "strength": "weak-direct/framework-strong",
+          "throughline_file": "throughline-market-value.md"
+        }
       ]
     },
-    "last_updated": "2026-05-04"
+    "last_updated": "2026-05-04",
+    "part11_cost_table_map": {
+      "\u00a711.4.1 Circulation & Entry": [
+        "E-06",
+        "E-08",
+        "E-03",
+        "E-04",
+        "E-11",
+        "E-01",
+        "E-02",
+        "E-09",
+        "D-06",
+        "D-08",
+        "E-10",
+        "E-05"
+      ],
+      "\u00a711.4.2 Bathroom": [
+        "G-01",
+        "G-02",
+        "G-03",
+        "G-04",
+        "G-05",
+        "G-07",
+        "C-05"
+      ],
+      "\u00a711.4.3 Acoustic Design": [
+        "A-04",
+        "A-14",
+        "A-03",
+        "A-02",
+        "A-05",
+        "A-11",
+        "A-10",
+        "A-08",
+        "A-09",
+        "A-16"
+      ],
+      "\u00a711.4.4 Visual & Lighting": [
+        "C-04",
+        "B-02",
+        "B-03",
+        "B-04",
+        "B-09",
+        "B-01",
+        "B-11",
+        "B-10",
+        "C-02"
+      ],
+      "\u00a711.4.5 Cognitive & Wayfinding": [
+        "D-01",
+        "D-03",
+        "D-02",
+        "D-10",
+        "D-04",
+        "D-06",
+        "D-08",
+        "D-05",
+        "A-16",
+        "G-01",
+        "D-11"
+      ],
+      "\u00a711.4.6 Thermal & IEQ": [
+        "H-02",
+        "C-01",
+        "C-02",
+        "C-03",
+        "A-08",
+        "C-04"
+      ],
+      "\u00a711.4.7 Smart & Assistive Tech": [
+        "H-03",
+        "H-02",
+        "H-04",
+        "H-05"
+      ],
+      "\u00a711.4.8 Site & Outdoor": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "E-10",
+        "D-11",
+        "O-01"
+      ],
+      "\u00a711.4.9 Kitchen & Workspace": [
+        "H-01"
+      ],
+      "\u00a711.4.10 Bedroom": [
+        "H-01"
+      ],
+      "\u00a711.4.11 Emergency Egress": [
+        "B-10",
+        "H-04",
+        "E-01",
+        "E-02"
+      ],
+      "\u00a711.4.12 Controls & Hardware": [
+        "E-03",
+        "E-05",
+        "E-04",
+        "F-06",
+        "C-04"
+      ]
+    }
   },
-
   "cost_premiums": [
     {
       "cost_id": "COST-PREM-001",
       "source": "TERRAGON/DStGB 2017",
       "jurisdiction": "DE",
       "building_type": "residential",
-      "building_detail": "Model five-storey residential building, Berlin, 20 dwellings, 1500 m²",
+      "building_detail": "Model five-storey residential building, Berlin, 20 dwellings, 1500 m\u00b2",
       "standard": "DIN 18040-2",
       "finding": "138 of 148 criteria produce zero additional cost at design stage",
       "premium_percent_min": 0.54,
       "premium_percent_max": 1.26,
-      "premium_per_sqm": 21.50,
+      "premium_per_sqm": 21.5,
       "currency": "EUR",
       "year": 2017,
       "evidence_tier": "E-3/E-4",
       "methodology": "Bottom-up elemental cost comparison: accessible vs code-minimum",
       "single_source_flag": false,
       "commercial_interest_flag": true,
-      "commercial_interest_note": "TERRAGON AG is a residential developer. Corroborated by Bundesfachstelle Barrierefreiheit and Prof. Lothar Marx (TU München, DIN committee member).",
+      "commercial_interest_note": "TERRAGON AG is a residential developer. Corroborated by Bundesfachstelle Barrierefreiheit and Prof. Lothar Marx (TU M\u00fcnchen, DIN committee member).",
       "pillar": "construction",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-05",
+        "E-06",
+        "E-08",
+        "E-09",
+        "E-10",
+        "E-11",
+        "G-01",
+        "G-02",
+        "G-03",
+        "G-04",
+        "G-05",
+        "G-07",
+        "H-01",
+        "H-02",
+        "H-04",
+        "D-06",
+        "D-08",
+        "B-10",
+        "C-04",
+        "F-06"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -53,7 +211,7 @@
       "building_type": "public",
       "building_detail": "12 public building case studies",
       "standard": "Universal Design",
-      "finding": "Average 1.19% for large projects; renovation 2.24–14.9%",
+      "finding": "Average 1.19% for large projects; renovation 2.24\u201314.9%",
       "premium_percent_min": 0.94,
       "premium_percent_max": 3.92,
       "premium_per_sqm": null,
@@ -64,7 +222,23 @@
       "single_source_flag": false,
       "commercial_interest_flag": false,
       "pillar": "construction",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-06",
+        "E-08",
+        "G-01",
+        "G-02",
+        "G-03",
+        "G-04",
+        "D-01",
+        "D-03",
+        "D-05",
+        "C-04",
+        "B-02"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -86,17 +260,26 @@
       "commercial_interest_flag": false,
       "age_flag": "47 years old; no equivalent-scale replication",
       "pillar": "construction",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-06",
+        "E-08",
+        "G-01",
+        "G-02",
+        "G-04"
+      ],
       "last_updated": "2026-05-04"
     },
     {
       "cost_id": "COST-PREM-004",
-      "source": "CMHC / Société Logique 2015",
+      "source": "CMHC / Soci\u00e9t\u00e9 Logique 2015",
       "jurisdiction": "CA",
       "building_type": "residential",
       "building_detail": "Modest housing",
       "standard": "60-feature comprehensive accessibility package",
-      "finding": "6–12% per dwelling for comprehensive 60-feature accessibility",
+      "finding": "6\u201312% per dwelling for comprehensive 60-feature accessibility",
       "premium_percent_min": 6.0,
       "premium_percent_max": 12.0,
       "premium_per_sqm": null,
@@ -118,7 +301,7 @@
       "building_type": "residential",
       "building_detail": "New-build housing",
       "standard": "M4(2) Accessible and Adaptable Dwellings",
-      "finding": "£1,387–£1,400 per dwelling to meet M4(2)",
+      "finding": "\u00a31,387\u2013\u00a31,400 per dwelling to meet M4(2)",
       "premium_percent_min": 0.4,
       "premium_percent_max": 0.5,
       "premium_per_unit": 1400,
@@ -129,7 +312,19 @@
       "single_source_flag": false,
       "commercial_interest_flag": false,
       "pillar": "construction",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-06",
+        "E-08",
+        "G-01",
+        "G-02",
+        "G-03",
+        "G-04",
+        "G-05"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -151,7 +346,11 @@
       "single_source_flag": false,
       "commercial_interest_flag": false,
       "pillar": "construction",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-06",
+        "E-04",
+        "G-01"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -161,7 +360,7 @@
       "building_type": "residential",
       "building_detail": "Multi-family housing",
       "standard": "Loi Handicap accessibility",
-      "finding": "0.5–1% new-build premium",
+      "finding": "0.5\u20131% new-build premium",
       "premium_percent_min": 0.5,
       "premium_percent_max": 1.0,
       "currency": "EUR",
@@ -178,7 +377,7 @@
       "building_type": "residential",
       "building_detail": "Multi-family housing",
       "standard": "Swedish accessibility standards",
-      "finding": "0.5–1% new-build premium",
+      "finding": "0.5\u20131% new-build premium",
       "premium_percent_min": 0.5,
       "premium_percent_max": 1.0,
       "currency": "SEK",
@@ -189,7 +388,6 @@
       "last_updated": "2026-05-04"
     }
   ],
-
   "retrofit_multipliers": [
     {
       "multiplier_id": "RETRO-MUL-001",
@@ -199,7 +397,7 @@
       "retrofit_cost": 19100,
       "multiplier": 12,
       "currency": "EUR",
-      "unit": "per 75 m² apartment",
+      "unit": "per 75 m\u00b2 apartment",
       "year": 2017,
       "evidence_tier": "E-3",
       "pillar": "inaction",
@@ -227,7 +425,7 @@
       "retrofit_cost": null,
       "multiplier": 22,
       "currency": "AUD",
-      "unit": "ratio claim — primary research source not traceable",
+      "unit": "ratio claim \u2014 primary research source not traceable",
       "year": null,
       "evidence_tier": "E-5",
       "traceability_flag": true,
@@ -235,7 +433,6 @@
       "last_updated": "2026-05-04"
     }
   ],
-
   "grant_programmes": [
     {
       "grant_id": "GRANT-001",
@@ -258,7 +455,7 @@
       "grant_id": "GRANT-002",
       "programme_name": "KfW Programme 159 (Altersgerecht Umbauen)",
       "jurisdiction": "DE",
-      "administering_body": "KfW (Kreditanstalt für Wiederaufbau)",
+      "administering_body": "KfW (Kreditanstalt f\u00fcr Wiederaufbau)",
       "type": "Preferential loan",
       "max_funding": 50000,
       "currency": "EUR",
@@ -274,7 +471,7 @@
     },
     {
       "grant_id": "GRANT-003",
-      "programme_name": "Kaigo Hoken (Long-term Care Insurance — Home Modification)",
+      "programme_name": "Kaigo Hoken (Long-term Care Insurance \u2014 Home Modification)",
       "jurisdiction": "JP",
       "administering_body": "Municipal governments under MHLW",
       "type": "Insurance benefit",
@@ -311,7 +508,12 @@
       "jurisdiction": "AU",
       "administering_body": "NDIA (National Disability Insurance Agency)",
       "type": "Revenue stream (~20-year payment)",
-      "design_categories": ["Improved Liveability", "Fully Accessible", "Robust", "High Physical Support"],
+      "design_categories": [
+        "Improved Liveability",
+        "Fully Accessible",
+        "Robust",
+        "High Physical Support"
+      ],
       "currency": "AUD",
       "eligibility": "NDIS participants with extreme functional impairment",
       "source": "NDIA",
@@ -339,7 +541,7 @@
     },
     {
       "grant_id": "GRANT-007",
-      "programme_name": "CMHC MLI Select — Accessibility Bucket",
+      "programme_name": "CMHC MLI Select \u2014 Accessibility Bucket",
       "jurisdiction": "CA",
       "administering_body": "CMHC",
       "type": "Financing benefit",
@@ -360,18 +562,18 @@
       "eligibility": "Aging-related or disability-related adaptations",
       "source": "ANAH",
       "status": "Active",
-      "verification_note": "New programme — funding ceiling requires verification",
+      "verification_note": "New programme \u2014 funding ceiling requires verification",
       "pillar": "inaction",
       "last_updated": "2026-05-04"
     },
     {
       "grant_id": "GRANT-009",
-      "programme_name": "Husbanken tilskudd/lån (Housing Bank grant/loan)",
+      "programme_name": "Husbanken tilskudd/l\u00e5n (Housing Bank grant/loan)",
       "jurisdiction": "NO",
       "administering_body": "Husbanken",
       "type": "Means-tested grant/loan",
       "ltv_max_pct": 85,
-      "eligibility": "Livsløpsbolig (lifetime homes) standard compliance",
+      "eligibility": "Livsl\u00f8psbolig (lifetime homes) standard compliance",
       "source": "Husbanken",
       "evidence_tier": "E-1",
       "status": "Active",
@@ -379,7 +581,6 @@
       "last_updated": "2026-05-04"
     }
   ],
-
   "health_outcomes": [
     {
       "health_id": "HEALTH-001",
@@ -394,7 +595,17 @@
       "evidence_tier": "Tier 1",
       "evidence_rank": 1,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "G-03",
+        "G-05",
+        "B-02",
+        "B-03",
+        "C-04",
+        "E-08"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -410,14 +621,24 @@
       "evidence_tier": "Tier 1",
       "evidence_rank": 2,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "G-03",
+        "G-05",
+        "B-02",
+        "B-03",
+        "C-04",
+        "E-08"
+      ],
       "last_updated": "2026-05-04"
     },
     {
       "health_id": "HEALTH-003",
       "source": "Keall et al. 2021",
-      "study_design": "RCT (Māori population)",
-      "sample": "Māori population, NZ",
+      "study_design": "RCT (M\u0101ori population)",
+      "sample": "M\u0101ori population, NZ",
       "journal": "Lancet Public Health",
       "jurisdiction": "NZ",
       "finding": "31% fall injury reduction",
@@ -426,7 +647,17 @@
       "evidence_tier": "Tier 1",
       "evidence_rank": 3,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "G-03",
+        "G-05",
+        "B-02",
+        "B-03",
+        "C-04",
+        "E-08"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -443,8 +674,18 @@
       "evidence_tier": "Tier 1",
       "evidence_rank": 4,
       "pillar": "health",
-      "convergence_note": "Cross-jurisdictional convergence with CAPABLE US (HO-006): independent programmes, similar BCR (9–10:1), similar cost ($500–$1,300)",
-      "spec_cross_refs": [],
+      "convergence_note": "Cross-jurisdictional convergence with CAPABLE US (HO-006): independent programmes, similar BCR (9\u201310:1), similar cost ($500\u2013$1,300)",
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "G-03",
+        "G-05",
+        "B-02",
+        "B-03",
+        "C-04",
+        "E-08"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -452,7 +693,7 @@
       "source": "Chandola & Rouxel 2022",
       "study_design": "Longitudinal cohort (n=10,459, 11.3 years)",
       "sample": "n=10,459, English Longitudinal Study of Ageing",
-      "journal": "Lancet Regional Health – Europe",
+      "journal": "Lancet Regional Health \u2013 Europe",
       "jurisdiction": "UK",
       "finding": "Curb-cut effect: non-impaired adults show 6% social isolation reduction, 4% reduced need to move from external housing modifications",
       "bcr": null,
@@ -461,7 +702,13 @@
       "evidence_rank": 5,
       "pillar": "health",
       "significance_note": "Strongest empirical evidence for universal benefit of accessible residential design (curb-cut effect in housing)",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "E-10",
+        "D-11"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -478,8 +725,18 @@
       "evidence_tier": "Tier 1",
       "evidence_rank": 6,
       "pillar": "health",
-      "convergence_note": "Cross-jurisdictional convergence with Keall NZ (HO-004): independent programmes, similar BCR (9–10:1), similar cost ($500–$1,300)",
-      "spec_cross_refs": [],
+      "convergence_note": "Cross-jurisdictional convergence with Keall NZ (HO-004): independent programmes, similar BCR (9\u201310:1), similar cost ($500\u2013$1,300)",
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "G-03",
+        "G-05",
+        "B-02",
+        "B-03",
+        "C-04",
+        "E-08"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -489,13 +746,23 @@
       "sample": "319 participants, US",
       "journal": "PMC",
       "jurisdiction": "US",
-      "finding": "Mortality: 9 vs 21 deaths at 2 years; ICER $13–15K/QALY (well below standard thresholds)",
+      "finding": "Mortality: 9 vs 21 deaths at 2 years; ICER $13\u201315K/QALY (well below standard thresholds)",
       "bcr": null,
       "cost_per_person": null,
       "evidence_tier": "Tier 1",
       "evidence_rank": 7,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-06",
+        "E-03",
+        "E-04",
+        "G-03",
+        "G-05",
+        "B-02",
+        "B-03",
+        "C-04",
+        "E-08"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -505,14 +772,20 @@
       "sample": "n=4,610 Japanese LTC recipients",
       "journal": "JAMDA",
       "jurisdiction": "JP",
-      "finding": "28% lower long-term care facility admission at ¥200,000 max adaptation cost",
+      "finding": "28% lower long-term care facility admission at \u00a5200,000 max adaptation cost",
       "bcr": null,
       "cost_per_person": 1287,
       "cost_currency": "USD equivalent",
       "evidence_tier": "Tier 2",
       "evidence_rank": 8,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "G-03",
+        "G-05",
+        "E-06",
+        "E-04",
+        "H-01"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -529,7 +802,22 @@
       "evidence_tier": "Tier 3",
       "evidence_rank": 9,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-06",
+        "E-08",
+        "G-01",
+        "G-02",
+        "G-03",
+        "G-04",
+        "G-05",
+        "G-07",
+        "H-01",
+        "H-02"
+      ],
       "last_updated": "2026-05-04"
     },
     {
@@ -545,32 +833,46 @@
       "evidence_tier": "Tier 3",
       "evidence_rank": 10,
       "pillar": "health",
-      "spec_cross_refs": [],
+      "spec_cross_refs": [
+        "G-03",
+        "G-05",
+        "E-06",
+        "E-04"
+      ],
       "last_updated": "2026-05-04"
     }
   ],
-
   "market_value": {
     "hedonic_gap_statement": "No peer-reviewed hedonic regression isolates an accessibility premium in residential transaction data in any of the 24 project jurisdictions. This is the single largest research gap across the entire economics evidence base.",
-    "framework": "Perceptual-Value Crossover (§15)",
+    "framework": "Perceptual-Value Crossover (\u00a715)",
     "throughlines": [
       {
         "throughline_id": "THRU-001",
         "label": "Square-footage inheritance",
         "evidence_tier": "Tier 1 (by inheritance from Sirmans 2006 meta-analysis)",
         "description": "Accessibility minimums are dimensional minimums. Floor area is the most consistently priced residential hedonic variable across 64 studies and 24 countries.",
-        "mechanism": "Dimensional generosity — accessibility specifications that mandate larger spaces transfer the hedonic value of floor area directly.",
-        "spec_cross_refs": ["E-04", "E-08", "E-12", "G-04", "G-08", "D-05"],
+        "mechanism": "Dimensional generosity \u2014 accessibility specifications that mandate larger spaces transfer the hedonic value of floor area directly.",
+        "spec_cross_refs": [
+          "E-04",
+          "E-08",
+          "E-12",
+          "G-04",
+          "G-08",
+          "D-05"
+        ],
         "strength_pct": 95,
         "pillar": "market"
       },
       {
         "throughline_id": "THRU-002",
         "label": "Cubic volume (ceiling height)",
-        "evidence_tier": "Tier 4–5",
-        "description": "Ceiling height premium 5–25% reported in trade press. Limited peer-reviewed hedonic evidence.",
-        "mechanism": "Dimensional generosity — specifications requiring greater ceiling clearance produce volume-premium effects.",
-        "spec_cross_refs": ["B-09", "I-04"],
+        "evidence_tier": "Tier 4\u20135",
+        "description": "Ceiling height premium 5\u201325% reported in trade press. Limited peer-reviewed hedonic evidence.",
+        "mechanism": "Dimensional generosity \u2014 specifications requiring greater ceiling clearance produce volume-premium effects.",
+        "spec_cross_refs": [
+          "B-09",
+          "I-04"
+        ],
         "strength_pct": 35,
         "pillar": "market"
       },
@@ -579,18 +881,27 @@
         "label": "Bedroom/bathroom count",
         "evidence_tier": "Tier 1 (where applicable)",
         "description": "Both are canonical Sirmans hedonic regressors. Applies only where accessibility specs change the room count.",
-        "mechanism": "Dimensional generosity — specifications that add or modify rooms transfer the hedonic value of room count.",
-        "spec_cross_refs": ["G-04", "E-15"],
+        "mechanism": "Dimensional generosity \u2014 specifications that add or modify rooms transfer the hedonic value of room count.",
+        "spec_cross_refs": [
+          "G-04",
+          "E-15"
+        ],
         "strength_pct": 80,
         "pillar": "market"
       },
       {
         "throughline_id": "THRU-004",
         "label": "Build quality at constant size",
-        "evidence_tier": "Tier 4–5",
+        "evidence_tier": "Tier 4\u20135",
         "description": "Acoustic doors, MERV 13+ filtration, slip-resistant tile push dwelling into next price-tier band without adding floor area.",
-        "mechanism": "Build-quality side effects — accessibility specifications that mandate higher-grade materials or systems produce quality-premium effects.",
-        "spec_cross_refs": ["A-03", "F-04", "F-07", "E-07", "G-03"],
+        "mechanism": "Build-quality side effects \u2014 accessibility specifications that mandate higher-grade materials or systems produce quality-premium effects.",
+        "spec_cross_refs": [
+          "A-03",
+          "F-04",
+          "F-07",
+          "E-07",
+          "G-03"
+        ],
         "strength_pct": 40,
         "pillar": "market"
       },
@@ -599,21 +910,36 @@
         "label": "Completed migration (downside-avoidance)",
         "evidence_tier": "Tier 4",
         "description": "Features that became universal expectations. No premium to measure because absence is the market negative (lever handles, wide entries).",
-        "mechanism": "Completed migration — features that have crossed from accessibility-origin to mainstream-default. Market prices their absence, not their presence.",
-        "spec_cross_refs": ["I-01", "I-02", "I-03", "H-02", "H-04", "B-12", "F-07"],
+        "mechanism": "Completed migration \u2014 features that have crossed from accessibility-origin to mainstream-default. Market prices their absence, not their presence.",
+        "spec_cross_refs": [
+          "I-01",
+          "I-02",
+          "I-03",
+          "H-02",
+          "H-04",
+          "B-12",
+          "F-07"
+        ],
         "strength_pct": 60,
         "pillar": "market"
       }
     ],
     "anchor_data_point": {
-      "source": "Cost vs. Value 2025 — Universal Design Bath Remodel",
+      "source": "Cost vs. Value 2025 \u2014 Universal Design Bath Remodel",
       "publisher": "Zonda Media / Journal of Light Construction",
       "scope": "115 US markets, 38th annual report",
       "cost_usd": 42183,
       "roi_pct": 61,
       "yoy_change_pp": 12,
       "evidence_tier": "Tier 3",
-      "spec_cross_refs": ["E-06", "G-04", "I-01", "I-03", "H-01", "G-03"],
+      "spec_cross_refs": [
+        "E-06",
+        "G-04",
+        "I-01",
+        "I-03",
+        "H-01",
+        "G-03"
+      ],
       "note": "Single strongest direct evidence point for accessibility-feature market value",
       "pillar": "market"
     },
@@ -621,17 +947,40 @@
       "concept": "Accessibility features are simultaneously consumed as mainstream desirable features under non-accessibility labels. The hedonic gap is a labelling problem, not a value problem.",
       "source": "NAHB 2024 What Home Buyers Really Want",
       "mappings": [
-        {"accessibility_label": "Curbless shower / zero-threshold", "mainstream_label": "Walk-in spa shower", "buyer_preference_pct": 72},
-        {"accessibility_label": "Wide corridors / open plan", "mainstream_label": "Open-concept living", "buyer_preference_pct": null},
-        {"accessibility_label": "First-floor bedroom suite", "mainstream_label": "Main-level master", "buyer_preference_pct": null},
-        {"accessibility_label": "First-floor laundry", "mainstream_label": "Convenience laundry", "buyer_preference_pct": 60},
-        {"accessibility_label": "Enclosed low-stimulation space", "mainstream_label": "Home office", "buyer_preference_pct": 66},
-        {"accessibility_label": "Step-free entry + lighting", "mainstream_label": "Front porch + exterior lighting", "buyer_preference_pct": null}
+        {
+          "accessibility_label": "Curbless shower / zero-threshold",
+          "mainstream_label": "Walk-in spa shower",
+          "buyer_preference_pct": 72
+        },
+        {
+          "accessibility_label": "Wide corridors / open plan",
+          "mainstream_label": "Open-concept living",
+          "buyer_preference_pct": null
+        },
+        {
+          "accessibility_label": "First-floor bedroom suite",
+          "mainstream_label": "Main-level master",
+          "buyer_preference_pct": null
+        },
+        {
+          "accessibility_label": "First-floor laundry",
+          "mainstream_label": "Convenience laundry",
+          "buyer_preference_pct": 60
+        },
+        {
+          "accessibility_label": "Enclosed low-stimulation space",
+          "mainstream_label": "Home office",
+          "buyer_preference_pct": 66
+        },
+        {
+          "accessibility_label": "Step-free entry + lighting",
+          "mainstream_label": "Front porch + exterior lighting",
+          "buyer_preference_pct": null
+        }
       ],
       "pillar": "market"
     }
   },
-
   "housing_deficit": [
     {
       "deficit_id": "DEFICIT-001",
@@ -687,18 +1036,96 @@
       "last_updated": "2026-05-04"
     }
   ],
-
   "research_gaps": [
-    {"gap_id": "GAP-ECON-01", "priority": "critical", "pillar": "market", "label": "Peer-reviewed hedonic accessibility premium", "description": "No peer-reviewed hedonic regression isolates an accessibility premium in any of the 24 project jurisdictions.", "status": "open"},
-    {"gap_id": "GAP-ECON-02", "priority": "critical", "pillar": "health", "label": "Co-1 lived-experience economic evidence", "description": "§16.7 is empty. Per project doctrine, Co-1 is co-primary evidence.", "status": "open"},
-    {"gap_id": "GAP-ECON-03", "priority": "critical", "pillar": "market", "label": "Non-US Cost vs. Value equivalent", "description": "61% ROI anchor is US-only. No jurisdiction has a comparable annual accessibility-remodel ROI series.", "status": "open"},
-    {"gap_id": "GAP-ECON-04", "priority": "high", "pillar": "all", "label": "~40 unverified jurisdictional source names", "description": "Pattern-matched source names in §4-§5 that have not passed §7 verification chain.", "status": "open"},
-    {"gap_id": "GAP-ECON-05", "priority": "high", "pillar": "construction", "label": "Missing Part 11 cost tables", "description": "Kitchen (H-01), bedroom, emergency egress, and controls/hardware categories have no cost table.", "status": "open"},
-    {"gap_id": "GAP-ECON-06", "priority": "high", "pillar": "construction", "label": "Cross-jurisdiction cost adjustment table", "description": "No single source covers all 24 jurisdictions for cost normalisation.", "status": "open"},
-    {"gap_id": "GAP-ECON-07", "priority": "moderate", "pillar": "inaction", "label": "SROI, WTP, contingent valuation", "description": "Standard CBA methodologies absent. One study using contingent valuation (Alonso 2002, Spain).", "status": "open"},
-    {"gap_id": "GAP-ECON-08", "priority": "moderate", "pillar": "market", "label": "Days-on-market differential", "description": "Published analysis of accessibility-feature DOM differential is sparse.", "status": "open"},
-    {"gap_id": "GAP-ECON-09", "priority": "moderate", "pillar": "market", "label": "Buyer-pool exclusion quantification", "description": "Sale-by-sale analysis of excluded buyers is essentially absent.", "status": "open"},
-    {"gap_id": "GAP-ECON-10", "priority": "moderate", "pillar": "inaction", "label": "LHA 22× primary source", "description": "Underlying primary research source not traceable from LHA website.", "status": "open"},
-    {"gap_id": "GAP-ECON-11", "priority": "moderate", "pillar": "market", "label": "14+ jurisdictions need deep investigation", "description": "IT, ES, NL, SE, NO, DK, FI, IE, NZ, JP (beyond financing), KR, BR, MX, IN, SG not investigated to UK/AU/CA/DE depth.", "status": "open"}
+    {
+      "gap_id": "GAP-ECON-01",
+      "priority": "critical",
+      "pillar": "market",
+      "label": "Peer-reviewed hedonic accessibility premium",
+      "description": "No peer-reviewed hedonic regression isolates an accessibility premium in any of the 24 project jurisdictions.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-02",
+      "priority": "critical",
+      "pillar": "health",
+      "label": "Co-1 lived-experience economic evidence",
+      "description": "\u00a716.7 is empty. Per project doctrine, Co-1 is co-primary evidence.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-03",
+      "priority": "critical",
+      "pillar": "market",
+      "label": "Non-US Cost vs. Value equivalent",
+      "description": "61% ROI anchor is US-only. No jurisdiction has a comparable annual accessibility-remodel ROI series.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-04",
+      "priority": "high",
+      "pillar": "all",
+      "label": "~40 unverified jurisdictional source names",
+      "description": "Pattern-matched source names in \u00a74-\u00a75 that have not passed \u00a77 verification chain.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-05",
+      "priority": "high",
+      "pillar": "construction",
+      "label": "Missing Part 11 cost tables",
+      "description": "Kitchen (H-01), bedroom, emergency egress, and controls/hardware categories have no cost table.",
+      "status": "resolved",
+      "resolution_note": "Part 11 v10 \u00a711.4.9-\u00a711.4.12 now contain cost tables for kitchen, bedroom, emergency egress, and controls/hardware. Resolved prior to v10 release.",
+      "resolved_date": "2026-05-04"
+    },
+    {
+      "gap_id": "GAP-ECON-06",
+      "priority": "high",
+      "pillar": "construction",
+      "label": "Cross-jurisdiction cost adjustment table",
+      "description": "No single source covers all 24 jurisdictions for cost normalisation.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-07",
+      "priority": "moderate",
+      "pillar": "inaction",
+      "label": "SROI, WTP, contingent valuation",
+      "description": "Standard CBA methodologies absent. One study using contingent valuation (Alonso 2002, Spain).",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-08",
+      "priority": "moderate",
+      "pillar": "market",
+      "label": "Days-on-market differential",
+      "description": "Published analysis of accessibility-feature DOM differential is sparse.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-09",
+      "priority": "moderate",
+      "pillar": "market",
+      "label": "Buyer-pool exclusion quantification",
+      "description": "Sale-by-sale analysis of excluded buyers is essentially absent.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-10",
+      "priority": "moderate",
+      "pillar": "inaction",
+      "label": "LHA 22\u00d7 primary source",
+      "description": "Underlying primary research source not traceable from LHA website.",
+      "status": "open"
+    },
+    {
+      "gap_id": "GAP-ECON-11",
+      "priority": "moderate",
+      "pillar": "market",
+      "label": "14+ jurisdictions need deep investigation",
+      "description": "IT, ES, NL, SE, NO, DK, FI, IE, NZ, JP (beyond financing), KR, BR, MX, IN, SG not investigated to UK/AU/CA/DE depth.",
+      "status": "open"
+    }
   ]
 }
