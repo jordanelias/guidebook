@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>R-BA — Bathroom</title>
+    <style>
+        :root {
+            --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+            --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+            --font-body: 'Source Serif 4', Georgia, serif;
+            --font-ui: 'DM Sans', 'Helvetica Neue', sans-serif;
+            --font-mono: 'JetBrains Mono', Consolas, monospace;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
+               line-height: 1.65; max-width: 960px; margin: 0 auto; padding: 24px; }
+
+        .room-header { margin-bottom: 32px; }
+        .room-id { font-family: var(--font-mono); font-size: 14px; color: var(--accent); letter-spacing: 1px; }
+        h1 { font-size: 28px; font-weight: 600; margin: 8px 0; }
+        .room-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+        .meta-tag { font-family: var(--font-ui); font-size: 13px; padding: 4px 10px;
+                    border-radius: 4px; background: var(--accent-light); color: var(--accent); }
+
+        section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+        section:last-child { border-bottom: none; }
+        h2 { font-family: var(--font-ui); font-size: 16px; font-weight: 600;
+              text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 12px; }
+
+        .crit-note { font-size: 15px; line-height: 1.7; padding: 12px 16px;
+                     background: #fff8e1; border-left: 4px solid #ffc107; margin-bottom: 16px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { font-family: var(--font-ui); font-size: 11px; text-transform: uppercase;
+              letter-spacing: 0.5px; text-align: left; padding: 6px 10px;
+              background: var(--accent-light); color: var(--accent); border-bottom: 2px solid var(--border); }
+        td { padding: 6px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
+
+        .stage-header td { font-family: var(--font-ui); font-weight: 600; font-size: 12px;
+                           background: #f0f0f0; color: var(--muted); text-transform: uppercase;
+                           letter-spacing: 1px; padding: 8px 10px; }
+
+        .pop-col { text-align: center; min-width: 48px; }
+        .app-primary { text-align: center; color: #2e7d32; font-weight: bold; }
+        .app-secondary { text-align: center; color: #1565c0; }
+        .app-none { text-align: center; color: #e0e0e0; }
+        .drawing-ref { font-family: var(--font-ui); font-size: 12px; color: var(--muted); }
+
+        .dar-section table { background: #e8f5e9; }
+        .dar-section th { background: #c8e6c9; color: #2e7d32; }
+
+        @media (max-width: 640px) {
+            body { padding: 16px; }
+            h1 { font-size: 22px; }
+            table { font-size: 12px; }
+            .pop-col { min-width: 36px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="room-header">
+    <span class="room-id">R-BA</span>
+    <h1>Bathroom</h1>
+    <div class="room-meta">
+        <span class="meta-tag">Residential</span>
+        <span class="meta-tag">■ Rich</span>
+    </div>
+</header>
+
+<section>
+    <p class="crit-note">Highest fall-risk space in residential buildings. Wet surfaces, transfers, and confined space create compounding hazards. Most bathroom falls occur during transfers (toilet, shower, bath).</p>
+</section>
+
+<section>
+    <h2>Item Application Matrix</h2>
+    <table>
+        <thead><tr><th>Code</th><th>Specification</th><th>Drawing</th><th class="pop-col">DEAF</th><th class="pop-col">DEM</th><th class="pop-col">MOB</th><th class="pop-col">NDV</th><th class="pop-col">PAIN</th><th class="pop-col">VIS</th></tr></thead>
+        <tbody><tr class="stage-header"><td colspan="9">SD</td></tr>
+<tr><td><a href="/specs/G-03">G-03</a></td><td>G-03</td><td class="drawing-ref">Floor plan; elevation</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/G-04">G-04</a></td><td>Accessible Bathroom (Wet Room Configuration — Zero Threshold)</td><td class="drawing-ref">Floor plan; section</td><td class="app-none">·</td><td class="app-secondary">◐</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr class="stage-header"><td colspan="9">DD</td></tr>
+<tr><td><a href="/specs/B-01">B-01</a></td><td>B-01</td><td class="drawing-ref">Reflected ceiling plan</td><td class="app-none">·</td><td class="app-secondary">◐</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-primary">●</td></tr>
+<tr><td><a href="/specs/E-07">E-07</a></td><td>E-07</td><td class="drawing-ref">Floor plan (finish schedule)</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/F-07">F-07</a></td><td>F-07</td><td class="drawing-ref">Floor plan</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/H-01">H-01</a></td><td>H-01</td><td class="drawing-ref">Elevation</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-secondary">◐</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr class="stage-header"><td colspan="9">CD</td></tr>
+<tr><td><a href="/specs/K-01">K-01</a></td><td>K-01</td><td class="drawing-ref">Elevation</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+</tbody>
+    </table>
+</section>
+
+<section class="dar-section">
+    <h2>DAR Provisions</h2>
+    <table>
+        <thead><tr><th>Provision</th><th>Stage</th><th>Drawing</th></tr></thead>
+        <tbody><tr><td>Structural blocking in walls at all grab bar positions (bilateral + vertical)</td><td>CD</td><td>Wall backing plan</td></tr>
+<tr><td>Drainage fall in structural floor for future wet room conversion</td><td>CD</td><td>Structural floor plan</td></tr>
+<tr><td>Electrical conduit for future ceiling hoist track</td><td>CD</td><td>Reflected ceiling plan</td></tr>
+<tr><td>Door frame sized for 900 mm clear opening (future automatic door)</td><td>SD</td><td>Floor plan</td></tr>
+</tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Conflict Register</h2>
+    <table>
+        <thead><tr><th>Conflict</th><th>Resolution</th><th>Domain</th></tr></thead>
+        <tbody><tr><td>Grab bar diameter: MOB prefers 32 mm; PAIN/OFS prefers 35 mm (reduced grip force)</td><td>GRAB-BAR-DIA: Mode P median 33 mm; Mode S OT resolves</td><td><a href="/conflicts/GRAB-BAR-DIA">GRAB-BAR-DIA</a></td></tr>
+</tbody>
+    </table>
+</section>
+
+</body>
+</html>
