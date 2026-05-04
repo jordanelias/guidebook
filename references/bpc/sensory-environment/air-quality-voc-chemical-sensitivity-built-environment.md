@@ -54,7 +54,12 @@
 | — | — | No RCT linking MERV 13 to MCAS symptom reduction in built environments | — | — |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 07:32
+| Source | Direction | New sources added |
+|---|---|---|
+| Steinemann 2018 US (AQV-07) | Forward | Steinemann 2018 AU (AQV-09); Steinemann 2019 4-country (AQV-10); Italian MCS survey 2025 (AQV-12) |
+| Steinemann 2018 US (AQV-07) | Backward | Hausteiner 2005 DE (AQV-11) |
+**Notes:** Steinemann 2019 is the critical find — 4-country comparison (US/AU/SE/UK) with autism co-prevalence data (~3x general population). Hausteiner 2005 provides DE-language prevalence data. Italian 2025 survey provides IT data. Combined: jurisdiction coverage for MCS prevalence expanded from US-only to US, AU, SE, UK, DE, IT.
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
@@ -71,12 +76,17 @@ Not yet run.
 | AQV-06 | IWBI | 2024 | WELL Building Standard v2 — Air Quality feature | 5 | INT | https://v2.wellcertified.com/wellv2/en/air |
 | AQV-07 | Steinemann, A. | 2018 | Prevalence and effects of MCS. JOEM 60(3):e152-e156. DOI:10.1097/JOM.0000000000001272 | 3 | US | 12.8% diagnosed MCS; 25.9% chemical sensitivity |
 | AQV-08 | ASHRAE | 2017 | ASHRAE 52.2-2017 — MERV filtration rating standard | 4 | INT | https://www.ashrae.org/technical-resources/bookstore/52-2 |
+| AQV-09 | Steinemann, A. | 2018 | Prevalence and effects of multiple chemical sensitivities in Australia. Prev Med Rep 10:191–194. DOI:10.1016/j.pmedr.2018.03.007 | 3 | AU | 6.5% diagnosed MCS in Australia |
+| AQV-10 | Steinemann, A. | 2019 | International prevalence of chemical sensitivity, co-prevalences with asthma and autism. Air Qual Atmos Health. DOI:10.1007/s11869-019-00672-1 | 3 | US/AU/SE/UK | 4-country comparison; autism co-prevalence ~3x; SE and UK data |
+| AQV-11 | Hausteiner, C. et al. | 2005 | Self-reported chemical sensitivity in Germany: a population-based survey. Int J Hyg Environ Health 208:271–278. DOI:10.1016/j.ijheh.2005.03.006 | 3 | DE | German population prevalence data |
+| AQV-12 | Leonardi, S. et al. | 2025 | Multiple Chemical Sensitivity: an Italian prevalence multicentric survey. Front Public Health. DOI:10.3389/fpubh.2025.1685040 | 3 | IT | Italian multicentric prevalence data |
 
 ## Metadata
 
 ```yaml
 slug: air-quality-voc-chemical-sensitivity-built-environment
 population: OFS
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```

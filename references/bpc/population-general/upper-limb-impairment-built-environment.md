@@ -76,7 +76,14 @@
 | [STUB — pending Opus synthesis pass] | | | | |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 07:32
+| Source | Direction | New sources added |
+|---|---|---|
+| Kennedy 2015 (ULB-05) | Forward | Lee/Sanford 2018 (ULB-12); Lee/Mehta-Desai 2019 (ULB-13); Levine 2022 Co-1 (ULB-14) |
+| Al Lawati 2017 (ULB-03) | Forward | Rouvier 2022 systematic review (ULB-15) |
+| Lee/Sanford 2018 (ULB-12) | Backward | Sanford/Echt/Malassigné 2000 (ULB-16) |
+| D'Souza 2011 (ULB-01) | Forward | ANSI A117.1-2017 67" turning space (already known) |
+**Notes:** ULB-11 (Lee 2017) confirmed as Phase 1 of ULB-12 (Lee 2018). ULB-04 DOI confirmed. ICC 2021 IBC code changes E123-18 adopted assisted toileting provisions based on Lee/Sanford research (Tier 6 confirmation).
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
@@ -88,20 +95,26 @@ Not yet run.
 | ULB-01 | D'Souza, C. et al. | 2011 | Wheeled mobility device dimensions. IDeA Center / Steinfeld. Assist Technol. DOI:10.1080/10400430903496580 | 1 | US | 2108mm needed for 95th-percentile power chairs |
 | ULB-02 | Togni, G. et al. | 2022 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
 | ULB-03 | Al Lawati, M. et al. | 2017 | 2cm threshold defeats 45.8% WC users. Disabil Rehabil Assist Technol | 3 | INT | See SRB-06 |
-| ULB-04 | Sanford, J. & Bosch, P. | 2013 | Toilet centreline 30 in. for stand-pivot transfers (n=20). [GREY — journal/DOI required] | 3 | US | 90% use stand-pivot, not lateral |
+| ULB-04 | Sanford, J. & Bosch, S.J. | 2013 | An investigation of noncompliant toilet room designs for assisted toileting. HERD 6(2):43–57. DOI:10.1177/193758671300600205 | 3 | US | 90% use stand-pivot, not lateral; 30" CL preferred |
 | ULB-05 | Kennedy, M.J. et al. | 2015 | Toilet grab-bar preference and COP deviation during toilet transfers. Assist Technol 27(2):78–87. PMID:26132352. DOI:10.1080/10400435.2014.976799 | 3 | INT | 2VB most preferred + smallest COP deviation |
 | ULB-06 | Levine, D. et al. | 2023 | Grab bar placement varies with body height (r=0.67). Human Factors. DOI:10.1177/00187208211059860 | 3 | INT | See per project-standards Levine 2023 |
 | ULB-07 | Levine, D. et al. | 2025 | Grab bar adjustability evidence. JMIR. DOI:10.2196/69442 | 3 | INT | See per project-standards Levine 2025 |
 | ULB-08 | Kim, W. et al. | 2014 | Ramp gradient >6% increases propulsion effort | 3 | INT | See SRB-04 |
 | ULB-09 | Zanotto, D. et al. | 2023 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
 | ULB-10 | Cockayne, S. et al. | 2021 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
-| ULB-11 | Lee, J. et al. | 2017 | Bilateral fold-down grab bars at 813mm height outperform ADA configuration. [GREY — DOI required] | 3 | INT | 356mm from toilet CL |
+| ULB-11 | Lee, S.J. et al. | 2017 | Bilateral fold-down grab bars at 813mm height outperform ADA configuration. [Phase 1 — superseded by ULB-12 full publication] | 3 | US | 356mm from toilet CL |
+| ULB-12 | Lee, S.J., Sanford, J., Calkins, M. et al. | 2018 | Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers. HERD 11(2):32–44. DOI:10.1177/1937586717730338 | 3 | US | n=130+ residents, 11 facilities; bilateral fold-down bars 356mm from CL, 813mm AFF; significantly more effective than ADA |
+| ULB-13 | Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., Prilutsky, B.I. | 2019 | Effects of bilateral swing-away grab bars on biomechanics of STS toilet transfers. Disabil Rehabil Assist Technol 14(3):292–300. DOI:10.1080/17483107.2018.1447605 | 3 | US | Kinetic data for 9 bilateral grab bar configurations |
+| ULB-14 | Levine, I.C., Lau, S.T., King, E.C., Novak, A.C. | 2022 | Consumer perspectives on grab bars: A Canadian national survey. Front Public Health 10:915100. DOI:10.3389/fpubh.2022.915100 | Co-1 | CA | National survey; majority support mandatory bathroom grab bars |
+| ULB-15 | Rouvier, T., Louessard, A., Simonetti, E. et al. | 2022 | Manual wheelchair biomechanics while overcoming environmental barriers: A systematic review. PLOS ONE. DOI:10.1371/journal.pone.0269657 | 3 (SR) | INT | Systematic review of WC biomechanics for environmental barriers |
+| ULB-16 | Sanford, J., Echt, K., Malassigné, P. | 2000 | An E for ADAAG: The case for ADA accessibility guidelines for the elderly. Phys Occup Ther Geriatr 16:39–58. DOI:10.1080/J148v16n03_03 | 3 | US | Foundation piece — three studies of toilet transfer |
 
 ## Metadata
 
 ```yaml
 slug: upper-limb-impairment-built-environment
 population: MOB
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```
