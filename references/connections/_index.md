@@ -5,15 +5,15 @@
 
 **Last migration:** 2026-04-19 (Block 4 B1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
-**Total connections migrated:** 214
-**Next CON-ID:** CON-0222
+**Total connections migrated:** 221
+**Next CON-ID:** CON-0229
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 140 |
 | CONSUMED-DEFERRED | 42 |
-| PENDING | 38 |
+| PENDING | 45 |
 | CONSUMED (this session) | 3 |
 
 ## Index
@@ -244,3 +244,10 @@
 | CON-0219 | PENDING | C-01, H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
 | CON-0220 | PENDING | A-16, F-01, F-03 | sensory-environment | MODERATE | false | — |
 | CON-0221 | PENDING | F-01, Part 3 | frameworks-and-methodology | HIGH | false | — |
+| CON-0222 | PENDING | A-16, Part 7 NR matrices | sensory-environment | HIGH | false | — |
+| CON-0223 | PENDING | C-03, C-04, A-09 | wayfinding-and-signage | HIGH | false | — |
+| CON-0224 | PENDING | F-07, K-05, Part 5 | health-and-symptom-management | HIGH | false | — |
+| CON-0225 | PENDING | Part 11, Part 12 | frameworks-and-methodology | HIGH | false | — |
+| CON-0226 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
+| CON-0227 | PENDING | D-05, C-04, F-03 | wayfinding-and-signage | MODERATE | false | — |
+| CON-0228 | PENDING | Part 9 §9.5, G-03 | frameworks-and-methodology | HIGH | false | — |

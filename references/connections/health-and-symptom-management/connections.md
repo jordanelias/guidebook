@@ -193,3 +193,26 @@ The practical implication: rest seating (I-03) should be placed AT TWSI attentio
 **Action required:** Add DEM/OFS population applicability to thermal comfort assessment spec. Add note: PMV/PPD contraindicated for DEM, NEU, OFS. Specify alternative assessment methods.
 
 **Disposition notes:** —
+
+---
+
+## CON-0224
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** thermoregulation-built-environment, ofs-built-environment, dementia-built-environment
+**Target item(s):** F-07, K-05, Part 5
+**Target population(s):** OFS, MS, DEM, older adults
+**Evidence tier:** 1-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** 3.9°C gap between OFS/MS maximum (≤21°C — Strassheim 2018, CDC ME/CFS, Chaseling 2022) and DEM/older adult thermal neutral (24.9°C — thermal-comfort-older-adults BPC). Resolution synthesized in thermoregulation BPC: ambient default 18-20°C in shared spaces where NEU/MS or SCI present; individual local warmth for DEM/older adults via heated seating pad (≤45°C surface, timer-controlled), radiant panel — no ambient temperature increase. CON-0184 covers K-05 assessment framework. CON-0191 covers ≤5°C inter-room differential. Neither captures the OFS/MS-vs-DEM ambient temperature conflict or its resolution. This is the second thermal conflict after MS-vs-FMS (ms-thermal BPC).
+
+**Evidence basis:** Strassheim 2018; CDC ME/CFS guidance; Chaseling et al. 2022; thermal-comfort-older-adults BPC; thermoregulation BPC synthesis; Griggs 2019 (SCI Tcore at 23.9°C).
+
+**Action required:** F-07: add OFS/MS vs DEM thermal conflict with resolution (ambient 18-20°C + local warmth). K-05: cross-reference. Part 5: document as second thermal conflict exemplar alongside MS-vs-FMS.
+
+**Disposition notes:** —

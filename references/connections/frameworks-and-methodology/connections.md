@@ -701,3 +701,49 @@ These programme models demonstrate that the highest-quality national systems sti
 **Action required:** F-01: topological specification replacing linear. Part 3: sensory gradient as topology. A-03: branch-point acoustic door.
 
 **Disposition notes:** —
+
+---
+
+## CON-0225
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, mobility-built-environment
+**Target item(s):** Part 11, Part 12
+**Target population(s):** ALL (economics)
+**Evidence tier:** 1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Citation chain: Keall et al. 2015 HIPI RCT (Lancet, 26% fall injury reduction, n=842) → Keall et al. 2017 cost-benefit analysis (Injury Prevention, positive ROI for home modifications — the only RCT-derived economic analysis of home modifications in the evidence base) → Keall et al. 2021 MHIPI RCT (Lancet Public Health, broader Māori-focused package). The 2017 cost-benefit paper demonstrates that the intervention cost was recovered within the trial period via reduced injury costs. CON-0048 and CON-0156 cover economics but neither cites Keall 2017. This is the strongest economics evidence: actual RCT with prospective cost-benefit follow-up, not modelled estimates.
+
+**Evidence basis:** Keall et al. 2015 Lancet DOI:10.1016/S0140-6736(14)61006-0; Keall et al. 2017 Injury Prevention; Keall et al. 2021 Lancet Public Health.
+
+**Action required:** Part 11: cite Keall 2017 as primary economics evidence (RCT-derived, not modelled). Part 12: cite as case study. Flag as highest-evidence economics finding in guidebook.
+
+**Disposition notes:** —
+
+---
+
+## CON-0228
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, mobility-built-environment
+**Target item(s):** Part 9 §9.5, G-03
+**Target population(s):** ALL
+**Evidence tier:** 1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Clemson et al. 2023 Cochrane: OT-delivered home hazard reduction achieves 38% fall reduction (high-risk); NON-OT-delivered: non-significant effect. Gillespie et al. Cochrane (cited in Keall 2015): same finding for broader falls prevention. MOB BPC: 'OT-delivered home safety assessment more effective than non-OT delivery.' This evidence chain (Gillespie → Keall → Clemson) converges on: environmental modifications work ONLY when specified by OT clinical reasoning. The DELIVERY MECHANISM finding is as important as the intervention evidence (CON-0203) but is not captured. Directly supports Part 9 specification that OT assessment should PRECEDE home modification, not follow it.
+
+**Evidence basis:** Clemson et al. 2023 Cochrane (PMID:36893804); Gillespie et al. Cochrane; Keall et al. 2015; MOB BPC OT delivery finding.
+
+**Action required:** Part 9 §9.5: cite OT-delivery evidence chain as mandatory delivery specification. G-03: note that grab bar efficacy evidence is conditional on OT-specified placement. Part 4: general note that environmental modification evidence is delivery-mechanism dependent.
+
+**Disposition notes:** —

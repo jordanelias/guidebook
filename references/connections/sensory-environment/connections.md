@@ -742,3 +742,49 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **Action required:** A-16: add approach decompression (10m). F-01: reference as gradient terminus. F-03: link bidirectional.
 
 **Disposition notes:** —
+
+---
+
+## CON-0222
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** sensory-relief-space-design, neurodivergent-built-environment, pain-ofs-built-environment-design, dementia-built-environment
+**Target item(s):** A-16, Part 7 NR matrices
+**Target population(s):** NDV, OFS, DEM
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** A-16 retreat/reset room requires proximity to accessible WC as a spatial planning parameter. Three independent clinical rationales: NDV/AUT (interoception difficulties → sudden unpredictable toilet need during sensory overload episode), OFS (orthostatic intolerance → frequent urgent urination, cannot delay or walk far), DEM (incontinence management → short toilet-to-activity distance). Amaze/Architecture & Access 2025 explicitly identifies this as a location requirement. CON-0186 covers A-16 cross-population convergence but does NOT specify WC proximity. CON-0144 covers exit decompression but not WC adjacency. This is a PLAN-LEVEL specification affecting building layout.
+
+**Evidence basis:** Amaze/Architecture & Access/Deakin 2025 (SRS-04); NDV BPC; OFS BPC; DEM BPC incontinence evidence.
+
+**Action required:** A-16: add WC proximity requirement (within 20m per CON-0190 governing interval, preferably adjacent). Adjacent WC accessible from A-16 without re-entering high-stimulation circulation. Part 7 NR matrices: A-16 + accessible WC as co-located pair.
+
+**Disposition notes:** —
+
+---
+
+## CON-0222
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** sensory-relief-space-design, neurodivergent-built-environment, pain-ofs-built-environment-design, dementia-built-environment
+**Target item(s):** A-16, Part 7 NR matrices
+**Target population(s):** NDV, OFS, DEM
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** A-16 retreat/reset room requires proximity to accessible WC as a spatial planning parameter. Three independent clinical rationales: NDV/AUT (interoception difficulties → sudden unpredictable toilet need during sensory overload episode), OFS (orthostatic intolerance → frequent urgent urination, cannot delay or walk far), DEM (incontinence management → short toilet-to-activity distance). Amaze/Architecture & Access 2025 explicitly identifies this as a location requirement. CON-0186 covers A-16 cross-population convergence but does NOT specify WC proximity. CON-0144 covers exit decompression but not WC adjacency. This is a PLAN-LEVEL specification affecting building layout.
+
+**Evidence basis:** Amaze/Architecture & Access/Deakin 2025 (SRS-04); NDV BPC; OFS BPC; DEM BPC incontinence evidence.
+
+**Action required:** A-16: add WC proximity requirement (within 20m per CON-0190 governing interval, preferably adjacent). Adjacent WC accessible from A-16 without re-entering high-stimulation circulation. Part 7 NR matrices: A-16 + accessible WC as co-located pair.
+
+**Disposition notes:** —

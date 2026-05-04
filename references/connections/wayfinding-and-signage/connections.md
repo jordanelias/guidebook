@@ -976,3 +976,141 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Action required:** D-08: dual-height sign system. D-06: cross-reference. C-04: LRV applies to both zones.
 
 **Disposition notes:** —
+
+---
+
+## CON-0223
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** luminance-contrast-lrv-evidence-base, dementia-built-environment, visual-impairment-built-environment
+**Target item(s):** C-03, C-04, A-09
+**Target population(s):** DEM, VIS
+**Evidence tier:** 3, Co-1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Floor contrast operates under two opposing rules on the same physical plane: VIS requires ≥30 LRV contrast at boundaries and junctions (BS 8300, AS 1428.1) for hazard detection. DEM requires ≤10 LRV between adjacent floor zones to prevent step-misperception (DSDC evidence, Co-1). Dark entrance mats are the index case: VIS reads high-contrast mat edge as useful boundary; DEM reads dark mat as void/hole (DSDC Stirling, Kirklees guidance). Specification coordination: floor-to-FLOOR transitions use ≤10 LRV differential (DEM governs — prevents void misperception); floor-to-WALL and floor-to-FIXTURE junctions use ≥30 LRV (VIS governs — enables hazard detection). Different spatial boundary types require different contrast rules on the same floor plane. Not a conflict — a specification-partitioning rule.
+
+**Evidence basis:** BS 8300-2:2018; AS 1428.1:2021; DSDC EADDAT 2022 (Co-1); Marquardt 2011; LRV BPC evidence gap analysis; DEM BPC dark mat finding.
+
+**Action required:** C-03: add DEM ≤10 LRV inter-zone rule. C-04: add specification-partitioning note (floor-floor vs floor-wall contrast rules differ). A-09: cross-reference. Part 3: document as specification-partitioning exemplar.
+
+**Disposition notes:** —
+
+---
+
+## CON-0226
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** intellectual-disability-built-environment-design, dementia-built-environment, cognitive-wayfinding-design
+**Target item(s):** D-02, Part 3 §3.2
+**Target population(s):** IntD, DEM, NEU
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Marquardt & Schmieg 2009 finding — floor plan configuration is the most influential environmental factor for wayfinding; signage/colour alone cannot compensate for poor layout — is cited in DEM and NEU BPCs but not IntD. IntD BPC independently specifies loop/radial circulation and no blind corners but without citing Marquardt or articulating the 'layout > signage' hierarchy. IntD wayfinding difficulty (limited spatial abstraction, difficulty interpreting novel signage) means IntD users are EQUALLY dependent on layout legibility over signage quality. The Marquardt principle transfers directly: for all populations with cognitive wayfinding impairment, layout specification must PRECEDE signage specification in the design process.
+
+**Evidence basis:** Marquardt & Schmieg 2009 (PMID:19487549); Marquardt 2011 HERD; IntD BPC; CWF BPC synthesis.
+
+**Action required:** D-02: add IntD to populations governed by 'layout > signage' principle. Part 3 §3.2: generalise as cross-population principle for cognitive wayfinding impairment.
+
+**Disposition notes:** —
+
+---
+
+## CON-0227
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** visual-impairment-built-environment, neurodivergent-built-environment, sensory-relief-space-design
+**Target item(s):** D-05, C-04, F-03
+**Target population(s):** VIS, NDV
+**Evidence tier:** 3-4
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** PAS 6463 multi-sensory zone boundaries serve VIS and NDV via different clinical mechanisms on the same specification: simultaneous visual + acoustic + spatial + luminance signals at zone transitions. VIS: multi-sensory signals are compensatory redundancy — when vision fails, acoustic and tactile signals provide alternative navigation cues. NDV: graduated multi-sensory transitions manage sensory load — abrupt single-sense changes trigger overload, but predictable multi-sensory changes are processable. The specification is identical — detectable gradient protocol with multi-sensory zone boundaries — but the clinical rationale differs. CON-0043 covers zone boundaries generally but not this dual-rationale convergence.
+
+**Evidence basis:** PAS 6463:2022; ISO 21542:2021; Mostafa ASPECTSS 2.0; VIS BPC detectable gradient protocol; NDV BPC sensory transition evidence.
+
+**Action required:** D-05: add dual-rationale note (VIS compensatory + NDV graduated management). F-03: cross-reference. C-04: multi-sensory zone boundary LRV specification serves both populations.
+
+**Disposition notes:** —
+
+---
+
+## CON-0223
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** luminance-contrast-lrv-evidence-base, dementia-built-environment, visual-impairment-built-environment
+**Target item(s):** C-03, C-04, A-09
+**Target population(s):** DEM, VIS
+**Evidence tier:** 3, Co-1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Floor contrast operates under two opposing rules on the same physical plane: VIS requires ≥30 LRV contrast at boundaries and junctions (BS 8300, AS 1428.1) for hazard detection. DEM requires ≤10 LRV between adjacent floor zones to prevent step-misperception (DSDC evidence, Co-1). Dark entrance mats are the index case: VIS reads high-contrast mat edge as useful boundary; DEM reads dark mat as void/hole (DSDC Stirling, Kirklees guidance). Specification coordination: floor-to-FLOOR transitions use ≤10 LRV differential (DEM governs — prevents void misperception); floor-to-WALL and floor-to-FIXTURE junctions use ≥30 LRV (VIS governs — enables hazard detection). Different spatial boundary types require different contrast rules on the same floor plane. Not a conflict — a specification-partitioning rule.
+
+**Evidence basis:** BS 8300-2:2018; AS 1428.1:2021; DSDC EADDAT 2022 (Co-1); Marquardt 2011; LRV BPC evidence gap analysis; DEM BPC dark mat finding.
+
+**Action required:** C-03: add DEM ≤10 LRV inter-zone rule. C-04: add specification-partitioning note (floor-floor vs floor-wall contrast rules differ). A-09: cross-reference. Part 3: document as specification-partitioning exemplar.
+
+**Disposition notes:** —
+
+---
+
+## CON-0226
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** intellectual-disability-built-environment-design, dementia-built-environment, cognitive-wayfinding-design
+**Target item(s):** D-02, Part 3 §3.2
+**Target population(s):** IntD, DEM, NEU
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Marquardt & Schmieg 2009 finding — floor plan configuration is the most influential environmental factor for wayfinding; signage/colour alone cannot compensate for poor layout — is cited in DEM and NEU BPCs but not IntD. IntD BPC independently specifies loop/radial circulation and no blind corners but without citing Marquardt or articulating the 'layout > signage' hierarchy. IntD wayfinding difficulty (limited spatial abstraction, difficulty interpreting novel signage) means IntD users are EQUALLY dependent on layout legibility over signage quality. The Marquardt principle transfers directly: for all populations with cognitive wayfinding impairment, layout specification must PRECEDE signage specification in the design process.
+
+**Evidence basis:** Marquardt & Schmieg 2009 (PMID:19487549); Marquardt 2011 HERD; IntD BPC; CWF BPC synthesis.
+
+**Action required:** D-02: add IntD to populations governed by 'layout > signage' principle. Part 3 §3.2: generalise as cross-population principle for cognitive wayfinding impairment.
+
+**Disposition notes:** —
+
+---
+
+## CON-0227
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** visual-impairment-built-environment, neurodivergent-built-environment, sensory-relief-space-design
+**Target item(s):** D-05, C-04, F-03
+**Target population(s):** VIS, NDV
+**Evidence tier:** 3-4
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** PAS 6463 multi-sensory zone boundaries serve VIS and NDV via different clinical mechanisms on the same specification: simultaneous visual + acoustic + spatial + luminance signals at zone transitions. VIS: multi-sensory signals are compensatory redundancy — when vision fails, acoustic and tactile signals provide alternative navigation cues. NDV: graduated multi-sensory transitions manage sensory load — abrupt single-sense changes trigger overload, but predictable multi-sensory changes are processable. The specification is identical — detectable gradient protocol with multi-sensory zone boundaries — but the clinical rationale differs. CON-0043 covers zone boundaries generally but not this dual-rationale convergence.
+
+**Evidence basis:** PAS 6463:2022; ISO 21542:2021; Mostafa ASPECTSS 2.0; VIS BPC detectable gradient protocol; NDV BPC sensory transition evidence.
+
+**Action required:** D-05: add dual-rationale note (VIS compensatory + NDV graduated management). F-03: cross-reference. C-04: multi-sensory zone boundary LRV specification serves both populations.
+
+**Disposition notes:** —
