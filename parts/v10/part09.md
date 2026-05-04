@@ -13,7 +13,7 @@
      - Part 9/9 cross-references updated -->
 
 
-## 10.0 Overview
+## 9.0 Overview
 
 Part 9 addresses the architect's coordination role with specialist consultants whose input is required for accessible design that cannot be delivered through engineering briefs alone. The engineering disciplines covered in Part 9 — acoustic, mechanical, electrical, and structural — operate on measurable physical systems. The consultants addressed here operate on the relationship between people and environments: a different domain, requiring a different coordination logic.
 
@@ -25,7 +25,7 @@ Other specialist consultants addressed in this Part — dementia design speciali
 
 ---
 
-## 9.1 The Three-Tier Hierarchy and Specialist Consultant Appointment
+## 9.1 The Design Modes and Specialist Consultant Appointment
 
 The Design Modes (Volume 1, §1.6.3) governs when specialist consultant input is required and what its scope must be.
 
@@ -260,7 +260,7 @@ For Tier 2 projects, the named individual and their chosen support network are t
 
 ---
 
-*Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Three-Tier Hierarchy) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 13 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
+*Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Design Modes) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 13 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
 
 
 
