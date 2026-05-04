@@ -28,6 +28,10 @@
 | CML-04 | Lucas, R.J. et al. | 2014 | Measuring and using light in the melanopsin age. Trends Neurosci 37(1):1–9 | 3 | INT | Foundational melanopsin paper |
 | CML-05 | IWBI | 2024 | WELL Building Standard v2 + v6 Feature L07: Circadian Lighting Design | 5 | INT | https://v2.wellcertified.com/wellv2/en/light |
 | CML-06 | Ticleanu, C. et al. | 2025 | Assessing melanopic equivalent daylight illuminance in office spaces. Light Res Technol. DOI:10.1177/14771535251317740 | 3 | INT | Recent validation study |
+| CML-07 | Kolberg, E., Pallesen, S., Hjetland, G.J. et al. | 2022 | Insufficient melanopic EDI in nursing home dementia units across seasons and gaze directions. Light Res Technol. DOI:10.1177/1477153521994539 | 3 | NO | 15 DEM nursing homes; nearly all below thresholds; DEM-specific |
+| CML-08 | Grant, L.K., St Hilaire, M.A., Heller, J.P. et al. | 2022 | Impact of Upgraded Lighting on Falls in Care Home Residents. J Am Med Dir Assoc 23(10):1698-1704. DOI:10.1016/j.jamda.2022.06.013 | 3 | US | Fall reduction from upgraded circadian lighting; care home RCT |
+| CML-09 | IES | 2023 | RP-46-23: Recommended Practice — Supporting the Physiological and Behavioral Effects of Lighting in Interior Daytime Environments | 5 | US | US IES recommended practice; aligned with Brown 2022 thresholds |
+| CML-10 | CIE | 2023 | CIE TN 015:2023 — Second International Workshop on Circadian and Neurophysiological Photometry | 4 | INT | Follow-up international consensus; reinforces melanopic EDI framework |
 
 ---
 
@@ -51,7 +55,11 @@
 | — | — | Older adult crystalline lens melanopic transmittance correction not yet quantified for specification use | — | — |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 07:45
+| Source | Direction | New sources added |
+|---|---|---|
+| Brown et al. 2022 (CML-01) | Forward | Kolberg 2022 DEM nursing homes (CML-07); Grant 2022 falls RCT (CML-08); IES RP-46-23 (CML-09); CIE TN 015:2023 (CML-10) |
+**Notes:** Kolberg 2022 is DEM-specific — measured melanopic EDI in 15 Norwegian dementia nursing homes; nearly all below conservative thresholds. Grant 2022 is an RCT showing fall reduction from upgraded circadian lighting in care homes. IES RP-46-23 is the US IES recommended practice aligned with Brown 2022 thresholds. CIE TN 015:2023 is the follow-up international workshop consensus.
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
@@ -61,6 +69,7 @@ Not yet run.
 ```yaml
 slug: circadian-lighting-melanopic-edi
 population: DEM, NEU, NDV, OFS
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```

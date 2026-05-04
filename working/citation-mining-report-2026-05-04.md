@@ -99,3 +99,37 @@ Leonardi et al. 2025 is a systematic review not previously in the BPC. Flag for 
 - No non-English sources discovered for upper-limb-impairment (NL, ES, PT, KO, IT still THIN)
 - No Co-1 sources discovered for air-quality or sensory-room-user-control
 - Grab bar research network is heavily US-centric; no European grab bar biomechanics studies found
+
+---
+
+## 4. circadian-lighting-melanopic-edi
+
+### Forward mining
+| Input source | Citing papers | Relevant found | New to BPC |
+|---|---|---|---|
+| Brown et al. 2022 (CML-01) | ~360 (Semantic Scholar) | 4 | 4 |
+
+### New sources
+| # | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI | Discovery |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Kolberg E, Pallesen S, Hjetland GJ et al. | 2022 | Insufficient melanopic EDI in nursing home dementia units across seasons and gaze directions | Light Res Technol | EN | NO | 3 | 10.1177/1477153521994539 | Forward from Brown 2022 |
+| 2 | Grant LK, St Hilaire MA, Heller JP et al. | 2022 | Impact of Upgraded Lighting on Falls in Care Home Residents | J Am Med Dir Assoc 23(10):1698-1704 | EN | US | 3 | 10.1016/j.jamda.2022.06.013 | Forward from Brown 2022 |
+| 3 | IES | 2023 | RP-46-23: Recommended Practice — Supporting the Physiological and Behavioral Effects of Lighting | IES | EN | US | 5 | — | Forward from Brown 2022 |
+| 4 | CIE | 2023 | CIE TN 015:2023 — Second International Workshop on Circadian and Neurophysiological Photometry | CIE | EN | INT | 4 | — | Forward from Brown 2022 |
+
+### Impact assessment
+- **Kolberg 2022** is the most important new source — DEM-specific melanopic EDI measurements in 15 Norwegian nursing homes. Demonstrates that nearly all existing dementia care facilities fail to meet melanopic EDI thresholds. Directly supports the specification case.
+- **Grant 2022** is a care home lighting upgrade intervention showing fall reduction — evidence that circadian lighting changes produce measurable safety outcomes.
+- **IES RP-46-23** is the US lighting industry's recommended practice, now aligned with Brown 2022 thresholds — Tier 5 standards pathway confirmation.
+- **CIE TN 015:2023** reinforces the international consensus framework.
+
+### 🟡 Escalation: DEM-specific lighting evidence
+Kolberg 2022 provides evidence that should cross-reference to the DEM population BPC and to Part 4 lighting items. Flag for connection-scout.
+
+---
+
+## Updated totals
+**Sources mined:** 11 (across 4 slugs)
+**New sources discovered:** 16 (backward: 3, forward: 13)
+**Systematic reviews found:** 2 (Rouvier 2022, Leonardi 2025)
+**Commits:** 2
