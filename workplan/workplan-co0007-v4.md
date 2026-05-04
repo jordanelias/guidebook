@@ -7,17 +7,36 @@
 
 ---
 
-## Current position (2026-05-03)
+## Current position (2026-05-04)
 
 | Stage | Status | Sessions consumed |
 |---|---|---|
 | Stage 0 (verification + decision freeze) | ✓ COMPLETE | 9 |
 | Stage A (A1-A13 foundations) | ✓ COMPLETE | ~24 |
 | Stage B1 (schema design) | ✓ COMPLETE | 9 |
-| **Stage B2** | **NEXT** | 0 |
+| Stage B2 (schema impl + audit remediation) | ✓ COMPLETE | 1 (session_2026-05-04) |
+| Stage B3 (navigation + website entities) | ✓ COMPLETE | 0 (same session) |
+| Stage B4.0–B4.1 (pipeline pilot) | ✓ COMPLETE | 0 (same session) |
+| Stage B4.2–B4.3 (additional pilots) | DEFERRED | — |
+| Stage B5–B7 (rendering, validation, arch lock) | DEFERRED | — |
+| Stage C0 (bulk migration) | ✓ COMPLETE | 0 (same session) |
+| **Stage C1–C11** | **ACTIVE** | 0 |
 
-**Total sessions consumed:** ~42 of 188–253 budget.
-**Remaining budget:** ~146–211 sessions.
+**Total sessions consumed:** ~43 of 188–253 budget.
+**Remaining budget:** ~145–210 sessions.
+
+### Resequencing decision (2026-05-04)
+
+Pipeline proven with 3 page types rendering from SQLite (spec, population, room). Remaining B-stage work (B4.2–B4.3 additional pilots, B5 rendering layer, B6 validation, B7 architecture lock) deferred until content is migrated. Rationale: website design is premature before all information is structured. B5–B7 will be completed after C-stage content population.
+
+### C0 bulk migration results
+
+`scripts/db/migrate_all.py` — idempotent migration producing 978 rows:
+- 141 specifications (73 BPC-synthesized + 68 Part 4 stubs), 87 distinct item codes
+- 11 populations, 347 spec-population joins
+- 71 measurements, 241 jurisdictional values (18 jurisdictions)
+- 14 conflicts (11 resolved + 3 unresolvable)
+- 16 doctrines, 6 specialists, 17 rooms, 11 throughlines, 57 economics entries
 
 ---
 
@@ -82,7 +101,7 @@ Python-backed infrastructure co-produced: 12 Pydantic schemas in `schemas/`, 10 
 **Sessions:** 24–33 (was 26–40)
 **Output:** Working multi-pilot demonstrating end-to-end; static site generator rendering all 14 template types from SQLite
 
-### B2. Schema implementation + audit remediation · 6–8 sessions
+### B2. Schema implementation + audit remediation · 6–8 sessions · ✓ COMPLETE (1 session)
 
 #### B2.1 Schema reconciliation and DDL amendment · 1 session · Opus
 
@@ -230,7 +249,7 @@ topics_json         TEXT            -- JSON array of topic strings
 
 ---
 
-### B3. Navigation + website entity specification · 4–5 sessions
+### B3. Navigation + website entity specification · 4–5 sessions · ✓ COMPLETE (same session)
 
 #### B3.1 Navigation mode specification · 1 session · Opus
 
@@ -291,7 +310,7 @@ Define the 14 page templates per IA §6.2:
 
 ---
 
-### B4. Pilot construction · 6–10 sessions
+### B4. Pilot construction · 6–10 sessions · PARTIAL (B4.0–B4.1 complete; B4.2–B4.3 deferred)
 
 #### B4.0 Pipeline pilot — E-08 Corridor Clear Width · 1 session · Sonnet
 
@@ -388,7 +407,7 @@ All original criteria, plus:
 
 Stage C is organized by **website page type** — each page requires atoms from multiple entity types simultaneously. The prior entity-type-first organization (parameters → populations → items → conflicts) is replaced.
 
-### C0. Skill responsibility matrix · 2–3 sessions
+### C0. Bulk migration + skill responsibility matrix · 2–3 sessions · ✓ COMPLETE (same session as B2-B4)
 
 Unchanged from original workplan.
 
