@@ -122,8 +122,40 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - CRITICAL: OTIS RCT null result — untargeted home assessments don't reduce falls. Targeted programmes (Keall, CAPABLE) do. Methodological note needed in throughline files.
 - 19 sources remain for next-session mining
 
+### Items 1, 3, 4 completed
+- OTIS targeted vs untargeted note added to throughline-health-outcomes.md + Part 11 §11.3
+- 5 new records added to economics.json (HEALTH-017 to HEALTH-021, now 21 records)
+- throughline-health-outcomes.md updated to v2.1: 17 mined sources in evidence table, 4 Co-1 in §16.7
+- Szanton citation corrected in both throughline and Part 11
+- OTIS null result recorded with null_result flag
+
 ## session_close
-2026-05-04 03:10
+2026-05-04 03:30
+
+## next_action
+1. **Second-gen citation mining** — 19 of 23 discovered sources unmined. Priority batch: Tsuchiya-Ito 2022/2023 (same group, fast), Wellecke/Winkler AU cluster (Co-1, fast), Whitehead BATH-OUT (UK)
+2. **Source verification sweep** — GAP-ECON-04 (~40 pattern-matched source names in methodology §4-§5). Systematic lookup task.
+3. **German-language citation networks** — TERRAGON AG, Bundesfachstelle Barrierefreiheit, KfW programme evaluations. Requires German-language search.
+4. **Jurisdiction deep-dives** — NL (strong UD tradition), JP (beyond financing), IE (Part M), NZ (Keall RCT policy context)
+5. **Tsuchiya-Ito 2019 JP-SE comparison** — connects JP to Scandinavian evidence via Iwarsson/Slaug (Lund). Deferred escalation flag #7.
+6. **Oliver et al. 2025 updated review** — retrieve and assess new evidence from 2019-2025 scoping update
+
+## blockers
+None.
+
+## decisions
+D-0147 through D-0156: see prior entries
+D-0157: OTIS null result — targeted vs untargeted distinction required in evidence hierarchy
+D-0158: Design-stage accessibility framed as inherently targeted (serves lifecycle population including future residents who develop mobility limitations)
+D-0159: Lektip 2023 7% pooled effect size noted alongside Clemson 21% — difference explained by population targeting
+
+## session_statistics
+- Total commits this session: 23
+- Files created/modified: Part 11, 6 throughline files, economics.json, unified-data-schema.md, citation mining report, session file, economics-research-methodology-v1.9-archived.md
+- economics.json: 21 health outcomes + 8 cost premiums + 3 retrofit multipliers + 9 grants + 5 throughlines + 5 housing deficit + 11 gaps = 62 primary records + 171 spec_cross_refs
+- Citation mining: 12 sources mined, 26 new sources discovered (8 Tier 1, 7 Tier 2, 9 Tier 3-4, 4 Co-1)
+- Gaps: 3 resolved, 5 closed-confirmed, 1 closed-documented, 2 deferred (0 open)
+- Critical finding: OTIS RCT null result (targeted vs untargeted distinction)
 
 ## next_action
 1. **Second-gen citation mining** — 19 remaining discovered sources to mine
