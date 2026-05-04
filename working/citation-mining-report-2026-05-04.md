@@ -168,3 +168,37 @@ Kolberg 2022 provides evidence that should cross-reference to the DEM population
 **GREY sources corrected:** 2 (ULB-04 DOI confirmed; WDS-04 wrong attribution fixed)
 **Systematic reviews found:** 2 (Rouvier 2022, Leonardi 2025)
 **Commits:** 3
+
+---
+
+## 6. ms-thermal-temperature-conflict-resolution
+
+### Forward mining
+| Input source | Citing papers | Relevant found | New to BPC |
+|---|---|---|---|
+| Staud 2011 (MST-02) | ~200+ | 1 | 1 |
+| MSIF 2023 (MST-01) | — | 2 | 2 |
+
+### New sources
+| # | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI | Discovery |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Berwick RJ, Siew S, Andersson DA, Marshall A, Goebel A | 2021 | Systematic review of temperature influence on fibromyalgia pain | J Pain 22(5):473-486 | EN | INT | 3 (SR) | 10.1016/j.jpain.2020.12.005 | Forward from Staud 2011 |
+| 2 | Christogianni A et al. | 2018 | Temperature sensitivity in MS: impact on sensory and cognitive symptoms | Temperature 5(3):208-223 | EN | INT | 3 | PMC6205043 | Forward from MSIF 2023 |
+| 3 | [Authors TBC] | 2025 | Weathering the Pain: Ambient Temperature's Role in Chronic Pain Syndromes | PMC11759284 | EN | INT | 3 | — | Forward from Staud 2011/MSIF |
+
+### Impact assessment
+- **Berwick 2021** is the definitive FMS thermal sensitivity systematic review — directly supports the harm-asymmetry conflict resolution in project-standards. 14/17 QST studies confirm cold pain hypersensitivity. CPT 10.9-26.3°C in FMS vs 5.9-13.5°C controls.
+- **Christogianni 2018** quantifies the MS Uhthoff threshold at 0.5°C core temperature increase — gives the specification its precision.
+- Combined: the FMS vs MS thermal conflict now has systematic-review-level evidence on both sides.
+
+### 🟡 Escalation: Systematic review found
+Berwick 2021 is a systematic review not previously in the BPC. Supports existing project-standard rule on harm-asymmetry.
+
+---
+
+## FINAL SESSION TOTALS
+**BPC slugs mined:** 6
+**New sources discovered:** 22 (backward: 3, forward: 19)
+**GREY sources corrected:** 2 (ULB-04 DOI, WDS-04 author)
+**Systematic reviews found:** 3 (Rouvier 2022, Leonardi 2025, Berwick 2021)
+**Commits:** 4

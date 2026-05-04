@@ -56,7 +56,12 @@
 | JA | JA | Standards-based only (bathing heat shock); no peer-reviewed OT thermal comfort evidence | No | No |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 08:15
+| Source | Direction | New sources added |
+|---|---|---|
+| Staud 2011 (MST-02) | Forward | Berwick 2021 FMS thermal SR (MST-09) |
+| MSIF 2023 (MST-01) | Forward | MS temperature sensitivity review 2018 (MST-10); Ambient temperature chronic pain review 2025 (MST-11) |
+**Notes:** Berwick 2021 is a systematic review of temperature influence on FMS pain — 14/17 QST studies show reduced cold pain thresholds (10.9-26.3°C in FMS vs 5.9-13.5°C controls). Directly supports the harm-asymmetry conflict resolution (cool default protects MS/SCI from neurological deterioration; FMS cold sensitivity is real but lower-harm). MS temperature review 2018 quantifies the 0.5°C core temperature threshold for Uhthoff onset. Ambient temperature review 2025 provides cross-condition comparison (MS, FM, CRPS, OA).
 
 ### Bottom-up findings (functional deficit pass)
 FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tier 3; Davis 2010 Tier 3) — cooling station ≤16C within 50m of MS facility circulation; extended occupancy capacity distinct from NDV retreat. FDR-MST-02: MS fatigue diurnal pattern — afternoon ambient should reduce 1-2C from morning setpoint via BMS programming. Krupp 2003 Tier 3. Items affected: F-07, A-16.
@@ -73,12 +78,16 @@ FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tie
 | MST-06 | Newcastle POTS clinic | 2018 | POTS thermal triggers — clinical guidance. [GREY — specific publication unverified] | 4 | UK | — |
 | MST-07 | ISO | 2005 | ISO 7730:2005 — Ergonomics of the thermal environment (PMV/PPD) | 4 | INT | https://www.iso.org/standard/39155.html |
 | MST-08 | IWBI | 2024 | WELL v2 Thermal Comfort feature | 5 | INT | https://v2.wellcertified.com/wellv2/en/thermal-comfort |
+| MST-09 | Berwick, R.J., Siew, S., Andersson, D.A., Marshall, A. & Goebel, A. | 2021 | A Systematic Review Into the Influence of Temperature on Fibromyalgia Pain: Meteorological Studies and QST. J Pain 22(5):473-486. DOI:10.1016/j.jpain.2020.12.005. PMID:33421589 | 3 (SR) | INT | 14/17 QST studies show reduced CPT in FMS; CPT 10.9-26.3°C vs 5.9-13.5°C controls |
+| MST-10 | Christogianni, A. et al. | 2018 | Temperature sensitivity in multiple sclerosis: An overview of its impact on sensory and cognitive symptoms. Temperature 5(3):208-223. PMC6205043 | 3 | INT | 0.5°C core temp increase triggers Uhthoff; MS-specific thermal review |
+| MST-11 | [Authors TBC] | 2025 | Weathering the Pain: Ambient Temperature's Role in Chronic Pain Syndromes. PMC11759284 | 3 | INT | Cross-condition review: MS Uhthoff, FM cold sensitivity, CRPS, OA |
 
 ## Metadata
 
 ```yaml
 slug: ms-thermal-temperature-conflict-resolution
 population: NEU, PAIN, OFS, DEM
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```
