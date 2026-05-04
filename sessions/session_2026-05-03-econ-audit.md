@@ -74,12 +74,24 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - Version footer mismatch corrected
 - Original archived as v1.9-archived
 
+### Session 3 continued (4 more commits: schema alignment + cross-refs + gap resolution)
+- economics.json restructured to match unified-data-schema.md conventions
+- Entity 5 expanded from 3 to 7 sub-entities (5a–5g) in schema
+- 171 spec_cross_refs populated across cost_premiums, health_outcomes, throughlines
+- GAP-ECON-05 (Missing Part 11 cost tables) resolved — tables exist in Part 11 v10
+- ER diagram updated with new economics relationships
+- part11_cost_table_map added linking 12 cost table sections to item codes
+- Interactive React dashboard created (economics-dashboard.jsx)
+
+## session_close
+2026-05-04 01:10
+
 ## next_action
-1. Co-1 verification pass — populate lived-experience economic perspectives
-2. Unverified source-name sweep (~40 pattern-matched §4-§5 entries)
-3. Missing Part 11 cost tables (kitchen, bedroom, egress, controls)
-4. Part 11 §11.3 update with Q5 evidence (Keall, Chandola, CAPABLE, Tsuchiya-Ito)
-5. §15 extraction to separate analytical document (Change Order required)
+1. Co-1 verification pass — populate lived-experience economic perspectives (GAP-ECON-02)
+2. Unverified source-name sweep (~40 pattern-matched entries) (GAP-ECON-04)
+3. Part 11 §11.3 update with Q5 evidence (Keall, Chandola, CAPABLE, Tsuchiya-Ito)
+4. §15 extraction to separate analytical document (Change Order required)
+5. Populate spec_cross_refs on remaining cost_premium records (CP-004, CP-007, CP-008) when spec database exists
 
 ## blockers
 None.
@@ -87,3 +99,6 @@ None.
 ## decisions
 - D-0147: Economics methodology partitioned by economic throughlines (health outcomes, cost-of-inaction, construction cost, market value) rather than by original section numbering
 - D-0148: TERRAGON AG commercial-interest disclosure added to construction-cost throughline
+- D-0149: Website data integration via schema-aligned JSON in references/website/data/ (not Wix)
+- D-0150: Entity 5 expanded from 3 sub-entities (5a-5c) to 7 (5a-5g) with four-pillar framework
+- D-0151: GAP-ECON-05 resolved — Part 11 v10 already contains the four missing cost tables
