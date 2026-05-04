@@ -90,8 +90,18 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - 1 CLOSED-DOCUMENTED: GAP-10 (LHA 22× is Tier 5 advocacy synthesis, untraceable primary)
 - 2 DEFERRED: GAP-04 (source verification task), GAP-11 (jurisdiction scope expansion)
 
+### Session 3 continued (citation mining)
+- Mined 6 sources (Clemson, Keall, Chandola, Ielegems, CAPABLE, Tsuchiya-Ito)
+- Discovered 16 new sources across Tiers 1-3
+- HIGH-YIELD: Tsuchiya-Ito JP housing adaptation chain (5 papers: 2022→2023→2024→2025)
+- Added 6 new records to economics.json health_outcomes (now 16 records, was 10)
+- Fixed Szanton citation: 2017→2018 (JAGS, doi:10.1111/jgs.15143)
+- Updated CAPABLE economics: $3,000/person programme, $20K Medicare savings/2yr
+- 7 escalation flags raised for evidence-auditor review
+- Report filed: research/citation-mining-economics_2026-05-04.md
+
 ## session_close
-2026-05-04 01:25
+2026-05-04 02:15
 
 ## next_action
 1. Unverified source-name sweep (~40 entries) — deferred verification task (GAP-ECON-04)
