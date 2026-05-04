@@ -563,3 +563,141 @@ These programme models demonstrate that the highest-quality national systems sti
 
 **Action required:** Part 1: add Art. 5 + GC6 as co-primary legal foundation alongside Art. 9.
 
+
+---
+
+## CON-0192
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment, all population-general BPCs
+**Target item(s):** Part 3 §3.8
+**Target population(s):** MOB (methodology)
+**Evidence tier:** 3-5
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** MOB is the only population with zero conflict flags across all synthesised BPCs. Every MOB specification is independently compatible with or convergent with every other population's specifications. MOB provisions form the strongest Universal Mode candidates — the base layer upon which population-specific provisions add without conflict resolution.
+
+**Evidence basis:** Cross-BPC conflict analysis (all 11 population-general BPCs).
+
+**Action required:** Part 3 §3.8: document MOB zero-conflict status. Universal Mode doctrine: MOB provisions as default base specification layer.
+
+**Disposition notes:** —
+
+---
+
+## CON-0193
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment, intellectual-disability-built-environment-design, visual-impairment-built-environment
+**Target item(s):** Part 1 §1.4
+**Target population(s):** ALL (framework)
+**Evidence tier:** 5
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Three international regulatory frameworks use structural hierarchy analogous to Design Mode system: Italy DM 236/89 three-tier (accessibilità/visitabilità/adattabilità), Denmark SBi-230 A/B/C quality levels, South Korea 2024 'daily life access' shift. Structural precedents for Universal/Enhanced/Specialised hierarchy — multiple jurisdictions independently arrived at tiered specification.
+
+**Evidence basis:** Italy DM 236/89; Denmark SBi-230; South Korea BFLE Act 2024; MOB BPC jurisdiction analysis.
+
+**Action required:** Part 1 §1.4: cite IT/DK/KR as international structural precedents for Design Mode hierarchy.
+
+**Disposition notes:** —
+
+---
+
+## CON-0195
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment, neurological-built-environment
+**Target item(s):** Part 3 §3.2
+**Target population(s):** DEM, NEU (methodology)
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Stage-aware specification principle: both DEM and NEU require specifications conditioned on functional stage, not single-value provisions. DEM cognitive stage determines layout type. NEU navigation impairment type determines modification strategy. Part 4 specifications must be stage-conditioned with explicit staging criteria.
+
+**Evidence basis:** DEM BPC staging analysis; NEU BPC navigation sub-typing; Claessen & van der Ham 2017.
+
+**Action required:** Part 3 §3.2: establish stage-aware specification as methodology principle. All DEM/NEU items: require stage-conditioning.
+
+**Disposition notes:** —
+
+---
+
+## CON-0199
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** neurological-built-environment, pain-ofs-built-environment-design
+**Target item(s):** Part 6 R-BED, Part 6 R-KIT
+**Target population(s):** NEU/MS, OFS/ME
+**Evidence tier:** 1, 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** MS activity clustering ≤2m (FDR-NEU-01, Four Ps energy conservation) and OFS rest-to-activity adjacency (FDR-OFS-01, PEM threshold) converge: minimize mandatory traversal between related activities. Different mechanisms (MS non-recoverable daily energy vs OFS/ME 12-48hr delayed crash) but identical specification. Extended: kitchen must assume ALREADY-FATIGUED user after morning ADL sequence. H-01 seated kitchen work serves dual rationale: MOB wheelchair AND OFS/PAIN energy-envelope management.
+
+**Evidence basis:** FDR-NEU-01; FDR-OFS-01; Roxburgh 2024; journey sequencing analysis.
+
+**Action required:** Part 6 R-BED/R-KIT: activity clustering ≤2m. H-01: add dual rationale.
+
+**Disposition notes:** —
+
+---
+
+## CON-0218
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment, visual-impairment-built-environment, mobility-built-environment, neurodivergent-built-environment
+**Target item(s):** Part 3 §3.x
+**Target population(s):** DEM, VIS, MOB, NDV
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Arrival sequence (E-04→E-05→path→E-06→E-12→E-13→reception→D-02) is 7+ independently specified items experienced as sequential chain. Failure at any link defeats the entire sequence. No principle requires sequential-dependency verification. A building can pass every item individually and fail the arrival system. Part 3 should specify arrival as a system requiring walkthrough verification.
+
+**Evidence basis:** Journey sequencing; DEM BPC entrance recognition; VIS BPC path continuity; MOB BPC weather protection.
+
+**Action required:** Part 3: arrival-as-system principle. Compliance = unbroken chain, not individual item pass/fail.
+
+**Disposition notes:** —
+
+---
+
+## CON-0221
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** sensory-relief-space-design, neurodivergent-built-environment, dementia-built-environment
+**Target item(s):** F-01, Part 3
+**Target population(s):** NDV, DEM, ALL
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** F-01 sensory gradient is not linear entrance→interior — it is TOPOLOGICAL. Utility rooms (kitchen, bathroom, laundry) are inherently stimulating AND deep in building. They must branch OFF the calm spine, not sit ON it. Calm spine: entrance → reception → primary corridor → occupied rooms → A-16. Utility rooms branch off with acoustic doors (A-03 STC ≥35) at branch points.
+
+**Evidence basis:** F-01; NDV BPC; DEM BPC kitchen stimulation; room synthesis.
+
+**Action required:** F-01: topological specification replacing linear. Part 3: sensory gradient as topology. A-03: branch-point acoustic door.
+
+**Disposition notes:** —

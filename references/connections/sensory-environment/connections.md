@@ -627,3 +627,118 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **Action required:** Elevate A-16 to cross-population universal provision. Tag all four populations explicitly. This room type resolves gaps across NDV, MH, DEM, and OFS simultaneously.
 
 **Disposition notes:** —
+
+---
+
+## CON-0196
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** pain-ofs-built-environment-design, sensory-relief-space-design, dementia-built-environment, neurodivergent-built-environment, neurological-built-environment, mobility-built-environment
+**Target item(s):** B-12, D-05
+**Target population(s):** DEM, MOB, NEU, OFS, PAIN
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Overnight bed-to-bathroom path lighting (motion-sensor, 300-400mm AFF, ≥5 lux, 2700-3000K) serves 5+ populations: DEM (nocturnal wayfinding), MOB (fall prevention — Keall 2015 Cochrane), NEU (spatial orientation post-ABI), OFS (orthostatic fall risk), PAIN (night navigation with limited mobility). Universal Mode candidate — no conflict identified.
+
+**Evidence basis:** Dementia Australia 2022 (Tier 2); Keall et al. 2015 Cochrane (Tier 1); bathroom BPC FDR scenario 14.
+
+**Action required:** B-12: elevate to Universal Mode with multi-population evidence. Tag DEM, MOB, NEU, OFS, PAIN.
+
+**Disposition notes:** —
+
+---
+
+## CON-0211
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** acoustics-speech-intelligibility-disability, deaf-acoustic-built-environment, neurodivergent-built-environment, dementia-built-environment
+**Target item(s):** Part 8 Engineering
+**Target population(s):** DEAF, NDV, DEM
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Building acoustic multi-zone system: speech-critical RT60 ≤0.3s NC-25, circulation RT60 ≤0.6s NC-35, A-16 RT60 ≤0.3s NC-25, hearing loop RT60 ≤0.4s NC-25, DEM common RT60 ≤0.4s NC-30, NDV-primary RT60 <0.3s NC-25. Partition STC between adjacent zones must be calibrated to acoustic delta. A-14 single STC ≥50 is insufficient — required STC varies by adjacency.
+
+**Evidence basis:** Acoustics BPC; DEAF acoustic BPC; NDV BPC; DEM BPC.
+
+**Action required:** Part 8: acoustic zoning coordination matrix. A-14: reference matrix.
+
+**Disposition notes:** —
+
+---
+
+## CON-0214
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** sensory-relief-space-design, neurodivergent-built-environment
+**Target item(s):** B-12, B-01
+**Target population(s):** NDV, DEM, OFS
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** B-12 sensor lighting must be isolated from B-01 circadian programme. Night-time sensor trigger could activate ≥250 melanopic EDI, fully waking circadian system during sleepy toileting. NDV photosensitivity: sudden activation may startle. Specification: B-12 at ≤10 lux, ≤2700K, independent circuit. Extends CON-0166 principle to bedroom sensor lighting.
+
+**Evidence basis:** CON-0166; B-01/B-12 specifications; NDV BPC photosensitivity; journey sequencing.
+
+**Action required:** B-12: independence from B-01. Max ≤10 lux ≤2700K nocturnal. Part 8: separate circuit.
+
+**Disposition notes:** —
+
+---
+
+## CON-0217
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** visual-impairment-built-environment, deaf-acoustic-built-environment, neurodivergent-built-environment, dementia-built-environment, neurological-built-environment
+**Target item(s):** B-10, A-16, K-04
+**Target population(s):** NDV, NEU/epilepsy, DEM, DEAF, DBL
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Simultaneous multi-modal alarm is itself an accessibility barrier: NDV strobe+siren → sensory overload → freeze; NEU/epilepsy unsynchronized strobe → seizure; DEM alarm without comprehension → undirected panic. Extends CON-0164 into temporal SEQUENCE: T+0s vibrotactile, T+3s steady amber pre-alert, T+5s VAD 0.5Hz + voice instruction, staff-mediated DEM evacuation concurrent.
+
+**Evidence basis:** CON-0164; NDV BPC; NEU BPC epilepsy; DEM BPC alarm comprehension; journey sequencing.
+
+**Action required:** B-10: sequenced multi-modal alarm replacing simultaneous. K-04: temporal sequence. Part 9: staff-mediated DEM evacuation.
+
+**Disposition notes:** —
+
+---
+
+## CON-0220
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** sensory-relief-space-design, neurodivergent-built-environment
+**Target item(s):** A-16, F-01, F-03
+**Target population(s):** NDV, MH
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** CON-0144 specifies A-16 exit decompression ≥3m. No specification addresses APPROACH. Person in sensory overload navigates through stimulating building to reach A-16. Last 10m of approach should have: reduced lighting ≤200 lux, no through-traffic routing, acoustic treatment RT60 ≤0.4s. Creates bidirectional decompression: calming on approach, graduated on exit.
+
+**Evidence basis:** CON-0144; F-01; F-03; NDV BPC; room synthesis.
+
+**Action required:** A-16: add approach decompression (10m). F-01: reference as gradient terminus. F-03: link bidirectional.
+
+**Disposition notes:** —

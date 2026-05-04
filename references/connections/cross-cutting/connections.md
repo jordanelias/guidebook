@@ -438,3 +438,26 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 **Action required:** Create cross-cutting design framework note: threat/safety neuroscience as unifying lens for MH+NDV+DEM. Reference Owen & Crane 2022 as the bridge paper. Route to Part 3 compound-functioning chapter.
 
 **Disposition notes:** —
+
+---
+
+## CON-0213
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** neurological-built-environment, pain-ofs-built-environment-design, accessible-bathroom-and-grab-bar
+**Target item(s):** H-05, G-09
+**Target population(s):** NEU/C4-C5, OFS, MOB, ALL
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Emergency call scattered across 5+ locations with 6 position-specific requirements: bathroom floor 400-500mm, bed head ≤500mm, WC seated, shower seated, OFS supine ≤400mm from bed edge, C4-C5 hard-wired switch. H-05 should carry multi-position reach envelope table coordinating all placements, with DAR for positions not initially wired.
+
+**Evidence basis:** FDR-BAB-07; FDR-NEW-09; FDR-NEW-16; bathroom BPC.
+
+**Action required:** H-05: create multi-position table (6 positions). G-09: cross-reference. DAR: all 6 positions at construction.
+
+**Disposition notes:** —

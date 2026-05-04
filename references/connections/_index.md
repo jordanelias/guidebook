@@ -5,15 +5,15 @@
 
 **Last migration:** 2026-04-19 (Block 4 B1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
-**Total connections migrated:** 181
-**Next CON-ID:** CON-0189
+**Total connections migrated:** 214
+**Next CON-ID:** CON-0222
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 140 |
 | CONSUMED-DEFERRED | 42 |
-| PENDING | 5 |
+| PENDING | 38 |
 | CONSUMED (this session) | 3 |
 
 ## Index
@@ -211,3 +211,36 @@
 | CON-0186 | CONSUMED | A-16 (sensory quiet room) | sensory-environment | HIGH | true | — |
 | CON-0187 | PENDING | D-02 (wayfinding system), D-06 (decision-point design) | wayfinding-and-signage | MODERATE | true | — |
 | CON-0188 | PENDING | Multiple (cross-cutting design framework) | cross-cutting | HIGH | true | — |
+| CON-0189 | PENDING | D-02, D-04, D-08 | wayfinding-and-signage | HIGH | false | — |
+| CON-0190 | PENDING | I-03, E-10 | seating-and-rest | HIGH | false | — |
+| CON-0191 | PENDING | G-03, G-04, F-07 | bathrooms-and-wet-areas | HIGH | false | — |
+| CON-0192 | PENDING | Part 3 §3.8 | frameworks-and-methodology | HIGH | false | — |
+| CON-0193 | PENDING | Part 1 §1.4 | frameworks-and-methodology | HIGH | false | — |
+| CON-0194 | PENDING | I-03, D-02, E-08 | entrances-and-circulation | HIGH | false | — |
+| CON-0195 | PENDING | Part 3 §3.2 | frameworks-and-methodology | MODERATE | false | — |
+| CON-0196 | PENDING | B-12, D-05 | sensory-environment | HIGH | false | — |
+| CON-0197 | PENDING | C-04, E-09 | entrances-and-circulation | MODERATE | false | — |
+| CON-0198 | PENDING | H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
+| CON-0199 | PENDING | Part 6 R-BED, Part 6 R-KIT | frameworks-and-methodology | HIGH | false | — |
+| CON-0200 | PENDING | A-09, E-07, C-04, E-08 | entrances-and-circulation | HIGH | false | — |
+| CON-0201 | PENDING | G-04 | bathrooms-and-wet-areas | MODERATE | false | — |
+| CON-0202 | PENDING | H-02, E-05 | controls-and-hardware | HIGH | false | — |
+| CON-0203 | PENDING | G-03, Part 4 preamble, Part 11 | bathrooms-and-wet-areas | HIGH | false | — |
+| CON-0204 | PENDING | I-03, E-10 | seating-and-rest | HIGH | false | — |
+| CON-0205 | PENDING | E-08, A-02 | entrances-and-circulation | MODERATE | false | — |
+| CON-0206 | PENDING | D-08, D-06, C-04 | wayfinding-and-signage | HIGH | false | — |
+| CON-0207 | PENDING | I-03, E-10, G-02, G-07 | seating-and-rest | HIGH | false | — |
+| CON-0208 | PENDING | Part 6 R-BED matrix | room-types | HIGH | false | — |
+| CON-0209 | PENDING | H-01, Part 6 R-KIT | kitchens-and-workspaces | MODERATE | false | — |
+| CON-0210 | PENDING | G-04 | bathrooms-and-wet-areas | HIGH | false | — |
+| CON-0211 | PENDING | Part 8 Engineering | sensory-environment | MODERATE | false | — |
+| CON-0212 | PENDING | G-02, G-05, G-07, I-03, E-10 | seating-and-rest | HIGH | false | — |
+| CON-0213 | PENDING | H-05, G-09 | cross-cutting | HIGH | false | — |
+| CON-0214 | PENDING | B-12, B-01 | sensory-environment | HIGH | false | — |
+| CON-0215 | PENDING | G-04, B-12 | bathrooms-and-wet-areas | MODERATE | false | — |
+| CON-0216 | PENDING | G-03, G-04 | bathrooms-and-wet-areas | HIGH | false | — |
+| CON-0217 | PENDING | B-10, A-16, K-04 | sensory-environment | HIGH | false | — |
+| CON-0218 | PENDING | Part 3 §3.x | frameworks-and-methodology | HIGH | false | — |
+| CON-0219 | PENDING | C-01, H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
+| CON-0220 | PENDING | A-16, F-01, F-03 | sensory-environment | MODERATE | false | — |
+| CON-0221 | PENDING | F-01, Part 3 | frameworks-and-methodology | HIGH | false | — |

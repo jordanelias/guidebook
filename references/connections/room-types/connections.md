@@ -28,3 +28,26 @@
 **Disposition notes:** - [x] HIGH → item-specification-writer briefing
 
 ---
+
+---
+
+## CON-0208
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment, accessible-bathroom-and-grab-bar, neurological-built-environment
+**Target item(s):** Part 6 R-BED matrix
+**Target population(s):** DEM
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** DEM bedroom requires 14+ coordinated specifications scattered across 10 items: distinctive door colour, memory box, toilet visible via glazed panel, overnight path lighting, bed-exit sensor, suppressed non-destination doors, cabinet mirror, emergency call ≤500mm from bed head, light switch ≤900mm from pillow, open storage ≤1200mm, WC/basin contrast ≥30 LRV, no patterned flooring, door personalisation, consistent furniture. No Part 6 matrix row assembles these.
+
+**Evidence basis:** FDR-DEM-01; FDR-DEM-02; FDR-BAB-07; bathroom BPC scenarios 7/14.
+
+**Action required:** Part 6: create R-BED-DEM matrix row (14 specifications). Flag as coordination exemplar.
+
+**Disposition notes:** —

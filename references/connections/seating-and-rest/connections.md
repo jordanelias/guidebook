@@ -144,3 +144,95 @@ The supplemental radiant heating panels (F-07) must not obstruct the ceiling hoi
 **Disposition notes:** - [x] MEDIUM → APPLIED 2026-04-03: I-04 Retrofit section updated with hoist track/radiant panel spatial coordination note. F-07 Population conflict section updated with CON-0107 reciprocal coordination note.
 
 ---
+
+---
+
+## CON-0190
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** pain-ofs-built-environment-design, mobility-built-environment, dementia-built-environment
+**Target item(s):** I-03, E-10
+**Target population(s):** OFS, PAIN, MOB, DEM
+**Evidence tier:** 1, 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Rest seating interval varies by population: OFS/PAIN 25-30m (Roxburgh 2024 Tier 1), MOB 50m (AS 1428.1), DEM 20m (Dementia Australia 2022). Governing interval = most restrictive population served. Mixed-population: ≤20m (DEM governs). OFS/PAIN-primary without DEM: ≤25m. MOB-only: ≤50m. E-10 currently specifies ≤20m without documenting population-specific rationale or harmonization logic.
+
+**Evidence basis:** Roxburgh 2024 (Tier 1 SR); AS 1428.1:2009; Dementia Australia 2022.
+
+**Action required:** E-10: add population-interval table. I-03: cross-reference.
+
+**Disposition notes:** —
+
+---
+
+## CON-0204
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** pain-ofs-built-environment-design, accessible-circulation-geometry
+**Target item(s):** I-03, E-10
+**Target population(s):** OFS, MOB, DEM, PAIN, NEU
+**Evidence tier:** 1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** FDR-ACG-01 explicitly flags rest seating alcove geometry (≥200mm recess + ≥900mm width + ≥450mm depth) as Universal Mode candidate. Serves fatigue, mobility, pain, dementia, neurological populations without conflict. Distinct from CON-0190 (interval) and CON-0207 (height). Three parameters together form complete rest seating specification system.
+
+**Evidence basis:** FDR-ACG-01 (Tier 1, Roxburgh 2024).
+
+**Action required:** I-03/E-10: specify alcove geometry as Universal Mode. Part 3 §3.8: cite as exemplar.
+
+**Disposition notes:** —
+
+---
+
+## CON-0207
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** pain-ofs-built-environment-design, mobility-built-environment, accessible-circulation-geometry
+**Target item(s):** I-03, E-10, G-02, G-07
+**Target population(s):** OFS, MOB, NEU, DEM
+**Evidence tier:** 1, 2
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Rest seating height ≥480mm via triple convergence: OFS (Roxburgh 2024 Tier 1 — 420mm exacerbates venous pooling), MOB/NEU spasticity (higher seat reduces STS muscle demand), DEM/older adults (reduced STS difficulty). The OFS vs aged-care 420mm conflict dissolves — ≥480mm serves ALL better. Clinical specification, not comfort. ≥480mm should replace 420mm as minimum.
+
+**Evidence basis:** Roxburgh 2024 (Tier 1); FDR-MOB-03; FDR-ACG-01.
+
+**Action required:** E-10/I-03/G-02/G-07: update minimum from 420mm to ≥480mm. Part 4: flag as Tier 1 evidence change.
+
+**Disposition notes:** —
+
+---
+
+## CON-0212
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment, neurological-built-environment, pain-ofs-built-environment-design
+**Target item(s):** G-02, G-05, G-07, I-03, E-10
+**Target population(s):** NEU, MOB, OFS, DEM
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Five items specify seating heights independently. Surface height TRANSITIONS trigger spasticity (FDR-MOB-03). All rest seating within a single circulation route should be consistent ≥480mm (per CON-0207) unless function-specific (WC 450mm for transfer biomechanics). Inconsistent heights = compound fall/spasticity risk.
+
+**Evidence basis:** FDR-MOB-03; CON-0207; journey sequencing.
+
+**Action required:** G-02/G-07/E-10: consistent ≥480mm. Part 3: building-level consistency principle. WC exception documented.
+
+**Disposition notes:** —

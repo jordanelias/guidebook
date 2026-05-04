@@ -201,3 +201,26 @@ van der Schaaf 2013 (n=23,868 across 199 wards) confirms private space per patie
 
 **Disposition notes:** — The d=2.0 figure should be prominent in Part 1 evidence section and Part 11 economics.
 
+
+---
+
+## CON-0202
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** neurological-built-environment, upper-limb-impairment-built-environment, mobility-built-environment
+**Target item(s):** H-02, E-05
+**Target population(s):** NEU/tremor, NEU/tetraplegia, MOB, UPL
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Population-prioritized control interface hierarchy synthesized from FDR-NEW-15 (tremor) + FDR-NEW-16 (C4-C5): (1) Voice — primary for severe motor impairment. (2) Switch access — C4-C5 tetraplegia. (3) Large rocker ≥25mm — tremor/MOB/NEU. (4) Lever/paddle — UPL/reduced grip. (5) Capacitive touchscreen — LAST, inaccessible for tremor/tetraplegia/severe spasticity. H-02 currently lists voice as 'alternative'; for severe motor impairment it is PRIMARY.
+
+**Evidence basis:** FDR-NEW-15; FDR-NEW-16; DIN 18040; UPL BPC synthesis.
+
+**Action required:** H-02: replace 'voice as alternative' with population-prioritized hierarchy. Touchscreen is last resort.
+
+**Disposition notes:** —

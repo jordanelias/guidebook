@@ -930,3 +930,49 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Action required:** Add compound-interaction note to D-02 and D-06 specs. Specify sequential-decision-point layout as universal fallback for DEM+VIS compound.
 
 **Disposition notes:** —
+
+---
+
+## CON-0189
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** neurological-built-environment, dementia-built-environment
+**Target item(s):** D-02, D-04, D-08
+**Target population(s):** NEU, DEM
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** NEU navigation impairment sub-typing (Claessen & van der Ham 2017: egocentric/topographic/landmark agnosia) provides a classification framework directly applicable to DEM wayfinding staging. Egocentric disorientation (self-to-space) maps to DEM Stage 6-7 (cannot navigate familiar rooms). Topographic disorientation (route memory failure) maps to DEM Stage 4-5 (loses way on familiar routes). Landmark agnosia (cannot use environmental cues) maps to DEM Stage 3-4 (fails to recognise decision-point markers). This transfers the NEU three-type classification into a DEM-staging tool for wayfinding specification.
+
+**Evidence basis:** Claessen & van der Ham 2017; Dementia Australia 2022; NEU BPC synthesis.
+
+**Action required:** D-02/D-04/D-08: add NEU navigation sub-type classification as staging framework for DEM wayfinding specification. Part 3 §3.2: reference as cross-population knowledge transfer exemplar.
+
+**Disposition notes:** —
+
+---
+
+## CON-0206
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment, visual-impairment-built-environment, deafblind-built-environment-design
+**Target item(s):** D-08, D-06, C-04
+**Target population(s):** DEM, VIS, DBL
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Signage height conflict: DEM downward scan ≤1220mm AFF (Benbow 2013) vs VIS/DBL braille 1400-1600mm AFF (ISO 21542, BS 8300). Resolution: dual-height sign system — pictogram + colour at ≤1220mm (DEM zone) + braille + raised characters at 1400-1600mm (VIS zone). Single sign spanning 1220-1600mm with population-specific content zones, latch side.
+
+**Evidence basis:** Benbow 2013; ISO 21542:2021; BS 8300-2:2018.
+
+**Action required:** D-08: dual-height sign system. D-06: cross-reference. C-04: LRV applies to both zones.
+
+**Disposition notes:** —

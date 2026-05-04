@@ -382,3 +382,141 @@ This finding is siloed in `thermal-comfort-older-adults-care-settings` and not p
 **Action required:** Add PAIN and OFS population tags to bilateral grab bar spec. Cross-reference FDR-CMP-01 (pain-modified transfer).
 
 **Disposition notes:** —
+
+---
+
+## CON-0191
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** thermoregulation-built-environment, accessible-bathroom-and-grab-bar
+**Target item(s):** G-03, G-04, F-07
+**Target population(s):** ALL (life-safety)
+**Evidence tier:** 2
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Inter-room temperature differential ≤5°C between bathroom and adjacent spaces is life-safety specification. Japan MHLW 2023: 6,073 deaths/year attributed to bathing-related thermal shock from cold bathroom exposure after warm living space. Bathroom pre-heating required to maintain ≤5°C differential before occupant entry. Distinct from F-07 thermal zoning (zone comfort) and CON-0184 (K-05 assessment framework).
+
+**Evidence basis:** Japan MHLW 2023; thermoregulation BPC; bathroom BPC FDR scenario 14.
+
+**Action required:** G-04: add ≤5°C inter-room differential specification. F-07: cross-reference. Part 8: bathroom pre-heating requirement.
+
+**Disposition notes:** —
+
+---
+
+## CON-0201
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment, mental-health-built-environment
+**Target item(s):** G-04
+**Target population(s):** DEM, NDV/MH
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** DEM mirror disorientation extends to NDV/MH: PTSD hypervigilance produces startle response to unexpected reflections in peripheral vision during vulnerable personal care. Specification: mirrors in cabinet doors (controllable exposure) rather than fixed wall-mounted in DEM and NDV/MH designated bathrooms. No conflict — cabinet-door mirrors serve both without trade-off.
+
+**Evidence basis:** FDR-DEM-02; MH BPC (PTSD hypervigilance); Dementia Australia 2022.
+
+**Action required:** G-04: cabinet-door mirrors for DEM/NDV/MH bathrooms. DAR: mirror backing at construction.
+
+**Disposition notes:** —
+
+---
+
+## CON-0203
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar
+**Target item(s):** G-03, Part 4 preamble, Part 11
+**Target population(s):** ALL
+**Evidence tier:** 1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Three independent SRs confirm grab bar efficacy: Clemson 2023 Cochrane (22 RCTs, 8,463 participants, 38% fall reduction), Crosby 2026 (9 RCTs, OR ~0.70), Kim 2025 (20 studies, bathroom modifications most impactful). G-03 is the most robustly evidenced single item. GRADE: HIGH.
+
+**Evidence basis:** Clemson et al. 2023 (PMID:37212132); Crosby et al. 2026 (PMID:41525145); Kim et al. 2025.
+
+**Action required:** G-03: flag as highest-evidence item. Part 4 preamble: evidence exemplar. Part 11: anchor cost-effectiveness.
+
+**Disposition notes:** —
+
+---
+
+## CON-0210
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, pain-ofs-built-environment-design, mobility-built-environment
+**Target item(s):** G-04
+**Target population(s):** MOB (power WC), OFS
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Bathroom dimensional accumulation for power WC + OFS exceeds 2200×2200mm. Components: ø1800mm turning + 300mm bilateral grab bars + 1200×1200mm shower + 900-1000mm WC lateral + 900×900mm door swing + ≥500mm OFS staged rising. Total forward from back wall exceeds 2200mm. Also: ø1800mm turning doesn't fit between deployed bars (1200mm gap) — sequencing dependency. Power WC + OFS requires ≥2200×2500mm.
+
+**Evidence basis:** Bathroom BPC dimensions; FDR-NEW-02; BS 8300 Annex G.
+
+**Action required:** G-04: ≥2200×2500mm for power WC + OFS. DAR: larger dimension at construction. Add grab bar sequencing note.
+
+**Disposition notes:** —
+
+---
+
+## CON-0215
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment
+**Target item(s):** G-04, B-12
+**Target population(s):** DEM
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** FDR-DEM-02 glazed panel bedroom→bathroom fails at night when bathroom is dark — panel shows nothing. Gap: bathroom needs always-on ultra-low beacon (≤2 lux, 2700K) visible through panel as nocturnal wayfinding landmark. Distinct from B-12 (motion-sensor path) and B-01 (circadian). Beacon is fixed, always-on visual landmark through glass.
+
+**Evidence basis:** FDR-DEM-02; journey sequencing night analysis.
+
+**Action required:** G-04: add nocturnal beacon specification. B-12: distinguish beacon from path lighting.
+
+**Disposition notes:** —
+
+---
+
+## CON-0216
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, mobility-built-environment, pain-ofs-built-environment-design
+**Target item(s):** G-03, G-04
+**Target population(s):** MOB/hemiplegia, OFS, DEM
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** SAFETY-CRITICAL: 1-2m between WC grab bars and basin has NO grab support specification. G-03 covers WC. I-03 covers shower. No item covers WC→basin→door path. Hemiplegic (unilateral support), OFS (post-STS orthostatic risk, highest fall probability in first 30s), DEM (disorientation during unsupported transition) — this gap is highest fall-risk bathroom segment. Resolution: continuous horizontal rail 850-900mm AFF along WC wall → basin wall → door wall.
+
+**Evidence basis:** Bathroom BPC; FDR-OFS-01; FDR-BAB-01; journey sequencing.
+
+**Action required:** G-03: add continuous rail specification linking WC→basin→door. G-04: room-level grab rail system. Part 4: safety-critical gap closure.
+
+**Disposition notes:** —

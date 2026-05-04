@@ -1173,3 +1173,95 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 **Action required:** Extend floor surface specification to include PAIN, NEU, OFS population tags. Add WBV risk note to chronic-pain and fatigue-spectrum slugs.
 
 **Disposition notes:** —
+
+---
+
+## CON-0194
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** visual-impairment-built-environment, pain-ofs-built-environment-design
+**Target item(s):** I-03, D-02, E-08
+**Target population(s):** VIS, OFS
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** COMPOUND-INTERACTION
+**Connection:** VIS+OFS circulation compound (FDR-CMP-02): VIS navigation requires continuous cognitive processing. OFS fatigue reduces cognitive reserve with distance. Compound: cognitive resource for VIS navigation decreases as OFS fatigue accumulates. Rest seating for VIS+OFS must be tactile-indicated (cane-detectable) and recline-capable (venous pooling). Interval ≤20m (50% of OFS standalone, accounting for dual cognitive load).
+
+**Evidence basis:** VIS BPC FDR; OFS BPC FDR; compound interaction audit methodology.
+
+**Action required:** I-03: add VIS+OFS compound specification. D-02: note wayfinding cognitive load compounds with OFS fatigue. E-08: tactile-indicated rest alcove.
+
+**Disposition notes:** —
+
+---
+
+## CON-0197
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment, neurological-built-environment
+**Target item(s):** C-04, E-09
+**Target population(s):** NEU/PD, VIS/DBL
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** PD floor visual cue strips (FDR-MOB-01: 450mm, high-contrast, stride-length intervals) and TWSI directional guidance strips (ISO 23599: elongated bars) are both linear floor-mounted contrast elements on shared corridors. VIS cane user could confuse PD strips with TWSI. Differentiation: TWSI uses ISO 23599 raised profile ≥4mm; PD strips must be FLAT contrast bands (no raised profile) — visually effective for PD while cane-distinguishable from TWSI.
+
+**Evidence basis:** FDR-MOB-01; ISO 23599:2012; VIS BPC TWSI specification.
+
+**Action required:** C-04/E-09: add differentiation protocol. Part 5: corridor floor element coordination.
+
+**Disposition notes:** —
+
+---
+
+## CON-0200
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment, pain-ofs-built-environment-design, deaf-spatial-design, neurological-built-environment
+**Target item(s):** A-09, E-07, C-04, E-08
+**Target population(s):** NEU/spasticity, PAIN, DEAF
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Corridor floor is the most specification-overloaded element: 9+ simultaneous requirements, 3+ direct conflicts. NEU/spasticity FIRM non-compliant. PAIN CUSHIONED resilient. DEAF HARD for vibration. Plus PTV ≥36, plain (DEM), TWSI (VIS), PD strips, LRV contrast. Resolution: SPATIAL DIFFERENTIATION — primary path firm/non-compliant/PTV ≥36/plain; TWSI lane within; cushioned mat at rest points only; acoustic via ceiling+wall not floor. New 13th conflict domain: FLOOR-SPECIFICATION-SYSTEM.
+
+**Evidence basis:** FDR-MOB-03; pain-ofs BPC; FDR-DEAF-02; compound audit; corridor analysis.
+
+**Action required:** Part 3 §3.8: corridor floor as PRIMARY CONFLICT DOMAIN. A-09: zoned floor system. Part 5: 13th conflict domain.
+
+**Disposition notes:** —
+
+---
+
+## CON-0205
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** visual-impairment-built-environment, dementia-built-environment, neurodivergent-built-environment
+**Target item(s):** E-08, A-02
+**Target population(s):** VIS, DEM, NDV
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Long-cane detection gap: objects 300-2000mm AFF projecting into circulation are undetectable by cane sweep. No element should project above 300mm AFF without detectable base at ≤300mm AFF. Cross-population: DEM cognitive inattention + NDV inattentional blindness during hyperfocus also fail to detect overhead hazards. Base-detectability serves VIS + DEM + NDV without conflict.
+
+**Evidence basis:** FDR-VI-01; AS 1428.1; DEM BPC; NDV BPC.
+
+**Action required:** E-08: add overhead obstacle base-detectability specification. A-02: cross-reference for wall-mounted elements.
+
+**Disposition notes:** —

@@ -171,3 +171,72 @@ Currently A-16 is NDV-only. MH "de-escalation room" described as distinct. Evide
 
 **Quality correction from original:** Downgraded from HIGH to MODERATE. Original overclaimed DEM/IntD benefit — DEM BPC documents spatial LAYOUT consistency, not surface HEIGHT consistency across rooms. These are different parameters.
 
+
+---
+
+## CON-0198
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** neurological-built-environment, visual-impairment-built-environment, dementia-built-environment
+**Target item(s):** H-01, I-02
+**Target population(s):** NEU/MS, VIS, DEM
+**Evidence tier:** 2-3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Three independent FDR scenarios converge on induction-only cooktops: MS (FDR-NEU-02: eliminates kitchen air heating → prevents Uhthoff's phenomenon), VIS (FDR-NEW-04: eliminates invisible hot surfaces → prevents burns), DEM (FDR-NEW-05: enables auto-shutoff → prevents unattended cooking fires). No conflict — induction serves all three without trade-offs. Universal Mode candidate.
+
+**Evidence basis:** FDR-NEU-02; FDR-NEW-04; FDR-NEW-05; MS thermoregulation evidence.
+
+**Action required:** H-01: specify induction-only as Universal Mode candidate. I-02: cross-reference. Part 6 R-KIT: induction-only default.
+
+**Disposition notes:** —
+
+---
+
+## CON-0209
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** dementia-built-environment, residential-kitchen-and-task-surfaces
+**Target item(s):** H-01, Part 6 R-KIT
+**Target population(s):** DEM, MOB
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** COMPOUND-INTERACTION
+**Connection:** DEM glass-front cabinets (visible contents) at standard 1350mm base height are above seated wheelchair eye level (~1100-1200mm). Contents not visible through glass at this angle. DEM+MOB compound: cabinet base ≤1200mm OR eliminate overheads in favour of pull-out base units with glass fronts ≤2 layers deep.
+
+**Evidence basis:** FDR-NEW-05; FDR-KIT-02; compound interaction audit.
+
+**Action required:** Part 6 R-KIT: add DEM+MOB compound kitchen specification. H-01: cross-reference.
+
+**Disposition notes:** —
+
+---
+
+## CON-0219
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** neurodivergent-built-environment, visual-impairment-built-environment, dementia-built-environment
+**Target item(s):** C-01, H-01, I-02
+**Target population(s):** NDV, VIS, DEM
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Kitchen is functional exception to C-01 muted palette. Safety-critical contrast (hot surfaces, sharp edges, controls for VIS; pictograms for DEM) must override visual calm. Kitchen is inherently stimulating. Resolution: C-01 suspended for safety-critical elements. Dual palette: muted BACKGROUND + HIGH-contrast FUNCTIONAL elements. NDV sensory retreat via adjacent rest surface.
+
+**Evidence basis:** C-01; VIS BPC safety contrast; DEM BPC; NDV BPC; room synthesis.
+
+**Action required:** C-01: kitchen exception note. Part 6 R-KIT: dual palette. H-01/I-02: cross-reference.
+
+**Disposition notes:** —
