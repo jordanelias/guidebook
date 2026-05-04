@@ -48,7 +48,7 @@
 - **Strategy:** PP (unlabelled — per OPG-02, should be tagged) — **MINOR**
 
 ### 9. MOVE-FREE (DEM vs MOB)
-- **Resolution status:** RESOLVED-CONSENSUS (residential) / TIER-2-ONLY (institutional) — **CORRECT**
+- **Resolution status:** RESOLVED-CONSENSUS (residential) / MODE-S-ONLY (institutional) — **CORRECT**
 - **Strategy:** SZ + OT-REF — **CORRECT**
 - **BPC consistency:** Not in original BPC 9. Resolution is sound.
 

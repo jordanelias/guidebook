@@ -30,7 +30,7 @@ class ConflictParty(GuidebookEntity):
 class ConflictResolution(GuidebookEntity):
     """Resolution details for a conflict domain."""
 
-    status: str  # RESOLVED-EVIDENCE, RESOLVED-CONSENSUS, UNRESOLVABLE-TIER-2, DEFERRED
+    status: str  # RESOLVED-EVIDENCE, RESOLVED-CONSENSUS, UNRESOLVABLE-MODE-S, DEFERRED
     strategy_codes: list[str] = []  # e.g. ["SZ", "PP"] — Sensory Zoning, Parallel Provision
     strategy_labels: list[str] = []  # human-readable strategy names
     description: str  # prose resolution description
@@ -41,7 +41,7 @@ class ConflictResolution(GuidebookEntity):
     def valid_status(cls, v: str) -> str:
         valid = {
             "RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS",
-            "UNRESOLVABLE-TIER-2", "DEFERRED", "OPEN",
+            "UNRESOLVABLE-MODE-S", "DEFERRED", "OPEN",
         }
         if v not in valid:
             raise ValueError(f"Invalid resolution status: '{v}'. Valid: {sorted(valid)}")
@@ -70,7 +70,7 @@ class Conflict(GuidebookEntity):
 
     Each record captures where two or more populations have opposing
     design requirements on the same physical parameter, and how the
-    conflict is resolved (or declared unresolvable at Tier 2).
+    conflict is resolved (or declared unresolvable at Mode S).
     """
 
     # Identity
@@ -95,9 +95,9 @@ class Conflict(GuidebookEntity):
     specifications_involved: list[str] = []  # item codes
     connection_ids: list[str] = []  # CON-NNNN references
 
-    # Unresolvable residual (for UNRESOLVABLE-TIER-2 conflicts)
+    # Unresolvable residual (for UNRESOLVABLE-MODE-S conflicts)
     unresolvable_residual: Optional[str] = None
-    tier_2_trigger: Optional[str] = None
+    mode_s_trigger: Optional[str] = None
     mitigation: Optional[str] = None
     ot_assessment_mandatory: bool = False
 
@@ -132,10 +132,10 @@ class Conflict(GuidebookEntity):
 
     @model_validator(mode="after")
     def unresolvable_consistency(self) -> "Conflict":
-        """UNRESOLVABLE-TIER-2 conflicts must have tier_2_trigger."""
-        if self.resolution.status == "UNRESOLVABLE-TIER-2":
-            if not self.tier_2_trigger:
+        """UNRESOLVABLE-MODE-S conflicts must have mode_s_trigger."""
+        if self.resolution.status == "UNRESOLVABLE-MODE-S":
+            if not self.mode_s_trigger:
                 raise ValueError(
-                    "UNRESOLVABLE-TIER-2 conflict must specify tier_2_trigger"
+                    "UNRESOLVABLE-MODE-S conflict must specify mode_s_trigger"
                 )
         return self

@@ -19,9 +19,12 @@ from pydantic import field_validator, model_validator
 
 from schemas.base import ConditionValue, EvidenceTierRange, GuidebookEntity
 from schemas.enums import (
+    CurationStatus,
+    DiagramType,
     ItemAssignmentStatus,
     PopulationCode,
     RecommendationStrength,
+    RetrofitCategory,
     ValueType,
 )
 
@@ -66,8 +69,8 @@ class Specification(GuidebookEntity):
     jurisdictions_divergent: list[str] = []
     divergence_note: Optional[str] = None
 
-    # Tier 2 handoff
-    tier_2_note: Optional[str] = None
+    # Mode S handoff
+    person_specific_note: Optional[str] = None
 
     # Conditional values
     conditions: list[ConditionValue] = []
@@ -80,6 +83,44 @@ class Specification(GuidebookEntity):
     percentile_basis: Optional[str] = None  # DEPRECATED — vestigial field
     notes: Optional[str] = None
     context_note: Optional[str] = None
+
+    # --- D-0139 Amendment 1 fields ---
+
+    # Question mode (DC-6)
+    question_heading: Optional[str] = None  # question-form heading
+    question_summary: Optional[str] = None  # question-mode summary variant
+
+    # Display atoms
+    summary: Optional[str] = None  # one-sentence summary (card view)
+    evidence_summary: Optional[str] = None  # short citation string (card view)
+
+    # Authored prose sections
+    why_md: Optional[str] = None  # "Why it matters" authored prose
+    schedule_md: Optional[str] = None  # schedule language (copyable text)
+
+    # Diagrams
+    diagram_svg: Optional[str] = None  # inline SVG content
+    diagram_type: Optional[DiagramType] = None
+
+    # DAR integration
+    dar_relevant: bool = False
+    dar_note: Optional[str] = None
+
+    # Engineering coordination
+    structural_backing_required: bool = False
+
+    # Classification and status
+    retrofit_category: Optional[RetrofitCategory] = None
+    ot_evidence_basis: Optional[str] = None  # OT framework citation string
+    curation_status: CurationStatus = CurationStatus.AUTOMATED
+
+    # JSON content atoms (stored as JSON strings, validated at write)
+    conflict_domains: Optional[list[str]] = None  # conflict domain IDs
+    failures_json: Optional[list[str]] = None  # failure pattern strings
+    install_notes_json: Optional[list[str]] = None  # installation notes
+    detail_groups_json: Optional[list[dict]] = None  # {title, items[]}
+    pop_reasons_json: Optional[dict[str, str]] = None  # keyed by PopulationCode
+    topics_json: Optional[list[str]] = None  # topic strings
 
     # --- Validators ---
 
@@ -119,6 +160,19 @@ class Specification(GuidebookEntity):
                     f"Unknown population code: '{code}'. "
                     f"Valid codes: {sorted(valid)}"
                 )
+        return v
+
+    @field_validator("conflict_domains")
+    @classmethod
+    def valid_conflict_domains(cls, v: Optional[list[str]]) -> Optional[list[str]]:
+        if v is not None:
+            import re as _re
+
+            for domain in v:
+                if not _re.match(r"^[A-Z][-A-Z]+$", domain):
+                    raise ValueError(
+                        f"conflict_domain must match [A-Z][-A-Z]+, got: '{domain}'"
+                    )
         return v
 
     @model_validator(mode="after")

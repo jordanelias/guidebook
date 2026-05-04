@@ -93,7 +93,7 @@ For each active conflict:
 | RESOLVED-CONSENSUS | Expert/standards consensus without outcome data (e.g., zoned lighting) |
 | RESOLUTION-PROPOSED | Resolution exists in guidelines but untested (e.g., adjustable everything) |
 | UNRESOLVED | No resolution found; populations cannot share identical specification |
-| TIER-2-ONLY | Conflict irreconcilable at Universal Mode–1; requires individual co-design |
+| MODE-S-ONLY | Conflict irreconcilable at Universal Mode–1; requires individual co-design |
 
 ### Step 4: Output conflict matrix
 
@@ -119,7 +119,7 @@ For each RESOLVED or RESOLUTION-PROPOSED conflict:
 
 ### Unresolved Conflicts → Gap Register
 
-For each UNRESOLVED or TIER-2-ONLY conflict:
+For each UNRESOLVED or MODE-S-ONLY conflict:
 - Gap ID (format: GAP-CONF-{DOMAIN}-{NN})
 - Populations affected
 - Specification implication

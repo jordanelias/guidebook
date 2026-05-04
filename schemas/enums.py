@@ -510,3 +510,47 @@ class ContaminationDisposition(str, Enum):
     AMBIGUOUS = "AMBIGUOUS"
     STUB = "STUB"
     MERGED = "MERGED"
+
+
+class DiagramType(str, Enum):
+    """Specification diagram type per D-0139 Amendment 1."""
+    PLAN = "plan"
+    SECTION = "section"
+    ELEVATION = "elevation"
+    ISOMETRIC = "isometric"
+    CHART = "chart"
+
+
+class RetrofitCategory(str, Enum):
+    """Retrofit cost/difficulty category per D-0139 Amendment 1.
+
+    LOW_PLANNING: zero cost at design stage; retrofit requires spatial reorganisation.
+    LOW_FIXTURE: fixture replacement only; no structural work.
+    MODERATE: minor works (e.g., door widening, ramp addition).
+    HIGH: significant structural works (e.g., lift shaft, wet room).
+    STRUCTURAL: load-bearing or foundation changes.
+    """
+    LOW_PLANNING = "LOW-PLANNING"
+    LOW_FIXTURE = "LOW-FIXTURE"
+    MODERATE = "MODERATE"
+    HIGH = "HIGH"
+    STRUCTURAL = "STRUCTURAL"
+
+
+class CurationStatus(str, Enum):
+    """Specification curation lifecycle per D-0139 Amendment 1."""
+    AUTOMATED = "automated"
+    REVIEWED = "reviewed"
+    OPUS_SYNTHESIZED = "opus_synthesized"
+
+
+class PopulationRole(str, Enum):
+    """Population relationship role in specification_population join.
+
+    PRIMARY: population is the primary design driver for this spec.
+    SECONDARY: population benefits but is not the primary driver.
+    ALL: universal applicability (legacy migration default).
+    """
+    PRIMARY = "primary"
+    SECONDARY = "secondary"
+    ALL = "all"

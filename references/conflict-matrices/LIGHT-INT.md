@@ -3,7 +3,7 @@
 **Domain:** LIGHT-INT — Daytime illuminance (lux / melanopic EDI)
 **Populations served:** DEM, NEU, NDV/AUT, NDV/SENS, NDV/MH, PAIN, OFS, VIS, DEAF
 **Classification:** [BOTH] — inter-group AND intra-individual
-**Overall status:** UNRESOLVED at Universal Mode · RESOLUTION-PROPOSED at Tier 1 (zoning + individual control) · TIER-2-ONLY for intra-individual co-occurrence
+**Overall status:** UNRESOLVED at Universal Mode · RESOLUTION-PROPOSED at Tier 1 (zoning + individual control) · MODE-S-ONLY for intra-individual co-occurrence
 
 ### Active Conflicts
 
@@ -11,7 +11,7 @@
 |---|---|---|---|---|---|---|---|
 | LIGHT-INT (daytime) | DEM, VIS, DEAF | NDV/AUT, NDV/SENS, NEU(migraine), PAIN(fibro), OFS/MCAS | ≥300 lux / ≥250 melanopic EDI / ≥4000 K | ≤200 lux ambient preferred; user-controlled to 0 lux; ≤3000 K; no fluorescent | Zoning + individual control + temporal dosing | RESOLUTION-PROPOSED (Tier 1) | ◐ |
 | LIGHT-INT (evening) | DEM | NDV/AUT, NEU, PAIN, OFS | ≤2700 K / ≤10 melanopic EDI | ≤2700 K / dim | Non-conflicting — parameters aligned | RESOLVED-CONSENSUS | ● |
-| LIGHT-INT (intra-individual) | NEU/MH/OFS circadian need | NEU/MH/OFS photosensitivity | ≥250 melanopic EDI for sleep-wake | Blue-enriched spectrum (480nm) triggers pain via shared ipRGC pathway | Temporal dosing; Mode S OT assessment | TIER-2-ONLY | ◐ |
+| LIGHT-INT (intra-individual) | NEU/MH/OFS circadian need | NEU/MH/OFS photosensitivity | ≥250 melanopic EDI for sleep-wake | Blue-enriched spectrum (480nm) triggers pain via shared ipRGC pathway | Temporal dosing; Mode S OT assessment | MODE-S-ONLY | ◐ |
 
 ### Mechanistic Finding
 
@@ -65,7 +65,7 @@ The ipRGC/melanopsin pathway (peak ~480nm) mediates BOTH circadian entrainment A
 **Resolution 7 — Tier escalation**
 - The conflict is irreconcilable at Universal Mode for shared ambient spaces. At Mode P, architect zones based on identified populations. At Mode S, OT assessment resolves individual placement.
 - For intra-individual co-occurrence (NEU/MH/OFS): circadian lighting and photosensitivity management are competing clinical objectives. The guidebook states the trade-off explicitly; neither takes priority without individual assessment.
-- Status: **TIER-2-ONLY** for intra-individual · Confidence: **HIGH** — this is the honest answer
+- Status: **MODE-S-ONLY** for intra-individual · Confidence: **HIGH** — this is the honest answer
 
 ### Universal Mode Default Specification
 
