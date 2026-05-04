@@ -106,8 +106,38 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - Co-1 network fully mapped: Wiesel→Goodwin→Wellecke→Winkler (4-study AU cluster)
 - 7 Tier 1, 6 Tier 2, 8 Tier 3-4, 4 Co-1 sources discovered
 
+### Evidence auditor + Part 11 §11.3 update
+- Resolved 6/7 escalation flags (1 deferred: Tsuchiya-Ito 2019 JP-SE comparison)
+- Lewis 2024 Cochrane: no hierarchy change (population-based, not individual)
+- Hollinghurst confirmed: 2 papers (2020 + 2022), n=657,536, largest admin dataset
+- Part 11 §11.3 updated with:
+  - Cross-jurisdictional health outcomes convergence (Clemson, Keall, CAPABLE, Tsuchiya-Ito, Hollinghurst, Chandola)
+  - Corrected CAPABLE/Szanton citation and economics
+  - Co-1 lived-experience evidence (Wiesel 2020, Goodwin 2022)
+  - LSE/Habinteg BCR corrected to 4.3–5.6:1
+
 ## session_close
-2026-05-04 02:30
+2026-05-04 02:50
+
+## next_action
+1. Source verification sweep — GAP-ECON-04 (~40 entries, deferred systematic task)
+2. German-language citation networks (TERRAGON, Bundesfachstelle)
+3. Tsuchiya-Ito 2019 JP-SE comparison integration (deferred flag #7)
+4. Priority jurisdiction deep-dives: NL, JP (beyond financing), IE, NZ
+5. Populate new sources into throughline-health-outcomes.md verified citations
+6. Add Hollinghurst 2020+2022 records to economics.json
+
+## decisions
+- D-0147: Economics methodology partitioned by economic throughlines
+- D-0148: TERRAGON AG commercial-interest disclosure added
+- D-0149: Website data via schema-aligned JSON (not Wix)
+- D-0150: Entity 5 expanded from 3 to 7 sub-entities
+- D-0151: GAP-ECON-05 resolved
+- D-0152: All 11 economics gaps resolved/closed/deferred
+- D-0153: Szanton citation corrected 2017→2018
+- D-0154: Citation mining complete — 23 new sources
+- D-0155: Lewis 2024 Cochrane — no hierarchy change (population-based)
+- D-0156: Part 11 §11.3 updated with cross-jurisdictional health evidence
 
 ## next_action
 1. Evidence-auditor review of 7 escalation flags (Lewis 2024, Colón-Emeric 2024, Hollinghurst 2022)
