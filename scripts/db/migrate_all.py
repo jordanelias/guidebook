@@ -542,6 +542,95 @@ def verify(conn):
     print(f"  Conflicts: {resolved} resolved + {unresolvable} unresolvable")
 
 
+def extract_part4_content(conn):
+    """C3: Extract specification content fields from Part 4 prose."""
+    import yaml
+
+    with open(REPO_ROOT / "parts" / "v10" / "part04.md", "r") as f:
+        part4_lines = f.readlines()
+
+    with open(REPO_ROOT / "references" / "part04-item-index.md", "r") as f:
+        index_content = f.read()
+
+    items = {}
+    for line in index_content.split("\n"):
+        m = re.match(r"\|\s*([A-K]-\d{2})\s*\|\s*(.+?)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|", line)
+        if m:
+            code = m.group(1)
+            if "MERGED" not in m.group(2).upper() and "ABSORBED" not in m.group(2).upper():
+                items[code] = {"start": int(m.group(3)), "end": int(m.group(4))}
+
+    count = 0
+    for code, item in sorted(items.items()):
+        content = "".join(part4_lines[item["start"] - 1 : item["end"]])
+        updates = {}
+
+        # schedule_md
+        spec_match = re.search(
+            r"\*\*Specifications:\*\*\s*\n(.*?)(?=\n\*\*[A-Z]|\n##|\Z)", content, re.DOTALL
+        )
+        if spec_match:
+            schedule = spec_match.group(1).strip()
+            if schedule and len(schedule) > 10:
+                updates["schedule_md"] = schedule
+
+        # retrofit_category
+        retro_match = re.search(r"Retrofit penalty:\s*(LOW|MODERATE|HIGH|STRUCTURAL)", content, re.IGNORECASE)
+        if retro_match:
+            cat = retro_match.group(1).upper()
+            full = re.search(r"Retrofit penalty:\s*(.+?)(?:\.|$)", content, re.IGNORECASE)
+            if full and "STRUCTURAL" in full.group(1).upper():
+                cat = "STRUCTURAL"
+            updates["retrofit_category"] = cat
+
+        # ot_evidence_basis
+        ot_match = re.search(r"\*\*Evidence basis \(OT\):\*\*\s*(.+?)(?=\n\n|\n\*\*|\Z)", content, re.DOTALL)
+        if ot_match and len(ot_match.group(1).strip()) > 5:
+            updates["ot_evidence_basis"] = ot_match.group(1).strip()[:500]
+
+        # dar_note
+        dar_mentions = re.findall(r"(?:DAR|structural blocking|structural backing|design.for.adaptab).*", content, re.IGNORECASE)
+        if dar_mentions and len(dar_mentions[0].strip()) > 10:
+            updates["dar_note"] = dar_mentions[0].strip()[:300]
+
+        # evidence_tier
+        tier_match = re.search(r"grade_confidence:\s*(HIGH|MODERATE|LOW)", content)
+        if tier_match:
+            updates["evidence_tier"] = {"HIGH": 2, "MODERATE": 3, "LOW": 4}[tier_match.group(1)]
+
+        # summary — from Description first sentence
+        desc_match = re.search(r"\*\*Description:\*\*\s*(.+?)(?=\n\n|\n\*\*)", content, re.DOTALL)
+        if desc_match:
+            desc = desc_match.group(1).strip()
+            first_sent = re.split(r"(?<=[.!?])\s", desc)[0]
+            if len(first_sent) > 10:
+                updates["summary"] = first_sent[:300]
+
+        # evidence_summary
+        cite_match = re.search(r"\*\*Key citations:\*\*\s*(.+?)(?=\n\n|\n\*\*|\Z)", content, re.DOTALL)
+        if cite_match and len(cite_match.group(1).strip()) > 5:
+            updates["evidence_summary"] = cite_match.group(1).strip()[:500]
+
+        # why_md — from Description full
+        if desc_match and len(desc_match.group(1).strip()) > 30:
+            updates["why_md"] = desc_match.group(1).strip()
+
+        # Apply (only fill nulls)
+        for field, value in updates.items():
+            conn.execute(
+                f'UPDATE specification SET {field} = ? WHERE item_code = ? AND ({field} IS NULL OR {field} = "")',
+                (value, code),
+            )
+
+        if updates:
+            count += 1
+
+    conn.commit()
+    return count
+
+
+
+
 def main():
     verify_only = "--verify-only" in sys.argv
 
@@ -596,6 +685,10 @@ def main():
     print("Creating item stubs from Part 4...")
     stub_count = create_item_stubs(conn)
     print(f"  → {stub_count} item stubs")
+
+    print("Extracting Part 4 content...")
+    extract_count = extract_part4_content(conn)
+    print(f"  → {extract_count} items enriched")
 
     verify(conn)
     conn.close()
