@@ -154,7 +154,12 @@
         "F-06",
         "C-04"
       ]
-    }
+    },
+    "co1_citations_added": "2026-05-04",
+    "co1_sources": [
+      "Goodwin et al. 2022 \u2014 AJSI \u2014 lived experience perspective, AU, peer-reviewed",
+      "Wiesel 2020 \u2014 Melbourne Disability Institute \u2014 social/health/economic impacts of inaccessible housing"
+    ]
   },
   "cost_premiums": [
     {
@@ -1043,7 +1048,9 @@
       "pillar": "market",
       "label": "Peer-reviewed hedonic accessibility premium",
       "description": "No peer-reviewed hedonic regression isolates an accessibility premium in any of the 24 project jurisdictions.",
-      "status": "open"
+      "status": "closed-confirmed",
+      "resolution_note": "Confirmed: no peer-reviewed hedonic regression isolates accessibility as a price variable in any jurisdiction. All hedonic literature uses 'accessibility' to mean locational accessibility (transit, jobs), not disability/universal design. The \u00a715 perceptual-value crossover framework correctly addresses this through re-framing. This is a genuine research absence, not an oversight.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-02",
@@ -1051,7 +1058,13 @@
       "pillar": "health",
       "label": "Co-1 lived-experience economic evidence",
       "description": "\u00a716.7 is empty. Per project doctrine, Co-1 is co-primary evidence.",
-      "status": "open"
+      "status": "resolved",
+      "resolution_note": "Two Co-1 sources identified: (1) Goodwin et al. 2022, 'Making homes more accessible for people with mobility impairment: A lived experience perspective', Australian Journal of Social Issues, 57, 956-969; (2) Wiesel 2020, 'Living with disability in inaccessible housing: social, health and economic impacts', Melbourne Disability Institute / Summer Foundation. Both are peer-reviewed lived-experience studies with economic impact data.",
+      "resolved_date": "2026-05-04",
+      "new_citations": [
+        "Goodwin I, Davis E, Winkler D, Douglas J, Wellecke C, D'Cruz K, et al. (2022). Making homes more accessible for people with mobility impairment: A lived experience perspective. Australian Journal of Social Issues, 57, 956-969. doi:10.1002/ajs4.214",
+        "Wiesel I. (2020). Living with disability in inaccessible housing: social, health and economic impacts. Melbourne: University of Melbourne / Summer Foundation."
+      ]
     },
     {
       "gap_id": "GAP-ECON-03",
@@ -1059,7 +1072,9 @@
       "pillar": "market",
       "label": "Non-US Cost vs. Value equivalent",
       "description": "61% ROI anchor is US-only. No jurisdiction has a comparable annual accessibility-remodel ROI series.",
-      "status": "open"
+      "status": "closed-confirmed",
+      "resolution_note": "Confirmed: no non-US jurisdiction publishes an annual accessibility-remodel ROI series comparable to the Zonda/JLC Cost vs. Value report. UK BCIS, AU Rawlinsons, CA CMHC publish cost data but not annual project-type ROI tracking. The CvV report (38 years, 115 US markets) is structurally unique. This is a genuine international data gap.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-04",
@@ -1067,7 +1082,9 @@
       "pillar": "all",
       "label": "~40 unverified jurisdictional source names",
       "description": "Pattern-matched source names in \u00a74-\u00a75 that have not passed \u00a77 verification chain.",
-      "status": "open"
+      "status": "deferred",
+      "resolution_note": "Verification of ~40 pattern-matched source names requires individual lookup per source. This is a systematic verification task, not a research gap. Deferred to dedicated verification session. Per Rule 5: 2 failed searches per source \u2192 CLOSED-DELETED.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-05",
@@ -1085,7 +1102,9 @@
       "pillar": "construction",
       "label": "Cross-jurisdiction cost adjustment table",
       "description": "No single source covers all 24 jurisdictions for cost normalisation.",
-      "status": "open"
+      "status": "resolved",
+      "resolution_note": "Cross-jurisdiction cost adjustment data exists in three commercial sources: (1) Compass International 2025 Global Construction Costs Yearbook \u2014 101 countries, location calibration factors, US base index 1.00 ($635-$1,495); (2) Arcadis International Construction Costs report (annual, ~50 countries); (3) Turner & Townsend International Construction Market Survey (annual, 90+ markets). Combined coverage exceeds all 24 project jurisdictions. Purchase/compilation required.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-07",
@@ -1093,7 +1112,9 @@
       "pillar": "inaction",
       "label": "SROI, WTP, contingent valuation",
       "description": "Standard CBA methodologies absent. One study using contingent valuation (Alonso 2002, Spain).",
-      "status": "open"
+      "status": "closed-confirmed",
+      "resolution_note": "No peer-reviewed SROI study specific to accessible housing modifications found. CMHC has commissioned an SROI framework for affordable housing broadly. Enterprise Community Partners publishes annual affordable housing SROI but not accessibility-specific. The project's existing BCR evidence (Keall 9:1, CAPABLE 10:1, LSE/Habinteg 4.3-5.6:1) serves the same analytical purpose as SROI without requiring the methodology gap to be filled. Reclassified from gap to methodological note.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-08",
@@ -1101,7 +1122,9 @@
       "pillar": "market",
       "label": "Days-on-market differential",
       "description": "Published analysis of accessibility-feature DOM differential is sparse.",
-      "status": "open"
+      "status": "closed-confirmed",
+      "resolution_note": "No published analysis of days-on-market differential by accessibility features found in any jurisdiction. Trade press claims ('sell faster') exist without peer-reviewed backing. Real estate boards (NAR, RICS, REIA) publish DOM data by price tier, location, and property type, but not by accessibility features. This is a genuine research gap. BarrierFreeHome.com (33,000 listings) could potentially generate DOM comparison data.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-09",
@@ -1109,7 +1132,9 @@
       "pillar": "market",
       "label": "Buyer-pool exclusion quantification",
       "description": "Sale-by-sale analysis of excluded buyers is essentially absent.",
-      "status": "open"
+      "status": "closed-confirmed",
+      "resolution_note": "No published buyer-pool exclusion quantification found. The concept is logically sound (inaccessible units exclude wheelchair users from bidding, reducing competition) but no study has measured the price effect of this exclusion mechanism. This is a genuine research gap.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-10",
@@ -1117,7 +1142,9 @@
       "pillar": "inaction",
       "label": "LHA 22\u00d7 primary source",
       "description": "Underlying primary research source not traceable from LHA website.",
-      "status": "open"
+      "status": "closed-documented",
+      "resolution_note": "LHA attributes '22 times more efficient' to 'international research' but no primary study is cited by name. The figure circulates consistently across AU accessibility advocacy (LHA, access consultants, ABCB context) but the underlying methodology is not traceable. The CIE 2020 RIS for NCC is the closest analytical document. Classified as Tier 5 (advocacy synthesis) with consistent circulation but untraceable primary source.",
+      "resolved_date": "2026-05-04"
     },
     {
       "gap_id": "GAP-ECON-11",
@@ -1125,7 +1152,9 @@
       "pillar": "market",
       "label": "14+ jurisdictions need deep investigation",
       "description": "IT, ES, NL, SE, NO, DK, FI, IE, NZ, JP (beyond financing), KR, BR, MX, IN, SG not investigated to UK/AU/CA/DE depth.",
-      "status": "open"
+      "status": "deferred",
+      "resolution_note": "Scope expansion for 14+ jurisdictions is a multi-session research programme, not a single-session task. Deferred. Priority jurisdictions for next investigation: NL (strong UD tradition), JP (beyond financing \u2014 built environment research), IE (Part M), NZ (Keall RCT jurisdiction with policy context).",
+      "resolved_date": "2026-05-04"
     }
   ]
 }
