@@ -75,4 +75,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   MS heat sensitivity (Uhthoff's phenomenon) conflicts with DEM cold sensitivity. No code addresses this conflict. Resolution: individual thermal zoning (F-07). ASHRAE 55 / EN 16798-1 general comfort only.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "3 new sources (MST-09 through MST-11); Berwick 2021 SR; MST-04 GREY resolved"
 ```

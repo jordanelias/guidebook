@@ -78,4 +78,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   Strong code coverage: US ANSI S12.60, UK BB93 (mandatory), DE DIN 18041, NO NS 8175. Key metric divergence: RT60 targets vary by room type and jurisdiction. STI ≥0.60 is emerging as universal speech intelligibility threshold.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "3 new sources (ASI-06 through ASI-08); ASI-01 GREY resolved"
 ```

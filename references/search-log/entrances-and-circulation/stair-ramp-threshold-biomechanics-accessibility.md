@@ -78,4 +78,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   KEY DIVERGENCE: ramp gradient — ADA 8.3% vs DIN 6% vs FR 5% preferred vs AU 7.1%. Guidebook targets DE/FR range (5-6.7%) as best practice, with ADA 8.3% as minimum.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "3 new sources (SRB-13 through SRB-15); domestic stair falls evidence"
 ```

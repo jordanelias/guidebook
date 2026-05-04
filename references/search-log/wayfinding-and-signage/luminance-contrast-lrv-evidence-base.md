@@ -75,4 +75,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   UK is the jurisdiction with the most developed LRV contrast evidence base. BS 8300 methodology is reference for the guidebook. US ADA lack of numeric LRV target is a gap.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "1 new source (LCL-08); LCL-04 GREY resolved; LCL-01/02 author corrections"
 ```

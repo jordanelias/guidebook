@@ -78,4 +78,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   UK has most developed dementia wayfinding guidance (DSDC Stirling, King's Fund). ISO 25552 provides international framework. No code mandates dementia-specific wayfinding — all Tier 2/5.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "3 new sources (WDS-08 through WDS-10); WDS-04 author attribution corrected"
 ```

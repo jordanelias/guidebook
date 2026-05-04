@@ -79,4 +79,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   Air quality governed by ventilation codes (ASHRAE 62.1, AD F, EN 16798) and voluntary standards (WELL, LEED). NO code addresses chemical sensitivity (MCS/MCAS) as an accessibility provision. WELL Air is closest (VOC limits, air filtration). OFS/MCAS populations need individual air quality control beyond any standard.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "4 new sources (AQV-09 through AQV-12); jurisdiction coverage US→US/AU/SE/UK/DE/IT"
 ```

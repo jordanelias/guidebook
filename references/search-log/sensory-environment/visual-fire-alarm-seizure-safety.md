@@ -75,4 +75,10 @@ jurisdiction_summary: >
   for visual alarm devices. Key conflict: DEAF need visual alert vs NEU/NDV photosensitive
   seizure risk from strobe flash — resolved via frequency limitation (≤2 Hz) per NFPA 72.
   PH BP 344 2024 IRR also specifies strobe in accessible toilets.
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "2 new sources (VFA-06, VFA-07); Fisher 2022 Epilepsy Foundation review"
 ```

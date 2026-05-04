@@ -101,4 +101,10 @@ jurisdiction_summary: >
   - US: UL 24480 (Tier 5) — uses Circadian Stimulus (CS) model, NOT melanopic EDI
   P1–P3 jurisdictions (US/UK/AU/CA/DE/NO/SE/ISO/EU/FR/CH/NL/DK/FI/JP/SG): tier6 verified — no code requirement.
   P4–P5 jurisdictions: NOT-RUN (unlikely to have circadian provisions given no P1–P3 codes exist).
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "4 new sources (CML-07 through CML-10); Kolberg 2022 DEM nursing homes; IES RP-46-23"
 ```

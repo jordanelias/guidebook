@@ -102,4 +102,10 @@ jurisdiction_summary: >
   Evidence base: NDV/AUT, NDV/SENS, DEM populations.
 
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "3 new sources (SRU-05 through SRU-07); Leonardi 2025 SR replaces single-group dependency"
 ```

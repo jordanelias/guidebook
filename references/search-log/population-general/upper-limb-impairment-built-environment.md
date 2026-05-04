@@ -118,4 +118,10 @@ jurisdiction_coverage:
 jurisdiction_summary: >
   MOB/UPL provisions: reach range, door hardware, controls. US ADA §309 operable parts. UK BS 8300 lever handles. DE DIN 18040 handle heights. Cross-reference reach-range-and-accessible-controls.
 
+
+citation_mining:
+  date: "2026-05-04 09:20"
+  session: "B2-S2-continuation"
+  method: "Forward and backward mining of seed sources via web search"
+  note: "6 new sources (ULB-12 through ULB-16); ULB-04 DOI confirmed; Lee/Sanford 2018 anchor source"
 ```
