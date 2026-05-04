@@ -108,12 +108,24 @@ Not yet run.
 | SRB-10 | KITE Research Institute | 2025 | Grab bar peak force during bathtub exit fall recovery — 1.3 kN | 3 | CA | Ongoing 2023–2025 |
 | SRB-11 | Owsley, C. et al. | 2001 | Contrast sensitivity, acuity, and visual impairment in older adults. J Am Geriatr Soc 49(5):568 | 3 | INT | Contrast sensitivity decline with age |
 | SRB-12 | Manandhar, A. et al. | 2022 | LRV contrast standards: lack of published evidence basis. [GREY — full citation unverified; DOI required] | 3 | INT | 30% LRV standard lacks evidence basis |
+| SRB-13 | [Authors TBC] | 2024 | Stair-Fall Risk Parameters in a Controlled Gait Laboratory Environment and Real (Domestic) Houses. PMC10821270 | 3 | UK | Higher riser = highest demand on older adults; domestic vs. lab comparison |
+| SRB-14 | [Authors TBC] | 2025 | Interstep Variations of Stairways and Associations of High-Contrast Striping and Fall-Related Events. PMC11754982 | 3 | US | 80% fall events at ≥14mm riser variation; contrast striping reduces events |
+| SRB-15 | [Authors TBC] | 2024 | Older adults' experiences of home stair falls: perception vs actuality. PMC12200730 | 3 | UK | 40% of domestic stairs don't meet UK guidelines |
+
+### Citation mining
+**Date:** 2026-05-04 08:30
+| Source | Direction | New sources added |
+|---|---|---|
+| Templer 1992 (SRB-01) | Forward | [Authors TBC] 2024 stair-fall risk lab vs domestic (SRB-13); [Authors TBC] 2025 interstep variations + contrast striping (SRB-14); [Authors TBC] 2024 home stair falls perception vs actuality (SRB-15) |
+| Al Lawati 2017 (SRB-06) | Forward | Already mined in ULB — Rouvier 2022 SR applies here too (cross-ref ULB-15) |
+**Notes:** SRB-13 (PMC10821270) demonstrates higher step riser imposes highest demand on older adults in real domestic environments. SRB-14 (PMC11754982) shows 80% of fall-related events at interstep riser variation ≥14mm; high-contrast striping reduces events. SRB-15 (PMC12200730) finds 40% of older adults' home staircases don't meet UK guidelines for pitch, rise and going despite perceived safety. All three sources have [Authors TBC] — verify first authors via PMC before publication.
 
 ## Metadata
 
 ```yaml
 slug: stair-ramp-threshold-biomechanics-accessibility
 population: MOB, VIS
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```

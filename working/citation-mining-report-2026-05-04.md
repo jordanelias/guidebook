@@ -202,3 +202,50 @@ Berwick 2021 is a systematic review not previously in the BPC. Supports existing
 **GREY sources corrected:** 2 (ULB-04 DOI, WDS-04 author)
 **Systematic reviews found:** 3 (Rouvier 2022, Leonardi 2025, Berwick 2021)
 **Commits:** 4
+
+---
+
+## 7. stair-ramp-threshold-biomechanics-accessibility
+
+### Forward mining
+| Input source | Citing papers | Relevant found | New to BPC |
+|---|---|---|---|
+| Templer 1992 (SRB-01) | ~500+ | 3 | 3 |
+
+### New sources
+| # | Authors | Year | Title | Journal | Tier | DOI | Discovery |
+|---|---|---|---|---|---|---|---|
+| 1 | [Authors TBC] | 2024 | Stair-Fall Risk Parameters in Lab vs Domestic Houses | PMC10821270 | 3 | — | Forward from Templer |
+| 2 | [Authors TBC] | 2025 | Interstep Variations and High-Contrast Striping | PMC11754982 | 3 | — | Forward from Templer |
+| 3 | [Authors TBC] | 2024 | Home stair falls: perception vs actuality | PMC12200730 | 3 | — | Forward from Templer |
+
+### Impact
+- SRB-14 provides quantitative evidence for contrast striping on stair nosings — directly supports B-09 specification
+- SRB-15: 40% of domestic stairs don't meet UK guidelines — design vs. as-built gap evidence
+
+---
+
+## 8. visual-fire-alarm-seizure-safety
+
+### Forward/Backward mining
+| Input source | Direction | New to BPC |
+|---|---|---|
+| Jordan & Vanderheiden 2024 (VFA-01) | Both | Fisher 2022 (VFA-06); ISO 9241-391 (VFA-07) |
+
+### New sources
+| # | Authors | Year | Title | Tier | DOI | Discovery |
+|---|---|---|---|---|---|---|
+| 1 | Fisher RS et al. | 2022 | Visually sensitive seizures: updated review | Epilepsia 63(4):739-768 | 3 | 10.1111/epi.17175 | Backward from Jordan 2024 |
+| 2 | ISO | 2016 | ISO 9241-391 — Photosensitive seizure reduction | 4 | — | Referenced in Jordan 2024 |
+
+### Impact
+- Fisher 2022 is the Epilepsy Foundation's definitive clinical review — anchors the 3 Hz threshold evidence
+
+---
+
+## UPDATED SESSION TOTALS
+**BPC slugs mined:** 8
+**New sources discovered:** 27
+**GREY sources corrected:** 2
+**Systematic reviews found:** 3
+**Commits:** 5

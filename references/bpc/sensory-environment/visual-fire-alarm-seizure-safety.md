@@ -18,6 +18,8 @@
 | VFA-03 | NFPA | 2022 | NFPA 72-2022 — National Fire Alarm and Signaling Code | 6 | US | Flash rate 1–3 Hz |
 | VFA-04 | Epilepsy Foundation | n.d. | Professional Advisory Board — photosensitive epilepsy recommendations | 2 | US | https://www.epilepsy.com |
 | VFA-05 | Martins da Silva, A. & Leal, B. | 2017 | Photosensitivity and epilepsy. Seizure 50:209–218. PMID:28532712 | 3 | INT | Harding test range 3–60 Hz |
+| VFA-06 | Fisher, R.S., Acharya, J.N., French, J.A. et al. | 2022 | Visually sensitive seizures: An updated review by the Epilepsy Foundation. Epilepsia 63(4):739-768. DOI:10.1111/epi.17175 | 3 | INT | Most comprehensive current clinical review; confirms 3 Hz lower bound |
+| VFA-07 | ISO | 2016 | ISO 9241-391:2016 — Ergonomics of human-system interaction: Requirements for the reduction of photosensitive seizures | 4 | INT | https://www.iso.org/standard/56350.html |
 
 ---
 
@@ -49,7 +51,12 @@
 | — | — | Vibrotactile alarm evidence limited to sleeping areas; waking-hours effectiveness not quantified | — | — |
 
 ### Citation mining
-Not yet performed.
+**Date:** 2026-05-04 08:30
+| Source | Direction | New sources added |
+|---|---|---|
+| Jordan & Vanderheiden 2024 (VFA-01) | Forward/Backward | Fisher 2022 Epilepsy Foundation updated review (VFA-06); ISO 9241-391 (VFA-07) |
+| Martins da Silva & Leal 2017 (VFA-05) | Forward | Fisher 2022 (VFA-06) same network |
+**Notes:** Fisher 2022 (DOI:10.1111/epi.17175) is the Epilepsy Foundation's updated review of visually sensitive seizures — most comprehensive current clinical evidence. Confirms 3 Hz lower bound but with population-dependent variation. ISO 9241-391 is the international ergonomics standard for photosensitive seizure reduction in human-system interaction — complements the fire alarm standards.
 
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
@@ -59,6 +66,7 @@ Not yet run.
 ```yaml
 slug: visual-fire-alarm-seizure-safety
 population: DEAF, DBL, NEU, NDV
-last_updated: 2026-04-19
+last_updated: 2026-05-04
 co0006_migration: true
+citation_mining_date: 2026-05-04
 ```
