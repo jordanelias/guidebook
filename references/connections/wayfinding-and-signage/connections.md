@@ -1137,3 +1137,26 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Action required:** D-02: specify wayfinding format hierarchy (landmark-first, sequential-second, map-last). Remove or deprioritise overview maps as primary wayfinding device. Part 3 §3.2: cite as cognitive progression exemplar.
 
 **Disposition notes:** —
+
+---
+
+## CON-0235
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** wayfinding-dementia-spatial-design, visual-impairment-built-environment, deaf-spatial-design, cognitive-wayfinding-design
+**Target item(s):** D-02, Part 3 §3.2
+**Target population(s):** DEM, NEU, IntD, VIS, DEAF
+**Evidence tier:** 3-4
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Zali et al. 2025 (HERD, DOI:10.1177/19375867251391361) scoping review confirms spatial planning more important than signage for wayfinding in SENSORY impairment populations (VIS, hearing-impaired), not just cognitive impairment. This extends CON-0226 (Marquardt layout>signage principle for DEM/NEU/IntD): the principle now applies to ALL populations with ANY wayfinding impairment — DEM, NEU, IntD, VIS, DEAF. Layout>signage is UNIVERSAL across wayfinding-impaired populations. Rationale differs by population (DEM: cognitive map failure; VIS: cannot read signage; DEAF: cannot hear announcements; IntD: cannot interpret novel signage; NEU: navigation sub-type determines cue dependency) but the specification is identical: layout specification must PRECEDE signage specification in design process.
+
+**Evidence basis:** Zali et al. 2025 (DOI:10.1177/19375867251391361); Marquardt & Schmieg 2009; CON-0226; CON-0189.
+
+**Action required:** D-02: upgrade layout>signage from DEM/NEU/IntD principle to universal wayfinding principle (all populations). Part 3 §3.2: cite as universal cross-population wayfinding principle with Zali 2025 as validating source.
+
+**Disposition notes:** —

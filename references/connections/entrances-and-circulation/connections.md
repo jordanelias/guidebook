@@ -1288,3 +1288,26 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 **Action required:** A-02/A-07/A-09/E-07: reframe specifications from access to injury prevention. Add propulsion effort as specification rationale alongside dimensional access. Part 3: add wheelchair propulsion effort as building-level specification principle.
 
 **Disposition notes:** —
+
+---
+
+## CON-0237
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment
+**Target item(s):** A-02, A-07
+**Target population(s):** MOB
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Koontz et al. 2012 (DOI:10.1123/jab.28.4.412): below 900mm corridor width, metabolic cost for manual wheelchair users increases 30-45% due to trunk lean and restricted stroke length. At 1200mm, metabolic cost normalises to open corridor conditions. This provides a quantified THRESHOLD for the propulsion-effort principle (CON-0229). Current A-02 specifications set minimum widths for ACCESS (can a wheelchair pass?) but not for METABOLIC EFFICIENCY (can a wheelchair propel without cumulative injury?). The 1200mm normalisation threshold should be the MINIMUM corridor width for primary wheelchair circulation routes — not 900mm (which is a passing-only dimension with 30-45% metabolic penalty). Distinct from existing Koontz citation in register (floor vibration WBV context) — this is the metabolic corridor width finding.
+
+**Evidence basis:** Koontz et al. 2012 (DOI:10.1123/jab.28.4.412); MOB BPC corridor width section.
+
+**Action required:** A-02: set 1200mm as minimum for primary wheelchair circulation (metabolic normalisation point). 900mm only for secondary/passing corridors with metabolic penalty note. A-07: cross-reference for cross-slope metabolic interaction.
+
+**Disposition notes:** —

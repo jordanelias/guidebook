@@ -788,3 +788,26 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **Action required:** A-16: add WC proximity requirement (within 20m per CON-0190 governing interval, preferably adjacent). Adjacent WC accessible from A-16 without re-entering high-stimulation circulation. Part 7 NR matrices: A-16 + accessible WC as co-located pair.
 
 **Disposition notes:** —
+
+---
+
+## CON-0238
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** biophilic-design-healthcare-workplace, neurodivergent-built-environment, sensory-relief-space-design
+**Target item(s):** F-01, BIO-01, A-16
+**Target population(s):** NDV, NDV/AUT, NDV/MH
+**Evidence tier:** 3, Co-1
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** CROSS-ITEM
+**Connection:** Biophilic breakout zones (warm/saturated/stimulating environments for NDV/MH recovery) conflict with C-01 muted/low-stimulation palette for NDV/AUT. BIO BPC resolution: biophilic zones as OPTIONAL DESTINATIONS, not primary circulation finishes. This aligns with CON-0221 (sensory gradient topology): biophilic breakout zones are branches OFF the calm spine, not ON it — identical topological treatment to utility rooms (kitchen, bathroom, laundry). The calm spine remains muted/low-stimulation (NDV/AUT governs). Biophilic branches provide recovery/decompression environments (NDV/MH governs) accessible by choice. A-16 (sensory retreat) and biophilic breakout serve COMPLEMENTARY functions for DIFFERENT NDV subtypes in the SAME building.
+
+**Evidence basis:** BIO BPC conflict resolution; CON-0221 (topology); NDV BPC divergent findings (AUT vs MH palette); Latiff et al. 2024.
+
+**Action required:** F-01: add biophilic zones as topology branches (same treatment as utility rooms). BIO-01: specify as optional-destination, not circulation finish. Link to A-16 as complementary provision.
+
+**Disposition notes:** —

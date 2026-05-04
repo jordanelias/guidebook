@@ -5,15 +5,15 @@
 
 **Last migration:** 2026-04-19 (Block 4 B1 — CO-0006)
 **Last Opus review:** 2026-04-08 (Pass 1 — 30 PENDING + 10 CONSUMED spot-check)
-**Total connections migrated:** 227
-**Next CON-ID:** CON-0241
+**Total connections migrated:** 232
+**Next CON-ID:** CON-0240
 
 ## Status summary
 | Status | Count |
 |---|---|
 | CONSUMED | 140 |
 | CONSUMED-DEFERRED | 42 |
-| PENDING | 57 |
+| PENDING | 56 |
 | CONSUMED (this session) | 3 |
 
 ## Index
@@ -257,9 +257,8 @@
 | CON-0232 | PENDING | BIO-01, Part 11 | cross-cutting | MODERATE | false | — |
 | CON-0233 | PENDING | K-05, H-04, H-02 | health-and-symptom-management | HIGH | false | — |
 | CON-0234 | PENDING | Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
-| CON-0235 | PENDING | B-01 circadian lighting, DEM BPC, Part 4 lighting items — Kolberg 2022 (CML-07): 15 Norwegian DEM nursing homes fail melanopic EDI thresholds; direct DEM-specific lighting evidence | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
-| CON-0236 | PENDING | SRB items ↔ LCL items — Harper/Dakin stair contrast chain (LCL-01, LCL-02, LCL-08 = SRB-14): contrast striping evidence applies to both stair-ramp and luminance-contrast BPCs; unify specification | entrances-and-circulation | HIGH | false | citation-mining 2026-05-04 |
-| CON-0237 | PENDING | ULB grab bar items → fold-down-grab-bar-specification — Lee/Sanford 2018 (ULB-12): bilateral fold-down bars 356mm from CL, 813mm AFF; n=130+; supersedes ADA specification | bathrooms-and-wet-areas | HIGH | false | citation-mining 2026-05-04 |
-| CON-0238 | PENDING | MST conflict resolution stratum upgrade — Berwick 2021 SR (MST-09): 14/17 QST studies confirm FMS cold pain hypersensitivity; strengthens harm-asymmetry rule in project-standards | health-and-symptom-management | HIGH | false | citation-mining 2026-05-04 |
-| CON-0239 | PENDING | SRU stratum upgrade potential — Leonardi 2025 SR (SRU-05): systematic review replaces single-research-group dependency; may upgrade evidence-auditor assessment | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
-| CON-0240 | PENDING | ASI RT60 ↔ room-acoustic-performance — Cueille 2022 (ASI-06): HI penalty 18dB SRT increase quantified; ASI-08 confirms HI cannot adapt to reverberation unlike NH; strengthens fixed RT spec | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
+| CON-0235 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
+| CON-0236 | PENDING | Part 1 §1.x, D-02 | frameworks-and-methodology | MODERATE | false | — |
+| CON-0237 | PENDING | A-02, A-07 | entrances-and-circulation | HIGH | false | — |
+| CON-0238 | PENDING | F-01, BIO-01, A-16 | sensory-environment | MODERATE | false | — |
+| CON-0239 | PENDING | Part 1, Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |

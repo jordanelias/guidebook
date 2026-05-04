@@ -793,3 +793,49 @@ These programme models demonstrate that the highest-quality national systems sti
 **Action required:** Part 9 §9.5: adopt HAwD six-stage process as reference adaptation pathway. Cross-reference CON-0228 (evidence that OT delivery is prerequisite for efficacy).
 
 **Disposition notes:** —
+
+---
+
+## CON-0236
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** wayfinding-dementia-spatial-design, cognitive-wayfinding-design
+**Target item(s):** Part 1 §1.x, D-02
+**Target population(s):** DEM, NEU, IntD (theoretical)
+**Evidence tier:** 3
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Passini 1984 (Wayfinding in Architecture, Van Nostrand Reinhold) provides the foundational theoretical model: wayfinding = sequence of decisions at choice points. This is the THEORETICAL basis for CON-0231 (sequential > map-based wayfinding format) and CON-0235 (layout > signage). Passini's decision theory explains WHY sequential cue chains work and overview maps fail: each decision point is a binary choice requiring minimal cognitive load, while map-reading requires simultaneous spatial-cognitive integration. For cognitively or sensorially impaired populations, binary choice sequences are processable; spatial integration is not. Part 1 should cite Passini as the foundational theoretical model for the guidebook's wayfinding specification philosophy.
+
+**Evidence basis:** Passini 1984 (decision theory); DEM-WF BPC WDS-06; CWF BPC citations.
+
+**Action required:** Part 1: cite Passini 1984 as foundational wayfinding theory. D-02: reference decision-theory model as basis for sequential wayfinding specification.
+
+**Disposition notes:** —
+
+---
+
+## CON-0239
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Opus-reviewed:** false
+**Source BPC slug(s):** mobility-built-environment
+**Target item(s):** Part 1, Part 9 §9.5
+**Target population(s):** ALL
+**Evidence tier:** Co-1, 5
+**Filed:** 2026-05-04
+**Applied:** —
+
+**Connection type:** METHODOLOGY
+**Connection:** Habinteg/CAE/RIBA Inclusive Housing Design Guide 2024 (Runnalls/Walker, RCOTSS-Housing, DOI:10.4324/9781003564164) is the ONLY practice guide that explicitly bridges MOB (M4(2)/M4(3) wheelchair-accessible housing categories) with sensory, cognitive, and NDV populations in a single document. All other practice guides are population-specific. This validates the guidebook's cross-population approach at the practice/implementation level — an OT-authored guide has independently arrived at the same cross-population framework. Part 1 should cite as practice-level validation of the guidebook's methodology. Part 9 should cite as reference OT practice guide for cross-population residential assessment.
+
+**Evidence basis:** Habinteg/CAE/RIBA 2024 (DOI:10.4324/9781003564164); MOB BPC source table.
+
+**Action required:** Part 1: cite Habinteg 2024 as practice-level validation of cross-population framework. Part 9: cite as reference cross-population OT residential assessment guide.
+
+**Disposition notes:** —
