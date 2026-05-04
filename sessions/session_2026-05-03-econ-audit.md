@@ -63,3 +63,27 @@ None.
 
 ## key_synthesis
 The economic case for accessible housing rests on four pillars ranked by evidence strength: (1) Health outcomes — 9-10:1 BCR from RCT and quasi-experimental data across NZ and US; (2) Cost-of-inaction — 5-20× retrofit penalty; (3) Construction cost when designed in — 0.4-1.9% for basic visitability; (4) Market value — no revealed-preference evidence, but dual-read thesis reframes the question. The hedonic gap is a labeling problem: accessible features are consumed as mainstream desirable features (NAHB 2024 mapping confirms 60-72% buyer preference). Cross-jurisdictional convergence across 12 jurisdictions strengthens confidence. The Chandola 2022 Lancet study provides the strongest empirical evidence for the curb-cut effect in residential housing.
+
+### Session 3 (2 commits: audit + partition)
+- Comprehensive audit of all economics/financial data files (13 files reviewed)
+- Identified architecture: 3 analytical frameworks (Q/V taxonomy, four-pillar case, §15 perceptual-value crossover)
+- Evidence strength assessment per pillar (health outcomes STRONG, cost-of-inaction STRONG, construction cost MODERATE-STRONG, market value WEAK)
+- 11 gaps identified and ranked (critical: hedonic premium, Co-1, non-US CvV equivalent)
+- Partitioned monolithic economics-research-methodology.md (v1.9, 1,624 lines) into 6 throughline-organized files
+- TERRAGON commercial-interest note added
+- Version footer mismatch corrected
+- Original archived as v1.9-archived
+
+## next_action
+1. Co-1 verification pass — populate lived-experience economic perspectives
+2. Unverified source-name sweep (~40 pattern-matched §4-§5 entries)
+3. Missing Part 11 cost tables (kitchen, bedroom, egress, controls)
+4. Part 11 §11.3 update with Q5 evidence (Keall, Chandola, CAPABLE, Tsuchiya-Ito)
+5. §15 extraction to separate analytical document (Change Order required)
+
+## blockers
+None.
+
+## decisions
+- D-0147: Economics methodology partitioned by economic throughlines (health outcomes, cost-of-inaction, construction cost, market value) rather than by original section numbering
+- D-0148: TERRAGON AG commercial-interest disclosure added to construction-cost throughline
