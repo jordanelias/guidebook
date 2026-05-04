@@ -1,7 +1,7 @@
 # Website Data Schema — Unified Reference
 **Created:** 2026-04-09 22:45
-**Phase:** 0.1
-**Status:** DRAFT — first pass; cross-referential integrity check (Phase 0.7) pending
+**Phase:** 0.2 — economics entity expanded (2026-05-04)
+**Status:** DRAFT — economics entity updated to v2.0 (7 sub-entities); cross-referential integrity check pending
 
 ---
 
@@ -14,8 +14,12 @@ specifications ←→ populations (many-to-many via population tags)
 specifications ←→ room_types (many-to-many via room matrices)
 specifications ←→ conflicts (many-to-many via conflict domains)
 specifications ←→ case_studies (many-to-many via case study tags)
-specifications ←→ economics (one-to-many via cost records)
+specifications ←→ economics (one-to-many via cost records + spec_cross_refs)
 populations ←→ conflicts (many-to-many via conflict participants)
+economics.throughlines → specifications (many-to-many via spec_cross_refs)
+economics.health_outcomes → economics.grant_programmes (jurisdiction linkage)
+economics.housing_deficit → economics.retrofit_multipliers (jurisdiction linkage)
+economics.research_gaps → all economics sub-entities (pillar linkage)
 ```
 
 ---
@@ -305,11 +309,21 @@ populations ←→ conflicts (many-to-many via conflict participants)
 
 ## Entity 5: Economics
 
-**Source:** Part 11 + `references/cost-data/` files
+**Source:** Part 11 + `references/methodology/throughline-*.md` + `references/cost-data/`
 **Interface:** Economics Engine
-**Target:** ~50–80 records across three sub-entities
+**Current state:** `economics.json` with 8 cost premiums, 3 retrofit multipliers, 9 grant programmes, 10 health outcome studies, 5 market-value throughlines, 5 housing deficit records, 11 research gaps. Organized by four-pillar economic case.
+**Target:** ~80–120 records across seven sub-entities
+**Data file:** `references/website/data/economics.json`
 
-### 5a: Cost Premiums
+**Four-pillar framework:**
+| Rank | Pillar | Strength | Throughline file |
+|------|--------|----------|-----------------|
+| 1 | Health Outcomes | Strong | `throughline-health-outcomes.md` |
+| 2 | Cost of Inaction | Strong | `throughline-cost-of-inaction.md` |
+| 3 | Construction Cost | Moderate–Strong | `throughline-construction-cost.md` |
+| 4 | Market Value | Weak-direct / Framework-strong | `throughline-market-value.md` |
+
+### 5a: Cost Premiums (Pillar 3)
 
 ```json
 {
@@ -317,36 +331,46 @@ populations ←→ conflicts (many-to-many via conflict participants)
   "source": "TERRAGON/DStGB 2017",
   "jurisdiction": "DE",
   "building_type": "residential",
-  "finding": "130/140 DIN 18040-2 criteria = zero additional cost at design stage",
-  "premium_percent_min": 0.5,
-  "premium_percent_max": 1.3,
+  "building_detail": "Model five-storey residential building, Berlin, 20 dwellings, 1500 m²",
+  "standard": "DIN 18040-2",
+  "finding": "138 of 148 criteria produce zero additional cost at design stage",
+  "premium_percent_min": 0.54,
+  "premium_percent_max": 1.26,
   "premium_per_sqm": 21.50,
   "currency": "EUR",
   "year": 2017,
-  "evidence_tier": "E-1",
-  "methodology": "Model five-storey residential building, Berlin, 20 dwellings, 1500 m²",
+  "evidence_tier": "E-3/E-4",
+  "methodology": "Bottom-up elemental cost comparison",
   "single_source_flag": false,
-  "last_updated": "2026-04-09"
+  "commercial_interest_flag": true,
+  "commercial_interest_note": "TERRAGON AG is a residential developer. Corroborated by Bundesfachstelle Barrierefreiheit.",
+  "pillar": "construction",
+  "spec_cross_refs": [],
+  "last_updated": "2026-05-04"
 }
 ```
 
-### 5b: Retrofit Multipliers
+### 5b: Retrofit Multipliers (Pillar 2)
 
 ```json
 {
-  "multiplier_id": "RETRO-001",
-  "item_code": "A-01",
-  "item_title": "Acoustic Buffer Zones",
-  "penalty_category": "LOW — PLANNING",
-  "new_build_cost_note": "Zero cost at design stage (adjacency planning decision)",
-  "retrofit_cost_note": "Spatial reorganisation, partition addition, room-use relocation",
-  "multiplier_range": "N/A — design-stage cost is zero",
-  "source": "Part 4 retrofit notes",
-  "last_updated": "2026-04-09"
+  "multiplier_id": "RETRO-MUL-001",
+  "jurisdiction": "DE",
+  "source": "TERRAGON AG / KfW / Prognos",
+  "new_build_cost": 1600,
+  "retrofit_cost": 19100,
+  "multiplier": 12,
+  "currency": "EUR",
+  "unit": "per 75 m² apartment",
+  "year": 2017,
+  "evidence_tier": "E-3",
+  "traceability_flag": false,
+  "pillar": "inaction",
+  "last_updated": "2026-05-04"
 }
 ```
 
-### 5c: Grant Programmes
+### 5c: Grant Programmes (Pillar 2)
 
 ```json
 {
@@ -354,16 +378,89 @@ populations ←→ conflicts (many-to-many via conflict participants)
   "programme_name": "Disabled Facilities Grant (DFG)",
   "jurisdiction": "UK",
   "administering_body": "Local authorities (England)",
-  "max_funding_gbp": 30000,
+  "type": "Mandatory grant",
+  "max_funding": 30000,
   "currency": "GBP",
-  "eligibility": "Means-tested; mandatory grant for essential adaptations",
+  "eligibility": "Means-tested adults; not means-tested for children under 18",
   "annual_budget": 761000000,
-  "budget_year": 2024,
+  "budget_year": 2025,
   "source": "UK Government",
   "evidence_tier": "E-1",
   "status": "Active",
-  "url": null,
-  "last_updated": "2026-04-09"
+  "pillar": "inaction",
+  "last_updated": "2026-05-04"
+}
+```
+
+### 5d: Health Outcomes (Pillar 1) — NEW
+
+Evidence hierarchy ranked by study design quality. Cross-jurisdictional convergence: NZ (RCT, 9:1 BCR at $500/person) and US (quasi-experimental, 10:1 BCR at $1,300/person).
+
+```json
+{
+  "health_id": "HEALTH-001",
+  "source": "Clemson et al. 2023",
+  "study_design": "Cochrane Systematic Review",
+  "sample": "6 RCTs, N=3,298",
+  "journal": "Cochrane Database of Systematic Reviews",
+  "jurisdiction": "Multi-jurisdictional",
+  "finding": "21% falls risk reduction from home modifications",
+  "bcr": null,
+  "cost_per_person": null,
+  "evidence_tier": "Tier 1",
+  "evidence_rank": 1,
+  "pillar": "health",
+  "spec_cross_refs": [],
+  "last_updated": "2026-05-04"
+}
+```
+
+### 5e: Market Value (Pillar 4) — NEW
+
+Contains three nested structures: `throughlines` (5 records mapping accessibility specs to property-value mechanisms), `anchor_data_point` (CvV Universal Design Bath 61% ROI), and `dual_read_thesis` (NAHB 2024 accessibility↔mainstream label mappings).
+
+```json
+{
+  "throughline_id": "THRU-001",
+  "label": "Square-footage inheritance",
+  "evidence_tier": "Tier 1 (by inheritance from Sirmans 2006)",
+  "description": "Accessibility minimums are dimensional minimums. Floor area is the most consistently priced hedonic variable.",
+  "mechanism": "Dimensional generosity",
+  "spec_cross_refs": ["E-04", "E-08", "E-12", "G-04", "G-08", "D-05"],
+  "strength_pct": 95,
+  "pillar": "market"
+}
+```
+
+### 5f: Housing Deficit (Pillar 2) — NEW
+
+Cross-jurisdictional accessible housing supply gaps.
+
+```json
+{
+  "deficit_id": "DEFICIT-001",
+  "jurisdiction": "US",
+  "accessible_pct": 5,
+  "accessible_label": "<5% moderate mobility accessible",
+  "gap_units": 300000,
+  "source": "HUD USER / AHS 2011; GAO 2023",
+  "pillar": "inaction",
+  "last_updated": "2026-05-04"
+}
+```
+
+### 5g: Research Gaps — NEW
+
+Consolidated gap register tracking 11 open research priorities across all pillars.
+
+```json
+{
+  "gap_id": "GAP-ECON-01",
+  "priority": "critical",
+  "pillar": "market",
+  "label": "Peer-reviewed hedonic accessibility premium",
+  "description": "No peer-reviewed hedonic regression isolates an accessibility premium in any jurisdiction.",
+  "status": "open"
 }
 ```
 
