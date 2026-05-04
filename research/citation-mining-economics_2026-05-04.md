@@ -169,3 +169,20 @@ This network provides the Co-1 evidence that was flagged as completely absent in
 4. Part 11 §11.3 update with expanded health evidence
 5. Source verification sweep (GAP-ECON-04, deferred)
 6. Populate new sources into throughline-health-outcomes.md verified citations
+
+
+---
+
+## Escalation Flag Resolution
+
+| Flag | Source | Resolution | Impact |
+|---|---|---|---|
+| 1 | Lewis et al. 2024 Cochrane SR | **No change.** Population-based interventions (community-wide), not individual home modifications. Complementary to Clemson 2023, not superseding. | None |
+| 2 | Colón-Emeric et al. 2024 JAMA | Review article synthesising latest falls evidence. High-authority source now referenced in §11.3.5. | §11.3 updated |
+| 3 | Hollinghurst et al. 2022 | **Confirmed.** Two papers: 2020 (care home admissions) and 2022 (emergency fall admissions, n=657,536). Welsh SAIL Databank. Largest admin dataset in evidence base. DOI: 10.1093/ageing/afab201. | §11.3 updated; economics.json needs record |
+| 4 | Szanton citation | **Corrected.** 2017→2018. JAGS doi:10.1111/jgs.15143. $20K Medicare savings over 2yr. $3,000/person programme cost (Baltimore). | economics.json + §11.3 corrected |
+| 5 | CAPABLE updated economics | **Integrated.** BCR confirmed ~10:1. Now in 34 US states. $1,300 cap home mods (St. Louis MA). | §11.3 updated |
+| 6 | Tsuchiya-Ito JP chain | **Integrated.** 5-paper chain (2022-2025) now in economics.json + §11.3. | §11.3 updated |
+| 7 | Tsuchiya-Ito 2019 JP-SE comparison | **Noted for future.** Connects JP to Scandinavian evidence via Iwarsson/Slaug (Lund). Not yet integrated. | Deferred |
+
+All flags resolved except #7 (deferred — connects to jurisdiction expansion work).
