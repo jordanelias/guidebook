@@ -116,8 +116,30 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
   - Co-1 lived-experience evidence (Wiesel 2020, Goodwin 2022)
   - LSE/Habinteg BCR corrected to 4.3–5.6:1
 
+### Second-generation citation mining (partial)
+- Mined 4 of 23 discovered sources: Hollinghurst, OTIS, Oliver, Lektip
+- 3 more new sources discovered (Wu & Grundy 2025, Oliver 2025, Cockayne 2025)
+- CRITICAL: OTIS RCT null result — untargeted home assessments don't reduce falls. Targeted programmes (Keall, CAPABLE) do. Methodological note needed in throughline files.
+- 19 sources remain for next-session mining
+
 ## session_close
-2026-05-04 02:50
+2026-05-04 03:10
+
+## next_action
+1. **Second-gen citation mining** — 19 remaining discovered sources to mine
+2. **OTIS methodological note** — add targeted vs untargeted distinction to throughline-health-outcomes.md and Part 11 §11.3
+3. **Add new records to economics.json** — Wu & Grundy 2025, Oliver 2025, Cockayne 2025, Hollinghurst 2020+2022
+4. **Source verification sweep** — GAP-ECON-04 (~40 entries)
+5. **German-language citation networks** — TERRAGON, Bundesfachstelle
+6. **Jurisdiction deep-dives** — NL, JP, IE, NZ
+7. **Populate throughline verified citations** — all new sources into throughline-health-outcomes.md §16
+
+## blockers
+None.
+
+## decisions
+- D-0147 through D-0156: see prior entries
+- D-0157: OTIS null result identified — targeted vs untargeted intervention distinction required in evidence hierarchy
 
 ## next_action
 1. Source verification sweep — GAP-ECON-04 (~40 entries, deferred systematic task)

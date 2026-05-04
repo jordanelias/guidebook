@@ -186,3 +186,43 @@ This network provides the Co-1 evidence that was flagged as completely absent in
 | 7 | Tsuchiya-Ito 2019 JP-SE comparison | **Noted for future.** Connects JP to Scandinavian evidence via Iwarsson/Slaug (Lund). Not yet integrated. | Deferred |
 
 All flags resolved except #7 (deferred — connects to jurisdiction expansion work).
+
+
+---
+
+## Session 4 — Second-generation mining (mining the discovered sources)
+
+**Sources mined:** 4 of 23 (Hollinghurst 2022, OTIS/Cockayne 2021, Oliver 2020, Lektip 2023)
+**New sources discovered:** 3
+
+### New sources
+
+| # | Authors | Year | Journal | Jurisdiction | Tier | Discovery |
+|---|---|---|---|---|---|---|
+| 24 | Wu & Grundy | 2025 | Age and Ageing | UK (ELSA) | Tier 2 | Forward from Hollinghurst |
+| 25 | Oliver et al. | 2025 | Disability & Rehab | Multi | Tier 1 (SR) | Forward from Oliver 2020 |
+| 26 | Cockayne et al. | 2025 | Public Health Research | UK | Tier 2 | Forward from OTIS 2021 |
+
+### Critical methodological finding
+
+OTIS RCT (Cockayne 2021, UK, NIHR-funded pragmatic RCT) found NO evidence that OT-delivered home assessment reduced falls in general-population 65+. Key distinction:
+- Clemson SR: targeted high-risk fallers → 21% reduction
+- Lektip SR+MA: includes general-population studies → 7% (RR 0.93)
+- OTIS: untargeted general population → null result
+
+BCR calculations (Keall 9:1, CAPABLE 10:1) remain valid — both are targeted programmes. Part 11 and throughline files need methodological note distinguishing targeted vs untargeted.
+
+### Sources remaining for next session (19 of 23)
+
+Rick Hansen 2020, CMS 2017, Tsuchiya-Ito 2022/2023/2025, Mitoku 2014, Liu 2009, Dalvand 2024, Chindapol 2023, Wellecke 2022, Best 2022, Winkler 2021a/b, Gusheh 2021, Whitehead 2018, Colón-Emeric 2024, Lewis 2024
+
+### Updated cumulative totals
+
+| Metric | Value |
+|---|---|
+| Sources mined (original + second-gen) | 12 |
+| Total unique sources discovered | 26 |
+| Tier 1 new | 8 |
+| Tier 2 new | 7 |
+| Tier 3-4 new | 9 |
+| Co-1 sources | 4 |
