@@ -83,15 +83,23 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - part11_cost_table_map added linking 12 cost table sections to item codes
 - Interactive React dashboard created (economics-dashboard.jsx)
 
+### Session 3 continued (gap resolution sweep)
+- All 11 economics gaps resolved/closed/deferred via web research
+- 3 RESOLVED: GAP-02 (Co-1 sources: Goodwin 2022, Wiesel 2020), GAP-05 (tables exist in Part 11 v10), GAP-06 (Compass Intl/Arcadis/T&T)
+- 5 CLOSED-CONFIRMED: GAP-01 (hedonic — genuine absence), GAP-03 (non-US CvV — structurally unique), GAP-07 (SROI — BCR serves same purpose), GAP-08 (DOM — no data), GAP-09 (buyer-pool — no data)
+- 1 CLOSED-DOCUMENTED: GAP-10 (LHA 22× is Tier 5 advocacy synthesis, untraceable primary)
+- 2 DEFERRED: GAP-04 (source verification task), GAP-11 (jurisdiction scope expansion)
+
 ## session_close
-2026-05-04 01:10
+2026-05-04 01:25
 
 ## next_action
-1. Co-1 verification pass — populate lived-experience economic perspectives (GAP-ECON-02)
-2. Unverified source-name sweep (~40 pattern-matched entries) (GAP-ECON-04)
-3. Part 11 §11.3 update with Q5 evidence (Keall, Chandola, CAPABLE, Tsuchiya-Ito)
-4. §15 extraction to separate analytical document (Change Order required)
-5. Populate spec_cross_refs on remaining cost_premium records (CP-004, CP-007, CP-008) when spec database exists
+1. Unverified source-name sweep (~40 entries) — deferred verification task (GAP-ECON-04)
+2. Part 11 §11.3 update with Q5 evidence (Keall, Chandola, CAPABLE, Tsuchiya-Ito)
+3. §15 extraction to separate analytical document (Change Order required)
+4. Populate Co-1 citations from Goodwin 2022 + Wiesel 2020 into throughline-health-outcomes.md §16.7
+5. Purchase/compile Compass International location factors for cross-jurisdiction cost normalisation
+6. Priority jurisdiction deep-dives: NL, JP (beyond financing), IE, NZ
 
 ## blockers
 None.
