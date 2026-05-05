@@ -1,50 +1,35 @@
 # Session: B2-S4-citation-corrections
 **Date:** 2026-05-05
-**session_close:** 2026-05-05 08:50
+**session_close:** 2026-05-05 09:15
 **Model:** Opus 4.6
 
 ## Summary
-Citation corrections, item-code audit, item creation, full specification consolidation (88→65).
+Citations, item-code audit, item creation, full specification consolidation (88→65), C1 Phases 3-4.
 
 ## Completed
-1. Gitlin ABLE RCT chain (3 papers)
+1. Gitlin ABLE RCT chain (3 papers verified)
 2. Ielegems 2024 mining
 3. Item-code audit (9 phantom codes, 28 orphans, 4 mechanical fixes)
-4. F-07, F-08, B-12, G-08, E-14 created; E-13/G-09/K-05 struck; K→J rename
-5. Full validity/consolidation audit
-6. **ALL Part 4 files consolidated**
+4. F-07/F-08/B-12/G-08/E-14 created; E-13/G-09/K-05 struck; K→J rename
+5. Full validity/consolidation audit → 88→65 items
+6. **All 7 Part 4 files consolidated** (A 17→9, B 12→6, C 6→4, D 11→9, E 13→9, F 8→6, G 8→9, H/I/J unchanged)
+7. **C1 Phase 3:** evidence_sources bulk upgrade (243 records, 50 DOIs, 125 quality upgrades, 6 ref_id fixes)
+8. **C1 Phase 4:** bpc_metadata migration (63 upgraded NO-BPC→HAS-BPC, 15 new rows added)
 
-## Consolidation results
+## Database state
+- evidence_sources: 562 rows (COMPLETE: 57, GREY: 99, PMID-ONLY: 16, AUTHOR-TITLE-ONLY: 390; DOIs: 85)
+- bpc_metadata: 78 rows (all HAS-BPC)
+- slugs: 78 rows (63 ACTIVE, 10 STUB, 4 MERGED, 1 PROVISIONAL)
+- connections: 245 rows (188 CONSUMED, 44 CONSUMED-DEFERRED, 12 PENDING, 1 CLOSED)
+- gaps: 172 rows (GAP-AUDIT-01 through -04 all CLOSED)
 
-| Category | Before | After | Δ |
-|---|---|---|---|
-| A (Acoustic) | 17 | 9+A-10b | −8 |
-| B (Lighting) | 12 | 6 | −6 |
-| C (Colour/Surface) | 6 | 4 | −2 |
-| D (Spatial Design) | 11 | 9 | −2 |
-| E (Entry/Circulation) | 13 | 9 | −4 |
-| F (Sensory Zoning) | 8 | 6 | −2 |
-| G (Furniture/Fixtures) | 8 | 9 | +1 |
-| H (Controls/Technology) | 5 | 5 | 0 |
-| I (Upper Limb) | 4 | 4 | 0 |
-| J (DeafBlind) | 4 | 4 | 0 |
-| **Total** | **88** | **65** | **−23** |
-
-Absorbed items: A-06→A-02, A-07→A-02, A-09→A-08, A-11→A-10, A-12→A-10, A-13→A-08, A-14→A-03, A-17→G-09, B-03→B-04, B-06→H-02, B-07→B-04, B-08→C-04, B-11→B-01, B-12→B-01, C-05→C-04, C-06→C-03, D-05→A-16, E-02→E-01, E-14→E-10, F-03→F-01, F-06→F-02
-Struck entirely: D-09, E-04, E-15
-E-file duplicates (E-06–E-09) also removed.
-H-05 resequenced (was after I-03, now after H-04).
-
-## Data integrity
-- SQLite connection_targets: fully remapped (prior commit)
-- Part 4 files: all 7 files modified and committed
-- J file (part05-j): unchanged
-- Old part05-k file: still in repo (historical)
-
-## Commits this session: 19 total
+## Commits: 22 total
 
 ## next_action
-- C1 migration tooling Phase 3 (evidence_source migration)
-- Consolidation manifest: update status from PENDING to COMPLETE
+- C1 Phase 5: specification migration (extend 73 records to full post-consolidation corpus of 65)
+- C1 Phase 6: cell migration (evidence state per spec×population)
+- C1 Phase 7: connection migration (245 records — verify targets match consolidated item codes)
+- C1 Phases 8-13: conflict, remaining entity types
+- 3 BPC files without slug entries (orphaned?) — investigate
 
 blockers: none
