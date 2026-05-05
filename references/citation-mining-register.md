@@ -4,9 +4,9 @@
 <!-- CHECK this register BEFORE mining any source. If source appears here with both B+F complete, skip. -->
 
 **Created:** 2026-05-05 00:29
-**Last updated:** 2026-05-05 00:45
-**Total sources mined:** 44 (28 prior + 9 pass 1 + 4 pass 2 + 3 phase 2 completion)
-**Unmined minable Tier 1-2/Co-1:** 19 (updated 2026-05-04 — 3 mined in phase 2 completion)
+**Last updated:** 2026-05-04 08:30
+**Total sources mined:** 50 (28 prior + 9 pass 1 + 4 pass 2 + 3 phase 2 + 6 phase 3)
+**Unmined minable Tier 1-2/Co-1:** 13 (updated 2026-05-04 — 6 mined in phase 3)
 **Exempt from mining:** 46 (DPO/advocacy/frameworks)
 **Next review:** When register exceeds 6K tokens — archive completed slugs to `references/citation-mining-archive.md`
 **Audit status:** COMPLETE (2026-05-05) — all 63 active BPCs, 510 sources cross-checked
@@ -282,3 +282,28 @@ Sources appearing in multiple BPCs. Mining once covers all instances. Tracked un
 | NDV-ASPECTSS | Mostafa 2008/2014 ASPECTSS (Archnet-IJAR) | — | ✓ | neurodivergent-built-environment | — | ✓ | 2026-05-05 | 1 (Mostafa 2024 POE) | session_2026-05-05-fin-s2 |
 | DBE-01 | Bowes & Dawson 2019 DEM SR (Emerald) | — | ✓ | dementia-built-environment | — | ✓ | 2026-05-05 | 1 (Siegelaar 2025 meta-review) | session_2026-05-05-fin-s2 |
 | MHB-08 | Faerden 2022 (HERD) | — | ✓ | mental-health-built-environment | — | ✓ | 2026-05-05 | 1 (Scottish Gov MH SR, PMC11080396) | session_2026-05-05-fin-s2 |
+
+
+## Phase 3 — Population BPC Anchors (2026-05-04)
+
+| REF-ID | Source | DOI | BPC Slug | B | F | Date | Yield | Session |
+|---|---|---|---|---|---|---|---|---|
+| — | Bowes & Dawson 2019 (DEM SR) | 10.1108/978-1-78769-971-720191004 | DEM | — | ✓ | 2026-05-04 | 2 new (Bowes 2023, Bowes 2024) | session_2026-05-04-cm-p3 |
+| — | Watchorn et al. 2025 (NDV sensory rooms) | 10.1108/ARCH-10-2024-0453 | NDV | — | ✓ | 2026-05-04 | 0 (too recent) | session_2026-05-04-cm-p3 |
+| — | Cloete & Rout 2025 (DeafSpace schools) | 10.38140/as.v32i2.9146 | DEAF | — | ✓ | 2026-05-04 | 0 (too recent) | session_2026-05-04-cm-p3 |
+| — | van der Kuil et al. 2021 (NEU navigation) | 10.1080/09602011.2021.1893192 | NEU | — | ✓ | 2026-05-04 | 0 (clinical only) | session_2026-05-04-cm-p3 |
+| — | Owen & Crane 2022 (TID housing) | 10.3390/ijerph192114279 | NDV-MH | — | ✓ | 2026-05-04 | 2 new (Cowart 2025, TID shelter 2024) | session_2026-05-04-cm-p3 |
+| — | Kos et al. 2015 (OFS pacing RCT) | 10.5014/ajot.2015.016287 | OFS | — | ✓ | 2026-05-04 | 0 (clinical only) | session_2026-05-04-cm-p3 |
+
+## Phase 4 — Tier 3 SR Supersession Check (2026-05-04)
+
+| Existing SR | Superseded by | DOI | Tier | Action |
+|---|---|---|---|---|
+| Bowes & Dawson 2019 (DEM) | Siegelaar et al. 2025 (meta-review of reviews) | 10.1177/30495334251345092 | 3 (meta-review) | Add to DEM BPC as primary synthesis |
+| Tola et al. 2021 (NDV/ASD) | Sensory stimuli in built environment SR 2026 | 10.1016/S0360-1323(26)00077-6 [TBC] | 3 | Add to NDV BPC; check against ASPECTSS |
+| Sheth & Cogle 2023 (home mod) | Cha 2025 (Healthcare) | 10.3390/healthcare13070752 | 3 | Add to MOB/ALL BPC |
+| Marquardt 2009 (DEM wayfinding) | Partially by Siegelaar 2025 | — | — | Subsumed; retain as wayfinding-specific |
+
+## Phase 5 — TBC Resolution (prior session)
+
+Status: COMPLETE. CCD-06 CLOSED-DELETED. TLD-01/02, SSG-02, SPM-03 DEFERRED (theoretical frameworks).
