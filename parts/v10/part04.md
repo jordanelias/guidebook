@@ -1211,11 +1211,13 @@ seated views essential).
 
 **Applicable Groups:** DEAF, DBL
 
-**Description:** Visual Alarm Devices (VAD) installed in all areas where deaf or hard-of-hearing users may be present. Minimum 75 candela; 1--3 Hz flash rate; BS EN 54-23:2010 Category W compliant. Coverage: all sleeping areas, bathrooms, meeting rooms, assembly areas.
+**Description:** Visual Alarm Devices (VAD) installed in all areas where deaf or hard-of-hearing users may be present. Minimum 75 candela; 1--2 Hz flash rate (guidebook recommendation: 0.5--1 Hz where photosensitive populations co-occupy); BS EN 54-23:2010 Category W compliant. Coverage: all sleeping areas, bathrooms, meeting rooms, assembly areas. All VADs to be synchronised to prevent cumulative flash rate exceeding thresholds.
 
 **Specifications:**
 
-75 candela minimum; 1--3 Hz flash rate; BS EN 54-23:2010 Category W Coverage: all sleeping areas, bathrooms, meeting rooms, public assembly areas
+75 candela minimum; 1--2 Hz flash rate; BS EN 54-23:2010 Category W Coverage: all sleeping areas, bathrooms, meeting rooms, public assembly areas
+
+● Photosensitive epilepsy safety [citation mining 2026-05-04]: Where NEU (epilepsy) or NDV (photosensitive) populations co-occupy, flash rate to be specified at 0.5--1 Hz (Jordan & Vanderheiden 2024, VFA-01, DOI:10.1145/3694790; Fisher et al. 2022, VFA-06, DOI:10.1111/epi.17175 — Epilepsy Foundation updated review confirms 3 Hz lower bound of seizure risk). All VADs synchronised per BS EN 54-23 to prevent cumulative flash rate exceeding individual thresholds. ISO 9241-391:2016 (VFA-07) provides international framework for photosensitive seizure reduction.
 
 Independent circuit from audio alarm system
 
@@ -1229,7 +1231,7 @@ Position: visible from any point in room (ceiling or high-wall mount)
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 11; Part 12 §12.4.
 
-**Key citations:** British Standards Institution. (2010). BS EN 54-23:2010. BSI. British Standards Institution. (2017). BS 9999:2017. BSI.
+**Key citations:** British Standards Institution. (2010). BS EN 54-23:2010. BSI. British Standards Institution. (2017). BS 9999:2017. BSI. Jordan, J.B. & Vanderheiden, G.C. (2024). International Guidelines for Photosensitive Epilepsy. *ACM TACCESS* 17(3):1-35. DOI:10.1145/3694790. Fisher, R.S. et al. (2022). Visually sensitive seizures: updated review. *Epilepsia* 63(4):739-768. DOI:10.1111/epi.17175.
 
 **DBL evidence note:** [THIN BASE — Tier 2+4 only; no Tier 1 OT clinical research on DeafBlind built environments in any jurisdiction; March 2026]
 
