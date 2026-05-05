@@ -331,6 +331,8 @@ BSI.
 
 **Cross-reference:** A-02 (Ceiling); A-06 (Wall Panels)
 
+**VIS acoustic differentiation [CON-0237]:** For VIS users, acoustic character differences between spaces provide wayfinding cues (hard corridor floor vs soft carpeted room). A-07 flutter echo elimination does NOT require all circulation surfaces to match occupied-room acoustic treatment. Circulation routes may retain harder surfaces (within flutter echo limits) to provide acoustic contrast that VIS users use for spatial orientation. A-02 RT60 ≤0.3s applies to OCCUPIED ROOMS; corridors may have higher RT60 (≤0.6s) provided A-07 parallel surface treatment is maintained.
+
 **Evidence basis (OT):** EHP Framework (prevent strategy); Dunn's Sensory Processing Model. Flutter echo between parallel untreated hard surfaces produces a sustained, non-decaying reflection series that functions as an uncontrolled repetitive auditory stimulus; this item prevents its formation at source, implementing the EHP 'prevent' strategy before the stimulus reaches the neurological threshold for distress in AUT and PCS users.
 
 **Jurisdiction comparison:** UK BB93 addresses flutter echo in school design. DE DIN 18041 §6 addresses room acoustic defects including flutter echo. No other code specifically targets flutter echo. Guidebook extends to all occupied spaces.
@@ -1706,6 +1708,8 @@ without structural intervention. See Part 12 §12.4.1.
 
 **Cross-reference:** D-01 (Loop Plan); C-02 (Colour Zoning); BIO-03 (Texture Variety); BIO-04 (Water Features)
 
+**Spatial planning note [CON-0189]:** Wayfinding effectiveness depends primarily on architectural layout (straight corridors, visible destinations, sightlines to landmarks), not signage complexity. Marquardt 2011 (WDS-05, HERD, DOI:10.1177/193758671100400207) demonstrated that spatial configuration — specifically straight-corridor topology — is the strongest predictor of independent wayfinding for DEM. Zali et al. 2025 SR (WDS-04, DOI:10.1177/19375867251391361) confirms wayfinding is spatial planning, not signage implementation. D-04 landmarks supplement, but cannot substitute for, legible spatial layout.
+
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. Landmark objects at every decision point implement Allen's CDM level 4 wayfinding principle (concrete, familiar objects as navigational anchors) and compensate for the absent visual environmental information that VIS users would otherwise use for orientation; the specificity requirement (real, familiar, not generic decoration) is derived from CDM level 4 object recognition research.
 
 **Jurisdiction comparison:** No code mandates landmarks at decision points. UK PAS 6463 and DSDC Stirling reference landmarks for NDV/DEM. ISO 21542 §40 references wayfinding landmarks. Guidebook specifies distinctive landmarks at EVERY decision point.
@@ -1746,6 +1750,8 @@ Minimum: 1 per 20 open-plan workstations
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3. AtkinsRéalis.
 
 **Cross-reference:** A-16 (Sensory Room); G-01 (Defensible Seating); F-01 (Sensory Gradient)
+
+**Wayfinding to retreat [CON-0227]:** The path TO low-stimulation spaces must be clearly marked with C-04 ≥50 LRV contrast signage (pictogram: universally recognisable calm/quiet symbol). Users in sensory distress cannot execute complex wayfinding — the retreat path must be cognitively simple (D-02 single route) and visually obvious. F-03 graduated re-entry applies on the RETURN path from retreat to general space.
 
 **FDR-NDV-01 [THIN — Tier 5]:** Proprioceptive underresponsivity (Dunn quadrant 1) — under-foot textured floor zone (300 mm border of tactile mat or textured vinyl) at focus room entry may support self-regulation for NDV/AUT low-registration users. Conflict: DEM visual floor uniformity (C-06) — limit texture to under-foot zone only, no surface pattern change visible in plan. ○ [THIN-POPULATION-SPEC]
 
@@ -3816,6 +3822,10 @@ Refrigerator: side-by-side or French door style; under-counter drawer alternativ
 
 Countertop: non-slip surface; raised lip ≥15 mm at perimeter; suction mount points
 
+Tap: single-lever mixer; ≤50 mm handle throw; thermostatic preferred (TMV ≤43°C for DEM/burn prevention) [CON-0198 — UPL reach range per H-01 400-1200mm applies to all kitchen controls]
+
+All kitchen controls (hob, oven, extract fan, lighting, tap) within H-01 reach range 400-1200mm AFF [CON-0219]
+
 **Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Kitchen one-handed operation throughout requires purpose specified kitchen furniture, appliances, and controls. Full retrofit requires complete kitchen replacement including appliances, cabinetry, and services connections. See Part 12 §12.4.
 
 **Key citations:** Independent Living Centre Western
@@ -3867,6 +3877,10 @@ Towel hooks: bilateral positions at 1100--1400 mm AFF
 
 Soap/shampoo dispensers: wall-mounted at 900--1100 mm AFF (one-hand pump)
 
+PAIN grab bar coating [CON-0185/0191]: where PAIN (allodynia/cold sensitivity) is primary population, grab bars to have insulated coating (silicone or rubber over stainless steel). Cold metal contact triggers allodynia in fibromyalgia, CRPS, and neuropathic pain populations. Coordinate with F-07 bathroom pre-heating (FDR-TCOA-02) — both provisions address the same thermal sensitivity.
+
+OFS horizontal bar [CON-0185]: horizontal grab bar at standing height (900-1000mm AFF) for pull-to-stand energy conservation during shower entry/exit. Reduces STS energy expenditure for OFS users managing post-exertional malaise.
+
 **Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Bathroom UPL provisions require hardware replacement, thermostatic valve installation, and structural blocking for grab bars. In an existing bathroom without pre-installed blocking, grab bar installation requires wall opening and blocking insertion. Full retrofit in a non-compliant bathroom approaches full bathroom refurbishment cost. See Part 12 §12.4; G-03 for grab bar blocking note.
 
 **Key citations:** Multiple Sclerosis International
@@ -3917,6 +3931,8 @@ Visual indicator: call activation light outside each room visible from nursing s
 Wireless pendant: compatible pendant option for ambulant users; pendant waterproof ≥IPX4; range ≥50 m from receiving station; pendant operable with one hand and ≤22 N force
 
 Tactile feedback: call button provides tactile confirmation of activation (audible click plus visible indicator change)
+
+DBL identification [CON-0213]: call cord/button must be identifiable by touch alone — DBL users cannot use visual colour cues. Standardised tactile marker (raised ring or textured grip) on call cord distinguishes it from other cords (light pull, window blind). Same tactile marker must be consistent across all rooms in a building to enable spatial habituation.
 
 Reset: call cancel/reset control accessible at 400--1100 mm AFF; DEM typologies: reset requires staff cancellation to maintain call integrity
 
