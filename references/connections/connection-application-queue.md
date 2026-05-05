@@ -103,7 +103,7 @@
 | Brief | CON-ID | Route to | Priority |
 |---|---|---|---|
 | ISW-BRIEF-06 | CON-0186 | ISW (A-16 spec rewrite) | P1 — strongest connection |
-| ISW-BRIEF-03 | CON-0183 | ISW (K-01 population tags) | P1 — simple tag addition |
+| ISW-BRIEF-03 | CON-0183 | ISW (A-02/A-08 population tags — corrected from K-01/K-02 per GAP-ICM-01) | P1 — simple tag addition |
 | ISW-BRIEF-05 | CON-0185 | ISW (G-03/G-04 population tags) | P1 — simple tag addition |
 | ISW-BRIEF-04 | CON-0184 | ISW (K-05 contraindication note) | P1 — safety-relevant |
 | ISW-BRIEF-02 | CON-0182 | ISW (K-03 compound annotation) | P2 — requires zoning design |

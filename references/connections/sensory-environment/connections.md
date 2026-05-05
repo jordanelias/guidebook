@@ -591,7 +591,7 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **Confidence:** HIGH
 **Opus-reviewed:** true
 **Source BPC slug(s):** room-acoustic-performance, deaf-acoustic-built-environment, neurodivergent-built-environment, mental-health-built-environment
-**Target item(s):** K-01 (RT60), K-02 (background noise)
+**Target item(s):** A-02 (RT60 ≤0.3s), A-08 (background noise NC-25/≤35 dBA) [corrected from K-01/K-02 per GAP-ICM-01 — K-series reassigned to DBL intervenor items]
 **Target population(s):** DEAF, NDV, MH
 **Evidence tier:** 3–5
 **Filed:** 2026-04-24
@@ -890,7 +890,7 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 
 **Status:** PENDING
 **Confidence:** HIGH
-**Target item(s):** K-01 (RT60), K-02 (background noise)
+**Target item(s):** A-02 (RT60 ≤0.3s), A-08 (background noise NC-25/≤35 dBA) [corrected from K-01/K-02 per GAP-ICM-01 — K-series reassigned to DBL intervenor items]
 **Filed:** sensory-environment
 
 **Connection type:** CROSS-POPULATION

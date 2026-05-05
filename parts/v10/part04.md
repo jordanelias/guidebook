@@ -765,6 +765,7 @@ HVAC: NC-25 maximum; individual control
 Blackout: 100% blackout blinds or no windows
 ● Alerting: vibrotactile + voice alarm ONLY; no VAD strobe in A-16 spaces [CON-0217]. Primary occupants are NEU (seizure risk) and NDV (photosensitive) — strobe is contraindicated. Fire alarm via bed-shaker/vibrotactile device (K-04) + voice announcement. Evidence: Jordan & Vanderheiden 2024 (VFA-01); Fisher 2022 (VFA-06). Cross-ref B-10 PSE safety note.
 Location: adjacent to primary circulation; not via another occupied space
+Seating: at minimum one position must be recline-capable (≥120° recline with footrest or full supine support) — OFS/ME/PEM populations require horizontal rest to manage orthostatic intolerance and prevent post-exertional malaise escalation. ○ [Tier 2 — NICE NG206 §hospital-env (2021) recommends lying-down rest space for ME/CFS patients; CDC ME/CFS clinical guidance documents PEM management through supine rest; no design standard specifies minimum recline angle. THIN-POPULATION-SPEC. GAP-OFS-RECUMBENT-01]
 
 Accessible toilet: within 15 m of A-16 entry (mandatory; not discretionary) — OFS/ME users with PEM cannot tolerate extended travel during episodes; DEM users require toilet access from the retreat space without wayfinding complexity; route must be direct and unobstructed ○ [Tier 2 — NICE NG206 §hospital-env; CDC ME/CFS clinical guidance; DSDC EADDAT 2022; no standard specifies maximum distance]
 

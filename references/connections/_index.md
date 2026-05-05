@@ -206,7 +206,7 @@
 | CON-0157 | CONSUMED | B-10, H-03, D-08, E-08 | cross-cutting | HIGH | true | --- |
 | CON-0181 | CONSUMED | A-09 (floor surface spec) | entrances-and-circulation | HIGH | true | — |
 | CON-0182 | CONSUMED | K-03 (circadian lighting) | sensory-environment | HIGH | true | — |
-| CON-0183 | CONSUMED | K-01 (RT60), K-02 (background noise) | sensory-environment | HIGH | true | — |
+| CON-0183 | CONSUMED | A-02 (RT60), A-08 (background noise) | sensory-environment | HIGH | true | — |
 | CON-0184 | CONSUMED | K-05 (thermal comfort assessment) | health-and-symptom-management | HIGH | true | — |
 | CON-0185 | CONSUMED | G-03, G-04 (grab bar height/configuration) | bathrooms-and-wet-areas | HIGH | true | — |
 | CON-0186 | CONSUMED | A-16 (sensory quiet room) | sensory-environment | HIGH | true | — |
