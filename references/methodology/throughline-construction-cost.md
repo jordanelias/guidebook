@@ -49,6 +49,8 @@ This is where unverifiable "X% premium" figures circulate without traceable orig
 - Norwegian Building Authority (Direktoratet for byggkvalitet / DiBK) accessibility cost studies
 - Swedish Boverket accessibility cost analyses (TGR + ALM/BBR series)
 - Singapore BCA Universal Design (BCA Code on Accessibility 2025, 6th revision, April 2025; Accessibility Fund up to $100K/development for UD features)
+  - *Singapore CARE/Duke-NUS currency check:* **[VERIFICATION PASS 2 — 2026-05-05]** Duke-NUS Centre for Ageing Research & Education (CARE) is a confirmed real centre producing health economics and ageing research. No specific accessible built environment cost study from CARE confirmed. Mark any prior CARE citations **[NOT-CITATION-READY — no specific study located]** pending targeted search in a dedicated multilingual-research session.
+- AccessibleEU Resource Centre — **[VERIFICATION PASS 2 — 2026-05-05 CONFIRMED]** Real EU-funded resource centre (2023–2026), flagship initiative of the EU Strategy for the Rights of Persons with Disabilities 2021–2030. Citable output: *Ambrose, I.* (2023). *Accessibility of the Built Environment in the European Union.* AccessibleEU Report 05. European Commission. URL: accessible-eu-centre.ec.europa.eu. **[Tier 4 — EU-commission-funded research].** Covers accessibility legislation monitoring, compliance, and built environment standards across EU member states. Citation-ready for policy/regulatory coverage of EU accessibility obligations; not a cost analysis document.
 - Dutch SBR / Aedes accessibility cost studies; NEN 9120:2025 (accessibility performance standard, published Feb 2025 — no separate economic appendix confirmed)
 - Japan MLIT Barrier-Free New Law cost studies (Japanese-language; J-STAGE indexed)
 - CMHC research reports — *Accessible Housing by Design* + *FlexHousing* series (Canada)
@@ -57,11 +59,13 @@ This is where unverifiable "X% premium" figures circulate without traceable orig
 - Living in Place / Visitability Inc / Concrete Change case-study databases (US-derived; methodology transferable)
 - AS 4299 cost analyses (Australia)
 - Korean Land & Housing Corporation (LH; 한국토지주택공사) — public corporation; research arm Land & Housing Institute (LHI) accessibility cost research
-- Hong Kong Buildings Department barrier-free design economic studies
-- Indian Central Building Research Institute (CBRI) accessibility cost research
+- Hong Kong Buildings Department barrier-free design economic studies — **[VERIFICATION PASS 2 — 2026-05-05 CLOSED-DELETED]** The BD publishes *Design Manual: Barrier Free Access* (regulatory compliance document, 2008, updated 2025) but produces no separate economic cost study. The HK Audit Commission published a government retrofitting expenditure audit (2017–2018) which is not a BD economic analysis. Two independent searches confirm no BD economic study exists. Do not cite as a cost-data source; remove this source family from the list.
+- Indian Central Building Research Institute (CBRI) accessibility cost research — **[VERIFICATION PASS 2 — 2026-05-05 CLOSED-DELETED]** CSIR-CBRI (Roorkee) is real but its research focus is building materials, energy efficiency, disaster mitigation, and rural housing. No disability or accessibility cost-specific research output confirmed in two independent searches. Do not cite; remove from source family list. Use CPWD Plinth Area Rates + Delhi Schedule of Rates (listed above) for Indian cost data instead.
 - South African CSIR Built Environment unit accessibility research
 
-**[VERIFICATION-PASS UPDATE 2026-05-02]** — the widely circulated "0.5–1% universal design cost premium" claim is traceable to **ADA National Network** ("Is it expensive to make all newly constructed places of public accommodation and commercial facilities accessible?" 2025) which states the figure as **"less than 1%"** — not "0.5–1%". The 0.5% specific figure has no identified original source. When citing: use "less than 1% (ADA National Network)" with [Tier 5 — advocacy-network synthesis] marker. The corollary retrofit figure from the same source is **"2% to 20%"** for adding features later, *not* "5×–25×" which is downstream misquotation. See §10 corrections.
+**[VERIFICATION-PASS UPDATE 2026-05-02 — Pass 1]** — the widely circulated "0.5–1% universal design cost premium" claim is traceable to **ADA National Network** ("Is it expensive to make all newly constructed places of public accommodation and commercial facilities accessible?" 2025) which states the figure as **"less than 1%"** — not "0.5–1%". The 0.5% specific figure has no identified original source. When citing: use "less than 1% (ADA National Network)" with [Tier 5 — advocacy-network synthesis] marker. The corollary retrofit figure from the same source is **"2% to 20%"** for adding features later, *not* "5×–25×" which is downstream misquotation. See §10 corrections.
+
+**[VERIFICATION-PASS UPDATE 2026-05-05 — Pass 2]** Verified four flagged source families from GAP-METH-ECON-01: HK Buildings Department economic studies (CLOSED-DELETED — no such study exists); India CBRI accessibility cost research (CLOSED-DELETED — no disability cost research found in two searches); Singapore CARE/Duke-NUS (centre confirmed real, no specific built environment cost study found — NOT-CITATION-READY); AccessibleEU (CONFIRMED — *Ambrose 2023 Report 05*, Tier 4). GAP-METH-ECON-02 (evidence-tier marking): source families in §Q1–Q3 maps are research guidance only, not verified citations; evidence-tier markers in §16.1 Verified Citations apply to citation-ready entries only. Unmarked source families require §7 verification chain before entering Part 11 or BPC.
 
 
 ### TERRAGON commercial-interest note
@@ -161,6 +165,9 @@ This section consolidates citations that have passed the §7 verification chain 
 
 **[Tier 4 — research-institute report]**
 **Rick Hansen Foundation** (2024). *RHFAC Retrofits and Upgrades Cost Study.* Canada. — Recent Canadian retrofit cost data linked to the RHFAC accessibility certification.
+
+**[Tier 4 — EU Commission-funded research]**
+**Ambrose, I.** (2023). *Accessibility of the Built Environment in the European Union.* AccessibleEU Report 05. European Commission, AccessibleEU Resource Centre. URL: accessible-eu-centre.ec.europa.eu/accessibility-built-environment-european-union_en — EU-wide survey of accessibility legislation, standards, and compliance in the built environment. Covers EN 17210:2021 implementation status across member states. Not a cost analysis; citable for EU policy/regulatory coverage and standards monitoring context.
 
 
 ---
