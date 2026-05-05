@@ -53,6 +53,7 @@
 | Jurisdiction | Language | Reason | Co-1? | Tier 5? |
 |---|---|---|---|---|
 | All 24 | All 14 | No dedicated standards for CHD, LPA, EXH, or BAR | — | — |
+| ZH/JA | ZH, JA | CHD: ZH/JA have dedicated special education school facility standards (BSP-08–11); not dedicated accessible design standards. No LPA, EXH, or BAR standards in any language. [GAP-062 ZH/JA passes complete 2026-03-19] | — | Tier 5 |
 | — | — | No OT clinical evidence for LPA built environment provisions | No | No |
 
 ### Citation mining
@@ -72,12 +73,16 @@ Not yet run.
 | BSP-05 | VA CFM | 2025 | VA Barrier-Free Design Standard — bariatric facility design | 5 | US | — |
 | BSP-06 | NHS | n.d. | NHS HBN 00-03 — healthcare bariatric guidance | 4 | UK | https://www.england.nhs.uk/publication/health-building-note-00-03/ |
 | BSP-07 | FGI | 2022 | FGI Guidelines for Design and Construction of Hospitals | 4 | US | https://fgiguidelines.org |
+| BSP-08 | GB/T 16252 + 建标156-2011 | 2011 | 城市普通中小学校校舍建设标准 — National school building standards (China), includes dimensional requirements for classrooms, corridors, and auxiliary spaces serving children. | 5 | ZH | [ZH pass 2026-03-19, GAP-062] |
+| BSP-09 | Beijing Municipal Government | 2019 | Beijing Special Education School Design Guidelines (北京市特殊教育学校建设标准). Covers accessible routes, sensory room provision, classroom acoustics for children with disability. | 5 | ZH | [ZH pass 2026-03-19, GAP-062] |
+| BSP-10 | Zhejiang Standard | 2025 | DB3303/T 084-2025 — Barrier-free environment construction for special education schools (Zhejiang Province). Most recent provincial standard; includes CHD-specific door widths, ramp gradients, tactile guidance. | 5 | ZH | [ZH pass 2026-03-19, GAP-062] |
+| BSP-11 | MEXT (文部科学省) | 2020 | 特別支援学校施設整備指針 — Special Support School Facilities Design Guidelines. Covers: classroom acoustics (≤40 dBA), multi-sensory provision, accessible WC at every floor, corridor widths ≥2400 mm for children using powered wheelchairs. | 5 | JA | [JA pass 2026-03-19, GAP-062] |
 
 ## Metadata
 
 ```yaml
 slug: body-sizes-supplementary-populations
 population: ALL
-last_updated: 2026-04-19
+last_updated: 2026-05-05
 co0006_migration: true
 ```
