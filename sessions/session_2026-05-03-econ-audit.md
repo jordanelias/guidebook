@@ -180,12 +180,33 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 - GAP-ECON-04: 20 claims verified, 0 fabricated, 2 corrections applied (NEN 9120, Singapore BCA)
 - RHF/hcma 2024 added as COST-PREM-009 (<0.5% offices, <1.5% schools)
 
-## next_action
-1. **§15 extraction** to separate analytical document (Change Order required)
-2. **JP beyond financing** — remaining priority jurisdiction
-3. **10 remaining unmined sources** — low priority
-4. **Tsuchiya-Ito 2019 JP-SE comparison** — deferred flag #7
-5. **BATH-OUT-2 monitoring** — results will provide first UK-specific BCR with QALY
+### JP deep-dive + §15 extraction completed
+- JP: Tsuchiya-Ito 8-paper chain mapped, housing deficit data (42.4%/8.8%), Barrier-Free Act 2006 context
+- Tsuchiya-Ito 2019 JP-SE comparison found — resolves escalation flag #7
+- §15 extracted to standalone perceptual-value-crossover.md (763 lines)
+- throughline-market-value.md slimmed from 934 to 219 lines
+- GAP-11 fully resolved (all 4 priority jurisdictions investigated)
+- economics.json: 23 health records, 6 deficit records, 10 grants, 9 cost premiums
+
+## ALL ECONOMICS WORK ITEMS COMPLETE
+
+## next_action (residual / monitoring)
+1. **10 remaining unmined sources** — Mitoku 2014, Liu 2009, CMS 2017, Dalvand 2024, Chindapol 2023, Winkler 2021a/b, Best 2022, Gusheh 2021, Rick Hansen 2020. Low priority, diminishing returns.
+2. **BATH-OUT-2 monitoring** — first UK powered RCT with QALY outcome for bathroom adaptations. Results will fill the QALY evidence gap.
+3. **10+ remaining jurisdictions** — IT, ES, SE, NO, DK, FI, KR, BR, MX, IN, SG. Lower priority than the 4 completed.
+
+## blockers
+None.
+
+## final_statistics
+- Total commits: 38
+- economics.json: 72 primary records (23 health, 9 cost, 3 retrofit, 10 grants, 6 deficit, 5 throughlines, 5 dual-read, 11 gaps) + 171 spec_cross_refs
+- Citation mining: 16 mined, 33 discovered (including JP deep-dive)
+- Files in references/methodology/: 8 (core, 4 throughlines, gaps+citations, PVC, archived original)
+- All 11 gaps: 0 open
+- All 7 escalation flags: resolved
+- Part 11 §11.3: fully updated with cross-jurisdictional evidence, OTIS note, Co-1
+- 3 critical findings: OTIS null, BATH-OUT-2 upcoming, TERRAGON counter-source
 
 ## blockers
 None.
