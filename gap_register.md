@@ -90,13 +90,13 @@
 | GAP-CONF-SPAT-03 | CR | P2 | OPEN | 2B | — | DEAF+NDV/AUT co-occurring: no built example of environmental refuge (A-16) with translucent/transparent panel to adjacent signing space. Gallaudet neurodivergent deaf students documented as needing... | cross-population-con |
 | GAP-CONF-TEMP-01 | CR | P2 | OPEN | 2B | — | No POE data from facilities implementing cool-ambient + individual-heating strategy for mixed disability populations. Resolution is clinically inferred, not empirically validated. | cross-population-con |
 | GAP-CONF-TEMP-03 | CR | P2 | OPEN | 2B | — | Intra-individual conflict: person with MS + fibromyalgia (co-occurring). No architectural resolution — clinical management domain. Guidebook should acknowledge limitation. | cross-population-con |
-| GAP-CO03-01 | ST | P2 | OPEN | 3 | 11 | Part 2 introduction: add methodology note on co-occurring disability as norm | Part 2 writing sessi |
-| GAP-CO03-02 | ST | P2 | OPEN | 3 | 12 | Part 3 title change applied in guidebook body | Parts 3+4 writing se |
-| GAP-CO03-03 | ST | P2 | OPEN | 3 | 12 | Part 3 §3.2.3 "Co-Occurrence as Norm, Not Exception" added | New subsection |
-| GAP-CO03-04 | ST | P2 | OPEN | 3 | 15 | Part 7 title change applied in guidebook body | Part 7 writing sessi |
+| GAP-CO03-01 | ST | P2 | CLOSED | 3 | 11 | Part 2 introduction: add methodology note on co-occurring disability as norm | Part 2 writing sessi |
+| GAP-CO03-02 | ST | P2 | CLOSED | 3 | 12 | Part 3 title change applied in guidebook body | Parts 3+4 writing se |
+| GAP-CO03-03 | ST | P2 | CLOSED | 3 | 12 | Part 3 §3.2.3 "Co-Occurrence as Norm, Not Exception" added | New subsection |
+| GAP-CO03-04 | ST | P2 | CLOSED | 3 | 15 | Part 7 title change applied in guidebook body | Part 7 writing sessi |
 | GAP-CO03-05 | ST | P2 | OPEN | 3 | 15 | Part 7 §7.1 rewrite: distinguish intra-individual from inter-group | §7.1 + §7.2 revision |
 | GAP-CO03-06 | ST | P2 | OPEN | 3 | 15–16 | Part 7 §7.3 entries tagged [INTRA-INDIVIDUAL] / [INTER-GROUP] / [BOTH] | Per-entry tagging |
-| GAP-CO03-07 | ST | P2 | OPEN | 3 | 10 | Part 1 §1.4 framework addition: three-tier as co-occurrence resolution | Part 1 writing sessi |
+| GAP-CO03-07 | ST | P2 | CLOSED | 3 | 10 | Part 1 §1.4 framework addition: three-tier as co-occurrence resolution | Part 1 writing sessi |
 | GAP-CO03-08 | ST | P2 | OPEN | 3 | 17 | Part 8 title + §8.4 split (intra vs inter) when Part 8 created | Part 8 new content s |
 | GAP-CO03-10 | ST | P2 | OPEN | 4 | 19 | find-and-replace: "cross-population" → context-dependent in guidebook body | Bundled with CO-0001 |
 | GAP-CO04-04 | ST | P2 | CLOSED | 0R | Next session | gap_register.md entries referencing old Part numbers need updating | ~20 entries |
