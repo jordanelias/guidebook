@@ -97,6 +97,10 @@ def query_spec(conn, item_code):
 
 def evidence_marker(tier):
     """Return evidence marker symbol."""
+    if isinstance(tier, str):
+        import re as _re
+        m = _re.search(r'(\d+)', str(tier))
+        tier = int(m.group(1)) if m else None
     if tier and tier <= 3:
         return "●"  # stated
     elif tier and tier <= 5:
