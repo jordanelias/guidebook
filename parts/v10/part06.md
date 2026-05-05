@@ -248,6 +248,11 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - B-01 (circadian lighting, bright daytime, warm evening) vs. NDV users sensitive to any light change: Resolution: specify full dimming range 0–100% with individual control; circadian schedule must be user-configurable, not fixed-schedule.
 - TC-01 (temperature maximum ≤24°C) vs. PAIN/fibromyalgia users who require warmer environments: Resolution: individual thermostat per TC-02 with range up to 26°C for PAIN users; the ≤24°C ceiling is a maximum for MS/OFS users but an individual control is the resolution for PAIN users.
 
+**Additional provisions [CON-0208]:**
+- DEM: WC/bathroom door visible from primary sleeping position (D-03 equivalent for residential). Straight sightline from bed to bathroom entrance reduces nocturnal disorientation falls.
+- NDV: full blackout blinds (B-07) + individual dimming to 0 lux (B-06) at bedside control. NDV hypersensitivity to any light during sleep is clinically documented.
+- OFS: bed height adjustability 400-600mm AFF recommended (450mm minimum for STS transfer); tilt/recline capability for daytime rest in symptom management. Electric profiling bed blocking (dedicated power outlet at bedhead + structural floor for bed weight).
+
 **Citation additions per residential analysis:**
 
 - Lifetime Homes Criteria 9+10 (hoist provision, bedroom dimensions)
@@ -457,7 +462,10 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Perch stool counter position shown on floor plan
 - [ ] Front-loading appliance positions with accessible service connections on M\&E drawings
 - [ ] Range hood noise specification (NC-30) in MEP brief
-- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan —
+- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan
+- [ ] All kitchen controls (hob, oven, extract fan, lighting, tap) within H-01 reach range 400-1200mm AFF [CON-0209]
+- [ ] Single-lever mixer tap ≤50mm handle throw [CON-0198]
+- [ ] Individual thermostat in kitchen (TC-02) coordinated with R-BED thermal specification [CON-0199]
 
 ### §6.8 R-HAL: Hallway and Internal Circulation
 
