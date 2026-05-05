@@ -11,10 +11,10 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 153 |
+| CONSUMED | 155 |
 | CONSUMED-DEFERRED | 43 |
-| PENDING | 48 |
-| CONSUMED (this session) | 8 |
+| PENDING | 46 |
+| CONSUMED (this session) | 10 |
 
 ## Index
 
@@ -218,7 +218,7 @@
 | CON-0193 | PENDING | Part 1 §1.4 | frameworks-and-methodology | HIGH | false | — |
 | CON-0194 | PENDING | I-03, D-02, E-08 | entrances-and-circulation | HIGH | false | — |
 | CON-0195 | PENDING | Part 3 §3.2 | frameworks-and-methodology | MODERATE | false | — |
-| CON-0196 | PENDING | B-12, D-05 | sensory-environment | HIGH | false | — |
+| CON-0196 | CONSUMED | B-12, D-05 | sensory-environment | HIGH | false | — |
 | CON-0197 | PENDING | C-04, E-09 | entrances-and-circulation | MODERATE | false | — |
 | CON-0198 | PENDING | H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
 | CON-0199 | PENDING | Part 6 R-BED, Part 6 R-KIT | frameworks-and-methodology | HIGH | false | — |
@@ -236,7 +236,7 @@
 | CON-0211 | PENDING | Part 8 Engineering | sensory-environment | MODERATE | false | — |
 | CON-0212 | PENDING | G-02, G-05, G-07, I-03, E-10 | seating-and-rest | HIGH | false | — |
 | CON-0213 | PENDING | H-05, G-09 | cross-cutting | HIGH | false | — |
-| CON-0214 | PENDING | B-12, B-01 | sensory-environment | HIGH | false | — |
+| CON-0214 | CONSUMED | B-12, B-01 | sensory-environment | HIGH | false | — |
 | CON-0215 | PENDING | G-04, B-12 | bathrooms-and-wet-areas | MODERATE | false | — |
 | CON-0216 | CONSUMED | G-03, G-04 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0217 | PENDING | B-10, A-16, K-04 | sensory-environment | HIGH | false | — |

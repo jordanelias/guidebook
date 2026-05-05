@@ -2041,7 +2041,9 @@ Evening shift to ≤10 EML and 2700K CCT removes the alerting light wavelengths 
 - ● Luminaires to be positioned at 300–400 mm AFF, oriented to illuminate the floor surface [REF:accessible-bathroom-and-grab-bar:22]
 - ● Floor illuminance to be no less than 5 lux throughout the route [REF:accessible-bathroom-and-grab-bar:22]
 - ● Colour temperature not to exceed 3000 K [REF:accessible-bathroom-and-grab-bar:22] *(single Tier 2 source)*
-- ○ Where the bed-to-bathroom route passes through a shared circulation area, low-level lighting to be maintained throughout; the pathway lighting system to be independent of the general room lighting circuit
+- ● B-12 sensor circuit must be electrically independent from B-01 circadian lighting programme. Night-time sensor trigger must not activate ≥250 melanopic EDI (which would fully reset the circadian system during sleepy toileting). Maximum: ≤10 lux, ≤2700 K on nocturnal sensor activation. NDV photosensitivity: sudden high-lux activation may startle. Part 8: separate circuit specification required. [CON-0214]
+- ○ Where the bed-to-bathroom route passes through a shared circulation area, low-level lighting to be maintained throughout; the pathway lighting sys
+- ● Universal Mode candidate: overnight bed-to-bathroom path lighting serves 5+ populations through independent clinical mechanisms — DEM (nocturnal wayfinding), MOB (fall prevention, Keall 2015 Cochrane), NEU (spatial orientation post-ABI), OFS (orthostatic fall risk during nocturnal STS), PAIN (night navigation with limited mobility). No population conflict identified. [CON-0196]tem to be independent of the general room lighting circuit
 
 **Design Stage:** Design Development · Technical Architecture · Post-Occupancy
 
@@ -6123,22 +6125,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Evidence quality:** Tier 3 (architectural assessment; pilot programme evaluation)
 
-**Key design strategies:** - De Hogeweyk model adapted for Norwegian climate and regulatory context - Six residential clusters of 8--10 residents with individual kitchens and outdoor spaces - Central community hub with café, gardens, and activity facilities - Norwegian vernacular architecture: pitched roofs, natural timber, landscaped outdoor accessible garden with protected microclimate - All units fully accessible: wet room, grab bars, loop paths, no dead ends - Secured perimeter with full outdoor mobility — "safe freedom" principle (D-01, D-11, E-06) - Biophilic integration: nature views from all primary rooms; kitchen gardens; indoor planting (BIO-01, BIO-02)
-
-**Verified outcomes:** - Pilot programme (Norwegian Directorate of Health, 2021--2023): resident wellbeing assessments above national care home benchmarks (Tier 3) - Confirmed as national reference project for future Norwegian dementia housing policy - Architecture award: nominated for Nordic Council's Environment Prize 2022
-
-**Cost data:** Total project approximately NOK 650 million (c. €47 million / CAD $80 million) for 18,000 m² — approximately £2,600/m² gross, comparable to Norwegian institutional construction norms. Per-resident cost approximately €310,000.
-
-**Limitations:** Pilot project; single site; full evaluation pending. High per-resident cost may not be scalable without national programme subsidy.
-
-### §12.14 — BC Housing Home Adaptations for Independence (HAFI) Programme (Canada, 2012–ongoing)
-
-**Building type:** Residential retrofit (individual dwellings --- community programme)
-
-**Primary population:** Low-income seniors and people with disabilities (MOB, OFS, DEM, PAIN)
-
-**Evidence quality:** Tier 2 (programme dataset; aggregate outcome metrics)
-
-**Key design strategies (typical modifications funded):** - Grab bar installation (G-03) — highest volume single intervention - Threshold modification and ramp installation (E-06, E-03) - Bathroom adaptation: shower seat, lever controls (G-04, I-01) - Kitchen modification: lever taps, lowered counter sections (I-01, I-02) - Stairlift installation (retrofit)
-
-**Verified outcomes:** - >6,500 homes adapted (BC Housing, programme data to 2023) - Programme evaluation (BC Housing, 2019, n=412): 91% of recipients reported improved ability t
+**Key design strategies:** - De Hogeweyk model adapted for Norwegian climate and regulatory context - Six residential clusters of 8--10 residents with individual kitchens and outdoor spaces - Central community hub with café, gardens, and activity facilities - Norwegian vernacular architecture: pitched roofs, natural timber, landscaped outdoor accessible garden with protected microclimate - All units fully accessible: wet room, grab bars, loop paths, no dead ends - Secured perimeter with full outdoor mobilit
