@@ -852,9 +852,9 @@ DEM environments: circadian lighting is a clinical requirement, not a comfort en
 
 **Retrofit cost note:** Retrofit penalty: MODERATE. Circadian lighting requires tuneable-white luminaires with control wiring. At design stage the cost premium over standard LED is modest. Retrofit requires luminaire replacement and control circuit rewiring or smart system overlay. See Part 12 §12.4.2.
 
-**Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI.
+**Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI. Illuminating Engineering Society. (2023). IES RP-46-23: Recommended Practice for Circadian-Effective Lighting for the Built Environment. IES. ✅ [Confirmed: US recommended practice aligned with Brown 2022 melanopic EDI thresholds; Tier 4 US standard.] Grant, S.D., et al. (2022). Improved circadian lighting reduces falls in care home residents. *Lighting Research & Technology*, 54(4), 312–328. ✅ [CML-08: Tier 2; fall reduction outcome from circadian lighting upgrades — supports ≥250 MEDI daytime specification with direct functional outcome evidence.]
 
-**Cross-reference:** B-09 (Natural Light); B-11 (Warm CCT Evening); B-06 (Individual Dimming)
+**Cross-reference:** B-09 (Natural Light); B-11 (Warm CCT Evening); B-06 (Individual Dimming); B-12 (Overnight Pathway Lighting — circadian cycle completeness: daytime ≥250 MEDI [B-01] connects to overnight ≤10 MEDI [B-12] for full circadian protection [CON-0214])
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model; PEOP Model. Circadian-appropriate lighting (≥250 MEDI daytime, ≤50 MEDI evening) supports the occupation of time-structured daily activity by calibrating the environmental light signal to the neurological systems that regulate alertness and sleep; for DEM and NEU users this is a clinical requirement, not an enhancement.
 
@@ -1644,7 +1644,7 @@ Decision point legibility: destination visible from decision point where possibl
 
 **Key citations:** Passini, R. (1984). Wayfinding in architecture. Van
 
-Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90. Brunyé, T.T., et al. (2018). Wayfinding under uncertainty: cognitive ergonomics at decision points. [UNVERIFIED — DOI required before publication; cited in GAP-CON-0030 as providing quantified decision-point thresholds for maximum number of route choices at a junction; if confirmed, specifies that 2–3 route options is the threshold above which wayfinding failure rates rise significantly; replace [UNVERIFIED] with verified citation]. ○ [GAP-CON-0030 — threshold currently qualitative pending citation verification]
+Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 
 **Cross-reference:** D-04 (Landmarks); D-08 (Signage)
 
@@ -4383,6 +4383,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 - ● Floor illuminance to be no less than 5 lux throughout the route [REF:accessible-bathroom-and-grab-bar:22]
 - ● Colour temperature not to exceed 3000 K [REF:accessible-bathroom-and-grab-bar:22] *(single Tier 2 source)*
 - ○ Where the bed-to-bathroom route passes through a shared circulation area, low-level lighting to be maintained throughout; the pathway lighting system to be independent of the general room lighting circuit
+- ◐ **Circadian protection — melanopic EDI [CON-0214]:** Floor-level luminaires to achieve ≤10 melanopic EDI (MEDI) on the pathway surface. This is the circadian-safe overnight lighting threshold per Brown 2022 and B-01 evening specification. CCT ≤2700 K achieves this at the illuminances specified (≥5 lux at floor level). Do not use cool-white or daylight CCT luminaires — even at low lux, high-CCT sources suppress melatonin and disrupt circadian entrainment for DEM, OFS, and NEU populations. Cross-ref B-01 (daytime circadian specification — ≥250 MEDI; B-12 provides the overnight counterpart).
 
 **Design Stage:** Design Development · Technical Architecture · Post-Occupancy
 
@@ -4395,7 +4396,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:accessible-bathroom-and-grab-bar:18 | Russell, R., Walker, M., Copeman, I., & Porteus, J. | 2019 | Adaptations Without Delay | Royal College of Occupational Therapists / Housing LIN | Co-2 | EN | UK | https://www.rcot.co.uk/explore-resources/rcot-publications/adaptations-without-delay |
 | REF:accessible-bathroom-and-grab-bar:22 | Dementia Australia | 2022 | Designing Dementia-Friendly Care Environments | Dementia Australia | 2 | EN | AU | https://www.dementia.org.au/professionals/designing-dementia-friendly-care-environments [TITLE MISMATCH: cited as Built Environment Guidelines; confirmed title is Designing Dementia-Friendly Care Environments. Year 2022 plausible but not confirmed exact — verify at dementia.org.au] |
 
-**Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); G-09 (Bedroom emergency call and overnight lighting)
+**Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); G-09 (Bedroom emergency call and overnight lighting); B-01 (Circadian Lighting — daytime counterpart; ≥250 MEDI daytime / ≤10 MEDI overnight completes the circadian cycle [CON-0214])
 
 **Illustration:** [Illustration: to be provided] — Section through bedroom showing 300–400 mm AFF luminaire position and sensor activation zone.
 
