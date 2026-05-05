@@ -43,9 +43,9 @@
 | GAP-CON-01 | SW | P2 | CLOSED | connection-scout | Part 5 | CON-0009: TWSI serves VIS, DBL, DEM through different mechanisms. DEM application not cross-referenced. | 2026-03-26 18:30 |
 | GAP-CON-02 | SW | P2 | CLOSED | connection-scout | D-01, D-02 | CON-0010: Loop circulation serves DEM, NEU, NDV. Cross-population note missing. TIER-0-CANDIDATE. | 2026-03-26 18:30 |
 | GAP-CON-03 | SW | P2 | CLOSED | connection-scout | A-10, A-11 | CON-0011: DBL residual hearing users benefit from hearing loop. Not in DBL items. | 2026-03-26 18:30 |
-| GAP-CON-04 | SW | P2 | OPEN | connection-scout | BIO-series | CON-0012: Biophilic outdoor zones serve NDV, DEM, NDV/MH. Consolidate siloed provisions. | 2026-03-26 18:30 |
+| GAP-CON-04 | SW | P2 | CLOSED | connection-scout | BIO-series | CON-0012: Biophilic outdoor zones serve NDV, DEM, NDV/MH. Consolidate siloed provisions. | 2026-03-26 18:30 |
 | GAP-CON-05-b | SW | P2 | CLOSED | connection-scout | A-09 | CON-0005: PAIN as co-population for resilient flooring (MOB WBV evidence extends to PAIN joint-loading reduction). THIN for PAIN-specific evidence. | 2026-03-26 18:15 |
-| GAP-CON-06 | SW | P2 | OPEN | connection-scout | Part 4 | CON-0015: Empirical-derivation-from-user principle. State as methodological standard. | 2026-03-26 18:30 |
+| GAP-CON-06 | SW | P2 | CLOSED | connection-scout | Part 4 | CON-0015: Empirical-derivation-from-user principle. State as methodological standard. | 2026-03-26 18:30 |
 | GAP-CON-06-b | SW | P2 | CLOSED | connection-scout | B-01 | CON-0006: MH and OFS as co-populations for circadian lighting. Sleep disruption core symptom for both; circadian entrainment mechanism identical to DEM/NEU. | 2026-03-26 18:15 |
 | GAP-CON-12 | SW | P2 | CLOSED | connection-scout | DAR items | CON-0012: Italian adattabilità (DM 236/89) as statutory DAR precedent. Cross-reference in Part 1 DAR doctrine. | 2026-03-26 18:15 |
 | GAP-CON-15 | SW | P2 | CLOSED | connection-scout | F-02/F-04 | CON-0015: MH as co-population for air quality / fragrance-free items. TID framework: chemical stimuli as PTSD triggers. | 2026-03-26 18:15 |
