@@ -11,9 +11,9 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 187 |
+| CONSUMED | 197 |
 | CONSUMED-DEFERRED | 50 |
-| PENDING | 7 |
+| PENDING | -3 |
 | CONSUMED (this session) | 21 |
 
 ## Index
@@ -210,14 +210,14 @@
 | CON-0185 | CONSUMED | G-03, G-04 (grab bar height/configuration) | bathrooms-and-wet-areas | HIGH | true | — |
 | CON-0186 | CONSUMED | A-16 (sensory quiet room) | sensory-environment | HIGH | true | — |
 | CON-0187 | CONSUMED | D-02 (wayfinding system), D-06 (decision-point design) | wayfinding-and-signage | MODERATE | true | — |
-| CON-0188 | PENDING | Multiple (cross-cutting design framework) | cross-cutting | HIGH | true | — |
+| CON-0188 | CONSUMED | Multiple (cross-cutting design framework) | cross-cutting | HIGH | true | — |
 | CON-0189 | CONSUMED | D-02, D-04, D-08 | wayfinding-and-signage | HIGH | false | — |
 | CON-0190 | CONSUMED-DEFERRED | I-03, E-10 | seating-and-rest | HIGH | false | — |
 | CON-0191 | CONSUMED | G-03, G-04, F-07 | bathrooms-and-wet-areas | HIGH | false | — |
-| CON-0192 | PENDING | Part 3 §3.8 | frameworks-and-methodology | HIGH | false | — |
+| CON-0192 | CONSUMED | Part 3 §3.8 | frameworks-and-methodology | HIGH | false | — |
 | CON-0193 | CONSUMED | Part 1 §1.4 | frameworks-and-methodology | HIGH | false | — |
 | CON-0194 | CONSUMED | I-03, D-02, E-08 | entrances-and-circulation | HIGH | false | — |
-| CON-0195 | PENDING | Part 3 §3.2 | frameworks-and-methodology | MODERATE | false | — |
+| CON-0195 | CONSUMED | Part 3 §3.2 | frameworks-and-methodology | MODERATE | false | — |
 | CON-0196 | CONSUMED | B-12, D-05 | sensory-environment | HIGH | false | — |
 | CON-0197 | CONSUMED | C-04, E-09 | entrances-and-circulation | MODERATE | false | — |
 | CON-0198 | CONSUMED | H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
@@ -240,7 +240,7 @@
 | CON-0215 | CONSUMED | G-04, B-12 | bathrooms-and-wet-areas | MODERATE | false | — |
 | CON-0216 | CONSUMED | G-03, G-04 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0217 | CONSUMED | B-10, A-16, K-04 | sensory-environment | HIGH | false | — |
-| CON-0218 | PENDING | Part 3 §3.x | frameworks-and-methodology | HIGH | false | — |
+| CON-0218 | CONSUMED | Part 3 §3.x | frameworks-and-methodology | HIGH | false | — |
 | CON-0219 | CONSUMED | C-01, H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
 | CON-0220 | CONSUMED | A-16, F-01, F-03 | sensory-environment | MODERATE | false | — |
 | CON-0221 | CONSUMED | F-01, Part 3 | frameworks-and-methodology | HIGH | false | — |
@@ -248,20 +248,20 @@
 | CON-0223 | CONSUMED | C-03, C-04, A-09 | wayfinding-and-signage | HIGH | false | — |
 | CON-0224 | CONSUMED-DEFERRED | F-07, K-05, Part 5 | health-and-symptom-management | HIGH | false | — |
 | CON-0225 | CONSUMED | Part 11, Part 12 | frameworks-and-methodology | HIGH | false | — |
-| CON-0226 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
+| CON-0226 | CONSUMED | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0227 | CONSUMED | D-05, C-04, F-03 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0228 | CONSUMED | Part 9 §9.5, G-03 | frameworks-and-methodology | HIGH | false | — |
 | CON-0229 | CONSUMED | A-02, A-07, A-09, E-07 | entrances-and-circulation | HIGH | false | — |
 | CON-0230 | CONSUMED | Part 11, G-03 | frameworks-and-methodology | HIGH | false | — |
-| CON-0231 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
+| CON-0231 | CONSUMED | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
 | CON-0232 | CONSUMED | BIO-01, Part 11 | cross-cutting | MODERATE | false | — |
 | CON-0233 | CONSUMED-DEFERRED | K-05, H-04, H-02 | health-and-symptom-management | HIGH | false | — |
-| CON-0234 | PENDING | Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
-| CON-0235 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
-| CON-0236 | PENDING | Part 1 §1.x, D-02 | frameworks-and-methodology | MODERATE | false | — |
+| CON-0234 | CONSUMED | Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
+| CON-0235 | CONSUMED | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
+| CON-0236 | CONSUMED | Part 1 §1.x, D-02 | frameworks-and-methodology | MODERATE | false | — |
 | CON-0237 | CONSUMED | A-02, A-07 | entrances-and-circulation | HIGH | false | — |
 | CON-0238 | CONSUMED | F-01, BIO-01, A-16 | sensory-environment | MODERATE | false | — |
-| CON-0239 | PENDING | Part 1, Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
+| CON-0239 | CONSUMED | Part 1, Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
 | CON-0241 | CONSUMED | B-01 circadian lighting, DEM BPC, Part 4 lighting -- Kolberg 2022 (CML-07): DEM nursing homes fail melanopic EDI | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
 | CON-0242 | CONSUMED | SRB items / LCL items -- Harper/Dakin stair contrast chain (LCL-01/02/08=SRB-14): unify specification | entrances-and-circulation | HIGH | false | citation-mining 2026-05-04 |
 | CON-0243 | CONSUMED-DEFERRED | ULB grab bar items / fold-down-grab-bar -- Lee/Sanford 2018 (ULB-12): bilateral 356mm CL 813mm AFF | bathrooms-and-wet-areas | HIGH | false | citation-mining 2026-05-04 |

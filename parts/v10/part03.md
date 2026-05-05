@@ -59,6 +59,8 @@ This guidebook integrates four complementary frameworks:
 
 No single framework is sufficient. ICF provides the taxonomy but not the theory. PEO provides the theory but not the classification. CA provides the ethics but not the operationalisation. Kawa provides the cultural correction but not the spatial parameters. Together they constitute the guidebook's intellectual architecture.
 
+**Spatial cognition evidence [CON-0226/0231/0235]:** The D-category wayfinding specifications (D-02 cognitive simplicity, D-04 landmarks, D-06 decision points) derive from a distinct evidence stream: spatial cognition research demonstrating that architectural layout governs navigation independently of signage. Marquardt 2011 (HERD, DOI:10.1177/193758671100400207) demonstrated spatial configuration as the strongest predictor of DEM wayfinding. Zali et al. 2025 (HERD SR, DOI:10.1177/19375867251391361) confirmed wayfinding is spatial planning, not signage. Tao 2018 (Hong Kong) provided non-Western validation. This evidence stream connects to PEO (framework 2) through the environment component — spatial legibility is an environmental factor that determines person-environment fit for cognitive wayfinding independently of person-level impairment severity.
+
 
 ### §3.3 Co-Occurrence Matrix
 
