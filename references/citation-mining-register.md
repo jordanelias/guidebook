@@ -4,9 +4,12 @@
 <!-- CHECK this register BEFORE mining any source. If source appears here with both B+F complete, skip. -->
 
 **Created:** 2026-05-05 00:29
-**Last updated:** 2026-05-05 00:29
+**Last updated:** 2026-05-05 00:55
 **Total sources mined:** 28
+**Unmined minable Tier 1-2/Co-1:** 37 (audit 2026-05-05)
+**Exempt from mining:** 46 (DPO/advocacy/frameworks)
 **Next review:** When register exceeds 6K tokens — archive completed slugs to `references/citation-mining-archive.md`
+**Audit status:** COMPLETE (2026-05-05) — all 63 active BPCs, 510 sources cross-checked
 
 ---
 
@@ -103,8 +106,78 @@ Sources mined inline during connection scout passes, not full citation-miner run
 
 ---
 
-## Unmined Tier 1–2 Sources
+---
 
-This section is populated by cross-referencing BPC key-sources tables against this register. Sources not appearing above need mining.
+## Unmined Tier 1-2/Co-1 Sources — Audit 2026-05-05
 
-**Status:** NOT YET AUDITED — requires systematic cross-check of all BPC key-sources REF-ID tables against this register. Flag for dedicated session.
+**Cross-check method:** All 63 active BPC key-sources tables (510 sources total) checked against register.
+**Result:** 37 minable academic sources unmined. 46 exempt (DPO/advocacy/frameworks). 12 already mined under different REF-IDs. 11 cross-slug duplicates (mine once).
+
+### Priority Queue — Minable Academic Sources (37)
+
+| REF-ID | Source | Year | Tier | BPC Slug | B | F |
+|---|---|---|---|---|---|---|
+| ACG-09 | Roxburgh, R. et al. | 2024 | 1 | accessible-circulation-geometry | — | — |
+| ECP-06 | Marquardt, G. | 2011 | 1 | accessible-design-economics-cost-premium | — | — |
+| CCD-06 | (Lund University author TBC) | 2023 | 1 | construction-cost-data | — | — |
+| DAB-04 | Badajoz-Davila et al. | 2020 | 1 | deaf-acoustic-built-environment | — | — |
+| DAB-05 | (author TBC) | 2019 | 1 | deaf-acoustic-built-environment | — | — |
+| DCR-01 | Iglehart, F. | 2020 | 1 | deaf-classroom-reverberation-time | — | — |
+| DCR-03 | Finitzo-Hieber, T. & Tillman, T.W. | 1978 | 1 | deaf-classroom-reverberation-time | — | — |
+| DGP-04 | Williams, A. et al. | 2024 | 1 | detectable-gradient-protocol-sensory-zones | — | — |
+| MOB-01 | Steinfeld, E. et al. | 2010 | 1 | mobility-built-environment | — | — |
+| MOB-12 | Sawatzky, B. et al. | 2015 | 1 | mobility-built-environment | — | — |
+| MOB-15 | Ringaert, L. et al. | 2001 | 1 | mobility-built-environment | — | — |
+| MOB-18 | Newton, C., Carnemolla, P. & Darcy, S. | 2023 | 1 | mobility-built-environment | — | — |
+| NAT-01 | Tola, G. et al. | 2021 | 1 | ndv-aut-built-environment-quantified-thresholds | — | — |
+| NEB-05 | Iwarsson, S. & Ståhl, A. | 2003 | 1 | neurological-built-environment | — | — |
+| OBE-07 | Kos, D. et al. | 2015 | 1 | ofs-built-environment | — | — |
+| POD-11 | Ismail, A. et al. | 2023 | 1 | pain-ofs-built-environment-design | — | — |
+| POD-13 | Hersche, R. et al. | 2022 | 1 | pain-ofs-built-environment-design | — | — |
+| RAH-07 | Newton, C. et al. | 2023 | 1 | residential-accessible-home-case-studies | — | — |
+| RET-05 | Putthinoi, S. et al. | 2017 | 1 | residential-entry-and-threshold | — | — |
+| RAP-18 | Wroblewski, M. et al. | 2012 | 1 | room-acoustic-performance | — | — |
+| RAP-19 | Neuman, A.C. et al. | 2010 | 1 | room-acoustic-performance | — | — |
+| RAP-21 | Anderson, K.L. & Goldstein, H. | 2004 | 1 | room-acoustic-performance | — | — |
+| RAP-24 | Spratford, M. et al. | 2019 | 1 | room-acoustic-performance | — | — |
+| RAP-27 | Saravanan, G. et al. | 2019 | 1 | room-acoustic-performance | — | — |
+| RAP-28 | Wu, Y.H. & Bentler, R.A. | 2012 | 1 | room-acoustic-performance | — | — |
+| RAP-29 | Reinhart, P. et al. | 2019 | 1 | room-acoustic-performance | — | — |
+| DSD-06 | Bauman, H-D. & Murray, J. | 2014 | 2 | deaf-spatial-design | — | — |
+| DBL-01 | Deafblind International (DbI) | n.d. | 2 | deafblind-built-environment-design | — | — |
+| DBL-02 | Nordic Welfare Centre | 2023 | 2 | deafblind-built-environment-design | — | — |
+| MOB-06 | NHF / Husbanken | 2014 | 2 | mobility-built-environment | — | — |
+| RAP-10 | BrainXchange / DMA | 2011 | 2 | room-acoustic-performance | — | — |
+| BDH-07 | Latiff, A. et al. | 2024 | Co-1 | biophilic-design-healthcare-workplace | — | — |
+| DSD-08 | Kusters, A. | 2015 | Co-1 | deaf-spatial-design | — | — |
+| DBL-03 | Clark, J.L. | 2023 | Co-1 | deafblind-built-environment-design | — | — |
+| DBL-04 | Clark, J.L. | 2021 | Co-1 | deafblind-built-environment-design | — | — |
+| NEB-03 | Antonakos, C. et al. | 2004 | Co-1 | neurological-built-environment | — | — |
+| ULB-14 | Levine, I.C., Lau, S.T., King, E.C., Nov | 2022 | Co-1 | upper-limb-impairment-built-environment | — | — |
+
+### Exempt from Citation Mining (46)
+
+DPO position papers, advocacy guidelines, government publications, theoretical frameworks/textbooks. These source types do not have academic citation networks suitable for backward/forward mining via PubMed, Scholar Gateway, or Google Scholar. Their evidence contributions are captured through direct search (multilingual-research) rather than citation network traversal.
+
+### Already Mined Under Different REF-IDs (12)
+
+Sources in the unmined list that were actually mined in prior sessions under a different REF-ID or author key:
+
+| BPC REF-ID | Note |
+|---|---|
+| ECP-01 | Mined in economics session (author match: Ielegems, B.) |
+| CCD-02 | Mined in economics session (author match: Ielegems, B.) |
+| OTI-02 | Mined in economics session (author match: Wellecke, C.) |
+| RAH-04 | Mined in economics session (author match: Szanton, S.) |
+| MOB-17 | Mined in economics session (author match: Winkler, D.) |
+| RAP-11 | Iglehart 2020 (= DCR-01, same as ASI-01 author) |
+| RAP-20 | Iglehart 2016 (= ASI-01, partial F) |
+| RAP-22 | Amlani & Russo 2016 (partial F from register) |
+| RAP-23 | Prodi & Visentin 2022 (partial F from register) |
+| RAP-25 | McGarrigle 2019 (partial F from register) |
+| RAP-26 | Vickers 2013 (partial F from register) |
+| RAP-30 | Iglehart 2004 (= ASI-02, partial F) |
+
+### Cross-Slug Duplicates (11)
+
+Sources appearing in multiple BPCs. Mining once covers all instances. Tracked under the first REF-ID encountered.
