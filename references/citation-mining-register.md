@@ -4,9 +4,9 @@
 <!-- CHECK this register BEFORE mining any source. If source appears here with both B+F complete, skip. -->
 
 **Created:** 2026-05-05 00:29
-**Last updated:** 2026-05-05 00:55
-**Total sources mined:** 28
-**Unmined minable Tier 1-2/Co-1:** 37 (audit 2026-05-05)
+**Last updated:** 2026-05-05 00:45
+**Total sources mined:** 37 (28 prior + 9 this session)
+**Unmined minable Tier 1-2/Co-1:** 26 (updated 2026-05-05)
 **Exempt from mining:** 46 (DPO/advocacy/frameworks)
 **Next review:** When register exceeds 6K tokens — archive completed slugs to `references/citation-mining-archive.md`
 **Audit status:** COMPLETE (2026-05-05) — all 63 active BPCs, 510 sources cross-checked
@@ -105,6 +105,47 @@ Sources mined inline during connection scout passes, not full citation-miner run
 | pain-ofs-built-environment-design | PARTIAL | Minimal forward per 2026-03-28 assessment |
 
 ---
+
+
+---
+
+## Session 2026-05-05 — Mining Pass 1
+
+### Batch 1: Mobility Built Environment
+
+| REF-ID | Source | DOI | BPC Slug | B | F | Date | Yield | Notes |
+|---|---|---|---|---|---|---|---|---|
+| MOB-01 | Steinfeld et al. 2010 (Assistive Technology journal) | 10.1080/10400430903520280 | mobility-built-environment | partial | partial | 2026-05-05 | 0 new — widely cited in standards, thin academic forward network for built environment | PMID 20402047; AT journal papers; foundational but no new BE sources via PubMed |
+| MOB-02 | Steinfeld et al. 2010 (IDeA Center report) | — | mobility-built-environment | — | — | 2026-05-05 | 0 new — technical report, not indexed | No PubMed PMID; cited in standards documents only |
+| MOB-12 | Sawatzky et al. 2015 | 10.1097/PHM.0000000000000203 | mobility-built-environment | — | ✓ | 2026-05-05 | 1 new: Worobey 2023 RESNA (PMID 37530806) | |
+| MOB-18 | Newton, Carnemolla & Darcy 2025 | 10.1108/SASBE-04-2023-0075 | mobility-built-environment, residential-accessible-home-case-studies | — | partial | 2026-05-05 | 1 new: Lindsay 2024 SR (PMC10810508) | Published 2025; BPC may need year update from 2023→2025 |
+| TDH-14/RET-05 | Putthinoi et al. 2017 | 10.1155/2017/2865960 | threshold-door-hardware, residential-entry-and-threshold | — | partial | 2026-05-05 | 0 new via PubMed | PMID 28656108; related articles mostly clinical SCI/WC |
+
+### Batch 2: Room Acoustic Performance
+
+| REF-ID | Source | DOI | BPC Slug | B | F | Date | Yield | Notes |
+|---|---|---|---|---|---|---|---|---|
+| RAP-18 | Wróblewski et al. 2012 | 10.1097/AUD.0b013e31825aecad | room-acoustic-performance | — | ✓ | 2026-03-28 | part of 8-source batch — REGISTER CORRECTION | PMID 22732772; was listed as unmined but mined in 2026-03-28 session |
+| RAP-19 | Neuman et al. 2010 | 10.1097/AUD.0b013e3181d3d514 | room-acoustic-performance | — | ✓ | 2026-03-28 | part of 8-source batch — REGISTER CORRECTION | PMID 20215967; was listed as unmined but mined in 2026-03-28 session |
+| RAP-24 | Spratford et al. 2019 | 10.1044/2019_AJA-19-0041 | room-acoustic-performance | — | ✓ | 2026-05-05 | 1 new: Lewis/Spratford 2022 RM benefit (PMID 36577441) | |
+| RAP-27 | Saravanan et al. 2019 | 10.4103/nah.NAH_15_19 | room-acoustic-performance | — | ✓ | 2026-05-05 | 1 new: Bottalico & Murgia 2023 STI classroom (PMID 37343547) | |
+| RAP-28 | Wu & Bentler 2012 | 10.1097/AUD.0b013e31825641e4 | room-acoustic-performance | — | ✓ | 2026-05-05 | 0 new — directional HA + reverb; no new BE sources | PMID 22677815 |
+| RAP-21 | Anderson & Goldstein 2004 | 10.1044/0161-1461(2004/017) | room-acoustic-performance | — | partial | 2026-05-05 | 0 new via web — confirmed real; PMID not found; Tier 1 FM/IR devices in classroom | LSHSS 35:169-184; cited extensively in RAP-11/RAP-24 papers |
+| batch | Neuman/Saravanan/Spratford/Wu forward network | — | room-acoustic-performance | — | ✓ | 2026-05-05 | 1 new: Benítez-Barrera 2020 home SNR (PMID 33136633) | Discovered via batch forward mining |
+
+### New Sources Discovered This Session (6)
+
+| # | Authors | Year | Title | Journal | Jurisdiction | Tier | DOI/PMID | Discovery route |
+|---|---|---|---|---|---|---|---|---|
+| 1 | Worobey LA et al. (RESNA) | 2023 | Position: ultralight manual wheelchairs | Assistive Technology | US | 2 | 10.1080/10400435.2023.2221148 / PMID 37530806 | Forward from Sawatzky 2015 (MOB-12) |
+| 2 | Newton S, Carnemolla P, Darcy S | 2025 | BIM applied to POE of accessible bathrooms | Smart Sust Built Env 14(1):237-253 | AU | 1 | 10.1108/SASBE-04-2023-0075 | Identity resolution of MOB-18/RAH-07 |
+| 3 | Lindsay S et al. | 2024 | Accessible independent housing: scoping review | PLOS One | Multi | 1 (SR) | 10.1371/journal.pone.0291228 / PMC10810508 | Forward from Newton 2025 |
+| 4 | Lewis D, Spratford M et al. | 2022 | Remote-microphone benefit in noise + reverberation | JAAA 33(6):330-341 | US | 1 | 10.1055/s-0042-1755319 / PMID 36577441 | Forward from Spratford 2019 (RAP-24) |
+| 5 | Bottalico P, Murgia S et al. | 2023 | Classroom acoustics for students when teacher dysphonic | LSHSS 54(4):1195-1207 | US | 1 | 10.1044/2023_LSHSS-22-00158 / PMID 37343547 | Forward from Saravanan 2019 (RAP-27) / Murgia 2022 (RAP-12) |
+| 6 | Benítez-Barrera CR et al. | 2020 | Listening at home: SNR in homes of children with HL | Ear Hear 41(6):1575-1585 | US | 1 | 10.1097/AUD.0000000000000896 / PMID 33136633 | Forward batch from room-acoustic network |
+
+### Remaining Unmined (updated count)
+From 37 → 27 after this session (corrections: RAP-18, RAP-19 were already mined; session mined: MOB-01/02/12/18, TDH-14, RAP-24/27/28/21 = 9 sources; 2 removed from unmined list as already mined = net -12 from queue, -2 corrections = 37-11=26 remaining).
 
 ---
 
