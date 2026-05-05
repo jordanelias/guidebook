@@ -48,8 +48,8 @@ This is where unverifiable "X% premium" figures circulate without traceable orig
 - Lifetime Homes cost analyses (UK; Habinteg, Joseph Rowntree Foundation; the most rigorous public-domain Q3 literature)
 - Norwegian Building Authority (Direktoratet for byggkvalitet / DiBK) accessibility cost studies
 - Swedish Boverket accessibility cost analyses (TGR + ALM/BBR series)
-- Singapore BCA Universal Design cost research (BCA Code on Accessibility 2025 commissioned analyses)
-- Dutch SBR / Aedes accessibility cost studies; NEN 9120:2025 economic appendix
+- Singapore BCA Universal Design (BCA Code on Accessibility 2025, 6th revision, April 2025; Accessibility Fund up to $100K/development for UD features)
+- Dutch SBR / Aedes accessibility cost studies; NEN 9120:2025 (accessibility performance standard, published Feb 2025 — no separate economic appendix confirmed)
 - Japan MLIT Barrier-Free New Law cost studies (Japanese-language; J-STAGE indexed)
 - CMHC research reports — *Accessible Housing by Design* + *FlexHousing* series (Canada)
 - HUD PD&R cost studies of Section 504 compliance (US)
