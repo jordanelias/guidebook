@@ -31,6 +31,24 @@ DB_PATH = REPO_ROOT / "data" / "db" / "guidebook.db"
 sys.path.insert(0, str(REPO_ROOT))
 
 
+def _parse_evidence_tier(tier_val):
+    """Parse evidence tier from various formats to integer 1-6."""
+    if tier_val is None:
+        return None
+    if isinstance(tier_val, int):
+        return tier_val if 1 <= tier_val <= 6 else None
+    s = str(tier_val)
+    if s.isdigit():
+        v = int(s)
+        return v if 1 <= v <= 6 else None
+    import re as _re
+    nums = _re.findall(r"\d+", s)
+    if nums:
+        v = int(nums[0])  # lowest = most conservative
+        return v if 1 <= v <= 6 else None
+    return None
+
+
 def migrate_specifications(conn):
     """Migrate all specifications from specification-database.json."""
     with open(REPO_ROOT / "references" / "specification-database.json", "r") as f:
@@ -58,7 +76,7 @@ def migrate_specifications(conn):
         """, (
             s["spec_id"], s["item_code"], s.get("slug", s["item_code"]),
             s.get("parameter"), s.get("value_type"),
-            s.get("recommendation_strength", "UNSET"), s.get("evidence_tier"),
+            s.get("recommendation_strength", "UNSET"), _parse_evidence_tier(s.get("evidence_tier")),
             None,  # universal_value — populated from measurements
             json.dumps({"min": s.get("value_min"), "max": s.get("value_max"),
                         "median": s.get("value_median"), "unit": s.get("unit")})
@@ -138,6 +156,20 @@ def migrate_populations(conn):
             p.get("co1_status"), p.get("co1_gap_note"),
             p.get("evidence_confidence"), p.get("co_occurrence_notes"),
         ))
+        count += 1
+
+    # Sub-code populations referenced in spec_population joins
+    sub_pops = [
+        ("ALL", "Universal (All Populations)", "Population-agnostic provisions applicable regardless of functional capacity.", None, None, None),
+        ("MOB/AMB", "Mobility — Ambulant", "Walking with or without aids. Reduced balance, endurance, or gait pattern.", None, None, "MODERATE"),
+        ("NDV/AUT", "Neurodivergence — Autism", "Autism spectrum. Sensory processing differences per Dunn model.", None, None, "MODERATE"),
+        ("IntD", "Intellectual Disability", "Cognitive impairment affecting environmental comprehension and wayfinding.", None, None, "LOW"),
+    ]
+    for code, label, profile, co1, gap, conf in sub_pops:
+        conn.execute(
+            "INSERT OR REPLACE INTO population (code, label, functional_profile, co1_status, co1_gap_note, evidence_confidence) VALUES (?, ?, ?, ?, ?, ?)",
+            (code, label, profile, co1, gap, conf),
+        )
         count += 1
 
     conn.commit()
@@ -510,8 +542,10 @@ def verify(conn):
         "specification", "population", "specification_population",
         "measurement", "jurisdictional_value", "conflict",
         "doctrine", "specialist", "specialist_trigger", "specialist_population",
-        "room", "throughline", "throughline_specification",
-        "economics_entry",
+        "room", "room_item", "room_item_population",
+        "room_dar_provision", "room_conflict",
+        "throughline", "throughline_specification",
+        "economics_entry", "evidence_source",
     ]
 
     print("\n=== Migration Verification ===")
@@ -596,6 +630,157 @@ def migrate_evidence_sources(conn):
 
     conn.commit()
     return count
+
+
+def extract_room_matrices(conn):
+    """C5: Extract room item matrices from Part 6."""
+    part6_path = REPO_ROOT / "parts" / "v10" / "part06.md"
+    if not part6_path.exists():
+        return 0
+
+    with open(part6_path, "r") as f:
+        content = f.read()
+
+    POP_CODES = ["MOB", "VIS", "DEAF", "DEM", "NDV", "OFS", "DBL", "PAIN", "NEU"]
+    ROOM_MAP = {
+        "§6.1": "R-ENT", "§6.2": "R-GAR", "§6.3": "R-LAU",
+        "§6.4": "R-BED", "§6.5": "R-BA", "§6.6": "R-LIV",
+        "§6.7": "R-KIT", "§6.8": "R-HAL", "§6.9": "R-STA",
+    }
+
+    sections = re.split(r"(?=^### §\d+\.\d+)", content, flags=re.MULTILINE)
+    total_items = 0
+
+    for section in sections:
+        header_match = re.match(r"^### (§\d+\.\d+\w?)", section)
+        if not header_match:
+            continue
+
+        section_id = header_match.group(1)
+        room_id = ROOM_MAP.get(section_id)
+        if not room_id:
+            continue
+
+        # Update criticality note
+        crit_match = re.search(
+            r"\*\*Room criticality:\*\*\s*(.+?)(?=\n\n|\n\*\*Item)", section, re.DOTALL
+        )
+        if crit_match:
+            conn.execute(
+                "UPDATE room SET criticality_note = ? WHERE room_id = ?",
+                (crit_match.group(1).strip()[:500], room_id),
+            )
+
+        # Find item application table
+        table_idx = section.find("Item application table")
+        if table_idx < 0:
+            continue
+
+        table_block = section[table_idx:]
+        lines = table_block.split("\n")
+
+        header_line = None
+        data_lines = []
+        in_data = False
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("| Item"):
+                header_line = stripped
+                continue
+            if stripped.startswith("| ---"):
+                in_data = True
+                continue
+            if in_data:
+                clean = stripped
+                if clean.startswith("**"):
+                    clean = clean[2:]
+                if clean.endswith("**"):
+                    clean = clean[:-2]
+                clean = clean.replace("\\*\\*", "").strip()
+                if not clean or (not clean.startswith("|")):
+                    break
+                if clean.startswith("| *●") or "---" in clean:
+                    continue
+                data_lines.append(clean)
+
+        if not header_line:
+            continue
+
+        headers = [h.strip() for h in header_line.split("|")[1:-1]]
+        pop_cols = {}
+        for i, h in enumerate(headers):
+            for pop in POP_CODES:
+                if h.strip() == pop:
+                    pop_cols[i] = pop
+
+        stage_col = None
+        for i, h in enumerate(headers):
+            if "design" in h.lower() and "stage" in h.lower():
+                stage_col = i
+
+        for line in data_lines:
+            cells = [c.strip() for c in line.split("|")[1:-1]]
+            if len(cells) < 3:
+                continue
+
+            cell0 = re.sub(r"R-[A-Z]+-\d+\w?\s*", "", cells[0])
+            code_match = re.search(r"([A-K]-\d{2})", cell0)
+            if not code_match:
+                continue
+
+            item_code = code_match.group(1)
+            stage = cells[stage_col].strip().replace("\\*\\*", "") if stage_col and len(cells) > stage_col else None
+
+            pop_app = {}
+            for col_idx, pop_code in pop_cols.items():
+                if col_idx < len(cells):
+                    val = cells[col_idx].strip()
+                    if "●" in val:
+                        pop_app[pop_code] = "primary"
+                    elif "○" in val:
+                        pop_app[pop_code] = "secondary"
+
+            conn.execute(
+                "INSERT OR REPLACE INTO room_item (room_id, item_code, design_stage) VALUES (?, ?, ?)",
+                (room_id, item_code, stage),
+            )
+
+            for pop, role in pop_app.items():
+                conn.execute(
+                    "INSERT OR REPLACE INTO room_item_population (room_id, item_code, population_code, applicability) VALUES (?, ?, ?, ?)",
+                    (room_id, item_code, pop, role),
+                )
+
+            total_items += 1
+
+        # DAR provisions
+        dar_match = re.search(
+            r"\*\*DAR provisions.*?\n\n\|.+\n\|[-| ]+\n((?:\|.+\n)+)", section, re.DOTALL
+        )
+        if dar_match:
+            for row in dar_match.group(1).strip().split("\n"):
+                cells = [c.strip() for c in row.split("|")[1:-1]]
+                if len(cells) >= 2 and cells[0] and not cells[0].startswith("*"):
+                    conn.execute(
+                        "INSERT INTO room_dar_provision (room_id, description, notes) VALUES (?, ?, ?)",
+                        (room_id, cells[0], cells[1] if len(cells) > 1 else None),
+                    )
+
+        # Conflict register
+        conf_match = re.search(
+            r"\*\*Conflict register.*?\n\n\|.+\n\|[-| ]+\n((?:\|.+\n)+)", section, re.DOTALL
+        )
+        if conf_match:
+            for row in conf_match.group(1).strip().split("\n"):
+                cells = [c.strip() for c in row.split("|")[1:-1]]
+                if len(cells) >= 2 and cells[0] and not cells[0].startswith("*"):
+                    conn.execute(
+                        "INSERT INTO room_conflict (room_id, description, resolution) VALUES (?, ?, ?)",
+                        (room_id, cells[0], cells[2] if len(cells) > 2 else None),
+                    )
+
+    conn.commit()
+    return total_items
 
 
 def extract_part4_content(conn):
@@ -741,6 +926,10 @@ def main():
     print("Migrating evidence sources...")
     evidence_count = migrate_evidence_sources(conn)
     print(f"  → {evidence_count} evidence sources")
+
+    print("Extracting room matrices from Part 6...")
+    room_count = extract_room_matrices(conn)
+    print(f"  → {room_count} room items")
 
     print("Creating item stubs from Part 4...")
     stub_count = create_item_stubs(conn)
