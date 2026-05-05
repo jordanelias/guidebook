@@ -144,6 +144,13 @@ The following amendments were applied during v9.0 production (2026-03-20):
 
 ## Part 1: Foundations of Accessible Design
 
+<!-- INTERNATIONAL REGULATORY PRECEDENTS (CON-0193):
+Three jurisdictions independently developed tiered specification systems analogous to Design Modes:
+- Italy DM 236/89: accessibilità / visitabilità / adattabilità
+- Denmark SBi-230: A/B/C quality levels
+- South Korea 2024 BFLE Act: 'daily life access' shift
+Multiple jurisdictions arrived at tiered specification independently. Apply in C-stage §1.6. -->
+
 ### §1.1 Definitions:
 
 **What is Accessibility?** Accessibility is the condition in which any person — regardless of physical, sensory, cognitive, or psychological characteristics — can independently, safely, and with dignity reach, enter, use, and exit a built environment and all its facilities.
@@ -676,6 +683,12 @@ Prevalence: ME/CFS approximately 17 million globally (NIHR, 2023), substantially
 ---
 
 ## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
+
+<!-- ARRIVAL SEQUENCE SYSTEM (CON-0218):
+Arrival is a 7+ item sequential chain (E-04→E-05→path→E-06→E-12→E-13→reception→D-02).
+Failure at any link defeats entire sequence. A building can pass every item individually
+and fail the arrival system. Part 3 should specify arrival as a system requiring
+walkthrough verification at commissioning. -->
 
 <!-- MOB ZERO-CONFLICT BASE LAYER (CON-0192):
 MOB is the only population with zero conflict flags across all 11 population-general BPCs.
@@ -2306,9 +2319,13 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 
 Maximum 1 route decision at any single point from entry to primary destination
 
+● Sequential navigation priority (Wiener & Pazzaglia 2021, van Buuren 2025): cognitive map (allocentric/survey-based) impairs EARLIEST in DEM/NEU. Route knowledge (turn-by-turn) impairs next. Landmark recognition most preserved. Wayfinding format hierarchy: (1) landmark cues → (2) sequential route cues → (3) map-based. Overview maps (you-are-here) are the LEAST accessible format for DEM/NEU/IntD — they rely on allocentric processing which fails first. Each wayfinding cue must lead to the next visible cue. [CON-0231]
+
 Where multiple routes exist: clear wayfinding signage at every decision point
 
 Primary route: shortest + most direct (not hidden accessible route)
+
+● Layout > signage principle (universal across wayfinding-impaired populations): Zali et al. 2025 (HERD) confirms spatial planning more important than signage for VIS and hearing-impaired populations, extending Marquardt 2009 DEM finding. The principle applies to ALL populations with ANY wayfinding impairment — DEM, NEU, IntD, VIS, DEAF. Rationale differs by population but specification is identical: layout specification must PRECEDE signage specification in design process. [CON-0235]
 
 Decision point legibility: destination visible from decision point where possible
 
@@ -2988,6 +3005,8 @@ Sensory zoning is the deliberate organisation of a building's sensory environmen
 
 
 ### F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
+
+● Topological model: sensory gradient is not linear entrance→interior — it is TOPOLOGICAL. Utility rooms (kitchen, bathroom, laundry) are inherently stimulating AND deep in building. They branch OFF the calm spine, not sit ON it. Calm spine: entrance → reception → primary corridor → occupied rooms → A-16. Utility rooms branch via acoustic doors (A-03 STC ≥35) at branch points. [CON-0221]
 
 **Applicable Groups:** NDV, PCS, AUT, MH, DEM, OFS
 
@@ -5138,6 +5157,13 @@ Structural engineering operates under a distinct scope from acoustic, mechanical
 > *All structural provisions for accessibility are primary structural design requirements, not secondary modifications. DAR (Design for Adaptable Readiness) provisions are to be incorporated at the earliest stage. Published retrofit cost multipliers for structural accessibility provisions: grab bar blocking ×75; ceiling hoist tracking ×20–40; lift shaft ×50+ (Rick Hansen Foundation 2023; TERRAGON/DStGB 2017). These figures are to be cited in any value engineering discussion where structural accessibility provisions are challenged. No structural accessibility provision is to be removed from the design without the written agreement of the lead architect.*
 ## Part 9: Working with Specialist Consultants
 
+<!-- OT DELIVERY MECHANISM (CON-0228):
+Clemson 2023 Cochrane: OT-delivered home hazard reduction → 38% fall reduction (high-risk).
+Non-OT-delivered: NON-SIGNIFICANT effect. Gillespie Cochrane + Keall 2015 confirm.
+Environmental modifications work ONLY when specified by OT clinical reasoning.
+The DELIVERY MECHANISM finding supports §9.2: OT assessment should PRECEDE modification.
+Apply in C-stage §9.2 expansion. -->
+
 ## 9.0 Overview
 
 Part 9 addresses the architect's coordination role with specialist consultants whose input is required for accessible design that cannot be delivered through engineering briefs alone. The engineering disciplines covered in Part 8 — acoustic, mechanical, electrical, and structural — operate on measurable physical systems. The consultants addressed here operate on the relationship between people and environments: a different domain, requiring a different coordination logic.
@@ -5490,6 +5516,15 @@ For DAR provisions in practice, see the following case studies in Part 12:
 
 *Next: Part 11 — The Economics of Accessible Construction* *Cross-reference: Part 1 §1.6 (DAR cost multiplier table, also in this Part §11.1); Part 11 §11.2 (macro cost ratio); Part 11 §11.4 (technique-level retrofit cost intelligence); Part 12 (case study evidence for DAR provisions in practice)*
 ## Part 11: The Economics of Accessible Construction
+
+<!-- RCT-DERIVED ECONOMICS (CON-0225 + CON-0230):
+Strongest economics evidence chain:
+- Keall 2015 HIPI RCT (Lancet, 26% fall injury reduction, n=842)
+- Keall 2017 cost-benefit (Injury Prevention, intervention cost recovered within trial period)
+- Keall 2021 MHIPI RCT (Lancet Public Health, Māori-focused)
+- Crosby 2026 (PMID:41525145): secure rails reduce hospital ADMISSIONS (not just fall incidence)
+Hospital admission cost is the dominant economic variable. Keall 2017 + Crosby 2026 = two strongest
+inputs for G-03 cost-effectiveness modelling. Apply in C-stage §11.3. -->
 
 ### Scope and Purpose
 
@@ -6110,20 +6145,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Verified outcomes:** - Post-occupancy survey (n=312): 74% of self-identified neurodivergent employees rated new environment as significantly better for concentration (Tier 3) - 68% used acoustic personalisation zones regularly (Tier 3) - 71% used sensory room during high-demand periods (Tier 3) - Absenteeism data: employer reports reduction; not independently audited
 
-**Cost data:** Retrofit of existing open-plan office. Acoustic provisions (focus pods, room treatment) accounted for the majority of the accessibility premium, estimated at approximately £240/m² over standard open-plan refurbishment. Sensory room: approximately £35,000--£45,000 per installation (acoustic shell + fit-out).
-
-**Limitations:** Self-report; employer-commissioned survey; HR metrics not independently audited. No neurotypical comparison group within same building.
-
-### §12.06 — Lyngby-Taarbæk Specialist School Acoustic Retrofit (Denmark, c. 2019--2020)
-
-**Building type:** Specialist school for dementia and cognitive disability (1980s building, retrofit)
-
-**Primary population:** Students with dementia and neurodevelopmental cognitive disability (DEM, NDV)
-
-**Evidence quality:** Tier 2 (pre/post measurement with validated instrument; BUILD/Aalborg verification)
-
-**Key design strategies:** - Acoustic ceiling panel installation (NRC ≥0.85) in classrooms and corridors (A-02) - Reduction of RT60 from 0.8 s to 0.4 s (50% reduction in reverberation energy) - No structural modification; surface-applied acoustic treatment only
-
-**Verified outcomes:** - 40% reduction in measured agitation episodes (pre/post comparison, n=28; BUILD/Aalborg University — Tier 2) - RT60 verified by independent acoustic measurement at 500 Hz before and after installation
-
-**Cost data:** Approximately DKK 180,000 (c. £20,000 / CAD $34,000) for the full build
+**Cost data:** Retrofit of existing open-plan office. Acoustic provisions 
