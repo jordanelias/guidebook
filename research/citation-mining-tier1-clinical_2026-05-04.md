@@ -217,3 +217,60 @@ Check ~20 Tier 3 systematic reviews for superseding newer reviews.
 
 **Phase 5 (TBC resolution — quarter session):**
 Look up 5 incomplete Tier 1 records.
+
+
+---
+
+## Phase 2 Completion — Final 3 Sources
+
+**Date:** 2026-05-04
+**Sources mined:** 3 (Keating 2024, Guay 2020, Levine 2025)
+**New sources discovered:** 1
+
+### Source 1: Keating et al. 2024
+- **Citation:** Keating CT, Hickman L, Geelhand P, et al. Cross-cultural variation in experiences of acceptance, camouflaging and mental health difficulties in autism: A registered report. PLOS ONE 19(3):e0299824.
+- **DOI:** 10.1371/journal.pone.0299824
+- **Backward mining:** Reference list reviewed — theoretical framework papers (Hull, Lai, Cook) already captured. No new built-environment sources.
+- **Forward mining:** Cited by Arnold et al. 2026 (camouflaging conceptualisation review, Autism journal). No built-environment citing papers found.
+- **Guidebook relevance:** Confirms cross-cultural variation in autism acceptance (8 countries: AU, BE, CA, JP, NZ, ZA, UK, US). Japanese participants most likely to conceal autistic traits. Supports Kawa model / PAS 6463 cultural transfer argument (project-standards: sensory space physics vs spatial model). Connects to NDV BPC, Part 1 §1.4 framework.
+- **Yield:** 0 new built-environment sources. Theoretical confirmation only.
+
+### Source 2: Guay et al. 2020 (JMIR)
+- **Citation:** Guay M, Latulippe K, Auger C, et al. Self-selection of bathroom-assistive technology: development of an electronic decision support system (Hygiene 2.0). J Med Internet Res 22(8):e16175.
+- **DOI:** 10.2196/16175
+- **Backward mining:** Reference list includes Algo clinical algorithm papers (Guay 2014, Guay 2013). Quebec non-OT decision-support paradigm — relevant to Part 9.
+- **Forward mining:** 5 citing papers, all within same research group (Ruest 2022, older adults online DSS). No independent replication or extension to built environment.
+- **Guidebook relevance:** Demonstrates that structured clinical algorithms can enable non-OTs to make appropriate bathroom adaptation recommendations. Directly supports Part 9 §9.2 (OT role) and Mode P approach — the guidebook serves a similar function at the building level that Algo serves at the assistive technology level. Connection to existing Part 9 content but no new specification data.
+- **Yield:** 0 new sources. Methodological parallel noted.
+
+### Source 3: Levine et al. 2025
+- **Citation:** Levine IC, Nirmalanathan K, Montgomery RE, Novak AC. Grab bar grasp location during bathtub exit and sit-to-stand transfers: biomechanical evaluation. JMIR Rehabil Assist Technol 12:e69442.
+- **DOI:** 10.2196/69442
+- **Backward mining:** 30 references reviewed. Core KITE cluster papers already captured (Greene 2024, Levine 2023, Guay 2020, Guitard 2011, King 2017). Komisar et al. 2018/2019 handrail papers already captured via ULB mining.
+- **Forward mining:** 1 new source discovered — Deen et al. 2025.
+- **Key data extracted:** n=65 (28 older 65+, 37 younger 18-35). Vertical grasp location: bathtub rim to >1m above (max 22.4 cm). Horizontal: near rim during exit, near seat during STS. Grasp location not correlated with body height. 8 grab bar configurations tested. CIHR-funded.
+- **Yield:** 1 new source.
+
+### New Source #44
+- **Authors:** Deen HHZ, Levine IC, Montgomery RE, Pong SM, Novak AC
+- **Year:** 2025
+- **Title:** Suction cup handholds have low efficacy in laboratory evaluation with typical bathing conditions and wall materials
+- **Journal:** Journal of Rehabilitation and Assistive Technologies Engineering
+- **DOI:** 10.1177/20556683251370322
+- **Institution:** KITE Research Institute, University Health Network, Toronto
+- **Tier:** Tier 1 (laboratory evaluation)
+- **Key finding:** Suction cup handholds fail under typical bathing conditions (wet walls, standard tile/acrylic surfaces). Critical safety implication — strengthens case for permanent wall-mounted grab bar installation over temporary alternatives.
+- **Connects to:** G-03 (grab bar specification), K-01 (bathroom safety), Part 9 (OT recommendation guidance)
+- **Connection type:** CROSS-ITEM (grab bar safety → specification rationale)
+
+### Phase 2 — FINAL CUMULATIVE STATUS
+
+| Metric | Value |
+|---|---|
+| Total sources mined (all phases) | 31 |
+| Total sources discovered | 44 |
+| Phase 2 mined | 12 of 22 Tier 1 |
+| Phase 2 remaining | 10 (theoretical frameworks — low priority, skip) |
+| Research clusters confirmed | 7 |
+
+### Phase 2 CLOSED. Proceeding to Phase 3 (population BPC anchors).

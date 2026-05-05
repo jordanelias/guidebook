@@ -5,8 +5,8 @@
 
 **Created:** 2026-05-05 00:29
 **Last updated:** 2026-05-05 00:45
-**Total sources mined:** 41 (28 prior + 9 pass 1 + 4 pass 2)
-**Unmined minable Tier 1-2/Co-1:** 22 (updated 2026-05-05)
+**Total sources mined:** 44 (28 prior + 9 pass 1 + 4 pass 2 + 3 phase 2 completion)
+**Unmined minable Tier 1-2/Co-1:** 19 (updated 2026-05-04 — 3 mined in phase 2 completion)
 **Exempt from mining:** 46 (DPO/advocacy/frameworks)
 **Next review:** When register exceeds 6K tokens — archive completed slugs to `references/citation-mining-archive.md`
 **Audit status:** COMPLETE (2026-05-05) — all 63 active BPCs, 510 sources cross-checked
@@ -265,3 +265,11 @@ Sources appearing in multiple BPCs. Mining once covers all instances. Tracked un
 | — | Keating et al. 2024 (PLoS ONE 19(3):e0299824) | ✓ | ✓ | ndv-sensory-environment | ✓ | ✓ | 2026-05-05 | 0 new (cluster already mapped) | session_2026-05-05-fin-s2 |
 | — | Guay et al. 2020 (JMIR 22(8):e16175) | ✓ | ✓ | bathroom-assistive-technology | ✓ | ✓ | 2026-05-05 | 1 (Auger 2022 follow-up, already known) | session_2026-05-05-fin-s2 |
 | G03-02 | Levine et al. 2025 (JMIR Rehabil 12:e69442) | ✓ | ✓ | grab-bar-biomechanics | ✓ | ✓ | 2026-05-05 | 0 (KITE cluster already mapped) | session_2026-05-05-fin-s2 |
+
+## Phase 2 Completion (2026-05-04)
+
+| REF-ID | Source | DOI | BPC Slug | B | F | Date | Yield | Session |
+|---|---|---|---|---|---|---|---|---|
+| — | Keating et al. 2024 (PLOS ONE) | 10.1371/journal.pone.0299824 | NDV | ✓ | ✓ | 2026-05-04 | 0 new (cultural confirmation only) | session_2026-05-04-cm-p2 |
+| — | Guay et al. 2020 (JMIR) | 10.2196/16175 | bathroom | ✓ | ✓ | 2026-05-04 | 0 new (methodological parallel) | session_2026-05-04-cm-p2 |
+| — | Levine et al. 2025 (JMIR RAT) | 10.2196/69442 | bathroom | ✓ | ✓ | 2026-05-04 | 1 new (Deen 2025) | session_2026-05-04-cm-p2 |
