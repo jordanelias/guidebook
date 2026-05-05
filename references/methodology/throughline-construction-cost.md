@@ -68,6 +68,12 @@ This is where unverifiable "X% premium" figures circulate without traceable orig
 
 The TERRAGON AG / DStGB (2017) "Barrierefreies Bauen im Kostenvergleich" study is the most granular new-build accessibility cost analysis in the project's evidence base (138/148 zero-cost finding). TERRAGON AG is a residential development company with commercial interest in demonstrating low accessibility costs to support its own development pipeline. The finding is corroborated by Bundesfachstelle Barrierefreiheit (federal government agency) and Prof. Lothar Marx (TU München, DIN committee member), which mitigates the commercial-interest concern. However, per project verification standards, this source should carry a **commercial-interest disclosure** when cited in Part 11 or any published output.
 
+**Figure discrepancy note:** TERRAGON's own website and full study PDF use 148 criteria / 138 zero-cost. The DStGB press release uses 140 / 130. The project cites 148/138 per the primary source document.
+
+**Counter-position (Jocham 2018/2022):** Ulrike Jocham ("Die Frau Nullschwelle") published a critique challenging specific TERRAGON claims, particularly the assertion that 2cm balcony thresholds are usable by wheelchair users. DStGB was formally notified in November 2018; no published response. Simon Lube (accessible construction expert) argues that true barrier-free construction with Universal Design may be achievable at *lower* cost than TERRAGON's estimate through standardised planning approaches. The critique does not challenge the overall cost magnitude (<2%) but disputes specific technical claims within the study.
+
+**Citation network note:** The TERRAGON study is widely cited in German-language accessibility advocacy and policy but has not been cited in any English-language peer-reviewed study found through citation mining. The German and English-language evidence bases for accessible construction costs are largely disconnected.
+
 ---
 
 ## Source map — Q4: Lifecycle cost

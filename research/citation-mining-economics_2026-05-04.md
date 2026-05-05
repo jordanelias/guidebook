@@ -226,3 +226,51 @@ Rick Hansen 2020, CMS 2017, Tsuchiya-Ito 2022/2023/2025, Mitoku 2014, Liu 2009, 
 | Tier 2 new | 7 |
 | Tier 3-4 new | 9 |
 | Co-1 sources | 4 |
+
+
+---
+
+## Session 5 — Continuation mining + German-language networks
+
+**Sources mined this session:** 3 (Whitehead/BATH-OUT 2018, TERRAGON/DStGB 2017 German-language, Oliver 2020 forward)
+**New sources discovered:** 3
+**Critical findings:** 2
+
+### New sources
+
+| # | Authors | Year | Title | Journal/Source | Jurisdiction | Tier | Discovery |
+|---|---|---|---|---|---|---|---|
+| 27 | Whitehead et al. | BATH-OUT-2 | Powered RCT protocol for bathing adaptations | HTA (protocol) | UK | Tier 1 (upcoming) | Forward from BATH-OUT 2018 |
+| 28 | Jocham (Die Frau Nullschwelle) | 2018/2022 | Critique of TERRAGON/DStGB study — "unbelegte Behauptungen" | Blog/industry | DE | Counter-source | German-language network mining |
+| 29 | Oliver et al. | 2025 | Updated scoping review 2019-2025 | D&R | Multi | Tier 1 (SR) | Already discovered S4 |
+
+### Critical findings
+
+🟡 **BATH-OUT-2 powered RCT:** The BATH-OUT feasibility study (Whitehead 2018) has led to a full powered RCT (BATH-OUT-2). This is the first UK powered RCT specifically evaluating bathroom accessibility adaptations (level-access shower installation) with economic evaluation. When published, it will provide the first UK-specific BCR for a single accessibility intervention. The primary outcome uses SF-36 which maps to QALYs, directly addressing the QALY evidence gap noted in Part 11 §11.3.5.
+
+🔴 **TERRAGON discrepancy + counter-source:** 
+1. **Figure discrepancy:** TERRAGON's own website states 148 criteria / 138 zero-cost. The DStGB press release states 140 criteria / 130 zero-cost. The full study PDF (from TERRAGON) uses 148/138. The project correctly uses 148/138.
+2. **Counter-source:** Ulrike Jocham ("Die Frau Nullschwelle") published a detailed critique accusing TERRAGON/DStGB of unsubstantiated claims, particularly:
+   - The assertion that 2cm balcony thresholds are usable by wheelchair users is challenged
+   - DStGB was formally notified in November 2018; no published response
+   - Simon Lube (accessible construction expert) argues that true barrier-free construction with Universal Design is achievable at *lower* cost than TERRAGON's estimate through standardised planning
+3. **Action required:** The commercial-interest note in `throughline-construction-cost.md` should reference the Jocham critique as a counter-position. The 148/138 finding remains the project's cited figure but should note the existence of the DStGB 140/130 variant.
+
+### German-language network findings
+
+The TERRAGON study is widely cited in German accessibility advocacy and policy but has **not been cited in any English-language peer-reviewed study** found in this mining. The Ielegems 2024 (BE) study does not cite TERRAGON. This means the German evidence base and the English-language evidence base are largely disconnected — the project's cross-jurisdictional synthesis is bridging a real gap.
+
+The KfW/Prognos evaluation (€19,100/apartment average retrofit cost) is confirmed as the source for the 12× retrofit multiplier. The KfW Programme 159 served ~25,000 dwellings/year with a peak of 43,310 in 2011.
+
+### Remaining unmined (12 of 23)
+Tsuchiya-Ito 2022/2023 (same group), Mitoku 2014, Liu 2009, Rick Hansen 2020, CMS 2017, Dalvand 2024, Chindapol 2023, Wellecke 2022, Winkler 2021a/b, Best 2022, Gusheh 2021. These are lower-priority sources where additional mining yield is expected to be minimal.
+
+### Updated cumulative totals
+
+| Metric | Value |
+|---|---|
+| Sources mined (all sessions) | 15 |
+| Total unique sources discovered | 29 |
+| Tier 1 new | 9 |
+| Counter-sources | 1 (Jocham/Frau Nullschwelle) |
+| Critical findings | 3 (OTIS null, BATH-OUT-2 upcoming, TERRAGON counter-source) |
