@@ -677,6 +677,13 @@ Prevalence: ME/CFS approximately 17 million globally (NIHR, 2023), substantially
 
 ## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
 
+<!-- MOB ZERO-CONFLICT BASE LAYER (CON-0192):
+MOB is the only population with zero conflict flags across all 11 population-general BPCs.
+Every MOB specification is independently compatible with or convergent with every other population.
+MOB provisions form the strongest Universal Mode candidates — the base layer upon which
+population-specific provisions add without conflict resolution.
+Document in Part 3 §3.8 as Universal Mode doctrine. -->
+
 <!-- CROSS-POPULATION NEUROSCIENCE FRAMEWORK (CON-0188):
 Owen & Crane 2022 (IJERPH 19:14279) provides neuroscience-informed framework unifying three design traditions:
 MH trauma-informed (control, safety, predictability), NDV sensory-responsive (predictability, user control, reduced load),
@@ -3746,6 +3753,8 @@ Single lever or push-button shower controls (not separate hot/cold)
 
 Bilateral grab bars: both sides of WC and shower (G-03)
 
+● VIS+OFS compound interaction (FDR-CMP-02): when VIS and OFS co-occur in one individual, cognitive resource for VIS navigation decreases as OFS fatigue accumulates with distance. Rest seating for VIS+OFS must be cane-detectable (tactile-indicated alcove) and recline-capable (venous pooling management). Interval ≤20 m (50% of OFS standalone, accounting for dual cognitive load). Route to Mode S OT assessment for individual compound profile. [CON-0194]
+
 Towel hooks: bilateral positions at 1100--1400 mm AFF
 
 Soap/shampoo dispensers: wall-mounted at 900--1100 mm AFF (one-hand pump)
@@ -3992,6 +4001,13 @@ Clear glass maximised for DEAF signing vs matte/etched glass for DEM/NDV: dimens
 ---
 
 ## Part 6: Residential Application Matrices
+
+<!-- ACTIVITY CLUSTERING (CON-0199):
+MS activity clustering ≤2m (FDR-NEU-01, Four Ps energy conservation) and OFS rest-to-activity
+adjacency (FDR-OFS-01, PEM threshold) converge: minimize mandatory traversal between related activities.
+R-BED: bedside controls + phone + water within arm reach. R-KIT: assume ALREADY-FATIGUED user
+after morning ADL sequence. H-01 seated kitchen: dual rationale (MOB wheelchair + OFS/PAIN energy envelope).
+Apply in C-stage room matrix population. -->
 
 ** Neufert Residential and Non-Residential OT Analysis dimensional data is not yet integrated into Part II room matrices. Dimensional specifications from Neufert sources should be added to relevant room matrices when the source file is confirmed readable. This does not affect item specifications or population guidance — only dimensional annotations marked [NEUFERT: pending] in the working draft. See Part 4 for status.
 
@@ -6110,22 +6126,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Verified outcomes:** - 40% reduction in measured agitation episodes (pre/post comparison, n=28; BUILD/Aalborg University — Tier 2) - RT60 verified by independent acoustic measurement at 500 Hz before and after installation
 
-**Cost data:** Approximately DKK 180,000 (c. £20,000 / CAD $34,000) for the full building. Approximately £80/m² for acoustic panel installation.
-
-*This is the lowest cost-per-outcome of any case study in this collection:* cost-per-percentage-point reduction in agitation episodes ≈ £500 (CAD $850).
-
-**Limitations:** Small sample (n=28); no control group; pre/post design is vulnerable to regression to mean. Single building typology. Agitation measurement method not detailed in available sources. BUILD/Aalborg verification has not been published as a full academic paper. **Generalisability:** The finding that acoustic intervention in an existing building produces measurable behavioural outcomes is consistent with the DSDC multi-site audit data (§11.10) and provides the strongest available evidence for the cost-effectiveness of acoustic retrofit as an accessibility intervention.
-
-### §12.07 — Singapore HDB Universal Design Flats Programme (Singapore, 2006–ongoing)
-
-**Building type:** National public housing programme (multi-storey residential blocks)
-
-**Primary population:** All residents including elderly, mobility-impaired, and disability population; BCA UD specifications
-
-**Evidence quality:** Tier 2 (longitudinal national dataset; HDB, 5-year follow-up)
-
-**Key design strategies:** - BCA Universal Design Index applied to all new HDB blocks from 2006 (Gold) and 2012 (Platinum) - Grab bar blocking in all bathrooms; wet room configuration; 900 mm door clearances - Non-slip flooring throughout; level entry from lift lobby; accessible parking - Asian anthropometric calibration: grab bar heights and reach zones adjusted for confirmed shorter reach envelopes vs Western specifications (user testing n>200 residents, HDB 2018)
-
-**Verified outcomes:** - >100,000 units with BCA UD Index specification (national scale) - Flat-to-care-home transfer rate significantly lower in UD-specified blocks vs standard blocks (HDB 5-year longitudinal, n>5,000; p<0.01 — Tier 2) - Specific finding on anthropometrics: grab bar heights optimal for Asian users confirmed at 820 mm AFF vs 800--900 mm in UK/Canadian standards — documented discrepancy with Western OT data, indicating that standards should be calibrated to population anthropometric data rather than imported from other jurisdictions
-
-**Cost data:** BCA estimates UD provisions added approximately SGD 1,000--3,000 per flat
+**Cost data:** Approximately DKK 180,000 (c. £20,000 / CAD $34,000) for the full build
