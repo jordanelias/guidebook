@@ -35,6 +35,8 @@ Part 8 is not a substitute for engineering design. It is the architect's instrum
 
 **Ready for Occupancy is specification.** A specification without a commissioning test is aspirational. Every engineering item with a measurable performance target carries a commissioning requirement, to be included in the commissioning schedule issued at technical design stage.
 
+**Intra-individual vs inter-group engineering coordination [CO03-08 / CO-0003]:** Engineering coordination failures fall into two distinct categories. **Intra-individual conflicts** (e.g., the same MS patient needs both ≤18°C ambient and high circadian melanopic EDI) cannot be resolved at the engineering brief level — they require Tier 2 OT assessment and individual environmental control (IEC strategy, H-02). Engineering briefs must provision for IEC infrastructure (individual thermostats, zoned HVAC, dimmable circuits) at every primary occupancy position. **Inter-group conflicts** (e.g., DEAF strobe vs NDV/AUT photosensitivity) require engineering design decisions — specifically, which fire alarm strategy serves both populations without clinical harm to either. These must be resolved at schematic design, documented in the engineer's brief, and validated at the commissioning gate. All engineering-dependent conflict resolutions in Part 8 are tagged [INTRA] or [INTER] accordingly.
+
 ### 8.0.3 Engineering Disciplines in This Part
 
 | Code | Discipline | Scope in this Part |
