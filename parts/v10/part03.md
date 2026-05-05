@@ -182,6 +182,8 @@ If Steps 1–5 fail to produce a resolution for a shared ambient parameter in a 
 
 ### §3.8 Resolution Decision Tree
 
+> **Original guidebook contribution [GAP-P8-01 / GAP-054]:** No peer-reviewed methodological framework for cross-population conflict resolution in the built environment exists in any language as of the search date (March 2026). §3.8 is an original practitioner methodology developed by this guidebook, derived from: the 12 environmental parameter conflict domains identified through cross-population BPC synthesis; ICF intersection theory; the competence-press compound strain model; and 9 resolved conflict case studies from international post-occupancy evidence. It is ahead of the field. Practitioners should treat it as structured professional judgment guidance, not as a validated instrument. An external realist review protocol (DD-8) exists for future empirical validation (references/deep-dive-protocols.md). ○ [Tier 0 — original synthesis; no prior peer-reviewed taxonomy; see project-standards RULE 2026-04-24 23:46 re: best practice ahead of field]
+
 The resolution decision tree operationalises §3.7 as a practitioner tool. It applies to any parameter conflict identified during the Stage 2 synthesis process.
 
 ```
@@ -276,7 +278,9 @@ DEAF and DBL users require visual fire alarm strobes throughout all occupied spa
 
 ### §3.9 Resolution Strategies Menu
 
-Eight resolution strategies are available. Strategies are not mutually exclusive and can be combined. Each strategy is referenced by a short code for use in conflict registers and design documents.
+> **Original guidebook contribution [GAP-P8-02]:** No peer-reviewed taxonomy of cross-population conflict resolution strategies for the built environment exists. The eight strategies below (IEC, SZ, TS, T0, DP, HD, OT-REF, DEFER) were developed from: analysis of 9 resolved cross-population conflict cases; OT adaptive strategy frameworks (compensatory FOR, EHP create/adapt/prevent); and design practice observation. They are not exhaustive and will be supplemented as new conflict types are documented through post-occupancy evaluation. ○ [original synthesis]
+
+Eight resolution strategies are available. Strategies are not mutually exclusive and can be combined. Each strategy is referenced by its abbreviation code in the resolution decision tree (§3.8).eferenced by a short code for use in conflict registers and design documents.
 
 **IEC — Individual Environmental Control.**
 Provide user-operated adjustment over the parameter (lighting level, CCT, temperature, acoustic setpoint). Eliminates the specification selection problem entirely at Tier 2. Best applied where: (a) individual users can identify their preference and operate controls; (b) the parameter is adjustable without affecting adjacent spaces. Items: H-01, H-02, B-06, F-07. Evidence: Tier 1 for user control of lighting and temperature (Faerden et al. 2022).
