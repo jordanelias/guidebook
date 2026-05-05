@@ -78,18 +78,18 @@
 <section>
     <h2>Item Application Matrix</h2>
     <table>
-        <thead><tr><th>Code</th><th>Specification</th><th>Drawing</th></tr></thead>
-        <tbody><tr class="stage-header"><td colspan="3">DD</td></tr>
-<tr><td><a href="/specs/A-11">A-11</a></td><td>Room Perimeter Hearing Loop (Assembly and Meeting Spaces)</td><td class="drawing-ref">Floor plan</td></tr>
-<tr><td><a href="/specs/B-01">B-01</a></td><td>Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime</td><td class="drawing-ref">Reflected ceiling plan</td></tr>
-<tr><td><a href="/specs/B-06">B-06</a></td><td>Individual Dimming Control (≥300 Lux Range)</td><td class="drawing-ref">Reflected ceiling plan</td></tr>
-<tr><td><a href="/specs/C-04">C-04</a></td><td>LRV Contrast (≥30 minimum; ≥50% LRV best practice at critica</td><td class="drawing-ref">Finish schedule</td></tr>
-<tr><td><a href="/specs/H-02">H-02</a></td><td>Individual Environmental Control — Universal Mode Universal Provisio</td><td class="drawing-ref">Floor plan</td></tr>
-<tr><td><a href="/specs/H-03">H-03</a></td><td>Visual Paging and Real-Time Captioning in Assembly Spaces</td><td class="drawing-ref">Floor plan; elevation</td></tr>
-<tr class="stage-header"><td colspan="3">CD</td></tr>
-<tr><td><a href="/specs/A-14">A-14</a></td><td>Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</td><td class="drawing-ref">Wall section</td></tr>
-<tr><td><a href="/specs/K-01">K-01</a></td><td>VIS</td><td class="drawing-ref">Section</td></tr>
-<tr><td><a href="/specs/K-02">K-02</a></td><td>NDV</td><td class="drawing-ref">Section</td></tr>
+        <thead><tr><th>Code</th><th>Specification</th><th>Drawing</th><th class="pop-col">DBL</th><th class="pop-col">DEAF</th><th class="pop-col">MOB</th><th class="pop-col">NDV</th></tr></thead>
+        <tbody><tr class="stage-header"><td colspan="7">DD</td></tr>
+<tr><td><a href="/specs/A-11">A-11</a></td><td>Room Perimeter Hearing Loop (Assembly and Meeting Spaces)</td><td class="drawing-ref">Floor plan</td><td class="app-secondary">◐</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/B-01">B-01</a></td><td>Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime</td><td class="drawing-ref">Reflected ceiling plan</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/B-06">B-06</a></td><td>Individual Dimming Control (≥300 Lux Range)</td><td class="drawing-ref">Reflected ceiling plan</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/C-04">C-04</a></td><td>LRV Contrast (≥30 minimum; ≥50% LRV best practice at critica</td><td class="drawing-ref">Finish schedule</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/H-02">H-02</a></td><td>Individual Environmental Control — Universal Mode Universal Provisio</td><td class="drawing-ref">Floor plan</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-secondary">◐</td><td class="app-primary">●</td></tr>
+<tr><td><a href="/specs/H-03">H-03</a></td><td>Visual Paging and Real-Time Captioning in Assembly Spaces</td><td class="drawing-ref">Floor plan; elevation</td><td class="app-secondary">◐</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr class="stage-header"><td colspan="7">CD</td></tr>
+<tr><td><a href="/specs/A-14">A-14</a></td><td>Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</td><td class="drawing-ref">Wall section</td><td class="app-none">·</td><td class="app-secondary">◐</td><td class="app-none">·</td><td class="app-primary">●</td></tr>
+<tr><td><a href="/specs/K-01">K-01</a></td><td>VIS</td><td class="drawing-ref">Section</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-secondary">◐</td></tr>
+<tr><td><a href="/specs/K-02">K-02</a></td><td>NDV</td><td class="drawing-ref">Section</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
 </tbody>
     </table>
 </section>
@@ -98,7 +98,10 @@
     <h2>DAR Provisions</h2>
     <table>
         <thead><tr><th>Provision</th><th>Stage</th><th>Drawing</th></tr></thead>
-        <tbody></tbody>
+        <tbody><tr><td>Hearing loop infrastructure (perimeter + portable backup)</td><td>CD</td><td>Floor plan</td></tr>
+<tr><td>Acoustic partition STC ≥50 (CON-0211)</td><td>CD</td><td>Wall section</td></tr>
+<tr><td>Captioning display mounting and power</td><td>DD</td><td>Elevation</td></tr>
+</tbody>
     </table>
 </section>
 
@@ -106,7 +109,8 @@
     <h2>Conflict Register</h2>
     <table>
         <thead><tr><th>Conflict</th><th>Resolution</th><th>Domain</th></tr></thead>
-        <tbody></tbody>
+        <tbody><tr><td>Acoustic: RT60 ≤0.3s (DEAF/NDV) vs cost of treatment</td><td>RT60 ≤0.3s governs — life-safety for DEAF speech intelligibility</td><td><a href="/conflicts/ACOUSTIC-TREATMENT">ACOUSTIC-TREATMENT</a></td></tr>
+</tbody>
     </table>
 </section>
 

@@ -78,18 +78,18 @@
 <section>
     <h2>Item Application Matrix</h2>
     <table>
-        <thead><tr><th>Code</th><th>Specification</th><th>Drawing</th></tr></thead>
-        <tbody><tr class="stage-header"><td colspan="3">SD</td></tr>
-<tr><td><a href="/specs/A-11">A-11</a></td><td>Room Perimeter Hearing Loop (Assembly and Meeting Spaces)</td><td class="drawing-ref">Floor plan</td></tr>
-<tr><td><a href="/specs/E-15">E-15</a></td><td>Changing Places Facility (Height-Adjustable Bench, Overhead</td><td class="drawing-ref">Floor plan</td></tr>
-<tr class="stage-header"><td colspan="3">DD</td></tr>
-<tr><td><a href="/specs/B-01">B-01</a></td><td>Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime</td><td class="drawing-ref">Reflected ceiling plan</td></tr>
-<tr><td><a href="/specs/B-10">B-10</a></td><td>Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout</td><td class="drawing-ref">Reflected ceiling plan</td></tr>
-<tr><td><a href="/specs/H-03">H-03</a></td><td>Visual Paging and Real-Time Captioning in Assembly Spaces</td><td class="drawing-ref">Floor plan; elevation</td></tr>
-<tr class="stage-header"><td colspan="3">CD</td></tr>
-<tr><td><a href="/specs/A-14">A-14</a></td><td>Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</td><td class="drawing-ref">Wall section</td></tr>
-<tr><td><a href="/specs/K-01">K-01</a></td><td>VIS</td><td class="drawing-ref">Section</td></tr>
-<tr><td><a href="/specs/K-02">K-02</a></td><td>NDV</td><td class="drawing-ref">Section</td></tr>
+        <thead><tr><th>Code</th><th>Specification</th><th>Drawing</th><th class="pop-col">DBL</th><th class="pop-col">DEAF</th><th class="pop-col">MOB</th><th class="pop-col">NDV</th></tr></thead>
+        <tbody><tr class="stage-header"><td colspan="7">SD</td></tr>
+<tr><td><a href="/specs/A-11">A-11</a></td><td>Room Perimeter Hearing Loop (Assembly and Meeting Spaces)</td><td class="drawing-ref">Floor plan</td><td class="app-secondary">◐</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/E-15">E-15</a></td><td>Changing Places Facility (Height-Adjustable Bench, Overhead</td><td class="drawing-ref">Floor plan</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td></tr>
+<tr class="stage-header"><td colspan="7">DD</td></tr>
+<tr><td><a href="/specs/B-01">B-01</a></td><td>Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime</td><td class="drawing-ref">Reflected ceiling plan</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/B-10">B-10</a></td><td>Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout</td><td class="drawing-ref">Reflected ceiling plan</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-secondary">◐</td></tr>
+<tr><td><a href="/specs/H-03">H-03</a></td><td>Visual Paging and Real-Time Captioning in Assembly Spaces</td><td class="drawing-ref">Floor plan; elevation</td><td class="app-none">·</td><td class="app-primary">●</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr class="stage-header"><td colspan="7">CD</td></tr>
+<tr><td><a href="/specs/A-14">A-14</a></td><td>Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</td><td class="drawing-ref">Wall section</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/K-01">K-01</a></td><td>VIS</td><td class="drawing-ref">Section</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
+<tr><td><a href="/specs/K-02">K-02</a></td><td>NDV</td><td class="drawing-ref">Section</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td><td class="app-none">·</td></tr>
 </tbody>
     </table>
 </section>
@@ -98,7 +98,10 @@
     <h2>DAR Provisions</h2>
     <table>
         <thead><tr><th>Provision</th><th>Stage</th><th>Drawing</th></tr></thead>
-        <tbody></tbody>
+        <tbody><tr><td>Hearing loop full room + portable backup</td><td>CD</td><td>Floor plan</td></tr>
+<tr><td>Changing Places facility adjacent</td><td>SD</td><td>Floor plan</td></tr>
+<tr><td>VAD fire alarm synchronised at 0.5 Hz (CON-0217)</td><td>DD</td><td>Reflected ceiling plan</td></tr>
+</tbody>
     </table>
 </section>
 
