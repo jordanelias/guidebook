@@ -9,9 +9,10 @@ description: >
   any multi-step guidebook task, or resuming work after a session gap.
 ---
 > **C2 overhaul 2026-05-05:** Session-start queries use SQLite. Saves ~7-8K tokens/session.
+> **Phase 1-C update 2026-05-04:** Steps 1b and 2 now use `db.py` CLI instead of markdown registers.
 
 
-<!-- Updated: 2026-05-03 — Workplan v4 (Amendment 8), roadmap display on bootstrap, Stage B2 NEXT -->
+<!-- Updated: 2026-05-04 — Phase 1-C: session-start SQLite migration (1b connections, 2 gaps) -->
 <!-- Prior: CO-0008 2026-04-26 — Stage A workflows, Python-backed skill classification, Phase 2B dormant -->
 
 **Model:** Opus 4.6 (primary for all work per CO-0008 PI update)
@@ -30,14 +31,18 @@ Fetch in one call via github-io batch_read:
 
 Parse LATEST to get session filename.
 
-> **Connection register (CO-0006 2026-04-08):** The monolithic `connection-register-active.md` is archived. Do NOT load it. Connection state is now in `references/connections/_index.md` (master index) + per-topic `connections.md` files. At session start, load `_index.md` only. Load per-topic files only when the session task touches that topic.
+> **Connection register (Phase 1 SQLite — 2026-05-05):** All connection state is in `data/guidebook.db`. Do NOT load `references/connections/_index.md` (archived). Query connections via `python3 scripts/db.py connections`. Per-topic `connections.md` files are archived — do not read or write.
 
-### 1b — Load session file (GraphQL batch_read — call 2)
+### 1b — Load session file + connection summary (GraphQL + bash — call 2)
 
-Fetch the session file identified in LATEST AND `references/connections/_index.md` in the same call.
+Fetch the session file identified in LATEST via GraphQL.
 Report: session_close, next_action, blockers. Confirm with user before resuming. Do not auto-resume.
 
-From `_index.md`: note count of PENDING HIGH-confidence connections — these are the highest-priority integration targets for any ISW session.
+Query PENDING HIGH-confidence connections via SQLite (saves ~4K tokens vs loading `_index.md`):
+```bash
+python3 scripts/db.py connections --status PENDING --confidence HIGH
+```
+Note count — these are the highest-priority integration targets for any ISW session.
 
 ### 1c — Workplan roadmap (on any workplan-related bootstrap)
 
@@ -69,9 +74,13 @@ CONSUMED: 42 sessions  |  REMAINING: 146-211  |  TOTAL: 188-253
 - If the workplan is amended, the roadmap auto-reflects the new budget table
 - For Stage C, show sub-stage breakdown only when C-stage work begins; until then, show as single line
 
-### 2 — Load gap register (filtered bash)
+### 2 — Load gap register (SQLite query)
 
-Extract OPEN P1 items only from `SQLite gaps table`. Do not load full file.
+Extract OPEN P1 items only:
+```bash
+python3 scripts/db.py gaps --status OPEN --priority P1
+```
+Do not load `gap_register.md` (archived).
 
 ### 2b — Data health check (conditional)
 
