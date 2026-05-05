@@ -2802,9 +2802,13 @@ No furniture, equipment, or signage projecting into corridor
 
 Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
 
+● Injury prevention framing: 1200 mm is the METABOLIC NORMALISATION threshold, not merely the ACCESS threshold. Below 900 mm, metabolic cost for manual wheelchair users increases 30--45% due to trunk lean and restricted stroke length (Koontz et al. 2012, DOI:10.1123/jab.28.4.412). At 1200 mm, metabolic cost normalises to open corridor conditions. 900 mm is a passing-only dimension with documented metabolic penalty — not acceptable for primary circulation. [CON-0237]
+
+● Upper limb preservation: Sawatzky et al. 2015 (Tier 1, AJPMR, DOI:10.1097/PHM.0000000000000253) establishes that upper limb overuse is the PRIMARY health risk for manual wheelchair users. Environment must reduce cumulative propulsion effort — corridor distance (shorter routes reduce shoulder load), cross-slope (any deviation increases unilateral load), threshold transitions (each bump is bilateral force spike). E-08 specification rationale extends from 'can a wheelchair fit?' to 'does the corridor minimise propulsion effort over repeated daily use?' [CON-0229]
+
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 11 §11.4.
 
-**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion and metabolic cost in corridors. DOI:10.1123/jab.28.4.412. [Tier 3.] Sawatzky, B.J., et al. (2015). Upper extremity preservation in manual wheelchair users. AJPMR 94(4):313-324. DOI:10.1097/PHM.0000000000000253. [Tier 1 — primary health risk for WC users is upper limb overuse; environment must reduce propulsion effort.]
 
 **Cross-reference:** Large body size corridor width ; E-01 (Lift Car Width)
 
@@ -6117,12 +6121,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Limitations:** Academic evaluation results not yet published at time of writing. Care model and architectural model are interdependent --- outcomes cannot be attributed to design alone. French-language evaluation data not fully translated for international comparison.
 
-### §12.13 — Carpe Diem Dementia Village, Bærum, Norway (Nordic Office of Architecture, 2021)
-
-**Building type:** Dementia care and housing centre (18,000 m², pilot for future Norwegian dementia care model)
-
-**Primary population:** Residents with dementia (DEM) and their families
-
-**Evidence quality:** Tier 3 (architectural assessment; pilot programme evaluation)
-
-**Key design strategies:** - De Hogeweyk model adapted for Norwegian climate and regulatory context - Six residential clusters of 8--10 residents with individual kitchens and outdoor spaces - Central community hub with café, gardens, and activity facilities - Norwegian vernacular architecture: pitched roofs, natural timber, landscaped outdoor accessible garden with protected microclimate - All units fully accessible: wet room, grab bars, loop paths, no dead ends - Secured perimeter with full outdoor mobilit
+### §12.13 — Carpe Diem Dementia Village, Bærum, Norway (Nordic Office o

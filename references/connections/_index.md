@@ -11,10 +11,10 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 155 |
+| CONSUMED | 157 |
 | CONSUMED-DEFERRED | 43 |
-| PENDING | 46 |
-| CONSUMED (this session) | 10 |
+| PENDING | 44 |
+| CONSUMED (this session) | 12 |
 
 ## Index
 
@@ -251,7 +251,7 @@
 | CON-0226 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0227 | PENDING | D-05, C-04, F-03 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0228 | PENDING | Part 9 §9.5, G-03 | frameworks-and-methodology | HIGH | false | — |
-| CON-0229 | PENDING | A-02, A-07, A-09, E-07 | entrances-and-circulation | HIGH | false | — |
+| CON-0229 | CONSUMED | A-02, A-07, A-09, E-07 | entrances-and-circulation | HIGH | false | — |
 | CON-0230 | PENDING | Part 11, G-03 | frameworks-and-methodology | HIGH | false | — |
 | CON-0231 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
 | CON-0232 | PENDING | BIO-01, Part 11 | cross-cutting | MODERATE | false | — |
@@ -259,7 +259,7 @@
 | CON-0234 | PENDING | Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
 | CON-0235 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
 | CON-0236 | PENDING | Part 1 §1.x, D-02 | frameworks-and-methodology | MODERATE | false | — |
-| CON-0237 | PENDING | A-02, A-07 | entrances-and-circulation | HIGH | false | — |
+| CON-0237 | CONSUMED | A-02, A-07 | entrances-and-circulation | HIGH | false | — |
 | CON-0238 | PENDING | F-01, BIO-01, A-16 | sensory-environment | MODERATE | false | — |
 | CON-0239 | PENDING | Part 1, Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
 | CON-0241 | CONSUMED | B-01 circadian lighting, DEM BPC, Part 4 lighting -- Kolberg 2022 (CML-07): DEM nursing homes fail melanopic EDI | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
