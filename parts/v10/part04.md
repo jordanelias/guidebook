@@ -3873,9 +3873,7 @@ KEY DIVERGENCE: DE DIN 18040-2 is the ONLY jurisdiction requiring height-adjusta
 
 **Specifications:**
 
-TMV: 38°C (UPL anti-scald); 37°C (MS general); 35°C (Uhthoff-positive
-
-— R-BA-03)
+TMV: 38°C (UPL anti-scald); 37°C (MS general); 35°C (Uhthoff-positive — R-BA-03); **≤37°C for OFS/POTS/ME** *(hot water causes vasodilation and worsens orthostatic intolerance — contraindicated above 37°C for OFS even where 38°C is the standard anti-scald preset)* [○ FDR-01-b; Bateman Horne 2025 Co-1; NICE NG206 Co-2]
 
 Single lever or push-button shower controls (not separate hot/cold)
 
