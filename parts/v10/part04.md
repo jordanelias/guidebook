@@ -1422,7 +1422,7 @@ UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:VIS|DEM -->
-<!-- grade_confidence: MODERATE — LRV ≥30% contrast: BS 8300 + CNIB + AS 1428.2 + multiple jurisdictions (≥10). Dain/Manandhar (Ophthalmic Physiol Opt, Tier 3) — computational + observational study on contrast ratios for VIS navigation. Note: GRADE framework document rates LRV ≥30% as LOW (standards convergence, no empirical validation). MODERATE assigned here given jurisdictional convergence ≥10. -->
+<!-- grade_confidence: MODERATE — LRV ≥30% contrast: BS 8300 + CNIB + AS 1428.2 + multiple jurisdictions (≥10). Manandhar et al. 2022 (Work 73(4):1265-1278, DOI:10.3233/WOR-210997, Tier 3) — 30% Michelson = "poorly visible" at severe VI; ~65% needed for reliable detection. Citation mining 2026-05-04: Harper 2022 (J Ergonomics, DOI:10.35248/2165-7556-22.12.303) OR=2.87 fall reduction from contrast striping; Brown 2023 (Ergonomics 66(9), DOI:10.1080/00140139.2022.2141347) descent speed reduction; Harper 2025 (IJMR, DOI:10.2196/60622) 80% fall events at interstep riser variation ≥14mm + contrast striping reduces events. GRADE: MODERATE (jurisdictional convergence ≥10 + empirical evidence from Manandhar + Harper group). -->
 <!-- CON-0043: ≥30 LRV = code-compliance minimum only. Best practice: ≥50% LRV at all contrast-dependent provisions. At platform edges, stair nosings, kerb lines: ≥65% Michelson. Pops: VIS · DEM · NDV/AUT · DBL. -->
 
 <!-- CON-0060 [HIGH]: C-04 LRV ≥30 at critical junctions is Universal Mode (VIS, DEM — both require this for safety). NDV/SENS muted palette preference must not reduce safety contrast at critical junctions. Zone-based resolution applies: ≥30 LRV contrast mandatory at all step edges, door frames, and critical junctions regardless of zone. Muted palette applies to non-safety surfaces only. -->
@@ -1447,7 +1447,7 @@ Door frames: ≥30 LRV vs adjacent wall throughout building
 
 **Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 12 §12.4.
 
-**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CNIB Foundation. (2024). Clearing our path. CNIB. JOTA. (2022). Grab bar colour contrast. [Translated from Japanese.\]
+**Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CNIB Foundation. (2024). Clearing our path. CNIB. JOTA. (2022). Grab bar colour contrast. [Translated from Japanese.\] Manandhar, S. et al. (2022). Luminance contrast preferences of people with a vision impairment for elements in the built environment. *Work* 73(4):1265-1278. DOI:10.3233/WOR-210997. Harper, S.A. et al. (2022). Stairway visual contrast enhancement to reduce fall-related events. *J Ergonomics* 12:303. DOI:10.35248/2165-7556-22.12.303.
 
 **Cross-reference:** C-05 (DEM floor transitions — inverse rule);
 
