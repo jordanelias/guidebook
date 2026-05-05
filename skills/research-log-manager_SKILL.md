@@ -66,7 +66,8 @@ After multilingual-research completes:
 1. **Update search-log file on GitHub:** Append search results, new sources, coverage data
 2. **Update SQLite coverage:**
    ```bash
-   python3 scripts/db.py upsert-coverage {slug} {jurisdiction} \
+   # upsert-coverage has no CLI subcommand — call directly:
+   python3 -c "import sys; sys.path.insert(0, 'scripts'); from db import upsert_search_coverage; upsert_search_coverage('
      --languages "EN,FR" --tiers "1,3,5" --session {session}
    ```
 3. **Add new evidence sources to SQLite:**

@@ -21,6 +21,12 @@ description: >
 
 ## 0. Data Sourcing (SQLite-first)
 
+> **Schema note:** The `specification`, `specification_population`, `measurement`, `room`,
+> and related entity tables are populated by `scripts/db/migrate_all.py` (not by the Phase 1
+> schema). These tables coexist in `data/guidebook.db` alongside the Phase 1 register tables.
+> If `specification` queries return empty, run `python3 scripts/db/migrate_all.py` to rebuild.
+
+
 ### Before writing or revising any item:
 
 1. **Load spec record from SQLite:**
@@ -39,7 +45,7 @@ description: >
 
 3. **Load population associations:**
    ```sql
-   SELECT population_code, role FROM specification_population
+   SELECT population_code, role FROM specification_population  -- role col from migrate_all.py schema
    WHERE spec_id IN (SELECT spec_id FROM specification WHERE item_code = '{code}')
    ```
 
@@ -77,9 +83,12 @@ description: >
 
 Query SQLite before writing:
 ```sql
-SELECT citation_mining_complete FROM bpc_metadata WHERE slug = '{slug}'
+SELECT citation_mining_complete, bpc_complete, evidence_state
+FROM bpc_metadata WHERE slug = '{slug}'
 ```
-If `citation_mining_complete = 0`: emit warning that evidence base may be incomplete.
+If `citation_mining_complete = 0`: emit warning — evidence base may be incomplete.
+If `bpc_complete = 0`: emit warning — BPC synthesis not finalised.
+**Note:** No `opus_synthesis` column in schema — use `bpc_complete` as the synthesis gate.
 
 ---
 

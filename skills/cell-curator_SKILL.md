@@ -12,6 +12,9 @@ description: >
 
 **Model:** Opus 4.6 (evidence state classification requires judgment)
 **SQLite:** `data/guidebook.db`
+> **Schema note:** `specification` and `specification_population` tables are from
+> `scripts/db/migrate_all.py` (entity layer), not Phase 1 schema. Coexist in same DB.
+
 
 ---
 
