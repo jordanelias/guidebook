@@ -3267,6 +3267,10 @@ LRV: ≥30 vs wall AND floor (JOTA, 2022)
 
 Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
+**PAIN population — insulated coating [CON-0185]:** Where PAIN (fibromyalgia, chronic pain) is a primary occupant group, grab bar surface coating in insulating material (neoprene sleeve, vinyl coating, or thermoplastic wrap) is indicated. Cold metal contact triggers allodynia in PAIN populations — surface temperature at point of grip is the operative variable, not ambient temperature. ● Berwick 2021 SR (MST-09, Tier 3): cold pain sensitivity confirmed in 14/17 QST studies in fibromyalgia.
+
+**OFS population — standing-height bar [CON-0185]:** For orthostatic and fatigue-spectrum populations (OFS/POTS, OFS/ME), an additional horizontal bar at 850--950 mm AFF (standing grip height) supports pull-to-stand energy conservation. Reduces metabolic cost of sit-to-stand transfer and lowers orthostatic load. Mode S position within range resolved by OT assessment.
+
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 11 for DAR blocking provisions; Part 12 §12.4.
 
 **Key citations:** Levine, I.C., Nirmalanathan, K., Montgomery, R.E., \& Novak, A.C. (2024). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12. doi:10.2196/jmir.2024. ✅ [Verified: JMIR Rehab Assist Technol; KITE/UHN Toronto team; n=65; motion capture; body height correlated with optimal grasp position — informs height range specification.] Lee, S.J., Sanford, J., Calkins, M. et al. (2018). Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers. *HERD* 11(2):32-44. DOI:10.1177/1937586717730338. ✅ [Verified: n=130+ residents, 11 facilities; bilateral fold-down bars at 356mm from CL, 813mm AFF significantly outperform ADA — most robust grab bar study in corpus.] Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., \& Prilutsky, B. (2019). Effects of bilateral swing-away grab bars on the biomechanics of stand-to-sit and sit-to-stand toilet transfers. *Disability and Rehabilitation: Assistive Technology*, 14, 292–300. ✅ [Verified: bilateral grab bar placement reduces lower limb joint moments — direct biomechanical basis for bilateral specification.] Bateni, H., \& Maki, B.E. (2005). Assistive devices for balance and mobility. *Archives of Physical Medicine and Rehabilitation*, 86(1), 134–145. ✅ British Standards Institution. (2018). BS 8300:2018. BSI.
@@ -3275,7 +3279,7 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 (2018). BS 8300:2018. BSI.
 
-**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); I-04 (Ceiling Hoist — CON-0103: where ceiling hoist is specified, grab bar wall blocking zones must align with hoist transfer positions — coordinate at Schematic Design; G-04 ceiling height must be continuous across the full hoist transfer path)
+**Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); I-04 (Ceiling Hoist — CON-0103: where ceiling hoist is specified, grab bar wall blocking zones must align with hoist transfer positions — coordinate at Schematic Design; G-04 ceiling height must be continuous across the full hoist transfer path); F-07 (thermal zoning — bathroom pre-heating ≤5°C inter-room differential reduces thermal shock risk for DEM; insulated bar coatings provide secondary cold-contact mitigation where pre-heating is absent [CON-0191]); Part 9 §9.5 (OT assessment protocol — Mode S grab bar positioning resolved by OT; ≥280 mm above seat surface as individual baseline [CON-0228])
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5kN static/≥2.5kN dynamic load rating, bilateral provision) are derived from transfer biomechanics research; the EHP 'adapt' strategy frames the grab bar as a context modification that enables the occupation of bathing, toileting, and transfer independently — occupations that are impossible without the adapted context.
 
@@ -3326,11 +3330,13 @@ Shower clear area: ≥900 mm; ≥1200×900 mm preferred
 
 Slip resistance: PTV ≥36 wet throughout shower area
 
+**Thermostatic shower control [CON-0191]:** Thermostatic mixer valve with temperature limit ≤43°C. Dual mechanism: (1) DEM/NEU — anti-scald; sudden hot water exposure is a fall and injury trigger for users with delayed reaction time. (2) PAIN — abrupt temperature change triggers pain response in fibromyalgia (cold-to-hot transition). ◐ Evidence basis: clinical consensus across DEM and PAIN BPCs; no RCT on thermostatic shower valves specifically for disability populations. Cross-ref F-07 (bathroom pre-heating — ≤5°C inter-room thermal differential reduces DEM cold-shock risk on entry). Grab bar insulated coatings (G-03 CON-0185) provide secondary cold-contact mitigation within the shower area.
+
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part 12 §12.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. DIN. (2011). DIN 18040-2:2011 [German\]. DIN.
 
-**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance)
+**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance); F-07 (thermal zoning — bathroom pre-heating [CON-0191])
 
 **Evidence basis (OT):** EHP Framework (create strategy); Biomechanical FOR. The wet room creates a new environmental context (zero-threshold wash space) that enables the occupation of showering/bathing for users who cannot step over a shower tray; the Biomechanical FOR grounds the fall-prevention specifications (PTV ≥36, fold-down seat, grab bar positions derived from transfer mechanics).
 
