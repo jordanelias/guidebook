@@ -3082,6 +3082,15 @@ Specifications are derived from MCAS trigger literature and HVAC engineering sta
 
 ### F-05 Seated-Task Design (All Primary Occupational Tasks Achievable Without Sustained Standing)
 
+<!-- REST SEATING EVIDENCE CLUSTER (CON-0190, CON-0204, CON-0207, CON-0212):
+New item E-10 (Rest Seating) required. Evidence:
+- Interval: DEM ≤20m governs; OFS/PAIN ≤25-30m (Roxburgh 2024 Tier 1); MOB ≤50m (AS 1428.1)
+- Height: ≥480mm minimum (OFS: 420mm exacerbates venous pooling; MOB/NEU: higher reduces STS demand; DEM/older: reduced STS difficulty). Replaces 420mm.
+- Geometry: ≥200mm recess + ≥900mm width + ≥450mm depth (FDR-ACG-01, Universal Mode candidate)
+- Consistency: all rest seating same height within circulation route (surface transitions trigger spasticity)
+- Exception: WC at 450mm for transfer biomechanics
+Awaiting E-10 item creation. -->
+
 **Applicable Groups:** OFS/POTS, OFS/CFS, MOB (wheelchair users ---
 
 G-06 below), UPL; also benefits ALL users at service points
@@ -3460,6 +3469,8 @@ Operability: one closed fist; no pinch, grasp, or twist required
 
 Force: ≤22 N
 
+● SCI (≥C4) settings: objective room temperature display required at accessible height. SCI tetraplegia persons cannot perceive thermal strain subjectively (Tcore rises to 37.7°C at 23.9°C indoor without awareness — Griggs 2019, PMC5798926 2018). Analogous to CO detector principle: when hazard is imperceptible, building system must detect and respond. Automatic cooling trigger at ≥23°C in SCI-designated settings. [CON-0233 partial — full K-05/H-04 items pending creation]
+
 Lever handles on all doors; no round knobs
 
 Push-pads: ≥50 mm diameter
@@ -3604,7 +3615,9 @@ UPL provisions apply throughout the building where UPL users are anticipated; th
 
 **Description:** All hardware one-hand operable without grip, pinch, or twist. Lever door handles on all doors; D-ring or bar pulls on all
 
-drawers and cabinet doors; single-lever taps throughout; push-pad access controls. Force: ≤22 N throughout.
+drawers and cabinet doors; single-lever taps throughout; push-pad access controls. Force: ≤22 N
+
+● SCI (≥C4) settings: objective room temperature display required at accessible height. SCI tetraplegia persons cannot perceive thermal strain subjectively (Tcore rises to 37.7°C at 23.9°C indoor without awareness — Griggs 2019, PMC5798926 2018). Analogous to CO detector principle: when hazard is imperceptible, building system must detect and respond. Automatic cooling trigger at ≥23°C in SCI-designated settings. [CON-0233 partial — full K-05/H-04 items pending creation] throughout.
 
 **Specifications:**
 
@@ -3614,7 +3627,9 @@ Cabinet pulls: D-ring or bar pulls (hook-grip compatible for prosthetic users)
 
 Taps: single-lever mixer throughout (not separate hot/cold knobs)
 
-Force: ≤22 N for all hardware
+Force: ≤22 N
+
+● SCI (≥C4) settings: objective room temperature display required at accessible height. SCI tetraplegia persons cannot perceive thermal strain subjectively (Tcore rises to 37.7°C at 23.9°C indoor without awareness — Griggs 2019, PMC5798926 2018). Analogous to CO detector principle: when hazard is imperceptible, building system must detect and respond. Automatic cooling trigger at ≥23°C in SCI-designated settings. [CON-0233 partial — full K-05/H-04 items pending creation] for all hardware
 
 Push-pads: ≥50 mm diameter at all access control points
 
@@ -3638,7 +3653,7 @@ UPL users.
 
 ### I-02 Kitchen (One-Handed Operation Throughout)
 
-**Applicable Groups:** UPL
+**Applicable Groups:** UPL, NEU/MS, VIS, DEM (Universal Mode candidate for cooktop specification)
 
 **Description:** Kitchen designed for full one-handed operation: induction cooktop (flat, front-controls, auto shutoff); side-hinged oven (not drop-down); under-counter knee space at cooktop and sink; non-slip surface; raised perimeter lip ≥15 mm. Single-lever thermostatic mixer tap. D-pull handles throughout.
 
@@ -3647,6 +3662,8 @@ UPL users.
 Cooktop: induction; flat surface; front-mounted controls 400--1100 mm
 
 AFF; auto-shutoff
+
+● Induction-only is a Universal Mode candidate via triple convergence: NEU/MS (eliminates kitchen air heating → prevents Uhthoff's phenomenon), VIS (eliminates invisible hot surfaces → prevents burns), DEM (enables auto-shutoff → prevents unattended cooking fires). No population conflict identified. [CON-0198]
 
 Oven: side-hinged door; slide-in range with pull-out shelf alternative
 
@@ -6115,10 +6132,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Key design strategies:** - Four neighbourhoods of 8--10 residents each; connected by a central "rue" (street) with market, café, garden, and activity spaces - Vernacular Landais architecture — local materials (wood, stone, brick) calibrated to regional familiarity for residents from southwestern France (DEM cultural familiarity principle) - No institutional elements: wooden facades, varied roof lines, residential-scale windows (non-clinical aesthetic) - All public spaces step-free; loop garden path (D-01, E-06, BIO-01) - Dementia-specific spatial design: toilets visible from primary social spaces (D-03); colour-differentiated neighbourhoods (C-02); plain flooring throughout (C-06) - Architecture designed for maximum natural light penetration (B-09)
 
-**Verified outcomes:** - Programme evaluation (Institut du Bien Vieillir Korian / University of Bordeaux, ongoing from 2020): residents demonstrated maintained mobility and social engagement at 12-month assessment - Antipsychotic use reported as below national average for equivalent care level - French-language evaluation (NORD Architects / Département des Landes, unpublished in English): 31% reduction in psychotropic medication use at 6 months compared to baseline and matched conventional care settings — strongest medication-reduction evidence currently documented for the dementia village model - French-language architectural debrief documents that the most impactful single design decision was the village street layout maintaining sightlines from all residential units to the central commons — directly corroborating D-03 at village scale - Social interaction metrics (daily outdoor engagement, meal participation) above national nursing home benchmarks - Full academic evaluation expected 2025--2026 (University of Bordeaux longitudinal study, published results pending)
-
-**Cost data:** Total project cost approximately €43 million (120 residents; community amenities including dedicated research facility). Per-resident construction cost approximately €358,000 — significantly above standard care home construction due to village-scale infrastructure and research component. Pure care provision construction estimated at approximately €180,000--€220,000/resident.
-
-**Limitations:** Academic evaluation results not yet published at time of writing. Care model and architectural model are interdependent --- outcomes cannot be attributed to design alone. French-language evaluation data not fully translated for international comparison.
-
-### §12.13 — Carpe Diem Dementia Village, Bærum, Norway (Nordic Office o
+**Verified outcomes:** - Programme evaluation (Institut du Bien Vieillir Korian / University of Bordeaux, ongoing from 2020): residents demonstrated maintained mobility and social engagement at 12-month assessment - Antipsychotic use reported as below national average for equivalent care level - French-language evaluation (NORD Architects / Département des Landes, unpublished in English): 31% reduction in psychotropic medication use at 6 months compared to baseline and matc
