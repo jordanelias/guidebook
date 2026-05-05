@@ -167,3 +167,54 @@ Tier: 5 | US. Key design principles: clear sightlines; consistent furniture layo
 Key: Interpreter must sit BESIDE person (ProTactile hand-signing). Social interaction spaces need MORE room than standard accessible design — ProTactile communication needs wider clear zones. Contrast backdrops for all skin tones.
 
 NOTE on 1500mm DBL corridor (GAP-S4-R07): No peer-reviewed or regulatory source found. Appears practitioner-derived (person 750-800mm + intervenor 600-750mm abreast = 1350-1550mm, rounded to 1500mm). [UNVERIFIED] until DbI/Perkins/ACVREP/Swedish National Resource Center explicitly states this dimension.
+
+
+## Sources added 2026-05-05 (kitchen adaptation + Gitlin ABLE erratum)
+
+### Kitchen/workspace adaptation — GAP-ECON-01
+
+**KITCHEN-UK-01** Multiple UK sources: Foundations UK DFG Guide, Living Made Easy/DLF, Freedom Living Solutions, France+Associates. 2024-2025.
+Tier: 4-5 | UK
+Technical specifications established:
+- Worktop heights: 760mm (wheelchair), 900mm (ambulant), 850mm (dual/shared)
+- Knee clearance: ≥700mm below worktop
+- Turning circle: 1500mm × 1500mm uninterrupted floor space
+- Minimum passage between facing units: 1200mm
+- Continuous worktop: hob + sink + prep area continuous (no breaks)
+- Side-opening oven mandatory; non-tilt shelves; pull-out heat-resistant surface below
+- Controls maximum height: 1000mm from floor
+- Sink: ≤140mm depth; insulated underside and pipes (burn prevention)
+- Wall units: max 300-350mm above worktop; lower shelf no higher than 1300mm
+- Rise-and-fall worktops: motorised or manual winder; for fluctuating needs or multiple users
+- Source: Foundations UK (foundations.uk.com/guides/kitchen-adaptations), Living Made Easy, Approved Document M
+
+DFG funding ceiling:
+- England: £30,000
+- Wales: £36,000
+- Northern Ireland: £25,000
+- Scotland: varies by local authority
+Funding covers "facilitating the preparation and cooking of food" — Housing Grants Construction and Regeneration Act 1996
+
+Cost range: [GAP-STILL-OPEN] No specific £ cost range found for full accessible kitchen replacement from authoritative independent source. Industry confirms "varies considerably" and "budgets often need to be bigger than standard kitchen." DFG cap (£30,000 England) is the policy ceiling, not a typical project cost. Habinteg and Foundations UK do not publish unit cost estimates for kitchen adaptations. [GAP: kitchen adaptation cost range — no authoritative cost range found; DFG ceiling only]
+
+Design stage implications: Kitchen accessible design is primarily a Schematic/planning decision (layout, turning circle, continuous worktop routing). Rise-and-fall units can be added at any stage but core layout decisions (turning circle, window positions, doorway locations) must be Brief/SD.
+
+### Gitlin ABLE RCT — erratum correction
+
+**BPC CORRECTION: PMC3157760 classification error**
+The BPC entry "Gitlin (ABLE RCT) PMC3157760" is a mislabelling:
+
+PMC3157760 = Jutkowitz, E. et al. (2011). Cost effectiveness of a home-based intervention that helps functionally vulnerable older adults age in place at home. PMID: 21876812. This is the ABLE COST-EFFECTIVENESS paper — NOT the original trial.
+
+The correct original ABLE RCT:
+**ABLE-RCT-01** Gitlin, L.N., Winter, L., Dennis, M.P., Corcoran, M., Schinfeld, S. & Hauck, W.W. (2006). A randomized trial of a multicomponent home intervention to reduce functional difficulties in older adults. J Am Geriatr Soc, 54(5), 809-16. DOI: 10.1111/j.1532-5415.2006.00703.x | PMID: 16696748
+Tier: 1 | US (Thomas Jefferson University)
+Key: n=319, adults ≥70, two-group RCT. OT + PT sessions + home modifications, 6 months. Reduced functional difficulties and fear of falling; reduced home hazards; enhanced self-efficacy. ABLE reduced mortality 9% at 12 months. Strongest benefit for adults ≥80.
+
+**ABLE-CE-01** Jutkowitz, E., Gitlin, L.N., Pizzi, L.T., Lee, E. & Dennis, M.P. (2011). Cost effectiveness of a home-based intervention... PMC3157760 | PMID: 21876812
+Key: ICER $13,179–$14,800 per additional year of life. 30 deaths by 2 years (9 ABLE vs 21 control). Cost-effective depending on willingness-to-pay threshold.
+
+**ABLE-MORT-01** Gitlin, L.N., Hauck, W.W., Dennis, M.P. et al. (2009). Long-term effect on mortality of a home intervention that reduces functional difficulties in older adults. J Am Geriatr Soc, 57, 476-481. DOI: 10.1111/j.1532-5415.2008.02147.x
+Key: Survivorship advantage statistically significant up to 2 years; mortality rates lower up to 3.5 years.
+
+ACTION REQUIRED: Update economics-sources.md BPC entry for PMC3157760 to read "ABLE cost-effectiveness (Jutkowitz 2011)" and add ABLE-RCT-01 (PMID 16696748) as separate entry.
