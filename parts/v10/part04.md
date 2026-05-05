@@ -109,6 +109,8 @@ Guidebook's graduated acoustic buffer concept (high→low stimulation) exceeds a
 <!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (central sensitisation → auditory hyperalgesia). Mark ○ THIN-POPULATION-SPEC per D2-41. Evidence: pain-ofs-built-environment-design BPC FDR + acoustic sensitivity literature. -->
 
 **Applicable Groups:** ALL (especially NDV, DEM, MH, PAIN, OFS) · DEAF · NEU/PCS
+
+> **THIN-POPULATION-SPEC [PAIN, OFS — GAP-D241-01]:** ○ Acoustic ceiling panels also apply to PAIN (fibromyalgia/central sensitisation: auditory hyperalgesia documented; Staud 2004; Wolfe ACR criteria 2010) and OFS (ME/CFS: reduced auditory tolerance post-exertion; Carruthers et al. 2011 Canadian Consensus Criteria). Evidence base for the NRC ≥0.85 specification is derived from NDV/AUT and DEAF populations (Bettarello 2021, Caniato 2024, ISO 3382); PAIN and OFS population-specific auditory research in built environments does not exist. The mechanism (reducing ambient acoustic load) is clinically plausible and harm-free; the THIN marker signals absence of PAIN/OFS-specific validation, not absence of benefit. [Tier 3 — mechanism; no built-environment RCT for PAIN/OFS acoustic sensitivity]
 <!-- CON-0039: CON-0039: RT60 ≤0.3 s mid-frequency Universal Mode for speech-critical rooms — serves DEAF/NDV/DEM/NEU simultaneously -->
 
 **Description:** Acoustic ceiling panels with NRC ≥0.85 installed in all primary occupied spaces — open-plan offices, classrooms, therapy rooms, communal areas, circulation corridors. Combined with A-01, A-05, and A-17 to achieve target RT60.
@@ -352,7 +354,8 @@ BSI.
 <!-- grade_confidence: MODERATE — NC-25 target: ANSI S12.60, DIN 18041, BS 8300 converge (≥6 jurisdictions). Plant room schematic-stage requirement is irreversible (NOT-RETROFITTABLE per Part 8). No RCT but strong standards consensus. -->
 
 **Applicable Groups:** AUT, PCS, DEM, MH, OFS · PAIN
-<!-- CON-0008: CON-0008: NC-25 background noise limit reduces exertion needed for communication — OFS/PAIN energy conservation -->
+
+<!-- D241: PAIN/OFS THIN-POPULATION-SPEC confirmed 2026-05-05 → mechanism: NC-25 reduces overall ambient load; PAIN auditory hyperalgesia + OFS post-exertional acoustic sensitivity both benefit; no PAIN/OFS-specific built-env RCT; marked ○ per evidence tier; GAP-D241-01 -->
 
 **Description:** HVAC system designed to achieve NC-25 or better at all air terminal devices in sensitive spaces (sensory rooms, DEM care spaces, therapy rooms, ABI recovery spaces). NC-25 is the single most commonly specified noise criterion in post-occupancy complaints from neurodiverse building occupants.
 
@@ -627,7 +630,8 @@ International hearing access committee. IFHOH.
 <!-- CON-0039 [HIGH]: Strict NDV/AUT acoustic target (RT60 ≤0.3 s) is a sub-target of the general DEAF/DEM target. No sound masking in any space where NDV is primary — already specified but ensure cross-reference to NDV/DEAF conflict resolution in Part 5 §5.2. -->
 
 **Applicable Groups:** AUT, PCS, NEU, DEM, NDV · OFS · PAIN
-<!-- CON-0008: CON-0008: sound masking increases cognitive load; energy cost for OFS/PAIN populations -->
+
+<!-- D241: PAIN/OFS THIN-POPULATION-SPEC confirmed 2026-05-05 → mechanism: sound masking increases cognitive load and amplifies auditory sensitivity in PAIN/OFS; prohibition is harm-prevention (removing a harmful specification, not adding a new one); no PAIN/OFS-specific RCT; ○ marker applies; GAP-D241-01 -->
 
 **Description:** Electronic sound masking systems explicitly excluded from spaces serving neurological populations, PCS patients, and dementia residents. Sound masking adds continuous broadband noise (45--48 dBA) that is clinically contraindicated for PCS and AUT users.
 
@@ -2420,6 +2424,8 @@ Where <1200 mm continuous: passing bay ≥1500×1500 mm at ≤10 m intervals
 No furniture, equipment, or signage projecting into corridor
 
 Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
+
+● DBL intervenor width: primary routes in buildings regularly used by DeafBlind persons: ≥1500 mm clear width minimum (continuous — not passing-bay configuration — to allow intervenor and DBL user side-by-side at walking pace). ○ [Tier 4 — DIN 18040-1 §4.3.7; no other canonical jurisdiction specifies DBL-specific corridor width; THIN single-jurisdiction basis — GAP-STEP6-03 CLOSED]
 
 ● Acoustic: corridors ≥1500mm with parallel hard walls require A-02 ceiling treatment (NRC ≥0.75) to prevent flutter echo [CON-0205]. Wide corridors without acoustic treatment create speech intelligibility hazards for DEAF/HI users (Cueille 2022, ASI-06)
 

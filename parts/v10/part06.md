@@ -250,6 +250,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | Bedside control conduit | 20 mm conduit from bedside position to consumer unit | Smart bedside control, nurse-call, assisted technology future-proofing | ×8 retrofit |
 | Bedroom door ≥900 mm clear | Framed at ≥900 mm clear opening | Future power chair access | ×5–15 retrofit |
 | Structural wall provision (future through-floor lift) | In multi-storey dwellings: structural zone ≥900×1200 mm on each floor at same position | Future through-floor lift installation | ×50+ retrofit without pre-planning |
+| **Ground-floor bedroom designation** [GAP-NEW-12] | **In multi-storey dwellings: designate one principal habitable room on the ground floor as a future-capable bedroom — minimum 10 m², 900 mm clear door, accessible WC within 5 m on same floor, turning circle ≥1500 mm. Structural blocking at bedhead wall for future hoist.** | **Enables aging-in-place and care-need support without stair access. Ground-floor sleep is the most frequently required adaptation at disability onset. Absence makes the dwelling non-liveable for wheelchair users and those with mobility onset.** | **×30–80 retrofit if spatial reorganisation required; impossible in many existing plans** |
 
 **Conflict register — R-BED:**
 
