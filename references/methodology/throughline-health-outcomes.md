@@ -22,7 +22,8 @@ The following evidence hierarchy was assembled through systematic citation minin
 | 4 | Keall 2017 | CBA of RCT | Injury Prevention | 36% insurer cost reduction; **9:1 BCR** |
 | 5 | Chandola 2022 | Longitudinal cohort (n=10,459, 11.3yr) | Lancet Reg Health Eur | Falls -3%, pain -6%, poor health -4% (impaired); **social isolation -6%, need to move -4% (NON-impaired)** |
 | 6 | Szanton 2018 | Quasi-experimental (CAPABLE) | JAGS | **~10:1 combined Medicare/Medicaid savings** at $3,000/person (doi: 10.1111/jgs.15143) |
-| 7 | Gitlin (ABLE) | RCT, 319 participants | PMC | Mortality: 9 vs 21 deaths (2yr); ICER $13-15K/QALY |
+| 7a | Gitlin 2009 | RCT (ABLE), N=319, 4yr follow-up | JAGS | Mortality: 42 control vs 34 treatment (4yr); moderate-risk subgroup significant p=.021 (doi: 10.1111/j.1532-5415.2008.02147.x) |
+| 7b | Jutkowitz 2012 | CEA of ABLE RCT (Gitlin 2006) | J Aging Res | 9 vs 21 deaths (2yr); **ICER $13,179–$14,800/QALY** (doi: 10.1155/2012/680265) |
 | 8 | Tsuchiya-Ito 2024 | Retrospective cohort (n=4,610) | JAMDA | **28% lower LTCF admission** at ¥200,000 max |
 | 9 | LSE/Habinteg 2023 | CBA (evidence review) | LSE Research Online | M4(3) BCR 4.3:1 to 5.6:1 (10yr) |
 | 10 | Carnemolla 2019 | Cohort (AU) | PMC | 0.36 hrs/wk care reduction |
