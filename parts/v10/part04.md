@@ -1458,6 +1458,8 @@ UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent
 
 **Specifications:**
 
+> **Two-tier LRV framework [GAP-077 / DD-3]:** C-04 operates at two distinct thresholds with different evidence bases. **Tier 1 (regulatory floor): ≥30 LRV** — derived from UK Disability Discrimination Act (DDA) guidance and adopted in BS 8300, AS 1428.2, and ≥10 other jurisdictions. Systematic Review Deep-Dive 3 (2026-04-09) confirms this value originated as regulatory guidance without empirical derivation from user studies; Manandhar et al. 2022 (Tier 3) documents 30% Michelson as "poorly visible" for severe VI. ● [Tier 6 — regulatory floor; not evidence-based optimum]. **Tier 2 (evidence-based optimum): ≥65% Michelson at all safety-critical junctions** — derived from Manandhar 2022 finding (~65% needed for reliable boundary detection at severe VI) and converging evidence from Harper 2022/2025 series (OR=2.87 fall reduction from contrast striping). ● [Tier 3 — peer-reviewed empirical evidence]. Designers must distinguish: meeting ≥30 LRV achieves code compliance, not best practice. Best practice is ≥65% Michelson at critical junctions.
+
 General: ≥30 LRV contrast at all critical junctions (code-compliance minimum)
 
 ● Best practice: ≥50 LRV at all contrast-dependent provisions [CON-0043]. 30 LRV is a regulatory floor with no empirical validation — Manandhar et al. 2022 documents it as "poorly visible" for severe VI
