@@ -56,11 +56,31 @@ Strategy codes (§3.9): **IEC** = Individual Environmental Control; **SZ** = Sen
 | **FRAGRANCE — Olfactory environment** | OFS/MCAS, NDV/SENS | DEM (olfactory orientation therapy) | Zero fragrance throughout: F-02 fragrance-free zones; F-06 whole-building policy | Scented environmental cues (familiar food smells, floral scents) for DEM spatial orientation and wellbeing | Genuine tension with no fully satisfactory population-level resolution. Mitigation: fragrance-free policy (F-06) as building-wide baseline; DEM olfactory cueing via food smells (kitchen adjacency, dining visibility) and natural scents (lavender planting ≥600 mm from circulation edge, per nature provision guidelines) rather than chemical fragrances or air fresheners. Natural food smells are not chemical triggers for OFS/MCAS; synthetic fragrances are. DEM orientation cues can be architectural-spatial (cooking smells from kitchen at corridor junction) rather than applied fragrance. Residual gap: some DEM dementia village programmes use synthetic lavender diffusers — contraindicated for OFS/MCAS populations and should not be specified in shared buildings. | PARTIAL · **PP** | ◐ Afrin 2020 (MCAS chemical triggers); ◐ DSDC EADDAT 2022 (DEM olfactory cues); ○ natural vs synthetic distinction (expert consensus). Cross-ref: F-02, F-03, F-06. [PP: architectural-spatial food/natural scent cues provide DEM olfactory orientation without chemical fragrance — parallel provision that does not trigger OFS/MCAS.] |
 | **DOOR-OPERATION — Automatic vs manual door actuation** | MOB (force-free access) | NDV/MH (predictability; startle response) | Automatic doors: no push force; 10-second hold-open; power-assisted throughout | Predictable actuation; no unexpected movement; advance visual and auditory warning before door opens | Motion sensor at ≥3 m (visual warning zone before door activates); auditory chime (≤65 dBA at 1 m) on sensor trigger; glazed door leaf (NDV spatial preview before entry); ≥3 seconds opening travel (no sudden movement); high-contrast floor activation zone (C-04 ≥30 LRV). Combined: MOB receives force-free access; NDV/MH receives predictable, pre-announced door movement with visual advance notice. | RESOLVED-CONSENSUS · **TS** | ◐ PAS 6463:2022 (NDV door predictability); ◐ BS 8300:2018 (automatic door performance); ◐ DeafSpace 2010 (glazed leaf visual preview). Cross-ref: E-11, C-04. [TS: integrated door specification (sensor range + auditory chime + glazed leaf + travel speed) resolves both populations through a single technical solution.] |
 
+
+POE priority key: HIGH = resolution is structurally novel and assembled from separate evidence bases; MODERATE = resolution has supporting clinical evidence but no built-environment validation; LOW = resolution is a prohibition or clinical protocol with strong plausibility.
+
+| TEMP-RANGE | GAP-CONF-TEMP-01 | Cool-ambient + individual-heating strategy POE in mixed disability facility | MODERATE — clinically inferred |
+| SPATIAL-OPEN | GAP-CONF-SPAT-03 | Environmental refuge (A-16) with translucent panel to adjacent signing space | LOW — no built example |
+| SPATIAL-OPEN | GAP-CONF-SPAT-02 | Glazed junction multi-population response (VIS glare, DEM reflection, NDV visual complexity) | HIGH — DeafSpace implemented but no controlled POE |
+| SPATIAL-OPEN | GAP-CONF-SPAT-01 | Prospect-refuge zone integration POE | HIGH — individual zone evidence exists; integrated scheme untested |
+| LIGHT-INT | GAP-CONF-LQUAL-02 | Circadian CCT programme impact on NDV/AUT in aged care | MODERATE — no co-occurrence facility POE |
+| LIGHT-INT | GAP-CONF-LIGHT-03 | Temporal dosing protocol (morning circadian window for photosensitive populations) | LOW — clinical protocol, not built-environment |
+| LIGHT-INT | GAP-CONF-LIGHT-02 | Integrated three-zone illuminance model (Brown 2022 + PAS 6463 + WELL) POE | HIGH — assembled from separate evidence bases |
+| LIGHT-INT | GAP-CONF-LIGHT-01 | Indirect vs direct delivery at equivalent melanopic EDI for migraine | MODERATE — clinical plausibility only |
+| ACOUSTIC-LVL | GAP-CONF-ACOU-02 | SFA in mixed NDV/SENS educational settings | MODERATE — extrapolated from general sensitivity data |
+| ACOUSTIC-LVL | GAP-CONF-ACOU-01 | Sound masking vs no-masking controlled comparison for NDV/PAIN | LOW — prohibition is PAS 6463 + clinical plausibility |
+|---|---|---|---|
+| Domain | Gap ID | POE needed | Priority |
+
+All resolutions in §5.2 are derived from clinical reasoning and standards synthesis (○ or ◐). No resolution has been validated by a controlled POE in a multi-population facility. The following POE gaps are logged:
+
+**§5.2.1 Evidence gap register — resolution validation status**
+
 ---
 
 ### §5.3 Unresolvable Conflicts Register
 
-Three conflict types remain unresolvable at Universal Mode–1 for shared ambient environments. Each is recorded here with its Tier 2 requirement and the specific condition that triggers mandatory individual co-design.
+Four conflict types remain unresolvable at Universal Mode–1 for shared ambient environments. Each is recorded here with its Tier 2 requirement and the specific condition that triggers mandatory individual co-design.
 
 **CONF-UNRESOLV-01 — Ambient temperature (OFS/NEU/MS vs PAIN/fibromyalgia in a non-zoned space)**
 
@@ -73,6 +93,15 @@ Where a hearing loop or sound field system (A-11, A-12) serves DEAF and CI users
 **CONF-UNRESOLV-03 — Visual glazing (DEAF DeafSpace junctions vs DEM reflective surface confusion and NDV visual noise)**
 
 Glazed corridor junctions (DEAF visual advance warning provision — §5.2 SPATIAL-OPEN) conflict with DEM reflective surface contraindication and NDV visual complexity. The matte/low-reflectance glazing specification in §5.2 partially mitigates both. The residual unresolvable case is a DEAF primary building (school for the Deaf; DEAF-majority workplace) where maximised glazing area is specified for signing visibility, and where DEM or NDV populations are secondary occupants. No single glazing specification fully satisfies: high-transmittance clear glass (DEAF signing) vs matte/etched glass (DEM reflection contraindication). Mitigation: clear glass upper band (>1400 mm AFF — signing sightline); frosted or etched lower band (≤1400 mm AFF — reduces floor-level reflections; lowers visual noise field). This is a dimensional compromise, not an evidence-based resolution. Where DEAF is the primary population, DEAF signing requirements govern; DEM/NDV mitigation is applied as far as possible within that constraint.
+
+**CONF-UNRESOLV-04 — Intra-individual thermal conflict (MS + fibromyalgia co-occurrence) [GAP-CONF-TEMP-03]**
+
+A person with both MS (Uhthoff phenomenon — heat sensitivity, ≤22°C ambient required) and fibromyalgia (cold pain hypersensitivity, warm ambient preferred) experiences a conflict that is *internal to one individual*. The §5.2 TEMP-RANGE resolution (≤18°C ambient + supplemental radiant heating at seating) was designed for the inter-group case (different people with different conditions in the same building). For the intra-individual case:
+
+- The built environment cannot resolve this conflict. Individual thermal control (H-02) provides the mechanism but does not eliminate the physiological contradiction.
+- **OT clinical management governs.** Part 9 §9.2.4 thermal profiling must document the co-occurrence explicitly. The OT report will specify an individual thermal target that is a clinical compromise — not an architectural one.
+- The guidebook acknowledges this as a boundary condition where the environment is necessary but not sufficient (§5.5). No building specification can resolve a physiological conflict within one person — the specification provides the control mechanism; the clinical team sets the target.
+- **Scope: INTRA-INDIVIDUAL.** This conflict type is fundamentally different from the inter-group conflicts in §5.2. It cannot be resolved by spatial zoning, time-sharing, or supplemental systems because the conflicting needs coexist in the same body at the same time.
 
 ---
 
@@ -202,4 +231,3 @@ The room matrices in Parts 6 and 7 specify environmental provisions. This sectio
 ---
 
 *End of Part 5. Cross-references: Part 3 §3.4 (Co-occurrence guidance by pair); Part 4 §3.11 (Population-specific worked examples); Part 7 (Non-residential population matrices); Part 9 §9.6 (DeafBlind specialist consultant).*
-
