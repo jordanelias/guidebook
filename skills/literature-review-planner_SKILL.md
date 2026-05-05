@@ -9,6 +9,8 @@ description: >
   Trigger on: "literature review plan", "research plan", "systematic review protocol",
   "search strategy", "PRISMA", "evidence synthesis", "research agenda", "next research phase".
 ---
+> **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
+
 
 **Model:** Sonnet 4.6 + web  
 **Framing:** Social model throughout. CRPD Article 9 as governing framework.  

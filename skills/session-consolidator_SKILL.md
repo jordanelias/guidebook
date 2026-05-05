@@ -8,6 +8,8 @@ description: >
   "end of session", "wrap up", "consolidate findings", "update project knowledge", "write
   session close", "save progress", or when workplan-orchestrator session-end protocol runs.
 ---
+> **C2 overhaul 2026-05-05:** Register queries now use SQLite instead of markdown/YAML.
+
 
 <!-- Updated: CO-0006 2026-04-08 — quarterly skill performance review protocol added -->
 
@@ -33,7 +35,7 @@ Run immediately after Step 1 — before extracting patterns or writing rules.
 
 For each file below that was modified or referenced this session: GET current content from GitHub. Check against session work compiled in Step 1. Fix any discrepancy inline (update the file, PUT back). If a fix cannot be completed inline, flag as BLOCKER — do not silently skip.
 
-**gap_register.md**
+**SQLite gaps table**
 - Every gap described as raised this session → entry exists with correct ID, priority, status OPEN, and today's timestamp.
 - Every gap described as resolved → status field is CLOSED / CLOSED-RESOLVED / CLOSED-DELETED / CLOSED-NOTED.
 - Every gap described as a known limitation → status is KNOWN-LIMITATION with rationale.
@@ -51,7 +53,7 @@ For each file below that was modified or referenced this session: GET current co
 - Every slug confirmed in search-log → BPC entry present.
 - Fix: cannot reconstruct BPC content post-hoc → flag as BLOCKER.
 
-**references/connection-register-active.md**
+**[ARCHIVED — use SQLite connections table]**
 - Every connection described as CONSUMED this session → status updated from PENDING to CONSUMED with today's timestamp and item reference.
 - Every new connection identified this session by `connection-scout` → PENDING entry present with correct priority and population codes.
 - Every connection described as DEFERRED or SUPERSEDED → status field reflects that state.
@@ -72,7 +74,7 @@ For each file below that was modified or referenced this session: GET current co
 - If file-splitter ran: verify manifest exists and is complete.
 
 **workplan/ directory** (v10.1 addition)
-- If Decision Register was updated this session: verify `data/decisions/decision_register.yaml (canonical per A12 §5.1; legacy workplan/v10-1-decision-register.md superseded)` reflects changes.
+- If Decision Register was updated this session: verify `SQLite decisions table (canonical per A12 §5.1; legacy workplan/v10-1-decision-register.md superseded)` reflects changes.
 - If Change Orders were issued: verify `references/change-orders/` contains the CO file.
 - For each watched directory (`workplan/`, `versions/current/`): GET listing. If >1 non-directory file outside the directory's `deprecated/` subdirectory, and a new file was committed to that directory this session: invoke `github-filing` on that directory before writing session YAML. Report result in reconciliation block.
 
@@ -99,7 +101,7 @@ Run after Step 1b — before pattern extraction.
 **Decision capture.** For each decision made this session in any of the 5 categories (D-DOCT / D-METH / D-SCHEMA / D-OP / D-PRES per A12 §1):
 - Build a Decision record per A12 §3.2 (16 fields). Required: decision_id (next D-NNNN), category, delegation, summary, outcome, rationale, decision_date, decided_by, model_routing (per A12 §4.4 notation), effort_level, decision_artifacts, status=ACTIVE, review_status (NA for DG-NON/DG-AUTO; PENDING for DG-REVIEW).
 - D-DOCT records require `alternatives_considered`; D-DOCT or D-METH with `delegation: DG-AUTO` (default departure) require `delegation_rationale`.
-- GET `data/decisions/decision_register.yaml`. Append the new Decision records. Validate the register through `scripts/decision_capture.py --register-only` before writing back.
+- GET `SQLite decisions table`. Append the new Decision records. Validate the register through `scripts/decision_capture.py --register-only` before writing back.
 - Each new RULE appended to `references/project-standards.md` (Step 3) MUST be paired with a Decision record. The RULE's section reference appears in the Decision's `decision_artifacts`.
 
 **Detection heuristics for "decision made this session":**
@@ -219,7 +221,7 @@ Before writing the session YAML, verify no working documents are uncommitted:
 
 Before writing the session YAML, validate the `blockers:` list against the gap register:
 
-1. GET `gap_register.md`.
+1. Query SQLite gaps table.
 2. For each item in the *prior* session's `blockers:` list: check if its associated gap ID is now CLOSED in the register. If CLOSED: do not carry forward to this session's YAML. If still OPEN: carry forward with updated context if relevant.
 3. If a blocker is listed in the current session's YAML without a corresponding OPEN gap register entry: either create the gap entry or remove the blocker — never let a blocker float without a gap ID.
 4. Write the validated `blockers:` list only.

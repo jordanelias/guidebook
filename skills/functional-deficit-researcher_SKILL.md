@@ -11,6 +11,8 @@ description: >
   functional task]", "search by function not population", "ICF search". CHECK before / LOG after
   every run. Runs AFTER multilingual-research top-down pass is COMPLETE for target slugs.
 ---
+> **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
+
 
 **Model:** Sonnet 4.6 (search, scenario execution) · Opus 4.6 (synthesis, NOVEL/REFINES classification)
 **Opus routing:** Sonnet runs scenarios → Opus synthesizes findings into BPC.
@@ -213,7 +215,7 @@ Population codes are **not assigned during collection**. After FDR evidence is a
    - REFINES + NOVEL → briefing list for `item-specification-writer`
    - CONTRADICTS → queue for `evidence-auditor`
    - Cross-pop flags → queue for `connection-scout` internal mode
-   - TIER-0-CANDIDATES → append to `gap_register.md` as P2 items
+   - TIER-0-CANDIDATES → append to `SQLite gaps table` as P2 items
 
 4. **Checkpoint summary:**
 ```
@@ -236,7 +238,7 @@ COMPLETE [YYYY-MM-DD HH:MM] — scenarios: {N} — novel: {N} — refines: {N} �
 
 ## 9. Research Slug Registry
 
-**Canonical registry:** `references/fdr/fdr-slug-registry-v2.md`
+**Canonical registry:** `references/fdr/SQLite slugs table`
 
 The registry supersedes the original §9 priority targets (all 8 COMPLETE as of 2026-04-09). It contains four scenario types:
 

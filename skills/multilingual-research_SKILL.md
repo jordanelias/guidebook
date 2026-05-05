@@ -9,6 +9,8 @@ description: >
   literature say", "international standards", "review the evidence", "find studies on".
   CHECK before / LOG after every run.
 ---
+> **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
+
 
 <!-- Updated: CO-0006 2026-04-08 — metadata capture mandate at research time; disposition field in LOG -->
 

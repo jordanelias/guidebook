@@ -8,6 +8,8 @@ description: >
   content reviews. Trigger on: "what's missing", "coverage gaps", "content review", "are we
   covering", "systematic review", "completeness check".
 ---
+> **C2 overhaul 2026-05-05:** Queries use SQLite instead of markdown.
+
 
 **Intake:** ≤500 lines only. Full document → haiku-chunker first.
 **Model:** Sonnet 4.6 (inventory, coverage mapping) · Opus 4.6 (gap significance judgment)
@@ -31,7 +33,7 @@ description: >
    - Secondary gaps (MED)
    - Thematic gaps
    - Research tasks for multilingual-research: `Topic | Search terms | Languages | Source types`
-   - Gap YAML per item → append to `gap_register.md` on GitHub (GET + append + PUT per Project Instructions §GitHub API):
+   - Gap YAML per item → append to `SQLite gaps table` on GitHub (GET + append + PUT per Project Instructions §GitHub API):
      ```yaml
      id: GAP-XXX
      type: evidence|framing|citation|format|code|cross-ref

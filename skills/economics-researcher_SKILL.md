@@ -12,6 +12,8 @@ description: >
   "QS data", "construction economics", or any task involving numeric economic claims
   about accessible design. Always consult before producing any cost figure or funding detail.
 ---
+> **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
+
 
 **Model:** Sonnet 4.6 + web search (required for all funding programme verification)  
 **Input:** task specification + gap register item (if research-driven) + jurisdiction scope  

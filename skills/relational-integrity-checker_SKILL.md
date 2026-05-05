@@ -8,6 +8,8 @@ description: >
   Trigger on: "check integrity", "verify references", "orphan codes", "phantom items",
   "relational check", or before any connection register migration.
 ---
+> **C2 overhaul 2026-05-05:** Queries use SQLite instead of markdown.
+
 
 <!-- Created: CO-0006 2026-04-08 -->
 
@@ -16,7 +18,7 @@ description: >
 **Canonical sources:**
 - Item codes: Part 4 TOC (parts/v10/part04.md or toc.md §Part 4)
 - Population codes: workplan-orchestrator_SKILL.md §Population Codes
-- Slug names: `references/slug-registry.md`
+- Slug names: `references/SQLite slugs table`
 **Run before:** connection register migration; BPC schema migration; any structural change touching cross-references
 
 ---
@@ -28,7 +30,7 @@ description: >
 Load and parse:
 1. `references/toc.md` → extract all canonical item codes (A-01 through K-NN). Store as `canonical_items`.
 2. `skills/workplan-orchestrator_SKILL.md` §Population Codes → extract all canonical pop codes (MOB, VIS, DEAF, etc.). Store as `canonical_pops`.
-3. `references/slug-registry.md` → extract all slug names. Store as `canonical_slugs`.
+3. `references/SQLite slugs table` → extract all slug names. Store as `canonical_slugs`.
 
 ### Step 2 — Extract references from scope files
 
@@ -36,7 +38,7 @@ For each scope file below, extract all item codes, population codes, and slug na
 
 | Scope file | Extract |
 |---|---|
-| `gap_register.md` | Item codes (letter-digit pattern), pop codes, slug names |
+| `SQLite gaps table` | Item codes (letter-digit pattern), pop codes, slug names |
 | `references/connections/_index.md` | Item codes, pop codes |
 | `references/connections/{topic}/connections.md` (all) | Item codes, pop codes, slug names |
 | `references/bpc/{topic}/{slug}.md` (sampled or all) | Item codes, pop codes |

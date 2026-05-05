@@ -8,6 +8,8 @@ description: >
   "what's the plan", "how should we approach", "run a full review", "where did we leave off",
   any multi-step guidebook task, or resuming work after a session gap.
 ---
+> **C2 overhaul 2026-05-05:** Session-start queries use SQLite. Saves ~7-8K tokens/session.
+
 
 <!-- Updated: 2026-05-03 — Workplan v4 (Amendment 8), roadmap display on bootstrap, Stage B2 NEXT -->
 <!-- Prior: CO-0008 2026-04-26 — Stage A workflows, Python-backed skill classification, Phase 2B dormant -->
@@ -69,7 +71,7 @@ CONSUMED: 42 sessions  |  REMAINING: 146-211  |  TOTAL: 188-253
 
 ### 2 — Load gap register (filtered bash)
 
-Extract OPEN P1 items only from `gap_register.md`. Do not load full file.
+Extract OPEN P1 items only from `SQLite gaps table`. Do not load full file.
 
 ### 2b — Data health check (conditional)
 
@@ -220,7 +222,7 @@ These workflows are structurally sound but depend on skills that will be rebuilt
 
 ## Gap Register — Write Protocol
 When any skill produces a gap item:
-1. GET `gap_register.md` + SHA via github-io.
+1. GET `SQLite gaps table` + SHA via github-io.
 2. Append: `GAP-XXX | P{1|2|3} | OPEN | {skill} | {section} | {description} | {YYYY-MM-DD HH:MM}`
 3. PUT back via github-io. Commit: `workplan-orchestrator: append GAP-XXX [{YYYY-MM-DD HH:MM}]`
 
@@ -312,7 +314,7 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 ---
 
 ## Risk Escalation
-After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → append REVIEW item to `gap_register.md` via github-io.
+After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → append REVIEW item to `SQLite gaps table` via github-io.
 
 ## Token Rules
 Never re-run a completed stage. Consume existing outputs. Checkpoint per stage: 1–2 lines. Context limit approaching → complete stage, invoke `session-consolidator`, instruct user to start new chat. All timestamps: `YYYY-MM-DD HH:MM`.
