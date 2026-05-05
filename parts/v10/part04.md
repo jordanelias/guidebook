@@ -1815,7 +1815,7 @@ operation without structural implication. See Part 12 §12.4.1.
 
 **Cross-reference:** D-04 (Landmarks); D-08 (Signage); C-04 (LRV
 
-Contrast)
+Contrast); D-02 (Cognitive Simplicity — D-02, D-06, and D-08 share a unified wayfinding evidence base: Marquardt 2011, Shabha 2022, Tao 2018 govern spatial layout, decision-point design, and signage as a coordinated system; apply all three where DEM wayfinding is a design requirement [CON-0187])
 
 **Evidence basis (OT):** Allen's CDM. Dead-end elimination removes a wayfinding failure mode that is specifically dangerous at Allen's CDM cognitive level 3--4: dead ends are not recognisable as such at these cognitive levels and produce wandering behaviour and distress that orientation-intact users do not experience.
 
@@ -2719,7 +2719,7 @@ possibly layout modification. See Part 12 §12.4.1.
 
 (2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3.
 
-**Cross-reference:** A-04 (Acoustic Zoning); B-05 (Lighting Transitions); Part 3 §3.2 (Theoretical framework — F-01 sensory gradient specification is derived directly from Dunn's Sensory Processing Model four-profile mapping: the Zone 1→2→3 gradient operationalises Dunn's sensory seeking→registration→avoiding continuum as spatial design; see §3.2 for the theoretical basis governing F-01 zone parameters [CON-0221])
+**Cross-reference:** A-04 (Acoustic Zoning); B-05 (Lighting Transitions); Part 3 §3.2 (Theoretical framework — F-01 sensory gradient specification is derived directly from Dunn's Sensory Processing Model four-profile mapping: the Zone 1→2→3 gradient operationalises Dunn's sensory seeking→registration→avoiding continuum as spatial design; see §3.2 for the theoretical basis governing F-01 zone parameters [CON-0221]); BIO-01 (Interior planting — biophilic elements complement Zone 2 and Zone 3 sensory spaces: low-stimulation planting provides restorative intermediate stimulus consistent with Kaplan's Attention Restoration Theory; BIO-01 plantings in Zone 2 social/breakout spaces and Zone 3 quiet rooms support the sensory gradient without adding acoustic or visual overload [CON-0238]); A-16 (Sensory Room — Zone 3 terminus; F-01 gradient governs the path leading to A-16 and F-03 governs re-entry from it)
 
 **Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. Sensory gradient from high-stimulation entry to low-stimulation primary occupied space alters the context progressively to keep cumulative sensory load within the processing capacity of sensory-sensitive users; abrupt transitions from high-load to low-load zones constitute shock stimuli that are themselves a trigger.
 
@@ -3350,7 +3350,12 @@ Slip resistance: PTV ≥36 wet throughout shower area
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. DIN. (2011). DIN 18040-2:2011 [German\]. DIN.
 
-**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance); F-07 (thermal zoning — bathroom pre-heating [CON-0191])
+**Cross-reference:** G-03 (Grab Bars); E-07 (Slip Resistance); F-07 (thermal zoning — bathroom pre-heating [CON-0191]); B-09 (Natural Light — bathroom daylight access complements G-04 wet room: natural light reduces reliance on artificial lighting, improves circadian alignment for DEM, and aids VIS users in spatial orientation within the wet room; windowsill ≤900 mm AFF per B-09 provides light without glare at seated/transfer level [CON-0215])
+
+**Population-specific configuration notes [CON-0201]:**
+- **SCI (C5–C8):** Lateral transfer approach requires 1500 mm clear floor space on the non-dominant transfer side; grab bar at 800–900 mm AFF (transfer height); shower chair or fold-down bench mandatory at Universal Mode.
+- **NEU/MS:** Anti-fatigue matting (PTV ≥36) at all standing positions; seating within the wet area required where fatigue is primary presentation; temperature pre-heated entry (F-07 ≤5°C differential) critical to avoid Uhthoff trigger.
+- **DEM:** Colour-differentiated shower controls (C-04 ≥50 LRV) against a muted wall (C-01); no mirrored surfaces (mirrors create identity confusion in late-stage DEM); visible contrast between floor and grab bars.
 
 **Evidence basis (OT):** EHP Framework (create strategy); Biomechanical FOR. The wet room creates a new environmental context (zero-threshold wash space) that enables the occupation of showering/bathing for users who cannot step over a shower tray; the Biomechanical FOR grounds the fall-prevention specifications (PTV ≥36, fold-down seat, grab bar positions derived from transfer mechanics).
 

@@ -387,6 +387,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - Window sill height ≤750 mm AFF for seated natural view access (MOB, ; preferred ≤600 mm AFF in residential care settings for bed-users
 - Interior planting: low-pollen species (pothos, ferns, spider plant); not latex-producing (no ficus); in OFS dwellings: no flowering or fragrant plants (F-06 plant selection)
 - Citations added: Kaplan \& Kaplan (1989) ART; Ulrich (1984, 1991); DSDC (2020); van den Berg (2010)
+- **Sensory gradient coordination [CON-0238]:** BIO-01 interior planting and BIO-04 nature views are complementary to the F-01 sensory gradient — biophilic elements provide restorative intermediate stimulus (Kaplan ART) and are appropriate in Zone 2 (social/active) and Zone 3 (calm/quiet) spaces. Do not specify fragrant, high-movement, or visually complex plantings in Zone 3 or A-16 sensory rooms. Low-texture, low-fragrance species (succulents, ferns) are the correct Zone 3 biophilic element.
 
 **DAR provisions — R-LIV:**
 
