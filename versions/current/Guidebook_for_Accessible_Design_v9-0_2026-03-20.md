@@ -677,6 +677,13 @@ Prevalence: ME/CFS approximately 17 million globally (NIHR, 2023), substantially
 
 ## Part 3: Synthesis, Sequencing and the Co-Occurrence Framework
 
+<!-- CROSS-POPULATION NEUROSCIENCE FRAMEWORK (CON-0188):
+Owen & Crane 2022 (IJERPH 19:14279) provides neuroscience-informed framework unifying three design traditions:
+MH trauma-informed (control, safety, predictability), NDV sensory-responsive (predictability, user control, reduced load),
+DEM dementia-friendly (familiarity, predictability, legibility). Shared mechanism: built environment modulates
+threat/safety neural circuits. This is a foundational methodological connection for §3.2 compound functioning.
+Reference for Part 3 expansion in C-stage. -->
+
 *Accessible Built Environments — Utopian
 
 Best Practice Guidebook v9.0*
@@ -1687,7 +1694,9 @@ RT60: ≤0.3 s (NRC ≥0.90 surfaces throughout)
 Lighting: 100%--0 lux dimming; warm amber 2700 K; no fluorescent
 HVAC: NC-25 maximum; individual control; temperature individually controllable 18–23°C
 Blackout: 100% blackout blinds or no windows
-Location: adjacent to primary circulation; not via another occupied space; adjacent to accessible toilet (≤5 m travel distance — OFS/PAIN/PEM populations)
+Location: adjacent to primary circulation; not via another occupied space; adjacent to accessible toilet (≤5 m travel distance — OFS/PAIN/PEM populati
+
+● WC adjacency rationale (three independent clinical bases): NDV/AUT (interoception difficulties → sudden unpredictable toilet need during sensory overload episode), OFS (orthostatic intolerance → frequent urgent urination, cannot delay or walk far), DEM (incontinence management → short toilet-to-activity distance). Adjacent WC must be accessible from A-16 without re-entering high-stimulation circulation. Amaze/Architecture & Access 2025 Reset Room Design Guide identifies this as a location requirement. [CON-0222]ons)
 Recumbent configuration: room must accommodate a reclined or supine rest position (recliner chair, adjustable lounger, or mat provision); minimum clear floor dimension ≥2400 mm in one axis for supine adult
 Minimum occupancy time: policy to permit occupancy ≥30 minutes without intervention (shorter time limits defeat therapeutic purpose for OFS/PEM populations)
 Decompression zone: ≥3 m transition corridor or anteroom at entry/exit threshold
@@ -1979,7 +1988,7 @@ seated views essential).
 
 ### B-10 Visual Fire Alarm (Strobe VAD Throughout Building)
 
-**Applicable Groups:** DEAF, DBL
+**Applicable Groups:** DEAF, DBL, NDV, NEU/epilepsy, DEM
 
 **Description:** Visual Alarm Devices (VAD) installed in all areas where deaf or hard-of-hearing users may be present. Minimum 75 candela; 1--3 Hz flash rate; BS EN 54-23:2010 Category W compliant. Coverage: all sleeping areas, bathrooms, meeting rooms, assembly areas.
 
@@ -1992,6 +2001,8 @@ Independent circuit from audio alarm system
 Monthly test with visual confirmation logged
 
 Position: visible from any point in room (ceiling or high-wall mount)
+
+● Sequenced multi-modal alarm (replaces simultaneous activation): T+0s vibrotactile personal alert (K-04). T+3s steady amber pre-alert (not strobe). T+5s VAD at 0.5 Hz (reduced from 1-3 Hz) + voice instruction. Staff-mediated DEM evacuation concurrent with sequence. Simultaneous multi-modal alarm is itself an accessibility barrier: NDV strobe+siren → sensory overload → freeze response; NEU/epilepsy unsynchronized strobe → seizure risk (photosensitive epilepsy threshold: 3 Hz); DEM alarm without comprehension → undirected panic. [CON-0217]
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 10; Part 11 §11.4.
 
@@ -3546,6 +3557,8 @@ In-room shading control: motorised where manual access limited
 Thermostat/temperature adjustment: ≤1100 mm AFF; ≤22 N force
 
 DEM: BMS with override limits rather than fully individual control (overheating/hypothermia risk)
+
+● Population-prioritized control interface hierarchy (synthesized from FDR-NEW-15 tremor + FDR-NEW-16 C4-C5): (1) Voice control — PRIMARY for severe motor impairment (NEU/tetraplegia, severe spasticity). (2) Switch access — C4-C5 tetraplegia (sip-puff, head switch). (3) Large rocker ≥25 mm — tremor/MOB/NEU. (4) Lever/paddle — UPL/reduced grip. (5) Capacitive touchscreen — LAST RESORT, inaccessible for tremor, tetraplegia, severe spasticity. Voice is not an 'alternative' — for severe motor impairment populations it is the primary interface. Touchscreen-only control systems exclude the most severely impaired users. [CON-0202]
 
 CAOT principle: adjustability without staff mediation
 
@@ -6115,26 +6128,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Verified outcomes:** - >100,000 units with BCA UD Index specification (national scale) - Flat-to-care-home transfer rate significantly lower in UD-specified blocks vs standard blocks (HDB 5-year longitudinal, n>5,000; p<0.01 — Tier 2) - Specific finding on anthropometrics: grab bar heights optimal for Asian users confirmed at 820 mm AFF vs 800--900 mm in UK/Canadian standards — documented discrepancy with Western OT data, indicating that standards should be calibrated to population anthropometric data rather than imported from other jurisdictions
 
-**Cost data:** BCA estimates UD provisions added approximately SGD 1,000--3,000 per flat (c. £600--£1,800 / CAD $1,000--$3,000) over standard HDB specification at Platinum level — representing approximately 0.5%--1.5% of total flat construction cost.
-
-**Limitations:** National programme data; no randomised assignment to UD vs standard blocks. Confounding factors (socioeconomic status, support services, care culture) not fully controlled. HDB data access is restricted; full statistical methods are not publicly available.
-
-### §12.08 — Gallaudet University SLCC, Washington DC (USA, 2006–ongoing)
-
-**Building type:** Student Life and Conference Centre (university social facility)
-
-**Primary population:** Deaf and Hard of Hearing students and staff (DEAF, DBL)
-
-**Evidence quality:** Tier 2 (quantitative spatial analysis); Tier 3 (qualitative user study n=47)
-
-**Key design strategies:** See §12.02 (DeafSpace principles); SLCC is the most longitudinally studied single DeafSpace building.
-
-**Verified outcomes:** - Corridor widths of 1800 mm confirmed by video analysis to support simultaneous two-user signing and walking without communication interruption - RT60 ≤0.4 s in primary signing corridors confirmed by acoustic measurement - 90% of seating positions with ≥3 m sightline to primary approach (spatial analysis) - Circular/fan seating produces significantly higher communication satisfaction than rectangular grid (qualitative study, n=47; Tier 3)
-
-### §12.09 — De Hogeweyk Dementia Village, Weesp, Netherlands (BuroKade / Vivium Care Group, 2009)
-
-**Building type:** Long-term care residence designed as a normalised village community
-
-**Primary population:** 188 residents with severe dementia (DEM — late stage)
-
-**Evidence quality:** Tier 2 (longitudinal clin
+**Cost data:** BCA estimates UD provisions added approximately SGD 1,000--3,000 per flat
