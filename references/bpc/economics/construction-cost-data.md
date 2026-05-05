@@ -37,7 +37,10 @@ France FFB claims 2–5% surcoût — contested by disability organisations as u
 - Korean BF certification cost impact — no cost premium study found
 
 ### Citation mining
-Forward/backward citation mining not yet performed. Priority targets: Ielegems 2024 reference list (10+ relevant prior studies cited); TERRAGON/DStGB bibliography.
+**Pass completed:** 2026-05-05 (depth-3 user-authorised override)
+**New sources added:** 9 (D1: 7, D2: 6, D3: 2 = 15 total; 9 net new to economics BPC)
+See `economics-sources.md` for full entries.
+**Remaining:** Ielegems 2024 reference list (built environment cost premium — architecture literature, not PubMed); TERRAGON/DStGB bibliography (German regulatory literature); Gitlin ABLE RCT correct PMC (see erratum in economics-sources.md).
 
 ### Bottom-up findings (functional deficit pass)
 {Not yet run — requires FDR integration for population-specific cost implications}
