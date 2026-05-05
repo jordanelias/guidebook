@@ -3208,7 +3208,7 @@ furniture replacement and procurement. See Part 11 §11.4.1.
 
 ### G-03 Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)
 
-**Applicable Groups:** MOB, DEM, PAIN, UPL
+**Applicable Groups:** MOB, DEM, PAIN, UPL, OFS
 
 **Description:** Toilet: bilateral horizontal bars at 800--900 mm AFF on both sides of WC centre line; angled bar at cistern wall. Bar diameter: 32--45 mm (circular/oval). Load rating: ≥1.5 kN continuous (static); ≥2.5 kN peak dynamic (fall-arrest). 18 mm structural plywood blocking, minimum 300×600 mm per bar position. 35--45 mm clearance from wall. Contrast: ≥30 LRV vs wall AND floor.
 
@@ -3230,11 +3230,13 @@ LRV: ≥30 vs wall AND floor (JOTA, 2022)
 
 Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
+● Continuous horizontal rail: 850--900 mm AFF along WC wall → basin wall → door wall. Covers the 1--2 m unsupported gap between WC grab bars and basin — the highest fall-risk bathroom segment. Required for: MOB/hemiplegia (unilateral support), OFS (post-STS orthostatic risk, highest fall probability in first 30s of standing), DEM (disorientation during unsupported transition). [CON-0216]
+
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 10 for DAR blocking provisions; Part 11 §11.4.
 
 **Key citations:** Levine, I.C., Nirmalanathan, K., Montgomery, R.E., \& Novak, A.C. (2024). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12. doi:10.2196/jmir.2024. ✅ [Verified: JMIR Rehab Assist Technol; KITE/UHN Toronto team; n=65; motion capture; body height correlated with optimal grasp position — informs height range specification.] Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., \& Prilutsky, B. (2019). Effects of bilateral swing-away grab bars on the biomechanics of stand-to-sit and sit-to-stand toilet transfers. *Disability and Rehabilitation: Assistive Technology*, 14, 292–300. ✅ [Verified: bilateral grab bar placement reduces lower limb joint moments — direct biomechanical basis for bilateral specification.] Bateni, H., \& Maki, B.E. (2005). Assistive devices for balance and mobility. *Archives of Physical Medicine and Rehabilitation*, 86(1), 134–145. ✅ British Standards Institution. (2018). BS 8300:2018. BSI. Deen, H.H.Z., Levine, I.C., Montgomery, R.E., Pong, S.M. & Novak, A.C. (2025). Suction cup handholds have low efficacy in laboratory evaluation with typical bathing conditions and wall materials. *Journal of Rehabilitation and Assistive Technologies Engineering*. DOI: 10.1177/20556683251370322. [KITE Institute, Toronto. Suction cup handholds fail under typical bathing conditions — strengthens permanent wall-mounted grab bar specification. Added 2026-05-04 citation mining Phase 2.]
 
-**Evidence note (v9.0):** Original Levine citation (2023, toilet transfer) was unverified — removed. Replaced with Levine et al. (2024), the published KITE/UHN bathtub STS study (JMIR Rehab Assist Technol), which directly addresses grab bar grasp positioning and is from the same research team. Evidence tier: Tier 1 OT clinical research (biomechanical, n=65, peer-reviewed). Lee et al. (2019) provides independent bilateral placement evidence.
+**Evidence note (v9.0, updated 2026-05-04):** ● G-03 is the most robustly evidenced single item in the guidebook. Three independent systematic reviews confirm grab bar efficacy: Clemson 2023 Cochrane (22 RCTs, 8,463 participants, 38% fall reduction), Crosby 2026 (9 RCTs, OR ~0.70), Kim 2025 (20 studies, bathroom modifications most impactful). GRADE: HIGH. [CON-0203] Biomechanical evidence from KITE/UHN Toronto (Levine 2025, Greene 2024, Guay 2020) establishes optimal grasp location and bilateral placement. Lee et al. (2019) provides independent bilateral placement evidence. Deen et al. (2025) demonstrates suction cup handholds fail under typical bathing conditions — permanent wall-mounted installation is the only reliable specification. Cross-population extension: PAIN populations require grab bars positioned for weight-bearing avoidance during pain-modified transfer (FDR-CMP-01). OFS populations require grab bars within easy reach without stretching — reduced energy budget means every unnecessary reach movement costs disproportionately. Bilateral fold-down bars at 813mm (Lee 2017/18) serve MOB, PAIN, and OFS. [CON-0185]
 
 (2018). BS 8300:2018. BSI.
 
@@ -3259,7 +3261,11 @@ Shower clear area: ≥900 mm; ≥1200×900 mm preferred
 
 Large body size : ≥1500×1500 mm clear shower area (see Supplementary Volume, Supp. Part 4)
 
+● Power WC + OFS compound profile: ≥2200×2500 mm total bathroom clear dimension. Components: ø1800 mm turning + 300 mm bilateral grab bars + 1200×1200 mm shower + 900--1000 mm WC lateral + 900×900 mm door swing + ≥500 mm OFS staged rising space. Note: ø1800 mm turning circle does not fit between deployed fold-down bars (1200 mm gap) — sequencing dependency requires bars to be folded up during entry. [CON-0210]
+
 Slip resistance: PTV ≥36 wet throughout shower area
+
+● Thermal shock prevention: inter-room temperature differential ≤5°C between bathroom and adjacent occupied spaces. Bathroom pre-heating required before occupant entry. Japan MHLW 2023: 6,073 deaths/year attributed to bathing-related thermal shock. [CON-0191]
 
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part 11 §11.4.
 
@@ -6135,6 +6141,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Key design strategies (typical modifications funded):** - Grab bar installation (G-03) — highest volume single intervention - Threshold modification and ramp installation (E-06, E-03) - Bathroom adaptation: shower seat, lever controls (G-04, I-01) - Kitchen modification: lever taps, lowered counter sections (I-01, I-02) - Stairlift installation (retrofit)
 
-**Verified outcomes:** - >6,500 homes adapted (BC Housing, programme data to 2023) - Programme evaluation (BC Housing, 2019, n=412): 91% of recipients reported improved ability to perform daily activities in the adapted home - 78% reported reduction in falls or near-falls following adaptation - 68% reported ability to remain in their home that they had not expected to maintain without adaptation
-
-**Cost data:** Average modification cost: CAD $7,500 per home (grants up to CAD $20,000 available); typical grab bar + threshold + lever hardware package: CAD $2,000--$4,500. Cost-per-outcome metrics: approximately CAD $80--$100 per percentage-point improvement in A
+**Verified outcomes:** - >6,500 homes adapted (BC Housing, programme data to 2023) - Programme evaluation (BC Housing, 2019, n=412): 91% of recipients reported improved ability t
