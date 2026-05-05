@@ -1,3 +1,6 @@
+<!-- DEPRECATED 2026-05-05 — moved to skills/deprecated/ during C2 skill overhaul. -->
+<!-- Reason: Document-assembly pipeline skill; monolithic markdown approach superseded by SQLite structured data. -->
+
 ---
 name: fix-linebreaks
 description: >
