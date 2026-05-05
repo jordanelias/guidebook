@@ -194,7 +194,7 @@ Primary occupied spaces: NC 25 (sensitive populations); NC 30 (general)
 No single zone transition 
 NC-10 change
 
-Restorative intervals: at least one acoustic low-point per 20m of primary journey
+Restorative intervals: at least one acoustic low-point per 20m of primary journey ○ [UNSUPPORTED — concept evidence-based (Kaplan & Kaplan 1989 attentional restoration theory; PAS 6463:2022 sensory gradient); 20m interval threshold has no quantified empirical derivation in built-environment literature]
 
 **Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic zoning through graduated material and layout planning is zero-cost at design stage. Retrofit requires redecoration, material replacement, and possible spatial reconfiguration. See Part 12 §12.4.1.
 
@@ -759,6 +759,8 @@ Blackout: 100% blackout blinds or no windows
 ● Alerting: vibrotactile + voice alarm ONLY; no VAD strobe in A-16 spaces [CON-0217]. Primary occupants are NEU (seizure risk) and NDV (photosensitive) — strobe is contraindicated. Fire alarm via bed-shaker/vibrotactile device (K-04) + voice announcement. Evidence: Jordan & Vanderheiden 2024 (VFA-01); Fisher 2022 (VFA-06). Cross-ref B-10 PSE safety note.
 Location: adjacent to primary circulation; not via another occupied space
 
+Accessible toilet: within 15 m of A-16 entry (mandatory; not discretionary) — OFS/ME users with PEM cannot tolerate extended travel during episodes; DEM users require toilet access from the retreat space without wayfinding complexity; route must be direct and unobstructed ○ [Tier 2 — NICE NG206 §hospital-env; CDC ME/CFS clinical guidance; DSDC EADDAT 2022; no standard specifies maximum distance]
+
 **Retrofit cost note:** Retrofit penalty: HIGH. Sensory room provision requires dedicated floor area — a planning decision at design stage. Retrofit requires spatial reorganisation within a finished building. Minimum 8 m² cannot be created from circulation space. See Part 12 §12.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0, Category 11. RHF. National Autistic Society. (2023). Creating autism-friendly environments. NAS.
@@ -1008,7 +1010,7 @@ ramps gradually from brighter to dimmer space.
 
 **Specifications:**
 
-Zone depth: 3 m minimum; 5 m preferred
+Zone depth: 3 m minimum; 5 m preferred ○ [UNSUPPORTED — 5m preferred depth derived from VIS pupil dark-adaptation research (≥3 minutes rod-cone transition); no built-environment study validates this interval as the correct spatial expression of that physiological process; threshold is expert-reasoned, not empirically tested]
 
 Illuminance gradient: ramp across zone depth (no step change)
 
@@ -3278,7 +3280,9 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 | DE | DIN 18040-1 §4.3.6 | 850mm | — | — | Both sides |
 | NO | TEK17 | Referenced | — | — | — |
 | ISO | ISO 21542:2021 §20 | 700-800mm | 30-40mm | ≥1100N | Both sides |
-| **Guidebook** | **G-03** | **Clinical positioning** | **32-38mm** | **≥1100N** | **Bilateral** |
+| **Guidebook** | **G-03** | **Clinical positioning** | **32-38mm** | **≥1.5 kN static / ≥2.5 kN dynamic** | **Bilateral** |
+
+> **WHO APS-15:2022 inadequacy flag [GAP-OPS-02]:** WHO APS-15:2022 specifies a grab bar load rating of 110 kg (≈1.08 kN). KITE Research Institute measurements (2023–2025, Tier 3) record 1.3 kN peak transfer forces in real-world sit-to-stand and bathtub exit transfers — exceeding the WHO specification by ≈20%. The WHO rating is clinically inadequate as a minimum for fall-arrest scenarios involving larger users or dynamic loading. Guidebook G-03 specifies ≥1.5 kN static / ≥2.5 kN peak dynamic — the correct design target. Do not cite WHO APS-15 as the load rating authority for this specification; cite KITE Research 2023–2025 (Tier 3) and structural engineering standards (BS 8300, AS 1428.1 ≥1100N is also below KITE observed peak; upgrade to ≥1.5 kN recommended in any revision).
 
 **HIGH DIVERGENCE:** Horizontal grab bar heights vary: US 838-914mm vs UK 680mm vs ISO 700-800mm vs DE 850mm.
 
