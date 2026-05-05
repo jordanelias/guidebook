@@ -22,6 +22,15 @@ description: >
 
 ## 1. Mining Protocol
 
+### Pre-mining CHECK (mandatory)
+Before mining any source:
+1. GET `references/citation-mining-register.md` from GitHub
+2. Search for the source (by author/year or REF-ID)
+3. If found with both B=✓ and F=✓ → **SKIP** (already fully mined)
+4. If found with partial → mine only the missing direction
+5. If not found → proceed with full mining
+6. **Skipping this check = error** (per project-standards)
+
 ### Backward Mining (reference list)
 For each input source:
 1. Retrieve the source's reference list via:
@@ -94,6 +103,7 @@ A discovered source is NOT relevant if:
 ## 4. Integration with research-log-manager
 
 After mining:
+- **Citation mining register:** Append each mined source to `references/citation-mining-register.md` with REF-ID, source, DOI, slug, B/F status, date, yield, session. This is the primary duplication-prevention mechanism. Commit register update in the same batch as BPC/connection updates.
 - New sources are added to the BPC entry for the slug under `citation_mining`:
   ```yaml
   citation_mining:

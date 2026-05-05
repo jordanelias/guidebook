@@ -8,6 +8,7 @@ Governed files and their token limits (1 token ≈ 4 chars, conservative):
   - references/project-standards.md       10K tokens  → ~40,000 chars
   - references/connections/_index.md       8K tokens  → ~32,000 chars
   - references/slug-registry.md            6K tokens  → ~24,000 chars
+  - references/citation-mining-register.md  6K tokens  → ~24,000 chars
 
 Usage:
     python3 scripts/check_thresholds.py               # check all governed files
@@ -56,6 +57,12 @@ THRESHOLDS = [
         "max_tokens": 6000,
         "description": "Slug registry",
         "note": "Consider splitting by topic if growing",
+    },
+    {
+        "glob": "references/citation-mining-register.md",
+        "max_tokens": 6000,
+        "description": "Citation mining register (duplication prevention)",
+        "note": "Archive COMPLETE slug sections to references/citation-mining-archive.md when over threshold",
     },
     {
         "glob": "sessions/session_*.md",
