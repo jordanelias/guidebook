@@ -249,7 +249,7 @@ Called via bash_tool. Script enforces constraints mechanically.
 | sensory-coherence-checker | To convert (C-stage) |
 | validate_schema.py | Built (CO-0008) |
 
-### Hybrid (14)
+### Hybrid (15)
 Claude reads SKILL.md for judgment; output validated by _validate.py.
 
 | Skill | Validator status | Model |
@@ -259,7 +259,8 @@ Claude reads SKILL.md for judgment; output validated by _validate.py.
 | citation-miner | To build (C-stage) | Sonnet 4.6 |
 | citation-verifier | To build (C-stage) | Sonnet 4.6 |
 | functional-deficit-researcher | To build (C-stage) | Opus 4.6 (synthesis) |
-| connection-scout | To build (C-stage) | Opus 4.6 |
+| connection-discovery | To build (B2) | Opus 4.6 |
+| connection-auditor | To build (B2) | Sonnet 4.6 |
 | cross-population-conflict-mapper | To build (C-stage) | Opus 4.6 (synthesis) |
 | economics-researcher | To build (C-stage) | Sonnet 4.6 |
 | jurisdiction-tracker | To build (A8) | Sonnet 4.6 |
