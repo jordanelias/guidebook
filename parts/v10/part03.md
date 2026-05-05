@@ -37,7 +37,7 @@ Epidemiological data confirms that the design assumption of a single-category us
 ---
 
 
-#### §3.2.3 Compound Functioning and Non-Additive Disability
+#### §3.2.3b Compound Functioning and Non-Additive Disability
 
 The ICF and competence-press models operate on individual functional dimensions. Multimorbidity research demonstrates that co-occurring conditions produce supra-additive disability: each additional chronic condition increases disability risk by approximately 16%, and the interaction between conditions accelerates functional decline faster than any single-condition model predicts (BMC Geriatrics 2022, MWI). Clarke et al. (American Journal of Epidemiology) demonstrated a 4.52x multiplicative interaction between built environment quality and lower-extremity impairment — the environment does not add to impairment; it multiplies it.
 
