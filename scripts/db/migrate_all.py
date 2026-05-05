@@ -546,6 +546,77 @@ def create_item_stubs(conn):
     return count
 
 
+def author_person_specific_notes(conn):
+    """C3: Author person_specific_note (Mode S language) for all items."""
+    CATEGORY_PATTERNS = {
+        "A": ("individual auditory processing profile, hearing device type, and sensory tolerance thresholds",
+              "acoustic parameters (RT60, background noise level, amplification type)"),
+        "B": ("individual visual function, photosensitivity profile, and circadian needs",
+              "lighting parameters (illuminance, colour temperature, dimming range, glare control)"),
+        "C": ("individual contrast sensitivity, colour perception, and cognitive processing of visual cues",
+              "contrast and colour specifications (LRV differential, surface finish, colour coding system)"),
+        "D": ("individual cognitive mapping ability, spatial orientation, and sensory processing preferences",
+              "wayfinding provisions (landmark type, signage complexity, route legibility)"),
+        "E": ("individual mobility device dimensions, companion requirements, and movement patterns",
+              "circulation dimensions and threshold specifications"),
+        "F": ("individual thermoregulation, chemical sensitivity, and respiratory function",
+              "thermal and air quality parameters (temperature range, ventilation rate, filtration level)"),
+        "G": ("individual anthropometry, transfer method, grip strength, and postural support needs",
+              "fixture dimensions and positioning (height, reach range, grab bar placement)"),
+        "H": ("individual hand function, grip type, cognitive processing, and assistive technology use",
+              "control specifications (operating force, height, interface type, feedback mode)"),
+        "I": ("individual transfer type (standing pivot, seated, lateral, hoist), balance, and thermal sensitivity",
+              "bathroom layout, fixture positioning, and safety specifications"),
+        "J": ("individual reach range, seated/standing work height, and upper limb function",
+              "workspace dimensions and equipment positioning"),
+        "K": ("individual communication mode, sensory channel availability, and assistive technology compatibility",
+              "alerting and communication provisions (modality, intensity, placement)"),
+    }
+    POP_FACTORS = {
+        "MOB": "wheelchair type and dimensions, transfer method, companion space requirements",
+        "VIS": "residual vision level, contrast sensitivity, screen reader/magnification use",
+        "DEAF": "hearing device type (HA/CI/BAHA), sign language use, visual communication needs",
+        "DEM": "cognitive level (Allen CDM), orientation ability, familiar environment factors",
+        "NDV": "sensory profile (Dunn model), self-regulation strategies",
+        "PAIN": "pain triggers, fatigue pacing requirements, grip force tolerance",
+        "OFS": "orthostatic tolerance, exertion ceiling, rest frequency requirements",
+        "NEU": "motor control level, balance, cognitive fatigue pattern",
+        "DBL": "combined sensory loss pattern, intervenor communication method, tactile navigation",
+    }
+    items = conn.execute("""
+        SELECT DISTINCT s.item_code, GROUP_CONCAT(DISTINCT sp.population_code) as pops
+        FROM specification s
+        LEFT JOIN specification_population sp ON s.spec_id = sp.spec_id
+        WHERE (s.person_specific_note IS NULL OR s.person_specific_note = '')
+          AND s.item_code NOT LIKE '[%'
+        GROUP BY s.item_code
+    """).fetchall()
+    count = 0
+    for code, pops in items:
+        category = code[0]
+        factor, action = CATEGORY_PATTERNS.get(category, (
+            "individual functional capacity and environmental interaction patterns",
+            "specification parameters"))
+        pop_list = (pops or "").split(",")
+        relevant = [p for p in pop_list if p in POP_FACTORS]
+        if relevant:
+            pop_detail = "; ".join(f"{p}: {POP_FACTORS[p]}" for p in relevant[:3])
+            note = (f"OT assessment resolves {action} to the person's own needs "
+                    f"based on {factor}. Key individual factors: {pop_detail}.")
+        else:
+            note = (f"OT assessment resolves {action} to the person's own needs "
+                    f"based on {factor}.")
+        if len(note) > 500:
+            note = note[:497] + "..."
+        result = conn.execute(
+            'UPDATE specification SET person_specific_note = ? WHERE item_code = ? '
+            'AND (person_specific_note IS NULL OR person_specific_note = "")',
+            (note, code))
+        count += result.rowcount
+    conn.commit()
+    return count
+
+
 def verify(conn):
     """Print verification report."""
     tables = [
@@ -1084,6 +1155,10 @@ def main():
     print("Extracting Part 4 content...")
     extract_count = extract_part4_content(conn)
     print(f"  → {extract_count} items enriched")
+
+    print("Authoring Mode S notes...")
+    ps_count = author_person_specific_notes(conn)
+    print(f"  → {ps_count} person_specific_notes authored")
 
     verify(conn)
     conn.close()
