@@ -1439,17 +1439,21 @@ UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent
 
 **Specifications:**
 
-General: ≥30 LRV contrast at all critical junctions
+General: ≥30 LRV contrast at all critical junctions (code-compliance minimum)
+
+● Best practice: ≥50 LRV at all contrast-dependent provisions [CON-0043]. 30 LRV is a regulatory floor with no empirical validation — Manandhar et al. 2022 documents it as "poorly visible" for severe VI
+
+● Critical junctions (stair nosings, platform edges, kerb lines): ≥65% Michelson contrast [CON-0043, CON-0161]. Evidence: ~2.5x the 30% standard needed for reliable boundary detection at severe VI
 
 DEM/elderly public: ≥35 LRV
 
 Aged care/DeafBlind: ≥40 LRV
 
-Stair nosings: ≥30 LRV full-width strip (55--75 mm depth)
+Stair nosings: ≥50 LRV full-width strip (55--75 mm depth); ≥65% Michelson where achievable [CON-0043]
 
 Grab bars: LRV vs wall AND vs floor (JOTA, 2022)
 
-Door frames: ≥30 LRV vs adjacent wall throughout building
+Door frames: ≥30 LRV vs adjacent wall throughout building; ≥50 LRV best practice
 
 **Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 12 §12.4.
 
