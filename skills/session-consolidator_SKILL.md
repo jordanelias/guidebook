@@ -9,9 +9,10 @@ description: >
   session close", "save progress", or when workplan-orchestrator session-end protocol runs.
 ---
 > **C2 overhaul 2026-05-05:** Register queries now use SQLite instead of markdown/YAML.
+> **Phase 1-C verified 2026-05-04:** Steps 1b (gaps, connections) confirmed SQLite-native. No remaining markdown register dependencies.
 
 
-<!-- Updated: CO-0006 2026-04-08 — quarterly skill performance review protocol added -->
+<!-- Updated: 2026-05-04 — Phase 1-C verification pass -->
 
 **Model:** Sonnet 4.6
 **GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
