@@ -261,3 +261,17 @@ The practical implication: rest seating (I-03) should be placed AT TWSI attentio
 **ISW action:** K-05: add quantified thresholds (MS ≤22C, DEM ≥24.9C, FMS variable). Part 5: add thermal profiling to residential OT assessment checklist.
 
 ---
+
+
+<!-- Batch 3 additions 2026-05-04 -->
+
+### CON-0233
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** K-05, H-04, H-02
+**Filed:** health-and-symptom-management
+
+**Connection type:** CROSS-POPULATION
+**Connection:** K-05 (thermal comfort assessment), H-04 (adjustable-height work surface), and H-02 (individual environmental control) form a personal environment cluster. Citation mining strengthened K-05 evidence with Baquero 2023 (neutral temp 24.9C for older adults) and Berwick 2021 SR (FMS thermal sensitivity). Individual thermal control (H-02) must coordinate with thermal assessment (K-05) and workstation ergonomics (H-04).
+**ISW action:** K-05: add Baquero 2023 quantified thresholds. H-04: add thermal comfort note — work surface near window requires individual thermal control (H-02). H-02: cross-reference K-05 assessment.

@@ -484,3 +484,32 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 **Action required:** BIO-01: flag healthcare system-level evidence. Part 11: add biophilic economics section with Al Khatib 2024 as primary source for healthcare cost-benefit.
 
 **Disposition notes:** —
+
+
+<!-- Batch 3 additions 2026-05-04 -->
+
+### CON-0188
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Multiple (cross-cutting design framework)
+**Filed:** cross-cutting
+
+**Connection type:** FRAMEWORK
+**Connection:** [INFERRED] Cross-cutting design framework connection. Likely synthesizes multiple population-specific provisions into a unified design approach. May relate to the three-tier design hierarchy (Universal Mode / Population Mode / Individual Mode) documented in Part 3.
+**ISW action:** [NEEDS SCOUT REVIEW — cross-cutting framework connections require Opus-level analysis of the complete Part 3 hierarchy.]
+
+---
+
+### CON-0213
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** H-05, G-09
+**Filed:** cross-cutting
+
+**Connection type:** CROSS-POPULATION
+**Connection:** H-05 (emergency pull cord) and G-09 (likely a bathroom/bedroom fixture) share a safety-critical population requirement. Both need to be accessible from floor level (fallen occupant) and standard height. DBL populations need haptic identification of both devices.
+**ISW action:** H-05: verify floor-level cord specification. G-09: add cross-reference to H-05. Both: add DBL haptic identification note.
+
+---

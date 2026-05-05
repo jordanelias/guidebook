@@ -869,3 +869,32 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **ISW action:** A-16: add note — alerting in sensory rooms: vibrotactile + voice alarm only; no VAD strobe. Cross-ref B-10 PSE safety note and K-04.
 
 ---
+
+
+<!-- Batch 3 additions 2026-05-04 -->
+
+### CON-0222
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** A-16, Part 7 NR matrices
+**Filed:** sensory-environment
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** A-16 (sensory room) provision must appear in all Part 7 non-residential matrices. Citation mining added Leonardi 2025 SR (SRU-05) confirming user control as primary variable for MSE effectiveness. Part 7 matrices should specify A-16 as mandatory provision in all building types serving NDV/AUT, DEM, or OFS populations.
+**ISW action:** Part 7: verify A-16 appears in NR-EDU, NR-HLT, NR-OFC, NR-CUL matrices. Add Leonardi 2025 as supporting evidence for mandatory (not recommended) provision.
+
+---
+
+### CON-0183
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** K-01 (RT60), K-02 (background noise)
+**Filed:** sensory-environment
+
+**Connection type:** CROSS-POPULATION
+**Connection:** RT60 ≤0.3s converges across DEAF (speech intelligibility), NDV (acoustic calm), and MH (cognitive load reduction) via independent clinical mechanisms. Citation mining added Cueille 2022 (ASI-06, 18dB HI penalty) and ASI-08 SR (HI cannot adapt). K-01/K-02 likely refer to Part 7 room-level acoustic specifications (not Part 4 K-category items which are DeafBlind). These room-level specs should adopt the RT60 ≤0.3s universal specification per CON-0039.
+**ISW action:** Part 7: apply RT60 ≤0.3s to all speech-critical room specifications in NR matrices. Add citation mining evidence (ASI-06, ASI-08).
+
+---

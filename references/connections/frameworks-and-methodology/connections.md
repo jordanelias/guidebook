@@ -839,3 +839,110 @@ These programme models demonstrate that the highest-quality national systems sti
 **Action required:** Part 1: cite Habinteg 2024 as practice-level validation of cross-population framework. Part 9: cite as reference cross-population OT residential assessment guide.
 
 **Disposition notes:** —
+
+
+<!-- Batch 3 additions 2026-05-04 -->
+
+### CON-0192
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 3 §3.8
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 3 §3.8 governs cross-population conflict resolution methodology. This connection likely adds evidence or process refinement to the conflict resolution framework based on BPC findings during B1/B2 phases.
+**ISW action:** [NEEDS SCOUT REVIEW — insufficient context to determine specific §3.8 amendment. Load Part 3 and relevant BPCs in dedicated session.]
+
+---
+
+### CON-0193
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 1 §1.4
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 1 §1.4 likely covers the guidebook's evidence methodology or scope statement. This connection probably adds an epistemic disclosure or evidence quality note.
+**ISW action:** [NEEDS SCOUT REVIEW — load Part 1 in dedicated session.]
+
+---
+
+### CON-0199
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 6 R-BED, Part 6 R-KIT
+**Filed:** frameworks-and-methodology
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** [INFERRED] Bedroom (R-BED) and kitchen (R-KIT) residential matrices need cross-population coordination. Likely involves ensuring consistent reach range (H-01), control heights, and thermal specifications across both room types.
+**ISW action:** Verify R-BED and R-KIT matrices share consistent H-01 reach range, I-02 lever hardware, and F-07 thermal specifications. Add cross-reference between matrices.
+
+---
+
+### CON-0218
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 3 §3.x
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 3 structural connection. Likely adds compound interaction methodology (per §3.2.3) based on BPC evidence from citation mining or cross-population analysis.
+**ISW action:** [NEEDS SCOUT REVIEW — load Part 3.]
+
+---
+
+### CON-0221
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** F-01, Part 3
+**Filed:** frameworks-and-methodology
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** [INFERRED] F-01 (sensory gradient) intersects with Part 3 methodology. The sensory gradient specification derives from Dunn's model (Part 3 §3.2 theoretical framework). This connection likely strengthens the evidence link between Dunn's four sensory profiles and the spatial zone specifications in F-01.
+**ISW action:** Part 3: verify Dunn's model → F-01 spatial zone mapping is documented. F-01: add Part 3 §3.2 cross-reference.
+
+---
+
+### CON-0225
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 11, Part 12
+**Filed:** frameworks-and-methodology
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** [INFERRED] Part 11 (DAR provisions) and Part 12 (case studies/economics) share a common theme: cost implications of design decisions. DAR provisions that are missed at design stage have documented cost multipliers. Part 12 economic evidence (CAPABLE ROI, Habinteg 4:1) should be cross-referenced with Part 11 cost-of-omission data.
+**ISW action:** Part 11: add economic cross-reference to Part 12 for each DAR provision showing cost multiplier. Part 12: reference Part 11 DAR provisions as the mechanism for achieving economic returns.
+
+---
+
+### CON-0228
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 9 §9.5, G-03
+**Filed:** frameworks-and-methodology
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** Part 9 §9.5 likely covers OT assessment protocols. G-03 grab bar positioning requires OT assessment for Mode S (280mm above seat surface per individual user). This connection links the OT assessment protocol to the grab bar specification.
+**ISW action:** Part 9 §9.5: verify grab bar positioning is included in OT assessment checklist. G-03: add Part 9 §9.5 cross-reference for Mode S assessment.
+
+---
+
+### CON-0230
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 11, G-03
+**Filed:** frameworks-and-methodology
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** Part 11 DAR provisions must include G-03 grab bar blocking as a mandatory construction-stage item. Blocking is NOT-RETROFITTABLE without 75x cost multiplier (per Part 6 R-BA DAR table). This connection ensures the DAR list captures all blocking positions.
+**ISW action:** Part 11: verify G-03 blocking is explicitly listed with cost multiplier. Add Lee/Sanford 2018 bilateral specification to DAR blocking requirements.
+
+---
