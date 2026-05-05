@@ -3418,6 +3418,8 @@ Reception counters: accessible height section per G-06
 
 **HIGH DIVERGENCE:** DE DIN 18040-2 is the ONLY jurisdiction requiring height-adjustable work surfaces. Range 650-870mm covers seated wheelchair (650mm) to standing (870mm).
 
+> **SCOPE-04 "adjustable" audit [GAP-SCOPE-04]:** G-05 electric height-adjustment operates correctly for MOB/UPL/OFS/PAIN users who can initiate the adjustment independently. **Failure modes for DEM late-stage and IntD without support:** (1) DEM late-stage users cannot recall the correct height or operate the control panel without prompting — electric height-adjustment at a DEM workstation requires carer-operable mechanism with a single-button or pre-set memory function; (2) IntD users without support may need height pre-set to their individually assessed height before the session begins. **Resolution:** in DEM or IntD-serving workplaces, specify motorised height-adjustable desks with ≥3 memory-height presets and single-button recall at accessible height (≤1100 mm AFF). Do not specify manual crank. Specify carer-training for height reset at each use. ○ [Tier 2 — RCOT; CAOT 2024; no standard specifies memory-height function for DEM workstations]
+
 
 ### G-06 Reception Counter (Accessible Height Section — 760--860 mm AFF)
 <!-- design_stage_lock: DD -->
@@ -3626,6 +3628,8 @@ Acoustic management: (a) sound-absorbing treatment sized to achieve the RT60 tar
 DEM: BMS with override limits rather than fully individual control (overheating/hypothermia risk)
 
 CAOT principle: adjustability without staff mediation
+
+> **SCOPE-04 "adjustable" audit [GAP-SCOPE-04]:** H-02 individual environmental control is the core "adjustable" provision for all populations. **Failure mode for IntD without support:** complex multi-parameter control panels (multi-zone BMS touchscreen, multi-slider interfaces) are inaccessible to IntD users without cognitive support. **Resolution:** IntD-serving environments: specify simplified IEC — single-slider or 3-position switch per parameter (cool/comfortable/warm; dim/medium/bright). Pre-set "My Settings" recall at single switch (CON-0095 voice + tactile + adjusted height). Where staff support is provided, IEC design can be staff-operated with user preference document maintained in the care plan. ○ [Tier 2 — RCOT; CAOT 2024; no standard specifies IEC interface cognitive accessibility requirements]
 
 **Environmental Control Unit — C4–C5 Tetraplegia (LIFE SAFETY):** For residential and care settings where C4–C5 tetraplegic users are resident:
 
