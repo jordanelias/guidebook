@@ -427,6 +427,32 @@ The synthesis approach changes how the guidebook is used in two ways. First, no 
 
 ---
 
+### §3.13 Sensory Coherence Audit Tool [GAP-CR-16]
+
+> **Original guidebook tool [GAP-CR-16]:** The sensory coherence audit tool operationalises §3.9 Principle 2 (Sensory Coherence). No peer-reviewed sensory coherence audit instrument exists for the built environment. This tool is an original practitioner contribution derived from: F-01 three-zone model; cross-population conflict domain analysis (§3.3); and OT sensory processing theory (Dunn 1999, Ayres 2005). ○ [Tier 0 — original synthesis; expert consensus basis; no external validation study]
+
+Sensory coherence means that every environmental parameter a building provides — acoustic, visual, thermal, olfactory, tactile — forms a coherent multi-sensory profile at every zone and transition. A building where Zone 2 (standard activity) has low acoustics (A-02, RT60 ≤0.5s), warm mid-CCT lighting (B-03, 3000K), and fragrance-free air (F-02) but also has a strongly fragranced air freshener in the adjacent corridor is not sensory-coherent. The fragrance creates a multi-sensory contradiction that is disruptive for NDV, PAIN, and OFS users precisely because they cannot predict or control it.
+
+#### The Sensory Coherence Checklist — to be completed at end of Technical Design (Stage 4)
+
+For each primary space in the building, record answers to all six questions. A "No" answer to any question is a coherence failure requiring resolution before Stage 5.
+
+**Question 1 — Acoustic zone integrity:** Does the acoustic specification of this space match its zone designation in the F-01 sensory gradient model? (Zone 1 ≤NC-25; Zone 2 ≤NC-30; Zone 3 no NC requirement). Does no adjacency contradict this (e.g., Zone 1 sensory room adjacent to Zone 3 without STC ≥50 partition)?
+
+**Question 2 — Lighting zone integrity:** Does the lighting CCT, intensity, and dimming specification match the zone? (Zone 1: ≤50 lux, ≤2700K, 100% dimmable; Zone 2: 200–350 lux, 2700–3000K, ≥50% dimming range; Zone 3: full design specification). Does no light trespass from an adjacent zone occur at night or in blackout conditions?
+
+**Question 3 — Olfactory zone integrity:** Is the fragrance-free specification (F-02) applied to all Zone 1 and Zone 2 spaces? Are there no fragranced products in FM specification (cleaning, air fresheners, candles) for any space serving NDV, OFS, or PAIN primary populations?
+
+**Question 4 — Thermal zone integrity:** Is the thermal specification consistent with zone and population? (OFS/MS: ≤20°C in occupied spaces; DEM: 20–24°C neutral zone; NDV: individual control via H-02). Are there no thermal contradictions at zone transitions (e.g., MS cooling station adjacent to DEM warm lounge without thermal buffer)?
+
+**Question 5 — Tactile/vibration zone integrity:** Are there no vibration sources (HVAC, plant, diesel generators) that violate A-09 ≤0.1 m/s² RMS threshold in occupied spaces designated for PAIN or OFS primary users? Is no resilient flooring absent from spaces where MOB or PAIN is the primary population?
+
+**Question 6 — Transition coherence:** At every sensory zone transition (Zone 1 → Zone 2 → Zone 3), is the transition graduated (per B-05 lighting ≥3m zone, F-01 spatial model)? Does no Zone 1 space share a door directly with a Zone 3 space without an intervening transition zone?
+
+**Recording format:** For each space, record: Space ID | Zone designation | Q1–Q6 (Pass/Fail/N/A) | Failure description | Resolution action | Responsible party. This document is the sensory coherence register — it is a Stage 4 design deliverable, not a post-construction check.
+
+---
+
 *Cross-references: Part 2 (population category definitions); Part 4 (Item Specification Library); Part 5 (Building-level conflict resolution table and worked examples); Part 9 §9.2/9.9/9.10 (OT appointment and co-occurrence consultation protocol); Part 10 (DAR provisions).*
 
 *Next: Part 4 — Item Specification Library*

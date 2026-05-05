@@ -742,7 +742,8 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS|NDV/MH -->
-<!-- grade_confidence: LOW — Sensory room ≥8m²: PAS 6463 §14.1 (Tier 4). No RCT on room size for NDV outcomes. Wilson 2023 PMID (Co-1) documents failure modes. Caldwell 2025 qualitative. No validated threshold. -->
+<!-- specialist_review_gate: NDV/AUT — OT with sensory integration CPD or STAR-certified sensory specialist review mandatory at SD for NDV-primary environments; DEM-primary — DSDC-trained specialist review mandatory at SD. A-16 room size (8m²), acoustic (STC ≥50/RT60 ≤0.3s), and HVAC (NC-25) specifications are the minimum non-negotiable baseline; specialist may require additional provisions. [GAP-SCOPE-06] -->
+<!-- grade_confidence: LOW — Sensory room ≥8m²: PAS 6463 §14.1 (Tier 4). No RCT on room size for NDV outcomes. --> outcomes. Wilson 2023 PMID (Co-1) documents failure modes. Caldwell 2025 qualitative. No validated threshold. -->
 
 <!-- CON-0046 [HIGH]: CS-17 (NHS CAMHS, NDTi 2022) documents NDV/MH ward environments actively harmful to NDV/AUT co-occupants. Sensory rooms in MH settings must be distinct from MH de-escalation rooms — different clinical purpose, different specification. -->
 <!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Universal Mode universal — one per occupied floor plate. -->
@@ -1582,6 +1583,7 @@ Wayfinding is the ability to determine one's location, plan a route, and navigat
 <!-- design_stage_lock: B -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:DEM -->
+<!-- specialist_review_gate: DEM — dementia environment specialist (DSDC-trained or equivalent) review mandatory at Schematic Design before floor plan is fixed. D-01 loop configuration is the primary determinant of DEM wayfinding outcome; error at this stage is not recoverable without structural alteration. See Part 9 §9.3. [GAP-SCOPE-06] -->
 <!-- grade_confidence: MODERATE — Loop floor plan for DEM environments: Marquardt & Schmieg 2009 (AJAD Tier 3) + Bowes et al. 2019 Stirling SR (429 items, Tier 3). PMC8725382 (NL floorplan study, Tier 3). Floor plan configuration confirmed as most influential factor. ≥5 jurisdictions reference loop plans for DEM care. MODERATE — multiple Tier 3 studies converge; no RCT. -->
 
 **Applicable Groups:** DEM · VIS · DBL · NEU · NDV/AUT
