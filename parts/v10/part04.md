@@ -109,8 +109,6 @@ Guidebook's graduated acoustic buffer concept (high→low stimulation) exceeds a
 <!-- CON-0040 [HIGH]: Add OFS, PAIN to Applicable Groups (central sensitisation → auditory hyperalgesia). Mark ○ THIN-POPULATION-SPEC per D2-41. Evidence: pain-ofs-built-environment-design BPC FDR + acoustic sensitivity literature. -->
 
 **Applicable Groups:** ALL (especially NDV, DEM, MH, PAIN, OFS) · DEAF · NEU/PCS
-
-> **THIN-POPULATION-SPEC [PAIN, OFS — GAP-D241-01]:** ○ Acoustic ceiling panels also apply to PAIN (fibromyalgia/central sensitisation: auditory hyperalgesia documented; Staud 2004; Wolfe ACR criteria 2010) and OFS (ME/CFS: reduced auditory tolerance post-exertion; Carruthers et al. 2011 Canadian Consensus Criteria). Evidence base for the NRC ≥0.85 specification is derived from NDV/AUT and DEAF populations (Bettarello 2021, Caniato 2024, ISO 3382); PAIN and OFS population-specific auditory research in built environments does not exist. The mechanism (reducing ambient acoustic load) is clinically plausible and harm-free; the THIN marker signals absence of PAIN/OFS-specific validation, not absence of benefit. [Tier 3 — mechanism; no built-environment RCT for PAIN/OFS acoustic sensitivity]
 <!-- CON-0039: CON-0039: RT60 ≤0.3 s mid-frequency Universal Mode for speech-critical rooms — serves DEAF/NDV/DEM/NEU simultaneously -->
 
 **Description:** Acoustic ceiling panels with NRC ≥0.85 installed in all primary occupied spaces — open-plan offices, classrooms, therapy rooms, communal areas, circulation corridors. Combined with A-01, A-05, and A-17 to achieve target RT60.
@@ -128,7 +126,7 @@ Post-installation RT60 measurement at 500 Hz required
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
-**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room)
+**Cross-reference:** A-01 (Buffer Zone); A-05 (Carpet); A-16 (Sensory Room); A-07 (Flutter Echo — circulation routes are explicitly exempt from A-02's RT60 ≤0.3s target: A-07 deliberate acoustic differentiation between circulation and occupied rooms provides VIS wayfinding cues via acoustic character contrast; applying ≤0.3s uniformly would eliminate this navigation signal [CON-0237])
 
 **Evidence basis (OT):** Dunn's Sensory Processing Model. RT60 reduction via ceiling treatment directly lowers the cumulative acoustic load experienced by sensory-avoiding and sensory-sensitive users, reducing the neurological effort cost of occupying the space and preserving cognitive and physical energy for the primary occupation.
 
@@ -354,8 +352,7 @@ BSI.
 <!-- grade_confidence: MODERATE — NC-25 target: ANSI S12.60, DIN 18041, BS 8300 converge (≥6 jurisdictions). Plant room schematic-stage requirement is irreversible (NOT-RETROFITTABLE per Part 8). No RCT but strong standards consensus. -->
 
 **Applicable Groups:** AUT, PCS, DEM, MH, OFS · PAIN
-
-<!-- D241: PAIN/OFS THIN-POPULATION-SPEC confirmed 2026-05-05 → mechanism: NC-25 reduces overall ambient load; PAIN auditory hyperalgesia + OFS post-exertional acoustic sensitivity both benefit; no PAIN/OFS-specific built-env RCT; marked ○ per evidence tier; GAP-D241-01 -->
+<!-- CON-0008: CON-0008: NC-25 background noise limit reduces exertion needed for communication — OFS/PAIN energy conservation -->
 
 **Description:** HVAC system designed to achieve NC-25 or better at all air terminal devices in sensitive spaces (sensory rooms, DEM care spaces, therapy rooms, ABI recovery spaces). NC-25 is the single most commonly specified noise criterion in post-occupancy complaints from neurodiverse building occupants.
 
@@ -630,8 +627,7 @@ International hearing access committee. IFHOH.
 <!-- CON-0039 [HIGH]: Strict NDV/AUT acoustic target (RT60 ≤0.3 s) is a sub-target of the general DEAF/DEM target. No sound masking in any space where NDV is primary — already specified but ensure cross-reference to NDV/DEAF conflict resolution in Part 5 §5.2. -->
 
 **Applicable Groups:** AUT, PCS, NEU, DEM, NDV · OFS · PAIN
-
-<!-- D241: PAIN/OFS THIN-POPULATION-SPEC confirmed 2026-05-05 → mechanism: sound masking increases cognitive load and amplifies auditory sensitivity in PAIN/OFS; prohibition is harm-prevention (removing a harmful specification, not adding a new one); no PAIN/OFS-specific RCT; ○ marker applies; GAP-D241-01 -->
+<!-- CON-0008: CON-0008: sound masking increases cognitive load; energy cost for OFS/PAIN populations -->
 
 **Description:** Electronic sound masking systems explicitly excluded from spaces serving neurological populations, PCS patients, and dementia residents. Sound masking adds continuous broadband noise (45--48 dBA) that is clinically contraindicated for PCS and AUT users.
 
@@ -1406,6 +1402,8 @@ that substitutes for abstract wayfinding reasoning when cognitive capacity for s
 
 No tessellated or geometric floor patterns in DEM/AUT/PCS environments
 
+**Entrance zone [CON-0223]:** Plain (non-patterned) flooring is required within the building entrance zone (minimum: beneath canopy + 2000 mm inside entry door). Patterned flooring at entrances creates false depth perception (VIS/DEM fall risk) and visual confusion at the transition from exterior to interior. Plain entrance flooring satisfies both DEM fall prevention and NDV/AUT sensory tolerance requirements simultaneously. Evidence: Harper 2025 (LCL-08, stair contrast); DSDC EADDAT 2022 (DEM plain floor, +15% pattern-associated falls).
+
 Stripe patterns (threshold marking, navigation): ≤200 mm width; maximum 3 stripes per zone
 
 Wall patterns: no diagonals, spirals, or optical illusion patterns
@@ -1474,6 +1472,10 @@ Stair nosings: ≥50 LRV full-width strip (55--75 mm depth); ≥65% Michelson wh
 Grab bars: LRV vs wall AND vs floor (JOTA, 2022)
 
 Door frames: ≥30 LRV vs adjacent wall throughout building; ≥50 LRV best practice
+
+**Entrance threshold level changes [CON-0200]:** ≥50 LRV contrast strip (full-width, 55–75 mm depth) at all entrance threshold level changes, including exterior-to-interior transitions, entry mat edges, and ramp terminations at entry. Harper 2025 (LCL-08/SRB-14): contrast striping reduces stair fall events; principle applies at all level changes including flat thresholds where grade change ≥5mm. Cross-ref E-06 (Level Entry — zero step) and E-08 (corridor level changes). ● [CON-0200]
+
+**Decision-point signage [CON-0206]:** At all wayfinding decision points (corridor junctions, lift lobbies, room entries), ≥50 LRV contrast between signage background and adjacent wall. ≥30 LRV is the compliance minimum for sign text; ≥50 LRV for the sign panel itself against the wall. Cross-ref D-08 (Pictogram + Braille signage standard). ◐ [CON-0206]
 
 **Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 12 §12.4.
 
@@ -1872,7 +1874,7 @@ acquired low-literacy disability (VIS, DEM, post-stroke aphasia).
 Pictogram: above or left of word; minimum 50 mm height
 Word: single-word descriptor; sentence case; rounded sans-serif
 Character height: ≥150 mm at 10 m viewing distance
-Contrast: ≥30 LRV text vs background
+Contrast: ≥30 LRV text vs background (code minimum); ≥50 LRV sign panel vs adjacent wall (best practice) [CON-0206] — 30 LRV text contrast is regulatory floor only; sign detectability depends on panel-to-wall contrast, not text-to-panel alone. Evidence: CNIB 2024 Clearing our Path; C-04 ≥50 LRV decision-point standard.
 Braille: Grade 2 Braille equivalent at 1400--1600 mm AFF at all room
 ID signs
 Tactile lettering: raised 0.8 mm; at 1400--1600 mm AFF
@@ -2261,6 +2263,8 @@ point of building approach; inadequate parking or excessive distance forces exer
 
 Canopy depth: ≥3000 mm; width: ≥2000 mm
 
+**Acoustic absorption — canopy soffit [CON-0229]:** Entrance canopy soffit to be finished in acoustic-absorbent material (NRC ≥0.70) or fitted with acoustic panels. Entrance areas are high-noise zones (traffic, wind, crowd) that degrade speech intelligibility for DEAF/HI users at the point of arrival. A reflective soffit amplifies noise; an absorptive soffit reduces reverberation and improves STI at the entrance threshold. Evidence: Cueille 2022 (ASI-06, Tier 3): 18 dB SRT penalty for HI listeners in reverberant conditions. ◐ [single Tier 3 source; principle well-established — no canopy-specific study identified]
+
 Gradient: ≤1:50 beneath canopy
 
 Drainage: to perimeter (no central drain creating trip hazard)
@@ -2425,9 +2429,9 @@ No furniture, equipment, or signage projecting into corridor
 
 Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
 
-● DBL intervenor width: primary routes in buildings regularly used by DeafBlind persons: ≥1500 mm clear width minimum (continuous — not passing-bay configuration — to allow intervenor and DBL user side-by-side at walking pace). ○ [Tier 4 — DIN 18040-1 §4.3.7; no other canonical jurisdiction specifies DBL-specific corridor width; THIN single-jurisdiction basis — GAP-STEP6-03 CLOSED]
+● Acoustic: corridors ≥1500mm with parallel hard walls require A-02 ceiling treatment (NRC ≥0.75) to prevent flutter echo [CON-020
 
-● Acoustic: corridors ≥1500mm with parallel hard walls require A-02 ceiling treatment (NRC ≥0.75) to prevent flutter echo [CON-0205]. Wide corridors without acoustic treatment create speech intelligibility hazards for DEAF/HI users (Cueille 2022, ASI-06)
+**Level changes — contrast [CON-0200]:** All level changes within corridor routes (ramp terminations, threshold strips, door sills ≥5mm) to have ≥50 LRV contrast strip full-width (55–75 mm depth). Code minimum is ≥30 LRV (C-04); ≥50 LRV is required at level changes specifically because reduced lighting at floor level and glancing angle of view reduce effective contrast detectability. Evidence: Harper 2025 (LCL-08/SRB-14): contrast striping reduces fall events at level changes. Cross-ref C-04 entrance threshold specification. ● [CON-0200]5]. Wide corridors without acoustic treatment create speech intelligibility hazards for DEAF/HI users (Cueille 2022, ASI-06)
 
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 12 §12.4.
 
