@@ -62,7 +62,7 @@
 | CON-0042 | CONSUMED | B-10, visual alerting items, H-04, CON-0014 items | sensory-environment | HIGH | true | — |
 | CON-0043 | CONSUMED | All C-items, D-02, D-06, F-01 zone boundaries | wayfinding-and-signage | HIGH | true | — |
 | CON-0044 | CONSUMED-DEFERRED | Part 1 (§1.4 theoretical framework), all G-items,  | entrances-and-circulation | MODERATE | true | — |
-| CON-0045 | CONSUMED-DEFERRED | Part 1 (evidence methodology), Part 13 (case studi | health-and-symptom-management | HIGH | true | — |
+| CON-0045 | CONSUMED-DEFERRED | Part 1 (evidence methodology), Part 12 [updated from Part 13 per CO-0004] (case studi | health-and-symptom-management | HIGH | true | — |
 | CON-0046 | CONSUMED | A-16, F-01, D-05, CON-0019 items | cross-cutting | HIGH | true | — |
 | CON-0047 | CONSUMED-DEFERRED | Part 7/8 methodology (§7.1 / §8.2) | frameworks-and-methodology | HIGH | true | — |
 | CON-0048 | CONSUMED-DEFERRED | Part 12 (Economics) | frameworks-and-methodology | HIGH | true | — |

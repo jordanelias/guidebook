@@ -97,7 +97,7 @@ Otherwise correct. HIGH confidence justified. ISW action (unified multi-channel 
 Otherwise correct. HIGH confidence justified — this is an internal consistency correction backed by the guidebook's own LRV BPC. ISW action (propagate ≥50% LRV to all contrast-dependent provisions) is correct.
 
 ### CON-0045 — CORRECT
-Confidence HIGH justified: confirmed not-found after full multilingual research pass. Routing to health-and-symptom-management acceptable. ISW action (evidence confidence weighting in Part 1 + Part 13 gap disclosure) is correct.
+Confidence HIGH justified: confirmed not-found after full multilingual research pass. Routing to health-and-symptom-management acceptable. ISW action (evidence confidence weighting in Part 1 + Part 12 [updated from Part 13 per CO-0004] gap disclosure) is correct.
 
 ### CON-0046 — CORRECT
 Confidence HIGH justified: NDTi/NHS England 2022 is Tier 1 Co-1 peer-reviewed. The shift from "recommended" to "required" is justified by documented systematic harm. Routing to cross-cutting correct.

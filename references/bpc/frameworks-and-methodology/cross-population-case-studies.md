@@ -102,15 +102,15 @@ IT: studi di caso progettazione accessibile multipopolazione [PARTIAL]
 
 ---
 
-### Guidance for Part 13 / Part 8
+### Guidance for Part 12 [updated from Part 13 per CO-0004] / Part 8
 
-**Part 13 (Case Studies and Built Evidence):**
+**Part 12 [updated from Part 13 per CO-0004] (Case Studies and Built Evidence):**
 - Lead with outcome data where available: Douglas et al. (2022) and De Hogeweyk medication reduction are the two strongest quantified outcomes in the corpus
 - Kelsey Civic Center: strongest contemporary cross-population design intent; insufficient POE data for quantified outcome claims — enter as design-intent case with "Evidence Contribution: design standards publication"
 - Enabling Village: strongest 10-year cross-disability operational case; present as programme-level evidence rather than building-level POE
 - Village Landais: cite as active longitudinal evaluation; do not claim confirmed outcomes; include early results with explicit PROVISIONAL flag
 - NHS CAMHS failure case: must be included — this is the paradigm case for Part 8 §8.5 (unresolvable conflict without sensory zoning)
-- Identify and disclose thin evidence base explicitly: Part 13 methodology note should acknowledge that no existing case study provides rigorous cross-population POE data
+- Identify and disclose thin evidence base explicitly: Part 12 [updated from Part 13 per CO-0004] methodology note should acknowledge that no existing case study provides rigorous cross-population POE data
 
 **Part 8 §8.4 (Cross-Population Resolutions):**
 - Tenji blocks: document as VIS/MOB conflict with partial design resolution (alternative crossing geometry) — Ormerod et al. 2015 + Thies et al. 2011 (replaces previously-struck Kapsalis attribution per D-0124)
@@ -215,7 +215,7 @@ Mostafa et al. (2024, Archnet-IJAR, DOI 10.1108/ARCH-11-2022-0258): Post-interve
 
 ### OT Home Modification Programme Evidence (not case study; systematic review)
 
-OT-delivered home modification programmes with clinical outcomes exist (Stark et al. RCT, AJOT 2016/2018; systematic reviews by Lektip et al. 2023; Hutchinson et al. 2025). These are programme-level evidence, not building case studies. Relevant to Part 12 economics and BC HAFI evaluation context. Do not enter as case studies; reference in BPC under evidence base for residential design.
+OT-delivered home modification programmes with clinical outcomes exist (Stark et al. RCT, AJOT 2016/2018; systematic reviews by Lektip et al. 2023; Hutchinson et al. 2025). These are programme-level evidence, not building case studies. Relevant to Part 11 economics [updated from Part 12 per CO-0004] and BC HAFI evaluation context. Do not enter as case studies; reference in BPC under evidence base for residential design.
 
 
 ### Citation mining — cross-population-case-studies

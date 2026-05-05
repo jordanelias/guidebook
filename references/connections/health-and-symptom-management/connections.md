@@ -7,7 +7,7 @@
 **Confidence:** HIGH
 **Opus-reviewed:** false
 **Source BPC slug(s):** — (pre-migration)
-**Target item(s):** Part 1 (evidence methodology), Part 13 (case studies)
+**Target item(s):** Part 1 (evidence methodology), Part 12 [updated from Part 13 per CO-0004] (case studies)
 **Target population(s):** VIS, PAIN, OFS (absence); DEM, NDV/AUT, MOB (presence)
 **Evidence tier:** —
 **Filed:** 2026-03-28
@@ -26,9 +26,9 @@ The guidebook's evidence hierarchy does not weight "never tested in a built envi
 | Residential case studies BPC Opus synthesis | COMPLETE | Same finding confirmed for residential contexts |
 | Case study compendium (26 entries) | COMPLETE | Zero VIS or PAIN/OFS entries with outcome data |
 
-**Action required:** Part 1 evidence methodology: add evidence confidence weighting — provisions validated by built environment POE carry higher confidence than provisions derived from clinical transfer only. Part 13 §13.0 methodology note: explicit disclosure of VIS/PAIN/OFS evidence gap. Gap register: commission VIS and PAIN/OFS POE studies as v11 research priority.
+**Action required:** Part 1 evidence methodology: add evidence confidence weighting — provisions validated by built environment POE carry higher confidence than provisions derived from clinical transfer only. Part 12 [updated from Part 13 per CO-0004] §13.0 methodology note: explicit disclosure of VIS/PAIN/OFS evidence gap. Gap register: commission VIS and PAIN/OFS POE studies as v11 research priority.
 
-**Disposition notes:** - [ ] HIGH → Part 1 methodology note + Part 13 evidence gap disclosure
+**Disposition notes:** - [ ] HIGH → Part 1 methodology note + Part 12 [updated from Part 13 per CO-0004] evidence gap disclosure
 
 ---
 

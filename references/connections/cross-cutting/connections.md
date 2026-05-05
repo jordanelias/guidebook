@@ -98,9 +98,9 @@ This is the only case study documenting design-caused escalation of disability �
 | CON-0019 (environmental refuge) | Internal | Refuge provision would mitigate harm |
 | CON-0040 (sensory zone system) | Internal | Three-zone model prevents one-size-fits-all ward design |
 
-**Action required:** Part 7/8: document as mandatory provision — Zone 3 + environmental refuge specified as required (not recommended) in healthcare, education, and any building type where NDV/AUT + NDV/MH co-occurrence is foreseeable. Shifts zone provision from best practice to harm prevention mandate. Reference NHS CAMHS as paradigm failure case in Part 13.
+**Action required:** Part 7/8: document as mandatory provision — Zone 3 + environmental refuge specified as required (not recommended) in healthcare, education, and any building type where NDV/AUT + NDV/MH co-occurrence is foreseeable. Shifts zone provision from best practice to harm prevention mandate. Reference NHS CAMHS as paradigm failure case in Part 12 [updated from Part 13 per CO-0004].
 
-**Disposition notes:** - [ ] HIGH → Part 7/8 mandatory zoning + Part 13 failure case
+**Disposition notes:** - [ ] HIGH → Part 7/8 mandatory zoning + Part 12 [updated from Part 13 per CO-0004] failure case
 
 ---
 

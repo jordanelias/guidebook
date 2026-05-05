@@ -84,12 +84,12 @@ The closest case
 ### health-and-symptom-management
 
 #### CON-0045
-**Items:** Part 1 (evidence methodology), Part 13 (case studies)
+**Items:** Part 1 (evidence methodology), Part 12 [updated from Part 13 per CO-0004] (case studies)
 **Populations:** VIS, PAIN, OFS (absence); DEM, NDV/AUT, MOB (presence)
 **Connection:** The case study corpus reveals a stark evidence asymmetry: VIS, PAIN/OFS, and DEAF (beyond Gallaudet) have zero purpose-built or home-modified environment case studies with outcome data globally. Confirmed not-found after full multilingual research pass.
 
 DEM has 5 outcome studies; NDV/AUT has 3; MOB
-**ISW action:** Part 1 evidence methodology: add evidence confidence weighting — provisions validated by built environment POE carry higher confidence than provisions derived from clinical transfer only. Part 13 §13.0 methodology note: explicit disclosure of VIS/PAIN/OFS evidence gap. Gap register: commission VIS a
+**ISW action:** Part 1 evidence methodology: add evidence confidence weighting — provisions validated by built environment POE carry higher confidence than provisions derived from clinical transfer only. Part 12 [updated from Part 13 per CO-0004] §13.0 methodology note: explicit disclosure of VIS/PAIN/OFS evidence gap. Gap register: commission VIS a
 
 ### kitchens-and-workspaces
 
