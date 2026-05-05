@@ -3680,6 +3680,39 @@ Category K items address environments specifically for UPL users. All
 
 UPL provisions apply throughout the building where UPL users are anticipated; they are not confined to specialist rooms.
 
+
+### H-05 Emergency Call — Multi-Position Reach Envelope
+
+**Applicable Groups:** ALL (life-safety)
+
+**Description:** Emergency call activation points positioned for six distinct occupant positions. Standard single-position emergency pull cord (ceiling height) is inaccessible from floor, bed, WC, shower, and supine positions. Multi-position provision ensures emergency communication from any position where a fall, medical event, or loss of consciousness may occur.
+
+**Specifications:**
+
+● Bathroom floor: pull cord or push pad at 400--500 mm AFF, reachable from prone/lateral position on floor after a fall
+
+● Bed head: push button or pull cord at ≤500 mm from pillow position, operable without sitting up
+
+● WC seated: pull cord or push pad within 300 mm horizontal reach of seated WC position, ≤900 mm AFF
+
+● Shower seated: waterproof push pad within 300 mm of shower seat, ≤900 mm AFF, IPX7 rated
+
+● OFS supine: push pad ≤400 mm from bed edge, reachable from supine position without trunk rotation (OFS orthostatic risk during nocturnal events)
+
+● C4-C5 tetraplegia: hard-wired sip-puff or head-switch activation, independent of mains power (battery backup ≥72 hrs), direct connection to monitoring system (not via smartphone app — motor impairment prevents phone operation during emergency)
+
+● DAR provision: conduit and back-box for all 6 positions at construction stage. Initial wiring to positions required by identified population; remaining positions activated at Mode S assessment. [CON-0213]
+
+**Design Stage:** Technical Architecture
+
+**Retrofit cost note:** Retrofit penalty: MODERATE per position (surface wiring + back-box). DAR blocking provision (conduit only) at construction: LOW. Full 6-position retrofit in finished building: HIGH (cumulative surface wiring).
+
+**Key citations:** FDR-BAB-07 (bathroom floor reach); FDR-NEW-09 (C4-C5 emergency communication); FDR-NEW-16 (tetraplegia environmental control).
+
+**Cross-reference:** H-02 (Environmental Control — voice as primary for severe motor impairment); H-04 (Intercom); K-04 (Vibrotactile Alert); Part 10 (DAR conduit provisions)
+
+**Evidence basis (OT):** Compensatory FOR; EHP Framework (prevent strategy). Emergency call multi-position provision prevents the secondary harm of inability to summon help after a primary event (fall, medical episode, loss of consciousness). The six positions derive from FDR compound scenarios documenting where primary events occur and what occupant position results.
+
 ### I-01 Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)
 
 **Applicable Groups:** UPL, MOB, DEM, PAIN
@@ -3959,7 +3992,19 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 Every population-specific accessibility specification in this guidebook is calibrated to its population's OT evidence base. When a building serves two or more populations simultaneously — the rule rather than the exception in any institutional, commercial, or multi-resident building — some specifications conflict directly. The high-contrast visual environment that orients a VIS user creates overstimulation for an NDV user in the same corridor. The acoustic amplification that enables a DEAF user to follow speech is a sensory assault for a NEU/PCS user in the same meeting room. A plain floor that prevents falls for a DEM user removes the tactile differentiation that a VIS user relies on for orientation. These are not design failures or specification errors. They are the inevitable result of applying population-specific evidence to shared space.
 
-Part 5 exists because conflict resolution requires a different method from specification writing. Specification writing asks: what does the evidence say for this population? Conflict resolution asks: when two evidence-based provisions contradict each other in the same space, which governs, and how does the design reconcile them? The answer is not to split the difference. It is to apply the resolution hierarchy, document the rationale, and identify — explicitly — the conflicts that cannot be resolved without individual co-design.
+Part 5 exists because conflict resolution requires a different method from specification writing.
+
+<!-- 13TH CONFLICT DOMAIN: FLOOR-SPECIFICATION-SYSTEM (CON-0200)
+Corridor floor is the most specification-overloaded element: 9+ simultaneous requirements, 3+ direct conflicts.
+NEU/spasticity: FIRM non-compliant surface required.
+PAIN: CUSHIONED resilient surface required.
+DEAF: HARD surface for vibration transmission.
+Plus: PTV ≥36, plain pattern (DEM), TWSI lane (VIS), protective strips, LRV contrast.
+Resolution: SPATIAL DIFFERENTIATION — primary path firm/non-compliant/PTV ≥36/plain;
+TWSI lane within; cushioned mat at rest points (E-10) only; acoustic via ceiling+wall not floor.
+Item-code discrepancy: CON-0200 references A-09 as floor surface; actual A-09 = HVAC vibration.
+Floor items: A-05 (carpet), B-08 (floor finishes), E-07 (slip resistance).
+Full resolution requires C-stage dedicated session. --> Specification writing asks: what does the evidence say for this population? Conflict resolution asks: when two evidence-based provisions contradict each other in the same space, which governs, and how does the design reconcile them? The answer is not to split the difference. It is to apply the resolution hierarchy, document the rationale, and identify — explicitly — the conflicts that cannot be resolved without individual co-design.
 
 **Resolution hierarchy:**
 
@@ -6115,34 +6160,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Cost data:** Development cost reported as approximately 15% above standard affordable housing per unit — driven primarily by acoustic isolation and universal kitchen specification, not accessibility provisions per se. Accessibility per the Kelsey IDS added approximately $3,000--$5,000 per unit above standard affordable housing specification.
 
-**Limitations:** Policy subsidy was essential to achieve viability; commercial replication without equivalent subsidy has not been demonstrated. Single project; longitudinal outcome data is pending.
-
-### §12.04 — DSDC Iris Murdoch Building, University of Stirling (UK, 2023)
-
-**Building type:** Academic research and teaching building (dementia design research and demonstration)
-
-**Primary population:** Dementia-inclusive design demonstration; staff, students, and visiting dementia community members (DEM)
-
-**Evidence quality:** Tier 2 (EADDAT assessment — validated instrument, Cronbach's alpha 0.82)
-
-**Key design strategies:** - Loop floor plan eliminating all dead-end corridors (D-01) - Landmark object at every decision point (D-04) - Pictogram + single-word signage at all junctions (D-08) - LRV ≥30 at all critical junctions; plain flooring throughout (C-04, C-06) - Toilet visible from primary occupied spaces without requiring navigation (D-03) - Secured outdoor garden with continuous loop path (D-11, BIO-01) - Colour-coded wings (C-02) - Dimmable warm lighting throughout; no fluorescent (B-03, B-06) - RT60 ≤0.5 s in occupied spaces (A-02, A-05)
-
-**Verified outcomes:** - EADDAT assessment (DSDC, 2024): highest tier rating across all 7 assessment domains - Confirmed as UK and international reference design for dementia-inclusive academic building design - Post-occupancy observation study (pending publication, DSDC 2024/2025): loop floor plan confirmed to reduce navigation errors vs linear corridor baseline
-
-**Cost data:** Standard university construction costs; dementia-specific provisions estimated at <2% of total project budget (primarily wayfinding, signage, and acoustic treatments).
-
-**Limitations:** Research/teaching function means primary user group is non-residential and time-limited; residential DEM design would require additional privacy provisions. Visitor and student populations are non-representative of residential DEM populations.
-
-### §12.05 — AtkinsRéalis Headquarters Refurbishment (UK/Canada, 2023--2024)
-
-**Building type:** Corporate workplace (multi-floor office, existing building retrofit)
-
-**Primary population:** Neurodivergent employees (AUT, ADHD, PCS, MIS — self-identified)
-
-**Evidence quality:** Tier 3 (self-report survey, employer-commissioned)
-
-**Key design strategies:** - Sensory gradient across floor plate from active open-plan to acoustic retreat (F-01) - Acoustic personalisation zones: high-absorption alcove; open-plan; STC ≥35 focus pods (A-03, A-14) - Enclosed sensory room per floor (A-16): RT60 ≤0.3 s; no fluorescent; individual dimming - Flicker-free LED throughout, individual dimming per zone (B-03, B-04, B-06) - Muted NCS chroma ≤4 palette (C-01) - Defensible seating ≥40% of all workstations (G-01) - Living wall panels at entry zones and quiet areas (BIO-02)
-
-**Verified outcomes:** - Post-occupancy survey (n=312): 74% of self-identified neurodivergent employees rated new environment as significantly better for concentration (Tier 3) - 68% used acoustic personalisation zones regularly (Tier 3) - 71% used sensory room during high-demand periods (Tier 3) - Absenteeism data: employer reports reduction; not independently audited
-
-**Cost data:** Retrofit of existing open-plan office. Acoustic provisions 
+**Limitations:** Policy subsidy was essential to achieve viability; commercial replication without equ

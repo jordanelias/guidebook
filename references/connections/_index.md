@@ -12,8 +12,8 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 205 |
-| CONSUMED-DEFERRED | 44 |
+| CONSUMED | 206 |
+| CONSUMED-DEFERRED | 43 |
 | PENDING | 0 |
 | CONSUMED (this session) | 57 |
 
