@@ -159,6 +159,8 @@ When multiple population-specific specifications apply to the same parameter in 
 **Step 2: Is either provision safety-critical?**
 A provision is safety-critical if its absence creates a risk of injury, falls, fire evacuation failure, or medical deterioration (Uhthoff's mechanism, scald, choking). If one provision is safety-critical and the other is not: the safety-critical provision governs the shared ambient environment. The non-safety-critical population's need is met through individual supplemental provision (radiant panel, personal control, assistive device).
 
+<!-- Citation mining 2026-05-04 evidence upgrade: The safety-critical hierarchy is now SR-supported on the exemplar case (MS/FMS thermal conflict). Berwick 2021 SR (MST-09, J Pain, DOI:10.1016/j.jpain.2020.12.005) confirms FMS cold pain hypersensitivity (14/17 QST studies; CPT 10.9-26.3C vs 5.9-13.5C controls). Christogianni 2018 (MST-10, Temperature 5(3):208-223) quantifies MS Uhthoff threshold at 0.5C core temp increase. Resolution: cool ambient (safety-critical for MS/NEU — neurological deterioration) governs; supplemental radiant heating for FMS/PAIN (not safety-critical — discomfort, not deterioration). This is the harm-asymmetry principle with SR-level evidence on both sides. -->
+
 **Step 3: Where both are safety-equivalent, which provision has stronger evidence?**
 A provision supported by Tier 1–2 OT clinical evidence governs over a provision supported by Tier 3–5 consensus or standards. If evidence quality is equivalent, proceed to Step 4.
 
