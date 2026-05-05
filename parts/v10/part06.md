@@ -116,6 +116,20 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - ISO 21542:2021 Clause 7 — principal international entry standard
 - DeafSpace Design Guidelines (2010) — lobby sightline and illuminance for signing users
 
+
+- DEM: consistent entry layout; no furniture rearrangement; visible toilet from entry (D-03)
+- DBL: vibrotactile doorbell indicator inside dwelling
+- DBL: tactile/visual contrast (≥50 LRV) on all exterior-interior transitions
+- DBL: tactile route from parking position to interior door
+- DBL: tactile approach route from street/site boundary to entry door (Norges Blindeforbund requirement)
+**DBL/IntD provisions — R-ENT [EXPERT CONSENSUS; GAP-S4-R01/R02]:**
+
+- Entry door hardware: tactile identification of lock (raised dot at keyhole); lever handle per I-01.
+- Tactile/high-contrast transitions at all threshold changes (mat edges, level changes, surface material changes) per E-09/C-04 ≥50 LRV.
+- Vibrotactile doorbell: door entry system with vibrotactile indoor unit (wrist pager or room-mounted vibration panel). Standard audio/visual doorbell is not perceptible to DBL users.
+- Tactile approach route from site boundary/parking to entry door: continuous tactile guide line (contrasting strip or raised rail) along primary approach path. Norges Blindeforbund guidance.
+**DBL provisions — R-ENT [EXPERT CONSENSUS — GAP-S4-R01/R02]:**
+
 **Schematic checklist — R-ENT:**
 
 - [ ] Step-free approach from street/parking to entry door confirmed on site plan
@@ -205,6 +219,18 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 > **[GAP-LAU-01] Research status:** Drum opening height and clear floor dimensions are US-only specifications (ADA S611). All 23 remaining canonical jurisdictions are silent on accessible laundry appliance specifications. These three specifications are guidebook-original for non-US jurisdictions. Multilingual research pass (full 24-jurisdiction search) required before Part 11 publication to confirm or expand the evidence base. ○ [PROVISIONAL — ADA single-jurisdiction basis]
 
+
+- PAIN/OFS: laundry at same level as bedroom (no stair carry). Where multi-level: laundry chute or designated laundry area on bedroom floor.
+- Tactile identification of all appliance controls (washer programme dial, dryer settings).
+- Consistent laundry layout: appliance positions identical across units.
+**DBL provisions — R-LAU [EXPERT CONSENSUS — GAP-S4-R09]:**
+
+
+**DBL/IntD provisions — R-LAU [EXPERT CONSENSUS; GAP-S4-R09]:**
+- DBL: consistent laundry layout; tactile identification of appliance controls (raised dot labels)
+- IntD: familiar layout; intuitive single-action controls; front-loading appliances at accessible height
+- PAIN/OFS: front-loading appliances eliminate overhead reach; perch stool provision at folding surface
+
 &#x20; **\*\*Schematic checklist — R-LAU:\*\***
 
 - [ ] Laundry door clear width ≥900 mm on floor plan
@@ -258,6 +284,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - TC-01 (temperature maximum ≤24°C) vs. PAIN/fibromyalgia users who require warmer environments: Resolution: individual thermostat per TC-02 with range up to 26°C for PAIN users; the ≤24°C ceiling is a maximum for MS/OFS users but an individual control is the resolution for PAIN users.
 
 **Additional provisions [CON-0208]:**
+
+- IntD: personalised bedroom identification (memory box D-06 or colour-coded door); consistent layout
+- DBL: vibrotactile bedside alert (K-04) for fire alarm, door entry, wake alarm
+- DBL: tactile landmark at bedroom door (distinct from other room doors — texture or profile)
+- DBL: consistent furniture layout (D-09 critical for tactile navigation); bed position consistent across visits
+**DBL/IntD provisions — R-BED [EXPERT CONSENSUS; GAP-S4-R03]:**
 - DEM: WC/bathroom door visible from primary sleeping position (D-03 equivalent for residential). Straight sightline from bed to bathroom entrance reduces nocturnal disorientation falls.
 - NDV: full blackout blinds (B-07) + individual dimming to 0 lux (B-06) at bedside control. NDV hypersensitivity to any light during sleep is clinically documented.
 - OFS: bed height adjustability 400-600mm AFF recommended (450mm minimum for STS transfer); tilt/recline capability for daytime rest in symptom management. Electric profiling bed blocking (dedicated power outlet at bedhead + structural floor for bed weight).
@@ -270,6 +302,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 - Lifetime Homes Criteria 9+10 (hoist provision, bedroom dimensions)
 - Habinteg (2022) — Wheelchair User Housing
+
+
+- Vibrotactile alert (K-04) at bedside: fire alarm, door alert, and communication alert via pillow/mattress vibration unit.
+- Tactile landmark at bedroom door: raised tactile symbol or personal object display (D-06 memory box equivalent) at door frame, identifiable by touch alone.
+- Consistent furniture layout (D-09): bed, bedside table, wardrobe positions to be identical across all units. Tactile spatial memory is the primary navigation mechanism.
+**DBL provisions — R-BED [EXPERT CONSENSUS — GAP-S4-R03]:**
 
 **Schematic checklist — R-BED:**
 
@@ -325,6 +363,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | NDV acoustic (RT60 ≤0.5 s) vs. tiled wet room (RT60 0.8–1.4 s default) | Specify Class A-rated perforated tile or acoustic plasterboard on non-wet walls; non-wet ceiling treatment NRC ≥0.75 |
 | TMV35°C (MS) vs. TMV38°C (general) | Label TMV setting in O\&M manual with named clinical requirement; OT records set temperature target |
 | Heated floor (TC-05) vs. OFS temperature sensitivity | Heated floor is floor-surface temperature (26–28°C), not air temperature; does not raise ambient above TC-01 ceiling if ventilation adequate. Note in O\&M. |
+
+- IntD: consistent bathroom layout; intuitive single-action controls; high-contrast grab bars (C-04 ≥50 LRV)
+- DBL: tactile identification of all controls (shower, basin, flush — raised dot or Braille label)
+- DBL: matte fixtures throughout (no chrome/polished finishes — specular reflection disables residual vision)
+- DBL: consistent bathroom layout across all bathrooms in the dwelling (tactile memory navigation)
+**DBL/IntD provisions — R-BA [EXPERT CONSENSUS; GAP-S4-R04]:**
 | ● **Heat shock prevention** (CON-0041, P1 SAFETY) | Inter-room thermal differential ≤5°C between bathroom and adjacent corridor/bedroom. Bathroom pre-heating: timer or PIR sensor activates ≥30 min before scheduled bathing; bathroom ≥20°C before occupant entry. Evidence: MHLW Japan 2023 (6,073 bathtub deaths/year from heat shock); Nakayama 1981 (foundational); Baquero 2023 (TCO-01, DOI:10.1155/2023/9185216) — older adult neutral temp 24.9°C. BMS programming item. |
 
 **Bathroom-specific citation additions per residential analysis (apply to G-03, G-04, I-03 items):**
@@ -343,6 +387,13 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 -**R-BA-04a — Bathroom Lighting:** dimmable warm CCT (2700–3000 K); flicker-free LED (B-03/04); face illuminance ≥200 lux at mirror plane (B-02); UGR <16 to prevent glare reflection from wet surfaces. Source add: CIBSE SLL LG2.
 
 - **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual thermostat (TC-02) at 900–1100 mm AFF; MS integrated thermal spec (TMV 35°C + extract ≥15 ACH + ambient ≤18°C confirmed as three-consultant package). ● Inter-room thermal differential ≤5°C [CON-0041 P1 SAFETY — Japan heat shock evidence]. Pre-heating: timer/PIR ≥30 min before bathing. Source add: DIN 18041:2016; Finnish SFS 5907; MHLW Japan 2023; Baquero 2023 DOI:10.1155/2023/9185216.
+
+
+- Vibrotactile alert receiver position within reach of shower area and WC (K-04 charging station in bathroom).
+- Tactile identification of all controls: raised dot on hot tap; tactile shower temperature indicator; raised/recessed flush button identification.
+- All fixtures matte finish (≤30 gloss units): taps, grab bars, towel rails. Specular chrome eliminates residual-vision contrast.
+- Consistent bathroom layout: identical fixture positions across all units in multi-unit settings. Tactile spatial memory governs independent bathroom use for DBL users.
+**DBL provisions — R-BA [EXPERT CONSENSUS — GAP-S4-R04]:**
 
 **Schematic checklist — R-BA:**
 
@@ -388,6 +439,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 **R-LIV-02 consolidated biophilic sub-section (formerly R-LIV-03):**
 
+
+- IntD: familiar domestic furniture scale; consistent room layout
+- DBL: matte surfaces throughout; no specular reflection on TV screen, table, or window surfaces during daytime
+- DBL: haptic communication clear floor zone ≥2400×2400 mm for DeafBlind person + intervenor (K-03 residential equivalent)
+- DBL: consistent furniture layout (D-09 applies); no rearrangement without tactile reorientation
+**DBL/IntD provisions — R-LIV [EXPERT CONSENSUS; GAP-S4-R05]:**
 - Window sill height ≤750 mm AFF for seated natural view access (MOB, ; preferred ≤600 mm AFF in residential care settings for bed-users
 - Interior planting: low-pollen species (pothos, ferns, spider plant); not latex-producing (no ficus); in OFS dwellings: no flowering or fragrant plants (F-06 plant selection)
 - Citations added: Kaplan \& Kaplan (1989) ART; Ulrich (1984, 1991); DSDC (2020); van den Berg (2010)
@@ -414,6 +471,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - BS 8300:2018 Clause 10 — living room spatial requirements
 - EN 14501 — blackout blind light transmission standard (Class 5: ≤1% light transmission)
 
+
+- Matte table surface (≤30 gloss units) for residual-vision contrast at communication position.
+- Haptic communication clear floor zone: ≥2400×2400 mm unobstructed floor space for DeafBlind person + intervenor tactile signing. Adjacent to primary seating, not in traffic path.
+- Consistent furniture layout (D-09): critical for tactile spatial memory. No rearrangement without DBL user consent and orientation walk-through.
+**DBL provisions — R-LIV [EXPERT CONSENSUS — GAP-S4-R05]:**
+
 **Schematic checklist — R-LIV:**
 
 - [ ] Turning circle ≥1500 mm confirmed on furniture layout plan
@@ -437,6 +500,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | R-KIT-04 A-08 | Range hood NC-30 (not NC-40 default) | — | — | — | ● | ● | — | — | DD |
 | I-01 | Lever hardware (all cabinets) | ● | ● | ● | ● | — | — | — | CD |
 | I-02 | Lever tap; single-lever mixer | ● | ● | ● | ● | — | — | — | CD |
+
+- IntD: familiar domestic kitchen scale (not institutional); intuitive single-action controls; consistent colour coding
+- DBL: tactile identification on all appliance controls (raised dot or Braille label)
+- DBL: all work surfaces matte finish (no specular reflection — residual vision optimisation)
+- DBL: consistent kitchen layout; no rearrangement of appliance positions without tactile reorientation
+**DBL/IntD provisions — R-KIT [EXPERT CONSENSUS; GAP-S4-R06]:**
 | E-07 | Slip resistance PTV ≥36 (wet areas) | ● | — | ● | ● | — | — | — | CD |
 | C-04 | LRV ≥30 at worktop edge, step edge | — | — | — | ● | — | — | ○ | CD |
 | D-08 | Pictogram + word appliance labels | — | — | — | ● | — | — | ● | SPEC |
@@ -469,11 +538,23 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 - Open-plan kitchen/living (NDV range hood noise) vs. kitchen as social space: where open-plan is unavoidable, specify acoustic partition with STC ≥35 door (A-03) between kitchen and living zone, closeable during cooking. Door shown on floor plan as named element.
 
+
+- Tactile identification on all appliance controls: raised dots or tactile labels (Braille or Moon) on cooktop, oven, dishwasher, microwave controls.
+- All surfaces matte (≤30 gloss units). Specular reflections from countertops eliminate residual-vision contrast for DBL users with residual sight.
+- Consistent kitchen layout: appliance positions and work surface layout to be identical across all units in multi-unit residential settings. DBL users build tactile spatial memory; rearrangement eliminates navigability.
+**DBL provisions — R-KIT [EXPERT CONSENSUS — GAP-S4-R06]:**
+
 **Schematic checklist — R-KIT:**
 
 - [ ] Multi-level counter (760 mm + 900 mm sections) confirmed on cabinetry drawings
 - [ ] Knee clearance at cooktop and sink confirmed on section drawing
 - [ ] Perch stool counter position shown on floor plan
+
+- IntD: plain wall surfaces (C-03); ≥30 LRV door frames (C-04); pictogram + word room identification (D-08)
+- DBL: consistent corridor layout — no furniture repositioning without notification
+- DBL: tactile guide line (raised profile 5mm, 30mm wide) from entry door to all primary room doors
+- DBL: corridor width ≥1500 mm on all primary internal routes for intervenor accompaniment (DIN 18040-1)
+**DBL/IntD provisions — R-HAL [EXPERT CONSENSUS; GAP-S4-R07]:**
 - [ ] Front-loading appliance positions with accessible service connections on M\&E drawings
 - [ ] Range hood noise specification (NC-30) in MEP brief
 - [ ] Turning circle ≥1500 mm confirmed on furniture layout plan
@@ -512,12 +593,24 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - CAN/ASC 2.8:2025 Clause 7.4 — Canadian accessible dwelling corridor
 - Alzheimer Society UK (2022) — night navigation provisions for DEM
 
+
+- Pictogram + tactile room identification at all internal doors (D-08 standard + raised tactile symbol).
+- Tactile guide line (contrasting tactile strip, ≥25 mm wide, floor-mounted or wall-rail) from entry door to all primary rooms (bedroom, bathroom, living room, kitchen).
+- Corridor clear width ≥1500 mm on all primary routes (intervenor accompaniment width). Standard E-08 ≥1200 mm is insufficient for DBL user + intervenor side-by-side. DIN 18040-1 evidence.
+**DBL provisions — R-HAL [EXPERT CONSENSUS — GAP-S4-R07]:**
+
 **Schematic checklist — R-HAL:**
 
 - [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred; ≥1500 mm ) confirmed on floor plan
 - [ ] All internal door frames ≥900 mm clear on floor plan
 - [ ] Night-light path (motion sensor + low-level LED) on electrical drawings
 - [ ] LRV ≥30 door frame contrast confirmed on finish schedule —
+
+- IntD: high-contrast step nosing + consistent tread/riser dimensions throughout (no tapered treads)
+- DBL: high-contrast nosing ≥50 LRV (C-04 best practice) on all treads
+- DBL: handrail tactile return at each landing (90° return minimum; identifiable by touch as "end of run")
+- DBL: tactile warning dome field (ISO 23599) at top and bottom of each stair run
+**DBL/IntD provisions — R-STA [EXPERT CONSENSUS; GAP-S4-R08]:**
 
 ### §6.9 R-STA: Staircase
 
@@ -561,6 +654,12 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - Habinteg (2022) — Wheelchair User Housing, stair provisions
 - STANNAH (2024) — Stairlift Installation Constraints [industry reference, not standard]
 - CAN/ASC 2.8:2025 — stairlift provisions in Canadian accessible dwelling standard
+
+
+- High-contrast nosing per C-04 ≥50 LRV on all stair nosings (also serves VIS, DEM).
+- Handrail: tactile return at each landing (handrail extends ≥300 mm past last riser and returns to wall). DBL users use handrail return as landing arrival indicator.
+- Tactile warning dome field (TWSI per E-09/ISO 23599) at top and bottom of each stair run — both intermediate landings and terminal landings.
+**DBL provisions — R-STA [EXPERT CONSENSUS — GAP-S4-R08]:**
 
 **Schematic checklist — R-STA:**
 
