@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>D-08 — Pictogram + Single-Word Signage Throughout</title>
+    <title>A-12 — Auracast Infrastructure Readiness</title>
     <style>
         :root {
             --ink: #1a1a2e;
@@ -114,17 +114,17 @@
 </nav>
 
 <header class="spec-header">
-    <span class="item-code">D-08</span>
-    <h1 class="spec-title">Pictogram + Single-Word Signage Throughout</h1>
-    <h1 class="question-title">Can someone who cannot read text understand every sign in the building?</h1>
-    <span class="evidence-badge">◐ Evidence Tier 4</span>
+    <span class="item-code">A-12</span>
+    <h1 class="spec-title">Auracast Infrastructure Readiness</h1>
+    <h1 class="question-title">Is the building ready to broadcast audio directly to future hearing devices over Bluetooth?</h1>
+    <span class="evidence-badge">● Evidence Tier 3</span>
 </header>
 
 <div class="spec-content">
 
     <section id="why" style="--spec-order: 10; --question-order: 2">
         <h2>Why It Matters</h2>
-        <p class="why-prose">Primary wall colour: NCS chroma ≤4 (muted, desaturated) throughout all occupied spaces. No primary colours, no saturated hues. Accent colours (for zoning and wayfinding — C-02) may exceed NCS chroma 4 only where used as deliberate navigational landmarks, not as general decoration.</p>
+        <p class="why-prose">All mechanical plant serving buildings with fibromyalgia, PCS, or NDV users installed on vibration isolation pads (minimum 20 dB insertion loss at 16--250 Hz). Where plant is adjacent to sensitive spaces: floating plant room construction (floating concrete slab on spring isolators).</p>
     </section>
 
     <section id="values" style="--spec-order: 2; --question-order: 3">
@@ -137,7 +137,7 @@
 
     <section id="evidence" style="--spec-order: 3; --question-order: 4">
         <h2>Evidence</h2>
-        <p>British Standards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.</p>
+        <p>Desmeules, J., et al. (2003). Arthritis \&amp; Rheumatism. [Vibration as fibromyalgia trigger.\] Staud, R. (2011). Curr Pain Headache Rep, 15(5), 338--343.</p>
         <table>
             <thead><tr><th></th><th>Authors</th><th>Year</th><th>Title</th><th>Tier</th></tr></thead>
             <tbody></tbody>
@@ -146,7 +146,11 @@
 
     <section id="populations" style="--spec-order: 4; --question-order: 5">
         <h2>Population Applicability</h2>
-        <div class="pop-badges"></div>
+        <div class="pop-badges"><span class="pop-badge" style="opacity:1.0" title="Primary">NDV</span>
+<span class="pop-badge" style="opacity:1.0" title="Primary">NEU</span>
+<span class="pop-badge" style="opacity:1.0" title="Primary">OFS</span>
+<span class="pop-badge" style="opacity:1.0" title="Primary">PAIN</span>
+</div>
     </section>
 
     <section id="jurisdictions" style="--spec-order: 5; --question-order: 6">
@@ -165,24 +169,27 @@
     <section id="dar" style="--spec-order: 7; --question-order: 8" class="dar-section id="dar" style="--spec-order: 7; --question-order: 8"" id="dar">
             <h2>Design for Adaptable Readiness (DAR)</h2>
             <div class="dar-flag">⚑ DAR Priority</div>
-            <p>dards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.</p>
+            <p>dard; specification derived from well-established occupational health standard applied to disability context. CON-0181 [HIGH]: extends population applicability to PAIN, NEU, OFS (connection-scout Opus 2026-04-24 15:17). --&gt;</p>
         </section id="dar" style="--spec-order: 7; --question-order: 8">
 
-    
+    <section id="engineering" style="--spec-order: 8; --question-order: 9" class="engineering-section id="engineering" style="--spec-order: 8; --question-order: 9"" id="engineering">
+            <h2>Engineering Coordination</h2>
+            <p class="struct-flag">⚠ Structural backing required</p>
+            <p>Retrofit category: <strong>HIGH</strong></p>
+        </section id="engineering" style="--spec-order: 8; --question-order: 9">
 
     <section id="schedule" style="--spec-order: 9; --question-order: 10">
         <h2>Schedule Language</h2>
         <div class="schedule-block">
             <button class="copy-btn" onclick="copySchedule()">Copy</button>
-NCS chroma ≤4 on all primary wall surfaces
+All rotating plant: vibration isolation pads with ≥20 dB insertion loss
 
-Accent/landmark colours: may exceed NCS chroma 4 only at designated wayfinding landmarks
+Adjacent to sensitive spaces: floating slab on spring isolators
 
-No primary red, blue, or yellow as dominant wall colour
+Pipe connections: flexible connections at all mechanical plant
 
-Ceiling: white or very pale (LRV ≥85) to reflect natural light
-
-Floor: plain, low-chroma (C-06)
+Post-installation: vibration measurement at sensitive space floors  
+(target: weighted RMS acceleration ≤0.5 m/s² per ISO 2631-1 EAV; older specification referenced 0.1 m/s RMS — incorrect unit, now superseded [CORRECTED: ISW Opus cross-check 2026-04-24 15:17; see threshold-resolved comment above])
         </div>
     </section>
 
@@ -202,8 +209,8 @@ Floor: plain, low-chroma (C-06)
     <section id="meta" style="--spec-order: 13; --question-order: 13">
         <div class="meta-footer">
             <span>Curation: automated</span>
-            <span>OT basis: Allen&#x27;s CDM; Dunn&#x27;s Sensory Processing</span>
-            <span>Retrofit: LOW</span>
+            <span>OT basis: Biomechanical FOR. Vibration at 16--250 Hz is a documented biomechanical trigger for central sensitisation in</span>
+            <span>Retrofit: HIGH</span>
         </div>
     </section>
 

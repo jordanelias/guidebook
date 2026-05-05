@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>D-08 — Pictogram + Single-Word Signage Throughout</title>
+    <title>C-01 — accessible-circulation-geometry</title>
     <style>
         :root {
             --ink: #1a1a2e;
@@ -114,30 +114,31 @@
 </nav>
 
 <header class="spec-header">
-    <span class="item-code">D-08</span>
-    <h1 class="spec-title">Pictogram + Single-Word Signage Throughout</h1>
-    <h1 class="question-title">Can someone who cannot read text understand every sign in the building?</h1>
-    <span class="evidence-badge">◐ Evidence Tier 4</span>
+    <span class="item-code">C-01</span>
+    <h1 class="spec-title">accessible-circulation-geometry</h1>
+    <h1 class="question-title">Is the colour scheme calm enough for someone with sensory sensitivity to occupy the space without distress?</h1>
+    <span class="evidence-badge">◐ Evidence Tier Tier 5</span>
 </header>
 
 <div class="spec-content">
 
     <section id="why" style="--spec-order: 10; --question-order: 2">
         <h2>Why It Matters</h2>
-        <p class="why-prose">Primary wall colour: NCS chroma ≤4 (muted, desaturated) throughout all occupied spaces. No primary colours, no saturated hues. Accent colours (for zoning and wayfinding — C-02) may exceed NCS chroma 4 only where used as deliberate navigational landmarks, not as general decoration.</p>
+        <p class="why-prose">No fluorescent luminaires (T8, T5, compact fluorescent) installed anywhere in the building. Replaced with flicker-free LED throughout (B-04). Applies to all spaces.</p>
     </section>
 
     <section id="values" style="--spec-order: 2; --question-order: 3">
         <h2>Values</h2>
         <table>
             <thead><tr><th>Mode</th><th>Population</th><th>Value</th><th>Notes</th></tr></thead>
-            <tbody></tbody>
+            <tbody><tr class="mode-population"><td>Mode P</td><td>ALL</td><td>1400.0–1400.0 mm</td><td></td></tr>
+</tbody>
         </table>
     </section>
 
     <section id="evidence" style="--spec-order: 3; --question-order: 4">
         <h2>Evidence</h2>
-        <p>British Standards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.</p>
+        <p>Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT. AOTA. (2023). OT practice guidelines for adults with TBI. AJOT, 77(4).</p>
         <table>
             <thead><tr><th></th><th>Authors</th><th>Year</th><th>Title</th><th>Tier</th></tr></thead>
             <tbody></tbody>
@@ -146,14 +147,22 @@
 
     <section id="populations" style="--spec-order: 4; --question-order: 5">
         <h2>Population Applicability</h2>
-        <div class="pop-badges"></div>
+        <div class="pop-badges"><span class="pop-badge" style="opacity:1.0" title="Primary">DEM</span>
+<span class="pop-badge" style="opacity:1.0" title="Primary">MOB</span>
+<span class="pop-badge" style="opacity:1.0" title="Primary">VIS</span>
+</div>
     </section>
 
     <section id="jurisdictions" style="--spec-order: 5; --question-order: 6">
         <h2>Jurisdiction Comparison</h2>
         <table>
             <thead><tr><th>Jurisdiction</th><th>Standard</th><th>Clause</th><th>Value</th><th>Notes</th></tr></thead>
-            <tbody></tbody>
+            <tbody><tr><td>AU</td><td></td><td></td><td></td><td>supporting</td></tr>
+<tr><td>DE</td><td></td><td></td><td></td><td>supporting</td></tr>
+<tr><td>EU</td><td></td><td></td><td></td><td>supporting</td></tr>
+<tr><td>UK</td><td></td><td></td><td></td><td>supporting</td></tr>
+<tr><td>US</td><td></td><td></td><td></td><td>divergent</td></tr>
+</tbody>
         </table>
     </section>
 
@@ -165,7 +174,7 @@
     <section id="dar" style="--spec-order: 7; --question-order: 8" class="dar-section id="dar" style="--spec-order: 7; --question-order: 8"" id="dar">
             <h2>Design for Adaptable Readiness (DAR)</h2>
             <div class="dar-flag">⚑ DAR Priority</div>
-            <p>dards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.</p>
+            <p>dard) defines flicker-free threshold. NDV/NEU seizure and photosensitivity evidence: Harding et al. 2005 Epilepsia (Tier 3 SR). ≥10 jurisdictions moving to LED — mandatory IEEE compliance is VE-protected per Part 8. HIGH on fluorescent elimination; MODERATE on IEEE 1789 threshold specifically. --&gt;</p>
         </section id="dar" style="--spec-order: 7; --question-order: 8">
 
     
@@ -174,15 +183,13 @@
         <h2>Schedule Language</h2>
         <div class="schedule-block">
             <button class="copy-btn" onclick="copySchedule()">Copy</button>
-NCS chroma ≤4 on all primary wall surfaces
+Zero fluorescent luminaires anywhere in the building
 
-Accent/landmark colours: may exceed NCS chroma 4 only at designated wayfinding landmarks
+All luminaires: LED driver with high frequency switching (not mains-frequency ripple)
 
-No primary red, blue, or yellow as dominant wall colour
+Verified per B-04: IEEE 1789-2015 compliance required
 
-Ceiling: white or very pale (LRV ≥85) to reflect natural light
-
-Floor: plain, low-chroma (C-06)
+Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires
         </div>
     </section>
 
@@ -202,7 +209,7 @@ Floor: plain, low-chroma (C-06)
     <section id="meta" style="--spec-order: 13; --question-order: 13">
         <div class="meta-footer">
             <span>Curation: automated</span>
-            <span>OT basis: Allen&#x27;s CDM; Dunn&#x27;s Sensory Processing</span>
+            <span>OT basis: EHP Framework (prevent strategy); Dunn&#x27;s Sensory Processing Model. Fluorescent luminaires (magnetic ballast 100Hz flicker; electronic 20--50kHz flicker at visible amplitudes) are documented triggers for migraine, photosensitive epilepsy, and PCS symptom exacerbation; this item implements a categorical prevent intervention by removing the trigger source entirely rather than attempting to mitigate it.</span>
             <span>Retrofit: LOW</span>
         </div>
     </section>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>D-08 — Pictogram + Single-Word Signage Throughout</title>
+    <title>K-04 — OFS</title>
     <style>
         :root {
             --ink: #1a1a2e;
@@ -114,30 +114,31 @@
 </nav>
 
 <header class="spec-header">
-    <span class="item-code">D-08</span>
-    <h1 class="spec-title">Pictogram + Single-Word Signage Throughout</h1>
-    <h1 class="question-title">Can someone who cannot read text understand every sign in the building?</h1>
-    <span class="evidence-badge">◐ Evidence Tier 4</span>
+    <span class="item-code">K-04</span>
+    <h1 class="spec-title">OFS</h1>
+    <h1 class="question-title">Will someone who cannot see or hear an alarm still know through vibration that something requires their attention?</h1>
+    <span class="evidence-badge">● Evidence Tier Co-1/Tier 3</span>
 </header>
 
 <div class="spec-content">
 
     <section id="why" style="--spec-order: 10; --question-order: 2">
         <h2>Why It Matters</h2>
-        <p class="why-prose">Primary wall colour: NCS chroma ≤4 (muted, desaturated) throughout all occupied spaces. No primary colours, no saturated hues. Accent colours (for zoning and wayfinding — C-02) may exceed NCS chroma 4 only where used as deliberate navigational landmarks, not as general decoration.</p>
+        <p class="why-prose">Building-wide HVAC zoning strategy to maintain ambient temperatures that are safe for Uhthoff&#x27;s-threshold users (NEU/MS) while enabling individual supplemental heating for PAIN and OFS users who require warmth. Resolves the primary TEMP-RANGE cross-population conflict (see Part 5 §5.2).</p>
     </section>
 
     <section id="values" style="--spec-order: 2; --question-order: 3">
         <h2>Values</h2>
         <table>
             <thead><tr><th>Mode</th><th>Population</th><th>Value</th><th>Notes</th></tr></thead>
-            <tbody></tbody>
+            <tbody><tr class="mode-population"><td>Mode P</td><td>ALL</td><td>18–22 °C</td><td></td></tr>
+</tbody>
         </table>
     </section>
 
     <section id="evidence" style="--spec-order: 3; --question-order: 4">
         <h2>Evidence</h2>
-        <p>British Standards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.</p>
+        <p></p>
         <table>
             <thead><tr><th></th><th>Authors</th><th>Year</th><th>Title</th><th>Tier</th></tr></thead>
             <tbody></tbody>
@@ -146,14 +147,16 @@
 
     <section id="populations" style="--spec-order: 4; --question-order: 5">
         <h2>Population Applicability</h2>
-        <div class="pop-badges"></div>
+        <div class="pop-badges"><span class="pop-badge" style="opacity:1.0" title="Primary">OFS</span>
+</div>
     </section>
 
     <section id="jurisdictions" style="--spec-order: 5; --question-order: 6">
         <h2>Jurisdiction Comparison</h2>
         <table>
             <thead><tr><th>Jurisdiction</th><th>Standard</th><th>Clause</th><th>Value</th><th>Notes</th></tr></thead>
-            <tbody></tbody>
+            <tbody><tr><td>UK</td><td></td><td></td><td></td><td>supporting</td></tr>
+</tbody>
         </table>
     </section>
 
@@ -165,7 +168,7 @@
     <section id="dar" style="--spec-order: 7; --question-order: 8" class="dar-section id="dar" style="--spec-order: 7; --question-order: 8"" id="dar">
             <h2>Design for Adaptable Readiness (DAR)</h2>
             <div class="dar-flag">⚑ DAR Priority</div>
-            <p>dards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.</p>
+            <p>dards. No disability-specific built-env RCT but strong clinical evidence + physical principle. MODERATE. --&gt;</p>
         </section id="dar" style="--spec-order: 7; --question-order: 8">
 
     
@@ -174,15 +177,12 @@
         <h2>Schedule Language</h2>
         <div class="schedule-block">
             <button class="copy-btn" onclick="copySchedule()">Copy</button>
-NCS chroma ≤4 on all primary wall surfaces
-
-Accent/landmark colours: may exceed NCS chroma 4 only at designated wayfinding landmarks
-
-No primary red, blue, or yellow as dominant wall colour
-
-Ceiling: white or very pale (LRV ≥85) to reflect natural light
-
-Floor: plain, low-chroma (C-06)
+- ● Ambient temperature in all primary activity spaces and shared circulation to be maintained at ≤18°C where NEU/MS is a primary or significant secondary population [REF:ms-thermal-temperature-conflict-resolution:01] *(Uhthoff&#x27;s phenomenon — heat-induced demyelination worsening is safety-critical; not a preference)*
+- ● Inter-room thermal differential across the building to not exceed 5°C [CON-0041] *(sudden temperature change from cold corridor to warm room is a neurological and cardiovascular trigger for OFS/POTS and NEU/MS)*
+- ● Individual supplemental radiant heating to be provided at all fixed seating positions in spaces serving PAIN or OFS populations: wall-mounted or portable radiant panel rated ≤22°C output at 0.5 m [REF:ms-thermal-temperature-conflict-resolution:02] *(PAIN allodynia and fibromyalgia require local warmth delivery without raising shared ambient)*
+- ● All apartment or room thermostats (residential settings) to be individually controllable within a 16–24°C range [REF:ms-thermal-temperature-conflict-resolution:01]
+- ○ Insulated coatings specified for all grab bars, handrails, and door hardware on primary circulation routes serving PAIN populations [CON-0003] *(cold metal contact triggers allodynia)*
+- ○ In tropical climates (ambient &gt;28°C) where mechanical cooling is absent: SCI (above T6 lesion) populations require passive cooling strategy as primary design intervention — cross-ventilation, solar shading, high ceiling, low SHGC glazing. Continuous indoor ambient above 28°C exceeds resting thermoregulatory capacity for tetraplegia (impaired sweating ~30% normal; impaired vasodilation) [REF:thermoregulation-built-environment:01] *(PROVISIONAL — no SCI-specific tropical ambient threshold confirmed in accessible design standards; threshold extrapolated from clinical evidence + WHO HHGL Annex G; Opus synthesis pending)*
         </div>
     </section>
 
@@ -202,8 +202,8 @@ Floor: plain, low-chroma (C-06)
     <section id="meta" style="--spec-order: 13; --question-order: 13">
         <div class="meta-footer">
             <span>Curation: automated</span>
-            <span>OT basis: Allen&#x27;s CDM; Dunn&#x27;s Sensory Processing</span>
-            <span>Retrofit: LOW</span>
+            <span>OT basis: —</span>
+            <span>Retrofit: —</span>
         </div>
     </section>
 
