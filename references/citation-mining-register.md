@@ -273,3 +273,12 @@ Sources appearing in multiple BPCs. Mining once covers all instances. Tracked un
 | — | Keating et al. 2024 (PLOS ONE) | 10.1371/journal.pone.0299824 | NDV | ✓ | ✓ | 2026-05-04 | 0 new (cultural confirmation only) | session_2026-05-04-cm-p2 |
 | — | Guay et al. 2020 (JMIR) | 10.2196/16175 | bathroom | ✓ | ✓ | 2026-05-04 | 0 new (methodological parallel) | session_2026-05-04-cm-p2 |
 | — | Levine et al. 2025 (JMIR RAT) | 10.2196/69442 | bathroom | ✓ | ✓ | 2026-05-04 | 1 new (Deen 2025) | session_2026-05-04-cm-p2 |
+
+## Phase 3 — Population BPC Anchor Mining — 2026-05-05
+
+| REF-ID | Source | B | F | Slug | B✓ | F✓ | Date | New sources | Session |
+|---|---|---|---|---|---|---|---|---|---|
+| IDD-02 | Quesada-Cubo et al. 2025 (JARRID 38(6):e70142) | ✓ | ✓ | intellectual-disability-built-environment-design | ✓ | ✓ | 2026-05-05 | 1 (Quesada-Cubo 2026 consensus) | session_2026-05-05-fin-s2 |
+| NDV-ASPECTSS | Mostafa 2008/2014 ASPECTSS (Archnet-IJAR) | — | ✓ | neurodivergent-built-environment | — | ✓ | 2026-05-05 | 1 (Mostafa 2024 POE) | session_2026-05-05-fin-s2 |
+| DBE-01 | Bowes & Dawson 2019 DEM SR (Emerald) | — | ✓ | dementia-built-environment | — | ✓ | 2026-05-05 | 1 (Siegelaar 2025 meta-review) | session_2026-05-05-fin-s2 |
+| MHB-08 | Faerden 2022 (HERD) | — | ✓ | mental-health-built-environment | — | ✓ | 2026-05-05 | 1 (Scottish Gov MH SR, PMC11080396) | session_2026-05-05-fin-s2 |

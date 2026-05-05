@@ -274,3 +274,42 @@ Look up 5 incomplete Tier 1 records.
 | Research clusters confirmed | 7 |
 
 ### Phase 2 CLOSED. Proceeding to Phase 3 (population BPC anchors).
+
+
+---
+
+## Phase 3 — Population BPC Anchor Mining (Session 2)
+
+**Populations scanned:** 12 (MOB, VIS, DEAF, DEM, NDV, NEU, DBL, IntD, MH, PAIN, OFS, UPL)
+**Anchor studies forward-mined:** 4 (Quesada-Cubo IntD SR, Mostafa ASPECTSS, Bowes DEM SR, Faerden MH)
+**New sources discovered:** 4
+
+### New Sources
+
+| # | Authors | Year | Title | Journal | Domain | Tier | Discovery |
+|---|---|---|---|---|---|---|---|
+| 44 | Quesada-Cubo, Díaz-Jiménez, de la Fuente-Robles | 2026 | Co-constructing inclusive housing for people with intellectual disabilities: A multi-stakeholder expert consensus study | ScienceDirect | IntD | Co-1/2 | Forward from Quesada-Cubo 2025 SR |
+| 45 | Mostafa, Sotelo, Honsberger, Honsberger, Brooker Lozott, Shanok | 2024 | The impact of ASPECTSS-based design intervention in autism school design: a case study | Archnet-IJAR 18(2):318-339. doi: 10.1108/ARCH-11-2022-0258 | NDV | 3 | Forward from Mostafa 2008 ASPECTSS |
+| 46 | Siegelaar, Mobach, Janus, Zuidema | 2025 | The Physical Environment and the Quality of Life and Behavior in People With Dementia: A Systematic Meta-Review | SAGE. doi: 10.1177/30495334251345092 | DEM | 3 | Forward from Bowes 2019 DEM SR |
+| 47 | Scottish Government / NHSScotland Assure (authors TBC) | 2024 | The Role of the Built Environment as a Therapeutic Intervention in Mental Health Facilities: A Systematic Literature Review | PMC11080396 | MH | 3 | Forward from Faerden 2022 citing network |
+
+### Key Findings
+
+**IntD (Quesada-Cubo 2026):** Follow-up to the 2025 SR. Multi-stakeholder Delphi with N=66 across 5 groups including activists with intellectual disabilities. 38 housing assessment items validated. FRI-HOUSING project, Spain. Directly relevant to IntD BPC and Part 6 residential matrices. First Co-1 participatory study specifically validating IntD housing design factors.
+
+**NDV (Mostafa 2024):** First ASPECTSS post-occupancy evaluation. Design retrofits tested: colour-coded navigation, acoustic treatment, transition alcoves, classroom compartmentalization. Pre-K–12th grade school. Confirms ASPECTSS principles translate to measurable design interventions. Key for Part 7 NR-EDU matrices.
+
+**DEM (Siegelaar 2025):** Meta-review of 11 SRs (from 410 candidate reviews). Key conclusion: large body of consensual knowledge but evidence quality remains low. Central challenge: balance between overstimulation and sensory deprivation. Ambiance variation may benefit quality of life. Potential superseder of Bowes 2019 (broader scope, more recent, evaluates evidence strength). CHECK in Phase 4.
+
+**MH (Scottish Gov SR):** 44 studies, 9 countries. Commissioned by Scottish Government for mental health estate quality assessment tool. Covers acute, forensic, IPCU settings. Key design factors: access to nature, privacy, social space, safety features. Expands evidence base beyond Faerden 2022 single-room focus.
+
+### Populations with No Key Sources Section
+
+DEAF and PAIN BPC files lack Key Sources sections — these are flagged for BPC cleanup but are not Phase 3 gaps (the evidence exists in population-specific sub-BPCs in communication-and-alerts/ and health-and-symptom-management/).
+
+### Phase 3 Cumulative Totals
+
+| Metric | Phase 1 | Phase 2 | Phase 3 | Total |
+|---|---|---|---|---|
+| Sources mined | 19 | 12 | 4 | 35 |
+| Sources discovered | 34 | 9 | 4 | 47 |
