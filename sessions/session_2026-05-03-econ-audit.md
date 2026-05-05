@@ -169,12 +169,26 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 | GAP-10 LHA 22× | CLOSED-DOCUMENTED |
 | GAP-11 Jurisdictions | DEFERRED (scope expansion) |
 
+### Continuation: jurisdiction deep-dives
+- NL: NEN 9120:2025 confirmed, Accessible Building Guide launched April 2025, no cost studies
+- IE: Part M 2022 (operational Jan 2024), €30K Housing Adaptation Grant (updated Dec 2024), no cost studies
+- NZ: Building code DOES NOT mandate residential accessibility — Keall RCT from unregulated context strengthens design-stage argument
+- IE grant added as GRANT-010 in economics.json
+- GAP-11 reclassified to partially-resolved
+
+### Source verification sweep completed
+- GAP-ECON-04: 20 claims verified, 0 fabricated, 2 corrections applied (NEN 9120, Singapore BCA)
+- RHF/hcma 2024 added as COST-PREM-009 (<0.5% offices, <1.5% schools)
+
 ## next_action
-1. **§15 extraction** to separate analytical document (Change Order required — structural change)
-2. **Jurisdiction deep-dives** — NL (UD tradition), JP (beyond financing), IE (Part M), NZ (Keall policy)
-3. **10 remaining unmined sources** — low priority (Mitoku, Liu, CMS, Dalvand, Chindapol, Winkler×2, Best, Gusheh, Rick Hansen 2020)
+1. **§15 extraction** to separate analytical document (Change Order required)
+2. **JP beyond financing** — remaining priority jurisdiction
+3. **10 remaining unmined sources** — low priority
 4. **Tsuchiya-Ito 2019 JP-SE comparison** — deferred flag #7
 5. **BATH-OUT-2 monitoring** — results will provide first UK-specific BCR with QALY
+
+## blockers
+None.
 
 ## blockers
 None.
