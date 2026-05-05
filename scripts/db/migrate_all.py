@@ -145,16 +145,26 @@ def migrate_populations(conn):
 
     count = 0
     for p in data["populations"]:
+        barriers = json.dumps(p["primary_barriers"]) if p.get("primary_barriers") else None
+        key_params = json.dumps(p["key_parameters"]) if p.get("key_parameters") else None
+        conflict_domains = json.dumps(p["conflict_domains"]) if p.get("conflict_domains") else None
+        bpc_slugs = json.dumps(p["bpc_slugs"]) if p.get("bpc_slugs") else None
+        co_occ = p.get("co_occurrence_notes")
+        if isinstance(co_occ, list):
+            co_occ = "; ".join(co_occ)
+
         conn.execute("""
             INSERT OR REPLACE INTO population (
                 code, label, functional_profile,
+                primary_barriers, key_parameters, conflict_domains_json, bpc_slugs,
                 co1_status, co1_gap_note, evidence_confidence,
                 co_occurrence_notes
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             p["population_id"], p["label"], p.get("functional_profile"),
+            barriers, key_params, conflict_domains, bpc_slugs,
             p.get("co1_status"), p.get("co1_gap_note"),
-            p.get("evidence_confidence"), p.get("co_occurrence_notes"),
+            p.get("evidence_confidence"), co_occ,
         ))
         count += 1
 
