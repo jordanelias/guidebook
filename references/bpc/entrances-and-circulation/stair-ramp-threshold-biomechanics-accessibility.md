@@ -120,6 +120,9 @@ Not yet run.
 | Al Lawati 2017 (SRB-06) | Forward | Already mined in ULB — Rouvier 2022 SR applies here too (cross-ref ULB-15) |
 **Notes:** SRB-13 (PMC10821270) demonstrates higher step riser imposes highest demand on older adults in real domestic environments. SRB-14 (PMC11754982) shows 80% of fall-related events at interstep riser variation ≥14mm; high-contrast striping reduces events. SRB-15 (PMC12200730) finds 40% of older adults' home staircases don't meet UK guidelines for pitch, rise and going despite perceived safety. All three sources have [Authors TBC] — verify first authors via PMC before publication.
 
+### Cross-references (citation mining 2026-05-04)
+- **Luminance contrast:** Harper/Dakin research chain (SRB-14 = LCL-08) is shared evidence between this BPC and luminance-contrast-lrv-evidence-base. LCL-01 (OR=2.87 fall reduction), LCL-02 (descent speed), LCL-08/SRB-14 (interstep variation) form unified stair contrast specification evidence. (CON-0242)
+
 ## Metadata
 
 ```yaml

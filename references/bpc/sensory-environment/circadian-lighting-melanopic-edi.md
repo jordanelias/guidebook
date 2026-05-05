@@ -64,6 +64,9 @@
 ### Bottom-up findings (functional deficit pass)
 Not yet run.
 
+### Cross-references
+- **DEM population:** Kolberg 2022 (CML-07) measured melanopic EDI in 15 Norwegian dementia nursing homes — nearly all below thresholds. Direct DEM-specific evidence for circadian lighting specification. Cross-ref: dementia-built-environment BPC. (CON-0241)
+
 ## Metadata
 
 ```yaml

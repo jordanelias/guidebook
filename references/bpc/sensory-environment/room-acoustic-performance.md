@@ -258,6 +258,9 @@ citation_mining:
 
 **Status:** Caveats EXEC-READY for item-specification-writer. Gap register: GAP-RAP-01 OPEN P1.
 
+### Cross-references (citation mining 2026-05-04)
+- **Speech intelligibility:** Cueille 2022 (ASI-06 in acoustics-speech-intelligibility-disability BPC) quantifies HI reverberation penalty at 18dB SRT increase. ASI-08 SR confirms HI cannot adapt to reverberation. Strengthens fixed RT60 specification rationale. (CON-0246)
+
 ## Metadata
 
 ```yaml

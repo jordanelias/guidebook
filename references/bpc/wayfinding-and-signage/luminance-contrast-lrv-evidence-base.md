@@ -47,6 +47,9 @@
 | LCL-02 Brown 2023 | Author corrected | Brown CB; full journal citation added |
 **Notes:** The Harper/Dakin group at Utah State is the primary active research group on stair contrast enhancement. Three papers (LCL-01, LCL-02, LCL-08) form a coherent evidence chain: contrast striping reduces fall-related events (OR=2.87), reduces descent speed (coeff -0.07), and 80% of fall events cluster at ≥14mm interstep variation.
 
+### Cross-references (citation mining 2026-05-04)
+- **Stair-ramp biomechanics:** LCL-08 (Harper 2025) = SRB-14 in stair-ramp-threshold-biomechanics-accessibility BPC. Contrast striping evidence applies to both stair nosing specification and environmental barrier design. Unified specification recommended. (CON-0242)
+
 ## Metadata
 
 ```yaml

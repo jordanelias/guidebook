@@ -11,9 +11,9 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 140 |
-| CONSUMED-DEFERRED | 42 |
-| PENDING | 62 |
+| CONSUMED | 145 |
+| CONSUMED-DEFERRED | 43 |
+| PENDING | 56 |
 | CONSUMED (this session) | 3 |
 
 ## Index
@@ -262,9 +262,9 @@
 | CON-0237 | PENDING | A-02, A-07 | entrances-and-circulation | HIGH | false | — |
 | CON-0238 | PENDING | F-01, BIO-01, A-16 | sensory-environment | MODERATE | false | — |
 | CON-0239 | PENDING | Part 1, Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
-| CON-0241 | PENDING | B-01 circadian lighting, DEM BPC, Part 4 lighting -- Kolberg 2022 (CML-07): DEM nursing homes fail melanopic EDI | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
-| CON-0242 | PENDING | SRB items / LCL items -- Harper/Dakin stair contrast chain (LCL-01/02/08=SRB-14): unify specification | entrances-and-circulation | HIGH | false | citation-mining 2026-05-04 |
-| CON-0243 | PENDING | ULB grab bar items / fold-down-grab-bar -- Lee/Sanford 2018 (ULB-12): bilateral 356mm CL 813mm AFF | bathrooms-and-wet-areas | HIGH | false | citation-mining 2026-05-04 |
-| CON-0244 | PENDING | MST conflict resolution stratum -- Berwick 2021 SR (MST-09): 14/17 QST confirm FMS cold pain | health-and-symptom-management | HIGH | false | citation-mining 2026-05-04 |
-| CON-0245 | PENDING | SRU stratum upgrade -- Leonardi 2025 SR (SRU-05): replaces single-research-group dependency | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
-| CON-0246 | PENDING | ASI RT60 / room-acoustic-performance -- Cueille 2022 (ASI-06): HI penalty 18dB; ASI-08 HI cannot adapt | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
+| CON-0241 | CONSUMED | B-01 circadian lighting, DEM BPC, Part 4 lighting -- Kolberg 2022 (CML-07): DEM nursing homes fail melanopic EDI | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
+| CON-0242 | CONSUMED | SRB items / LCL items -- Harper/Dakin stair contrast chain (LCL-01/02/08=SRB-14): unify specification | entrances-and-circulation | HIGH | false | citation-mining 2026-05-04 |
+| CON-0243 | CONSUMED-DEFERRED | ULB grab bar items / fold-down-grab-bar -- Lee/Sanford 2018 (ULB-12): bilateral 356mm CL 813mm AFF | bathrooms-and-wet-areas | HIGH | false | citation-mining 2026-05-04 |
+| CON-0244 | CONSUMED | MST conflict resolution stratum -- Berwick 2021 SR (MST-09): 14/17 QST confirm FMS cold pain | health-and-symptom-management | HIGH | false | citation-mining 2026-05-04 |
+| CON-0245 | CONSUMED | SRU stratum upgrade -- Leonardi 2025 SR (SRU-05): replaces single-research-group dependency | sensory-environment | HIGH | false | citation-mining 2026-05-04 |
+| CON-0246 | CONSUMED | ASI RT60 / room-acoustic-performance -- Cueille 2022 (ASI-06): HI penalty 18dB; ASI-08 HI cannot adapt | sensory-environment | HIGH | false | citation-mining 2026-05-04 |

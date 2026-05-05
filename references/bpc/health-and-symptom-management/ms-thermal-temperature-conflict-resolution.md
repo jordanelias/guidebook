@@ -31,7 +31,7 @@
 ### Best-practice synthesis
 **Most inclusive provision:** Ambient temperature ≤18–21°C with individual supplemental heating at each primary seating position; serves NEU/MS and OFS as floor while allowing PAIN/DEM occupants to warm locally.
 **Most targeted provision:** Personal cooling provision (desk fan, cooling vest storage) in MS neurology ward/room settings; no forced air heating as sole source in NEU/OFS spaces.
-**Conflict resolution:** No single ambient temperature satisfies all populations simultaneously. Resolution is architectural: low ambient + individual supplemental heating. Spatial separation or individual controls are the only viable approaches.
+**Conflict resolution:** No single ambient temperature satisfies all populations simultaneously. Resolution is architectural: low ambient + individual supplemental heating. Spatial separation or individual controls are the only viable approaches. **Evidence-auditor 2026-05-04: conflict resolution now SR-supported on both sides — Berwick 2021 (FMS cold sensitivity) + Christogianni 2018 (MS Uhthoff 0.5C threshold). Harm-asymmetry rule in project-standards has MODERATE stratum.**
 **Highest-ambition actionable specification:** F-06: ≤18°C ambient with individual zone control per desk/seat (BMS or portable); accessible thermostat within reach of each primary seat; Part 9 §9.1.4 Passivhaus-grade envelope (U ≤0.15, Uw ≤0.8) for passive thermal stability.
 **Opus synthesis note:** Synthesis is conflict-resolution focused. No single-population best practice applies — the synthesis IS the conflict resolution protocol.
 

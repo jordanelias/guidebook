@@ -86,6 +86,9 @@
 9. AS 1428.1-2009 — Design for access and mobility. Standards Australia. [AU · Tier 6]
 10. GB 50763-2012 — 无障碍设计规范. Ministry of Housing and Urban-Rural Development, PRC. [ZH · Tier 6]
 
+### Cross-references (citation mining 2026-05-04)
+- **Circadian lighting:** Kolberg 2022 (CML-07 in circadian-lighting-melanopic-edi BPC) measured melanopic EDI in 15 Norwegian DEM nursing homes — nearly all below minimum thresholds across seasons and gaze directions. Direct DEM-specific evidence that existing facilities fail circadian lighting requirements. (CON-0241)
+
 ## Metadata
 
 ```yaml

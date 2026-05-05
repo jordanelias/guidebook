@@ -58,6 +58,9 @@
 | ASI-02 | Forward | Adaptation to reverberation SR 2024 (ASI-08) |
 **Notes:** Cueille 2022 quantifies the HI penalty: 18dB SRT increase (RT 0→1s) vs 10dB for NH — the most precise quantification of the hearing-impaired reverberation penalty. ASI-08 confirms that NH listeners adapt to reverberation but HI listeners do not — supports fixed RT specification rather than adaptive approach. Korean study adds non-Western evidence for elderly populations.
 
+### Cross-references (citation mining 2026-05-04)
+- **Room acoustic performance:** Cueille 2022 (ASI-06) quantifies 18dB SRT increase for HI (vs 10dB NH) — strengthens the RT60 specification in room-acoustic-performance BPC. ASI-08 SR confirms HI cannot adapt to reverberation unlike NH — supports fixed RT specification (not adaptive). Cross-ref: room-acoustic-performance BPC. (CON-0246)
+
 ## Metadata
 
 ```yaml

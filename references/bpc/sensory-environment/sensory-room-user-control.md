@@ -1,7 +1,7 @@
 ## sensory-room-user-control
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 2–3  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
-**Status:** TARGETED RETRIEVAL — originally narrow (Unwin 2021–2024, single research group). Citation mining 2026-05-04 discovered systematic review (Leonardi 2025) and additional studies from IT and US.
+**Status:** TARGETED RETRIEVAL — originally narrow (Unwin 2021–2024, single research group). Citation mining 2026-05-04 discovered systematic review (Leonardi 2025) and additional studies from IT and US. **Evidence-auditor 2026-05-04: stratum upgraded from single-research-group to systematic-review-supported (3-country coverage: UK, IT, US).**
 
 ### Best-practice synthesis
 **Most inclusive provision:** Occupant-controlled dimming, sound management, and blackout as primary design requirements; static parameters (STC, RT60, NC) as enabling context
