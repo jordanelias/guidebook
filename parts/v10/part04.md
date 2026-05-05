@@ -3237,7 +3237,7 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. The Kelsey. (2023). Inclusive design standards.
 
-**Cross-reference:** G-01 (Defensible Seating); G-03 (Armrests)
+**Cross-reference:** G-01 (Defensible Seating); G-03 (Armrests); E-10 (Rest seating on circulation routes — seat height ≥480 mm AFF in E-10 is consistent with G-02 Type A 430–450 mm range; shared transfer biomechanics evidence base: D'Souza 2011 Universal Design Index, Steinfeld 2006 RESNA govern dimensional specifications across both items [CON-0207, CON-0212]); G-07 (Waiting area seating — shared anthropometric basis [CON-0212])
 
 **Evidence basis (OT):** Biomechanical FOR. The range of seat heights (430--500mm), back heights, and armrest positions derives from biomechanical research on the muscle force requirements of sit-to-stand transfer: 450--500mm seat height reduces hip extensor moment by \~40% compared to 380mm (Rodosky et al. 1989); armrest availability reduces peak shoulder force during sit-to-stand by 15--25%.
 
@@ -3493,7 +3493,7 @@ furniture repositioning and procurement. See Part 12 §12.4.1.
 
 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF.
 
-**Cross-reference:** G-02 (Variety of Seating);
+**Cross-reference:** G-02 (Variety of Seating); E-10 (Rest seating on circulation routes — unified rest provision: G-07 governs seating at service points, E-10 governs seating at ≤25 m intervals on routes; consistent seat height 450–500 mm AFF, bilateral armrests, and load rating ≥250 kg (bariatric) apply to both [CON-0190])
 
 G-01 (Defensible Seating)
 
@@ -4535,7 +4535,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:accessible-circulation-geometry:12 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
 | REF:accessible-circulation-geometry:02 | BSI | 2018 | BS 8300-2:2018 | BSI | 5 | EN | UK |
 
-**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); GAP-FDR-T0-09 (Universal Mode candidate — pending connection-scout)
+**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); G-07 (Waiting area seating — service-point counterpart to E-10 circulation seating; shared anthropometric basis: D'Souza 2011 Universal Design Index, Steinfeld 2006 RESNA — seat height, armrest geometry, and transfer biomechanics evidence governs both items [CON-0190, CON-0212]); E-14 (Entrance rest seating — distinct from E-10: E-14 governs threshold seating, E-10 governs route intervals); GAP-FDR-T0-09 (Universal Mode candidate — pending connection-scout)
 
 **Illustration:** [Illustration: to be provided] — Plan of alcove showing 900 mm width, 200 mm recess from circulation path, and 450 mm seat depth. Section showing 480 mm AFF seat height and arm projection.
 
