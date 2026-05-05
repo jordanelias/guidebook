@@ -122,7 +122,7 @@ Post-installation RT60 measurement at 500 Hz required
 ● Speech-critical rooms (classrooms, therapy rooms, consultation rooms, meeting rooms): target RT60 ≤0.3 s (mid-frequency 500–2000 Hz) in occupied condition [CON-0039]. RT60 ≤0.6 s is the OUTER FAILURE BOUNDARY — not a compliant specification. Evidence: Murgia 2023 SR (ASI-01, DOI:10.1044/2022_LSHSS-21-00181) confirms RT60 >0.6s prevents 100% speech perception even at high SNR; Cueille 2022 (ASI-06, DOI:10.1098/rsos.210342) quantifies HI penalty at 18dB SRT increase; ASI-08 SR confirms HI cannot adapt to reverberation.
 ○ Non-speech-critical rooms (circulation, utility, storage): RT60 ≤0.6 s acceptable
 
-**Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part 11 §11.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -154,7 +154,7 @@ No letterbox penetrations; no undercuts ≥ 3mm
 Closer: hydraulic door closer specified
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic door replacement is a moderate retrofit; achieving STC ≥35 requires 
-full frame and threshold sealing which may require opening up surrounding construction. At design stage, specification cost is near-zero. See Part 12 §12.4.3.
+full frame and threshold sealing which may require opening up surrounding construction. At design stage, specification cost is near-zero. See Part 11 §11.4.3.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. ISO 10140-2:2010. Acoustics Laboratory measurement of sound insulation. ISO.
 
@@ -198,7 +198,7 @@ NC-10 change
 
 Restorative intervals: at least one acoustic low-point per 20m of primary journey ○ [UNSUPPORTED — concept evidence-based (Kaplan & Kaplan 1989 attentional restoration theory; PAS 6463:2022 sensory gradient); 20m interval threshold has no quantified empirical derivation in built-environment literature]
 
-**Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic zoning through graduated material and layout planning is zero-cost at design stage. Retrofit requires redecoration, material replacement, and possible spatial reconfiguration. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW — PLANNING. Acoustic zoning through graduated material and layout planning is zero-cost at design stage. Retrofit requires redecoration, material replacement, and possible spatial reconfiguration. See Part 11 §11.4.1.
 
 **Key citations:** Kaplan, R., \& Kaplan, S. (1989). The experience of nature. Cambridge University Press. British Standards Institution.
 
@@ -291,7 +291,7 @@ Fabric: low-VOC, class 1 fire rating
 
 **Retrofit cost note:** Retrofit penalty: LOW. Fabric wall panels are surface-applied and can be retrofitted without structural work using
 
-standard fixing. See Part 12 §12.4.1.
+standard fixing. See Part 11 §11.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences,
 
@@ -325,7 +325,7 @@ Corridor end walls: acoustic panel or splayed geometry
 
 Specular reflection check: acoustic consultant review at design stage
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Flutter echo elimination through non-parallel surface treatment is zero-cost at design stage. Retrofit requires material addition or surface modification; physical parallel wall removal is a structural intervention. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Flutter echo elimination through non-parallel surface treatment is zero-cost at design stage. Retrofit requires material addition or surface modification; physical parallel wall removal is a structural intervention. See Part 11 §11.4.2.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -370,7 +370,7 @@ Acoustic lining: rectangular supply ducts lined for ≥10 m from AHU
 
 All mechanical plant: mounted on vibration isolation pads
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. HVAC noise control (NC-25) at design stage requires correct plant selection and ductwork specification. Retrofit requires silencer insertion, ductwork modification, or plant replacement — significant mechanical works. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. HVAC noise control (NC-25) at design stage requires correct plant selection and ductwork specification. Retrofit requires silencer insertion, ductwork modification, or plant replacement — significant mechanical works. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. ANSI/ASA S12.60:2010. Acoustical performance criteria for schools. ASA.
 
@@ -421,7 +421,7 @@ Pipe connections: flexible connections at all mechanical plant
 Post-installation: vibration measurement at sensitive space floors  
 (target: weighted RMS acceleration ≤0.5 m/s² per ISO 2631-1 EAV; older specification referenced 0.1 m/s RMS — incorrect unit, now superseded [CORRECTED: ISW Opus cross-check 2026-04-24 15:17; see threshold-resolved comment above])
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Floating plant room specification cannot be retrofitted without rebuilding the plant room. Anti-vibration mounts and structural decoupling must be incorporated at construction stage. Among the highest-penalty items when deferred. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Floating plant room specification cannot be retrofitted without rebuilding the plant room. Anti-vibration mounts and structural decoupling must be incorporated at construction stage. Among the highest-penalty items when deferred. See Part 11 §11.4.
 
 **Key citations:** Desmeules, J.A., Cedraschi, C., Rapiti, E., Baumgartner, E., Finckh, A., Cohen, P., Dayer, P., & Vischer, T.L. (2003). Neurophysiologic evidence for a central sensitization in patients with fibromyalgia. *Arthritis & Rheumatism*, 48(5), 1420–1429. PMID: 12746916. DOI: 10.1002/art.10893. ✅ [Verified 2026-05-05: full authors, volume, pages, PMID, DOI confirmed]. ○ [GAP-IMPL-04 CLOSED]
 
@@ -466,7 +466,7 @@ All staffed service points: counter loop required
 
 **Retrofit cost note:** Retrofit penalty: LOW. Counter hearing loop is a low-cost surface or under-counter cable installation. Retrofit
 
-penalty is minimal; power supply proximity is the principal constraint. See Part 12 §12.4.
+penalty is minimal; power supply proximity is the principal constraint. See Part 11 §11.4.
 
 **Key citations:** International Electrotechnical Commission. (2017). IEC 60118-4:2014+AMD1:2017 [BS EN IEC 60118-4:2015+A1:2018 for UK/EU\]. IEC. Hearing Loss Association of America. (2023). Hearing loop technology. HLAA.
 
@@ -505,7 +505,7 @@ All absorption products: moisture resistant rating confirmed
 
 Post-installation: RT60 measurement at commissioning
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Pool/hydrotherapy acoustic treatment involves wet environment panels and surface specification. Retrofit without facility closure requires a full tile/substrate replacement programme. At design stage, specification is the only cost. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Pool/hydrotherapy acoustic treatment involves wet environment panels and surface specification. Retrofit without facility closure requires a full tile/substrate replacement programme. At design stage, specification is the only cost. See Part 11 §11.4.2.
 
 **Key citations:** ISO 3382-2:2008. Measurement of room acoustic parameters. ISO. Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942.
 
@@ -546,7 +546,7 @@ Signage: IFHOH symbol at all entrances to looped space
 
 Required: all assembly spaces ≥25 capacity; all consultation/interview rooms
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Room perimeter hearing loop requires a cable run in floor or wall chase. In a finished building, chase-cutting and reinstatement adds moderate cost. Design stage conduit provision eliminates this entirely. See Part 11 for DAR conduit provisions; Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Room perimeter hearing loop requires a cable run in floor or wall chase. In a finished building, chase-cutting and reinstatement adds moderate cost. Design stage conduit provision eliminates this entirely. See Part 10 for DAR conduit provisions; Part 11 §11.4.
 
 **Key citations:** International Electrotechnical Commission. (2017). IEC 60118-4:2014+AMD1:2017 [BS EN IEC 60118-4:2015+A1:2018 for UK/EU\]. IEC. Hearing Loss Association of America. (2023). Hearing loop technology and Auracast. HLAA. HLF. (2023). Teleslynge i alle offentlige bygg [Norwegian\]. HLF.
 
@@ -597,7 +597,7 @@ Loop installation (A-11) remains required; Auracast does not substitute
 
 **Retrofit cost note:** Retrofit penalty: LOW. Auracast infrastructure readiness requires conduit provision and power access points — a
 
-design-stage specification only. Retrofit requires surface-run conduit or chase cutting. See Part 11; Part 12 §12.4.
+design-stage specification only. Retrofit requires surface-run conduit or chase cutting. See Part 10; Part 11 §11.4.
 
 **Key citations:** Hearing Loss Association of America. (2023).
 
@@ -641,7 +641,7 @@ Open offices: acoustic zoning (A-04), focus rooms (D-05)
 
 **Key evidence (non-English):** De Hogeweyk post-occupancy evaluation (BuroKade/Vivium, Dutch-language reports, 2012--2019): 94% of residents with moderate dementia navigated independently to the village square and back within 6 months of admission, compared to 34% in conventional dementia units — the strongest empirical wayfinding evidence available for consistent environment provisions (D-09) in combination with loop plan (D-01).
 
-**Retrofit cost note:** Retrofit penalty: ZERO — NET SAVING. This item is a specification exclusion. Omitting sound masking systems costs less than installing them. Retrofit action is removal of existing masking systems at minor cost. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: ZERO — NET SAVING. This item is a specification exclusion. Omitting sound masking systems costs less than installing them. Retrofit action is removal of existing masking systems at minor cost. See Part 11 §11.4.1.
 
 **Key citations:** Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT.
 
@@ -677,7 +677,7 @@ Flanking: sealed at all ceiling/floor junctions
 
 Target: STC ≥50 laboratory; Field STC ≥45
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Double-leaf STC ≥50 partitions require structural provision at wall head and floor --- major interventions in an existing building. At design stage, the specification premium over a standard partition is modest. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Double-leaf STC ≥50 partitions require structural provision at wall head and floor --- major interventions in an existing building. At design stage, the specification premium over a standard partition is modest. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS
 
@@ -713,7 +713,7 @@ Do not apply full acoustic treatment to primary circulation if it removes all ac
 
 Resolve tension with A-05: carpet reduces acoustic cues — provide hard floor strips at key junctions
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic differentiation between spaces is a material and finish specification at zero cost at design stage. Retrofit requires finish replacement and potentially structural element modification at room junctions. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Acoustic differentiation between spaces is a material and finish specification at zero cost at design stage. Retrofit requires finish replacement and potentially structural element modification at room junctions. See Part 11 §11.4.1.
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -768,7 +768,7 @@ Location: adjacent to primary circulation; not via another occupied space
 
 Accessible toilet: within 15 m of A-16 entry (mandatory; not discretionary) — OFS/ME users with PEM cannot tolerate extended travel during episodes; DEM users require toilet access from the retreat space without wayfinding complexity; route must be direct and unobstructed ○ [Tier 2 — NICE NG206 §hospital-env; CDC ME/CFS clinical guidance; DSDC EADDAT 2022; no standard specifies maximum distance]
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Sensory room provision requires dedicated floor area — a planning decision at design stage. Retrofit requires spatial reorganisation within a finished building. Minimum 8 m² cannot be created from circulation space. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Sensory room provision requires dedicated floor area — a planning decision at design stage. Retrofit requires spatial reorganisation within a finished building. Minimum 8 m² cannot be created from circulation space. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0, Category 11. RHF. National Autistic Society. (2023). Creating autism-friendly environments. NAS.
 
@@ -803,7 +803,7 @@ Hygiene contexts: wipe clean upholstery (vinyl, antimicrobial fabric) is acousti
 
 **Retrofit cost note:** Retrofit penalty: LOW. Upholstered seating is a procurement specification with no structural or services
 
-implications. Retrofit is furniture replacement, phaseable without building disruption. See Part 12 §12.4.1.
+implications. Retrofit is furniture replacement, phaseable without building disruption. See Part 11 §11.4.1.
 
 **Key citations:** Bettarello, F., et al. (2021). Applied Sciences, 11(9), 3942. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -850,7 +850,7 @@ Natural light maximised; not substituted by electric light where achievable
 
 DEM environments: circadian lighting is a clinical requirement, not a comfort enhancement
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Circadian lighting requires tuneable-white luminaires with control wiring. At design stage the cost premium over standard LED is modest. Retrofit requires luminaire replacement and control circuit rewiring or smart system overlay. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Circadian lighting requires tuneable-white luminaires with control wiring. At design stage the cost premium over standard LED is modest. Retrofit requires luminaire replacement and control circuit rewiring or smart system overlay. See Part 11 §11.4.2.
 
 **Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI. Illuminating Engineering Society. (2023). IES RP-46-23: Recommended Practice for Circadian-Effective Lighting for the Built Environment. IES. ✅ [Confirmed: US recommended practice aligned with Brown 2022 melanopic EDI thresholds; Tier 4 US standard.] Grant, S.D., et al. (2022). Improved circadian lighting reduces falls in care home residents. *Lighting Research & Technology*, 54(4), 312–328. ✅ [CML-08: Tier 2; fall reduction outcome from circadian lighting upgrades — supports ≥250 MEDI daytime specification with direct functional outcome evidence.]
 
@@ -900,7 +900,7 @@ Preferred: indirect or semi-indirect luminaires supplemented by wall-wash
 
 — negligible cost premium. Retrofit requires repositioning existing luminaire points, which may involve ceiling works and circuit
 
-modification. See Part 12 §12.4.2.
+modification. See Part 11 §11.4.2.
 
 **Key citations:** DeafSpace Project, Gallaudet University. (2010).
 
@@ -948,7 +948,7 @@ Verified per B-04: IEEE 1789-2015 compliance required
 
 Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Fluorescent elimination is a luminaire swap. In retrofit, ballast removal and fixture replacement across a building carries moderate labour cost but no structural implications. At design stage, LED specification is standard. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Fluorescent elimination is a luminaire swap. In retrofit, ballast removal and fixture replacement across a building carries moderate labour cost but no structural implications. At design stage, LED specification is standard. See Part 11 §11.4.1.
 
 **Key citations:** Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT. AOTA. (2023). OT practice guidelines for adults with TBI. AJOT, 77(4).
 
@@ -993,7 +993,7 @@ At all dimming levels including 20% output: within low-risk range
 
 Product specification: IEEE 1789 compliance certificate required before installation
 
-**Retrofit cost note:** Retrofit penalty: LOW. Flicker-free IEEE 1789-compliant LEDs are a standard specification item. Retrofit is simple luminaire replacement. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Flicker-free IEEE 1789-compliant LEDs are a standard specification item. Retrofit is simple luminaire replacement. See Part 11 §11.4.1.
 
 **Key citations:** IEEE. (2015). IEEE 1789-2015: Recommended practices for modulating current in high-brightness LEDs. IEEE. CAOT. (2018). Practice guidelines for acquired brain injury. CAOT.
 
@@ -1029,7 +1029,7 @@ Entry: supplementary electric lighting in vestibule in dull weather
 
 **Retrofit cost note:** Retrofit penalty: MODERATE. Gradual lighting transition zones require zone circuit design at design stage. Retrofit
 
-requires circuit separation, dimmer installation, and possible luminaire addition in transition areas. See Part 12 §12.4.2.
+requires circuit separation, dimmer installation, and possible luminaire addition in transition areas. See Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. Invalidiliitto. (2022). Esteettömyysopas [Finnish\]. Invalidiliitto. CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -1070,7 +1070,7 @@ Sensory/consulting rooms: scene controller with preset 'minimum' (10 lux) scene
 
 Where residential occupancy: all bedroom and living room circuits minimum
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Individual dimming requires wiring and switch installation per zone. At design stage this is standard electrical specification. Retrofit requires cable runs, switch replacement, and possible smart lighting overlay. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Individual dimming requires wiring and switch installation per zone. At design stage this is standard electrical specification. Retrofit requires cable runs, switch replacement, and possible smart lighting overlay. See Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS 6463:2022. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0, Category 11. RHF.
 
@@ -1113,7 +1113,7 @@ Supplementary downlights: deep recessed, diffuse lens, minimum 30° cutoff
 
 Illuminance: 200--300 lux at task level achieved by indirect strategy
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Indirect and cove lighting requires physical cove construction at ceiling or wall level. At design stage the cove is integrated into the ceiling design at modest cost. Retrofit requires suspended ceiling modification or new cove construction plus additional circuit provision. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Indirect and cove lighting requires physical cove construction at ceiling or wall level. At design stage the cove is integrated into the ceiling design at modest cost. Retrofit requires suspended ceiling modification or new cove construction plus additional circuit provision. See Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -1147,7 +1147,7 @@ Wet rooms: matte, R10 slip resistance takes priority
 
 **Retrofit cost note:** Retrofit penalty: LOW. Matte, low-reflectance floor finishes are a procurement specification. Retrofit is floor
 
-covering replacement only. See Part 12 §12.4.1.
+covering replacement only. See Part 11 §11.4.1.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -1194,7 +1194,7 @@ Sill height: ≤750 mm AFF for seated and reclined views. Applicable where DEM, 
 
 seated views essential).
 
-**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Maximising natural light through clerestories, light wells, and rooflights is a fundamental building form decision. Retrofit requires structural assessment, temporary propping, lintel installation, weatherproofing, and internal making-good. Retrofit cost of a single rooflight can exceed the design-stage cost by 10×. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Maximising natural light through clerestories, light wells, and rooflights is a fundamental building form decision. Retrofit requires structural assessment, temporary propping, lintel installation, weatherproofing, and internal making-good. Retrofit cost of a single rooflight can exceed the design-stage cost by 10×. See Part 11 §11.4.
 
 **Key citations:** Ulrich, R.S. (1984). View through a window may influence recovery from surgery. Science, 224(4647). WELL Building Institute. (2024). WELL v2. IWBI.
 
@@ -1245,7 +1245,7 @@ Position: visible from any point in room (ceiling or high-wall mount)
 
 **Continuous tactile guidance to exit (DBL — LIFE SAFETY):** In all buildings where DBL users are resident: continuous handrail from private room door to building exit without interruption. Handrail to carry raised characters with braille on underside of horizontal section at each stair landing and decision point: floor number, direction of egress, tactile star at exit floor (per CAN/ASC 2.2 §12.6.1). Any gap in handrail continuity on the egress route is a life safety failure for DBL users. Source: FDR-NEW-11; CAN/ASC 2.2; DbI guidelines.
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 11; Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Visual fire alarm strobe installation requires surface-mounted head and alarm circuit extension. In a finished building, surface-run cable is acceptable. Design stage conduit provision eliminates visible surface runs. See Part 10; Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2010). BS EN 54-23:2010. BSI. British Standards Institution. (2017). BS 9999:2017. BSI. Jordan, J.B. & Vanderheiden, G.C. (2024). International Guidelines for Photosensitive Epilepsy. *ACM TACCESS* 17(3):1-35. DOI:10.1145/3694790. Fisher, R.S. et al. (2022). Visually sensitive seizures: updated review. *Epilepsia* 63(4):739-768. DOI:10.1111/epi.17175.
 
@@ -1293,7 +1293,7 @@ DEM: automated shift at 19:00 via BMS (occupants cannot always be relied upon to
 
 Where residential occupancy: manual override available for non-standard sleep schedules
 
-**Retrofit cost note:** Retrofit penalty: LOW. Warm colour temperature (2700 K) is a lamp or luminaire specification change. Retrofit is lamp replacement in compatible luminaires, or luminaire swap. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Warm colour temperature (2700 K) is a lamp or luminaire specification change. Retrofit is lamp replacement in compatible luminaires, or luminaire swap. See Part 11 §11.4.1.
 
 **Key citations:** WELL Building Institute. (2024). WELL v2. IWBI. Alzheimer's Disease International. (2020). World Alzheimer Report 2020. ADI.
 
@@ -1336,7 +1336,7 @@ Ceiling: white or very pale (LRV ≥85) to reflect natural light
 
 Floor: plain, low-chroma (C-06)
 
-**Retrofit cost note:** Retrofit penalty: LOW. Colour palette specification is a decoration decision. Retrofit is redecoration --- the lowest-penalty category of change in any building. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Colour palette specification is a decoration decision. Retrofit is redecoration --- the lowest-penalty category of change in any building. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.
 
@@ -1373,7 +1373,7 @@ Floor accent: zone colour strip at corridor centre or edge
 
 No more than 5 distinct zone colours per building
 
-**Retrofit cost note:** Retrofit penalty: LOW. Colour-coded wayfinding is a redecoration and signage programme without structural implications. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Colour-coded wayfinding is a redecoration and signage programme without structural implications. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. Marquardt, G. (2011). HERD, 4(2), 75--90. Grey, T., et al. (2015). Universal design guidelines: Dementia friendly dwellings. NDA Ireland.
 
@@ -1414,7 +1414,7 @@ LBD (Lewy Body Dementia): plain matte uniform flooring mandatory (see
 
 **Retrofit cost note:** Retrofit penalty: LOW. Pattern avoidance is a floor and wall covering specification. Retrofit is covering
 
-replacement without structural works. See Part 12 §12.4.1.
+replacement without structural works. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. National Autistic Society. (2023). Creating autism-friendly environments. NAS.
 
@@ -1477,7 +1477,7 @@ Door frames: ≥30 LRV vs adjacent wall throughout building; ≥50 LRV best prac
 
 **Decision-point signage [CON-0206]:** At all wayfinding decision points (corridor junctions, lift lobbies, room entries), ≥50 LRV contrast between signage background and adjacent wall. ≥30 LRV is the compliance minimum for sign text; ≥50 LRV for the sign panel itself against the wall. Cross-ref D-08 (Pictogram + Braille signage standard). ◐ [CON-0206]
 
-**Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. LRV contrast ≥30 is achieved through paint, finish, and fixture selection. Retrofit is primarily redecoration and, at floor/fixture junctions, fixture replacement. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CNIB Foundation. (2024). Clearing our path. CNIB. JOTA. (2022). Grab bar colour contrast. [Translated from Japanese.\] Manandhar, S. et al. (2022). Luminance contrast preferences of people with a vision impairment for elements in the built environment. *Work* 73(4):1265-1278. DOI:10.3233/WOR-210997. Harper, S.A. et al. (2022). Stairway visual contrast enhancement to reduce fall-related events. *J Ergonomics* 12:303. DOI:10.35248/2165-7556-22.12.303.
 
@@ -1521,7 +1521,7 @@ Tactile transition strip (≤3 mm height): permitted; colour must meet
 
 ≤10 LRV rule
 
-**Retrofit cost note:** Retrofit penalty: LOW. Low LRV differential at adjacent floor materials is a flooring specification decision. Retrofit is flooring replacement at junctions. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Low LRV differential at adjacent floor materials is a flooring specification decision. Retrofit is flooring replacement at junctions. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling.
 
@@ -1559,7 +1559,7 @@ LBD environments: plain matte uniform mandatory (see §2.5)
 
 **Retrofit cost note:** Retrofit penalty: LOW. Plain, low-contrast flooring is a floor covering specification. Retrofit is full floor
 
-covering replacement without structural works. See Part 12 §12.4.1.
+covering replacement without structural works. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling.
 
@@ -1600,7 +1600,7 @@ Dead end terminations: treated as destination landmarks with return signage
 
 Toilet access: visible from all primary loop positions (D-03)
 
-**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Loop floor plan with no dead-end corridors is a fundamental plan organisation decision. Achieving a loop plan through retrofit requires removing or adding walls — potentially structural — and fundamentally reorganising internal layouts. In many existing buildings this is practically impossible without near-total internal reconstruction. At design stage it is zero-cost planning. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Loop floor plan with no dead-end corridors is a fundamental plan organisation decision. Achieving a loop plan through retrofit requires removing or adding walls — potentially structural — and fundamentally reorganising internal layouts. In many existing buildings this is practically impossible without near-total internal reconstruction. At design stage it is zero-cost planning. See Part 11 §11.4.
 
 **Key citations:** Marquardt, G. (2011). HERD, 4(2), 75--90. DSDC. (2022). EADDAT. University of Stirling.
 
@@ -1646,7 +1646,7 @@ Primary route: shortest + most direct (not hidden accessible route)
 
 Decision point legibility: destination visible from decision point where possible
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Cognitive simplicity through a single primary route requires spatial reorganisation of circulation. Retrofit involves partition removal, route reconfiguration, and wayfinding redesign — significant works in complex existing buildings. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Cognitive simplicity through a single primary route requires spatial reorganisation of circulation. Retrofit involves partition removal, route reconfiguration, and wayfinding redesign — significant works in complex existing buildings. See Part 11 §11.4.2.
 
 **Key citations:** Passini, R. (1984). Wayfinding in architecture. Van
 
@@ -1684,7 +1684,7 @@ Toilet door: ≥30 LRV contrast against corridor wall (C-04)
 
 Maximum 20 m from any primary occupied space to nearest toilet (MS bladder urgency)
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Toilet visibility from primary occupied spaces requires sight-line planning. Retrofit requires spatial reorganisation or transparent partition introduction; where structural walls are involved the intervention is major. At design stage, toilet positioning is a zero-cost planning decision. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH. Toilet visibility from primary occupied spaces requires sight-line planning. Retrofit requires spatial reorganisation or transparent partition introduction; where structural walls are involved the intervention is major. At design stage, toilet positioning is a zero-cost planning decision. See Part 11 §11.4.2.
 
 **Key citations:** Marquardt, G. (2011). Wayfinding for people with dementia: A review of the role of architectural design. HERD, 4(2), 75--90. [Landmark German-language OT research: 32-facility study documenting 47% [UNVERIFIED-QUANT — this figure has been removed from the BPC as unverifiable; do not cite as evidence-based. See spec-db-part4-reconciliation Section C1 and project-standards 2026-04-09] reduction in incontinence events where toilet is directly visible from primary living space. Strongest single empirical finding for any spatial provision in this Guidebook.\] Kirch, M., \& Marquardt, G. (2023). HERD, 16(1). doi:10.1177/19375867221119540 Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF.
 
@@ -1720,7 +1720,7 @@ VIS: acoustic landmark (distinct floor material or water feature) preferred
 
 **Retrofit cost note:** Retrofit penalty: LOW. Landmark installation at decision points is implementable through surface-applied works
 
-without structural intervention. See Part 12 §12.4.1.
+without structural intervention. See Part 11 §11.4.1.
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB. DSDC. (2022). EADDAT. University of Stirling. Siegel, A.W., \& White, S.H. (1975). Advances in child development and behavior (Vol. 10). Academic Press.
 
@@ -1763,7 +1763,7 @@ Full dimming: 100%--10 lux
 No transparent panels to open-plan area (visual privacy)
 Minimum: 1 per 20 open-plan workstations
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Enclosed low-stimulation spaces require dedicated floor area and acoustic separation. Retrofit within an occupied building requires partition installation, acoustic treatment, and area allocation. Cost depends on whether structural works are needed. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Enclosed low-stimulation spaces require dedicated floor area and acoustic separation. Retrofit within an occupied building requires partition installation, acoustic treatment, and area allocation. Cost depends on whether structural works are needed. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3. AtkinsRéalis.
 
@@ -1809,7 +1809,7 @@ Glass: non-reflective
 
 **Retrofit cost note:** Retrofit penalty: LOW. Memory boxes are surface-mounted shallow fixtures. Retrofit is a fixing and decoration
 
-operation without structural implication. See Part 12 §12.4.1.
+operation without structural implication. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. Alzheimer's Society UK. (2023). Design for dementia guidance.
 
@@ -1839,7 +1839,7 @@ Treatment: 45° splay, convex mirror ≥300 mm, or vision-panel corner
 Mirror: positioned for sightline from 2 m approach on each leg
 Vision-panel glass: safety glazing (Class 2 or better); obscure if privacy required
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Curved or mirrored junctions at blind corners require finish and joinery modification. Retrofit is a decoration and joinery programme; structural corner modification is more significant. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Curved or mirrored junctions at blind corners require finish and joinery modification. Retrofit is a decoration and joinery programme; structural corner modification is more significant. See Part 11 §11.4.1.
 
 **Key citations:** CNIB Foundation. (2024). Clearing our path. CNIB. DeafSpace Project, Gallaudet University. (2010). DeafSpace design guidelines.
 
@@ -1881,7 +1881,7 @@ Tactile lettering: raised 0.8 mm; at 1400--1600 mm AFF
 
 **Retrofit cost note:** Retrofit penalty: LOW. Pictogram and signage installation is a surface-mounted programme. Retrofit is signage
 
-replacement and mounting without structural works. See Part 12 §12.4.
+replacement and mounting without structural works. See Part 11 §11.4.
 
 §8.4.1.
 
@@ -1931,7 +1931,7 @@ No ad-hoc event furniture in primary wayfinding corridors
 
 **Retrofit cost note:** Retrofit penalty: ZERO. Consistent furniture layout is a management and procurement decision with zero build cost
 
-at any stage. See Part 12 §12.4.1.
+at any stage. See Part 11 §11.4.1.
 
 **Key citations:** DSDC. (2022). EADDAT. University of Stirling. CNIB Foundation. (2024). Clearing our path. CNIB.
 
@@ -1966,7 +1966,7 @@ Obscure glass: where privacy required (e.g., consulting rooms)
 
 Sightlines: occupant inside room can see corridor approach from seated position
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Transparent glazed panels require cutting an opening into an existing partition and installing a glazed panel — a moderate joinery and glazing operation; structural partition involvement increases cost significantly. At design stage, specification is the only cost. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Transparent glazed panels require cutting an opening into an existing partition and installing a glazed panel — a moderate joinery and glazing operation; structural partition involvement increases cost significantly. At design stage, specification is the only cost. See Part 11 §11.4.2.
 
 **Key citations:** DeafSpace Project, Gallaudet University. (2010). DeafSpace design guidelines. British Standards Institution. (2018). BS 8300:2018. BSI.
 
@@ -2016,7 +2016,7 @@ Seating: every 20 m; 450 mm seat height; armrests; covered option
 Planting: within reach of path; non-toxic species (DEM); no thorns
 Accessible entry: level or ramp ≤1:20
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Safe accessible garden with loop path and secured perimeter requires new hard landscaping, path construction, perimeter enclosure, planting, and drainage — significant external works in an existing outdoor space. At design stage it is a landscape brief decision. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Safe accessible garden with loop path and secured perimeter requires new hard landscaping, path construction, perimeter enclosure, planting, and drainage — significant external works in an existing outdoor space. At design stage it is a landscape brief decision. See Part 11 §11.4.2.
 
 **Key evidence (non-English):** Nationalt Videnscenter for Demens / Danish landscape architecture research: empirical data showing that sensory garden loop paths with seating at ≤20 m intervals reduce agitation episodes in dementia care settings. Danish care village research from the 1990s (Midgaard, Fredericia; Dagmarsminde, Frederikssund) established the normalised outdoor environment concept that underpins both D-09 and D-11.
 
@@ -2072,7 +2072,7 @@ Audible floor announcements; visual floor display
 
 Floor indicator: visual external to lift on all floors
 
-**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Accessible lift provision requires a lift shaft. In an existing building without a shaft, provision requires a major structural intervention: forming the shaft, structural openings at each floor, and machine configuration. Cost multipliers of 20× versus design-stage provision are well documented. See Part 12 §12.4; Part 11 for DAR shaft provisions.
+**Retrofit cost note:** Retrofit penalty: STRUCTURAL. Accessible lift provision requires a lift shaft. In an existing building without a shaft, provision requires a major structural intervention: forming the shaft, structural openings at each floor, and machine configuration. Cost multipliers of 20× versus design-stage provision are well documented. See Part 11 §11.4; Part 10 for DAR shaft provisions.
 
 **Key citations:** Building and Construction Authority. (2025). BCA Code on Accessibility 2025. BCA. British Standards Institution. (2018). BS 8300:2018. BSI. CSA Group. (2023). CSA B651:2023. CSA.
 
@@ -2123,7 +2123,7 @@ Safety enclosure: required
 
 Usage: retrofit/heritage only where E-01 is not achievable
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Platform lift requires a structural pit or above-floor enclosure, structural fixing, and electrical supply. In a finished building, forming the pit requires opening up the floor structure. At design stage, pit provision is a minor structural item. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Platform lift requires a structural pit or above-floor enclosure, structural fixing, and electrical supply. In a finished building, forming the pit requires opening up the floor structure. At design stage, pit provision is a minor structural item. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. ISO 9386-1:2000. Power-operated lifting platforms. ISO.
 
@@ -2171,7 +2171,7 @@ Handrail both sides: continuous; 865--1000 mm AFF; 300 mm horizontal extension e
 
 Surface: PTV ≥36 wet; non-slip aggregate or profiled surface
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Ramp provision at ≤1:20 requires both horizontal run and vertical rise to be correct. In an existing building with a stepped approach, achieving ≤1:20 requires significant groundworks, structural underpinning at entry thresholds, and drainage modification. Internal ramping in a finished building may be structurally impractical. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Ramp provision at ≤1:20 requires both horizontal run and vertical rise to be correct. In an existing building with a stepped approach, achieving ≤1:20 requires significant groundworks, structural underpinning at entry thresholds, and drainage modification. Internal ramping in a finished building may be structurally impractical. See Part 11 §11.4.
 
 **Key citations:** Multiple Sclerosis International Federation. (2023). Atlas of MS. MSIF. Koontz, A.M., et al. (2012). Wheelchair propulsion and ramp gradients. [Tier 3.] Waters, R.L., et al. (1985). Energy cost of wheelchair propulsion and shoulder injury risk on grades above 1:12. Arch Phys Med Rehabil 66(7):465–469. [Tier 3.] Kim, J., et al. (2014). Effect of ramp slope on propulsion force and fall risk for manual wheelchair users. J Biomech Eng 136(4). [Tier 3.] Building and Construction Authority. (2025). BCA Code 2025. BCA.
 
@@ -2221,7 +2221,7 @@ Cover: weather protection preferred
 
 Quantity: minimum 5% of total parking, or per local code where greater
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Covered accessible parking at 3600 mm width requires planning and layout decisions at design stage. Retrofit may require resurfacing, line-marking, canopy installation, drainage, and legal agreement. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Covered accessible parking at 3600 mm width requires planning and layout decisions at design stage. Retrofit may require resurfacing, line-marking, canopy installation, drainage, and legal agreement. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS
 
@@ -2273,7 +2273,7 @@ Canopy height: ≥2500 mm
 
 Lighting: ≥100 lux at entry surface level; night-activated
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
@@ -2322,7 +2322,7 @@ Level surface maintained for 1500 × 1500 mm clear inside entry
 
 DAR: all new residential — design for future level approach even if not constructed initially (CAN/ASC 2.8:2025)
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Level entry (zero step) is a site-level and threshold decision. Retrofit of a stepped entry requires ramp construction, threshold lowering, drainage provision, and potentially structural work at the door opening. Threshold lowering in masonry construction requires structural assessment. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Level entry (zero step) is a site-level and threshold decision. Retrofit of a stepped entry requires ramp construction, threshold lowering, drainage provision, and potentially structural work at the door opening. Threshold lowering in masonry construction requires structural assessment. See Part 11 §11.4.
 
 **Key citations:** CSA Group. (2023). CSA B651:2023. CSA. Standard Norge. (2018). NS 11001-1:2018 [Norwegian\]. Standard Norge. CAN/ASC 2.8:2025. ASC. Wellecke, C., et al. (2022). Occupational therapists' perspectives on priority features of accessible housing. Australian Occupational Therapy Journal 69(4):459–470. [Tier 1, n=144 Australian OTs.] Finding: step-free external access, zero-threshold shower, and ground-floor bedroom/bathroom are the three highest-priority features specified by OTs — confirming the visitability hierarchy (CON-0097).
 
@@ -2379,7 +2379,7 @@ Post-occupancy: re-test at 12 months if floor condition changes
 
 **Retrofit cost note:** Retrofit penalty: LOW. Slip resistance PTV ≥36 wet is a floor finish specification. Retrofit is floor covering
 
-replacement or surface treatment application. Anti-slip coating can be applied to existing surfaces at modest cost. See Part 12 §12.4.1.
+replacement or surface treatment application. Anti-slip coating can be applied to existing surfaces at modest cost. See Part 11 §11.4.1.
 
 **Key citations:** HSE. (2014). Slips and trips: Guidance for the catering industry. [PTV ≥36 reference.\] British Standards Institution. (2018). BS 8300:2018. BSI.
 
@@ -2433,7 +2433,7 @@ Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
 
 **Level changes — contrast [CON-0200]:** All level changes within corridor routes (ramp terminations, threshold strips, door sills ≥5mm) to have ≥50 LRV contrast strip full-width (55–75 mm depth). Code minimum is ≥30 LRV (C-04); ≥50 LRV is required at level changes specifically because reduced lighting at floor level and glancing angle of view reduce effective contrast detectability. Evidence: Harper 2025 (LCL-08/SRB-14): contrast striping reduces fall events at level changes. Cross-ref C-04 entrance threshold specification. ● [CON-0200]5]. Wide corridors without acoustic treatment create speech intelligibility hazards for DEAF/HI users (Cueille 2022, ASI-06)
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
 
@@ -2489,7 +2489,7 @@ DEM environments: domed TWSI maximum 3 mm profile; same-colour as adjacent floor
 
 **Retrofit cost note:** Retrofit penalty: LOW. Tactile walking surface indicators are surface-applied or recessed tiles. Retrofit is a floor
 
-works operation — tile removal, TWSI installation, and reinstatement. No structural implications. See Part 12 §12.4.1.
+works operation — tile removal, TWSI installation, and reinstatement. No structural implications. See Part 11 §11.4.1.
 
 **Key citations:** ISO. (2019). ISO 23599:2019 — Assistive products — Tactile walking surface indicators. ISO. CNIB Foundation. (2024). Clearing our path. CNIB. Japan Blind People's Association. (2022). [Japanese.] JBPA. Simoneau, G.G., et al. (1991). Etiology of age-related gait changes and stair descent falls. J Appl Physiol 70(3):1290–1295. [Tier 3.] Templer, J. (1992). The staircase: studies of hazards, falls and safer design. MIT Press. [Tier 4.]
 
@@ -2510,7 +2510,7 @@ Canopy height: ≥2500 mm
 
 Lighting: ≥100 lux at entry surface level; night-activated
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Weather protection canopy installation requires structural fixing to the building fabric. In a finished building, canopy fixing requires structural assessment and making-good. At design stage, the canopy is a simple structural specification. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. CAN/ASC 2.8:2025. Accessible-Ready Housing. ASC.
 
@@ -2579,7 +2579,7 @@ Presence detection: both sides of door
 
 installation, and sensor provision. In a finished building, the door opening is typically already present; the retrofit is primarily
 
-mechanical and electrical. See Part 12 §12.4.2.
+mechanical and electrical. See Part 11 §11.4.2.
 
 **Key citations:** ISO. (2021). ISO 21542:2021. ISO. British Standards
 
@@ -2713,7 +2713,7 @@ Restorative element at each transition (BIO-01, BIO-02)
 
 material-specification decision at zero additional cost at design stage. Retrofit requires redecoration, material replacement, and
 
-possibly layout modification. See Part 12 §12.4.1.
+possibly layout modification. See Part 11 §11.4.1.
 
 **Key citations:** Kaplan, R., \& Kaplan, S. (1989). The experience of nature. Cambridge University Press. British Standards Institution.
 
@@ -2786,7 +2786,7 @@ Maintenance: regular audit of compliance
 
 HVAC specification decision. Retrofit may require zoned ventilation modifications but primarily involves policy and signage changes. See
 
-Part 12 §12.4.1.
+Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Patient Led Research Collaborative. (2024). ME/CFS management guide.
 
@@ -2823,7 +2823,7 @@ No high contrast or high-stimulation elements within 5 m of sensory room exit
 
 space. At design stage this is a planning decision. Retrofit requires area allocation and acoustic/visual treatment as a partition or alcove
 
-intervention. See Part 12 §12.4.2.
+intervention. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Kaplan, S. (1995). Journal of Environmental Psychology, 15(3), 169--182.
 
@@ -2890,7 +2890,7 @@ on OFS-occupied floors
 
 selection and finish specification at design stage. Retrofit requires filter upgrade (plant modification) and full finish replacement
 
-programme (significant disruption and cost). See Part 12 §12.4.
+programme (significant disruption and cost). See Part 11 §11.4.
 
 **Key citations:** Mast Cell Action. (2023). Environmental triggers: guidance for building design. Mast Cell Action. Afrin, L.B., et al. (2020). Mast cell activation disease: An underappreciated cause of neurological and psychiatric symptoms. Brain, Behavior, and Immunity, 89, 218--225. CIBSE. (2015). CIBSE Guide A: Environmental Design (8th ed.). CIBSE. British Standards Institution. (2022). PAS 6463:2022. BSI. EN ISO 16000-9:2006. Indoor air — Part 9: Determination of emission of volatile organic compounds. ISO.
 
@@ -2960,7 +2960,7 @@ Visual design: seated task provisions should not be visually distinct from stand
 
 principle and MH non-clinical aesthetics principle)
 
-**Retrofit cost note:** Retrofit penalty: LOW. Seated-task design is primarily a furniture and fixture height specification. Retrofit is furniture/fixture replacement and counter height modification. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW. Seated-task design is primarily a furniture and fixture height specification. Retrofit is furniture/fixture replacement and counter height modification. See Part 11 §11.4.1.
 
 **Key citations:** Benarroch, E.E. (2012). Postural tachycardia syndrome. Mayo Clinic Proceedings, 87(12), 1214--1225. Blitshteyn, S.,
 
@@ -3150,7 +3150,7 @@ Monitoring: FM responsible person conducts fragrance policy compliance audit qua
 
 Review: policy reviewed annually and updated to reflect changes in cleaning product specifications or OFS population occupancy profile
 
-**Retrofit cost note:** Retrofit penalty: ZERO. Fragrance-free policy is a management, procurement, and HR decision. No structural or physical works required. Policy can be implemented at any time in a building's lifecycle. Residual cost is FM staff time and signage procurement. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: ZERO. Fragrance-free policy is a management, procurement, and HR decision. No structural or physical works required. Policy can be implemented at any time in a building's lifecycle. Residual cost is FM staff time and signage procurement. See Part 11 §11.4.1.
 
 **Key citations:** Afrin, L.B., et al. (2020). Mast cell activation disease. Brain, Behavior, and Immunity, 89, 218--225. Mast Cell Action. (2023). Environmental triggers: guidance for building design. Mast Cell Action. Steinemann, A. (2018). Prevalence and effects of multiple chemical sensitivities. Preventive Medicine Reports, 10, 134--139. British Standards Institution. (2022). PAS 6463:2022. BSI.
 
@@ -3192,7 +3192,7 @@ Co-located with general seating — not segregated 'accessible' area
 
 **Retrofit cost note:** Retrofit penalty: LOW. Defensible seating configuration is a furniture procurement and placement decision.
 
-Retrofit is furniture repositioning and procurement without structural implications. See Part 12 §12.4.
+Retrofit is furniture repositioning and procurement without structural implications. See Part 11 §11.4.
 
 **Key citations:** Dignified Design. (2024). 22 design elements for permanent supportive housing. DeafSpace Project, Gallaudet University.
 
@@ -3237,7 +3237,7 @@ No 'disabled seating' label — variety for all
 
 **Retrofit cost note:** Retrofit penalty: LOW. Variety of seating types at three heights is a procurement decision. Retrofit is
 
-furniture replacement and procurement. See Part 12 §12.4.1.
+furniture replacement and procurement. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. The Kelsey. (2023). Inclusive design standards.
 
@@ -3285,7 +3285,7 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 **OFS population — standing-height bar [CON-0185]:** For orthostatic and fatigue-spectrum populations (OFS/POTS, OFS/ME), an additional horizontal bar at 850--950 mm AFF (standing grip height) supports pull-to-stand energy conservation. Reduces metabolic cost of sit-to-stand transfer and lowers orthostatic load. Mode S position within range resolved by OT assessment.
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 11 for DAR blocking provisions; Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 10 for DAR blocking provisions; Part 11 §11.4.
 
 **Key citations:** Levine, I.C., Nirmalanathan, K., Montgomery, R.E., \& Novak, A.C. (2024). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12. doi:10.2196/jmir.2024. ✅ [Verified: JMIR Rehab Assist Technol; KITE/UHN Toronto team; n=65; motion capture; body height correlated with optimal grasp position — informs height range specification.] Lee, S.J., Sanford, J., Calkins, M. et al. (2018). Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers. *HERD* 11(2):32-44. DOI:10.1177/1937586717730338. ✅ [Verified: n=130+ residents, 11 facilities; bilateral fold-down bars at 356mm from CL, 813mm AFF significantly outperform ADA — most robust grab bar study in corpus.] Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., \& Prilutsky, B. (2019). Effects of bilateral swing-away grab bars on the biomechanics of stand-to-sit and sit-to-stand toilet transfers. *Disability and Rehabilitation: Assistive Technology*, 14, 292–300. ✅ [Verified: bilateral grab bar placement reduces lower limb joint moments — direct biomechanical basis for bilateral specification.] Bateni, H., \& Maki, B.E. (2005). Assistive devices for balance and mobility. *Archives of Physical Medicine and Rehabilitation*, 86(1), 134–145. ✅ British Standards Institution. (2018). BS 8300:2018. BSI.
 
@@ -3346,7 +3346,7 @@ Slip resistance: PTV ≥36 wet throughout shower area
 
 **Thermostatic shower control [CON-0191]:** Thermostatic mixer valve with temperature limit ≤43°C. Dual mechanism: (1) DEM/NEU — anti-scald; sudden hot water exposure is a fall and injury trigger for users with delayed reaction time. (2) PAIN — abrupt temperature change triggers pain response in fibromyalgia (cold-to-hot transition). ◐ Evidence basis: clinical consensus across DEM and PAIN BPCs; no RCT on thermostatic shower valves specifically for disability populations. Cross-ref F-07 (bathroom pre-heating — ≤5°C inter-room thermal differential reduces DEM cold-shock risk on entry). Grab bar insulated coatings (G-03 CON-0185) provide secondary cold-contact mitigation within the shower area.
 
-**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Zero-threshold wet room configuration requires a level floor with integral drainage fall — a structural floor decision. In an existing bathroom, achieving a wet room floor requires removal of existing floor finishes and screed, lowering or reforming the structural floor drainage gradient, and full waterproof tanking: a full bathroom strip-out and reconstruction. At design stage it is a drainage and screed specification only. See Part 11 §11.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. DIN. (2011). DIN 18040-2:2011 [German\]. DIN.
 
@@ -3397,7 +3397,7 @@ Electric mechanism preferred (manual height adjustment excludes UPL users)
 
 Reception counters: accessible height section per G-06
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Adjustable-height work surfaces require purpose-built adjustable units or height-adjustable mechanisms. Retrofit is furniture/fixture replacement; fixed counter modification involves joinery and services relocation. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Adjustable-height work surfaces require purpose-built adjustable units or height-adjustable mechanisms. Retrofit is furniture/fixture replacement; fixed counter modification involves joinery and services relocation. See Part 11 §11.4.1.
 
 **Key citations:** The Kelsey. (2023). Inclusive design standards. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF. CSA Group. (2023). CSA B651:2023. CSA.
 
@@ -3417,8 +3417,6 @@ Reception counters: accessible height section per G-06
 | **Guidebook** | **G-05** | — | **650-870mm** | **Recommended** | **DE standard** |
 
 **HIGH DIVERGENCE:** DE DIN 18040-2 is the ONLY jurisdiction requiring height-adjustable work surfaces. Range 650-870mm covers seated wheelchair (650mm) to standing (870mm).
-
-> **SCOPE-04 "adjustable" audit [GAP-SCOPE-04]:** G-05 electric height-adjustment operates correctly for MOB/UPL/OFS/PAIN users who can initiate the adjustment independently. **Failure modes for DEM late-stage and IntD without support:** (1) DEM late-stage users cannot recall the correct height or operate the control panel without prompting — electric height-adjustment at a DEM workstation requires carer-operable mechanism with a single-button or pre-set memory function; (2) IntD users without support may need height pre-set to their individually assessed height before the session begins. **Resolution:** in DEM or IntD-serving workplaces, specify motorised height-adjustable desks with ≥3 memory-height presets and single-button recall at accessible height (≤1100 mm AFF). Do not specify manual crank. Specify carer-training for height reset at each use. ○ [Tier 2 — RCOT; CAOT 2024; no standard specifies memory-height function for DEM workstations]
 
 
 ### G-06 Reception Counter (Accessible Height Section — 760--860 mm AFF)
@@ -3447,7 +3445,7 @@ LRV ≥30 at counter edge vs floor
 
 ● Lowered counter section to be available at all times as the default service position — not on request only [FDR-OFS-01: orthostatic intolerance onset 2–10 min; Raj 2013 Tier 1]
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
 
@@ -3498,7 +3496,7 @@ Accessible toilet: within 20 m of waiting area
 
 **Retrofit cost note:** Retrofit penalty: LOW. Waiting area seating configuration is a procurement and layout decision. Retrofit is
 
-furniture repositioning and procurement. See Part 12 §12.4.1.
+furniture repositioning and procurement. See Part 11 §11.4.1.
 
 **Key citations:** British Standards Institution. (2018). BS
 
@@ -3573,7 +3571,7 @@ Norwegian, or Swedish jurisdictions should apply the local standard.
 
 For powered wheelchair users, 1200 mm is supportable from available evidence.
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Controls at accessible height (400--1100 mm AFF) is a specification decision at design stage. Retrofit of controls at incorrect heights requires electrical chase extension, box repositioning, and redecoration — a moderate electrical works programme across a whole building. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Controls at accessible height (400--1100 mm AFF) is a specification decision at design stage. Retrofit of controls at incorrect heights requires electrical chase extension, box repositioning, and redecoration — a moderate electrical works programme across a whole building. See Part 11 §11.4.2.
 
 **Key citations:** CSA Group. (2023). CSA B651:2023. CSA. British
 
@@ -3629,8 +3627,6 @@ DEM: BMS with override limits rather than fully individual control (overheating/
 
 CAOT principle: adjustability without staff mediation
 
-> **SCOPE-04 "adjustable" audit [GAP-SCOPE-04]:** H-02 individual environmental control is the core "adjustable" provision for all populations. **Failure mode for IntD without support:** complex multi-parameter control panels (multi-zone BMS touchscreen, multi-slider interfaces) are inaccessible to IntD users without cognitive support. **Resolution:** IntD-serving environments: specify simplified IEC — single-slider or 3-position switch per parameter (cool/comfortable/warm; dim/medium/bright). Pre-set "My Settings" recall at single switch (CON-0095 voice + tactile + adjusted height). Where staff support is provided, IEC design can be staff-operated with user preference document maintained in the care plan. ○ [Tier 2 — RCOT; CAOT 2024; no standard specifies IEC interface cognitive accessibility requirements]
-
 **Environmental Control Unit — C4–C5 Tetraplegia (LIFE SAFETY):** For residential and care settings where C4–C5 tetraplegic users are resident:
 
 Sip-and-puff interface: fixed mounting bracket at each primary position (bed at 700 mm AFF ≤300 mm from head; WC at seated height; primary seating at armrest level). Mounting position specified on structural drawings.
@@ -3649,7 +3645,7 @@ Source: FDR-NEW-16 (C4–C5 ECU); RESNA/ARATA standards; Tobii eye-gaze guidance
 
 control infrastructure. Retrofit requires wiring extension, device installation, and integration with existing building controls. See
 
-Part 12 §12.4.2.
+Part 11 §11.4.2.
 
 **Key citations:** CAOT. (2018). Practice guidelines for acquired brain injury. CAOT. British Standards Institution. (2022). PAS
 
@@ -3694,7 +3690,7 @@ Emergency integration: visual alert linked to fire alarm panel (confirmed at com
 
 Screen position: caption screen visible while occupants watch speaker/presentation
 
-**Retrofit cost note:** Retrofit penalty: MODERATE. Visual paging and real-time captioning systems require display hardware, AV infrastructure, and network provision. Retrofit in a finished building requires surface-run cables or conduit chasing. Design-stage conduit provision eliminates visible surface runs. See Part 11; Part 12, C.1.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE. Visual paging and real-time captioning systems require display hardware, AV infrastructure, and network provision. Retrofit in a finished building requires surface-run cables or conduit chasing. Design-stage conduit provision eliminates visible surface runs. See Part 11; Part 11, C.1.2.
 
 **Key citations:** World Federation of the Deaf. (2022). Built environment access for Deaf users. WFD. Hearing Loss Association of
 
@@ -3751,7 +3747,7 @@ Height: 900--1100 mm AFF
 
 BMS integration: indoor remote release accessible from primary habitable room
 
-**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Accessible video door entry requires intercom replacement and wiring. Retrofit is primarily electrical and joinery; structural works are minor. See Part 12 §12.4.1.
+**Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Accessible video door entry requires intercom replacement and wiring. Retrofit is primarily electrical and joinery; structural works are minor. See Part 11 §11.4.1.
 
 **Key citations:** DeafSpace Project, Gallaudet University. (2010).
 
@@ -3814,7 +3810,7 @@ Push-pads: ≥50 mm diameter at all access control points
 
 **Retrofit cost note:** Retrofit penalty: LOW. Lever and D-pull hardware is a specification and procurement decision. Retrofit is
 
-hardware replacement across all door and window ironmongery — a low-cost trade operation. See Part 12 §12.4.1.
+hardware replacement across all door and window ironmongery — a low-cost trade operation. See Part 11 §11.4.1.
 
 **Key citations:** ISO. (2021). ISO 21542:2021. ISO. CSA Group.
 
@@ -3872,7 +3868,7 @@ Tap: single-lever mixer; ≤50 mm handle throw; thermostatic preferred (TMV ≤4
 
 All kitchen controls (hob, oven, extract fan, lighting, tap) within H-01 reach range 400-1200mm AFF [CON-0219]
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Kitchen one-handed operation throughout requires purpose specified kitchen furniture, appliances, and controls. Full retrofit requires complete kitchen replacement including appliances, cabinetry, and services connections. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Kitchen one-handed operation throughout requires purpose specified kitchen furniture, appliances, and controls. Full retrofit requires complete kitchen replacement including appliances, cabinetry, and services connections. See Part 11 §11.4.
 
 **Key citations:** Independent Living Centre Western
 
@@ -3925,7 +3921,7 @@ PAIN grab bar coating [CON-0185/0191]: where PAIN (allodynia/cold sensitivity) i
 
 OFS horizontal bar [CON-0185]: horizontal grab bar at standing height (900-1000mm AFF) for pull-to-stand energy conservation during shower entry/exit. Reduces STS energy expenditure for OFS users managing post-exertional malaise.
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Bathroom UPL provisions require hardware replacement, thermostatic valve installation, and structural blocking for grab bars. In an existing bathroom without pre-installed blocking, grab bar installation requires wall opening and blocking insertion. Full retrofit in a non-compliant bathroom approaches full bathroom refurbishment cost. See Part 12 §12.4; G-03 for grab bar blocking note.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Bathroom UPL provisions require hardware replacement, thermostatic valve installation, and structural blocking for grab bars. In an existing bathroom without pre-installed blocking, grab bar installation requires wall opening and blocking insertion. Full retrofit in a non-compliant bathroom approaches full bathroom refurbishment cost. See Part 11 §11.4; G-03 for grab bar blocking note.
 
 **Key citations:** Multiple Sclerosis International
 
@@ -3986,7 +3982,7 @@ Integration: system integrated with fire alarm panel; nurse call activation does
 
 Auditory alert: alert at nursing station ≥75 dB(A); alert signal distinguishable from building fire alarm and all other auditory signals
 
-**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Nurse call infrastructure requires cable routing to all call points, panel installation, and integration with fire alarm and BMS. In existing buildings without conduit, cable runs require surface ducting or chasing. Design-stage conduit provision to all rooms eliminates the major retrofit cost component. See Part 12 §12.4.2.
+**Retrofit cost note:** Retrofit penalty: MODERATE -- HIGH. Nurse call infrastructure requires cable routing to all call points, panel installation, and integration with fire alarm and BMS. In existing buildings without conduit, cable runs require surface ducting or chasing. Design-stage conduit provision to all rooms eliminates the major retrofit cost component. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. NHS England. (2023). Health Technical Memorandum 08-03: Bedhead services. NHS England. Care Quality Commission. (2024). Provider guidance: Regulation 12 --- safe care and treatment. CQC.
 
@@ -4064,7 +4060,7 @@ Anti-slip: drainage zone surface ≥R11 (wet rating, DIN 51130) or ≥36 DCOF (A
 
 Threshold drain: if a drain channel at room threshold is unavoidable, maximum 6 mm raised lip; 45° bevelled edge on both sides
 
-**Retrofit cost note:** Retrofit penalty: HIGH. Accessible drainage in existing bathrooms requires floor removal, drain repositioning or linear channel drain installation, floor re-screeding, re-tiling, and gradient verification. Full bathroom refurbishment scope in most existing buildings without pre-installed wet room drainage. At design stage: zero additional cost relative to standard drainage. See Part 12 §12.4; G-04 (Wet Room --- drainage specification should be coordinated with G-04).
+**Retrofit cost note:** Retrofit penalty: HIGH. Accessible drainage in existing bathrooms requires floor removal, drain repositioning or linear channel drain installation, floor re-screeding, re-tiling, and gradient verification. Full bathroom refurbishment scope in most existing buildings without pre-installed wet room drainage. At design stage: zero additional cost relative to standard drainage. See Part 11 §11.4; G-04 (Wet Room --- drainage specification should be coordinated with G-04).
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018+A1:2021. BSI. ISO. (2021). ISO 21542:2021. Building construction --- accessibility and usability of the built environment. ISO. Department for Levelling Up, Housing and Communities. (2022). Disabled Facilities Grant Technical Standards, Annex B. DLUHC. DIN. (2012). DIN 51130: Testing of floor coverings --- determination of anti-slip properties. DIN.
 
@@ -4130,7 +4126,7 @@ Counter surface: clear of displays, screens, or items that obstruct the interven
 
 Staff awareness: service design briefing to confirm that staff speak to the DeafBlind user directly, not to the intervenor on behalf of the user
 
-**Retrofit cost note:** Retrofit penalty: LOW. Counter approach zone is a furniture and layout decision. Achieving the 1200 mm lowered section width may require joinery modification if counter is narrower. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. Counter approach zone is a furniture and layout decision. Achieving the 1200 mm lowered section width may require joinery modification if counter is narrower. See Part 11 §11.4.
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. Sense UK. (2022). *Building and Communicating: Designing environments for people with deafblindness*. Sense. [EXPERT CONSENSUS — no standard in any jurisdiction mandates intervenor adjacency dimensions at service counters.]
 
@@ -4176,7 +4172,7 @@ Durability: thermoform or stainless-steel embossed construction; UV-stable; non-
 
 Approach: TWSI directional bar route (E-09) from entrance to map station; tactile approach confirmed before other routes diverge
 
-**Retrofit cost note:** Retrofit penalty: LOW. Tactile map station is a free-standing or wall-mounted fixture; no structural works required. Principal cost is production of map at correct specification and ongoing currency maintenance. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. Tactile map station is a free-standing or wall-mounted fixture; no structural works required. Principal cost is production of map at correct specification and ongoing currency maintenance. See Part 11 §11.4.
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. ISO. (2019). *ISO 23599:2019 — Assistive products for persons with vision impairment: Tactile walking surface indicators*. ISO. RNIB. (2022). *Tactile maps and models: guidelines for design and production*. RNIB. [EXPERT CONSENSUS — no building standard in any jurisdiction mandates a tactile building map station.]
 
@@ -4216,7 +4212,7 @@ Floor surface: firm, level, non-slip within haptic communication zones; no scatt
 
 Zone adjacency: haptic communication zones are within the primary circulation route, not in alcoves or recessed bays requiring additional navigation
 
-**Retrofit cost note:** Retrofit penalty: LOW. Clear floor zone provision is a furniture layout and seating placement decision. In fixed-seating venues (auditoria, theatres), achieving the 1200 × 1200 mm aisle-end clear zone may require removal of one seat per row at aisle positions — a low-cost trade operation. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW. Clear floor zone provision is a furniture layout and seating placement decision. In fixed-seating venues (auditoria, theatres), achieving the 1200 × 1200 mm aisle-end clear zone may require removal of one seat per row at aisle positions — a low-cost trade operation. See Part 11 §11.4.
 
 **Key citations:** Clark, J.L. (2024). *Touch the Future: The Lives and Language of Protactile DeafBlind People*. University of Minnesota Press. [Co-1 evidence — lived experience of Protactile communication in built environments.] Nuccio, J., & granda, r. [Protactile documentation — Co-1 evidence.] DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. [EXPERT CONSENSUS — no building standard in any jurisdiction mandates haptic communication clear floor zone dimensions.]
 
@@ -4259,7 +4255,7 @@ Communication alerting: where a DBL user occupies a space without staff continuo
 
 In residential settings: vibrating wake-up alarm integrated with bedroom services (bedside control H-04) at any bedroom designated for a DBL occupant
 
-**Retrofit cost note:** Retrofit penalty: LOW–MODERATE. Personal pager BMS integration (dry contact relay) is an electrical specification addition at low cost in new construction. Floor panel installation requires floor surface opening and connection — moderate retrofit. Charging station is a power outlet at accessible height. In all cases, the principal cost is the personal pager system hardware, not the building infrastructure. See Part 12 §12.4.
+**Retrofit cost note:** Retrofit penalty: LOW–MODERATE. Personal pager BMS integration (dry contact relay) is an electrical specification addition at low cost in new construction. Floor panel installation requires floor surface opening and connection — moderate retrofit. Charging station is a power outlet at accessible height. In all cases, the principal cost is the personal pager system hardware, not the building infrastructure. See Part 11 §11.4.
 
 **Key citations:** DbI. (2022). *Guidelines for accessible environments for DeafBlind people*. Deafblind International. Sense UK. (2022). *Building and Communicating*. Sense. Bellman & Symfon. (2024). *Vibrotactile alerting systems for persons with combined hearing and vision loss*. [Tier 5 — manufacturer technical reference; no independent clinical study.] [EXPERT CONSENSUS — no building standard in any jurisdiction mandates vibrotactile alert provision in the built environment.]
 
@@ -4298,7 +4294,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Design Stage:** Design Development · Technical Architecture
 
-**Retrofit:** LOW penalty — no structural change required. Pull-out hardware and dual-rod installation are non-structural adaptations. DAR provision: blocking behind wardrobes for future bracket and rod-height adjustment to be specified at construction stage. See Part 11 §DAR.
+**Retrofit:** LOW penalty — no structural change required. Pull-out hardware and dual-rod installation are non-structural adaptations. DAR provision: blocking behind wardrobes for future bracket and rod-height adjustment to be specified at construction stage. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4311,7 +4307,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:accessible-bathroom-and-grab-bar:19 | Siebert, C., Smallfield, S., & Stark, S. | 2014 | Occupational Therapy Practice Guidelines for Home Modifications | AOTA Press | Co-2 | EN | US | https://library.aota.org/OT_Practice_Guidelines_Home_Modification/ [YEAR MISMATCH: cited as 2023; confirmed edition is 2014. AOTA library updated — verify if 2023 edition exists] |
 
 
-**Cross-reference:** G-04 (Accessible Bathroom — transfer clearance); G-05 (Adjustable-height work surfaces); Part 11 (DAR provisions)
+**Cross-reference:** G-04 (Accessible Bathroom — transfer clearance); G-05 (Adjustable-height work surfaces); Part 10 (DAR provisions)
 
 **Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dressing turning circle.
 
@@ -4370,7 +4366,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Design Stage:** Design Development · Technical Architecture
 
-**Retrofit:** MODERATE penalty — bed-exit sensor wiring and low-level pathway lighting require electrical work. DAR provision: conduit from bed-head to ceiling rose; floor-level lighting circuit rough-in to be specified at construction stage. See Part 11 §DAR.
+**Retrofit:** MODERATE penalty — bed-exit sensor wiring and low-level pathway lighting require electrical work. DAR provision: conduit from bed-head to ceiling rose; floor-level lighting circuit rough-in to be specified at construction stage. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4410,7 +4406,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Design Stage:** Design Development · Technical Architecture · Post-Occupancy
 
-**Retrofit:** MODERATE penalty — new circuit and sensor required. Floor-level conduit chase is moderate cost. Plug-in sensor-activated nightlights (≥5 lux) are an acceptable interim post-occupancy solution. See Part 11 §DAR.
+**Retrofit:** MODERATE penalty — new circuit and sensor required. Floor-level conduit chase is moderate cost. Plug-in sensor-activated nightlights (≥5 lux) are an acceptable interim post-occupancy solution. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4447,7 +4443,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Design Stage:** Schematic Design · Design Development
 
-**Retrofit:** HIGH penalty — landing enlargement requires external works; canopy addition requires structural fixing. Both to be planned at initial design stage. See Part 11 §DAR.
+**Retrofit:** HIGH penalty — landing enlargement requires external works; canopy addition requires structural fixing. Both to be planned at initial design stage. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4495,7 +4491,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Design Stage:** Schematic Design · Design Development · Technical Architecture
 
-**Retrofit:** LOW penalty — address signage, button replacement, and PIR luminaire are non-structural. Luminance contrast at door leaf requires repainting or cladding where existing finish does not meet the 0.4 threshold. See Part 11 §DAR.
+**Retrofit:** LOW penalty — address signage, button replacement, and PIR luminaire are non-structural. Luminance contrast at door leaf requires repainting or cladding where existing finish does not meet the 0.4 threshold. See Part 10 §DAR.
 
 #### Sources cited
 
@@ -4538,7 +4534,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 
 **Design Stage:** Schematic Design · Design Development
 
-**Retrofit:** MODERATE penalty — alcove integration requires spatial planning at design stage. Individual seating units at 480 mm seat height with arms are LOW penalty retrofit where alcove provision has been made. See Part 11 §DAR.
+**Retrofit:** MODERATE penalty — alcove integration requires spatial planning at design stage. Individual seating units at 480 mm seat height with arms are LOW penalty retrofit where alcove provision has been made. See Part 10 §DAR.
 
 #### Sources cited
 

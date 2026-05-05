@@ -21,7 +21,7 @@ The central specialist is the occupational therapist. OT practice is the primary
 
 Other specialist consultants addressed in this Part — dementia design specialists, DeafSpace consultants, sensory design specialists, and accessibility auditors — each operate on an evidence base with a specific population scope. The appointment triggers and scope of services for each are defined below.
 
-**What this Part does not cover.** Hearing loop specialists and audiologists are addressed in Part 9 §9.1 as acoustic engineering sub-specialists. Post-occupancy evaluation protocols are addressed in Part 13. Legal compliance review by access consultants operating under code frameworks is addressed in Appendix A (Global Standards Catalogue). Fire engineers' involvement in emergency evacuation for disabled occupants is addressed in Appendix D.
+**What this Part does not cover.** Hearing loop specialists and audiologists are addressed in Part 9 §9.1 as acoustic engineering sub-specialists. Post-occupancy evaluation protocols are addressed in Part 12. Legal compliance review by access consultants operating under code frameworks is addressed in Appendix A (Global Standards Catalogue). Fire engineers' involvement in emergency evacuation for disabled occupants is addressed in Appendix D.
 
 ---
 
@@ -59,7 +59,7 @@ Appoint an OT when any of the following conditions apply:
 - **Residential adaptations to an occupied dwelling** — where a current occupant has a disability and the design brief is to improve that person's independence in their own home. OT referral may precede architectural involvement; the OT assessment report is the primary brief document.
 - **Tier 1 project with NDV, DEM, NEU, OFS, or DBL as a primary population** — these populations require environmental calibration beyond the standard design library medians. Sensory zoning (F-01 through F-07), acoustic environment, and individual control provisions (H-01, H-02) require OT review of the proposed environment against population-specific functional profiles before technical design is finalised.
 - **Healthcare, supported housing, or specialist education environments** — where the gap between code compliance and genuine occupational independence is at its greatest, and where OT involvement is standard professional practice in most jurisdictions.
-- **Post-occupancy evaluation** — where the building has been completed and occupied, and the design team or building owner requires evidence of whether the environment is meeting its accessibility intent. See Part 13.
+- **Post-occupancy evaluation** — where the building has been completed and occupied, and the design team or building owner requires evidence of whether the environment is meeting its accessibility intent. See Part 12.
 
 ### 9.2.3 Scope of Services by Design Stage
 
@@ -262,7 +262,7 @@ For Tier 2 projects, the named individual and their chosen support network are t
 
 ---
 
-*Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Design Modes) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 13 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
+*Cross-reference: §1.4 (OT as Tier 1 evidence) · §1.5 (Evidence Hierarchy — Co-primary Tier 1) · §1.6.3 (Design Modes) · Part 9 (Engineering coordination) · Part 11 (DAR provisions) · Part 12 (Post-Occupancy Evaluation) · 17-Jurisdiction Research Compendium §B2 (DeafSpace), §B3 (DSDC), §B5 (Sensory Zoning) · Appendix D (Emergency Evacuation — PEEP)*
 
 
 

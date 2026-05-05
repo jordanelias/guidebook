@@ -17,9 +17,15 @@ This guidebook treats the following provisions as required in all non-residentia
 
 **A note on specification voice in Part 7.** Where this Part refers to a provision as "mandatory" — including in the §7.1–§7.7 matrix tables and supporting prose — the mandate is this guidebook's recommendation, not an external regulatory mandate, except where a specific jurisdictional code or standard is cited inline. The basis for these recommendations is the population evidence in Parts 2 and 4 and the conflict resolution methodology in Part 3 §3.8–§3.9. See voice-style guidance and Part 1 §1.9.4 (the guidebook as a framework for professional judgment) for the underlying epistemic position.
 
-**Intra-individual vs inter-group co-occurrence [CO03-05 / CO-0003]:** Part 7 matrix conflicts fall into two distinct categories that require different resolution strategies. **[INTRA-INDIVIDUAL]** conflicts arise within a single person who has co-occurring disability conditions — for example, a DEM user who is also MOB, or a PAIN user who also has NDV. These are resolved through Tier 2 Mode S OT assessment; the building cannot resolve them through specification alone. **[INTER-GROUP]** conflicts arise between two different groups of users sharing the same space — for example, DEAF users who need visual alerting strobes and NDV/AUT users for whom strobes are a seizure/sensory trigger. These are resolved through the Part 3 §3.8–§3.9 decision tree and resolution strategies (TS, SZ, IEC, T0). **[BOTH]** applies where the same conflict can arise intra-individually and inter-group. All conflict register entries in §7.1–§7.7 below are tagged accordingly. Intra-individual conflicts should be escalated to OT assessment (Part 9 §9.10 OT threshold); inter-group conflicts must be resolved in the design before construction documentation.
+**Epistemic disclosure (CON-0047):** The non-residential matrix provisions in this Part are evidence-informed syntheses. They are derived from population-specific design evidence (Parts 2 and 4), conflict resolution methodology (Part 3 §3.8–§3.9), and building-level conflict resolutions (Part 5 §5.2). They have not been empirically validated through dual-population or multi-population post-occupancy evaluation (POE). Where conflicts exist between population specifications in a shared space, the resolution stated in Part 5 §5.2 governs; room-level conflict notes in each matrix identify the specific items and populations involved. The provisions represent the best currently available synthesis of independent population evidence — they are a starting framework for professional judgment, not a substitute for it (Part 1 §1.1).
 
- They are derived from population-specific design evidence (Parts 2 and 4), conflict resolution methodology (Part 3 §3.8–§3.9), and building-level conflict resolutions (Part 5 §5.2). They have not been empirically validated through dual-population or multi-population post-occupancy evaluation (POE). Where conflicts exist between population specifications in a shared space, the resolution stated in Part 5 §5.2 governs; room-level conflict notes in each matrix identify the specific items and populations involved. The provisions represent the best currently available synthesis of independent population evidence — they are a starting framework for professional judgment, not a substitute for it (Part 1 §1.1).
+**Conflict scope classification [CO-0003]:** Cross-population conflict register entries in this Part are classified by scope:
+- **INTER-GROUP** — conflict arises between different users of the same building (e.g., DEAF user needs strobe; NDV user in same space is photosensitive). Resolution is spatial (zoning, time-sharing) or supplemental (additional modality).
+- **INTRA-INDIVIDUAL** — conflict arises within one person who has co-occurring conditions (e.g., person with MS + fibromyalgia: MS needs cool ambient, fibromyalgia needs warmth). Resolution cannot use zoning — must be individual-level (user control, adaptive system).
+- **BOTH** — conflict can arise at either level. Resolution must address both scenarios.
+
+See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for the methodological framework governing scope classification.
+
 
 | Item | Title | Design Stage | Drawing | Why Non-Negotiable |
 | --- | --- | --- | --- | --- |
@@ -47,7 +53,7 @@ This guidebook treats the following provisions as required in all non-residentia
 
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
-| Classroom | NDV, DEAF, MOB, DBL | A-04 (acoustic zone), RT60 ≤0.4 s (DIN 18041 Cat A; ≤0.3 s where NDV co-occupies — stricter NDV target governs per Part 5 ACOUSTIC-LVL; evidence: Cueille 2022 ASI-06 18dB HI penalty; ASI-08 SR [CON-0183]), A-11 (room loop), B-03/04, G-05 (≥20% height-adjustable desks), K-03 (DBL haptic zone at teacher position) ⚡ **Room conflict [CO04-06]:** DEAF vs NDV on acoustic — RT60 ≤0.3s resolves both (DEAF needs low reverberation; NDV needs acoustic calm). Convergent resolution — no compromise required. DEAF vs B-10 strobe: use vibrotactile supplemental in classrooms serving NDV (TS strategy). |
+| Classroom | NDV, DEAF, MOB, DBL | A-04 (acoustic zone), RT60 ≤0.4 s (DIN 18041 Cat A; ≤0.3 s where NDV co-occupies — stricter NDV target governs per Part 5 ACOUSTIC-LVL; evidence: Cueille 2022 ASI-06 18dB HI penalty; ASI-08 SR [CON-0183]), A-11 (room loop), B-03/04, G-05 (≥20% height-adjustable desks), K-03 (DBL haptic zone at teacher position) |
 | Assembly hall | ALL | A-11 (room loop), H-03 (CART), B-10, E-12, A-04, K-03 (DBL haptic zone at aisle ends) |
 | Sensory room | NDV/AUT | A-16 (RT60 ≤0.3 s; NC ≤20), F-01, F-03 (≥1 per 150 students) |
 | Science / specialist rooms | NDV, PAIN, UPL | F-04 (chemical fume extraction), I-02 (lab tap controls), G-05 |
@@ -80,13 +86,13 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
 
 
@@ -100,7 +106,7 @@ This guidebook treats the following provisions as required in all non-residentia
 | --- | --- | --- |
 | Entry / reception | ALL | E-06, E-11, A-10, G-06, F-01, B-05, K-01 (DBL intervenor adjacency), K-02 (tactile map) |
 | Consulting room | DEAF, MOB, DEM | A-11 (≥15 m²), B-02 (200 lux face), NC-25 (A-08), F-04 (6 ACH fresh air) |
-| Patient ward / bed space | MOB, DEM, NDV, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01 (circadian), TC-01 (≤24°C general; ≤18°C MS ward), A-16, K-04 (vibrotactile alert) ⚡ **Room conflict [CO04-06]:** DEM circadian lighting (B-01 ≥250 MEDI daytime) vs NDV/AUT photosensitivity — high melanopic EDI triggers sensory overload in NDV (CON-0182). Resolution: full daytime circadian lighting in primary ward spaces; mandatory low-lux opt-out (A-16) within 25m — do not compromise daytime threshold. DEM vs DEAF on strobe (B-10): vibrotactile (K-04) supplemental at all bed spaces eliminates strobe dependency for DEAF users; strobe restricted to corridor and non-DEM-occupied zones. [BOTH] |
+| Patient ward / bed space | MOB, DEM, NDV, DBL | G-01 (turning circle), G-03 (bilateral call buttons + grab bars), B-01 (circadian), TC-01 (≤24°C general; ≤18°C MS ward), A-16, K-04 (vibrotactile alert) |
 | Accessible WC / bathroom | MOB, DEM, DBL | G-03, G-04, I-03, TC-05, K-04 (vibrotactile) |
 | Sensory room (MH / paediatric) | NDV, DEM, PAIN | A-16, F-01, F-03 (≥1 per ward; mandatory MH inpatient/CAMHS/paediatric) |
 | Pharmacy / counter | MOB, VIS, DEAF, DBL | G-06, A-10, H-01, C-04, K-01 (DBL intervenor adjacency) |
@@ -132,13 +138,13 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
 
 
@@ -151,7 +157,7 @@ This guidebook treats the following provisions as required in all non-residentia
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
 | Arrival / reception | MOB, DEAF | E-06, E-11, G-06, A-10, F-01 |
-| Open-plan office | NDV, OFS, PAIN, MOB | A-01 (acoustic pods ≥1 per 20 staff), A-02, A-08, B-03/04, B-06, F-01, F-04, TC-01 ⚡ **Room conflict [CO04-06]:** NDV needs acoustic isolation (acoustic pod RT60 ≤0.3s) while DEAF users cannot use audio-loop assistive technology in high-ambient noise; resolution: individual acoustic pod provides NDV acoustic shelter AND is loop-equipped (A-11 portable loop) — TS strategy. OFS/PAIN needs supine rest capacity (A-16/G-08) that conflicts with open-plan aesthetics: specify enclosed pod or screen-separated reclined station rather than open-floor mattress (social-context solution). NDV vs fragrance (F-02): fragrance-free zone conflicts with no enforcement mechanism in workplace — specify in FM brief with named enforcement protocol. [INTER-GROUP] |
+| Open-plan office | NDV, OFS, PAIN, MOB | A-01 (acoustic pods ≥1 per 20 staff), A-02, A-08, B-03/04, B-06, F-01, F-04, TC-01 |
 | Focus / quiet room | NDV, OFS, PAIN | A-16 or F-03 (≥1 per 20 staff, mandatory — A-16 preferred where NDV/AUT or OFS is a primary or known secondary population; Leonardi 2025 SR: user control is primary MSE effectiveness variable [CON-0222]), RT60 ≤0.4 s, NC-25 |
 | Meeting room | DEAF, MOB, DBL | A-11, H-03 (CART), B-02, G-01 (turning circle at table), K-03 (DBL haptic zone at table end) |
 | Break room / kitchen | ALL | I-02, F-02, F-04, G-05, TC-01 |
@@ -180,13 +186,13 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
 
 
@@ -223,13 +229,13 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
 
 
@@ -268,13 +274,13 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
 
 
@@ -311,13 +317,13 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
 
 
@@ -358,11 +364,11 @@ This guidebook treats the following provisions as required in all non-residentia
 
 
 **Cross-population conflict register — this building type:**
-| Items | Population A | Population B | Domain | Resolution | Strategy | Type |
+| Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
-| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | [INTER-GROUP] |
-| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | [INTER-GROUP] |
-| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | [INTER-GROUP] |
-| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | [BOTH — inter-group if different users; intra-individual if MS+PAIN co-occurrence] |
-| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | [INTER-GROUP] |
+| B-10 vs NDV/AUT | DEAF (strobe) | NDV/AUT (photosensitive) | Visual alerting | Strobe + vibrotactile supplemental | TS | INTER-GROUP |
+| A-11 vs A-13 | DEAF (loop/PA) | NDV (no sound masking) | Acoustic | Independent loop audio input; no broadcast audio in NDV zones | TS | INTER-GROUP |
+| C-04 vs C-01 | VIS (≥30 LRV) | NDV/SENS (muted palette) | Colour contrast | ≥30 LRV on primary routes (safety governs); ≤20 LRV in retreat zones | SZ | BOTH |
+| F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW | BOTH |
+| E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS | BOTH |
 *For building-wide system conflicts, see Part 5 §5.2.*
