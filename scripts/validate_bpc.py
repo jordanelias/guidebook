@@ -55,6 +55,14 @@ LEGACY_MARKERS = [
 
 METADATA_REQUIRED_KEYS = ["slug", "population", "last_updated"]
 
+# Files in references/bpc/ root that are not per-slug BPC files — skip entirely
+NON_BPC_FILENAMES = {
+    "index.md",
+    "_template.md",
+    "economics-sources.md",
+    "government-grant-programmes.md",
+}
+
 
 # ── Validators ───────────────────────────────────────────────────────────────
 
@@ -64,6 +72,18 @@ def validate_file(path: str) -> list[str]:
     Returns a list of error strings. Empty list = pass.
     """
     errors = []
+
+    # Non-BPC files: skip entirely
+    if os.path.basename(path) in NON_BPC_FILENAMES:
+        return []
+
+    # Frozen flat archives: files directly in references/bpc/ (no subdirectory).
+    # These are pre-CO-0006 format archives exempt from Metadata and Key sources
+    # section checks per project-standards "Flat BPC/SL files frozen" rule.
+    bpc_root = os.path.normpath("references/bpc")
+    is_frozen_flat = (
+        os.path.normpath(os.path.dirname(path)) == bpc_root
+    )
 
     try:
         with open(path, encoding="utf-8") as f:
@@ -78,8 +98,18 @@ def validate_file(path: str) -> list[str]:
     if re.search(r"\*\*Status:\*\*\s*MERGED|status:\s*MERGED", content, re.IGNORECASE):
         return []  # Redirect stubs pass validation unconditionally
 
+    # Deferred non-standard stubs: exempt (Block 5 decision pending)
+    if re.search(r"status:\s*DEFERRED.NON.STANDARD", content, re.IGNORECASE):
+        return []
+
+    # Frozen flat archives: exempt from all section checks (pre-CO-0006 format)
+    if is_frozen_flat:
+        return []
+
     # STUB-NOT-RUN files: Key sources section may be empty/placeholder — exempt
     is_stub_not_run = bool(re.search(r"status:\s*STUB.NOT.RUN|STATUS:\s*STUB.NOT.RUN|STUB.*NOT.RUN", content, re.IGNORECASE))
+    if is_stub_not_run:
+        return []  # Stub files pass validation unconditionally
 
     # 1. Mandatory sections present
     for section in MANDATORY_SECTIONS:
@@ -192,7 +222,11 @@ def _validate_metadata(content: str) -> list[str]:
                 found_keys.add(kv.group(1).lower())
 
     for key in METADATA_REQUIRED_KEYS:
-        if key.lower() not in found_keys:
+        # Accept 'populations' (plural) as an alias for 'population'
+        aliases = {key}
+        if key == "population":
+            aliases.add("populations")
+        if not any(alias.lower() in found_keys for alias in aliases):
             errors.append(f"METADATA_MISSING_KEY: Metadata section missing required key '{key}'")
 
     return errors

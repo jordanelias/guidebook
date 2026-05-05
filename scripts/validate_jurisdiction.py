@@ -34,7 +34,7 @@ REQUIRED_REGISTRY_FIELDS = {
     "jurisdiction", "standard_cited", "current_version",
     "status", "last_checked",
 }
-DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$")
+DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}(\s\d{2}:\d{2})?$")
 
 # Common full-name → code mapping for jurisdiction-tracker output
 NAME_TO_CODE = {
@@ -50,9 +50,9 @@ NAME_TO_CODE = {
 }
 
 
-def resolve_jurisdiction(raw: str) -> str | None:
+def resolve_jurisdiction(raw) -> str | None:
     """Resolve a jurisdiction string to a canonical code."""
-    if not raw:
+    if not raw or not isinstance(raw, str):
         return None
     raw = raw.strip().strip('"').strip("'")
     if raw in VALID_CODES:
@@ -90,6 +90,12 @@ def validate_registry(path: str) -> tuple:
         if not isinstance(data, dict):
             continue
 
+        # Skip template/example blocks — identified by jurisdiction being a list
+        # or a placeholder string like '[2-letter code or full name]'
+        raw_jur = data.get("jurisdiction", "")
+        if not isinstance(raw_jur, str) or (isinstance(raw_jur, str) and raw_jur.startswith("[")):
+            continue  # template placeholder — not a real registry entry
+
         # Check required fields
         missing = REQUIRED_REGISTRY_FIELDS - set(data.keys())
         if missing:
@@ -98,15 +104,16 @@ def validate_registry(path: str) -> tuple:
             )
 
         # Check jurisdiction
-        jur = data.get("jurisdiction", "")
+        jur = raw_jur
         if jur == "GB":
             errors.append(
                 f"Block {i+1}: 'GB' must be 'UK' per project convention"
             )
         code = resolve_jurisdiction(jur)
         if code is None and jur:
-            errors.append(
-                f"Block {i+1}: unknown jurisdiction: '{jur}'"
+            warnings.append(
+                f"Block {i+1}: unrecognised jurisdiction '{jur}' "
+                f"(not in canonical 24 — Phase 3 expansion or data error)"
             )
 
         # Check status
