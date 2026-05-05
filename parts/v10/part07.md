@@ -123,6 +123,10 @@ See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for
 - Grab bar provisions: G-03 bilateral in all accessible patient bathrooms
 - MS neurology ward: ambient ≤18°C (TC-01); TMV ≤35°C (I-03); personal cooling provision (TC-03)
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at principal entrance; vibrotactile BMS relay at all bed spaces and accessible bathrooms for DBL inpatients (K-04); intervenor adjacency space (K-01) at reception, pharmacy, and all consultation counters — minimum 1500 × 1500 mm clear floor zone; haptic communication clear floor zone (K-03) at all waiting positions designated for DBL patients
+- DBL healthcare-specific: tactile approach route to consultation table (raised floor guide from reception to consulting room); tactile room identification at all clinical doors (Braille + raised pictogram); consistent room layout across all consultation rooms for tactile memory navigation [GAP-S4-N02]
+- IntD healthcare-specific: accessible health literacy signage at reception; pictogram appointment stages; consistent consulting room layout; familiar domestic-scale waiting area [GAP-S4-N02]
+- DBL healthcare-specific [GAP-S4-N02]: tactile approach guide line from ward entrance to consultation table/bedside; tactile room identification (raised tactile symbol + Braille at all ward room doors); consistent room layout across ward — identical bed position, call button, and bathroom door location in every room for tactile spatial memory.
+- IntD healthcare [GAP-S4-N02]: NICE NG93 provisions for learning disability inpatient settings — communication passport at bedside; visual schedule board; consistent staff approach; reduced environmental complexity in ward bay.
 
 
 **DEM/NDV[IntD-proxy] provisions — NR-HLT:** [TIER 4–5; interim; March 2026] All healthcare settings: (1) Easy Read format for consent forms, patient information, appointment letters; (2) pictogram + word signage throughout; (3) DEM wayfinding provisions (D-01, D-03, D-04) applied as strongest proxy — loop floor plan without dead ends aids orientation for DEM/NDV[IntD-proxy] users; (4) sensory quiet space (A-16) accessible without staff mediation; (5) support worker accommodation at all clinical appointment points.
@@ -223,6 +227,14 @@ See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for
 - Fitting room: ≥1500 mm turning circle; fold-down seat (G-02 specification); mirror lower edge ≤400 mm AFF; lever door (I-01); grab bar both sides of seat (G-03 blocking)
 - PA system and announcements: visual display at all service points for DEAF users (H-03); hearing loop at all counters (A-10)
 
+
+**DBL/IntD provisions — NR-RET [EXPERT CONSENSUS; GAP-S4-N04]:**
+- DBL: tactile route through main retail floor from entry to service counter (raised profile guide line or tactile floor strip)
+- DBL: consistent department/aisle layout — no seasonal rearrangement of primary route without tactile route update
+- DBL: tactile building map (K-02) at principal entrance
+- IntD: simplified wayfinding — visual complexity management in retail requires plain circulation routes (C-03), clear sightlines to service counter, and pictogram department signage (D-08)
+- IntD: queue management — take-a-number or staff-marshalled queue (no unstructured queuing at counters)
+
 **Retail schematic checklist:**
 
 - [ ] Accessible parking (3600 + 1200 mm, or 4500 mm BAR) on site plan
@@ -232,6 +244,9 @@ See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for
 - [ ] Accessible fitting room on floor plan (turning circle + grab bar blocking) —
 
 
+
+- DBL retail-specific [GAP-S4-N04]: tactile guide line from entrance to primary service counter; consistent department layout across store chain (identical floor plan for tactile memory in repeat visits). Matte floor finish throughout (≤30 gloss units). Vibrotactile alert option for queue/service number call.
+- IntD retail [GAP-S4-N04]: visual complexity management — simplified wayfinding per D-02/D-08; reduced decision points (≤2 choices per junction); muted sensory environment in checkout zone; plain flooring per C-03.
 **Cross-population conflict register — this building type:**
 | Items | Population A | Population B | Domain | Resolution | Strategy | Scope |
 |---|---|---|---|---|---|---|
