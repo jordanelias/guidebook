@@ -108,3 +108,58 @@ Interconnected systematic reviews on home modifications. Stark 2017 SR → Stark
 | Tier 3+ new | 17 |
 | Co-1 new | 4 |
 | Research clusters identified | 5 (JP Tsuchiya-Ito, AU Co-1, Toronto/KITE bathing, NDV environment, home mod SR) |
+
+
+---
+
+## Phase 2 Batch 3 — Final sources this session
+
+**Sources mined:** 2 (Patil 2025, Ahmed 2022)
+**New sources confirmed:** 0 (no new forward citations beyond mapped networks)
+
+### Source confirmation
+
+**Patil & Raghani 2025** (Int J Equity Health, doi: 10.1186/s12939-025-02503-5): Barrier-free interior design for visually impaired. Key data: 90% improved navigation confidence (textured handrails + non-glare + consistent furniture), 75% appreciated enhanced lighting, 65% improved spatial awareness from acoustics, 70% of VI individuals fall annually. Symbiosis Institute of Design, Pune. 10 citations. Connects to VIS BPC and specifications B-01, B-02, C-04.
+
+**Ahmed et al. 2022** (ICONARP, doi: 10.15320/ICONARP.2022.195): Hospital wayfinding in Nigeria. Part of Ahmed research cluster (3+ papers). Key limitation noted: absence of physically challenged people and elderly in research process. Connects to wayfinding specifications D-01, D-03, D-10.
+
+### Phase 2 — FINAL STATUS
+
+| Category | Count | Status |
+|---|---|---|
+| Mined (high-priority) | 9 of 22 | Stark, Gitlin, Murgia, Vetter, Greene, Patil, Ahmed + jurisdiction batch |
+| Remaining high-priority | 3 | Keating 2024, Guay 2020, Levine 2025 |
+| Lower priority (skip) | 10 | Theoretical frameworks + TBC entries |
+| Total new sources | 43 | Across all phases |
+
+### Handoff for next session
+
+**Phase 2 completion (3 sources):**
+- Keating 2024 — cross-cultural autism camouflaging/acceptance → NDV
+- Guay 2020 — bathroom assistive technology self-selection → bathroom
+- Levine 2025 — ramp biomechanics (may overlap with grab bar cluster)
+
+**Phase 3 (population BPC anchors — full session):**
+Read each BPC file, extract 2-3 anchor studies, forward mine:
+MOB, VIS, DEAF, DEM, NDV, NEU, IntD, PAIN, OFS, NDV-MH, DBL
+
+**Phase 4 (SR supersession — half session):**
+Check ~20 Tier 3 systematic reviews for superseding newer reviews.
+
+**Phase 5 (TBC resolution — quarter session):**
+Look up 5 incomplete Tier 1 records.
+
+### CONVERSATION-LEVEL STATISTICS
+
+| Metric | Value |
+|---|---|
+| Total commits this conversation | 47 |
+| Economics records created | 75+ |
+| Health outcome records | 24 |
+| Sources mined (all phases) | 28 |
+| Sources discovered | 43 |
+| Research clusters identified | 6 |
+| Methodology files created | 8 |
+| Part 11 updated | Yes (§11.3) |
+| Gaps resolved | 11/11 |
+| Jurisdictions surveyed | 11 |
