@@ -1994,8 +1994,9 @@ Guidebook extends transparent glazing beyond door vision panels to internal part
 <!-- ot_appointment_trigger: conditional:DEM|OFS -->
 <!-- grade_confidence: MODERATE — Safe accessible garden with loop path: Gonzalez & Kirkevold 2014 J Clin Nurs (Tier 3 scoping review — horticultural therapy + dementia). DSDC EADDAT. Helsedirektoratet NO guidelines. ≥5 jurisdictions reference. MODERATE — Tier 3 scoping + multiple jurisdictions. -->
 
-**Applicable Groups:** DEM, MOB, MH, OFS · PAIN
+**Applicable Groups:** DEM, MOB, MH, OFS · PAIN · NDV
 <!-- D2-41: D2-41: garden loop with seating ≤20m serves OFS rest intervals; DEM wandering freedom; PAIN cushioned seating -->
+<!-- CON-04: NDV added — natural outdoor environments with graduated sensory input (wind, texture, sound, light) serve NDV sensory regulation; accessible gardens with predictable layout support NDV/AUT navigation without overwhelming complexity. NDV/MH therapeutic outdoor exposure is a validated intervention (ecotherapy). -->
 
 **Description:** Accessible outdoor garden with: secured perimeter (no open exit to unsupervised road); loop path (no dead ends — DEM principle from D-01 applied outdoors); seating every 20 m; hard surface throughout (PTV ≥36 wet). Natural planting within reach of path.
 
@@ -2835,7 +2836,7 @@ intervention. See Part 12 §12.4.2.
 <!-- CON-0102 [HIGH]: [INTRA-INDIVIDUAL] OFS/MCAS thermal+chemical co-trigger. Individual radiant heating (F-07) must not use recirculated air without HEPA (F-04). Coordinate F-04 filtration with F-07 thermal zoning delivery method. -->
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity),
 
-PAIN (fragrance triggers), NEU (chemical sensitivity in PCS/ABI)
+PAIN (fragrance triggers), NEU (chemical sensitivity in PCS/ABI), NDV/MH (PTSD — chemical stimuli as trauma triggers per TID framework; MERV 13+ filtration reduces mast-cell-activating airborne triggers that also function as PTSD sensory triggers; F-02 fragrance-free co-specification required [GAP-CON-15])
 
 **Description:** New item added in v9.0 per OFS category review (Stage 3). A comprehensive air quality specification for all spaces regularly occupied by OFS/MCAS, chemically sensitive NDV, or PCS users. F-04 extends and complements F-02 (Fragrance-free zones): where F-02 addresses introduced fragrances at the policy level, F-04 addresses the built-in physical specification of filtration, materials, and thermal stability that determines baseline air quality.
 

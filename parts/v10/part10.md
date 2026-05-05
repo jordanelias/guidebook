@@ -84,6 +84,7 @@ Visitability (Concrete Change, Eleanor Smith, 1987) proposes three core requirem
 | NO | TEK17 (mandatory) | Mandatory all new dwellings | Level entry; accessible bathroom; lift in ≥3 storeys |
 | SE | BFS 2024:12 (Boverket) (mandatory) | Mandatory all apartments in multi-dwelling | Future conversion without structural modification |
 | DE | DIN 18040-2 (voluntary; state adoption varies) | Building regulation in most Länder | Barrier-free residential (some include DAR) |
+| **IT** | **Decreto Ministeriale 236/89 (DM 236/89)** | **Mandatory for new public and residential buildings** | **Three-tier system: accessibilità (full), adattabilità (future-adaptable), visitabilità (minimum visit). Adattabilità is the statutory DAR precedent — earliest national codification of adaptability doctrine. Requires structural provision for future adaptation without structural modification. [CON-0012 / GAP-CON-12]** |
 
 Visitability policy has produced an estimated 10,000+ visitable homes globally (Concrete Change). The evidence confirms that mandatory adoption (AU, NO, SE) produces higher population-level accessibility than voluntary standards.
 
