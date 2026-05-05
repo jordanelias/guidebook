@@ -97,7 +97,7 @@
 | GAP-CO03-05 | ST | P2 | CLOSED | 3 | 15 | Part 7 §7.1 rewrite: distinguish intra-individual from inter-group | §7.1 + §7.2 revision |
 | GAP-CO03-06 | ST | P2 | CLOSED | 3 | 15–16 | Part 7 §7.3 entries tagged [INTRA-INDIVIDUAL] / [INTER-GROUP] / [BOTH] | Per-entry tagging |
 | GAP-CO03-07 | ST | P2 | CLOSED | 3 | 10 | Part 1 §1.4 framework addition: three-tier as co-occurrence resolution | Part 1 writing sessi |
-| GAP-CO03-08 | ST | P2 | OPEN | 3 | 17 | Part 8 title + §8.4 split (intra vs inter) when Part 8 created | Part 8 new content s |
+| GAP-CO03-08 | ST | P2 | CLOSED | 3 | 17 | Part 8 title + §8.4 split (intra vs inter) when Part 8 created | Part 8 new content s |
 | GAP-CO03-10 | ST | P2 | OPEN | 4 | 19 | find-and-replace: "cross-population" → context-dependent in guidebook body | Bundled with CO-0001 |
 | GAP-CO04-04 | ST | P2 | CLOSED | 0R | Next session | gap_register.md entries referencing old Part numbers need updating | ~20 entries |
 | GAP-CO04-05 | ST | P2 | CLOSED | 0R | Next session | CO-0001, CO-0002, CO-0003 cross-reference notes for CO-0004 | Add supersession/com |
