@@ -313,3 +313,63 @@ DEAF and PAIN BPC files lack Key Sources sections — these are flagged for BPC 
 |---|---|---|---|---|
 | Sources mined | 19 | 12 | 4 | 35 |
 | Sources discovered | 34 | 9 | 4 | 47 |
+
+
+---
+
+## Phase 4 — Tier 3 SR Supersession Check (Session 2)
+
+**SRs checked:** 5 (Bowes 2019 DEM, Claessen 2017 NEU, IOM/NAM 2015 OFS, ASPECTSS NDV, Weber 2022 MH)
+**Full supersessions found:** 0
+**Partial updates found:** 2
+
+### Results
+
+| SR | Year | Domain | Superseded? | By | Assessment |
+|---|---|---|---|---|---|
+| Bowes & Dawson DEM SR (429 items) | 2019 | DEM | No — updated | Siegelaar et al. 2025 meta-review | Complementary: Bowes catalogues evidence comprehensively; Siegelaar evaluates evidence *quality* (finding it low). Both required. |
+| Claessen navigation impairment SR | 2017 | NEU | No | — | No newer SR on navigation impairment classification in stroke/TBI found. Remains current. |
+| IOM/NAM Beyond ME/CFS | 2015 | OFS | No | — | No built environment SR exists for ME/CFS. NIHR 2025 evidence map (Health Technol Assess) covers 2018-2023 but is not a built environment SR. |
+| ASPECTSS (Mostafa 2008/2014) | 2008 | NDV | No — validated | Mostafa 2024 POE | POE confirms framework, does not supersede. No competing NDV design framework SR found. |
+| Weber et al. MH SR (Frontiers in Psychiatry) | 2022 | MH | Partially expanded | Scottish Gov SR (PMC11080396) | Scottish Gov SR covers 44 studies vs Weber's scope; includes forensic and IPCU settings. Not a replacement but a broader evidence base. |
+
+---
+
+## Phase 5 — TBC Resolution (Session 2)
+
+**Records checked:** 1 of 5
+**Resolved:** 0
+**CLOSED-DELETED:** 1
+
+### Results
+
+| Entry | Status | Action |
+|---|---|---|
+| CCD-06 (Lund University accessible design cost thesis, 2023) | CLOSED-DELETED | 2 failed independent searches. No thesis matching "accessible design cost impact not significant" found in Lund University repository or web search. Per standing rule: 2 failed searches → CLOSED-DELETED. |
+| TLD-01, TLD-02, SSG-02, SPM-03-update | DEFERRED | Low priority per handoff assessment. Theoretical frameworks (not mineable for built environment evidence). |
+
+---
+
+## Session 2 Cumulative Totals
+
+| Metric | Phase 1 (prior) | Phase 2 | Phase 3 | Phase 4 | Phase 5 | Total |
+|---|---|---|---|---|---|---|
+| Sources mined | 19 | 15 | 4 | 5 | 1 | 44 |
+| Sources discovered | 34 | 9 | 4 | 0 | 0 | 47 |
+| Gaps resolved | — | — | — | 0 | 1 (CCD-06) | 1 |
+
+### Session 2 new sources (this conversation only)
+
+| # | Source | Domain | Tier |
+|---|---|---|---|
+| 44 | Quesada-Cubo 2026 IntD consensus (N=66) | IntD | Co-1/2 |
+| 45 | Mostafa 2024 ASPECTSS POE | NDV | 3 |
+| 46 | Siegelaar 2025 DEM meta-review (11 SRs) | DEM | 3 |
+| 47 | Scottish Gov MH built environment SR (44 studies) | MH | 3 |
+
+### Remaining work (future sessions)
+
+- Phase 3 expansion: mine remaining population anchors (MOB Steinfeld, MOB Keall, DBL DbI guidelines)
+- Phase 4 expansion: check SRs in acoustics, lighting, wayfinding, bathroom domains
+- CCD-06 CLOSED-DELETED status needs propagation to construction-cost-data BPC
+- TLD-01/02, SSG-02, SPM-03 TBC entries remain unresolved (low priority)
