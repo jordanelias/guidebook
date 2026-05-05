@@ -1165,6 +1165,24 @@
       "spec_cross_refs": [],
       "discovery": "JP jurisdiction deep-dive 2026-05-04",
       "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-024",
+      "source": "Slaug et al. 2017",
+      "study_design": "Simulation study (SE/DE data)",
+      "sample": "Population-level simulation using ENABLE-AGE + official statistics",
+      "journal": "International Journal of Environmental Research and Public Health",
+      "jurisdiction": "SE/DE",
+      "finding": "Policy removing top 5 environmental barriers in homes of at-risk older adults can maintain I-ADL independence and reduce home service costs",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 2",
+      "evidence_rank": 24,
+      "pillar": "health",
+      "doi": "10.3390/ijerph14090964",
+      "spec_cross_refs": [],
+      "discovery": "Jurisdiction batch sweep 2026-05-04",
+      "last_updated": "2026-05-04"
     }
   ],
   "market_value": {

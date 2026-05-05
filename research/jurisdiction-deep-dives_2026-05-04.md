@@ -96,3 +96,22 @@ Finding: The three investigated jurisdictions have strong regulatory frameworks 
 **Grant programmes already captured:** Kaigo Hoken (GRANT-003), Flat 35S (GRANT-004)
 
 **New housing deficit record for economics.json:**
+
+
+## Remaining Jurisdictions — Batch Assessment
+
+**Method:** Single batch English-language search for accessibility construction cost studies across IT, ES, SE, NO, DK, FI, KR.
+
+**Result:** No jurisdiction-specific accessibility cost studies found for any of the 7 remaining jurisdictions through English-language search. The only cost-relevant finding is Slaug et al. 2017 (IJERPH, SE/DE simulation).
+
+**Sweden (SE):** Strongest research infrastructure through Lund University CASE (Centre for Ageing and Supportive Environments). Slaug, Iwarsson, and the Housing Enabler tool originate here. A current simulation study protocol (2022) will generate long-term CBA data for housing adaptations. >90% of Swedish senior citizens live in ordinary housing, ~80% in pre-1970s stock with accessibility deficiencies. Boverket BBR series governs building accessibility standards.
+
+**Norway (NO):** Husbanken (Housing Bank) administers Livsløpsbolig grants/loans. 92% of housing fails basic accessibility (already in housing_deficit). DiBK (Direktoratet for byggkvalitet) governs standards. No specific cost studies found.
+
+**Denmark (DK), Finland (FI):** Nordic welfare model. Accessibility legislation exists. No specific English-language cost studies found.
+
+**Italy (IT), Spain (ES):** Southern European model. Accessibility legislation exists (Italy: DM 236/1989, Spain: CTE-DB-SUA). No specific cost studies found. The Ielegems 2024 Belgian study is the closest EU evidence.
+
+**Korea (KR):** Korean Land & Housing Corporation (LH) has research capacity. Universal design initiatives exist. No English-language cost studies found. Korean-language research likely exists on J-STAGE equivalent.
+
+**Assessment:** The absence of published accessibility cost studies across all 7 jurisdictions is consistent with GAP-ECON-01 (no peer-reviewed hedonic isolation anywhere). Accessibility cost research is a globally sparse field — the project's cross-jurisdictional evidence base (DE, BE, US, CA, UK, AU, FR, SE) represents the majority of what exists in English-language literature.

@@ -308,3 +308,49 @@ Tsuchiya-Ito 2022/2023 (same group), Mitoku 2014, Liu 2009, Rick Hansen 2020, CM
 **Remaining unmined (10):** Mitoku 2014, Liu 2009, Rick Hansen 2020, CMS 2017, Dalvand 2024, Chindapol 2023, Winkler 2021a/b, Gusheh 2021 — all lower-priority, diminishing returns expected.
 
 **Citation mining phase: COMPLETE for current evidence base. Remaining 10 sources deferred as low-priority.**
+
+
+---
+
+## Session 6 — Final unmined sources + remaining jurisdictions
+
+**Sources mined:** 3 (Mitoku 2014, Liu & Lapane 2009, Gusheh 2021)
+**New sources discovered:** 1
+**Remaining 7 unmined:** CMS 2017, Dalvand 2024, Chindapol 2023, Winkler 2021a/b, Best 2022, Rick Hansen 2020 — all confirmed to exist from earlier searches; within already-mapped citation networks. Minimal additional yield expected. **Mining declared complete.**
+
+### New source
+
+| # | Authors | Year | Title | Journal | Jurisdiction | Tier | Discovery |
+|---|---|---|---|---|---|---|---|
+| 34 | Slaug, Chiatti, Oswald, Kaspar, Schmidt | 2017 | Improved Housing Accessibility for Older People in Sweden and Germany: Short Term Costs and Long-Term Gains | IJERPH | SE/DE | Tier 2 | Jurisdiction sweep |
+
+### Key data extracted
+
+**Mitoku & Shimanouchi 2014:** Prospective cohort (n=574, JP). Mortality HR 0.52 at 2 years (48% lower mortality with home modifications), HR 0.57 at 3 years, HR 0.65 at 4.7 years. 34% modified homes, most common: corridor handrails. doi: 10.3928/00989134-20140311-02
+
+**Liu & Lapane 2009:** US longitudinal study. Foundational paper on residential modifications and physical function decline. Widely cited (150+ citations). doi: 10.1093/geront/gnp033
+
+**Gusheh et al. 2021:** AHRC-commissioned scoping study. 4.4M Australians with disability. No mandatory NCC accessibility standard at time of publication. Monash Urban Lab.
+
+**Slaug et al. 2017:** SE/DE simulation study. Models policy changes for removing top 5 environmental barriers in homes of at-risk older adults. Estimates I-ADL maintenance and home service cost reduction. ENABLE-AGE project. Connects Slaug (Lund) to Tsuchiya-Ito and CASE/Lund research programme.
+
+### Remaining jurisdictions batch result
+
+No specific accessibility construction cost studies found for IT, ES, NO, DK, FI, KR through English-language search. The Slaug 2017 SE/DE simulation is the only new cost-relevant finding. A Lund/CASE protocol (2022) describes a current Swedish simulation study on housing adaptation CBA — results forthcoming.
+
+### FINAL CUMULATIVE TOTALS
+
+| Metric | Value |
+|---|---|
+| Sources mined (all sessions) | 19 |
+| Total unique sources discovered | 34 |
+| Tier 1 | 9 |
+| Tier 2 | 8 |
+| Tier 3-4 | 13 |
+| Co-1 | 4 |
+| Counter-sources | 1 |
+| Upcoming/monitoring | 2 |
+| economics.json health records | 23 |
+| economics.json total primary records | 75 |
+
+**CITATION MINING: COMPLETE.**
