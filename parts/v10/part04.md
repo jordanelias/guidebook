@@ -742,8 +742,7 @@ Norges Blindeforbund. (2023). Kontrast i bygde omgivelser
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM|NEU|OFS|NDV/MH -->
-<!-- specialist_review_gate: NDV/AUT — OT with sensory integration CPD or STAR-certified sensory specialist review mandatory at SD for NDV-primary environments; DEM-primary — DSDC-trained specialist review mandatory at SD. A-16 room size (8m²), acoustic (STC ≥50/RT60 ≤0.3s), and HVAC (NC-25) specifications are the minimum non-negotiable baseline; specialist may require additional provisions. [GAP-SCOPE-06] -->
-<!-- grade_confidence: LOW — Sensory room ≥8m²: PAS 6463 §14.1 (Tier 4). No RCT on room size for NDV outcomes. --> outcomes. Wilson 2023 PMID (Co-1) documents failure modes. Caldwell 2025 qualitative. No validated threshold. -->
+<!-- grade_confidence: LOW — Sensory room ≥8m²: PAS 6463 §14.1 (Tier 4). No RCT on room size for NDV outcomes. Wilson 2023 PMID (Co-1) documents failure modes. Caldwell 2025 qualitative. No validated threshold. -->
 
 <!-- CON-0046 [HIGH]: CS-17 (NHS CAMHS, NDTi 2022) documents NDV/MH ward environments actively harmful to NDV/AUT co-occupants. Sensory rooms in MH settings must be distinct from MH de-escalation rooms — different clinical purpose, different specification. -->
 <!-- CON-0002 [HIGH]: Expand Applicable Groups to NDV, NDV/MH, OFS, PAIN (in addition to NDV/AUT). Add recline-capable seating option (OFS/PAIN — Tier 2 clinical basis, THIN-POPULATION-SPEC). Collapse MH de-escalation room into A-16 with population-specific configuration notes (see §2.8 distinction table). Cross-reference H-02 as co-primary. CON-0019: specify as Universal Mode universal — one per occupied floor plate. -->
@@ -1583,7 +1582,6 @@ Wayfinding is the ability to determine one's location, plan a route, and navigat
 <!-- design_stage_lock: B -->
 <!-- ve_risk: HIGH -->
 <!-- ot_appointment_trigger: conditional:DEM -->
-<!-- specialist_review_gate: DEM — dementia environment specialist (DSDC-trained or equivalent) review mandatory at Schematic Design before floor plan is fixed. D-01 loop configuration is the primary determinant of DEM wayfinding outcome; error at this stage is not recoverable without structural alteration. See Part 9 §9.3. [GAP-SCOPE-06] -->
 <!-- grade_confidence: MODERATE — Loop floor plan for DEM environments: Marquardt & Schmieg 2009 (AJAD Tier 3) + Bowes et al. 2019 Stirling SR (429 items, Tier 3). PMC8725382 (NL floorplan study, Tier 3). Floor plan configuration confirmed as most influential factor. ≥5 jurisdictions reference loop plans for DEM care. MODERATE — multiple Tier 3 studies converge; no RCT. -->
 
 **Applicable Groups:** DEM · VIS · DBL · NEU · NDV/AUT
@@ -1654,7 +1652,7 @@ Decision point legibility: destination visible from decision point where possibl
 
 Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 
-**Cross-reference:** D-04 (Landmarks); D-08 (Signage — signage is secondary to spatial planning: architectural layout, sightlines, and landmarks are the primary wayfinding mechanism; signage compensates where spatial design is insufficient [CON-0189]); E-08 (Corridor Clear Width — rest and support provisions must be located on the D-02 primary route; OFS/PAIN users following the single cognitive route need seating within that route [CON-0194])
+**Cross-reference:** D-04 (Landmarks); D-08 (Signage — signage is secondary to spatial planning: architectural layout, sightlines, and landmarks are the primary wayfinding mechanism; signage compensates where spatial design is insufficient [CON-0189]); E-08 (Corridor Clear Width — rest and support provisions must be located on the D-02 primary route; OFS/PAIN users following the single cognitive route need seating within that route [CON-0194]); Part 1 §1.4 (Three-tier hierarchy — D-02 cognitive simplicity is a Universal Mode provision; the range-and-median specification model in §1.4 governs how D-02 single-route legibility operates across Tier 1 and Tier 2 projects [CON-0236])
 
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. Direct, short routes compensate for the reduced working memory capacity at Allen's CDM cognitive levels 3--4 by minimising the number of spatial 'chunks' that must be held in memory between decision points; for VIS users route directness reduces the cognitive wayfinding load that accumulates over long non-direct routes.
 
@@ -2426,8 +2424,6 @@ exceeds clinically acceptable thresholds for populations with reduced balance an
 Primary routes: 1200 mm clear width minimum 
 
 Where <1200 mm continuous: passing bay ≥1500×1500 mm at ≤10 m intervals
-
-● **Mode S OT handoff [SCOPE-05]:** The 1500 mm / 1800 mm turning circle distinction is clinically significant. A standard power wheelchair requires ≥1500 mm; a larger powered chair or a manual chair with long footplates requires ≥1800 mm. Mode P provision: ≥1500 mm clear turning circle in all principal manoeuvring positions (each side of WC, at bed foot, at wardrobe approach). For any named Tier 2 user: OT assessment confirms whether 1500 mm or 1800 mm governs before construction detailing. Document decision in OT assessment report. ○ [Tier 2 — ISO 21542:2021; BS 8300:2018]
 
 No furniture, equipment, or signage projecting into corridor
 
@@ -3271,8 +3267,6 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 
 Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Mode P median: 700 mm; Mode S: 280 mm above seat surface, resolved by OT assessment)
 
-● **Mode S OT handoff [SCOPE-05]:** The 650–900 mm range spans 250 mm — a clinically significant difference for transfer biomechanics. Mode P median (700 mm) cannot be assumed correct for any individual. Every residential project with a named MOB, PAIN, OFS, NEU, or UPL user requires OT-assessed grab bar height per the Housing Enabler protocol (§1.8.8). For non-residential where primary users are not known: specify structural blocking for the full 600–950 mm range and mount at the Mode P median pending OT assessment at fit-out. ○ [Tier 2 — RCOT Adaptations Without Delay 2019; BS 8300:2018 §8.3]
-
 Angled bar at cistern wall
 
 Bar diameter: 32--45 mm
@@ -3396,8 +3390,6 @@ height-adjustable (electric or manual) from 650 mm to 870 mm AFF. Knee clearance
 20% of all workstations: height-adjustable
 
 Height range: 650--870 mm AFF
-
-● **Mode S OT handoff [SCOPE-05]:** The 650–870 mm range spans 220 mm — from minimum wheelchair knee-clearance height (650 mm) to comfortable standing desk height (870 mm). Mode P default for a wheelchair user is 720–750 mm; for ambulant with pain or fatigue, 800–820 mm. No single fixed height serves all needs. For residential or single-named-user Tier 2 projects: OT assessment determines target height before procurement. For non-residential: electric height-adjustment mechanism is mandatory (not optional), enabling individual users to set their own working height across the full range. Manual crank adjustment is not Mode S-compatible for UPL users. ○ [Tier 2 — RCOT; DIN 18040-2 §5.7 (DE); CAOT 2024]
 
 Knee clearance: ≥600 mm depth at all heights
 
@@ -4320,8 +4312,6 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dressing turning circle.
 
 **FDR-TCOA-01 [Tier 3 — van Hoof 2010]:** Thermoregulatory unawareness in DEM — carer-managed dressing is a primary occupational need. In DEM-designated residential and care bedrooms, wardrobe to provide: full-width door opening (minimum 900 mm clear); adjustable hanging rail 1050–1200 mm AFF (suits carer-operated dressing from seated or standing position); shelf height 600–900 mm for carer-visible clothing display; visual display arrangement of clothing options (open shelving or glass front). ○ [THIN — Tier 3 clinical mechanism; no dedicated wardrobe design RCT]
-
-● **Mode S OT handoff [SCOPE-05]:** Hanging rail 1050–1200 mm AFF spans 150 mm — the full range from optimised wheelchair user reach (~1050 mm) to optimised standing ambulant user reach (~1200 mm). Mode P default depends on the primary occupant type. For residential projects with named users: OT assessment determines exact height within range. For non-residential: adjustable rail spanning full 1050–1200 mm is strongly preferred over fixed installation. ○ [Tier 2 — RCOT; no standard specifies hanging rail height for disability populations]
 
 ---
 
