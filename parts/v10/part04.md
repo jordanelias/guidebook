@@ -776,6 +776,8 @@ Accessible toilet: within 15 m of A-16 entry (mandatory; not discretionary) — 
 
 **Evidence basis (OT):** EHP Framework (create strategy). The sensory room implements EHP's 'create' strategy: an entirely new environmental context is constructed within which the occupation of sensory self-regulation becomes possible. The 8 m² minimum, STC ≥50 partition, and RT60 ≤0.3s specifications are the minimum context parameters required for this occupation to occur.
 
+**Evidence note [GAP-CON-0026]:** Van Doorn et al. 2024 SAE scoping review and Piller et al. 2025 SBI systematic review confirm mixed evidence for generic multi-sensory environments. Stronger evidence supports individualised, user-controlled sensory input over fixed multi-sensory installations. This aligns with the guidebook's specification of A-16 as individually controllable (H-02 cross-ref) and the Leonardi 2025 finding that user control is the primary effectiveness variable for MSE. Fixed multi-sensory equipment (bubble tubes, fibre optics) is not required at Universal Mode — individual control of lighting, acoustic, and thermal parameters is the primary specification.
+
 **FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure (Leavitt & Feinstein 2014, Davis 2010). NEU/MS users require a cooling-capacity retreat distinct from NDV sensory regulation — ambient ≤16°C preferred (vs NDV typical ≤20°C). ○ In facilities serving NEU/MS as a primary or significant secondary population: where A-16 serves both NDV and NEU/MS, specify individual HVAC control enabling ≤16°C setpoint. Alternatively, a separate cooling station (≤12 m², individually temperature-controlled to ≤16°C, adjacent to MS clinic or specialist facility area) may be provided as a dedicated NEU/MS provision. Extended occupancy capacity required (30–60 min recovery duration vs 10–15 min NDV reset). [THIN — architectural implication only; no design standard specifies]
 
 **Jurisdiction comparison:** No code mandates sensory rooms. UK PAS 6463:2022 references sensory environments. NL Snoezelen concept (1970s) is historical origin. ISO 25552 (dementia) references calming environments. Guidebook specifies provision in all settings serving NDV/AUT/DEM populations — user-controllable lighting, sound, texture.
@@ -2014,6 +2016,8 @@ Loop path: continuous; no dead-ends
 Hard surface throughout: PTV ≥36 wet
 Seating: every 20 m; 450 mm seat height; armrests; covered option
 Planting: within reach of path; non-toxic species (DEM); no thorns
+
+Shade: continuous shade coverage on ≥80% of primary garden path (pergola, tree canopy, or fixed shade structure). OFS heat intolerance (Uhthoff onset at 0.5°C core temperature increase) makes unshaded outdoor routes functionally inaccessible in warm seasons. No standard specifies shade coverage for disability populations. ○ [GAP-FDR-05 — expert consensus; Christogianni 2018 MST-10 for Uhthoff threshold]
 Accessible entry: level or ramp ≤1:20
 
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Safe accessible garden with loop path and secured perimeter requires new hard landscaping, path construction, perimeter enclosure, planting, and drainage — significant external works in an existing outdoor space. At design stage it is a landscape brief decision. See Part 11 §11.4.2.
@@ -2024,6 +2028,8 @@ Accessible entry: level or ramp ≤1:20
 
 Dignified Design. (2024). 22 design elements for permanent supportive housing. Rick Hansen Foundation. (2024). RHFAC v4.0. RHF.
 
+
+**Shade provision on outdoor routes [GAP-FDR-05]:** Continuous shade (canopy, pergola, or mature tree cover) on ≥50% of the primary garden loop path length. OFS/MS heat intolerance (Uhthoff threshold at 0.5°C core temperature increase, Christogianni 2018 MST-10) makes unshaded outdoor routes inaccessible in warm weather. Shade specification is additional to E-05 entrance canopy — this provision covers the outdoor circulation route. ◐ [Tier 3 — Christogianni 2018; clinical consensus]
 **Cross-reference:** D-01 (Loop Plan); BIO-01 (Nature Views); BIO-02 (Interior Planting)
 
 **Evidence basis (OT):** EHP Framework (create strategy); Life Balance Model. The safe enclosed garden creates an outdoor environmental context that is otherwise unavailable to DEM, MOB, and MH users in institutional or high-security settings; the Life Balance Model grounds the provision as a participation right — access to outdoor occupation — not an optional amenity.
@@ -3445,6 +3451,10 @@ LRV ≥30 at counter edge vs floor
 
 ● Lowered counter section to be available at all times as the default service position — not on request only [FDR-OFS-01: orthostatic intolerance onset 2–10 min; Raj 2013 Tier 1]
 
+**Seated service option [GAP-FDR-03]:** Perch stool (seat height 650–750 mm AFF, footring, bilateral armrests) within ≤1000 mm of lowered counter section. OFS/POTS users cannot stand for the 2–10 minute transaction duration without orthostatic symptom onset (Raj 2013). Perch stool is positioned at the lowered section, not the standing-height section, so the user maintains eye contact at appropriate height. JAN (Job Accommodation Network) lists counter-adjacent seating as a POTS workplace accommodation. ◐ [Tier 2 JAN + Tier 1 Raj 2013 orthostatic onset time]
+
+
+**Seated service option [GAP-FDR-03]:** Perch stool or fixed seat (450–500 mm AFF, bilateral armrests) within 600 mm of the lowered counter section. OFS/POTS users experience orthostatic intolerance onset within 2–10 minutes of standing (Raj 2013); seated service eliminates the standing requirement entirely. JAN (Job Accommodation Network) lists counter-adjacent seating as a POTS workplace accommodation. Seat to face staff position. ◐ [Tier 2 — JAN; clinical consensus]
 **Retrofit cost note:** Retrofit penalty: MODERATE. Reception counter accessible height section requires counter modification or replacement involving joinery, services relocation, and surface reinstatement. At design stage it is a joinery specification item. See Part 11 §11.4.2.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Building and Construction Authority. (2025). BCA Code 2025. BCA. CSA Group. (2023). CSA B651:2023. CSA.
@@ -3931,6 +3941,10 @@ Federation. (2023). Atlas of MS. MSIF. Petajan, J.H., \& White, A.T.
 
 **Cross-reference:** G-03 (Grab Bars); G-04 (Wet Room); R-BA-03 (TMV specification)
 
+**Bidet/wash-dry toilet DAR provision [GAP-FDR-01]:** Where OFS, PAIN, or MOB/UPL populations are primary or secondary: wall reinforcement for integrated bidet seat at WC position (structural blocking ≥18 mm plywood behind finished surface, 400–600 mm AFF); cold water supply ≤200 mm from WC centreline; electrical outlet (GFCI/RCD) ≤600 mm from WC centreline at 400–600 mm AFF. No standard specifies bidet spatial provision. OT evidence: Vasi 2006 functional toileting assessment confirms bidet use reduces bilateral UPL toileting dependency; energy conservation benefit for OFS (eliminates reach-and-twist personal hygiene motion). DAR specification — install blocking and services at construction; fixture deferred to occupant fit-out. ◐ [Tier 2 OT CPG + expert consensus; no RCT on bidet provision]
+
+
+**DAR provision — bidet/wash-dry [GAP-FDR-01]:** Wall reinforcement zone (600×400 mm) adjacent to WC position for future bidet seat installation. Water supply rough-in ≤200 mm from WC centre. Electrical supply position ≤600 mm from WC (13A switched fused spur or equivalent; earthed). These provisions are construction-stage only — bidet installation is a post-occupancy decision, but supply infrastructure cannot be retrofitted without wall and floor disruption. Source: Vasant 2019 (OFS/MCAS BPC); clinical consensus across OFS, PAIN, and DEM populations.
 **Evidence basis (OT):** Biomechanical FOR; Compensatory FOR. Anti-scald thermostatic controls at 38°C compensate for the reduced sensation in UPL users with peripheral neuropathy (who cannot detect scalding temperatures by touch) and for the Uhthoff's-sensitive MS users (NEU/PAIN) for whom hot water contact causes acute neurological symptom worsening; the 38°C threshold is derived from the tissue damage threshold at typical exposure durations.
 
 **Jurisdiction comparison:**

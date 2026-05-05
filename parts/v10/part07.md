@@ -159,6 +159,7 @@ See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for
 | Arrival / reception | MOB, DEAF | E-06, E-11, G-06, A-10, F-01 |
 | Open-plan office | NDV, OFS, PAIN, MOB | A-01 (acoustic pods ≥1 per 20 staff), A-02, A-08, B-03/04, B-06, F-01, F-04, TC-01 |
 | Focus / quiet room | NDV, OFS, PAIN | A-16 or F-03 (≥1 per 20 staff, mandatory — A-16 preferred where NDV/AUT or OFS is a primary or known secondary population; Leonardi 2025 SR: user control is primary MSE effectiveness variable [CON-0222]), RT60 ≤0.4 s, NC-25 |
+| Lie-down / recovery room | OFS, PAIN | F-03 (quiet zone), A-16 (if sensory room combined), recumbent surface ≥1800×700 mm, NC-25, blackout blinds (B-07), individual thermostat (TC-02). ≥1 per workplace where OFS/PEM is identified. [GAP-FDR-07] | INTER-GROUP |
 | Meeting room | DEAF, MOB, DBL | A-11, H-03 (CART), B-02, G-01 (turning circle at table), K-03 (DBL haptic zone at table end) |
 | Break room / kitchen | ALL | I-02, F-02, F-04, G-05, TC-01 |
 | Accessible WC | MOB | G-03, G-04, I-03 |
@@ -168,8 +169,10 @@ See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for
 
 - Open-plan acoustics: no design achieves NC-30 throughout open plan. Specify: (a) acoustic ceiling NRC ≥0.85 throughout; (b) acoustic pods or booths for concentration work (RT60 ≤0.3 s; ≥1 per 20 staff); (c) masking prohibited in NDV workspaces (A-13) — ambient natural sound at ≤40 dBA available at individual desks as alternative
 - Quiet room provision: ≥1 F-03 quiet space per 20 staff — treated as mandatory by this guidebook in workplace settings (see §7.0 voice note)
+- Lie-down/recovery room [GAP-FDR-07]: ≥1 per workplace where OFS/PEM population is identified. Recumbent rest surface (not seating — full supine position required for PEM crash recovery). Minimum 1800×700 mm padded surface. No standard requires supine recovery space in workplaces. JAN (Job Accommodation Network) lists rest room access as a POTS/ME workplace accommodation. Provision at SD — room location is a spatial planning decision.
 - NDV/AUT staff reasonable adjustment: named sensory-reduced workstation (A-01 buffer, A-06 panels, B-06 individual dimming, F-01 gradient) in workplace reasonable adjustment register
 - Controls: individual window or blind control at each workstation; individual temperature control (TC-02) at each office; no shared thermostat only
+- **Supine recovery space [GAP-FDR-07]:** ≥1 enclosed lie-down room per floor in workplaces where OFS/PEM is a known staff population. Minimum: lockable door, daybed or clinical recliner (recline ≥160°), blackout capability, NC-25, temperature control. OFS/PEM crash episodes require supine recovery for 30–120 minutes; no standard workplace provision exists. JAN lists lie-down space as a POTS/ME/CFS workplace accommodation. Distinct from F-03 quiet room (F-03 is seated sensory retreat; this is supine medical recovery). ◐ [Tier 2 — JAN; clinical consensus]
 - Fragrance-free policy (F-02): strongly recommended in workplace; specify in FM brief
 - MERV 13 filtration (F-04) in all workplace HVAC systems
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: where a DBL employee is employed: (1) tactile building map station at principal entrance and floor entry (K-02); (2) haptic communication clear floor zone at that person's designated workstation and at all meeting rooms they regularly use — 1500 × 1500 mm clear (K-03); (3) vibrotactile alert personal pager BMS infrastructure (K-04) at workstation and in all occupied meeting rooms. These are reasonable adjustment provisions; implement on identified need.
@@ -180,6 +183,7 @@ See Part 3 §3.2.3b (compound functioning) and §3.8 Step 0 (compound check) for
 
 - [ ] Acoustic pods/focus booths (≥1 per 20 staff) on floor plan
 - [ ] Quiet room (F-03) on floor plan with acoustic door (A-03)
+- [ ] Supine recovery room (lie-down) on floor plan — lockable, daybed, blackout [GAP-FDR-07]
 - [ ] ≥20% height-adjustable desks in FF\&E brief
 - [ ] Individual temperature control at each enclosed office on M\&E drawings
 - [ ] Open-plan ceiling NRC ≥0.85 specified (no parallel hard surfaces ≥4 m) —
