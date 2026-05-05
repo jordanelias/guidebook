@@ -55,7 +55,7 @@ This guidebook treats the following provisions as required in all non-residentia
 
 **Education-specific enhancements:**
 
-- Classroom acoustics: RT60 ≤0.4 s in classrooms ≤200 m³ (DIN 18041:2016 Category A); background noise ≤35 dBA; SNR ≥15 dB at all seats; A-11 loop for hearing aid users
+- Classroom acoustics: RT60 ≤0.4 s in classrooms ≤200 m³ (DIN 18041:2016 Category A); background noise ≤35 dBA; SNR ≥15 dB at all seats; A-11 loop for hearing aid users. ● Where DEAF/HI students are primary or identified: RT60 ≤0.3 s per CON-0039/0183 — Murgia 2023 SR confirms >0.6s prevents 100% speech perception; Cueille 2022 quantifies 18dB HI penalty; ASI-08 SR confirms HI cannot adapt to reverberation. STI ≥0.60 (≥0.75 for CI users).
 - Sensory room provision: ≥1 per 150 students in general schools; ≥1 per 50 students in autism-specific settings (Autism Europe 2022)
 - Height-adjustable furniture: ≥20% of student workspaces height-adjustable 380–760 mm (G-05)
 - No fluorescent lighting in any classroom (B-03/04): this is not a best-practice aspiration — it is a clinical safety requirement for NDV/epilepsy students
@@ -202,6 +202,7 @@ This guidebook treats the following provisions as required in all non-residentia
 | Accessible WC | MOB | G-03, G-04, I-03 |
 | Fitting rooms | MOB | Turning circle ≥1500 mm, ≥950 mm door clear, grab bar, fold-down seat |
 | Café/food service | ALL | G-06 (counter), F-04, B-03/04, G-02 (accessible seating) |
+| Sensory room / quiet space | NDV, DEM, OFS, PAIN | A-16 (≥1 per store ≥2000m² GFA; recommended all stores). [CON-0222] |
 
 **Retail-specific enhancements:**
 
@@ -289,6 +290,7 @@ This guidebook treats the following provisions as required in all non-residentia
 | Conference / meeting | DEAF, MOB, NDV | A-11, H-03 (CART), B-02, G-01, F-03 (quiet area) |
 | Reception | ALL | E-06, E-11, G-06, A-10, F-01 |
 | Pool / leisure | MOB | A-10b (hydrotherapy RT60), E-07 (PTV ≥36 wet), G-03 (grab bars), I-03 (anti-scald) |
+| Sensory room / quiet space | NDV, DEM, OFS, PAIN | A-16 (≥1 per hotel ≥50 rooms; ≥1 per conference centre). [CON-0222] |
 
 **Hospitality-specific enhancements:**
 
