@@ -35,30 +35,26 @@ python3 scripts/db.py next-id connections
 ```
 Returns JSON: `{"next_id": "CON-0248"}`
 
-### Register new connection (direct SQL)
-```sql
-INSERT INTO connections
-  (con_id, status, confidence, connection_type, filed_in, description,
-   source_skill, opus_reviewed, created_at, created_by_session, updated_at, updated_by_session)
-VALUES
-  ('CON-0248', 'PENDING', 'HIGH', 'CROSS-POPULATION', 'sensory-environment',
-   'A-02 RT60 evidence applies to NDV/AUT classroom acoustic parameter',
-   'connection-scout', 0, '{ts}', '{session}', '{ts}', '{session}')
+### Register new connection
+```bash
+python3 scripts/db.py add-connection \
+  --con-id CON-0248 \
+  --confidence HIGH \
+  --connection-type CROSS-POPULATION \
+  --filed-in sensory-environment \
+  --description "A-02 RT60 evidence applies to NDV/AUT classroom acoustic parameter" \
+  --source-skill connection-scout \
+  --targets '["item:A-02","item:A-08"]' \
+  --session {session}
 ```
 
-### Register connection targets (one row per target)
-```sql
-INSERT INTO connection_targets (con_id, target, created_at, created_by_session, updated_at, updated_by_session)
-VALUES ('CON-0248', 'item:A-02', '{ts}', '{session}', '{ts}', '{session}')
-```
-
-Target format: `{type}:{identifier}` — e.g. `item:E-08`, `slug:threshold-door-hardware`, `population:MOB/UPL`
+Target format inside JSON array: `{type}:{identifier}`
+e.g. `"item:E-08"`, `"slug:threshold-door-hardware"`, `"population:MOB/UPL"`
 
 ### Update connection status
-```sql
-UPDATE connections SET status = 'CONSUMED',
-  updated_at = '{ts}', updated_by_session = '{session}'
-WHERE con_id = 'CON-0248'
+```bash
+python3 scripts/db.py update-connection \
+  --con-id CON-0248 --status CONSUMED --session {session}
 ```
 
 ---
@@ -68,7 +64,7 @@ WHERE con_id = 'CON-0248'
 ### Internal mode
 Sources to scan:
 - BPC files: `references/bpc/{topic}/{slug}.md`
-- Gap register: `python3 scripts/db.py gaps` (OPEN items only)
+- Gap register: `python3 scripts/db.py gaps --status OPEN`
 - Connections pending: `python3 scripts/db.py connections --status PENDING`
 
 Procedure:
@@ -112,6 +108,6 @@ When item-specification-writer consumes a connection:
 
 1. Always `next-id connections` for CON-ID — never manually increment
 2. HIGH confidence → feed to item-specification-writer
-3. SPECULATIVE → gap register via `db.py` (P3 priority)
+3. SPECULATIVE → `python3 scripts/db.py add-gap --category CONN --priority P3 --description "..." --skill connection-scout --session {session}`
 4. Per-topic connection markdown files archived (Phase 1-E) — descriptions live in `connections.description`
 5. Do NOT read or write `references/connection-register-active.md` (archived)

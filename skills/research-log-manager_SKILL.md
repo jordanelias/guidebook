@@ -126,9 +126,13 @@ mirrored in `bpc_metadata` SQLite table. When updating a BPC file:
 
 1. CHECK before / LOG after every research run — skipping = error
 2. research-log-manager CHECK triggers before citation-miner batch — ensures slug context
-3. 3+ NO-DATA for same language across topics → file gap register entry via SQLite:
+3. 3+ NO-DATA for same language across topics → file gap register entry:
    ```bash
-   python3 scripts/db.py add-gap --category RES --priority P3 --description "..." --session {session}
+   python3 scripts/db.py add-gap \
+     --category RES --priority P3 \
+     --description "{language} NO-DATA across {topics}" \
+     --skill research-log-manager \
+     --session {session}
    ```
 4. Never permanently close a language — mark THIN and move on
 5. All source additions go through evidence_sources table — no standalone markdown source lists

@@ -53,22 +53,16 @@ literature-review-planner confirms a Tier 1–3 source:
 When citation-miner is invoked directly:
 
 1. Query unmined sources:
-   ```sql
-   SELECT ssl.local_ref_id, ssl.slug, es.doi, es.tier
-   FROM evidence_sources es
-   JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-   LEFT JOIN citation_mining cm
-     ON cm.slug = ssl.slug AND cm.local_ref_id = ssl.local_ref_id
-   WHERE es.tier IN (1, 2, 3)
-   AND (cm.local_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
-   ORDER BY es.tier ASC
+   ```bash
+   # All slugs, Tier 1-3:
+   python3 scripts/db.py unmined --tier-max 3
+   # Single slug:
+   python3 scripts/db.py unmined --slug {slug} --tier-max 3
    ```
 2. For each: mine backward + forward, log both directions
-3. After completing all sources in a slug: update `bpc_metadata`:
-   ```sql
-   UPDATE bpc_metadata SET citation_mining_complete = 1,
-     updated_at = '{timestamp}', updated_by_session = '{session}'
-   WHERE slug = '{slug}'
+3. After completing all sources in a slug:
+   ```bash
+   python3 scripts/db.py update-bpc --slug {slug} --citation-mining-complete 1 --session {session}
    ```
 4. Report: total mined, new sources discovered, remaining unmined
 
@@ -122,17 +116,19 @@ When citation-miner is invoked directly:
 ### citation_mining columns
 `slug, local_ref_id, global_ref_id, doi, backward, forward, connections_produced, notes`
 
-### Adding new sources (direct SQL — no db.py add-source command yet)
-```sql
-INSERT INTO evidence_sources
-  (ref_id, authors, year, title, doi, doi_less_key, tier, evidence_type,
-   jurisdiction, notes, created_at, created_by_session, updated_at, updated_by_session)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-```
-```sql
-INSERT INTO source_slug_links (ref_id, slug, local_ref_id,
-  created_at, created_by_session, updated_at, updated_by_session)
-VALUES (?, ?, ?, ?, ?, ?, ?)
+### Adding new sources
+```bash
+python3 scripts/db.py add-source \
+  --ref-id {local_ref_id} \
+  --authors "{authors}" \
+  --year {year} \
+  --title "{title}" \
+  --tier {tier} \
+  --doi {doi} \
+  --jurisdiction {jur} \
+  --slug {slug} \
+  --local-ref-id {local_ref_id} \
+  --session {session}
 ```
 
 ---
