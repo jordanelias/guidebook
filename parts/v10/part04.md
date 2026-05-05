@@ -421,7 +421,9 @@ Post-installation: vibration measurement at sensitive space floors
 
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Floating plant room specification cannot be retrofitted without rebuilding the plant room. Anti-vibration mounts and structural decoupling must be incorporated at construction stage. Among the highest-penalty items when deferred. See Part 12 §12.4.
 
-**Key citations:** Desmeules, J., et al. (2003). Arthritis \& Rheumatism. [Vibration as fibromyalgia trigger.\] Staud, R. (2011). Curr Pain Headache Rep, 15(5), 338--343.
+**Key citations:** Desmeules, J.A., Cedraschi, C., Rapiti, E., Baumgartner, E., Finckh, A., Cohen, P., Dayer, P., & Vischer, T.L. (2003). Neurophysiologic evidence for a central sensitization in patients with fibromyalgia. *Arthritis & Rheumatism*, 48(5), 1420–1429. PMID: 12746916. DOI: 10.1002/art.10893. ✅ [Verified 2026-05-05: full authors, volume, pages, PMID, DOI confirmed]. ○ [GAP-IMPL-04 CLOSED]
+
+Staud, R. (2011). *Curr Pain Headache Rep*, 15(5), 338–343. [UNVERIFIED — two independent searches (2026-05-05) failed to locate this article at these pages/volume/journal; no PMID or DOI identified; citation at risk per Standing Rule 5; do not use before verification or replacement. GAP-IMPL-05 OPEN]
 
 **Cross-reference:** A-08 (HVAC Noise); A-01 (Buffer Zone)
 
