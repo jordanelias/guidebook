@@ -3480,6 +3480,8 @@ within the primary waiting area (not a segregated accessible area) implements th
 
 ## CATEGORY H: CONTROLS, TECHNOLOGY AND INDIVIDUAL ENVIRONMENTAL CONTROL
 
+> **EU Accessibility Act (EAA) cross-reference [GAP-EAA-01]:** EU Directive 2019/882 (European Accessibility Act) applies to products and services including self-service terminals, digital interfaces, and interactive building management systems — which overlap directly with H-series items (H-01 through H-05). For EU-jurisdiction projects, EAA compliance is a legal requirement from June 2025 for new products/services. H-series items involving touchscreens, self-service kiosks, BLE beacons, and building management interfaces must satisfy EAA requirements alongside the design specifications below. Relevant standard: EN 301 549 (ICT accessibility requirements). See also AccessibleEU monitoring outputs for jurisdiction-specific implementation status. [Tier 4 — EU Commission Directive 2019/882; EN 301 549 v3.2.1 (2021)]
+
 **Jurisdiction comparison:**
 
 | Jurisdiction | Standard | Accessible Seating | Seat Height | Armrests | Clear Space |
