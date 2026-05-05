@@ -104,8 +104,8 @@
 | GAP-CO04-06 | ST | P2 | OPEN | 3 | Sessions 13–14 | Parts 6/7 matrices: add inline room-level conflict notes (new scope per CO-0004) | New writing requirem |
 | GAP-CO04-07 | ST | P2 | CLOSED | 3 | Session 18 | Part 9 §9.9/§9.10: add co-occurrence collaboration protocol + OT threshold | New sections |
 | GAP-CO04-08 | ST | P2 | OPEN | 4 | Session 19 | Full find-and-replace: all Part number references in guidebook body text | Bundled with CO-0001 |
-| GAP-CO04-09 | ST | P2 | OPEN | 2C or 3 | As touched | Connection register Part number references in disposition notes need updating | Inline |
-| GAP-CO04-10 | ST | P2 | OPEN | 2C or 3 | As touched | BPC entries referencing old Part numbers in synthesis directions need updating | Inline |
+| GAP-CO04-09 | ST | P2 | CLOSED | 2C or 3 | As touched | Connection register Part number references in disposition notes need updating | Inline |
+| GAP-CO04-10 | ST | P2 | CLOSED | 2C or 3 | As touched | BPC entries referencing old Part numbers in synthesis directions need updating | Inline |
 | GAP-CR-01 | ST | P2 | OPEN | critique-report-writer | Master Bibliography | Bibliography section contains 12 lines metadata, zero actual references. RECLASSIFIED P1→P2 2026-03-29: bibliography-compiler requires upstream REF-ID markers and sources-cited tables which do not ... | 2026-03-20 21:00 · u |
 | GAP-PROTO-07 | ST | P2 | OPEN | intersectionality-checker | ALL | intersectionality-checker skill not yet built. Compound-identity gap flag needed for Full Section Review. Build in P2 phase. | 2026-03-19 04:08 |
 | GAP-XREF-01 | ST | P2 | CLOSED | cross-reference-resolver | Application matrices / Part 5-6 | J-series item codes (J-01 through J-08) referenced in application matrices and body text. Category J deleted per GAP-STRUCT-01 (Decision Register). References not yet cleaned up — Phase 4 find-and-... | 2026-03-28 17:50 [CO |
