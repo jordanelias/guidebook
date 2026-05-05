@@ -1644,7 +1644,7 @@ Decision point legibility: destination visible from decision point where possibl
 
 **Key citations:** Passini, R. (1984). Wayfinding in architecture. Van
 
-Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
+Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90. Brunyé, T.T., et al. (2018). Wayfinding under uncertainty: cognitive ergonomics at decision points. [UNVERIFIED — DOI required before publication; cited in GAP-CON-0030 as providing quantified decision-point thresholds for maximum number of route choices at a junction; if confirmed, specifies that 2–3 route options is the threshold above which wayfinding failure rates rise significantly; replace [UNVERIFIED] with verified citation]. ○ [GAP-CON-0030 — threshold currently qualitative pending citation verification]
 
 **Cross-reference:** D-04 (Landmarks); D-08 (Signage)
 

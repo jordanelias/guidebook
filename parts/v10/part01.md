@@ -282,6 +282,13 @@ For Tier 2 practice, the Housing Enabler is the recommended assessment instrumen
 
 ### §1.8.9 Attention Restoration Theory (ART) and Stress Recovery Theory (SRT) ART and SRT provide the evidence basis for biophilic design provisions (Appendix B), natural lighting specifications (B-09), and sensory retreat provisions (A-16, F-01).
 
+### §1.8.10 Kawa Model — Framing Principle for Guidebook Specifications [GAP-KAWA-01]
+
+The Kawa Model (Iwama, 2006) uses the metaphor of a river to represent the flow of life and occupation. Barriers are external to the person — they are the rocks and driftwood that obstruct the river's flow; the person is the water. The water is always flowing; the question is whether the environment enables or impedes it.
+
+This framing is the most direct architectural expression of the CRPD social model of disability (Art. 1: disability results from the interaction between persons with impairments and environmental barriers). Every Part 4 item specification is a Kawa-model intervention: it removes or prevents an environmental barrier to restore the natural flow of occupation. Specifications are not obligations imposed on disabled people; they are obligations imposed on the environment. This distinction governs the specification voice throughout the guidebook (project-standards RULE 2026-04-26 19:25).
+
+The Kawa Model's cultural origins in Japan also provide a non-Western theoretical anchor. PEOP (§1.8.6) is the most internationally validated OT framework and governs assessment practice; Kawa is adopted here as a framing principle for specification language and is not used as a primary assessment instrument. ○ [Tier 2 — OT professional body CPG; Iwama 2006; WFOT endorsed]
 
 
 ### §1.9.1 Biomechanical Derivation of Dimensional Specifications
