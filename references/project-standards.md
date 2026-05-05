@@ -255,10 +255,10 @@ CONDITION: Any loop or sequence of >3 BPC/SL file reads.
 ACTION: Batch up to 20 files per GraphQL call using aliased object() queries. See github-io batch_read() pattern. Sequential reads for >3 files waste ~600 tokens per extra call.
 DATE: 2026-03-31
 
-RULE: Read connection-register.md at most once per session. Cache the content in a local variable or file. Do not re-read it per synthesis batch or per skill invocation.
-CONDITION: Any session running connection-scout, item-specification-writer, or Opus synthesis batches.
-ACTION: Read connection-register.md once at the start of the relevant workflow. Reference the cached content for all subsequent operations in the same session.
-DATE: 2026-03-31
+RULE: [RETIRED — CO-0009] Connection state is in SQLite (`connections` + `connection_targets` tables). Query via `python3 scripts/db.py connections`. Do not load archived markdown connection files (`_index.md`, per-topic `connections.md`).
+CONDITION: Any session referencing connection state.
+ACTION: Use `db.py connections` CLI. Archived markdown files are read-only historical records.
+DATE: 2026-05-04 19:20
 
 RULE: Do not re-read workplan-orchestrator_SKILL.md mid-session. It is loaded at session start (Step 1a). A mid-session re-read is only justified if the skill file was updated during the current session.
 CONDITION: Any bash_tool call fetching workplan-orchestrator_SKILL.md after session start.
@@ -457,19 +457,9 @@ Validators in `scripts/` run on every commit via `.github/workflows/ci.yml`. All
 
 ---
 
-### `scripts/check_thresholds.py`
+### ~~`scripts/check_thresholds.py`~~ [RETIRED — CO-0009 2026-05-04]
 
-**Purpose:** File size limits on governed files (session-start token budget management).
-
-| File | Limit | Action if over |
-|---|---|---|
-| `gap_register.md` | 20K tokens | Archive CLOSED items; review P3 for closure |
-| `references/project-standards.md` | 10.5K tokens | Consider splitting |
-| `references/connections/_index.md` | 8K tokens | Index = summary only; detail in per-topic files |
-| `references/slug-registry.md` | 6K tokens | Consider splitting by topic |
-| `sessions/session_*.md` (most recent) | 2K tokens | Session logs must be concise YAML |
-
-**Usage:** `python3 scripts/check_thresholds.py` · `--report`
+**Retired:** Markdown register threshold management is obsolete. All registers migrated to SQLite (`data/guidebook.db`). Script archived to `_archived/`.
 
 ---
 
@@ -558,7 +548,7 @@ DATE: 2026-04-30 02:55
 RULE: A13 doctrine-recheck.md is CANONICAL. Governs: 3 cadence triggers (PERIODIC every 25 working sessions / STAGE_TRANSITION at A->B and B->C / RULE_REVISION targeted on doctrinal-rule revision; non-triggers: new RULE without supersession, new governance doc for new phase, skill or operational change); 5-pass procedure (2.2 doctrine inventory; 2.3 cross-reference consistency; 2.4 drift detection; 2.5 decision-register cross-check post-A12-S2; 2.6 contamination resampling); contamination resampling per Stage 0.4 / Amendment 6 methodology with 4-state classification rubric (CLEAN / AMBIGUOUS / STUB / MERGED); fresh-context decision-checking for B-06 long-context drift mitigation; record format (RecheckSession + RecheckFinding + ContaminationSample + DoctrineSnapshot). Schema: doctrine_recheck.py (new), enums.py (+4 enums: RecheckTrigger, RecheckFindingSeverity, RecheckFindingStatus, ContaminationDisposition). Validators: doctrine_recheck.py (mechanical passes 2.2-2.5; CLI --snapshot-only / --cross-ref / --baseline-against / --report; exit 0/1/2), contamination_sampler.py (deterministic stratified selection; --n with floor 15; outputs sampling manifest with disposition: PENDING placeholders for human classification). CS1 LIVE: doctrine-recheck cadence active from this commit forward. Closes Stage A done criterion ("Doctrine-recheck cadence operational; CS1 LIVE"). Resolves B-06 long-context drift; partial D-04 epistemic defense (structural portion; epistemic-defense skill itself builds at C2).
 DATE: 2026-04-30 03:15
 
-RULE: Citation mining register (`references/citation-mining-register.md`) is the canonical record of which sources have been citation-mined (backward and/or forward). CHECK this register before mining any source — if found with both B=✓ and F=✓, skip. After mining, append the source to the register in the same commit as BPC/connection updates. Skipping the CHECK or the LOG is a protocol error. Register threshold: 6K tokens; when exceeded, archive COMPLETE slug sections to `references/citation-mining-archive.md`. Connection-scout inline mining also logs to this register.
+RULE: [SUPERSEDED — CO-0009] Citation mining state is in SQLite (`citation_mining` table). Query via `python3 scripts/db.py mining`. CHECK before mining any source — if found with both backward=1 and forward=1, skip. After mining, LOG via `db.py log-mining`. Skipping CHECK or LOG is a protocol error. The markdown file `references/citation-mining-register.md` was never created (born in SQLite per architecture decision).
 CONDITION: Any citation-miner run, connection-scout pass that includes inline citation mining, or any session where citation networks are traversed.
-ACTION: (1) GET register before mining. (2) Check each source. (3) Mine only unmined/partial sources. (4) Append results to register. (5) Commit register update alongside other outputs.
-DATE: 2026-05-05 00:29
+ACTION: (1) Query `citation_mining` table before mining. (2) Check each source. (3) Mine only unmined/partial sources. (4) Insert results via `db.py log-mining`. (5) Commit DB update.
+DATE: 2026-05-04 19:20
