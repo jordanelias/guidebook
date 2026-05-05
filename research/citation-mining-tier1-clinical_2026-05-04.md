@@ -58,3 +58,53 @@ Of the 22 unmined Tier 1 sources, the following categories remain:
 2. **Population BPC anchor mining** — read each population BPC file, extract 2-3 anchor studies, forward mine
 3. **Bibliography Tier 3 SR supersession check** — verify whether any Tier 3 SRs have been superseded by newer reviews
 4. **Resolve TBC entries** — look up missing author/DOI data for 5 incomplete Tier 1 records
+
+
+---
+
+## Phase 2 Continuation — Tier 1 Sources Batch 2
+
+**Sources mined:** 3 (Vetter 2025, Greene 2024, Murgia 2023)
+**New sources discovered:** 4
+
+### New Sources
+
+| # | Authors | Year | Title | Journal | Domain | Tier | Discovery |
+|---|---|---|---|---|---|---|---|
+| 40 | Clemson dissertation (anon) | 2025 | Autism-supportive outpatient waiting environment design guidelines (12 guidelines) | Clemson U | NDV | Tier 3 | Forward from Vetter 2025 |
+| 41 | Rand et al. | 2024 | Grab Bar Use Influences Fall Hazard During Bathtub Exit | Gerontol Geriatr Med | Bathroom | Tier 2 | Forward from Greene 2024 |
+| 42 | Levine et al. | 2025 | Grab Bar Grasp Location During Bathtub Exit and STS: Biomechanical Evaluation (n=65) | JMIR Rehabil Assist Technol | Bathroom | Tier 1 | Forward from Greene 2024 |
+| 43 | Sheth & Cogle | 2023 | Home Modifications for Older Adults: A Systematic Review (2010-2024) | SAGE | General | Tier 1 (SR) | Forward from Stark 2017 (already counted in batch 1) |
+
+### Research Clusters Identified
+
+**Toronto/KITE Bathing Biomechanics Cluster (Greene, Levine, Novak, Guay):**
+Wall-mounted vs rim-mounted grab bars, grasp location, fall hazard during transfers. 4+ papers from same lab. Directly relevant to bathroom specification items G-03, G-05. Key finding: wall-mounted vertical bars superior — less trunk flexion, lower loads, preferred by users.
+
+**Autistic Environment Design Cluster (Vetter, Clemson dissertation):**
+Waiting room design for autistic children. 3 themes: triggers, regulation facilitation, supported inclusion. 12 design guidelines from Clemson dissertation. Connects to NDV BPC and sensory specifications.
+
+**Home Modification SR Network (Stark, Sheth, Clemson 2023):**
+Interconnected systematic reviews on home modifications. Stark 2017 SR → Stark 2021 RCT → Sheth 2023 updated SR. Forms an evidence chain for home modification intervention efficacy.
+
+### Phase 2 Summary
+
+| Mined | Found | Remaining |
+|---|---|---|
+| 7 of 22 Tier 1 | 9 new sources | 15 sources unmined |
+
+**Remaining 5 high-priority:** Keating 2024 (cross-cultural autism), Patil 2025 (VIS design), Guay 2020 (bathroom AT), Levine 2025 (ramp biomechanics — may already be in Levine 2025 grab bar paper cluster), Ahmed 2022 (hospital wayfinding)
+
+**Lower priority (10):** Theoretical frameworks (Townsend, Kielhofner, Iwama, Dunn, Allen) and TBC entries — skip mining, low yield expected.
+
+### Updated Cumulative Totals (All Phases)
+
+| Metric | Value |
+|---|---|
+| Sources mined (all phases) | 26 |
+| Sources discovered | 43 |
+| Tier 1 new | 12 |
+| Tier 2 new | 10 |
+| Tier 3+ new | 17 |
+| Co-1 new | 4 |
+| Research clusters identified | 5 (JP Tsuchiya-Ito, AU Co-1, Toronto/KITE bathing, NDV environment, home mod SR) |
