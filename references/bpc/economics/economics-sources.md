@@ -218,3 +218,41 @@ Key: ICER $13,179–$14,800 per additional year of life. 30 deaths by 2 years (9
 Key: Survivorship advantage statistically significant up to 2 years; mortality rates lower up to 3.5 years.
 
 ACTION REQUIRED: Update economics-sources.md BPC entry for PMC3157760 to read "ABLE cost-effectiveness (Jutkowitz 2011)" and add ABLE-RCT-01 (PMID 16696748) as separate entry.
+
+
+## Sources added 2026-05-05 (Habinteg/LSE wheelchair user homes + M4 cost data)
+
+### Habinteg / LSE wheelchair user homes economics (2023-2025)
+
+**HABINTEG-LSE-01** Habinteg Housing Association / LSE Housing and Communities Research Group (2023). Living not existing: The economic & social value of wheelchair user homes. habinteg.org.uk/living-not-existing
+Tier: 3 | UK | Joint: Habinteg Housing Association + London School of Economics
+Key findings — cost-benefit of M4(3) wheelchair user homes vs M4(2) accessible and adaptable:
+- Working age adult wheelchair user household: additional build cost ~£22,000; 10-year benefit value ~£94,000 → BCR ~4.3:1
+- Later life (≥65) wheelchair user household: additional build cost ~£18,000; 10-year benefit value >£101,000 → BCR ~5.6:1
+- Family with disabled child wheelchair user household: additional build cost ~£26,000; 10-year benefit value ~£66,000 → BCR ~2.5:1
+Methodology: Quantitative CBA using existing research evidence; qualitative analysis of 17 wheelchair user interviews.
+[CONFIDENCE: medium — commissioned by Habinteg (advocacy interest); LSE authors independent; methodology follows established CBA conventions]
+
+**HABINTEG-M42-01** Habinteg Housing Association (2024). Adaptations to older homes could cost households thousands. habinteg.org.uk [citing 2015 government data updated for inflation]
+Tier: 4 | UK
+Key findings:
+- M4(2) over M4(1) build cost premium: £644 for three-bedroom semi-detached (2015 government data, updated for inflation)
+- M4(1) to M4(2) adaptation cost (three common adaptations — grab rail, stairlift, wet room): up to ~£27,000 (Habinteg contractor estimates)
+- This £27,000 figure represents the THREE most common adaptations combined in M4(1) homes; it is NOT a kitchen-specific figure
+- 2024/25 DFG allocation: £625M to local authorities (185% increase over 10 years from £56M in 1997/98 → £185M in 2013/14 → £625M in 2024/25). Source: Foundations UK.
+Relevance: Supports retrofit multiplier argument for kitchen provisions specifically — no published unit cost for kitchen only.
+
+**HABINTEG-IHDG-01** Habinteg Housing Association / Centre for Accessible Environments / RIBA (2024). Inclusive Housing Design Guide. Published September 2024.
+Tier: 3 | UK | Authors: Jacquel Runnalls, peer reviewed Dr Marney Walker (specialist housing OTs)
+Key: Updated Wheelchair Housing Design Guide. Addresses M4(2) and M4(3) building regulations. Provides technical design guidance, bespoke scale drawings, case studies. Does not contain kitchen cost data. Relevant as design standards reference.
+
+### Kitchen adaptation cost — gap status update (GAP-ECON-01)
+
+[GAP: accessible kitchen adaptation cost range UK — no authoritative unit cost published]
+Evidence so far:
+- DFG cap £30,000 England / £36,000 Wales = policy ceiling, not typical kitchen cost
+- The £27,000 Habinteg figure covers grab rail + stairlift + wet room (NOT kitchen-specific)
+- Standard kitchen replacement UK: typically £8,000-£20,000 (mainstream); accessible kitchen premium unquantified
+- Industry consensus: "varies considerably"; "budgets often need to be bigger than standard kitchen"
+- No Foundations UK, Habinteg, CMHC, or DCWC data found for accessible kitchen cost specifically
+- RECOMMENDATION: Contact Foundations UK directly for DFG kitchen adaptation cost distribution data; they hold all DFG performance data in England.
