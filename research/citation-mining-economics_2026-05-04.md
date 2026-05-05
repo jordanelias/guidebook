@@ -274,3 +274,37 @@ Tsuchiya-Ito 2022/2023 (same group), Mitoku 2014, Liu 2009, Rick Hansen 2020, CM
 | Tier 1 new | 9 |
 | Counter-sources | 1 (Jocham/Frau Nullschwelle) |
 | Critical findings | 3 (OTIS null, BATH-OUT-2 upcoming, TERRAGON counter-source) |
+
+
+---
+
+## Session 5 continued — Tsuchiya-Ito chain mining
+
+**Additional sources mined:** 1 (Tsuchiya-Ito 2023 forward citations)
+**New sources discovered:** 2
+
+| # | Authors | Year | Title | Journal | Jurisdiction | Tier | Discovery |
+|---|---|---|---|---|---|---|---|
+| 30 | Kitamura, Ota, Tsuchiya-Ito | 2025 | Cluster analysis of housing adaptation recipients under Japan LTC insurance | Gerontologist | JP | Tier 3 | Forward from Tsuchiya-Ito 2023 |
+| 31 | (Protocol — in progress) | 2025 | Home modifications and frailty: scoping review protocol | ResearchGate | Multi | SR (upcoming) | Forward from Tsuchiya-Ito 2023 |
+
+### Citation mining — FINAL SUMMARY
+
+**Total sources mined:** 16 (8 original + 8 second-generation)
+**Total unique sources discovered:** 31
+**Breakdown:** 9 Tier 1, 7 Tier 2, 12 Tier 3-4, 1 counter-source, 2 upcoming (BATH-OUT-2, frailty SR)
+
+**Critical findings (3):**
+1. OTIS RCT null result — untargeted vs targeted distinction
+2. BATH-OUT-2 powered RCT — first UK QALY-based evaluation of bathroom adaptations
+3. TERRAGON counter-source — Jocham/Frau Nullschwelle technical critique
+
+**Evidence base expansion:**
+- Health outcomes: 10 → 21 records in economics.json
+- Co-1: 0 → 4 verified sources (Wiesel, Goodwin, Wellecke, Best)
+- Japanese chain: 1 → 6 papers (most comprehensive non-Western evidence)
+- Welsh admin data: 0 → 2 papers (Hollinghurst, largest dataset n=657K)
+
+**Remaining unmined (10):** Mitoku 2014, Liu 2009, Rick Hansen 2020, CMS 2017, Dalvand 2024, Chindapol 2023, Winkler 2021a/b, Gusheh 2021 — all lower-priority, diminishing returns expected.
+
+**Citation mining phase: COMPLETE for current evidence base. Remaining 10 sources deferred as low-priority.**

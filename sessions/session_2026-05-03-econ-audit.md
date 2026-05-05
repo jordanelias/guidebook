@@ -44,11 +44,21 @@
 - 3377197: economics-sources (20+ verified citations)
 
 ## next_action
-1. Part 11 §11.3 update with Q5 evidence (Keall, Chandola, CAPABLE, Tsuchiya-Ito)
-2. §15 extraction to separate analytical document (Change Order required)
-3. Cha et al. 2025 MDPI systematic review (new lead)
-4. Whitehead BATH-OUT, Hollinghurst 2022 (lower priority deferred leads)
-5. Ishikawa & Koike 2008 Japanese-language study (multilingual research)
+1. **Source verification sweep** — GAP-ECON-04 (~40 pattern-matched source names in methodology §4-§5). Systematic lookup task — dedicate full session.
+2. **§15 extraction** to separate analytical document (Change Order required)
+3. **Jurisdiction deep-dives** — NL (strong UD tradition), JP (beyond financing), IE (Part M), NZ (Keall RCT policy context)
+4. **BATH-OUT-2 monitoring** — powered RCT results will provide first UK-specific BCR for bathroom adaptations with QALY outcome
+5. **10 remaining unmined sources** — Mitoku 2014, Liu 2009, Rick Hansen 2020, CMS 2017, Dalvand 2024, Chindapol 2023, Winkler 2021a/b, Gusheh 2021 (low priority)
+
+## economics_session_summary
+- 26 commits across 2 conversations
+- Methodology: monolithic → 6 throughline files
+- economics.json: 0 → 62+ records, 7 sub-entities, 171 spec_cross_refs
+- Health evidence: 10 → 21 records
+- Citation mining: 16 sources mined, 31 discovered
+- Gaps: 11 open → 0 open
+- Critical findings: OTIS null (targeted vs untargeted), BATH-OUT-2 upcoming, TERRAGON counter-source
+- Part 11 §11.3 updated with cross-jurisdictional evidence + OTIS note + Co-1
 
 ## blockers
 None.
