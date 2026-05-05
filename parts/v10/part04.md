@@ -564,7 +564,10 @@ Required: all assembly spaces ≥25 capacity; all consultation/interview rooms
 | DE | DIN 18040-1 | Assembly spaces | Two-Senses principle | DIN EN 60118-4 |
 | FR | Arrêté 2017 | ≥50 seats | Hearing enhancement | NF EN 60118-4 |
 | EU | EN 17210:2021 | Recommended | Hearing enhancement | EN 60118-4 |
+| JP | Barrier-Free Law (移動等円滑化法) / MLIT standards | **No mandatory provision** | Induction loops are advisory/guideline only (Fukushi Machizukuri guidelines); not required by any building standard | No standard — [GAP-ALS-01] |
 | **Guidebook** | **A-11** | **All assembly/meeting spaces** | **Perimeter induction loop** | **IEC 60118-4** |
+
+> **Japan jurisdiction gap [GAP-ALS-01]:** Japan's Barrier-Free Law and MLIT building standards do not mandate induction loop installation. All hearing loop provisions in Japan are advisory under Fukushi Machizukuri (welfare town-making) guidelines. Japan's DEAF accessibility framework relies primarily on sign language interpretation services and visual alerting systems rather than hearing loop infrastructure. Designers on Japan-jurisdiction projects should note this regulatory gap and apply Guidebook A-10/A-11 specifications as best-practice provisions beyond Japanese code requirements. ○ [Tier 5 gap — confirmed absence; verified March 2026]
 
 Guidebook specifies perimeter induction loop (not just "assistive listening") because telecoil-compatible hearing aids are the most common technology worldwide. Cross-reference A-12 (Auracast readiness) for emerging Bluetooth LE Audio alternative.
 
@@ -774,6 +777,8 @@ Accessible toilet: within 15 m of A-16 entry (mandatory; not discretionary) — 
 **FDR-MST-01 [Tier 3 — Leavitt 2014; Davis 2010]:** Uhthoff's phenomenon recovery time 30–60 minutes post heat exposure (Leavitt & Feinstein 2014, Davis 2010). NEU/MS users require a cooling-capacity retreat distinct from NDV sensory regulation — ambient ≤16°C preferred (vs NDV typical ≤20°C). ○ In facilities serving NEU/MS as a primary or significant secondary population: where A-16 serves both NDV and NEU/MS, specify individual HVAC control enabling ≤16°C setpoint. Alternatively, a separate cooling station (≤12 m², individually temperature-controlled to ≤16°C, adjacent to MS clinic or specialist facility area) may be provided as a dedicated NEU/MS provision. Extended occupancy capacity required (30–60 min recovery duration vs 10–15 min NDV reset). [THIN — architectural implication only; no design standard specifies]
 
 **Jurisdiction comparison:** No code mandates sensory rooms. UK PAS 6463:2022 references sensory environments. NL Snoezelen concept (1970s) is historical origin. ISO 25552 (dementia) references calming environments. Guidebook specifies provision in all settings serving NDV/AUT/DEM populations — user-controllable lighting, sound, texture.
+
+**Evidence qualification [CON-0026]:** Van Doorn et al. (2024) SAE scoping review and Piller et al. (2025) systematic review confirm mixed evidence for generic sensory rooms and stronger evidence for individualised approaches. This finding supports the guidebook's Mode S framing: A-16 provides the spatial shell and controls infrastructure; the individualisation of stimuli (lighting level, colour, sound, texture, temperature) is achieved through user-operated controls (H-02) and OT co-design at Mode S. Generic sensory room provision is the Mode P baseline; individualised sessions are Mode S. Provision without individual control capability is the configuration with weakest evidence. [○ CON-0026; Van Doorn 2024 SAE scoping review; Piller 2025 SR]
 
 
 ### A-17 Upholstered Seating [ABSORBED INTO G-02 per CO-0003/D2-24]
@@ -1571,8 +1576,9 @@ Wayfinding is the ability to determine one's location, plan a route, and navigat
 <!-- ot_appointment_trigger: conditional:DEM -->
 <!-- grade_confidence: MODERATE — Loop floor plan for DEM environments: Marquardt & Schmieg 2009 (AJAD Tier 3) + Bowes et al. 2019 Stirling SR (429 items, Tier 3). PMC8725382 (NL floorplan study, Tier 3). Floor plan configuration confirmed as most influential factor. ≥5 jurisdictions reference loop plans for DEM care. MODERATE — multiple Tier 3 studies converge; no RCT. -->
 
-**Applicable Groups:** DEM · VIS · DBL · NDV/AUT
+**Applicable Groups:** DEM · VIS · DBL · NEU · NDV/AUT
 <!-- CON-0001: Universal Mode: 5 populations require consistent loop/single-path circulation from independent clinical rationales -->
+<!-- CON-02: NEU added — loop plan supports NEU users with ABI/PCS where spatial disorientation and executive function deficits follow brain injury; consistent loop reduces route-planning demand. -->
 
 **Description:** All circulation designed as continuous loops from entry through primary spaces. No dead-end corridors. If structural constraints require dead-ends: end wall treated as a landmark (artwork, window, planting) with return route clearly signed.
 
