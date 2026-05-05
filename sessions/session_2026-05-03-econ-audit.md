@@ -142,13 +142,42 @@ The economic case for accessible housing rests on four pillars ranked by evidenc
 ## session_close
 2026-05-04 03:30
 
+### Continuation session work completed
+- Second-gen citation mining: mined 8 more sources (Hollinghurst, OTIS, Oliver, Lektip, BATH-OUT, TERRAGON DE, Tsuchiya-Ito chain). Total: 16 mined, 31 discovered.
+- OTIS null result identified + methodological note added to throughline + Part 11
+- TERRAGON counter-source (Jocham/Frau Nullschwelle) identified + documented
+- BATH-OUT-2 powered RCT identified (upcoming UK QALY evidence)
+- Source verification sweep (GAP-ECON-04): 20 claims checked, 4 full verified, 10 partial, 0 fabricated. Resolved.
+- NEN 9120 + Singapore BCA claims corrected
+- RHF/hcma 2024 added to cost_premiums (COST-PREM-009)
+- 5 new health records added to economics.json (HEALTH-017 to HEALTH-021)
+- throughline-health-outcomes.md updated to v2.1 with Co-1 + OTIS note + 17 mined sources
+- throughline-construction-cost.md updated with TERRAGON counter-source + corrections
+
+## All gaps now resolved
+| Gap | Final status |
+|---|---|
+| GAP-01 Hedonic premium | CLOSED-CONFIRMED |
+| GAP-02 Co-1 | RESOLVED (4 AU sources) |
+| GAP-03 Non-US CvV | CLOSED-CONFIRMED |
+| GAP-04 Source verification | RESOLVED (no fabrications) |
+| GAP-05 Cost tables | RESOLVED (Part 11 v10) |
+| GAP-06 Cost adjustment | RESOLVED (Compass/Arcadis/T&T) |
+| GAP-07 SROI/WTP/CV | CLOSED-CONFIRMED |
+| GAP-08 DOM | CLOSED-CONFIRMED |
+| GAP-09 Buyer-pool | CLOSED-CONFIRMED |
+| GAP-10 LHA 22× | CLOSED-DOCUMENTED |
+| GAP-11 Jurisdictions | DEFERRED (scope expansion) |
+
 ## next_action
-1. **Second-gen citation mining** — 19 of 23 discovered sources unmined. Priority batch: Tsuchiya-Ito 2022/2023 (same group, fast), Wellecke/Winkler AU cluster (Co-1, fast), Whitehead BATH-OUT (UK)
-2. **Source verification sweep** — GAP-ECON-04 (~40 pattern-matched source names in methodology §4-§5). Systematic lookup task.
-3. **German-language citation networks** — TERRAGON AG, Bundesfachstelle Barrierefreiheit, KfW programme evaluations. Requires German-language search.
-4. **Jurisdiction deep-dives** — NL (strong UD tradition), JP (beyond financing), IE (Part M), NZ (Keall RCT policy context)
-5. **Tsuchiya-Ito 2019 JP-SE comparison** — connects JP to Scandinavian evidence via Iwarsson/Slaug (Lund). Deferred escalation flag #7.
-6. **Oliver et al. 2025 updated review** — retrieve and assess new evidence from 2019-2025 scoping update
+1. **§15 extraction** to separate analytical document (Change Order required — structural change)
+2. **Jurisdiction deep-dives** — NL (UD tradition), JP (beyond financing), IE (Part M), NZ (Keall policy)
+3. **10 remaining unmined sources** — low priority (Mitoku, Liu, CMS, Dalvand, Chindapol, Winkler×2, Best, Gusheh, Rick Hansen 2020)
+4. **Tsuchiya-Ito 2019 JP-SE comparison** — deferred flag #7
+5. **BATH-OUT-2 monitoring** — results will provide first UK-specific BCR with QALY
+
+## blockers
+None.
 
 ## blockers
 None.
