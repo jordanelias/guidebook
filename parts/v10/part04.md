@@ -2633,6 +2633,9 @@ Sensory zoning is the deliberate organisation of a building's sensory environmen
 
 UK is the ONLY jurisdiction where Changing Places are mandatory (since September 2021 via Building Regulations amendment).
 
+<!-- CON-0102 APPLIED 2026-05-04: F-category coherence note -->
+**F-Category Interdependence Note:** F-04 (Air Quality), F-06 (Fragrance-Free Policy), F-07 (Thermal Zoning), and F-08 (Thermal Transition) are interdependent specifications governing the same building system. For OFS/MCAS populations, HVAC design must simultaneously satisfy: MERV 13+ filtration with no recirculated air without HEPA (F-04); zero fragrance diffusers including HVAC-integrated systems (F-06); individual supplemental radiant heating that does not recirculate air (F-07); and thermal vestibule air handling coordinated with both F-06 fragrance-free and F-04 filtration requirements (F-08). These four items must be specified as a coordinated HVAC system, not independently. Failure to coordinate produces intra-individual co-triggering: the same OFS/MCAS user experiences thermal and chemical triggers from the same air handling system. Citation mining 2026-05-04 confirmed: Steinemann 2019 (AQV-10) documents MCS-autism co-prevalence at ~3x general population, reinforcing the OFS/NDV overlap that makes F-category coordination critical.
+
 
 ### F-01 Sensory Gradient (High to Low Stimulation from Entry to Occupation)
 <!-- CON-0040 [HIGH]: Unified sensory environment system: Dunn profiles → spatial zones → quantified parameters -->
