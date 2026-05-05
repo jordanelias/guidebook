@@ -256,3 +256,35 @@ Evidence so far:
 - Industry consensus: "varies considerably"; "budgets often need to be bigger than standard kitchen"
 - No Foundations UK, Habinteg, CMHC, or DCWC data found for accessible kitchen cost specifically
 - RECOMMENDATION: Contact Foundations UK directly for DFG kitchen adaptation cost distribution data; they hold all DFG performance data in England.
+
+
+## Sources added 2026-05-05 (Kawa Model — GAP-KAWA-01)
+
+### Kawa Model foundational sources
+
+**KAWA-01** Iwama, M.K. (2006). The Kawa Model: Culturally Relevant Occupational Therapy. Churchill Livingstone Elsevier, Edinburgh.
+Tier: 3 | JP/CA | Author: Michael Iwama (University of Toronto)
+Key: Foundational text for the Kawa Model. River metaphor for OT: water = life force/occupational flow; river walls and riverbed = environment; rocks = life obstacles (disability, poverty, loss); driftwood = assets and liabilities. Built environment relevance: river walls represent the physical environment — narrowing walls restrict flow; widening walls enable flow. Core mapping: accessible built environment = wider, smoother river channel → more life flow.
+
+**KAWA-02** Iwama, M.K., Thomson, N.A. & Macdonald, R.M. (2009). The Kawa Model: The power of culturally responsive occupational therapy. Disability and Rehabilitation, 31(15), 1125-1135. DOI: 10.1080/09638280902773711
+Tier: 2 | JP/CA/UK | Peer-reviewed
+Key: First substantial OT model developed outside Western tradition. Focuses on 'contexts' that shape and influence the realities of people's day-to-day lives — transactional quality of human-environment dynamics. Critiques Western OT models that focus primarily on the individual client rather than the environment. Directly supports the guidebook's environment-first framing.
+
+**KAWA-03** PMC9851780 (2023). The Kawa Model: A Self-Reflection Tool for OT Student Development in Australia. PMC
+Tier: 2 | AU | Peer-reviewed
+Key: Confirms Kawa Model's critique of Western OT's tethering to individuality, independence, productivity values. Positions Kawa Model as inclusive — integrates person as part of collective ecological whole. Notes criticism of professions that exclude communities not ascribing to Western values. Supports using Kawa as guidebook framing language for disability + environment.
+
+### BPC note on Kawa Model fit for guidebook framing (GAP-KAWA-01)
+
+Kawa Model mapping to guidebook architecture:
+- River flow (mizu) → occupational potential / life flow
+- River walls/banks (kawa no tsutsumi) → BUILT ENVIRONMENT → primary intervention point of guidebook
+- Rocks (iwa) → disability, poverty, barriers, life obstacles
+- Driftwood (ryuboku) → adaptive equipment, support networks, personal assets
+- River space (torimaki suru) → margins of possibility between environment and obstacles
+
+Guidebook argument: narrowing river walls (inaccessible built environment) combined with rocks (disability) restricts life flow disproportionately. Removing the narrowing (accessible design) widens the channel — even without removing the rocks (disability), flow improves substantially. This distinguishes environmental intervention from clinical intervention.
+
+Cross-cultural relevance: Kawa Model validated across 6 continents, used in 500+ OT programs worldwide. Non-Western origin makes it more appropriate as a framing language for a guidebook serving diverse populations than MOHO or other Western-origin models.
+
+Limitation for Part 1 §1.4: Kawa Model was developed for clinical OT assessment, not architectural design guidance. The guidebook would be making a non-canonical application of the metaphor. Citation strategy: cite Iwama (2006) and Iwama et al. (2009); acknowledge adaptation of original clinical context to architectural framing; note that the river metaphor's built environment element (river walls) is a natural extension of the model's original intent.
