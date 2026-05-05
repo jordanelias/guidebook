@@ -12,7 +12,7 @@
 | Status | Count |
 |---|---|
 | CONSUMED | 197 |
-| CONSUMED-DEFERRED | 50 |
+| CONSUMED-DEFERRED | 43 |
 | PENDING | -3 |
 | CONSUMED (this session) | 21 |
 
@@ -206,13 +206,13 @@
 | CON-0181 | CONSUMED | A-09 (floor surface spec) | entrances-and-circulation | HIGH | true | — |
 | CON-0182 | CONSUMED | K-03 (circadian lighting) | sensory-environment | HIGH | true | — |
 | CON-0183 | CONSUMED | K-01 (RT60), K-02 (background noise) | sensory-environment | HIGH | true | — |
-| CON-0184 | CONSUMED-DEFERRED | K-05 (thermal comfort assessment) | health-and-symptom-management | HIGH | true | — |
+| CON-0184 | CONSUMED | K-05 (thermal comfort assessment) | health-and-symptom-management | HIGH | true | — |
 | CON-0185 | CONSUMED | G-03, G-04 (grab bar height/configuration) | bathrooms-and-wet-areas | HIGH | true | — |
 | CON-0186 | CONSUMED | A-16 (sensory quiet room) | sensory-environment | HIGH | true | — |
 | CON-0187 | CONSUMED | D-02 (wayfinding system), D-06 (decision-point design) | wayfinding-and-signage | MODERATE | true | — |
 | CON-0188 | CONSUMED | Multiple (cross-cutting design framework) | cross-cutting | HIGH | true | — |
 | CON-0189 | CONSUMED | D-02, D-04, D-08 | wayfinding-and-signage | HIGH | false | — |
-| CON-0190 | CONSUMED-DEFERRED | I-03, E-10 | seating-and-rest | HIGH | false | — |
+| CON-0190 | CONSUMED | I-03, E-10 | seating-and-rest | HIGH | false | — |
 | CON-0191 | CONSUMED | G-03, G-04, F-07 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0192 | CONSUMED | Part 3 §3.8 | frameworks-and-methodology | HIGH | false | — |
 | CON-0193 | CONSUMED | Part 1 §1.4 | frameworks-and-methodology | HIGH | false | — |
@@ -226,15 +226,15 @@
 | CON-0201 | CONSUMED | G-04 | bathrooms-and-wet-areas | MODERATE | false | — |
 | CON-0202 | CONSUMED | H-02, E-05 | controls-and-hardware | HIGH | false | — |
 | CON-0203 | CONSUMED | G-03, Part 4 preamble, Part 11 | bathrooms-and-wet-areas | HIGH | false | — |
-| CON-0204 | CONSUMED-DEFERRED | I-03, E-10 | seating-and-rest | HIGH | false | — |
+| CON-0204 | CONSUMED | I-03, E-10 | seating-and-rest | HIGH | false | — |
 | CON-0205 | CONSUMED | E-08, A-02 | entrances-and-circulation | MODERATE | false | — |
 | CON-0206 | CONSUMED | D-08, D-06, C-04 | wayfinding-and-signage | HIGH | false | — |
-| CON-0207 | CONSUMED-DEFERRED | I-03, E-10, G-02, G-07 | seating-and-rest | HIGH | false | — |
+| CON-0207 | CONSUMED | I-03, E-10, G-02, G-07 | seating-and-rest | HIGH | false | — |
 | CON-0208 | CONSUMED | Part 6 R-BED matrix | room-types | HIGH | false | — |
 | CON-0209 | CONSUMED | H-01, Part 6 R-KIT | kitchens-and-workspaces | MODERATE | false | — |
 | CON-0210 | CONSUMED | G-04 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0211 | CONSUMED | Part 8 Engineering | sensory-environment | MODERATE | false | — |
-| CON-0212 | CONSUMED-DEFERRED | G-02, G-05, G-07, I-03, E-10 | seating-and-rest | HIGH | false | — |
+| CON-0212 | CONSUMED | G-02, G-05, G-07, I-03, E-10 | seating-and-rest | HIGH | false | — |
 | CON-0213 | CONSUMED | H-05, G-09 | cross-cutting | HIGH | false | — |
 | CON-0214 | CONSUMED | B-12, B-01 | sensory-environment | HIGH | false | — |
 | CON-0215 | CONSUMED | G-04, B-12 | bathrooms-and-wet-areas | MODERATE | false | — |
@@ -246,7 +246,7 @@
 | CON-0221 | CONSUMED | F-01, Part 3 | frameworks-and-methodology | HIGH | false | — |
 | CON-0222 | CONSUMED | A-16, Part 7 NR matrices | sensory-environment | HIGH | false | — |
 | CON-0223 | CONSUMED | C-03, C-04, A-09 | wayfinding-and-signage | HIGH | false | — |
-| CON-0224 | CONSUMED-DEFERRED | F-07, K-05, Part 5 | health-and-symptom-management | HIGH | false | — |
+| CON-0224 | CONSUMED | F-07, K-05, Part 5 | health-and-symptom-management | HIGH | false | — |
 | CON-0225 | CONSUMED | Part 11, Part 12 | frameworks-and-methodology | HIGH | false | — |
 | CON-0226 | CONSUMED | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0227 | CONSUMED | D-05, C-04, F-03 | wayfinding-and-signage | MODERATE | false | — |
@@ -255,7 +255,7 @@
 | CON-0230 | CONSUMED | Part 11, G-03 | frameworks-and-methodology | HIGH | false | — |
 | CON-0231 | CONSUMED | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
 | CON-0232 | CONSUMED | BIO-01, Part 11 | cross-cutting | MODERATE | false | — |
-| CON-0233 | CONSUMED-DEFERRED | K-05, H-04, H-02 | health-and-symptom-management | HIGH | false | — |
+| CON-0233 | CONSUMED | K-05, H-04, H-02 | health-and-symptom-management | HIGH | false | — |
 | CON-0234 | CONSUMED | Part 9 §9.5 | frameworks-and-methodology | MODERATE | false | — |
 | CON-0235 | CONSUMED | D-02, Part 3 §3.2 | wayfinding-and-signage | HIGH | false | — |
 | CON-0236 | CONSUMED | Part 1 §1.x, D-02 | frameworks-and-methodology | MODERATE | false | — |

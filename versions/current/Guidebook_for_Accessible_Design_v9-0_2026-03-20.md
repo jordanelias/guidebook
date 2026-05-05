@@ -2869,6 +2869,37 @@ Lighting: ≥100 lux at entry surface level; night-activated
 **Cross-reference:** E-06 (Level Entry); 
 **Evidence basis (OT):** Compensatory FOR; Life Balance Model. The canopy compensates for the environmental condition (rain, sun, wind) that disproportionately elevates the physical and thermoregulatory cost of entry for MOB, PAIN, and OFS users; the 3000mm depth specification ensures sufficient shelter to pause and manage equipment.
 
+
+### E-10 Rest Seating at Regular Intervals on All Accessible Routes
+
+**Applicable Groups:** ALL (Universal Mode candidate — no population conflict identified)
+
+**Description:** Rest seating provided at regular intervals on all primary accessible circulation routes. Seating serves multiple independent clinical functions: fatigue management (OFS/PAIN), fall prevention (MOB/DEM), orthostatic recovery (OFS), and spatial orientation pause (NEU/DEM). Universal Mode specification because the most restrictive population interval governs without conflict.
+
+**Specifications:**
+
+● Seating interval: ≤20 m on all primary accessible circulation routes where DEM population is served. OFS/PAIN-primary without DEM: ≤25--30 m (Roxburgh 2024, Tier 1 SR). MOB-only: ≤50 m (AS 1428.1:2009). Mixed-population default: ≤20 m (DEM governs). [CON-0190]
+
+● Seat height: ≥480 mm minimum. ≥480 mm serves all populations — OFS (420 mm exacerbates venous pooling per Roxburgh 2024 Tier 1), MOB/NEU spasticity (higher seat reduces STS muscle demand), DEM/older adults (reduced STS difficulty). 420 mm is retired as minimum. Exception: WC at 450 mm for transfer biomechanics (distinct functional requirement). [CON-0207]
+
+● Alcove geometry: ≥200 mm recess from primary circulation path + ≥900 mm seat width + ≥450 mm seat depth. Universal Mode candidate — serves fatigue, mobility, pain, dementia, neurological populations without conflict (FDR-ACG-01, Roxburgh 2024 Tier 1). [CON-0204]
+
+● Height consistency: all rest seating within a single circulation route at consistent ≥480 mm. Surface height transitions trigger spasticity in NEU populations (FDR-MOB-03). Inconsistent heights between adjacent rest points create compound fall/spasticity risk. [CON-0212]
+
+● Armrests: bilateral, ≥200 mm above seat surface, extending ≥50 mm beyond seat front edge. Required for STS assistance (MOB), orthostatic recovery support (OFS), orientation anchor (DEM).
+
+● Backrest: required on all rest seating (not benches without backs). Minimum 400 mm height.
+
+**Design Stage:** Brief · Schematic Design
+
+**Retrofit cost note:** Retrofit penalty: LOW. Rest seating is a furniture and layout decision. Alcove recess (200 mm) may require minor wall adjustment in existing corridors but is typically achievable within fit-out scope.
+
+**Key citations:** Roxburgh, M. et al. (2024). Systematic review of rest seating and fatigue in built environments. [Tier 1 SR.] AS 1428.1:2009. Design for access and mobility. Standards Australia. [Tier 6.] Dementia Australia (2022). Built Environment Guidelines. [Tier 2.]
+
+**Cross-reference:** F-05 (Seated-Task Design); E-08 (Corridor Width); I-03 (UPL provisions); G-02, G-07 (seating heights — must match ≥480 mm consistency principle)
+
+**Evidence basis (OT):** Life Balance Model (rest as occupational enabler); Biomechanical FOR (STS mechanics at ≥480 mm); EHP Framework (create strategy — seating creates the environmental condition for rest occupation); Dunn's Sensory Processing Model (pause point for sensory regulation during route traversal).
+
 ### E-12 Entrance Landing and Manoeuvring Space for Power Wheelchair Users
 
 **Applicable Groups:** MOB, MOB/UPL, OFS
@@ -3026,12 +3057,7 @@ intervention. See Part 11 §11.4.2.
 
 ### F-04 Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)
 
-<!-- THERMAL ASSESSMENT NOTE (CON-0184, CON-0224):
-K-05 (thermal comfort assessment) item pending creation. Key evidence:
-- PMV/PPD (ISO 7730) is CONTRAINDICATED for DEM (cannot self-report), NEU/MS (thermoregulation impaired), OFS (orthostatic intolerance worsened by heat). Van Hoof 2010 (DOI:10.1016/j.buildenv.2009.06.017) demonstrated PMV/PPD unreliability.
-- OFS/MS vs DEM thermal conflict: 3.9°C gap between OFS/MS maximum (≤21°C) and DEM thermal neutral (24.9°C). Resolution: ambient 18-20°C default + individual local warmth (heated seating pad ≤45°C, radiant panel) for DEM/older adults.
-- Alternative assessment: objective physiological monitoring or proxy-reported for DEM/NEU/OFS.
-Awaiting K-05 and F-07 item creation. -->
+<!-- K-05 CREATED 2026-05-04. CON-0184 + CON-0224 consumed. -->
 
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity),
 
@@ -3089,14 +3115,7 @@ Specifications are derived from MCAS trigger literature and HVAC engineering sta
 
 ### F-05 Seated-Task Design (All Primary Occupational Tasks Achievable Without Sustained Standing)
 
-<!-- REST SEATING EVIDENCE CLUSTER (CON-0190, CON-0204, CON-0207, CON-0212):
-New item E-10 (Rest Seating) required. Evidence:
-- Interval: DEM ≤20m governs; OFS/PAIN ≤25-30m (Roxburgh 2024 Tier 1); MOB ≤50m (AS 1428.1)
-- Height: ≥480mm minimum (OFS: 420mm exacerbates venous pooling; MOB/NEU: higher reduces STS demand; DEM/older: reduced STS difficulty). Replaces 420mm.
-- Geometry: ≥200mm recess + ≥900mm width + ≥450mm depth (FDR-ACG-01, Universal Mode candidate)
-- Consistency: all rest seating same height within circulation route (surface transitions trigger spasticity)
-- Exception: WC at 450mm for transfer biomechanics
-Awaiting E-10 item creation. -->
+<!-- E-10 CREATED 2026-05-04. CON-0190/0204/0207/0212 consumed. -->
 
 **Applicable Groups:** OFS/POTS, OFS/CFS, MOB (wheelchair users ---
 
@@ -3858,6 +3877,33 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Cross-reference:** B-10 (Visual Fire Alarm — simultaneous activation required); H-04 (Accessible Intercom — personal pager integration); H-05 (Nurse Call / Emergency Pull Cord — supplementary for DBL occupants in residential care)
 
 **Evidence basis (OT):** Compensatory FOR; EHP Framework (prevent strategy). Vibrotactile alerting compensates for the absence of both auditory and visual emergency notification by providing a tactile alert channel; for DeafBlind occupants this is not an enhancement but the sole reliable mechanism for life-safety alerting. The EHP 'prevent' strategy grounds the provision: the environment is modified to prevent the life-safety failure that results from no accessible alert channel. The 20–200 Hz vibration frequency range is derived from the perceptible vibrotactile frequency range for individuals with intact tactile sensitivity (Verrillo, 1993); no architectural standard specifies this range for built environment applications.
+
+### K-05 Thermal Comfort Assessment for Thermoregulation-Impaired Populations
+
+**Applicable Groups:** DEM, NEU/MS, OFS, SCI
+
+**Description:** Standard thermal comfort assessment (PMV/PPD per ISO 7730) is contraindicated for populations with impaired thermoregulation or impaired thermal perception. DEM populations cannot self-report thermal discomfort or adjust controls. NEU/MS populations have impaired thermoregulation that invalidates metabolic rate assumptions. OFS populations experience orthostatic intolerance worsened by ambient temperature. SCI (≥C4) populations cannot perceive thermal strain subjectively — core temperature rises without awareness. Alternative assessment methods required.
+
+**Specifications:**
+
+● PMV/PPD (ISO 7730) not to be used as the sole thermal comfort assessment method for DEM, NEU/MS, OFS, or SCI populations. Van Hoof 2010 (DOI:10.1016/j.buildenv.2009.06.017, Tier 3) demonstrated PMV/PPD unreliability for cognitively impaired populations. [CON-0184]
+
+● OFS/MS vs DEM thermal conflict: 3.9°C gap between OFS/MS maximum (≤21°C — Strassheim 2018, CDC ME/CFS, Chaseling 2022) and DEM/older adult thermal neutral (24.9°C). Resolution: ambient default 18--20°C in shared spaces where NEU/MS or SCI present; individual local warmth for DEM/older adults via heated seating pad (≤45°C surface, timer-controlled) or radiant panel. No ambient temperature increase. [CON-0224]
+
+● SCI (≥C4): objective room temperature display required at accessible height. Automatic cooling trigger at ≥23°C in SCI-designated settings. Tcore rises to 37.7°C at 23.9°C indoor without awareness (Griggs 2019, PMC5798926 2018). Life-safety system — analogous to CO detector principle. [CON-0233]
+
+● Alternative assessment: proxy-reported thermal comfort (carer observation of behavioural indicators: restlessness, flushing, perspiration, shivering) or objective physiological monitoring (skin temperature sensors, environmental temperature logging) for all four populations.
+
+**Design Stage:** Technical Architecture · Post-Occupancy
+
+**Retrofit cost note:** Retrofit penalty: LOW. Assessment methodology is a commissioning and operational decision, not a construction decision. Temperature display and automatic cooling trigger require BMS integration (moderate if BMS exists; high if no BMS).
+
+**Key citations:** Van Hoof, J. et al. (2010). Thermal comfort and the built environment for older adults and people with dementia. Building and Environment, 45, 358-370. DOI:10.1016/j.buildenv.2009.06.017. [Tier 3.] Strassheim, V. et al. (2018). Defining the ME/CFS activity management zone. [OFS thermal evidence.] Griggs, K.E. et al. (2019). Thermoregulation during exercise in SCI. [Tier 1.] Chaseling, G.K. et al. (2022). MS thermoregulation. [Tier 3.]
+
+**Cross-reference:** F-04 (Air Quality/Thermal Stability); G-04 (Bathroom thermal — CON-0191 ≤5°C differential); H-01 (Controls — SCI temperature display per CON-0233); Part 5 §5.2 (TEMP-RANGE conflict domain)
+
+**Evidence basis (OT):** EHP Framework (prevent strategy — prevent thermal harm by environmental monitoring); PEO/PEOP model (environment-occupation-person fit requires objective environmental data when person cannot provide subjective report). No OT CPG addresses thermal environment as a home modification domain (confirmed GAP-LRP-01).
+
 ## Part 5: Building-Level Co-Occurrence Resolution
 
 *Accessible Built Environments — Utopian Best Practice Guidebook v9.0*
@@ -6115,12 +6161,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Building type:** Pre-K--12th grade public school for students on the autism spectrum (existing building, retrofit)
 
-**Primary population:** Autistic students (NDV/AUT)
-
-**Evidence quality:** Tier 3 (post-occupancy staff survey; partial Tier 2 for acoustic measurement component)
-
-**Key design strategies:** - ASPECTSS Design Index (Mostafa, 2014) applied: Acoustics, Spatial Sequencing, Escape spaces, Compartmentalisation, Transitions, Sensory Zoning, Safety - Colour-coded navigation corridors (C-02) - Acoustic treatment at primary circulation spaces (A-02, A-06) - Transition alcoves at classroom entries (F-01 principles) - Classroom reorganisation using compartmentalisation: reduction of open-plan to smaller predictable zones (D-05 principles) - Escape/sensory retreat spaces added per floor (A-16)
-
-**Verified outcomes:** - Post-occupancy staff survey (n=34 teachers and aides): majority reported improvement in student regulation, focus, and classroom participation following retrofit (Tier 3) - Partial acoustic measurement confirmed reduction in classroom RT60 from 0.7--0.9 s to
-
-0.4--0.5 s in retrofitted classrooms (Tier 2 component) - ASPECTSS alignment scores improved from pre-retrofit assessment to post-retrofit (validated instrument alignment, Tier 2 compone
+**Primary popula
