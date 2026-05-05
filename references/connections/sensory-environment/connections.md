@@ -811,3 +811,61 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **Action required:** F-01: add biophilic zones as topology branches (same treatment as utility rooms). BIO-01: specify as optional-destination, not circulation finish. Link to A-16 as complementary provision.
 
 **Disposition notes:** —
+
+
+<!-- Citation mining session 2026-05-04 additions -->
+
+
+### CON-0196
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** circadian-lighting-melanopic-edi, biophilic-design-healthcare-workplace
+**Target item(s):** B-12, D-05
+**Target population(s):** DEM, NDV, ALL
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Circadian lighting (CML BPC) and biophilic design share overlapping evidence on daylight exposure and melanopic EDI. Citation mining 2026-05-04 added Kolberg 2022 (CML-07) showing DEM nursing homes fail melanopic EDI thresholds, and Grant 2022 (CML-08) showing fall reduction from upgraded circadian lighting. B-12 (daylight provision) should cross-reference CML melanopic EDI thresholds as the performance criterion for daylight quality, not just daylight quantity. D-05 (biophilic elements) should reference Grant 2022 fall reduction as an outcome measure.
+**ISW action:** B-12: add melanopic EDI ≥250 lux-equivalent (daytime, vertical plane at eye level) as performance criterion per Brown 2022 consensus. D-05: add Grant 2022 as outcome evidence for biophilic/lighting upgrades.
+
+---
+
+### CON-0214
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** circadian-lighting-melanopic-edi, sensory-room-user-control
+**Target item(s):** B-12, B-01
+**Target population(s):** DEM, NDV/AUT
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** B-01 (circadian lighting specification) and B-12 (daylight) share the melanopic EDI performance framework. Citation mining added IES RP-46-23 (CML-09) as the US industry standard aligned with Brown 2022 thresholds. B-12 daylight provision should be specified in melanopic EDI terms, not just illuminance or daylight factor.
+**ISW action:** B-01: add IES RP-46-23 reference. B-12: specify melanopic EDI ≥250 lux-eq vertical plane.
+
+---
+
+### CON-0217
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** visual-fire-alarm-seizure-safety, sensory-room-user-control
+**Target item(s):** B-10, A-16, K-04
+**Target population(s):** DEAF, NEU, NDV/AUT, DBL
+**Evidence tier:** 3-4
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** B-10 (visual fire alarm), A-16 (sensory room), and K-04 (vibrotactile alerting) form a cluster: alerting in sensory rooms requires special specification because standard VAD strobes may trigger seizures or sensory overload in the primary occupants of A-16 spaces. Citation mining added Fisher 2022 (VFA-06) confirming 3 Hz seizure threshold and ISO 9241-391 (VFA-07). Sensory room A-16 specification should explicitly require vibrotactile-only alerting (no strobe) with voice alarm as secondary.
+**ISW action:** A-16: add note — alerting in sensory rooms: vibrotactile + voice alarm only; no VAD strobe. Cross-ref B-10 PSE safety note and K-04.
+
+---

@@ -239,3 +239,25 @@ The practical implication: rest seating (I-03) should be placed AT TWSI attentio
 **Action required:** K-05: add SCI thermal perception absence as safety-critical specification. H-04: require objective room temperature display in SCI settings. H-02: automatic cooling trigger at ≥23°C in SCI settings. Frame as life-safety system.
 
 **Disposition notes:** —
+
+
+<!-- Citation mining session 2026-05-04 additions -->
+
+
+### CON-0224
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** ms-thermal-temperature-conflict-resolution, thermal-comfort-older-adults-care-settings, thermoregulation-built-environment
+**Target item(s):** F-07, K-05, Part 5
+**Target population(s):** NEU/MS, DEM, PAIN, OFS
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** F-07 thermal zoning, K-05 (thermal comfort assessment), and Part 5 residential assessment all address the same underlying problem: different populations have opposing thermal needs. Citation mining strengthened this with Berwick 2021 SR (MST-09, FMS cold pain), Christogianni 2018 (MST-10, MS 0.5C Uhthoff threshold), and Baquero 2023 (TCO-01, older adult neutral temp 24.9C). K-05 assessment protocol should reference these thresholds. Part 5 residential assessment should include thermal profiling as part of OT assessment.
+**ISW action:** K-05: add quantified thresholds (MS ≤22C, DEM ≥24.9C, FMS variable). Part 5: add thermal profiling to residential OT assessment checklist.
+
+---

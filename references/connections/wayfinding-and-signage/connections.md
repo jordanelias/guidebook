@@ -1160,3 +1160,23 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Action required:** D-02: upgrade layout>signage from DEM/NEU/IntD principle to universal wayfinding principle (all populations). Part 3 §3.2: cite as universal cross-population wayfinding principle with Zali 2025 as validating source.
 
 **Disposition notes:** —
+
+
+<!-- Citation mining session 2026-05-04 additions -->
+
+
+### CON-0189
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** wayfinding-dementia-spatial-design, cognitive-wayfinding-design, wayfinding-cognitive-science-spatial-design
+**Target item(s):** D-02, D-04, D-08
+**Target population(s):** DEM, IntD, NDV
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** DEM wayfinding (Marquardt 2011, WDS-05) and cognitive wayfinding share the principle that spatial planning is more important than signage for intuitive navigation. Citation mining corrected WDS-04 attribution (Zali et al. 2025, DOI:10.1177/19375867251391361) and added Shabha 2022 (WDS-08, integrated design review) and Tao 2018 (WDS-09, Hong Kong floor plan legibility). D-02/D-04/D-08 wayfinding items should reference the spatial planning principle, not just signage provisions.
+**ISW action:** D-02: add spatial planning note — wayfinding is architectural (layout, sightlines, landmarks), not primarily signage. D-04/D-08: add Marquardt 2011 straight-corridor finding.

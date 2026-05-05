@@ -1311,3 +1311,43 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 **Action required:** A-02: set 1200mm as minimum for primary wheelchair circulation (metabolic normalisation point). 900mm only for secondary/passing corridors with metabolic penalty note. A-07: cross-reference for cross-slope metabolic interaction.
 
 **Disposition notes:** —
+
+
+<!-- Citation mining session 2026-05-04 additions -->
+
+
+### CON-0229
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** acoustics-speech-intelligibility-disability, deaf-spatial-design, room-acoustic-performance
+**Target item(s):** A-02, A-07, A-09, E-07
+**Target population(s):** DEAF, NDV, ALL
+**Evidence tier:** 1-3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Acoustic items (A-02, A-07) and entrance/circulation items (A-09 entrance canopy, E-07 entrance door) share an acoustic design requirement: entrance areas are high-noise zones that degrade speech intelligibility for DEAF/HI users immediately upon entry. Citation mining added Cueille 2022 (ASI-06) quantifying 18dB SRT penalty for HI listeners, and ASI-08 SR confirming HI cannot adapt to reverberation. E-07 entrance doors with automatic closers should be specified with acoustic seals; A-09 entrance canopy should include acoustic absorption to reduce reflected traffic noise at the entrance threshold.
+**ISW action:** A-09: add acoustic absorption note for entrance canopy soffit. E-07: add acoustic seal specification for entrance doors in speech-critical buildings.
+
+---
+
+### CON-0200
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** stair-ramp-threshold-biomechanics-accessibility, luminance-contrast-lrv-evidence-base, threshold-and-level-access
+**Target item(s):** A-09, E-07, C-04, E-08
+**Target population(s):** MOB, VIS, ALL
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** Entrance items (A-09, E-07, E-08) and contrast item (C-04) intersect at the building threshold: the point where level change, door hardware, contrast marking, and weather protection all converge. Citation mining added Harper 2025 (SRB-14/LCL-08) showing 80% of stair fall events at interstep riser variation ≥14mm with contrast striping reducing events. Threshold items should specify consistent contrast marking at all level changes including entrance thresholds.
+**ISW action:** E-08: add ≥50 LRV contrast strip at all entrance threshold level changes (cross-ref C-04). A-09: coordinate entrance canopy lighting with C-04 contrast visibility requirements.
+
+---

@@ -520,3 +520,43 @@ This finding is siloed in `thermal-comfort-older-adults-care-settings` and not p
 **Action required:** G-03: add continuous rail specification linking WC→basin→door. G-04: room-level grab rail system. Part 4: safety-critical gap closure.
 
 **Disposition notes:** —
+
+
+<!-- Citation mining session 2026-05-04 additions -->
+
+
+### CON-0191
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** upper-limb-impairment-built-environment, ms-thermal-temperature-conflict-resolution, accessible-bathroom-and-grab-bar
+**Target item(s):** G-03, G-04, F-07
+**Target population(s):** MOB/UPL, NEU/MS, DEM
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Bathroom grab bar items (G-03/G-04) and thermal zoning (F-07) intersect in the bathroom: grab bar surface temperature matters for PAIN/OFS populations (cold metal allodynia), and bathroom pre-heating (F-07 FDR-TCOA-02) prevents heat shock deaths. Citation mining added Lee/Sanford 2018 (ULB-12, n=130+) for bilateral fold-down bar specification and Berwick 2021 SR (MST-09) for thermal sensitivity evidence. G-04 wet room configuration must coordinate grab bar insulated coating (PAIN) with F-07 bathroom pre-heating (DEM heat shock prevention).
+**ISW action:** G-04: add coordination note — insulated grab bar coatings where PAIN primary; bathroom pre-heating per F-07 FDR-TCOA-02. G-03: add Lee/Sanford 2018 fold-down specification cross-ref.
+
+---
+
+### CON-0216
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Opus-reviewed:** false
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, deafblind-built-environment-design
+**Target item(s):** G-03, G-04
+**Target population(s):** DBL, MOB
+**Evidence tier:** 2-3
+**Filed:** 2026-04-24
+**Applied:** —
+
+**Connection type:** CROSS-POPULATION
+**Connection:** DBL populations require haptic-first bathroom navigation: grab bars serve both as support AND as wayfinding landmarks. G-03/G-04 bilateral positioning creates a predictable tactile reference frame that enables DBL users to navigate the bathroom independently. Grab bar positioning must be consistent across all bathrooms in a building to enable spatial habituation.
+**ISW action:** G-03: add DBL population note — bilateral grab bars serve dual function (support + tactile wayfinding). Consistent positioning across all bathrooms is a DBL requirement, not just a best practice.
+
+---
