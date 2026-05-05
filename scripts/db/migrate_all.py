@@ -597,7 +597,7 @@ def extract_doctrine_body(conn):
 
 
 def fill_ot_dar_gaps(conn):
-    """Fill remaining ot_evidence_basis and dar_note gaps with category defaults."""
+    """Fill remaining field gaps with category defaults."""
     OT_DEFAULTS = {
         "A": "Sensory Processing Model (Dunn) — auditory environment calibrated to sensory profile",
         "B": "Sensory Processing Model (Dunn) + Biomechanical FOR — visual environment calibrated to functional vision",
@@ -623,24 +623,45 @@ def fill_ot_dar_gaps(conn):
         "I": "Bathroom provisions require drainage, waterproofing, structural floor — highest retrofit cost category.",
         "K": "Communication provisions require BMS relay infrastructure, conduit, hearing loop wiring.",
     }
+    RETROFIT_DEFAULTS = {
+        "A": "MODERATE", "B": "MODERATE", "C": "LOW-PLANNING", "D": "LOW-PLANNING",
+        "E": "STRUCTURAL", "F": "HIGH", "G": "HIGH", "H": "LOW-FIXTURE",
+        "I": "STRUCTURAL", "J": "MODERATE", "K": "MODERATE",
+    }
+    TIER_DESCRIPTIONS = {
+        1: "Systematic review or meta-analysis",
+        2: "Controlled study with disability-specific outcomes",
+        3: "Standards convergence across ≥3 jurisdictions",
+        4: "Expert consensus or professional guidance",
+        5: "Code requirement without published evidence base",
+        6: "Expert opinion or case report",
+    }
 
     count = 0
     items = conn.execute(
-        "SELECT DISTINCT item_code FROM specification WHERE item_code NOT LIKE '[%'"
+        "SELECT DISTINCT item_code, evidence_tier FROM specification WHERE item_code NOT LIKE '[%'"
     ).fetchall()
 
-    for (code,) in items:
+    for code, tier in items:
         category = code[0]
-        if category in OT_DEFAULTS:
+        for field, defaults in [
+            ("ot_evidence_basis", OT_DEFAULTS),
+            ("dar_note", DAR_DEFAULTS),
+            ("retrofit_category", RETROFIT_DEFAULTS),
+        ]:
+            if category in defaults:
+                r = conn.execute(
+                    f'UPDATE specification SET {field} = ? WHERE item_code = ? AND ({field} IS NULL OR {field} = "")',
+                    (defaults[category], code),
+                )
+                count += r.rowcount
+
+        # Evidence summary from tier
+        if tier and tier in TIER_DESCRIPTIONS:
+            summary = f"Tier {tier} — {TIER_DESCRIPTIONS[tier]}. See Part 4 item entry for full citation list."
             r = conn.execute(
-                'UPDATE specification SET ot_evidence_basis = ? WHERE item_code = ? AND (ot_evidence_basis IS NULL OR ot_evidence_basis = "")',
-                (OT_DEFAULTS[category], code),
-            )
-            count += r.rowcount
-        if category in DAR_DEFAULTS:
-            r = conn.execute(
-                'UPDATE specification SET dar_note = ? WHERE item_code = ? AND (dar_note IS NULL OR dar_note = "")',
-                (DAR_DEFAULTS[category], code),
+                'UPDATE specification SET evidence_summary = ? WHERE item_code = ? AND (evidence_summary IS NULL OR evidence_summary = "")',
+                (summary, code),
             )
             count += r.rowcount
 
