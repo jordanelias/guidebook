@@ -138,3 +138,32 @@ Key data: $5,000–$114,000+/participant/year (range by design category/location
 
 **DE-01** PMC5615501 (2017). Improved Housing Accessibility for Older People in Sweden and Germany. *Int J Environ Res Public Health*.
 Key: Germany — 2.5M barrier-free units needed, 1.4M available; 1.1M gap; ~€39B adaptation cost needed; GKV pays up to €4,000/measure/year. Scale data for Part 11 §11.2.
+
+
+## Sources added 2026-05-05 (ceiling hoist cost data + DBL evidence)
+
+### Ceiling hoist cost data (UK 2024-2025) — GAP-ECON-02
+
+**HOIST-UK-01** Multiple UK suppliers (Felgains, Wealden Rehab/CareSpaces, Dolphin Mobility, Innovare Care Concepts, Medaco). 2024-2025.
+Tier: 5 | UK | GBP (converging across 5 independent sources)
+- Straight track 3m (bed to wheelchair): £1,800–£3,000 supply+install
+- H-frame/XY (room coverage, multiple transfer points): £2,400–£3,500
+- XY linked multi-room: £6,000–£12,000
+- Portable gantry (no ceiling fixing): £2,000–£4,000
+- Annual service: ~£265. VAT 0% for chronically sick/disabled.
+Design stage implications: straight track = Brief/SD; H-frame = Schematic; multi-room = Brief. Retrofit multiplier vs. blocking preparation at construction: 30x–100x.
+Sources: felgains.com (Oct 2025), carespaces.co.uk (Mar 2024), dolphinlifts.co.uk (2025), innovacareconcepts.com (Aug 2025), medaco.co.uk (Dec 2025)
+
+### DBL built environment evidence — GAP-S4 series
+
+**DBL-REH-01** Warnicke, C., Wahlqvist, M., Anderzén-Carlsson, A. & Sundqvist, A-S. (2022). Interventions for adults with deafblindness — an integrative review. BMC Health Services Research, 22(1), 1594. DOI: 10.1186/s12913-022-08958-4 | PMID: 36585684 | PMC: PMC9801155
+Tier: 1 | SE + international | Örebro University + Swedish National Resource Center for Deafblindness
+Key: 28 studies reviewed. 14 on communication; 10 on orientation/mobility; 3 on information access; 1 on psychological adaptation. Most studies 1-5 participants. No studies addressed built environment design parameters (corridor widths, room layouts). Evidence base for DBL built environment specs is expert/practitioner consensus, NOT peer-reviewed. GAP-S4 gaps reflect genuine evidence absence.
+
+**DBL-DESIGN-01** JJones Design Co. (2026). How to Design an Accessible Home for Deaf and HOH People. Practitioner. DeafBlind interior designer, US.
+Tier: 5 | US. Key design principles: clear sightlines; consistent furniture layouts; matte surfaces; smart home vibrotactile alerts; lighting contrast at walls.
+
+**DBL-DESIGN-02** NYSID / Helen Keller National Center student project (2022). nysid.edu. Tier: 5 | US.
+Key: Interpreter must sit BESIDE person (ProTactile hand-signing). Social interaction spaces need MORE room than standard accessible design — ProTactile communication needs wider clear zones. Contrast backdrops for all skin tones.
+
+NOTE on 1500mm DBL corridor (GAP-S4-R07): No peer-reviewed or regulatory source found. Appears practitioner-derived (person 750-800mm + intervenor 600-750mm abreast = 1350-1550mm, rounded to 1500mm). [UNVERIFIED] until DbI/Perkins/ACVREP/Swedish National Resource Center explicitly states this dimension.
