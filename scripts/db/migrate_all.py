@@ -546,6 +546,108 @@ def create_item_stubs(conn):
     return count
 
 
+def extract_doctrine_body(conn):
+    """C9: Extract doctrine body_md from Part 1 sections."""
+    part1_path = REPO_ROOT / "parts" / "v10" / "part01.md"
+    if not part1_path.exists():
+        return 0
+
+    with open(part1_path, "r") as f:
+        content = f.read()
+
+    SECTION_MAP = {
+        "DOC-0001": r"§1\.2\s+The Code-as-Floor",
+        "DOC-0002": r"§1\.3\s+Designing for the Individual",
+        "DOC-0003": r"§1\.3\s+Designing for the Individual",
+        "DOC-0004": r"§1\.4\s+Universal Design",
+        "DOC-0005": r"§1\.5\s+Evidence Hierarchy",
+        "DOC-0006": r"§1\.6\s+The DAR Principle",
+        "DOC-0007": r"§1\.7\s+CRPD Framework",
+        "DOC-0008": r"§1\.8\.1\s+Biomechanical",
+        "DOC-0009": r"§1\.8\.2\s+Dunn",
+        "DOC-0010": r"§1\.8\.3\s+Ecology",
+        "DOC-0011": r"§1\.8\.4\s+Compensatory",
+        "DOC-0012": r"§1\.8\.5\s+Allen",
+        "DOC-0013": r"§1\.8\.6\s+Person-Environment",
+        "DOC-0014": r"§1\.8\.7\s+Ecological Psychology",
+        "DOC-0015": r"§1\.8\.8\s+Competence-Press",
+        "DOC-0016": r"§1\.8\.9\s+Attention Restoration",
+    }
+
+    count = 0
+    for doc_id, pattern in SECTION_MAP.items():
+        m = re.search(r"^(#{2,3})\s+" + pattern, content, re.MULTILINE)
+        if not m:
+            continue
+        heading_level = len(m.group(1))
+        rest = content[m.end():]
+        end_match = re.search(r"^#{2," + str(heading_level) + r"}\s+§", rest, re.MULTILINE)
+        body = rest[:end_match.start()].strip() if end_match else rest.strip()
+
+        if body and len(body) > 20:
+            first_para = body.split("\n\n")[0][:300] if "\n\n" in body else body[:200]
+            conn.execute(
+                "UPDATE doctrine SET body_md = ?, implications = COALESCE(implications, ?) WHERE doctrine_id = ? AND (body_md IS NULL OR body_md = '')",
+                (body, first_para, doc_id),
+            )
+            count += 1
+
+    conn.commit()
+    return count
+
+
+def fill_ot_dar_gaps(conn):
+    """Fill remaining ot_evidence_basis and dar_note gaps with category defaults."""
+    OT_DEFAULTS = {
+        "A": "Sensory Processing Model (Dunn) — auditory environment calibrated to sensory profile",
+        "B": "Sensory Processing Model (Dunn) + Biomechanical FOR — visual environment calibrated to functional vision",
+        "C": "Biomechanical FOR (visual perception) + Compensatory FOR — contrast specifications from sensitivity research",
+        "D": "Allen CDM (cognitive wayfinding) + EHP Framework (alter strategy) — wayfinding calibrated to cognitive level",
+        "E": "Biomechanical FOR — circulation dimensions from wheelchair propulsion biomechanics",
+        "F": "EHP Framework (alter strategy) — thermal/air quality provisions alter environmental context",
+        "G": "Biomechanical FOR — fixture dimensions from anthropometry, grip strength, transfer mechanics",
+        "H": "Biomechanical FOR + Compensatory FOR — control specifications from hand function research",
+        "I": "Biomechanical FOR + EHP Framework (create strategy) — bathroom provisions for self-care occupations",
+        "J": "Biomechanical FOR — workspace dimensions from reach range and anthropometry",
+        "K": "Sensory Processing Model (Dunn) + Compensatory FOR — communication provisions for sensory channel limitations",
+    }
+    DAR_DEFAULTS = {
+        "A": "Acoustic provisions require partition STC, ceiling treatment — decisions locked at construction. Retrofit requires demolition.",
+        "B": "Lighting requires electrical infrastructure. Retrofit of luminaire positioning requires ceiling reconstruction.",
+        "C": "Colour/contrast provisions are surface finishes — low-cost at specification, moderate at retrofit.",
+        "D": "Wayfinding requires wall surfaces and spatial layout — locked at schematic design.",
+        "E": "Circulation provisions are structural — clear widths locked at framing. Widening requires structural intervention.",
+        "F": "Thermal/air quality requires HVAC infrastructure. Retrofit requires mechanical system modification.",
+        "G": "Fixture provisions require wall blocking and services rough-in. Grab bar blocking: 75× retrofit multiplier.",
+        "H": "Control provisions require electrical rough-in at specified heights.",
+        "I": "Bathroom provisions require drainage, waterproofing, structural floor — highest retrofit cost category.",
+        "K": "Communication provisions require BMS relay infrastructure, conduit, hearing loop wiring.",
+    }
+
+    count = 0
+    items = conn.execute(
+        "SELECT DISTINCT item_code FROM specification WHERE item_code NOT LIKE '[%'"
+    ).fetchall()
+
+    for (code,) in items:
+        category = code[0]
+        if category in OT_DEFAULTS:
+            r = conn.execute(
+                'UPDATE specification SET ot_evidence_basis = ? WHERE item_code = ? AND (ot_evidence_basis IS NULL OR ot_evidence_basis = "")',
+                (OT_DEFAULTS[category], code),
+            )
+            count += r.rowcount
+        if category in DAR_DEFAULTS:
+            r = conn.execute(
+                'UPDATE specification SET dar_note = ? WHERE item_code = ? AND (dar_note IS NULL OR dar_note = "")',
+                (DAR_DEFAULTS[category], code),
+            )
+            count += r.rowcount
+
+    conn.commit()
+    return count
+
+
 def author_person_specific_notes(conn):
     """C3: Author person_specific_note (Mode S language) for all items."""
     CATEGORY_PATTERNS = {
@@ -1155,6 +1257,14 @@ def main():
     print("Extracting Part 4 content...")
     extract_count = extract_part4_content(conn)
     print(f"  → {extract_count} items enriched")
+
+    print("Extracting doctrine body content...")
+    doc_count = extract_doctrine_body(conn)
+    print(f"  → {doc_count} doctrines enriched")
+
+    print("Filling OT/DAR gaps...")
+    gap_count = fill_ot_dar_gaps(conn)
+    print(f"  → {gap_count} gaps filled")
 
     print("Authoring Mode S notes...")
     ps_count = author_person_specific_notes(conn)
