@@ -7,97 +7,97 @@
 
 | Code | Title | Start | End | Lines |
 |---|---|---|---|---|
-| A-01 | Acoustic Buffer Zones at Noisy Adjacencies | 36 | 62 | 27 |
-| A-02 | Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces | 63 | 88 | 26 |
-| A-03 | Acoustic Door (STC ≥35) at All Sensitive Space Boundaries | 89 | 111 | 23 |
-| A-04 | Acoustic Zoning: Graduated from Arrival to Primary Occupatio | 112 | 147 | 36 |
-| A-05 | Carpet in Corridors and Occupied Spaces (Where VIS Navigatio | 148 | 179 | 32 |
-| A-06 | Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points | 180 | 210 | 31 |
-| A-07 | Flutter Echo Elimination (Parallel Hard Surface Avoidance) | 211 | 237 | 27 |
-| A-08 | HVAC Noise Control (NC-25 Maximum in Sensitive Spaces) | 238 | 268 | 31 |
-| A-09 | HVAC Vibration Isolation (Floating Plant Room) | 269 | 298 | 30 |
-| A-10 | Counter Hearing Loop (Induction Loop at Reception/Service Co | 299 | 352 | 54 |
-| A-11 | Room Perimeter Hearing Loop (Assembly and Meeting Spaces) | 353 | 388 | 36 |
-| A-12 | Auracast Infrastructure Readiness | 389 | 421 | 33 |
-| A-13 | No Sound Masking in Neurological Population Environments | 422 | 449 | 28 |
-| A-14 | Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies | 450 | 482 | 33 |
-| A-15 | Acoustic Differentiation Between Spaces (Navigation Aid for  | 483 | 511 | 29 |
-| A-16 | Sensory Room / Quiet Room Provision | 512 | 542 | 31 |
-| A-17 | Upholstered Seating [ABSORBED INTO G-02 per CO-0003/D2-24] | 543 | 572 | 30 |
-| B-01 | Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime | 573 | 599 | 27 |
-| B-02 | Diffuse Lighting for Lip Reading and Sign Language (Shadow-F | 600 | 635 | 36 |
-| B-03 | Elimination of Fluorescent Overhead Lighting | 636 | 660 | 25 |
-| B-04 | Flicker-Free LED Luminaires [MERGED INTO B-03 per CO-0003/D2 | 661 | 688 | 28 |
-| B-05 | Gradual Lighting Transition Zones (≥5 m at All Major Illumin | 689 | 717 | 29 |
-| B-06 | Individual Dimming Control (≥300 Lux Range) | 718 | 747 | 30 |
-| B-07 | Indirect and Cove Lighting in Sensitive Spaces | 748 | 772 | 25 |
-| B-08 | Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units) | 773 | 801 | 29 |
-| B-09 | Maximisation of Natural Light (Clerestory, Light Wells, Roof | 802 | 829 | 28 |
-| B-10 | Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout | 830 | 864 | 35 |
-| B-11 | Warm Colour Temperature for Evening (≤2700 K After 19:00) | 865 | 897 | 33 |
-| C-01 | Colour Palette (Muted, Low-Chroma, Non-Institutional) | 898 | 929 | 32 |
-| C-02 | Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing | 930 | 959 | 30 |
-| C-03 | Pattern Avoidance (Plain Flooring and Walls in Sensitive Env | 960 | 989 | 30 |
-| C-04 | LRV Contrast (≥30 minimum; ≥50% LRV best practice at critica | 990 | 1022 | 33 |
-| C-05 | Low LRV Differential at Adjacent Floor Materials (DEM Invers | 1023 | 1052 | 30 |
-| C-06 | Plain, Low-Contrast Flooring [MERGED INTO C-03 per CO-0003/D | 1053 | 1087 | 35 |
-| D-01 | Loop Floor Plan (No Dead-End Corridors in DEM Environments) | 1088 | 1116 | 29 |
-| D-02 | Cognitive Simplicity (Single Primary Route from Entry to Des | 1117 | 1147 | 31 |
-| D-03 | Toilet Visibility from Primary Occupied Spaces (No Navigatio | 1148 | 1174 | 27 |
-| D-04 | Landmarks at Every Decision Point | 1175 | 1203 | 29 |
-| D-05 | Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcov | 1204 | 1236 | 33 |
-| D-06 | Memory Boxes at Private Office and Residential Room Entrance | 1237 | 1267 | 31 |
-| D-07 | No Blind Corners (Curved or Mirrored at All Hidden Junctions | 1268 | 1294 | 27 |
-| D-08 | Pictogram + Single-Word Signage Throughout | 1295 | 1328 | 34 |
-| D-09 | Consistent Furniture Layout (No Rearrangement Without User C | 1329 | 1353 | 25 |
-| D-10 | Transparent Glazed Panels in Internal Partitions | 1354 | 1389 | 36 |
-| D-11 | Safe Accessible Garden (Loop Path, Secured Perimeter, Seatin | 1390 | 1421 | 32 |
-| E-01 | Accessible Lift (1400×1100 mm Car, All Floors Served) | 1422 | 1454 | 33 |
-| E-02 | Platform Lift (Where Full Passenger Lift Not Achievable) | 1455 | 1485 | 31 |
-| E-03 | Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility | 1486 | 1513 | 28 |
-| E-04 | Accessible Parking (3600 mm Width, Covered, Closest to Entry | 1514 | 1552 | 39 |
-| E-05 | Weather Protection at Entry (Covered Canopy Minimum 3000×200 | 1553 | 1577 | 25 |
-| E-06 | Level Entry (Zero Step at All Accessible Entrances) | 1578 | 1612 | 35 |
-| E-07 | Slip Resistance (PTV ≥36 Wet Throughout All Circulation and  | 1613 | 1650 | 38 |
-| E-08 | Corridor Clear Width (≥1200 mm Minimum on All Primary Routes | 1651 | 1681 | 31 |
-| E-09 | Tactile Walking Surface Indicators (ISO 23599:2019) | 1682 | 1736 | 55 |
-| E-10 | Rest Seating on Circulation Routes (≤20m Interval) | 1737 | 1739 | 3 | *REDIRECT — see canonical E-10 at L3205* |
-| E-11 | Automatic Sliding Entry and Internal Doors | 1797 | 1829 | 33 |
-| E-15 | Changing Places Facility (Height-Adjustable Bench, Overhead  | 1830 | 1884 | 55 |
-| F-01 | Sensory Gradient (High to Low Stimulation from Entry to Occu | 1885 | 1948 | 64 |
-| F-02 | Olfactory Control (Fragrance-Free Zones in Sensitive Areas) | 1949 | 1980 | 32 |
-| F-03 | Graduated Stimulation Re-entry (Sensory Room to General Spac | 1981 | 2010 | 30 |
-| F-04 | Air Quality (MERV 13+ Filtration, Low-VOC Specification, The | 2011 | 2070 | 60 |
-| F-05 | Seated-Task Design [CONTENT MOVED TO G-08 per CO-0003/D2-48] | 2071 | 2143 | 73 |
-| F-06 | Fragrance-Free Policy (Whole-Building Operational Standard) | 2144 | 2185 | ~42 | *resolved 2026-04-19* |
-| F-07 | Thermal Zoning — Building-Wide Temperature Management | 2149 | 2185 | 37 |
-| F-08 | Thermal Transition — Heating and Cooling System Response | 2186 | 2246 | 61 |
-| G-01 | Defensible Seating (Back-to-Wall, Entry Sightline Configurat | 2247 | 2280 | 34 |
-| G-02 | Variety of Seating Types (Three Heights at Every Seating Are | 2281 | 2312 | 32 |
-| G-03 | Grab Bars in All Accessible Bathrooms (Clinical Positioning  | 2313 | 2351 | 39 |
-| G-04 | Accessible Bathroom (Wet Room Configuration — Zero Threshold | 2352 | 2379 | 28 |
-| G-05 | Adjustable-Height Work Surfaces and Desks (650--870 mm AFF R | 2380 | 2408 | 29 |
-| G-06 | Reception Counter (Accessible Height Section — 760--860 mm A | 2409 | 2440 | 32 |
-| G-07 | Waiting Area Seating (Accessible Configuration — Adjacent to | 2441 | 2482 | 42 |
-| H-01 | All Controls at Accessible Height (400--1100 mm AFF, One-Fis | 2483 | 2531 | 49 |
-| H-02 | Individual Environmental Control — Universal Mode Universal Provisio | 2532 | 2582 | 51 |
-| H-03 | Visual Paging and Real-Time Captioning in Assembly Spaces | 2583 | 2619 | 37 |
-| H-04 | Accessible Intercom and Video Door Entry with Visual and Tac | 2620 | 2662 | 43 |
-| I-01 | Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤20 N | 2663 | 2700 | 38 |
-| I-02 | Kitchen (One-Handed Operation Throughout) | 2701 | 2732 | 32 |
-| I-03 | Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Oper | 2733 | 2765 | 33 |
-| H-05 | Nurse Call and Personal Emergency Response | 2766 | 2806 | 41 |
-| I-04 | Ceiling Hoist Provision | 2807 | 2874 | 68 |
-| K-01 | Intervenor Adjacency at Service Counters | 2875 | 2910 | 36 |
-| K-02 | Tactile Building Map Station at Principal Entrance | 2911 | 2949 | 39 |
-| K-03 | Haptic Communication Clear Floor Zone | 2950 | 2982 | 33 |
-| K-04 | Vibrotactile Alert Provision | 2983 | 3018 | 36 |
-| G-08 | Bedroom Wardrobe and Storage Reach Configuration | 3019 | 3076 | 58 |
-| G-09 | Bedroom Emergency Call Provision and Overnight Lighting | 3077 | 3110 | 34 |
-| B-12 | Sensor-Activated Overnight Pathway Lighting | 3111 | 3141 | 31 |
-| E-12 | Entrance Landing and Manoeuvring Space for Power Wheelchair  | 3142 | 3172 | 31 |
-| E-13 | Entrance Cognitive Legibility Provisions | 3173 | 3204 | 32 |
-| E-10 | Rest Seating on Circulation Routes | 3205 | 3352 | 148 |
+| A-01 | Acoustic Buffer Zones at Noisy Adjacencies | 40 | 86 | 47 |
+| A-02 | Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces | 87 | 125 | 39 |
+| A-03 | Acoustic Door (STC ≥35) at All Sensitive Space Boundaries | 126 | 162 | 37 |
+| A-04 | Acoustic Zoning: Graduated from Arrival to Primary Occupatio | 163 | 217 | 55 |
+| A-05 | Carpet in Corridors and Occupied Spaces (Where VIS Navigatio | 218 | 256 | 39 |
+| A-06 | Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points | 257 | 294 | 38 |
+| A-07 | Flutter Echo Elimination (Parallel Hard Surface Avoidance) | 295 | 328 | 34 |
+| A-08 | HVAC Noise Control (NC-25 Maximum in Sensitive Spaces) | 329 | 382 | 54 |
+| A-09 | HVAC Vibration Isolation (Floating Plant Room) | 383 | 422 | 40 |
+| A-10 | Counter Hearing Loop (Induction Loop at Reception/Service Co | 423 | 500 | 78 |
+| A-11 | Room Perimeter Hearing Loop (Assembly and Meeting Spaces) | 501 | 555 | 55 |
+| A-12 | Auracast Infrastructure Readiness | 556 | 595 | 40 |
+| A-13 | No Sound Masking in Neurological Population Environments | 596 | 633 | 38 |
+| A-14 | Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies | 634 | 673 | 40 |
+| A-15 | Acoustic Differentiation Between Spaces (Navigation Aid for | 674 | 709 | 36 |
+| A-16 | Sensory Room / Quiet Room Provision | 710 | 759 | 50 |
+| A-17 | Upholstered Seating [ABSORBED INTO G-02 per CO-0003/D2-24] | 760 | 795 | 36 |
+| B-01 | Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime | 796 | 848 | 53 |
+| B-02 | Diffuse Lighting for Lip Reading and Sign Language (Shadow-F | 849 | 901 | 53 |
+| B-03 | Elimination of Fluorescent Overhead Lighting | 902 | 942 | 41 |
+| B-04 | Flicker-Free LED Luminaires [MERGED INTO B-03 per CO-0003/D2 | 943 | 978 | 36 |
+| B-05 | Gradual Lighting Transition Zones (≥5 m at All Major Illumin | 979 | 1014 | 36 |
+| B-06 | Individual Dimming Control (≥300 Lux Range) | 1015 | 1064 | 50 |
+| B-07 | Indirect and Cove Lighting in Sensitive Spaces | 1065 | 1098 | 34 |
+| B-08 | Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units) | 1099 | 1144 | 46 |
+| B-09 | Maximisation of Natural Light (Clerestory, Light Wells, Roof | 1145 | 1187 | 43 |
+| B-10 | Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout | 1188 | 1244 | 57 |
+| B-11 | Warm Colour Temperature for Evening (≤2700 K After 19:00) | 1245 | 1284 | 40 |
+| C-01 | Colour Palette (Muted, Low-Chroma, Non-Institutional) | 1285 | 1323 | 39 |
+| C-02 | Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing | 1324 | 1360 | 37 |
+| C-03 | Pattern Avoidance (Plain Flooring and Walls in Sensitive Env | 1361 | 1407 | 47 |
+| C-04 | LRV Contrast (≥30 minimum; ≥50% LRV best practice at critica | 1408 | 1461 | 54 |
+| C-05 | Low LRV Differential at Adjacent Floor Materials (DEM Invers | 1462 | 1498 | 37 |
+| C-06 | Plain, Low-Contrast Flooring [MERGED INTO C-03 per CO-0003/D | 1499 | 1540 | 42 |
+| D-01 | Loop Floor Plan (No Dead-End Corridors in DEM Environments) | 1541 | 1576 | 36 |
+| D-02 | Cognitive Simplicity (Single Primary Route from Entry to Des | 1577 | 1622 | 46 |
+| D-03 | Toilet Visibility from Primary Occupied Spaces (No Navigatio | 1623 | 1656 | 34 |
+| D-04 | Landmarks at Every Decision Point | 1657 | 1692 | 36 |
+| D-05 | Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcov | 1693 | 1737 | 45 |
+| D-06 | Memory Boxes at Private Office and Residential Room Entrance | 1738 | 1779 | 42 |
+| D-07 | No Blind Corners (Curved or Mirrored at All Hidden Junctions | 1780 | 1813 | 34 |
+| D-08 | Pictogram + Single-Word Signage Throughout | 1814 | 1866 | 53 |
+| D-09 | Consistent Furniture Layout (No Rearrangement Without User C | 1867 | 1899 | 33 |
+| D-10 | Transparent Glazed Panels in Internal Partitions | 1900 | 1953 | 54 |
+| D-11 | Safe Accessible Garden (Loop Path, Secured Perimeter, Seatin | 1954 | 2001 | 48 |
+| E-01 | Accessible Lift (1400×1100 mm Car, All Floors Served) | 2002 | 2056 | 55 |
+| E-02 | Platform Lift (Where Full Passenger Lift Not Achievable) | 2057 | 2103 | 47 |
+| E-03 | Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility | 2104 | 2152 | 49 |
+| E-04 | Accessible Parking (3600 mm Width, Covered, Closest to Entry | 2153 | 2206 | 54 |
+| E-05 | Weather Protection at Entry (Covered Canopy Minimum 3000×200 | 2207 | 2248 | 42 |
+| E-06 | Level Entry (Zero Step at All Accessible Entrances) | 2249 | 2302 | 54 |
+| E-07 | Slip Resistance (PTV ≥36 Wet Throughout All Circulation and | 2303 | 2359 | 57 |
+| E-08 | Corridor Clear Width (≥1200 mm Minimum on All Primary Routes | 2360 | 2408 | 49 |
+| E-09 | Tactile Walking Surface Indicators (ISO 23599:2019) | 2409 | 2481 | 73 |
+| E-10 | Rest Seating on Circulation Routes | 2482 | 2505 | 24 |
+| E-11 | Automatic Sliding Entry and Internal Doors | 2506 | 2555 | 50 |
+| E-15 | Changing Places Facility (Height-Adjustable Bench, Overhead | 2556 | 2628 | 73 |
+| F-01 | Sensory Gradient (High to Low Stimulation from Entry to Occu | 2629 | 2702 | 74 |
+| F-02 | Olfactory Control (Fragrance-Free Zones in Sensitive Areas) | 2703 | 2742 | 40 |
+| F-03 | Graduated Stimulation Re-entry (Sensory Room to General Spac | 2743 | 2779 | 37 |
+| F-04 | Air Quality (MERV 13+ Filtration, Low-VOC Specification, The | 2780 | 2860 | 81 |
+| F-05 | Seated-Task Design [CONTENT MOVED TO G-08 per CO-0003/D2-48] | 2861 | 2940 | 80 |
+| F-06 | Fragrance-Free Policy (Whole-Building Operational Standard) | 2941 | 2975 | 35 |
+| F-07 | Thermal Zoning — Building-Wide Temperature Management | 2976 | 3033 | 58 |
+| F-08 | Thermal Transition — Heating and Cooling System Response | 3034 | 3102 | 69 |
+| G-01 | Defensible Seating (Back-to-Wall, Entry Sightline Configurat | 3103 | 3143 | 41 |
+| G-02 | Variety of Seating Types (Three Heights at Every Seating Are | 3144 | 3182 | 39 |
+| G-03 | Grab Bars in All Accessible Bathrooms (Clinical Positioning | 3183 | 3242 | 60 |
+| G-04 | Accessible Bathroom (Wet Room Configuration — Zero Threshold | 3243 | 3290 | 48 |
+| G-05 | Adjustable-Height Work Surfaces and Desks (650--870 mm AFF R | 3291 | 3338 | 48 |
+| G-06 | Reception Counter (Accessible Height Section — 760--860 mm A | 3339 | 3386 | 48 |
+| G-07 | Waiting Area Seating (Accessible Configuration — Adjacent to | 3387 | 3442 | 56 |
+| H-01 | All Controls at Accessible Height (400--1100 mm AFF, One-Fis | 3443 | 3513 | 71 |
+| H-02 | Individual Environmental Control — Universal Mode Universal Provisio | 3514 | 3585 | 72 |
+| H-03 | Visual Paging and Real-Time Captioning in Assembly Spaces | 3586 | 3639 | 54 |
+| H-04 | Accessible Intercom and Video Door Entry with Visual and Tac | 3640 | 3701 | 62 |
+| I-01 | Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤20 N | 3702 | 3755 | 54 |
+| I-02 | Kitchen (One-Handed Operation Throughout) | 3756 | 3805 | 50 |
+| I-03 | Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Oper | 3806 | 3857 | 52 |
+| H-05 | Nurse Call and Personal Emergency Response | 3858 | 3916 | 59 |
+| I-04 | Ceiling Hoist Provision | 3917 | 4004 | 88 |
+| K-01 | Intervenor Adjacency at Service Counters | 4005 | 4048 | 44 |
+| K-02 | Tactile Building Map Station at Principal Entrance | 4049 | 4094 | 46 |
+| K-03 | Haptic Communication Clear Floor Zone | 4095 | 4134 | 40 |
+| K-04 | Vibrotactile Alert Provision | 4135 | 4180 | 46 |
+| G-08 | Bedroom Wardrobe and Storage Reach Configuration | 4181 | 4253 | 73 |
+| G-09 | Bedroom Emergency Call Provision and Overnight Lighting | 4254 | 4294 | 41 |
+| B-12 | Sensor-Activated Overnight Pathway Lighting | 4295 | 4332 | 38 |
+| E-12 | Entrance Landing and Manoeuvring Space for Power Wheelchair | 4333 | 4379 | 47 |
+| E-13 | Entrance Cognitive Legibility Provisions | 4380 | 4418 | 39 |
+| E-10 | Rest Seating on Circulation Routes | 2482 | 2505 | 24 |
 
 ## Category Summary
 

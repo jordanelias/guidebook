@@ -91,8 +91,8 @@ class Room(GuidebookEntity):
     @field_validator("room_id")
     @classmethod
     def valid_room_id(cls, v: str) -> str:
-        if not re.match(r"^R-[A-Z]{2,4}$", v):
-            raise ValueError(f"room_id must match R-XX to R-XXXX, got: '{v}'")
+        if not re.match(r"^(R|NR)-[A-Z]{2,4}$", v):
+            raise ValueError(f"room_id must match R-XX/NR-XXX, got: '{v}'")
         return v
 
     @field_validator("building_type")

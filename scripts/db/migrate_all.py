@@ -793,6 +793,138 @@ def extract_room_matrices(conn):
     return total_items
 
 
+def extract_jurisdiction_detail(conn):
+    """C8: Extract jurisdiction detail from Part 4 comparison tables."""
+    part4_path = REPO_ROOT / "parts" / "v10" / "part04.md"
+    if not part4_path.exists():
+        return 0
+
+    with open(part4_path, "r") as f:
+        part4_content = f.read()
+
+    with open(REPO_ROOT / "references" / "part04-item-index.md", "r") as f:
+        idx_content = f.read()
+
+    items = {}
+    for line in idx_content.split("\n"):
+        m = re.match(r"\|\s*([A-K]-\d{2})\s*\|\s*(.+?)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|", line)
+        if m and "MERGED" not in m.group(2).upper() and "ABSORBED" not in m.group(2).upper():
+            items[m.group(1)] = {"start": int(m.group(3)), "end": int(m.group(4))}
+
+    p4_lines = part4_content.split("\n")
+
+    spec_ids = {}
+    for row in conn.execute("SELECT spec_id, item_code FROM specification").fetchall():
+        spec_ids.setdefault(row[1], []).append(row[0])
+
+    # Clear and repopulate
+    conn.execute("DELETE FROM jurisdictional_value")
+
+    total_jv = 0
+
+    JUR_MAP = {
+        "US": "US", "UK": "UK", "AU": "AU", "DE": "DE", "NO": "NO",
+        "ISO": "ISO", "CA": "CA", "NZ": "NZ", "SE": "SE", "DK": "DK",
+        "IE": "IE", "SG": "SG", "HK": "HK", "JP": "JP", "KR": "KR",
+        "FR": "FR", "NL": "NL", "IN": "IN", "ZA": "ZA", "FI": "FI",
+    }
+
+    for code, item in sorted(items.items()):
+        item_content = "\n".join(p4_lines[item["start"] - 1 : item["end"]])
+        jur_idx = item_content.find("**Jurisdiction comparison:**")
+        if jur_idx < 0:
+            continue
+
+        table_block = item_content[jur_idx:]
+        table_lines = table_block.split("\n")
+
+        header_row = None
+        data_rows = []
+        in_data = False
+        for tline in table_lines:
+            tline = tline.strip()
+            if tline.startswith("| Jurisdiction") or tline.startswith("|Jurisdiction"):
+                header_row = tline
+                continue
+            if tline.startswith("|---") or tline.startswith("| ---"):
+                in_data = True
+                continue
+            if in_data:
+                if not tline.startswith("|"):
+                    break
+                data_rows.append(tline)
+
+        if not header_row or not data_rows:
+            continue
+
+        headers = [h.strip() for h in header_row.split("|")[1:-1]]
+        std_col = next((i for i, h in enumerate(headers) if "standard" in h.lower()), None)
+        notes_col = next((i for i, h in enumerate(headers) if "note" in h.lower()), None)
+        value_cols = [
+            (i, h) for i, h in enumerate(headers)
+            if i != 0 and i != std_col and i != notes_col
+        ]
+
+        sids = spec_ids.get(code, [])
+        if not sids:
+            continue
+        sid = sids[0]
+
+        for row in data_rows:
+            cells = [c.strip() for c in row.split("|")[1:-1]]
+            if len(cells) < 2:
+                continue
+
+            jurisdiction = cells[0].strip("* ")
+            if not jurisdiction or "guidebook" in jurisdiction.lower():
+                continue
+
+            standard = cells[std_col].strip("* ") if std_col is not None and std_col < len(cells) else None
+            value_parts = []
+            for col_idx, col_name in value_cols:
+                if col_idx < len(cells) and cells[col_idx].strip() and cells[col_idx].strip() != "—":
+                    value_parts.append(f"{col_name}: {cells[col_idx].strip()}")
+            value_text = "; ".join(value_parts) if value_parts else None
+            notes = cells[notes_col].strip() if notes_col is not None and notes_col < len(cells) and cells[notes_col].strip() != "—" else None
+
+            jur_code = JUR_MAP.get(jurisdiction, jurisdiction)
+            conn.execute("""
+                INSERT INTO jurisdictional_value (spec_id, jurisdiction, standard_name, value_text, notes)
+                VALUES (?, ?, ?, ?, ?)
+            """, (sid, jur_code, standard, value_text, notes))
+            total_jv += 1
+
+    # Backfill from spec-db for specs without Part 4 tables
+    with open(REPO_ROOT / "references" / "specification-database.json", "r") as f:
+        db = json.load(f)
+
+    for s in db["specifications"]:
+        sid = s["spec_id"]
+        existing = conn.execute(
+            "SELECT COUNT(*) FROM jurisdictional_value WHERE spec_id = ?", (sid,)
+        ).fetchone()[0]
+        if existing > 0:
+            continue
+
+        for jcode in s.get("jurisdictions_supporting", []):
+            if isinstance(jcode, str):
+                conn.execute(
+                    "INSERT INTO jurisdictional_value (spec_id, jurisdiction, notes) VALUES (?, ?, 'supporting')",
+                    (sid, jcode),
+                )
+                total_jv += 1
+        for jcode in s.get("jurisdictions_divergent", []):
+            if isinstance(jcode, str):
+                conn.execute(
+                    "INSERT INTO jurisdictional_value (spec_id, jurisdiction, notes) VALUES (?, ?, 'divergent')",
+                    (sid, jcode),
+                )
+                total_jv += 1
+
+    conn.commit()
+    return total_jv
+
+
 def extract_part4_content(conn):
     """C3: Extract specification content fields from Part 4 prose."""
     import yaml
@@ -944,6 +1076,10 @@ def main():
     print("Creating item stubs from Part 4...")
     stub_count = create_item_stubs(conn)
     print(f"  → {stub_count} item stubs")
+
+    print("Extracting jurisdiction detail from Part 4...")
+    jv_count = extract_jurisdiction_detail(conn)
+    print(f"  → {jv_count} jurisdiction values")
 
     print("Extracting Part 4 content...")
     extract_count = extract_part4_content(conn)

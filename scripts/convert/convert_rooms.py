@@ -48,21 +48,19 @@ RESIDENTIAL_ROOMS = [
 
 # Non-residential rooms (Part 7) — extracted from Part 7 if it exists
 NON_RESIDENTIAL_ROOMS = [
-    {"room_id": "R-REC", "room_label": "Reception and Lobby", "section": "§7.1",
+    {"room_id": "NR-EDU", "room_label": "Education", "section": "§7.1",
      "evidence_density": "▓ Moderate"},
-    {"room_id": "R-COR", "room_label": "Corridor and Circulation", "section": "§7.2",
+    {"room_id": "NR-HLT", "room_label": "Healthcare", "section": "§7.2",
      "evidence_density": "▓ Moderate"},
-    {"room_id": "R-MTG", "room_label": "Meeting Room", "section": "§7.3",
+    {"room_id": "NR-WRK", "room_label": "Workplace", "section": "§7.3",
      "evidence_density": "░ Thin"},
-    {"room_id": "R-OFC", "room_label": "Open-Plan Office", "section": "§7.4",
+    {"room_id": "NR-RET", "room_label": "Retail and Commercial", "section": "§7.4",
      "evidence_density": "░ Thin"},
-    {"room_id": "R-WC", "room_label": "Accessible WC", "section": "§7.5",
-     "evidence_density": "■ Rich"},
-    {"room_id": "R-CHW", "room_label": "Changing Places / Changing Room", "section": "§7.6",
-     "evidence_density": "▓ Moderate"},
-    {"room_id": "R-CAN", "room_label": "Canteen and Dining", "section": "§7.7",
+    {"room_id": "NR-CUL", "room_label": "Cultural", "section": "§7.5",
      "evidence_density": "░ Thin"},
-    {"room_id": "R-ASM", "room_label": "Assembly and Event Space", "section": "§7.8",
+    {"room_id": "NR-HOS", "room_label": "Hospitality", "section": "§7.6",
+     "evidence_density": "░ Thin"},
+    {"room_id": "NR-TRP", "room_label": "Transport", "section": "§7.7",
      "evidence_density": "░ Thin"},
 ]
 
