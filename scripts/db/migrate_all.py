@@ -669,6 +669,63 @@ def fill_ot_dar_gaps(conn):
     return count
 
 
+def author_remaining_content(conn):
+    """Author why_md, schedule_md, summary, evidence_summary for items lacking Part 4 sections."""
+    WHY_MD = {
+        "E-05": "Weather protection at entry is not an amenity — it is a functional requirement for populations with thermoregulatory impairment, orthostatic intolerance, or mobility limitations that slow passage through the entry threshold.",
+        "E-10": "Rest seating on circulation routes determines whether a person with fatigue, pain, or reduced endurance can traverse the building independently or must choose between exhaustion and not going.",
+        "E-15": "A Changing Places facility provides the only dignified option for adults who cannot use a standard accessible WC independently. Without it, carers must change adults on toilet floors.",
+        "G-02": "A single seat height excludes more people than no seating at all: it signals that seating exists while making it unusable for anyone outside a narrow anthropometric range.",
+        "K-01": "Tactile and visual wayfinding provisions enable independent navigation for VIS and DBL populations. Without TGSIs and high-contrast visual markers, blind and low-vision users must rely on companion guidance.",
+        "K-03": "Tactile building maps provide the spatial overview that sighted users obtain from visual signage. For DBL users, the tactile map is the only means of forming a cognitive map of an unfamiliar building.",
+    }
+    SCHEDULE_MD = {
+        "B-12": "Sensor-activated overnight pathway lighting: bed-exit sensor activates low-level pathway lighting (≤5 lux at floor, warm white ≤2700K) on route between bed and bathroom. Sensor response time ≤0.5 seconds.",
+        "D-09": "Consistent furniture layout: no rearrangement without notification. Fixed furniture positions marked on floor plan. Moveable furniture confined to designated zones not encroaching on accessible routes.",
+        "E-10": "Rest seating: ≥1 seat at ≤30 m intervals on all primary accessible routes. Seat height 450 mm (±25 mm). Armrests both sides. Back support. Clear floor space ≥900×1200 mm adjacent for companion wheelchair.",
+        "E-13": "Entrance cognitive legibility: main entrance visually distinct from facade. Pictogram + single-word signage at entry decision points. Entry sequence legible to DEM (Allen CDM level 4) and NDV populations.",
+        "E-15": "Changing Places facility: minimum 12 m² clear floor area. Height-adjustable bench ≥1800×750 mm. Ceiling hoist with full room coverage. Peninsular WC. Separate from standard accessible WC.",
+        "G-01": "Turning circle: ≥1500 mm diameter clear turning space in all rooms and at all direction changes. ≥1700 mm where powered wheelchair turning anticipated. No obstruction above 300 mm AFF.",
+        "G-02": "Seating variety: three seat heights (400, 450, 500 mm AFF). ≥30% wall-backed with armrests and entry sightline. Co-located with general seating — not segregated.",
+        "K-01": "TGSIs at all hazard points. Tactile directional indicators on primary routes. High-contrast visual markers (LRV ≥60 differential) at decision points. Audible information at lifts and crossings.",
+        "K-03": "Tactile building map at main entrance, elevator lobbies, floor landings. Tilted 15° at 750–900 mm AFF. Tactile field 400×300 to 600×450 mm. ISO 23599 convention. Braille Grade 2 UEB.",
+    }
+    EVIDENCE_FILLS = {
+        "F-02": "Tier 3 — Standards convergence. Indoor air quality provisions supported by WHO guidelines, PAS 6463:2022, and WELL Building Standard.",
+        "F-06": "Tier 4 — Expert consensus. Fragrance-free policy supported by occupational health guidance and chemical sensitivity research.",
+    }
+    TIER_FILLS = {"A-04": 4, "F-02": 3, "F-06": 4}
+
+    count = 0
+    for code, text in WHY_MD.items():
+        r = conn.execute('UPDATE specification SET why_md = ? WHERE item_code = ? AND (why_md IS NULL OR why_md = "")', (text, code))
+        count += r.rowcount
+    for code, text in SCHEDULE_MD.items():
+        r = conn.execute('UPDATE specification SET schedule_md = ? WHERE item_code = ? AND (schedule_md IS NULL OR schedule_md = "")', (text, code))
+        count += r.rowcount
+    for code, text in EVIDENCE_FILLS.items():
+        r = conn.execute('UPDATE specification SET evidence_summary = ? WHERE item_code = ? AND (evidence_summary IS NULL OR evidence_summary = "")', (text, code))
+        count += r.rowcount
+    for code, tier in TIER_FILLS.items():
+        r = conn.execute('UPDATE specification SET evidence_tier = ? WHERE item_code = ? AND evidence_tier IS NULL', (tier, code))
+        count += r.rowcount
+
+    # Summary from why_md for items that have why_md but not summary
+    missing = conn.execute("SELECT item_code FROM specification WHERE (summary IS NULL OR summary = '') AND why_md IS NOT NULL AND item_code NOT LIKE '[%'").fetchall()
+    for (code,) in missing:
+        why = conn.execute("SELECT why_md FROM specification WHERE item_code = ? AND why_md IS NOT NULL LIMIT 1", (code,)).fetchone()
+        if why and why[0]:
+            first_sent = why[0].split(".")[0] + "."
+            conn.execute('UPDATE specification SET summary = ? WHERE item_code = ? AND (summary IS NULL OR summary = "")', (first_sent[:300], code))
+            count += 1
+
+    # F-05 retired
+    conn.execute('UPDATE specification SET question_heading = "[CONTENT MOVED TO G-08]", status = "retired" WHERE item_code = "F-05" AND (question_heading IS NULL OR question_heading = "")')
+
+    conn.commit()
+    return count
+
+
 def author_person_specific_notes(conn):
     """C3: Author person_specific_note (Mode S language) for all items."""
     CATEGORY_PATTERNS = {
@@ -1286,6 +1343,10 @@ def main():
     print("Filling OT/DAR gaps...")
     gap_count = fill_ot_dar_gaps(conn)
     print(f"  → {gap_count} gaps filled")
+
+    print("Authoring remaining content...")
+    auth_count = author_remaining_content(conn)
+    print(f"  → {auth_count} authored")
 
     print("Authoring Mode S notes...")
     ps_count = author_person_specific_notes(conn)
