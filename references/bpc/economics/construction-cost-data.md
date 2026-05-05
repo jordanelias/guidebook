@@ -77,3 +77,25 @@ opus_synthesis: true
 | CCD-09 | Szanton/CAPABLE | 2017 | US home modification + OT/RN intervention | 2 | US | USD $72-$1,398/participant (avg ~$1,300); ~10:1 Medicaid cost savings. Johns Hopkins/JAGS. |
 | CCD-10 | LSE/Habinteg | 2023 | UK M4(3) wheelchair user homes CBA | 2-3 | UK | Working-age: £22K cost → £94K benefit (4.3:1); Later-years: £18K → £101K (5.6:1); Child: £26K → £67K (2.6:1). Annual LA savings £5-9K/wheelchair user. |
 | CCD-11 | Tsuchiya-Ito et al. | 2022/2024 | Japanese LTC insurance adaptations | 1 | JP | Median USD $1,287 (¥200K max lifetime); 28% lower LTCF admission at max cost. BMC Geriatrics + JAMDA. |
+
+
+## TERRAGON/DStGB 2017 — forward search results (2026-05-05)
+
+Forward search approach: TERRAGON is grey developer literature. Searched for independent academic/regulatory sources addressing DIN 18040-2 cost claims.
+
+**Divergent figure clarification:**
+- TERRAGON (2017): 130/140 DIN 18040-2 criteria = zero additional cost at component level
+- Niedersachsen disability commissioner (independent): 0.86–1.7% whole-building cost premium for fully barrier-free DIN-standard dwellings
+- Trade sources (oberflaechenschutz.at, 2026): 3–5% for DIN 18040-2 basic; 5–8% for R-standard (wheelchair)
+
+These are NOT contradictory — they measure different things:
+- Per-criterion analysis (TERRAGON): most criteria require no new materials or techniques
+- Whole-building cost premium: includes spatial planning impacts (room sizing, corridor widths) that add area cost
+
+**BPC correction needed:** The existing synthesis citing "0.54–1.26%" from TERRAGON appears to be the spatial-planning premium for selected items, not whole-building. Recommend the accessible-design-economics-cost-premium.md distinguishes between:
+1. Per-criterion incremental material/technique cost (TERRAGON: 130/140 = zero)
+2. Whole-building spatial cost premium (Niedersachsen independent: 0.86–1.7%; trade sources: 3–5%)
+
+**Fuglerud et al. (2015) citation confirmed:** NR Report 1032, Norsk Regnesentral — "Cost-benefit analysis of universal design." Norwegian government-adjacent research. Strongly positive BCRs for accessible design in Norway (as cited in accessible-design-economics-cost-premium.md).
+
+**Germany housing supply gap (PMC5615501):** ~1.1M barrier-free dwellings needed but unavailable; ~€39B adaptation investment needed. German care insurance: up to €4,000/measure/year refund. Relevant to Part 11 §11.2.

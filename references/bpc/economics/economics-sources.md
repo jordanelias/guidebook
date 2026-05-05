@@ -111,3 +111,30 @@
 **PMC3157760 (cited as Gitlin ABLE RCT):** This PMC ID is INCORRECT — it resolves to an unrelated 1985 spinal manipulation paper. The correct Gitlin ABLE RCT papers are:
 - Gitlin, L.N. et al. (2006). A randomized trial of a multicomponent home intervention to reduce functional difficulties in older adults. *J Am Geriatr Soc*, 54(5), 809-16. [Search via DOI or PMID required — not returned in this mining pass]
 - Recommend search in next session: PubMed query "Gitlin ABLE functional difficulties home intervention 2006"
+
+
+## Sources added 2026-05-05 (SROI/NDIS/TERRAGON forward pass)
+
+### SROI methodology (GAP-ECON-04 partial closure)
+
+**SROI-01** Watson, K.J. et al. (2016). Capturing the social value of buildings: The promise of SROI. *Building and Environment*, 103, 289-317. | Tier 2 | UK
+Key: SROI applied to built environment case buildings. Demonstrates feasibility; identifies methodological challenges (cannot capture community sociality; requires modification for multi-stakeholder settings). Recommended as POE-to-investment translation framework.
+
+**SROI-02** Watson, K.J. et al. (2017). Applying SROI to the built environment. *Building Research & Information*. DOI: 10.1080/09613218.2016.1223486 | Tier 2 | UK
+Key: Stage-by-stage application to three case buildings. User-centred design generates measurable social value.
+
+**SROI-03** CMHC. Calculating SROI for Affordable Housing. Research Insight. | Tier 4 | CA
+Key: SROI framework for housing investment; rated existing studies by methodology quality.
+
+**SROI-04** Fujiwara, D. & Mirzoev, S. (2015). SROI and public health — systematic review. *BMC Public Health*. PMC4477315 | Tier 2 | Multi
+Key: 40 SROI studies reviewed. SROI unique in capturing multi-stakeholder value; ratios not comparable across studies. Relevant for §11.3 methodology framing.
+
+### NDIS SDA (GAP-ECON-05 partial closure)
+
+**NDIS-SDA-01** National Disability Insurance Agency. NDIS Pricing Arrangements for Specialist Disability Accommodation 2025-26. ndis.gov.au | Tier 4 | AU (Current)
+Key data: $5,000–$114,000+/participant/year (range by design category/location/building type); 4 design categories (Improved Liveability, Fully Accessible, Robust, High Physical Support); ~6% NDIS participants eligible; participant contribution capped at 25% DSP + 100% CRA; EY commissioned for 2022-23 Pricing Review; annual indexation from 1 July each year. NOTE: Original BPC figure "$35K–$117K" is close to current range but "$600M/year total" needs verification from NDIA expenditure data.
+
+### Germany housing accessibility (TERRAGON forward)
+
+**DE-01** PMC5615501 (2017). Improved Housing Accessibility for Older People in Sweden and Germany. *Int J Environ Res Public Health*.
+Key: Germany — 2.5M barrier-free units needed, 1.4M available; 1.1M gap; ~€39B adaptation cost needed; GKV pays up to €4,000/measure/year. Scale data for Part 11 §11.2.
