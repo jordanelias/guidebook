@@ -37,6 +37,14 @@
 
 All RT60 specifications are for the 500 Hz octave band in the occupied condition unless stated otherwise. NC ratings are single-number noise criterion measurements. STI = Speech Transmission Index (≥0.5 = good speech intelligibility). STC = Sound Transmission Class (partition isolation rating). All hearing loop specifications: IEC 60118-4:2014+AMD1:2017.
 
+<!-- Citation mining 2026-05-04: Evidence base for RT60 ≤0.3s strengthened by three new sources:
+     ASI-06 (Cueille 2022, R Soc Open Sci): HI penalty quantified at 18dB SRT increase (RT 0→1s) vs 10dB NH
+     ASI-07 (Korean 2022, Buildings): Elderly incomplete-hearing — RT60 >0.6s degrades speech scores
+     ASI-08 (2024 SR, PMC11384524): 23 studies confirm NH adapt to reverberation but HI do not — supports FIXED RT specification
+     Combined with existing Murgia 2023 SR (ASI-01, now GREY-resolved: DOI:10.1044/2022_LSHSS-21-00181):
+     RT60 >0.6s prevents 100% speech perception even at high SNR. The 0.6s value is confirmed as FAILURE BOUNDARY, not design target.
+     CON-0039 ISW action: elevate RT60 ≤0.3s to Universal Mode for all speech-critical rooms. -->
+
 ### A-01 Acoustic Buffer Zones at Noisy Adjacencies
 <!-- CON-0135 [HIGH]: A-01/A-02/A-08/A-10 acoustic cluster: adjacency + panels + HVAC NC-25 + hearing loop IEC 60118-4 -->
 <!-- CON-0138 [HIGH]: A-01/A-02/A-08 acoustic — MODERATE annotation; additional convergence evidence -->
