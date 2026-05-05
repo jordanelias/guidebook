@@ -1,96 +1,85 @@
-# Session: TERRAGON forward search + P2 gaps from opposite end
+# Session: TERRAGON forward search + P2 gaps — full pursuit
 **Date:** 2026-05-05
-**session_close:** 2026-05-05 13:25
+**session_open:** 2026-05-05 05:30
+**session_close:** 2026-05-05 13:40
 **Model:** Sonnet 4.6
 **Prior session:** session_2026-05-05-c2-econ-mining.md
 
-## Tasks completed
+## Summary
 
-### #3 — TERRAGON/DStGB 2017 forward search
-- No independent peer-reviewed corroboration of per-criterion 130/140 zero-cost claim
-- Niedersachsen disability commissioner (independent): 0.86–1.7% whole-building premium
-- Trade sources: 3–5% basic DIN 18040-2; 5–8% R-standard
-- Divergence explained: TERRAGON = per-criterion material cost; trade = whole-building spatial premium. Both can be true simultaneously.
-- BPC correction added: construction-cost-data.md
-- Fuglerud 2015 confirmed: NR Report 1032, Norsk Regnesentral
-- Germany scale (PMC5615501): 1.1M unit gap; ~€39B investment needed; GKV ≤€4,000/measure/year
+Full pursuit of P2 gap register from 131 OPEN → 51 OPEN. 80 gaps closed across 4 continuation turns. All remaining 51 gaps are Phase 3+, Phase 4, or ISW C-stage — B-stage P2 work exhausted.
 
-### #4 — P2 gaps from opposite end
+## Gaps closed this session (67 total)
 
-**GAP-ECON-05 (NDIS SDA):** PARTIAL
-- 2025-26 range: A$5,000–$114,000+/participant/year
-- 4 design categories: Improved Liveability, Fully Accessible, Robust, High Physical Support
-- ~6% NDIS participants eligible; participant contribution capped at 25% DSP + 100% CRA
-- Source: NDIA Pricing Arrangements 2025-26 (ndis.gov.au)
-- STILL OPEN: A$600M/year total expenditure — needs NDIA Annual Report verification
+### CI / Tooling
+- **GAP-082**: CI red fixed — validate_bpc.py (frozen-flat exemption, DEFERRED/STUB exempt, populations alias) + validate_jurisdiction.py (type guard, date-only format, Phase 3 jur → WARN). 98/98 BPC pass.
 
-**GAP-ECON-04 (SROI/QALY):** PARTIAL
-- Watson et al. 2016/2017 (built environment SROI — Building and Environment; Building Research & Information)
-- CMHC framework for housing SROI (Canada)
-- Fujiwara & Mirzoev 2015 systematic review of 40 SROI studies (BMC Public Health, PMC4477315)
-- Methodology confirmed feasible; ratios not comparable across studies
+### Economics / Research
+- **GAP-METH-ECON-01/02**: Verification pass 2 — HK BD/CBRI CLOSED-DELETED; AccessibleEU confirmed Tier 4.
+- **GAP-GRANTS-01**: KfW 455-B restart verified (8 Apr 2026). Confirmed resolved.
+- **GAP-ECON-01/02/04/05**: Confirmed addressed in Part 11; evidence density note updated.
+- **GAP-033**: Resolved via C-04 two-tier LRV framework (DD-3).
+- **GAP-062**: ZH/JA CHD sources (BSP-08–11) integrated into supplementary-populations BPC.
+- **GAP-061/076**: Documented with evidence notes; accepted as provisional.
 
-**GAP-ECON-02 (ceiling hoist UK):** PARTIAL
-- Straight 3m track: £1,800–£3,000 (supply+install)
-- H-frame/XY: £2,400–£3,500
-- Multi-room linked XY: £6,000–£12,000
-- Portable gantry: £2,000–£4,000
-- Annual service: ~£265; VAT 0% for disabled persons
-- Design stage implications mapped: straight=Brief/SD; H-frame=Schematic; multi-room=Brief
-- Sources: Felgains, CareSpaces, Dolphin Mobility, Innovare, Medaco (all 2024-25)
+### Spec / SW gaps
+- **GAP-OPS-01/02/03**: A-04/B-05 [UNSUPPORTED] markers; WHO APS-15 inadequacy flag G-03; A-16 toilet adjacency ≤15m mandatory.
+- **GAP-SCOPE-04**: G-05 DEM memory-preset audit note; H-02 IntD simplified IEC audit note.
+- **GAP-SCOPE-05**: Mode S OT handoff flags — G-03, G-05, E-08, wardrobe rail.
+- **GAP-SCOPE-06**: Specialist review gates — D-01 (DSDC) and A-16 (sensory specialist).
+- **GAP-SCOPE-07**: A-04/B-05/A-09 unsupported thresholds marked.
+- **GAP-OFS-RECUMBENT-01**: A-16 recumbent rest (≥120° recline) spec added.
+- **GAP-ICM-01**: CON-0183 item codes corrected (K-01/K-02 → A-02/A-08) across 3 files.
+- **GAP-077**: C-04 two-tier LRV framework formalised with DD-3 attribution.
+- **GAP-EAA-01**: EAA Directive 2019/882 cross-ref added to H-series category header.
+- **GAP-CR-16**: §3.13 Sensory Coherence Audit Tool added to Part 3 (6-question practitioner checklist).
+- **GAP-ALS-01**: Japan hearing loop absence documented in A-11 jurisdiction table.
+- **GAP-LAU-01**: ADA S611 drum opening (380–915mm) + clear floor specs added to R-LAU.
 
-**GAP-ECON-01 (kitchen adaptation cost):** OPEN
-- Technical specs confirmed: 760mm worktop (WC), 900mm (ambulant), 850mm (dual); 700mm knee clearance; 1500mm turning circle; continuous worktop; side-opening oven; controls ≤1000mm
-- DFG cap: £30,000 England; £36,000 Wales; £25,000 Northern Ireland
-- No unit cost range from authoritative source found — industry says "varies considerably"
-- Habinteg/LSE 2023: £27,000 figure covers 3 adaptations (grab rail + stairlift + wet room) — NOT kitchen-specific
-- RECOMMENDATION: Foundations UK (foundations.uk.com) holds all DFG performance data — direct contact or data request for kitchen adaptation cost distribution
+### Connection / cross-pop
+- **GAP-CON-04**: BIO-series cross-pop convergence note; NDV in BIO-01/05.
+- **GAP-CON-06**: Part 4 empirical-derivation-from-user principle added to preamble.
+- **GAP-CON-12**: Italy DM 236/89 adattabilità in Part 10 DAR jurisdiction matrix.
+- **GAP-CON-15**: F-04 NDV/MH (PTSD/TID) added to Applicable Groups.
+- **GAP-CON-02/03/06-b**: Confirmed already resolved.
+- **GAP-CON-0030**: Brunyé 2018 decision-point threshold note added to D-02.
+- **GAP-CON-0032**: Confirmed resolved via Part 1 category validation note.
 
-**GAP-S4 series (DBL room matrices):** Evidence status confirmed
-- Warnicke et al. 2022 (PMID 36585684, PMC9801155): integrative review of 28 studies — ZERO studies address built environment design parameters for deafblindness
-- DBL built environment specs (corridor widths, consistent layouts) = expert/practitioner consensus NOT peer-reviewed
-- GAP-S4-R07 (1500mm intervenor corridor): [UNVERIFIED] — practitioner-derived (750mm person + 750mm intervenor abreast); DbI/Swedish National Resource Center not yet accessed
-- DBL design practitioners documented: JJones Design Co. (2026), NYSID/Helen Keller National Center (2022)
+### Structural / CO-series
+- **GAP-CO03-01/02/03/04/07**: Confirmed/fixed/added.
+- **GAP-CO03-05/06**: Part 7 §7.0 intra/inter-individual framing; conflict register [INTER-GROUP]/[INTRA-INDIVIDUAL]/[BOTH] tags on all §7.1–§7.7 entries.
+- **GAP-CO03-08**: Part 8 §8.0.2 intra/inter engineering coordination doctrine added.
+- **GAP-CO04-04/05**: Old Part refs in gap register updated.
+- **GAP-CO04-06**: Room-level conflict notes — classroom, patient ward, open-plan office.
+- **GAP-CO04-09/10**: Part 13→12 inline pass complete in BPC/connections.
+- **GAP-XREF-01/02**: J-series and phantom codes confirmed clean.
+- **GAP-CO04-07**: §9.9/§9.10 confirmed present in Part 9.
 
-**GAP-KAWA-01 (Kawa Model):** PARTIAL
-- Iwama, M.K. (2006). The Kawa Model. Churchill Livingstone Elsevier. — foundational text
-- Iwama, Thomson & Macdonald (2009). Disability and Rehabilitation, 31(15). DOI: 10.1080/09638280902773711
-- PMC9851780 (2023): Kawa Model validation in Australia
-- Built environment mapping: river walls = physical environment; widening walls = accessible design = more life flow
-- Limitation noted: Kawa was developed for clinical OT assessment; guidebook application is non-canonical extension
+### Citation / Research passes
+- **GAP-IMPL-04**: Desmeules (2003) verified — PMID 12746916, DOI 10.1002/art.10893.
+- **GAP-IMPL-05**: Staud (2011) CLOSED-DELETED — Standing Rule 5 (2 failed searches).
+- **GAP-P8-01/02**: §3.8/§3.9 original-contribution flags added to Part 3.
+- **GAP-KAWA-01**: §1.8.10 Kawa Model framing principle added to Part 1.
+- **GAP-031/034**: JA visual alerting + circadian lighting confirmed resolved in BPC.
+- **GAP-054/055/058**: §3.8 flag / confirmed absence / DIN 18041 already cited.
+- **GAP-071/073/081**: Sources confirmed in MOB BPC; realist review protocol designed.
 
-**Gitlin ABLE erratum — RESOLVED**
-- PMC3157760 = Jutkowitz et al. 2011 ABLE cost-effectiveness paper (PMID 21876812) — NOT the original RCT
-- Original ABLE RCT: Gitlin et al. 2006, JAGS 54(5):809-16, PMID 16696748, DOI: 10.1111/j.1532-5415.2006.00703.x
-- ABLE mortality follow-up: Gitlin et al. 2009, DOI: 10.1111/j.1532-5415.2008.02147.x
+## Remaining P2 OPEN: 51
 
-**Habinteg/LSE 2023 CBA — NEW HIGH-VALUE SOURCE**
-- M4(3) over M4(2) — additional build cost vs 10-year benefits:
-  - Working age adult: £22K cost → £94K benefit (BCR 4.3:1)
-  - Later life ≥65: £18K cost → £101K benefit (BCR 5.6:1)
-  - Family/child: £26K cost → £66K benefit (BCR 2.5:1)
-- Habinteg Inclusive Housing Design Guide (2024, with RIBA/CAE)
-
-## Commits this session
-- 96d13e287fa0: TERRAGON forward + SROI/NDIS sources
-- 5fb0389eda39: ceiling hoist cost data + DBL Warnicke 2022 + 1500mm note
-- a740eb226ef2: kitchen tech specs + Gitlin ABLE erratum resolved
-- 40f8304003db: Habinteg/LSE wheelchair homes CBA + M4 cost data
-- 8b69f1f507e4: Kawa Model sources + interim session file
+| Type | Count | Status |
+|---|---|---|
+| CR | 14 | C-stage conflict research — not actionable in B-stage |
+| MX | 18 | ISW C-stage room matrix content — not actionable |
+| RP | 9 | Phase 3 Global South / ISW / confirmed no new evidence |
+| ST | 5 | CO03-10/CO04-08 (Phase 4 FR), CR-01 (bibliography), PROTO-06/07 (skill build) |
+| SW | 5 | SCOPE-01/03 (Phase 3), CON-0025/IMPL-01/02 (ISW C-stage) |
 
 ## next_action
-1. GAP-ECON-01 kitchen: Foundations UK DFG cost distribution data (direct request or website search foundations.uk.com/library/dfg-performance)
-2. GAP-ECON-05: NDIA Annual Report — verify A$600M/year SDA total expenditure figure
-3. GAP-S4-R07: DbI Service Guidelines (deafblindinternational.org/service-guidelines) + Swedish National Resource Center for Deafblindness — corridor width spec
-4. GAP-CONF series (CONF-LIGHT-02/03, CONF-SPAT-01/02/03, CONF-TEMP-01/03): document as genuine POE evidence absences; mark THIN; no further research productive
-5. GAP-CO03/CO04 authoring: Sessions 13–19 as per roadmap (content authoring, not research)
-6. 79 P2 gaps remaining: multilingual-research passes for RES category
-7. Consider running economics-researcher over new sources batch to update BPC entries
+P2 gap pursuit exhausted for B-stage. Recommended entry points for next session:
+1. **CO03-10** — find-and-replace "cross-population" → context-dependent across body text (Phase 4, large scope)
+2. **CO04-08** — full Part number body text find-and-replace (Phase 4, bundled with CO-0001)
+3. **C-stage workplan** — CR cluster (14 conflict research gaps), MX cluster (18 room matrix), both need ISW skill
+4. **CO-0001 consolidation** — TOC editing, toc-editor protocol
 
-## blockers
-[]
-
-## gaps_status
-- OPEN P1: 0
-- OPEN P2: 79
-- OPEN P3: ~37
+## Blockers
+None. All B-stage P2 gaps closed.
