@@ -3286,7 +3286,7 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 **Specifications:**
 
-Zero threshold: no shower tray, no threshold ≤3 mm
+Zero threshold: no shower tray, no threshold, no raised lip, no drainage channel proud of floor level. ● Absolute zero-threshold [CON-0210]: Al Lawati 2017 (ULB-03/SRB-06) shows 2cm threshold defeats 45.8% of wheelchair users. Linear drain must be flush with finished floor level.
 
 Floor slope: ≤1:80 to drain (non-wheelchair) / ≤1:80 (wheelchair-accessible)
 
@@ -3579,7 +3579,7 @@ Eye-gaze screen: adjustable arm mount at 500–700 mm from face, perpendicular t
 
 Per-position switch access: accessible switch (head-operated, chin-operated, or proximity-activated) at bed, WC, and primary seating position, wired to ECU hub. No hand operation required.
 
-Voice control acoustic environment: RT60 ≤0.4 s in all rooms with voice-controlled ECU (cross-ref A-02). C4–C5 users have reduced vocal volume, increasing sensitivity to reverberation.
+Voice control acoustic environment: RT60 ≤0.4 s in all rooms with voice-controlled ECU (cross-ref A-02). C4–C5 users have reduced vocal volume, increasing sensitivity to reverberation. Citation mining 2026-05-04: Cueille 2022 (ASI-06, DOI:10.1098/rsos.210342) quantifies HI reverberation penalty at 18dB SRT increase — same mechanism applies to voice recognition systems processing reduced-volume speech in reverberant environments. ASI-08 SR confirms adaptation to reverberation is not possible for impaired signal sources.
 
 **Backup power (LIFE SAFETY):** UPS with ≥4 hr battery for ECU system. ECU controls door locks, lighting, call system, HVAC, and communication. Power failure = complete environmental lockout for C4–C5 user. Backup power is a life safety requirement, not a comfort provision. DAR provision: conduit from ECU mounting positions to electrical panel at construction stage (≤0.1% NC premium; retrofit ×8–15). Cross-ref Part 10 DAR.
 
