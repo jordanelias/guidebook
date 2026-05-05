@@ -302,3 +302,7 @@ None.
 - D-0149: Website data integration via schema-aligned JSON in references/website/data/ (not Wix)
 - D-0150: Entity 5 expanded from 3 sub-entities (5a-5c) to 7 (5a-5g) with four-pillar framework
 - D-0151: GAP-ECON-05 resolved — Part 11 v10 already contains the four missing cost tables
+
+
+## citation_mining_handoff
+Phase 2: 7 Tier 1 remaining. Phase 3: population BPCs. Phase 4: SR supersession. Phase 5: TBC entries. 43 commits, 39 sources discovered.
