@@ -611,6 +611,22 @@
       "status": "Active",
       "pillar": "inaction",
       "last_updated": "2026-05-04"
+    },
+    {
+      "grant_id": "GRANT-010",
+      "programme_name": "Housing Adaptation Grant for People with a Disability",
+      "jurisdiction": "IE",
+      "administering_body": "Local authorities (Ireland)",
+      "type": "Means-tested grant",
+      "max_funding": 30000,
+      "currency": "EUR",
+      "eligibility": "People with disability; means-tested with income disregards (updated Dec 2024). OT assessment required for certain works.",
+      "source": "Citizens Information / Department of Housing",
+      "evidence_tier": "E-1",
+      "status": "Active",
+      "note": "Updated December 2024 with new income disregards and expanded eligible works",
+      "pillar": "inaction",
+      "last_updated": "2026-05-04"
     }
   ],
   "health_outcomes": [
@@ -1420,8 +1436,8 @@
       "pillar": "market",
       "label": "14+ jurisdictions need deep investigation",
       "description": "IT, ES, NL, SE, NO, DK, FI, IE, NZ, JP (beyond financing), KR, BR, MX, IN, SG not investigated to UK/AU/CA/DE depth.",
-      "status": "deferred",
-      "resolution_note": "Scope expansion for 14+ jurisdictions is a multi-session research programme, not a single-session task. Deferred. Priority jurisdictions for next investigation: NL (strong UD tradition), JP (beyond financing \u2014 built environment research), IE (Part M), NZ (Keall RCT jurisdiction with policy context).",
+      "status": "partially-resolved",
+      "resolution_note": "3 of 4 priority jurisdictions investigated (NL, IE, NZ). All have regulatory frameworks but no published accessibility cost studies. Consistent with global hedonic gap. IE grant data added. JP beyond financing, plus 10+ other jurisdictions remain.",
       "resolved_date": "2026-05-04"
     }
   ]
