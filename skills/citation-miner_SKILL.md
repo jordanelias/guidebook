@@ -2,136 +2,225 @@
 name: citation-miner
 description: >
   Backward and forward citation mining for confirmed Tier 1–3 sources in the guidebook
-  evidence base. For every confirmed source: mine its reference list (backward) and
-  Google Scholar "cited by" (forward) to discover additional relevant evidence. ALWAYS
-  use this skill when asked to: mine citations, find related sources, trace citation
-  networks, discover additional evidence from a known source, perform backward citation
-  mining, perform forward citation mining, or expand the evidence base from existing
-  references. Trigger on: "citation mining", "mine references", "cited by", "backward
-  citations", "forward citations", "trace the citation network", "find related papers",
-  "expand evidence base". Phase 2B skill — runs after initial multilingual-research
-  retrieval.
+  evidence base. Runs in two modes: INLINE (triggered automatically by research skills
+  when a source is confirmed) and BATCH (standalone pass over all unmined sources in a
+  slug or globally). Depth-1 only — mine references of each source but never recurse
+  into discovered sources within the same session. Tracks all mining in SQLite via
+  db.py CLI. Produces bibliography-ready output. ALWAYS use this skill when asked to:
+  mine citations, find related sources, trace citation networks, expand evidence base,
+  run citation mining pass, generate bibliography. Trigger on: "citation mining",
+  "mine references", "cited by", "backward citations", "forward citations",
+  "expand evidence base", "bibliography", "unmined sources".
 ---
 
 **Model:** Sonnet 4.6 + web search
-**Input:** Source list (author, year, title, DOI if available, tier) from multilingual-research or BPC
-**Output:** New sources discovered + tier classification + BPC update data
 **Connectors:** PubMed, Scholar Gateway, Consensus — activate for mining.
+**SQLite:** `data/guidebook.db` via `scripts/db.py`
 
 ---
 
-## 1. Mining Protocol
+## 1. Two Modes
 
-### Pre-mining CHECK (mandatory)
-Before mining any source:
-1. GET `references/citation-mining-register.md` from GitHub
-2. Search for the source (by author/year or REF-ID)
-3. If found with both B=✓ and F=✓ → **SKIP** (already fully mined)
-4. If found with partial → mine only the missing direction
-5. If not found → proceed with full mining
-6. **Skipping this check = error** (per project-standards)
+### INLINE mode (called from research skills)
+
+When multilingual-research, functional-deficit-researcher, economics-researcher, or
+literature-review-planner confirms a Tier 1–3 source:
+
+1. The calling skill passes: `(slug, ref_id, author, year, title, doi)`
+2. Citation-miner checks: `python3 scripts/db.py is-mined {slug} {ref_id}`
+3. If already mined (both B+F) → skip, return
+4. If unmined or partial → mine missing direction(s)
+5. Log result: `python3 scripts/db.py log-mining {slug} {ref_id} {direction} --connections CON-XXXX --session {session}`
+6. Return discovered sources to calling skill
+
+**Depth-1 enforced:** discovered sources are RECORDED but NOT mined in the same pass.
+They enter the unmined queue for the next batch run.
+
+### BATCH mode (standalone)
+
+When citation-miner is invoked directly:
+
+1. Query unmined sources:
+   ```sql
+   SELECT es.ref_id, es.surname, es.year, es.title, es.doi, ssl.slug
+   FROM evidence_sources es
+   JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
+   LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.local_ref_id = es.ref_id
+   WHERE es.evidence_tier IN (1, 2, 3)
+   AND (cm.backward IS NULL OR cm.backward = 0 OR cm.forward IS NULL OR cm.forward = 0)
+   ORDER BY es.evidence_tier ASC, es.year DESC
+   ```
+2. For each unmined source: mine backward, mine forward, log to SQLite
+3. After completing all sources in a slug: update `bpc_metadata.citation_mining_complete = 1`
+4. Report: total mined, new sources discovered, remaining unmined
+
+**Depth-1 enforced:** sources discovered during batch are added to evidence_sources
+but NOT mined in the same batch run. They appear in the next batch query.
+
+---
+
+## 2. Mining Protocol
 
 ### Backward Mining (reference list)
-For each input source:
-1. Retrieve the source's reference list via:
-   - DOI → CrossRef API or publisher page
-   - PubMed → "References" section
-   - Scholar Gateway → source record
-2. Scan references for relevance: title contains target population code terms OR built environment terms
+For each source:
+1. Retrieve reference list via DOI → CrossRef, PubMed references, or Scholar Gateway
+2. Filter for relevance (see §3)
 3. For each relevant reference found:
-   - Verify it exists (PubMed/Scholar Gateway lookup)
+   - Verify existence (PubMed/Scholar lookup)
    - Classify evidence tier per §1.5 hierarchy
-   - Record: author, year, title, journal, DOI, tier, language, jurisdiction, discovery method (backward from {source})
+   - Check if already in evidence_sources table
+   - If new: add to evidence_sources + source_slug_links
+   - Record discovery_method: `backward_from:{ref_id}`
 
 ### Forward Mining (cited by)
-For each input source:
+For each source:
 1. Search Google Scholar "cited by" or Scholar Gateway forward citations
-2. Filter by relevance: title/abstract contains target population + built environment terms
-3. Apply recency filter: prioritise post-2015 sources (but don't exclude earlier if highly relevant)
+2. Apply recency filter: prioritise post-2015, don't exclude earlier if high-tier
+3. Filter for relevance (see §3)
 4. For each relevant citing paper:
-   - Verify it exists
+   - Verify existence
    - Classify evidence tier
-   - Record as above with discovery method (forward from {source})
+   - Check if already in evidence_sources
+   - If new: add to evidence_sources + source_slug_links
+   - Record discovery_method: `forward_from:{ref_id}`
 
 ---
 
-## 2. Relevance Filter
+## 3. Relevance Filter
 
-A discovered source is relevant if it meets ANY of:
-- Addresses the same population code AND built environment element as the input source
-- Provides OT clinical evidence (Tier 1) for the same specification domain
-- Provides lived experience data (Co-1) for the same population
-- Is a systematic review covering the input source's topic
-- Provides jurisdiction-specific beyond-code data not yet in the BPC
+**Include** if ANY:
+- Same population code AND built environment element as input source
+- OT clinical evidence (Tier 1) for same specification domain
+- Lived experience data (Co-1) for same population
+- Systematic review covering input source's topic
+- Jurisdiction-specific beyond-code data not yet in evidence base
 
-A discovered source is NOT relevant if:
+**Exclude** if ANY:
 - Pure medical/clinical without built environment application
 - Policy/advocacy without specification-level data
-- Duplicate of an already-known source
+- Duplicate of existing source (check by dedup key: `lower(surname + year + first_5_title_words)`)
 
 ---
 
-## 3. Output Format
+## 4. SQLite Integration
 
-```markdown
-## Citation Mining Report — {slug}
-**Date:** YYYY-MM-DD HH:MM
-**Sources mined:** [N]
-**New sources discovered:** [N] (backward: [N], forward: [N])
+### Pre-mining check (mandatory)
+```bash
+python3 scripts/db.py is-mined {slug} {ref_id}
+```
+Returns: `{"backward": 0/1, "forward": 0/1, "connections_produced": [...]}` or null
 
-### Backward mining
-| Input source | Refs scanned | Relevant found | New to BPC |
-|---|---|---|---|
+### Post-mining log (mandatory)
+```bash
+python3 scripts/db.py log-mining {slug} {ref_id} backward --connections CON-0247,CON-0248 --session session_2026-05-05
+python3 scripts/db.py log-mining {slug} {ref_id} forward --connections CON-0249 --session session_2026-05-05
+```
 
-### Forward mining
-| Input source | Citing papers | Relevant found | New to BPC |
-|---|---|---|---|
+### Adding new sources
+New sources discovered during mining are added to evidence_sources via direct SQL
+INSERT (not yet exposed as db.py subcommand — add if needed). Required fields:
+- ref_id (next available in slug's REF-ID sequence)
+- surname, year, title, journal
+- doi (if available)
+- evidence_tier
+- language, jurisdiction
+- discovery_method
 
-### New sources
-| # | Authors | Year | Title | Journal | Lang | Jurisdiction | Tier | DOI | Discovery |
-|---|---|---|---|---|---|---|---|---|---|
-
-### Sources already known
-[List of sources found that are already in the BPC — confirms network coverage]
-
-### Mining gaps
-[Languages/jurisdictions where mining produced no new results]
+### Slug completion check
+After all sources in a slug are mined (B+F):
+```sql
+UPDATE bpc_metadata SET citation_mining_complete = 1,
+  updated_at = '{timestamp}', updated_by_session = '{session}'
+WHERE slug = '{slug}'
 ```
 
 ---
 
-## 4. Integration with research-log-manager
+## 5. Bibliography Output
 
-After mining:
-- **Citation mining register:** Append each mined source to `references/citation-mining-register.md` with REF-ID, source, DOI, slug, B/F status, date, yield, session. This is the primary duplication-prevention mechanism. Commit register update in the same batch as BPC/connection updates.
-- New sources are added to the BPC entry for the slug under `citation_mining`:
-  ```yaml
-  citation_mining:
-    backward: [N]
-    forward: [N]
-    sources_added: [N]
-    sources_mined: [list of input source identifiers]
-  ```
-- New Tier 1–2 sources trigger re-evaluation of `best_practice_synthesis`
-- Call `research-log-manager LOG` to update the search-log entry
+When asked for bibliography or when a mining pass completes, generate formatted
+bibliography from evidence_sources:
 
----
+```bash
+python3 scripts/db.py coverage {slug}
+```
 
-## 5. Token Efficiency
+For full bibliography generation, query:
+```sql
+SELECT es.ref_id, es.surname, es.year, es.title, es.journal, es.doi,
+       es.evidence_tier, es.language, GROUP_CONCAT(ssl.slug) as slugs
+FROM evidence_sources es
+JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
+GROUP BY es.ref_id
+ORDER BY es.surname, es.year
+```
 
-- Mine ≤8 sources per run (prioritise highest-tier inputs)
-- Stop forward mining at 20 citing papers per source (diminishing returns)
-- If a source has >100 citing papers: filter by "cited by" sort relevance, take top 20
-- Batch by slug: mine all sources for one slug before moving to next
-- Checkpoint after each source: `CHECKPOINT — mined: {author year} — backward: {N} new — forward: {N} new`
-
----
-
-## 6. Escalation Triggers
-
-- Mining reveals a systematic review not previously identified → 🟡 flag for evidence-auditor (may change stratum)
-- Mining reveals contradictory evidence → 🔴 flag for workplan-orchestrator (specification may need revision)
-- Mining produces >10 new Tier 1–2 sources for a slug → flag as HIGH-YIELD; reassess best_practice_synthesis
+Format each entry as:
+```
+[REF-ID] Surname, Initials (Year). Title. *Journal*, Volume(Issue), Pages. DOI: xxx
+  Tier: N | Language: XX | Slugs: slug-1, slug-2
+  Mining: B={status} F={status} | Discovered via: {method}
+```
 
 ---
 
+## 6. Depth-1 Rule
+
+**This is a hard constraint.** During any single invocation (inline or batch):
+
+- Mine the references OF the input source ✓
+- Mine the citations OF the input source ✓
+- Record any new sources discovered ✓
+- Mine the references of discovered sources ✗ NEVER
+- Mine the citations of discovered sources ✗ NEVER
+
+Discovered sources enter the unmined queue. They will be mined in a SUBSEQUENT
+invocation (next batch run or next inline trigger). This prevents citation mining
+from consuming unbounded context chasing citation chains.
+
+---
+
+## 7. Integration with Research Skills
+
+All research skills that confirm Tier 1–3 sources MUST invoke citation-miner
+in inline mode before completing their run. The integration point is:
+
+1. Research skill confirms source exists and assigns tier
+2. Research skill calls citation-miner inline: `(slug, ref_id, author, year, title, doi)`
+3. Citation-miner checks is-mined, mines if needed, logs result
+4. Citation-miner returns any new sources to research skill
+5. Research skill includes new sources in its LOG output
+
+**Skills with this integration:**
+- multilingual-research (Step 4: mandatory citation-miner invocation)
+- functional-deficit-researcher (Step 4b: mandatory after diminishing-return gate)
+- economics-researcher (Step 7: mandatory for E-1/E-2 sources)
+- literature-review-planner (Section 3: during plan scoping)
+
+---
+
+## 8. Session Reporting
+
+At end of any mining session, produce:
+
+```markdown
+## Citation Mining Summary — {date}
+**Mode:** {inline|batch}
+**Sources processed:** {N} (backward: {N}, forward: {N})
+**New sources discovered:** {N}
+**Connections produced:** {CON-IDs}
+**Slugs completed:** {list of slugs where all sources now mined}
+**Remaining unmined:** {N} sources across {N} slugs
+```
+
+Query for remaining unmined:
+```sql
+SELECT COUNT(*) as unmined, ssl.slug
+FROM evidence_sources es
+JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
+LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.local_ref_id = es.ref_id
+WHERE es.evidence_tier IN (1, 2, 3)
+AND (cm.backward IS NULL OR cm.backward = 0 OR cm.forward IS NULL OR cm.forward = 0)
+GROUP BY ssl.slug
+ORDER BY unmined DESC
+```

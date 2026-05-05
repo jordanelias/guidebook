@@ -1,92 +1,126 @@
 <!-- GOVERNED BY PROJECT INSTRUCTIONS — execution copy only. PI definition governs on conflict. -->
+<!-- C2 OVERHAUL 2026-05-05: SQLite-first data sourcing + citation mining integration -->
 
 ---
 name: item-specification-writer
 description: >
-  Draft, revise, and audit item-level design specifications for any volume of the guidebook
-  containing itemised provisions. Applies the three-tier design hierarchy, specification
-  range doctrine, social model framing, and population code cross-referencing to every item.
-  ALWAYS use this skill when asked to: write a new specification item, revise an existing
-  item, draft evidence tables for items, write room or typology matrices, produce synthesis
-  sections for a specification category, or produce any structured item-level content.
-  Trigger on: "write the item", "draft the spec", "revise this item", "new specification",
-  "item spec", "add a provision", "draft the category", "write the evidence table",
-  "item-level content", "specification for [population] [building element]", or any task
-  where the output is a structured design specification with a code, title, specification
-  text, evidence basis, and population tags. Also trigger when revising existing items
-  for evidence upgrades, framing corrections, or consolidation outputs.
+  Draft, revise, and audit item-level design specifications for the guidebook. SQLite-first:
+  reads evidence from evidence_sources, writes spec fields to specification table, triggers
+  citation mining for confirmed sources. Applies design modes, specification range doctrine,
+  social model framing, and population code cross-referencing. ALWAYS use when asked to:
+  write a new spec, revise an existing item, draft evidence tables, write room matrices,
+  or produce structured item-level content. Trigger on: "write the item", "draft the spec",
+  "revise this item", "new specification", "item spec", "ISW", "evidence upgrade".
 ---
 
-**Model:** Sonnet 4.6 — judgment required for all evidence and framing decisions  
-**Input:** item brief (code · title · population codes · evidence · typology scope) + section map  
-**Output:** complete item block in guidebook format + evidence table + population tag table  
-**Chunk ceiling:** ≤30 items per run. Full category → haiku-chunker first.
+**Model:** Sonnet 4.6 (judgment required for evidence and framing)
+**SQLite:** `data/guidebook.db`
+**GitHub backend:** `jordanelias/guidebook` · `main` (Part 4 prose files)
 
 ---
 
+## 0. Data Sourcing (SQLite-first)
 
-## Pre-Step: BPC Opus-Synthesis Check
+### Before writing or revising any item:
 
-Before writing any item specification, check the BPC entry for the target slug:
-- If `opus_synthesis: false` → emit: `[BPC NOT OPUS-REVIEWED — synthesis may be incomplete. Proceed with Sonnet-level synthesis at reduced confidence.]`
-- This warning propagates to all downstream outputs (item spec, formatted item, critique).
-- Do not block execution — proceed after emitting warning.
+1. **Load spec record from SQLite:**
+   ```sql
+   SELECT * FROM specification WHERE item_code = '{code}'
+   ```
 
-## Governing Principles
+2. **Load evidence sources:**
+   ```sql
+   SELECT es.ref_id, es.surname, es.year, es.title, es.evidence_tier, es.language
+   FROM evidence_sources es
+   JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
+   WHERE ssl.slug IN (SELECT bpc_source_slug FROM specification WHERE item_code = '{code}')
+   ORDER BY es.evidence_tier ASC
+   ```
+
+3. **Load population associations:**
+   ```sql
+   SELECT population_code, role FROM specification_population
+   WHERE spec_id IN (SELECT spec_id FROM specification WHERE item_code = '{code}')
+   ```
+
+4. **Load connections targeting this item:**
+   ```sql
+   SELECT c.con_id, c.status, c.confidence, c.description
+   FROM connections c
+   JOIN connection_targets ct ON c.con_id = ct.con_id
+   WHERE ct.target_id = '{code}' AND c.status = 'PENDING'
+   ```
+
+5. **Load BPC synthesis from GitHub:** GET `references/bpc/{topic}/{slug}.md`
+   Check `bpc_metadata.citation_mining_complete` — if false, note in output.
+
+### After writing or revising:
+
+6. **Write spec fields to SQLite:**
+   ```sql
+   UPDATE specification SET
+     summary = ?, evidence_summary = ?, why_md = ?, schedule_md = ?,
+     question_heading = ?, dar_relevant = ?, dar_note = ?,
+     retrofit_category = ?, ot_evidence_basis = ?,
+     person_specific_note = ?, evidence_tier = ?,
+     updated_at = ?, updated_by_session = ?
+   WHERE item_code = '{code}'
+   ```
+
+7. **Write updated Part 4 prose to GitHub** (the markdown file remains canonical for prose)
+
+8. **Trigger citation-miner inline** for any new Tier 1–3 source confirmed during the revision
+
+---
+
+## 1. BPC Opus-Synthesis Check
+
+Query SQLite before writing:
+```sql
+SELECT citation_mining_complete FROM bpc_metadata WHERE slug = '{slug}'
+```
+If `citation_mining_complete = 0`: emit warning that evidence base may be incomplete.
+
+---
+
+## 2. Governing Principles
 
 ### Social Model (non-negotiable)
-The built environment creates barriers. People are not the problem.  
-- CRPD Articles 9, 19, and 30 govern all specification decisions.
-- State the ideal built environment first. Note constraints only where genuinely necessary.
-- Never: "to help users with X", "to accommodate disability". Always: "to remove the barrier", "to provide equivalent access".
+The built environment creates barriers. People are not the problem.
+- CRPD Articles 9, 19, 30 govern all specification decisions.
+- State the ideal built environment first. Constraints only where genuinely necessary.
+- Never: "to help users with X". Always: "to remove the barrier".
 
 ### Design Modes
-Every item must identify which tier it serves and apply the tier's specification standard:
-
-| Tier | Context | Specification standard |
+| Mode | Context | Specification standard |
 |---|---|---|
-| Universal Mode: Universal Design, improvable floor | No particular disability population is a predominant user (e.g. public institutional spaces) | Above code minimum — executed in a way that allows tailoring and improvement for specific people as required |
-| Mode P: Population-Informed Inclusive Design | Identified disability population(s) most likely to use the building | Ranges; median is the population-informed default. Core question: what works best for this population? |
-| Mode S: Person-Specific Co-Design | Named client/person; specific building | Co-design: OT establishes functional capacity; client expresses own preferences. Specifications uniquely tailored to the person |
-
-The Tier 1 range is the population evidence envelope. At Tier 2, co-design between OT and client resolves the specific value within that range.
+| Universal Mode | No particular population predominant | Above code minimum, allows tailoring |
+| Mode P | Identified population(s) most likely to use building | Ranges; median is population-informed default |
+| Mode S | Named client/person; specific building | Co-design: OT + client resolve specific value |
 
 ### Specification Range Doctrine
-Ranges appearing in specifications are not expressions of uncertainty. They are the mechanism that allows a single item to serve both Tier 1 and Tier 2 practice simultaneously.
-
-- At Mode P (identified population): use the median value as the population-informed default.
-- At Tier 2 (named person/client): the position within the range is determined through co-design — OT establishes functional capacity; client expresses own preferences. Both are required inputs.
-- Never: "between X and Y" without specifying which end applies at which tier.
-- Priority populations for range framing: MOB/AMB, MOB/UPL, OFS, and any population where functional variation is high.
+Ranges are not uncertainty — they bridge Mode P and Mode S.
+- Mode P: use median as population-informed default
+- Mode S: position within range determined through co-design (OT + client)
+- Never "between X and Y" without specifying which end at which mode
 
 ---
 
-## Item Format
-
-Every item block follows this structure, in this order:
+## 3. Item Format
 
 ```markdown
-### [CODE] [Title — Descriptive Only; No Values or Thresholds in Heading]
+### [CODE] [Title — Descriptive Only; No Values in Heading]
 
-**Population codes:** [code list]  
-**Typology:** Residential · Non-Residential · Both  
+**Population codes:** [code list]
+**Typology:** Residential · Non-Residential · Both
 **Design stage:** [SD / DD / TA / Construction / Post-occupancy]
 
 #### Specification
 
-● or ○ [Ideal provision — state the best achievable outcome first]
-
-● or ○ [Best practice — what this guidebook targets for new build]
-
-● or ○ [Acceptable — where spatial or structural constraint exists; always specify what constraint justifies it]
-
-● or ○ [Minimum — only where a hard floor is needed; note that this is a floor, not a target]
-
-**Evidence markers (mandatory):** Every prescriptive sentence carries exactly one marker.
-- **●** (filled circle) = evidence-based — at least one Tier 1–6 source directly supports this value
-- **○** (empty circle) = inferred — derived from clinical reasoning, expert consensus, or extrapolation; gap disclosed
-- Non-prescriptive sentences (rationale, context, cross-references) carry no marker.
-- See `evidence-marker` skill for classification criteria and upgrade protocol.
+● or ○ [Ideal provision — best achievable outcome first]
+● or ○ [Best practice — guidebook target for new build]
+● or ○ [Acceptable — where spatial/structural constraint exists]
+● or ○ [Minimum — hard floor, not a target]
 
 #### Evidence basis
 
@@ -95,141 +129,57 @@ Every item block follows this structure, in this order:
 | [1–6] | [Author, Year] | [Specific claim] |
 
 #### Conflict notes
-[Only where this item conflicts with a provision for another population code — name the conflict, state the resolution rule from §IV.2, and cross-reference the other item]
+[Only where this item conflicts with another population's provision]
 
 #### Cross-references
-[Internal refs to related items, evidence annex entries, DAR register entries]
+[Internal refs to related items, evidence annex, DAR register]
 
 #### Retrofit note
-**Retrofit:** [HIGH / MODERATE / LOW penalty] — see §8.4.[X]
-
-#### Illustration
-**[Illustration: to be provided]**
-Remove this note only when an actual illustration is supplied. Every Part 4 item (including Appendix B and C items) is designed to be accompanied by a technical diagram, drawing, or illustration.
+**Retrofit:** [HIGH / MODERATE / LOW penalty]
 ```
 
----
-
-## K-Category Template (v10.1 addition — Sensory Environment)
-
-Category K items address sensory environment specifications (lighting, acoustics, thermal, olfactory). K-items follow the standard item format above with these additions:
-
-```markdown
-### K-[NN] [Title — Descriptive Only]
-
-**Population codes:** [code list — K-items typically affect NDV/SENS, NDV/AUT, DEM, VIS, DEAF, NEU]
-**Typology:** Residential · Non-Residential · Both
-**Design stage:** [SD / DD / TA / Construction / Post-occupancy]
-**Sensory domain:** Acoustic · Visual · Thermal · Olfactory · Tactile · Multi-sensory
-
-#### Specification
-[Standard ●/○ marked specification sentences]
-
-#### Sensory interaction notes
-[Where this item's provision interacts with other sensory domains — e.g., acoustic treatment affecting thermal mass, lighting affecting NDV/SENS overstimulation. Cross-reference Part 5 §5.2 conflict resolutions where applicable.]
-
-#### Evidence basis
-[Standard evidence table]
-
-#### Cross-population conflicts
-[K-items frequently produce cross-population conflicts. Identify all known conflicts and cross-reference Part 5 §5.2 resolution entries. Flag unresolved conflicts for Part 8 development.]
-```
-
-K-category codes: K-01 through K-[NN]. Numbering is sequential within the category.
+**Evidence markers:** ● = evidence-based (Tier 1–6 source); ○ = inferred (gap disclosed).
+Non-prescriptive sentences carry no marker.
 
 ---
 
-## Population Code Rules
+## 4. Population Code Rules
 
-- Apply all 11 population codes. Never collapse sub-codes.
-- `●` = primary population (item primarily addresses this population's barriers)
-- `○` = secondary population (item has secondary benefit)
-- `—` = not applicable (no meaningful interaction)
-- Where a population code produces a conflicting requirement: flag with `⚠ CONFLICT` and apply §IV.2 conflict priority rules.
+Apply all 11 codes. Never collapse sub-codes.
+- `●` primary, `○` secondary, `—` not applicable
+- Conflict → flag `⚠ CONFLICT` + apply conflict resolution rules
 
-**Canonical codes:** MOB (MOB/AMB, MOB/UPL) · VIS · DEAF · NEU (NEU/PCS) · DEM · NDV (NDV/AUT, NDV/ADHD, NDV/SENS) · NDV/MH · PAIN · DBL · OFS (OFS/ME, OFS/POTS, OFS/MCAS)
-
-BAR is not a main-taxonomy code. Large body size provisions belong in the supplementary volume. Do not add BAR items to the main specification library.
+**Canonical:** MOB (MOB/AMB, MOB/UPL) · VIS · DEAF · NEU (NEU/PCS) · DEM · NDV (NDV/AUT, NDV/ADHD, NDV/SENS) · NDV/MH · PAIN · DBL · OFS (OFS/ME, OFS/POTS, OFS/MCAS)
 
 ---
 
-## Evidence Rules
+## 5. Evidence Rules
 
-- Every prescriptive claim carries a citation or evidence tier marker.
-- Unsupported claims: flag `[UNSUPPORTED — citation required]`.
-- Tier 1 (OT clinical systematic reviews): cite author-year + journal.
-- Tier 2 (community/lived experience research): cite source + note it provides outcome criteria, not override.
-- Tiers 3–6: cite source; note tier explicitly in evidence table.
-- Single-source specifications: flag `[SINGLE SOURCE — Tier X protocol applies]`.
-- Do not embed extended evidence rationale in the item body. Two sentences maximum: OT framework name + one-sentence claim. Extended rationale belongs in the evidence annex.
+- Every prescriptive claim carries citation or tier marker
+- Unsupported: flag `[UNSUPPORTED — citation required]`
+- Single-source: flag `[SINGLE SOURCE — Tier X]`
+- Two sentences max in item body for rationale — extended rationale in evidence annex
+- After confirming any new source: add to `evidence_sources` table + trigger citation-miner
 
 ---
 
-## Heading Rule
+## 6. Connection Consumption
 
-No values, ranges, or thresholds in item headings. The heading is a navigational label only.
-
-✓ `### G-03 Grab Bar Provision in Accessible Bathrooms`  
-✗ `### G-03 Grab Bars (32–45 mm Diameter, 200 kg Rated)`
-
----
-
-## Sequencing Rule
-
-Ideal → Best Practice → Acceptable → Minimum — at item level, in this order.  
-Where only one tier is applicable, state that tier and omit the others.  
-Never start with Minimum and work upward.
+When revising an item based on a PENDING connection:
+1. Apply the connection's evidence to the spec
+2. Update SQLite: `UPDATE connections SET status = 'CONSUMED' WHERE con_id = ?`
+3. If connection reveals a new conflict: register in conflicts table
+4. Log consumed connection in session report
 
 ---
 
-**Typology scope** (required on every item): Residential (dwellings, supported living, care homes) · Non-Residential (workplaces, healthcare, education, civic, retail, transport) · Both. Where specification differs by typology, use tiered sub-specifications rather than two separate items.
+## 7. Heading Rule
+No values, ranges, or thresholds in item headings. Navigational label only.
 
----
+## 8. No-Value Heading Rule
+Sequencing: Ideal → Best Practice → Acceptable → Minimum within each item.
 
-## Passes Required
-
-**New items:** 3 passes — (1) draft, (2) framing-checker review, (3) evidence-auditor review.  
-**Revised items:** 2 passes — (1) revision, (2) framing-checker spot-check.  
-**Evidence upgrade only:** 1 pass — swap citation, re-run evidence-auditor.
-
----
-
-## Escalation Triggers
-
-Stop and confirm with user:
-
-- Item requires original research that is not available in the evidence corpus — do not draft a specification without evidence; flag as `[EVIDENCE GAP — item cannot be specified without further research]`
-- Item conflicts with a locked decision in `project-standards.md` — do not draft; flag the conflict
-- Typology scope is unclear (item may apply differently in R vs NR but current scope is "Both") — confirm before drafting
-- Population code produces an irresolvable conflict where no §IV.2 rule applies — escalate to workplan-orchestrator
-
----
-
-
----
-
-## Source Citation Protocol (endnote system)
-
-**Pre-step:** `research-log-manager RETRIEVE` for each relevant slug before writing. BPC `Key sources` list provides the REF-ID index.
-
-**REF-ID markers:** Every prescriptive claim citing evidence carries `[REF:{slug}:{NN}]` inline. `{slug}` = BPC slug; `{NN}` = 01-indexed position in BPC Key sources. Multiple markers at one point for multi-source claims.
-
-**Placement:**
-- After claim, before punctuation.
-- Every bullet with dimensional value, material requirement, or performance threshold needs ≥1 REF-ID. No source → `[UNSUPPORTED — citation required]`.
-
-**Sources-cited table:** `#### Sources cited` after each item block:
-
-```markdown
-#### Sources cited
-
-| REF-ID | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdiction |
-|---|---|---|---|---|---|---|---|---|
-```
-
-Min 2, max 12 sources per item. Every REF-ID ↔ sources-cited row bidirectional. Real sources only. Source not in BPC Key sources → flag `[NOT IN BPC — verify via citation-verifier]`. <2 verified → `[CITATION GAP — evidence-auditor referral required]`.
-
-**Replaces Key citations** for new/revised items. Do not emit both. Legacy items retain `Key citations` until revised.
-
-**Downstream:** `vol2-item-formatter` validates REF-ID ↔ sources-cited. `bibliography-compiler` compiles volume-end endnotes. `cross-reference-resolver` validates superscripts.
-
+## 9. Escalation
+- Unresolvable cross-population conflict → cross-population-conflict-mapper
+- >2 evidence markers need upgrading → citation-miner batch on slug
+- DAR integration needed → flag for Part 6/10 update
