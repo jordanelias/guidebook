@@ -117,6 +117,8 @@ Coverage: 80% of ceiling area (not spot treatment)
 Corridor ceilings: NRC ≥0.75 minimum
 Where DEM or NEU/acquired brain injury is primary occupant group: NRC ≥0.90 (clinical requirement; ISO 3382-2)
 Post-installation RT60 measurement at 500 Hz required
+● Speech-critical rooms (classrooms, therapy rooms, consultation rooms, meeting rooms): target RT60 ≤0.3 s (mid-frequency 500–2000 Hz) in occupied condition [CON-0039]. RT60 ≤0.6 s is the OUTER FAILURE BOUNDARY — not a compliant specification. Evidence: Murgia 2023 SR (ASI-01, DOI:10.1044/2022_LSHSS-21-00181) confirms RT60 >0.6s prevents 100% speech perception even at high SNR; Cueille 2022 (ASI-06, DOI:10.1098/rsos.210342) quantifies HI penalty at 18dB SRT increase; ASI-08 SR confirms HI cannot adapt to reverberation.
+○ Non-speech-critical rooms (circulation, utility, storage): RT60 ≤0.6 s acceptable
 
 **Retrofit cost note:** Retrofit penalty: LOW. Acoustic ceiling panels are surface-applied and can be installed post completion without structural intervention. Retrofit penalty is primarily labour on a finished ceiling surface. See Part 12 §12.4.1.
 
@@ -355,6 +357,8 @@ BSI.
 NC-25 maximum at all air terminals in sensitive spaces
 
 NC-30 maximum in general occupied spaces
+
+● Background noise ≤35 dBA in all speech-critical rooms [CON-0039]; NC-25 exceeds this requirement and is retained as the governing specification for sensitive spaces. STI ≥0.60 at furthest listener position (≥0.75 for DEAF/CI populations)
 
 Duct sizing: low-velocity design (duct velocity ≤3 m/s at primary distribution)
 
