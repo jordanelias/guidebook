@@ -307,6 +307,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 | NDV acoustic (RT60 ≤0.5 s) vs. tiled wet room (RT60 0.8–1.4 s default) | Specify Class A-rated perforated tile or acoustic plasterboard on non-wet walls; non-wet ceiling treatment NRC ≥0.75 |
 | TMV35°C (MS) vs. TMV38°C (general) | Label TMV setting in O\&M manual with named clinical requirement; OT records set temperature target |
 | Heated floor (TC-05) vs. OFS temperature sensitivity | Heated floor is floor-surface temperature (26–28°C), not air temperature; does not raise ambient above TC-01 ceiling if ventilation adequate. Note in O\&M. |
+| ● **Heat shock prevention** (CON-0041, P1 SAFETY) | Inter-room thermal differential ≤5°C between bathroom and adjacent corridor/bedroom. Bathroom pre-heating: timer or PIR sensor activates ≥30 min before scheduled bathing; bathroom ≥20°C before occupant entry. Evidence: MHLW Japan 2023 (6,073 bathtub deaths/year from heat shock); Nakayama 1981 (foundational); Baquero 2023 (TCO-01, DOI:10.1155/2023/9185216) — older adult neutral temp 24.9°C. BMS programming item. |
 
 **Bathroom-specific citation additions per residential analysis (apply to G-03, G-04, I-03 items):**
 
@@ -323,7 +324,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 
 -**R-BA-04a — Bathroom Lighting:** dimmable warm CCT (2700–3000 K); flicker-free LED (B-03/04); face illuminance ≥200 lux at mirror plane (B-02); UGR <16 to prevent glare reflection from wet surfaces. Source add: CIBSE SLL LG2.
 
-- **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual thermostat (TC-02) at 900–1100 mm AFF; MS integrated thermal spec (TMV 35°C + extract ≥15 ACH + ambient ≤18°C confirmed as three-consultant package). Source add: DIN 18041:2016; Finnish SFS 5907.
+- **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual thermostat (TC-02) at 900–1100 mm AFF; MS integrated thermal spec (TMV 35°C + extract ≥15 ACH + ambient ≤18°C confirmed as three-consultant package). ● Inter-room thermal differential ≤5°C [CON-0041 P1 SAFETY — Japan heat shock evidence]. Pre-heating: timer/PIR ≥30 min before bathing. Source add: DIN 18041:2016; Finnish SFS 5907; MHLW Japan 2023; Baquero 2023 DOI:10.1155/2023/9185216.
 
 **Schematic checklist — R-BA:**
 
@@ -332,6 +333,7 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - [ ] Zero-threshold shower (or floor recess for future conversion) confirmed on bathroom section
 - [ ] TMV3 on M\&E drawings at all outlets (shower, bath, basin)
 - [ ] Heated floor zone on M\&E drawings (electric UFH)
+- [ ] Bathroom pre-heating timer/PIR specified in BMS schedule (≤5°C differential, ≥30 min pre-heat) [CON-0041]
 - [ ] Extract ventilation ≥15 ACH on M\&E drawings
 - [ ] Lever taps on plumbing drawings —
 
