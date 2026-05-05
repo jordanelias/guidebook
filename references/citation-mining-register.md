@@ -307,3 +307,13 @@ Sources appearing in multiple BPCs. Mining once covers all instances. Tracked un
 ## Phase 5 — TBC Resolution (prior session)
 
 Status: COMPLETE. CCD-06 CLOSED-DELETED. TLD-01/02, SSG-02, SPM-03 DEFERRED (theoretical frameworks).
+
+
+## Phase 6 — Gitlin ABLE chain + Ielegems 2024 (session 2026-05-05)
+
+| Source | DOI | Domain | B | F | Date | Notes | Session |
+|---|---|---|---|---|---|---|---|
+| Gitlin et al. 2006 (ABLE RCT) | 10.1111/j.1532-5415.2006.00703.x | economics | ✓ | ✓ | 2026-05-05 | Chain: Gitlin 2006→2009→Jutkowitz 2012. REF-00282 corrected to COMPLETE | session_2026-05-05-b2-s4-citation |
+| Gitlin et al. 2009 (ABLE mortality) | 10.1111/j.1532-5415.2008.02147.x | economics | — | — | 2026-05-05 | Part of ABLE chain. Registered as REF-00563 COMPLETE | session_2026-05-05-b2-s4-citation |
+| Jutkowitz et al. 2012 (ABLE CEA) | 10.1155/2012/680265 | economics | — | — | 2026-05-05 | Part of ABLE chain. Registered as REF-00564 COMPLETE. ICER $13-15K/QALY | session_2026-05-05-b2-s4-citation |
+| Ielegems & Vanrie 2024 | 10.1108/ARCH-07-2023-0178 | economics | ✓ | ✓ | 2026-05-05 | Archnet-IJAR 18(4):719-736. UD new-build cost 0.94-3.92%. 3 Crossref fwd. MCP denied; web fallback. REF-00066 corrected | session_2026-05-05-b2-s4-citation |
