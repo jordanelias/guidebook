@@ -63,3 +63,36 @@ To be added as GRANT-010 in next economics.json update.
 **Reclassify from DEFERRED to PARTIALLY RESOLVED.** Three of four priority jurisdictions investigated (NL, IE, NZ). JP beyond financing remains uninvestigated. The remaining 10+ jurisdictions (IT, ES, SE, NO, DK, FI, KR, BR, MX, IN, SG) are lower priority.
 
 Finding: The three investigated jurisdictions have strong regulatory frameworks but no published accessibility cost studies beyond what's already in the project. This is consistent with the hedonic gap (GAP-01) — accessibility cost research is sparse globally, not just in the already-captured jurisdictions.
+
+
+## Japan (JP) — Beyond Financing
+
+**Regulatory framework:**
+- Heart Building Law 1994 → Transportation BF Law 2000 → Barrier-Free New Law 2006 → Universal Design 2020 Action Plan
+- Barrier-Free Act 2006 (高齢者、障害者等の移動等の円滑化の促進に関する法律): covers public transportation, public buildings, shopping centers. Fines up to ¥3M for violations. Does NOT mandate residential accessibility.
+- MLIT General Principles of Universal Design Policy (2005): comprehensive framework covering buildings, transport, roads.
+- 2025 Building Code update: new structural review requirements (35-day review period from April 2025), but not specifically accessibility-focused.
+
+**Housing deficit data:**
+- Only **42.4%** of households with older adults reach "standard level" barrier-free (handrails at 2+ places, no indoor level differences)
+- Only **8.8%** reach "high level" barrier-free (handrails + no level differences + wheelchair-width corridors)
+- Source: Statistics Bureau of Japan, via Tsuchiya-Ito et al. 2022
+
+**Tsuchiya-Ito research chain (IHEP/Dia Foundation) — now 8 papers:**
+
+| Year | Paper | Journal | Key finding |
+|---|---|---|---|
+| 2019 | JP-SE cross-cultural comparison (with Iwarsson/Slaug, Lund) | J Cross-Cultural Gerontology | Environmental challenges differ by housing stock characteristics |
+| 2020 | Housing Enabler content validity (conference abstract) | Gerontologist | Japanese adaptation of Swedish Housing Enabler tool |
+| 2022 | Implementation and costs by functional limitation | BMC Geriatrics | Cost data by disability type under Kaigo Hoken |
+| 2023 | Frailty prevention | BMC HSR | Housing adaptations prevent care needs deterioration |
+| 2024a | LTCF admission reduction | JAMDA | 28% lower institutional admission |
+| 2024b | Housing Enabler JP adaptation (full paper) | J Housing Built Env | Cross-cultural tool validation (doi: 10.1007/s10901-024-10145-2) |
+| 2025a | 3-year expenditure analysis | Gerontologist (abstract) | Long-term cost trajectory |
+| 2025b | Cluster analysis of recipients | Gerontologist (abstract) | Recipient characteristics under LTC insurance |
+
+**Key insight:** The Tsuchiya-Ito group at IHEP (Institute for Health Economics and Policy) / Dia Foundation is the most prolific accessible housing economics research group outside of the UK/NZ/US. Their work bridges Japanese LTC insurance claims data with Swedish housing accessibility methodology (Iwarsson/Slaug, Lund University), creating a unique cross-cultural evidence chain. The 2024b paper (Housing Enabler JP adaptation) is particularly significant because it creates a validated Japanese tool for the kind of housing accessibility assessment that underlies all the cost-effectiveness evidence.
+
+**Grant programmes already captured:** Kaigo Hoken (GRANT-003), Flat 35S (GRANT-004)
+
+**New housing deficit record for economics.json:**

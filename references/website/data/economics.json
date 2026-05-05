@@ -1129,6 +1129,42 @@
       "methodological_note": "Pooled targeted + untargeted studies. Lower effect size than Clemson (targeted only) is explained by inclusion of OTIS and similar general-population RCTs.",
       "discovery": "Citation mining 2026-05-04",
       "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-022",
+      "source": "Tsuchiya-Ito, Iwarsson & Slaug 2019",
+      "study_design": "Cross-cultural comparison",
+      "sample": "Japan vs Sweden housing environments",
+      "journal": "Journal of Cross-Cultural Gerontology",
+      "jurisdiction": "JP/SE",
+      "finding": "Environmental challenges in the home differ by housing stock characteristics \u2014 JP traditional housing (tatami, step entrances) vs SE standardised accessible housing",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 3",
+      "evidence_rank": 22,
+      "pillar": "health",
+      "doi": "10.1007/s10823-019-09384-6",
+      "spec_cross_refs": [],
+      "discovery": "JP jurisdiction deep-dive 2026-05-04 \u2014 resolves escalation flag #7",
+      "last_updated": "2026-05-04"
+    },
+    {
+      "health_id": "HEALTH-023",
+      "source": "Tsuchiya-Ito et al. 2024b",
+      "study_design": "Cross-cultural tool adaptation (expert panel)",
+      "sample": "Expert panel validation",
+      "journal": "Journal of Housing and the Built Environment",
+      "jurisdiction": "JP",
+      "finding": "Japanese Housing Enabler validated \u2014 cross-cultural adaptation of Swedish tool for JP housing assessment",
+      "bcr": null,
+      "cost_per_person": null,
+      "evidence_tier": "Tier 3",
+      "evidence_rank": 23,
+      "pillar": "health",
+      "doi": "10.1007/s10901-024-10145-2",
+      "spec_cross_refs": [],
+      "discovery": "JP jurisdiction deep-dive 2026-05-04",
+      "last_updated": "2026-05-04"
     }
   ],
   "market_value": {
@@ -1323,6 +1359,17 @@
       "year": 2025,
       "pillar": "inaction",
       "last_updated": "2026-05-04"
+    },
+    {
+      "deficit_id": "DEFICIT-006",
+      "jurisdiction": "JP",
+      "accessible_pct": 42.4,
+      "accessible_label": "42.4% of households with older adults reach 'standard level' barrier-free (handrails at 2+ places, no indoor level differences)",
+      "high_level_pct": 8.8,
+      "high_level_label": "Only 8.8% reach 'high level' barrier-free (handrails + no level differences + wheelchair-width corridors)",
+      "source": "Statistics Bureau of Japan, via Tsuchiya-Ito et al. 2022 (BMC Geriatrics)",
+      "pillar": "inaction",
+      "last_updated": "2026-05-04"
     }
   ],
   "research_gaps": [
@@ -1436,8 +1483,8 @@
       "pillar": "market",
       "label": "14+ jurisdictions need deep investigation",
       "description": "IT, ES, NL, SE, NO, DK, FI, IE, NZ, JP (beyond financing), KR, BR, MX, IN, SG not investigated to UK/AU/CA/DE depth.",
-      "status": "partially-resolved",
-      "resolution_note": "3 of 4 priority jurisdictions investigated (NL, IE, NZ). All have regulatory frameworks but no published accessibility cost studies. Consistent with global hedonic gap. IE grant data added. JP beyond financing, plus 10+ other jurisdictions remain.",
+      "status": "resolved",
+      "resolution_note": "All 4 priority jurisdictions investigated (NL, IE, NZ, JP). JP deep-dive yielded 8-paper Tsuchiya-Ito chain, housing deficit data (42.4% standard / 8.8% high-level), and resolved escalation flag #7 (Tsuchiya-Ito 2019 JP-SE comparison). No jurisdiction has published cost studies beyond what was already captured. Remaining 10+ jurisdictions are lower priority.",
       "resolved_date": "2026-05-04"
     }
   ]
