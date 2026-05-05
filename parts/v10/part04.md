@@ -765,7 +765,6 @@ HVAC: NC-25 maximum; individual control
 Blackout: 100% blackout blinds or no windows
 ● Alerting: vibrotactile + voice alarm ONLY; no VAD strobe in A-16 spaces [CON-0217]. Primary occupants are NEU (seizure risk) and NDV (photosensitive) — strobe is contraindicated. Fire alarm via bed-shaker/vibrotactile device (K-04) + voice announcement. Evidence: Jordan & Vanderheiden 2024 (VFA-01); Fisher 2022 (VFA-06). Cross-ref B-10 PSE safety note.
 Location: adjacent to primary circulation; not via another occupied space
-Seating: at minimum one position must be recline-capable (≥120° recline with footrest or full supine support) — OFS/ME/PEM populations require horizontal rest to manage orthostatic intolerance and prevent post-exertional malaise escalation. ○ [Tier 2 — NICE NG206 §hospital-env (2021) recommends lying-down rest space for ME/CFS patients; CDC ME/CFS clinical guidance documents PEM management through supine rest; no design standard specifies minimum recline angle. THIN-POPULATION-SPEC. GAP-OFS-RECUMBENT-01]
 
 Accessible toilet: within 15 m of A-16 entry (mandatory; not discretionary) — OFS/ME users with PEM cannot tolerate extended travel during episodes; DEM users require toilet access from the retreat space without wayfinding complexity; route must be direct and unobstructed ○ [Tier 2 — NICE NG206 §hospital-env; CDC ME/CFS clinical guidance; DSDC EADDAT 2022; no standard specifies maximum distance]
 
@@ -1458,8 +1457,6 @@ UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent
 
 **Specifications:**
 
-> **Two-tier LRV framework [GAP-077 / DD-3]:** C-04 operates at two distinct thresholds with different evidence bases. **Tier 1 (regulatory floor): ≥30 LRV** — derived from UK Disability Discrimination Act (DDA) guidance and adopted in BS 8300, AS 1428.2, and ≥10 other jurisdictions. Systematic Review Deep-Dive 3 (2026-04-09) confirms this value originated as regulatory guidance without empirical derivation from user studies; Manandhar et al. 2022 (Tier 3) documents 30% Michelson as "poorly visible" for severe VI. ● [Tier 6 — regulatory floor; not evidence-based optimum]. **Tier 2 (evidence-based optimum): ≥65% Michelson at all safety-critical junctions** — derived from Manandhar 2022 finding (~65% needed for reliable boundary detection at severe VI) and converging evidence from Harper 2022/2025 series (OR=2.87 fall reduction from contrast striping). ● [Tier 3 — peer-reviewed empirical evidence]. Designers must distinguish: meeting ≥30 LRV achieves code compliance, not best practice. Best practice is ≥65% Michelson at critical junctions.
-
 General: ≥30 LRV contrast at all critical junctions (code-compliance minimum)
 
 ● Best practice: ≥50 LRV at all contrast-dependent provisions [CON-0043]. 30 LRV is a regulatory floor with no empirical validation — Manandhar et al. 2022 documents it as "poorly visible" for severe VI
@@ -1655,7 +1652,7 @@ Decision point legibility: destination visible from decision point where possibl
 
 Nostrand Reinhold. Marquardt, G. (2011). HERD, 4(2), 75--90.
 
-**Cross-reference:** D-04 (Landmarks); D-08 (Signage)
+**Cross-reference:** D-04 (Landmarks); D-08 (Signage — signage is secondary to spatial planning: architectural layout, sightlines, and landmarks are the primary wayfinding mechanism; signage compensates where spatial design is insufficient [CON-0189]); E-08 (Corridor Clear Width — rest and support provisions must be located on the D-02 primary route; OFS/PAIN users following the single cognitive route need seating within that route [CON-0194])
 
 **Evidence basis (OT):** Allen's CDM; Compensatory FOR. Direct, short routes compensate for the reduced working memory capacity at Allen's CDM cognitive levels 3--4 by minimising the number of spatial 'chunks' that must be held in memory between decision points; for VIS users route directness reduces the cognitive wayfinding load that accumulates over long non-direct routes.
 
@@ -2722,7 +2719,7 @@ possibly layout modification. See Part 12 §12.4.1.
 
 (2022). PAS 6463:2022. BSI. AtkinsRéalis. (2024). Neuroinclusive office design v3.
 
-**Cross-reference:** A-04 (Acoustic Zoning); B-05 (Lighting Transitions)
+**Cross-reference:** A-04 (Acoustic Zoning); B-05 (Lighting Transitions); Part 3 §3.2 (Theoretical framework — F-01 sensory gradient specification is derived directly from Dunn's Sensory Processing Model four-profile mapping: the Zone 1→2→3 gradient operationalises Dunn's sensory seeking→registration→avoiding continuum as spatial design; see §3.2 for the theoretical basis governing F-01 zone parameters [CON-0221])
 
 **Evidence basis (OT):** EHP Framework (alter strategy); Dunn's Sensory Processing Model. Sensory gradient from high-stimulation entry to low-stimulation primary occupied space alters the context progressively to keep cumulative sensory load within the processing capacity of sensory-sensitive users; abrupt transitions from high-load to low-load zones constitute shock stimuli that are themselves a trigger.
 
@@ -4374,7 +4371,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:accessible-bathroom-and-grab-bar:22 | Dementia Australia | 2022 | Designing Dementia-Friendly Care Environments | Dementia Australia | 2 | EN | AU | https://www.dementia.org.au/professionals/designing-dementia-friendly-care-environments [TITLE MISMATCH: cited as Built Environment Guidelines; confirmed title is Designing Dementia-Friendly Care Environments. Year 2022 plausible but not confirmed exact — verify at dementia.org.au] |
 | REF:accessible-bathroom-and-grab-bar:23 | American Occupational Therapy Association | 2023 | Fall Prevention in the Home | AOTA | Co-2 | EN | US | [UNVERIFIED — AOTA publishes fall prevention tip sheets and practice resources but specific standalone 'Fall Prevention in Bedroom 2023' not confirmed. May be from AOTA Practice Advisory or OT Practice article. Verify at aota.org] |
 
-**Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); B-12 (Sensor-activated overnight pathway lighting); H-01 (Controls at accessible height); D-06 (Memory boxes at residential room entrances)
+**Cross-reference:** B-11 (Warm colour temperature ≤2700 K after 19:00); B-12 (Sensor-activated overnight pathway lighting); H-01 (Controls at accessible height); D-06 (Memory boxes at residential room entrances); H-05 (Nurse Call — H-05 and G-09 form a residential emergency response cluster: G-09 governs bedroom provision, H-05 governs care/supported-living settings; both require floor-level cord access + DBL haptic identification of cord and button [CON-0213])
 
 **Illustration:** [Illustration: to be provided] — Bedroom plan showing dual cord positions, pillow-proximity switch zone, bed-exit sensor coverage arc, and 1000 mm foot clearance.
 

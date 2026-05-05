@@ -45,7 +45,7 @@ This guidebook treats the following provisions as required in all non-residentia
 
 | Space | Primary populations | Critical items |
 | --- | --- | --- |
-| Classroom | NDV, DEAF, MOB, DBL | A-04 (acoustic zone), RT60 ≤0.4 s (DIN 18041 Cat A), A-11 (room loop), B-03/04, G-05 (≥20% height-adjustable desks), K-03 (DBL haptic zone at teacher position) |
+| Classroom | NDV, DEAF, MOB, DBL | A-04 (acoustic zone), RT60 ≤0.4 s (DIN 18041 Cat A; ≤0.3 s where NDV co-occupies — stricter NDV target governs per Part 5 ACOUSTIC-LVL; evidence: Cueille 2022 ASI-06 18dB HI penalty; ASI-08 SR [CON-0183]), A-11 (room loop), B-03/04, G-05 (≥20% height-adjustable desks), K-03 (DBL haptic zone at teacher position) |
 | Assembly hall | ALL | A-11 (room loop), H-03 (CART), B-10, E-12, A-04, K-03 (DBL haptic zone at aisle ends) |
 | Sensory room | NDV/AUT | A-16 (RT60 ≤0.3 s; NC ≤20), F-01, F-03 (≥1 per 150 students) |
 | Science / specialist rooms | NDV, PAIN, UPL | F-04 (chemical fume extraction), I-02 (lab tap controls), G-05 |
@@ -64,7 +64,7 @@ This guidebook treats the following provisions as required in all non-residentia
 - DBL provisions [EXPERT CONSENSUS — no standard; March 2026]: tactile building map station (K-02) at school principal entrance and library; haptic communication clear floor zone (K-03) at all designated DBL student seating positions in classrooms and assembly — minimum 1200 × 1200 mm clear zone at aisle-end seat; vibrotactile alert infrastructure (K-04 — BMS relay from fire alarm panel) in all classrooms and student areas
 
 
-**Zone 3 sensory retreat and quiet room — provision treated as mandatory by this guidebook (CON-0046):** Sensory gradient (F-01) and sensory retreat/quiet room (A-16) are treated as mandatory by this guidebook in all educational settings serving NDV/AUT populations — not optional upgrade provisions. Basis: the NHS CAMHS paradigm failure (documented in Part 12 — Gallaudet DeafSpace failure case and NHS CAMHS case) demonstrates that failure to provide adequate sensory environments in educational and therapeutic settings produces acute clinical harm, not merely comfort reduction. Evidence: Autism Europe 2022 (15–20% NDV/AUT prevalence in school-age population); PAS 6463:2022. ● Minimum provision: ≥1 sensory retreat per 150 students (general); ≥1 per 50 students (autism-specific settings). This is not a best-practice aspiration — it is a harm-prevention specification.
+**Zone 3 sensory retreat and quiet room — provision treated as mandatory by this guidebook (CON-0046):** Sensory gradient (F-01) and sensory retreat/quiet room (A-16) are treated as mandatory by this guidebook in all educational settings serving NDV/AUT populations — not optional upgrade provisions. Basis: the NHS CAMHS paradigm failure (documented in Part 12 — Gallaudet DeafSpace failure case and NHS CAMHS case) demonstrates that failure to provide adequate sensory environments in educational and therapeutic settings produces acute clinical harm, not merely comfort reduction. Evidence: Autism Europe 2022 (15–20% NDV/AUT prevalence in school-age population); PAS 6463:2022. ● Minimum provision: ≥1 sensory retreat per 150 students (general); ≥1 per 50 students (autism-specific settings). This is not a best-practice aspiration — it is a harm-prevention specification. Leonardi 2025 SR (SRU-05, Tier 3) confirms user control as the primary determinant of MSE effectiveness — informing the guidebook's mandatory (not recommended) specification. [CON-0222]
 
 **DEM/NDV[IntD-proxy] provisions — NR-EDU:** [TIER 4–5; interim; March 2026] Apply to all educational settings serving students with intellectual disability: (1) Easy Read format for all public-facing information and signage (D-08 extension); (2) pictogram + single-word room identification throughout; (3) sensory gradient and quiet room per NDV provisions (F-01, A-16) — strongest available proxy evidence; (4) consistent layout with no unexpected spatial changes (D-09); (5) support worker access minimum: 1500 mm corridors throughout and 1500 mm turning circles at all primary destinations.
 **Education schematic checklist:**
@@ -150,7 +150,7 @@ This guidebook treats the following provisions as required in all non-residentia
 | --- | --- | --- |
 | Arrival / reception | MOB, DEAF | E-06, E-11, G-06, A-10, F-01 |
 | Open-plan office | NDV, OFS, PAIN, MOB | A-01 (acoustic pods ≥1 per 20 staff), A-02, A-08, B-03/04, B-06, F-01, F-04, TC-01 |
-| Focus / quiet room | NDV, OFS, PAIN | F-03 (≥1 per 20 staff, mandatory), RT60 ≤0.4 s, NC-25 |
+| Focus / quiet room | NDV, OFS, PAIN | A-16 or F-03 (≥1 per 20 staff, mandatory — A-16 preferred where NDV/AUT or OFS is a primary or known secondary population; Leonardi 2025 SR: user control is primary MSE effectiveness variable [CON-0222]), RT60 ≤0.4 s, NC-25 |
 | Meeting room | DEAF, MOB, DBL | A-11, H-03 (CART), B-02, G-01 (turning circle at table), K-03 (DBL haptic zone at table end) |
 | Break room / kitchen | ALL | I-02, F-02, F-04, G-05, TC-01 |
 | Accessible WC | MOB | G-03, G-04, I-03 |
@@ -364,4 +364,3 @@ This guidebook treats the following provisions as required in all non-residentia
 | F-07 vs PAIN | NEU/MS (≤18°C) | PAIN (warmth) | Thermal | ≤18°C ambient; supplemental radiant at seating | SRW |
 | E-11 vs NDV/MH | MOB (automatic) | NDV/MH (predictable) | Door operation | 3m sensor zone; chime; glazed leaf; ≥3s travel | TS |
 *For building-wide system conflicts, see Part 5 §5.2.*
-
