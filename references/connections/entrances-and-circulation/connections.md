@@ -1351,3 +1351,58 @@ Additionally: automatic door openers (specified as "best practice" for entrance 
 **ISW action:** E-08: add ≥50 LRV contrast strip at all entrance threshold level changes (cross-ref C-04). A-09: coordinate entrance canopy lighting with C-04 contrast visibility requirements.
 
 ---
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0194
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** I-03, D-02, E-08
+**Filed:** entrances-and-circulation
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** I-03 (grab bars at service counters), D-02 (cognitive simplicity), and E-08 (corridor width) intersect in circulation design: rest and support provisions must be located on the primary cognitive route, not hidden on secondary paths. OFS/PAIN users following D-02 single route need I-03 rest and E-08 width simultaneously.
+**ISW action:** I-03: add note — locate rest/grab provisions on D-02 primary route. E-08: verify corridor width accommodates I-03 installations without reducing clear width.
+
+---
+
+### CON-0197
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** C-04, E-09
+**Filed:** entrances-and-circulation
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** C-04 (LRV contrast) and E-09 (TGSI/tactile walking surface indicators) share a visual-tactile detection requirement at hazard locations. LRV ≥50 best practice (C-04) applies to TGSI colour selection. Citation mining added Manandhar 2022 (LCL-04) showing 30% contrast = "poorly visible" at severe VI.
+**ISW action:** E-09: add C-04 ≥50 LRV requirement for TGSI colour vs surrounding surface.
+
+---
+
+### CON-0205
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** E-08, A-02
+**Filed:** entrances-and-circulation
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** E-08 (corridor width ≥1500mm) and A-02 (acoustic ceiling) intersect: wide corridors with hard parallel walls create flutter echo. Acoustic treatment (A-02 NRC ≥0.75 corridor ceiling) is required to prevent corridors becoming acoustic hazards despite meeting width requirements.
+**ISW action:** E-08: add acoustic note — corridors ≥1500mm with parallel hard walls require A-02 ceiling treatment.
+
+---
+
+### CON-0237
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** A-02, A-07
+**Filed:** entrances-and-circulation
+
+**Connection type:** CROSS-POPULATION
+**Connection:** A-02 (acoustic ceiling) and A-07 (acoustic differentiation for VIS wayfinding) interact: A-07 deliberately maintains different acoustic character between spaces for VIS navigation, while A-02 aims for uniform low RT60. Resolution: A-07 differentiation applies to CIRCULATION ROUTES (harder surfaces, higher RT60) while A-02 ≤0.3s applies to OCCUPIED ROOMS. Citation mining evidence from ASI-06/08 supports this zoned approach.
+**ISW action:** A-07: clarify that acoustic differentiation is for circulation-to-room contrast, not within-room variation. A-02: add A-07 cross-reference noting circulation exception.
+
+---

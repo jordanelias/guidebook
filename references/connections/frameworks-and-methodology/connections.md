@@ -946,3 +946,59 @@ These programme models demonstrate that the highest-quality national systems sti
 **ISW action:** Part 11: verify G-03 blocking is explicitly listed with cost multiplier. Add Lee/Sanford 2018 bilateral specification to DAR blocking requirements.
 
 ---
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0195
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** Part 3 §3.2
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 3 §3.2 methodology connection. Likely refines the theoretical framework section.
+**ISW action:** [NEEDS SCOUT REVIEW.]
+
+---
+
+
+### CON-0234
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** Part 9 §9.5
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 9 §9.5 OT assessment protocol connection.
+**ISW action:** [NEEDS SCOUT REVIEW.]
+
+---
+
+
+### CON-0236
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** Part 1 §1.x, D-02
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 1 scope/methodology and D-02 cognitive simplicity. Likely adds a note about the evidence basis for the cognitive simplicity specification within Part 1's methodology framework.
+**ISW action:** [NEEDS SCOUT REVIEW.]
+
+---
+
+
+### CON-0239
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** Part 1, Part 9 §9.5
+**Filed:** frameworks-and-methodology
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] Part 1 and Part 9 §9.5 methodology connection.
+**ISW action:** [NEEDS SCOUT REVIEW.]

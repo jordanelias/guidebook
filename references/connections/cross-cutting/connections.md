@@ -513,3 +513,20 @@ Additionally, the MH BPC identifies that ward-level environmental factors (capac
 **ISW action:** H-05: verify floor-level cord specification. G-09: add cross-reference to H-05. Both: add DBL haptic identification note.
 
 ---
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0232
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** BIO-01, Part 11
+**Filed:** cross-cutting
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** BIO-01 (biophilic design elements) should appear in Part 11 DAR provisions where planting, water features, or natural materials are specified at design stage and difficult to retrofit.
+**ISW action:** Part 11: add BIO-01 to DAR checklist where biophilic elements require structural or landscape coordination.
+
+---
+

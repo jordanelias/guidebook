@@ -1213,3 +1213,71 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Connection type:** CROSS-DOMAIN
 **Connection:** C-03 (pattern avoidance) and C-04 (LRV contrast) interact with A-09 (entrance canopy) at the building entrance: patterned flooring at entrances creates false depth perception (VIS/DEM fall risk) while insufficient contrast at threshold level changes increases trip risk. Citation mining added Harper 2025 (LCL-08) showing contrast striping reduces fall events.
 **ISW action:** A-09 entrance specification: plain (non-patterned) flooring within entrance zone (C-03) + ≥50 LRV contrast at all level changes (C-04).
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0187
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** D-02, D-06
+**Filed:** wayfinding-and-signage
+
+**Connection type:** CROSS-POPULATION
+**Connection:** D-02 (cognitive simplicity) and D-06 (decision-point design) share evidence from wayfinding-dementia BPC. Marquardt 2011 shows architectural layout governs DEM wayfinding; Zali 2025 SR confirms spatial planning > signage. D-06 decision points need both cognitive simplicity (D-02) and visual contrast (C-04).
+**ISW action:** D-06: add D-02 cross-reference for cognitive simplicity at decision points. Add ≥50 LRV (C-04) at all decision-point signage.
+
+---
+
+### CON-0226
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** D-02, Part 3 §3.2
+**Filed:** wayfinding-and-signage
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED] D-02 cognitive simplicity links to Part 3 §3.2 theoretical framework. Likely documents the evidence pathway from cognitive psychology (spatial cognition) to the single-route specification.
+**ISW action:** [NEEDS SCOUT REVIEW — load Part 3 §3.2.]
+
+---
+
+### CON-0227
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** D-05, C-04, F-03
+**Filed:** wayfinding-and-signage
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** D-05 (retreat/quiet space signage), C-04 (contrast), and F-03 (graduated re-entry from sensory room) intersect: the path TO a retreat space must be clearly marked (C-04 contrast) and the re-entry FROM the space must be graduated (F-03). This is the "escape-recovery-return" pathway.
+**ISW action:** D-05: add C-04 ≥50 LRV wayfinding to retreat spaces. F-03: cross-reference D-05 for signage on return path.
+
+---
+
+### CON-0231
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** D-02, Part 3 §3.2
+**Filed:** wayfinding-and-signage
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED — likely duplicate or extension of CON-0226. Both target D-02 + Part 3 §3.2.]
+**ISW action:** [NEEDS SCOUT REVIEW — verify not duplicate of CON-0226.]
+
+---
+
+### CON-0235
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** D-02, Part 3 §3.2
+**Filed:** wayfinding-and-signage
+
+**Connection type:** METHODOLOGY
+**Connection:** [INFERRED — same target as CON-0226 and CON-0231. May be related to different aspect of D-02/Part 3 link.]
+**ISW action:** [NEEDS SCOUT REVIEW — verify relationship to CON-0226 and CON-0231.]
+
+---

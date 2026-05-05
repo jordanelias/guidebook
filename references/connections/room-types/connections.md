@@ -51,3 +51,20 @@
 **Action required:** Part 6: create R-BED-DEM matrix row (14 specifications). Flag as coordination exemplar.
 
 **Disposition notes:** —
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0208
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Target item(s):** Part 6 R-BED matrix
+**Filed:** room-types
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** Part 6 bedroom matrix needs population-specific provisions added. Likely includes DEM bedroom-specific wayfinding (toilet visible from bed per D-03), NDV lighting control (full dimming), and OFS reclined rest position.
+**ISW action:** Part 6 R-BED: verify D-03, B-02/B-06, and OFS provisions are in matrix.
+
+---
+

@@ -275,3 +275,20 @@ Currently A-16 is NDV-only. MH "de-escalation room" described as distinct. Evide
 **ISW action:** Kitchen specification coordination note: C-01 muted palette + C-04 ≥50 LRV on controls/handles + H-01 consistent heights + I-02 lever-only.
 
 ---
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0209
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** H-01, Part 6 R-KIT
+**Filed:** kitchens-and-workspaces
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** H-01 (controls at 400-1200mm) must be reflected in Part 6 R-KIT kitchen matrix. All kitchen controls (hob controls, oven controls, extract fan, lighting) within reach range.
+**ISW action:** Part 6 R-KIT: verify H-01 reach range applied to all kitchen controls.
+
+---
+

@@ -611,3 +611,34 @@ This finding is siloed in `thermal-comfort-older-adults-care-settings` and not p
 **ISW action:** G-04: reinforce zero-threshold as absolute requirement. Cross-ref Al Lawati 2017. Add drainage specification: linear drain flush with floor level.
 
 ---
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0201
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** G-04
+**Filed:** bathrooms-and-wet-areas
+
+**Connection type:** CROSS-POPULATION
+**Connection:** [INFERRED] G-04 wet room connection. Likely adds a population-specific configuration note (e.g., bariatric, DEM, or SCI-specific wet room requirements).
+**ISW action:** [NEEDS SCOUT REVIEW — load G-04 BPC cross-references.]
+
+---
+
+
+### CON-0215
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** G-04, B-12
+**Filed:** bathrooms-and-wet-areas
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** G-04 (wet room) and B-12 (daylight) intersect in bathroom design: daylight in bathrooms aids VIS users and supports circadian health, but wet room steam can cause condensation on windows reducing daylight. Ventilation specification (≥15 ACH extract) resolves this.
+**ISW action:** G-04: add B-12 daylight note for bathrooms with windows. Cross-reference extract ventilation requirement.
+
+---
+

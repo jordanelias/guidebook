@@ -898,3 +898,48 @@ DBL needs BOTH: high ambient for residual vision + shadow-free for tactile readi
 **ISW action:** Part 7: apply RT60 ≤0.3s to all speech-critical room specifications in NR matrices. Add citation mining evidence (ASI-06, ASI-08).
 
 ---
+
+
+<!-- Batch 4 additions 2026-05-04 -->
+
+### CON-0211
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** Part 8 Engineering
+**Filed:** sensory-environment
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** [INFERRED] Sensory environment specifications have engineering coordination requirements in Part 8. Likely involves HVAC (NC-25), acoustic (RT60), and lighting (melanopic EDI) engineering specifications.
+**ISW action:** Part 8: verify all sensory environment specifications have corresponding engineering coordination notes.
+
+---
+
+
+### CON-0220
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** A-16, F-01, F-03
+**Filed:** sensory-environment
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** A-16 (sensory room), F-01 (sensory gradient), and F-03 (graduated re-entry) form the sensory environment pathway: F-01 defines the gradient, A-16 is the endpoint (Zone 3), and F-03 is the transition back. These three must be specified as a system.
+**ISW action:** Add system cross-reference note to all three items: F-01→A-16→F-03 pathway.
+
+---
+
+
+### CON-0238
+
+**Status:** PENDING
+**Confidence:** MODERATE
+**Target item(s):** F-01, BIO-01, A-16
+**Filed:** sensory-environment
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** F-01 (sensory gradient), BIO-01 (biophilic design), and A-16 (sensory room) share nature-based design evidence. Biophilic elements in F-01 Zone 2 (transition zone) can provide a graduated sensory experience between high-stimulation entry and low-stimulation retreat. Citation mining confirmed Leonardi 2025 SR for A-16 user control evidence.
+**ISW action:** F-01 Zone 2: add biophilic element specification (BIO-01). A-16: cross-reference F-01 Zone 3 status.
+
+---
+
