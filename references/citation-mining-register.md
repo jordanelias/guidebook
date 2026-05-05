@@ -5,8 +5,8 @@
 
 **Created:** 2026-05-05 00:29
 **Last updated:** 2026-05-05 00:45
-**Total sources mined:** 37 (28 prior + 9 this session)
-**Unmined minable Tier 1-2/Co-1:** 26 (updated 2026-05-05)
+**Total sources mined:** 41 (28 prior + 9 pass 1 + 4 pass 2)
+**Unmined minable Tier 1-2/Co-1:** 22 (updated 2026-05-05)
 **Exempt from mining:** 46 (DPO/advocacy/frameworks)
 **Next review:** When register exceeds 6K tokens — archive completed slugs to `references/citation-mining-archive.md`
 **Audit status:** COMPLETE (2026-05-05) — all 63 active BPCs, 510 sources cross-checked
@@ -105,6 +105,41 @@ Sources mined inline during connection scout passes, not full citation-miner run
 | pain-ofs-built-environment-design | PARTIAL | Minimal forward per 2026-03-28 assessment |
 
 ---
+
+
+
+---
+
+## Session 2026-05-05 — Mining Pass 2 (OFS/PAIN + Neurological)
+
+### Batch 3: OFS/PAIN Sources
+
+| REF-ID | Source | DOI | BPC Slug | B | F | Date | Yield | Notes |
+|---|---|---|---|---|---|---|---|---|
+| OBE-07 | Kos et al. 2015 | 10.5014/ajot.2015.016287 | ofs-built-environment | — | ✓ | 2026-05-05 | 2 new: Casson 2022 SR+MA (PMID 36345726), Kos 2016 MS-RCT (PMID 27182847) | PMID 26356665; PMC4564796; grey flag CLEARED — source confirmed real |
+| POD-13 | Hersche et al. 2022 | — | pain-ofs-built-environment-design | — | — | 2026-05-05 | CLOSED-DELETED | 2 failed independent searches; no source found; remove from BPC |
+| POD-03 | PMC6260403 | 10.1155/2018/5378451 | pain-ofs-built-environment-design | — | — | 2026-05-05 | BPC ERROR IDENTIFIED | PMC6260403 = Lagueux 2018 OT chronic pain scoping review — NOT the immunology paper the BPC notes claim. Legitimate Tier 1 SR. BPC metadata requires correction. |
+
+### Batch 4: Neurological Built Environment
+
+| REF-ID | Source | DOI | BPC Slug | B | F | Date | Yield | Notes |
+|---|---|---|---|---|---|---|---|---|
+| NEB-05 | Iwarsson & Ståhl 2003 | 10.1080/dre.25.2.57.66 | neurological-built-environment | — | ✓ | 2026-05-05 | 1 new: Hedvall/Ståhl/Iwarsson 2025 (DOI 10.1080/09638288.2025.2491831) | PMID 12554380; ~1300 citations; foundational person-environment framework |
+
+### New Sources Discovered This Session (5)
+
+| # | Authors | Year | Title | Journal | Jurisdiction | Tier | DOI/PMID | Discovery route |
+|---|---|---|---|---|---|---|---|---|
+| 7 | Casson S et al. | 2022 | Activity pacing for CFS: SR+MA | Disabil Rehabil 45(23):3788-3802 | Multi | 1 (SR+MA) | 10.1080/09638288.2022.2135776 / PMID 36345726 | Forward from Kos 2015 (OBE-07) |
+| 8 | Kos D et al. | 2016 | Self-management OT in MS-related fatigue: RCT | Int J Rehabil Res 39(3):255-62 | BE | 1 | 10.1097/MRR.0000000000000178 / PMID 27182847 | Forward from Kos 2015 (OBE-07) |
+| 9 | Lagueux É et al. | 2018 | OT contribution to chronic pain management: scoping review | Pain Res Manag 2018:5378451 | Multi | 1 (SR) | 10.1155/2018/5378451 / PMC6260403 | BPC error correction — POD-03 was incorrectly flagged |
+| 10 | Hedvall P-O, Ståhl A, Iwarsson S | 2025 | Accessibility, usability and UD — still confusing? Harmonisation of key concepts | Disabil Rehabil 47(25):6750-6759 | SE/INT | 3 | 10.1080/09638288.2025.2491831 | Forward from Iwarsson 2003 (NEB-05); OA (CC BY 4.0) |
+| 11 | Nielsen SS et al. | 2022 | Effect of occupational engagement on lifestyle in chronic pain: SR+MA | Occup Ther Int 2022:7082159 | DK | 1 (SR+MA) | 10.1155/2022/7082159 / PMID 35814357 | Identified during POD-13 search (adjacent to Hersche search) |
+
+### BPC Corrections Required
+- **POD-13**: Remove Hersche 2022 (CLOSED-DELETED). 2 failed searches; no verifiable source exists.
+- **POD-03**: Correct metadata: PMC6260403 = Lagueux 2018 (Pain Res Manag 2018:5378451). Remove incorrect note about "1981 immunology paper."
+- **OBE-07**: Remove grey flag. DOI confirmed: 10.5014/ajot.2015.016287. PMID 26356665.
 
 
 ---
