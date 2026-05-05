@@ -2168,6 +2168,8 @@ DEM/elderly public: ≥35 LRV
 
 Aged care/DeafBlind: ≥40 LRV
 
+● Floor contrast specification-partitioning: floor-to-FLOOR transitions use ≤10 LRV differential (DEM governs — prevents void/hole misperception of dark floor zones, DSDC EADDAT 2022 Co-1 evidence). Floor-to-WALL and floor-to-FIXTURE junctions use ≥30 LRV (VIS governs — enables hazard detection). Dark entrance mats are the index case: VIS reads high-contrast mat edge as useful boundary; DEM reads dark mat as void. Different spatial boundary types require different contrast rules on the same floor plane. This is a specification-partitioning rule, not a conflict. [CON-0223]
+
 Stair nosings: ≥30 LRV full-width strip (55--75 mm depth)
 
 Grab bars: LRV vs wall AND vs floor (JOTA, 2022)
@@ -2291,6 +2293,8 @@ Where multiple routes exist: clear wayfinding signage at every decision point
 Primary route: shortest + most direct (not hidden accessible route)
 
 Decision point legibility: destination visible from decision point where possible
+
+● NEU navigation sub-type framework (Claessen & van der Ham 2017): three navigation impairment types map to DEM staging and wayfinding specification tiers. Egocentric disorientation (self-to-space → DEM Stage 6-7: cannot navigate familiar rooms → room-level tactile/colour coding). Topographic disorientation (route memory failure → DEM Stage 4-5: loses way on familiar routes → continuous wayfinding cues on all routes). Landmark agnosia (cannot use environmental cues → DEM Stage 3-4: fails to recognise decision-point markers → multi-modal markers at all decision points). This transfers NEU classification into a DEM-staging tool for graduated wayfinding specification. [CON-0189]
 
 **Retrofit cost note:** Retrofit penalty: HIGH. Cognitive simplicity through a single primary route requires spatial reorganisation of circulation. Retrofit involves partition removal, route reconfiguration, and wayfinding redesign — significant works in complex existing buildings. See Part 11 §11.4.2.
 
@@ -2464,6 +2468,8 @@ Contrast: ≥30 LRV text vs background
 Braille: Grade 2 Braille equivalent at 1400--1600 mm AFF at all room
 ID signs
 Tactile lettering: raised 0.8 mm; at 1400--1600 mm AFF
+
+● Dual-height sign system: DEM downward scan zone ≤1220 mm AFF (Benbow 2013) conflicts with VIS/DBL braille zone 1400--1600 mm AFF (ISO 21542, BS 8300). Resolution: single sign spanning 1220--1600 mm with population-specific content zones. Lower zone (≤1220 mm): pictogram + high-contrast colour field (DEM). Upper zone (1400--1600 mm): braille + raised characters (VIS/DBL). Both zones on latch side. [CON-0206]
 
 **Retrofit cost note:** Retrofit penalty: LOW. Pictogram and signage installation is a surface-mounted programme. Retrofit is signage
 
@@ -6131,34 +6137,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Primary population:** 188 residents with severe dementia (DEM — late stage)
 
-**Evidence quality:** Tier 2 (longitudinal clinical comparison; multiple published reviews)
-
-**Key design strategies:** - 27 small-scale houses (6--7 residents each) with four lifestyle types calibrated to pre-diagnosis lifestyle familiarity - Community amenities integrated: supermarket, pub, restaurant, theatre, hair salon, garden — all accessible step-free throughout - Loop circulation paths; no dead ends; outdoor garden accessible to all residents (D-01, D-11) - Residential-scale rooms and furnishings; no institutional elements - Same staff in each house consistently; care delivered as household activity rather than clinical procedure - All spaces designed for DEM orientation: visual access to outdoors, plain flooring, muted palette, landmark objects (C-06, D-04, BIO-01)
-
-**Verified outcomes:** - Antipsychotic medication usage significantly reduced compared to traditional nursing home baseline; approximately 50% lower antipsychotic prescription rates (multiple clinical reviews, including Godwin 2015) - Dutch-language post-occupancy evaluation (BuroKade/Vivium, 2012--2019): 94% of residents with moderate dementia navigated independently to the village square and return within 6 months of admission, vs 34% in conventional dementia care units — strongest available wayfinding evidence for loop plan (D-01) and consistent environment (D-09) - Staffing ratio: De Hogeweyk operates at lower per-resident staffing ratio than conventional Dutch dementia care facilities despite higher quality-of-life scores, providing direct economic evidence that accessible environment design reduces care dependency (see Part 11 §11.1) - Residents reported as eating better, sleeping better, and being more active than in prior institutional care (qualitative programme evaluation — Tier 3) - Residents ambulatory in the community without elopement incidents; "unlocked but safe" design confirmed functional by longitudinal operation since 2009 - Replicated internationally in 15+ projects across Netherlands, France (Village Landais Alzheimer, Dax, 2020), Norway (Carpe Diem, Bærum, 2021), USA, Canada, South Korea, Australia
-
-**Cost data:** De Hogeweyk operates within standard Dutch nursing home reimbursement (same AWBZ/WLZ per-resident budget as conventional care homes) — demonstrating cost neutrality of the design model at operational scale. Construction cost: approximately €30 million for the full village (188 residents, full community amenities) --- c. €160,000/resident, comparable to high-spec nursing home construction.
-
-**Limitations:** No randomised comparison group; comparison is with published nursing home statistics rather than matched controls. Design-and-care model are inseparable — outcomes cannot be attributed to architecture alone. Replication in non-Dutch care system contexts requires cultural and regulatory adaptation. Critics (e-flux, 2021) note ethical concerns about therapeutic environments that simulate normalcy for individuals unable to critically evaluate the simulation.
-
-### §12.10 — DSDC Dementia Care Home Audit Programme (UK, 2020--2024)
-
-**Building type:** Care home (40+ sites — retrospective multi-site audit)
-
-**Primary population:** Dementia care home residents (DEM)
-
-**Evidence quality:** Tier 2 (validated instrument EADDAT, Cronbach's alpha 0.82; multi-site)
-
-**Key design strategies documented (post-hoc from audited sites):** - Acoustic intervention (ceiling panel installation: A-02) - Plain flooring replacement (removing geometric patterns: C-06) - Improved wayfinding (D-04, D-08) - Toilet visibility improvements (D-03)
-
-**Verified outcomes:** - Pre/post acoustic intervention: 30--40% reduction in measured agitation episodes across 12 audited sites (Tier 2 --- consistent with §12.06 findings) - Acoustic calm confirmed as the single highest-leverage environmental intervention for dementia across all 40+ audited sites (consistent across site type, resident acuity, and care regime) - Floor pattern change from plain to patterned: 15% increase in falls documented retrospectively through incident records across multiple sites — confirmed as contraindicated (C-06, C-03) - EADDAT validated (Cronbach's alpha 0.82) across 40+ sites --- provides a reliable instrument for post-occupancy dementia environment assessment
-
-**Cost data:** Acoustic panel installation across audited sites: £120/m² (ceiling only); typical single-floor care home: £8,000--£25,000 per intervention. Cost-per-percentage-point reduction in agitation episodes comparable to §12.06 (approximately £800/percentage point — Tier 2 estimate from available data).
-
-**Limitations:** Retrospective audit design; selection bias (audited sites may not be representative); no randomisation. Floor pattern finding is post-hoc incident record review. Multi-site consistency increases confidence but does not constitute controlled evidence. *Source: DSDC (2024). EADDAT multi-site audit results 2020--2024. University of Stirling.*
-
-### §12.11 — ASPECTSS-Based Autism School Retrofit, USA (Mostafa, Honsberger, Shanok et al., 2024)
-
-**Building type:** Pre-K--12th grade public school for students on the autism spectrum (existing building, retrofit)
-
-**Primary popula
+**Evidence quality:** Tier 2 (longitudinal clin
