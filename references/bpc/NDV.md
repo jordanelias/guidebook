@@ -76,6 +76,7 @@
 6. Sensory Responsive Environments Framework (SREF) (2024). *MDPI Land*, 13(5), 636. [EN, Co-1]
 7. McAllister, K., & McBeth, C. (2022). Autism Spectrum Condition and the Built Environment. *Cities & Health*. [EN, Co-1]
 8. Latiff, A., et al. (2024). Biophilic outdoor transitional spaces for NDV populations. [EN, Co-1]
+9. (Authors TBC). (2026). Sensory stimuli in the built environment for autistic people: A scoping review. *Building and Environment*. 77 studies, PRISMA-ScR. [EN, Tier 3 — updated NDV sensory evidence synthesis superseding Tola 2021. Full text behind paywall; cross-check against ASPECTSS and PAS 6463 when accessible. Added 2026-05-04 citation mining Phase 4.]
 
 ---
 
