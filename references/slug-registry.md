@@ -1,3 +1,4 @@
+<!-- ARCHIVED 2026-05-05 03:30 — Phase 1-E. Read-only. Do NOT update. Slug data now in SQLite (slugs table). Use `python3 scripts/db.py coverage --slug SLUG` to query. -->
 # Slug Registry
 **Managed by:** research-log-manager
 **Purpose:** Canonical list of all research slugs. Authoritative for CHECK/LOG/RETRIEVE path resolution.

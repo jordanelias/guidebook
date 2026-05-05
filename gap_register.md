@@ -1,3 +1,4 @@
+<!-- ARCHIVED 2026-05-05 03:30 — Phase 1-E. This file is read-only. Do NOT update. All gap data is now in SQLite (data/guidebook.db, gaps table). Use `python3 scripts/db.py gaps` to query. -->
 # Gap Register
 <!-- Schema: Gap ID | Cat | P | Status | Skill | Section | Description | Date -->
 <!-- Categories: RP=Research pipeline · SW=Spec writing · CR=Conflict · ST=Structural · MX=Matrix/room · CD=Content draft · EC=Economics · EG=Evidence gap -->

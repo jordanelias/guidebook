@@ -1,3 +1,4 @@
+<!-- ARCHIVED 2026-05-05 03:30 — Phase 1-E. Read-only. Do NOT update. Connection data now in SQLite (connections + connection_targets tables). Use `python3 scripts/db.py connections` to query. -->
 # Connection Register — Master Index
 <!-- CO-0006 Phase 0B-1 migration 2026-04-08 -->
 <!-- Updated by: connection-scout (append) | ISW (status updates) -->
