@@ -73,7 +73,12 @@ def render_html(pop):
     def spec_rows(specs, role_class):
         rows = ""
         for s in specs:
-            tier_marker = "●" if s["tier"] and s["tier"] <= 3 else "◐" if s["tier"] and s["tier"] <= 5 else "○"
+            tier = s["tier"]
+            if isinstance(tier, str):
+                import re as _re
+                m = _re.search(r'(\d+)', str(tier))
+                tier = int(m.group(1)) if m else None
+            tier_marker = "●" if tier and tier <= 3 else "◐" if tier and tier <= 5 else "○"
             rows += f'<tr class="{role_class}"><td><a href="/specs/{e(s["item_code"])}">{e(s["item_code"])}</a></td><td>{e(s["title"])}</td><td>{tier_marker}</td></tr>\n'
         return rows
 
