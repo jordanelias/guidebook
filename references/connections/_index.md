@@ -14,7 +14,7 @@
 |---|---|
 | CONSUMED | 205 |
 | CONSUMED-DEFERRED | 44 |
-| PENDING | 1 |
+| PENDING | 0 |
 | CONSUMED (this session) | 57 |
 
 ## Index
