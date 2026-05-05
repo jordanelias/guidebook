@@ -2425,6 +2425,8 @@ Primary routes: 1200 mm clear width minimum
 
 Where <1200 mm continuous: passing bay ≥1500×1500 mm at ≤10 m intervals
 
+● **Mode S OT handoff [SCOPE-05]:** The 1500 mm / 1800 mm turning circle distinction is clinically significant. A standard power wheelchair requires ≥1500 mm; a larger powered chair or a manual chair with long footplates requires ≥1800 mm. Mode P provision: ≥1500 mm clear turning circle in all principal manoeuvring positions (each side of WC, at bed foot, at wardrobe approach). For any named Tier 2 user: OT assessment confirms whether 1500 mm or 1800 mm governs before construction detailing. Document decision in OT assessment report. ○ [Tier 2 — ISO 21542:2021; BS 8300:2018]
+
 No furniture, equipment, or signage projecting into corridor
 
 Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
@@ -3267,6 +3269,8 @@ furniture replacement and procurement. See Part 12 §12.4.1.
 
 Toilet: bilateral horizontal bars at 650--900 mm AFF both sides (Mode P median: 700 mm; Mode S: 280 mm above seat surface, resolved by OT assessment)
 
+● **Mode S OT handoff [SCOPE-05]:** The 650–900 mm range spans 250 mm — a clinically significant difference for transfer biomechanics. Mode P median (700 mm) cannot be assumed correct for any individual. Every residential project with a named MOB, PAIN, OFS, NEU, or UPL user requires OT-assessed grab bar height per the Housing Enabler protocol (§1.8.8). For non-residential where primary users are not known: specify structural blocking for the full 600–950 mm range and mount at the Mode P median pending OT assessment at fit-out. ○ [Tier 2 — RCOT Adaptations Without Delay 2019; BS 8300:2018 §8.3]
+
 Angled bar at cistern wall
 
 Bar diameter: 32--45 mm
@@ -3390,6 +3394,8 @@ height-adjustable (electric or manual) from 650 mm to 870 mm AFF. Knee clearance
 20% of all workstations: height-adjustable
 
 Height range: 650--870 mm AFF
+
+● **Mode S OT handoff [SCOPE-05]:** The 650–870 mm range spans 220 mm — from minimum wheelchair knee-clearance height (650 mm) to comfortable standing desk height (870 mm). Mode P default for a wheelchair user is 720–750 mm; for ambulant with pain or fatigue, 800–820 mm. No single fixed height serves all needs. For residential or single-named-user Tier 2 projects: OT assessment determines target height before procurement. For non-residential: electric height-adjustment mechanism is mandatory (not optional), enabling individual users to set their own working height across the full range. Manual crank adjustment is not Mode S-compatible for UPL users. ○ [Tier 2 — RCOT; DIN 18040-2 §5.7 (DE); CAOT 2024]
 
 Knee clearance: ≥600 mm depth at all heights
 
@@ -4312,6 +4318,8 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 **Illustration:** [Illustration: to be provided] — Plan view of dual-rod wardrobe with 380 mm shelf depth and 1500 mm dressing turning circle.
 
 **FDR-TCOA-01 [Tier 3 — van Hoof 2010]:** Thermoregulatory unawareness in DEM — carer-managed dressing is a primary occupational need. In DEM-designated residential and care bedrooms, wardrobe to provide: full-width door opening (minimum 900 mm clear); adjustable hanging rail 1050–1200 mm AFF (suits carer-operated dressing from seated or standing position); shelf height 600–900 mm for carer-visible clothing display; visual display arrangement of clothing options (open shelving or glass front). ○ [THIN — Tier 3 clinical mechanism; no dedicated wardrobe design RCT]
+
+● **Mode S OT handoff [SCOPE-05]:** Hanging rail 1050–1200 mm AFF spans 150 mm — the full range from optimised wheelchair user reach (~1050 mm) to optimised standing ambulant user reach (~1200 mm). Mode P default depends on the primary occupant type. For residential projects with named users: OT assessment determines exact height within range. For non-residential: adjustable rail spanning full 1050–1200 mm is strongly preferred over fixed installation. ○ [Tier 2 — RCOT; no standard specifies hanging rail height for disability populations]
 
 ---
 
