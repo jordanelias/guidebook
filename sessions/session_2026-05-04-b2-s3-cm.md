@@ -1,55 +1,79 @@
-# Session: B2-S3-CM-completion (updated)
+# Session: B2-S3-CM-completion (final)
 **Date:** 2026-05-04
-**session_close:** 2026-05-04 10:15
+**session_close:** 2026-05-04 11:00
 **Model:** Opus 4.6
 
 ## Summary
-Citation mining completion (Phases 2-5) + evidence propagation + ISW connection consumption. 8 commits total.
+Citation mining completion (Phases 2-5) + evidence propagation + ISW connection consumption (21 connections across 5 topic areas).
 
-## Commit log
-1. `83f12e31c446` — citation-miner: Phase 2 completion (Keating, Guay, Levine)
-2. `c1c0301569d8` — citation-miner: Phases 3-4-5 (population BPC anchors, SR supersession, TBC)
-3. `7148b8154c96` — session-consolidator: session file + LATEST
-4. `127a174d43e6` — citation-miner: propagate Siegelaar DEM + NDV SR 2026 + Deen G-03
-5. `0e3b8820bdfc` — ISW: consume 5 bathroom connections (G-03 + G-04)
-6. `8564402488b3` — ISW: consume 2 sensory connections (B-12)
-7. `a72f95d338af` — ISW: consume 2 entrance connections (E-08)
-8. (this commit) — session update
+## Commit log (11 total)
+1. `83f12e31c446` — Phase 2 completion: Keating, Guay, Levine mined
+2. `c1c0301569d8` — Phases 3-4-5: population BPC anchors + SR supersession
+3. `7148b8154c96` — session file
+4. `127a174d43e6` — propagation: Siegelaar DEM + NDV SR 2026 + Deen G-03
+5. `0e3b8820bdfc` — ISW: 5 bathroom (G-03 + G-04)
+6. `8564402488b3` — ISW: 2 sensory (B-12)
+7. `a72f95d338af` — ISW: 2 entrance (E-08)
+8. `8eb67ffc3072` — ISW: kitchen + seating cluster + SCI thermal
+9. `746608f96c34` — ISW: thermal assessment + kitchen dual palette
+10-11. session updates
 
-## Citation mining results
-- Phase 2 CLOSED: 3 sources mined, 1 new (Deen 2025)
-- Phase 3 PARTIAL: 6/11 populations, 4 new sources
-- Phase 4 COMPLETE: 2 major SR supersessions (Siegelaar DEM, NDV sensory 2026)
-- Phase 5 COMPLETE (prior session)
-- Total new sources: 9
+## Citation mining
+- 9 new sources discovered
+- 2 major SR supersessions: Siegelaar 2025 (DEM meta-review), NDV sensory SR 2026
 
-## Evidence propagation
-- DEM BPC: +Siegelaar 2025 meta-review + Bowes 2023 housing SR
-- NDV BPC: +sensory stimuli SR 2026 (B&E, 77 studies)
-- G-03: +Deen 2025 suction cup handhold efficacy
+## ISW connections processed (21 total)
 
-## ISW connections consumed (9 total)
+### CONSUMED (14)
 | CON-ID | Target | Upgrade |
 |---|---|---|
-| CON-0185 | G-03 | OFS added; cross-population grab bar evidence |
-| CON-0191 | G-04 | Thermal shock ≤5°C differential (Japan MHLW) |
-| CON-0203 | G-03 | Evidence strength (3 SRs, GRADE HIGH) |
-| CON-0210 | G-04 | Power WC+OFS ≥2200×2500mm dimensional |
-| CON-0216 | G-03 | Continuous rail WC→basin→door (safety gap) |
-| CON-0196 | B-12 | Universal Mode (5+ populations) |
-| CON-0214 | B-12 | B-01 circadian isolation (≤10 lux ≤2700K) |
-| CON-0229 | E-08 | Injury prevention framing (Sawatzky Tier 1) |
-| CON-0237 | E-08 | Metabolic normalisation at 1200mm (Koontz) |
+| CON-0185 | G-03 | OFS cross-population |
+| CON-0191 | G-04 | Thermal shock ≤5°C |
+| CON-0203 | G-03 | 3 SRs GRADE HIGH |
+| CON-0210 | G-04 | Power WC+OFS ≥2200×2500mm |
+| CON-0216 | G-03 | Continuous rail WC→basin→door |
+| CON-0196 | B-12 | Universal Mode 5+ pops |
+| CON-0214 | B-12 | B-01 circadian isolation |
+| CON-0229 | E-08 | Injury prevention (Sawatzky) |
+| CON-0237 | E-08 | Metabolic 1200mm threshold |
+| CON-0198 | I-02 | Induction Universal Mode |
+| CON-0219 | I-02 | Kitchen dual palette |
 
-## Skipped / deferred
-- CON-0183: K-01/K-02 item-code discrepancy (acoustic items use A-codes in guidebook; connection references K-codes)
-- CON-0200: Complex floor conflict domain — needs Part 3/Part 5 dedicated session
-- MOB/VIS/IntD/PAIN/DBL population mining — diminishing returns from clinical anchors
+### CONSUMED-DEFERRED (7) — awaiting item creation
+| CON-ID | Blocked by |
+|---|---|
+| CON-0190 | E-10 (rest seating) not created |
+| CON-0204 | E-10 not created |
+| CON-0207 | E-10 not created |
+| CON-0212 | E-10 not created |
+| CON-0233 | K-05 (thermal assessment) not created |
+| CON-0184 | K-05 not created |
+| CON-0224 | F-07/K-05 not created |
+
+## Items upgraded
+G-03 (3 upgrades), G-04 (2), B-12 (2), E-08 (2), I-02 (2), H-01 (1)
+
+## Items pending creation (blocks deferred connections)
+- E-10 Rest Seating (blocks 4 connections)
+- K-05 Thermal Comfort Assessment (blocks 3)
+- F-07 Thermal Zoning (blocks 1)
+
+## Discrepancies found
+- CON-0183: K-01/K-02 in connections = acoustic items; K-01/K-02 in guidebook = DeafBlind items
+- CON-0229/0237: reference A-02 as corridor width; A-02 in guidebook = acoustic ceiling; E-08 = corridor width
+
+## Connection status after session
+| Status | Count |
+|---|---|
+| CONSUMED | 159 |
+| CONSUMED-DEFERRED | 50 |
+| PENDING | 35 |
 
 ## next_action
-- Resolve CON-0183 K-01/K-02 item-code mapping (acoustic RT60/noise items)
-- Resolve CON-0200 FLOOR-SPECIFICATION-SYSTEM as 13th conflict domain in Part 3/Part 5
-- Continue ISW: 44 PENDING connections remain (35 HIGH, 9 other)
-- B3 Navigation = website design (per prior session handoff — LAST priority)
+- Create E-10 (rest seating), K-05 (thermal assessment), F-07 (thermal zoning) items
+- Resolve item-code discrepancies: acoustic K-01/K-02 mapping; corridor A-02 vs E-08
+- Continue ISW: 35 PENDING connections (wayfinding batch: CON-0189/0206/0223; frameworks batch: CON-0192/0193/0218/0221)
+- CON-0200: 13th conflict domain (FLOOR-SPECIFICATION-SYSTEM) — Part 3/Part 5 session
 
 blockers: none
+commit_oid: 746608f96c34
