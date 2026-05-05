@@ -3041,6 +3041,13 @@ accessibility at service/workstation points: distinct, complementary scope)
 
 **KEY GAP:** No thermal comfort standard addresses disability-specific thermoregulation. MS heat sensitivity (Uhthoff's phenomenon) vs DEM cold sensitivity requires individual zoning beyond any standard.
 
+<!-- Citation mining 2026-05-04: Evidence base strengthened:
+     TCO-01 Baquero 2023 (Indoor Air, DOI:10.1155/2023/9185216): n=1,065 older adults; neutral temp 24.9C; PMV underpredicts by 2.3C — GREY RESOLVED
+     TCO-07 (2024 SR): Meta-analysis confirms older occupants neutral sensation OR=1.83 (95% CI 1.53-2.19)
+     MST-09 Berwick 2021 (J Pain, DOI:10.1016/j.jpain.2020.12.005): SR 14/17 QST studies confirm FMS cold pain hypersensitivity (CPT 10.9-26.3C vs 5.9-13.5C controls)
+     MST-10 Christogianni 2018 (Temperature 5(3):208-223): MS Uhthoff threshold at 0.5C core temp increase
+     Combined: harm-asymmetry conflict resolution (cool default for MS vs warm preference for DEM/FMS) now has SR-level evidence on BOTH sides -->
+
 
 ### F-08 Thermal Transition — Heating and Cooling System Response
 <!-- CON-0102 [HIGH]: F-04/F-06/F-07/F-08 interdependent OFS/MCAS HVAC system — F-category coherence note required -->
