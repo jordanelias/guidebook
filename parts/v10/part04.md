@@ -813,7 +813,7 @@ All EML (Equivalent Melanopic Lux) targets are at seated eye level (1200 mm AFF)
 <!-- design_stage_lock: DD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU|NDV -->
-<!-- grade_confidence: MODERATE — Melanopic EDI ≥250: Brown et al. 2022 PLOS Biology (Tier 1) + CIE S026:2018. WELL v2 sets lower threshold (≥181 melanopic EDI). DIN/TS 67600:2022 adopts melanopic EDI metric. ≥5 jurisdictions moving toward circadian metrics. Tier 1 photobiology evidence; limited built-env RCT. -->
+<!-- grade_confidence: MODERATE — Melanopic EDI ≥250: Brown et al. 2022 PLOS Biology (Tier 1) + CIE S026:2018. WELL v2 sets lower threshold (≥181 melanopic EDI). DIN/TS 67600:2022 adopts melanopic EDI metric. ≥5 jurisdictions moving toward circadian metrics. Tier 1 photobiology evidence; limited built-env RCT. Citation mining 2026-05-04: IES RP-46-23 (CML-09) is the US IES recommended practice aligned with Brown 2022 thresholds. CIE TN 015:2023 (CML-10) reinforces international consensus. Kolberg 2022 (CML-07) DEM nursing homes fail melanopic EDI thresholds. Grant 2022 (CML-08) fall reduction from upgraded circadian lighting. -->
 <!-- METRIC NOTE: This item uses melanopic EDI (≥250) as the daytime threshold per Brown et al. 2022 PLOS Biology. Prior versions cited EML (≥150–200 EML). Conversion: melanopic EDI ≈ EML / 1.104. Use melanopic EDI ≥250 as the unified design target. See BPC circadian-lighting-melanopic-edi and spec-db-part4-reconciliation Section C1. -->
 
 **Applicable Groups:** ALL (especially DEM, MH, PAIN, NEU) · OFS · NDV/AUT
@@ -853,6 +853,8 @@ DEM environments: circadian lighting is a clinical requirement, not a comfort en
 | INT | WELL v2/v6 L03/L07 | ≥150 EML / ≥250 m-EDI | ≤50 EML | — | No (voluntary) |
 | INT | CIE S 026/E:2018 | Metric definition | — | — | No (metric only) |
 | US | UL 24480 | CS ≥0.3 (different model) | — | — | No (voluntary) |
+| US | IES RP-46-23 | Aligned with Brown 2022 | — | — | No (recommended practice) |
+| INT | CIE TN 015:2023 | Consensus workshop | — | — | No (technical note) |
 | All others | — | **No requirement** | — | — | — |
 | **Guidebook** | **B-01** | **≥250 MEDI daytime** | **≤50 MEDI evening** | **Adjusted for age** | **Recommended** |
 
@@ -1777,7 +1779,7 @@ Mounted: 1300--1500 mm AFF (centre); adjacent to door frame
 
 Contents: occupant's personal objects (provided and refreshed by occupant/family)
 
-Backing: plain contrast colour ≥30 LRV from objects
+Backing: plain contrast colour ≥50 LRV from objects (30 LRV code minimum) [CON-0206 — ≥50 LRV best practice per C-04]
 
 Glass: non-reflective
 
@@ -2796,6 +2798,8 @@ intervention. See Part 12 §12.4.2.
 
 **Cross-reference:** A-16 (Sensory Room); F-01 (Sensory Gradient)
 
+**Sensory pathway system [CON-0220/0238]:** F-01 → A-16 → F-03 form an integrated sensory pathway: F-01 defines the gradient (high→low stimulation from entry), A-16 is the endpoint (Zone 3, lowest stimulation), and F-03 is the graduated return. These three items must be specified and located as a system. D-05 wayfinding to retreat spaces (≥50 LRV per C-04) marks the path TO A-16. Biophilic elements (BIO-01) in F-01 Zone 2 provide natural graduated transition.
+
 **Evidence basis (OT):** EHP Framework (establish strategy); Dunn's Sensory Processing Model. Graduated re-entry implements EHP's 'establish' strategy: the design builds on the user's existing regulatory capacity by providing a low-stimulation transition space that allows sensory regulation to be re-established at the user's own pace before re-entering higher stimulation zones.
 
 **Jurisdiction comparison:** No code addresses transition from low-stimulation to general spaces. Guidebook-specific provision — sensory room users need graduated re-entry to avoid sensory shock. Cross-reference A-16 (sensory room), F-01 (sensory gradient).
@@ -3255,6 +3259,8 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 **Cross-reference:** G-04 (Wet Room); C-04 (LRV Contrast); I-03 (UPL Grab Bars); I-04 (Ceiling Hoist — CON-0103: where ceiling hoist is specified, grab bar wall blocking zones must align with hoist transfer positions — coordinate at Schematic Design; G-04 ceiling height must be continuous across the full hoist transfer path)
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Grab specifications (32--45mm diameter, ≥1.5kN static/≥2.5kN dynamic load rating, bilateral provision) are derived from transfer biomechanics research; the EHP 'adapt' strategy frames the grab bar as a context modification that enables the occupation of bathing, toileting, and transfer independently — occupations that are impossible without the adapted context.
+
+**DBL dual function [CON-0216]:** For DeafBlind users, bilateral grab bars serve BOTH as transfer support AND as tactile wayfinding landmarks. Consistent bilateral positioning across ALL bathrooms in a building is a DBL requirement (not just best practice) — it enables spatial habituation through predictable tactile reference frames.
 
 **Jurisdiction comparison:**
 
@@ -4467,6 +4473,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 - ● Arms to be provided on both sides of each seat, extending at least 200 mm beyond the front seat edge [REF:accessible-circulation-geometry:02] *(single Tier 5 proxy)*
 - ○ A minimum of one seating position per alcove to accommodate a tilt or recline angle of no less than 15° from vertical [REF:accessible-circulation-geometry:09]
 - ○ Full horizontal capability to be provided at a rate of one per floor in buildings where OFS/ME is the identified population and full recline is required for symptom management
+- ○ Bariatric provision [CON-0204]: minimum one seating position per floor to accommodate ≥250 kg load rating and ≥600 mm seat width. All rest seating to have minimum load rating ≥200 kg. Standard 120 kg office seating is not acceptable for public rest provisions.
 
 **Design Stage:** Schematic Design · Design Development
 
