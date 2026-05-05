@@ -47,7 +47,7 @@
 | GAP-CON-05-b | SW | P2 | CLOSED | connection-scout | A-09 | CON-0005: PAIN as co-population for resilient flooring (MOB WBV evidence extends to PAIN joint-loading reduction). THIN for PAIN-specific evidence. | 2026-03-26 18:15 |
 | GAP-CON-06 | SW | P2 | OPEN | connection-scout | Part 4 | CON-0015: Empirical-derivation-from-user principle. State as methodological standard. | 2026-03-26 18:30 |
 | GAP-CON-06-b | SW | P2 | CLOSED | connection-scout | B-01 | CON-0006: MH and OFS as co-populations for circadian lighting. Sleep disruption core symptom for both; circadian entrainment mechanism identical to DEM/NEU. | 2026-03-26 18:15 |
-| GAP-CON-12 | SW | P2 | OPEN | connection-scout | DAR items | CON-0012: Italian adattabilità (DM 236/89) as statutory DAR precedent. Cross-reference in Part 1 DAR doctrine. | 2026-03-26 18:15 |
+| GAP-CON-12 | SW | P2 | CLOSED | connection-scout | DAR items | CON-0012: Italian adattabilità (DM 236/89) as statutory DAR precedent. Cross-reference in Part 1 DAR doctrine. | 2026-03-26 18:15 |
 | GAP-CON-15 | SW | P2 | CLOSED | connection-scout | F-02/F-04 | CON-0015: MH as co-population for air quality / fragrance-free items. TID framework: chemical stimuli as PTSD triggers. | 2026-03-26 18:15 |
 | GAP-CR-16 | SW | P2 | OPEN | critique-report-writer | §4.3 | Sensory coherence described but not operationalised — needs practitioner tool | 2026-03-20 21:00 [CO |
 | GAP-D241-01 | SW | P2 | OPEN | Phase 3 | 15 | D2-41 PAIN/OFS acoustic items assessment — Session 5 output. A-02 (Acoustic Ceiling Panels NRC ≥0.85), A-08 (HVAC NC-25), A-13 (RT60 ≤0.4 s): all three APPLY PAIN ○ + OFS ○ with THIN-POPULATION-SPE... | Part 4 A-02, A-08, A |
