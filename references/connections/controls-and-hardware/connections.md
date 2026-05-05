@@ -224,3 +224,22 @@ van der Schaaf 2013 (n=23,868 across 199 wards) confirms private space per patie
 **Action required:** H-02: replace 'voice as alternative' with population-prioritized hierarchy. Touchscreen is last resort.
 
 **Disposition notes:** —
+
+
+<!-- Batch 2 additions 2026-05-04 -->
+
+### CON-0202
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** upper-limb-impairment-built-environment, reach-range-and-accessible-controls
+**Target item(s):** H-02, E-05
+**Target population(s):** MOB/UPL, SCI, NEU
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-POPULATION
+**Connection:** H-02 (Individual Environmental Control) and E-05 (powered door operator) both require accessible activation — voice, proximity sensor, or large-area push plate. UPL users with C4-C5 SCI cannot operate standard switches. Voice-activated environmental control (H-02) should be specified with RT60 ≤0.4s acoustic environment (cross-ref A-02) to ensure reliable speech recognition.
+**ISW action:** H-02: add voice control acoustic note — RT60 ≤0.4s in all voice-controlled spaces. E-05: add proximity/motion sensor as primary activation for SCI.
+
+---

@@ -1180,3 +1180,36 @@ The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifie
 **Connection type:** CROSS-POPULATION
 **Connection:** DEM wayfinding (Marquardt 2011, WDS-05) and cognitive wayfinding share the principle that spatial planning is more important than signage for intuitive navigation. Citation mining corrected WDS-04 attribution (Zali et al. 2025, DOI:10.1177/19375867251391361) and added Shabha 2022 (WDS-08, integrated design review) and Tao 2018 (WDS-09, Hong Kong floor plan legibility). D-02/D-04/D-08 wayfinding items should reference the spatial planning principle, not just signage provisions.
 **ISW action:** D-02: add spatial planning note — wayfinding is architectural (layout, sightlines, landmarks), not primarily signage. D-04/D-08: add Marquardt 2011 straight-corridor finding.
+
+
+<!-- Batch 2 additions 2026-05-04 -->
+
+### CON-0206
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** wayfinding-dementia-spatial-design, luminance-contrast-lrv-evidence-base, cognitive-wayfinding-design
+**Target item(s):** D-08, D-06, C-04
+**Target population(s):** DEM, VIS, IntD
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** D-08 (pictogram signage), D-06 (decision-point design), and C-04 (LRV contrast) intersect at decision points: signage must be both cognitively simple (pictogram) AND visually detectable (≥50 LRV). Citation mining added Tao 2018 (WDS-09, Hong Kong floor plan legibility) showing DEM wayfinding depends on floor plan legibility, not signage complexity.
+**ISW action:** D-06: add C-04 ≥50 LRV contrast requirement at all decision-point signage. D-08: add pictogram + word + Braille as minimum standard with ≥50 LRV.
+
+---
+
+### CON-0223
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** luminance-contrast-lrv-evidence-base, stair-ramp-threshold-biomechanics-accessibility
+**Target item(s):** C-03, C-04, A-09
+**Target population(s):** VIS, NDV, DEM
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** C-03 (pattern avoidance) and C-04 (LRV contrast) interact with A-09 (entrance canopy) at the building entrance: patterned flooring at entrances creates false depth perception (VIS/DEM fall risk) while insufficient contrast at threshold level changes increases trip risk. Citation mining added Harper 2025 (LCL-08) showing contrast striping reduces fall events.
+**ISW action:** A-09 entrance specification: plain (non-patterned) flooring within entrance zone (C-03) + ≥50 LRV contrast at all level changes (C-04).

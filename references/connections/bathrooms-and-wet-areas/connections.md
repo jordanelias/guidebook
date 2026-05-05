@@ -560,3 +560,54 @@ This finding is siloed in `thermal-comfort-older-adults-care-settings` and not p
 **ISW action:** G-03: add DBL population note — bilateral grab bars serve dual function (support + tactile wayfinding). Consistent positioning across all bathrooms is a DBL requirement, not just a best practice.
 
 ---
+
+
+<!-- Batch 2 additions 2026-05-04 -->
+
+### CON-0185
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, chronic-pain-built-environment, fatigue-spectrum-built-environment
+**Target item(s):** G-03, G-04
+**Target population(s):** MOB, PAIN, OFS
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Grab bar biomechanics evidence converges across MOB (transfer safety), PAIN (cold-metal allodynia — insulated coating), and OFS (energy conservation during transfer). Citation mining 2026-05-04 added Lee/Sanford 2018 (ULB-12, n=130+, bilateral fold-down at 356mm from CL). PAIN population needs insulated grab bar coatings to prevent cold-triggered allodynia. OFS population needs horizontal bars at standing height for pull-to-stand energy conservation.
+**ISW action:** G-03: add PAIN insulated coating note; OFS horizontal bar at standing height; Lee/Sanford 2018 reference (already added in prior ISW pass).
+
+---
+
+### CON-0203
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, dementia-built-environment
+**Target item(s):** G-03, Part 4 preamble, Part 11
+**Target population(s):** DEM, ALL
+**Evidence tier:** 3-5
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** G-03 grab bar blocking must be specified at DAR (Design Appraisal Report) stage in Part 11 — blocking is NOT-RETROFITTABLE without significant cost. Part 4 preamble should reference the DAR blocking list. Part 11 DAR checklist should include all grab bar positions as mandatory blocking items.
+**ISW action:** Part 11: verify G-03 blocking in DAR checklist. Part 4 preamble: add DAR cross-reference for all blocking-dependent items.
+
+---
+
+### CON-0210
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** accessible-bathroom-and-grab-bar, threshold-and-level-access
+**Target item(s):** G-04
+**Target population(s):** MOB, VIS
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-DOMAIN
+**Connection:** G-04 wet room zero-threshold specification intersects with threshold-and-level-access BPC evidence. Al Lawati 2017 (ULB-03/SRB-06) shows 2cm threshold defeats 45.8% of wheelchair users. G-04 zero-threshold shower specification must be absolute — no raised threshold, no lip, no drainage channel proud of floor level.
+**ISW action:** G-04: reinforce zero-threshold as absolute requirement. Cross-ref Al Lawati 2017. Add drainage specification: linear drain flush with floor level.
+
+---

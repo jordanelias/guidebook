@@ -240,3 +240,38 @@ Currently A-16 is NDV-only. MH "de-escalation room" described as distinct. Evide
 **Action required:** C-01: kitchen exception note. Part 6 R-KIT: dual palette. H-01/I-02: cross-reference.
 
 **Disposition notes:** —
+
+
+<!-- Batch 2 additions 2026-05-04 -->
+
+### CON-0198
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** residential-kitchen-and-task-surfaces, upper-limb-impairment-built-environment
+**Target item(s):** H-01, I-02
+**Target population(s):** MOB/UPL, DEM
+**Evidence tier:** 3
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-POPULATION
+**Connection:** H-01 (controls at 400-1200mm AFF) and I-02 (lever taps) share the same UPL evidence base — reduced grip strength, limited reach range, one-handed operation requirement. Kitchen tap specification (I-02) should cross-reference H-01 reach range and residential-kitchen BPC evidence.
+**ISW action:** I-02: add UPL cross-reference to H-01 reach range. Kitchen-specific tap specification: single-lever mixer, ≤50mm handle throw.
+
+---
+
+### CON-0219
+
+**Status:** PENDING
+**Confidence:** HIGH
+**Source BPC slug(s):** residential-kitchen-and-task-surfaces, sensory-processing-model-design-application
+**Target item(s):** C-01, H-01, I-02
+**Target population(s):** NDV/AUT, DEM, UPL
+**Evidence tier:** 3-5
+**Filed:** 2026-04-24
+
+**Connection type:** CROSS-POPULATION
+**Connection:** Kitchen design intersects colour (C-01 muted palette for NDV) with controls (H-01 reach range) and fixtures (I-02 lever taps). NDV/AUT populations benefit from muted, non-institutional kitchen colour palettes combined with predictable, consistent control positioning. DEM populations need high-contrast controls against kitchen surfaces.
+**ISW action:** Kitchen specification coordination note: C-01 muted palette + C-04 ≥50 LRV on controls/handles + H-01 consistent heights + I-02 lever-only.
+
+---
