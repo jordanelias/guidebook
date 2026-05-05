@@ -1340,7 +1340,7 @@ Floor: plain, low-chroma (C-06)
 
 **Key citations:** British Standards Institution. (2022). PAS 6463:2022. BSI. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. DSDC. (2022). EADDAT. University of Stirling.
 
-**Cross-reference:** C-02 (Colour Zoning); C-03 (Pattern Avoidance);
+**Cross-reference:** C-02 (Colour Zoning); C-03 (Pattern Avoidance); I-02 (Kitchen — muted palette applies within kitchen: NDV/AUT benefit from low-chroma surfaces; DEM benefit from high-contrast control identification within a muted overall palette; C-01 and C-04 ≥50 LRV at controls/handles must be coordinated [CON-0219]); H-01 (Controls — kitchen control positions at 400–1200 mm AFF consistent with C-01 palette specification [CON-0219])
 
 D-05 (Enclosed Refuge Spaces)
 
@@ -2573,6 +2573,8 @@ Hold-open time: adjustable 5--15 seconds (temporal accessibility)
 Slow-open profile: 0--100% over 2--3 seconds (not <1 second — Part 8 §8.4.8)
 Presence detection: both sides of door
 
+**UPL/SCI primary activation [CON-0202]:** For UPL users with C4–C5 SCI or severe upper limb pathology who cannot operate push plates, proximity sensor (infrared or radar) or motion-triggered activation is the required primary mechanism — not a supplementary option. Push plate activation requires arm extension and force application that is not available to high-level SCI users. The automatic door becomes inaccessible if push plate is the only trigger. Specify: proximity sensor ≤1000 mm detection range, active on both sides, threshold-level activation (no floor-level-only sensor which requires foot movement). ◐ Evidence: clinical consensus (CAOT SCI CPG; no built-environment RCT on door trigger type for SCI). Cross-ref H-02 (voice control as secondary activation option — RT60 ≤0.4s required for reliable voice activation [CON-0202]).
+
 **Retrofit cost note:** Retrofit penalty: MODERATE. Automatic sliding door installation requires door leaf replacement, overhead track/motor
 
 installation, and sensor provision. In a finished building, the door opening is typically already present; the retrofit is primarily
@@ -3085,6 +3087,8 @@ accessibility at service/workstation points: distinct, complementary scope)
 | ISO | ISO 7730:2005 | PMV-PPD model | A/B/C | — | Reference method |
 | **Guidebook** | **F-07** | **Individual zones** | **Per population** | **Yes — H-02** | **MS heat vs DEM cold conflict** |
 
+
+**Cross-reference [CON-0224]:** H-02 (Individual Environmental Control — F-07 specifies building-wide thermal zoning targets; H-02 is the individual delivery mechanism; coordinates are: F-07 ambient ≤18°C for MS, H-02 supplemental radiant for PAIN/OFS); Part 9 §9.2.4 (OT thermal profiling — per-population thresholds [MS ≤22°C, DEM/older adult ≥24.9°C, FMS variable] are inputs to F-07 specification; OT assessment resolves individual position within range [CON-0224, CON-0228])
 **KEY GAP:** No thermal comfort standard addresses disability-specific thermoregulation. MS heat sensitivity (Uhthoff's phenomenon) vs DEM cold sensitivity requires individual zoning beyond any standard.
 
 <!-- Citation mining 2026-05-04: Evidence base strengthened:
@@ -3642,7 +3646,7 @@ Part 12 §12.4.2.
 
 6463:2022. BSI. Dignified Design. (2024). 22 design elements for permanent supportive housing.
 
-**Cross-reference:** B-06 (Individual Dimming); A-16 (Sensory Room); H-01 (Accessible Controls — H-01 specifies physical control ergonomics; H-02 specifies the capability for the user to adjust environmental parameters: reach-and-operate vs adapt-and-personalise); F-05 (Seated Task Design — F-05 addresses task accessibility at service points and workstations; H-02 addresses environmental adjustment capability: distinct scope)
+**Cross-reference:** B-06 (Individual Dimming); A-16 (Sensory Room); H-01 (Accessible Controls — H-01 specifies physical control ergonomics; H-02 specifies the capability for the user to adjust environmental parameters: reach-and-operate vs adapt-and-personalise); F-05 (Seated Task Design — F-05 addresses task accessibility at service points and workstations; H-02 addresses environmental adjustment capability: distinct scope); Part 9 §9.2.4 (OT thermal profiling — K-05 Thermal Comfort Assessment coordinates with H-02 individual temperature control: OT assessment determines per-population thermal targets; H-02 is the built environment delivery mechanism [CON-0233])
 
 **Evidence basis (OT):** EHP Framework (adapt strategy); Dunn's Sensory Processing Model. Individual environmental control (lighting, temperature, acoustic environment) implements EHP's 'adapt' strategy at the individual level: the context is adaptable to each user's current sensory state rather than fixed at a population average; for OFS/POTS users, individual thermal control is a physiological management tool, not a comfort preference.
 
