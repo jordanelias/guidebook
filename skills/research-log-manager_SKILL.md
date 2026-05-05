@@ -13,49 +13,47 @@ description: >
 **GitHub backend:** `jordanelias/guidebook` · `main`
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
 
+> **C2 overhaul 2026-05-05:** All register operations use SQLite and db.py CLI.
+> `slug-registry.md`, `gap_register.md`, and `citation-mining-register.md` are archived.
+> All slug lookups, coverage writes, and gap filings go through db.py subcommands.
+
 ---
 
 ## Slug Resolution (all actions)
 
-Query SQLite first, then resolve GitHub paths:
+Query SQLite first:
 
 ```bash
-python3 scripts/db.py synonyms {slug_candidate}
+python3 scripts/db.py coverage --slug {slug}
 ```
 
-If the slug exists in the `slugs` table: use canonical slug name and `topic_directory`.
-If not found: check `terms` table for alias match, then `slugs` for the canonical form.
+Returns: jurisdiction/language coverage counts, completeness flag.
 
-**New slug:** INSERT into slugs table, create both SL and BPC files on GitHub, commit.
-
-```bash
-# Check if slug exists
-python3 scripts/db.py coverage {slug}
+For slug → topic_directory lookup:
+```sql
+SELECT slug, topic_directory, sl_path, bpc_path, status
+FROM slugs WHERE slug = '{slug}'
 ```
 
-Derive paths:
-- Search log: `references/search-log/{topic_directory}/{slug}.md`
-- BPC: `references/bpc/{topic_directory}/{slug}.md`
+**New slug:** INSERT into slugs table, create BPC + search-log files on GitHub, commit.
 
 ---
 
 ## CHECK action
 
-1. Query SQLite for slug status:
+1. Query coverage:
    ```bash
-   python3 scripts/db.py coverage {slug}
+   python3 scripts/db.py coverage --slug {slug}
    ```
-   Returns: jurisdiction coverage, language coverage, evidence tier range, mining status
+2. Query mining status:
+   ```sql
+   SELECT citation_mining_complete, bpc_complete, search_complete
+   FROM bpc_metadata WHERE slug = '{slug}'
+   ```
+3. GET BPC file from GitHub: `references/bpc/{topic_directory}/{slug}.md`
+4. Report to calling skill: jurisdictions searched/not searched, languages searched/not searched, evidence tier range, mining status, coverage gaps.
 
-2. If slug exists: GET BPC file from GitHub for current synthesis content
-3. Report to calling skill:
-   - Jurisdictions searched / not searched
-   - Languages searched / not searched
-   - Evidence tier range (highest → lowest)
-   - Citation mining complete? (from `bpc_metadata.citation_mining_complete`)
-   - Search coverage gaps
-
-**If slug is NEW:** report "No prior research. Starting fresh."
+**New slug:** report "No prior research. Starting fresh."
 
 ---
 
@@ -63,76 +61,72 @@ Derive paths:
 
 After multilingual-research completes:
 
-1. **Update search-log file on GitHub:** Append search results, new sources, coverage data
-2. **Update SQLite coverage:**
-   ```bash
-   # upsert-coverage has no CLI subcommand — call directly:
-   python3 -c "import sys; sys.path.insert(0, 'scripts'); from db import upsert_search_coverage; upsert_search_coverage('
-     --languages "EN,FR" --tiers "1,3,5" --session {session}
-   ```
-3. **Add new evidence sources to SQLite:**
-   ```sql
-   INSERT INTO evidence_sources (ref_id, surname, year, title, journal, doi,
-     evidence_tier, language, jurisdiction, discovery_method,
-     created_at, created_by_session, updated_at, updated_by_session)
-   VALUES (...)
-   ```
-   ```sql
-   INSERT INTO source_slug_links (ref_id, slug, role,
-     created_at, created_by_session, updated_at, updated_by_session)
-   VALUES (...)
-   ```
-4. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections
-5. **Invoke citation-miner inline** for every confirmed Tier 1–3 source (per §7 of citation-miner skill)
+1. **Update search-log file on GitHub:** Append search results, new sources, coverage data.
 
-**Threshold management:** Search-log files on GitHub have no token limit — they grow freely.
-SQLite coverage data replaces the need to parse search-log headers at session start.
+2. **Update SQLite coverage (per jurisdiction searched):**
+   ```bash
+   python3 scripts/db.py upsert-coverage \
+     --slug {slug} \
+     --jurisdiction {jur_code} \
+     --status searched \
+     --co1-attempted {0|1} \
+     --session {session_filename}
+   ```
+   Run once per jurisdiction attempted. Repeat for each.
+
+3. **Update SQLite language coverage (per language searched):**
+   ```bash
+   python3 scripts/db.py upsert-language \
+     --slug {slug} \
+     --language {lang_code} \
+     --status searched \
+     --results-count {N} \
+     --session {session_filename}
+   ```
+   Run once per language attempted.
+
+4. **Add new evidence sources:**
+   ```bash
+   python3 scripts/db.py add-source \
+     --ref-id {local_ref_id} \
+     --authors "{authors}" \
+     --year {year} \
+     --title "{title}" \
+     --tier {tier} \
+     --doi {doi} \
+     --jurisdiction {jur} \
+     --slug {slug} \
+     --local-ref-id {local_ref_id} \
+     --session {session_filename}
+   ```
+
+5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
+
+6. **Invoke citation-miner inline** for every confirmed Tier 1–3 source (per citation-miner §7).
 
 ---
 
 ## RETRIEVE action
 
 1. GET BPC file from GitHub: `references/bpc/{topic_directory}/{slug}.md`
-2. Parse: best_practice_synthesis, consensus_findings, divergent_findings, key_sources, NO-DATA
-3. Return structured data to item-specification-writer or calling skill
-
----
-
-## Slug Registry Migration
-
-The markdown `references/slug-registry.md` is archived. Slug data now lives in SQLite:
-
-```sql
-SELECT slug, topic_directory, status, evidence_state, pico_complete,
-       search_complete, bpc_complete, citation_mining_complete
-FROM slugs
-WHERE status = 'ACTIVE'
-```
-
-Do NOT read or write `slug-registry.md`. All slug operations go through SQLite.
-
----
-
-## BPC Front-Matter
-
-BPC files retain their GitHub markdown format. The front-matter metadata is also
-mirrored in `bpc_metadata` SQLite table. When updating a BPC file:
-1. Update the markdown file on GitHub (canonical content)
-2. Update `bpc_metadata` in SQLite (queryable status)
+2. Parse: best_practice_synthesis, consensus_findings, divergent_findings, key_sources, NO-DATA flags.
+3. Return structured data to item-specification-writer or calling skill.
 
 ---
 
 ## Rules
 
-1. CHECK before / LOG after every research run — skipping = error
-2. research-log-manager CHECK triggers before citation-miner batch — ensures slug context
-3. 3+ NO-DATA for same language across topics → file gap register entry:
+1. CHECK before / LOG after every research run — skipping = error.
+2. Never read or write `references/slug-registry.md` (archived).
+3. Never read or write `references/citation-mining-register.md` (archived).
+4. 3+ NO-DATA for same language across topics → file gap:
    ```bash
    python3 scripts/db.py add-gap \
-     --category RES --priority P3 \
+     --category RES \
+     --priority P3 \
      --description "{language} NO-DATA across {topics}" \
      --skill research-log-manager \
-     --session {session}
+     --session {session_filename}
    ```
-4. Never permanently close a language — mark THIN and move on
-5. All source additions go through evidence_sources table — no standalone markdown source lists
+5. Never permanently close a language — mark THIN and move on.
+6. All source additions go through `db.py add-source` — no raw SQL.
