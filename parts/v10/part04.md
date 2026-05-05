@@ -754,6 +754,7 @@ RT60: ≤0.3 s (NRC ≥0.90 surfaces throughout)
 Lighting: 100%--0 lux dimming; warm amber 2700 K; no fluorescent
 HVAC: NC-25 maximum; individual control
 Blackout: 100% blackout blinds or no windows
+● Alerting: vibrotactile + voice alarm ONLY; no VAD strobe in A-16 spaces [CON-0217]. Primary occupants are NEU (seizure risk) and NDV (photosensitive) — strobe is contraindicated. Fire alarm via bed-shaker/vibrotactile device (K-04) + voice announcement. Evidence: Jordan & Vanderheiden 2024 (VFA-01); Fisher 2022 (VFA-06). Cross-ref B-10 PSE safety note.
 Location: adjacent to primary circulation; not via another occupied space
 
 **Retrofit cost note:** Retrofit penalty: HIGH. Sensory room provision requires dedicated floor area — a planning decision at design stage. Retrofit requires spatial reorganisation within a finished building. Minimum 8 m² cannot be created from circulation space. See Part 12 §12.4.2.
@@ -1604,7 +1605,7 @@ implements Allen's CDM cognitive level 4 design principle: the environment reduc
 <!-- design_stage_lock: SD -->
 <!-- ve_risk: MEDIUM -->
 <!-- ot_appointment_trigger: conditional:DEM|NEU|NDV -->
-<!-- grade_confidence: MODERATE — Cognitive simplicity / single primary route: Passini 1984 (wayfinding theory, Tier 3 equivalent) + Iwarsson & Ståhl 2003 (Disabil Rehabil framework). ≥6 jurisdictions reference. Tier 3 + standards convergence. -->
+<!-- grade_confidence: MODERATE — Cognitive simplicity / single primary route: Passini 1984 (wayfinding theory, Tier 3 equivalent) + Iwarsson & Ståhl 2003 (Disabil Rehabil framework). ≥6 jurisdictions reference. Tier 3 + standards convergence. Citation mining 2026-05-04: Marquardt 2011 (WDS-05) DOI:10.1177/193758671100400207 confirmed as foundational — architectural layout > signage for DEM wayfinding. Zali et al. 2025 (WDS-04, DOI:10.1177/19375867251391361) SR confirms wayfinding is spatial planning not signage implementation. Shabha 2022 (WDS-08) integrated operational design review. Tao 2018 (WDS-09) non-Western evidence (Hong Kong). [CON-0189] -->
 
 <!-- CON-0001 [HIGH]: Universal Mode convergence — DEM, VIS, DBL, DEM/NDV[IntD-proxy], NDV/AUT all require consistent, predictable circulation. Synthesis: add Universal Mode universal circulation legibility note to this item. All buildings to provide loop or single-path circulation with no dead-ends; consistent furniture arrangement; 3D landmark objects at every decision point. -->
 
