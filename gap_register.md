@@ -94,14 +94,14 @@
 | GAP-CO03-02 | ST | P2 | CLOSED | 3 | 12 | Part 3 title change applied in guidebook body | Parts 3+4 writing se |
 | GAP-CO03-03 | ST | P2 | CLOSED | 3 | 12 | Part 3 §3.2.3 "Co-Occurrence as Norm, Not Exception" added | New subsection |
 | GAP-CO03-04 | ST | P2 | CLOSED | 3 | 15 | Part 7 title change applied in guidebook body | Part 7 writing sessi |
-| GAP-CO03-05 | ST | P2 | OPEN | 3 | 15 | Part 7 §7.1 rewrite: distinguish intra-individual from inter-group | §7.1 + §7.2 revision |
-| GAP-CO03-06 | ST | P2 | OPEN | 3 | 15–16 | Part 7 §7.3 entries tagged [INTRA-INDIVIDUAL] / [INTER-GROUP] / [BOTH] | Per-entry tagging |
+| GAP-CO03-05 | ST | P2 | CLOSED | 3 | 15 | Part 7 §7.1 rewrite: distinguish intra-individual from inter-group | §7.1 + §7.2 revision |
+| GAP-CO03-06 | ST | P2 | CLOSED | 3 | 15–16 | Part 7 §7.3 entries tagged [INTRA-INDIVIDUAL] / [INTER-GROUP] / [BOTH] | Per-entry tagging |
 | GAP-CO03-07 | ST | P2 | CLOSED | 3 | 10 | Part 1 §1.4 framework addition: three-tier as co-occurrence resolution | Part 1 writing sessi |
 | GAP-CO03-08 | ST | P2 | OPEN | 3 | 17 | Part 8 title + §8.4 split (intra vs inter) when Part 8 created | Part 8 new content s |
 | GAP-CO03-10 | ST | P2 | OPEN | 4 | 19 | find-and-replace: "cross-population" → context-dependent in guidebook body | Bundled with CO-0001 |
 | GAP-CO04-04 | ST | P2 | CLOSED | 0R | Next session | gap_register.md entries referencing old Part numbers need updating | ~20 entries |
 | GAP-CO04-05 | ST | P2 | CLOSED | 0R | Next session | CO-0001, CO-0002, CO-0003 cross-reference notes for CO-0004 | Add supersession/com |
-| GAP-CO04-06 | ST | P2 | OPEN | 3 | Sessions 13–14 | Parts 6/7 matrices: add inline room-level conflict notes (new scope per CO-0004) | New writing requirem |
+| GAP-CO04-06 | ST | P2 | CLOSED | 3 | Sessions 13–14 | Parts 6/7 matrices: add inline room-level conflict notes (new scope per CO-0004) | New writing requirem |
 | GAP-CO04-07 | ST | P2 | CLOSED | 3 | Session 18 | Part 9 §9.9/§9.10: add co-occurrence collaboration protocol + OT threshold | New sections |
 | GAP-CO04-08 | ST | P2 | OPEN | 4 | Session 19 | Full find-and-replace: all Part number references in guidebook body text | Bundled with CO-0001 |
 | GAP-CO04-09 | ST | P2 | CLOSED | 2C or 3 | As touched | Connection register Part number references in disposition notes need updating | Inline |
