@@ -257,3 +257,11 @@ Sources in the unmined list that were actually mined in prior sessions under a d
 ### Cross-Slug Duplicates (11)
 
 Sources appearing in multiple BPCs. Mining once covers all instances. Tracked under the first REF-ID encountered.
+
+## Financial Audit Phase 2 Completion — 2026-05-05
+
+| REF-ID | Source | B | F | Slug | B✓ | F✓ | Date | New sources | Session |
+|---|---|---|---|---|---|---|---|---|---|
+| — | Keating et al. 2024 (PLoS ONE 19(3):e0299824) | ✓ | ✓ | ndv-sensory-environment | ✓ | ✓ | 2026-05-05 | 0 new (cluster already mapped) | session_2026-05-05-fin-s2 |
+| — | Guay et al. 2020 (JMIR 22(8):e16175) | ✓ | ✓ | bathroom-assistive-technology | ✓ | ✓ | 2026-05-05 | 1 (Auger 2022 follow-up, already known) | session_2026-05-05-fin-s2 |
+| G03-02 | Levine et al. 2025 (JMIR Rehabil 12:e69442) | ✓ | ✓ | grab-bar-biomechanics | ✓ | ✓ | 2026-05-05 | 0 (KITE cluster already mapped) | session_2026-05-05-fin-s2 |

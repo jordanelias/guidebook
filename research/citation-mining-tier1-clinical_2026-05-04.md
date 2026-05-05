@@ -163,3 +163,57 @@ Look up 5 incomplete Tier 1 records.
 | Part 11 updated | Yes (§11.3) |
 | Gaps resolved | 11/11 |
 | Jurisdictions surveyed | 11 |
+
+
+---
+
+## Phase 2 — COMPLETE (Session 2)
+
+**Sources mined this session:** 3 (Keating 2024, Guay 2020, Levine 2025)
+**New sources discovered:** 0 (all clusters already mapped in prior session)
+
+### Source Details
+
+**Keating CT et al. 2024** (PLoS ONE 19(3):e0299824, doi: 10.1371/journal.pone.0299824):
+- Cross-cultural autism acceptance/camouflaging study. Registered report.
+- n=306 autistic adults across 8 countries (AU, BE, CA, JP, NZ, ZA, UK, US)
+- Key findings: external + personal acceptance associated with lower depression (not camouflaging or stress). Higher camouflaging → elevated depression, anxiety, stress. Japan: highest camouflaging.
+- Tier: Co-1/Tier 1 (registered report with autistic participants as co-researchers)
+- Guidebook connection: NDV BPC cross-cultural evidence. Supports Kawa model lens (collectivist cultures → more camouflaging → PAS 6463 private retreat model may not transfer). Strengthens project-standards rule on PAS 6463 spatial model cultural specificity.
+
+**Guay M et al. 2020** (J Med Internet Res 22(8):e16175, doi: 10.2196/16175):
+- Hygiene 2.0 electronic decision support system for bathroom AT self-selection
+- Quebec, Canada. User-centered design with older adults + caregivers.
+- Enables non-OT professionals to make bathroom adaptation recommendations using clinical algorithm
+- Tier: Tier 2 (tool development/validation)
+- Guidebook connection: Part 9 §9.2 OT role (expands non-OT recommendation scope for lower-complexity adaptations). Bathroom FDR domain. G-03, G-04, G-05 specifications. Also connects to Guay 2020 Clinical Biomechanics paper (force applied to grab bar during bathtub transfers — different paper, same PI).
+- Forward: Auger et al. 2022 (usability/stability follow-up study — already known)
+
+**Levine IC et al. 2025** (JMIR Rehabil Assist Technol 12:e69442, doi: 10.2196/69442):
+- Grab bar grasp location during bathtub exit and STS — biomechanical evaluation
+- n=65 (28 older 65+, 37 younger 18-35). 8 grab bar configurations. Motion capture.
+- KITE Research Institute, University Health Network, Toronto
+- Key: Grasp location varies between proactive (normal exit) and reactive (balance loss) scenarios. Linked to user height for some configurations.
+- Tier: Tier 1 (biomechanical evaluation with quantitative outcome measures)
+- Guidebook connection: G-03 grab bar height/location specs (already a required citation per project-standards). Confirms Toronto/KITE bathing biomechanics cluster (Greene, Levine, Novak, Guay).
+- Note: This was listed in prior session handoff as "Levine 2025 ramp biomechanics" — confirmed as grab bar paper, not ramp. Already source #42 in the mining report.
+
+### Phase 2 Final Totals
+
+| Metric | Phase 1 (Economics) | Phase 2 (Clinical) | Total |
+|---|---|---|---|
+| Sources mined | 19 | 12 | 31 |
+| Sources discovered | 34 | 9 | 43 |
+| Total records in economics.json | 75+ | — | 75+ |
+
+### Phase 3–5 Handoff (unchanged from prior session)
+
+**Phase 3 (population BPC anchors — full session):**
+Read each BPC file, extract 2-3 anchor studies, forward mine:
+MOB, VIS, DEAF, DEM, NDV, NEU, IntD, PAIN, OFS, NDV-MH, DBL
+
+**Phase 4 (SR supersession — half session):**
+Check ~20 Tier 3 systematic reviews for superseding newer reviews.
+
+**Phase 5 (TBC resolution — quarter session):**
+Look up 5 incomplete Tier 1 records.
