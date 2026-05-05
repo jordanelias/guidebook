@@ -197,6 +197,14 @@ The following provisions apply to ALL new and substantially refurbished dwelling
 - Lifetime Homes — utility space provisions
 - ⚠ **UNVERIFIED:** No dedicated accessible laundry standard identified. Flag for citation pass.
 
+**Appliance specification notes [GAP-LAU-01]:**
+
+- **Drum opening height:** 380–915 mm AFF (front-loading drum door opening range). ● [Tier 6 — ADA Standards for Accessible Design S611 (2010); only jurisdiction providing a quantified appliance height spec — all other jurisdictions silent on washer/dryer drum opening height. ○ Single-jurisdiction spec — apply with caution outside US context; Mode S OT assessment governs optimal height for individual.]
+- **Clear floor zone at appliances:** 762 mm × 1219 mm parallel or perpendicular approach. ● [Tier 6 — ADA S611; only jurisdiction specifying clear floor dimensions at laundry appliances. All other jurisdictions silent.] Where MOB/UPL turning circle governs, the 1500 mm turning circle supersedes the 762×1219 mm approach floor as the binding constraint.
+- **Pedestal height:** 430–500 mm AFF pedestal raises drum opening to optimal transfer height for seated users. ○ [Tier 5 — CAOT OT home modification guidance; no standard specifies pedestal height range. Single-OT-body source — Mode S OT assessment determines individual optimum.]
+
+> **[GAP-LAU-01] Research status:** Drum opening height and clear floor dimensions are US-only specifications (ADA S611). All 23 remaining canonical jurisdictions are silent on accessible laundry appliance specifications. These three specifications are guidebook-original for non-US jurisdictions. Multilingual research pass (full 24-jurisdiction search) required before Part 11 publication to confirm or expand the evidence base. ○ [PROVISIONAL — ADA single-jurisdiction basis]
+
 &#x20; **\*\*Schematic checklist — R-LAU:\*\***
 
 - [ ] Laundry door clear width ≥900 mm on floor plan
