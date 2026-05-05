@@ -81,9 +81,9 @@ The register identifies design library items (Part 7, Categories A–J) that req
 | A-10 | Counter Hearing Loop | AC, EE | DD | No | IEC 60118-4 field strength throughout counter loop area | EE brief; loop layout drawing |
 | A-11 | Room Hearing Loop | AC, EE | DD | No | IEC 60118-4 field strength across full room area | EE brief; loop layout drawing |
 | A-12 | Sound Field System (Classroom / Assembly) | AC, EE | DD | No | STI ≥0.7; coverage uniformity | EE brief; AV schedule |
-| A-13 | Reverberation Time Control (RT60 ≤0.4 s) | AC | DD | No | RT60 at 500 Hz in occupied condition | Acoustic strategy |
+| A-13 | Reverberation Time Control (RT60 ≤0.4 s general; ≤0.3 s speech-critical) | AC | DD | No | RT60 at 500 Hz in occupied condition | Acoustic strategy |
 | A-14 | Speech Privacy (STC ≥50 at Clinical Partitions) | AC | DD | Partial — partition type confirmed at DD | Privacy index measurement | Partition schedule |
-| A-16 | Sensory Room (Multi-Sensory Environment) | AC, ME, EE | SD | ⚠ YES — room location and adjacency are schematic decisions; NC-25 requires HVAC to be coordinated from SD | NC-25; RT60 ≤0.4 s; lighting commissioning | Room data sheet |
+| A-16 | Sensory Room (Multi-Sensory Environment) | AC, ME, EE | SD | ⚠ YES — room location and adjacency are schematic decisions; NC-25 requires HVAC to be coordinated from SD | NC-25; RT60 ≤0.3 s; vibrotactile-only alerting (no VAD strobe); lighting commissioning | Room data sheet |
 | A-17 | Background Noise Control (Open-Plan Office, NC-30) | AC, ME | DD | No | NC-30 at workstations | Acoustic strategy; ME brief |
 
 *Items A-07 (flutter echo — geometry/material) and A-15 (tactile warning surfaces — product specification) have no engineering dependency and are excluded.*
@@ -97,7 +97,7 @@ The register identifies design library items (Part 7, Categories A–J) that req
 | Item | Title | Discipline(s) | Earliest Brief Stage | NOT-RETROFITTABLE | Ready for Occupancy Test | Architect Doc Home |
 |---|---|---|---|---|---|---|
 | A-04 | Acoustic Paging System (DEM) | EE | DD | No | STI ≥0.5 | EE brief; electrical schedule |
-| B-01 | Circadian Lighting Strategy (Variable CCT 2700–5500 K) | EE | DD | No | CCT and EML at eye level across 24-hour cycle; EML ≥200 at 09:00; CCT ≤2700 K at 19:00 | Lighting specification; BMS brief |
+| B-01 | Circadian Lighting Strategy (Melanopic EDI ≥250 Daytime) | EE | DD | No | Melanopic EDI and CCT at eye level across 24-hour cycle | Lighting specification; BMS brief |
 | B-02 | High-CRI Luminaires (CRI ≥90, R9 ≥50) | EE | DD | No | CRI at all task surfaces | Lighting specification |
 | B-03 | Elimination of Fluorescent Lighting | EE | DD | No | IEEE 1789-2015 compliance certificate for all luminaires at handover | Lighting specification |
 | B-04 | Flicker-Free LED (IEEE 1789-2015 Compliant) | EE | DD | No | Flicker % <5% at all dimming levels including 20% output | Lighting specification |
@@ -170,12 +170,12 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 | A-01 | Confirm that proposed room adjacency achieves NC-25 in sensitive spaces; identify any adjacency that cannot achieve target and propose resolution before SD sign-off | SD | NC-25 achievable confirmed | NC post-completion |
 | A-02 | Confirm NRC ≥0.85 achievable with architect's ceiling system; coverage ≥80% of ceiling area | DD | NRC ≥0.85; RT60 achievable | RT60 at 500 Hz |
 | A-03/A-14 | Confirm STC ≥50 achievable with specified partition types at all sensitive boundaries; issue STC-rated partition schedule | DD | STC ≥50 at sensitive boundaries | STC measurement pre-completion |
-| A-05/A-06 | Confirm wall treatment achieves target RT60 in combination with ceiling and floor specification | DD | RT60 per brief (clinical ≤0.4 s; general per project brief) | RT60 post-installation |
+| A-05/A-06 | Confirm wall treatment achieves target RT60 in combination with ceiling and floor specification | DD | RT60 per brief (speech-critical ≤0.3 s; other clinical ≤0.4 s; general per project brief) | RT60 post-installation |
 | A-08 | Issue NC-25 limit to ME as a primary plant selection constraint before ME commences ductwork design; confirm ME's plant and ductwork meets target before DD closes | SD | NC-25 in ME design confirmed | NC at all air terminals |
 | A-09 | Confirm vibration isolation specification with ME achieves <0.1 m/s RMS at sensitive space floors | SD | <0.1 m/s RMS | Vibration measurement |
 | A-10/A-11 | Provide loop layout for all room and counter hearing loops; confirm no architectural or structural interference with loop field; confirm no loop-to-loop interference between adjacent rooms | DD | IEC 60118-4 field strength throughout | IEC 60118-4 measurement at commissioning |
-| A-12/A-13 | Confirm RT60 ≤0.4 s and STI ≥0.7 achievable with proposed ceiling and wall treatment; confirm sound field system layout with EE | DD | RT60 ≤0.4 s; STI ≥0.7 | RT60 and STI post-installation |
-| A-16 | Confirm sensory room achieves NC-25 and RT60 ≤0.4 s with specified finishes and HVAC supply; no vibration from adjacent plant | SD | NC-25; RT60 ≤0.4 s | NC and RT60 |
+| A-12/A-13 | Confirm RT60 ≤0.3 s in speech-critical rooms and ≤0.4 s in other clinical spaces achievable with proposed ceiling and wall treatment; STI ≥0.60 (≥0.75 for CI users); confirm sound field system layout with EE. [CON-0039 — 0.6s is failure boundary not target; Murgia 2023 SR, Cueille 2022, ASI-08 SR] | DD | RT60 ≤0.3 s speech / ≤0.4 s other; STI ≥0.60 | RT60 and STI post-installation |
+| A-16 | Confirm sensory room achieves NC-25 and RT60 ≤0.3 s with specified finishes and HVAC supply; no vibration from adjacent plant; alerting via vibrotactile only (no VAD strobe per CON-0217) | SD | NC-25; RT60 ≤0.3 s | NC and RT60 |
 | A-17 | Confirm NC-30 achievable with HVAC design and ceiling specification; confirm speech privacy index ≥0.5 between adjacent workstations | DD | NC-30; privacy index ≥0.5 | NC and privacy index |
 | F-01/F-07 | Confirm acoustic targets per sensory zone are achievable; identify any HVAC duct path transmitting noise between zones | SD/DD | NC-25 in low-stimulation zones | NC measurement per zone |
 
@@ -190,7 +190,7 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 
 | Item | Core Requirement | Stage | Performance Target | Ready for Occupancy |
 |---|---|---|---|---|
-| B-01 | Tunable white luminaires (2700–5500 K) in all primary spaces where DEM, NDV/MH, NEU, or OFS users are primary occupants; BMS-automated schedule with manual override | DD | EML ≥200 at 09:00; CCT ≤2700 K at 19:00 | CCT and EML at eye level over 24-hour cycle |
+| B-01 | Tunable white luminaires (2700–5500 K) in all primary spaces where DEM, NDV/MH, NEU, or OFS users are primary occupants; BMS-automated schedule with manual override. [Updated: melanopic EDI ≥250 (not EML ≥200) per Brown 2022 consensus; IES RP-46-23; CIE TN 015:2023] | DD | Melanopic EDI ≥250 at 09:00 (vertical plane, 1200mm AFF); CCT ≤2700 K at 19:00; melanopic EDI ≤50 after 19:00 | Melanopic EDI and CCT at eye level over 24-hour cycle |
 | B-02 | All luminaires CRI ≥90, R9 ≥50 throughout building | DD | CRI ≥90 at all task surfaces | CRI measurement |
 | B-03 | Zero fluorescent luminaires; IEEE 1789-2015 compliance confirmed for all drivers | DD | No fluorescent luminaire installed; IEEE 1789 certificates at handover | Certificate audit |
 | B-04 | All LED drivers IEEE 1789-2015 low-risk compliant; flicker % <5% at all dimming levels including 20% output | DD | Flicker % <5% at 20% and 100% output | Flicker measurement |
@@ -249,6 +249,10 @@ The acoustic brief must be issued before ME ductwork design and EE ceiling/light
 | H-02 | Individual HVAC zone control accessible from 900–1100 mm AFF; each zone independently operable | DD | 18–22°C range per zone | Temperature test per zone |
 | I-03 | TMV at all patient/resident bathrooms and WCs: ≤38°C at outlet. ≤35°C where NEU users are primary occupants. Annual service to be in FM brief | DD | ≤38°C at all outlets under all flow conditions | Temperature test at all outlets |
 | I-04 | Floor drain and drainage channel for zero-threshold shower; slab recess coordination with SE (§8.5) | SD | No pooling at threshold | Drainage test |
+
+**F-category HVAC coherence note [CON-0102]:** F-04 (air quality/MERV 13+), F-06 (fragrance-free/no recirculated air without HEPA), F-07 (individual supplemental heating — radiant, not forced air), and F-08 (thermal transition) are interdependent HVAC specifications. The mechanical engineer must design these as a coordinated system, not independently. For OFS/MCAS populations: HVAC-integrated fragrance diffusers are prohibited (F-06); individual supplemental radiant heating must not recirculate air (F-07). Steinemann 2019 (AQV-10) documents MCS-autism co-prevalence at ~3x.
+
+**Bathroom pre-heating [CON-0041]:** Inter-room thermal differential ≤5°C between bathroom and adjacent corridor/bedroom. BMS timer or PIR activates bathroom heating ≥30 min before scheduled bathing. Evidence: MHLW Japan 2023 (6,073 bathtub deaths/year from heat shock); Baquero 2023 (TCO-01, neutral temp 24.9°C for older adults).
 
 **ME brief standard clause:**
 > *Mechanical systems in this project are to be designed with the following accessibility constraints as primary performance requirements. HVAC acoustic targets — NC-25 in sensitive spaces, NC-30 in general occupied spaces — are plant selection and ductwork design constraints, not commissioning adjustment targets. These criteria must be met by design. Vibration isolation to sensitive spaces is to be resolved jointly with the structural engineer at schematic design stage before the structural slab is finalised.*
