@@ -11,10 +11,10 @@
 ## Status summary
 | Status | Count |
 |---|---|
-| CONSUMED | 158 |
-| CONSUMED-DEFERRED | 48 |
-| PENDING | 38 |
-| CONSUMED (this session) | 18 |
+| CONSUMED | 159 |
+| CONSUMED-DEFERRED | 50 |
+| PENDING | 35 |
+| CONSUMED (this session) | 21 |
 
 ## Index
 
@@ -206,7 +206,7 @@
 | CON-0181 | CONSUMED | A-09 (floor surface spec) | entrances-and-circulation | HIGH | true | — |
 | CON-0182 | CONSUMED | K-03 (circadian lighting) | sensory-environment | HIGH | true | — |
 | CON-0183 | PENDING | K-01 (RT60), K-02 (background noise) | sensory-environment | HIGH | true | — |
-| CON-0184 | PENDING | K-05 (thermal comfort assessment) | health-and-symptom-management | HIGH | true | — |
+| CON-0184 | CONSUMED-DEFERRED | K-05 (thermal comfort assessment) | health-and-symptom-management | HIGH | true | — |
 | CON-0185 | CONSUMED | G-03, G-04 (grab bar height/configuration) | bathrooms-and-wet-areas | HIGH | true | — |
 | CON-0186 | CONSUMED | A-16 (sensory quiet room) | sensory-environment | HIGH | true | — |
 | CON-0187 | PENDING | D-02 (wayfinding system), D-06 (decision-point design) | wayfinding-and-signage | MODERATE | true | — |
@@ -241,12 +241,12 @@
 | CON-0216 | CONSUMED | G-03, G-04 | bathrooms-and-wet-areas | HIGH | false | — |
 | CON-0217 | PENDING | B-10, A-16, K-04 | sensory-environment | HIGH | false | — |
 | CON-0218 | PENDING | Part 3 §3.x | frameworks-and-methodology | HIGH | false | — |
-| CON-0219 | PENDING | C-01, H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
+| CON-0219 | CONSUMED | C-01, H-01, I-02 | kitchens-and-workspaces | HIGH | false | — |
 | CON-0220 | PENDING | A-16, F-01, F-03 | sensory-environment | MODERATE | false | — |
 | CON-0221 | PENDING | F-01, Part 3 | frameworks-and-methodology | HIGH | false | — |
 | CON-0222 | PENDING | A-16, Part 7 NR matrices | sensory-environment | HIGH | false | — |
 | CON-0223 | PENDING | C-03, C-04, A-09 | wayfinding-and-signage | HIGH | false | — |
-| CON-0224 | PENDING | F-07, K-05, Part 5 | health-and-symptom-management | HIGH | false | — |
+| CON-0224 | CONSUMED-DEFERRED | F-07, K-05, Part 5 | health-and-symptom-management | HIGH | false | — |
 | CON-0225 | PENDING | Part 11, Part 12 | frameworks-and-methodology | HIGH | false | — |
 | CON-0226 | PENDING | D-02, Part 3 §3.2 | wayfinding-and-signage | MODERATE | false | — |
 | CON-0227 | PENDING | D-05, C-04, F-03 | wayfinding-and-signage | MODERATE | false | — |

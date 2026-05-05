@@ -3026,6 +3026,13 @@ intervention. See Part 11 §11.4.2.
 
 ### F-04 Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)
 
+<!-- THERMAL ASSESSMENT NOTE (CON-0184, CON-0224):
+K-05 (thermal comfort assessment) item pending creation. Key evidence:
+- PMV/PPD (ISO 7730) is CONTRAINDICATED for DEM (cannot self-report), NEU/MS (thermoregulation impaired), OFS (orthostatic intolerance worsened by heat). Van Hoof 2010 (DOI:10.1016/j.buildenv.2009.06.017) demonstrated PMV/PPD unreliability.
+- OFS/MS vs DEM thermal conflict: 3.9°C gap between OFS/MS maximum (≤21°C) and DEM thermal neutral (24.9°C). Resolution: ambient 18-20°C default + individual local warmth (heated seating pad ≤45°C, radiant panel) for DEM/older adults.
+- Alternative assessment: objective physiological monitoring or proxy-reported for DEM/NEU/OFS.
+Awaiting K-05 and F-07 item creation. -->
+
 **Applicable Groups:** OFS/MCAS, OFS/CFS, NDV (chemical sensitivity),
 
 PAIN (fragrance triggers), NEU (chemical sensitivity in PCS/ABI)
@@ -3680,6 +3687,8 @@ Countertop: non-slip surface; raised lip ≥15 mm at perimeter; suction mount po
 Australia. (2024). Kitchen modifications for one-handed function.
 
 **Cross-reference:** I-01 (Hardware); R-KIT-01 (Residential Kitchen)
+
+● Kitchen colour exception: C-01 muted palette is suspended for safety-critical kitchen elements. Dual palette: muted BACKGROUND + HIGH-contrast FUNCTIONAL elements (hot surfaces, sharp edges, controls for VIS; pictograms for DEM). Kitchen is inherently stimulating; suppressing all contrast creates safety risk. NDV sensory retreat via adjacent rest surface rather than within kitchen. [CON-0219]
 
 **Evidence basis (OT):** Biomechanical FOR; EHP Framework (adapt strategy). Kitchen one-handed operation provisions (lever taps, drawer pull hardware, single-hand appliances, knee clearance under worktops) adapt the kitchen environment to enable the occupation of cooking which the standard kitchen context makes impossible for bilateral UPL users — implementing EHP's 'adapt' strategy at the task-context level.
 
@@ -6114,22 +6123,4 @@ Case studies are selected for documented, independently verified outcomes — no
 
 **Verified outcomes:** - Post-occupancy staff survey (n=34 teachers and aides): majority reported improvement in student regulation, focus, and classroom participation following retrofit (Tier 3) - Partial acoustic measurement confirmed reduction in classroom RT60 from 0.7--0.9 s to
 
-0.4--0.5 s in retrofitted classrooms (Tier 2 component) - ASPECTSS alignment scores improved from pre-retrofit assessment to post-retrofit (validated instrument alignment, Tier 2 component) - Prior ASPECTSS research (Mostafa, 2015): correlation between ASPECTSS score and perceived design excellence confirmed across 5 purpose-built autism schools
-
-*Source: Mostafa, M., Sotelo, M., Honsberger, T., Honsberger, C., Brooker Lozott, E., \& Shanok, N. (2024). The impact of ASPECTSS-based design intervention in autism school design: a case study. Archnet-IJAR, 18(2), 318--339.*
-
-**Cost data:** Retrofit cost data not published; acoustic treatment and alcove construction are the primary cost items; estimated at £150/m² for treatment areas based on comparable UK acoustic retrofit projects.
-
-**Limitations:** Staff-reported outcomes only; no independent student behaviour measurement in this study. Small sample (n=34 staff). No control building comparison. Post-occupancy method is school-specific; residential generalisation requires separate evaluation.
-
-### §12.12 — Village Landais Alzheimer, Dax (NORD Architects / Département des Landes, France, 2020)
-
-**Building type:** Dementia care village (inspired by De Hogeweyk model, §12.09)
-
-**Primary population:** 120 residents with Alzheimer's and related dementias (DEM)
-
-**Evidence quality:** Tier 3 (qualitative evaluation, programme reports); Tier 2 for specific acoustic/environmental measurements where available
-
-**Key design strategies:** - Four neighbourhoods of 8--10 residents each; connected by a central "rue" (street) with market, café, garden, and activity spaces - Vernacular Landais architecture — local materials (wood, stone, brick) calibrated to regional familiarity for residents from southwestern France (DEM cultural familiarity principle) - No institutional elements: wooden facades, varied roof lines, residential-scale windows (non-clinical aesthetic) - All public spaces step-free; loop garden path (D-01, E-06, BIO-01) - Dementia-specific spatial design: toilets visible from primary social spaces (D-03); colour-differentiated neighbourhoods (C-02); plain flooring throughout (C-06) - Architecture designed for maximum natural light penetration (B-09)
-
-**Verified outcomes:** - Programme evaluation (Institut du Bien Vieillir Korian / University of Bordeaux, ongoing from 2020): residents demonstrated maintained mobility and social engagement at 12-month assessment - Antipsychotic use reported as below national average for equivalent care level - French-language evaluation (NORD Architects / Département des Landes, unpublished in English): 31% reduction in psychotropic medication use at 6 months compared to baseline and matc
+0.4--0.5 s in retrofitted classrooms (Tier 2 component) - ASPECTSS alignment scores improved from pre-retrofit assessment to post-retrofit (validated instrument alignment, Tier 2 compone
