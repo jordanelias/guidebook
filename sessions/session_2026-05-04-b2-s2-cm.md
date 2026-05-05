@@ -1,45 +1,51 @@
-# Session: B2-S2-continuation -- Citation Mining + Evidence Audit + Connection Consumption
+# Session: B2-S2-CM-extended
 **Date:** 2026-05-04
-**Session file:** session_2026-05-04-b2-s2-cm.md
-**Phase:** B2 (complete) -- citation mining + evidence audit + connection consumption
+**session_close:** 2026-05-05 00:30
 **Model:** Opus 4.6
-**session_close:** 2026-05-04 23:55
 
 ## Summary
-Full citation mining pass across 11 BPC slugs. Evidence-auditor assessment of 5 systematic reviews. 6 new connections registered and consumed. Cross-references added to 7 BPCs. Part 4 acoustics preamble updated with evidence annotation. 35 new sources discovered, 5 GREY sources resolved, 3 author corrections.
+Extended citation mining session covering: 11 BPC citation mining passes (35 new sources), evidence-auditor on 5 systematic reviews, connection consumption (9 connections consumed), connection-scout detail writing (10 connections), Part 4 ISW evidence upgrades (11 items), Part 6 bathroom matrix update.
 
-## Commits (12 total)
-| # | OID | Description |
-|---|---|---|
-| 1 | bad0cebcb176 | citation-miner: 3-slug -- 12 new sources |
-| 2 | be79573257da | citation-miner: circadian-lighting 4 new |
-| 3 | 290b221f6a09 | citation-miner: wayfinding-dementia 3 + WDS-04 fix |
-| 4 | 833e19e8e68e | citation-miner: ms-thermal 3 + Berwick SR |
-| 5 | feba95ad436c | citation-miner: stair-ramp 3 + visual-fire 2 |
-| 6 | 5e380f683978 | citation-miner: thermal-comfort 2 + Baquero fix |
-| 7 | e26e4f2d0937 | citation-miner: acoustics + LRV 4 + 3 GREY |
-| 8 | dcb2e23f2253 | research-log-manager: LOG 11 slugs |
-| 9 | f44c19b75417 | connection-scout: 6 new PENDING (CON-0241-0246) |
-| 10 | deb081e2979f | evidence-auditor + connection consumption: SRU stratum upgrade, MST SR annotation, 7 BPC cross-refs, 6 connections consumed |
-| 11 | ad4ec84daf55 | ISW: Part 4 acoustics preamble evidence annotation (CON-0039) |
+## Commit log (27 total)
+### Phase 1: Citation Mining
+1-7: 11 BPC slugs mined, 35 sources, 5 GREY resolved
+8: research-log-manager LOG
+### Phase 2: Evidence Audit + Connections
+9: 6 new connections registered (CON-0241-0246)
+10: evidence-auditor + 6 connections consumed + 7 BPC cross-refs
+### Phase 3: Part 4 ISW
+11: Category A preamble RT60 evidence
+12: C-04 LRV two-tier + Manandhar + Harper
+13: F-category coherence note (CON-0102)
+14: F-07 thermal evidence
+15: A-02 RT60 0.3s spec + A-08 STI (CON-0039)
+16: B-10 flash rate + PSE (CON-0042)
+17: CON-0039 + CON-0042 index update
+18: C-04 two-tier LRV spec (CON-0043)
+19: G-03 Lee/Sanford 2018 evidence (CON-0185)
+### Phase 4: Connection Details
+20: 10 connection details across 5 topic files
+### Phase 5: More ISW
+21: A-16 vibrotactile alerting (CON-0217) + D-02 spatial planning (CON-0189)
+### Phase 6: Part 6
+22: R-BA heat shock ≤5C + pre-heating (CON-0041)
+### Session management
+23-27: session files, LATEST, connection index updates
 
-## Evidence-auditor results
-| SR | BPC | Stratum change |
-|---|---|---|
-| Leonardi 2025 | SRU | YES -- single-group to SR-supported |
-| Berwick 2021 | MST | PARTIAL -- conflict resolution now SR-supported both sides |
-| Rouvier 2022 | ULB | NO |
-| TCO-07 | TCO | NO |
-| ASI-08 | ASI | NO |
+## Part 4 items upgraded
+A-02, A-08, A-16, B-10, C-04, D-02, F-category preamble, F-07, G-03
 
-## Connections consumed (CON-0241 through CON-0246)
-All 6 consumed. Cross-refs added to: circadian-lighting, DEM, stair-ramp, LRV, ASI, room-acoustic-performance.
+## Part 6 items upgraded
+R-BA-04b, R-BA conflict register, R-BA schematic checklist
 
-## Blockers
-None.
+## Connections consumed this session
+CON-0039, CON-0042, CON-0043 (partial), CON-0102, CON-0185 (partial), CON-0189 (partial), CON-0217, CON-0241-0246
+
+## Connection details written
+CON-0189, CON-0191, CON-0196, CON-0200, CON-0214, CON-0216, CON-0217, CON-0224, CON-0229
 
 ## next_action
-- Consume Batch 1 application queue connections (14 HIGH, pre-existing) -- requires ISW sessions on Part files
-- B3 Navigation (non-website aspects)
-- 131 P2 OPEN gaps (all multilingual-research or literature-review-planner)
-- Website design LAST per user instruction
+- Connection-scout: write details for remaining 41 connections (CON-0183+ without topic files)
+- ISW: continue Part 4 evidence upgrades for remaining connections
+- ISW: Part 7/8 methodology notes (CON-0047, CON-0048)
+- B3 Navigation = website design (LAST)
