@@ -2400,6 +2400,8 @@ No furniture, equipment, or signage projecting into corridor
 
 Skirting/kickplate at 200--300 mm AFF on wheelchair routes (impact protection)
 
+● Acoustic: corridors ≥1500mm with parallel hard walls require A-02 ceiling treatment (NRC ≥0.75) to prevent flutter echo [CON-0205]. Wide corridors without acoustic treatment create speech intelligibility hazards for DEAF/HI users (Cueille 2022, ASI-06)
+
 **Retrofit cost note:** Retrofit penalty: HIGH — STRUCTURAL. Corridor clear width of 1200 mm minimum is a plan dimension. In an existing building with narrower corridors, achieving 1200 mm requires partition removal — structural in many cases — or the corridor cannot comply. This is among the most expensive accessibility retrofits; where structural walls form the corridor, compliance may be impossible without major reconstruction. See Part 12 §12.4.
 
 **Key citations:** British Standards Institution. (2018). BS 8300:2018. BSI. Koontz, A.M., et al. (2012). Wheelchair propulsion. [Tier 3.\]
@@ -2446,7 +2448,7 @@ Domed profile: at stair heads, platform edges, road crossings, escalator heads
 
 Bar profile: directional guidance on primary accessible routes only
 
-Colour: maximum tonal contrast with adjacent surface; minimum 30 LRV
+Colour: maximum tonal contrast with adjacent surface; ≥50 LRV best practice (30 LRV code minimum) [CON-0197 — Manandhar 2022 (DOI:10.3233/WOR-210997): 30% = "poorly visible" at severe VI]
 
 Profile height: 5 mm ±1 mm (ISO 23599:2019)
 
