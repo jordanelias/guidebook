@@ -263,3 +263,89 @@ Phase 2 does not change the priority ordering from §7. It strengthens the case 
 | Landmarks degrade last in DEM — specify first in D-category | D-category restructure |
 | Smart home interface = signifier design problem | C-category controls, §1.4.4 |
 | Design quality taxonomy validated by POE — use as Part 12 outcome criteria | Part 12 case studies |
+
+
+---
+
+## 10. Citation Mining — One Depth (Forward + Backward)
+
+**Date:** 2026-05-06 05:45
+**Method:** Forward citation search on key review papers; backward citations extracted from reference lists.
+
+### 10.1 From Wiener & Pazzaglia 2021 (PMC8545728) — Dementia Wayfinding
+
+**Forward citations (new sources found):**
+- Van Buuren & Mohammadi 2022 (HERD, PMC8725382) — dementia-friendly design criteria and floorplan typologies. CFA of Dutch care facilities. Connects Lynch legibility to floorplan configuration quantitatively.
+- Weisman 1981 (Environment and Behavior, 454 citations) — "Evaluating Architectural Legibility: Way-Finding in the Built Environment." **Foundational paper.** Identified 4 environmental variables: (1) visual access to landmarks, (2) architectural differentiation between areas, (3) signs/room numbers, (4) building configuration. Floor plan simplicity accounted for 56% of variance in disorientation. Maps to Lynch (1,2,4 = environmental affordances) and Norman (3 = signifiers/manifest cues).
+- O'Malley et al. 2017 — care home residents prefer personal environmental cues over signage. Institutional signage strategies transfer poorly to residential settings.
+
+**Backward citations (key sources in reference list):**
+- Marquardt & Schmieg 2009 — dementia-friendly architecture assessment
+- O'Neill 1991 — effects of signage and floorplan on wayfinding performance
+- Hölscher et al. 2006 — multi-level building wayfinding strategies and familiarity
+- Moeser 1988 — survey knowledge doesn't develop linearly with familiarity
+
+### 10.2 From Golembiewski (Salutogenic Architecture)
+
+**Forward citations (new sources found):**
+- Golembiewski & Zeisel 2022 — Handbook of Salutogenesis 2nd ed, Chapter 48: "Salutogenic Approaches to Dementia Care." Key update. Explicitly uses "affordances" in salutogenic context. Bridge between Norman/Gibson and Antonovsky. Connects SOC to dementia care design: comprehensibility (where am I? what's happening?), manageability (can I do this? can I control this?), meaningfulness (does this matter? am I engaged?).
+- Niennattrakul (Univ Indonesia) — perception of designers of enabling environment for dementia in Thailand. Combines salutogenesis with Capability Approach.
+- "Salutogenic environment: effect of EQHPS on patients' SOC" — measuring SOC from environmental features in hospital public spaces. Validates that environmental quality predicts SOC scores.
+- Fleury-Perkins & Fénoglio 2022 — "proof of care" concept. High co-occurrence of clinical observations in salutogenic environments could qualify as proof of effectiveness. Proposed for evidence validation of care architecture.
+
+### 10.3 From ASA Dementia Paper (PMC12739567, Talebzadeh 2025)
+
+**Forward/lateral citations (new sources found):**
+- Talebzadeh 2025 (Ghent University PhD dissertation) — "Beyond Silence: Integrating Soundscape Augmentation in Dementia Care Design." Full research behind the ASA framework paper. Includes:
+  - RCT (n=28) at Toronto Rehabilitation Institute: significant improvement in Pittsburgh Agitation Scale resisting-care subscale
+  - Sound selection methodology: psychoacoustic analysis of 218 sound fragments across 17 activities
+  - Distinct auditory processing profiles by DEM subtype: AD = primitive-based (bottom-up) through temporoparietal hub disruption; FTD = schema-based (top-down) through frontal network degradation; PCA = severe ASA segregation/grouping impairments exceeding typical AD
+  - **Tier 1 evidence** (intervention-tested RCT)
+- Hardy et al. (PMC4446369) — "Functional neuroanatomy of auditory scene analysis in Alzheimer's disease." Neuroimaging study: planum temporale, posterior STG, supramarginal gyrus, IPS, prefrontal cortex. Passive-listening fMRI paradigm using own-name recognition in multi-talker babble.
+- Bregman 1990/1993 — "Auditory Scene Analysis: the perceptual organization of sound." MIT Press. The foundational text. Defines primitive (bottom-up) and schema-based (top-down) grouping — the two processing modes that different DEM subtypes lose differentially.
+
+### 10.4 From Space Syntax / Weisman Legibility Network
+
+**Forward citations (new sources found):**
+- IDEA Center, University at Buffalo — "Architectural Wayfinding" whitepaper. Synthesized Weisman into design principles: legible circulation systems, clear articulation, boundary demarcation, integrated communication systems.
+- Hospital ED space syntax study (ResearchGate, Erbil hospitals) — used isovist, axial, convex, and VGA analysis on three ED layout typologies (Podular, Ballroom, Linear). Found Ballroom most effective for wayfinding and accessibility. **Quantitative validation** of layout effects on wayfinding — exactly the kind of generalizable finding that emerges from aggregate instrument use.
+- Haq & Zimring 2003 — space syntax applied to hospital wayfinding. Integration depth predicts movement patterns.
+- O'Neill 1991 — signage + floorplan effects on wayfinding performance. Connects to both Weisman and Arthur & Passini.
+- Visibility Graph Analysis (Turner et al. 2001, Environment and Planning B) — methodology paper for isovist-based spatial analysis. The analytical tool underlying space syntax building evaluation.
+
+### 10.5 Cross-Network Connections Discovered
+
+The citation mining revealed three **cross-network bridges** not visible from individual source searches:
+
+1. **Weisman → Lynch → Space Syntax pipeline.** Weisman 1981 operationalized Lynch's legibility as a measurable building variable. Space syntax then provided the mathematical tools (integration, connectivity, depth) to compute Weisman's variables computationally. This is a complete theory → measurement → specification pipeline that the guidebook can reference.
+
+2. **Golembiewski → Affordance bridge.** Golembiewski & Zeisel 2022 explicitly use "engaging affordances" in salutogenic context. This connects Norman's signifier/affordance distinction to Antonovsky's SOC dimensions. Comprehensibility = legible affordances + clear signifiers. Manageability = operable affordances. Meaningfulness = meaningful/engaging affordances. This is the theoretical integration point for §1.4.8 and §1.8.
+
+3. **Bregman → Talebzadeh → DEM subtype-specific specification.** Bregman's ASA framework (primitive vs. schema-based grouping) maps to specific cortical networks that degrade differently by DEM subtype. Talebzadeh's RCT validates that soundscape interventions targeting the specific impairment pattern produce measurable outcomes. This is the strongest new evidence for subtype-specific acoustic specification in Part 4.
+
+### 10.6 Revised Source Registry
+
+| Source | Year | Type | Relevance | Tier |
+|---|---|---|---|---|
+| Lynch, Image of the City | 1960 | Foundation | Imageability, 5 elements | Meta-methodological |
+| Passini, Wayfinding in Architecture | 1984 | Foundation | 3-step cognitive model | Meta-methodological |
+| Arthur & Passini, Wayfinding | 1992 | Foundation | Spatial problem-solving | Meta-methodological |
+| Norman, Design of Everyday Things | 1988/2013 | Foundation | Affordance/signifier distinction | Meta-methodological |
+| Antonovsky, Unraveling Mystery of Health | 1987 | Foundation | SOC: comprehensibility, manageability, meaningfulness | Meta-methodological |
+| Oliver, Social Work with Disabled People | 1983 | Foundation | Social model of disability | Meta-methodological |
+| Gibson, Ecological Approach | 1979 | Foundation | Affordance theory (ecological) | Meta-methodological |
+| Bregman, Auditory Scene Analysis | 1990 | Foundation | Primitive vs schema-based grouping | Meta-methodological |
+| Weisman, Evaluating Architectural Legibility | 1981 | Empirical | 56% variance from floor plan simplicity; 4 environmental variables | Tier 3 |
+| Wiener & Pazzaglia | 2021 | Review | Cognitive psychology → DEM-friendly design guidelines | Tier 3 |
+| Li & Klippel | 2020 | Review | Interior wayfinding integrative review (84 studies) | Tier 3 |
+| Golembiewski & Zeisel | 2022 | Framework | Salutogenic approaches to DEM care; affordance-SOC bridge | Tier 2 (NGO/advocacy framework) |
+| Talebzadeh | 2025 | RCT + framework | ASA deficits by DEM subtype; soundscape augmentation RCT (n=28) | Tier 1 (intervention-tested) |
+| Rakhshani & Khakzand | 2025 | Systematic review | Salutogenic architecture for elderly; 26 articles | Tier 3 |
+| Van Buuren & Mohammadi | 2022 | Empirical | DEM-friendly floorplan typologies CFA | Tier 3 |
+| Zali et al. | 2026 | Scoping review | Wayfinding for sensory impairment; Arthur & Passini + Lynch framework | Tier 3 |
+| Van der Linden et al. | 2025 | Case study | Passini dementia wayfinding; fly-on-the-wall observation | Tier 3 |
+| Hardy et al. | 2015 | Neuroimaging | ASA functional neuroanatomy in AD | Tier 1 |
+| Mostafa | 2008/2014/2023 | Framework | ASPECTSS Design Index; spatial sequencing + transition zones | Tier 2 |
+| Turner et al. | 2001 | Methodology | Visibility Graph Analysis; isovist-based spatial analysis | Analytical tool |
+| Hillier et al. | 1984/1993 | Methodology | Space syntax; integration, connectivity, depth measures | Analytical tool |
+| Housing Enabler (Iwarsson & Slaug) | 2001/2010 | Assessment | Person-environment fit quantification; r=0.74 inter-rater | Analytical tool |
