@@ -74,9 +74,9 @@ def extract_items(text: str) -> list[dict]:
         applicable_groups = None
         if ag_m:
             raw = ag_m.group(1).strip().rstrip("*").strip()
-            # Normalise: remove markdown, parentheses, extra spaces
+            # Normalise: remove markdown, parentheses and their content, extra spaces
             raw = re.sub(r"[*_`]", "", raw)
-            raw = re.sub(r"\(.*?\)", "", raw)
+            raw = re.sub(r"\([^)]*\)", "", raw)  # remove (parenthetical notes)
             raw = re.sub(r"\s+", " ", raw).strip().rstrip(",")
             applicable_groups = raw if raw else None
 
