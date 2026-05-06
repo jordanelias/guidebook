@@ -389,28 +389,28 @@ Methodological throughline: measurement instruments applied across cases produce
 
 ## 12. Integration Plan
 
-### Phase A: Corrections — COMPLETE (this commit)
+### Phase A: Corrections — COMPLETE (commit 23e3ccf9)
 
-### Phase B: Part 1 §1.4.8 — Social model (political foundation)
-- Add one paragraph before existing four frameworks
+### Phase B: Part 1 §1.4.8 — Social model — COMPLETE (commit 7b0a0e05)
+- Added one paragraph before existing four frameworks
 - Name Oliver 1983, Shakespeare & Watson 2002
 - Connect to §1.7 CRPD grounding
 - Explain why MOB-only codes are structurally insufficient
 - Dependency: None
 - Effort: ~75
 
-### Phase C: Part 1 §1.8.7 — Norman signifier expansion
-- Expand from 1 paragraph to full framework treatment
+### Phase C: Part 1 §1.8.7 — Norman signifier expansion — COMPLETE (commit 7b0a0e05)
+- Expanded from 1 paragraph to full framework treatment
 - Structure: Gibson → Norman → split → population-specific failures → CDM connection → Weisman connection
 - Dependency: None
 - Effort: ~100
 
-### Phase D: Part 1 §1.8 — Lynch/Passini wayfinding framework (new §1.8.10)
+### Phase D: Part 1 §1.8 — Lynch/Passini wayfinding framework — COMPLETE (commit ddbafd2b)
 - Lynch 5 elements + Passini 3-step model + population failure analysis + Weisman + space syntax
 - Dependency: Phase C (signifier distinction available to reference)
 - Effort: ~125
 
-### Phase E: Part 1 §1.8 — Salutogenesis (new §1.8.11)
+### Phase E: Part 1 §1.8 — Salutogenesis — COMPLETE (commit ddbafd2b)
 - Antonovsky SOC + Golembiewski application + affordance-SOC bridge + distinction from ART/SRT
 - Dependency: Phases C and D (affordance-SOC bridge needs both components)
 - Effort: ~100
