@@ -421,6 +421,12 @@ D-SCHEMA decisions: DG-REVIEW. D-OP/D-METH decisions: check delegation table.
 **Done criterion:** schema_version = 4; ~103 items in items table; all db.py commands
 functional; gap.py accepts CONF and AUDT; all CI validators pass.
 
+**schema_version increment protocol (L-03):** Sessions 1a, 1b, and 1c constitute
+migration 004 as three sub-files: 004a_tables.sql (items + item_audit_runs + conflicts),
+004b_db_extensions.sql (db.py CI validators), 004c_gap_categories.sql (gap category
+expansion + Pydantic updates). Only 004c executes `UPDATE db_meta SET value='4'` — at
+the very end of Session 1c after CI passes. Sessions 1a and 1b do not touch db_meta.
+
 ### Phase 2 — Skill modifications · 2 sessions · Sonnet
 
 **Session 1 — connection-discovery merge:**
