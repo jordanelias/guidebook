@@ -39,10 +39,6 @@
 
 All RT60 specifications are for the 500 Hz octave band in the occupied condition unless stated otherwise. NC ratings are single-number noise criterion measurements. STI = Speech Transmission Index (≥0.5 = good speech intelligibility). STC = Sound Transmission Class (partition isolation rating). All hearing loop specifications: IEC 60118-4:2014+AMD1:2017.
 
-**Dementia subtype and auditory processing.** DEM is not monolithic for acoustic specification. Auditory scene analysis (ASA) research (Bregman, 1990; Hardy et al., 2015; Talebzadeh, 2025) demonstrates that different dementia subtypes lose different auditory processing capacities. Alzheimer's disease primarily impairs bottom-up/primitive sound source segregation and spatial processing through temporoparietal hub disruption — the person cannot separate a speaker's voice from background noise even when the signal level is adequate. Frontotemporal dementia primarily impairs top-down/schema-based processing through frontal network degradation — the person cannot use contextual expectation to parse ambiguous acoustic scenes. Posterior cortical atrophy produces severe segregation and grouping impairments exceeding typical Alzheimer's. Talebzadeh (2025, Ghent University; RCT n=28, Toronto Rehabilitation Institute) demonstrated that soundscape interventions targeting subtype-specific impairment patterns produce measurable reductions in agitation during care activities.
-
-For specification: the Mode P acoustic targets in this category (RT60, NC, STI) remain valid as population-level defaults for the generic DEM code. At Mode S, the OT assessment should identify dementia subtype and cognitive profile. Where subtype is Alzheimer's: prioritise STI and background noise reduction (the bottom-up segregation deficit means the person cannot compensate for poor signal-to-noise ratio). Where subtype is frontotemporal: prioritise acoustic predictability — steady-state background conditions and elimination of unexpected sound events (the top-down schema deficit means the person cannot contextualise unexpected sounds). Acoustic predictability — consistency of the background acoustic environment over time — is a specification quality (§3.4 Principle 5) distinct from absolute level; Dunn's sensory processing model (Part 1 §1.8.2) explains why sensory-sensitive profiles respond to variability more than to level.
-
 <!-- Citation mining 2026-05-04: Evidence base for RT60 ≤0.3s strengthened by three new sources:
      ASI-06 (Cueille 2022, R Soc Open Sci): HI penalty quantified at 18dB SRT increase (RT 0→1s) vs 10dB NH
      ASI-07 (Korean 2022, Buildings): Elderly incomplete-hearing — RT60 >0.6s degrades speech scores
@@ -939,8 +935,9 @@ No building code specifies vertical illuminance for lip reading. Guidebook's ≥
 <!-- ot_appointment_trigger: conditional:NDV|NEU -->
 <!-- grade_confidence: HIGH — No fluorescent/non-IEEE-1789-compliant LEDs: IEEE 1789-2015 (Tier 4 engineering standard) defines flicker-free threshold. NDV/NEU seizure and photosensitivity evidence: Harding et al. 2005 Epilepsia (Tier 3 SR). ≥10 jurisdictions moving to LED — mandatory IEEE compliance is VE-protected per Part 8. HIGH on fluorescent elimination; MODERATE on IEEE 1789 threshold specifically. -->
 
-**Applicable Groups:** PCS, AUT, PAIN, NDV · OFS · NEU
+**Applicable Groups:** PCS, AUT, PAIN, NDV · OFS · NEU · PSE
 <!-- CON-0071: fluorescent flicker is OFS/NEU/PAIN trigger -->
+<!-- SYNTH-SCAN-C06: PSE seizure-provocative range 3–70 Hz (Hermes et al. 2017, PMC5438467 Tier 2). Low-frequency PWM LED dimming (100–400 Hz) can produce visible modulation within provocative range at high modulation depth. IEEE 1789-2015 >1250 Hz threshold eliminates this risk. SAFETY specification — not comfort. -->
 
 **Description:** No fluorescent luminaires (T8, T5, compact fluorescent) installed anywhere in the building. Replaced with flicker-free LED throughout (B-04). Applies to all spaces.
 
@@ -948,11 +945,11 @@ No building code specifies vertical illuminance for lip reading. Guidebook's ≥
 
 Zero fluorescent luminaires anywhere in the building
 
-All luminaires: LED driver with high frequency switching (not mains-frequency ripple)
+All luminaires: LED driver with PWM dimming frequency >1250 Hz or DC-driven per IEEE 1789-2015 ● [IEEE 1789-2015 risk framework: <90 Hz HIGH RISK; 90–1250 Hz acceptable at low modulation depth only; >1250 Hz LOW RISK. Many commercial LED drivers operate at 100–400 Hz PWM — within risk zone. Specify >1250 Hz or DC-driven to ensure PSE safety. Standard LED luminaires at 2–20 kHz PWM comply; low-cost drivers at 100–400 Hz do not.]
 
-Verified per B-04: IEEE 1789-2015 compliance required
+Verified per IEEE 1789-2015: SVM ≤0.4; modulation depth compliant at operating frequency
 
-Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires
+Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires with compliant drivers
 
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Fluorescent elimination is a luminaire swap. In retrofit, ballast removal and fixture replacement across a building carries moderate labour cost but no structural implications. At design stage, LED specification is standard. See Part 11 §11.4.1.
 
@@ -1396,11 +1393,12 @@ that substitutes for abstract wayfinding reasoning when cognitive capacity for s
 
 ### C-03 Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments)
 <!-- design_stage_lock: DD -->
-<!-- ve_risk: LOW -->
+<!-- ve_risk: MEDIUM — safety specification (PSE seizure prevention) -->
 <!-- ot_appointment_trigger: conditional:NDV|DEM -->
-<!-- grade_confidence: LOW — Pattern avoidance in sensitive environments: PAS 6463 (Tier 4) + NDV lived experience. No RCT on pattern vs plain flooring for NDV outcomes. Visual noise research is Tier 4-5. -->
+<!-- grade_confidence: MODERATE — Pattern avoidance: PAS 6463 (Tier 4) + NDV lived experience + PSE seizure evidence (Hermes et al. 2017, Current Biology 27(9):R336-R338, PMC5438467, Tier 2 — static high-contrast gratings at 2–4 cycles/degree trigger seizures in ~30% of PSE individuals via gamma oscillation mechanism). DEM +15% pattern-associated falls (DSDC 2024). Three-population convergence (PSE seizure + NDV overload + DEM falls) elevates from comfort to SAFETY specification. -->
 
-**Applicable Groups:** DEM, AUT, PCS, NDV, OFS
+**Applicable Groups:** DEM, AUT, PCS, NDV, OFS, PSE
+<!-- SYNTH-SCAN-C07: PSE seizure trigger from static high-contrast patterns. Hermes et al. 2017 (PMC5438467): ~30% of PSE individuals seize from high-contrast gratings >1 cycle/degree. Citation mining confirmed ZERO prior publications applying PSE neuroscience to architectural pattern specification — this is a novel guidebook contribution. SAFETY specification — seizure prevention, not comfort. -->
 
 **Description:** No tessellated, geometric, or strongly patterned floor finishes in DEM, AUT, or PCS environments. Patterns create perceptual confusion (DEM: floor pattern perceived as steps or holes; AUT: visual overload). Plain, uniform colour flooring required.
 
@@ -1414,6 +1412,8 @@ Stripe patterns (threshold marking, navigation): ≤200 mm width; maximum 3 stri
 
 Wall patterns: no diagonals, spirals, or optical illusion patterns
 
+**PSE seizure prevention [SYNTH-SCAN-C07]:** No regular high-contrast patterns exceeding 1 cycle per degree subtended at typical viewing distance on surfaces >0.5 m². High-contrast regular patterns (stripes, checks, gratings) at spatial frequencies of 2–4 cycles/degree trigger seizures in ~30% of individuals with photosensitive epilepsy via cortical gamma oscillation mechanism (Hermes et al. 2017, Tier 2). This applies to feature walls, tiled surfaces, cladding patterns, and carpet/flooring designs. ● [Tier 2 neuroscience evidence — novel built environment application; citation mining confirmed no prior publication connects PSE seizure research to architectural pattern specification. SAFETY specification — seizure prevention.]
+
 LBD (Lewy Body Dementia): plain matte uniform flooring mandatory (see
 
 §2.5)
@@ -1422,7 +1422,7 @@ LBD (Lewy Body Dementia): plain matte uniform flooring mandatory (see
 
 replacement without structural works. See Part 11 §11.4.1.
 
-**Key citations:** DSDC. (2022). EADDAT. University of Stirling. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. National Autistic Society. (2023). Creating autism-friendly environments. NAS.
+**Key citations:** DSDC. (2022). EADDAT. University of Stirling. Mostafa, M. (2021). ASPECTSS 2.0. Frontiers in Psychiatry, 12, 727353. National Autistic Society. (2023). Creating autism-friendly environments. NAS. Hermes, D., Petridou, N., Kay, K.N., & Winawer, J. (2017). Gamma oscillations and photosensitive epilepsy. *Current Biology* 27(9):R336-R338. DOI:10.1016/j.cub.2017.03.076. PMID:28486114.
 
 **Cross-reference:** C-06 (Plain Flooring); B-08 (Matte Floor)
 
@@ -1438,7 +1438,7 @@ High-chroma, saturated patterns at floor level constitute a visual stimulus in t
 | UK | PAS 6463:2022 | **Plain surfaces recommended** | Avoid strong patterns | Yes | Only standard addressing patterns |
 | UK | BS 8300 | — | — | — | Does not address |
 | ISO | ISO 21542 | Not addressed | — | — | — |
-| **Guidebook** | **C-03** | **Plain in sensitive areas** | **No bold geometric** | **≤3 Hz flicker avoidance** | **NDV/NEU/VIS evidence** |
+| **Guidebook** | **C-03** | **Plain in sensitive areas** | **No bold geometric** | **No regular high-contrast patterns >1 c/deg on large surfaces (PSE seizure prevention)** | **NDV/NEU/VIS/PSE evidence; SAFETY specification** |
 
 UK PAS 6463 is the ONLY standard addressing pattern avoidance for neurodivergent populations. No other code restricts surface patterns.
 
