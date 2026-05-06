@@ -35,7 +35,12 @@ class Gap(GuidebookEntity):
     @field_validator("category")
     @classmethod
     def valid_category(cls, v: str) -> str:
-        valid = {"RP", "SW", "CR", "ST", "MX", "CD", "EC", "EG"}
+        # Full set per migration 005 (schema_version 5).
+        # CI and DEC were added in migration 002 but omitted from this
+        # validator until the CO-0009 Phase 1 Session 1c correction pass.
+        # CONF and AUDT added in migration 005.
+        valid = {"RP", "SW", "CR", "ST", "MX", "CD", "EC", "EG",
+                 "CI", "DEC", "CONF", "AUDT"}
         if v not in valid:
             raise ValueError(f"Invalid category: '{v}'. Must be one of {valid}")
         return v
