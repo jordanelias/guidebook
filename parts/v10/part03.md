@@ -47,7 +47,9 @@ This principle is operationalised in §3.8 Step 0 (compound functioning check) a
 
 #### §3.2.4 Theoretical Framework Layering
 
-This guidebook integrates four complementary frameworks:
+This guidebook integrates five complementary frameworks (Part 1 §1.4.8):
+
+0. **The social model of disability (Oliver 1983; Shakespeare & Watson 2002)** provides the political foundation. Disability is produced by environmental and social barriers, not by impairment. This premise grounds CRPD Article 9 and explains why the guidebook's scope extends beyond mobility to sensory, cognitive, and neurological barriers — all are environmental, all are within the scope of design intervention.
 
 1. **ICF (WHO 2001)** provides the classification infrastructure — activity codes, environmental factors, the taxonomy of functioning. It is the shared language between this guidebook and the international disability research and policy community.
 
@@ -110,6 +112,10 @@ The layered environment model organises accessible design provisions by their ph
 3. **Safety-critical provisions establish the floor.** Where one population's provision addresses a safety outcome (fall, scald, fire evacuation, Uhthoff's neurological worsening) and another population's provision addresses a comfort or preference outcome, the safety provision governs the shared environment. Comfort requirements are met through individual supplemental provision.
 
 4. **Zoning is a resolution mechanism, not a workaround.** Sensory gradient zoning (F-01) separates irreconcilable ambient parameters into distinct spatial zones without compromising either population. Zoning is not a compromise — it is the principled design response to specifications that cannot be reconciled in a single ambient parameter.
+
+5. **Transition zones mediate between sensory states.** Where zoning separates specifications into distinct spatial zones, transition zones (Mostafa, 2008; ASPECTSS Design Index) manage the perceptual shift between them. A person moving from a high-stimulus circulation zone to a low-stimulus retreat space requires sensory recalibration space — an intermediate zone where acoustic, lighting, and thermal parameters are graduated rather than stepped. This principle operationalises Dunn's sensory processing model (Part 1 §1.8.2) into spatial organisation: sensory-sensitive and sensory-avoiding profiles experience abrupt environmental transitions as distressing, not merely uncomfortable. Graduated transitions also support the salutogenic comprehensibility dimension (Part 1 §1.8.11) — a comprehensible environment does not produce unexplained perceptual shifts. The F-01 sensory gradient model specifies the three-zone structure; this fifth principle specifies how the boundaries between zones are handled.
+
+**Six design qualities govern cross-item synthesis.** The sensory design quality taxonomy (safety, sensory balance, adjustability, predictability, controllability, recovery) names what multiple specifications collectively achieve. "Predictability" is not an item — it is a quality that D-category wayfinding specifications, B-category lighting specifications, A-category acoustic specifications, and F-category spatial specifications all serve. When assessing whether a synthesis achieves its purpose, test against these six qualities: does the combined specification make the environment safe, sensorily balanced, adjustable, predictable, controllable, and restorative? A synthesis that achieves every individual item specification but produces an unpredictable environment has failed.
 
 ---
 
@@ -431,7 +437,7 @@ The synthesis approach changes how the guidebook is used in two ways. First, no 
 
 ### §3.13 Sensory Coherence Audit Tool [GAP-CR-16]
 
-> **Original guidebook tool [GAP-CR-16]:** The sensory coherence audit tool operationalises §3.9 Principle 2 (Sensory Coherence). No peer-reviewed sensory coherence audit instrument exists for the built environment. This tool is an original practitioner contribution derived from: F-01 three-zone model; cross-population conflict domain analysis (§3.3); and OT sensory processing theory (Dunn 1999, Ayres 2005). ○ [Tier 0 — original synthesis; expert consensus basis; no external validation study]
+> **Original guidebook tool [GAP-CR-16]:** The sensory coherence audit tool operationalises §3.9 Principle 2 (Sensory Coherence) and §3.4 Principle 5 (Transition Zones). No peer-reviewed sensory coherence audit instrument exists for the built environment. This tool is an original practitioner contribution derived from: F-01 three-zone model; cross-population conflict domain analysis (§3.3); and OT sensory processing theory (Dunn 1999, Ayres 2005). ○ [Tier 0 — original synthesis; expert consensus basis; no external validation study]
 
 Sensory coherence means that every environmental parameter a building provides — acoustic, visual, thermal, olfactory, tactile — forms a coherent multi-sensory profile at every zone and transition. A building where Zone 2 (standard activity) has low acoustics (A-02, RT60 ≤0.5s), warm mid-CCT lighting (B-03, 3000K), and fragrance-free air (F-02) but also has a strongly fragranced air freshener in the adjacent corridor is not sensory-coherent. The fragrance creates a multi-sensory contradiction that is disruptive for NDV, PAIN, and OFS users precisely because they cannot predict or control it.
 
