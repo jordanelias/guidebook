@@ -287,6 +287,20 @@ Salutogenesis does different work from ART and SRT (§1.8.9). ART and SRT explai
 
 The salutogenic framework reframes accessible design from the removal of barriers to the active promotion of health. The social model (§1.4.8) establishes that the environment disables; salutogenesis establishes that the environment can also heal. This reframing matters because it shifts the design aspiration from "does this environment not prevent functioning?" to "does this environment actively support the person's sense of coherence?"
 
+#### §1.8.12 Throughlines: How the Frameworks Connect
+
+The evidence frameworks in §1.8.1–§1.8.11 are not a list. Five throughlines connect them into an integrated theoretical architecture.
+
+**Legibility.** Lynch's imageability (§1.8.10) → Weisman's architectural legibility (56% of disorientation variance from floor plan simplicity) → space syntax (computational measurement of legibility) → Passini's cognitive process model (§1.8.10) → salutogenic comprehensibility (§1.8.11). This throughline runs from spatial theory through measurement instrument through cognitive process to health outcome.
+
+**Signifier.** Gibson's ecological affordance (§1.8.7) → Norman's affordance/signifier distinction (§1.8.7) → Weisman's four environmental variables (three are affordances, one is a signifier) → Allen's CDM levels (§1.8.5) mapping signifier complexity tolerance → population-specific signifier failures in Part 4 specifications. This throughline explains why the same physical element communicates differently to different populations.
+
+**Person-environment fit.** The social model (§1.4.8) establishes the political claim → PEO (§1.4.8) provides the practice model → Competence-Press (§1.8.8) specifies when environmental compensation matters most → salutogenesis (§1.8.11) specifies what the environment should produce → the Capability Approach (§1.4.8) establishes what is at stake. Five frameworks, one insight at different levels of analysis.
+
+**Sensory organisation.** Dunn's four sensory profiles (§1.8.2) → ASPECTSS spatial sequencing and transition zones (Part 3 §3.4 Principle 5) → Bregman's auditory scene analysis (Part 4 A-category preamble) → dementia-subtype-specific acoustic specification → the sensory design quality taxonomy (Part 3 §3.4: safety, sensory balance, adjustability, predictability, controllability, recovery).
+
+**Instrument to specification.** Housing Enabler (§1.8.8) → space syntax (§1.8.10) → post-occupancy evaluation quality dimensions → aggregate findings across building populations → population-level specifications. This is the methodological throughline: measurement instruments applied across individual cases produce generalizable findings that inform specifications. The guidebook's evidence hierarchy (Part 1 §1.6) traces this pathway from Tier 1 clinical instruments to population-level Tier 3 specifications.
+
 
 ### §1.9.1 Biomechanical Derivation of Dimensional Specifications
 

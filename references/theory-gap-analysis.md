@@ -415,17 +415,17 @@ Methodological throughline: measurement instruments applied across cases produce
 - Dependency: Phases C and D (affordance-SOC bridge needs both components)
 - Effort: ~100
 
-### Phase F: Part 3 §3.8 — Spatial sequencing + sensory quality taxonomy
+### Phase F: Part 3 §3.4/§3.13 — Spatial sequencing + sensory quality taxonomy — COMPLETE (commit f1975a15)
 - ASPECTSS spatial sequencing as synthesis principle + 6-quality cross-item vocabulary
 - Dependency: Phases C, D, E complete
 - Effort: ~100
 
-### Phase G: Part 4 A-category — ASA by DEM subtype
-- Refine acoustic specs with DEM subtype differentiation; Talebzadeh Tier 1 evidence
+### Phase G: Part 4 A-category — ASA by DEM subtype — COMPLETE (commit f1975a15)
+- Refined acoustic specs with DEM subtype differentiation; Talebzadeh Tier 1 evidence
 - Dependency: Phase D
 - Effort: ~75
 
-### Phase H: Throughline documentation
+### Phase H: Throughline documentation — COMPLETE (this commit)
 - Brief synthesis section in Part 1 or Part 3 documenting the 5 throughlines
 - Dependency: All phases B–G complete
 - Effort: ~75
