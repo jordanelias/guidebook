@@ -74,6 +74,11 @@ from SQLite." It does NOT mean "omit entirely." Skipping a step that has never b
 this item causes the consolidator to produce an incomplete brief — the wrapper must warn and
 abort rather than silently proceed.
 
+**force_rerun semantics:** `force_rerun` accepts step numbers to re-run even if previously
+complete. Use case: prior run used Sonnet, current run wants Opus output. Wrapper deletes
+prior step outputs from SQLite (gaps with matching session+skill source, connections
+similarly) before re-running. Mutually exclusive with `skip_steps` for the same step number.
+
 **Conflict-mapper multi-run protocol:** Conflict-mapper has a ceiling of 3 domains per run.
 For items with >3 active domains, the wrapper invokes conflict-mapper iteratively. Each run
 logs its CONF-NNNN records to the tracking DB `conflicts` table. Before each subsequent run,
@@ -225,6 +230,12 @@ CREATE INDEX idx_conflicts_status ON conflicts(status);
 `gap_id` FK constraint intentionally omitted. For UNRESOLVED conflicts: insert gap first,
 then insert conflict with gap_id populated — both in the same transaction.
 
+**Pop pair ordering (symmetric dedup):** The dedup index treats `(UPL, MOB)` and `(MOB, UPL)`
+as different conflicts. Wrapper must alphabetically order populations before insert
+(pop_a < pop_b lexicographically). This is a Phase 1 implementation detail enforced by
+the `add-conflict` CLI command, not a CHECK constraint (CHECK on `pop_a < pop_b` would
+prevent insertion of any unordered pair).
+
 Domain codes use the same values as the website DB conflict table (`LIGHT-INT`, `ACOUSTIC-LVL`,
 etc.) for cross-reference consistency. Cross-DB FK not possible in SQLite — alignment is
 by convention, not constraint.
@@ -264,7 +275,7 @@ ALTER TABLE citation_mining ADD COLUMN deferred_reason TEXT;
 | cross-population-conflict-mapper (UNRESOLVED) | gaps + conflict.gap_id | CONF | GAP-NNN |
 | content-gap-analyzer | gaps | MX, RP, ST, CD | GAP-NNN |
 | evidence-auditor (OVERCLAIMED, UNCERTAIN_REVIEW) | gaps | EG | GAP-NNN |
-| evidence-auditor (UNDISCLOSED-CONSENSUS, MARKER-STRATUM-MISMATCH) | gaps | AUDT | GAP-NNN |
+| evidence-auditor (UNDISCLOSED-CONSENSUS, MARKER-STRATUM-MISMATCH, UNSUPPORTED-MARKER, UNSTATED) | gaps | AUDT | GAP-NNN |
 | evidence-auditor (CONFIRMED_STRATUM, UNDERCLAIMED) | brief only — not logged | — | — |
 | functional-deficit-auditor (FDR trigger YES) | gaps | RP | GAP-NNN |
 | functional-deficit-auditor (scope error) | gaps | AUDT | GAP-NNN |
@@ -342,8 +353,9 @@ Depth-1 enforced at wrapper level. `deferred_reason` makes deferrals auditable.
 
 ### 5.6 Evidence-auditor flag routing is a hard rule
 CONFIRMED_STRATUM and UNDERCLAIMED: brief only, not logged to DB.
-OVERCLAIMED and UNCERTAIN_REVIEW: → EG gap.
-UNDISCLOSED-CONSENSUS and MARKER-STRATUM-MISMATCH: → AUDT gap.
+OVERCLAIMED and UNCERTAIN_REVIEW: → EG gap (evidence sufficiency issue).
+UNDISCLOSED-CONSENSUS, MARKER-STRATUM-MISMATCH, UNSUPPORTED-MARKER, UNSTATED: → AUDT gap
+(authoring correction needed — disclosure missing, marker wrong, stratum unstated).
 Not subject to per-finding judgment.
 
 ### 5.7 The items table is the pipeline anchor
@@ -611,6 +623,11 @@ record; tracking DB is canonical audit record. C6 content migration goes to webs
 `spec_hash` on item_audit_runs enables staleness detection. If item spec changes mid-audit,
 wrapper detects on resume and prompts: restart (all findings re-evaluated) or continue
 (stale-state flag in brief). Silent continuation is not permitted.
+
+**Normalization before hashing:** Wrapper strips leading/trailing whitespace, normalises
+line endings to `\n`, and removes any frontmatter timestamps before MD5. Without
+normalisation, cosmetic edits (e.g., editor-injected line ending changes) trigger false
+staleness alerts. Phase 4 implementation detail.
 
 ### 9.8 C3 budget commitment gate
 Do not commit to the full C3 pipeline pre-pass budget before calibration data exists.
