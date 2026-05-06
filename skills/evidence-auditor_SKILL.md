@@ -85,3 +85,41 @@ Flag any OFS or PAIN specification at EMERGING/ABSENT stratum without this discl
 
 Claim objects (YAML) — one per flagged item.
 Summary: X assessed — Y ✅ / Z 🔴 OVERCLAIMED / W ⚠️ UNSTATED / V ⚠️ UNCERTAIN_REVIEW · Overall: STRONG/ADEQUATE/WEAK/MIXED
+
+5. **SQLite write (actionable flags only):**
+
+Log flagged findings that require action to the tracking DB. Do NOT log CONFIRMED_STRATUM
+or UNDERCLAIMED (informational only — brief record only, no DB entry).
+
+| Flag | Gap category | Rationale |
+|---|---|---|
+| OVERCLAIMED | EG | Evidence insufficient for stated confidence — research or reclassification needed |
+| UNCERTAIN_REVIEW | EG | SelfCheck divergence — review or research needed to resolve |
+| UNDISCLOSED-CONSENSUS | AUDT | Authoring error: disclosure missing — ISW correction needed |
+| MARKER-STRATUM-MISMATCH | AUDT | Authoring error: wrong marker placed — ISW correction needed |
+| UNSUPPORTED-MARKER | AUDT | Authoring error: ● with no citation — ISW correction needed |
+| UNSTATED | AUDT | Authoring error: stratum not stated — ISW correction needed |
+
+```bash
+# EG gap (research/review needed)
+python3 scripts/db.py add-gap \
+  --category EG \
+  --priority P2 \
+  --description "[flag-code] [section]: [claim text truncated to 120 chars] — [action required]" \
+  --skill evidence-auditor \
+  --section [item_code or section_id] \
+  --session [session-name]
+
+# AUDT gap (authoring correction needed)
+python3 scripts/db.py add-gap \
+  --category AUDT \
+  --priority P2 \
+  --description "[flag-code] [section]: [claim text truncated to 120 chars] — [correction required]" \
+  --skill evidence-auditor \
+  --section [item_code or section_id] \
+  --session [session-name]
+```
+
+After logging: run `python3 scripts/db.py gaps --status OPEN` to confirm insertion.
+Commit DB to GitHub with message:
+`evidence-auditor: [N] flags logged [item_code] [YYYY-MM-DD HH:MM]`
