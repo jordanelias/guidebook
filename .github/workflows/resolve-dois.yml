@@ -1,0 +1,36 @@
+name: Resolve DOIs via CrossRef
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_resolve:
+        description: 'Maximum number of sources to attempt'
+        required: false
+        default: '100'
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Resolve DOIs
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+          MAX_RESOLVE: ${{ github.event.inputs.max_resolve }}
+        run: python scripts/resolve_dois.py
+      
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/guidebook.db
+          git diff --cached --quiet || git commit -m "source-verification: batch DOI resolution via CrossRef [$(date -u '+%Y-%m-%d %H:%M')]"
+          git push
