@@ -1,5 +1,8 @@
 # Theoretical Framework Gap Analysis — Literature Review
 **Date:** 2026-05-06 04:34
+> **Audit 2026-05-06 06:10:** 6 corrections applied (A1–A5). 3 errors fixed, 2 type/date imprecisions corrected, 3 secondary citations flagged [UNVERIFIED]. All foundation sources, validation studies, and cross-network connections verified against search results. See corrections inline marked [CORRECTED] and [UNVERIFIED].
+
+
 **Session:** Theory integration scoping review
 **Status:** Phase 1 complete (theory + object-level); Phase 2 pending (rooms/buildings/engineering)
 
@@ -48,10 +51,10 @@ Scoping review to identify theoretical frameworks missing from or underweight in
 - Passini R (1984) Wayfinding in Architecture. Van Nostrand Reinhold.
 - Arthur P & Passini R (1992) Wayfinding: People, Signs, and Architecture.
 **Validation studies:**
-- Wiener & Pazzaglia 2021 (Cognitive Processing, PMC8545728) — systematic integration of cognitive psychology, neuropsychology, and environmental psychology into dementia-friendly wayfinding design guidelines. Explicitly connects Lynch's 5 elements and Passini's 3-step cognitive model to residual navigation abilities in dementia.
+- Wiener & Pazzaglia 2021 (Cognitive Processing, PMC8545728) — opinion paper / narrative synthesis integrating cognitive psychology, neuropsychology, and environmental psychology into dementia-friendly wayfinding design guidelines. [CORRECTED 2026-05-06 — paper self-describes as opinion paper, not systematic review] Explicitly connects Lynch's 5 elements and Passini's 3-step cognitive model to residual navigation abilities in dementia.
 - Zali et al. 2026 (SAGE, doi:10.1177/19375867251391361) — first scoping review of wayfinding for people with sensory impairment. Framework grounded in Arthur & Passini 1992 and Lynch 1960.
 - Van der Linden et al. 2025 (Frontiers in Dementia, PMC11931140) — Passini's spatial-problem-solving framework validated for dementia wayfinding case studies.
-- Davis & Ohman (PMC5358323) — salient, colorful, personally meaningful cues at decision points help Alzheimer's wayfinding.
+- PMC5358323 — salient, colorful, personally meaningful cues at decision points help Alzheimer's wayfinding. [UNVERIFIED — author attribution; PMC ID and content confirmed]
 - Li & Klippel 2020 (Frontiers in Psychology, PMC7677306) — integrative review of 84 studies on interior wayfinding.
 - Passini & Proulx 1988 (Environment and Behavior) — wayfinding without vision.
 **Lynch's 5 elements:** paths, edges, districts, nodes, landmarks
@@ -68,7 +71,7 @@ Scoping review to identify theoretical frameworks missing from or underweight in
 - Norman D (1988/2013) The Design of Everyday Things.
 - Gibson JJ (1979) The Ecological Approach to Visual Perception.
 **Distinction:** Affordance = what the environment *actually offers*. Signifier = what the environment *communicates* it offers. Gibson didn't distinguish these. Norman did.
-**Validation:** Norman's framework validated through 35+ years of HCI and industrial design research. Petrucci et al. 2024 (Frontiers in Psychology, PMC11212831) confirmed affordances are body-scaled and individually variable. Morgenthaler et al. 2024 (AJOT) used affordance theory to build environmental taxonomies.
+**Validation:** Norman's framework validated through 35+ years of HCI and industrial design research. 2024 Frontiers in Psychology meta-review (PMC11212831) confirmed affordances are body-scaled and individually variable. [CORRECTED 2026-05-06 — Petrucci et al. 2016 is one study reviewed within this paper, not its authors] Morgenthaler et al. 2024 (AJOT) used affordance theory to build environmental taxonomies.
 **Current gap:** §1.8.7 is one paragraph conflating affordance and signifier. Grab bar shape is a signifier issue as much as an affordance issue.
 **Integration target:** Expand §1.8.7 from 1 paragraph to proper treatment
 **What it adds:**
@@ -105,7 +108,7 @@ Scoping review to identify theoretical frameworks missing from or underweight in
 
 ### 4.3 ASA Deficits by Dementia Subtype
 **Source:** PMC12739567 (2025) — novel framework
-**Finding:** Different dementia subtypes have different bottom-up (primitive) vs. top-down (schema-based) auditory processing deficits. Alzheimer's loses top-down first; Lewy body has bottom-up primitive segregation deficits.
+**Finding:** Different dementia subtypes have different patterns of bottom-up (primitive) vs. top-down (schema-based) auditory processing deficits. AD primarily loses bottom-up/primitive processing (sound source segregation, spatial processing) through temporoparietal hub disruption; FTD loses top-down/schema-based processing through frontal network degradation; PCA has severe segregation/grouping impairments exceeding typical AD. [CORRECTED 2026-05-06 — original §4.3 had AD/FTD direction inverted; §10.3 had correct version]
 **Current gap:** Generic "DEM" acoustic specs (STI ≥ 0.60) don't differentiate by subtype.
 **Integration target:** A-category acoustic specs; Part 5 conflict resolution
 **What it adds:** Subtype-specific acoustic specification at Mode P; flags subtype as Mode S resolution parameter.
@@ -201,8 +204,8 @@ Phase 2 **confirmed** Phase 1 findings rather than revealing new theoretical fra
 **Theoretical implication:** Signifier legibility degrades with cognitive decline. Design must progress from abstract to concrete signifiers as cognitive level drops (Allen's CDM levels map to signifier complexity tolerance).
 
 #### 9.2.2 Hospital corridor — Affordance vs. manifest cue competition
-- Vilar et al. 2014 + EEG replication (bioRxiv 2021): corridor width and brightness (environmental affordances) compete with signage (manifest cues). **Urgency level determines dominance:** emergency visitors follow signs; routine visitors follow spatial affordances.
-- Carpman et al. 1985: architectural design = combination of environmental affordances + manifest cues — the hospital wayfinding literature independently arrived at the affordance/signifier distinction before Norman named it
+- Vilar et al. 2014 [UNVERIFIED — secondary citation via bioRxiv 2021] + EEG replication (bioRxiv 2021): corridor width and brightness (environmental affordances) compete with signage (manifest cues). **Urgency level determines dominance:** emergency visitors follow signs; routine visitors follow spatial affordances.
+- Carpman et al. 1985 [UNVERIFIED — secondary citation via bioRxiv 2021]: architectural design = combination of environmental affordances + manifest cues — the hospital wayfinding literature independently arrived at the affordance/signifier distinction before Norman named it
 **Theoretical implication:** Wayfinding specifications must address both affordance and signifier channels. In emergency contexts, signifiers dominate. In residential contexts, affordances dominate. This explains why institutional signage strategies transfer poorly to residential settings (O'Malley et al. 2017).
 
 #### 9.2.3 HVAC/Thermal — Competence-Press confirmed, population-specific range validated
@@ -302,7 +305,7 @@ Phase 2 does not change the priority ordering from §7. It strengthens the case 
   - Distinct auditory processing profiles by DEM subtype: AD = primitive-based (bottom-up) through temporoparietal hub disruption; FTD = schema-based (top-down) through frontal network degradation; PCA = severe ASA segregation/grouping impairments exceeding typical AD
   - **Tier 1 evidence** (intervention-tested RCT)
 - Hardy et al. (PMC4446369) — "Functional neuroanatomy of auditory scene analysis in Alzheimer's disease." Neuroimaging study: planum temporale, posterior STG, supramarginal gyrus, IPS, prefrontal cortex. Passive-listening fMRI paradigm using own-name recognition in multi-talker babble.
-- Bregman 1990/1993 — "Auditory Scene Analysis: the perceptual organization of sound." MIT Press. The foundational text. Defines primitive (bottom-up) and schema-based (top-down) grouping — the two processing modes that different DEM subtypes lose differentially.
+- Bregman 1990 — "Auditory Scene Analysis: the perceptual organization of sound." MIT Press. [CORRECTED 2026-05-06 — 1993 date from typo in ASA paper ("Bragman, 1993"); correct publication is 1990] The foundational text. Defines primitive (bottom-up) and schema-based (top-down) grouping — the two processing modes that different DEM subtypes lose differentially.
 
 ### 10.4 From Space Syntax / Weisman Legibility Network
 
@@ -349,3 +352,93 @@ The citation mining revealed three **cross-network bridges** not visible from in
 | Turner et al. | 2001 | Methodology | Visibility Graph Analysis; isovist-based spatial analysis | Analytical tool |
 | Hillier et al. | 1984/1993 | Methodology | Space syntax; integration, connectivity, depth measures | Analytical tool |
 | Housing Enabler (Iwarsson & Slaug) | 2001/2010 | Assessment | Person-environment fit quantification; r=0.74 inter-rater | Analytical tool |
+
+
+---
+
+## 11. Throughlines
+
+Five structural throughlines connect the frameworks into an integrated theoretical architecture. These are not editorial additions — they are empirically visible connections between validated frameworks.
+
+### 11.1 Legibility
+Lynch (imageability, 5 elements) → Weisman (architectural legibility as measurable variable; 56% variance from floor plan simplicity) → Space syntax (computational legibility: integration, depth, connectivity via VGA/isovist) → Passini (cognitive process that *uses* legibility: information processing → decision-making → decision execution) → Salutogenesis comprehensibility (health outcome produced by legibility)
+
+Every link empirically validated. Strongest throughline. Runs from abstract theory through measurement instrument through cognitive process to health outcome.
+
+### 11.2 Signifier
+Gibson (ecological affordance) → Norman (affordance ≠ signifier) → Weisman's 4 variables (1,2,4 = affordances; 3 = signifiers) → Vilar 2014 [UNVERIFIED] (urgency modulates which channel dominates: emergency = signifiers; routine = affordances) → Allen CDM levels (signifier complexity tolerance degrades with cognitive level: abstract symbols → concrete images → objects) → LRV/contrast specifications (signifier failure = dark floor perceived as hole by DEM; insufficient contrast = absent signifier for VIS)
+
+Explains *why* the same physical element communicates differently to different populations. Theoretical key to cross-population conflict resolution for perceptual specifications.
+
+### 11.3 Person-Environment Fit (political → practice → health → justice)
+Social model (political: society disables, not impairment) → PEO/PEOP (practice: fit determines functioning) → Competence-Press (declining capacity requires environmental compensation) → Salutogenesis (health-promoting environments actively produce SOC) → Capability Approach (justice: environment as conversion factor for capabilities)
+
+Five frameworks, one insight at different levels. Social model says *why* environment matters. PEO says *how*. Competence-Press says *when* it matters most. Salutogenesis says *what* the environment should produce. Capability Approach says *what's at stake*.
+
+### 11.4 Sensory Organization
+Dunn (4 sensory profiles: seeking, avoiding, sensitivity, low registration) → Mostafa ASPECTSS (spatial sequencing + sensory zoning + transition zones) → Bregman ASA (primitive vs. schema-based auditory grouping) → Talebzadeh (DEM-subtype-specific acoustic design; Tier 1 RCT) → Sensory design quality taxonomy (predictability, controllability, recovery as cross-item qualities)
+
+Runs from sensory processing theory through spatial organization principle through auditory neuroscience to specification. Governs A-category, B-category, and sensory dimensions of D-category.
+
+### 11.5 Instrument → Specification
+Housing Enabler (person-environment fit; r=0.74) → Space syntax (spatial configuration; VGA/isovist) → POE quality dimensions (adaptability, safety, legibility, autonomy) → Aggregate findings (Weisman 56%, ED typology comparison) → Population-level specifications
+
+Methodological throughline: measurement instruments applied across cases produce generalizable findings that inform specifications. How evidence flows from Tier 1 clinical instruments to population-level specifications.
+
+---
+
+## 12. Integration Plan
+
+### Phase A: Corrections — COMPLETE (this commit)
+
+### Phase B: Part 1 §1.4.8 — Social model (political foundation)
+- Add one paragraph before existing four frameworks
+- Name Oliver 1983, Shakespeare & Watson 2002
+- Connect to §1.7 CRPD grounding
+- Explain why MOB-only codes are structurally insufficient
+- Dependency: None
+- Effort: ~75
+
+### Phase C: Part 1 §1.8.7 — Norman signifier expansion
+- Expand from 1 paragraph to full framework treatment
+- Structure: Gibson → Norman → split → population-specific failures → CDM connection → Weisman connection
+- Dependency: None
+- Effort: ~100
+
+### Phase D: Part 1 §1.8 — Lynch/Passini wayfinding framework (new §1.8.10)
+- Lynch 5 elements + Passini 3-step model + population failure analysis + Weisman + space syntax
+- Dependency: Phase C (signifier distinction available to reference)
+- Effort: ~125
+
+### Phase E: Part 1 §1.8 — Salutogenesis (new §1.8.11)
+- Antonovsky SOC + Golembiewski application + affordance-SOC bridge + distinction from ART/SRT
+- Dependency: Phases C and D (affordance-SOC bridge needs both components)
+- Effort: ~100
+
+### Phase F: Part 3 §3.8 — Spatial sequencing + sensory quality taxonomy
+- ASPECTSS spatial sequencing as synthesis principle + 6-quality cross-item vocabulary
+- Dependency: Phases C, D, E complete
+- Effort: ~100
+
+### Phase G: Part 4 A-category — ASA by DEM subtype
+- Refine acoustic specs with DEM subtype differentiation; Talebzadeh Tier 1 evidence
+- Dependency: Phase D
+- Effort: ~75
+
+### Phase H: Throughline documentation
+- Brief synthesis section in Part 1 or Part 3 documenting the 5 throughlines
+- Dependency: All phases B–G complete
+- Effort: ~75
+
+### Sequencing
+
+```
+B (social model) ────────────────────────────────────────┐
+C (Norman signifiers) ──────┬────────────────────────────┤
+D (Lynch/Passini) ──────────┤                            ├─ H (throughlines)
+E (salutogenesis) ──────────┤                            │
+F (spatial sequencing) ─────┘                            │
+G (ASA DEM subtype) ─────────────────────────────────────┘
+```
+
+Total effort: ~650. Approximately 3–4 sessions if combined with voice-style review.
