@@ -121,22 +121,22 @@ context. The consolidator aggregates all runs by querying `conflicts WHERE item_
 
 IDs continue from D-0140 (current latest).
 
-| Decision ID | A12 Category | Summary |
-|---|---|---|
-| D-0141 | D-SCHEMA | items table: migrate schemas/item.py to tracking DB |
-| D-0142 | D-SCHEMA | item_audit_runs table: pipeline state tracking per item |
-| D-0143 | D-SCHEMA | conflicts table (tracking DB): per-item audit findings |
-| D-0144 | D-SCHEMA | Gap categories CONF + AUDT: extend gaps CHECK constraint |
-| D-0145 | D-SCHEMA | citation_mining.deferred_reason column |
-| D-0146 | D-OP | Merge connection-scout → connection-discovery: deprecate scout |
-| D-0147 | D-METH | functional-deficit-auditor: scope, ICF alignment, FDR trigger criteria |
-| D-0148 | D-METH | economics-auditor: scope, boundary with economics-researcher |
-| D-0149 | D-OP | audit-consolidator: output contract, GitHub brief path convention |
-| D-0150 | D-OP | item-audit-pipeline: wrapper architecture, session boundary handling |
+| Decision ID | A12 Category | Delegation | Summary |
+|---|---|---|---|
+| D-0141 | D-SCHEMA | DG-REVIEW | items table: migrate schemas/item.py to tracking DB |
+| D-0142 | D-SCHEMA | DG-REVIEW | item_audit_runs table: pipeline state tracking per item |
+| D-0143 | D-SCHEMA | DG-REVIEW | conflicts table (tracking DB): per-item audit findings |
+| D-0144 | D-SCHEMA | DG-REVIEW | Gap categories CONF + AUDT: extend gaps CHECK constraint |
+| D-0145 | D-SCHEMA | DG-REVIEW | citation_mining.deferred_reason column |
+| D-0146 | D-OP | DG-REVIEW | Merge connection-scout → connection-discovery: deprecate scout |
+| D-0147 | D-METH | DG-NON | functional-deficit-auditor: scope, ICF alignment, FDR trigger criteria |
+| D-0148 | D-METH | DG-NON | economics-auditor: scope, boundary with economics-researcher |
+| D-0149 | D-OP | DG-REVIEW | audit-consolidator: output contract, GitHub brief path convention |
+| D-0150 | D-OP | DG-REVIEW | item-audit-pipeline: wrapper architecture, session boundary handling |
 
 D-0141–D-0145: DG-REVIEW (D-SCHEMA default).
-D-0146–D-0150: verify delegation category against decision-protocol.md table before authoring.
-Do not assume DG-AUTO without checking.
+D-0146, D-0149, D-0150: DG-REVIEW with rationale — first-of-kind operations (default DG-AUTO upgraded).
+D-0147, D-0148: DG-NON — new methodology (default for D-METH new methodology applies).
 
 ### 4.2 Migration 004 schema
 
