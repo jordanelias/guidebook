@@ -33,12 +33,25 @@ description: >
    - Secondary gaps (MED)
    - Thematic gaps
    - Research tasks for multilingual-research: `Topic | Search terms | Languages | Source types`
-   - Gap YAML per item → append to `SQLite gaps table` on GitHub (GET + append + PUT per Project Instructions §GitHub API):
-     ```yaml
-     id: GAP-XXX
-     type: evidence|framing|citation|format|code|cross-ref
-     section: "..."
-     priority: P1|P2|P3
-     status: OPEN
-     skill_responsible: content-gap-analyzer
+   - Gap YAML per item → log to SQLite `gaps` table via db.py:
+     ```bash
+     python3 scripts/db.py add-gap \
+       --category [RP|MX|ST|CD] \
+       --priority [P1|P2|P3] \
+       --description "[type: evidence|framing|citation|format|code|cross-ref] [section]: [gap description]" \
+       --skill content-gap-analyzer \
+       --section "[section_or_item_code]" \
+       --session [session-name]
      ```
+     Category mapping: evidence gaps → RP · missing population coverage → MX ·
+     structure gaps → ST · content development gaps → CD
+
+   **Session-groupable output summary** (always include at end of run, parseable by audit-consolidator):
+   ```
+   CONTENT-GAP-ANALYZER COMPLETE
+   Session: [session-name]
+   Item/scope: [item_code or scope]
+   GAPS LOGGED: [N] ([P1: N] [P2: N] [P3: N])
+   Categories: [RP: N] [MX: N] [ST: N] [CD: N]
+   Next GAP-ID: [GAP-NNN]
+   ```
