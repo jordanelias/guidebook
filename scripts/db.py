@@ -424,6 +424,186 @@ def get_synonyms(item_code: str, language: str = None) -> list[dict]:
         return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
+# ── CO-0009 Phase 1 Session 1b additions ──────────────────────────────────
+
+import re as _re
+
+_VALID_CONFLICT_STATUS = frozenset({
+    "RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS",
+    "RESOLUTION-PROPOSED", "UNRESOLVED", "MODE-S-ONLY",
+})
+_VALID_ITEM_STATUS   = frozenset({"draft", "active", "merged", "retired"})
+_VALID_RUN_STATUS    = frozenset({"IN-PROGRESS", "COMPLETE", "HANDED-OFF"})
+_ITEM_CODE_RE        = _re.compile(r"^[A-K]-\d{2}[a-z]?$")
+_CATEGORY_RE         = _re.compile(r"^[A-K]$")
+_PIPELINE_STEPS      = frozenset({
+    "connection-discovery-spec", "connection-discovery-evidence",
+    "conflict-mapper", "content-gap-analyzer", "evidence-auditor",
+    "functional-deficit-auditor", "economics-auditor", "audit-consolidator",
+})
+
+
+def next_conf_id() -> str:
+    with connect() as conn:
+        row = conn.execute(
+            "SELECT conflict_id FROM conflicts "
+            "WHERE conflict_id GLOB 'CONF-[0-9]*' "
+            "ORDER BY CAST(SUBSTR(conflict_id,6) AS INTEGER) DESC LIMIT 1"
+        ).fetchone()
+    if not row:
+        return "CONF-0001"
+    return f"CONF-{int(row['conflict_id'].split('-')[1]) + 1:04d}"
+
+
+def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
+    if data.get("status") not in _VALID_CONFLICT_STATUS:
+        raise ValueError(f"Invalid conflict status: {data.get('status')}")
+    if data.get("pop_a") and data.get("pop_b"):
+        if data["pop_a"] > data["pop_b"]:
+            raise ValueError(
+                f"pop_a must be < pop_b lexicographically. "
+                f"Got pop_a={data['pop_a']} pop_b={data['pop_b']}. "
+                f"Swap them before inserting."
+            )
+    row = {**data, **audit(session)}
+    with connect(dry_run) as conn:
+        cols = ", ".join(row)
+        ph   = ", ".join(["?"] * len(row))
+        conn.execute(f"INSERT INTO conflicts ({cols}) VALUES ({ph})", list(row.values()))
+    return data["conflict_id"]
+
+
+def update_conflict(conflict_id: str, session: str,
+                    status: str = None, resolution: str = None,
+                    evidence: str = None, gap_id: str = None,
+                    dry_run: bool = False):
+    if status and status not in _VALID_CONFLICT_STATUS:
+        raise ValueError(f"Invalid conflict status: {status}")
+    u    = _upd(session)
+    sets = [f"updated_at=?", f"updated_by_session=?"]
+    vals = [u["updated_at"], u["updated_by_session"]]
+    if status is not None:
+        sets.append("status=?");     vals.append(status)
+    if resolution is not None:
+        sets.append("resolution=?"); vals.append(resolution)
+    if evidence is not None:
+        sets.append("evidence=?");   vals.append(evidence)
+    if gap_id is not None:
+        sets.append("gap_id=?");     vals.append(gap_id)
+    vals.append(conflict_id)
+    with connect(dry_run) as conn:
+        conn.execute(
+            f"UPDATE conflicts SET {', '.join(sets)} WHERE conflict_id=?", vals
+        )
+
+
+def get_conflicts(item_code: str = None, domain: str = None,
+                  status: str = None, summary: bool = False) -> list | dict:
+    q     = "SELECT * FROM conflicts WHERE 1=1"
+    params = []
+    if item_code:
+        q += " AND item_code=?"; params.append(item_code)
+    if domain:
+        q += " AND domain=?";    params.append(domain)
+    if status:
+        q += " AND status=?";    params.append(status)
+    q += " ORDER BY conflict_id"
+    with connect() as conn:
+        rows = [dict(r) for r in conn.execute(q, params).fetchall()]
+    if summary:
+        from collections import Counter
+        return dict(Counter(r["status"] for r in rows))
+    return rows
+
+
+def delete_connection(con_id: str, session: str, dry_run: bool = False):
+    """Hard-delete a connection and its targets. Use sparingly — for data corrections only."""
+    with connect(dry_run) as conn:
+        conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
+        conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
+
+
+def insert_item(data: dict, session: str, dry_run: bool = False) -> str:
+    if not _ITEM_CODE_RE.match(data.get("item_code", "")):
+        raise ValueError(f"item_code must match [A-K]-NN[a-z]?, got: '{data.get('item_code')}'")
+    if not _CATEGORY_RE.match(data.get("category", "")):
+        raise ValueError(f"category must be single letter A-K, got: '{data.get('category')}'")
+    if data.get("status") and data["status"] not in _VALID_ITEM_STATUS:
+        raise ValueError(f"Invalid item status: {data.get('status')}")
+    row = {**data, **audit(session)}
+    with connect(dry_run) as conn:
+        cols = ", ".join(row)
+        ph   = ", ".join(["?"] * len(row))
+        conn.execute(f"INSERT INTO items ({cols}) VALUES ({ph})", list(row.values()))
+    return data["item_code"]
+
+
+def get_items(category: str = None, status: str = None) -> list:
+    q      = "SELECT * FROM items WHERE 1=1"
+    params = []
+    if category:
+        q += " AND category=?"; params.append(category)
+    if status:
+        q += " AND status=?";   params.append(status)
+    q += " ORDER BY item_code"
+    with connect() as conn:
+        return [dict(r) for r in conn.execute(q, params).fetchall()]
+
+
+def insert_audit_run(data: dict, session: str, dry_run: bool = False) -> str:
+    if data.get("status") and data["status"] not in _VALID_RUN_STATUS:
+        raise ValueError(f"Invalid audit run status: {data.get('status')}")
+    row = {**data, **audit(session)}
+    with connect(dry_run) as conn:
+        cols = ", ".join(row)
+        ph   = ", ".join(["?"] * len(row))
+        conn.execute(f"INSERT INTO item_audit_runs ({cols}) VALUES ({ph})", list(row.values()))
+    return data["run_id"]
+
+
+def update_audit_run(run_id: str, session: str,
+                     status: str = None, steps_complete: list = None,
+                     steps_started: list = None, brief_path: str = None,
+                     spec_hash: str = None, dry_run: bool = False):
+    if status and status not in _VALID_RUN_STATUS:
+        raise ValueError(f"Invalid audit run status: {status}")
+    # Validate step names
+    for step_list in [steps_complete or [], steps_started or []]:
+        unknown = [s for s in step_list if s not in _PIPELINE_STEPS]
+        if unknown:
+            raise ValueError(f"Unknown pipeline step(s): {unknown}. Valid: {sorted(_PIPELINE_STEPS)}")
+    u    = _upd(session)
+    sets = ["updated_at=?", "updated_by_session=?"]
+    vals = [u["updated_at"], u["updated_by_session"]]
+    if status is not None:
+        sets.append("status=?");          vals.append(status)
+    if steps_complete is not None:
+        sets.append("steps_complete=?");  vals.append(json.dumps(steps_complete))
+    if steps_started is not None:
+        sets.append("steps_started=?");   vals.append(json.dumps(steps_started))
+    if brief_path is not None:
+        sets.append("brief_path=?");      vals.append(brief_path)
+    if spec_hash is not None:
+        sets.append("spec_hash=?");       vals.append(spec_hash)
+    vals.append(run_id)
+    with connect(dry_run) as conn:
+        conn.execute(
+            f"UPDATE item_audit_runs SET {', '.join(sets)} WHERE run_id=?", vals
+        )
+
+
+def get_audit_runs(item_code: str = None, status: str = None) -> list:
+    q      = "SELECT * FROM item_audit_runs WHERE 1=1"
+    params = []
+    if item_code:
+        q += " AND item_code=?"; params.append(item_code)
+    if status:
+        q += " AND status=?";    params.append(status)
+    q += " ORDER BY created_at DESC"
+    with connect() as conn:
+        return [dict(r) for r in conn.execute(q, params).fetchall()]
+
+
 # --- CLI ---
 
 
@@ -471,7 +651,7 @@ def main():
     # next-id
     p_nid = sub.add_parser("next-id", help="Get next available ID")
     p_nid.add_argument("entity",
-                       choices=["connections", "gaps", "terms"])
+                       choices=["connections", "gaps", "terms", "conflicts"])
 
     # coverage
     p_cov = sub.add_parser("coverage", help="Check search coverage")
@@ -575,6 +755,91 @@ def main():
     # validate
     sub.add_parser("validate", help="Run DB validation checks")
 
+    # ── CO-0009 Phase 1 Session 1b ─────────────────────────────────────────
+
+    # add-conflict
+    p_aconf = sub.add_parser("add-conflict", help="Insert a conflict record")
+    p_aconf.add_argument("--conflict-id", help="CONF-NNNN (auto-generated if omitted)")
+    p_aconf.add_argument("--item-code")
+    p_aconf.add_argument("--domain", required=True)
+    p_aconf.add_argument("--pop-a", required=True, help="Population A (wrapper must ensure pop_a < pop_b)")
+    p_aconf.add_argument("--pop-b", required=True, help="Population B")
+    p_aconf.add_argument("--status", required=True,
+                         choices=list(_VALID_CONFLICT_STATUS))
+    p_aconf.add_argument("--resolution")
+    p_aconf.add_argument("--evidence")
+    p_aconf.add_argument("--gap-id")
+    p_aconf.add_argument("--source-skill", default="cross-population-conflict-mapper")
+    p_aconf.add_argument("--session", required=True)
+    p_aconf.add_argument("--dry-run", action="store_true")
+
+    # update-conflict
+    p_uconf = sub.add_parser("update-conflict", help="Update a conflict record")
+    p_uconf.add_argument("--conflict-id", required=True)
+    p_uconf.add_argument("--status", choices=list(_VALID_CONFLICT_STATUS))
+    p_uconf.add_argument("--resolution")
+    p_uconf.add_argument("--evidence")
+    p_uconf.add_argument("--gap-id")
+    p_uconf.add_argument("--session", required=True)
+    p_uconf.add_argument("--dry-run", action="store_true")
+
+    # conflicts
+    p_confs = sub.add_parser("conflicts", help="Query conflict records")
+    p_confs.add_argument("--item")
+    p_confs.add_argument("--domain")
+    p_confs.add_argument("--status")
+    p_confs.add_argument("--summary", action="store_true")
+
+    # delete-connection
+    p_dc = sub.add_parser("delete-connection",
+                           help="Hard-delete a connection by CON-ID (data corrections only)")
+    p_dc.add_argument("--con-id", required=True)
+    p_dc.add_argument("--session", required=True)
+    p_dc.add_argument("--dry-run", action="store_true")
+
+    # add-item
+    p_ai = sub.add_parser("add-item", help="Insert an item record")
+    p_ai.add_argument("--item-code", required=True)
+    p_ai.add_argument("--category", required=True)
+    p_ai.add_argument("--name", required=True)
+    p_ai.add_argument("--applicable-groups")
+    p_ai.add_argument("--bpc-source-slug")
+    p_ai.add_argument("--status", default="draft",
+                      choices=list(_VALID_ITEM_STATUS))
+    p_ai.add_argument("--item-id")
+    p_ai.add_argument("--session", required=True)
+    p_ai.add_argument("--dry-run", action="store_true")
+
+    # items
+    p_items = sub.add_parser("items", help="Query items")
+    p_items.add_argument("--category")
+    p_items.add_argument("--status")
+
+    # add-audit-run
+    p_aar = sub.add_parser("add-audit-run", help="Create an item_audit_runs record")
+    p_aar.add_argument("--item-code", required=True)
+    p_aar.add_argument("--session", required=True)
+    p_aar.add_argument("--spec-hash")
+    p_aar.add_argument("--status", default="IN-PROGRESS",
+                       choices=list(_VALID_RUN_STATUS))
+    p_aar.add_argument("--dry-run", action="store_true")
+
+    # update-audit-run
+    p_uar = sub.add_parser("update-audit-run", help="Update an item_audit_runs record")
+    p_uar.add_argument("--run-id", required=True)
+    p_uar.add_argument("--session", required=True)
+    p_uar.add_argument("--status", choices=list(_VALID_RUN_STATUS))
+    p_uar.add_argument("--steps-complete", help="JSON array of completed step names")
+    p_uar.add_argument("--steps-started",  help="JSON array of started step names")
+    p_uar.add_argument("--brief-path")
+    p_uar.add_argument("--spec-hash")
+    p_uar.add_argument("--dry-run", action="store_true")
+
+    # audit-runs
+    p_ar = sub.add_parser("audit-runs", help="Query item_audit_runs")
+    p_ar.add_argument("--item")
+    p_ar.add_argument("--status")
+
     args = parser.parse_args()
 
     if not args.command:
@@ -625,8 +890,9 @@ def main():
     elif args.command == "next-id":
         id_funcs = {
             "connections": next_con_id,
-            "gaps": next_gap_id,
-            "terms": next_term_id,
+            "gaps":        next_gap_id,
+            "terms":       next_term_id,
+            "conflicts":   next_conf_id,
         }
         _emit({"next_id": id_funcs[args.entity]()})
 
@@ -747,6 +1013,87 @@ def main():
         sys.exit(subprocess.call(
             [sys.executable, str(Path(__file__).parent / "validate_db.py")]
         ))
+
+    # ── CO-0009 Phase 1 Session 1b ─────────────────────────────────────────
+
+    elif args.command == "add-conflict":
+        conf_id = args.conflict_id if args.conflict_id else next_conf_id()
+        data = {
+            "conflict_id": conf_id,
+            "domain":      args.domain,
+            "pop_a":       args.pop_a,
+            "pop_b":       args.pop_b,
+            "status":      args.status,
+            "source_skill": args.source_skill,
+        }
+        if args.item_code:   data["item_code"]  = args.item_code
+        if args.resolution:  data["resolution"] = args.resolution
+        if args.evidence:    data["evidence"]   = args.evidence
+        if args.gap_id:      data["gap_id"]     = args.gap_id
+        insert_conflict(data, session=args.session, dry_run=args.dry_run)
+        _emit({"conflict_id": conf_id, "dry_run": args.dry_run})
+
+    elif args.command == "update-conflict":
+        update_conflict(
+            args.conflict_id, session=args.session,
+            status=args.status, resolution=args.resolution,
+            evidence=args.evidence, gap_id=args.gap_id,
+            dry_run=args.dry_run,
+        )
+        _emit({"updated": args.conflict_id})
+
+    elif args.command == "conflicts":
+        result = get_conflicts(
+            item_code=args.item, domain=args.domain,
+            status=args.status, summary=args.summary,
+        )
+        _emit(result)
+
+    elif args.command == "delete-connection":
+        delete_connection(args.con_id, session=args.session, dry_run=args.dry_run)
+        _emit({"deleted": args.con_id, "dry_run": args.dry_run})
+
+    elif args.command == "add-item":
+        data = {
+            "item_code": args.item_code,
+            "category":  args.category,
+            "name":      args.name,
+            "status":    args.status,
+        }
+        if args.applicable_groups: data["applicable_groups"] = args.applicable_groups
+        if args.bpc_source_slug:   data["bpc_source_slug"]   = args.bpc_source_slug
+        if args.item_id:           data["item_id"]           = args.item_id
+        insert_item(data, session=args.session, dry_run=args.dry_run)
+        _emit({"item_code": args.item_code, "dry_run": args.dry_run})
+
+    elif args.command == "items":
+        _emit(get_items(category=args.category, status=args.status))
+
+    elif args.command == "add-audit-run":
+        run_id = f"{args.item_code}_{args.session}"
+        data   = {
+            "run_id":    run_id,
+            "item_code": args.item_code,
+            "session":   args.session,
+            "status":    args.status,
+        }
+        if args.spec_hash: data["spec_hash"] = args.spec_hash
+        insert_audit_run(data, session=args.session, dry_run=args.dry_run)
+        _emit({"run_id": run_id, "dry_run": args.dry_run})
+
+    elif args.command == "update-audit-run":
+        sc = json.loads(args.steps_complete) if args.steps_complete else None
+        ss = json.loads(args.steps_started)  if args.steps_started  else None
+        update_audit_run(
+            args.run_id, session=args.session,
+            status=args.status, steps_complete=sc, steps_started=ss,
+            brief_path=args.brief_path, spec_hash=args.spec_hash,
+            dry_run=args.dry_run,
+        )
+        _emit({"updated": args.run_id})
+
+    elif args.command == "audit-runs":
+        _emit(get_audit_runs(item_code=args.item, status=args.status))
 
 
 if __name__ == "__main__":
