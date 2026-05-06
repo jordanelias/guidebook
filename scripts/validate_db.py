@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
-EXPECTED_SCHEMA_VERSION = 3
+EXPECTED_SCHEMA_VERSION = 4
 
 
 def validate(verbose: bool = False):
@@ -138,9 +138,23 @@ def validate(verbose: bool = False):
     else:
         infos.append("C8 PASS: all open gaps have valid priority")
 
-    # C9: term_item_links referencing non-existent items (Phase 1: INFO only)
-    # Items table doesn't exist yet in Phase 1 — skip FK check
-    infos.append("C9 SKIP: items table not yet created (Phase 1)")
+    # C9: items table exists and item_code format valid
+    tables = [r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'"
+    ).fetchall()]
+    if 'items' not in tables:
+        errors.append("C9 FAIL: items table not found (migration 004 not applied)")
+    else:
+        import re
+        bad_codes = [
+            r[0] for r in conn.execute("SELECT item_code FROM items").fetchall()
+            if not re.match(r'^[A-K]-\d{2}[a-z]?$', r[0])
+        ]
+        if bad_codes:
+            errors.append(f"C9 FAIL: {len(bad_codes)} item(s) with invalid item_code: {bad_codes[:5]}")
+        else:
+            count = conn.execute("SELECT COUNT(*) FROM items").fetchone()[0]
+            infos.append(f"C9 PASS: items table present, {count} item(s), all codes valid")
 
     conn.close()
 
