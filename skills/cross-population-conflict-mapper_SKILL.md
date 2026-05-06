@@ -95,7 +95,58 @@ For each active conflict:
 | UNRESOLVED | No resolution found; populations cannot share identical specification |
 | MODE-S-ONLY | Conflict irreconcilable at Universal Mode–1; requires individual co-design |
 
-### Step 4: Output conflict matrix
+### Step 4: Log to SQLite
+
+Do NOT write to `gap_register.md` or `connection-register.md` (both archived).
+All output goes to the tracking DB via db.py CLI.
+
+**For each conflict (all statuses):** log to the `conflicts` table:
+
+```bash
+# Get next CONF-ID
+python3 scripts/db.py next-id conflicts
+
+# Log conflict (ensure pop_a < pop_b alphabetically)
+python3 scripts/db.py add-conflict \
+  --item-code [item_code] \
+  --domain [LIGHT-INT|ACOUSTIC-LVL|...] \
+  --pop-a [alphabetically first population] \
+  --pop-b [alphabetically second population] \
+  --status [RESOLVED-EVIDENCE|RESOLVED-CONSENSUS|RESOLUTION-PROPOSED|UNRESOLVED|MODE-S-ONLY] \
+  --resolution "[mechanism if resolved]" \
+  --evidence "[source citation if resolved]" \
+  --session [session-name]
+```
+
+**For UNRESOLVED and MODE-S-ONLY conflicts only:** also log a gap, then link:
+
+```bash
+# Log gap first
+python3 scripts/db.py add-gap \
+  --category CONF \
+  --priority P1 \
+  --description "[domain]: [pop_a] vs [pop_b] — [why unresolved, what research is needed]" \
+  --skill cross-population-conflict-mapper \
+  --section [item_code] \
+  --session [session-name]
+
+# Then update the conflict with gap_id (use GAP-NNN returned above)
+python3 scripts/db.py update-conflict \
+  --conflict-id CONF-XXXX \
+  --gap-id GAP-NNN \
+  --session [session-name]
+```
+
+**For RESOLVED conflicts:** no gap needed. The `conflicts` table record is the full output.
+
+**For multi-run sessions (>3 active domains):** the wrapper re-invokes conflict-mapper
+with already-resolved domains as context to skip. Query before each run:
+
+```bash
+python3 scripts/db.py conflicts --item [item_code] --summary
+```
+
+### Step 5: Output conflict matrix (inline)
 
 ```markdown
 ## Cross-Population Conflict Matrix — [scope]
@@ -116,11 +167,13 @@ For each RESOLVED or RESOLUTION-PROPOSED conflict:
 - Resolution mechanism
 - Outcome data (if any)
 - Guidebook implication (Universal Mode default, Tier 1 range, Tier 2 requirement)
+- CONF-ID logged
 
-### Unresolved Conflicts → Gap Register
+### Unresolved Conflicts
 
 For each UNRESOLVED or MODE-S-ONLY conflict:
-- Gap ID (format: GAP-CONF-{DOMAIN}-{NN})
+- CONF-ID (tracking DB)
+- GAP-ID (tracking DB, category CONF)
 - Populations affected
 - Specification implication
 - Research needed
@@ -154,16 +207,22 @@ Known resolution archetypes (apply where evidence supports):
 **Feeds FROM:**
 - `item-specification-writer` (item specs requiring conflict check)
 - `sensory-coherence-checker` (unresolved conflicts needing evidence)
-- `connection-scout` (cross-population tensions discovered)
+- `connection-discovery` (cross-population tensions discovered — replaces connection-scout)
 - `content-gap-analyzer` (population coverage revealing conflict)
 - `multilingual-research` / `functional-deficit-researcher` (population-specific evidence)
+- `item-audit-pipeline` (Step 3 of pipeline wrapper)
 
 **Feeds INTO:**
 - `item-specification-writer` (conflict matrix informs spec ranges and DAR)
 - `sensory-coherence-checker` (pre-populates known conflicts for Phase 5 QA)
-- `gap_register.md` (unresolved conflicts as typed gaps: CONF)
-- `connection-register.md` (conflict resolutions as connections)
+- SQLite `conflicts` table (all conflicts via `db.py add-conflict`)
+- SQLite `gaps` table (UNRESOLVED/MODE-S-ONLY only via `db.py add-gap --category CONF`)
 - Part 8 §8.4 (conflict resolution guidance)
+
+**Do NOT write to:**
+- `gap_register.md` (archived — use `db.py add-gap`)
+- `connection-register.md` (archived — use `db.py add-conflict`)
+- `references/connection-register-active.md` (archived)
 
 **Preceded by:** Population-specific BPC research for relevant populations
 **Followed by:** Item specification writing with conflict-aware ranges
