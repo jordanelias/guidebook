@@ -24,8 +24,15 @@ CATEGORY_RE    = re.compile(r"^[A-K]$")
 VALID_STATUS   = {"draft", "active", "merged", "retired"}
 # Known population codes per project taxonomy
 KNOWN_POPS     = {
+    # Core population codes
     "UPL", "MOB", "DEM", "PAIN", "NDV", "VIS", "DEAF",
     "SCI", "OFS", "ABI", "MH", "ASD", "LOW-VISION",
+    "PCS", "AUT", "NEU", "DBL", "ADHD", "SENS", "IntD",
+    # Compound and qualified codes used in spec
+    "NDV/MH", "NDV/SENS", "NEU/MS", "NEU/PCS", "NEU/epilepsy",
+    "MOB/UPL", "OFS/POTS", "OFS/CFS", "OFS/MCAS", "OFS/MCAS",
+    # Shorthand used in spec
+    "ALL",  # All populations
 }
 
 
