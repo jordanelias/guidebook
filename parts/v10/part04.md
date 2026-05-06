@@ -1160,7 +1160,9 @@ DSDC. (2022). EADDAT. University of Stirling.
 
 **Cross-reference:** C-06 (Plain Low-Contrast Flooring); E-07 (Slip Resistance)
 
-**Evidence basis (OT):** Biomechanical FOR. Floor gloss above 30 gloss units creates specularity that impairs the visual contrast detection ability of low-vision users and creates visual 'noise' that disorients VIS and DEM users navigating by floor-surface differentiation; PTV compatibility requirement ensures that matte specification does not reduce slip resistance below safe threshold.
+**Evidence basis (OT):** Biomechanical FOR; ecological psychology (Gibson 1979). Floor gloss above 30 gloss units creates specularity that impairs the visual contrast detection ability of low-vision users and creates visual 'noise' that disorients VIS and DEM users navigating by floor-surface differentiation; PTV compatibility requirement ensures that matte specification does not reduce slip resistance below safe threshold.
+
+**Ecological psychology rationale [CON-0262]:** Specular/high-gloss surfaces are misaffordances — they signal action possibilities that do not exist (Gibson 1979). Three populations are harmed by the same physical property via different mechanisms: (a) DEM — polished floors create puddle illusion (perceived as wet/dangerous), reflections misread as obstacles or other people (DSDC EADDAT 2022: +15% pattern-associated falls); (b) VIS — glare reduces effective contrast below safety threshold at critical junctions; (c) NDV — reflective surfaces generate uncontrolled moving visual input, increasing sensory load. The ≤30 gloss unit specification eliminates the misaffordance-generating surface property. This is a three-population safety convergence, not a comfort preference. Cross-ref §3.13 Question 7 (misaffordance audit). ● [Three-population convergence + ecological psychology theoretical framework]
 
 **Jurisdiction comparison:**
 
@@ -1476,6 +1478,8 @@ DEM/elderly public: ≥35 LRV
 Aged care/DeafBlind: ≥40 LRV
 
 Stair nosings: ≥50 LRV full-width strip (55--75 mm depth); ≥65% Michelson where achievable [CON-0043]
+
+**PD gait cueing dual rationale [CON-0263]:** Stair nosing contrast serves two populations via entirely different mechanisms: (a) VIS — step edge identification for safe descent; (b) Parkinson's Disease — nosing lines function as natural transverse visual gait cues. PD freezing of gait is interrupted by horizontal visual stripes; stair nosings provide this cueing automatically at every step. Stairs are often SAFER than level corridors for PD users because the nosing-line rhythm restores gait cadence (FDR stair-ramp). This dual rationale strengthens VE resistance: nosing contrast is simultaneously a VIS safety provision and a PD gait-restoration provision. ● [Two-population convergence; PD gait cueing from transverse visual lines is Tier 2 evidence]
 
 Grab bars: LRV vs wall AND vs floor (JOTA, 2022)
 
@@ -3297,6 +3301,8 @@ Shower: fold-down horizontal bar at 800--850 mm; vertical entry bar
 
 **OFS population — standing-height bar [CON-0185]:** For orthostatic and fatigue-spectrum populations (OFS/POTS, OFS/ME), an additional horizontal bar at 850--950 mm AFF (standing grip height) supports pull-to-stand energy conservation. Reduces metabolic cost of sit-to-stand transfer and lowers orthostatic load. Mode S position within range resolved by OT assessment.
 
+**Wet-area surface finish [CON-0272]:** In wet areas (shower, bath), satin-finish grab bars provide 10% more traction than peened-finish grab bars under wet-hand conditions (Bobrick TB-108, Bureau Veritas Report (5118) 248, September 2018, per ASTM F2961 Grip Performance Test). Dry-hand traction is equivalent. This is counterintuitive — textured/peened finish is commonly assumed to be superior for wet grip. Peened-finish bars also carry ~20% price premium over satin. Specification: satin or brushed finish preferred in all wet areas; knurled finish contraindicated (existing I-01 note — skin damage risk for PAIN/UPL). ○ [Tier 3 — manufacturer-commissioned independent test (Bobrick/Bureau Veritas); single source, no independent replication found; ASTM F2961 protocol. Flag for replication monitoring.]
+
 **Retrofit cost note:** Retrofit penalty: LOW -- MODERATE. Grab bar installation requires secure fixing into a load bearing substrate. In a finished building without pre-installed blocking, achieving compliant fixing requires opening up the wall to install structural blocking. At design stage, blocking provision is a minor carpentry item. See Part 10 for DAR blocking provisions; Part 11 §11.4.
 
 **Key citations:** Levine, I.C., Nirmalanathan, K., Montgomery, R.E., \& Novak, A.C. (2024). Grab bar grasp location during bathtub exit and sit-to-stand transfers: Biomechanical evaluation. *JMIR Rehabilitation and Assistive Technologies*, 12. doi:10.2196/jmir.2024. ✅ [Verified: JMIR Rehab Assist Technol; KITE/UHN Toronto team; n=65; motion capture; body height correlated with optimal grasp position — informs height range specification.] Lee, S.J., Sanford, J., Calkins, M. et al. (2018). Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers. *HERD* 11(2):32-44. DOI:10.1177/1937586717730338. ✅ [Verified: n=130+ residents, 11 facilities; bilateral fold-down bars at 356mm from CL, 813mm AFF significantly outperform ADA — most robust grab bar study in corpus.] Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., \& Prilutsky, B. (2019). Effects of bilateral swing-away grab bars on the biomechanics of stand-to-sit and sit-to-stand toilet transfers. *Disability and Rehabilitation: Assistive Technology*, 14, 292–300. ✅ [Verified: bilateral grab bar placement reduces lower limb joint moments — direct biomechanical basis for bilateral specification.] Bateni, H., \& Maki, B.E. (2005). Assistive devices for balance and mobility. *Archives of Physical Medicine and Rehabilitation*, 86(1), 134–145. ✅ British Standards Institution. (2018). BS 8300:2018. BSI.
@@ -3368,6 +3374,7 @@ Slip resistance: PTV ≥36 wet throughout shower area
 - **SCI (C5–C8):** Lateral transfer approach requires 1500 mm clear floor space on the non-dominant transfer side; grab bar at 800–900 mm AFF (transfer height); shower chair or fold-down bench mandatory at Universal Mode.
 - **NEU/MS:** Anti-fatigue matting (PTV ≥36) at all standing positions; seating within the wet area required where fatigue is primary presentation; temperature pre-heated entry (F-07 ≤5°C differential) critical to avoid Uhthoff trigger.
 - **DEM:** Colour-differentiated shower controls (C-04 ≥50 LRV) against a muted wall (C-01); no mirrored surfaces (mirrors create identity confusion in late-stage DEM); visible contrast between floor and grab bars.
+- **OFS+PAIN compound temperature conflict [CON-0268]:** OFS/POTS requires shower temperature ≤37°C (heat causes vasodilation, worsens orthostatic intolerance). PAIN/FMS benefits from warm bath ≥38°C (hydrotherapy for pain management, Tier 1 evidence). Co-occurrence creates intra-individual conflict on the same parameter. Resolution: thermostatic mixer with two programmable temperature presets (Preset A: ≤37°C for OFS shower; Preset B: ≥38°C for PAIN seated hydrotherapy). Both presets within the ≤43°C anti-scald limit. Where co-occurrence is confirmed by OT assessment, dual-preset thermostatic valve is a Mode S specification. ○ [CONFIDENCE: moderate — clinical mechanisms Tier 1 on both sides; dual-preset resolution is novel and untested in accessibility literature; analogous to UNRESOLV-04 MS+FMS thermal conflict]
 
 **Evidence basis (OT):** EHP Framework (create strategy); Biomechanical FOR. The wet room creates a new environmental context (zero-threshold wash space) that enables the occupation of showering/bathing for users who cannot step over a shower tray; the Biomechanical FOR grounds the fall-prevention specifications (PTV ≥36, fold-down seat, grab bar positions derived from transfer mechanics).
 
@@ -3806,7 +3813,7 @@ DE DIN 18040-2 is the ONLY code that specifically requires video intercom for re
 <!-- ot_appointment_trigger: conditional:MOB -->
 <!-- grade_confidence: MODERATE — Lever, D-pull, one-hand operable hardware ≤20N: ISO 21542:2021 + CSA B651 + BS 8300 + DIN 18040 + ADA + AS 1428. ≥10 jurisdictions mandate lever hardware. Force threshold: ISO/EN standards. MODERATE — universally mandated; no RCT on lever vs knob for disability-specific outcomes. -->
 
-**Applicable Groups:** UPL, MOB, DEM, PAIN
+**Applicable Groups:** UPL, MOB, DEM, PAIN, NEU/tremor, PSE
 
 **Description:** All hardware one-hand operable without grip, pinch, or twist. Lever door handles on all doors; D-ring or bar pulls on all
 
@@ -3820,9 +3827,11 @@ Cabinet pulls: D-ring or bar pulls (hook-grip compatible for prosthetic users)
 
 Taps: single-lever mixer throughout (not separate hot/cold knobs)
 
-Force: ≤20 N for all hardware
+**Force disaggregation [CON-0265]:** Generic ≤20 N applies to all user-activated controls (governing specification). Three force categories for detailed specification per ICC A117.1: (a) activation force for controls and switches ≤20 N (guidebook, stricter than ICC ≤22.2 N); (b) rotational torque for lever hardware ≤3.16 N·m; (c) linear push/pull for panic hardware and fire doors ≤66.7 N. Knuckle clearance ≥38 mm at all lever hardware; lever grip diameter ≥19 mm. ● [FDR-RRC-01; ICC A117.1 source]
 
 Push-pads: ≥50 mm diameter at all access control points
+
+**Velocity-sensitive hardware contraindication [CON-0261]:** No spring-loaded mechanisms requiring rapid engagement or velocity-dependent action. Three populations harmed via three distinct mechanisms: (a) spasticity — velocity-dependent extensor spasm triggered by rapid lever depression (UPL FDR); (b) tremor — spring-return mechanism resets during sustained tremor hold, causing premature release (FDR-RRC-04); (c) PAIN/allodynia — rapid-action hardware increases sharp pain response in hypersensitive hands. Resolution: magnetic latches, slow-return damped levers, or touch-release mechanisms. Applies to all door hardware, cabinet latches, window stays, and control mechanisms. ● [Three-population convergence; novel guidebook contribution]
 
 **Retrofit cost note:** Retrofit penalty: LOW. Lever and D-pull hardware is a specification and procurement decision. Retrofit is
 
@@ -4552,6 +4561,8 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 - ○ Full horizontal capability to be provided at a rate of one per floor in buildings where OFS/ME is the identified population and full recline is required for symptom management
 - ○ Bariatric provision [CON-0204]: minimum one seating position per floor to accommodate ≥250 kg load rating and ≥600 mm seat width. All rest seating to have minimum load rating ≥200 kg. Standard 120 kg office seating is not acceptable for public rest provisions.
 
+**Cognitive fatigue compound rest interval [CON-0259]:** Where navigation is cognitively mediated rather than automatic — i.e. the user is actively processing wayfinding decisions rather than following a learned route — cognitive fatigue accumulates faster than physical fatigue. This affects four populations via different mechanisms: (a) VIS — tactile wayfinding via TWSI requires sustained directed attention; (b) DEM — wayfinding in unfamiliar environments depletes cognitive reserve (PMC8725382, Tier 2); (c) OFS/ME — post-exertional cognitive malaise follows same depletion pattern as physical PEM; (d) NEU/PCS — neurovascular uncoupling causes cognitive fatigue during sustained attention tasks. On unfamiliar routes serving these populations, rest interval should be reduced to ≤15 m (from ≤25 m standard). On familiar/learned routes, standard ≤25 m interval applies. This modifier is compound-population-specific — it does not apply to MOB or PAIN populations navigating familiar routes. ○ [CONFIDENCE: moderate — mechanism is sound and cross-population; specific 15m interval is halving of 25m standard, not empirically derived]
+
 **Design Stage:** Schematic Design · Design Development
 
 **Retrofit:** MODERATE penalty — alcove integration requires spatial planning at design stage. Individual seating units at 480 mm seat height with arms are LOW penalty retrofit where alcove provision has been made. See Part 10 §DAR.
@@ -4564,7 +4575,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 | REF:accessible-circulation-geometry:12 | RCOT | 2019 | Housing Adaptations Without Delay | RCOT/Housing LIN | Co-2 | EN | UK |
 | REF:accessible-circulation-geometry:02 | BSI | 2018 | BS 8300-2:2018 | BSI | 5 | EN | UK |
 
-**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); G-07 (Waiting area seating — service-point counterpart to E-10 circulation seating; shared anthropometric basis: D'Souza 2011 Universal Design Index, Steinfeld 2006 RESNA — seat height, armrest geometry, and transfer biomechanics evidence governs both items [CON-0190, CON-0212]); E-14 (Entrance rest seating — distinct from E-10: E-14 governs threshold seating, E-10 governs route intervals); GAP-FDR-T0-09 (Universal Mode candidate — pending connection-scout)
+**Cross-reference:** D-11 (Safe accessible garden — seating every 20 m outdoors); G-02 (Variety of seating types); G-07 (Waiting area seating — service-point counterpart to E-10 circulation seating; shared anthropometric basis: D'Souza 2011 Universal Design Index, Steinfeld 2006 RESNA — seat height, armrest geometry, and transfer biomechanics evidence governs both items [CON-0190, CON-0212]); E-14 (Entrance rest seating — distinct from E-10: E-14 governs threshold seating, E-10 governs route intervals); F-07 (thermal zoning — rest seating positions on primary routes should be located at or adjacent to thermal cool points where thermoregulation-impaired populations are anticipated occupants [CON-0273]. Movement through a building generates metabolic heat; for MS, SCI, and OFS populations, corridor traversal raises core temperature. Rest periods should provide thermal recovery as well as physical rest. Coordinate rest seating positions with air movement outlets, window openings, or cool-zone boundaries.); GAP-FDR-T0-09 (Universal Mode candidate — pending connection-scout)
 
 **Illustration:** [Illustration: to be provided] — Plan of alcove showing 900 mm width, 200 mm recess from circulation path, and 450 mm seat depth. Section showing 480 mm AFF seat height and arm projection.
 
