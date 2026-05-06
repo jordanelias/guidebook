@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
-EXPECTED_SCHEMA_VERSION = 4
+EXPECTED_SCHEMA_VERSION = 5
 
 
 def validate(verbose: bool = False):
