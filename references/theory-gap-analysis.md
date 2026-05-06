@@ -178,3 +178,88 @@ Sources: Heckmondwike 2025; Realm Access 2025; Forbo dementia guidance; Grestec 
 ## 8. Phase 2 Pending
 
 Literature review from rooms, building types, construction terms, and engineering perspectives — searching for theory emergence from spatial/technical starting points rather than framework starting points.
+
+
+---
+
+## 9. Phase 2: Rooms, Building Types, Construction, Engineering
+
+**Date:** 2026-05-06 05:15
+**Approach:** Bottom-up from physical spaces, construction systems, and engineering disciplines — searching for theory that emerges from spatial/technical starting points.
+
+### 9.1 Summary
+
+Phase 2 **confirmed** Phase 1 findings rather than revealing new theoretical frameworks. The rooms/building/engineering perspective validated the same frameworks from different angles.
+
+### 9.2 Key Confirmatory Findings
+
+#### 9.2.1 Bathroom/Toilet — Signifier theory validated
+- Namazi & Johnson 1991: floor arrows + word "toilet" most effective DEM wayfinding cue
+- O'Malley et al. 2017: residents prefer personal environmental cues over signage (homely vs. institutional — signifier preference)
+- BrainXchange 2013: "Toilets that are close and easily recognized are most likely to be used" — recognition = signifier function
+- Toilet bowl images work better than gender symbols for moderate DEM (symbol = abstract signifier; image = direct signifier) — validates Norman's signifier hierarchy
+**Theoretical implication:** Signifier legibility degrades with cognitive decline. Design must progress from abstract to concrete signifiers as cognitive level drops (Allen's CDM levels map to signifier complexity tolerance).
+
+#### 9.2.2 Hospital corridor — Affordance vs. manifest cue competition
+- Vilar et al. 2014 + EEG replication (bioRxiv 2021): corridor width and brightness (environmental affordances) compete with signage (manifest cues). **Urgency level determines dominance:** emergency visitors follow signs; routine visitors follow spatial affordances.
+- Carpman et al. 1985: architectural design = combination of environmental affordances + manifest cues — the hospital wayfinding literature independently arrived at the affordance/signifier distinction before Norman named it
+**Theoretical implication:** Wayfinding specifications must address both affordance and signifier channels. In emergency contexts, signifiers dominate. In residential contexts, affordances dominate. This explains why institutional signage strategies transfer poorly to residential settings (O'Malley et al. 2017).
+
+#### 9.2.3 HVAC/Thermal — Competence-Press confirmed, population-specific range validated
+- OSTI 1999 (Fanger study): people with MS have "a wide range of responses" — actual percentage dissatisfied much higher than Fanger's predicted percentage dissatisfied. **Fanger's PMV model is invalid for thermoregulation-impaired populations.**
+- Grossmann et al. 2021 (Frontiers in Physiology): SCI individuals with high lesion (≥T6, especially tetraplegia) reach higher core and skin temperatures with lower sweating capacity. Confirms existing project-standards rule (18–22°C target for thermoregulation-impaired).
+**Theoretical implication:** Standard thermal comfort models (Fanger PMV/PPD, ASHRAE 55) are derived from able-bodied populations and do not predict satisfaction for thermoregulation-impaired users. The guidebook's 18–22°C range is clinically derived, not comfort-model derived — this distinction should be stated explicitly in F-07 specs.
+
+#### 9.2.4 Glazing/Daylighting — Circadian specification strengthened
+- PMC8507741 (2021 crossover study): electrochromic glass windows → 22-min earlier sleep onset, improved circadian alignment, improved mental health. **RCT-level evidence for window specification affecting circadian outcomes.**
+- PMC6931144 (2019 pilot): cycled lighting in nursing homes → therapeutic application of light for impaired circadian rhythms in older adults with mobility/cognitive limitations who cannot access daylight naturally.
+- PMC11622703 (2024 cohort): daylight-simulating luminaire in dementia care home → mood, agitation, rest-activity, social well-being outcomes measured.
+**Theoretical implication:** B-01/B-12 circadian lighting chain has growing RCT evidence. Glazing specification (melanopic transmittance, orientation) is a construction-level decision with clinical-level outcomes. The salutogenesis framework (comprehensibility of daily rhythm through light patterns) provides the theoretical bridge between engineering specification and health outcome.
+
+#### 9.2.5 Acoustic insulation — Consistency > compliance
+- Acoustical Surfaces 2026: "For individuals with sensory processing differences, benchmarks tied solely to speech intelligibility may not fully capture comfort. Lower reverberation and steadier background conditions often play a larger role than absolute loudness."
+- "Designing for consistency, not just compliance, is often what separates technically adequate rooms from genuinely supportive ones."
+- Care home acoustics (HH Designers 2025): "Field details matter more than catalog STC numbers." STC specified at partition level; actual performance depends on flanking paths, seals, duct lining, vibration isolation.
+**Theoretical implication:** The sensory design quality "predictability" (from Phase 1 §4.4) applies to acoustics: steady-state background is more important than peak attenuation for NDV populations. This is a specification *quality* that cuts across A-category items. Dunn's sensory processing model explains why: sensory-sensitive profiles respond to *variability* more than to *level*.
+
+#### 9.2.6 Care home floorplan — Lynch/Passini validated for DEM wayfinding
+- Van der Linden et al. 2025 (PMC11931140): "participants became more dependent on the physical space. This is the space they literally can perceive and count on, while the mental image of the physical space declines." — Environmental Docility Hypothesis (Lawton & Simon 1968)
+- Wiener & Pazzaglia 2021: landmark strategies persist throughout dementia course; Lynch's landmarks are the most durable wayfinding element for DEM.
+- PMC8725382 (2022): CFA of Dutch care facility floorplans against wayfinding design criteria — spatial typologies validated
+**Theoretical implication:** As cognitive capacity declines, environmental affordances must compensate (Competence-Press). Lynch's landmarks are the last wayfinding capacity to degrade in DEM — they should be the *first* element specified in D-category, not an add-on to signage.
+
+#### 9.2.7 Smart home controls — Signifier + manageability
+- Korean 2025 study (Tandfonline): rooms function as different autonomy contexts: living rooms = control hubs; kitchens = multitasking support; bathrooms = safety/hygiene; entries = autonomy gateways
+- Complex interfaces cited as primary barrier for people with intellectual disabilities and cognitive impairments
+- "Visual guides, automatic reminders, and customizable features" preferred — all are signifiers in Norman's sense
+**Theoretical implication:** Smart home interface design is a signifier design problem. The salutogenesis "manageability" dimension maps directly: can the user manage the technology? If not, the technology reduces rather than enhances autonomy. This connects to the guidebook's user control hierarchy (§1.4.4) and operability-per-population specification requirement (project-standards rule on "adjustable").
+
+#### 9.2.8 POE quality dimensions — Cross-validation of design quality taxonomy
+- Güvenbaş & Polay 2021: POE of Kyrenia Town Centre used 7 desirable qualities: adaptability, safety, comfort, dignity, density, legibility, autonomy
+- Maps onto Phase 1 sensory design quality taxonomy (safety, sensory balance, adjustability, predictability, controllability, recovery)
+- Both taxonomies share: safety, adaptability/adjustability, legibility/predictability, autonomy/controllability
+**Theoretical implication:** The design quality taxonomy from Phase 1 §4.4 is independently validated from a POE perspective. These qualities are measurable post-occupancy, which means they can serve as outcome criteria for case studies (Part 12).
+
+### 9.3 Frameworks NOT found in Phase 2
+
+No new theoretical frameworks emerged from the rooms/building/engineering search that were not already identified in Phase 1 or already present in §1.8. The bottom-up perspective confirmed that the theoretical architecture is largely complete with the Phase 1 additions.
+
+### 9.4 Revised Integration Priority (unchanged)
+
+Phase 2 does not change the priority ordering from §7. It strengthens the case for:
+1. Norman signifiers (validated across bathroom, hospital, smart home contexts)
+2. Lynch/Passini (validated in care home floorplan, hospital corridor, DEM wayfinding)
+3. Salutogenesis (circadian glazing evidence provides construction-to-health-outcome bridge)
+4. Sensory design quality taxonomy (POE cross-validation)
+
+### 9.5 New specification-level insights for integration
+
+| Finding | Target |
+|---|---|
+| Signifier complexity must degrade with CDM level (abstract → concrete) | D-category specs, Allen's CDM §1.8.5 |
+| Affordances dominate residential; signifiers dominate institutional — urgency modulates | Part 6 vs Part 7 wayfinding approach |
+| Fanger PMV/PPD invalid for thermoregulation-impaired — state explicitly | F-07, Part 8 HVAC |
+| Acoustic predictability > acoustic level for NDV | A-category, Dunn's §1.8.2 |
+| Landmarks degrade last in DEM — specify first in D-category | D-category restructure |
+| Smart home interface = signifier design problem | C-category controls, §1.4.4 |
+| Design quality taxonomy validated by POE — use as Part 12 outcome criteria | Part 12 case studies |
