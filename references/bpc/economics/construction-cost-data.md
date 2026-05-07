@@ -53,10 +53,10 @@ See `economics-sources.md` for full entries.
 | CCD-02 | Ielegems, B. & Vanrie, J. | 2024 | Cost premiums by building type. Archnet-IJAR 18(4) | 1 | BE | 0.94–3.92% new-build; 2.24–14.9% renovation |
 | CCD-03 | HUD / Woodstock Institute | 2020 | Accessible housing costs and savings | 2 | US | $12,200–$15,150/unit avg; $6,668 savings/participant |
 | CCD-04 | ADA National Network | 2025 | Cost of accessible design | 6 | US | <1% new-build premium |
-| CCD-05 | RHFAC / HCMA | 2024 | Rick Hansen Foundation cost study | 6 | CA | ~1% or zero |
+| CCD-05 | Rick Hansen Foundation / HCMA Architecture | 2024 | RHFAC™ Retrofits and Upgrades Cost Study. URL: https://hcma.ca/assets/rick-hansen-foundation-accessibility-certification-retrofits-and-upgrades-cost-study/ | 6 | CA | 0.5% (office tower) / 1.5% (K-12 school) of replacement cost. Note: BPC narrative "~1% or zero" matches the 2020 Cost Comparison Feasibility Study (separate document); BPC narrative may need updating to reflect retrofits-study findings, OR add 2020 study as separate reference. URL confirmed 2026-05-07. |
 | CCD-06 | (Lund University author TBC) | 2023 | Lund University accessible design cost thesis | 1 | SE | No significant impact |
-| CCD-07 | EIB | 2020 | Accessible housing cost analysis — €4,000/apt; 1.3 m² trade-off | 3 | NL | — |
-| CCD-08 | KfW / Prognos | 2022 | Barrier-reduction retrofit evaluation — €19,100 avg | 3 | DE | Retrofit multiplier |
+| CCD-07 | European Investment Bank (EIB) | 2020 | Social and Affordable Housing Overview 2020. URL: https://www.eib.org/en/publications/social-and-affordable-housing-overview-2020 | 3 | INT | €4,000/apt and 1.3 m² figures [UNVERIFIED-QUANT] — forward to BPC author for page reference; jurisdiction was "NL", correct to INT (EU bank) |
+| CCD-08 | Deschermeier, P., Hartung, A., Vaché, M. & Weber, I. (IWU) | 2020/pub.2022 | Evaluation des KfW-Förderprogramms „Altersgerecht Umbauen" — €19,100 avg. URL: https://www.kfw.de/Über-die-KfW/KfW-Research/Evaluation-Altersgerecht-Umbauen.html | 3 | DE | Retrofit multiplier; author corrected Prognos→IWU 2026-05-07 |
 | CCD-09 | UK Government (MHCLG) | 2026 | DFG allocation — £30,000 max; £723M confirmed 2026–27 | 2 | UK | — |
 | CCD-10 | NDIS | 2025 | Home modifications assessment — AUD$221/hr | 2 | AU | — |
 
