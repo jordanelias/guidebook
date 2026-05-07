@@ -750,16 +750,16 @@
     "ref_id": "T3-067",
     "n": 67,
     "status": "VERIFIED",
-    "doi": "",
+    "doi": "10.21834/jabs.v4i14.338",
     "pmid": null,
     "grey": false,
     "year": 2019,
     "raw": "**Ghazali, R. et al.** (2019). ASPECTSS application in Malaysian school context. *3*.  \n*BPC slugs: `sensory-space-global-south`*",
-    "note": "Ghazali, R. et al. (2019). ASPECTSS application in Malaysian school context. Likely an international journal or conference paper. Needs DOI.",
-    "author": "Ghazali, R., Md Sakip, S.R., & Samsuddin, I.",
+    "note": "VERIFIED 2026-05-07 — DOI from CrossRef. Korean-language Tier 3 SR previously had no DOI; now resolved.",
+    "author": "Ghazali, R., Md Sakip, S.R. & Samsuddin, I.",
     "title": "Sensory Design of Learning Environment for Autism: Architects awareness?",
     "journal": "Journal of Asian Behavioural Studies (jABs) 4(14):53-62",
-    "correction_note": ""
+    "correction_note": "BPC author was \"Ghazali, R. et al.\"; correct full author list Ghazali, R., Md Sakip, S.R., Samsuddin, I."
   },
   {
     "ref_id": "T3-068",
