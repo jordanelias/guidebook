@@ -85,10 +85,10 @@ Not yet run.
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
 | ECP-01 | Ielegems, B. & Vanrie, J. | 2024 | Accessible design cost premiums by building type. Archnet-IJAR 18(4):719–736 | 1 | BE | 0.94–3.92% by building type |
-| ECP-02 | TERRAGON / DStGB | 2017 | DIN 18040-2 cost analysis — 130/140 criteria zero cost; 0.54–1.26% full compliance | 3 | DE | Strongest single-country dataset |
-| ECP-03 | KfW / Prognos | 2022 | Barrier-reduction programme evaluation — €19,100 avg retrofit (700,000+ dwellings) | 3 | DE | Retrofit multiplier evidence |
+| ECP-02 | TERRAGON / Deutscher Städte- und Gemeindebund (DStGB) | April 2017 | Barrierefreies Bauen im Kostenvergleich — Eine Analyse notwendiger Mehrausgaben gegenüber konventionellen Bauweisen. URL: https://www.dstgb.de/aktuelles/archiv/archiv-2017/barrierefreiheit-bei-neubauwohnungen-fuer-rund-ein-prozent-der-baukosten-realisierbar/ — 148 DIN 18040-2 criteria; 138 zero-cost; 1.26% full-compliance premium (€21.50/m²) | 3 | DE | Strongest single-country dataset; full title and URL added 2026-05-07 |
+| ECP-03 | Deschermeier, P., Hartung, A., Vaché, M. & Weber, I. (IWU) | 2020/pub.2022 | Evaluation des KfW-Förderprogramms „Altersgerecht Umbauen (Barrierereduzierung – Einbruchschutz)". URL: https://www.kfw.de/Über-die-KfW/KfW-Research/Evaluation-Altersgerecht-Umbauen.html. €19,100 avg retrofit (700,000+ dwellings) | 3 | DE | Retrofit multiplier evidence; author corrected Prognos→IWU 2026-05-07 |
 | ECP-04 | Fuglerud, K. et al. | 2015 | Benefit-cost ratios for accessible design in Norway | 3 | NO | Positive ratios confirmed |
-| ECP-05 | (RHF/HCMA) | 2024 | Rick Hansen Foundation Accessibility Certification cost study — ~1% or zero | 6 | CA | — |
+| ECP-05 | Rick Hansen Foundation / HCMA Architecture | 2024 | RHFAC™ Retrofits and Upgrades Cost Study. URL: https://hcma.ca/assets/rick-hansen-foundation-accessibility-certification-retrofits-and-upgrades-cost-study/. Findings: 0.5% (office) / 1.5% (K-12 school) of replacement cost | 6 | CA | URL added 2026-05-07. "~1% or zero" narrative matches 2020 cost-comparison study (separate document) — consider adding as ECP-05b or revising narrative. |
 | ECP-06 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD. | 1 | INT | Toilet visibility finding; quantified % [UNVERIFIED-QUANT — verify before citing] |
 | ECP-07 | Van Buuren, R. & Mohammadi, N. | 2022 | Dutch facility floor plan evaluation. HERD | 3 | NL | Loop floor plan; 94%/34% figures [UNVERIFIED-QUANT] |
 | ECP-09 | Tibble, M. | 2005 | Review of extra costs facing disabled people | 3 | INT | 5.7% household expenditure |
