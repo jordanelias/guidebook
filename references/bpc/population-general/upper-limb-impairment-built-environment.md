@@ -94,7 +94,7 @@ Not yet run.
 |---|---|---|---|---|---|---|
 | ULB-01 | D'Souza, C. et al. | 2011 | Wheeled mobility device dimensions. IDeA Center / Steinfeld. Assist Technol. DOI:10.1080/10400430903496580 | 1 | US | 2108mm needed for 95th-percentile power chairs |
 | ULB-02 | Togni, G. et al. | 2022 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
-| ULB-03 | Al Lawati, M. et al. | 2017 | 2cm threshold defeats 45.8% WC users. Disabil Rehabil Assist Technol | 3 | INT | See SRB-06 |
+| ULB-03 | Al Lawati, Z., Kirby, R.L. et al. | 2017 | Getting a Manual Wheelchair Over a Threshold Using the Momentum Method. *Arch Phys Med Rehabil* 98(10):2097-2099.e7. DOI:10.1016/j.apmr.2017.04.023. PMID:28579369 | 3 | INT | See SRB-06; corrected 2026-05-07 |
 | ULB-04 | Sanford, J. & Bosch, S.J. | 2013 | An investigation of noncompliant toilet room designs for assisted toileting. HERD 6(2):43–57. DOI:10.1177/193758671300600205 | 3 | US | 90% use stand-pivot, not lateral; 30" CL preferred |
 | ULB-05 | Kennedy, M.J. et al. | 2015 | Toilet grab-bar preference and COP deviation during toilet transfers. Assist Technol 27(2):78–87. PMID:26132352. DOI:10.1080/10400435.2014.976799 | 3 | INT | 2VB most preferred + smallest COP deviation |
 | ULB-06 | Levine, D. et al. | 2023 | Grab bar placement varies with body height (r=0.67). Human Factors. DOI:10.1177/00187208211059860 | 3 | INT | See per project-standards Levine 2023 |
