@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       max_resolve:
-        description: 'Maximum number of sources to attempt'
+        description: 'Maximum number of Phase 2 (title search) candidates per run'
         required: false
         default: '100'
 
@@ -25,7 +25,7 @@ jobs:
 
       - name: Resolve DOIs
         env:
-          GUIDEBOOK_DB_PATH: data/guidebook.db
+          GUIDEBOOK_DB_PATH: data/db/guidebook.db
           MAX_RESOLVE: ${{ github.event.inputs.max_resolve }}
         run: python scripts/resolve_dois.py
 
@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/guidebook.db
+          git add data/db/guidebook.db
           if git diff --cached --quiet; then
             echo "No DOIs resolved — nothing to commit"
             exit 0
