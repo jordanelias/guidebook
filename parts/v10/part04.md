@@ -3068,10 +3068,16 @@ accessibility at service/workstation points: distinct, complementary scope)
 <!-- grade_confidence: MODERATE — Thermal zoning ≤18–21°C: ms-thermal-temperature-conflict-resolution BPC (Opus synthesis). MSIF Atlas 2023 (Tier 3, 60-80% MS heat sensitivity). CDC ME/CFS (Tier Co-1). WHO HHGL 2018 (Tier 4). ≥8 jurisdictions reference thermal comfort standards. No disability-specific built-env RCT but strong clinical evidence + physical principle. MODERATE. -->
 
 <!-- CON-0102 [HIGH]: [INTRA-INDIVIDUAL] OFS/MCAS. Individual supplemental radiant heating must not recirculate air — OFS/MCAS user experiences thermal and chemical triggers from same HVAC system. Coordinate with F-04 HEPA requirement. -->
-**Applicable Groups:** NEU/MS · SCI · OFS · PAIN · DEM · ALL
+**Applicable Groups:** NEU/MS · SCI · OFS · PAIN · DEM · CRPS · OA · ALL
 <!-- CO-0003 new item. CON-0041: inter-room thermal differential ≤5°C safety specification. -->
 
 **Description:** Building-wide HVAC zoning strategy to maintain ambient temperatures that are safe for Uhthoff's-threshold users (NEU/MS) while enabling individual supplemental heating for PAIN and OFS users who require warmth. Resolves the primary TEMP-RANGE cross-population conflict (see Part 5 §5.2).
+
+**Quantified thermal thresholds (Jevotovsky et al. 2025, MST-11, PMID:39847186):**
+- ● NEU/MS Uhthoff trigger: ≥0.2–0.5°C core temperature increase causes neurological deterioration (Syndulko et al. via Jevotovsky). MS patients report preference for room temperature <20°C. SAFETY-CRITICAL — not comfort preference.
+- ● PAIN/FMS heat pain threshold: 41.1°C vs controls 45.2°C (Δ4.1°C — Hurtig et al. via Jevotovsky). FMS cold pain threshold: 10.9–26.3°C vs controls 5.9–13.5°C (Berwick 2021 SR). NOTE: FMS thermal tolerance envelope is narrowed on BOTH sides. At ≤18°C ambient, some FMS individuals will experience cold pain (CPT includes 18°C). Individual supplemental heating is clinically necessary, not optional, at ≤18°C.
+- ○ CRPS: warm/hot weather triggers and intensifies pain; chronic phase vasoconstriction impairs thermoregulation (ten Brink et al. via Jevotovsky). Supports cool ambient rationale.
+- ○ OA: lower temperature + higher humidity = increased pain and joint rigidity (McAlindon 2007; Wang meta-analysis via Jevotovsky). Supports supplemental heating rationale in cold-climate buildings.
 
 **Specifications:**
 - ● Ambient temperature in all primary activity spaces and shared circulation to be maintained at ≤18°C where NEU/MS is a primary or significant secondary population [REF:ms-thermal-temperature-conflict-resolution:01] *(Uhthoff's phenomenon — heat-induced demyelination worsening is safety-critical; not a preference)*
@@ -4571,7 +4577,7 @@ In residential settings: vibrating wake-up alarm integrated with bedroom service
 - ● Rest seating to be provided at intervals not exceeding 25 m on all primary accessible circulation routes [REF:accessible-circulation-geometry:09]
 - ○ Where 25 m intervals cannot be achieved, a maximum interval of 30 m is acceptable on secondary routes only [REF:accessible-circulation-geometry:09]
 - ● Rest seating to be recessed a minimum of 200 mm from the clear circulation path, in alcoves of no less than 900 mm width per seat and 450 mm seat depth [REF:accessible-circulation-geometry:12] *(single Co-2 source)*
-- ● Seat height to be no less than 480 mm AFF; seat height below this threshold creates a postural barrier for OFS/POTS users [REF:accessible-circulation-geometry:12]
+- ● Seat height to be no less than 480 mm AFF; seat height below this threshold increases sit-to-stand exertion for OFS/POTS users — the additional exertion is itself an orthostatic and PEM trigger [GAP-SYNTH-01 RESOLVED: venous pooling rationale removed; correct rationale is transfer ergonomics. 480mm derived from OT raised-seating practice (Co-2), not Roxburgh 2024. See FDR-ACG correction 2026-05-06.] [REF:accessible-circulation-geometry:12]
 - ● Arms to be provided on both sides of each seat, extending at least 200 mm beyond the front seat edge [REF:accessible-circulation-geometry:02] *(single Tier 5 proxy)*
 - ○ A minimum of one seating position per alcove to accommodate a tilt or recline angle of no less than 15° from vertical [REF:accessible-circulation-geometry:09]
 - ○ Full horizontal capability to be provided at a rate of one per floor in buildings where OFS/ME is the identified population and full recline is required for symptom management
