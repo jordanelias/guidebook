@@ -5,7 +5,7 @@
 **Key evidence:**
   - Navigation progression: allocentric (cognitive map) impaired earliest → route knowledge → landmark knowledge (most preserved) (PMC8545728, 2021, Tier 3)
   - Behavioural pattern study: DEM residents can navigate using sequential decision-making and landmarks; large-scale cognitive map formation is not preserved (van Buuren et al. 2025, PMC11931140, Tier 3)
-  - Wayfinding requires integration of digital technologies, consistent multi-sensory cues, and neuroscience-informed design for hospitals, transit, and large institutions (Jost et al. 2024, Tier 4)
+  - Wayfinding requires integration of digital technologies, consistent multi-sensory cues, and neuroscience-informed design for hospitals, transit, and large institutions (Jost, Hutson & Hutson 2024, Tier 4)
   - Scoping review: wayfinding misconceived as signage only; spatial planning for intuitive navigation equally important; VIS and hearing-impaired populations face design-addressable challenges (Zali et al. 2025, DOI:10.1177/19375867251391361, Tier 3–4) [CORRECTED: was "Ilegems & Vanrie 2025" — wrong attribution]
 **Design implications:**
   - Sequential decision-making support — one choice point at a time
@@ -69,7 +69,7 @@ Not yet run.
 |---|---|---|---|---|---|---|
 | WDS-01 | Wiener, J.M. & Pazzaglia, F. | 2021 | Ageing- and dementia-friendly design. Cogn Process. PMC8545728 | 3 | INT | Cognitive map progression |
 | WDS-02 | van Buuren, L.P.G. et al. | 2025 | DEM residents navigate via sequential decisions. PMC11931140 | 3 | NL | Supersedes van Buuren 2023 |
-| WDS-03 | Jost, G. et al. | 2024 | Neuroscience-informed wayfinding design. [GREY — full citation unverified; DOI required] | 4 | INT | ⚠ verify |
+| WDS-03 | Jost, S., Hutson, P. & Hutson, J. | 2024 | Navigating Life: Neuroscience and Inclusive Design in Wayfinding Systems. *Int J Clin Case Stud Rep* 6(3):283-293 (SciTech Central). URL: https://digitalcommons.lindenwood.edu/faculty-research-papers/690/ | 4 | INT | Author corrected Jost G→Jost S + Hutson P + Hutson J; full title corrected 2026-05-07 |
 | WDS-04 | Zali, P., McElroy, L.B., Giardini, M.E., Chaiyawat, K. & Watson, M. | 2025 | A Scoping Review of the Impact of Environmental Design on Wayfinding for People With Sensory Impairment. HERD. DOI:10.1177/19375867251391361 | 3/4 | INT | ⚠ CORRECTED: was "Ilegems & Vanrie" — wrong attribution fixed 2026-05-04 |
 | WDS-05 | Marquardt, G. | 2011 | Wayfinding for people with dementia. HERD 4(2):75–90. DOI:10.1177/193758671100400207 | 3 | INT | — |
 | WDS-06 | Passini, R. | 1984 | Wayfinding in Architecture. Van Nostrand Reinhold | 3 | INT | Decision theory |
