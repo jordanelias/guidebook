@@ -72,7 +72,7 @@ Project-level financial data for all case studies in references/case-study-compe
 | CSFD-02 | LSE / Habinteg | 2023 | M4(3) Wheelchair Standard Cost Study | 3 | UK | VERIFIED; CS-23 basis |
 | CSFD-03 | MHCLG | 2024 | Disabled Facilities Grant programme data 2023/24 | 5 | UK | VERIFIED; CS-25 basis |
 | CSFD-04 | Szanton, S. et al. | 2019 | CAPABLE RCT costing — $2,825/participant, $700–$1,400 home mods | 1 | US | VERIFIED; CS-22 basis |
-| CSFD-05 | HUD | 2024 | Section 811/AHSC programme documents (Kelsey Civic Center) | 2 | US | VERIFIED; CS-03 basis |
+| CSFD-05 | The Kelsey + Mercy Housing California (developers); HUD Section 811 / CA HCD AHSC (funders) | 2023-2025 | The Kelsey Civic Center, San Francisco — 112-unit mixed-income disability-forward housing (14 units HUD Section 811). URL: https://thekelsey.org/projects/civic-center/ | 2 | US | VERIFIED; CS-03 basis. Year corrected 2024→2023-2025 (groundbreaking 2023, opening 2025); HUD Section 811 reclassified as funding source, not author 2026-05-07 |
 
 ## Metadata
 
