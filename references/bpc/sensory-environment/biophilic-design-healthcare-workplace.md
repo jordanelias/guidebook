@@ -58,10 +58,10 @@
 
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
-| BDH-01 | Al Khatib, H. et al. | 2024 | Biophilic design in healthcare: systematic review of 61 sources | 3 | INT | Primary SR; use over Ulrich 1984 |
-| BDH-02 | Gonçalves, A. et al. | 2023 | Nature exposure and workplace restorative outcomes: 16 studies | 3 | INT | — |
-| BDH-04 | Tekin, B. et al. | 2023 | User group stratification in biophilic healthcare design | 3 | INT | Space typology differentiation |
-| BDH-05 | Liu, Y. et al. | 2024 | Attention Restoration Theory: 571-source review; HRV/cortisol measurement | 3 | INT | HRV/cortisol preferred over BP as proxy |
+| BDH-01 | Al Khatib, H. et al. | 2024 | A systematic review of the impact of therapeutical biophilic design. *Frontiers in Built Environment*. DOI:10.3389/fbuil.2024.1467692 | 3 | INT | Primary SR; use over Ulrich 1984. Title and DOI added 2026-05-07 |
+| BDH-02 | Gonçalves, G., Sousa, C., Fernandes, M.J., Almeida, N. & Sousa, A. | 2023 | Restorative Effects of Biophilic Workplace and Nature Exposure during Working Time: A Systematic Review. *IJERPH* 20(21):6986. DOI:10.3390/ijerph20216986. PMID:37947544 | 3 | INT | Lead-author initial corrected A→G; DOI added 2026-05-07 |
+| BDH-04 | Tekin, B.H., Corcoran, R. & Urbano Gutiérrez, R. | 2023 | A Systematic Review and Conceptual Framework of Biophilic Design Parameters in Clinical Environments. *HERD* 16(1):233-250. DOI:10.1177/19375867221118675. PMID:35996349 | 3 | INT | Space typology differentiation; full citation and DOI added 2026-05-07 |
+| BDH-05 | Liu, Y., Zhang, J., Liu, C. & Yang, Y. | 2024 | A Review of Attention Restoration Theory: Implications for Designing Restorative Environments. *Sustainability* 16(9):3639. DOI:10.3390/su16093639 | 3 | INT | HRV/cortisol preferred over BP as proxy; full author list and DOI added 2026-05-07 |
 | BDH-06 | Ulrich, R.S. | 1984 | View through a window may influence recovery from surgery. Science 224:420–421 | 3 | US | Historical reference only — single hospital, n=46; cite BDH-01 as primary |
 | BDH-07 | Latiff, A. et al. | 2024 | Biophilic outdoor transitional zones for NDV populations | Co-1 | AU/UK | [GREY — full citation unverified; DOI required] |
 
