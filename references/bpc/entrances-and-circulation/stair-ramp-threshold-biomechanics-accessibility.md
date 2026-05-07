@@ -101,7 +101,7 @@ Not yet run.
 | SRB-03 | Waters, R. et al. | 1985 | Energy-speed relationship of walking. J Orthop Res 3(1):61 | 3 | INT | WC ramp propulsion shoulder injury |
 | SRB-04 | Kim, W. et al. | 2014 | Effect of slope on wheelchair users. J Mech Sci Technol | 3 | INT | Gradient >6% increases propulsion effort |
 | SRB-05 | Pavol, M. et al. | 2001 | Influence of lower extremity on likelihood of falls in older persons. J Gerontol 56(8):M438 | 3 | INT | Threshold >6mm gait interception |
-| SRB-06 | Al Lawati, M. et al. | 2017 | Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol | 3 | INT | 2cm threshold defeats 45.8% |
+| SRB-06 | Al Lawati, Z., Kirby, R.L. et al. | 2017 | Getting a Manual Wheelchair Over a Threshold Using the Momentum Method: A Descriptive Study of Common Errors. *Arch Phys Med Rehabil* 98(10):2097-2099.e7. DOI:10.1016/j.apmr.2017.04.023. PMID:28579369 | 3 | INT | 2cm threshold defeats 45.8%; corrected 2026-05-07 |
 | SRB-07 | Koontz, A. et al. | 2012 | Shoulder moment contributions to wheelchair propulsion. Clin Biomech | 3 | INT | Corridor width metabolic cost |
 | SRB-08 | Rodosky, M. et al. | 1989 | Influence of chair height on lower limb mechanics during rising. J Orthop Res 7(2):266 | 3 | INT | Seat height hip extensor moment |
 | SRB-09 | Lord, S. et al. | 1993 | Sit-to-stand performance depends on sensation, speed, balance, and psychological status in addition to strength. J Gerontol 49(4):M97 | 3 | INT | Sit-to-stand as falls predictor |
