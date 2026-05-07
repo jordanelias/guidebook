@@ -22,7 +22,7 @@
 | IT | vibrazioni pavimento sedia a rotelle vibrazioni corpo intero | ✓ CLEAN | — |
 
 ### Best-practice synthesis
-**Most inclusive provision:** Resilient floor materials (carpet on underlay; rubber; cork; vinyl with foam backing) in all primary circulation routes and residential areas — reduces WBV transmission to wheelchair users without requiring structural intervention. Evidence: floor type is the single largest determinant of WBV in manual wheelchair users (Larivière 2024, Tier 3).
+**Most inclusive provision:** Resilient floor materials (carpet on underlay; rubber; cork; vinyl with foam backing) in all primary circulation routes and residential areas — reduces WBV transmission to wheelchair users without requiring structural intervention. Evidence: floor type is the single largest determinant of WBV in manual wheelchair users (Larivière et al. 2021, Tier 3).
 **Most targeted provision:** Avoid hard, rigid flooring surfaces (concrete, tile, stone) in areas with high wheelchair traffic; specify resilient floor coverings at design stage — most effective when specified at DD rather than retrofit.
 **Conflict resolution:** MOB/UPL users (manual wheelchair): WBV reduction via resilient flooring is primary; MOB/VIS users: highly patterned soft flooring creates navigation hazard — resolve by specifying plain-colour resilient surfaces.
 **Highest-ambition actionable specification:** All primary circulation routes and residential dwelling areas to specify resilient flooring materials; avoid hard rigid surfaces in wheelchair-primary environments. `[No disability-specific floor vibration standard in any jurisdiction; all specifications are engineering/research-derived; March 2026]`
@@ -32,7 +32,7 @@
 | Finding | Languages with evidence | Jurisdictions confirming | Tier |
 |---|---|---|---|
 | Wheelchair users in community settings exposed to WBV at/above ISO 2631-1 health caution zone | EN | Cross-jurisdictional (Garcia-Mendez 2013) | 3 |
-| Floor type is the single largest determinant of WBV transmitted to cervical spine of manual wheelchair users | EN | Cross-jurisdictional (Larivière 2024) | 3 |
+| Floor type is the single largest determinant of WBV transmitted to cervical spine of manual wheelchair users | EN | Cross-jurisdictional (Larivière et al. 2021) | 3 |
 | ISO 2631-1 was not designed for SCI/disability populations; may not accurately reflect risk for this group | EN | Cross-jurisdictional (Chénier & Aissaoui 2014) | 3 |
 | NHS HTM 08-01 provides hospital floor vibration performance standard (structural, not disability-specific) | EN | UK | 4 |
 | ISO 10137:2007 provides building serviceability criteria for occupants — no disability-specific floor vibration standard | EN | ISO | 4 |
@@ -51,7 +51,7 @@
 ### Citation mining
 | Source | Direction | New sources added |
 |---|---|---|
-| Garcia-Mendez (2013) | Forward | Larivière (2024); Misch (2022) |
+| Garcia-Mendez (2013) | Forward | Larivière et al. (2021); Misch & Sprigle (2022) |
 | ISO 2631-1 | Forward | Chénier & Aissaoui (2014) |
 
 ### Key sources
@@ -59,8 +59,8 @@
 | REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
 |---|---|---|---|---|---|---|
 | FVW-01 | Garcia-Mendez, Y. et al. | 2013 | Health risks of vibration exposure to wheelchair users. J Spinal Cord Med 36(4):365–375 | 3 | INT | WBV health risk baseline |
-| FVW-02 | Larivière, O. et al. | 2024 | Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng | 3 | INT | Floor type = largest WBV determinant |
-| FVW-03 | Misch, A. et al. | 2022 | Whole-body vibration and wheelchair users. JRATE | 3 | INT | — |
+| FVW-02 | Larivière, O., Chadefaux, D., Sauret, C. & Thoreux, P. | 2021 | Vibration Transmission during Manual Wheelchair Propulsion: A Systematic Review. *Vibration* 4:444-481. DOI:10.3390/vibration4020029 | 3 | INT | Floor type = largest WBV determinant; year corrected 2024→2021 and journal corrected JRATE→Vibration on 2026-05-07 |
+| FVW-03 | Misch, J. & Sprigle, S. | 2022 | Estimating whole-body vibration limits of manual wheelchair mobility over common surfaces. *J Rehabil Assist Technol Eng* 9:20556683221092322. DOI:10.1177/20556683221092322 | 3 | INT | Author corrected Misch A→Misch J & Sprigle S (Georgia Tech REAR Lab) on 2026-05-07 |
 | FVW-04 | Chénier, F. & Aissaoui, R. | 2014 | Effect of wheelchair frame on vibration transmission. Med Eng Phys 36(7):872–879 | 3 | INT | Frame material effect |
 | FVW-05 | ISO | 2004 | ISO 2631-1:1997/2004 — Mechanical Vibration and Shock — WBV evaluation | 4 | INT | https://www.iso.org/standard/30516.html |
 | FVW-06 | ISO | 2007 | ISO 10137:2007 — Serviceability of Buildings (vibration criteria) | 4 | INT | https://www.iso.org/standard/40133.html |
