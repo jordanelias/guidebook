@@ -336,9 +336,6 @@
 **HUD / Woodstock Institute** (2020). Accessible housing costs and savings. *2*.  
 *BPC slugs: `construction-cost-data`*
 
-**ENS / Camera dei Deputati** (2021). Riconoscimento della lingua dei segni italiana. *2*.  
-*BPC slugs: `deaf-spatial-design`*
-
 **Mostafa, M.** (2021). ASPECTSS 2.0. Front Psychiatry. DOI:10.3389/fpsyt.2021.727353. *2*. https://doi.org/10.3389/fpsyt.2021.727353  
 *BPC slugs: `design-framework-evidence-audit`, `detectable-gradient-protocol-sensory-zones`, `ndv-aut-built-environment-quantified-thresholds`, `sensory-processing-model-design-application`*
 
@@ -354,7 +351,7 @@
 **Alzheimer Nederland** (2023). Dementievriendelijke ontmoetingsplekken pilot. RadarAdvies. *2*.  
 *BPC slugs: `cognitive-wayfinding-design`*
 
-**Ampetronic / Listen Technologies** (2023). AURI Auracast system. *2*.  
+~~**Ampetronic / Listen Technologies** (2023). AURI Auracast system.~~  [RECLASSIFIED: citation-verifier 2026-05-07 — removed from Tier 2; AURI is a commercial product (Ampetronic + Listen Technologies joint venture), not an advocacy publication or evidence framework. Year corrected 2023→2024-2025 (preview HLAA 2024, shipping 2025). Retained as non-tier supporting product reference: https://www.ampetronic.com/auri/. Note: Auracast™ broadcast audio (Bluetooth SIG standard) is the citable underlying technology; AURI is a specific implementation.] *(non-tier)*  
 *BPC slugs: `deaf-acoustic-built-environment`*
 
 **Mast Cell Action** (2023). MCAS environmental management guidance. *2*. https://www.mastcellaction.org  
@@ -426,7 +423,7 @@
 **RIT InfoGuides** (n.d.). DeafSpace: Principles and Elements. *2*.  
 *BPC slugs: `deaf-spatial-design`*
 
-**한국시각장애인연합회** (n.d.). Tactile route advocacy publications. *2*.  
+~~**한국시각장애인연합회** (n.d.). Tactile route advocacy publications.~~  [DELETED: citation-verifier 2026-05-07 — UNVERIFIED-CLOSED. Korea Blind Union (KBU) is a confirmed real DPO and a 2023 crosswalk-tactile-block survey is referenced in news media (3.5% non-installation rate within 300m of govt/disability-org buildings), but the specific publication number/title is not locatable despite multiple searches. Per project-standards.md §"2 failed independent searches → CLOSED-DELETED".]  
 *BPC slugs: `visual-impairment-built-environment`*
 
 ## Co-2 — OT Professional Body CPGs
@@ -1482,6 +1479,9 @@
 *BPC slugs: `ofs-built-environment`*
 
 ## Tier 6 — Statutory Codes (Reference Baseline)
+
+**Repubblica Italiana — Camera dei Deputati / Senato** (2021). Decreto-Legge 22 marzo 2021 n. 41, art. 34-ter "Misure per il riconoscimento della Lingua dei Segni Italiana e l'inclusione delle persone con disabilità uditiva" (convertito in legge 19 maggio 2021). URL: https://www.ens.it/e-un-giorno-storico-la-repubblica-riconosce-la-lingua-dei-segni-italiana/  [RECLASSIFIED: citation-verifier 2026-05-07 — moved from Tier 2 (advocacy) to Tier 6 (statutory) — this is a statutory instrument, not an advocacy publication]. *6*.  
+*BPC slugs:* `deaf-spatial-design` *(jurisdiction: IT)*
 
 **DM236-89-IT** (1989). 1989. *DM 236/89 — Prescrizioni tecniche per l'accessibilità*. https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf  
 *BPC slugs: `accessible-bathroom-and-grab-bar`, `residential-kitchen-and-task-surfaces`*
