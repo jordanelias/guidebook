@@ -628,16 +628,16 @@
 **Brandt, A. et al.** (2016). WC and walker users passing through doors with different opening force. AAATE 2016. DOI:10.3233/978-1-61499-684-2-612. PMID:27534356. *3*. https://doi.org/10.3233/978-1-61499-684-2-612  
 *BPC slugs: `threshold-door-hardware`*
 
-**Steinfeld-2016** (2016). 2016. *Experimental Studies of Wheelchair and Walker Users Passing Through Doors…*. https://doi.org/10.3233/978-1-61499-684-2-883  
+~~**Steinfeld-2016** (2016). *Experimental Studies of Wheelchair and Walker Users Passing Through Doors…*~~  [DELETED: citation-verifier 2026-05-07 — UNVERIFIED-CLOSED, 2 failed searches; closest match Steinfeld 2010 AWM Final Report (different paper); DOI 10.3233/978-1-61499-684-2-883 resolves to a different IOS Press chapter and does not match this title; per project-standards.md §"2 failed independent searches → CLOSED-DELETED"]  
 *BPC slugs: `reach-range-and-accessible-controls`*
 
 [GREY] **Trouvé, H. et al.** (2016). French OT practice — home modification. *3*.  
 *BPC slugs: `ot-built-environment-interface`*
 
-**Al Lawati, M. et al.** (2017). Impact of doorstep height on wheelchair users. Disabil Rehabil Assist Technol. *3*.  
+**Al Lawati, Z., Kirby, R.L., Smith, C., MacKenzie, D., Theriault, C. & Matheson, K.** (2017). Getting a Manual Wheelchair Over a Threshold Using the Momentum Method: A Descriptive Study of Common Errors. *Archives of Physical Medicine and Rehabilitation* 98(10):2097-2099.e7. DOI:10.1016/j.apmr.2017.04.023. PMID:28579369  [CORRECTED: citation-verifier 2026-05-07 — title was "Impact of doorstep height"; correct title and DOI from publisher]. *3*.  
 *BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*
 
-**Al Lawati, M. et al.** (2017). 2cm threshold defeats 45.8% WC users. Disabil Rehabil Assist Technol. *3*.  
+**Al Lawati, Z., Kirby, R.L., Smith, C., MacKenzie, D., Theriault, C. & Matheson, K.** (2017). Getting a Manual Wheelchair Over a Threshold Using the Momentum Method: A Descriptive Study of Common Errors. *Archives of Physical Medicine and Rehabilitation* 98(10):2097-2099.e7. DOI:10.1016/j.apmr.2017.04.023. PMID:28579369  [CORRECTED: citation-verifier 2026-05-07 — quantitative claim retained from BPC summary]. *3*.  
 *BPC slugs: `upper-limb-impairment-built-environment`*
 
 **Claessen, M.H.G. & van der Ham, I.J.M.** (2017). Classification of navigation impairment: SR of neuropsychological case studies. Neurosci Biobehav Rev 73:81–97. DOI:10.1016/j.neubiorev.2016.12.015. PMID:27993606. *3*. https://doi.org/10.1016/j.neubiorev.2016.12.015  
@@ -658,10 +658,10 @@
 [GREY] **Sekiguchi Y et al.** (2017). [GREY — title unverified; DOI required before publication]. *[GREY — journal unverified]*.  
 *BPC slugs: `accessible-bathroom-and-grab-bar`*
 
-**TERRAGON / DStGB** (2017). DIN 18040-2 cost analysis — 130/140 criteria zero cost; 0.54–1.26% full compliance. *3*.  
+**TERRAGON / Deutscher Städte- und Gemeindebund (DStGB)** (April 2017). *Barrierefreies Bauen im Kostenvergleich — Eine Analyse notwendiger Mehrausgaben gegenüber konventionellen Bauweisen*. URL: https://www.dstgb.de/aktuelles/archiv/archiv-2017/barrierefreiheit-bei-neubauwohnungen-fuer-rund-ein-prozent-der-baukosten-realisierbar/ [GREY — industry report]  [VERIFIED: citation-verifier 2026-05-07 — 148 DIN 18040-2 criteria; 138 zero-cost; 1.26% full-compliance premium (€21.50/m²)]. *3*.  
 *BPC slugs: `accessible-design-economics-cost-premium`*
 
-**TERRAGON / DStGB** (2017). DIN 18040-2 cost analysis. *3*.  
+**TERRAGON / Deutscher Städte- und Gemeindebund (DStGB)** (April 2017). *Barrierefreies Bauen im Kostenvergleich*. URL: https://www.dstgb.de/aktuelles/archiv/archiv-2017/barrierefreiheit-bei-neubauwohnungen-fuer-rund-ein-prozent-der-baukosten-realisierbar/ [GREY — industry report]  [VERIFIED: citation-verifier 2026-05-07]. *3*.  
 *BPC slugs: `construction-cost-data`*
 
 [GREY] **Russell, M. et al.** (2018). 4-phase 9-subphase OT-design protocol. *3*.  
@@ -685,7 +685,7 @@
 **Devos, H. et al.** (2019). Dementia soundscape. PMC6950055. DOI:10.3389/fneur.2019.01286. *3*. https://doi.org/10.3389/fneur.2019.01286  
 *BPC slugs: `room-acoustic-performance`*
 
-**Ghazali, R. et al.** (2019). ASPECTSS application in Malaysian school context. *3*.  
+**Ghazali, R., Md Sakip, S.R. & Samsuddin, I.** (2019). Sensory Design of Learning Environment for Autism: Architects awareness? *Journal of Asian Behavioural Studies* 4(14):53-62. DOI:10.21834/jabs.v4i14.338  [CORRECTED: citation-verifier 2026-05-07 — DOI added; full author list and title from CrossRef]. *3*.  
 *BPC slugs: `sensory-space-global-south`*
 
 **Griggs, K.E. et al.** (2019). Thermoregulatory impairment in athletes with a spinal cord injury (infographic). Br J Sports Med 53(20):1305–1306. PMID:30610000. DOI:10.1136/bjsports-2018-099853. *3*. https://doi.org/10.1136/bjsports-2018-099853  
@@ -700,7 +700,7 @@
 [GREY] **de Leeuw, A. et al.** (2020). Collectivist cultures and autism stigma. *3*.  
 *BPC slugs: `sensory-space-global-south`*
 
-**EIB** (2020). Accessible housing cost analysis — €4,000/apt; 1.3 m² trade-off. *3*.  
+**European Investment Bank (EIB)** (2020). *Social and Affordable Housing Overview 2020*. Luxembourg. URL: https://www.eib.org/en/publications/social-and-affordable-housing-overview-2020 [GREY — EIB thematic publication]  [VERIFIED: citation-verifier 2026-05-07 — document confirmed; €4,000/apt and 1.3 m² figures UNVERIFIED-QUANT, not located in source — forward to BPC author for page reference]. *3*.  
 *BPC slugs: `construction-cost-data`*
 
 **Hamre, C. et al.** (2020). Spatial navigation impairment in mild stroke patients. Top Stroke Rehabil 27(8):601–609. DOI:10.1080/10749357.2020.1755814. PMID:32316862. *3*. https://doi.org/10.1080/10749357.2020.1755814  
@@ -796,19 +796,19 @@
 [GREY] **Holohan, E.** (2022). Trauma-informed design. *3*.  
 *BPC slugs: `mental-health-built-environment`*
 
-**Jee, S.I.** (2022). Daylighting Design Factors for Korean Dementia Nursing Homes. J Korea Inst Healthcare Archit 28(4):71–87. *3*.  
+**Jee, S.I.** (2022). A Daylighting Design Indicator for Korean Dementia Nursing Homes Based on the Therapeutic Effects of Light. *Journal of The Korea Institute of Healthcare Architecture* 28(4):71–87. Korea Science: JAKO202313043209241  [VERIFIED: citation-verifier 2026-05-07 — Korean-language; no Crossref DOI; Korea Science ID is stable identifier]. *3*.  
 *BPC slugs: `cognitive-wayfinding-design`*
 
-**KfW / Prognos** (2022). Barrier-reduction programme evaluation — €19,100 avg retrofit (700,000+ dwellings). *3*.  
+**Deschermeier, P., Hartung, A., Vaché, M. & Weber, I. (Institut Wohnen und Umwelt, IWU)** (2020/published KfW 2022). *Evaluation des KfW-Förderprogramms „Altersgerecht Umbauen (Barrierereduzierung – Einbruchschutz)"*. KfW Research / IWU. URL: https://www.kfw.de/Über-die-KfW/KfW-Research/Evaluation-Altersgerecht-Umbauen.html [GREY — KfW evaluation report]  [CORRECTED: citation-verifier 2026-05-07 — author was "KfW / Prognos"; Prognos did the 2014 evaluation; the 2020/2022 evaluation is by IWU]. *3*.  
 *BPC slugs: `accessible-design-economics-cost-premium`*
 
-**KfW / Prognos** (2022). Barrier-reduction retrofit evaluation — €19,100 avg. *3*.  
+**Deschermeier, P., Hartung, A., Vaché, M. & Weber, I. (IWU)** (2020/published KfW 2022). *Evaluation des KfW-Förderprogramms „Altersgerecht Umbauen"*. KfW Research / IWU. URL: https://www.kfw.de/Über-die-KfW/KfW-Research/Evaluation-Altersgerecht-Umbauen.html [GREY — KfW evaluation report]  [CORRECTED: citation-verifier 2026-05-07 — Prognos→IWU]. *3*.  
 *BPC slugs: `construction-cost-data`*
 
 [GREY] **Manandhar, A. et al.** (2022). LRV contrast standards: lack of published evidence basis. *3*.  
 *BPC slugs: `stair-ramp-threshold-biomechanics-accessibility`*
 
-**Misch, A. et al.** (2022). Whole-body vibration and wheelchair users. JRATE. *3*.  
+**Misch, J. & Sprigle, S.** (2022). Estimating whole-body vibration limits of manual wheelchair mobility over common surfaces. *Journal of Rehabilitation and Assistive Technologies Engineering* 9:20556683221092322. DOI:10.1177/20556683221092322  [CORRECTED: citation-verifier 2026-05-07 — author was "Misch, A. et al."; correct authors Misch J. & Sprigle S. (Georgia Tech REAR Lab); DOI added]. *3*.  
 *BPC slugs: `floor-vibration-wheelchair-disability`*
 
 **Murgia, S. et al.** (2022). Systematic Review of Literature on Speech Intelligibility and Classroom Acoustics in Elementary Schools. Lang Speech Hear Serv Sch 54(1):322–335. PMID:36260411. DOI:10.1044/2022_LSHSS-21-00181. *3*. https://doi.org/10.1044/2022_LSHSS-21-00181  
@@ -856,13 +856,13 @@
 [GREY] **DeCuyper, M. et al.** (2023). J Psychiatric Mental Health Nurs —. *3*.  
 *BPC slugs: `mental-health-built-environment`*
 
-**Gonçalves, A. et al.** (2023). Nature exposure and workplace restorative outcomes: 16 studies. *3*.  
+**Gonçalves, G., Sousa, C., Fernandes, M.J., Almeida, N. & Sousa, A.** (2023). Restorative Effects of Biophilic Workplace and Nature Exposure during Working Time: A Systematic Review. *International Journal of Environmental Research and Public Health* 20(21):6986. DOI:10.3390/ijerph20216986. PMID:37947544  [CORRECTED: citation-verifier 2026-05-07 — lead-author initial was "A."; correct initial G.; DOI added]. *3*.  
 *BPC slugs: `biophilic-design-healthcare-workplace`*
 
 **Levine, D. et al.** (2023). Grab bar placement varies with body height (r=0.67). Human Factors. DOI:10.1177/00187208211059860. *3*. https://doi.org/10.1177/00187208211059860  
 *BPC slugs: `upper-limb-impairment-built-environment`*
 
-**LSE / Habinteg** (2023). M4(3) Wheelchair Standard Cost Study. *3*.  
+**Provan, B., Lane, L. et al. (LSE Housing and Communities, commissioned by Habinteg Housing Association)** (2023). *Living not existing: The economic & social value of wheelchair user homes*. CASE Report 147, London School of Economics. URL: https://eprints.lse.ac.uk/121508/ (Exec summary: https://sticerd.lse.ac.uk/dps/case/cr/casereport147_executivesummary.pdf)  [VERIFIED: citation-verifier 2026-05-07 — full citation and CASE Report number from LSE eprints]. *3*.  
 *BPC slugs: `case-study-economics-financial-data`*
 
 **MSIF** (2023). MS International Federation Atlas 2023. *3*. https://www.msif.org/research/ms-atlas/  
@@ -873,7 +873,7 @@
 
 *BPC slugs: `biophilic-design-healthcare-workplace`*
 
-**Tekin, B. et al.** (2023). User group stratification in biophilic healthcare design. *3*.  
+**Tekin, B.H., Corcoran, R. & Urbano Gutiérrez, R.** (2023). A Systematic Review and Conceptual Framework of Biophilic Design Parameters in Clinical Environments. *HERD: Health Environments Research & Design Journal* 16(1):233-250. DOI:10.1177/19375867221118675. PMID:35996349  [VERIFIED: citation-verifier 2026-05-07 — full title and DOI from publisher]. *3*.  
 *BPC slugs: `biophilic-design-healthcare-workplace`*
 
 **Unwin, K.L., Powell, G. & Jones, C.R.G.** (2023). Follow-up study — sensory room control findings replicated. Autism. *3*.  
@@ -894,7 +894,7 @@
 [GREY] **(author TBC)** (2024). Systematic review of therapeutic lighting — Solarlits. *3*.  
 *BPC slugs: `therapeutic-lighting-design`*
 
-**Al Khatib, H. et al.** (2024). Biophilic design in healthcare: systematic review of 61 sources. *3*.  
+**Al Khatib, H. et al.** (2024). A systematic review of the impact of therapeutical biophilic design. *Frontiers in Built Environment*. DOI:10.3389/fbuil.2024.1467692  [VERIFIED: citation-verifier 2026-05-07 — DOI from publisher]. *3*.  
 *BPC slugs: `biophilic-design-healthcare-workplace`*
 
 **Bodryzlova, Y. et al.** (2024). J Psychiatric Research. PMID:39128221. *3*. PMID:39128221  
@@ -910,13 +910,13 @@
 
 *BPC slugs: `cross-population-case-studies`*
 
-**Larivière, O. et al.** (2024). Floor type and WBV in manual wheelchair users. J Rehabil Assist Technol Eng. *3*.  
+**Larivière, O., Chadefaux, D., Sauret, C. & Thoreux, P.** (2021). Vibration Transmission during Manual Wheelchair Propulsion: A Systematic Review. *Vibration* 4:444-481. DOI:10.3390/vibration4020029  [CORRECTED: citation-verifier 2026-05-07 — year was 2024; correct year 2021; journal was "JRATE", correct journal Vibration (MDPI); DOI added]. *3*.  
 *BPC slugs: `floor-vibration-wheelchair-disability`*
 
 **Lindsay, S. et al.** (2024). Accessible independent housing for people with disabilities: scoping review. PLoS ONE 19(1):e0291228. DOI:10.1371/journal.pone.0291228. *3*. https://doi.org/10.1371/journal.pone.0291228  
 *BPC slugs: `intellectual-disability-built-environment-design`, `residential-accessible-home-case-studies`*
 
-**Liu, Y. et al.** (2024). Attention Restoration Theory: 571-source review; HRV/cortisol measurement. *3*.  
+**Liu, Y., Zhang, J., Liu, C. & Yang, Y.** (2024). A Review of Attention Restoration Theory: Implications for Designing Restorative Environments. *Sustainability* 16(9):3639. DOI:10.3390/su16093639  [VERIFIED: citation-verifier 2026-05-07 — full author list and DOI from publisher]. *3*.  
 *BPC slugs: `biophilic-design-healthcare-workplace`*
 
 [GREY] **Price, E. et al.** (2024). EDITION study. *3*.  
