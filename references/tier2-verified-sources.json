@@ -56,13 +56,14 @@
   },
   {
     "ref_id": "T2-07",
-    "status": "VERIFIED",
+    "status": "VERIFIED-TIER-CORRECTION",
     "key": "ENS/Camera dei Deputati 2021 Italian sign language recognition",
-    "note": "VERIFIED 2026-05-07 — Statutory recognition of LIS/LIST. RECLASSIFICATION RECOMMENDED: this is a statutory instrument (Tier 6 candidate), not a Tier 2 advocacy guideline. ENS memoria to Camera dei Deputati: https://www.camera.it/application/xmanager/projects/leg18/attachments/upload_file_doc_acquisiti/pdfs/000/005/666/ENS_15.6.2021_.pdf",
-    "authors": "Repubblica Italiana (Camera dei Deputati) / commentary by Ente Nazionale Sordi (ENS)",
+    "note": "VERIFIED 2026-05-07; RECLASSIFIED to Tier 6 (statutory) per BPC author decision 2026-05-07 — this is a statutory instrument, not an advocacy publication. Bibliography draft v11 entry physically moved from Tier 2 section to Tier 6 section (commit 2026-05-07). BPC slug `deaf-spatial-design` should record this as a Tier 6 reference. ENS commentary (originally cited as the Tier 2 source) at: https://www.ens.it/e-un-giorno-storico-la-repubblica-riconosce-la-lingua-dei-segni-italiana/. ENS memoria to Camera dei Deputati: https://www.camera.it/application/xmanager/projects/leg18/attachments/upload_file_doc_acquisiti/pdfs/000/005/666/ENS_15.6.2021_.pdf",
+    "authors": "Repubblica Italiana — Camera dei Deputati / Senato",
     "year": "2021",
-    "title": "Decreto-Legge 22 marzo 2021 n. 41, art. 34-ter \"Misure per il riconoscimento della Lingua dei Segni Italiana e l'inclusione delle persone con disabilità uditiva\" (convertito in legge 19 maggio 2021)",
-    "url": "https://www.ens.it/e-un-giorno-storico-la-repubblica-riconosce-la-lingua-dei-segni-italiana/"
+    "title": "Decreto-Legge 22 marzo 2021 n. 41, art. 34-ter \"Misure per il riconoscimento della Lingua dei Segni Italiana e l'inclusione delle persone con disabilità uditiva\" (convertito in legge 19 maggio 2021 — DL 3099 / S.2144)",
+    "url": "https://www.ens.it/e-un-giorno-storico-la-repubblica-riconosce-la-lingua-dei-segni-italiana/",
+    "tier_reclassification": "Tier 6 (statutory) — moved from Tier 2 (advocacy)"
   },
   {
     "ref_id": "T2-08",
@@ -111,13 +112,14 @@
   },
   {
     "ref_id": "T2-13",
-    "status": "VERIFIED",
+    "status": "NON-TIER-PRODUCT-REFERENCE",
     "key": "Ampetronic/Listen Technologies 2023 AURI Auracast system",
-    "note": "VERIFIED 2026-05-07 — Year corrected: BPC said 2023; preview HLAA Convention 2024, shipping early 2025. RECLASSIFICATION RECOMMENDED: commercial product, not a typical Tier 2 advocacy publication; consider reclassifying as a supporting product reference rather than a tier-citable evidence framework. Listen Technologies URL: https://www.listentech.com/auri/",
+    "note": "VERIFIED 2026-05-07; RECLASSIFIED out of evidence-tier system per BPC author decision 2026-05-07 — AURI is a commercial product (Ampetronic + Listen Technologies joint venture), not an advocacy publication or evidence framework. Year corrected: BPC said 2023; preview HLAA Convention 2024, shipping early 2025. Retained as non-tier supporting product reference. URL: https://www.ampetronic.com/auri/. Note: the citable underlying technology is the Auracast™ broadcast audio standard (Bluetooth SIG); AURI is a specific implementation. Bibliography draft v11 entry struck-through with reclassification annotation in Tier 2 section (commit 2026-05-07).",
     "authors": "Ampetronic + Listen Technologies Corporation (joint venture)",
     "year": "2024-2025",
     "title": "AURI™ — first Auracast™ broadcast audio-based assistive listening solution",
-    "url": "https://www.ampetronic.com/auri/"
+    "url": "https://www.ampetronic.com/auri/",
+    "tier_reclassification": "Removed from tier system — non-tier product reference"
   },
   {
     "ref_id": "T2-14",
@@ -347,12 +349,8 @@
   },
   {
     "ref_id": "T2-37",
-    "status": "VERIFIED-PARTIAL",
+    "status": "CLOSED-DELETED",
     "key": "한국시각장애인연합회 Korea Blind Union tactile route advocacy",
-    "note": "VERIFIED-PARTIAL 2026-05-07 — KBU is real DPO; 2023 tactile-block survey is referenced in news media. Specific report ID/title not located. [GAP: KBU-2023-tactile — exact publication number/title needed from BPC author]",
-    "authors": "한국시각장애인연합회 (Korean Blind Union, KBU/KBUWel) — 시각장애인편의시설지원센터 (Visually Impaired Accessibility Support Center)",
-    "year": "2023",
-    "title": "KBU 횡단보도 점자블록 미설치율 조사 (crosswalk tactile block non-installation survey, 300m radius from government and disability-org buildings — 3.5% non-installation rate)",
-    "url": "https://www.kbuwel.or.kr/"
+    "note": "CLOSED-DELETED 2026-05-07 per project-standards.md §\"2 failed independent searches → CLOSED-DELETED\". Korea Blind Union (한국시각장애인연합회 / KBU / KBUWel) is confirmed as a real DPO, and a 2023 crosswalk-tactile-block survey is referenced in news media (3.5% non-installation rate within 300m of government and disability-org buildings — see https://inews.ewha.ac.kr/news/articleView.html?idxno=72336), but the specific publication number/title cannot be located despite multiple searches. Bibliography draft v11 entry struck-through with deletion annotation (commit 2026-05-07). If BPC author can later supply the specific document title, this can be re-opened."
   }
 ]
