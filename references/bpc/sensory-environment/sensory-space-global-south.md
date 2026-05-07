@@ -124,10 +124,10 @@ See search log for full table.
 |---|---|---|---|---|---|---|
 | SSG-01 | Bertone, A. et al. | 2021 | Scoping review: built environment design and ASD — 21 studies. [GREY — DOI required] | 3 | INT | 9 US, 6 UK, 5 Egypt |
 | SSG-02 | Tsukuba University | 2021 | カームダウンスペース — calming space research (JP/US/FR comparison) | 1 | JP | Individual control = primary design variable |
-| SSG-03 | Tsukuba University | 2025 | カームダウンスペース — follow-up study | 5 | JP | — |
+| SSG-03 | 筑波大学 (Tsukuba University researchers) | 2025 | 感覚過敏及び発達障害傾向を有する人の簡易構造物を用いたカームダウンスペース使用時における生体情報とアンケート回答の傾向分析及び日本・アメリカ・フランスでの実証実験の総合比較. *日本建築学会計画系論文集* 90(837), 2025-11-01. URL: https://www.jstage.jst.go.jp/article/aija/90/837/90_2387/_article/-char/ja/ | 5 | JP | URL added 2026-05-07 |
 | SSG-04 | Crompton, C.J. et al. | 2024 | Collectivist cultures, autism camouflaging, and stigma. [GREY — DOI required] | 1 | INT | Collectivist culture / PAS 6463 model transfer problem |
 | SSG-05 | UAE (case study) | n.d. | Quiet and simple design — natural light, neutral colours, acoustic and ventilation | 3 | UAE | No dimensional specifications |
-| SSG-06 | Ghazali, R. et al. | 2019 | ASPECTSS application in Malaysian school context | 3 | MY | Cross-cultural application confirmed |
+| SSG-06 | Ghazali, R., Md Sakip, S.R. & Samsuddin, I. | 2019 | Sensory Design of Learning Environment for Autism: Architects awareness? *J Asian Behavioural Studies* 4(14):53-62. DOI:10.21834/jabs.v4i14.338 | 3 | MY | Cross-cultural application confirmed; DOI added 2026-05-07 |
 | SSG-07 | de Leeuw, A. et al. | 2020 | Collectivist cultures and autism stigma. [GREY — DOI required] | 3 | INT | — |
 | SSG-08 | (Crompton co-author) | 2024 | Cross-cultural camouflaging study | 1 | INT | See SSG-04 |
 | SSG-09 | Chilean Congress | 2023 | Ley de Autismo N°21.545 — first LAC statutory sensory accommodation mandate | 6 | CL | No design specifications — statutory trigger only |
