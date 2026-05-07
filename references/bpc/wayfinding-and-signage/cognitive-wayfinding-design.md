@@ -96,7 +96,7 @@
 | CWD-16 | Helsedirektoratet | 2024 | Nasjonal faglig retningslinje om demens | 5 | NO | https://www.helsedirektoratet.no/retningslinjer/demens |
 | CWD-17 | Alzheimer Nederland | 2023 | Dementievriendelijke ontmoetingsplekken pilot. RadarAdvies | 2 | NL | — |
 | CWD-18 | Seoul Metropolitan Government | 2023 | 서울형 치매전담실 가이드북 | 5 | KR | — |
-| CWD-19 | Jee, S.I. | 2022 | Daylighting Design Factors for Korean Dementia Nursing Homes. J Korea Inst Healthcare Archit 28(4):71–87 | 3 | KR | — |
+| CWD-19 | Jee, S.I. | 2022 | A Daylighting Design Indicator for Korean Dementia Nursing Homes Based on the Therapeutic Effects of Light. *Journal of The Korea Institute of Healthcare Architecture* 28(4):71–87. Korea Science: JAKO202313043209241 | 3 | KR | Korean-language; no Crossref DOI; Korea Science ID is stable identifier. Title corrected 2026-05-07 |
 | CWD-20 | Dementia Australia | ongoing | Designing Dementia-Friendly Care Environments | 2 | AU | https://www.dementia.org.au/information/for-health-professionals/built-environment |
 | CWD-21 | 周燕珉 et al. | 2023 | 老年住宅 (3rd ed.). China Architecture & Building Press | 5 | CN | — |
 | CWD-22 | Siegelaar, A. et al. | 2025 | Physical environment and quality of life in dementia: meta-review. Sage Open Aging. DOI:10.1177/30495334251345092 | 3 | INT | — |
