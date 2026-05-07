@@ -29,15 +29,15 @@ jobs:
           MAX_RESOLVE: ${{ github.event.inputs.max_resolve }}
         run: python scripts/resolve_dois.py
 
-      - name: Commit if changed
+      - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/guidebook.db
           if git diff --cached --quiet; then
-            echo "No changes to commit"
+            echo "No DOIs resolved — nothing to commit"
             exit 0
           fi
-          git pull --rebase origin main
           git commit -m "source-verification: batch DOI resolution via CrossRef [$(date -u '+%Y-%m-%d %H:%M')]"
+          git pull --rebase origin main
           git push origin main
