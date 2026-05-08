@@ -270,6 +270,22 @@ Brief: references/audit-briefs/{item_code}_brief.md
 
 ---
 
+## Outputs
+
+Per CO-0009 §5.10, this skill's output contract:
+
+| Field | Value |
+|---|---|
+| Tables written | `item_audit_runs` (tracking DB): creates run record, manages steps_started/steps_complete/status. Delegates all gap/conflict/connection writes to member skills. |
+| Gap categories | N/A — wrapper does not write gaps directly. Member skills write: AUDT, RP, EC, EG, CONF, CR, SW, MX, CD per their individual contracts. |
+| source_skill | N/A — each member skill uses its own source_skill value. Wrapper uses `item-audit-pipeline` in commit messages only. |
+| citation-miner relevance filter | Manages inline citation-miner (depth-1, relevance-gated) across steps 1–7. Relevance = source topic overlaps item's applicable_groups or ICF codes. Non-relevant sources deferred with `deferred_reason`. |
+| Idempotency mechanism | Run-level: `run_id = {item_code}_{session}` is unique per item per session. Step-level: `force_rerun` deletes current-session findings before re-run. Member skills rely on DB-level constraints (UNIQUE indexes, INSERT OR IGNORE) for within-step idempotency. |
+
+**Additional output:** `references/audit-briefs/{item_code}_brief.md` via audit-consolidator (Step 8).
+
+---
+
 ## Rules
 
 1. `steps_started` is written BEFORE each step; `steps_complete` AFTER. Both must be
