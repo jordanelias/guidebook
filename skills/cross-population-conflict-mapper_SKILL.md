@@ -62,7 +62,7 @@ For each active domain, search in this order:
 **Priority 1 — Existing project evidence:**
 - `references/bpc/` per-slug files for relevant populations
 - `sensory-coherence-checker` known conflict patterns (§3)
-- `references/connection-register.md` for PENDING connections
+- SQLite `connections` table for PENDING connections: `python3 scripts/db.py connections --status PENDING`
 
 **Priority 2 — Aged care / dementia facility POEs:**
 Aged care populations co-occur DEM + MOB + VIS + DEAF by default.
