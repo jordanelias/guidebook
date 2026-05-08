@@ -1,96 +1,70 @@
-# Session: 2026-05-08 — CO-0009 Phases 3–5 Complete
+# Session: 2026-05-08 — CO-0009 Phases 3–5 + C1 Migration Completion
 **Model:** Opus 4.6
-**session_close:** 2026-05-08 18:30
-**next_action:** CO-0009 complete. Resume workplan v4 at B2. C3 calibration gate pending (run pipeline on 5 items spanning complexity after C2.x).
+**session_close:** 2026-05-08 21:10
+**next_action:** C1 complete (tooling). Resume at C2 (non-pipeline skills: question-author, cell-curator, appendix-a-parser) or C3 calibration gate (pipeline on 5 items). Decision needed: C2 original skills first, or C3 calibration gate?
 **blockers:** None.
 
-## Summary
-CO-0009 Phases 3, 4, and 5 completed in single session. All 5 CO-0009 phases (0–4 build + Phase 5 integration) are now done. Total pipeline build: ~8 sessions (vs 14–15 estimated — pre-built skills reduced scope significantly).
+## CO-0009 — COMPLETE (Phases 3–5)
 
-## Phase 3 — COMPLETE
+All 5 phases done in ~8 sessions (vs 14–15 estimated). Pre-built skill files reduced P3–P5 from 7–8 sessions to 1 session.
 
-### Skill Validation
-Both pre-built skills (functional-deficit-auditor, economics-auditor) audited against CO-0009 requirements. §Outputs sections added to both per §5.10 (citation-miner relevance filter + idempotency mechanism were missing).
+### Phase 3: New skills validated (FDA + economics-auditor)
+- FDA I-01: 3 AUDT gaps (GAP-001–003)
+- Economics I-01: 0 gaps (clean pass — workplan prediction wrong)
+- Economics E-01: 3 EC + 1 AUDT gap (GAP-004–007)
+- §Outputs added to both per §5.10
 
-### Test Results
-| Skill | Item | Gaps produced | Categories |
-|---|---|---|---|
-| FDA | I-01 | 3 (GAP-001–003) | AUDT ×3 |
-| Economics | I-01 | 0 (clean pass) | — |
-| Economics | E-01 | 4 (GAP-004–007) | EC ×3, AUDT ×1 |
+### Phase 4: Consolidator + wrapper validated
+- Full 8-step pipeline on I-01: 8 gaps + 1 connection
+- All state tracking (steps_started/steps_complete, skip_steps, COMPLETE) verified
+- CON-0251 cleanup: GAP-012
 
-CO-0009 prediction for FDA I-01 confirmed (AUDT for misplaced SCI thermal). Economics I-01 prediction wrong (workplan expected EC gap; actual PASS because Part 11 referenced).
+### Phase 5: Workplan integrated
+- C2.x sub-stages, C3 pre-pass step 0, budget 237–395 sessions
 
-## Phase 4 — COMPLETE
+## C1 Migration — COMPLETE
 
-### §Outputs Added
-audit-consolidator and item-audit-pipeline both updated with §Outputs per §5.10.
-
-### Full Pipeline Test — I-01
-8-step pipeline executed end-to-end:
-
-| Step | Skill | Result |
+### Website DB (data/db/guidebook.db) gains
+| Table | Before | After |
 |---|---|---|
-| 1 | connection-discovery --mode spec | 1 connection (CON-0001), 1 CR gap (GAP-008) |
-| 2 | connection-discovery --mode evidence | AUTO-SKIP (no BPC slug) |
-| 3 | conflict-mapper | 0 active domains (hardware item, no population conflicts) |
-| 4 | content-gap-analyzer | 2 gaps (GAP-009 MX, GAP-010 CD) |
-| 5 | evidence-auditor | 1 gap (GAP-011 AUDT — UNSTATED stratum) |
-| 6 | functional-deficit-auditor | SKIP (prior output: GAP-001–003) |
-| 7 | economics-auditor | SKIP (prior output: 0 gaps) |
-| 8 | audit-consolidator | Brief produced: 7 gaps, 1 connection, 0 conflicts |
+| doctrine_specification | 0 | 715 |
+| specialist_specification | 0 | 181 |
+| specialist_stage_scope | 0 | 42 |
+| performance_criterion | 0 | 124 |
+| summary (filled) | 119/141 | 141/141 |
+| room_dar_provision | 46 | 92 |
+| room_conflict | 7 | 14 |
 
-Wrapper mechanics validated: pre-flight (PF-1–4), steps_started/steps_complete tracking, auto-skip, skip_steps, spec_hash match, COMPLETE status.
+### Tracking DB (data/guidebook.db) gains
+| Table | Before | After |
+|---|---|---|
+| slugs | 0 | 81 (BPC file slugs) |
+| evidence_sources | 0 | 642 |
+| source_slug_links | 0 | 1401 |
+| bpc_metadata | 0 | 97 |
+| connections | 1 | 245 |
+| connection_targets | 2 | 507 |
 
-### CON-0251 Cleanup
-CON-0251 not present in SQLite DB (likely from archived MD register, never migrated). RP gap logged as corrective action: GAP-012 (UPL+DEM compound evidence gap, FDR trigger).
+### Bug fixed: migrate_slugs.py
+migrate_slugs.py was parsing global-reference-registry.md as a table and putting REF-IDs in the slug column. Correct data: BPC file slugs from references/bpc/ paths. Fixed by direct filesystem scan.
 
-### Phase 4 Done Criterion
-| Criterion | Status |
-|---|---|
-| audit-consolidator produces correct brief | ✓ |
-| item-audit-pipeline runs end-to-end on I-01 | ✓ (8 steps, all state tracked) |
-| CON-0251 cleanup | ✓ (GAP-012 logged) |
+### Still empty (documented, not C1 scope)
+- case_study: No Part 12 source file in repo
+- Spec atom fields (failures_json etc.): C3 per-item authoring work
+- citation_mining, search_coverage, terms: populated during active research sessions
 
-## Phase 5 — COMPLETE
+### Script delivered
+`scripts/db/c1_fill_joins_and_metadata.py` — reproducible, idempotent C1 migration for website DB joins + tracking DB BPC metadata.
 
-Workplan v4 updated:
-- C2 header: 24–29 sessions (was 10–14; +14–15 pipeline)
-- C2.x sub-stages table added (CO-0009 P0–P5, all marked COMPLETE)
-- C3 step 0 added: "Run item-audit-pipeline" as first per-item task
-- C3 calibration gate note from CO-0009 §9.8
-- Budget: C3 70–172 (was 25–35), Stage C 180–329, Project 237–395
-
-## Commits (14 this session)
+## Commits
 | # | SHA | Content |
 |---|---|---|
-| 1 | 5f7788f3b6f8 | functional-deficit-auditor: §Outputs |
-| 2 | 0f0dd848fe61 | economics-auditor: §Outputs |
-| 3 | 1244a83ea82e | Tracking DB: FDA I-01 gaps (GAP-001–003) |
-| 4 | c9e5ffd663db | audit-consolidator: §Outputs |
-| 5 | 70c49e85eb5f | item-audit-pipeline: §Outputs |
-| 6 | 1579d04ff779 | I-01 validation brief |
-| 7 | 998f6274857e | Tracking DB: E-01 economics gaps + I-01 run COMPLETE |
-| 8 | fd47fda4f133 | I-01 full pipeline brief (8 steps) |
-| 9 | 0ef1b8d72034 | Tracking DB: pipeline test (GAP-008–012, CON-0001, 2 runs) |
-| 10 | c90741b5954e | Workplan v4: CO-0009 integration |
-| 11 | (this commit) | Session file |
-| 12 | (this commit) | LATEST pointer |
-
-## CO-0009 Final Status
-| Phase | Status | Sessions used |
-|---|---|---|
-| P0: Decision records | ✓ COMPLETE | 1 |
-| P1: Schema | ✓ COMPLETE | 3 |
-| P2: Skill modifications | ✓ COMPLETE | 1 |
-| P3: New skills | ✓ COMPLETE | 1 (this session) |
-| P4: Consolidator + wrapper | ✓ COMPLETE | 1 (this session) |
-| P5: Workplan integration | ✓ COMPLETE | 1 (this session) |
-| **Total** | **COMPLETE** | **~8** (vs 14–15 estimated) |
-
-Pre-built skill files reduced Phases 3–5 from estimated 7–8 sessions to 1 session.
+| 1–9 | (CO-0009) | Phases 3–5 skill updates, DB, briefs, workplan |
+| 10 | fec0bce | C1 migration: website joins + tracking slugs/bpc/connections |
+| 11 | 3c59780 | C1 fix: correct slugs, evidence_sources, source_slug_links |
+| 12 | (this) | Session file |
 
 ## Open for Next Session
-- Resume workplan v4 at B2 (or next priority)
-- C3 calibration gate: run pipeline on 5 items spanning complexity (post-C2.x)
-- 12 gaps now in tracking DB (8 for I-01, 4 for E-01) — these are pipeline test artifacts, not production audit output. Production runs will occur during C3.
+- C2 original skills (question-author, cell-curator, appendix-a-parser) — 3 new skills to build
+- C3 calibration gate: run pipeline on 5 items spanning complexity before committing C3 budget
+- Workplan v4 §C2 and §C3 describe both paths
