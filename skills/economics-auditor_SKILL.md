@@ -222,6 +222,20 @@ Economics-researcher trigger: YES | NO
 
 ---
 
+## Outputs
+
+Per CO-0009 §5.10, this skill's output contract:
+
+| Field | Value |
+|---|---|
+| Tables written | `gaps` (tracking DB) |
+| Gap categories | EC (missing economic content, C1–C5); AUDT (framing violations, C1–C6) |
+| source_skill | `economics-auditor` |
+| citation-miner relevance filter | N/A — economics-auditor does not invoke citation-miner. Citation-miner runs as a separate cross-cutting step in item-audit-pipeline. |
+| Idempotency mechanism | Wrapper-managed. Economics-auditor produces gaps with sequential GAP-NNN IDs; no natural dedup key exists at DB level. On re-run (`force_rerun`), the wrapper deletes prior gaps matching `(item_code, source_skill, created_by_session)` before invoking economics-auditor. Skill itself must not assume prior output has been cleared — always use `add-gap`, never `INSERT OR IGNORE`. |
+
+---
+
 ## Rules
 
 1. Economics-auditor never calls economics-researcher inline
