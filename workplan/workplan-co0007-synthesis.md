@@ -1,3 +1,6 @@
+<!-- DEPRECATED 2026-05-08 04:16 -->
+> **⚠ DEPRECATED:** SUPERSEDED — Stage 0 work product. Findings incorporated into workplan-co0007-v4.md. Historical reference only.
+
 # CO-0007 Synthesis: Mission, Throughlines, and Workplan
 **Created:** 2026-04-25 00:14
 **Status:** SYNTHESIS DOCUMENT — produced for your decision; not auto-committed
