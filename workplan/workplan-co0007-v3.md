@@ -1,3 +1,6 @@
+<!-- DEPRECATED 2026-05-08 04:16 -->
+> **⚠ DEPRECATED:** SUPERSEDED by workplan-co0007-v4.md (ADOPTED 2026-05-03). Do not use for planning. Historical reference only.
+
 # CO-0007 Workplan v3
 **Created:** 2026-04-25 05:00 UTC
 **Model:** Opus 4.7
