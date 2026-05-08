@@ -1,3 +1,6 @@
+<!-- DEPRECATED 2026-05-08 04:16 -->
+> **⚠ DEPRECATED:** SUPERSEDED — amendments absorbed into workplan-co0007-v4.md (ADOPTED 2026-05-03). Historical reference only.
+
 # Workplan CO-0007 v3 — Amendments
 **Created:** 2026-04-26 03:30 UTC
 **Stage:** 0.9 (Workplan adoption)
