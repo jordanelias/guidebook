@@ -28,10 +28,13 @@ Fetch in one call via github-io batch_read:
 - `sessions/LATEST`
 - `references/project-standards.md`
 - `skills/workplan-orchestrator_SKILL.md`
+- `workplan/workplan-co0007-v4.md` — **canonical operative plan (always load)**
 
-Parse LATEST to get session filename.
+Parse LATEST to get session filename. Read v4 §Current position — report active stage before any task discussion.
 
 > **Connection register (Phase 1 SQLite — 2026-05-05):** All connection state is in `data/guidebook.db`. Do NOT load `references/connections/_index.md` (archived). Query connections via `python3 scripts/db.py connections`. Per-topic `connections.md` files are archived — do not read or write.
+
+> **Workplan authority (2026-05-08):** `workplan-co0007-v4.md` is the only operative plan. All other workplan files are either deprecated (with explicit banners) or tactical references subordinate to v4. Do not load or follow any other workplan for session planning. See `workplan/workplan-reconciliation-2026-05-08.md` for the full supersession map.
 
 ### 1b — Load session file + connection summary (GraphQL + bash — call 2)
 
@@ -44,9 +47,9 @@ python3 scripts/db.py connections --status PENDING --confidence HIGH
 ```
 Note count — these are the highest-priority integration targets for any ISW session.
 
-### 1c — Workplan roadmap (on any workplan-related bootstrap)
+### 1c — Workplan roadmap (display — v4 already loaded in §1a)
 
-When the user's opening message mentions "workplan", "bootstrap", "roadmap", "where are we", "what's left", or similar — display this compact roadmap after reporting session state. Read `workplan/workplan-co0007-v4.md` §Budget arithmetic table and render:
+When the user's opening message mentions "workplan", "roadmap", "where are we", "what's left", or similar — render this roadmap from v4 §Current position + §Budget arithmetic (both already in context from §1a):
 
 ```
 ROADMAP — Accessible Built Environments Guidebook
@@ -54,25 +57,27 @@ ROADMAP — Accessible Built Environments Guidebook
 Stage 0  Verification + decision freeze     ████████████████████ COMPLETE  (9 sessions)
 Stage A  Foundations (A1-A13)                ████████████████████ COMPLETE  (24 sessions)
 B1       Schema design                      ████████████████████ COMPLETE  (9 sessions)
+B2-B4.1  Schema impl + pilot                ████████████████████ COMPLETE  (1 session)
+C0       Bulk migration                     ████████████████████ COMPLETE  (same session)
 ─────────────────────────────────────────────────────────────────
-B2       Schema impl + audit remediation    ░░░░░░░░░░░░░░░░░░░░ NEXT     (0/6-8)
-B3       Navigation + website entities      ░░░░░░░░░░░░░░░░░░░░          (0/4-5)
-B4       Pilot construction                 ░░░░░░░░░░░░░░░░░░░░          (0/6-10)
-B5       Rendering layer                    ░░░░░░░░░░░░░░░░░░░░          (0/3-4)
-B6       Pilot validation                   ░░░░░░░░░░░░░░░░░░░░          (0/3-4)
-B7       Architecture lock                  ░░░░░░░░░░░░░░░░░░░░          (0/2)
+C1       Migration tooling                  ░░░░░░░░░░░░░░░░░░░░ ACTIVE   (0/3-5)
+C2       Skill set rebuild                  ░░░░░░░░░░░░░░░░░░░░          (0/10-14)
+C3       Specification pages                ░░░░░░░░░░░░░░░░░░░░          (0/25-35)
+C4       Population pages                   ░░░░░░░░░░░░░░░░░░░░          (0/12-18)
+C5       Room pages                         ░░░░░░░░░░░░░░░░░░░░          (0/15-22)
+C6       Conflict pages                     ░░░░░░░░░░░░░░░░░░░░          (0/10-15)
+C7       Evidence + bibliography            ░░░░░░░░░░░░░░░░░░░░          (0/12-17)
+C8       Jurisdiction content               ░░░░░░░░░░░░░░░░░░░░          (0/6-10)
+C9       Cross-cutting prose (Opus)         ░░░░░░░░░░░░░░░░░░░░          (0/18-25)
+C10      Quality gates                      ░░░░░░░░░░░░░░░░░░░░          (0/5-8)
+C11      Maintenance lifecycle              ░░░░░░░░░░░░░░░░░░░░          (0/3-5)
 ─────────────────────────────────────────────────────────────────
-C0-C11   Content migration + population     ░░░░░░░░░░░░░░░░░░░░          (0/121-177)
+B4.2-B7  Deferred (post-content)            ░░░░░░░░░░░░░░░░░░░░          (0/14-20)
 ═════════════════════════════════════════════════════════════════
-CONSUMED: 42 sessions  |  REMAINING: 146-211  |  TOTAL: 188-253
+CONSUMED: ~43 sessions  |  REMAINING: ~145-210  |  TOTAL: 188-253
 ```
 
-**Update rules for this roadmap:**
-- As sessions complete within a sub-stage, update consumed count and fill bars proportionally
-- When a sub-stage completes, mark it COMPLETE and fill the bar
-- The roadmap is a rendering of the workplan budget table — it does not store independent state
-- If the workplan is amended, the roadmap auto-reflects the new budget table
-- For Stage C, show sub-stage breakdown only when C-stage work begins; until then, show as single line
+**Update rules:** render from v4 budget table, not from this static block. As sessions complete, update consumed counts. When a C-stage completes, mark COMPLETE.
 
 ### 2 — Load gap register (SQLite query)
 
@@ -139,24 +144,25 @@ echo "  B4 connection consump : $([ "$B4" = "PASS" ] && echo "UNLOCKED" || echo 
 echo "  B5 readiness audit    : $([ "$B4" = "PASS" ] && echo "UNLOCKED" || echo "LOCKED [dep:B4]")"
 ```
 
-**Gate enforcement rule** — apply to every incoming task before workflow selection:
+**Gate enforcement rule** — apply to every incoming task before workflow selection. Map user requests to v4 C-stages:
 
-| If the user wants to do… | Requires block | Gate action |
+| If the user wants to do… | v4 stage | Gate action |
 |---|---|---|
-| BPC CO-0006 migration, citation edits | B2 (dep: B0) | Block if B0 FAIL |
-| Part 4 spec completion, ISW, annotations | B3 (dep: B1) | Block if B1 FAIL |
-| Connection consumption, ISW cross-refs | B4 (dep: B3 + PENDING=0) | Block if B3 FAIL or PENDING>0 |
-| Prose edits to Parts 1, 11, 12 | Not a Phase A target | Block always — redirect to correct block |
-| Hallucination audit, GRADE ratings | B4 | Block if B4 FAIL |
-| Final readiness audit | B5 (dep: B4) | Block if B4 FAIL |
+| BPC CO-0006 migration, citation enrichment | C1 (migration tooling) + C7 (evidence base) | Proceed — B0 PASS is sufficient |
+| Part 4 spec completion, ISW, annotations | C3 (specification pages) | Check: part04-item-index exists |
+| Connection consumption, ISW cross-refs | C3 (36 CON-HIGH entries) | Check: PENDING=0 required |
+| Prose edits to Parts 1, 10, 11, 12 | C9 (cross-cutting prose — **Opus required**) | Check: C3 substantially complete first; confirm Opus model |
+| Hallucination audit, GRADE ratings | C7 / C3 | Proceed with appropriate checks |
+| Schema work, migration scripts, validators | C1 / C2 | Proceed — governance/infra always allowed |
+| Final readiness audit | C10 | Check: C3-C9 substantially complete |
 | Governance, infra, session wrap | Any | Never blocked |
 
 If a content workflow is BLOCKED, respond with:
 ```
-BLOCK GATE: [workflow] requires Block [N] which is LOCKED.
-Gate failures: [list specific failing checks]
-Permitted work this session: [list unlocked blocks]
-To unlock Block [N]: [specific action needed]
+BLOCK GATE: [task] maps to v4 [C-stage] which requires [prerequisite].
+Gate failures: [specific check results]
+Permitted work this session: [list unlocked C-stages]
+To unblock: [specific action needed]
 ```
 Do not proceed with the blocked workflow. Do not substitute adjacent work.
 
