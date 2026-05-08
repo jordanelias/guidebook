@@ -422,7 +422,7 @@ Complete the 13-phase migration tooling started in B2.6. Remaining phases:
 - Phase 8: conflict migration (from conflicts.json + 13 conflict-matrix files)
 - Phase 9-13: remaining entity types
 
-### C2. Skill set rebuild · 10–14 sessions
+### C2. Skill set rebuild · 24–29 sessions (was 10–14; +14–15 for pipeline build)
 
 Per original workplan, minus the skills already operational from B2-B5.
 
@@ -431,9 +431,26 @@ Add to skill inventory:
 - `cell-curator` — populates evidence state per (spec × population) pair
 - `appendix-a-parser` — extends jurisdictional value extraction to new Appendix A entries
 
-### C3. Specification page content — migrate all 91+ items · 25–35 sessions
+**C2.x — Item audit pipeline build (CO-0009, 14–15 sessions):**
+
+| Sub-stage | Sessions | Model | Status |
+|---|---|---|---|
+| C2.x-P0: Decision records (D-0141–D-0150) | 1 | Opus | ✓ COMPLETE |
+| C2.x-P1: Schema (migration 004–005, db.py CLI, validators) | 3 | Sonnet | ✓ COMPLETE |
+| C2.x-P2: Skill modifications (4 existing skills) | 1 | Sonnet | ✓ COMPLETE |
+| C2.x-P3: New skills (FDA + economics-auditor) | 1 | Opus/Sonnet | ✓ COMPLETE |
+| C2.x-P4: Consolidator + wrapper + pipeline test | 1 | Sonnet | ✓ COMPLETE |
+| C2.x-P5: Workplan integration | 1 | Sonnet | ✓ THIS SESSION |
+
+**Pipeline status:** item-audit-pipeline validated end-to-end on I-01 (8 steps, 8 gaps, 1 connection). All 4 new skills (functional-deficit-auditor, economics-auditor, audit-consolidator, item-audit-pipeline) have §Outputs contracts per CO-0009 §5.10. CON-0251 cleanup complete.
+
+### C3. Specification page content — migrate all 91+ items · 70–172 sessions (was 25–35; +45–137 pipeline pre-pass)
+
+> **C3 calibration gate (CO-0009 §9.8):** The 45–137 pipeline pre-pass range is unvalidated. Before committing the full C3 budget, run the pipeline on 5 items spanning complexity levels after C2.x-P4. If median item ≤0.75 sessions: revise downward. If median item ≥1.25 sessions: flag for scope/sequencing decision. Pipeline calibration on I-01 consumed ~0.5 sessions (simple item, 4 populations, no BPC). Complex items (8+ populations, residential room scope) will take longer.
 
 The primary content migration. For each Part 4 item:
+
+0. **Run item-audit-pipeline** (CO-0009 pre-pass) — surfaces cross-item connections, population conflicts, content gaps, evidence issues, functional deficit scope errors, and economics framing gaps before authoring begins. Produces an audit brief at `references/audit-briefs/{item_code}_brief.md`. Items with open RP or CONF gaps after pipeline run should have those gaps closed before atom authoring, where feasible. Skip_steps available for items with partial prior audit coverage.
 
 1. **Extract or author all atom fields** per the 11 new specification columns:
    - `question_heading` — if not authored in B2.7, author now
@@ -623,8 +640,8 @@ These operate continuously:
 | **Stage B total** | **24–33** | |
 | C0 | 2–3 | |
 | C1 | 3–5 | |
-| C2 | 10–14 | |
-| **C3** | **25–35** | |
+| C2 | 24–29 | CO-0009 pipeline (+14–15) |
+| **C3** | **70–172** | CO-0009 pre-pass (+45–137) |
 | **C4** | **12–18** | |
 | **C5** | **15–22** | |
 | **C6** | **10–15** | |
@@ -633,10 +650,12 @@ These operate continuously:
 | **C9** | **18–25** | |
 | C10 | 5–8 | |
 | C11 | 3–5 | |
-| **Stage C total** | **121–177** | |
-| **Project total** | **188–253** | |
+| **Stage C total** | **180–329** | was 121–177; CO-0009 pipeline |
+| **Project total** | **237–395** | was 188–253 |
 | **Consumed** | **42** | |
-| **Remaining** | **146–211** | |
+| **Remaining** | **195–353** | |
+
+> **Budget note (CO-0009 §9.8):** Upper bound (395) reflects worst-case per-item pipeline complexity. C3 calibration gate applies: run pipeline on 5 items after C2.x complete, then revise. If median item ≤0.75 sessions, C3 pipeline overhead ≈45–77 sessions (low end). If ≥1.25 sessions, reassess scope.
 
 **Budget reduction from v3:** ~30-80 sessions saved through:
 - Combined parameter+item migration (C3 replaces old C3+C5-items)
