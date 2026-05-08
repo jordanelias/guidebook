@@ -1,3 +1,6 @@
+<!-- DEPRECATED 2026-05-08 04:16 -->
+> **⚠ DEPRECATED:** SUPERSEDED — Stage 0 audit. All 31 findings resolved and mapped in workplan-co0007-v4.md §Finding-resolution map. Historical reference only.
+
 > **SUPERSEDED 2026-04-25 00:19** by `workplan/workplan-co0007-synthesis.md`.
 >
 > This audit workplan was drafted before the conversation surfaced the architectural shift to structured data and multi-modal navigation. It treats markdown as the deliverable form; the synthesis workplan treats markdown as interim and structured data as the long-term form. The audit-as-byproduct approach in the synthesis subsumes this audit.
