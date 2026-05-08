@@ -446,7 +446,19 @@ Add to skill inventory:
 
 ### C3. Specification page content — migrate all 91+ items · 70–172 sessions (was 25–35; +45–137 pipeline pre-pass)
 
-> **C3 calibration gate (CO-0009 §9.8):** The 45–137 pipeline pre-pass range is unvalidated. Before committing the full C3 budget, run the pipeline on 5 items spanning complexity levels after C2.x-P4. If median item ≤0.75 sessions: revise downward. If median item ≥1.25 sessions: flag for scope/sequencing decision. Pipeline calibration on I-01 consumed ~0.5 sessions (simple item, 4 populations, no BPC). Complex items (8+ populations, residential room scope) will take longer.
+> **C3 calibration gate (CO-0009 §9.8) — COMPLETE 2026-05-08:**
+>
+> | Item | Type | Pops | Gaps | Est. session |
+> |---|---|---|---|---|
+> | I-01 | Simple (hardware) | 4 | 8 | 0.50 |
+> | A-04 | Medium-sensory | ALL | 5 | 0.45 |
+> | B-10 | Safety-critical | 5 | 7 | 0.50 |
+> | E-03 | Medium-structural | 3 | 11 | 0.55 |
+> | G-04 | Complex (bathroom) | 4 | 10 | 0.60 |
+>
+> **Median: 0.50 sessions/item (≤0.75 → REVISE DOWNWARD).** 86 items × 0.50 = ~43 sessions pipeline pre-pass. Plus 25–35 content authoring = **68–78 sessions total C3.**
+>
+> Systemic findings: SCI absent from applicable groups (3/5 items), evidence stratum UNSTATED (all items), economics lifecycle framing absent on all HIGH retrofit items. AUDT is the dominant gap category (47%).
 
 The primary content migration. For each Part 4 item:
 
@@ -641,7 +653,7 @@ These operate continuously:
 | C0 | 2–3 | |
 | C1 | 3–5 | |
 | C2 | 24–29 | CO-0009 pipeline (+14–15) |
-| **C3** | **70–172** | CO-0009 pre-pass (+45–137) |
+| **C3** | **68–78** | Calibrated: 43 pipeline + 25–35 content |
 | **C4** | **12–18** | |
 | **C5** | **15–22** | |
 | **C6** | **10–15** | |
@@ -650,12 +662,12 @@ These operate continuously:
 | **C9** | **18–25** | |
 | C10 | 5–8 | |
 | C11 | 3–5 | |
-| **Stage C total** | **180–329** | was 121–177; CO-0009 pipeline |
-| **Project total** | **237–395** | was 188–253 |
+| **Stage C total** | **127–230** | was 180–329; calibrated C3 |
+| **Project total** | **184–296** | was 237–395; calibrated |
 | **Consumed** | **42** | |
-| **Remaining** | **195–353** | |
+| **Remaining** | **142–254** | |
 
-> **Budget note (CO-0009 §9.8):** Upper bound (395) reflects worst-case per-item pipeline complexity. C3 calibration gate applies: run pipeline on 5 items after C2.x complete, then revise. If median item ≤0.75 sessions, C3 pipeline overhead ≈45–77 sessions (low end). If ≥1.25 sessions, reassess scope.
+> **Budget note (calibrated 2026-05-08):** C3 calibration gate passed at median 0.50 sessions/item. Upper bound reduced from 395 to 296. Pipeline pre-pass adds ~43 sessions to C3; content authoring 25–35 sessions. 45 calibration gaps across 5 items confirm pipeline catches systemic issues (AUDT 47%, EC 20%, RP 9%).
 
 **Budget reduction from v3:** ~30-80 sessions saved through:
 - Combined parameter+item migration (C3 replaces old C3+C5-items)
