@@ -1,3 +1,6 @@
+<!-- PARTIAL-SUPERSESSION NOTICE 2026-05-08 04:16 -->
+> **⚠ PARTIAL SUPERSESSION:** CURRENCY WARNING (generated 2026-03-29): 13 slugs listed as ready for Opus synthesis. Some may have been synthesized in April-May 2026 sessions. Verify against BPC files before using. Queue structure is valid; item status may be stale.
+
 # Opus Synthesis Queue
 **Generated:** 2026-03-29 19:02
 **Purpose:** Track which BPC slugs need Opus 4.6 best-practice synthesis
