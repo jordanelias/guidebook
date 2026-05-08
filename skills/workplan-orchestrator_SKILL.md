@@ -97,10 +97,75 @@ If PAT not present in Project Instructions: prompt user.
 
 ### 4 — Task Intake
 
+#### 4a — Block gate check (mandatory before any Phase A content workflow)
+
+Run before selecting any workflow. Uses only files already on disk from steps 1–3 — no additional downloads.
+
+```bash
+# PAT sourced from Project Instructions (see bootstrap §<project_identity>)
+REPO="jordanelias/guidebook"
+AUTH="Authorization: Bearer $PAT"
+
+# HEAD-only checks — no file download
+_exists() { curl -so /dev/null -w "%{http_code}" -H "$AUTH" \
+  "https://api.github.com/repos/$REPO/contents/$1"; }
+
+# Gate checks
+B0=$([ "$(_exists scripts/validate_bpc.py)" = "200" ] && \
+     [ "$(_exists .github/workflows/ci.yml)" = "200" ] && echo PASS || echo FAIL)
+
+B1=$([ "$B0" = "PASS" ] && \
+     [ "$(_exists references/gap_register_archive.md)" = "200" ] && \
+     [ "$(_exists references/parser-source-readiness.md)" = "200" ] && echo PASS || echo FAIL)
+
+B3=$([ "$B1" = "PASS" ] && \
+     [ "$(_exists references/part04-item-index.md)" = "200" ] && \
+     [ "$(_exists references/spec-db-part4-reconciliation.md)" = "200" ] && echo PASS || echo FAIL)
+
+PENDING=$(python3 -c "import sqlite3; \
+  print(sqlite3.connect('/tmp/guidebook.db') \
+  .execute(\"SELECT COUNT(*) FROM connections WHERE status='PENDING'\") \
+  .fetchone()[0])" 2>/dev/null || echo "?")
+
+B4=$([ "$B3" = "PASS" ] && [ "$PENDING" = "0" ] && echo PASS || echo FAIL)
+
+# Dependency-graph output (B2 unlocks with B0 only, parallel to B3)
+echo "=== BLOCK GATE ==="
+echo "  B0 enforcement infra  : $B0"
+echo "  B1 cleanup + audit    : $B1  $([ "$B0" != "PASS" ] && echo '[locked: B0]')"
+echo "  B2 citation migration : $([ "$B0" = "PASS" ] && echo "UNLOCKED (dep:B0)" || echo "LOCKED [dep:B0]")"
+echo "  B3 spec completeness  : $([ "$B3" = "PASS" ] && echo "PASS" || echo "LOCKED [dep:B1]")  $([ "$B1" != "PASS" ] && echo '→ complete B1 first')"
+echo "  B4 connection consump : $([ "$B4" = "PASS" ] && echo "UNLOCKED" || echo "LOCKED")  $([ "$B3" != "PASS" ] && echo '[dep:B3]')$([ "$PENDING" != "0" ] && echo "[PENDING=$PENDING — must be 0]")"
+echo "  B5 readiness audit    : $([ "$B4" = "PASS" ] && echo "UNLOCKED" || echo "LOCKED [dep:B4]")"
+```
+
+**Gate enforcement rule** — apply to every incoming task before workflow selection:
+
+| If the user wants to do… | Requires block | Gate action |
+|---|---|---|
+| BPC CO-0006 migration, citation edits | B2 (dep: B0) | Block if B0 FAIL |
+| Part 4 spec completion, ISW, annotations | B3 (dep: B1) | Block if B1 FAIL |
+| Connection consumption, ISW cross-refs | B4 (dep: B3 + PENDING=0) | Block if B3 FAIL or PENDING>0 |
+| Prose edits to Parts 1, 11, 12 | Not a Phase A target | Block always — redirect to correct block |
+| Hallucination audit, GRADE ratings | B4 | Block if B4 FAIL |
+| Final readiness audit | B5 (dep: B4) | Block if B4 FAIL |
+| Governance, infra, session wrap | Any | Never blocked |
+
+If a content workflow is BLOCKED, respond with:
+```
+BLOCK GATE: [workflow] requires Block [N] which is LOCKED.
+Gate failures: [list specific failing checks]
+Permitted work this session: [list unlocked blocks]
+To unlock Block [N]: [specific action needed]
+```
+Do not proceed with the blocked workflow. Do not substitute adjacent work.
+
+#### 4b — Workflow selection
+
 Select workflow → load required skills via batch_read (see §Workflow-Gated Loading below).
 No skill outside the workflow list may execute without explicit user approval.
 
-**Total startup:** 2 GraphQL calls + 1 filtered bash read + 1 optional validation. ~8K tokens.
+**Total startup:** 2 GraphQL calls + 1 filtered bash read + 1 optional validation + 5 HEAD requests (gate). ~8K tokens.
 
 ---
 
@@ -186,6 +251,8 @@ Guidance for Claude's judgment where output is not mechanically validatable. Voi
 ---
 
 ## Workflows
+
+> **Block gate governs workflow selection.** Run §4a before selecting any Phase A content workflow. See §4a for the dependency graph, gate check commands, and enforcement rules. The table below lists which block each workflow belongs to — if that block is LOCKED, the workflow is BLOCKED.
 
 ### Active Workflows (Stage A)
 
