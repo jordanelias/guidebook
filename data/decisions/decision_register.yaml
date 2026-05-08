@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-08 02:15
+last_updated: 2026-05-08 03:00
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -4506,4 +4506,244 @@ decisions:
   review_status: PENDING
   notes: >
     Migration 005 implements this decision (ALTER TABLE, not table recreation).
+- decision_id: D-0146
+  category: D-OP
+  delegation: DG-REVIEW
+  delegation_rationale: >
+    First-of-kind operation: skill merge with deprecation and mode-flag refactoring.
+    Default DG-AUTO upgraded to DG-REVIEW per decision-protocol.md §2.2.
+  summary: connection-scout merged into connection-discovery with --mode flag; scout
+    deprecated
+  outcome: >
+    connection-scout is absorbed into connection-discovery. connection-discovery gains
+    three modes via --mode flag: spec (item specifications and cross-reference tables),
+    evidence (BPC files, gap register, session outputs), external (forward citation
+    search via Scholar Gateway / PubMed). Non-connection findings exit via db.py add-gap,
+    never as SPECULATIVE connections. SPECULATIVE findings are logged as CR gaps per
+    the SPECULATIVE→gap rule. connection-scout_SKILL.md moved to skills/deprecated/.
+  rationale: >
+    connection-scout and connection-discovery had overlapping scope (both discover
+    connections from evidence) with the only distinction being internal vs external
+    source material. The --mode flag unifies them under a single skill entry point,
+    reducing the skill registry and eliminating ambiguity about which skill to invoke.
+    Pattern conformance: the merged skill follows the existing db.py CLI output
+    contract.
+  alternatives_considered: []
+  decision_date: 2026-05-08 03:00
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - skills/connection-discovery_SKILL.md
+  - skills/deprecated/connection-scout_SKILL.md
+  - workplan/workplan-item-audit-pipeline-co0009.md §3.1
+  predecessors:
+  - D-0089
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    connection-discovery_SKILL.md already reflects the merge (header references D-0146).
+    connection-scout_SKILL.md remains at skills/ pending physical move to deprecated/.
+
+- decision_id: D-0147
+  category: D-METH
+  delegation: DG-NON
+  summary: functional-deficit-auditor skill — ICF alignment audit of item functional-deficit
+    framing with FDR trigger criteria
+  outcome: >
+    New skill: functional-deficit-auditor. Scope: per-item audit of ICF alignment
+    in functional-deficit framing. The auditor checks whether each item's stated
+    functional deficits use correct ICF-d activity codes, whether the deficit→spatial
+    requirement chain is clinically defensible, and whether FDR scenario coverage
+    is complete for the item's applicable population groups. Opus required for
+    mechanism judgment (deficit→requirement reasoning is clinical, not mechanical).
+    Runs as Step 6 in the item-audit-pipeline wrapper. Output: gap entries (category
+    EG for evidence gaps, AUDT for alignment findings) to tracking DB gaps table.
+  rationale: >
+    The existing functional-deficit-researcher (FDR) skill conducts bottom-up OT
+    intervention research by functional deficit — it synthesizes new evidence into
+    BPC entries. The auditor is a distinct methodological concern: it evaluates
+    whether an item's existing FDR framing is ICF-aligned and clinically defensible,
+    without conducting new research. This separation follows the project's general
+    pattern of distinguishing synthesis skills (Opus, generate content) from audit
+    skills (check existing content against criteria). Opus is required because
+    the deficit→spatial requirement judgment chain involves clinical reasoning
+    (e.g., whether hemiplegia→lateral clearance is supported by the cited OT
+    literature), which is beyond checklist application.
+  alternatives_considered:
+  - >-
+    Extend functional-deficit-researcher to include audit mode — rejected: the
+    researcher is a synthesis skill (Opus, generates new BPC content from OT
+    literature). Adding audit responsibilities would conflate generation with
+    evaluation, violating the project's synthesis/audit separation principle.
+    The researcher produces; the auditor checks.
+  - >-
+    Run ICF alignment as a sub-check within evidence-auditor — rejected:
+    evidence-auditor evaluates evidence quality (stratum, overclaimed markers,
+    uncertain review). ICF alignment is a domain-specific structural check
+    (is the ICF code correct? is the deficit→requirement chain valid?) that
+    requires FDR domain knowledge, not evidence-quality methodology.
+  - >-
+    Use Sonnet for the auditor — rejected: the deficit→requirement judgment
+    is clinical mechanism reasoning. Sonnet handles checklist application
+    (economics-auditor) but ICF alignment requires cross-referencing OT
+    intervention literature against spatial parameters, which is dispersed-evidence
+    synthesis at the judgment level.
+  decision_date: 2026-05-08 03:00
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - workplan/workplan-item-audit-pipeline-co0009.md §3.2
+  - workplan/workplan-item-audit-pipeline-co0009.md §2
+  predecessors:
+  - D-0139
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    Boundary with functional-deficit-researcher: auditor flags items where ICF
+    alignment is questionable; researcher conducts deficit research and synthesizes
+    into BPC. Auditor never generates new BPC content. Skill file to be created
+    in Phase 3.
+
+- decision_id: D-0148
+  category: D-METH
+  delegation: DG-NON
+  summary: economics-auditor skill — checklist-based item-level economic framing
+    audit at Sonnet tier
+  outcome: >
+    New skill: economics-auditor. Scope: per-item checklist application for economic
+    framing. The auditor checks whether each item has a cost-benefit framing where
+    one exists in the evidence base, whether cited economic data is current (freshness
+    window per evidence hierarchy), and whether the economic argument is structurally
+    complete (claim + evidence + jurisdiction scope). Sonnet tier — no Opus required
+    because this is checklist application, not synthesis. Runs as Step 7 in the
+    item-audit-pipeline wrapper. Output: gap entries (category EC for economics gaps)
+    to tracking DB gaps table.
+  rationale: >
+    Economics content in the guidebook currently has no systematic per-item audit.
+    economics-researcher synthesizes new economic evidence (Sonnet + web search);
+    the auditor checks whether existing item specifications have adequate economic
+    framing without conducting new research. The checklist pattern keeps the skill
+    at Sonnet tier (effort 75), making it economical to run across all items. The
+    boundary is explicit: auditor flags gaps; researcher synthesizes evidence to
+    fill them. The auditor never triggers economics-researcher inline (CO-0009
+    §5.8).
+  alternatives_considered:
+  - >-
+    Extend economics-researcher to include audit mode — rejected: the researcher
+    is a web-search-dependent synthesis skill with a 20-source ceiling and
+    jurisdiction scope gate. Adding per-item audit would inflate its invocation
+    cost and conflate evidence gathering with evidence checking.
+  - >-
+    Run economics checks within content-gap-analyzer — rejected: content-gap-analyzer
+    checks structural completeness of item specifications (missing sections,
+    incomplete cross-references). Economics framing requires domain-specific
+    checklist knowledge (cost-benefit structure, freshness windows, jurisdiction
+    scope) that is beyond structural analysis.
+  - >-
+    Use Opus for the auditor — rejected: the economics audit is checklist
+    application (does the item have a cost-benefit framing? is it current?
+    is it complete?). No dispersed-evidence synthesis or clinical mechanism
+    judgment is required. Sonnet at effort 75 is sufficient and keeps per-item
+    cost low for the full pipeline pass.
+  decision_date: 2026-05-08 03:00
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - workplan/workplan-item-audit-pipeline-co0009.md §3.2
+  - workplan/workplan-item-audit-pipeline-co0009.md §5.8
+  predecessors:
+  - D-0139
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    Boundary with economics-researcher: auditor flags items lacking economic framing;
+    researcher synthesizes evidence to fill gaps. Auditor never triggers researcher
+    inline. Skill file to be created in Phase 3. Expected model_routing for the
+    skill itself: sonnet/75/extract.
+
+- decision_id: D-0149
+  category: D-OP
+  delegation: DG-REVIEW
+  delegation_rationale: >
+    First-of-kind operation: defines the output contract pattern for pipeline audit
+    skills. Default DG-AUTO upgraded to DG-REVIEW per decision-protocol.md §2.2.
+  summary: audit-consolidator output contract — research brief at references/audit-briefs/
+    plus item_audit_runs status update
+  outcome: >
+    audit-consolidator (Step 8) produces a research brief at
+    references/audit-briefs/{item_code}_brief.md and updates item_audit_runs to
+    status=COMPLETE with brief_path populated. Gap deduplication is the consolidator's
+    responsibility per CO-0009 §9.2.
+  rationale: >
+    The output contract follows CO-0009 §2 (consolidator is Step 8) and §9.4
+    (new pipeline skills must declare tables written, gap categories used,
+    source_skill value, citation-miner relevance filter, and idempotency mechanism).
+  alternatives_considered: []
+  decision_date: 2026-05-08 03:00
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - workplan/workplan-item-audit-pipeline-co0009.md §2
+  - workplan/workplan-item-audit-pipeline-co0009.md §9.2
+  - workplan/workplan-item-audit-pipeline-co0009.md §9.4
+  predecessors:
+  - D-0141
+  - D-0142
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    Skill file to be created in Phase 4. Brief template not yet defined — Phase 4
+    deliverable.
+
+- decision_id: D-0150
+  category: D-OP
+  delegation: DG-REVIEW
+  delegation_rationale: >
+    First-of-kind operation: wrapper orchestrating 8-step pipeline with session
+    boundary handling and state machine. Default DG-AUTO upgraded to DG-REVIEW
+    per decision-protocol.md §2.2.
+  summary: item-audit-pipeline wrapper architecture — 8-step orchestration with
+    idempotent state tracking and session boundary handling
+  outcome: >
+    Wrapper orchestrates Steps 1–8 per CO-0009 §2 architecture. Tracks state in
+    item_audit_runs table. skip_steps and force_rerun semantics per §2.
+    Idempotency at DB level via INSERT OR IGNORE, dedup checks, and UNIQUE
+    constraints. spec_hash with normalisation per §9.7 for multi-session staleness
+    detection. HANDED-OFF status written on context pressure (>75% context or
+    explicit user signal) at the nearest step boundary — wrapper completes the
+    current step, updates item_audit_runs, and produces a handoff block.
+  rationale: >
+    The wrapper is the orchestration layer that makes the per-item pipeline
+    executable as a single invocation while preserving step-level idempotency
+    and session-boundary resilience per CO-0009 §9.3.
+  alternatives_considered: []
+  decision_date: 2026-05-08 03:00
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - workplan/workplan-item-audit-pipeline-co0009.md §2
+  - workplan/workplan-item-audit-pipeline-co0009.md §9.3
+  - workplan/workplan-item-audit-pipeline-co0009.md §9.7
+  predecessors:
+  - D-0141
+  - D-0142
+  - D-0143
+  - D-0144
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    HANDED-OFF trigger: context >75% (per preference token reporting) or explicit
+    user signal, at nearest step boundary. Wrapper completes current step before
+    handing off. Skill file to be created in Phase 4.
 
