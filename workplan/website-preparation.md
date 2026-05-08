@@ -1,3 +1,6 @@
+<!-- PARTIAL-SUPERSESSION NOTICE 2026-05-08 04:16 -->
+> **⚠ PARTIAL SUPERSESSION:** PARTIALLY SUPERSEDED by workplan-co0007-v4.md (ADOPTED 2026-05-03). Phase A Blocks 0-5 are subsumed into v4 Stage C. Phase B tech stack is a deferred decision per v4. Block 2 per-file migration pipeline remains valid as tactical reference for C1/C7 work. 26-parser architecture is pending reconciliation per v4 C1 item. Do not use Block sequencing (0→1→2→3→4→5) for session planning — use v4 C-stage structure instead. See workplan-reconciliation-2026-05-08.md §3.
+
 # Workplan: Research Processing → Website Build
 **Version:** 2.0
 **Created:** 2026-04-17
