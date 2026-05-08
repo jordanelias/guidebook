@@ -1,3 +1,6 @@
+<!-- DEPRECATED 2026-05-08 04:16 -->
+> **⚠ DEPRECATED:** SUPERSEDED by PI v10.4 (in claude.ai Project Instructions, 2026-05-08). This v9.0 file contradicts the active PI on model identity, standing rules, and session protocol. Do not use.
+
 # Project Instructions — Accessible Built Environments Guidebook
 **Revised:** 2026-03-29
 
