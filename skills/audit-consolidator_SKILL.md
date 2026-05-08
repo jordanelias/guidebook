@@ -213,6 +213,22 @@ python3 scripts/db.py update-audit-run \
 
 ---
 
+## Outputs
+
+Per CO-0009 §5.10, this skill's output contract:
+
+| Field | Value |
+|---|---|
+| Tables written | `item_audit_runs` (tracking DB): status → COMPLETE, brief_path populated. No gap/conflict/connection tables written — pure read. |
+| Gap categories | N/A — reads all categories, writes none. |
+| source_skill | `audit-consolidator` (not written to gaps; used only in commit messages and brief metadata). |
+| citation-miner relevance filter | N/A — consolidator does not invoke citation-miner. Reads deferred citations from `citation_mining` table. |
+| Idempotency mechanism | Brief file: overwrite on same-session re-run; append dated section on cross-session re-run (Rule 2). item_audit_runs status update: idempotent (COMPLETE → COMPLETE is a no-op). |
+
+**Additional output:** `references/audit-briefs/{item_code}_brief.md` committed to GitHub.
+
+---
+
 ## Rules
 
 1. Brief location: always `references/audit-briefs/{item_code}_brief.md`
