@@ -115,7 +115,7 @@ B0=$([ "$(_exists scripts/validate_bpc.py)" = "200" ] && \
      [ "$(_exists .github/workflows/ci.yml)" = "200" ] && echo PASS || echo FAIL)
 
 B1=$([ "$B0" = "PASS" ] && \
-     [ "$(_exists references/gap_register_archive.md)" = "200" ] && \
+     [ "$(_exists gap_register_archive.md)" = "200" ] && \
      [ "$(_exists references/parser-source-readiness.md)" = "200" ] && echo PASS || echo FAIL)
 
 B3=$([ "$B1" = "PASS" ] && \
