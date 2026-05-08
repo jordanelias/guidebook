@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-08 03:00
+last_updated: 2026-05-08 03:15
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -4356,8 +4356,8 @@ decisions:
   - D-0138
   - D-0139
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     Migration 004 implements this decision. Pydantic validator fix is a code change
     to schemas/item.py (Phase 1 implementation scope).
@@ -4393,8 +4393,8 @@ decisions:
   - D-0141
   - D-0139
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     Migration 004 implements this decision. Normalisation rules for spec_hash
     (strip whitespace, normalise line endings, remove frontmatter timestamps)
@@ -4436,8 +4436,8 @@ decisions:
   predecessors:
   - D-0139
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     Migration 004 implements this decision. The two-DB boundary is permanent per
     CO-0009 §5.12. Pop-pair ordering enforcement is a Phase 1 CLI implementation
@@ -4472,8 +4472,8 @@ decisions:
   predecessors:
   - D-0139
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     Migration 005 implements this decision. The Pydantic validator in schemas/gap.py
     already includes CONF and AUDT (added during Phase 1 Session 1c correction pass).
@@ -4502,8 +4502,8 @@ decisions:
   predecessors:
   - D-0139
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     Migration 005 implements this decision (ALTER TABLE, not table recreation).
 - decision_id: D-0146
@@ -4541,8 +4541,8 @@ decisions:
   - D-0089
   - D-0139
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     connection-discovery_SKILL.md already reflects the merge (header references D-0146).
     connection-scout_SKILL.md remains at skills/ pending physical move to deprecated/.
@@ -4698,8 +4698,8 @@ decisions:
   - D-0141
   - D-0142
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     Skill file to be created in Phase 4. Brief template not yet defined — Phase 4
     deliverable.
@@ -4740,10 +4740,11 @@ decisions:
   - D-0143
   - D-0144
   supersedes: []
-  status: PROPOSED
-  review_status: PENDING
+  status: ACTIVE
+  review_status: CONFIRMED
   notes: >
     HANDED-OFF trigger: context >75% (per preference token reporting) or explicit
     user signal, at nearest step boundary. Wrapper completes current step before
     handing off. Skill file to be created in Phase 4.
+
 
