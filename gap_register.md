@@ -1,308 +1,81 @@
-<!-- ARCHIVED 2026-05-05 03:30 — Phase 1-E. This file is read-only. Do NOT update. All gap data is now in SQLite (data/guidebook.db, gaps table). Use `python3 scripts/db.py gaps` to query. -->
-# Gap Register
+<!-- CANONICAL READ-ONLY VIEW — all writes go to SQLite: python3 scripts/db.py add-gap ... -->
+<!-- Generated: 2026-05-08 from data/guidebook.db | Active (OPEN/OPEN-PARTIAL) items only -->
+<!-- CLOSED items: gap_register_archive.md -->
+# Gap Register — Active Items
 <!-- Schema: Gap ID | Cat | P | Status | Skill | Section | Description | Date -->
 <!-- Categories: RP=Research pipeline · SW=Spec writing · CR=Conflict · ST=Structural · MX=Matrix/room · CD=Content draft · EC=Economics · EG=Evidence gap -->
 <!-- Priorities: P1=critical · P2=moderate · P3=low -->
-<!-- Archive: CLOSED items in gap_register_archive.md -->
 
 | Gap ID | Cat | P | Status | Skill | Section | Description | Date |
-|---|---|---|---|---|---|---|---|
-| GAP-078 | RP | P1 | CLOSED-CONSUMED | literature-review-planner | BPC files (multiple) | 12 SRs integrated (Block 4 B2 2026-04-19). sensory-relief-space x5, IntD x1, bathrooms x2, residential x1, design-framework x1. New slug school-environment-autism created. See references/evidence-synthesis-integration-2026-04-09.md §B for full register. Highest priority: Rashid 2025 (NDV taxonomy), Quesada-Cubo ... | 2026-04-09 23:00 |
-| GAP-079 | RP | P2 | OPEN-PARTIAL | literature-review-planner | Part 4 + Part 7/8 matrices | RECLASSIFIED P1→P2 2026-05-02 per audit_2026-04-30 R8 + workplan/gap-p1-reclassification-recommendation.md Option B + D-0122. Targets Stage C migration scope (per migration-survival.md §4.11 bibliography survives_as_is + §4.2 BPC synthesis survives_with_rederivation). Original entry: B3 COMPLETE for Part 4 (90/90 items). Part 7/8 matrix GRADE ratings deferred to Phase B. Originaligned but not yet applied to ~125 item specifications. Framework in references/evidence-synthesis-integration-2026-04-09.md §F. Requires 3-4 sessions to apply when Stage C reaches the GRADE-application stage. | 2026-04-09 23:00 (reclassified 2026-05-02) |
-| GAP-080 | RP | P1 | CLOSED-CONSUMED | literature-review-planner | Parts 1-12 | Evidence density statements inserted at all 12 Part openings (Block 4 B4 2026-04-19). Commits: f442b48be021 through 24b5e05e3709. See references/evidence-synthesis-integration-2026-04-09... | 2026-04-09 23:00 |
-| GAP-031 | RP | P2 | CLOSED | multilingual-research | visual-alerting-and-wayfinding-light | VIS,DEAF,DBL | JA: 光警報装置 (visual al |
-| GAP-033 | RP | P2 | CLOSED | multilingual-research | luminance-contrast-and-pattern | VIS,DEM,NDV | Thin empirical basis |
-| GAP-034 | RP | P2 | CLOSED | multilingual-research | therapeutic-lighting-design | ALL | Circadian lighting ( |
-| GAP-054 | RP | P2 | CLOSED | multilingual-research | Cluster 1C | Cross-population conflict resolution has no peer-reviewed methodological framework in any language searched. Guidebook Part 5 (Cross-Population Conflict Resolutions) [updated from Part E per CO-0004] is best practice ahead of the f... | 2026-03-19 |
-| GAP-055 | RP | P2 | CLOSED | multilingual-research | Cluster 1A/1B/1C | FR, DE, FI OT bodies (Ergothérapie France, DVE, Suomen Toimintaterapeuttiliitto) produce no built environment design standards or interprofessional design publications. Confirmed in 3 independent l... | 2026-03-19 |
-| GAP-058 | RP | P2 | CLOSED | multilingual-research | Cluster 4/CHD | DIN 18041:2016 explicitly covers hearing-impaired classroom acoustics and disability inclusion law requirements. Not cited in Supplementary Volume Section I.5 (acoustic environment for children) or... | 2026-03-19 |
-| GAP-061 | RP | P2 | CLOSED | multilingual-research | Supp Vol BAR §IV / J-03 | The 300 kg / 3 kN bariatric grab bar load specification has no OT evidence base. HMInfo/UNSW (2015, Tier 3 per D-18) explicitly states: "very little research to direct home modifications specifical... | 2026-03-19 |
-| GAP-062 | RP | P2 | CLOSED | multilingual-research | Cluster 4/CHD | FR/ZH/JA/KO passes for Cluster 4/CHD completed 2026-03-19 session. ZH confirmed strong evidence base (建标156-2011; Beijing 2019; Zhejiang DB3303/T 084-2025). JA confirmed strong (MEXT 2020; 特別支援学校施設... | 2026-03-19 |
-| GAP-071 | RP | P2 | CLOSED | multilingual-research | mobility-built-environment | TIER 5 GAP: Partially resolved 2026-03-25. Retrieved: Habinteg IHDG 2024 (DOI:10.4324/9781003564164), RCOT Adaptations Without Delay 2019, Kelsey IDS (300+ elements), CMHC UD Guide, NCC LHA 4th ed.... | 2026-03-25 20:00 |
-| GAP-073 | RP | P2 | CLOSED | multilingual-research | mobility-built-environment | TIER 3 GAP: Partially resolved 2026-03-25. Retrieved: Clemson et al. (2023) Cochrane CD013258 (22 RCTs, 8463 participants, 38% fall reduction); Gillespie et al. (2012) Cochrane CD007146; Lektip et ... | 2026-03-25 20:00 |
-| GAP-076 | RP | P2 | CLOSED | multilingual-research | residential-kitchen-and-task-surfaces | PARTIAL: 19/24 jurisdictions searched (6 NOT-RUN: NO/SE/DK/FI/SG/BR — likely NO-DATA). BPC PROVISIONAL — tier5 structural gap (8/16). Accepted. | 2026-03-26 16:50 |
-| GAP-077 | RP | P2 | CLOSED | literature-review-planner | Part 4 Category C (C-04) | LRV specification upgrade: formalise two-tier approach (≥30 code floor / ≥65% Michelson evidence-based optimum). Systematic review Deep-Dive 3 confirms 30% LRV is regulatory floor from UK DDA, not ... | 2026-04-09 18:30 |
-| GAP-081 | RP | P2 | CLOSED | literature-review-planner | External research programme | Realist review protocol (DD-8) and Co-1 meta-synthesis protocol (DD-9) designed. Execution requires external research team (6-12 months). Protocols in references/evidence-synthesis-integration-2026... | 2026-04-09 23:00 |
-| GAP-ALS-01 | RP | P2 | CLOSED | multilingual-research | A-10/A-11 | DEAF: Japan (JA) has no mandatory hearing loop provision in any building standard. The Barrier-Free Law (移動等円滑化法) and MLIT building standards do not mandate induction loop installation; all provisi... | 2026-03-19 11:00 |
-| GAP-DBL-BE-02 | RP | P2 | OPEN | multilingual-research | §2.10 (DBL) | Protactile movement (Clark; Nuccio & granda) has articulated a DBL-specific spatial philosophy (distantism critique; co-presence design) that has not been translated into architectural specificatio... | 2026-03-19 14:30 [CO |
-| GAP-IMPL-03 | RP | P2 | OPEN | multilingual-research | H-05 | Real-time captioned transport information: deferred — requires dedicated multilingual-research run before item creation. | 2026-03-18 20:00 |
-| GAP-IMPL-04 | RP | P2 | CLOSED | citation-verifier | A-09 | Desmeules et al. (2003) incomplete citation — no volume/page/DOI. Confirm before publication. | 2026-03-18 20:00 |
-| GAP-IMPL-05 | RP | P2 | CLOSED | citation-verifier | A-09 | Staud (2011) — verify PMID or DOI before publication. | 2026-03-18 20:00 |
-| GAP-LAU-01 | RP | P2 | CLOSED | multilingual-research | R-LAU | Laundry room specification gaps: (1) drum opening height 380–915 mm AFF — only ADA S611 provides quantified spec; all other jurisdictions silent on appliance height; (2) clear floor 762×1219 mm par... | 2026-03-18 17:00 |
-| GAP-LRP-06 | RP | P2 | OPEN | multilingual-research | `threshold-door-hardware` (expansion) | Current evidence base is US/UK/DE/AU only. No MENA, South Asian, or Sub-Saharan African door/threshold evidence. New jurisdictions: IN · EG · ZA · MA · NG. Phase 3-A. | 2026-04-05 18:26 |
-| GAP-LRP-07 | RP | P2 | OPEN | multilingual-research | `pain-ofs-built-environment-design` (exp | Evidence from high-income countries only. OFS/EDS/fibromyalgia adaptation strategies in Global South contexts absent. New jurisdictions: IN · ZA · MX · CO · CL · PE. Phase 3-B. | 2026-04-05 18:26 |
-| GAP-LRP-08 | RP | P2 | OPEN | multilingual-research | `acoustics-speech-intelligibility-disabi | Hearing loop infrastructure negligible in Global South. Alternative assistive listening solutions for low-resource settings absent. New jurisdictions: IN · ZA · NG · KE · EG · ID. Phase 3-C. | 2026-04-05 18:26 |
-| GAP-LRP-09 | RP | P2 | OPEN | multilingual-research | `dementia-built-environment` (expansion) | All dementia-environment research is from high-income countries. Global South dementia rates rising rapidly; no residential design evidence from these populations. New jurisdictions: IN · ZA · MX ·... | 2026-04-05 18:26 |
-| GAP-LRP-10 | RP | P2 | OPEN | multilingual-research | `intellectual-disability-built-environme | Evidence base is almost entirely UK/AU/US. Cultural frameworks for intellectual disability and family/communal care settings in Global South not represented. New jurisdictions: IN · ZA · ID · PH · ... | 2026-04-05 18:26 |
-| GAP-OT-BE-01 | RP | P2 | OPEN | multilingual-research | §9.x (Part 9 — Working with Specialist Consultants) [updated from §VI.2 per CO-0004] | Young et al. (2019) scoping review finding has not changed substantially since 2019: no RCT or controlled evidence of outcome improvement from OT involvement on upstream design teams. The Russell p... | 2026-03-19 14:30 |
-| GAP-RAP-01 | RP | P2 | OPEN | multilingual-research | A-01/A-02/A-08 | NDV/AUT acoustic provisions: no jurisdiction has a quantified RT60 target specific to autistic users. Bettarello et al. (2021) and Caniato et al. (2024) are the strongest available evidence but do ... | 2026-03-19 |
-| GAP-CON-0025 | SW | P2 | OPEN | connection-scout | Outdoor provisions | Sensory-responsive outdoor landscape design for NDV/VIS populations not addressed. SREF framework (Finnigan 2024) and Mostafa "sensory decolonization" concept provide structured approach. Extends g... | 2026-03-26 19:00 |
-| GAP-CON-0026 | SW | P2 | CLOSED | connection-scout | A-16 evidence base | Van Doorn et al. 2024 SAE scoping review + Piller et al. 2025 SBI systematic review confirm mixed evidence for generic sensory rooms and stronger evidence for individualised approaches — supports t... | 2026-03-26 19:00 |
-| GAP-CON-0030 | SW | P2 | CLOSED | connection-scout | Cognitive wayfinding items / CON-0001 | Cognitive ergonomics wayfinding uncertainty model (bioRxiv 2023) and intersection decision-point research (Brunyé 2018) quantify decision-point thresholds currently specified qualitatively. MODERAT... | 2026-03-26 20:20 |
-| GAP-CON-0032 | SW | P2 | CLOSED | connection-scout | Part 1 structure | 2025 scoping review (64 studies, 7 interior design principles for older adult health) validates guidebook item category structure. Relaxation design as distinct category vs guidebook's distributed ... | 2026-03-26 20:20 |
-| GAP-CON-01 | SW | P2 | CLOSED | connection-scout | Part 5 | CON-0009: TWSI serves VIS, DBL, DEM through different mechanisms. DEM application not cross-referenced. | 2026-03-26 18:30 |
-| GAP-CON-02 | SW | P2 | CLOSED | connection-scout | D-01, D-02 | CON-0010: Loop circulation serves DEM, NEU, NDV. Cross-population note missing. TIER-0-CANDIDATE. | 2026-03-26 18:30 |
-| GAP-CON-03 | SW | P2 | CLOSED | connection-scout | A-10, A-11 | CON-0011: DBL residual hearing users benefit from hearing loop. Not in DBL items. | 2026-03-26 18:30 |
-| GAP-CON-04 | SW | P2 | CLOSED | connection-scout | BIO-series | CON-0012: Biophilic outdoor zones serve NDV, DEM, NDV/MH. Consolidate siloed provisions. | 2026-03-26 18:30 |
-| GAP-CON-05-b | SW | P2 | CLOSED | connection-scout | A-09 | CON-0005: PAIN as co-population for resilient flooring (MOB WBV evidence extends to PAIN joint-loading reduction). THIN for PAIN-specific evidence. | 2026-03-26 18:15 |
-| GAP-CON-06 | SW | P2 | CLOSED | connection-scout | Part 4 | CON-0015: Empirical-derivation-from-user principle. State as methodological standard. | 2026-03-26 18:30 |
-| GAP-CON-06-b | SW | P2 | CLOSED | connection-scout | B-01 | CON-0006: MH and OFS as co-populations for circadian lighting. Sleep disruption core symptom for both; circadian entrainment mechanism identical to DEM/NEU. | 2026-03-26 18:15 |
-| GAP-CON-12 | SW | P2 | CLOSED | connection-scout | DAR items | CON-0012: Italian adattabilità (DM 236/89) as statutory DAR precedent. Cross-reference in Part 1 DAR doctrine. | 2026-03-26 18:15 |
-| GAP-CON-15 | SW | P2 | CLOSED | connection-scout | F-02/F-04 | CON-0015: MH as co-population for air quality / fragrance-free items. TID framework: chemical stimuli as PTSD triggers. | 2026-03-26 18:15 |
-| GAP-CR-16 | SW | P2 | CLOSED | critique-report-writer | §4.3 | Sensory coherence described but not operationalised — needs practitioner tool | 2026-03-20 21:00 [CO |
-| GAP-D241-01 | SW | P2 | CLOSED | Phase 3 | 15 | D2-41 PAIN/OFS acoustic items assessment — Session 5 output. A-02 (Acoustic Ceiling Panels NRC ≥0.85), A-08 (HVAC NC-25), A-13 (RT60 ≤0.4 s): all three APPLY PAIN ○ + OFS ○ with THIN-POPULATION-SPE... | Part 4 A-02, A-08, A |
-| GAP-EAA-01 | SW | P2 | CLOSED | connection-scout | H-series items | EAA (EU Directive 2019/882) applies to self-service terminals, touchscreens, BLE beacons, and building management interfaces — which overlap with H-series guidebook items. EU-jurisdiction installat... | 2026-04-02 20:54 |
-| GAP-FDR-01 | SW | P2 | CLOSED | functional-deficit-researcher | accessible-bathroom-and-grab-bar / resid | Bidet/wash-dry spatial specification absent from BPC consensus findings. Water supply ≤200mm, electrical ≤600mm from WC, wall reinforcement for integrated seat needed as explicit spec. Source: Vasi... | 2026-03-26 18:30 |
-| GAP-FDR-01-b | SW | P2 | CLOSED | functional-deficit-researcher | BPC pain-ofs-built-environment-design | OFS shower temperature specification: thermostatic valve ≤37°C mandatory for OFS; hot water contraindicated. No standard addresses this. Conflicts with PAIN warm bath preference — requires dual-pro... | 2026-03-26 17:10 |
-| GAP-FDR-02 | SW | P2 | CLOSED | functional-deficit-researcher | BPC pain-ofs-built-environment-design | Bedroom-bathroom adjacency ≤5 m for OFS/PEM populations: no standard specifies maximum distance. OT energy conservation evidence supports this as critical for PEM management. | 2026-03-26 17:10 |
-| GAP-FDR-03 | SW | P2 | CLOSED | functional-deficit-researcher | BPC pain-ofs-built-environment-design | Seated service counter option for OFS: no standard requires seating at service counters for orthostatic intolerance populations. JAN lists as POTS workplace accommodation. | 2026-03-26 17:10 |
-| GAP-FDR-05 | SW | P2 | CLOSED | functional-deficit-researcher | Outdoor circulation | No standard specifies mandatory shade on primary outdoor routes for OFS heat intolerance | 2026-03-26 23:00 |
-| GAP-FDR-06 | SW | P2 | CLOSED | functional-deficit-researcher | Bedroom / residential | No residential standard specifies adjustable bed head elevation capacity for OFS head-up tilt sleeping | 2026-03-26 23:00 |
-| GAP-FDR-07 | SW | P2 | CLOSED | functional-deficit-researcher | Workplace | No standard requires supine recovery space (lie-down room) in workplaces for OFS/PEM | 2026-03-26 23:00 |
-| GAP-FDR-08 | SW | P2 | CLOSED | functional-deficit-researcher | Entrance | No standard specifies thermal transition zone (vestibule cooling) at entrance for OFS | 2026-03-26 23:00 |
-| GAP-FDR-T0-04 | SW | P2 | CLOSED | connection-scout (Opus) | All building entrances | Entrance recline seating within 5 m — PARTIAL Universal Mode confirmed (OFS, PAIN, MOB/AMB, DEM; neutral others). Route to item-specification-writer: new E-14 Entrance Rest Seating. CON-0037 raised. | 2026-03-28 17:00 |
-| GAP-IMPL-01 | SW | P2 | OPEN | workplan-orchestrator | H-01 | Controls accessible height: 1100mm vs 1200mm tension for powered wheelchair reach range unresolved. Evidence review required for next edition. | 2026-03-18 20:00 |
-| GAP-IMPL-02 | SW | P2 | OPEN | item-specification-writer | G-08 | Resilient/cushioned flooring for PAIN: deferred — single source only; citation floor not met. Requires additional evidence before item creation. | 2026-03-18 20:00 |
-| GAP-NEW-12 | SW | P2 | CLOSED | content-gap-analyzer | R-BED | ALL: DAR provision for ground floor bedroom designation; allows future care needs without structural change; referenced in DAR doctrine but not as a standalone Vol 2 item | 2026-03-17 21:30 |
-| GAP-NEW-13 | SW | P2 | CLOSED | content-gap-analyzer | NR-TRP | VIS,DEAF,DBL: real-time accessible information display at transport interchange points (caption displays, tactile departure boards); absent from guidebook; covered partially by some transport stand... | 2026-03-17 21:30 |
-| GAP-OFS-RECUMBENT-01 | SW | P2 | CLOSED | Phase 3 | 15 | D2-47 recumbent rest specification gap. A-16 requires recumbent rest configuration for OI/PEM populations (ME/CFS, OFS). Clinical basis confirmed: Tier 2 (NICE NG206 §hospital-env, CDC ME/CFS clini... | Part 4 A-16 |
-| GAP-OPS-01 | SW | P2 | CLOSED | evidence-auditor | A-04, B-05, A-09 | Opus synthesis (2026-03-28): three unsupported threshold values must be marked [UNSUPPORTED — concept evidence-based, threshold not evidence-derived] in guidebook body. A-04 20 m restorative interv... | 2026-03-28 |
-| GAP-OPS-02 | SW | P2 | CLOSED | evidence-auditor | WHO APS-15:2022 | Opus synthesis (2026-03-28): WHO APS-15:2022 grab bar rating of 110 kg (242 lbs) is inadequate given KITE Research 1.3 kN peak force finding. Guidebook must flag WHO specification as inadequate and... | 2026-03-28 |
-| GAP-OPS-03 | SW | P2 | CLOSED | item-specification-writer | sensory-relief-space-design / A-16 | Opus synthesis (2026-03-28): proximity to accessible toilet must be elevated from location note to mandatory adjacency requirement in A-16. Not currently in guidebook spec. Amaze/Architecture and A... | 2026-03-28 |
-| GAP-SCOPE-01 | SW | P2 | OPEN | Phase 3 | 15–18 | Part 4/Part 8 deduplication — Part 4 is the single specification source for all performance targets (architectural authority). Part 8 is a coordination register mapping architect specifications to ... | Part 4, Part 8 |
-| GAP-SCOPE-03 | SW | P2 | OPEN | Phase 3 | 18 | No operational annex for building policy specifications. 8 purely operational requirements (fragrance enforcement, furniture rearrangement, queue management, staffing models, response protocols, cl... | New Part or Annex |
-| GAP-SCOPE-04 | SW | P2 | CLOSED | Phase 3 | 15–17 | "Adjustable" operability audit required. Conflict-matrices SYNTHESIS identifies that "adjustable" fails for DEM late stage, IntD without support, and shared ambient parameters. Every specification ... | Part 4 all items wit |
-| GAP-SCOPE-05 | SW | P2 | CLOSED | Phase 3 | 15–16 | Mode S OT handoff flags missing on ~15 BPC specifications with ranges. Grab bar height 650–900mm, turning circle 1500/1800mm, worktop 650–900mm, closet rod 1050/1200mm, seating interval 25–50m, toi... | Part 4 items G-03, G |
-| GAP-SCOPE-06 | SW | P2 | CLOSED | Phase 3 | 15, 17 | Specialist review gates missing for DEM-primary and NDV-primary items. D-01 (loop plan), D-03 (toilet visibility) need mandatory dementia specialist review at SD per Part 9 §9.3. A-16, F-01 need ma... | Part 4 items D-01, D |
-| GAP-SCOPE-07 | SW | P2 | CLOSED | Phase 3 | 15 | Five unsupported threshold values in specifications. A-04 20m restorative interval, B-05 5m lighting transition, A-09 0.1 m/s RMS vibration — cross-population-conflict BPC flags all three as [UNSUP... | Part 4 items A-04, A |
-| GAP-STEP6-03 | SW | P2 | CLOSED | item-specification-writer | E-08 | DBL intervenor width: ≥1500mm on primary routes where DBL identified. DIN 18040-1 evidence. | 2026-03-18 20:00 |
-| GAP-CONF-03 | CR | P2 | OPEN | 2B | 8+ | Dementia village literature synthesis: Hogeweyk, Village Landais Alzheimer, and derivatives as cross-population case studies (DEM+MOB 40%+VIS+DEAF). Freedom-of-movement vs fall-prevention tension d... | Richest evidence vei |
-| GAP-CONF-04 | CR | P2 | OPEN | 2B | 8+ | DEAF↔NDV/AUT spatial conflict: DeafSpace open/transparent design vs ASPECTSS compartmentalised design. Gallaudet campus itself documents the tension (sensory room request). No built-project resolut... | Theoretical only; no |
-| GAP-CONF-05 | CR | P2 | OPEN | 5 | 20+ | sensory-coherence-checker known conflict patterns table (6 entries) needs expansion to 12 domains from cross-population-conflict-mapper output. Phase 5 dependency. | Blocked until GAP-CO |
-| GAP-CONF-ACOU-01 | CR | P2 | OPEN | 2B | — | No controlled comparison of sound masking vs no-masking for NDV/PAIN populations. Current prohibition is PAS 6463 guidance + clinical plausibility. Needed: Tier 3 study on masking effect on NDV/PAI... | cross-population-con |
-| GAP-CONF-ACOU-02 | CR | P2 | OPEN | 2B | — | SFA in mixed-population educational settings: no study measures NDV/SENS response to classroom SFA. Prohibition in NDV-designated spaces is extrapolated from general noise sensitivity evidence. Nee... | cross-population-con |
-| GAP-CONF-LIGHT-01 | CR | P2 | OPEN | 2B | — | Resolution 3 validity: no study compares migraine response to indirect vs direct delivery at equivalent melanopic EDI. Indirect delivery reduces perceptual glare but may not resolve ipRGC/melanopic... | cross-population-con |
-| GAP-CONF-LIGHT-02 | CR | P2 | OPEN | 2B | — | Three-zone illuminance model (CON-0016) assembled from separate evidence bases (Brown 2022, PAS 6463, WELL v2). No POE of integrated system in multi-population facility. Needed: facility-level eval... | cross-population-con |
-| GAP-CONF-LIGHT-03 | CR | P2 | OPEN | 2B | — | Temporal dosing protocol (morning circadian window for photosensitive NEU/MH/OFS populations) — clinical plausibility but no RCT for built-environment implementation. Intra-individual co-occurring ... | cross-population-con |
-| GAP-CONF-LQUAL-02 | CR | P2 | OPEN | 2B | — | No co-occurrence facility POE measuring circadian CCT programme impact on NDV/AUT residents in aged care settings. | cross-population-con |
-| GAP-CONF-SPAT-01 | CR | P2 | OPEN | 2B | — | Prospect-refuge zoning in multi-population facility: no POE of integrated prospect (DEAF open/signing) and refuge (NDV/AUT enclosed/low-stimulation) zones. Individual components have evidence; inte... | cross-population-con |
-| GAP-CONF-SPAT-02 | CR | P2 | OPEN | 2B | — | Glazed junction multi-population response: DeafSpace glass corners implemented at Gallaudet but no POE measuring VIS glare, DEM reflective confusion, or NDV visual complexity response to anti-refle... | cross-population-con |
-| GAP-CONF-SPAT-03 | CR | P2 | OPEN | 2B | — | DEAF+NDV/AUT co-occurring: no built example of environmental refuge (A-16) with translucent/transparent panel to adjacent signing space. Gallaudet neurodivergent deaf students documented as needing... | cross-population-con |
-| GAP-CONF-TEMP-01 | CR | P2 | OPEN | 2B | — | No POE data from facilities implementing cool-ambient + individual-heating strategy for mixed disability populations. Resolution is clinically inferred, not empirically validated. | cross-population-con |
-| GAP-CONF-TEMP-03 | CR | P2 | OPEN | 2B | — | Intra-individual conflict: person with MS + fibromyalgia (co-occurring). No architectural resolution — clinical management domain. Guidebook should acknowledge limitation. | cross-population-con |
-| GAP-CO03-01 | ST | P2 | CLOSED | 3 | 11 | Part 2 introduction: add methodology note on co-occurring disability as norm | Part 2 writing sessi |
-| GAP-CO03-02 | ST | P2 | CLOSED | 3 | 12 | Part 3 title change applied in guidebook body | Parts 3+4 writing se |
-| GAP-CO03-03 | ST | P2 | CLOSED | 3 | 12 | Part 3 §3.2.3 "Co-Occurrence as Norm, Not Exception" added | New subsection |
-| GAP-CO03-04 | ST | P2 | CLOSED | 3 | 15 | Part 7 title change applied in guidebook body | Part 7 writing sessi |
-| GAP-CO03-05 | ST | P2 | CLOSED | 3 | 15 | Part 7 §7.1 rewrite: distinguish intra-individual from inter-group | §7.1 + §7.2 revision |
-| GAP-CO03-06 | ST | P2 | CLOSED | 3 | 15–16 | Part 7 §7.3 entries tagged [INTRA-INDIVIDUAL] / [INTER-GROUP] / [BOTH] | Per-entry tagging |
-| GAP-CO03-07 | ST | P2 | CLOSED | 3 | 10 | Part 1 §1.4 framework addition: three-tier as co-occurrence resolution | Part 1 writing sessi |
-| GAP-CO03-08 | ST | P2 | CLOSED | 3 | 17 | Part 8 title + §8.4 split (intra vs inter) when Part 8 created | Part 8 new content s |
-| GAP-CO03-10 | ST | P2 | OPEN | 4 | 19 | find-and-replace: "cross-population" → context-dependent in guidebook body | Bundled with CO-0001 |
-| GAP-CO04-04 | ST | P2 | CLOSED | 0R | Next session | gap_register.md entries referencing old Part numbers need updating | ~20 entries |
-| GAP-CO04-05 | ST | P2 | CLOSED | 0R | Next session | CO-0001, CO-0002, CO-0003 cross-reference notes for CO-0004 | Add supersession/com |
-| GAP-CO04-06 | ST | P2 | CLOSED | 3 | Sessions 13–14 | Parts 6/7 matrices: add inline room-level conflict notes (new scope per CO-0004) | New writing requirem |
-| GAP-CO04-07 | ST | P2 | CLOSED | 3 | Session 18 | Part 9 §9.9/§9.10: add co-occurrence collaboration protocol + OT threshold | New sections |
-| GAP-CO04-08 | ST | P2 | OPEN | 4 | Session 19 | Full find-and-replace: all Part number references in guidebook body text | Bundled with CO-0001 |
-| GAP-CO04-09 | ST | P2 | CLOSED | 2C or 3 | As touched | Connection register Part number references in disposition notes need updating | Inline |
-| GAP-CO04-10 | ST | P2 | CLOSED | 2C or 3 | As touched | BPC entries referencing old Part numbers in synthesis directions need updating | Inline |
-| GAP-CR-01 | ST | P2 | OPEN | critique-report-writer | Master Bibliography | Bibliography section contains 12 lines metadata, zero actual references. RECLASSIFIED P1→P2 2026-03-29: bibliography-compiler requires upstream REF-ID markers and sources-cited tables which do not ... | 2026-03-20 21:00 · u |
-| GAP-PROTO-07 | ST | P2 | OPEN | intersectionality-checker | ALL | intersectionality-checker skill not yet built. Compound-identity gap flag needed for Full Section Review. Build in P2 phase. | 2026-03-19 04:08 |
-| GAP-XREF-01 | ST | P2 | CLOSED | cross-reference-resolver | Application matrices / Part 5-6 | J-series item codes (J-01 through J-08) referenced in application matrices and body text. Category J deleted per GAP-STRUCT-01 (Decision Register). References not yet cleaned up — Phase 4 find-and-... | 2026-03-28 17:50 [CO |
-| GAP-XREF-02 | ST | P2 | CLOSED | cross-reference-resolver | Application matrices / Part 7 | F-06, F-07, H-05, H-06, I-04, I-05, I-06 referenced in matrices but no headings in Part 7. Pre-existing phantom item codes from earlier drafts. Phase 3 writing task — determine whether items are ne... | 2026-03-28 17:50 [CO |
-| GAP-S4-N01 | MX | P2 | OPEN | content-gap-analyzer | N-EDU | DBL: school corridor tactile guide lines; assembly hall vibrotactile paging. IntD: accessible toilet pictogram signage; familiar classroom layout; quiet withdrawal spaces (partially covered under N... | 2026-03-18 17:30 [CO |
-| GAP-S4-N02 | MX | P2 | OPEN | content-gap-analyzer | N-HEA | DBL: tactile approach to consultation table; tactile room identification; consistent room layout across ward for tactile memory. IntD: NICE NG93 provisions for learning disability inpatient setting... | 2026-03-18 17:30 [CO |
-| GAP-S4-N03 | MX | P2 | OPEN | content-gap-analyzer | N-OFF | DBL: workplace provisions entirely absent — workstation design; meeting room haptic communication space; consistent layout. IntD: supported employment settings; consistent workstation layout; picto... | 2026-03-18 17:30 [CO |
-| GAP-S4-N04 | MX | P2 | OPEN | content-gap-analyzer | N-RET | DBL: tactile route through main retail floor; consistent department layout. IntD: visual complexity management — simplified wayfinding (D-02/D-08); reduced decision points; muted sensory environmen... | 2026-03-18 17:30 [CO |
-| GAP-S4-N05 | MX | P2 | OPEN | content-gap-analyzer | N-CUL | DBL: tactile models at gallery (flagged as "where feasible" — must be upgraded to normative provision); tactile building map at entrance. IntD: easy-read exhibit labels; simplified maps; quiet room... | 2026-03-18 17:30 [CO |
-| GAP-S4-N05-ITEM | MX | P2 | OPEN | content-gap-analyzer | N-CUL | GAP-ITEM-NEW: DBL-02 interpreter seating — define as discrete item: clear floor ≥1200×1500mm for DeafBlind person + intervenor; end of row; direct sightline to performance/worship area | 2026-03-18 17:30 [CO |
-| GAP-S4-N06 | MX | P2 | OPEN | content-gap-analyzer | N-HOS | DBL: hotel room vibrotactile door alarm; phone alert; fire alarm; consistent room layout (identical across all accessible rooms); matte bathroom fixtures. IntD: clear wayfinding from entry to room;... | 2026-03-18 17:30 [CO |
-| GAP-S4-N07 | MX | P2 | OPEN | content-gap-analyzer | N-TRP | DBL: vibrotactile train approach alert not specified (TWSI is present but DBL-specific provision absent); concourse tactile guide line system. IntD: cognitive accessibility provisions (D-02/D-08/pi... | 2026-03-18 17:30 [CO |
-| GAP-S4-R01 | MX | P2 | OPEN | content-gap-analyzer | R-ENT | DBL: tactile approach route from street/site boundary to entry door not specified (Norges Blindeforbund requirement); vibrotactile/tactile bell not specified | 2026-03-18 17:30 [CO |
-| GAP-S4-R02 | MX | P2 | OPEN | content-gap-analyzer | R-GAR | DBL: tactile route from parking position to interior door; tactile/visual contrast on all transitions. DEM: consistent layout; no navigation complexity in garage interior. OFS: protected thermal tr... | 2026-03-18 17:30 |
-| GAP-S4-R03 | MX | P2 | OPEN | content-gap-analyzer | R-BED | DBL: consistent furniture layout (D-09) critical for tactile navigation; tactile landmark at bedroom door. IntD: personalised bedroom as refuge space per prospect-refuge theory; memory box/personal... | 2026-03-18 17:30 [CO |
-| GAP-S4-R04 | MX | P2 | OPEN | content-gap-analyzer | R-BAT | DBL: consistent bathroom layout; matte fixtures for residual vision; tactile identification of all controls. IntD: consistent bathroom layout across all units (same layout per floor per NDIS SDA) | 2026-03-18 17:30 [CO |
-| GAP-S4-R05 | MX | P2 | OPEN | content-gap-analyzer | R-LIV | DBL: consistent furniture layout (D-09); haptic communication clear floor zone ≥2400×2400mm for DeafBlind person + intervenor; matte table surfaces. IntD: prospect space principles; personalisation | 2026-03-18 17:30 [CO |
-| GAP-S4-R06 | MX | P2 | OPEN | content-gap-analyzer | R-KIT | DBL: consistent kitchen layout; all surfaces matte; tactile appliance identification. IntD: familiar domestic kitchen scale (not institutional); intuitive controls; routine-supportive layout | 2026-03-18 17:30 [CO |
-| GAP-S4-R07 | MX | P2 | OPEN | content-gap-analyzer | R-HAL | DBL: ≥1500mm corridor width for intervenor accompaniment not applied to R-HAL; tactile guide line from entry to all primary rooms. IntD: pictogram at all internal door junctions (D-08); consistent ... | 2026-03-18 17:30 [CO |
-| GAP-S4-R08 | MX | P2 | OPEN | content-gap-analyzer | R-STR | DBL: tactile warning dome field at top and bottom of each stair run; handrail tactile return at each landing. IntD: high-contrast nosing already standard — extend to IntD population rationale | 2026-03-18 17:30 [CO |
-| GAP-S4-R09 | MX | P2 | OPEN | content-gap-analyzer | R-LAU | DBL: consistent laundry layout; tactile identification of appliance controls. IntD: familiar layout; intuitive controls. PAIN/OFS: laundry room provisions absent (energy conservation — seated task;... | 2026-03-18 17:30 [CO |
-| REVIEW-S4-01 | MX | P2 | OPEN | workplan-orchestrator | ALL ROOMS | 3 escalation signals: GAP-S4-SYST-01 (DBL absent from 15/16 rooms); GAP-S4-N05-ITEM (undefined item referenced in main text). Recommend: (1) DBL/IntD systematic insertion pass using item-specificat... | 2026-03-18 17:30 [CO |
-| GAP-KAWA-01 | CD | P2 | CLOSED | connection-scout | Part 1 §1.4 | Kawa Model recommended as primary framing language for guidebook item specifications (barriers external, not person-deficit; most direct CRPD social model alignment). PEOP confirmed as most interna... | 2026-04-02 20:54 |
-| GAP-P8-01 | CD | P2 | CLOSED | 3 | Session 12 | Part 3 §3.8 resolution decision tree: original practitioner methodology — flag per GAP-054 | Original contributio |
-| GAP-P8-02 | CD | P2 | CLOSED | 3 | Session 12 | Part 3 §3.9 strategies menu: no peer-reviewed taxonomy exists — guidebook contribution | Original contributio |
-| GAP-ECON-01 | EC | P2 | CLOSED | economics-researcher | Part 11 §11.4 | Kitchen/workspace cost table absent from §11.4. H-01, H-02 items have no cost intelligence. Kitchen is second-most-expensive room to retrofit after bathroom. | 2026-04-09 18:03 |
-| GAP-ECON-02 | EC | P2 | CLOSED | economics-researcher | Part 11 §11.4 | Bedroom/ceiling hoist cost table absent from §11.4. Part 10 DAR documents ×20–40 retrofit multiplier for ceiling hoist blocking but this data is not cross-referenced in Part 11 cost tables. | 2026-04-09 18:03 |
-| GAP-ECON-04 | EC | P2 | CLOSED | economics-researcher | Part 11 §11.3 | SROI and QALY methodologies absent from §11.3 value framework. Evidence exists: Foundations UK SROI for DFG; BATH-OUT-2 SF-36→QALY; CAPABLE $10K–$22K ROI. | 2026-04-09 18:03 |
-| GAP-ECON-05 | EC | P2 | CLOSED | economics-researcher | Part 11 §11.8.3 | NDIS SDA (~A$600M/year, 4 design categories, $35K–$117K/participant/year) not referenced anywhere in guidebook. Most comprehensive government-backed accessible housing programme globally. Added to ... | 2026-04-09 18:03 |
-| GAP-ECON-05 | EC | P2 | CLOSED | economics-researcher | Part 11 | NDIS SDA (~A$600M/year, 4 design categories, ~25,500 participants) not referenced anywhere in guidebook. Most comprehensive government-backed accessible housing investment programme globally. Four ... | 2026-04-09 18:03 |
-| GAP-GRANTS-01 | EC | P2 | CLOSED | connection-scout | Economics / Bibliography | Quebec PAD grant programme suspended April 2025; KfW 455-B grant suspended January 2025. Any existing guidebook citations to these programmes are stale and must be corrected before v9.0 publication... | 2026-04-02 20:54 |
-| GAP-PROTO-06 | ST | P2 | OPEN | poe-assessor | ALL | poe-assessor skill not yet built. No POE methodology exists for accessible design in any language. Build before POE slugs are run. | 2026-03-19 04:08 |
-| GAP-030 | RP | P3 | OPEN | multilingual-research | visual-alerting-and-wayfinding-light | VIS,DEAF,DBL | KO: No dedicated vis |
-| GAP-032 | RP | P3 | OPEN | multilingual-research | luminance-contrast-and-pattern | VIS,DEM,NDV | ZH, JA, KO: Dementia |
-| GAP-035 | RP | P3 | OPEN | multilingual-research | visual-alerting-and-wayfinding-light | VIS,DEAF,DBL | No jurisdiction has  |
-| GAP-057 | RP | P3 | OPEN | multilingual-research | Cluster 1A/1B/1C | FI/FR/NL confirmed NO-DATA across 3+ search attempts for OT interprofessional design. Scope-gate threshold met. Recommend moving these three languages to extended-language set for this slug. | 2026-03-19 |
-| GAP-065 | RP | P3 | OPEN | multilingual-research | Cluster 1A/1B/1C | IT (AITO) scope-gate candidate confirmed alongside FR/NL/FI. Four languages confirmed NO-DATA/THIN for OT interprofessional built environment design searches. | 2026-03-19 |
-| GAP-075 | RP | P3 | OPEN | multilingual-research | mobility-built-environment | ES THIN: CERMI and CTE/SUA retrieved; no OT-specific or Co-1 research found in Spanish for MOB built environment; CERMI advocacy publications need direct retrieval | 2026-03-19 22:30 |
-| GAP-ALS-02 | RP | P3 | OPEN | multilingual-research | A-11 | DEAF: The French CEREMA standard (Arrêté 20 avril 2017 + CEREMA 2021) requires hearing loops (BIM — boucle à induction magnétique) in all ERP categories 1–4 AND in all assembly spaces ≥50 seats. Th... | 2026-03-19 11:00 |
-| GAP-B4-09 | RP | P3 | OPEN | multilingual-research | NEW-ITEM | PAIN: cushioned/resilient flooring specification for joint impact reduction; expert consensus only — flag as thin evidence | 2026-03-18 16:30 |
-| GAP-IMPL-06 | RP | P3 | OPEN | multilingual-research | I-02 | Kitchen one-handed operation: single grey literature source only (ILCWA). Citation floor failure. | 2026-03-18 20:00 |
-| GAP-LAU-02 | RP | P3 | OPEN | multilingual-research | R-LAU | NDIS SDA High Physical Support specifies laundry appliances accessible from seated/standing with adjustable height — this is the most advanced jurisdiction-specific provision; consider as best-prac... | 2026-03-18 17:00 |
-| GAP-LRP-12 | RP | P3 | OPEN | multilingual-research | `post-occupancy-evaluation-global` (new  | No POE studies from Global South in any BPC entry. POE is the only evidence of actual performance. Phase 4. | 2026-04-05 18:26 |
-| GAP-CON-0020 | SW | P3 | OPEN | connection-scout | DEAF/VIS/DEM/NDV | DEAF glazed corridor junctions (DeafSpace) may conflict with VIS glare, DEM reflective confusion, NDV visual complexity. Four-way conflict unassessed. Possible mitigations: anti-reflective coating,... | 2026-03-26 18:30 |
-| GAP-CON-07 | SW | P3 | OPEN | connection-scout | DBL+NDV/MH | CON-0016: Protactile distantism parallels TID. Research question only. | 2026-03-26 18:30 |
-| GAP-CON-16 | SW | P3 | OPEN | connection-scout | C-04/D-02 | CON-0016: Luminance contrast (VIS) + floor pattern (DEM) + TWSI (VIS/DBL) spatial interaction. Coordination cross-reference note needed. SPECULATIVE. | 2026-03-26 18:15 |
-| GAP-FDR-04 | SW | P3 | OPEN | functional-deficit-researcher | BPC pain-ofs-built-environment-design | Anti-fatigue/cushioned flooring for PAIN: no standard specifies impact absorption properties for chronic pain populations. Evidence base is thin (expert consensus only). | 2026-03-26 17:10 |
-| GAP-RAP-04 | SW | P3 | OPEN | bibliography-updater | Appendix A / bibliography | AIJ AIJES-S001-2008 (学校施設の音環境保全基準) — primary Japanese room acoustic standard for schools — absent from guidebook bibliography and Appendix A. Add before next publication. | 2026-03-19 |
-| GAP-RAP-05 | SW | P3 | OPEN | bibliography-updater | Appendix A / bibliography | UNI 11532-2:2020 — primary Italian school acoustic standard; explicitly addresses hearing-deficit and attention/concentration disorder populations (categoria A3.1/A4); absent from guidebook bibliog... | 2026-03-19 |
-| GAP-CONF-CCONT-01 | CR | P3 | OPEN | 2B | — | No controlled study comparing DEM wayfinding performance with high-chroma vs desaturated colour coding (holding 3D objects and LRV contrast constant). | cross-population-con |
-| GAP-CONF-LQUAL-01 | CR | P3 | OPEN | 2B | — | No evidence on NDV/AUT tolerance of graduated CCT transitions (≤50K/hr). LIGHT-QUAL Resolution 3 is clinical plausibility only. | cross-population-con |
-| GAP-CONF-MOVE-01 | CR | P3 | OPEN | 2B | — | Acute psychiatric wards: MH populations may present with fall risk AND need for secure containment (involuntary admission). Clinical governance domain — guidebook should acknowledge boundary. | cross-population-con |
-| GAP-CONF-PRED-01 | CR | P3 | OPEN | 2B | — | Multi-use community rooms serving both NDV/AUT and variable MOB users: no evidence on standardised layout with reset protocol satisfying both populations. | cross-population-con |
-| GAP-CONF-TEMP-02 | CR | P3 | OPEN | 2B | — | DEM late-stage thermal preference poorly characterised. Baquero 2023 reports 24.9°C neutral for older adults generally; no dementia-specific thermal comfort study found. | cross-population-con |
-| GAP-CONF-VCOMP-01 | CR | P3 | OPEN | 2B | — | IntD wayfinding evidence is thin (THIN-BASE per project-standards). IntD benefit from pictograms inferred from DEM evidence + clinical reasoning. No IntD-specific wayfinding study found. | cross-population-con |
-| GAP-CO03-09 | ST | P3 | OPEN | 2C | 9 | Connection register: tag all 38 entries INTRA/INTER/BOTH | Bundled with connect |
-| GAP-CO03-11 | ST | P3 | OPEN | 2B–3 | ongoing | BPC content terminology update (ongoing as BPCs touched) | No separate pass; ap |
-| GAP-CO03-12 | ST | P3 | OPEN | 3 | 18 | Population code `+` notation documented in glossary | Back matter session |
-| GAP-CO03-13 | ST | P3 | OPEN | 2C | 9 | Slug registry: add CO-0003 terminology notes for frozen slug names | Bundled with slug re |
-| GAP-XREF-03 | ST | P3 | OPEN | cross-reference-resolver | Parts 1-6 | D-18 cited as rule reference ("D-18 rule") — not an item code. Labelling inconsistency in evidence hierarchy section. Author decision: rename to avoid item-code confusion. | 2026-03-28 17:50 |
-| GAP-ECON-03 | EC | P3 | OPEN | economics-researcher | Part 11 §11.4 | Emergency egress cost table absent from §11.4. Refuge of rescue is a Brief-stage decision with high retrofit cost. BS 9999, DIN 18040-1 provide evidence. | 2026-04-09 18:03 |
-| GAP-DOI-01 | RP | P2 | OPEN-PARTIAL | jurisdiction-tracker | All BPC Key sources tables | ~45 GREY flags. Session 1: 2 resolved (RAP-12, MST-02). Session 2: 3 resolved (OTI-02 Wellecke, ULB-05 Kennedy, AQV-01 Afrin). Session 3: 2 resolved (TBE-01 Griggs PMID:30610000, TBE-04 Flensner PMID:21352533); 2 annotated ambiguity (POD-04, MST-04/TCO-01). Session 4 (2026-04-19): POD-11 flagged POSSIBLE-ERROR (Ismail 2023 FM hydro SR not locatable). Remaining ~32 non-PubMed items require journal website lookup: Archnet-IJAR (Rashid, Watchorn), AOTJ (OTI-03 Russell), Indoor Air (TCO-02 Van Hoof), J Appl Sci (TCO-04 Nakayama), Architectural Science Review, NAT-07 Weber, ULB-02 Togni, and lighting BPC items (TLD-01/02/03). Recommend desktop session with institutional access. POD-03 PMC6260403 also flagged WRONG-MATCH — correct PMC ID unknown. Total resolved: 7 items. Total flagged errors: 5 items. Remaining genuine GREY: ~28 items. Non-PubMed: OTI-03 Russell AOTJ, TBE-01/04/05 thermoregulation, TCO-01/02/04 thermal comfort, Archnet-IJAR papers. Priority: Tier 1 citations first (OTI-02 Wellecke, OTI-03 Russell, POD-03/04). See phase-b-handoff.md §10 Decision 4. | 2026-04-19 |
-| GAP-CITE-01 | RP | P2 | OPEN-PARTIAL | citation-tagger | Parts 1-12 | RECLASSIFIED P1→P2 2026-05-02 per audit_2026-04-30 R8 + workplan/gap-p1-reclassification-recommendation.md Option B + D-0122. Targets Stage C migration scope — Parts 1-12 prose-form is SUPERSEDED per migration-survival.md §4.2; the underlying claim-to-source citations migrate forward in re-derived form rather than continuing to populate the pre-pivot prose. Original entry: Citation tagging Step 2: populate ref_ids for 1,382 claims. Session 1 (2026-04-19): Part 4 Cat A — 45 TAGGED, 17 DEFERRED, 11 ORPHANED. Session 2 (2026-04-19): Part 4 Cat B-C — 38 TAGGED, 6 DEFERRED, 0 ORPHANED. Session 3 (2026-04-19): Part 4 Cat D-E — 164 TAGGED, 29 DEFERRED, 0 ORPHANED. Session 4 (2026-04-19): Part 4 Cat F-G — 139 TAGGED, 15 DEFERRED, 0 ORPHANED. Running total: 386 TAGGED / 67 DEFERRED / 11 ORPHANED / 918 PENDING. Registry gaps (cumulative): CAOT 2018 ABI, IEEE 1789-2015 flicker, CNIB 2024, Invalidiliitto 2022, BS 9999:2017, NAS 2023 autism-friendly, JOTA 2022 grab bar contrast, ADI 2020 World Alzheimer Report; NEW (F-G scope): Krupp 2003 MS fatigue diurnal (F-07 FDR-MST-02), Raj 2013 orthostatic onset (G-06 FDR-OFS-01), Stewart 2012 OI clinical data (G-06 FDR-OFS-01). All tagged with best-available supporting refs. Next at Stage C: Session 5 Part 4 Cat H-I-K (~94 remaining claims) — but per migration-survival.md, these will be re-cited in the new storage form rather than completing the pre-pivot prose tagging. | 2026-04-19 (reclassified 2026-05-02) |
-
-
----
-
-## Phase 2A — Jurisdiction Coverage Audit P1 Gaps
-**Added:** 2026-04-24 06:32
-**Source:** Phase 2A automated audit — 93 BPC files × 49 registry jurisdictions
-
-### ABSENT jurisdictions (in registry, zero BPC coverage)
-These 24 jurisdictions have standards in the registry but no confirming evidence
-or explicit NO-DATA entries in any BPC slug. Priority for scoping assessment:
-
-| Code | Region | Standards in registry |
-|---|---|---|
-| AR | Latin America | 1 |
-| BD | South/SE Asia | 1 |
-| CL | Latin America | 1 |
-| CO | Latin America | 1 |
-| CR | Latin America | 1 |
-| EC | Latin America | 1 |
-| EG | MENA | 1 |
-| ET | Sub-Saharan Africa | 1 |
-| GH | Sub-Saharan Africa | 1 |
-| GT | Latin America | 1 |
-| ID | South/SE Asia | 1 |
-| IN | South Asia | 2 |
-| INT | International bodies | 16 |
-| KE | Sub-Saharan Africa | 1 |
-| MA | MENA | 1 |
-| MX | Latin America | 1 |
-| NG | Sub-Saharan Africa | 1 |
-| PE | Latin America | 1 |
-| PH | South/SE Asia | 1 |
-| TH | South/SE Asia | 1 |
-| TZ | Sub-Saharan Africa | 1 |
-| UN | International | 1 |
-| UY | Latin America | 1 |
-| ZA | Sub-Saharan Africa | 1 |
-
-**Recommended action:** Scope-gate Latin America (LAC) as a cluster. 
-INT and UN standards should be propagated into relevant domain slugs explicitly.
-South/SE Asia cluster (BD, ID, PH, TH) — assess for wayfinding-global-south slug.
-
-### PARTIAL-THIN jurisdictions (coverage thin, >5 NO-DATA gaps)
-| Code | Confirmed slugs | NO-DATA slugs | Status |
-|---|---|---|---|
-| CN | 2 | 7 | Scope-gate candidate |
-| IT | 9 | 11 | Research priority — AITO outreach needed |
-| NL | 9 | 8 | Confirmed research absence — scope-gate |
-| ES | 5 | 7 | Research priority — LAC evidence may transfer |
-| KR | 7 | 6 | Korean standards present; OT literature needed |
-
-### Slugs with highest jurisdiction gap burden
-| Slug | NO-DATA entries | Action |
-|---|---|---|
-| ALL-ROOMS.md | 49 | FROZEN file — migrate data to topic slugs |
-| residential-entry-and-threshold.md | 11 | Priority for ES/PT/IT/NL research |
-| DEAF.md | 10 | FROZEN — canonical at deaf-spatial-design |
-| reach-range-and-accessible-controls.md | 10 | Priority for JP/KR/CN coverage |
-| residential-kitchen-and-task-surfaces.md | 9 | Priority for ES/IT/PT |
-
-### OPEN P1 items added
-- GAP-JUR-AR: AR — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-BD: BD — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-CL: CL — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-CO: CO — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-CR: CR — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-EC: EC — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-EG: EG — no BPC coverage; assess scope-gate vs targeted research
-- GAP-JUR-ET: ET — no BPC coverage; assess scope-gate vs targeted research
-- GAP-FROZEN: 15 root-level FROZEN slug files — confirm superseded by topic slugs
-- GAP-SCOPE-CN: CN/ZH formally scope-gate in affected slugs (GAP-055 extension)
-- GAP-SCOPE-NL: NL formally scope-gate in affected slugs (GAP-057 extension)
-
-
----
-
-## GAP-THERMAL-01 — Thermal Comfort Assessment Spec Item Missing
-**Added:** 2026-04-24 07:34
-**Source:** CON-0184 (connection-scout Opus run) → ISW execution pass
-**Priority:** P2
-
-Van Hoof et al. 2010 (verified T3, DOI:10.1016/j.buildenv.2009.06.017) demonstrates that PMV/PPD thermal comfort models (ISO 7730) are unreliable for DEM, NEU/MS, and OFS populations who cannot self-report thermal discomfort or thermoregulate normally. No part04 item addresses thermal comfort assessment methodology.
-
-**Gap:** No spec item for thermal comfort assessment protocol — only F-07 addresses thermal zoning (ambient temperature targets). Required: a new spec item specifying PMV/PPD contraindication + alternative assessment methods (objective physiological monitoring, proxy-report protocols) for DEM/NEU/OFS.
-
-**Action:** Create new spec item (likely K-05 or append to F-07) specifying:
-- PMV/PPD contraindicated for DEM, NEU, OFS [○ inferred]
-- Alternative: behavioural observation protocols, skin temperature sensors, proxy-report
-- Evidence: van Hoof 2010 (●), WHO HHGL 2018 (●)
-
-**OPEN**
-
-
----
-
-## GAP-VOICE-01 — Part 4 Mandatory Voice Audit
-**Added:** 2026-04-29 04:22
-**Source:** A4 Session 2 (voice-style advocacy identity propagation)
-**Priority:** P3 — route to C9 prose migration
-**Skill:** voice-style + (future) prose migration tools
-
-A4 Session 2 completed 15 voice-style reframes across Parts 1, 4, 8, 9 (commit 6d40fb3b7fd2) addressing high-confidence advocacy-identity violations: blanket "shall be", unlocated "DAR is mandatory", "operates above the code floor", "this document governs" overreach. 
-
-**Remaining work (Part 4):** 36 instances of "mandatory" detected in Part 4. Sample analysis indicates the **majority are legitimate** — jurisdictional comparison table cells describing external mandates (e.g., "UK is the ONLY jurisdiction where Changing Places are mandatory", "DE | DIN/TS 67600 | Mandatory workplace"). Voice-style §8 explicitly permits "mandatory" when citing external mandates.
-
-**Subset requiring location:** approximately 5–10 instances are Guidebook self-mandates without explicit location, e.g.:
-- "≥30 LRV contrast mandatory at all step edges"
-- "LBD environments: plain matte uniform mandatory"
-- "Vibrotactile alerting is mandatory where DEAF, DBL, or photosensitive populations"
-- "recline capability is mandatory" (item I-XX)
-- "Insulated bar coatings mandatory where PAIN is primary"
-- "PAIN/OFS thermostatic shower mandatory"
-
-These need either: (a) explicit Guidebook-voice locator ("This guidebook treats X as mandatory..."), (b) reframe as evidence-located construction ("Tier 3 evidence supports X as the minimum..."), or (c) downgrade to "required" / "essential" with consequence framing.
-
-**Action (deferred to C9 prose migration):**
-1. Per-instance categorization: external mandate (no action) vs. Guidebook self-mandate (locate)
-2. Apply voice-style §8.1 tier-appropriate construction to self-mandates
-3. Decision protocol per instance — recorded per A12 capture protocol
-
-**Estimate:** Single C9 session, after Part 4 migration to structured data per C5 (items + room set migration). Acting before C5 risks duplicate work — voice review post-migration can apply to the YAML field directly.
-
-**OPEN — routes to C9**
-
-| GAP-082 | CI | P2 | CLOSED | workplan-orchestrator | scripts/validate_bpc.py + scripts/validate_jurisdiction.py | Two CI jobs persistently red across last 3 commits to main (dbe9bcaf, 0d9551cd, 60e4eaf1): (1) Structure validation step "Validate all BPC files" — exit 1 in scripts/validate_bpc.py invocation; (2) Schema validation step "Validate jurisdiction codes and standards-registry" — exit 1 in scripts/validate_jurisdiction.py invocation. Failures pre-date Stage A close and Stage B start. Annotation API surfaces only "Process completed with exit code 1"; full failure messages live in Azure-blob-hosted logs which are outside the container egress allowlist. Investigation requires: (a) fetching scripts/validate_bpc.py + validate_jurisdiction.py + relevant data files via GraphQL in a follow-up session and reproducing locally, OR (b) accessing CI logs via the GitHub web UI and copying error text into a follow-up gap update. Routes to a future B-stage maintenance session — does not block B1 progress. Governance validators (A10/A12/A13) and Commit Message + Syntax checks remain green. | 2026-05-01 02:42 |
-
-| GAP-METH-ECON-01 | RP | P2 | CLOSED | workplan-orchestrator | references/methodology/economics-research-methodology.md §4–§5 | Source verification pass v1.1 (2026-05-02) covered ~15 high-priority entries, identified and corrected 7+ fabrications. ~40+ jurisdictional source-name claims in §4–§5 remain pattern-matched-only (especially Hong Kong Buildings Department barrier-free economic studies; Indian CBRI accessibility cost research; Singapore CARE/Duke-NUS currency check; AccessibleEU operational research output specifics). A second verification pass required to confirm or correct each before any becomes citation-ready. Routes to economics-researcher skill build at C-stage. | 2026-05-02 02:30 |
-| GAP-METH-ECON-02 | RP | P2 | CLOSED | workplan-orchestrator | references/methodology/economics-research-methodology.md §4 + §6 | Evidence-tier marking initially applied only in §15 Verified Citation Register. Source families in §4 and §6 still lack explicit Tier 1–6 marking — closes audit C.8 V-06 (evidence-tier laundering) only partially. Second pass required to mark every source family with expected evidence tier (Tier 1 RCT-derived / Tier 3 systematic-review / Tier 4 government-research-institute / Tier 5 advocacy-network synthesis / Tier 6 statutory programme operational data). | 2026-05-02 02:30 |
-| GAP-METH-ECON-03 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md (new section needed) | Cost-definition heterogeneity not addressed. "Construction cost" is ambiguous: hard cost vs soft cost vs contingency vs all-in-development cost vs total-occupancy-cost. Two researchers using current methodology could arrive at premium estimates differing by 30–40% purely from cost-definition choice. Methodology should specify which cost definition applies at which stage and for which question type. | 2026-05-02 02:30 |
-| GAP-METH-ECON-04 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §5 | Build-to-rent / yield-economics audience missing. V1–V5 framework is sale-mode-dominant. Multifamily / build-to-rent / institutional REIT economics differ structurally (NOI, cap rate, refinancing terms, hold-period optimisation, exit valuation). A V1–V5 equivalent for the rental-yield audience is needed — distinct from sale-mode V1–V5. | 2026-05-02 02:30 |
-| GAP-METH-ECON-05 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §15.7 | Co-1 (lived-experience) verification register absent in §15. Required per project Co-1 evidence doctrine (CRPD Art. 4.3 + project Standing Rule). Co-1 evidence in accessibility economics specifically has not been catalogued. Most likely sources: disability-led housing co-operatives' published reports; DPO position papers on housing economics; resident-narrative qualitative studies embedded in larger quantitative studies. | 2026-05-02 02:30 |
-| GAP-METH-ECON-06 | DEC | P3 | OPEN | session-consolidator | data/decisions/decision_register.yaml | Decision record for `references/methodology/economics-research-methodology.md` v1.0 + v1.1 not yet authored. Per A12 CS8 cross-stage activation (governance/decision-protocol.md), every new RULE pairs with a Decision record; methodology document is not a RULE but an authored artefact whose adoption status (DRAFT pre-canonical → CANONICAL via D-METH/DG-REVIEW) requires Decision capture. Project-owner direction required before authoring. | 2026-05-02 02:30 |
-
-| GAP-METH-ECON-07 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §15 | Per-item perceptual-value evidence tiering across registry. §15.3 maps four mechanisms (dimensional generosity / build-quality / design-language / hospitality) to specific registry items, but evidence strength varies — strongest cases (G-04, E-06, I-01, F-04) have multiple converging streams; weakest applicable (E-08 corridor width above code, A-03 acoustic doors as quality signal) rest on framework logic more than direct evidence. Future research should tier each registry item by §15 evidence strength (Strong / Moderate / Weak) and identify the specific evidence stream supporting each placement. Also pending: registry items not yet evaluated under §15 framework (Categories J / K specifically beyond items already touched). | 2026-05-02 |
-
-| GAP-ICM-01 | IC | P2 | CLOSED | workplan-orchestrator | references/connections/_index.md | Item-code discrepancies in connection register. CON-0183 references K-01/K-02 as acoustic RT60/background noise items; actual K-01 = Intervenor Adjacency (DBL), K-02 = Tactile Map Station (DBL/VIS). Acoustic specifications are in A-category (A-02 ceiling, A-08 STI). CON-0229/0237 reference A-02 as corridor width; actual A-02 = Acoustic Ceiling Panels, E-08 = Corridor Width. CON-0200 references A-09 as floor surface; actual A-09 = HVAC Vibration, floor items are A-05/B-08/E-07. Requires systematic audit of all connection item-code references against actual guidebook item codes. | 2026-05-04 13:10 |
+|--------|-----|---|--------|-------|---------|-------------|------|
+| GAP-079 | RP | P2 | OPEN-PARTIAL | literature-review-planner | Part 4 + Part 7/8 matrices | RECLASSIFIED P1→P2 2026-05-02 per audit_2026-04-30 R8 + workplan/gap-p1-reclassification-recommendation.md Option B +… | 2026-05-05 |
+| GAP-CITE-01 | RP | P2 | OPEN-PARTIAL | citation-tagger | Parts 1-12 | RECLASSIFIED P1→P2 2026-05-02 per audit_2026-04-30 R8 + workplan/gap-p1-reclassification-recommendation.md Option B +… | 2026-05-05 |
+| GAP-CON-0025 | SW | P2 | OPEN | connection-scout | Outdoor provisions | Sensory-responsive outdoor landscape design for NDV/VIS populations not addressed. SREF framework (Finnigan 2024) and… | 2026-05-05 |
+| GAP-CONF-03 | CR | P2 | OPEN | 2B | 8+ | Dementia village literature synthesis: Hogeweyk, Village Landais Alzheimer, and derivatives as cross-population case … | 2026-05-05 |
+| GAP-CONF-04 | CR | P2 | OPEN | 2B | 8+ | DEAF↔NDV/AUT spatial conflict: DeafSpace open/transparent design vs ASPECTSS compartmentalised design. Gallaudet camp… | 2026-05-05 |
+| GAP-CONF-05 | CR | P2 | OPEN | 5 | 20+ | sensory-coherence-checker known conflict patterns table (6 entries) needs expansion to 12 domains from cross-populati… | 2026-05-05 |
+| GAP-CONF-ACOU-01 | CR | P2 | OPEN | 2B | — | No controlled comparison of sound masking vs no-masking for NDV/PAIN populations. Current prohibition is PAS 6463 gui… | 2026-05-05 |
+| GAP-CONF-ACOU-02 | CR | P2 | OPEN | 2B | — | SFA in mixed-population educational settings: no study measures NDV/SENS response to classroom SFA. Prohibition in ND… | 2026-05-05 |
+| GAP-CONF-LIGHT-01 | CR | P2 | OPEN | 2B | — | Resolution 3 validity: no study compares migraine response to indirect vs direct delivery at equivalent melanopic EDI… | 2026-05-05 |
+| GAP-CONF-LIGHT-02 | CR | P2 | OPEN | 2B | — | Three-zone illuminance model (CON-0016) assembled from separate evidence bases (Brown 2022, PAS 6463, WELL v2). No PO… | 2026-05-05 |
+| GAP-CONF-LIGHT-03 | CR | P2 | OPEN | 2B | — | Temporal dosing protocol (morning circadian window for photosensitive NEU/MH/OFS populations) — clinical plausibility… | 2026-05-05 |
+| GAP-CONF-LQUAL-02 | CR | P2 | OPEN | 2B | — | No co-occurrence facility POE measuring circadian CCT programme impact on NDV/AUT residents in aged care settings. | 2026-05-05 |
+| GAP-CONF-SPAT-01 | CR | P2 | OPEN | 2B | — | Prospect-refuge zoning in multi-population facility: no POE of integrated prospect (DEAF open/signing) and refuge (ND… | 2026-05-05 |
+| GAP-CONF-SPAT-02 | CR | P2 | OPEN | 2B | — | Glazed junction multi-population response: DeafSpace glass corners implemented at Gallaudet but no POE measuring VIS … | 2026-05-05 |
+| GAP-CONF-SPAT-03 | CR | P2 | OPEN | 2B | — | DEAF+NDV/AUT co-occurring: no built example of environmental refuge (A-16) with translucent/transparent panel to adja… | 2026-05-05 |
+| GAP-CONF-TEMP-01 | CR | P2 | OPEN | 2B | — | No POE data from facilities implementing cool-ambient + individual-heating strategy for mixed disability populations.… | 2026-05-05 |
+| GAP-CONF-TEMP-03 | CR | P2 | OPEN | 2B | — | Intra-individual conflict: person with MS + fibromyalgia (co-occurring). No architectural resolution — clinical manag… | 2026-05-05 |
+| GAP-CR-01 | ST | P2 | OPEN | critique-report-writer | Master Bibliography | Bibliography section contains 12 lines metadata, zero actual references. RECLASSIFIED P1→P2 2026-03-29: bibliography-… | 2026-05-05 |
+| GAP-DBL-BE-02 | RP | P2 | OPEN | multilingual-research | §2.10 (DBL) | Protactile movement (Clark; Nuccio & granda) has articulated a DBL-specific spatial philosophy (distantism critique; … | 2026-05-05 |
+| GAP-DOI-01 | RP | P2 | OPEN-PARTIAL | jurisdiction-tracker | All BPC Key sources tables | ~45 GREY flags. Session 1: 2 resolved (RAP-12, MST-02). Session 2: 3 resolved (OTI-02 Wellecke, ULB-05 Kennedy, AQV-0… | 2026-05-05 |
+| GAP-GRANTS-01 | EC | P2 | OPEN | connection-scout | Economics / Bibliography | Quebec PAD grant programme suspended April 2025; KfW 455-B grant suspended January 2025. Any existing guidebook citat… | 2026-05-05 |
+| GAP-IMPL-02 | SW | P2 | OPEN | item-specification-writer | G-08 | Resilient/cushioned flooring for PAIN: deferred — single source only; citation floor not met. Requires additional evi… | 2026-05-05 |
+| GAP-IMPL-03 | RP | P2 | OPEN | multilingual-research | H-05 | Real-time captioned transport information: deferred — requires dedicated multilingual-research run before item creation. | 2026-05-05 |
+| GAP-LRP-06 | RP | P2 | OPEN | multilingual-research | `threshold-door-hardware` (expansion) | Current evidence base is US/UK/DE/AU only. No MENA, South Asian, or Sub-Saharan African door/threshold evidence. New … | 2026-05-05 |
+| GAP-LRP-07 | RP | P2 | OPEN | multilingual-research | `pain-ofs-built-environment-design` (exp | Evidence from high-income countries only. OFS/EDS/fibromyalgia adaptation strategies in Global South contexts absent.… | 2026-05-05 |
+| GAP-LRP-08 | RP | P2 | OPEN | multilingual-research | `acoustics-speech-intelligibility-disabi | Hearing loop infrastructure negligible in Global South. Alternative assistive listening solutions for low-resource se… | 2026-05-05 |
+| GAP-LRP-09 | RP | P2 | OPEN | multilingual-research | `dementia-built-environment` (expansion) | All dementia-environment research is from high-income countries. Global South dementia rates rising rapidly; no resid… | 2026-05-05 |
+| GAP-LRP-10 | RP | P2 | OPEN | multilingual-research | `intellectual-disability-built-environme | Evidence base is almost entirely UK/AU/US. Cultural frameworks for intellectual disability and family/communal care s… | 2026-05-05 |
+| GAP-METH-ECON-01 | RP | P2 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §4–§5 | Source verification pass v1.1 (2026-05-02) covered ~15 high-priority entries, identified and corrected 7+ fabrication… | 2026-05-05 |
+| GAP-METH-ECON-02 | RP | P2 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §4 + §6 | Evidence-tier marking initially applied only in §15 Verified Citation Register. Source families in §4 and §6 still la… | 2026-05-05 |
+| GAP-OT-BE-01 | RP | P2 | OPEN | multilingual-research | §VI.2 (Part VI OT role) | Young et al. (2019) scoping review finding has not changed substantially since 2019: no RCT or controlled evidence of… | 2026-05-05 |
+| GAP-PROTO-06 | ST | P2 | OPEN | poe-assessor | ALL | poe-assessor skill not yet built. No POE methodology exists for accessible design in any language. Build before POE s… | 2026-05-05 |
+| GAP-PROTO-07 | ST | P2 | OPEN | intersectionality-checker | ALL | intersectionality-checker skill not yet built. Compound-identity gap flag needed for Full Section Review. Build in P2… | 2026-05-05 |
+| GAP-RAP-01 | RP | P2 | OPEN | multilingual-research | A-01/A-02/A-08 | NDV/AUT acoustic provisions: no jurisdiction has a quantified RT60 target specific to autistic users. Bettarello et a… | 2026-05-05 |
+| GAP-SCOPE-01 | SW | P2 | OPEN | Phase 3 | 15–18 | Part 4/Part 8 deduplication — Part 4 is the single specification source for all performance targets (architectural au… | 2026-05-05 |
+| GAP-SCOPE-03 | SW | P2 | OPEN | Phase 3 | 18 | No operational annex for building policy specifications. 8 purely operational requirements (fragrance enforcement, fu… | 2026-05-05 |
+| GAP-030 | RP | P3 | OPEN | multilingual-research | visual-alerting-and-wayfinding-light | VIS,DEAF,DBL | 2026-05-05 |
+| GAP-032 | RP | P3 | OPEN | multilingual-research | luminance-contrast-and-pattern | VIS,DEM,NDV | 2026-05-05 |
+| GAP-035 | RP | P3 | OPEN | multilingual-research | visual-alerting-and-wayfinding-light | VIS,DEAF,DBL | 2026-05-05 |
+| GAP-057 | RP | P3 | OPEN | multilingual-research | Cluster 1A/1B/1C | FI/FR/NL confirmed NO-DATA across 3+ search attempts for OT interprofessional design. Scope-gate threshold met. Recom… | 2026-05-05 |
+| GAP-065 | RP | P3 | OPEN | multilingual-research | Cluster 1A/1B/1C | IT (AITO) scope-gate candidate confirmed alongside FR/NL/FI. Four languages confirmed NO-DATA/THIN for OT interprofes… | 2026-05-05 |
+| GAP-075 | RP | P3 | OPEN | multilingual-research | mobility-built-environment | ES THIN: CERMI and CTE/SUA retrieved; no OT-specific or Co-1 research found in Spanish for MOB built environment; CER… | 2026-05-05 |
+| GAP-083 | CI | P3 | OPEN | validate_db | connections | CON-0033, CON-0034, CON-0035 are CONSUMED connections with 0 targets. Pre-existing data quality issue predating migra… | 2026-05-06 |
+| GAP-ALS-02 | RP | P3 | OPEN | multilingual-research | A-11 | DEAF: The French CEREMA standard (Arrêté 20 avril 2017 + CEREMA 2021) requires hearing loops (BIM — boucle à inductio… | 2026-05-05 |
+| GAP-B4-09 | RP | P3 | OPEN | multilingual-research | NEW-ITEM | PAIN: cushioned/resilient flooring specification for joint impact reduction; expert consensus only — flag as thin evi… | 2026-05-05 |
+| GAP-CO03-09 | ST | P3 | OPEN | 2C | 9 | Connection register: tag all 38 entries INTRA/INTER/BOTH | 2026-05-05 |
+| GAP-CO03-11 | ST | P3 | OPEN | 2B–3 | ongoing | BPC content terminology update (ongoing as BPCs touched) | 2026-05-05 |
+| GAP-CO03-12 | ST | P3 | OPEN | 3 | 18 | Population code `+` notation documented in glossary | 2026-05-05 |
+| GAP-CO03-13 | ST | P3 | OPEN | 2C | 9 | Slug registry: add CO-0003 terminology notes for frozen slug names | 2026-05-05 |
+| GAP-CON-0020 | SW | P3 | OPEN | connection-scout | DEAF/VIS/DEM/NDV | DEAF glazed corridor junctions (DeafSpace) may conflict with VIS glare, DEM reflective confusion, NDV visual complexi… | 2026-05-05 |
+| GAP-CON-07 | SW | P3 | OPEN | connection-scout | DBL+NDV/MH | CON-0016: Protactile distantism parallels TID. Research question only. | 2026-05-05 |
+| GAP-CON-16 | SW | P3 | OPEN | connection-scout | C-04/D-02 | CON-0016: Luminance contrast (VIS) + floor pattern (DEM) + TWSI (VIS/DBL) spatial interaction. Coordination cross-ref… | 2026-05-05 |
+| GAP-CONF-CCONT-01 | CR | P3 | OPEN | 2B | — | No controlled study comparing DEM wayfinding performance with high-chroma vs desaturated colour coding (holding 3D ob… | 2026-05-05 |
+| GAP-CONF-LQUAL-01 | CR | P3 | OPEN | 2B | — | No evidence on NDV/AUT tolerance of graduated CCT transitions (≤50K/hr). LIGHT-QUAL Resolution 3 is clinical plausibi… | 2026-05-05 |
+| GAP-CONF-MOVE-01 | CR | P3 | OPEN | 2B | — | Acute psychiatric wards: MH populations may present with fall risk AND need for secure containment (involuntary admis… | 2026-05-05 |
+| GAP-CONF-PRED-01 | CR | P3 | OPEN | 2B | — | Multi-use community rooms serving both NDV/AUT and variable MOB users: no evidence on standardised layout with reset … | 2026-05-05 |
+| GAP-CONF-TEMP-02 | CR | P3 | OPEN | 2B | — | DEM late-stage thermal preference poorly characterised. Baquero 2023 reports 24.9°C neutral for older adults generall… | 2026-05-05 |
+| GAP-CONF-VCOMP-01 | CR | P3 | OPEN | 2B | — | IntD wayfinding evidence is thin (THIN-BASE per project-standards). IntD benefit from pictograms inferred from DEM ev… | 2026-05-05 |
+| GAP-ECON-03 | EC | P3 | OPEN | economics-researcher | Part 11 §11.4 | Emergency egress cost table absent from §11.4. Refuge of rescue is a Brief-stage decision with high retrofit cost. BS… | 2026-05-05 |
+| GAP-FDR-04 | SW | P3 | OPEN | functional-deficit-researcher | BPC pain-ofs-built-environment-design | Anti-fatigue/cushioned flooring for PAIN: no standard specifies impact absorption properties for chronic pain populat… | 2026-05-05 |
+| GAP-IMPL-06 | RP | P3 | OPEN | multilingual-research | I-02 | Kitchen one-handed operation: single grey literature source only (ILCWA). Citation floor failure. | 2026-05-05 |
+| GAP-LAU-02 | RP | P3 | OPEN | multilingual-research | R-LAU | NDIS SDA High Physical Support specifies laundry appliances accessible from seated/standing with adjustable height — … | 2026-05-05 |
+| GAP-LRP-12 | RP | P3 | OPEN | multilingual-research | `post-occupancy-evaluation-global` (new | No POE studies from Global South in any BPC entry. POE is the only evidence of actual performance. Phase 4. | 2026-05-05 |
+| GAP-METH-ECON-03 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md (new section needed) | Cost-definition heterogeneity not addressed. "Construction cost" is ambiguous: hard cost vs soft cost vs contingency … | 2026-05-05 |
+| GAP-METH-ECON-04 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §5 | Build-to-rent / yield-economics audience missing. V1–V5 framework is sale-mode-dominant. Multifamily / build-to-rent … | 2026-05-05 |
+| GAP-METH-ECON-05 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §15.7 | Co-1 (lived-experience) verification register absent in §15. Required per project Co-1 evidence doctrine (CRPD Art. 4… | 2026-05-05 |
+| GAP-METH-ECON-06 | DEC | P3 | OPEN | session-consolidator | data/decisions/decision_register.yaml | Decision record for `references/methodology/economics-research-methodology.md` v1.0 + v1.1 not yet authored. Per A12 … | 2026-05-05 |
+| GAP-METH-ECON-07 | RP | P3 | OPEN | workplan-orchestrator | references/methodology/economics-research-methodology.md §15 | Per-item perceptual-value evidence tiering across registry. §15.3 maps four mechanisms (dimensional generosity / buil… | 2026-05-05 |
+| GAP-RAP-04 | SW | P3 | OPEN | bibliography-updater | Appendix A / bibliography | AIJ AIJES-S001-2008 (学校施設の音環境保全基準) — primary Japanese room acoustic standard for schools — absent from guidebook bibl… | 2026-05-05 |
+| GAP-RAP-05 | SW | P3 | OPEN | bibliography-updater | Appendix A / bibliography | UNI 11532-2:2020 — primary Italian school acoustic standard; explicitly addresses hearing-deficit and attention/conce… | 2026-05-05 |
+| GAP-XREF-03 | ST | P3 | OPEN | cross-reference-resolver | Parts 1-6 | D-18 cited as rule reference ("D-18 rule") — not an item code. Labelling inconsistency in evidence hierarchy section.… | 2026-05-05 |
