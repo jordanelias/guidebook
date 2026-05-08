@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-05-02 02:55
+last_updated: 2026-05-08 02:15
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -4322,3 +4322,188 @@ decisions:
     PROPOSED. Adoption applies the §3.1-§3.4 revisions to governance/repo-strategy.md
     and archives this CO. If D-0138 is amended in adoption, this CO is amended
     correspondingly.
+- decision_id: D-0141
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: items table added to tracking DB — item_code as primary key with letter-suffix
+    regex fix
+  outcome: >
+    Items table created in tracking DB (data/guidebook.db) per CO-0009 §4.2. item_code
+    (TEXT PRIMARY KEY) is the anchor for per-item audit pipeline state. category uses
+    IN constraint ('A'–'K') rather than BETWEEN to prevent multi-char values. item_id
+    (ITEM-NNNN) nullable — formal assignment is out of CO-0009 scope. category_name
+    omitted (derivable from category letter; storing it creates drift risk).
+    bpc_source_slug FK to slugs table; nullable for items without a BPC file. status
+    lifecycle: draft → active → merged/retired. Companion fix: schemas/item.py
+    item_code validator regex corrected from ^[A-K]-\d{2}$ to ^[A-K]-\d{2}[a-z]?$
+    to accept letter-suffix codes (e.g., A-10b).
+  rationale: >
+    The items table operationalises D-0139's schema spec for the item entity type,
+    using item_code (not item_id) as primary key because item_code is the identifier
+    used throughout Part 4 prose and all downstream pipeline skills. The Pydantic
+    validator regex bug (rejecting A-10b) is a pre-existing defect that blocks
+    population; correcting it in the same migration avoids a partial-load state.
+  alternatives_considered: []
+  decision_date: 2026-05-08 02:15
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - scripts/migrations/004_tables.sql
+  - schemas/item.py
+  - workplan/workplan-item-audit-pipeline-co0009.md §4.2
+  predecessors:
+  - D-0138
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    Migration 004 implements this decision. Pydantic validator fix is a code change
+    to schemas/item.py (Phase 1 implementation scope).
+
+- decision_id: D-0142
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: item_audit_runs table added to tracking DB — per-item pipeline state with
+    mid-step failure recovery and spec-hash staleness detection
+  outcome: >
+    item_audit_runs table created in tracking DB per CO-0009 §4.2. run_id =
+    {item_code}_{session_filename} (unique per item per session). steps_started and
+    steps_complete are JSON arrays: a step in steps_started but not steps_complete
+    signals mid-step failure and triggers re-run. spec_hash stores MD5 of normalised
+    item spec text at run start; on resume, wrapper recomputes and compares — mismatch
+    prompts restart or continue with stale-state flag. status CHECK: IN-PROGRESS,
+    COMPLETE, HANDED-OFF. brief_path records the output audit brief location.
+  rationale: >
+    The item_audit_runs table is the state machine for per-item pipeline execution,
+    enabling idempotent resumption across session boundaries per CO-0009 §9.3. The
+    dual-array pattern (steps_started vs steps_complete) is the simplest mechanism
+    that distinguishes "not yet attempted" from "attempted and failed" without
+    requiring a separate step-level table.
+  alternatives_considered: []
+  decision_date: 2026-05-08 02:15
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - scripts/migrations/004_tables.sql
+  - workplan/workplan-item-audit-pipeline-co0009.md §4.2
+  predecessors:
+  - D-0141
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    Migration 004 implements this decision. Normalisation rules for spec_hash
+    (strip whitespace, normalise line endings, remove frontmatter timestamps)
+    are Phase 4 implementation detail per CO-0009 §9.7.
+
+- decision_id: D-0143
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: conflicts table added to tracking DB — per-item audit findings distinct
+    from website DB conflict table
+  outcome: >
+    Conflicts table created in tracking DB per CO-0009 §4.2. conflict_id uses
+    CONF-NNNN sequential IDs (tracking DB only). item_code FK to items table.
+    domain column uses the same taxonomy codes as the website DB conflict table
+    (LIGHT-INT, ACOUSTIC-LVL, etc.) for cross-reference consistency, but no
+    cross-DB FK (impossible in SQLite). UNIQUE dedup index on (item_code, domain,
+    pop_a, pop_b); wrapper must alphabetically order populations before insert
+    (pop_a < pop_b lexicographically) — enforced by CLI command, not CHECK
+    constraint. gap_id column has no FK constraint (populated after gap creation
+    in same transaction). status CHECK: RESOLVED-EVIDENCE, RESOLVED-CONSENSUS,
+    RESOLUTION-PROPOSED, UNRESOLVED, MODE-S-ONLY.
+  rationale: >
+    The tracking DB conflicts table records per-item audit findings from
+    cross-population-conflict-mapper; the website DB conflict table holds
+    canonical 12-domain resolution content for publication. Both use the same
+    domain taxonomy codes by convention, not constraint, because cross-DB FK
+    is impossible in SQLite. This is intentional dual-purpose storage per
+    CO-0009 §9.6, not duplication — the tracking DB records what was found;
+    the website DB records what was resolved and published.
+  alternatives_considered: []
+  decision_date: 2026-05-08 02:15
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - scripts/migrations/004_tables.sql
+  - workplan/workplan-item-audit-pipeline-co0009.md §4.2
+  - workplan/workplan-item-audit-pipeline-co0009.md §9.6
+  predecessors:
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    Migration 004 implements this decision. The two-DB boundary is permanent per
+    CO-0009 §5.12. Pop-pair ordering enforcement is a Phase 1 CLI implementation
+    detail.
+
+- decision_id: D-0144
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: gap categories CONF and AUDT added to gaps CHECK constraint
+  outcome: >
+    Gaps table CHECK constraint extended to include CONF and AUDT categories.
+    Full set after expansion: RP, SW, CR, ST, MX, CD, EC, EG, CI, DEC, CONF, AUDT.
+    CONF is used by cross-population-conflict-mapper for conflict findings.
+    AUDT is used by evidence-auditor for UNDISCLOSED-CONSENSUS and
+    MARKER-STRATUM-MISMATCH findings. Table recreation pattern per migration 002
+    (SQLite requires table recreation to modify CHECK constraints).
+    schemas/gap.py validator updated to match.
+  rationale: >
+    CO-0009 §3.1 introduces two new gap-producing skills (conflict-mapper writes
+    CONF; evidence-auditor writes AUDT). Without these categories in the CHECK
+    constraint, pipeline INSERT operations would fail at the DB level. The
+    recreation pattern follows migration 002 precedent.
+  alternatives_considered: []
+  decision_date: 2026-05-08 02:15
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - scripts/migrations/005_gap_categories.sql
+  - schemas/gap.py
+  - workplan/workplan-item-audit-pipeline-co0009.md §3.1
+  predecessors:
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    Migration 005 implements this decision. The Pydantic validator in schemas/gap.py
+    already includes CONF and AUDT (added during Phase 1 Session 1c correction pass).
+
+- decision_id: D-0145
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: deferred_reason TEXT column added to citation_mining table
+  outcome: >
+    ALTER TABLE citation_mining ADD COLUMN deferred_reason TEXT. NULL indicates the
+    source was mined or not yet processed. Non-null text value records the reason
+    for deferral (e.g., "not-relevant-to-I-01").
+  rationale: >
+    CO-0009 §3.1 specifies citation-miner inline depth-1 relevance gating throughout
+    pipeline steps 1–7. Sources deferred during pipeline runs need a recorded reason
+    so the consolidator can distinguish "not yet processed" from "evaluated and
+    deferred" without re-running the relevance check.
+  alternatives_considered: []
+  decision_date: 2026-05-08 02:15
+  decided_by: opus_4_6_session_2026-05-08
+  model_routing: opus/100/extract
+  effort_level: 100
+  decision_artifacts:
+  - scripts/migrations/005_gap_categories.sql
+  - workplan/workplan-item-audit-pipeline-co0009.md §3.1
+  predecessors:
+  - D-0139
+  supersedes: []
+  status: PROPOSED
+  review_status: PENDING
+  notes: >
+    Migration 005 implements this decision (ALTER TABLE, not table recreation).
+
