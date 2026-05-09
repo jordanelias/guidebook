@@ -41,7 +41,9 @@ Stored in `evidence_population_match` table (one row per study × target populat
 Specific researcher, paper, or institution with a contrary or qualifying view.
 
 ```
-dissenter: "Chaffin et al. 2006 — argues 22 N too generous for active RA flare populations (grip force <8 N during flare)"
+dissenter: "Björk et al. 1997 (PMID 9021280) — assessed grip force in 20 women with RA before/after pain; provides one data point but small sample, women only, does not directly test 22N threshold."
+
+Note: Earlier draft of this protocol used "Chaffin et al. 2006" as the example. That citation was NOT verifiable when checked under the protocol itself. This is exactly the failure mode the protocol is designed to catch. Replaced with verified Björk 1997 example.
 OR
 dissenter: "NONE FOUND — searched [list queries]; no published dissent. Either consensus is genuine or search failed."
 ```
