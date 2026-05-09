@@ -440,7 +440,7 @@ Add to skill inventory:
 | C2.x-P2: Skill modifications (4 existing skills) | 1 | Sonnet | ✓ COMPLETE |
 | C2.x-P3: New skills (FDA + economics-auditor) | 1 | Opus/Sonnet | ✓ COMPLETE |
 | C2.x-P4: Consolidator + wrapper + pipeline test | 1 | Sonnet | ✓ COMPLETE |
-| C2.x-P5: Workplan integration | 1 | Sonnet | ✓ THIS SESSION |
+| C2.x-P5: Workplan integration | 1 | Sonnet | ✓ COMPLETE |
 
 **Pipeline status:** item-audit-pipeline validated end-to-end on I-01 (8 steps, 8 gaps, 1 connection). All 4 new skills (functional-deficit-auditor, economics-auditor, audit-consolidator, item-audit-pipeline) have §Outputs contracts per CO-0009 §5.10. CON-0251 cleanup complete.
 
@@ -711,3 +711,4 @@ Decisions 1–20 from v3 are all RESOLVED (made during Stage 0 and A). Active an
 | — | C11 | Maintenance lifecycle approval | PENDING |
 
 All decisions are captured per A12 protocol in `data/decisions/decision_register.yaml`.
+
