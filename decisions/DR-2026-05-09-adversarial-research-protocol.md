@@ -1,6 +1,6 @@
 # Decision Record: Adopt Adversarial Research Protocol v2
 **Date:** 2026-05-09
-**Status:** PROPOSED — pending owner sign-off
+**Status:** ADOPTED 2026-05-09 — owner directive: "whatever makes sense for long-term integrity and health"
 **Supersedes:** None
 
 ## Context

@@ -20,6 +20,39 @@
 | search_languages | 1134 | Coverage tracking per slug × language |
 | search_coverage | 1863 | Coverage tracking per slug × jurisdiction |
 
+## Adversarial Research Protocol (REQUIRED — DR 2026-05-09)
+
+Every search performed under this remediation plan MUST populate the protocol fields:
+
+```sql
+-- For each gap closure or evidence finding:
+UPDATE gaps SET
+    confidence_interval = '<numerical range>',  -- e.g., "60-80%"
+    shift_conditions = '<what would shift CI up/down>',
+    named_dissenter = '<specific contrary view OR "NONE FOUND" + logged queries>',
+    falsification_condition = '<specific finding that would invalidate>'
+WHERE gap_id = ?;
+
+INSERT INTO evidence_population_match (
+    match_id, source_ref, target_population, study_population, 
+    sample_size, match_grade, mismatch_note, ...
+) VALUES (...);
+```
+
+**No gap closure without these fields.** Audit query enforces: `scripts/audit/research_protocol_audit.py`.
+
+The multilingual searches under this remediation plan are at HIGHEST risk for consensus confirmation because:
+- Multilingual queries naturally find translations of the same consensus, not contradictory views
+- Non-English standards may simply mirror ISO/EN/ADA without independent evidence
+- Foreign-language adversarial searches require explicit query construction
+
+**Required for each multilingual search:**
+1. State the prior in English BEFORE searching in the target language
+2. Search using `term_aliases` for the target language
+3. Search ALSO using adversarial term combinations (e.g., for `ramp gradient` in DE: search both "Rampenneigung Standard" AND "Rampenneigung Kritik OR Limitation OR ungenügend")
+4. Log results to `search_languages` AND `search_coverage`
+5. For each cited study, log to `evidence_population_match` with grade
+
 ## Search Protocol
 
 For each remediation search:
