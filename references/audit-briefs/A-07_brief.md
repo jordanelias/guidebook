@@ -1,13 +1,7 @@
 # Audit Brief — A-07: Flutter Echo Elimination (Parallel Hard Surface Avoidance)
-**Date:** 2026-05-09 01:45 UTC
-**Gaps:** 3 (P2: 0 · P3: 3)
-**Research actions:** 0 · **Authoring corrections:** 3
+**Date:** 2026-05-09 02:04 UTC · **Gaps:** 1 (P2: 0 · P3: 1)
 
 ## Authoring Corrections
-
 | Gap | Cat | Pri | Description |
 |---|---|---|---|
 | GAP-059 | AUDT | P3 | FDA-Q2 A-07: Acoustic item but DEAF not in Applicable Groups. DEAF users are a primary acoustic popu |
-| GAP-060 | AUDT | P3 | FDA-Q3 A-07: DEM in Applicable Groups but evidence basis does not reference Allens Cognitive Disabil |
-| GAP-061 | AUDT | P3 | UNSTATED A-07: 2 numerical specification(s) without evidence stratum annotation. ISW to add stratum  |
-
