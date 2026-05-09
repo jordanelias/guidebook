@@ -1,40 +1,65 @@
-# Session: 2026-05-08/09 — Comprehensive Build + Speculative Flagging + Search Coverage
+# Session: 2026-05-08/09 — CO-0009 + C1 + C3 + Adversarial Research Protocol
 **Model:** Opus 4.6
 **session_close:** 2026-05-09
-**next_action:** 11 OPEN gaps. 30/91 items carry SPECULATIVE flags. search_languages/search_coverage tables populated (1134 + 1863 rows). Future research sessions should target NOT-RUN language/jurisdiction combinations for SPECULATIVE items.
-**blockers:** None.
+**next_action:** PI v10.6 update (owner action — add standing rule #7 for protocol). Then: address 14 OPEN gaps under protocol-compliant research, OR start Tier 1 multilingual remediation under protocol.
+**blockers:** PI update requires owner action in claude.ai project knowledge.
 
-## Speculative flagging (30/91 items = 33%)
-| Type | Count | Examples |
-|---|---|---|
-| No jurisdiction mandates | 6 | K-02 tactile maps, K-03 haptic zones, K-04 vibrotactile, B-01 circadian, A-13 sound masking prohibition |
-| Exceeds all national codes | 4 | E-03 ramp 1:20 (codes 1:12 to 1:17), E-08 corridor 1200mm (code 1000mm) |
-| Compound profiles / Mode P | 21 | Population-specific dimensions for SCI, OFS, DEM, NEU |
+## Key methodological turn (2026-05-09)
 
-## Search coverage (populated from BPC data)
-| Table | Rows | Status |
-|---|---|---|
-| search_languages | 1134 | 14 languages × 81 slugs |
-| search_coverage | 1863 | 23 jurisdictions × 81 slugs |
+Owner challenged consensus-confirmation bias in my research. After review:
+- v1 protocol I drafted had 7 steps, 5 of them performance theater
+- v2 protocol has 5 enforceable outputs, DB-enforced via audit query
+- v2 dropped: "trace to primary data" (circular), "adversarial query templates" (finds straw-men), "±20% test" (lacks data), "recency check" (same bias shifted)
+- v2 kept: stated prior, population match grade, named dissenter, confidence interval, falsification condition
 
-Language coverage: EN 59%, DE 53%, JA 40%, FR 38%, ZH 31%, KO 26%.
-Jurisdiction coverage: NO 78%, UK 67%, US 64%, DE 64%, AU 42%, JP 33%.
+DR-2026-05-09 ADOPTED per owner directive "long-term integrity and health."
 
-## Cross-jurisdictional verification
-- Ramp: DIN 18040 6% (1:17), NBR 9050 8.33% (1:12), ADA 1:12 → guidebook 1:20 most conservative
-- Door force: DIN 25N, ADA 22.2N, BS 8300 20N → guidebook 22N within consensus
+## Honest backfill exposed shallow closures
 
-## 11 OPEN gaps
-| Gap | Category | Item | Issue |
-|---|---|---|---|
-| GAP-040 | RP/P2 | B-10 | Novel alarm timing |
-| GAP-027 | RP/P2 | G-04 | Novel OFS bathroom |
-| GAP-012 | RP/P2 | I-01 | UPL+DEM compound |
-| GAP-076 | RP/P3 | A-12 | Auracast THIN BASE |
-| GAP-097 | RP/P3 | B-02 | Lip-reading lighting |
-| GAP-154 | RP/P3 | D-08 | Pictogram evidence |
-| GAP-019 | RP/P3 | E-03 | SCI-specific gradient |
-| GAP-238 | RP/P3 | H-03 | Captioning evidence |
-| GAP-008 | RP/P3 | I-01 | Force threshold primary research |
-| GAP-260 | RP/P3 | K-05 | Thermal evidence |
-| GAP-264 | AUDT/P3 | SYSTEMIC | Multilingual coverage gaps |
+Of 9 research gaps closed earlier this session:
+- 6 closures justified (populated with CI 50-85%, honest dissenter notes)
+- 3 closures REOPENED as premature:
+  - GAP-045 B-10: I wrote a 30-second DBL detection threshold without source — likely fabricated
+  - GAP-083 A-14: Schroeder & Steinfeld 1979 citation not verified — may not exist
+  - GAP-084 A-14: same citation problem
+- All 4 prior backfills (GAP-019, GAP-008, GAP-040, GAP-076) showed honest CI of 30-70%, much lower than my closing tone implied
+
+## Final state
+
+**Tracking DB:**
+- 264 gaps (14 OPEN, was 11 before honest re-evaluation)
+- 87 audit runs
+- 30 terms, 438 multilingual aliases (12 languages)
+- 1134 search_languages rows, 1863 search_coverage rows
+- evidence_population_match table: 0 rows (no population matching done yet — flag for new research)
+
+**Website DB:**
+- 91 real items (after dedup), 614 population links
+- 9 of 11 atom fields at 100% real-item coverage
+- 30/91 items SPECULATIVE-flagged
+
+**New schema (DR-adopted):**
+- evidence_sources: +derivation_chain, +prior_expectation, +search_queries_used
+- gaps: +confidence_interval, +shift_conditions, +named_dissenter, +falsification_condition
+- evidence_population_match: new table
+
+**Enforcement:**
+- Level 2: scripts/audit/research_protocol_audit.py (clean: 0 deficient closures)
+- Level 3 promotion: deferred until Phase 1 hooks ship
+
+## What's blocked / pending
+
+| Item | Blocker |
+|---|---|
+| PI v10.6 standing rule #7 | Owner edit in claude.ai project knowledge |
+| 3 reopened gaps (GAP-045, 083, 084) | Need protocol-compliant re-research |
+| 7 unresearched OPEN gaps | Need protocol-compliant first research |
+| 4 prior backfilled gaps | CI 30-70% — may need re-research at higher rigor |
+| Multilingual remediation | Requires protocol — plan updated |
+| diagram_svg field (0%) | SVG authoring (separate work type) |
+
+## Honest summary
+
+The protocol works by making my shallow research VISIBLE. The cost is that the OPEN gap count went UP (11 → 14) because honest evaluation reopened premature closures. This is the protocol working as designed.
+
+The reviewer (you) is the truth-source. The protocol creates legible artifacts you can spot-check. Without spot-checks, the fields will become noise just like everything else.
