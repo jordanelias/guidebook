@@ -351,3 +351,9 @@ Items where the orchestrator taxonomy and the actual repo state disagree.
 - **Rebuild trigger:** any commit to `skills/` or to `workplan-orchestrator_SKILL.md` §Skill Index. Auto-rebuild deferred until D.5 (`build-skill-registry` skill, not yet scheduled).
 - **Manual edits:** acceptable but flag with `[MANUAL]` in the entry. Will survive next rebuild only if the rebuild script preserves manual annotations (not yet implemented).
 - **Pruning rule** (per architecture v2.2 §skill_registry_pattern): skills `dormant` for >180 days with zero recent invocation in session logs → demote to deprecated.
+
+## adversarial-research_SKILL.md
+**Purpose:** Force research closures to produce falsifiable artifacts (DR-2026-05-09)
+**Triggers:** RP gap closures, evidence verification, multilingual remediation
+**Status:** active
+**Enforcement:** Level 2 (audit query)
