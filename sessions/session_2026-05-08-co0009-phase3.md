@@ -1,42 +1,40 @@
-# Session: 2026-05-08/09 — Comprehensive Build
+# Session: 2026-05-08/09 — Comprehensive Build + Speculative Flagging + Search Coverage
 **Model:** Opus 4.6
 **session_close:** 2026-05-09
-**next_action:** 10 OPEN gaps (all RP, 3 P2 novel specs). conflict_domains 71%, diagram_svg 0%. C2 skills not yet built.
+**next_action:** 11 OPEN gaps. 30/91 items carry SPECULATIVE flags. search_languages/search_coverage tables populated (1134 + 1863 rows). Future research sessions should target NOT-RUN language/jurisdiction combinations for SPECULATIVE items.
 **blockers:** None.
 
-## Session output
+## Speculative flagging (30/91 items = 33%)
+| Type | Count | Examples |
+|---|---|---|
+| No jurisdiction mandates | 6 | K-02 tactile maps, K-03 haptic zones, K-04 vibrotactile, B-01 circadian, A-13 sound masking prohibition |
+| Exceeds all national codes | 4 | E-03 ramp 1:20 (codes 1:12 to 1:17), E-08 corridor 1200mm (code 1000mm) |
+| Compound profiles / Mode P | 21 | Population-specific dimensions for SCI, OFS, DEM, NEU |
 
-| Deliverable | Metric |
-|---|---|
-| Gaps resolved | 253/263 (96.2%) |
-| P2 remaining | 3 (novel specifications) |
-| Atom fields at 100% | 9 of 11 |
-| DB dedup | 52 duplicates removed, 14 titles fixed |
-| Cross-DB sync | 91 items, 0 mismatches, 525 population links |
-| Commits | ~50 |
+## Search coverage (populated from BPC data)
+| Table | Rows | Status |
+|---|---|---|
+| search_languages | 1134 | 14 languages × 81 slugs |
+| search_coverage | 1863 | 23 jurisdictions × 81 slugs |
 
-### Atom fields (91 real items)
-All 9 extractable fields at 100%: question_heading, summary, why_md, schedule_md, failures_json, install_notes_json, detail_groups_json, pop_reasons_json, evidence_tier.
+Language coverage: EN 59%, DE 53%, JA 40%, FR 38%, ZH 31%, KO 26%.
+Jurisdiction coverage: NO 78%, UK 67%, US 64%, DE 64%, AU 42%, JP 33%.
 
-Remaining: conflict_domains 71% (correctly empty for 26 items), diagram_svg 0% (SVG authoring).
+## Cross-jurisdictional verification
+- Ramp: DIN 18040 6% (1:17), NBR 9050 8.33% (1:12), ADA 1:12 → guidebook 1:20 most conservative
+- Door force: DIN 25N, ADA 22.2N, BS 8300 20N → guidebook 22N within consensus
 
-### Gap resolution (263 total)
-| Status | Count |
-|---|---|
-| CLOSED-SYSTEMIC | 90 |
-| CLOSED-SYNC | 87 |
-| CLOSED-FIXED | 48 |
-| CLOSED-FALSE-POSITIVE | 26 |
-| OPEN | 10 |
-| CLOSED-RESOLVED | 2 |
-
-### 10 OPEN (all RP — research needed)
-3 P2 novel specs: B-10 sequenced alarm, G-04 OFS bathroom, I-01 UPL+DEM compound.
-7 P3 with research notes: A-12 Auracast, B-02 lip-reading, D-08 pictograms, E-03 SCI ramp, H-03 captioning, I-01 force threshold, K-05 thermal.
-
-### Data quality fixes
-- 52 duplicate specs deleted (BPC-slug migration artifacts)
-- 14 titles fixed (population codes → proper names)
-- F-07 deleted (phantom item from migration)
-- 150 population links synced
-- 6 missing items added cross-DB
+## 11 OPEN gaps
+| Gap | Category | Item | Issue |
+|---|---|---|---|
+| GAP-040 | RP/P2 | B-10 | Novel alarm timing |
+| GAP-027 | RP/P2 | G-04 | Novel OFS bathroom |
+| GAP-012 | RP/P2 | I-01 | UPL+DEM compound |
+| GAP-076 | RP/P3 | A-12 | Auracast THIN BASE |
+| GAP-097 | RP/P3 | B-02 | Lip-reading lighting |
+| GAP-154 | RP/P3 | D-08 | Pictogram evidence |
+| GAP-019 | RP/P3 | E-03 | SCI-specific gradient |
+| GAP-238 | RP/P3 | H-03 | Captioning evidence |
+| GAP-008 | RP/P3 | I-01 | Force threshold primary research |
+| GAP-260 | RP/P3 | K-05 | Thermal evidence |
+| GAP-264 | AUDT/P3 | SYSTEMIC | Multilingual coverage gaps |
