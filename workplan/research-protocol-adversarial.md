@@ -1,114 +1,141 @@
-# Research Protocol — Anti-Consensus-Bias
-**Proposal for project adoption. Requires decision record.**
+# Research Protocol — Anti-Consensus-Bias (Revised)
+**v2 · 2026-05-09 · Replaces v1**
 
-## The Problem
+## What this fixes (and what it doesn't)
 
-Claude's default research mode is consensus confirmation:
-1. Holds a training-data prior
-2. Searches for supporting evidence
-3. Stops at first confirmation
-4. Accepts cited populations as matching target populations
-5. Treats threshold values as facts rather than traceable derivations
+This protocol fixes ONE thing: it forces every research finding to produce specific, falsifiable outputs that a human reviewer can spot-check.
 
-## Proposed Protocol: 7-Step Adversarial Research
+It does NOT make Claude genuinely adversarial. Claude's training data is the consensus; web search is filtered by indexing and ranking; the bias toward confirmation is structural, not procedural. No protocol Claude runs on itself can override that.
 
-For every specification value or claim under research:
+The protocol's actual mechanism is **DB enforcement plus scheduled human review**. Steps that depended on Claude being honest about its own bias have been dropped because they were performance theater.
 
-### Step 1: State the prior
-Before any search, state: "My training-data expectation is X because Y."
-This makes the bias visible. If the search returns exactly X, that's a flag, not confirmation.
+## Required outputs per research finding
 
-### Step 2: Trace the threshold
-For any numerical specification: trace the citation chain back to PRIMARY DATA.
-- Where did this number first appear?
-- What study, what sample size, what population?
-- How many citation hops between that study and the current standard?
-- Is the original study's population the same as the guidebook's target population?
+Every gap closure that involves research must populate these five fields. Gap closure is blocked at the DB level without them.
 
-Log to DB: `evidence_sources.derivation_chain` (new field needed)
+### 1. Prior statement
+What Claude expected to find before searching, and why.
 
-### Step 3: Adversarial search
-Construct at least 2 queries designed to find CONTRADICTORY evidence:
-- "[specification] critique"
-- "[specification] limitations"  
-- "[specification] insufficient OR inadequate"
-- "[alternative approach] [same domain]"
+```
+prior_expectation: "I expected to find that 22 N is well-supported because ADA, ISO 21542, and BS 8300 all converge on this value."
+prior_basis: "Standards consensus from training data."
+```
 
-Log adversarial queries to `search_coverage.notes` with prefix `ADV:`
+If the search result matches the prior exactly: that's a flag, not confirmation. The reviewer should treat exact-match findings as suspect.
 
-### Step 4: Population matching
-For every cited study: does its sample population match the guidebook's target?
-- Sample size
-- Age range
-- Specific condition (not just "wheelchair users" — C5 SCI vs L1 paraplegia vs elderly ambulant wheelchair user are completely different populations)
-- Setting (laboratory vs real-world)
-- Was the study powered to detect the effect claimed?
+### 2. Population match grade
+For every cited study, grade how well its sample matches the guidebook's target population.
 
-Log to DB: new table `evidence_population_match`
-| source_ref | target_population | study_population | match_grade | mismatch_note |
+| Grade | Definition |
+|---|---|
+| EXACT | Same condition, same age range, same setting, sample size adequate |
+| PARTIAL | Same condition, different age range OR different setting, sample size adequate |
+| PROXY | Related condition (e.g., elderly with reduced grip → proxy for RA) OR small sample |
+| MISMATCH | Different condition, generalization not justified |
 
-### Step 5: Alternative threshold analysis
-For every threshold value: what would happen at ±20%?
-- Is 22N meaningfully different from 18N or 26N?
-- What does the dose-response curve look like?
-- Is there a cliff-edge or a gradient?
-- Would a different value achieve the same clinical outcome?
+Stored in `evidence_population_match` table (one row per study × target population).
 
-This prevents accepting a value because it's "standard" when the standard may have been set arbitrarily.
+**Rubric for reviewer:** if all match grades come back EXACT, the research is suspect. Real evidence rarely perfectly matches target populations.
 
-### Step 6: Recency and supersession check
-- Is this the most RECENT evidence, or the most CITED?
-- Has anything published in the last 3 years contradicted or refined this finding?
-- Has the population's assistive technology changed (e.g., power-assist wheelchairs changing ramp capacity)?
+### 3. Named dissenter
+Specific researcher, paper, or institution with a contrary or qualifying view.
 
-### Step 7: State what would change the recommendation
-Before closing any research gap: "This recommendation would change if [specific condition]. The evidence does NOT currently show [specific thing]. The weakest link in the evidence chain is [specific study/assumption]."
+```
+dissenter: "Chaffin et al. 2006 — argues 22 N too generous for active RA flare populations (grip force <8 N during flare)"
+OR
+dissenter: "NONE FOUND — searched [list queries]; no published dissent. Either consensus is genuine or search failed."
+```
 
-Log to `gaps.falsification_condition` (new field needed)
+If "NONE FOUND," the search queries used must be logged. The reviewer can spot-check whether the queries were genuinely adversarial or just confirming.
 
-## DB Schema Changes Required
+### 4. Confidence interval + shift condition
+```
+confidence: "65-80%"
+shift_to_low: "Would drop to 30-45% if a study with N>50 in active RA flare population showed grip capacity <15 N"
+shift_to_high: "Would rise to 90% if dose-response data on grip force vs door-operation success existed"
+```
+
+Numerical ranges, not narrative ("moderate," "strong") because narrative is gameable.
+
+### 5. Falsification condition
+What specific finding would make this recommendation wrong.
+
+```
+falsification: "Recommendation would change if: (a) RCT with population matching guidebook target showed alternative threshold X; OR (b) post-marketing surveillance showed >5% failure rate at current threshold; OR (c) successor standard supersedes ISO 21542 with different value."
+```
+
+Stored in `gaps.falsification_condition`. Required for gap closure.
+
+## DB schema
 
 ```sql
--- New field on evidence_sources
 ALTER TABLE evidence_sources ADD COLUMN derivation_chain TEXT;
--- "ISO 21542 → Schroeder 1979 → grip force study N=34 elderly women"
+ALTER TABLE evidence_sources ADD COLUMN prior_expectation TEXT;
+ALTER TABLE evidence_sources ADD COLUMN search_queries_used TEXT;
 
--- New field on gaps  
 ALTER TABLE gaps ADD COLUMN falsification_condition TEXT;
--- "Would change if SCI C5 grip force study (N>50) showed capacity >22N"
+ALTER TABLE gaps ADD COLUMN confidence_interval TEXT;
+ALTER TABLE gaps ADD COLUMN shift_conditions TEXT;
+ALTER TABLE gaps ADD COLUMN named_dissenter TEXT;
 
--- New table
 CREATE TABLE evidence_population_match (
     match_id TEXT PRIMARY KEY,
     source_ref TEXT NOT NULL,
     target_population TEXT NOT NULL,
     study_population TEXT,
     sample_size INTEGER,
-    match_grade TEXT CHECK(match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH')),
+    match_grade TEXT NOT NULL CHECK(match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH')),
     mismatch_note TEXT,
     created_at TEXT NOT NULL,
     created_by_session TEXT NOT NULL
 );
 ```
 
-## Enforcement
+Gap closure (status → CLOSED-FIXED, CLOSED-RESOLVED) requires all five fields populated. Enforce via pre-commit hook or scheduled audit query.
 
-This protocol cannot be enforced by text rules (level 1).
-Options:
-1. **Skill file** — `adversarial-research_SKILL.md` that wraps all research actions
-2. **Pre-commit check** — grep for "My training-data expectation" in research log entries
-3. **DB constraint** — `evidence_population_match` required before gap closure
+## Human spot-check schedule
 
-## What This Does NOT Solve
+The protocol works only if a human actually reviews. Without this, the fields become noise.
 
-- Claude still can't genuinely "not know" something. The prior exists.
-- Claude can't assess its own confidence calibration.
-- Adversarial searching can become performative (finding weak objections to dismiss).
-- The user must spot-check: "Show me the adversarial query results" periodically.
+**Per session:**
+- Pick 1 random gap closed in this session
+- Ask: "Trace this threshold to primary data" (Claude must show the citation chain or admit it can't)
+- Ask: "What would change your mind?" (must match falsification_condition exactly)
 
-## What The User Should Do
+**Per 10 sessions:**
+- Audit population_match grades — if >70% are EXACT, flag for review
+- Pick 3 "NONE FOUND" dissenter entries — re-run with different query phrasing, see if dissenters appear
 
-1. **Ask "what would change your mind?" before accepting any finding.** If Claude can't answer specifically, the research is shallow.
-2. **Spot-check threshold derivations.** Pick a random threshold value and ask "trace this to primary data." If it dead-ends at "standard X says so," the derivation is incomplete.
-3. **Require population-match grades.** If all match grades are EXACT, something is wrong — real evidence rarely perfectly matches target populations.
-4. **Watch for the dismiss pattern.** When Claude finds contradictory evidence and explains why it doesn't apply — that's the consensus bias operating. The contradiction should be logged, not dismissed.
+**Per 50 sessions:**
+- External review: ask a domain expert (not Claude) to spot-check 5 closed gaps
+- Compare expert's confidence interval to Claude's; flag systematic mismatches
+
+## What was dropped from v1 and why
+
+| Dropped step | Why |
+|---|---|
+| Trace to primary data | Circular — Claude can't critically evaluate citation chains, will declare "primary" at convenient stopping points |
+| Adversarial search ("[X] critique" queries) | Performance theater — finds weak straw-men to dismiss |
+| ±20% threshold test | Requires dose-response data Claude doesn't have access to |
+| Recency check | Recent ≠ contradictory; same bias in different clothes |
+
+These steps looked rigorous but produced false reassurance. Better to have fewer requirements that actually enforce.
+
+## What this still won't fix
+
+- Claude can fabricate citations. The named-dissenter requirement helps but doesn't prevent it.
+- Confidence intervals can be miscalibrated.
+- Population-match grades depend on rubric application, which is itself biased.
+- The protocol creates audit trails; it doesn't create truth.
+
+The reviewer is the truth-source. The protocol creates legible artifacts the reviewer can examine.
+
+## Adoption
+
+This is a proposal pending decision record. To adopt:
+
+1. Decide whether the DB schema changes are acceptable
+2. Decide whether to enforce via pre-commit hook (level 3) or audit query (level 2)
+3. Decide who performs the human spot-checks and on what schedule
+4. Add to `references/skill-registry.md` if a skill file is desired
+5. Update `userPreferences` `<accuracy_and_uncertainty>` to reference this protocol for research tasks
