@@ -462,7 +462,7 @@ Add to skill inventory:
 
 The primary content migration. For each Part 4 item:
 
-0. **Run item-audit-pipeline** (CO-0009 pre-pass) — surfaces cross-item connections, population conflicts, content gaps, evidence issues, functional deficit scope errors, and economics framing gaps before authoring begins. Produces an audit brief at `references/audit-briefs/{item_code}_brief.md`. Items with open RP or CONF gaps after pipeline run should have those gaps closed before atom authoring, where feasible. Skip_steps available for items with partial prior audit coverage.
+0. **Run item-audit-pipeline** (CO-0009 pre-pass) — ✅ **COMPLETE 2026-05-09.** 86/86 items audited. 263 gaps logged → 253 resolved (96.2%). 10 OPEN (all RP research). v9 stale-spec error corrected via BPC cross-reference. Atom fields populated: 9 of 11 at ≥99% for real items.
 
 1. **Extract or author all atom fields** per the 11 new specification columns:
    - `question_heading` — if not authored in B2.7, author now
