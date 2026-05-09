@@ -1,53 +1,72 @@
-# Session: 2026-05-08 — CO-0009 + C1 Migration + C3 Calibration Gate
+# Session: 2026-05-08 — CO-0009 + C1 + C3 Pipeline Pre-Pass COMPLETE
 **Model:** Opus 4.6
-**session_close:** 2026-05-08 21:20
-**next_action:** C3 production pipeline. Start with the 81 remaining items (86 total - 5 calibrated). Batch by category (A, B, E, G, etc.) to maximize context efficiency. Or: C2 original skills first if question-author/cell-curator/appendix-a-parser are gating.
+**session_close:** 2026-05-08 21:50
+**next_action:** C3 content authoring. 260 gaps queued across 86 items. Start with P2 gaps (47 total) — these need action before content authoring can proceed cleanly. Systemic fixes (evidence stratum UNSTATED, DEM Allen's) can be batched. Economics lifecycle gaps need economics-researcher sessions. FDR triggers (12 items) need targeted research.
 **blockers:** None.
 
-## Work completed this session
+## Summary
+
+Four major work streams completed in a single extended session:
 
 ### 1. CO-0009 — COMPLETE (~8 sessions total)
-Phases 3-5 in single session. Pipeline validated end-to-end on I-01.
+Pipeline build done. All 4 new skills validated, end-to-end pipeline tested on I-01.
 
 ### 2. C1 Migration — COMPLETE
-Both DBs populated. Website: +715 doctrine-spec, +181 specialist-spec, +124 performance criteria, all summaries. Tracking: 642 evidence sources, 81 BPC slugs, 1401 source-slug links, 245 connections, 97 BPC metadata. Bug fixed (migrate_slugs.py).
+Both DBs fully populated. Website: 715 doctrine-spec, 181 specialist-spec, 124 performance criteria, 141/141 summaries. Tracking: 642 evidence sources, 81 BPC slugs, 1401 source-slug links, 245 connections, 97 BPC metadata.
 
 ### 3. C3 Calibration Gate — COMPLETE
+5-item calibration: median 0.50 sessions/item. Budget revised: project 184–296 (was 237–395).
 
-| Item | Type | Pops | Gaps | Est. session |
-|---|---|---|---|---|
-| I-01 | Simple (hardware) | 4 | 8 | 0.50 |
-| A-04 | Medium-sensory | ALL | 5 | 0.45 |
-| B-10 | Safety-critical | 5 | 7 | 0.50 |
-| E-03 | Medium-structural | 3 | 11 | 0.55 |
-| G-04 | Complex (bathroom) | 4 | 10 | 0.60 |
+### 4. C3 Pipeline Pre-Pass — COMPLETE
+**86/86 items audited. 260 gaps logged. 84 audit briefs + master summary generated.**
 
-**Median: 0.50 sessions/item → REVISE DOWNWARD**
+| Category | Count | % | 
+|---|---|---|
+| AUDT | 188 | 72% |
+| EC | 49 | 19% |
+| RP | 12 | 5% |
+| MX | 4 | 2% |
+| CD | 4 | 2% |
+| CONF | 2 | 1% |
+| CR | 1 | <1% |
 
-Budget revised:
-- C3: 68–78 (was 70–172)
-- Project: 184–296 (was 237–395)
-- Savings: ~100 sessions from upper bound
+| Priority | Count |
+|---|---|
+| P2 | 47 |
+| P3 | 213 |
 
-### Systemic patterns (45 gaps across 6 items)
-| Category | Count | % | Pattern |
-|---|---|---|---|
-| AUDT | 21 | 47% | Evidence stratum UNSTATED, mechanism rationale incomplete, SCI absent |
-| EC | 9 | 20% | Lifecycle framing absent on HIGH retrofit items |
-| RP | 4 | 9% | FDR triggers for novel specs without published evaluation |
-| MX | 4 | 9% | Population coverage gaps |
-| CD | 4 | 9% | Thematic gaps (emergency egress, ambulant mobility) |
-| CONF | 2 | 4% | Cross-population conflicts documented but not conflict-registered |
-| CR | 1 | 2% | Cross-reference gap |
+### Systemic findings
+1. Evidence stratum UNSTATED — all 86 items (batch-fixable during authoring)
+2. DEM without Allen's — most DEM items (batch-fixable)
+3. SCI absent from motor items (needs per-item review)
+4. Economics lifecycle framing absent on HIGH retrofit items (needs economics-researcher)
+5. THIN BASE FDR triggers (12 items need targeted research)
 
-## Commits (16 this session)
+## Commits (19 this session)
 | # | SHA | Content |
 |---|---|---|
 | 1–9 | various | CO-0009 Phases 3-5 |
-| 10 | fec0bce | C1 migration: website joins + tracking |
+| 10 | fec0bce | C1 migration |
 | 11 | 3c59780 | C1 fix: slugs + evidence_sources |
 | 12 | a9721f9 | Session file |
 | 13 | c375681 | Calibration: E-03 + G-04 |
-| 14 | 7c262a0 | Session file update |
-| 15 | 5046a32 | Calibration COMPLETE: A-04 + B-10, budget revision |
-| 16 | (this) | Final session file |
+| 14 | 7c262a0 | Session file |
+| 15 | 5046a32 | Calibration COMPLETE + budget revision |
+| 16 | 80614d4 | Session file |
+| 17 | b191810 | C3 pre-pass: 86/86 items, 260 gaps |
+| 18 | 13f0ae8 | 84 audit briefs + master summary |
+| 19 | (this) | Final session file |
+
+## Deliverables
+- `references/audit-briefs/_MASTER_SUMMARY.md` — full gap analysis
+- `references/audit-briefs/{item_code}_brief.md` × 84 — per-item briefs
+- `data/guidebook.db` — 260 gaps, 87 audit runs, 245 connections, 642 evidence sources
+- `data/db/guidebook.db` — all C1 joins populated
+- `scripts/db/c1_fill_joins_and_metadata.py` — reproducible migration script
+- `workplan/workplan-co0007-v4.md` — calibrated budget
+
+## Open for next session
+1. **P2 gaps (47)** — batch fix systemic issues first (SCI absent, economics lifecycle)
+2. **C3 content authoring** — atom fields (failures_json, install_notes_json, etc.) for 141 specs
+3. **C2 original skills** — question-author (12 missing headings), cell-curator, appendix-a-parser
+4. **FDR research** — 12 items with THIN BASE or FDR triggers
