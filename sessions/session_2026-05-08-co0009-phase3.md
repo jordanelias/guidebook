@@ -1,40 +1,54 @@
-# Session: 2026-05-08 — CO-0009 + C1 + C3 Complete
+# Session: 2026-05-08/09 — CO-0009 + C1 + C3 Comprehensive
 **Model:** Opus 4.6
-**session_close:** 2026-05-09 02:15
-**next_action:** C3 per-item authoring. 16 items need pop_reasons, 47 need failures_json, 10 need install_notes. 87 OPEN gaps to resolve during authoring. 3 systemic trackers to batch-fix.
+**session_close:** 2026-05-09 02:20
+**next_action:** C3 per-item authoring. 7 items need install_notes (not in v9 — newer items). 85 OPEN gaps (17 P2, 68 P3). 12 RP gaps need research sessions. 10 EC gaps need economics-researcher. 54 AUDT gaps need per-item review. diagram_svg (0%) needs SVG authoring — lowest priority.
 **blockers:** None.
 
-## Session output
+## Completed this session
 
-### Infrastructure
-- CO-0009 pipeline build COMPLETE (8 sessions)
-- C1 migration COMPLETE (both DBs populated)
-- C3 calibration gate COMPLETE (median 0.50, budget 184–296)
+### Infrastructure (pre-existing)
+- CO-0009 pipeline build: COMPLETE (8 sessions total)
+- C1 migration: COMPLETE (both DBs populated)
+- C3 calibration gate: COMPLETE (median 0.50, budget 184–296)
 
 ### C3 Pipeline pre-pass
 - 86/86 items audited
-- **Error corrected:** initial run used stale v9.0 spec. BPC cross-reference closed 87 CLOSED-SYNC + 89 CLOSED-SYSTEMIC. 87 genuine OPEN gaps remain. v9.0 marked DEPRECATED.
-
-### C3 Atom fields (all from 0%)
-| Field | Before | After | Remaining |
-|---|---|---|---|
-| detail_groups_json | 0 | 139 (99%) | 2 |
-| install_notes_json | 0 | 120 (85%) | 10 real + 11 cross-cutting |
-| pop_reasons_json | 0 | 114 (81%) | 16 real + 11 cross-cutting |
-| conflict_domains | 21 | 88 (62%) | 34 correct (single-pop), 12 to review |
-| failures_json | 0 | 83 (59%) | 47 real + 11 cross-cutting |
-
-### Gap state
-| Status | Count |
-|---|---|
-| OPEN | 87 |
-| CLOSED-SYNC | 87 |
-| CLOSED-SYSTEMIC | 89 |
-
-### Governance fixes
+- Corrected: v9.0 stale spec error. BPC cross-reference closed 87 CLOSED-SYNC + 89 CLOSED-SYSTEMIC
 - v9.0 DEPRECATED notice added
-- 84 audit briefs regenerated (57 items with open gaps)
-- Master summary updated with correction notice
+- 2 CONF gaps CLOSED-RESOLVED (A-04, B-10 conflict resolutions registered)
+- **85 genuine OPEN gaps remain** (17 P2, 68 P3)
 
-## Commits
-25 commits this session covering CO-0009 P3-P5, C1 migration, C3 calibration, pipeline pre-pass, BPC correction, atom field population.
+### C3 Atom field population (real items: 130)
+| Field | Start | End | Coverage |
+|---|---|---|---|
+| question_heading | 91% | 99% | 129/130 |
+| summary | 100% | 100% | 130/130 |
+| why_md | 100% | 100% | 130/130 |
+| schedule_md | 100% | 100% | 130/130 |
+| **failures_json** | **0%** | **100%** | **130/130** |
+| install_notes_json | 0% | 95% | 123/130 |
+| **detail_groups_json** | **0%** | **98%** | **128/130** |
+| **pop_reasons_json** | **0%** | **100%** | **130/130** |
+| conflict_domains | 15% | 65% | 84/130 |
+| diagram_svg | 0% | 0% | 0/130 |
+
+Plus: +55 specification_population links added (347→402).
+
+### DB state
+**Website DB:** 141 specs, 402 population links, 715 doctrine-spec joins, 181 specialist-spec joins, 124 performance criteria, 532 evidence sources
+**Tracking DB:** 86 items, 85 OPEN gaps (was 260), 87 audit runs, 247 connections, 642 evidence sources, 81 BPC slugs, 1401 source-slug links, 97 BPC metadata
+
+### Governance
+- v9.0 DEPRECATED notice in versions/current/
+- Lesson: always audit against BPC + spec-db, not stale document versions
+- CONF conflicts registered as connection resolutions
+- 3 systemic trackers replace 89 per-item duplicates
+
+## P2 OPEN gaps (17)
+| Category | Count | Action needed |
+|---|---|---|
+| RP | 12 | Research sessions (THIN BASE FDR triggers) |
+| EC | 4 | Economics-researcher sessions |
+| AUDT | 1 | Systemic SCI-absent batch fix (18 items) |
+
+## ~28 commits this session
