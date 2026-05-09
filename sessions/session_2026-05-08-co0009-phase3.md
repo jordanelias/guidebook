@@ -1,29 +1,42 @@
-# Session: 2026-05-08/09 — CO-0009 + C1 + C3 + Research + Economics
+# Session: 2026-05-08/09 — Comprehensive Build
 **Model:** Opus 4.6
-**session_close:** 2026-05-09 02:50
-**next_action:** 27 OPEN gaps (3 P2 novel specs, 24 P3 with research notes). All gaps have research annotations. No further automated resolution possible — remaining work is per-item authoring or future empirical validation of novel specifications.
+**session_close:** 2026-05-09
+**next_action:** 10 OPEN gaps (all RP, 3 P2 novel specs). conflict_domains 71%, diagram_svg 0%. C2 skills not yet built.
 **blockers:** None.
 
-## Final metrics
-| Metric | Value |
+## Session output
+
+| Deliverable | Metric |
 |---|---|
-| Gaps: logged → open | 263 → 27 (90% resolved) |
-| P2 remaining | 3 (all novel specifications without published evaluation) |
+| Gaps resolved | 253/263 (96.2%) |
+| P2 remaining | 3 (novel specifications) |
 | Atom fields at 100% | 9 of 11 |
-| specification_population | 347 → 439 (+92) |
-| Commits | ~45 |
+| DB dedup | 52 duplicates removed, 14 titles fixed |
+| Cross-DB sync | 91 items, 0 mismatches, 525 population links |
+| Commits | ~50 |
 
-## 3 remaining P2 gaps (novel specifications)
-1. **GAP-012** I-01: UPL+DEM compound hardware selection — no published research on cognitive-physical compound population intersection
-2. **GAP-027** G-04: OFS 500mm staged rising space — novel specification for orthostatic/fatigue bathroom spatial requirement
-3. **GAP-040** B-10: T+0/3/5s sequenced alarm timing — novel multi-modal alarm sequence without published clinical evaluation
+### Atom fields (91 real items)
+All 9 extractable fields at 100%: question_heading, summary, why_md, schedule_md, failures_json, install_notes_json, detail_groups_json, pop_reasons_json, evidence_tier.
 
-These represent design innovations in the guidebook that need future empirical validation. Correctly flagged as P2 research priorities.
+Remaining: conflict_domains 71% (correctly empty for 26 items), diagram_svg 0% (SVG authoring).
 
-## Research conducted this session
-- **Ramp gradient (E-03):** 3+ SCI studies found beyond Koontz 2012 → P3
-- **Force threshold (I-01):** International standards consensus (ADA/BS/DIN/AS) → P3
-- **Hearing loops (A-10/A-11):** IEC 60118-4, PMC efficacy study → CLOSED
-- **TWSI (E-09):** ISO 23599 extensive safety evidence → CLOSED
-- **Sequenced alarm (B-10):** Multimodal principle supported, timing novel → stays P2
-- **Lifecycle economics:** Schroeder & Steinfeld (0-0.5%), UK Changing Places (50%+), RHFAC ($0.10-0.60/sqft) → 5 EC gaps P3
+### Gap resolution (263 total)
+| Status | Count |
+|---|---|
+| CLOSED-SYSTEMIC | 90 |
+| CLOSED-SYNC | 87 |
+| CLOSED-FIXED | 48 |
+| CLOSED-FALSE-POSITIVE | 26 |
+| OPEN | 10 |
+| CLOSED-RESOLVED | 2 |
+
+### 10 OPEN (all RP — research needed)
+3 P2 novel specs: B-10 sequenced alarm, G-04 OFS bathroom, I-01 UPL+DEM compound.
+7 P3 with research notes: A-12 Auracast, B-02 lip-reading, D-08 pictograms, E-03 SCI ramp, H-03 captioning, I-01 force threshold, K-05 thermal.
+
+### Data quality fixes
+- 52 duplicate specs deleted (BPC-slug migration artifacts)
+- 14 titles fixed (population codes → proper names)
+- F-07 deleted (phantom item from migration)
+- 150 population links synced
+- 6 missing items added cross-DB
