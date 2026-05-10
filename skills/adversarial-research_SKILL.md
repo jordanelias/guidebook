@@ -138,6 +138,66 @@ The protocol also caught a SILENT BUG:
 - Audit query showed "0 verified citations" after I claimed 4 in commit messages
 - Schema strictness + audit separation = each layer catches different failure modes
 
+
+## Pattern: topic-evidence vs claim-evidence (added 2026-05-10)
+
+Caught during DR-2026-05-09 strict re-examination. The most common bias mode for Claude:
+
+> **Conflating "evidence on the topic" with "evidence supporting the specific claim"**
+
+Examples this skill caught when applied rigorously:
+
+### Case 1: Hearing loops (GAP-069 A-10)
+- Cited: IEC 60118-4 (real, verified)
+- Claim: "Install hearing loops at reception/service counters"
+- Bias: The standard specifies hearing loop PERFORMANCE (field strength), not WHERE to install loops. The "at counter" placement decision is design-derived, not evidence-derived.
+- Result: Reopened, CI dropped from 70-85% to 40-55%.
+
+### Case 2: Lip-reading lighting (GAP-097 B-02)
+- Cited: Erber 1974 (real, shadow effect on lipreading documented)
+- Claim: Specific lux thresholds for shadow-free face illumination
+- Bias: Erber demonstrates SHADOWS reduce lipreading 3-12% but does NOT provide quantitative lux thresholds. BS 8300, CIBSE, AJA Bernstein 2021 — none provide lux thresholds for lipreading-specific illumination.
+- Result: Reopened, CI dropped from 60-75% to 25-40%.
+
+### Case 3: Thermal comfort (GAP-260 K-05)
+- Cited: Griggs 2019 (PMID 31414956, real)
+- Claim: Built-environment temperature specification for SCI users
+- Bias: Griggs is exercise physiology — heat balance during EXERCISE/REST. Translation to building design specifications is an assumption.
+- Result: Reopened, CI dropped from 75-85% to 45-60%.
+
+### Case 4: Auracast (GAP-076 A-12)
+- Cited: Bluetooth SIG specification + 2.5M global deployment forecast
+- Claim: Specify Auracast readiness in new buildings
+- Bias: The technology is real and deploying. But "specify readiness now in 2026 vs retrofit when needed in 2030" is a forward-looking design choice. Industry forecast ≠ empirical study showing building-side readiness adds value.
+- Result: Reopened, CI dropped from 70-85% to 50-65%.
+
+## Detection question
+
+Before closing any research gap, answer in writing:
+
+> **"Does the cited evidence specifically validate THE SPECIFIC CLAIM, or does it just speak to the topic?"**
+
+If the answer is "speaks to the topic," the gap stays open OR closes with low confidence and explicit acknowledgment of the gap between cited evidence and specific claim.
+
+## Audit checks for this pattern
+
+The audit query (scripts/audit/research_protocol_audit.py) flags:
+- CHECK 5: Closed gaps with NONE FOUND dissenter that lack review markers
+- CHECK 2: Verified citations without population_match record (forces "what specifically does this support" question)
+- CHECK 3: Population match grade distribution >70% EXACT (real evidence rarely perfectly matches)
+
+## What this means for application
+
+When invoking this skill:
+1. State the prior
+2. Search adversarially (find evidence AGAINST, not just FOR)
+3. **Verify citations exist** (independent sources)
+4. **Distinguish topic from claim**: trace what the citation actually supports
+5. Population match: grade with rubric, log ref_id FK
+6. Log all 5 protocol fields to gap
+
+If you cannot honestly populate all 5 fields with specific content, the gap should remain OPEN. "NOT-RESEARCHED" is acceptable; vague closure is not.
+
 ## Audit query
 
 Run before session close:
