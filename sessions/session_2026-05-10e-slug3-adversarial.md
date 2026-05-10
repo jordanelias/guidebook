@@ -90,3 +90,40 @@ Full audit script not run (path dependency on repo clone). Pre-existing CHECK 2 
 - PI v10.7 still not live in project settings (standing rule #8 for PMP not PI-enforced, only workplan-enforced)
 - GAP-281 (bpc_source_slug NULL) still open — does not block current work
 - GAP-282 (missing RT60-school item) still open — PMP walk A-02 finding may overlap (ANSI S12.60 RT60 ≤0.6s)
+
+## Addendum: Circadian slug partial work
+
+### circadian-lighting-melanopic-edi — 2/14 FULL PROTOCOL (FR, JA)
+Started Tier 1 slug 4 before context budget required handoff. FR and JA searched with adversarial. 9 languages remain NOT-RUN (DA, ES, FI, IT, KO, NL, PT, SV, ZH).
+
+### Critical PMP pre-finding for B-01
+**BPC item B-01 specifies ≥150 EML (Lucas 2014 metric). This is outdated on TWO dimensions:**
+1. **Metric:** Field has moved from EML to melanopic EDI (CIE S 026, 2018). WELL v2 already migrated.
+2. **Threshold:** Brown 2022 consensus (PMC8929548) recommends ≥250 melanopic EDI for daytime (≈275 EML). BPC's 150 EML is well below this.
+
+Adversarial findings from FR/EN searches:
+- Brown 2022 itself: "uncertainty as to whether [melanopsin] provides a sufficiently detailed model" — rod/cone signals also reach ipRGCs
+- "Whether melanopic EDI provides superior predictive value... in real-world is not yet established" (MedRxiv)
+- "Interindividual variations in sensitivity to light" acknowledged (PMC7970181)
+- "Impractical to require a specific melanopic EDI every day of the year" — seasonal/latitude issue (Ticleanu 2025)
+- "Daylight alone was insufficient to meet melanopic recommendations consistently" — cost/feasibility (ScienceDirect energy review)
+- Recommendations explicitly "do not apply" to shift workers (IES)
+- Non-visual lighting requirements exist ONLY in voluntary certification systems (WELL, UL 24480), not mandatory building codes
+
+### Updated session close timestamp
+**session_close:** 2026-05-10 21:45 UTC
+
+### Updated commits
+| SHA | Content |
+|---|---|
+| 4d3b8a48d4 | data/guidebook.db — slug 3 adversarial + PMP walks |
+| 713d8ef6d8 | sessions/session_2026-05-10e (initial) |
+| fab25118b9 | sessions/LATEST |
+| 53ed9ac2cf | data/guidebook.db — circadian slug FR+JA |
+
+### Updated next_action
+1. **Complete circadian slug:** 9 NOT-RUN + 3 PRE-REMEDIATION languages need adversarial searches
+2. **PMP walk B-01:** ≥150 EML, D=up. Pre-finding suggests gap_signed will be large (~+125 EML). Metric migration EML→melanopic EDI also needed.
+3. **Continue remaining Tier 1:** construction-cost-data (11 NOT-RUN), visual-fire-alarm-seizure-safety (11 NOT-RUN), accessible-design-economics (9 NOT-RUN), thermal-comfort-older-adults (8 NOT-RUN)
+4. **PMP backlog:** 11+ items with numerical specs
+5. **BPC corrections:** A-02 NRC threshold (0.85→0.90), B-01 metric+threshold (EML→melanopic EDI, 150→250)
