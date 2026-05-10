@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guidebook — Disability-Inclusive Design</title>
+  <meta name="description" content="A reference guidebook for disability-inclusive built-environment design. 91 provisions, 661 evidence sources, 10 categories.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/guidebook.css">
+</head>
+<body class="mode-spec">
+
+<a href="#main" class="skip">Skip to main content</a>
+
+<header class="masthead" role="banner">
+  <div class="masthead-inner">
+    <a href="index.html" class="brand" aria-label="Guidebook home">
+      Guidebook<span class="brand-sub">v10 · disability-inclusive design</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="specs/e-08.html">Exemplar · E-08</a>
+      <a href="#directory" aria-current="page">Directory</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="subbar" aria-label="Context bar">
+  <div class="subbar-inner">
+    <span class="crumb-sep">Home</span>
+    <span class="mode-toggle" role="group" aria-label="Reading mode">
+      <button type="button" data-mode="spec" aria-pressed="true">Spec mode</button>
+      <button type="button" data-mode="question" aria-pressed="false">Question mode</button>
+    </span>
+  </div>
+</div>
+
+<main id="main" class="page">
+
+  <header class="article-header">
+    <div class="kicker">
+      <span class="item-code">GB</span>
+      <span>v10 · 2026-05</span>
+      <span>source: data/guidebook.db</span>
+    </div>
+    <h1 class="title-spec">A reference for disability-inclusive built-environment design.</h1>
+    <h1 class="title-question">What does this building need to work for the people who use it?</h1>
+    <p class="tagline">One canonical record per provision. Different audiences arrive through different doors and reach the same evidence — measured, cited, and disagreement intact.</p>
+  </header>
+
+  <div class="layout">
+    <article class="spec-content">
+
+      <section style="--order-spec:1; --order-q:1">
+        <span class="h2-num">§ 1 · Entry</span>
+        <h2>Four doors to the same record</h2>
+        <p class="lede">No door is privileged. The guidebook holds one specification record per provision and renders the same data with different section orders depending on which door you came through.</p>
+
+        <nav class="doors" aria-label="Audience entry points">
+          <a class="door" data-door="1" href="specs/e-08.html">
+            <span class="door-num">Door 1 / spec mode</span>
+            <span class="door-title">Design professional</span>
+            <p class="door-prompt">"Show me the number and the evidence behind it."</p>
+            <span class="door-cta">Specifications →</span>
+          </a>
+          <a class="door" data-door="2" href="specs/e-08.html?mode=question">
+            <span class="door-num">Door 2 / question mode</span>
+            <span class="door-title">Disabled user · advocate</span>
+            <p class="door-prompt">"Does this building work for me?"</p>
+            <span class="door-cta">Questions →</span>
+          </a>
+          <a class="door" data-door="3" href="specs/e-08.html#populations" aria-label="Door 3: OT and allied health — population view">
+            <span class="door-num">Door 3 / population view</span>
+            <span class="door-title">OT · allied health</span>
+            <p class="door-prompt">"What does my client's population need?"</p>
+            <span class="door-cta">Populations →</span>
+          </a>
+          <a class="door" data-door="4" href="specs/e-08.html#conflicts" aria-label="Door 4: Policymaker — economics view">
+            <span class="door-num">Door 4 / economics</span>
+            <span class="door-title">Policymaker · procurer</span>
+            <p class="door-prompt">"What does this cost and what does it save?"</p>
+            <span class="door-cta">Economics →</span>
+          </a>
+        </nav>
+      </section>
+
+      <section style="--order-spec:2; --order-q:2">
+        <span class="h2-num">§ 2 · At a glance</span>
+        <h2>Scale of the record</h2>
+        <p>Every count below is a live <code style="font-family:var(--font-mono); font-size:0.92em;">COUNT()</code> against <code style="font-family:var(--font-mono); font-size:0.92em;">data/guidebook.db</code>.</p>
+
+        <div class="stats" role="list">
+          <div class="stat" role="listitem">
+            <span class="stat-n">91</span>
+            <span class="stat-l">Provisions · active</span>
+          </div>
+          <div class="stat" role="listitem">
+            <span class="stat-n">661</span>
+            <span class="stat-l">Evidence sources · tiered</span>
+          </div>
+          <div class="stat" role="listitem">
+            <span class="stat-n">245</span>
+            <span class="stat-l">Cross-references</span>
+          </div>
+          <div class="stat" role="listitem">
+            <span class="stat-n">32</span>
+            <span class="stat-l">Open gaps</span>
+          </div>
+        </div>
+      </section>
+
+      <section style="--order-spec:3; --order-q:3" id="recent">
+        <span class="h2-num">§ 3 · Recent updates</span>
+        <h2>Last modified</h2>
+        <ul class="recent" aria-label="Recently modified provisions">
+          <li>
+            <span class="r-code">A-02</span>
+            <a class="r-title" href="#" data-unavailable>Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces</a>
+            <span class="r-meta">2026-05-10</span>
+          </li>
+          <li>
+            <span class="r-code">A-08</span>
+            <a class="r-title" href="#" data-unavailable>HVAC Noise Control (NC-25 Maximum in Sensitive Spaces)</a>
+            <span class="r-meta">2026-05-10</span>
+          </li>
+          <li>
+            <span class="r-code">E-11</span>
+            <a class="r-title" href="#" data-unavailable>Automatic Sliding Entry and Internal Doors</a>
+            <span class="r-meta">2026-05-09</span>
+          </li>
+          <li>
+            <span class="r-code">E-15</span>
+            <a class="r-title" href="#" data-unavailable>Changing Places Facility (Height-Adjustable Bench, Overhead</a>
+            <span class="r-meta">2026-05-09</span>
+          </li>
+          <li>
+            <span class="r-code">F-06</span>
+            <a class="r-title" href="#" data-unavailable>Fragrance-Free Policy (Whole-Building Operational Standard)</a>
+            <span class="r-meta">2026-05-09</span>
+          </li>
+        </ul>
+      </section>
+
+      <section style="--order-spec:4; --order-q:4" id="directory">
+        <span class="h2-num">§ 4 · Full directory</span>
+        <h2>All 91 provisions by category</h2>
+      </section>
+
+
+      <section class="section cat-section" id="cat-a" style="--order-spec:1; --order-q:1">
+        <div class="sec-head" style="--sec-color: var(--sec-2)">
+          <span class="sec-num">Cat. A</span>
+          <h2>Acoustics & Sensory</h2>
+          <span class="sec-meta">18 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-01</span>
+            <span class="cr-name">Acoustic Buffer Zones at Noisy Adjacencies</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-02</span>
+            <span class="cr-name">Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-03</span>
+            <span class="cr-name">Acoustic Door (STC ≥35) at All Sensitive Space Boundaries</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-04</span>
+            <span class="cr-name">Acoustic Zoning: Graduated from Arrival to Primary Occupation</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-05</span>
+            <span class="cr-name">Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-06</span>
+            <span class="cr-name">Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-07</span>
+            <span class="cr-name">Flutter Echo Elimination (Parallel Hard Surface Avoidance)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-08</span>
+            <span class="cr-name">HVAC Noise Control (NC-25 Maximum in Sensitive Spaces)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-09</span>
+            <span class="cr-name">HVAC Vibration Isolation (Floating Plant Room)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-10</span>
+            <span class="cr-name">Counter Hearing Loop (Induction Loop at Reception/Service Counter)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-10b</span>
+            <span class="cr-name">RT60 for Hydrotherapy and Pool Environments</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-11</span>
+            <span class="cr-name">Room Perimeter Hearing Loop (Assembly and Meeting Spaces)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-12</span>
+            <span class="cr-name">Auracast Infrastructure Readiness</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-13</span>
+            <span class="cr-name">No Sound Masking in Neurological Population Environments</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-14</span>
+            <span class="cr-name">Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-15</span>
+            <span class="cr-name">Acoustic Differentiation Between Spaces (Navigation Aid for VIS)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-16</span>
+            <span class="cr-name">Sensory Room / Quiet Room Provision (≥8 m², one per floor or per 500 m² GFA)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">A-17</span>
+            <span class="cr-name">Upholstered Seating Throughout Occupied Spaces</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-b" style="--order-spec:2; --order-q:2">
+        <div class="sec-head" style="--sec-color: var(--sec-3)">
+          <span class="sec-num">Cat. B</span>
+          <h2>Surfaces & Finishes</h2>
+          <span class="sec-meta">12 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-01</span>
+            <span class="cr-name">Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-02</span>
+            <span class="cr-name">Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-03</span>
+            <span class="cr-name">Elimination of Fluorescent Overhead Lighting</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-04</span>
+            <span class="cr-name">Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-05</span>
+            <span class="cr-name">Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-06</span>
+            <span class="cr-name">Individual Dimming Control (≥300 Lux Range)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-07</span>
+            <span class="cr-name">Indirect and Cove Lighting in Sensitive Spaces</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-08</span>
+            <span class="cr-name">Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-09</span>
+            <span class="cr-name">Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-10</span>
+            <span class="cr-name">Visual Fire Alarm (Strobe VAD Throughout Building)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-11</span>
+            <span class="cr-name">Warm Colour Temperature for Evening (≤2700 K After 19:00)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">B-12</span>
+            <span class="cr-name">Sensor-Activated Overnight Pathway Lighting</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-c" style="--order-spec:3; --order-q:3">
+        <div class="sec-head" style="--sec-color: var(--sec-4)">
+          <span class="sec-num">Cat. C</span>
+          <h2>Controls & Hardware</h2>
+          <span class="sec-meta">6 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">C-01</span>
+            <span class="cr-name">Colour Palette (Muted, Low-Chroma, Non-Institutional)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">C-02</span>
+            <span class="cr-name">Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing/Zone)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">C-03</span>
+            <span class="cr-name">Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">C-04</span>
+            <span class="cr-name">LRV Contrast (≥30 at All Critical Junctions)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">C-05</span>
+            <span class="cr-name">Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">C-06</span>
+            <span class="cr-name">Plain, Low-Contrast Flooring Throughout (No Geometric Patterns)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-d" style="--order-spec:4; --order-q:4">
+        <div class="sec-head" style="--sec-color: var(--sec-5)">
+          <span class="sec-num">Cat. D</span>
+          <h2>Wayfinding & Signage</h2>
+          <span class="sec-meta">11 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-01</span>
+            <span class="cr-name">Loop Floor Plan (No Dead-End Corridors in DEM Environments)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-02</span>
+            <span class="cr-name">Cognitive Simplicity (Single Primary Route from Entry to Destination)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-03</span>
+            <span class="cr-name">Toilet Visibility from Primary Occupied Spaces (No Navigation Required)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-04</span>
+            <span class="cr-name">Landmarks at Every Decision Point</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-05</span>
+            <span class="cr-name">Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-06</span>
+            <span class="cr-name">Memory Boxes at Private Office and Residential Room Entrances</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-07</span>
+            <span class="cr-name">No Blind Corners (Curved or Mirrored at All Hidden Junctions)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-08</span>
+            <span class="cr-name">Pictogram + Single-Word Signage Throughout</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-09</span>
+            <span class="cr-name">Consistent Furniture Layout (No Rearrangement Without User Consultation)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-10</span>
+            <span class="cr-name">Transparent Glazed Panels in Internal Partitions</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">D-11</span>
+            <span class="cr-name">Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-e" style="--order-spec:5; --order-q:5">
+        <div class="sec-head" style="--sec-color: var(--sec-6)">
+          <span class="sec-num">Cat. E</span>
+          <h2>Circulation & Access</h2>
+          <span class="sec-meta">14 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-01</span>
+            <span class="cr-name">Accessible Lift (1400×1100 mm Car, All Floors Served)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-02</span>
+            <span class="cr-name">Platform Lift (Where Full Passenger Lift Not Achievable)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-03</span>
+            <span class="cr-name">Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-04</span>
+            <span class="cr-name">Accessible Parking (3600 mm Width, Covered, Closest to Entry)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-05</span>
+            <span class="cr-name">Weather Protection at Entry (Covered Canopy Minimum 3000×2000 mm)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-06</span>
+            <span class="cr-name">Level Entry (Zero Step at All Accessible Entrances)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-07</span>
+            <span class="cr-name">Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="specs/e-08.html">
+            <span class="cr-code">E-08</span>
+            <span class="cr-name">Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)</span>
+            <span class="cr-refs">0 refs · exemplar</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-09</span>
+            <span class="cr-name">Tactile Walking Surface Indicators (ISO 23599:2019)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-10</span>
+            <span class="cr-name">Rest Seating at Regular Intervals on All Accessible Routes</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-11</span>
+            <span class="cr-name">Automatic Sliding Entry and Internal Doors</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-12</span>
+            <span class="cr-name">Entrance Landing and Manoeuvring Space for Power Wheelchair Users</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-13</span>
+            <span class="cr-name">Entrance Cognitive Legibility Provisions</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">E-15</span>
+            <span class="cr-name">Changing Places Facility (Height-Adjustable Bench, Overhead</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-f" style="--order-spec:6; --order-q:6">
+        <div class="sec-head" style="--sec-color: var(--sec-7)">
+          <span class="sec-num">Cat. F</span>
+          <h2>Environment & Services</h2>
+          <span class="sec-meta">7 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-01</span>
+            <span class="cr-name">Sensory Gradient (High to Low Stimulation from Entry to Occupation)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-02</span>
+            <span class="cr-name">Olfactory Control (Fragrance-Free Zones in Sensitive Areas)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-03</span>
+            <span class="cr-name">Graduated Stimulation Re-entry (Sensory Room to General Space Transition)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-04</span>
+            <span class="cr-name">Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-05</span>
+            <span class="cr-name">Seated-Task Design (All Primary Occupational Tasks Achievable Without Sustained Standing)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-06</span>
+            <span class="cr-name">Fragrance-Free Policy (Whole-Building Operational Standard)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">F-08</span>
+            <span class="cr-name">Thermal Transition — Heating and Cooling System Response</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-g" style="--order-spec:7; --order-q:7">
+        <div class="sec-head" style="--sec-color: var(--sec-8)">
+          <span class="sec-num">Cat. G</span>
+          <h2>Sanitary & Hygiene</h2>
+          <span class="sec-meta">9 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-01</span>
+            <span class="cr-name">Defensible Seating (Back-to-Wall, Entry Sightline Configuration)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-02</span>
+            <span class="cr-name">Variety of Seating Types (Three Heights at Every Seating Area)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-03</span>
+            <span class="cr-name">Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-04</span>
+            <span class="cr-name">Accessible Bathroom (Wet Room Configuration — Zero Threshold)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-05</span>
+            <span class="cr-name">Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-06</span>
+            <span class="cr-name">Reception Counter (Accessible Height Section — 760--860 mm AFF)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-07</span>
+            <span class="cr-name">Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-08</span>
+            <span class="cr-name">Bedroom Wardrobe and Storage Reach Configuration</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">G-09</span>
+            <span class="cr-name">Bedroom Emergency Call Provision and Overnight Lighting</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-h" style="--order-spec:8; --order-q:8">
+        <div class="sec-head" style="--sec-color: var(--sec-9)">
+          <span class="sec-num">Cat. H</span>
+          <h2>Kitchen & Dining</h2>
+          <span class="sec-meta">5 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">H-01</span>
+            <span class="cr-name">All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">H-02</span>
+            <span class="cr-name">Individual Environmental Control (Lighting and Temperature Per Space)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">H-03</span>
+            <span class="cr-name">Visual Paging and Real-Time Captioning in Assembly Spaces</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">H-04</span>
+            <span class="cr-name">Accessible Intercom and Video Door Entry with Visual and Tactile Feedback</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">H-05</span>
+            <span class="cr-name">Emergency Call — Multi-Position Reach Envelope</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-i" style="--order-spec:9; --order-q:9">
+        <div class="sec-head" style="--sec-color: var(--sec-10)">
+          <span class="sec-num">Cat. I</span>
+          <h2>Specialist Equipment</h2>
+          <span class="sec-meta">4 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">I-01</span>
+            <span class="cr-name">Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">I-02</span>
+            <span class="cr-name">Kitchen (One-Handed Operation Throughout)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">I-03</span>
+            <span class="cr-name">Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">I-04</span>
+            <span class="cr-name">Ceiling Hoist Provision</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cat-section" id="cat-k" style="--order-spec:11; --order-q:11">
+        <div class="sec-head" style="--sec-color: var(--sec-12)">
+          <span class="sec-num">Cat. K</span>
+          <h2>Outdoor & Landscape</h2>
+          <span class="sec-meta">5 provisions</span>
+        </div>
+        <div class="rowlist">
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">K-01</span>
+            <span class="cr-name">Intervenor Adjacency at Service Counters</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">K-02</span>
+            <span class="cr-name">Tactile Building Map Station at Principal Entrance</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">K-03</span>
+            <span class="cr-name">Haptic Communication Clear Floor Zone</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">K-04</span>
+            <span class="cr-name">Vibrotactile Alert Provision</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+          <a class="cat-row" href="#" data-unavailable>
+            <span class="cr-code">K-05</span>
+            <span class="cr-name">Thermal Comfort Assessment for Thermoregulation-Impaired Populations</span>
+            <span class="cr-refs">0 refs</span>
+          </a>
+        </div>
+      </section>
+
+      <section style="--order-spec:20; --order-q:20" id="about">
+        <span class="h2-num">§ 5 · About</span>
+        <h2>One record, many lenses</h2>
+        <p>The website is generated from a SQLite database. The schema is canonical; the prose is layered on top.</p>
+        <table>
+          <caption>Primary tables · <code style="font-family:var(--font-mono);">data/guidebook.db</code></caption>
+          <thead><tr><th>Table</th><th>Purpose</th><th>Rows</th></tr></thead>
+          <tbody>
+            <tr><th>items</th><td>One row per provision (item_code · name)</td><td class="num">91</td></tr>
+            <tr><th>evidence_sources</th><td>Reference register (tiered, DOI-keyed)</td><td class="num">661</td></tr>
+            <tr><th>connections</th><td>Cross-provision links</td><td class="num">245</td></tr>
+            <tr><th>gaps</th><td>Open research questions</td><td class="num">32 open</td></tr>
+            <tr><th>bpc_metadata</th><td>Evidence state per slug</td><td class="num">97</td></tr>
+            <tr><th>search_coverage</th><td>Jurisdiction × slug search status</td><td class="num">1864</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Conventions</h3>
+        <p>● stated &nbsp; ◐ provisional &nbsp; ○ pending. Co-1 (lived experience) evidence is never subordinated to academic tiers. Populations are not ranked. Conflicts show both parties at parity.</p>
+        <p>WCAG 2.2 AA target. Every drawing carries dimensional alt-text. Animations respect reduced-motion.</p>
+      </section>
+
+    </article>
+
+    <aside class="infobox" aria-label="Quick reference">
+      <div class="infobox-head">Guidebook · v10</div>
+      <dl>
+        <dt>Status</dt>
+        <dd>Active · drafting</dd>
+        <dt>Provisions</dt>
+        <dd class="value-big">91</dd>
+        <dt>Evidence</dt>
+        <dd class="value-big">661 <small>sources</small></dd>
+        <dt>Categories</dt>
+        <dd>10</dd>
+        <dt>Reading modes</dt>
+        <dd>Spec · Question</dd>
+        <dt>Doors</dt>
+        <dd>
+          <ul class="iblist">
+            <li>Design professional</li>
+            <li>Disabled user · advocate</li>
+            <li>OT · allied health</li>
+            <li>Policymaker · procurer</li>
+          </ul>
+        </dd>
+        <dt>Source</dt>
+        <dd><code style="font-family:var(--font-mono); font-size:var(--fs-xs);">data/guidebook.db</code></dd>
+        <dt>Conformance</dt>
+        <dd>WCAG 2.2 AA</dd>
+        <dt>Licence</dt>
+        <dd>CC BY-SA 4.0</dd>
+      </dl>
+    </aside>
+  </div>
+</main>
+
+<footer class="colophon" role="contentinfo">
+  <div class="colophon-inner">
+    <div>
+      <h2 class="colo-h">Guidebook</h2>
+      <p>A reference for disability-inclusive built-environment design. Generated from <code style="font-family:var(--font-mono);">data/guidebook.db</code>. One canonical record per provision.</p>
+    </div>
+    <div>
+      <h2 class="colo-h">Repository</h2>
+      <p><a href="https://github.com/jordanelias/guidebook">github.com/jordanelias/guidebook</a><br>v10 · main</p>
+    </div>
+    <div>
+      <h2 class="colo-h">Audit</h2>
+      <p>WCAG 2.2 AA · keyboard pass · screen reader pass</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btns = document.querySelectorAll('.mode-toggle button');
+  function setMode(mode) {
+    document.body.classList.toggle('mode-question', mode === 'question');
+    document.body.classList.toggle('mode-spec', mode !== 'question');
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === mode)); });
+    var ts = document.querySelector('.title-spec');
+    var tq = document.querySelector('.title-question');
+    if (ts) ts.setAttribute('aria-hidden', mode === 'question' ? 'true' : 'false');
+    if (tq) tq.setAttribute('aria-hidden', mode === 'question' ? 'false' : 'true');
+    try { localStorage.setItem('guidebook-mode', mode); } catch (e) {}
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.mode); }); });
+  try {
+    var saved = localStorage.getItem('guidebook-mode');
+    if (saved === 'question') setMode('question');
+  } catch (e) {}
+})();
+</script>
+
+</body>
+</html>
