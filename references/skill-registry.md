@@ -1,6 +1,6 @@
 # Skill Registry — Guidebook
-**Built:** 2026-05-08 00:00 UTC · **Source:** auto-built from `skills/` + `workplan-orchestrator_SKILL.md` taxonomy
-**Total skills:** 43 · **Active:** 27 · **Recent (30–90d):** 11 · **Deprecated:** 5
+**Built:** 2026-05-08 00:00 UTC · **Source:** auto-built from `skills/` + `workplan-orchestrator_SKILL.md` taxonomy · **Last manual edit:** 2026-05-10 (added progressive-measurement, see footer)
+**Total skills:** 44 · **Active:** 28 · **Recent (30–90d):** 11 · **Deprecated:** 5
 
 **This file is the source of truth for skill assignments.** PI §skills_assigned points here. Architecture v2.2 §reference_files_pattern requires it.
 
@@ -357,3 +357,12 @@ Items where the orchestrator taxonomy and the actual repo state disagree.
 **Triggers:** RP gap closures, evidence verification, multilingual remediation
 **Status:** active
 **Enforcement:** Level 2 (audit query)
+
+## progressive-measurement_SKILL.md
+**Purpose:** Map empirically-supported range of numerical-spec values via iterative walk + re-centering (DR-2026-05-10)
+**Triggers:** numerical-spec BPC closure, audit re-evaluation, post-adversarial-research walk on any value-asserting claim
+**Status:** active
+**Enforcement:** Level 2 (audit query at scripts/audit/pmp_audit.py — to be authored as part of Phase 1)
+**Schema dependency:** spec_value_probes table + items.pmp_* columns (migration 006_spec_value_probes.sql, schema_version 6)
+**Companion:** adversarial-research (PMP runs only after adversarial clears the underlying claim)
+**[MANUAL]** Added 2026-05-10 by session 2026-05-10c. Will be incorporated into Hybrid section on next registry rebuild.
