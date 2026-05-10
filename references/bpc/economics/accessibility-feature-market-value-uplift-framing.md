@@ -21,7 +21,7 @@ investigation_axes_completed: 9 of 15 alternative-uplift channels
 |---|---|---|---|
 | EN | accessibility feature value uplift; framing premium; relabeling effect; aging-in-place ROI; universal design property value; purple pound; accessible tourism uplift | accessibility-feature-market-value-uplift-framing | Three distinct conceptual layers: (1) supply-side relabeling (universal in industry); (2) demand-side WTP differential for property as a whole (largely refuted at rigorous-hedonic level); (3) demand-side WTP differential through alternative channels — care-substitution, hospitality, retail footfall, B-corp brand premium, dementia-village private-pay premium, accessible tourism, sensory-room competitive amenity. Channel 3 produces the strongest empirical signals. |
 | NO | livsløpsbolig; livsløpsstandard; universell utforming | — | SINTEF 2019 directly tested Channel 2; null result. Channel 3 not yet searched in NO. |
-| NL | levensloopbestendig wonen; aanpasbaar wonen; Hogeweyk model | — | NL is the home of Hogeweyk — strongest Channel-3 anchor (€19.3M build, parity per-resident cost in NL universal-coverage system, 60% premium when same model deployed US private-pay). |
+| NL | levensloopbestendig wonen; aanpasbaar wonen; Hogeweyk model | — | NL is the home of Hogeweyk — strongest Channel-3 anchor (€19.3M build, parity per-resident cost in NL universal-coverage system). US private-pay premium claim (Avandell) removed — fabrication. |
 | DE | barrierearm; altersgerechtes Wohnen; Wertsteigerung Barrierefreiheit | [PARTIAL] | German tourism data via BMWA 2004 — disabled tourists WTP €1,000–€2,000 more; spend 1.16×. Property-market data NOT-RUN. |
 | FR/SV/DA/FI/IT/ES/PT/JA/ZH/KO | (see session 1 alias list) | [UNVERIFIED-TERMS] | NOT-RUN |
 
@@ -35,7 +35,7 @@ investigation_axes_completed: 9 of 15 alternative-uplift channels
 
 **Channel 3 — Alternative-uplift channels (NEW Session 2).** This is where the framing-effect hypothesis receives its strongest empirical support.
 
-3a. **Dementia-village private-pay premium.** Avandell NJ: $12,000/month vs US memory-care average ~$7,500/month → **60% revenue premium** for same physical care under "village" architectural framing. NL Hogeweyk: parity (€5–6k/month) under universal coverage. Conclusion: relabel premium is **bounded by payer structure**.
+3a. **Dementia-village private-pay premium.** [REMOVED — CONFIRMED FABRICATION per BPC audit Pass 2B, 2026-05-10.] Prior text cited Avandell NJ at $12,000/month vs US memory-care average ~$7,500/month → "60% revenue premium." Verification found: Avandell is not operational (still in zoning review as of 2024); no published pricing exists; the $12,000 figure has no primary source. The "60% premium" was arithmetic on fabricated inputs. NL Hogeweyk parity claim (€5–6k/month under universal coverage) is independently plausible but also uncited with a primary source. Channel 3a requires fresh research with verified pricing data from operational dementia villages before any quantified claim can be reinstated.
 
 3b. **Curbless shower / wet room product-level relabeling.** Same physical feature framed across three decades: 1990s "accessible/roll-in" (institutional, low-uptake) → 2000s–2010s "European/spa/wet room" (luxury, premium-priced) → 2020s "curbless/zero-entry/seamless" (design-forward, premium). Industry-trade outlets explicitly state "Features once associated with getting older are now being rebranded as high-end design elements" (Behind The Hedges 2026). Curbless install $8,000–$18,000 (Kukun 2026). **The single cleanest case of the framing-effect hypothesis at the product-feature level.**
 
@@ -67,7 +67,7 @@ The economic argument for accessibility integration is strongest when constructe
 1. **Cost-side argument** (already in cost-premium BPC) — design-stage 0.94–3.92%; retrofit 10–40×; CAPABLE per-modification cost <$1,500.
 2. **Avoided-cost dividend** — CAPABLE >$30,000 savings/participant; 45% ADL reduction; cross-jurisdictional fall-prevention.
 3. **Brand/firm performance premium** — Accenture/Disability:IN 2× economic profit; Purple Pound £274B/year exposure.
-4. **Service/destination uplift** — accessible tourism €786B EU impact; disabled tourist 1.16× spend; dementia village 60% premium under private-pay.
+4. **Service/destination uplift** — accessible tourism €786B EU impact; disabled tourist 1.16× spend; dementia village premium claim removed (fabrication — see Channel 3a).
 5. **Product-feature relabel premium** — curbless/wet room as luxury (industry-grey only).
 
 **The single-channel hedonic-property-value claim is empirically weak and should not be the load-bearing argument for accessibility integration. The multi-channel argument is robust.**
@@ -87,14 +87,14 @@ The economic argument for accessibility integration is strongest when constructe
 | Disabled-household spending power £274B/year UK; £2B/month revenue lost to inaccessibility | EN | UK | 4 | 3e |
 | CAPABLE: >$30K Medicare savings/participant; 45% ADL reduction; $1,500 modification cost | EN | US | 1 (RCT) | 3f |
 | Sensory rooms = competitive amenity at airports/stadiums/arenas (Pittsburgh 2019, MSG, SFO etc.) | EN | US, AU | 5 | 3h |
-| Hogeweyk model: 60% revenue premium under US private-pay (Avandell $12K vs $7.5K avg) | EN | US (NJ) | 5 | 3a |
+| Hogeweyk model: dementia-village premium claim removed — Avandell pricing unverifiable (facility not operational) | EN | US (NJ) | — | 3a [REMOVED] |
 | Hogeweyk model at parity cost (€5–6K/month) under NL universal coverage — premium suppressed | EN, NL | NL | 5 | 3a |
 
 ### Divergent findings
 | Topic | Position A | Position B | Cause |
 |---|---|---|---|
 | Direction of accessibility property-value premium at property-as-whole level | US grey/industry: 5–10% boost, 68–70% bathroom ROI claimed | Rigorous: SINTEF 2019, UK 2022 IA — zero to small | Evidence-quality gap |
-| Whether dementia-village relabeling generates premium | US private-pay: 60% premium (Avandell vs memory care) | NL universal-coverage: parity | Payer structure determines capitalisation |
+| Whether dementia-village relabeling generates premium | US private-pay: Avandell claim REMOVED (fabrication — facility not operational, no published pricing) | NL universal-coverage: parity [UNCITED] | Payer structure determines capitalisation (if premium exists) |
 | Whether A/B framing experiment exists | Conceptual literature posits framing effect | No empirical A/B with controlled feature sets identified across 2 sessions | Possible NO-DATA |
 
 ### NO-DATA / THIN
@@ -142,7 +142,7 @@ Not yet run.
 | 22 | Szanton-CAPABLE-2021 | Szanton SL, Li Q, Gitlin LN | 2021 | CAPABLE Program Improves Disability in Research and Implementation Settings | Innovation in Aging 5(Suppl 1) | DOI:10.1093/geroni/igab046.449 | Tier 1 | EN | US |
 | 23 | Cudjoe-Steinman-2024-CAPABLE | Cudjoe T, Steinman L | 2024 | CAPABLE Adaptations: Meeting the Needs of Older Adults Across Diverse Contexts | Innovation in Aging 8(Suppl 1) | DOI:10.1093/geroni/igae098.0584 | Tier 1 | EN | US |
 | 24 | NHSJS-2024-DementiaVillage | (review article) | 2024 | Dementia Village Viability Within the Current U.S. Healthcare System | NHSJS | nhsjs.com/2024/dementia-village-viability-within-the-current-u-s-healthcare-system/ | Tier 5 | EN | US/NL/INT |
-| 25 | Avandell-NJ-2023 | Stat News | 2023 | Avandell NJ $12,000/month projection — first US dementia village | Stat News | statnews.com/2023/10/24/dementia-villages-research-equity-alzheimers/ | Tier 5 | EN | US (NJ) |
+| 25 | Avandell-NJ-2023 | Stat News | 2023 | [SOURCE DOES NOT CONTAIN $12,000/month FIGURE — article discusses dementia village concept and equity, not pricing. Avandell not operational.] | Stat News | statnews.com/2023/10/24/dementia-villages-research-equity-alzheimers/ | — | EN | US (NJ) |
 | 26 | Hogeweyk-iGlobenews-2025 | iGlobenews / van Hal E | 2025 | Living with Dementia in Dignity: The Dutch Hogeweyk Concept | iGlobenews | iglobenews.org/living-with-dementia/ | Tier 5 | EN | NL |
 | 27 | RHF-RHFAC-2024 | Rick Hansen Foundation | 2024 | RHFAC — Rick Hansen Foundation Accessibility Certification | Rick Hansen Foundation | rickhansen.com/become-accessible/rating-certification | Tier 5 | EN | CA |
 | 28 | KultureCity-2024 | KultureCity | 2024 | Sensory inclusion certification (program documentation) | KultureCity | (multiple stadium/arena partner pages) | Tier 5 | EN | US/AU/INT |
@@ -158,7 +158,7 @@ Not yet run.
 - Bailey 2025 (arXiv:2511.02120) preprint, not peer-reviewed.
 - Accenture/Disability:IN DEI studies partly self-selecting; direction robust, magnitude may be overstated.
 - BMWA 2004 — 21-year-old data; replace with current data before publication.
-- Avandell NJ $12,000/month is a 2023 projection, not yet operational.
+- Avandell NJ $12,000/month — CONFIRMED FABRICATION (BPC audit Pass 2B, 2026-05-10): facility not operational, no published pricing, source article does not contain the figure. Channel 3a claim removed.
 - Hogeweyk per-resident cost varies €5,000–€6,571/month across sources; range used.
 
 ### Outstanding research targets (NOT-RUN — for subsequent sessions)
