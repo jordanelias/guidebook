@@ -9,8 +9,13 @@ Flags:
 4. Confidence intervals using narrative instead of numerical ranges
 5. "Topic-evidence vs claim-evidence" pattern (per strict-review session)
 6. NONE FOUND dissenter entries that lack logged search queries
+7. Verified citations lacking prior_expectation (added 2026-05-10 Stage B.5)
+8. Verified citations lacking search_queries_used (added 2026-05-10 Stage B.5)
+9. search_languages with status=SEARCHED but no PROTOCOL: marker in notes
+   (added 2026-05-10 Stage B.5; supports multilingual remediation auditability)
 
-Per DR-2026-05-09. Run before each session close.
+Per DR-2026-05-09 (CHECK 1-6) and Stage B.5 audit findings 2026-05-10 (CHECK 7-9).
+Run before each session close.
 """
 import sqlite3
 import sys
@@ -65,7 +70,6 @@ def audit():
     """).fetchall()
 
     # CHECK 5: Topic-evidence vs claim-evidence pattern
-    # Look for closed gaps where dissenter mentions standard/citation but doesn't address SPECIFIC claim
     topic_evidence_pattern = db.execute("""
         SELECT gap_id, named_dissenter FROM gaps
         WHERE status IN ('CLOSED-FIXED', 'CLOSED-RESOLVED')
@@ -82,6 +86,35 @@ def audit():
         AND named_dissenter NOT LIKE '%search%' 
         AND named_dissenter NOT LIKE '%queries%'
         AND named_dissenter NOT LIKE '%review%'
+    """).fetchall()
+
+    # CHECK 7 (added 2026-05-10): Verified citations lacking prior_expectation.
+    # Per DR-2026-05-09 §"What v2 Requires" — prior_expectation is one of the
+    # five required fields. Pre-Stage-B.5 audit returned 0 issues across all
+    # checks while 642/659 evidence_sources were missing this field. Closing
+    # the hole.
+    verified_no_prior = db.execute("""
+        SELECT ref_id, title FROM evidence_sources
+        WHERE verification_status = 'VERIFIED'
+        AND (prior_expectation IS NULL OR prior_expectation = '')
+    """).fetchall()
+
+    # CHECK 8 (added 2026-05-10): Verified citations lacking search_queries_used.
+    verified_no_queries = db.execute("""
+        SELECT ref_id, title FROM evidence_sources
+        WHERE verification_status = 'VERIFIED'
+        AND (search_queries_used IS NULL OR search_queries_used = '')
+    """).fetchall()
+
+    # CHECK 9 (added 2026-05-10): search_languages with status=SEARCHED but no
+    # PROTOCOL: marker in notes. Markers are: 'PROTOCOL: FULL', 'PROTOCOL: PARTIAL',
+    # 'PROTOCOL: PRE-REMEDIATION'. Without these, multilingual remediation
+    # compliance is unverifiable from the DB.
+    unmarked_langs = db.execute("""
+        SELECT slug, language FROM search_languages
+        WHERE status = 'SEARCHED'
+        AND (notes IS NULL OR notes NOT LIKE 'PROTOCOL:%')
+        ORDER BY slug, language
     """).fetchall()
 
     # Report
@@ -117,15 +150,40 @@ def audit():
     for gap_id, dissent in unlogged_none_found[:3]:
         print(f"  ⚠ {gap_id}: '{dissent[:80]}'")
 
+    print(f"\n[CHECK 7] Verified citations lacking prior_expectation: {len(verified_no_prior)}")
+    for ref_id, title in verified_no_prior[:5]:
+        print(f"  ⚠ {ref_id}: {(title or '')[:70]}")
+
+    print(f"\n[CHECK 8] Verified citations lacking search_queries_used: {len(verified_no_queries)}")
+    for ref_id, title in verified_no_queries[:5]:
+        print(f"  ⚠ {ref_id}: {(title or '')[:70]}")
+
+    print(f"\n[CHECK 9] search_languages with no PROTOCOL: marker: {len(unmarked_langs)}")
+    if unmarked_langs:
+        # Group by slug for compact output
+        by_slug = {}
+        for slug, lang in unmarked_langs:
+            by_slug.setdefault(slug, []).append(lang)
+        for slug in sorted(by_slug)[:5]:
+            langs = ','.join(sorted(by_slug[slug]))
+            print(f"  ⚠ {slug}: {langs}")
+        if len(by_slug) > 5:
+            print(f"  ... and {len(by_slug) - 5} more slugs")
+
     # Summary
     total_issues = (len(deficient) + len(unmatched_verified) + 
                     (1 if suspicious_grades else 0) + len(narrative_ci) + 
-                    len(topic_evidence_pattern) + len(unlogged_none_found))
+                    len(topic_evidence_pattern) + len(unlogged_none_found) +
+                    len(verified_no_prior) + len(verified_no_queries) +
+                    len(unmarked_langs))
     
     print(f"\n--- TOTAL ISSUES: {total_issues} ---")
     if total_issues == 0:
         print("Audit clean. Reminder: protocol creates audit trails, not truth.")
         print("Human spot-check is the actual control mechanism.")
+    else:
+        print("Reminder: protocol creates audit trails, not truth.")
+        print("Human spot-check remains the control mechanism even on clean audits.")
     
     return 0 if total_issues == 0 else 1
 
