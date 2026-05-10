@@ -1,6 +1,6 @@
 # Decision Record: Adopt Progressive Measurement Probe (PMP) Protocol
 **Date:** 2026-05-10
-**Status:** PROPOSED 2026-05-10 — pending owner sign-off
+**Status:** ADOPTED 2026-05-10 — owner directive: "proceed" (session 2026-05-10c)
 **Supersedes:** Partially overturns DR-2026-05-09 §"What Was Dropped From v1" — specifically the deletion of the "±20% threshold test." Reinstates the concept under a corrected design.
 
 ## Context
@@ -86,8 +86,8 @@ Worked example for A-08 (NC-25 maximum, sensitive spaces) sketched in workplan. 
 
 ## Open items
 
-- [ ] Owner sign-off on this DR
-- [ ] Run migration 006
+- [x] Owner sign-off on this DR (received 2026-05-10, session 2026-05-10c, directive: "proceed")
+- [x] Run migration 006 (commit 6fbb90f1, schema_version 5→6, applied 2026-05-10)
 - [ ] Stage B: write `skills/progressive-measurement_SKILL.md`
 - [ ] Stage B: PI v10.7 standing rule #8 invoking PMP for numerical specs
 - [ ] Stage C: first execution on slug 3 A-02 (NRC ≥0.85, D=up) and A-08 (NC-25, D=down)
