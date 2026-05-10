@@ -9,13 +9,13 @@
 | ALL | — | — | Height-adjustable evidence primarily European manufacturer + workplace ergonomics |
 
 ### Best-practice synthesis
-**Most inclusive provision:** Height-adjustable worktop (electric, 18–30cm range) with underrideable section ≥685mm high × ≥600mm deep × ≥900mm wide. Shallow sink (100mm) integrated. Front controls on all appliances. Oven at worktop height with retractable door. Pull-out boards. D-handles. Sockets 900–1200mm. ø1500mm turning. Lever single-handle taps.
+**Most inclusive provision:** Height-adjustable worktop (electric, 18–30cm range) with underrideable section ≥685mm high × ≥600mm deep × ≥900mm wide. Shallow sink (100mm) integrated. Front controls on all appliances. Oven at worktop height with retractable door. Pull-out boards. D-handles. Sockets 900–1200mm. turning swept-envelope: 1800mm clear floor area for typical power-WC kitchen maneuver [Co-1/Tier 2 — IWA BPAG p.29; Tier 5 — BS 8300-2]; **2400mm where IDEA + BS8300 entire-sample evidence applies (Steinfeld 2006, Tier 3)**, particularly for kitchens serving bariatric or large-power-WC users. 1500mm code-floor turning circle (Tier 6) only where space cannot be made and Mode-S co-design assesses the user's specific chair geometry. Lever single-handle taps.
 
 **Most targeted provision:** NL WMO-keuken (onderrijdbare keuken) — most systematised approach globally. BE/NL underrideable standard (700mm height, 900mm width, 600mm depth, 800mm worktop max) most detailed Tier 5 spec. CN GB 50763-2012 §3.12.4 is the only national standard with residential kitchen knee clearance dimension (650×650×250mm).
 
 **Conflict resolution:** Standing vs seated — height-adjustable worktops. LPA requires lower worktops vs wheelchair requires clearance beneath — electric adjustment is the only universal solution. UPL one-handed operation: lever taps, front controls, D-handles serve both UPL and MOB without conflict.
 
-**Highest-ambition actionable specification:** Knee clearance ≥685mm high × ≥600mm deep × ≥900mm wide; worktop 800mm fixed (650–900mm adjustable at Tier 2); turning ø1500mm; sink ≤150mm depth; front controls; lever taps; D-handles; sockets 900–1200mm; kitchen ≥6.00m²; oven 1000–1400mm; DAR pre-wire for adjustable worktop.
+**Highest-ambition actionable specification:** Knee clearance ≥685mm high × ≥600mm deep × ≥900mm wide; worktop 800mm fixed (650–900mm adjustable at Tier 2); turning swept-envelope 1800mm [Tier 2/5] / 2400mm [Tier 3 Steinfeld 2006] / 1500mm code-floor fallback [Tier 6]; sink ≤150mm depth; front controls; lever taps; D-handles; sockets 900–1200mm; kitchen ≥6.00m²; oven 1000–1400mm; DAR pre-wire for adjustable worktop.
 
 **Opus synthesis note:** NL WMO-keuken is the most systematised residential kitchen accessibility approach globally. CN GB 50763 is the sole national standard specifying residential kitchen knee clearance dimensions. Height-adjustable worktop (electric, 18–30 cm range) is the only universal resolution for standing/seated/LPA conflicts — correctly identified. 6/24 jurisdictions NOT-RUN; evidence base is European-dominated. PROVISIONAL status retained.
 
