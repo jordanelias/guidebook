@@ -1,6 +1,6 @@
 # Session: Tier 1 multilingual remediation complete + 3 PMP walks
 **session_start:** 2026-05-10 20:00 UTC
-**session_close:** 2026-05-10 22:30 UTC
+**session_close:** 2026-05-10 23:00 UTC
 **PI version:** v10.6 (v10.7 not yet live)
 **workplan:** workplan-co0007-v4.md
 
@@ -26,7 +26,7 @@ Three PMP walks executed:
 | 7 | accessible-design-economics-cost-premium | ✅ | 14/14 |
 | 8 | thermal-comfort-older-adults-care-settings | ✅ | 14/14 |
 
-## Commits (7 total)
+## Commits (8 total)
 
 | SHA | Content |
 |---|---|
@@ -36,7 +36,8 @@ Three PMP walks executed:
 | 53ed9ac2cf | DB: circadian FR+JA |
 | ff8728eae7 | DB: circadian 14/14 + PMP B-01 |
 | e68b418497 | DB: Tier 1 complete (slugs 5-8, 56 rows) |
-| (pending) | Session (final) |
+| ea5cac6060 | Session (Tier 1 complete) |
+| f2a8250722 | DB: PMP walk E-03 |
 
 ## PMP walk results
 
@@ -44,6 +45,7 @@ Three PMP walks executed:
 |---|---|---|---|---|---|---|
 | PMP-A08-001 | A-08 NC-25 | 25 NC | down | 25.0 | 0 | None — matches ANSI S12.60 |
 | PMP-A02-001 | A-02 NRC ≥0.85 | 0.85 | up | 0.90 | +0.05 | Raise to ≥0.90 (ANSI S12.60 S5.3) |
+| PMP-E03-001 | E-03 ramp 1:20 | 5.0% | down | 5.0 | 0 | Matches ISO 21542/BS 8300/DIN 18040 |
 | PMP-B01-001 | B-01 ≥150 EML | 150 | up | 285.0 | +135 | **CRITICAL:** metric EML→m-EDI + threshold 150→250 |
 
 ## DB changes
@@ -51,8 +53,8 @@ Three PMP walks executed:
 - search_languages: 83 rows updated (27 slug 3–4, 56 slugs 5–8)
 - evidence_sources: 2 added (REF-00710 Tola 2021, REF-00711 Abdelmoula 2024)
 - evidence_population_match: 5 added (3 slug 3, 2 slug 4). Grade distribution: 1 EXACT, 3 PARTIAL, 1 PROXY
-- spec_value_probes: 18 added across 3 walks
-- items: 3 updated with PMP results (A-08, A-02, B-01)
+- spec_value_probes: 21 added across 4 walks
+- items: 4 updated (A-08, A-02, B-01, E-03) with PMP results (A-08, A-02, B-01)
 - source_slug_links: 2 added (REF-00710, REF-00711 → school-environment-autism)
 
 ## Cross-jurisdictional findings (all 8 slugs)
