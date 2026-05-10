@@ -67,3 +67,36 @@ GAP-265..278 filed in SQLite. 8× P1, 5× P2, 1× P3. Total OPEN gaps: 28.
 - C2 skills (cell-curator, appendix-a-parser) — queued
 - diagram_svg field authoring — separate session type
 - IntD BPC existence adjudication — deferred per owner instruction
+
+
+---
+
+## Multilingual remediation — started (Tier 1, slug 1 of 8)
+
+### `luminance-contrast-lrv-evidence-base` — EN + DE searched
+
+**EN findings:**
+- 30% LRV difference is the standard threshold (BS 8300 UK, AS 1428.1 AU)
+- PMC5433805 (Rethinking ADA signage): explicitly states A117.1 contrast values have "no credible evidence base supporting its numerical values" — ADVERSARIAL FINDING
+- Canada CAN/ASC-24 uses Michelson + Weber contrast alongside LRV
+- ISO 21542 uses simple LRV difference
+- AU AS 1428.1 uses Bowman-Sapolinski equation (dimensionally different)
+- Multiple contrast DEFINITIONS across jurisdictions — not just different thresholds but different FORMULAS
+
+**DE findings:**
+- DIN 32975 specifies ≥0.4 Michelson-type contrast (NOT 30 LRV points)
+- DIN 32975 also requires reflectance of lighter surface ≥0.5
+- BBSR (Federal Institute) commissioned 2024 research at TU Ilmenau on DIN 32975 + lighting interaction
+- DBSV (Co-1 — blind/visually impaired self-advocacy) published technical guide on contrast design
+- 1994 "Kontrastoptimierung" research project cited as evidence base
+- DIN 32975 formula and BS 8300 LRV formula produce DIFFERENT pass/fail results for same surfaces
+
+**Key finding:** The contrast "standard" is NOT internationally consistent. Different jurisdictions use mathematically incompatible formulas. A surface pair that passes BS 8300 (≥30 LRV points) may fail DIN 32975 (≥0.4 Michelson) or vice versa. The BPC must acknowledge this.
+
+**Remaining:** 12 languages NOT-RUN for this slug; 7 more Tier 1 slugs not started.
+
+### Handoff for next session
+
+1. Continue `luminance-contrast-lrv-evidence-base` — FR, JA, ZH, KO, then remaining 8 languages
+2. Then next 7 Tier 1 slugs per priority queue in `workplan/multilingual-search-remediation.md`
+3. Per adversarial protocol: the EN PMC5433805 finding about missing evidence base must be traced to specific BPC claims — does the BPC assert a specific threshold that lacks empirical support?
