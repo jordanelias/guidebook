@@ -18,7 +18,13 @@
 
 **Conflict resolution:** Ramp-only access serves MOB/WC well but disadvantages MOB/AMB (ambulant disabled), OFS, and NEU populations who often prefer steps with handrail. Best practice provides both ramp and complementary stepped route where site permits. This is the Scottish Technical Handbook requirement and RCOT best practice recommendation.
 
-**Highest-ambition actionable specification:** Level approach (gradient ≤1:50 entire path, cross-fall ≤1:48); zero threshold at entrance door; minimum clear door width ≥900mm (best practice) / ≥850mm (minimum); level landing ≥1500×1500mm outside door clear of arc; automatic door opener provided; tactile/visual attention indicator at entrance; luminance contrast ≥0.4 (entrance vs surroundings). Where level access cannot be achieved: permanent integrated ramp ≤1:20, ≥900mm clear width, bilateral handrails, rest landing every 750mm rise or 10m run (whichever comes first), luminance contrast marking at ramp top and bottom.
+**Highest-ambition actionable specification:** Level approach (gradient ≤1:50 entire path, cross-fall ≤1:48); zero threshold at entrance door; minimum clear door width ≥900mm (best practice) / ≥850mm (minimum); level landing ≥1500×1500mm outside door clear of arc (see code-floor disclosure below); automatic door opener provided; tactile/visual attention indicator at entrance; luminance contrast ≥0.4 (entrance vs surroundings). Where level access cannot be achieved: permanent integrated ramp ≤1:20, ≥900mm clear width, bilateral handrails, rest landing every 750mm rise or 10m run (whichever comes first), luminance contrast marking at ramp top and bottom.
+
+**Code-floor disclosure:** The 850mm door minimum is the CSA B651-23 code value for power-WC clear width (Tier 6). 900mm is the BS 8300 / DIN 18040-1 standards value (Tier 5). Power-WC + assistant configurations (assistant beside, not behind) require ≥1000mm clear per Habinteg Wheelchair Housing Design Guide 2018 (Tier Co-2 — RCOT/Habinteg authored). Where assistant-accompanied entry is anticipated, 900mm is sub-best-practice; specify ≥1000mm.
+
+**Landing 1500×1500mm** is the BS 8300 / DIN 18040-1 turning-circle-derived code-floor value. Per `mobility-built-environment.md` Steinfeld 2006 RESNA evidence (2400mm IDEA + BS8300 entire-sample 180° turn), and per IWA BPAG Tier 2 1800mm power-WC turning, residential entry landings sized to accommodate power-WC users should provide ≥1800mm × ≥1800mm clear of door arc. Specify 1500×1500 only as Mode 6 code-compliance fallback where space cannot be made.
+
+**[GAP — RES-ENTRY-Co1]** This BPC's Co-1 coverage is 0/24. Residential entry is a domain where lived-experience evidence is dense (entry frustrations recurrent in Co-1 corpora). Co-1 work owed.
 
 ### Consensus findings
 | Finding | Jurisdictions confirming | Languages | Tier |
