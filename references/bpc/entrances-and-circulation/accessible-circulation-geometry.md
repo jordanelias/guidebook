@@ -32,10 +32,11 @@
 - Door dwell: ≥6 seconds recommended for users with reduced mobility (EN 81-70).
 
 **Corridor clear widths:**
-- Single wheelchair passage: ≥915mm continuously (ADA); ≥900mm (DIN 18040-1/BS 8300 residential); ≥1200mm non-residential.
-- Two wheelchair users passing: ≥1525mm (ADA); ≥1800mm (UK Part M non-residential best practice; care settings standard).
-- Best practice for primary routes: 1800mm minimum, with 1800×1800mm passing places at maximum 10m intervals where narrowing occurs.
-- Power wheelchair users: ≥1500mm for comfortable single passage; ≥1800mm for passing.
+- **Code-floor values (Tier 6 — not best practice):** 915mm continuous single passage (ADA); 900mm residential single passage (DIN 18040-1, BS 8300); 1200mm non-residential single passage (UK Part M, DIN 18040-1); 1525mm two-WC passing (ADA). These are reference baselines only. Per `mobility-built-environment.md` pattern, code-floor values are cited here to record regulatory baselines, not as permitted design specifications.
+- **Tier 5 standards values:** 1800mm primary route two-way passing (BS 8300, DIN 18040-1, UK Part M non-residential best practice); 1500mm comfortable single passage for power-WC users; 1800mm power-WC passing. Adequate where DEAF population is not anticipated and only wheelchair-passing geometry governs.
+- **Tier Co-1 / Tier 2 / Tier 3 best practice (DEAF-inclusive primary corridors):** 2440mm primary corridors with glazed/transparent intersections (DSDG Bauman 2010 Co-1; DeafScape Vaughn 2018 Tier 2; Cloete & Rout 2025 Acta Structilia 32(2):238–263 Tier 3 cross-cultural scoping review). Required where signed conversation is anticipated; serves wheelchair-passing simultaneously. 1830mm (6 ft) acceptable on secondary corridors only. 3050mm (10 ft) public exterior pathways where signing groups anticipated.
+- **Tier 3 swept-path evidence:** Steinfeld 2006 RESNA reports 2400mm clear floor area to accommodate IDEA + BS8300 entire-sample 180° turn — converges with the DEAF 2440mm primary. Different evidence streams, same dimensional conclusion.
+- **Cross-population conflict** (DeafSpace open-plan vs NDV/MH compartmentalisation vs DEM loop-plan): resolved at the building-plan level, not corridor cross-section. Per `cross-population-conflict-resolutions.md`. Glazed intersections satisfy both DEAF visual sightline and NDV/MH anti-ambush requirements simultaneously.
 
 **Rest seating intervals:**
 - No building code in any of 14 languages searched specifies a maximum seating interval.
@@ -48,7 +49,7 @@
 - Powered doors with ≥6-second open dwell on primary accessible routes.
 - Operating force where manual: ≤20N (AU AS 1428.1; NO TEK17 — best practice); ≤30N preferred (OT Tier 1 evidence per MOB BPC Steinfeld et al. 2016); ≤38N maximum (CMHC; ADA guidance).
 
-**Most inclusive provision:** Automatic sliding doors on all primary routes; EN 81-70 Type 2 minimum lift (1100×1400mm) with best practice 1100×1800mm; 1800mm corridor width on primary routes; rest seating at 25–30m intervals with tilt/recline option.
+**Most inclusive provision:** Automatic sliding doors on all primary routes; EN 81-70 Type 2 minimum lift (1100×1400mm) with best practice 1100×1800mm; **2440mm corridor width on primary mixed-population routes with glazed intersections** (converging DEAF Co-1 and Steinfeld 2006 Tier 3 evidence); 1830mm secondary corridors; rest seating at 25–30m intervals with tilt/recline option.
 
 ### Consensus findings
 | Finding | Languages with evidence | Jurisdictions confirming | Tier |
@@ -65,7 +66,7 @@
 | Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
 |---|---|---|---|
 | Lift car Type classification | UK/EU EN 81-70 Type 2 (1100×1400mm) | ADA US (1370mm depth + 2030mm width for centre-opening) | ADA is more generous in width but specifies a different geometry; both accommodate standard WC + companion |
-| Corridor minimum non-residential | UK Part M (1200mm min; 1800mm two-way) | DE DIN 18040-1 (1200mm min; 1800mm recommended) | Aligned on best practice; differ at minimum |
+| Corridor minimum non-residential | UK Part M (1200mm min; 1800mm two-way) | DE DIN 18040-1 (1200mm min; 1800mm recommended) | Aligned on **code-consensus value of 1800mm two-way**; 1200mm single-passage code floor. Code consensus is not best practice per project-standards line 20. Best practice = 2440mm primary mixed-population per DEAF Co-1 evidence; 1800mm reflects pre-DEAF-evidence two-WC-passing convergence. |
 
 ### NO-DATA / THIN
 | Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
