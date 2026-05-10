@@ -1,35 +1,33 @@
-# Session: Multilingual LRV Remediation
+# Session: Multilingual LRV Remediation (continued)
 **session_start:** 2026-05-10 07:00 UTC
-**session_close:** 2026-05-10 07:45 UTC
+**session_close:** 2026-05-10 08:15 UTC
 **PI version:** v10.6
 **workplan:** workplan-co0007-v4.md + multilingual-search-remediation.md
 
 ## Work completed
 
-### luminance-contrast-lrv-evidence-base: multilingual search (11/14 SEARCHED, 3 PARTIAL)
+### luminance-contrast-lrv-evidence-base — COMPLETE
+- 13/14 languages SEARCHED, 1 PARTIAL (PT only)
+- BPC file corrected: 4 of 6 "standards confirmed" were factually wrong (DE, NO, SE, JP do NOT use LRV)
+- Added cross-jurisdictional contrast formula taxonomy (6 formula types across 16 jurisdictions)
+- Key adversarial finding: "topic-evidence vs claim-evidence" conflation detected and corrected
 
-Languages searched this session: JA, ZH, KO, SV, NO, DA, IT, ES (8 languages)
-Previously searched: EN, DE, FR (3 languages, prior session)
-Remaining PARTIAL: FI, NL, PT
-
-### Key cross-jurisdictional findings
-
-Formula incompatibility is the headline finding. At least 6 distinct mathematical approaches exist globally. Two identical surfaces can pass in one jurisdiction and fail in another depending solely on which formula is applied.
-
-East Asian jurisdictions (JP, CN, KR) specify NO numerical thresholds for built environment luminance contrast. Norway is most prescriptive with element-specific thresholds. Sweden uses NCS system. Spain aligns with UK/AU LRV tradition for some elements.
-
-### Adversarial findings
-
-Topic-evidence vs claim-evidence risk (per standing rule 7): Finding evidence that a country has an accessibility standard does NOT validate that it uses a particular contrast threshold.
+### sensory-room-user-control — LOADED (not started)
+- 13/14 NOT-RUN, 1 SEARCHED (IT)
+- Term aliases loaded for TERM-012 (sensory room) and TERM-020 (sensory overload)
+- BPC at: references/bpc/sensory-environment/sensory-room-user-control.md
 
 ## Commits
-- DB update: 6d337e5a (luminance-contrast-lrv 11/14 langs)
-- Session file: this commit
+1. DB: 6d337e5a (11/14 langs for slug 1)
+2. Session file: 97046a5f
+3. LATEST: 57a8baa8
+4. BPC correction: 3daafea4 (cross-jurisdictional formula correction)
+5. DB: b7344d64 (FI/NL updates, 13/14 final)
 
 ## next_action
-1. Search FI, NL, PT for luminance-contrast-lrv (3 remaining PARTIAL)
-2. Fetch BPC file for this slug and apply cross-jurisdictional findings
-3. Move to slug 2: sensory-room-user-control (13 langs NOT-RUN)
+1. Start sensory-room-user-control multilingual search (13 langs NOT-RUN)
+2. Per adversarial protocol: state prior, search, log findings for each language
+3. After slug 2: move to slug 3 (school-environment-autism, 12 NOT-RUN)
 
 ## blockers
 None.
