@@ -107,10 +107,66 @@ Wrote 14 `citation_mining` stub rows for this session's backward-mining discover
 
 I considered batch-promoting the 8+ named standards from GAP-284 (JGJ 450-2018, DIN EN 54-23, NF S 61-931/936, etc.) but chose NOT to. Reason: each standard needs proper sourcing/verification before promotion (issuer, year, scope of applicability, official document URL). Casually inserting 8 PROVISIONAL rows with thin metadata would be the very pattern GAP-284 critiques — name-without-substance. Deferred to a dedicated named-standards-promotion pass. GAP-284 remains OPEN as guidance for that pass.
 
-## blockers
+## THIRD TRANCHE (third "proceed best for long-term" request, same conversation)
 
-- Forward citation mining is **blocked** pending Scholar Gateway approval (GAP-286). Cannot meaningfully resolve without that connector or equivalent cited-by API.
-- Schema migration to UNIQUE(slug, local_ref_id) is **blocked** pending owner decision on GAP-288 cleanup approach (likely DELETE the 701 orphan rows, then add constraint).
+User reaffirmed "proceed with best for long-term". Took it as instruction to do the actual data cleanup and convert the level-1 audit tools to level-2 automated CI checks. Work delivered:
+
+### GAP-285 + GAP-288 fully resolved (data side)
+
+**Sibling-pattern verification** (precondition for cleanup): for each of the 701 orphan `source_slug_links` rows (where `ref_id NOT LIKE 'REF-%'`), checked if a matching `REF-NNNNN` sibling exists for the same `(slug, local_ref_id)`. Result: **700 have siblings, 1 does not** (`TBE-03` in slug `thermoregulation-built-environment`).
+
+**Cleanup executed:** `DELETE FROM source_slug_links WHERE rowid IN (the 700 safe ones)`. Result: `source_slug_links` rows went from 1422 → 722 (-700). Orphans went from 701 → 1.
+
+**Final duplicate resolution:** one legitimate-duplicate case remained: `school-environment-autism / SEA-01 → [REF-00642, REF-00710, REF-00711]` (three distinct sources with same local_ref_id, inherited from session_2026-05-10f's multilingual-search pass). Renumbered: REF-00642 kept as `SEA-01` (oldest), REF-00710 → `SEA-02`, REF-00711 → `SEA-03`. Updated both `source_slug_links` and the corresponding `citation_mining` rows. Final state: 0 duplicates remaining.
+
+**GAP-285 CLOSED-RESOLVED, GAP-288 CLOSED-RESOLVED.**
+
+**Follow-up filed:** GAP-289 (P3 AUDT) for the single residual TBE-03 case. Needs owner identification of what evidence_sources entry was intended; then create row + update ref_id. Bounded single-row surgical fix.
+
+### GitHub Actions CI workflow shipped
+
+`.github/workflows/audit.yml` runs on push/PR/manual:
+- **Blocking:** `source_slug_links_duplicates.py` — regression test, fails if any (slug, local_ref_id) duplicate reappears (catches future migration bugs that would otherwise repeat GAP-288).
+- **Blocking:** `citation_mining_completeness.py --session $(cat sessions/LATEST) --tier-max 2` — fails if the current session leaves T1-2 sources without citation_mining rows. This enforces RULE 124 at commit-time, not just at session-close. Converts GAP-283's level-1 enforcement (skill text + CLI audit) to level-2 (automated). Closes the enforcement loop GAP-287 worried about.
+- **Informational:** global T1-2 backlog count and T1-3 view. Surfaces legacy backlog (159 sources currently) without blocking every commit.
+
+Locally simulated all four steps against current DB before pushing — all pass.
+
+### DB delta this tranche
+
+| Action | Count |
+|---|---|
+| source_slug_links rows deleted (orphan cleanup) | 700 |
+| source_slug_links rows updated (SEA-01 → SEA-02/03 renumber) | 2 |
+| citation_mining rows updated (local_ref_id renumber) | 2 |
+| gaps closed | 2 (GAP-285, GAP-288) |
+| gaps filed | 1 (GAP-289) |
+
+### Net session-totals (across all three tranches)
+
+| Metric | Final value |
+|---|---|
+| New evidence_sources | 14 (REF-00712..00725) |
+| New citation_mining rows | 21 |
+| Evidence_sources updates | 19 |
+| source_slug_links updates | 702 (700 deletes + 2 renumber) |
+| Citation_mining updates | 2 (renumber) |
+| Gaps filed | 7 (GAP-283..289) |
+| Gaps closed | 2 (GAP-285, GAP-288 CLOSED-RESOLVED) |
+| Skill files updated | 2 (citation-miner, research-log-manager) |
+| New audit scripts | 2 (scripts/audit/*.py) |
+| New CI workflow | 1 (.github/workflows/audit.yml) |
+| Commits to repo | 13 across 3 tranches |
+
+### Honest limits at session close
+
+`[SELF-AUTHORED — bias risk]` — what an independent reviewer would likely surface:
+
+- **Forward mining is still 0%.** All Tier 2 sources this session show `forward = 0, deferred_reason = "Scholar Gateway unavailable"`. Strict reading of RULE 124 says mandatory mining is incomplete. Per GAP-286 the blocker is infrastructure, not protocol — but the gap is real.
+- **Citation_mining coverage is 2.4%** for T1-2 globally (4 of 165). The other 159 are legacy entries from session_2026-05-08-c1-migration-fix and various research passes that predate enforcement. Mining the backlog is a substantial separate workstream.
+- **GAP-283 P1 is technically still OPEN.** The text-level enforcement is shipped (research-log-manager step 7); the CI-level enforcement is shipped (audit.yml). What's not shipped: a confirmed end-to-end demonstration that a new research session adding a T1-2 source will actually be blocked by the CI if it forgets to mine. The chain depends on three things working in sequence: (a) the research skill calls citation-miner inline, (b) citation-miner writes the citation_mining row, (c) CI runs the audit on the resulting commit. I have validated (b) and (c). I have updated the skill text for (a) but not run a fresh research session through the loop. Closing GAP-283 requires that confirmation.
+- **No new code-level git hooks** — those are pre-commit hooks running on the developer's machine before push, which is stronger than CI (catches it before it ships). The CI workflow is server-side. Owners may still want a `pre-commit` hook config as part of Phase 1.
+- **The 8 named standards from GAP-284 are still not promoted.** This session declined that work for sourcing-quality reasons but did not close the gap; the next session needs to do it.
 
 ## confidence
 
