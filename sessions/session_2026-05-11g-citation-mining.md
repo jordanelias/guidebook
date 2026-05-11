@@ -165,8 +165,72 @@ Locally simulated all four steps against current DB before pushing — all pass.
 - **Forward mining is still 0%.** All Tier 2 sources this session show `forward = 0, deferred_reason = "Scholar Gateway unavailable"`. Strict reading of RULE 124 says mandatory mining is incomplete. Per GAP-286 the blocker is infrastructure, not protocol — but the gap is real.
 - **Citation_mining coverage is 2.4%** for T1-2 globally (4 of 165). The other 159 are legacy entries from session_2026-05-08-c1-migration-fix and various research passes that predate enforcement. Mining the backlog is a substantial separate workstream.
 - **GAP-283 P1 is technically still OPEN.** The text-level enforcement is shipped (research-log-manager step 7); the CI-level enforcement is shipped (audit.yml). What's not shipped: a confirmed end-to-end demonstration that a new research session adding a T1-2 source will actually be blocked by the CI if it forgets to mine. The chain depends on three things working in sequence: (a) the research skill calls citation-miner inline, (b) citation-miner writes the citation_mining row, (c) CI runs the audit on the resulting commit. I have validated (b) and (c). I have updated the skill text for (a) but not run a fresh research session through the loop. Closing GAP-283 requires that confirmation.
-- **No new code-level git hooks** — those are pre-commit hooks running on the developer's machine before push, which is stronger than CI (catches it before it ships). The CI workflow is server-side. Owners may still want a `pre-commit` hook config as part of Phase 1.
-- **The 8 named standards from GAP-284 are still not promoted.** This session declined that work for sourcing-quality reasons but did not close the gap; the next session needs to do it.
+## FOURTH TRANCHE — Concurrent-write incident and recovery (~04:14 UTC)
+
+### Incident
+
+After pushing the third-tranche cleanup commit `0b27fe5966` at 03:32 UTC, another session (`session_2026-05-11e-wayfinding-dementia`, push at 04:13 UTC, commit `d803dbda39`) pushed `data/guidebook.db` with a DB version that **predated this session's writes**. Result: complete data loss for this session's DB changes — 0 of 14 sources, 0 of 21 citation_mining rows, 0 of 7 gaps survived on the remote. All non-DB commits (skills, audit scripts, CI workflow, governance memo, session file text) were unaffected because they live in different files.
+
+Root cause: `data/guidebook.db` is a binary file in git. Git has no merge support for binary blobs. The wayfinding-dementia session presumably fetched the DB at some point before 03:32 UTC, did its work locally, and pushed at 04:13 — its DB image overwrote mine wholesale.
+
+### Recovery executed
+
+1. Re-fetched the post-clobber remote DB (which contained wayfinding-dementia's writes but not mine).
+2. Confirmed wayfinding-dementia's writes are isolated to `search_languages` (3 rows for slug `wayfinding-dementia-spatial-design` languages DE/DA/SV).
+3. Reapplied all this session's work in a single batch on top of the post-clobber state:
+   - Re-ran `mine_710.py` → 12 new sources (REF-00712..00723)
+   - Re-ran `mine_711_verify.py` → 2 new sources (REF-00724, REF-00725) + 5 T3 verifications
+   - Re-ran `verify_t3.py` → T3 verification updates + citation_mining rows
+   - Re-wrote 14 DEPTH-1-DISCOVERY stubs
+   - Re-executed source_slug_links cleanup (delete 700, renumber SEA-01 → SEA-02/03)
+   - Re-filed all gaps (GAP-283..289) plus added GAP-290 (critical, this incident)
+   - Re-closed GAP-285 + GAP-288
+4. Pushed `data/guidebook.db` as commit `b254fb71a1` at ~04:14 UTC.
+5. Immediately re-fetched and verified: all 14 sources / 21 mining rows / 8 gaps / 2 closes present; wayfinding-dementia's 3 search_languages rows preserved.
+
+Total state confirms intent: 675 evidence_sources, 21 citation_mining, 722 source_slug_links, 1 orphan (TBE-03 expected), 0 duplicate sets. Audits pass.
+
+### New gap surfaced: GAP-290 (P1 AUDT) — concurrent-write architecture
+
+This incident IS a recurring failure mode, not a one-off. Filed as P1 because every multi-agent session can hit it. Description:
+
+> Binary DB file in git has no merge support — concurrent writes from multiple agents cause complete data loss. Architectural fix needed: (a) DB-level concurrency control (single-writer lock via a sessions/CURRENT_WRITER flag with timestamp + expiry), or (b) migration-based schema (apply ADD/UPDATE/DELETE statements via PR-mergeable text files), or (c) live DB hosted outside git (Supabase / Postgres / Turso) with the file in git as periodic snapshot only.
+
+Until one of these ships, recovery protocol for next-clobber:
+1. Re-fetch the post-clobber remote DB.
+2. Inventory the other session's writes (look at session-stamp columns across tables).
+3. Replay your own work on top.
+4. Push the merged state with a clear commit message naming both sessions.
+
+This works because most sessions touch disjoint slices of the DB. Failure mode: two sessions modifying the same row, which would need true 3-way merge that SQLite-in-git doesn't support.
+
+### Updated session totals (across all four tranches)
+
+| Metric | Final value |
+|---|---|
+| New evidence_sources | 14 (REF-00712..00725) |
+| New citation_mining rows | 21 |
+| Evidence_sources updates | 19 |
+| source_slug_links: deletes / updates | 700 / 2 |
+| Citation_mining updates | 2 |
+| Gaps filed | 8 (GAP-283..290) |
+| Gaps closed | 2 (GAP-285, GAP-288 CLOSED-RESOLVED) |
+| Skill files updated | 2 (citation-miner, research-log-manager) |
+| New audit scripts | 2 (scripts/audit/*.py) |
+| New CI workflow | 1 (.github/workflows/audit.yml) |
+| Commits to repo | 14 (13 original + 1 recovery) |
+
+### Bias-acknowledged limits at final close
+
+`[SELF-AUTHORED — bias risk]` — independent reviewer would surface:
+
+- **GAP-290 is now the highest-priority unresolved finding.** A P1 architecture issue affecting every multi-agent session outranks the protocol-violation P1 (GAP-283). Without it, every recovery is best-effort and can fail again immediately.
+- **Forward citation mining is still 0%** (GAP-286 unresolved).
+- **Citation_mining coverage T1-2 is 2.4%** globally — legacy backlog of 159 sources untouched.
+- **GAP-283 is technically still OPEN**: text + CI enforcement shipped but no end-to-end demonstration that a new research session will actually be blocked from forgetting to mine.
+- **The 8 named standards from GAP-284 are still not promoted** — deferred for a properly-sourced batch.
+- **TBE-03 single residual orphan** (GAP-289) — single-row surgical fix outstanding.
+- **The fact that recovery worked** is partially luck: wayfinding-dementia and this session happened to touch disjoint slices of the DB (different tables, different slugs, different gap_ids). Two sessions touching the same row would have lost real data with no recovery path.
 
 ## confidence
 
