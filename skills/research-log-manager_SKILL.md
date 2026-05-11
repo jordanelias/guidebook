@@ -102,7 +102,24 @@ After multilingual-research completes:
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 
-6. **Invoke citation-miner inline** for every confirmed Tier 1–3 source (per citation-miner §7).
+6. **Invoke citation-miner inline — MANDATORY for every confirmed Tier 1–2 source, ALSO for Tier 3 unless explicitly deferred.** Failure to invoke is a protocol violation (GAP-283).
+
+   For each new evidence_sources row with `tier IN (1, 2, 3)`:
+
+   a. Check mining status:
+   ```bash
+   python3 scripts/db.py is-mined --slug {slug} --ref {local_ref_id}
+   ```
+
+   b. If `mined: false`, invoke citation-miner skill (INLINE mode) with `(slug, local_ref_id, doi)`. Citation-miner will perform backward + forward mining per its own protocol and write a citation_mining row.
+
+   c. If citation-miner cannot complete a direction (e.g., Scholar Gateway unavailable), it will write `deferred_reason` — that is acceptable. A citation_mining row MUST exist; only the direction may be deferred.
+
+7. **Verify LOG completeness before session-close.** Run the audit script:
+   ```bash
+   python3 scripts/audit/citation_mining_completeness.py --session {session_filename}
+   ```
+   The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker. To clear: either mine the source or write a citation_mining row with `deferred_reason` and the explicit DEFERRED-* marker.
 
 ---
 
@@ -122,11 +139,13 @@ After multilingual-research completes:
 4. 3+ NO-DATA for same language across topics → file gap:
    ```bash
    python3 scripts/db.py add-gap \
-     --category RES \
+     --category RP \
      --priority P3 \
      --description "{language} NO-DATA across {topics}" \
      --skill research-log-manager \
      --session {session_filename}
    ```
+   *(Note: category is `RP` — `RES` was deprecated when the gaps schema CHECK constraint was tightened to RP/SW/CR/ST/MX/CD/EC/EG/CI/DEC/CONF/AUDT.)*
 5. Never permanently close a language — mark THIN and move on.
 6. All source additions go through `db.py add-source` — no raw SQL.
+7. LOG completeness verification (step 7 above) is MANDATORY before session-close. Surfaces GAP-283-class protocol violations early.
