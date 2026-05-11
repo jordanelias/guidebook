@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). The CO-0009 item audit pipeline is now §Phase F (Items pipeline) in the new workplan. Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # CO-0009 — Item Audit Pipeline
 **Created:** 2026-05-05 19:04 UTC
 **Revised:** 2026-05-05 19:45 UTC (v2 — post-review corrections)
