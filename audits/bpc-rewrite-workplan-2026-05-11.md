@@ -491,4 +491,96 @@ Each session that touches this workplan must:
 
 ---
 
+## Appendix E — Supersession map: workplan reconciliation 2026-05-11
+
+This workplan is the **sole authoritative content workplan** for the project as of 2026-05-11. Every other file in `workplan/` has one of four dispositions: SUPERSEDED-BY-THIS-WORKPLAN, SUBORDINATE-TO-PI-STANDING-RULE, ABSORBED, or HISTORICAL-COMPLETED. This appendix is the canonical list.
+
+### E.1 SUPERSEDED — fully replaced by this workplan (no further reference needed for forward work)
+
+| File | Was | Now superseded by |
+|---|---|---|
+| `workplan/workplan-co0007-v4.md` | OPERATIVE (Stage C1–C11 ACTIVE) | This workplan §Phase E. Stage A/B foundation work in v4 remains validly completed (~43 sessions consumed); only Stage C content scoping is replaced. |
+| `workplan/workplan-reconciliation-2026-05-08.md` | Prior reconciliation map | This appendix E (E.1–E.5) replaces it. |
+| `workplan/workplan-item-audit-pipeline-co0009.md` | PROPOSED (CO-0009) | This workplan §Phase F. Item audit pipeline runs after Phase E rehabilitates the source BPCs. |
+| `workplan/co0008-scope-infrastructure-overhaul.md` | DRAFT (CO-0008) | This workplan §Phase A (foundation infrastructure work is folded into A.1–A.12). |
+| `workplan/co0008-throughline-analysis.md` | DRAFT | Subsumed by Phase A foundation work. |
+| `workplan/pi-update-co0008.md` | READY TO APPLY | PI v10.8 supersedes (v10.8 is the new live PI per `decisions/PI-update-needed.md`). |
+| `workplan/pi-revision-co-paste-ready.md` | Paste-ready PI patches | PI v10.8 supersedes. |
+| `workplan/multilingual-search-remediation.md` | Multilingual remediation plan | This workplan §Phase B + §Phase C (B7 citation mining + C coverage axis expansion to 19×46). |
+| `workplan/workplan-jurisdiction-sweep.md` | Jurisdiction sweep workplan | This workplan §Phase C (coverage axis expansion to 46 jurisdictions). |
+| `workplan/evidence-expansion-2026-04-03.md` | Evidence base expansion programme | This workplan §Phase B (evidence rehabilitation, 510-hour estimate). |
+| `workplan/website-preparation.md` | Tactical reference subordinate to v4 | This workplan §Phase G (output regeneration). |
+| `workplan/co0007-synthesis-workplan-2.md` | Stage 0.7 synthesis workplan | Foundation complete; superseded by this workplan for forward work. |
+
+### E.2 SUBORDINATE — still active under PI v10.8 standing rules (sub-protocols supporting this workplan)
+
+| File | Subordinate to | Role |
+|---|---|---|
+| `workplan/progressive-measurement-protocol.md` | PI v10.8 standing rule #8 | PMP walks for numerical-spec items. Required during Phase F (items pipeline). |
+| `workplan/research-protocol-adversarial.md` | PI v10.8 standing rule #7 | Anti-consensus-bias research protocol. Required at every gap closure throughout all Phases. |
+| `workplan/hook-workplan-guidebook.md` | PI v10.8 `<hooks_status>` | Engineering workplan for hook enforcement (level 0 → level 2 → level 3 promotion). Runs orthogonal to content phases. |
+
+These three files are NOT superseded. They continue to govern their specific protocols.
+
+### E.3 HISTORICAL-COMPLETED — Stage A / B foundation deliverables (preserve as record; no forward use)
+
+| File | Status |
+|---|---|
+| `workplan/a1-a2-iteration-plan.md` | A1–A2 complete |
+| `workplan/a4-part01-audit-2026-04-27.md` | A4 complete |
+| `workplan/a5-handoff.md` | A5 handoff (Co-1 operational spec) — work absorbed into `governance/co1-operational.md` |
+| `workplan/a6-handoff.md` | A6 handoff (Evidence methodology) — work absorbed into `governance/evidence-methodology.md` |
+| `workplan/b1-derivation-framework.md` | B1 framework — superseded by adopted candidate |
+| `workplan/b1-candidate-a-markdown-yaml.md` | B1 candidate eval — not adopted |
+| `workplan/b1-candidate-b-relational.md` | B1 candidate eval — **adopted (relational schema chosen)** |
+| `workplan/b1-candidate-c-graph.md` | B1 candidate eval — not adopted |
+| `workplan/b1-candidate-d-hybrid.md` | B1 candidate eval — not adopted |
+| `workplan/b1-comparative-scoring.md` | B1 scoring — work record |
+| `workplan/b1-criteria-weighting.md` | B1 requirements lock — work record |
+| `workplan/co0007-contamination-sample.md` | CO-0007 Stage 0 deliverable |
+| `workplan/co0007-quantitative-verification.md` | CO-0007 Stage 0 deliverable |
+| `workplan/co0007-session-grounding-report.md` | CO-0007 Stage 0 deliverable |
+| `workplan/co0007-skill-inventory.md` | CO-0007 Stage 0 deliverable — superseded by `references/skill-registry.md` |
+| `workplan/co0007-stage-0_5-decision-package.md` | CO-0007 Stage 0.5 decision materials |
+| `workplan/co0007-stage-0_9-adoption-package.md` | CO-0007 Stage 0.9 adoption package |
+| `workplan/co0009-phase0-handoff.md` | CO-0009 Phase 0 handoff |
+| `workplan/phase1b-part01-s15-expansion.md` | Phase 1B draft (Part 1 §1.5 expansion) |
+| `workplan/co0003-amendment-2026-03-28.md` | CO-0003 amendment record |
+| `workplan/co0004-body-propagation.md` | CO-0004 body propagation work |
+| `workplan/P1-D2-D3-co0004-remapping.md` | CO-0004 decision remapping |
+| `workplan/slug-triage-2026-03-28.md` | Slug triage record (Phase 2A Session 4) |
+| `workplan/v10-5_2026-03-29.md` | Already marked DEPRECATED (v10-5 of co0007) |
+| `workplan/roadmap-2026-04-27.md` | Already marked DEPRECATED |
+| `workplan/workplan-co0007-audit.md` | Already marked DEPRECATED (Stage 0 audit) |
+| `workplan/workplan-co0007-synthesis.md` | Already marked DEPRECATED |
+| `workplan/workplan-co0007-v3-amendments.md` | Already marked DEPRECATED |
+| `workplan/workplan-co0007-v3.md` | Already marked DEPRECATED |
+
+### E.4 DECISION-SUPPORT — not workplans; standalone analysis documents (preserve as-is)
+
+These are not workplans and are not subject to supersession. They are decision records / analyses.
+
+| File | Type |
+|---|---|
+| `workplan/placeholder-review-triage.md` | Decision-support |
+| `workplan/gap-p1-reclassification-recommendation.md` | Decision-support (GAP-079 / GAP-CITE-01) |
+| `workplan/external-review-queue.md` | Decision-support (external review prioritisation) |
+| `workplan/external-review-outreach-drafts.md` | Application-ready artifact |
+| `workplan/opa-adjudication.md` | OP-A adjudication (Part 5 §5.2 conflict resolution) — RESOLVED |
+| `workplan/opb-adjudication.md` | OP-B adjudication (CON connection synthesis) |
+| `workplan/opg-methodology-review.md` | OP-G methodology review (Part 3 §3.8/3.9) |
+| `workplan/opus-missing-passes.md` | Opus synthesis queue tracker — referenced by Phase E.2f |
+| `workplan/opus-synthesis-queue.md` | Opus synthesis queue tracker — referenced by Phase E.2f |
+| `workplan/struck-claim-research-attempt_2026-05-01.md` | Research findings (struck claims) |
+| `workplan/economics-audit-research-2026-05-03.md` | Interim research findings |
+
+### E.5 Forward-work rule
+
+For any session opening under PI v10.8, the operative workplan is **this document** (`audits/bpc-rewrite-workplan-2026-05-11.md`). Do not consult the files in E.1 except for historical context. The files in E.2 remain operative for their specific protocols and must be honoured. The files in E.3 and E.4 are records; consult only when investigating prior decisions.
+
+If a session discovers a workplan-like file not classified above (created after 2026-05-11 11:00 UTC), default to: NOT-AUTHORITATIVE pending explicit adoption in a future PI revision.
+
+---
+
 **End of workplan.**
+
