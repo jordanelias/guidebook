@@ -1,0 +1,3159 @@
+[
+  {
+    "ref_id": "REF-00002",
+    "field": "pmid",
+    "new_value": "41201449",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00002",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00003",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00004",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00005",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00006",
+    "field": "doi",
+    "new_value": "10.1371/journal",
+    "source": "bib-v11",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00008",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00009",
+    "field": "doi",
+    "new_value": "10.18061/dsq.v24i3.508",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00009",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00010",
+    "field": "doi",
+    "new_value": "10.1080/10749357.2020.1755814",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00010",
+    "field": "pmid",
+    "new_value": "32316862",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00010",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00010",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00011",
+    "field": "doi",
+    "new_value": "10.1080/dre.25.2.57.66",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00011",
+    "field": "pmid",
+    "new_value": "12554380",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00011",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00013",
+    "field": "doi",
+    "new_value": "10.1016/j.neubiorev.2016.12.015",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00013",
+    "field": "pmid",
+    "new_value": "27993606",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00013",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00014",
+    "field": "doi",
+    "new_value": "10.1016/j.neuropsychologia.2017.07.001",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00014",
+    "field": "pmid",
+    "new_value": "28684296",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00014",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00019",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00022",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00025",
+    "field": "doi",
+    "new_value": "10.1016/j",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00025",
+    "field": "pmid",
+    "new_value": "28579369",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00025",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00027",
+    "field": "doi",
+    "new_value": "10.1080/10400435",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00027",
+    "field": "pmid",
+    "new_value": "26132352",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00027",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00028",
+    "field": "doi",
+    "new_value": "10.1177/00187208211059860",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00028",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00039",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00040",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00041",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00044",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00045",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00047",
+    "field": "doi",
+    "new_value": "10.3390/app11093942",
+    "source": "bib-v11",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00048",
+    "field": "doi",
+    "new_value": "10.1177/13623613221102753",
+    "source": "bib-v11",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00054",
+    "field": "doi",
+    "new_value": "10.4324/9781003564164",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00054",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00056",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00058",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00059",
+    "field": "doi",
+    "new_value": "10.1080/10400430903496580",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00059",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00059",
+    "field": "pmid",
+    "new_value": "20402047",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00059",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00060",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00061",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00063",
+    "field": "doi",
+    "new_value": "10.4324/9781003564164",
+    "source": "bib-v11",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00067",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00069",
+    "field": "pmid",
+    "new_value": "34233981",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00069",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00070",
+    "field": "doi",
+    "new_value": "10.1097/PHM.0000000000000203",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00070",
+    "field": "pmid",
+    "new_value": "25299526",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00070",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00072",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00073",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00075",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00078",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00079",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00080",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00083",
+    "field": "doi",
+    "new_value": "10.1108/978-1-78769-971-720191004",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00083",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00083",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00088",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00089",
+    "field": "doi",
+    "new_value": "10.1111/jocn.12388",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00089",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00089",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00092",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00095",
+    "field": "pmid",
+    "new_value": "34233981",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00096",
+    "field": "pmid",
+    "new_value": "36567605",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00096",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00100",
+    "field": "pmid",
+    "new_value": "39128221",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00100",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00101",
+    "field": "pmid",
+    "new_value": "35869551",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00101",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00102",
+    "field": "pmid",
+    "new_value": "36806071",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00102",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00103",
+    "field": "pmid",
+    "new_value": "20370928",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00103",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00105",
+    "field": "pmid",
+    "new_value": "38193620",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00105",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00107",
+    "field": "pmid",
+    "new_value": "36548797",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00107",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00108",
+    "field": "doi",
+    "new_value": "10.1111/inm.13070",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00108",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00108",
+    "field": "pmid",
+    "new_value": "36097405",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00108",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00109",
+    "field": "doi",
+    "new_value": "10.1177/19375867231219031",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00109",
+    "field": "pmid",
+    "new_value": "38385552",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00109",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00109",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00112",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00113",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00114",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00115",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00118",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00120",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00121",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00122",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00123",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00125",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00126",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00127",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00128",
+    "field": "doi",
+    "new_value": "10.1177/193758671100400207",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00128",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00129",
+    "field": "doi",
+    "new_value": "10.3389/fpsyt.2021.727353",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00129",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00134",
+    "field": "doi",
+    "new_value": "10.1016/j",
+    "source": "bib-v11",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00134",
+    "field": "pmid",
+    "new_value": "35292211",
+    "source": "bib-v11",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00140",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00141",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00143",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00147",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00148",
+    "field": "doi",
+    "new_value": "10.4324/9781003564164",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00148",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00148",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00149",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00150",
+    "field": "pmid",
+    "new_value": "30615553",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00154",
+    "field": "doi",
+    "new_value": "10.1371/journal.pone.0291228",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00154",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00155",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00156",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00157",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00160",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00161",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00163",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00169",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00171",
+    "field": "doi",
+    "new_value": "10.1016/j.buildenv.2021.108352",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00171",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00172",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00173",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00174",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00175",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00176",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00177",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00178",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00179",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00180",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00187",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00188",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00190",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00194",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00201",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00202",
+    "field": "doi",
+    "new_value": "10.1177/193758671100400207",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00202",
+    "field": "pmid",
+    "new_value": "21465436",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00202",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00203",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00205",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00212",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00213",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00214",
+    "field": "doi",
+    "new_value": "10.1136/bjsports-2018-099853",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00214",
+    "field": "pmid",
+    "new_value": "30610000",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00214",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00215",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00216",
+    "field": "doi",
+    "new_value": "10.1186/1471-2377-11-27",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00216",
+    "field": "pmid",
+    "new_value": "21352533",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00216",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00216",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00220",
+    "field": "doi",
+    "new_value": "10.1007/s11926-011-0206-6",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00220",
+    "field": "pmid",
+    "new_value": "21833699",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00220",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00220",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00225",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00230",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00233",
+    "field": "doi",
+    "new_value": "10.1186/s12967-018-1473-z",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00235",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00240",
+    "field": "pmid",
+    "new_value": "18751709",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00242",
+    "field": "doi",
+    "new_value": "10.1155/2022/4590154",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00242",
+    "field": "pmid",
+    "new_value": "35521629",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00242",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00244",
+    "field": "doi",
+    "new_value": "10.17226/19012",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00244",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00244",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00247",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00250",
+    "field": "doi",
+    "new_value": "10.5014/ajot.2015.016287",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00250",
+    "field": "pmid",
+    "new_value": "26356665",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00250",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00252",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00254",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00258",
+    "field": "doi",
+    "new_value": "GREY \u2014 sticerd.lse.ac.uk/dps/case/cr/casereport147.pdf",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00258",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00261",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00299",
+    "field": "doi",
+    "new_value": "GREY \u2014 no DOI (institutional report)",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00299",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00302",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00303",
+    "field": "doi",
+    "new_value": "10.1016/j",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00303",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00306",
+    "field": "doi",
+    "new_value": "GREY \u2014 PDF at dstgb.de and terragon-ag.de",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00306",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00311",
+    "field": "doi",
+    "new_value": "GREY \u2014 eib.org/publications/social-and-affordable-housing-overview-2020",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00311",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00313",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00314",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00315",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00316",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00317",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00319",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00325",
+    "field": "doi",
+    "new_value": "10.1044/2019_AJA-19-0010",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00325",
+    "field": "pmid",
+    "new_value": "31835909",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00325",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00325",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00327",
+    "field": "doi",
+    "new_value": "10.1044/jshr.2103.440",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00327",
+    "field": "pmid",
+    "new_value": "713515",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00327",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00331",
+    "field": "doi",
+    "new_value": "10.1121/10.0001259",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00331",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00337",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00338",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00339",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00340",
+    "field": "doi",
+    "new_value": "10.3109/09638288.2014.913710",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00340",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00340",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00341",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00342",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00343",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00344",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00345",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00353",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00356",
+    "field": "doi",
+    "new_value": "10.5014/ajot.2017.018887",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00356",
+    "field": "pmid",
+    "new_value": "28218595",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00356",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00362",
+    "field": "pmid",
+    "new_value": "35292211",
+    "source": "GRR",
+    "match_type": "DOI"
+  },
+  {
+    "ref_id": "REF-00362",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "DOI"
+  },
+  {
+    "ref_id": "REF-00363",
+    "field": "pmid",
+    "new_value": "17050754",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00363",
+    "field": "doi",
+    "new_value": "10.1111/j.1532-5415.2006.00703.x",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00363",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00367",
+    "field": "pmid",
+    "new_value": "40694815",
+    "source": "bib-v11",
+    "match_type": "DOI"
+  },
+  {
+    "ref_id": "REF-00367",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "DOI"
+  },
+  {
+    "ref_id": "REF-00368",
+    "field": "doi",
+    "new_value": "10.1177/00084174231186066",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00368",
+    "field": "pmid",
+    "new_value": "37498939",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00368",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00371",
+    "field": "doi",
+    "new_value": "10.2196/16175",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00371",
+    "field": "pmid",
+    "new_value": "32773380",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00371",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00373",
+    "field": "pmid",
+    "new_value": "25255696",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00373",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00380",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-co2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00381",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00383",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00384",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00385",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00387",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00388",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00389",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00390",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00391",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00392",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00397",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00398",
+    "field": "doi",
+    "new_value": "10.3390/vibration4020029",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00398",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AT-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00399",
+    "field": "doi",
+    "new_value": "10.1177/20556683221092322",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00399",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00400",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00401",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00402",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00405",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00407",
+    "field": "pmid",
+    "new_value": "28656108",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00418",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00421",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00425",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00426",
+    "field": "doi",
+    "new_value": "10.1177/03080226241249279",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00426",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00426",
+    "field": "pmid",
+    "new_value": "40337282",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00426",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00427",
+    "field": "doi",
+    "new_value": "10.1177/15691861221137223",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00427",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00427",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00428",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00438",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00447",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00451",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00452",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00455",
+    "field": "doi",
+    "new_value": "10.3233/978-1-61499-684-2-612",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00455",
+    "field": "pmid",
+    "new_value": "27534356",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00455",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00455",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00458",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00461",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00472",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00474",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00476",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00478",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00479",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00480",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00481",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00482",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00484",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00485",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00486",
+    "field": "pmid",
+    "new_value": "19487549",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00487",
+    "field": "doi",
+    "new_value": "10.1177/19375867211043546",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00487",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00488",
+    "field": "doi",
+    "new_value": "10.3389/frdem.2025.1524425",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00488",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00489",
+    "field": "doi",
+    "new_value": "10.1177/193758671400800111",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00489",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00489",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00493",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00494",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00495",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00496",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00498",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00499",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00500",
+    "field": "doi",
+    "new_value": "Korea Science indexed \u2014 JAKO202313043209241",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00500",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00501",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AT-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00502",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00503",
+    "field": "doi",
+    "new_value": "10.1177/30495334251345092",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00503",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00503",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00505",
+    "field": "doi",
+    "new_value": "10.15320/ICONARP.2022.195",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00505",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00508",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00509",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00512",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00518",
+    "field": "doi",
+    "new_value": "10.1016/j.rasd.2024.102362",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00518",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00519",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00527",
+    "field": "doi",
+    "new_value": "10.35248/2165-7556-22",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00527",
+    "field": "pmid",
+    "new_value": "36361166",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00527",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00528",
+    "field": "doi",
+    "new_value": "10.1080/00140139",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00528",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00529",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00531",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00535",
+    "field": "doi",
+    "new_value": "10.1145/3694790",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00535",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00535",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00537",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00538",
+    "field": "pmid",
+    "new_value": "28532712",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00538",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00541",
+    "field": "doi",
+    "new_value": "10.1177/13623613211050176",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00541",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00541",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00542",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00543",
+    "field": "doi",
+    "new_value": "10.1080/09613218",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00543",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00545",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00550",
+    "field": "doi",
+    "new_value": "10.1177/19375867251353735",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00550",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00551",
+    "field": "doi",
+    "new_value": "10.1371/journal.pbio.3001571",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00551",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00551",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00552",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00553",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00554",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00556",
+    "field": "doi",
+    "new_value": "10.1177/14771535251317740",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00556",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00556",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00562",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00564",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00565",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00566",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00567",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00570",
+    "field": "doi",
+    "new_value": "10.1044/2022_LSHSS-21-00181",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00570",
+    "field": "pmid",
+    "new_value": "36260411",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00570",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00570",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00571",
+    "field": "doi",
+    "new_value": "10.3389/fneur.2019.01286",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00571",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00571",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00572",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00574",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00576",
+    "field": "doi",
+    "new_value": "10.1097/AUD.0b013e31825aecad",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00576",
+    "field": "pmid",
+    "new_value": "22732772",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00576",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00577",
+    "field": "doi",
+    "new_value": "10.1097/AUD.0b013e3181d3d514",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00577",
+    "field": "pmid",
+    "new_value": "20215967",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00577",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00577",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00578",
+    "field": "doi",
+    "new_value": "10.1044/2016_AJA-15-0064",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00578",
+    "field": "pmid",
+    "new_value": "27244568",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00578",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00578",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00579",
+    "field": "doi",
+    "new_value": "10.1044/0161-1461(2004/017",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00579",
+    "field": "pmid",
+    "new_value": "15191328",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00579",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00579",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00580",
+    "field": "doi",
+    "new_value": "10.3766/jaaa.15096",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00580",
+    "field": "pmid",
+    "new_value": "27885976",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00580",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00580",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00581",
+    "field": "doi",
+    "new_value": "10.1097/AUD.0000000000001110",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00581",
+    "field": "pmid",
+    "new_value": "34369418",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00581",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00581",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00582",
+    "field": "doi",
+    "new_value": "10.1044/2019_AJA-19-0041",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00582",
+    "field": "pmid",
+    "new_value": "31682768",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00582",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00582",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00583",
+    "field": "doi",
+    "new_value": "10.1097/AUD.0000000000000623",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00583",
+    "field": "pmid",
+    "new_value": "29905670",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00583",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00583",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00584",
+    "field": "doi",
+    "new_value": "10.1097/AUD.0b013e31827ad76f",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00584",
+    "field": "pmid",
+    "new_value": "23340455",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00584",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00584",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00585",
+    "field": "doi",
+    "new_value": "10.4103/nah.NAH_15_19",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00585",
+    "field": "pmid",
+    "new_value": "32174643",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00585",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00585",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00586",
+    "field": "doi",
+    "new_value": "10.1097/AUD.0b013e31825641e4",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00586",
+    "field": "pmid",
+    "new_value": "22677815",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00586",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00586",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00587",
+    "field": "doi",
+    "new_value": "10.3766/jaaa.18048",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00587",
+    "field": "pmid",
+    "new_value": "31267958",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00587",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00588",
+    "field": "doi",
+    "new_value": "10.1044/1059-0889(2004/009",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00588",
+    "field": "pmid",
+    "new_value": "15248805",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00588",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00588",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00589",
+    "field": "doi",
+    "new_value": "10.1177/13623613221102753",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00589",
+    "field": "pmid",
+    "new_value": "35695710",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00589",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00590",
+    "field": "doi",
+    "new_value": "10.1097/00001163-199704000-00005",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00590",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00593",
+    "field": "doi",
+    "new_value": "10.1177/000841749606300103",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00593",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00597",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00600",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00601",
+    "field": "doi",
+    "new_value": "10.1044/2022_LSHSS-21-00181",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00601",
+    "field": "pmid",
+    "new_value": "36260411",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00601",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier1",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00603",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00608",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00609",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00614",
+    "field": "doi",
+    "new_value": "10.1515/dx-2020-0005",
+    "source": "DB2-action",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00614",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00614",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00615",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier2",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00616",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00617",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00619",
+    "field": "doi",
+    "new_value": "10.1097/JOM.0000000000001272",
+    "source": "DB2-action",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00619",
+    "field": "metadata_quality",
+    "new_value": "COMPLETE",
+    "source": "GRR",
+    "match_type": "AYT"
+  },
+  {
+    "ref_id": "REF-00620",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00630",
+    "field": "doi",
+    "new_value": "10.21834/jabs",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00630",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00633",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier456",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00637",
+    "field": "doi",
+    "new_value": "10.3389/fbuil",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00637",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00638",
+    "field": "doi",
+    "new_value": "10.3390/ijerph20216986",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00638",
+    "field": "pmid",
+    "new_value": "37947544",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00638",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00639",
+    "field": "doi",
+    "new_value": "10.1177/19375867221118675",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00639",
+    "field": "pmid",
+    "new_value": "35996349",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00639",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00640",
+    "field": "doi",
+    "new_value": "10.3390/su16093639",
+    "source": "bib-v11",
+    "match_type": "AY-UNIQUE"
+  },
+  {
+    "ref_id": "REF-00640",
+    "field": "verification_status",
+    "new_value": "VERIFIED",
+    "source": "json-tier3",
+    "match_type": "AY-UNIQUE"
+  }
+]
