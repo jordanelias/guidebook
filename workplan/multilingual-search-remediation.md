@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). Multilingual remediation is now distributed across the new workplan's §Phase B.11 (citation mining), §Phase C (coverage axis expansion to 19 langs × 46 juris), and §Phase A.11 (native-language keyword compendium verification for AR/HI/ID/SW/BN). Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # Multilingual & Multijurisdictional Search Remediation Plan
 **Created:** 2026-05-09
 **Governs:** search_languages, search_coverage, term_aliases tables in tracking DB
