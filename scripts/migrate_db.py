@@ -121,8 +121,10 @@ def apply_data_migrations(conn, dry_run: bool, applied_by_session: str = None) -
         sql = body.decode('utf-8')
         print(f"    Applying {path.name}...")
         if not dry_run:
+            # Count FK violations before migration so we can detect only NEW ones introduced.
+            # Pre-existing production drift (~18 violations) should not fail a clean migration.
+            pre_violations = set(tuple(r) for r in conn.execute("PRAGMA foreign_key_check").fetchall())
             # Disable FK checks during bulk load so inserts can be in any order.
-            # FKs are re-validated at the end via PRAGMA foreign_key_check.
             conn.execute("PRAGMA foreign_keys = OFF")
             try:
                 conn.executescript(sql)
@@ -131,24 +133,23 @@ def apply_data_migrations(conn, dry_run: bool, applied_by_session: str = None) -
                     (migration_id, now, sha, applied_by_session)
                 )
                 conn.commit()
-                # Verify FK invariants. Bootstrap migrations may carry pre-existing
-                # production drift (legacy data with FK orphans); we surface but don't
-                # fail. Subsequent migrations MUST not introduce new violations.
-                violations = conn.execute("PRAGMA foreign_key_check").fetchall()
-                is_bootstrap = "BOOTSTRAP" in (path.read_text()[:500]).upper()
-                if violations:
-                    label = "WARNING (bootstrap)" if is_bootstrap else "ERROR"
-                    print(f"    {label}: {len(violations)} FK violations after applying {migration_id}", file=sys.stderr)
-                    for v in violations[:5]:
+                # Re-enable and compare violation sets
+                conn.execute("PRAGMA foreign_keys = ON")
+                post_violations = set(tuple(r) for r in conn.execute("PRAGMA foreign_key_check").fetchall())
+                new_violations = post_violations - pre_violations
+                is_bootstrap = "BOOTSTRAP" in body[:500].decode('utf-8', errors='ignore').upper()
+                if new_violations:
+                    label = "WARNING (bootstrap, legacy data drift)" if is_bootstrap else "ERROR"
+                    print(f"    {label}: {len(new_violations)} {'pre-existing' if is_bootstrap else 'new'} FK violations after applying {migration_id}", file=sys.stderr)
+                    for v in list(new_violations)[:5]:
                         print(f"      {v}", file=sys.stderr)
                     if not is_bootstrap:
-                        raise sqlite3.IntegrityError(f"{len(violations)} FK violations")
+                        raise sqlite3.IntegrityError(f"{len(new_violations)} new FK violations")
             except sqlite3.Error as e:
                 conn.rollback()
+                conn.execute("PRAGMA foreign_keys = ON")
                 print(f"    ERROR applying {migration_id}: {e}", file=sys.stderr)
                 raise
-            finally:
-                conn.execute("PRAGMA foreign_keys = ON")
     return len(pending)
 
 
@@ -207,6 +208,7 @@ def rebuild_from_migrations(target_db_path: str, dry_run: bool = False):
             sha = hashlib.sha256(body).hexdigest()
             sql = body.decode('utf-8')
             if not dry_run:
+                pre_violations = set(tuple(r) for r in conn.execute("PRAGMA foreign_key_check").fetchall())
                 conn.execute("PRAGMA foreign_keys = OFF")
                 conn.executescript(sql)
                 conn.execute(
@@ -215,12 +217,13 @@ def rebuild_from_migrations(target_db_path: str, dry_run: bool = False):
                 )
                 conn.commit()
                 conn.execute("PRAGMA foreign_keys = ON")
-                violations = conn.execute("PRAGMA foreign_key_check").fetchall()
-                is_bootstrap = "BOOTSTRAP" in (path.read_text()[:500]).upper()
-                if violations:
-                    label = "WARNING (bootstrap, pre-existing drift)" if is_bootstrap else "ERROR"
-                    print(f"  {label}: {len(violations)} FK violations after {migration_id}", file=sys.stderr)
-                    for v in violations[:5]:
+                post_violations = set(tuple(r) for r in conn.execute("PRAGMA foreign_key_check").fetchall())
+                new_violations = post_violations - pre_violations
+                is_bootstrap = "BOOTSTRAP" in body[:500].decode('utf-8', errors='ignore').upper()
+                if new_violations:
+                    label = "WARNING (bootstrap, legacy data drift)" if is_bootstrap else "ERROR"
+                    print(f"  {label}: {len(new_violations)} FK violations after {migration_id}", file=sys.stderr)
+                    for v in list(new_violations)[:5]:
                         print(f"    {v}", file=sys.stderr)
                     if not is_bootstrap:
                         sys.exit(1)
