@@ -328,7 +328,47 @@ Everything I set out to deliver is now on `main`:
 
 Session-totals coverage: T1-2 citation_mining went from 1.2% → 2.4% (4/165). The remaining 161-source backlog is captured by the new audit scripts as informational output on every CI run. It's now visible; it can be worked down systematically rather than forgotten.
 
-`[SELF-AUTHORED — bias risk]` — this session ended better than its midpoint suggested. Three clobbers in eight minutes is a serious failure mode, and the replay-based salvage strategy is durable infrastructure that future sessions can adopt. The honest critique remains: GAP-290 P1 is unresolved and unresolved means recurring; the next concurrent-session pair will hit it again unless the owner picks an architectural option from the proposal and someone implements it. Until then, every session's DB work is fragile.
+## SEVENTH TRANCHE — Commit-all-properly cleanup (~04:55 UTC)
+
+User asked: "commit all properly". Inventory check found three local-only artifacts with lasting value — the mining-methodology scripts (`mine_710.py`, `mine_711_verify.py`, `verify_t3.py`) — that document HOW the discoveries were made (CrossRef queries, dedup logic, metadata mapping). Replay script captures the RESULT; methodology scripts capture the PROCESS. Both are useful for audit + future similar sessions.
+
+Patched each script for portability (DB path via `GUIDEBOOK_DB_PATH` env var instead of hardcoded `/home/claude/guidebook.db`), added docstring headers referencing sister scripts, validated all parse cleanly. Pushed as three commits:
+
+- `3a2dcc8b2e` — `scripts/migrations/session_2026_05_11g_mine_ref00710.py` (12-source CrossRef-based backward mining)
+- `f3f2114fdc` — `scripts/migrations/session_2026_05_11g_mine_ref00711_and_t3_verify.py` (probabilistic abstract-text matching for conference abstracts + T3 scaffold)
+- `eabfc9f725` — `scripts/migrations/session_2026_05_11g_t3_verify.py` (T3 bibliographic-search verification)
+
+All commits use the project's `{skill-name}: {action} [{YYYY-MM-DD HH:MM}]` convention.
+
+Updated commit count: **28 total** for this session (24 documented in fifth tranche + 1 sixth-tranche session-file push + 3 methodology scripts + this seventh-tranche update).
+
+Inventory confirmation — every material artifact this session produced is on remote and matches local:
+
+| Artifact | Path | Status |
+|---|---|---|
+| Skill: citation-miner §0 connector availability | `skills/citation-miner_SKILL.md` | ✓ on remote |
+| Skill: research-log-manager LOG step 7 | `skills/research-log-manager_SKILL.md` | ✓ on remote |
+| Audit: citation_mining completeness | `scripts/audit/citation_mining_completeness.py` | ✓ on remote |
+| Audit: source_slug_links duplicates | `scripts/audit/source_slug_links_duplicates.py` | ✓ on remote |
+| CI workflow | `.github/workflows/audit.yml` | ✓ on remote |
+| Memo: citation-mining protocol | `governance/citation-mining-protocol-memo-2026-05-11.md` | ✓ on remote |
+| Memo: concurrent-write architecture proposal | `governance/concurrent-write-architecture-proposal-2026-05-11.md` | ✓ on remote |
+| Replay: data dump | `scripts/migrations/session_2026_05_11g_data.json` | ✓ on remote |
+| Replay: idempotent applier | `scripts/migrations/session_2026_05_11g_replay.py` | ✓ on remote |
+| Methodology: REF-00710 backward | `scripts/migrations/session_2026_05_11g_mine_ref00710.py` | ✓ on remote (this tranche) |
+| Methodology: REF-00711 + T3 scaffold | `scripts/migrations/session_2026_05_11g_mine_ref00711_and_t3_verify.py` | ✓ on remote (this tranche) |
+| Methodology: T3 verification | `scripts/migrations/session_2026_05_11g_t3_verify.py` | ✓ on remote (this tranche) |
+| DB: 14 sources, 21 mining rows, 8 gaps, 700-row cleanup, renumber | `data/guidebook.db` | ✓ on remote |
+| Session file | `sessions/session_2026-05-11g-citation-mining.md` | ✓ on remote |
+| LATEST pointer | `sessions/LATEST` | ✓ on remote |
+
+Local files NOT pushed (intentional — transient/ephemeral):
+- `push_*.sh` shell helpers — session-specific deployment scripts, not project artifacts
+- `skills_remote/*` — fetched copies of remote files for editing
+- `/tmp/payload.json`, `/tmp/db_*.db`, `/tmp/crossref_*.json` — transient buffers
+- Probe scripts (`schema_probe.py`, `evidence_query.py`, `diagnose.py`, `cross_check.py`) — diagnostic one-offs, no lasting value
+
+Final audit pass against remote: both `scripts/audit/*` exit 0 (this session clean, 0 duplicates). Session-close is complete.
 
 ## confidence
 
