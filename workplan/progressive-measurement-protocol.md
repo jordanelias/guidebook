@@ -1,3 +1,8 @@
+<!-- SUBORDINATE 2026-05-11 -->
+> **SUBORDINATE PROTOCOL:** This document is the operating protocol for PI v10.8 standing rule #8 (Progressive Measurement Probe). It is NOT superseded by `audits/bpc-rewrite-workplan-2026-05-11.md`; it operates underneath that workplan as a sub-protocol. Remains in force until a future PI revision modifies rule #8.
+
+---
+
 # Progressive Measurement Probe (PMP) Protocol
 **Status:** PROPOSED 2026-05-10. Pending decision record `DR-2026-05-10-progressive-measurement-protocol.md`.
 **Companions:** `research-protocol-adversarial.md` (claim validation), `multilingual-search-remediation.md` (per-language adversarial).
