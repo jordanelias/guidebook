@@ -25,7 +25,7 @@ jobs:
 
       - name: Resolve DOIs
         env:
-          GUIDEBOOK_DB_PATH: data/db/guidebook.db
+          GUIDEBOOK_DB_PATH: data/guidebook.db
           MAX_RESOLVE: ${{ github.event.inputs.max_resolve }}
         run: python scripts/resolve_dois.py
 
@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/db/guidebook.db
+          git add data/guidebook.db
           if git diff --cached --quiet; then
             echo "No DOIs resolved — nothing to commit"
             exit 0
