@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). The new workplan's §Appendix E provides an updated reconciliation map covering all 54 files in workplan/. Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # Workplan Reconciliation — All COs, Workplans, and Governance Documents
 **Generated:** 2026-05-08 04:15 UTC
 **Session:** governance session (D-block fixes + block gate + reconciliation)
