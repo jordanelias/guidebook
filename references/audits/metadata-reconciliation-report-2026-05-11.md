@@ -1,51 +1,60 @@
-# Metadata Reconciliation Report — 2026-05-11
+# Metadata Reconciliation + DOI Resolution Report — 2026-05-11
 
 **Session:** session_2026-05-11-metadata-reconciliation
-**Scope:** Consolidate DOI, PMID, verification_status, and metadata_quality from 5 flat-file sources into `data/guidebook.db`
-**PI version:** v10.8 (live as of this session)
-**Workplan phase:** Pre-Phase-B — foundational data consolidation
+**Scope:** (1) Consolidate metadata from 5 parallel stores into canonical DB; (2) Run CrossRef DOI resolution; (3) Fix infrastructure bug in GitHub Action
+**PI version:** v10.8
+**Workplan phase:** Pre-Phase-B foundational data consolidation
 
 ---
 
-## 1. Problem discovered
+## 1. Problem: five parallel metadata stores, never reconciled
 
-The project has accumulated five parallel stores of bibliographic metadata that were never reconciled into the canonical database (`data/guidebook.db`):
-
-| Source | Format | Entries | DOIs | PMIDs | Verification data |
+| Source | Format | Entries | DOIs | PMIDs | Verification |
 |---|---|---|---|---|---|
-| `data/guidebook.db` (canonical) | SQLite, `evidence_sources` table | 675 | 30 | 5 | 32 VERIFIED |
-| `data/db/guidebook.db` (Action target) | SQLite, `evidence_source` table | 532 | 56 | — | — |
-| `references/bibliography-v11-draft.md` | Markdown | ~446 | 74 | 48 | — |
-| `references/global-reference-registry.json` | JSON | 531 | 56 | 41 | metadata_quality |
-| `references/tier*-verified-sources.json` (×6) | JSON | 551 | 108 | 59 | 498 VERIFIED |
+| `data/guidebook.db` (canonical) | SQLite `evidence_sources` | 675 | 30 | 5 | 32 VERIFIED |
+| `data/db/guidebook.db` (Action) | SQLite `evidence_source` | 532 | 56 | — | — |
+| `bibliography-v11-draft.md` | Markdown | ~446 | 74 | 48 | — |
+| `global-reference-registry.json` | JSON | 531 | 56 | 41 | metadata_quality |
+| `tier*-verified-sources.json` (×6) | JSON | 551 | 108 | 59 | 498 VERIFIED |
 
-The BPC rewrite workplan (Phase B) was scoped against `data/guidebook.db` alone. It estimated 140 hours for DOI resolution and 110 hours for verification — work partly already done in the flat files.
-
-### Critical infrastructure bug
-
-The GitHub Action `resolve-dois.yml` writes to `data/db/guidebook.db` using table `evidence_source` (singular). The canonical DB is `data/guidebook.db` using table `evidence_sources` (plural). The Action ran successfully twice (2026-05-07) but its results never reached the canonical DB. **These are two completely separate databases with different schemas and non-matching ref_ids.**
+**Infrastructure bug:** The GitHub Action `resolve-dois.yml` wrote to `data/db/guidebook.db` (table `evidence_source`, singular). The canonical DB is `data/guidebook.db` (table `evidence_sources`, plural). Different schemas, non-matching ref_ids. Action results from 2026-05-07 never reached the canonical DB.
 
 ---
 
-## 2. Reconciliation method
+## 2. What was done
 
-1. **Content-based matching** — ref_ids do NOT correspond across sources. Matching used first-author surname + year (exact), falling back to first-author + title prefix (5 words). Match types: `AY-UNIQUE` (74%), `AYT` (18%), `DOI` (existing match), `AT-UNIQUE` (remainder).
+### Step 1: Flat-file reconciliation (451 updates)
 
-2. **Update rules** — only populate NULL/empty fields. Never overwrite existing values. verification_status only upgraded TO `VERIFIED`, never downgraded.
+Content-based matching (first-author + year, falling back to first-author + title prefix) across all 5 sources. Only NULL/empty fields populated; no overwrites.
 
-3. **DOI quality check** — 11 problematic DOIs found and fixed:
-   - 3 truncated to `10.1016/j` → nulled (junk from DB2 CrossRef matching)
-   - 4 GREY notes stored in DOI field → moved to `notes`, DOI nulled
-   - 1 Korea Science ID (`JAKO...`) → not a DOI; nulled, ID preserved in title
-   - 3 unclosed parens (`10.1044/...`) → closing paren appended
+- **92 DOIs** imported (8 later removed as junk → net 84)
+- **62 PMIDs** imported
+- **49 metadata_quality** upgrades (AUTHOR-TITLE-ONLY → COMPLETE)
+- **248 verification_status** upgrades (NULL → VERIFIED)
+
+DOI quality fixes: 3 truncated DOIs nulled (`10.1016/j`), 4 GREY notes removed from DOI field, 1 Korea Science ID moved to notes, 3 unclosed parens fixed.
+
+### Step 2: CrossRef DOI resolution (76 verified DOIs)
+
+Ran fixed `resolve_dois.py` against the reconciled DB (MAX_RESOLVE=300).
+
+- **Phase 1 (PMID→DOI via NCBI):** 0 resolved (NCBI blocked by egress proxy — 403)
+- **Phase 2 (CrossRef title search):** 100 candidates resolved
+- **Audit:** 25 false positives identified and reverted (duplicate DOIs assigned to wrong refs, author-TBC entries, no-year entries)
+- **Net retained:** 76 verified DOIs
+
+### Step 3: Infrastructure fix
+
+- `scripts/resolve_dois.py` — changed table `evidence_source` → `evidence_sources`, default DB path `data/db/guidebook.db` → `data/guidebook.db`, added `pmid` column check for Phase 1, added `updated_at`/`updated_by_session` tracking
+- `.github/workflows/resolve-dois.yml` — changed `GUIDEBOOK_DB_PATH` env var, changed `git add` target
 
 ---
 
-## 3. Results
+## 3. Final state
 
 | Metric | Before | After | Change |
 |---|---|---|---|
-| DOI populated | 30 (4%) | 114 (17%) | +84 |
+| DOI populated | 30 (4%) | 190 (28%) | +160 |
 | PMID populated | 5 (1%) | 67 (10%) | +62 |
 | metadata_quality = COMPLETE | 18 (3%) | 67 (10%) | +49 |
 | metadata_quality = AUTHOR-TITLE-ONLY | 567 (84%) | 518 (77%) | −49 |
@@ -53,54 +62,38 @@ The GitHub Action `resolve-dois.yml` writes to `data/db/guidebook.db` using tabl
 | verification_status = NULL | 642 (95%) | 394 (58%) | −248 |
 | Synthesis-eligible (rule #10) | ~14 (2%) | 47 (7%) | +33 |
 
-451 individual field updates across 273 rows. Zero errors. All updates tagged with `updated_by_session = 'session_2026-05-11-metadata-reconciliation'`.
+5 duplicate DOIs remain — these are genuine DB duplicates (same paper under different ref_ids), flagged for Phase B deduplication.
 
 ---
 
 ## 4. Phase B workplan impact
 
-| Phase B sub-task | Original scope | After reconciliation | Hours saved |
+| Sub-task | Original scope | After this session | Saved |
 |---|---|---|---|
-| B.2 (AUTHOR-TITLE-ONLY → resolve) | 567 sources × 15 min = 140h | 518 remaining | ~12h |
-| B.7 (verification_status) | 642 sources × 10 min = 110h | 394 remaining | ~41h |
-| **Combined** | | | **~54h** |
+| B.2 (AUTHOR-TITLE-ONLY resolve) | 567 × 15 min = 140h | 518 remaining | ~12h |
+| B.7 (verification_status) | 642 × 10 min = 110h | 394 remaining | ~41h |
+| **Combined** | **~250h** | | **~54h** |
 
-**Key structural insight:** 213 sources are now VERIFIED but not COMPLETE. These need DOI/journal resolution (Phase B.2–B.5) but do NOT need existence verification (Phase B.7). The two phases can be decoupled and parallelized for these 213.
-
----
-
-## 5. Remaining issues requiring action
-
-### 5.1 Fix GitHub Action target (infrastructure bug)
-
-`scripts/resolve_dois.py` + `.github/workflows/resolve-dois.yml`:
-- **Current:** writes to `data/db/guidebook.db`, table `evidence_source` (singular)
-- **Required:** write to `data/guidebook.db`, table `evidence_sources` (plural)
-- **Action:** update `GUIDEBOOK_DB_PATH` default in script + workflow env var; update all SQL to use `evidence_sources`; deprecate `data/db/guidebook.db`
-
-### 5.2 Re-run Action against reconciled DB
-
-After fixing 5.1, re-run `resolve-dois.yml` with `max_resolve: 500`. The 518 remaining AUTHOR-TITLE-ONLY entries could yield ~100–200 more DOIs via CrossRef title search, further reducing Phase B.2 scope.
-
-### 5.3 Consolidate or deprecate parallel stores
-
-| File | Recommendation |
-|---|---|
-| `data/db/guidebook.db` | Deprecate after fixing Action target. Archive or delete. |
-| `references/global-reference-registry.json` | Keep as read-only export. Generate from DB, not maintained independently. |
-| `references/bibliography-v11-draft.md` | Keep as human-readable bibliography. Generate from DB for future versions. |
-| `references/tier*-verified-sources.json` (×6) | Keep as audit trail. Do not add new data here — add to DB directly. |
-
-### 5.4 evidence_type still 95% empty
-
-None of the flat files carry `evidence_type` data. This remains fully Phase B.6 work (~55 hours). The tier classification from the JSON filenames (tier1 = clinical, tier3 = SR/meta) provides a signal but doesn't map cleanly to the 9-value `evidence_type` enum.
+**Key structural insight:** 213 sources are VERIFIED but not COMPLETE. They need DOI/journal resolution but NOT existence verification. Phase B.2 and B.7 can be decoupled for this subset.
 
 ---
 
-## 6. Provenance trail
+## 5. Remaining action items
 
-All 451 updates carry:
-- `updated_at = '2026-05-11 reconciliation'`
-- `updated_by_session = 'session_2026-05-11-metadata-reconciliation'`
+1. **Re-run Action in GitHub UI** — the fixed workflow can now be dispatched with `max_resolve: 500` to resolve more DOIs. NCBI Phase 1 will work from GitHub (not blocked by egress proxy).
+2. **Deprecate `data/db/guidebook.db`** — no longer needed. Archive or delete.
+3. **Flag 5 duplicate ref_ids** for Phase B deduplication.
+4. **28 PMID-bearing sources still lack DOIs** — NCBI resolution blocked in container; will resolve when Action runs from GitHub.
 
-Full manifest: saved as `reconciliation_manifest.json` (451 entries with ref_id, field, new_value, source, match_type).
+---
+
+## 6. Commits
+
+| SHA | File | Message |
+|---|---|---|
+| c0f8bb2fe9ab | `data/guidebook.db` | First reconciliation pass (451 updates) |
+| 4ec50bf39995 | `data/guidebook.db` | + CrossRef resolution (76 DOIs) + audit cleanup |
+| 1bb96b69b209 | `scripts/resolve_dois.py` | Fix table name + DB path |
+| c2fc557fc358 | `.github/workflows/resolve-dois.yml` | Fix DB path |
+| bccb09435f52 | `references/audits/metadata-reconciliation-report-2026-05-11.md` | Initial report |
+| 1cb41479bf2a | `references/audits/reconciliation-manifest-2026-05-11.json` | Audit trail |
