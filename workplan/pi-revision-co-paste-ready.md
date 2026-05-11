@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `governance/project-instructions-v10_8.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). PI revisions are now governed by `governance/project-instructions-v10_8.md`. The paste-ready patches in this file are obsolete; use the full v10.8 file for deployment. Do not use for forward work. Preserved here as historical record. See `governance/project-instructions-v10_8.md` §Appendix E for the full supersession map.
+
+---
+
 # PI Revision — Paste-Ready Text Patches
 
 **Status:** Application-ready artifact (companion to governance/pi-revision-co.md)
