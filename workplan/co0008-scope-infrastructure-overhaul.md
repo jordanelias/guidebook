@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). CO-0008 infrastructure overhaul work is now §Phase A (Foundation), with all 12 sub-tasks (A.1 through A.12) absorbing the prior CO-0008 scope. Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # CO-0008 Scope: Infrastructure Overhaul
 
 **Author:** Opus 4.6
