@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Batch DOI resolution via CrossRef API for evidence_source table.
+"""Batch DOI resolution via CrossRef API for evidence_sources table.
 
 Two-phase approach:
   Phase 1: PMID → DOI via NCBI ID Converter (high confidence)
   Phase 2: Author + title → DOI via CrossRef title search (moderate confidence)
 
 Environment variables:
-  GUIDEBOOK_DB_PATH  — path to SQLite DB (default: data/db/guidebook.db)
+  GUIDEBOOK_DB_PATH  — path to SQLite DB (default: data/guidebook.db)
   MAX_RESOLVE        — max Phase 2 candidates per run (default: 100)
 """
 
@@ -19,10 +19,12 @@ import sys
 import os
 import re
 
-DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/db/guidebook.db")
+DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 RATE_LIMIT = 0.5  # seconds between requests
 MAX_RESOLVE = int(os.environ.get("MAX_RESOLVE", "100"))
 USER_AGENT = "guidebook-project/1.0 (mailto:jordan@guidebook.dev)"
+
+TABLE = "evidence_sources"
 
 
 def ncbi_pmid_to_doi(pmid: str) -> str | None:
@@ -115,18 +117,23 @@ def crossref_title_search(author: str, title: str, year: str) -> str | None:
     return None
 
 
-def extract_pmid(title: str, notes: str) -> str | None:
-    """Extract PMID from title or notes fields."""
+def extract_pmid(title: str, notes: str, pmid_col: str) -> str | None:
+    """Extract PMID from pmid column, title, or notes fields."""
+    # Prefer the dedicated pmid column
+    if pmid_col:
+        m = re.search(r"(\d{5,})", str(pmid_col))
+        if m:
+            return m.group(1)
     combined = f"{title or ''} {notes or ''}"
     m = re.search(r"PMID[:\s]?(\d+)", combined, re.IGNORECASE)
     return m.group(1) if m else None
 
 
-def is_standard_or_grey(title: str, notes: str, evidence_tier) -> bool:
+def is_standard_or_grey(title: str, notes: str, tier) -> bool:
     """Return True if source is unlikely to have a DOI."""
     combined = f"{title or ''} {notes or ''}"
     try:
-        if evidence_tier is not None and int(evidence_tier) >= 4:
+        if tier is not None and int(tier) >= 4:
             return True
     except (ValueError, TypeError):
         pass
@@ -153,32 +160,39 @@ def main():
     tables = [r[0] for r in conn.execute(
         "SELECT name FROM sqlite_master WHERE type='table'"
     ).fetchall()]
-    if "evidence_source" not in tables:
-        print(f"ERROR: evidence_source table not found. Tables: {tables}")
+    if TABLE not in tables:
+        print(f"ERROR: {TABLE} table not found. Tables: {tables}")
         return 1
 
     ts = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
 
     # ── Phase 1: PMID → DOI ──
-    pmid_rows = conn.execute("""
-        SELECT ref_id, title, notes
-        FROM evidence_source
+    # Check both the dedicated pmid column and PMID mentions in title/notes
+    pmid_rows = conn.execute(f"""
+        SELECT ref_id, title, notes, pmid
+        FROM {TABLE}
         WHERE (doi IS NULL OR doi = '')
-        AND (title LIKE '%PMID%' OR notes LIKE '%PMID%')
+        AND (
+            (pmid IS NOT NULL AND pmid != '')
+            OR title LIKE '%PMID%'
+            OR notes LIKE '%PMID%'
+        )
     """).fetchall()
 
     print(f"Phase 1 — PMID candidates: {len(pmid_rows)}")
     pmid_resolved = 0
 
     for r in pmid_rows:
-        pmid = extract_pmid(r["title"], r["notes"])
+        pmid = extract_pmid(r["title"], r["notes"], r["pmid"])
         if not pmid:
             continue
         doi = ncbi_pmid_to_doi(pmid)
         if doi:
             conn.execute(
-                "UPDATE evidence_source SET doi = ? WHERE ref_id = ?",
-                (doi, r["ref_id"])
+                f"UPDATE {TABLE} SET doi = ?, "
+                "updated_at = ?, updated_by_session = 'resolve-dois-action' "
+                "WHERE ref_id = ?",
+                (doi, ts, r["ref_id"])
             )
             pmid_resolved += 1
             print(f"  PMID→DOI: {r['ref_id']} (PMID:{pmid}) → {doi}")
@@ -187,9 +201,9 @@ def main():
     print(f"Phase 1 resolved: {pmid_resolved}\n")
 
     # ── Phase 2: title search ──
-    title_rows = conn.execute("""
-        SELECT ref_id, authors, year, title, notes, evidence_tier
-        FROM evidence_source
+    title_rows = conn.execute(f"""
+        SELECT ref_id, authors, year, title, notes, tier
+        FROM {TABLE}
         WHERE (doi IS NULL OR doi = '')
         AND authors IS NOT NULL AND authors != ''
         AND authors != '(author TBC)'
@@ -200,7 +214,7 @@ def main():
 
     candidates = [
         r for r in title_rows
-        if not is_standard_or_grey(r["title"], r["notes"], r["evidence_tier"])
+        if not is_standard_or_grey(r["title"], r["notes"], r["tier"])
     ][:MAX_RESOLVE]
 
     print(f"Phase 2 — Title search candidates: {len(candidates)}")
@@ -213,8 +227,10 @@ def main():
         )
         if doi:
             conn.execute(
-                "UPDATE evidence_source SET doi = ? WHERE ref_id = ?",
-                (doi, r["ref_id"])
+                f"UPDATE {TABLE} SET doi = ?, "
+                "updated_at = ?, updated_by_session = 'resolve-dois-action' "
+                "WHERE ref_id = ?",
+                (doi, ts, r["ref_id"])
             )
             title_resolved += 1
             print(f"  RESOLVED: {r['ref_id']} ({r['authors'][:30]}, {r['year']}) → {doi}")
@@ -226,9 +242,9 @@ def main():
     conn.commit()
 
     # ── Summary ──
-    total = conn.execute("SELECT COUNT(*) FROM evidence_source").fetchone()[0]
+    total = conn.execute(f"SELECT COUNT(*) FROM {TABLE}").fetchone()[0]
     with_doi = conn.execute(
-        "SELECT COUNT(*) FROM evidence_source WHERE doi IS NOT NULL AND doi != ''"
+        f"SELECT COUNT(*) FROM {TABLE} WHERE doi IS NOT NULL AND doi != ''"
     ).fetchone()[0]
     without_doi = total - with_doi
 
