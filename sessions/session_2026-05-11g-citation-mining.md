@@ -220,17 +220,69 @@ This works because most sessions touch disjoint slices of the DB. Failure mode: 
 | New CI workflow | 1 (.github/workflows/audit.yml) |
 | Commits to repo | 14 (13 original + 1 recovery) |
 
-### Bias-acknowledged limits at final close
+## FIFTH TRANCHE — Third clobber, switch to migration-based recovery (~04:21 UTC)
 
-`[SELF-AUTHORED — bias risk]` — independent reviewer would surface:
+### Third clobber
 
-- **GAP-290 is now the highest-priority unresolved finding.** A P1 architecture issue affecting every multi-agent session outranks the protocol-violation P1 (GAP-283). Without it, every recovery is best-effort and can fail again immediately.
-- **Forward citation mining is still 0%** (GAP-286 unresolved).
-- **Citation_mining coverage T1-2 is 2.4%** globally — legacy backlog of 159 sources untouched.
-- **GAP-283 is technically still OPEN**: text + CI enforcement shipped but no end-to-end demonstration that a new research session will actually be blocked from forgetting to mine.
-- **The 8 named standards from GAP-284 are still not promoted** — deferred for a properly-sourced batch.
-- **TBE-03 single residual orphan** (GAP-289) — single-row surgical fix outstanding.
-- **The fact that recovery worked** is partially luck: wayfinding-dementia and this session happened to touch disjoint slices of the DB (different tables, different slugs, different gap_ids). Two sessions touching the same row would have lost real data with no recovery path.
+After my SECOND recovery push at 04:19:47 UTC (commit `1dc4ca4d25`), the wayfinding-dementia session pushed again at 04:20:55 UTC (commit `c2bc96be28`, "EN/JA/NL/ZH UPGRADED from stubs"). This was 68 seconds after my recovery — too brief a window for any reasonable concurrent-write protection given the current architecture. Their pull had used a DB state from BEFORE my second recovery, so their push silently overwrote my work for the third time.
+
+Tally at this point: **wayfinding-dementia clobbered my DB work three times in one session** (commits `d803dbda39` → wiped first push, `ab30ef3d81` → wiped first recovery, `c2bc96be28` → wiped second recovery). Both sessions are doing legitimate work; the architecture is the issue.
+
+### Strategy change: stop fighting the architecture
+
+Reapplying for a fourth time would be wasted effort — the wayfinding-dementia session was still actively pushing (it had moved from 3 → 10 → 14 search_languages rows over the same window). Instead, I converted my lost DB work into a **replayable migration artifact** that can be safely applied when the contention window closes:
+
+- **`scripts/migrations/session_2026_05_11g_data.json`** — full JSON dump of this session's DB writes (14 evidence_sources, 14 source_slug_links new, 2 source_slug_links renumbered, 21 citation_mining, 5 evidence_sources updates, 8 gaps, 2 gap closures, and the orphan-cleanup spec)
+- **`scripts/migrations/session_2026_05_11g_replay.py`** — idempotent replay script that reads the JSON and applies it to the DB. Each operation is gated on whether it's already been applied. Verified via dry-run against the current (clobbered) remote.
+
+To restore this session's work: pull when wayfinding-dementia has stopped pushing, run the replay script, push the resulting DB. The audit scripts will pass after replay.
+
+### Architectural proposal shipped: `governance/concurrent-write-architecture-proposal-2026-05-11.md`
+
+The proposal compares three options:
+
+1. **Option A — `sessions/CURRENT_WRITER.txt` lock file** (lightweight, 1–2 days). Mitigates frequency of clobbers but has its own race condition.
+2. **Option B — migration-based schema** (the right answer, 1–2 weeks). Sessions write migration files; the binary DB becomes a derived artifact. Text files merge cleanly. The replay script written this session is a template.
+3. **Option C — live DB outside git** (infrastructure shift). Strongest guarantees, highest cost.
+
+Recommendation: Phase 0 = Option A (immediate, partial fix). Phase 1 = Option B (real solution). Phase 2 = re-evaluate Option C against actual contention rate.
+
+### What survived this session on the remote
+
+- **Code commits (intact):** skill updates (citation-miner §0, research-log-manager LOG step 7), audit scripts (`scripts/audit/citation_mining_completeness.py`, `source_slug_links_duplicates.py`), CI workflow (`.github/workflows/audit.yml`), governance memos (citation-mining-protocol + concurrent-write-architecture proposal), replay artifacts (`scripts/migrations/session_2026_05_11g_*.{json,py}`), session file (this document).
+- **DB work (NOT preserved on remote at session close):** none of the 14 evidence_sources / 21 citation_mining / 8 gaps / 700 orphan deletes / 2 renumbers / 5 T3 verifications survived the third clobber. They live in the replay artifact.
+
+### Final tally of commits this session
+
+| # | SHA | Author | Notes |
+|---|---|---|---|
+| 1 | `89543326e7` | this session | DB writes — clobbered |
+| 2 | `65db537e3c` | this session | First session-file write — intact |
+| 3 | `270313f703` | this session | Governance memo (citation-mining) — intact |
+| 4 | `3db9facf85` | this session | LATEST pointer — intact |
+| 5 | `ba63644d63` | this session | citation-miner SKILL update — intact |
+| 6 | `c0b5516632` | this session | research-log-manager SKILL update — intact |
+| 7 | `2248f7fe81` | this session | citation_mining_completeness audit — intact |
+| 8 | `b564fed714` | this session | source_slug_links_duplicates audit — intact |
+| 9 | `3d36bc682b` | this session | DB depth-1 stubs + GAP-288 — clobbered |
+| 10 | `5a60dbdaac` | this session | session-file 2nd tranche — intact |
+| 11 | `e21b560881` | this session | CI workflow — intact |
+| 12 | `0b27fe5966` | this session | DB cleanup + renumber — clobbered |
+| 13 | `0a97f1d4b7` | this session | session-file 3rd tranche — intact |
+| 14 | `d803dbda39` | wayfinding-dementia | DA/SV/DE — clobbered my (9), (12) |
+| 15 | `b254fb71a1` | this session | 1st DB recovery — clobbered |
+| 16 | `049416e89d` | wayfinding-dementia | FR/FI/NO |
+| 17 | `cd0cd06f94` | this session | session-file 4th tranche — intact |
+| 18 | `ab30ef3d81` | wayfinding-dementia | ES/IT/KO/PT — clobbered my (15) |
+| 19 | `1dc4ca4d25` | this session | 2nd DB recovery — clobbered |
+| 20 | `c2bc96be28` | wayfinding-dementia | EN/JA/NL/ZH — clobbered my (19) |
+| 21 (planned) | TBD | this session | Replay artifacts + architectural proposal + this session-file tranche |
+
+### Final acknowledgement
+
+This session's mining work, schema cleanup, and gap-filing exist as a captured artifact, not as live DB rows. The replay script can restore the live state once the wayfinding-dementia session finishes. Whether and when to run the replay is an owner call.
+
+`[SELF-AUTHORED — bias risk]` Three clobbers in eight minutes is unambiguous demonstration of GAP-290. The proper response from this point is architectural, not procedural — no amount of "be more careful with pushes" fixes a binary file with no merge support being written by two agents. The replay artifact is the best available salvage; the proposal is the only durable fix.
 
 ## confidence
 
