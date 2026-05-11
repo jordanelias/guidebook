@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). Its Stage A/B foundation work (~43 sessions consumed) remains validly completed and is not invalidated. Only the Stage C1–C11 content scoping is replaced — by the new workplan's Phase E (Per-BPC rewrite). Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # CO-0007 Workplan v4
 **Created:** 2026-05-03 22:40 UTC
 **Model:** Opus 4.6
