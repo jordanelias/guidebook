@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). Website preparation / output regeneration is now §Phase G in the new workplan, with the output generator built early in §Phase A.12 for incremental testing during Phase E. Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # Website Preparation — Tactical Reference
 **Version:** 3.0 (excised 2026-05-08)
 **Canonical plan:** workplan-co0007-v4.md (ADOPTED 2026-05-03)
