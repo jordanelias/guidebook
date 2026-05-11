@@ -1,0 +1,79 @@
+name: Repo Integrity Audits
+
+# Per GAP-287 (Phase 1 hook prioritisation) — converts the CLI audit scripts
+# at scripts/audit/* from level-1 (text/CLI, requires session author to run)
+# to level-2 (automated checks on every push and PR). Blocks on regressions;
+# surfaces global backlog as informational.
+#
+# Added in session_2026-05-11g-citation-mining.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    name: Audits (citation-mining + source_slug_links)
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Read current session pointer
+        id: session
+        run: |
+          if [ -f sessions/LATEST ]; then
+            SESSION=$(cat sessions/LATEST | tr -d '\n\r ')
+            echo "session=$SESSION" >> "$GITHUB_OUTPUT"
+            echo "Current session: $SESSION"
+          else
+            echo "::warning::sessions/LATEST not found — skipping per-session scope"
+            echo "session=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Source-slug-links integrity (BLOCKING regression test)
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: |
+          # Fails if any duplicate (slug, local_ref_id) pairs exist.
+          # After the 2026-05-11 GAP-285+GAP-288 cleanup, this should hold at zero.
+          # A new duplicate appearing here means a new migration or write bug.
+          python3 scripts/audit/source_slug_links_duplicates.py
+
+      - name: Citation-mining completeness — current session (BLOCKING)
+        if: steps.session.outputs.session != ''
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: |
+          # Per GAP-283 — enforces RULE 124 (mandatory citation_mining for confirmed
+          # Tier 1-2). A session that adds T1-2 evidence_sources rows must also produce
+          # citation_mining rows (or write a DEPTH-1-DISCOVERY / DEFERRED stub).
+          python3 scripts/audit/citation_mining_completeness.py \
+            --session "${{ steps.session.outputs.session }}" \
+            --tier-max 2
+
+      - name: Citation-mining completeness — global T1-2 backlog (informational)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: |
+          # Surfaces the legacy 159-source backlog. Should trend toward zero over time
+          # as batch-pass mining catches up. Not blocking — would block every commit
+          # otherwise until backlog is fully cleared.
+          python3 scripts/audit/citation_mining_completeness.py --tier-max 2
+
+      - name: Citation-mining completeness — global T1-3 (informational)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: |
+          # Wider view including Tier 3 (not mandatory per RULE 124 but tracked).
+          python3 scripts/audit/citation_mining_completeness.py --tier-max 3
