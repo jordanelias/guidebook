@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). Evidence base expansion work is now §Phase B (Evidence rehabilitation), with a ~510-hour effort estimate for resolving 661 sources, including the 567 AUTHOR-TITLE-ONLY and 68 GREY sources. Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # Workplan: Evidence Base Expansion Programme
 **Created:** 2026-04-03
 **Basis:** `misc/literature-review-proposal-2026-04-03.md` (commits b5a433e7, 4a79f36c)
