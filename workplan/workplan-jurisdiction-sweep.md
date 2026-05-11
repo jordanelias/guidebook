@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). Jurisdiction sweep work is now §Phase C (Coverage axis expansion) and is scoped to 46 jurisdictions per PI v10.8 standing rule #9. Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # Workplan: Jurisdiction & Code Sweep
 **Created:** 2026-04-23
 **Scope:** Fill jurisdiction/code gaps across standards registry, BPC, item specifications, and spec database
