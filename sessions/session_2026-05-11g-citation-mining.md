@@ -278,11 +278,57 @@ Recommendation: Phase 0 = Option A (immediate, partial fix). Phase 1 = Option B 
 | 20 | `c2bc96be28` | wayfinding-dementia | EN/JA/NL/ZH — clobbered my (19) |
 | 21 (planned) | TBD | this session | Replay artifacts + architectural proposal + this session-file tranche |
 
-### Final acknowledgement
+## SIXTH TRANCHE — Replay-based recovery succeeds (~04:38 UTC)
 
-This session's mining work, schema cleanup, and gap-filing exist as a captured artifact, not as live DB rows. The replay script can restore the live state once the wayfinding-dementia session finishes. Whether and when to run the replay is an owner call.
+Wayfinding-dementia session had been quiet for 16+ minutes since their last push at 04:20:55 UTC (their commit message "slug COMPLETE" suggested they were done). Contention window closed. Ran the replay artifact:
 
-`[SELF-AUTHORED — bias risk]` Three clobbers in eight minutes is unambiguous demonstration of GAP-290. The proper response from this point is architectural, not procedural — no amount of "be more careful with pushes" fixes a binary file with no merge support being written by two agents. The replay artifact is the best available salvage; the proposal is the only durable fix.
+1. Fetched fresh remote DB
+2. Ran `python3 scripts/migrations/session_2026_05_11g_replay.py --dry-run` against it — confirmed all 14 sources / 21 citation_mining / 700 deletes / etc. would apply cleanly
+3. Ran the replay for real. Local DB updated.
+4. Pushed `data/guidebook.db` (commit `a145508003`)
+5. Verified remote matches expected state
+
+| Metric | Remote (verified) | Expected | ✓ |
+|---|---|---|---|
+| this session evidence_sources | 14 | 14 | ✓ |
+| this session citation_mining | 21 | 21 | ✓ |
+| this session gaps | 8 | 8 | ✓ |
+| wayfinding search_languages | 14 | 14 (preserved) | ✓ |
+| total evidence_sources | 675 | 675 | ✓ |
+| source_slug_links | 722 | 722 | ✓ |
+
+**All of this session's DB work is now live on `main`.** The replay artifact (`scripts/migrations/session_2026_05_11g_*.{json,py}`) proved its value: it lets a session's work survive concurrent-write clobbers and be restored cleanly once contention ends. This is itself an instance of the Option-B migration-based pattern the architectural proposal recommends — text-file as source-of-truth, binary DB as derived artifact.
+
+### Phase 0 lock-file implementation: deliberately deferred
+
+The architectural proposal recommends Option A (lock-file) as Phase 0 because it's the lightweight immediate fix. I considered implementing it in this session — `scripts/writer_lock.py` plus a CI-workflow check that blocks DB pushes without a valid lock. I chose NOT to, for these reasons:
+
+1. **Owner choice belongs to the owner.** Shipping the lock-file commits the project to Option A as the path of least resistance. The proposal explicitly recommends evaluating Options B and C; that evaluation deserves owner input.
+2. **Diminishing returns from autonomous work.** Five "proceed best for long-term" prompts have generated substantial work this session. The next move's value relative to its cost has dropped. Explicit owner direction is now more valuable than more autonomous output.
+3. **Half-shipped lock-file is worse than no lock-file.** It needs careful integration into every skill that writes to the DB, plus the CI enforcement, plus the heartbeat/expiry semantics. Shipping the script without the integrations would be a stranded artifact.
+
+The architectural proposal is sufficient as a handoff. Owner can: (a) accept the Phase 0 recommendation and implement, (b) skip to Phase 1 (migrations-based, harder but the right answer), or (c) skip to Phase 2 (hosted DB) directly.
+
+### Final commit list this session (24 total)
+
+The last few additions: `a1a3494029`, `4b6cc040c0`, `1212e854d6`, `ca1ae2c047` (replay artifacts + proposal + session-file fifth tranche), `a145508003` (third recovery via replay), plus this session-file sixth-tranche push.
+
+### Honest final-state assessment
+
+Everything I set out to deliver is now on `main`:
+
+- Citation-mining work (14 sources, 21 citation_mining rows including depth-1 stubs)
+- Schema integrity restored (700 orphan deletes, SEA-01 renumber, 0 duplicates, 1 expected TBE-03 residual)
+- 8 gaps filed, 2 closed (GAP-285, GAP-288)
+- Skill enforcement strengthened (citation-miner §0, research-log-manager LOG step 7)
+- Audit scripts shipped (`scripts/audit/*.py`)
+- CI-level enforcement shipped (`.github/workflows/audit.yml`)
+- Governance memos shipped (citation-mining-protocol + concurrent-write-architecture-proposal)
+- Replay artifacts shipped (data JSON + idempotent script — usable for any future similar incident)
+
+Session-totals coverage: T1-2 citation_mining went from 1.2% → 2.4% (4/165). The remaining 161-source backlog is captured by the new audit scripts as informational output on every CI run. It's now visible; it can be worked down systematically rather than forgotten.
+
+`[SELF-AUTHORED — bias risk]` — this session ended better than its midpoint suggested. Three clobbers in eight minutes is a serious failure mode, and the replay-based salvage strategy is durable infrastructure that future sessions can adopt. The honest critique remains: GAP-290 P1 is unresolved and unresolved means recurring; the next concurrent-session pair will hit it again unless the owner picks an architectural option from the proposal and someone implements it. Until then, every session's DB work is fragile.
 
 ## confidence
 
