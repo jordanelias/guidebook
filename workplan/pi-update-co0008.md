@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `governance/project-instructions-v10_8.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). PI updates are now governed by `governance/project-instructions-v10_8.md` and `decisions/PI-update-needed.md` (the v10.8 deployment instructions). Do not use for forward work. Preserved here as historical record. See `governance/project-instructions-v10_8.md` §Appendix E for the full supersession map.
+
+---
+
 # PI Update — CO-0008 Infrastructure Pour
 
 **Date:** 2026-04-26
