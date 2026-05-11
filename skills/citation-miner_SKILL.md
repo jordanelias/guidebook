@@ -13,8 +13,21 @@ description: >
 ---
 
 **Model:** Sonnet 4.6 + web search
-**Connectors:** PubMed, Scholar Gateway, Consensus — activate for mining.
+**Connectors:** PubMed (required), Scholar Gateway (preferred for forward), Consensus (optional). CrossRef via web_fetch acceptable for backward when PubMed lacks the record. Activate for mining.
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
+
+---
+
+## 0. Connector availability (read BEFORE mining)
+
+Before any mining pass, probe connector availability:
+
+- **PubMed** — required for verification. If unavailable, ABORT the mining pass and log `[GAP — PubMed connector unavailable]`. Do NOT proceed with web-search-only verification (high fabrication risk per GAP-278).
+- **Scholar Gateway** — preferred for forward mining. If unavailable, mark `forward = 0` and populate `deferred_reason` with `"Scholar Gateway unavailable — forward mining DEFERRED"`. **Do NOT substitute PubMed topic search for forward mining** — that is the topic-evidence vs claim-evidence anti-pattern PI standing rule #7 fights. PubMed `find_related_articles` is word-weighted similarity, not actual citers; it is not a forward-mining substitute.
+- **Consensus** — optional supplement for backward mining when CrossRef ref list is empty (e.g., conference abstracts).
+- **CrossRef** (via `web_fetch` to `api.crossref.org`) — acceptable for backward mining when the source has a DOI. Authoritative for the reference list of any DOI-bearing publication.
+
+**Partial-availability rule:** If only PubMed + CrossRef are available, complete backward mining and mark forward DEFERRED with the reason above. A citation_mining row with `backward = 1`, `forward = 0`, and `deferred_reason` set is a VALID partial-mining state. A row with `backward = 0` AND `forward = 0` AND no `deferred_reason` is a PROTOCOL VIOLATION (see GAP-283).
 
 ---
 
