@@ -1,3 +1,8 @@
+<!-- SUPERSEDED 2026-05-11 -->
+> **⚠ SUPERSEDED:** This workplan is replaced by `audits/bpc-rewrite-workplan-2026-05-11.md` (ADOPTED 2026-05-11 in session_2026-05-11h, per PI v10.8 standing rule #6). CO-0007 synthesis (Stage 0.7) is foundation-complete. The synthesis methodology is now governed by PI v10.8 standing rule #9 (9-step rule). Do not use for forward work. Preserved here as historical record. See `audits/bpc-rewrite-workplan-2026-05-11.md` §Appendix E for the full supersession map.
+
+---
+
 # CO-0007 Synthesis: Mission, Throughlines, and Workplan — v2
 **Created:** 2026-04-26 03:14 UTC
 **Status:** SYNTHESIS DOCUMENT v2 — re-issued per Stage 0.7
