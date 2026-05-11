@@ -1,11 +1,11 @@
 name: Repo Integrity Audits
 
-# Per GAP-287 (Phase 1 hook prioritisation) — converts the CLI audit scripts
-# at scripts/audit/* from level-1 (text/CLI, requires session author to run)
-# to level-2 (automated checks on every push and PR). Blocks on regressions;
-# surfaces global backlog as informational.
-#
-# Added in session_2026-05-11g-citation-mining.md.
+# Per GAP-287 / GAP-290 — converts the CLI audit scripts and the migration runner
+# to level-2 (automated checks on every push and PR). Three blocking checks:
+#   1. source_slug_links has no duplicate (slug, local_ref_id) pairs
+#   2. citation_mining is complete for the current session's T1-2 sources
+#   3. The committed data/guidebook.db is reproducible from the migration history
+#      (catches direct DB writes that bypassed the migration system)
 
 on:
   push:
@@ -17,7 +17,7 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    name: Audits (citation-mining + source_slug_links)
+    name: Audits (citation-mining + source_slug_links + migration-reproducibility)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,45 +35,73 @@ jobs:
             echo "session=$SESSION" >> "$GITHUB_OUTPUT"
             echo "Current session: $SESSION"
           else
-            echo "::warning::sessions/LATEST not found — skipping per-session scope"
             echo "session=" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Source-slug-links integrity (BLOCKING regression test)
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
-        run: |
-          # Fails if any duplicate (slug, local_ref_id) pairs exist.
-          # After the 2026-05-11 GAP-285+GAP-288 cleanup, this should hold at zero.
-          # A new duplicate appearing here means a new migration or write bug.
-          python3 scripts/audit/source_slug_links_duplicates.py
+        run: python3 scripts/audit/source_slug_links_duplicates.py
 
       - name: Citation-mining completeness — current session (BLOCKING)
         if: steps.session.outputs.session != ''
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
         run: |
-          # Per GAP-283 — enforces RULE 124 (mandatory citation_mining for confirmed
-          # Tier 1-2). A session that adds T1-2 evidence_sources rows must also produce
-          # citation_mining rows (or write a DEPTH-1-DISCOVERY / DEFERRED stub).
           python3 scripts/audit/citation_mining_completeness.py \
-            --session "${{ steps.session.outputs.session }}" \
-            --tier-max 2
+            --session "${{ steps.session.outputs.session }}" --tier-max 2
+
+      - name: Migration reproducibility (BLOCKING — GAP-290 enforcement)
+        run: |
+          # Rebuild a fresh DB from the migration history alone.
+          # Compare key invariants vs the committed data/guidebook.db.
+          # If they diverge, someone wrote directly to the DB and bypassed migrations.
+          python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db
+
+          python3 - <<'PY'
+          import sqlite3, sys
+          committed = sqlite3.connect("data/guidebook.db")
+          rebuilt = sqlite3.connect("/tmp/rebuilt.db")
+          queries = [
+              ("PRAGMA user_version", "schema_version"),
+              ("SELECT COUNT(*) FROM evidence_sources", "evidence_sources count"),
+              ("SELECT COUNT(*) FROM citation_mining", "citation_mining count"),
+              ("SELECT COUNT(*) FROM source_slug_links", "source_slug_links count"),
+              ("SELECT COUNT(*) FROM gaps", "gaps count"),
+              ("SELECT COUNT(*) FROM connections", "connections count"),
+              ("SELECT COUNT(*) FROM items", "items count"),
+          ]
+          mismatches = []
+          for sql, label in queries:
+              try:
+                  c = committed.execute(sql).fetchone()[0]
+                  r = rebuilt.execute(sql).fetchone()[0]
+                  status = "OK" if c == r else "MISMATCH"
+                  print(f"  {label:30} committed={c:>8}  rebuilt={r:>8}  {status}")
+                  if c != r:
+                      mismatches.append((label, c, r))
+              except sqlite3.OperationalError as e:
+                  # Table may not exist in older schema versions; skip
+                  print(f"  {label:30} skip ({e})")
+          if mismatches:
+              print()
+              print(f"  ERROR: {len(mismatches)} invariant(s) diverge between committed DB and migration history.")
+              print(f"  This means someone wrote to data/guidebook.db without emitting a data migration.")
+              print(f"  Per GAP-290 resolution, all DB writes must go through scripts/emit_data_migration.py.")
+              sys.exit(1)
+          print()
+          print(f"  PASS: committed DB matches what the migration history produces.")
+          PY
+        continue-on-error: false
 
       - name: Citation-mining completeness — global T1-2 backlog (informational)
         continue-on-error: true
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
-        run: |
-          # Surfaces the legacy 159-source backlog. Should trend toward zero over time
-          # as batch-pass mining catches up. Not blocking — would block every commit
-          # otherwise until backlog is fully cleared.
-          python3 scripts/audit/citation_mining_completeness.py --tier-max 2
+        run: python3 scripts/audit/citation_mining_completeness.py --tier-max 2
 
       - name: Citation-mining completeness — global T1-3 (informational)
         continue-on-error: true
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
-        run: |
-          # Wider view including Tier 3 (not mandatory per RULE 124 but tracked).
-          python3 scripts/audit/citation_mining_completeness.py --tier-max 3
+        run: python3 scripts/audit/citation_mining_completeness.py --tier-max 3
