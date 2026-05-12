@@ -1,12 +1,15 @@
-name: Source verification pipeline (V1)
+name: Source verification pipeline (V1.2)
 
-# 5-phase pipeline per references/audits/verification-pipeline-proposal-2026-05-12-v2.md:
+# 6-phase pipeline per references/audits/verification-pipeline-proposal-2026-05-12-v2.md:
 #   Phase 0  PMC extractor (no network)
 #   Phase 1a PMID -> DOI via NCBI
 #   Phase 1b PMCID -> DOI via NCBI
 #   Phase 2a CrossRef structured (person-author academic)
 #   Phase 2b CrossRef bibliographic (corporate-author academic)
 #   Phase 3  CrossRef type:standard (ISO/EN/BSI/IEC/PAS standards)
+#   Phase 4  CrossRef DOI-lookup metadata enrichment (V1.2 — fills pages,
+#            pub_month, language, subtype, citation_count, ORCID, full author
+#            lists; promotes metadata_quality AUTHOR-TITLE-ONLY → COMPLETE)
 #
 # State before/after and per-phase counts are written to the pipeline_runs table
 # in data/guidebook.db — consistent with the project's SQLite-first tracking pattern.
@@ -70,28 +73,34 @@ jobs:
                      doi_before, doi_after,
                      verified_before, verified_after,
                      pmcid_before, pmcid_after,
+                     metadata_complete_before, metadata_complete_after,
                      phase_0_extracted,
                      phase_1a_resolved, phase_1b_resolved,
                      phase_2a_resolved, phase_2b_resolved,
                      phase_3_resolved,
-                     phase_1a_transient + phase_1b_transient AS transient
+                     phase_4_enriched, phase_4_complete,
+                     phase_1a_transient + phase_1b_transient + phase_4_transient AS transient
               FROM pipeline_runs
               ORDER BY started_at DESC LIMIT 1
           """).fetchone()
           if not r:
-              msg = "source-verification: V1 pipeline run — no run record found"
+              msg = "source-verification: V1.2 pipeline run — no run record found"
           else:
-              (run_id, total, doi_b, doi_a, ver_b, ver_a,
-               pmc_b, pmc_a, p0, p1a, p1b, p2a, p2b, p3, transient) = r
+              (run_id, total, doi_b, doi_a, ver_b, ver_a, pmc_b, pmc_a,
+               mc_b, mc_a,
+               p0, p1a, p1b, p2a, p2b, p3, p4e, p4c, transient) = r
               doi_d = doi_a - doi_b
               ver_d = ver_a - ver_b
               pmc_d = pmc_a - pmc_b
+              mc_d  = mc_a  - mc_b
               msg = (
-                  f"source-verification: V1 run {run_id} — "
+                  f"source-verification: V1.2 run {run_id} — "
                   f"doi {doi_d:+d} ({doi_a} total), "
                   f"verified {ver_d:+d} ({ver_a} total), "
+                  f"COMPLETE {mc_d:+d} ({mc_a} total), "
                   f"pmcid {pmc_d:+d} ({pmc_a} total); "
-                  f"phases p0={p0} p1a={p1a} p1b={p1b} p2a={p2a} p2b={p2b} p3={p3}"
+                  f"phases p0={p0} p1a={p1a} p1b={p1b} p2a={p2a} p2b={p2b} p3={p3} "
+                  f"p4={p4e}({p4c}→COMPLETE)"
                   + (f"; {transient} transient" if transient else "")
               )
           print(msg)
