@@ -346,6 +346,7 @@ def verify_dead_with_wayback(conn, ref_id, url, pub_title, ts, code, soft_error=
 
 def ensure_schema(conn):
     """Idempotently add the URL-verification columns and runs table."""
+    conn.execute("PRAGMA foreign_keys = ON")
     es_cols = [r[1] for r in conn.execute(f"PRAGMA table_info({TABLE})")]
     for col, ddl in [
         ("url_resolution_outcome", "TEXT"),
