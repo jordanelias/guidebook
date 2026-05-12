@@ -8,7 +8,9 @@ import urllib.error
 
 import os
 DB_ORIG = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
-DB_TEST = "/tmp/ch2-test.db"
+import tempfile as _tf
+_db_fd, DB_TEST = _tf.mkstemp(suffix=".db", prefix="guidebook-test-")
+import os as _os; _os.close(_db_fd)
 
 results = []
 def record(tid, name, passed, details="", error=""):
