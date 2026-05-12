@@ -192,12 +192,17 @@ def run_checks(db_path):
            bad_complete_doi == 0,
            f"{bad_complete_doi} COMPLETE rows lack doi with no acceptable explanation" if bad_complete_doi else "")
 
-    # legacy/v2 row count parity
-    v1 = conn.execute("SELECT COUNT(*) FROM evidence_sources_v1_legacy").fetchone()[0]
-    v2 = conn.execute("SELECT COUNT(*) FROM evidence_sources").fetchone()[0]
-    record("C05", f"evidence_sources row count matches v1_legacy ({v2} == {v1})",
-           v1 == v2,
-           f"v1={v1} v2={v2} — {abs(v2-v1)} row delta (new rows added since cutover are expected)" if v1 != v2 else "")
+    # legacy/v2 row count parity — only when legacy table still exists
+    has_legacy = conn.execute("""SELECT COUNT(*) FROM sqlite_master
+        WHERE type='table' AND name='evidence_sources_v1_legacy'""").fetchone()[0]
+    if has_legacy:
+        v1 = conn.execute("SELECT COUNT(*) FROM evidence_sources_v1_legacy").fetchone()[0]
+        v2 = conn.execute("SELECT COUNT(*) FROM evidence_sources").fetchone()[0]
+        record("C05", f"evidence_sources row count matches v1_legacy ({v2} == {v1})",
+               v1 == v2,
+               f"v1={v1} v2={v2} — {abs(v2-v1)} row delta (new rows added since cutover are expected)" if v1 != v2 else "")
+    else:
+        record("C05", "v1_legacy parity (table dropped, check skipped)", True)
 
     # ── D: Duplicate / collision detection ───────────────────────────────────
     print("\n[D] Duplicate and collision detection")
@@ -205,8 +210,13 @@ def run_checks(db_path):
     # Duplicate DOIs — with known exception documented
     # Documented intentional duplicates — same paper cited in multiple BPCs
     # under different scope descriptions. Linked via bpc_note / superseded_by_ref_id.
-    # To add a new exception: verify it's intentional, document in data_migrations,
-    # add the DOI here.
+    # To add a new exception:
+    #   1. Verify in the DB the duplicate is intentional (different bpc_shorthand /
+    #      bpc_note describing distinct scope claims on the same source).
+    #   2. Add a `data_migrations` row documenting WHY it's intentional.
+    #   3. Add the DOI to the tuple below.
+    # When `superseded_by_ref_id` linkage is added across all these, the tuple
+    # should be reduced and the check rewritten to use that column instead.
     KNOWN_DUP_DOIS = (
         "10.31030/2853913",           # IEC 60118-4 — 3 scope citations (hearing loops)
         "10.1016/S0140-6736(14",      # HIPI study — 2 BPC citations (falls + lighting)
@@ -235,13 +245,16 @@ def run_checks(db_path):
            f"{len(dup_rows)} unexpected duplicates: {[dict(r) for r in dup_rows]}" if dup_rows else "")
 
     # Duplicate ref_ids across evidence_sources and legacy (should be same set)
-    refs_v2 = {r[0] for r in conn.execute("SELECT ref_id FROM evidence_sources")}
-    refs_v1 = {r[0] for r in conn.execute("SELECT ref_id FROM evidence_sources_v1_legacy")}
-    only_v2 = refs_v2 - refs_v1
-    only_v1 = refs_v1 - refs_v2
-    record("D02", "evidence_sources and v1_legacy have matching ref_id sets",
-           len(only_v2) == 0 and len(only_v1) == 0,
-           f"only in v2: {list(only_v2)[:5]}; only in v1: {list(only_v1)[:5]}" if (only_v2 or only_v1) else "")
+    if has_legacy:
+        refs_v2 = {r[0] for r in conn.execute("SELECT ref_id FROM evidence_sources")}
+        refs_v1 = {r[0] for r in conn.execute("SELECT ref_id FROM evidence_sources_v1_legacy")}
+        only_v2 = refs_v2 - refs_v1
+        only_v1 = refs_v1 - refs_v2
+        record("D02", "evidence_sources and v1_legacy have matching ref_id sets",
+               len(only_v2) == 0 and len(only_v1) == 0,
+               f"only in v2: {list(only_v2)[:5]}; only in v1: {list(only_v1)[:5]}" if (only_v2 or only_v1) else "")
+    else:
+        record("D02", "v1_legacy ref_id parity (table dropped, check skipped)", True)
 
     # Duplicate slugs in bpc_metadata
     dup_slugs = conn.execute("""SELECT slug, COUNT(*) FROM bpc_metadata
