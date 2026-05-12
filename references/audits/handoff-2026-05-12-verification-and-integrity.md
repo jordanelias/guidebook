@@ -63,8 +63,8 @@ that touches `data/` or pipeline scripts.
 
 **Local dry-run** (safe — uses copy):
 ```bash
-cp data/guidebook.db /tmp/test.db
-GUIDEBOOK_DB_PATH=/tmp/test.db MAX_RESOLVE=20 RATE_LIMIT=0.3 \
+cp data/guidebook.db data/.test-copy.db
+GUIDEBOOK_DB_PATH=data/.test-copy.db MAX_RESOLVE=20 RATE_LIMIT=0.3 \
     python3 scripts/resolve_dois.py
 ```
 Environment knobs:
@@ -79,8 +79,8 @@ Environment knobs:
 
 **Local dry-run:**
 ```bash
-cp data/guidebook.db /tmp/test.db
-GUIDEBOOK_DB_PATH=/tmp/test.db MAX_VERIFY=20 RATE_LIMIT=1.0 \
+cp data/guidebook.db data/.test-copy.db
+GUIDEBOOK_DB_PATH=data/.test-copy.db MAX_VERIFY=20 RATE_LIMIT=1.0 \
     python3 scripts/verify_urls.py
 ```
 Environment knobs:
