@@ -6,7 +6,8 @@ blocks arbitrary domains, but the runner won't have that restriction).
 import sqlite3, shutil, sys, traceback, importlib.util, os
 import urllib.error
 
-DB_ORIG = "/home/claude/live-v1.db"
+import os
+DB_ORIG = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 DB_TEST = "/tmp/ch2-test.db"
 
 results = []
@@ -27,7 +28,7 @@ def read(conn, ref_id):
     r = conn.execute("SELECT * FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
     return dict(r) if r else {}
 
-spec = importlib.util.spec_from_file_location("verify_urls", "/home/claude/verify_urls.py")
+spec = importlib.util.spec_from_file_location("verify_urls", "scripts/verify_urls.py")
 mod = importlib.util.module_from_spec(spec)
 
 # Override DB_PATH and disable real network before loading
