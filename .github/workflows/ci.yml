@@ -101,6 +101,25 @@ jobs:
         run: python3 scripts/validate_schema.py --cross-check
         continue-on-error: true
 
+  db_integrity:
+    name: DB integrity (35 checks — FK, enums, consistency, duplicates, run health)
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' &&
+       (contains(github.event.pull_request.changed_files, 'data/') ||
+        contains(github.event.pull_request.changed_files, 'scripts/resolve_dois.py') ||
+        contains(github.event.pull_request.changed_files, 'scripts/verify_urls.py')))
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # The integrity test is stdlib-only — no requirements needed. Runs in ~1s.
+      - name: Run DB integrity test (35 checks)
+        run: python3 scripts/tests/test_db_integrity.py
+
   governance:
     name: Governance validation (A10/A12/A13 — adversarial-use, decisions, doctrine)
     runs-on: ubuntu-latest
