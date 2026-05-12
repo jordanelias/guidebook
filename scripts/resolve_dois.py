@@ -184,19 +184,22 @@ def normalize_title_words(s):
 # ─── CrossRef Phase 2a (person-author structured) ───────────────────────────
 
 def crossref_structured(author_last, pub_title, pub_year):
-    """CrossRef structured query for person-authored academic items."""
+    """CrossRef structured query for person-authored academic items.
+    Returns (doi, reason, item|None).
+    """
     if not author_last or not pub_title or not pub_year:
-        return None, "missing-input"
+        return None, "missing-input", None
 
     title_words_query = " ".join(normalize_title_words(pub_title))[:200]
     if not title_words_query:
-        return None, "empty-title-words"
+        return None, "empty-title-words", None
 
     params = {
         "query.author": author_last,
         "query.title": title_words_query,
         "rows": "5",
-        "select": "DOI,title,author,published-print,published-online,issued,type",
+        "select": ("DOI,title,author,published-print,published-online,issued,type,"
+                   "container-title,ISSN,volume,issue,page,publisher,language"),
     }
     yr_lo = int(pub_year) - MAX_YEAR_DELTA
     yr_hi = int(pub_year) + MAX_YEAR_DELTA
@@ -206,11 +209,11 @@ def crossref_structured(author_last, pub_title, pub_year):
     try:
         data = fetch_json(url, timeout=15)
     except Exception:
-        return None, "crossref-error"
+        return None, "crossref-error", None
 
     items = data.get("message", {}).get("items", []) or []
     if not items:
-        return None, "no-results"
+        return None, "no-results", None
 
     return _select_match(items, pub_title, pub_year, author_last=author_last)
 
@@ -218,15 +221,18 @@ def crossref_structured(author_last, pub_title, pub_year):
 # ─── CrossRef Phase 2b (corporate-author bibliographic) ─────────────────────
 
 def crossref_bibliographic(corp_name, pub_title, pub_year):
-    """CrossRef bibliographic query for corporate-authored academic items."""
+    """CrossRef bibliographic query for corporate-authored academic items.
+    Returns (doi, reason, item|None).
+    """
     if not corp_name or not pub_title or not pub_year:
-        return None, "missing-input"
+        return None, "missing-input", None
 
     bib_q = f"{corp_name} {' '.join(normalize_title_words(pub_title))}"[:250]
     params = {
         "query.bibliographic": bib_q,
         "rows": "5",
-        "select": "DOI,title,author,published-print,published-online,issued,type,publisher",
+        "select": ("DOI,title,author,published-print,published-online,issued,type,"
+                   "container-title,ISSN,volume,issue,page,publisher,language"),
     }
     yr_lo = int(pub_year) - MAX_YEAR_DELTA
     yr_hi = int(pub_year) + MAX_YEAR_DELTA
@@ -236,11 +242,11 @@ def crossref_bibliographic(corp_name, pub_title, pub_year):
     try:
         data = fetch_json(url, timeout=15)
     except Exception:
-        return None, "crossref-error"
+        return None, "crossref-error", None
 
     items = data.get("message", {}).get("items", []) or []
     if not items:
-        return None, "no-results"
+        return None, "no-results", None
 
     return _select_match(items, pub_title, pub_year, corp_name=corp_name)
 
@@ -250,19 +256,22 @@ def crossref_bibliographic(corp_name, pub_title, pub_year):
 def crossref_standard(standard_number, pub_title, pub_year):
     """CrossRef type:standard query for ISO/EN/BSI standards.
 
-    Acceptance criteria:
-      - Publisher must contain a STANDARD_PUBLISHER_TOKEN
-      - Title must overlap with the source's pub_title keywords
-      - Standard number tokens (e.g., '23599') should appear in result title
+    Acceptance criteria (ALL must pass):
+      1. Publisher contains a STANDARD_PUBLISHER_TOKEN
+      2. Title-word overlap with pub_title >= 2 words, ratio >= 0.30
+      3. The numeric part of standard_number MUST appear in the CrossRef title
+         (this is the mandatory discriminator — prevents e.g. PAS 6463 matching
+         IEC/PAS 63313 on "PAS" / year alone)
+
+    Returns (doi, reason, item) where item is the CrossRef record or None.
     """
     if not standard_number or not pub_title:
-        return None, "missing-input"
+        return None, "missing-input", None
 
-    # Extract numeric part of the standard number for matching
+    # Extract numeric part of the standard number for mandatory title check.
     num_match = re.search(r"\d+", standard_number)
     std_num_token = num_match.group(0) if num_match else ""
 
-    # Build query: standard number + title keywords
     title_kw = " ".join(normalize_title_words(pub_title))[:160]
     bib_q = f"{standard_number} {title_kw}"[:250]
 
@@ -277,11 +286,11 @@ def crossref_standard(standard_number, pub_title, pub_year):
     try:
         data = fetch_json(url, timeout=15)
     except Exception:
-        return None, "crossref-error"
+        return None, "crossref-error", None
 
     items = data.get("message", {}).get("items", []) or []
     if not items:
-        return None, "no-results"
+        return None, "no-results", None
 
     candidates = []
     orig_words = normalize_title_words(pub_title)
@@ -302,45 +311,46 @@ def crossref_standard(standard_number, pub_title, pub_year):
         if not cr_words:
             continue
 
-        # Title-word overlap with source pub_title
-        overlap = orig_words & cr_words
-        ratio = len(overlap) / min(len(orig_words), len(cr_words)) if orig_words and cr_words else 0
-        if len(overlap) < 2 or ratio < 0.30:
+        # Numeric token MUST appear in CrossRef title (mandatory gate).
+        if std_num_token and std_num_token not in cr_title:
             continue
 
-        # Standard number token (e.g. '23599') should ideally appear in CrossRef title
-        # (not strictly required if title overlap is strong, but boosts confidence)
-        num_in_title = bool(std_num_token and std_num_token in cr_title)
+        overlap = orig_words & cr_words
+        ratio = len(overlap) / min(len(orig_words), len(cr_words)) if orig_words and cr_words else 0
+        # Threshold 0.20 (not 0.30) — standards crossref titles are often in a
+        # different language (German DIN editions) from English pub_title. The
+        # numeric token gate above is the primary discriminator; word overlap is
+        # just a sanity check to catch completely irrelevant matches.
+        if len(overlap) < 2 or ratio < 0.20:
+            continue
 
         candidates.append({
             "doi": doi, "title": cr_title, "publisher": publisher,
-            "ratio": ratio, "overlap": len(overlap), "num_match": num_in_title,
+            "ratio": ratio, "overlap": len(overlap), "item": item,
         })
 
     if not candidates:
-        return None, "no-acceptable-match"
+        return None, "no-acceptable-match", None
 
-    # Prefer candidates where the standard number appears in title
-    candidates.sort(key=lambda c: (-int(c["num_match"]), -c["ratio"], -c["overlap"]))
+    candidates.sort(key=lambda c: (-c["ratio"], -c["overlap"]))
 
-    # Ambiguity check
     if len(candidates) >= 2:
         top, runner = candidates[0], candidates[1]
         same = canonical_doi(top["doi"]) == canonical_doi(runner["doi"])
-        if (not same and top["num_match"] == runner["num_match"]
-                and (top["ratio"] - runner["ratio"]) < 0.15):
-            return None, "ambiguous"
+        if not same and (top["ratio"] - runner["ratio"]) < 0.15:
+            return None, "ambiguous", None
 
-    return candidates[0]["doi"], "matched"
+    best = candidates[0]
+    return best["doi"], "matched", best["item"]
 
 
 # ─── Shared match selector for academic Phase 2a/2b ─────────────────────────
 
 def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
-    """Apply acceptance criteria and pick at-most-one DOI from candidate items."""
+    """Apply acceptance criteria and return (doi, reason, item|None)."""
     orig_words = normalize_title_words(pub_title)
     if not orig_words:
-        return None, "empty-title-words"
+        return None, "empty-title-words", None
 
     short_title = len(orig_words) < MIN_TITLE_OVERLAP_WORDS
 
@@ -350,7 +360,6 @@ def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
         if not doi:
             continue
 
-        # Person-author check (Phase 2a)
         if author_last:
             cr_authors = item.get("author", []) or []
             cr_surnames = [
@@ -361,7 +370,6 @@ def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
             if not any(author_last.lower() == s for s in cr_surnames):
                 continue
 
-        # Corporate-author check (Phase 2b)
         if corp_name:
             cr_authors = item.get("author", []) or []
             publisher = item.get("publisher", "") or ""
@@ -375,7 +383,6 @@ def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
             if not org_match:
                 continue
 
-        # Title overlap
         cr_title = (item.get("title") or [""])[0]
         cr_words = normalize_title_words(cr_title)
         if not cr_words:
@@ -390,7 +397,6 @@ def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
             if len(overlap) < MIN_TITLE_OVERLAP_WORDS or ratio < MIN_TITLE_OVERLAP_RATIO:
                 continue
 
-        # Year check
         date_obj = (
             item.get("published-print") or item.get("published-online")
             or item.get("issued")
@@ -409,19 +415,118 @@ def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
                 pass
 
         candidates.append({"doi": doi, "title": cr_title, "ratio": ratio,
-                           "overlap": len(overlap), "year": cr_year})
+                           "overlap": len(overlap), "year": cr_year, "item": item})
 
     if not candidates:
-        return None, "no-acceptable-match"
+        return None, "no-acceptable-match", None
 
     candidates.sort(key=lambda c: (-c["ratio"], -c["overlap"]))
     if len(candidates) >= 2:
         top, runner = candidates[0], candidates[1]
         same = canonical_doi(top["doi"]) == canonical_doi(runner["doi"])
         if not same and (top["ratio"] - runner["ratio"]) < 0.10:
-            return None, "ambiguous"
+            return None, "ambiguous", None
 
-    return candidates[0]["doi"], "matched"
+    best = candidates[0]
+    return best["doi"], "matched", best["item"]
+
+
+# ─── Metadata enrichment from CrossRef response ──────────────────────────────
+
+def enrich_from_crossref(conn, ref_id, item, ts=None):
+    """Write CrossRef bibliographic fields back to empty evidence_sources columns.
+
+    Only fills NULL / empty fields — never overwrites existing data. After
+    enrichment, evaluates whether the row now meets COMPLETE criteria and
+    promotes metadata_quality accordingly.
+
+    Fields written (only if currently NULL):
+      pub_title      ← item['title'][0]
+      pub_year       ← item['issued']['date-parts'][0][0]
+      journal_abbrev ← item['container-title'][0]
+      volume         ← item['volume']
+      issue          ← item['issue']
+      publisher      ← item['publisher']
+      issn           ← item['ISSN'][0]
+    """
+    if not item:
+        return
+    ts = ts or time.strftime("%Y-%m-%d %H:%M", time.gmtime())
+
+    def _extract_year(it):
+        for key in ("published-print", "published-online", "issued"):
+            dp = (it.get(key) or {}).get("date-parts")
+            if dp:
+                try:
+                    y = dp[0][0]
+                    if y:
+                        return int(y)
+                except (IndexError, TypeError, ValueError):
+                    pass
+        return None
+
+    cr_title = (item.get("title") or [""])[0] or None
+    cr_year = _extract_year(item)
+    cr_journal = ((item.get("container-title") or [""])[0]) or None
+    cr_volume = item.get("volume") or None
+    cr_issue = item.get("issue") or None
+    cr_publisher = item.get("publisher") or None
+    cr_issn = ((item.get("ISSN") or [""])[0]) or None
+
+    # Fetch current row to avoid overwriting
+    row = conn.execute("""
+        SELECT pub_title, pub_year, journal_abbrev, volume, issue,
+               publisher, issn, doi, first_author_last, is_corporate_primary,
+               metadata_quality
+        FROM evidence_sources WHERE ref_id = ?
+    """, (ref_id,)).fetchone()
+    if not row:
+        return
+
+    sets, params = [], []
+
+    def _fill(col, new_val):
+        if new_val is not None and (row[col] is None or str(row[col]).strip() == ""):
+            sets.append(f"{col} = ?")
+            params.append(new_val)
+
+    _fill("pub_title",     cr_title)
+    _fill("pub_year",      cr_year)
+    _fill("journal_abbrev", cr_journal)
+    _fill("volume",        cr_volume)
+    _fill("issue",         cr_issue)
+    _fill("publisher",     cr_publisher)
+    _fill("issn",          cr_issn)
+
+    if not sets:
+        return  # Nothing to enrich
+
+    # After hypothetical enrichment, re-evaluate COMPLETE criteria:
+    #   doi + pub_title + pub_year + (first_author_last OR is_corporate_primary)
+    new_title  = cr_title  if (row["pub_title"] is None or not str(row["pub_title"]).strip()) else row["pub_title"]
+    new_year   = cr_year   if (row["pub_year"] is None) else row["pub_year"]
+    doi_ok     = bool(row["doi"])
+    title_ok   = bool(new_title and str(new_title).strip())
+    year_ok    = bool(new_year)
+    author_ok  = bool(row["first_author_last"] or row["is_corporate_primary"])
+    will_complete = doi_ok and title_ok and year_ok and author_ok
+
+    if will_complete and row["metadata_quality"] != "COMPLETE":
+        sets.append("metadata_quality = ?")
+        params.append("COMPLETE")
+
+    sets += ["updated_at = ?", "updated_by_session = ?"]
+    params += [ts, SESSION]
+    params.append(ref_id)
+
+    conn.execute(
+        f"UPDATE evidence_sources SET {', '.join(sets)} WHERE ref_id = ?",
+        params
+    )
+    enriched_fields = [s.split(" = ")[0] for s in sets
+                       if s.split(" = ")[0] not in ("updated_at", "updated_by_session", "metadata_quality")]
+    print(f"    enrich: {ref_id} ← {enriched_fields}"
+          + (" [→COMPLETE]" if will_complete and row["metadata_quality"] != "COMPLETE" else ""))
 
 
 # ─── Phase 0: PMC ID extractor (no network) ─────────────────────────────────
@@ -625,12 +730,13 @@ def main():
     p2a_ok = p2a_no = 0
     p2a_reasons = {}
     for r in p2a_rows:
-        doi, reason = crossref_structured(r["first_author_last"], r["pub_title"], r["pub_year"])
+        doi, reason, item = crossref_structured(r["first_author_last"], r["pub_title"], r["pub_year"])
         p2a_reasons[reason] = p2a_reasons.get(reason, 0) + 1
         if doi:
             write_verification(conn, r["ref_id"], "crossref-structured", "VERIFIED",
                                doi=doi, doi_outcome="RESOLVED",
                                note=f"CrossRef structured: {r['first_author_last']} ({r['pub_year']})")
+            enrich_from_crossref(conn, r["ref_id"], item, now_iso)
             p2a_ok += 1
             print(f"  RESOLVED: {r['ref_id']} {r['first_author_last']} ({r['pub_year']}) -> {doi}")
         else:
@@ -669,12 +775,13 @@ def main():
     for r in p2b_rows:
         if not r["corp"]:
             continue
-        doi, reason = crossref_bibliographic(r["corp"], r["pub_title"], r["pub_year"])
+        doi, reason, item = crossref_bibliographic(r["corp"], r["pub_title"], r["pub_year"])
         p2b_reasons[reason] = p2b_reasons.get(reason, 0) + 1
         if doi:
             write_verification(conn, r["ref_id"], "crossref-bibliographic", "VERIFIED",
                                doi=doi, doi_outcome="RESOLVED",
                                note=f"CrossRef bib: {r['corp']} ({r['pub_year']})")
+            enrich_from_crossref(conn, r["ref_id"], item, now_iso)
             p2b_ok += 1
             print(f"  RESOLVED: {r['ref_id']} {r['corp']} ({r['pub_year']}) -> {doi}")
         else:
@@ -714,12 +821,13 @@ def main():
     p3_ok = p3_no = 0
     p3_reasons = {}
     for r in routable:
-        doi, reason = crossref_standard(r["standard_number"], r["pub_title"], r["pub_year"])
+        doi, reason, item = crossref_standard(r["standard_number"], r["pub_title"], r["pub_year"])
         p3_reasons[reason] = p3_reasons.get(reason, 0) + 1
         if doi:
             write_verification(conn, r["ref_id"], "crossref-standard", "VERIFIED",
                                doi=doi, doi_outcome="RESOLVED",
                                note=f"CrossRef type:standard: {r['standard_number']}")
+            enrich_from_crossref(conn, r["ref_id"], item, now_iso)
             p3_ok += 1
             print(f"  RESOLVED: {r['ref_id']} {r['standard_number']} -> {doi}")
         else:
