@@ -1,152 +1,223 @@
 #!/usr/bin/env python3
-"""Batch DOI resolution via CrossRef API for evidence_sources table.
+"""DOI resolution against evidence_sources v2 schema.
 
-Two-phase approach:
-  Phase 1: PMID → DOI via NCBI ID Converter (high confidence)
-  Phase 2: Author + title → DOI via CrossRef title search (moderate confidence)
+Uses the structured columns produced by the v2 migration to query CrossRef and
+NCBI precisely instead of parsing free-form text. Honors `doi_resolution_outcome`
+so previously-rejected matches are never retried.
 
-Environment variables:
-  GUIDEBOOK_DB_PATH  — path to SQLite DB (default: data/guidebook.db)
-  MAX_RESOLVE        — max Phase 2 candidates per run (default: 100)
+Phase 1 — NCBI PMID → DOI (high confidence; biomedical sources).
+Phase 2 — CrossRef structured query on first_author_last + pub_title + pub_year.
+
+Acceptance criteria (Phase 2):
+  - Author surname must appear in CrossRef result's first 3 authors (case-insensitive).
+  - Title-word Jaccard overlap >= 0.55 after stopword removal.
+  - Year matches within +/- 1.
+  - Only one plausible candidate (ambiguity = reject).
+
+Skip behavior:
+  - doi_resolution_outcome = 'REVERTED'  -> permanently skipped.
+  - doi_resolution_outcome = 'NO-MATCH' within SKIP_NO_MATCH_DAYS -> skipped.
+  - is_corporate_primary = 1 -> skipped (CrossRef author query unsuited for orgs).
+  - pub_year IS NULL or first_author_last IS NULL -> skipped.
+  - source_type in ('standard','grey','internal','website','guideline') -> skipped.
+
+Env vars:
+  GUIDEBOOK_DB_PATH   path to SQLite (default: data/guidebook.db)
+  MAX_RESOLVE         max Phase 2 candidates per run (default: 500)
+  SKIP_NO_MATCH_DAYS  days before retrying a NO-MATCH (default: 30)
 """
 
-import sqlite3
 import json
-import urllib.request
-import urllib.parse
-import time
-import sys
 import os
 import re
+import sqlite3
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
 
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
-RATE_LIMIT = 0.5  # seconds between requests
-MAX_RESOLVE = int(os.environ.get("MAX_RESOLVE", "100"))
-USER_AGENT = "guidebook-project/1.0 (mailto:jordan@guidebook.dev)"
-
+MAX_RESOLVE = int(os.environ.get("MAX_RESOLVE", "500"))
+SKIP_NO_MATCH_DAYS = int(os.environ.get("SKIP_NO_MATCH_DAYS", "30"))
+RATE_LIMIT = 0.5
+USER_AGENT = "guidebook-project/2.0 (mailto:jordan@guidebook.dev)"
 TABLE = "evidence_sources"
 
+MIN_TITLE_OVERLAP_RATIO = 0.55
+MIN_TITLE_OVERLAP_WORDS = 4
+MAX_YEAR_DELTA = 1
 
-def ncbi_pmid_to_doi(pmid: str) -> str | None:
-    """Convert PMID to DOI via NCBI ID Converter API."""
+ELIGIBLE_TYPES = (
+    "journal_article", "book", "book_chapter", "thesis",
+    "conference_paper", "report", "case_study", "primary_research",
+)
+
+STOPWORDS = {
+    "the", "a", "an", "and", "or", "of", "in", "on", "at", "to", "for",
+    "with", "by", "from", "as", "is", "are", "was", "were", "be", "been",
+    "have", "has", "had", "do", "does", "did", "this", "that", "these", "those",
+    "it", "its", "their", "them", "they", "we", "our", "us",
+}
+
+
+def fetch_json(url, timeout=15):
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.loads(resp.read())
+
+
+def ncbi_pmid_to_doi(pmid):
+    """Convert PMID to DOI via NCBI ID Converter.
+
+    Returns (doi, status) where status is:
+      'resolved'  - DOI found and returned
+      'no-doi'    - NCBI responded but record has no DOI
+      'transient' - network/auth error; do not mark NO-MATCH
+    """
     url = (
-        f"https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/"
+        "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/"
         f"?ids={pmid}&format=json&tool=guidebook&email=jordan@guidebook.dev"
     )
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read())
-        records = data.get("records", [])
-        if records and records[0].get("doi"):
-            return records[0]["doi"]
+        data = fetch_json(url, timeout=15)
+    except urllib.error.HTTPError as e:
+        if e.code == 403 or e.code >= 500:
+            print(f"    NCBI transient error {e.code} for PMID {pmid}")
+            return None, "transient"
+        return None, "no-doi"
     except Exception as e:
-        print(f"  NCBI lookup error: {e}")
-    return None
+        print(f"    NCBI transient error for PMID {pmid}: {e}")
+        return None, "transient"
+
+    records = data.get("records", []) or []
+    if records and records[0].get("doi"):
+        return records[0]["doi"], "resolved"
+    return None, "no-doi"
 
 
-def crossref_title_search(author: str, title: str, year: str) -> str | None:
-    """Query CrossRef for a DOI match by author + title keywords."""
-    first_author = author.split(",")[0].split(" et al")[0].split("(")[0].strip()
+def canonical_doi(doi):
+    """Normalize a DOI for equality comparison.
 
-    # Strip metadata noise from title field
-    title_clean = re.sub(r"\[.*?\]", "", title)
-    title_clean = re.sub(r"PMID[:\s]?\d+", "", title_clean, flags=re.IGNORECASE)
-    title_clean = re.sub(r"PMC\d+", "", title_clean)
-    title_clean = re.sub(r"GREY[^.;]*", "", title_clean, flags=re.IGNORECASE)
-    title_clean = re.sub(r"DOI[:\s]?10\.\S+", "", title_clean, flags=re.IGNORECASE)
-    title_clean = re.sub(r"[^\w\s]", " ", title_clean[:150])
-    title_clean = " ".join(title_clean.split()[:14])
+    CrossRef occasionally returns near-duplicates like '10.1037//x' and '10.1037/x'
+    that resolve to the same paper but compare as different strings. Collapse double
+    slashes and lowercase for the comparison key only — the original string is what
+    we store.
+    """
+    if not doi:
+        return ""
+    return re.sub(r"/{2,}", "/", doi.strip().lower())
 
-    if len(title_clean.split()) < 4:
-        return None
 
-    query = f"{first_author} {title_clean}"
-    url = (
-        f"https://api.crossref.org/works?"
-        f"query={urllib.parse.quote(query)}&rows=3"
-        f"&select=DOI,title,author,published-print,published-online"
-    )
+def normalize_title_words(s):
+    if not s:
+        return set()
+    cleaned = re.sub(r"[^\w\s]", " ", s.lower())
+    return {w for w in cleaned.split() if len(w) > 2 and w not in STOPWORDS}
 
+
+def crossref_lookup(author_last, pub_title, pub_year):
+    """Query CrossRef structured. Returns (doi, reason)."""
+    if not author_last or not pub_title or not pub_year:
+        return None, "missing-input"
+
+    title_words_query = " ".join(normalize_title_words(pub_title))[:200]
+    if not title_words_query:
+        return None, "empty-title-words"
+
+    params = {
+        "query.author": author_last,
+        "query.title": title_words_query,
+        "rows": "5",
+        "select": "DOI,title,author,published-print,published-online,issued,type",
+    }
+    yr_lo = int(pub_year) - MAX_YEAR_DELTA
+    yr_hi = int(pub_year) + MAX_YEAR_DELTA
+    params["filter"] = f"from-pub-date:{yr_lo},until-pub-date:{yr_hi}-12"
+
+    url = "https://api.crossref.org/works?" + urllib.parse.urlencode(params)
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read())
+        data = fetch_json(url, timeout=15)
     except Exception as e:
-        print(f"  CrossRef error: {e}")
-        return None
+        return None, f"crossref-error"
 
-    items = data.get("message", {}).get("items", [])
+    items = data.get("message", {}).get("items", []) or []
     if not items:
-        return None
+        return None, "no-results"
 
-    orig_words = set(re.sub(r"[^\w\s]", "", title.lower()).split())
-    noise = {"grey", "pmid", "pmc", "unverified", "possible", "error",
-             "wrong", "match", "tbc", "doi", "required", "the", "and",
-             "for", "in", "of", "a", "an", "to", "on", "is", "with"}
-    orig_words -= noise
+    orig_words = normalize_title_words(pub_title)
+    if not orig_words:
+        return None, "empty-title-words"
 
-    for item in items[:3]:
+    # Short title handling: if the source title has fewer than the minimum overlap
+    # words, require 100% overlap with the CrossRef title instead of the floor count.
+    # This permits perfect matches like "Dynamic touch" (2 substantive words).
+    short_title = len(orig_words) < MIN_TITLE_OVERLAP_WORDS
+
+    candidates = []
+    for item in items:
         doi = item.get("DOI", "")
         if not doi:
             continue
-        cr_titles = item.get("title", [])
-        cr_title = cr_titles[0] if cr_titles else ""
-        cr_words = set(re.sub(r"[^\w\s]", "", cr_title.lower()).split()) - noise
 
-        if not orig_words or not cr_words:
+        cr_authors = item.get("author", []) or []
+        cr_surnames = [
+            (a.get("family") or "").lower()
+            for a in cr_authors[:3]
+            if isinstance(a, dict)
+        ]
+        if not any(author_last.lower() == s for s in cr_surnames):
             continue
 
-        overlap = len(orig_words & cr_words)
-        overlap_ratio = overlap / min(len(orig_words), len(cr_words))
+        cr_title = (item.get("title") or [""])[0]
+        cr_words = normalize_title_words(cr_title)
+        if not cr_words:
+            continue
+        overlap = orig_words & cr_words
+        ratio = len(overlap) / min(len(orig_words), len(cr_words))
 
-        # Year check
-        year_match = True
-        pub = item.get("published-print") or item.get("published-online")
-        if pub and year:
+        if short_title:
+            # Require all source title words present in CrossRef result.
+            if overlap != orig_words:
+                continue
+        else:
+            if len(overlap) < MIN_TITLE_OVERLAP_WORDS or ratio < MIN_TITLE_OVERLAP_RATIO:
+                continue
+
+        date_obj = (
+            item.get("published-print")
+            or item.get("published-online")
+            or item.get("issued")
+        )
+        cr_year = None
+        if date_obj:
             try:
-                cr_year = pub.get("date-parts", [[None]])[0][0]
-                if cr_year is not None:
-                    year_match = abs(int(cr_year) - int(year)) <= 1
-            except (ValueError, TypeError, IndexError):
+                cr_year = (date_obj.get("date-parts") or [[None]])[0][0]
+            except (AttributeError, IndexError, TypeError):
+                pass
+        if cr_year is not None:
+            try:
+                if abs(int(cr_year) - int(pub_year)) > MAX_YEAR_DELTA:
+                    continue
+            except (ValueError, TypeError):
                 pass
 
-        if overlap >= 3 and overlap_ratio >= 0.35 and year_match:
-            return doi
+        candidates.append({
+            "doi": doi, "title": cr_title, "ratio": ratio,
+            "overlap": len(overlap), "year": cr_year,
+        })
 
-    return None
+    if not candidates:
+        return None, "no-acceptable-match"
 
+    candidates.sort(key=lambda c: (-c["ratio"], -c["overlap"]))
+    if len(candidates) >= 2:
+        top, runner = candidates[0], candidates[1]
+        same_doi = canonical_doi(top["doi"]) == canonical_doi(runner["doi"])
+        if not same_doi and (top["ratio"] - runner["ratio"]) < 0.10:
+            return None, "ambiguous"
 
-def extract_pmid(title: str, notes: str, pmid_col: str) -> str | None:
-    """Extract PMID from pmid column, title, or notes fields."""
-    # Prefer the dedicated pmid column
-    if pmid_col:
-        m = re.search(r"(\d{5,})", str(pmid_col))
-        if m:
-            return m.group(1)
-    combined = f"{title or ''} {notes or ''}"
-    m = re.search(r"PMID[:\s]?(\d+)", combined, re.IGNORECASE)
-    return m.group(1) if m else None
-
-
-def is_standard_or_grey(title: str, notes: str, tier) -> bool:
-    """Return True if source is unlikely to have a DOI."""
-    combined = f"{title or ''} {notes or ''}"
-    try:
-        if tier is not None and int(tier) >= 4:
-            return True
-    except (ValueError, TypeError):
-        pass
-    if re.search(
-        r"\bISO\b|\bDIN\b|\bBS \d|\bEN \d|CAN/|ANSI|ASHRAE|ASTM|IEEE"
-        r"|PAS \d|\bNCC\b|\bADA\b|\bNBC\b|NFPA|IBC|OBOA|WELL v|Fitwel"
-        r"|LEED|BREEAM|\bguideline\b|\bhandbook\b|\bmanual\b"
-        r"|position statement|toolkit|\bframework\b|WHO|UN-Habitat"
-        r"|\bRIBA\b|\bCNIB\b|\bRNID\b|\bHabinteg\b",
-        combined, re.IGNORECASE
-    ):
-        return True
-    return False
+    return candidates[0]["doi"], "matched"
 
 
 def main():
@@ -157,105 +228,133 @@ def main():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
 
-    tables = [r[0] for r in conn.execute(
-        "SELECT name FROM sqlite_master WHERE type='table'"
-    ).fetchall()]
-    if TABLE not in tables:
-        print(f"ERROR: {TABLE} table not found. Tables: {tables}")
+    cols = [r[1] for r in conn.execute(f"PRAGMA table_info({TABLE})")]
+    required = {"first_author_last", "pub_title", "pub_year",
+                "doi_resolution_outcome", "source_type", "is_corporate_primary"}
+    missing = required - set(cols)
+    if missing:
+        print(f"ERROR: evidence_sources is not v2. Missing: {missing}")
         return 1
 
-    ts = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
+    now_iso = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
+    cutoff_date = time.strftime(
+        "%Y-%m-%d",
+        time.gmtime(time.time() - SKIP_NO_MATCH_DAYS * 86400),
+    )
 
-    # ── Phase 1: PMID → DOI ──
-    # Check both the dedicated pmid column and PMID mentions in title/notes
+    # Phase 1: PMID -> DOI
     pmid_rows = conn.execute(f"""
-        SELECT ref_id, title, notes, pmid
-        FROM {TABLE}
+        SELECT ref_id, pmid FROM {TABLE}
         WHERE (doi IS NULL OR doi = '')
-        AND (
-            (pmid IS NOT NULL AND pmid != '')
-            OR title LIKE '%PMID%'
-            OR notes LIKE '%PMID%'
-        )
-    """).fetchall()
+        AND pmid IS NOT NULL AND pmid != ''
+        AND (doi_resolution_outcome IS NULL
+             OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
+    """, (cutoff_date,)).fetchall()
 
-    print(f"Phase 1 — PMID candidates: {len(pmid_rows)}")
-    pmid_resolved = 0
+    print(f"Phase 1 (PMID -> DOI via NCBI): {len(pmid_rows)} candidates")
+    p1_ok = p1_no = p1_transient = 0
 
     for r in pmid_rows:
-        pmid = extract_pmid(r["title"], r["notes"], r["pmid"])
-        if not pmid:
-            continue
-        doi = ncbi_pmid_to_doi(pmid)
-        if doi:
+        doi, status = ncbi_pmid_to_doi(r["pmid"])
+        if status == "resolved" and doi:
             conn.execute(
-                f"UPDATE {TABLE} SET doi = ?, "
-                "updated_at = ?, updated_by_session = 'resolve-dois-action' "
-                "WHERE ref_id = ?",
-                (doi, ts, r["ref_id"])
+                f"UPDATE {TABLE} SET doi=?, doi_resolution_outcome='RESOLVED', "
+                "updated_at=?, updated_by_session='resolve-dois-action' "
+                "WHERE ref_id=?",
+                (doi, now_iso, r["ref_id"])
             )
-            pmid_resolved += 1
-            print(f"  PMID→DOI: {r['ref_id']} (PMID:{pmid}) → {doi}")
-        time.sleep(RATE_LIMIT)
-
-    print(f"Phase 1 resolved: {pmid_resolved}\n")
-
-    # ── Phase 2: title search ──
-    title_rows = conn.execute(f"""
-        SELECT ref_id, authors, year, title, notes, tier
-        FROM {TABLE}
-        WHERE (doi IS NULL OR doi = '')
-        AND authors IS NOT NULL AND authors != ''
-        AND authors != '(author TBC)'
-        AND title IS NOT NULL AND length(title) > 20
-        ORDER BY CAST(year AS INTEGER) DESC
-        LIMIT ?
-    """, (MAX_RESOLVE * 2,)).fetchall()  # over-fetch, filter below
-
-    candidates = [
-        r for r in title_rows
-        if not is_standard_or_grey(r["title"], r["notes"], r["tier"])
-    ][:MAX_RESOLVE]
-
-    print(f"Phase 2 — Title search candidates: {len(candidates)}")
-    title_resolved = 0
-    skipped = 0
-
-    for r in candidates:
-        doi = crossref_title_search(
-            r["authors"], r["title"], str(r["year"] or "")
-        )
-        if doi:
+            p1_ok += 1
+            print(f"  PMID->DOI: {r['ref_id']} (PMID:{r['pmid']}) -> {doi}")
+        elif status == "no-doi":
+            # NCBI confirmed no DOI exists for this PMID — mark NO-MATCH.
             conn.execute(
-                f"UPDATE {TABLE} SET doi = ?, "
-                "updated_at = ?, updated_by_session = 'resolve-dois-action' "
-                "WHERE ref_id = ?",
-                (doi, ts, r["ref_id"])
+                f"UPDATE {TABLE} SET doi_resolution_outcome='NO-MATCH', "
+                "updated_at=?, updated_by_session='resolve-dois-action' "
+                "WHERE ref_id=?",
+                (now_iso, r["ref_id"])
             )
-            title_resolved += 1
-            print(f"  RESOLVED: {r['ref_id']} ({r['authors'][:30]}, {r['year']}) → {doi}")
+            p1_no += 1
         else:
-            skipped += 1
-
+            # Transient error (403, timeout, etc.) — leave row alone so it
+            # retries next run instead of being skipped for 30 days.
+            p1_transient += 1
         time.sleep(RATE_LIMIT)
 
     conn.commit()
+    print(f"Phase 1 done: {p1_ok} resolved, {p1_no} no-match, {p1_transient} transient (will retry)\n")
 
-    # ── Summary ──
+    # Phase 2: CrossRef structured query
+    placeholders = ",".join(["?"] * len(ELIGIBLE_TYPES))
+    cr_rows = conn.execute(f"""
+        SELECT ref_id, first_author_last, first_author_first, pub_title, pub_year, source_type
+        FROM {TABLE}
+        WHERE (doi IS NULL OR doi = '')
+        AND source_type IN ({placeholders})
+        AND is_corporate_primary = 0
+        AND first_author_last IS NOT NULL AND first_author_last != ''
+        AND pub_title IS NOT NULL AND length(pub_title) > 15
+        AND pub_year IS NOT NULL
+        AND (doi_resolution_outcome IS NULL
+             OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
+        ORDER BY pub_year DESC, ref_id
+        LIMIT ?
+    """, (*ELIGIBLE_TYPES, cutoff_date, MAX_RESOLVE)).fetchall()
+
+    print(f"Phase 2 (CrossRef structured): {len(cr_rows)} candidates")
+    p2_ok = p2_no = 0
+    reasons = {}
+
+    for r in cr_rows:
+        doi, reason = crossref_lookup(
+            r["first_author_last"], r["pub_title"], r["pub_year"]
+        )
+        reasons[reason] = reasons.get(reason, 0) + 1
+
+        if doi:
+            conn.execute(
+                f"UPDATE {TABLE} SET doi=?, doi_resolution_outcome='RESOLVED', "
+                "updated_at=?, updated_by_session='resolve-dois-action' "
+                "WHERE ref_id=?",
+                (doi, now_iso, r["ref_id"])
+            )
+            p2_ok += 1
+            print(f"  RESOLVED: {r['ref_id']} {r['first_author_last']} "
+                  f"({r['pub_year']}) -> {doi}")
+        else:
+            conn.execute(
+                f"UPDATE {TABLE} SET doi_resolution_outcome='NO-MATCH', "
+                "updated_at=?, updated_by_session='resolve-dois-action' "
+                "WHERE ref_id=?",
+                (now_iso, r["ref_id"])
+            )
+            p2_no += 1
+        time.sleep(RATE_LIMIT)
+
+    conn.commit()
+    print(f"\nPhase 2 done: {p2_ok} resolved, {p2_no} no-match")
+    print("Phase 2 no-match reasons:")
+    for reason, c in sorted(reasons.items(), key=lambda x: -x[1]):
+        print(f"  {reason}: {c}")
+
+    # Summary
     total = conn.execute(f"SELECT COUNT(*) FROM {TABLE}").fetchone()[0]
     with_doi = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE doi IS NOT NULL AND doi != ''"
     ).fetchone()[0]
-    without_doi = total - with_doi
+    no_match = conn.execute(
+        f"SELECT COUNT(*) FROM {TABLE} WHERE doi_resolution_outcome='NO-MATCH'"
+    ).fetchone()[0]
+    reverted = conn.execute(
+        f"SELECT COUNT(*) FROM {TABLE} WHERE doi_resolution_outcome='REVERTED'"
+    ).fetchone()[0]
 
-    print(f"\n{'='*50}")
-    print(f"Phase 1 (PMID→DOI):    {pmid_resolved}")
-    print(f"Phase 2 (title search): {title_resolved}")
-    print(f"Total resolved:         {pmid_resolved + title_resolved}")
-    print(f"Skipped (no match):     {skipped}")
-    print(f"DOI coverage:           {with_doi}/{total} ({100*with_doi//total}%)")
-    print(f"Remaining without DOI:  {without_doi}")
-    print(f"{'='*50}")
+    print(f"\n{'=' * 56}")
+    print(f"  Total sources:               {total}")
+    print(f"  With DOI:                    {with_doi} ({100*with_doi//total}%)")
+    print(f"  NO-MATCH (retry in {SKIP_NO_MATCH_DAYS}d):    {no_match}")
+    print(f"  REVERTED (never retry):      {reverted}")
+    print(f"  This run resolved:           {p1_ok + p2_ok}")
+    print(f"{'=' * 56}")
 
     conn.close()
     return 0
