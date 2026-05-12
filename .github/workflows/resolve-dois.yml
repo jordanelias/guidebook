@@ -1,12 +1,18 @@
-name: Resolve DOIs via CrossRef
+name: Resolve DOIs via CrossRef and NCBI
 
 on:
   workflow_dispatch:
     inputs:
       max_resolve:
-        description: 'Maximum number of Phase 2 (title search) candidates per run'
+        description: 'Maximum CrossRef Phase 2 candidates per run'
         required: false
-        default: '100'
+        default: '500'
+      skip_no_match_days:
+        description: 'Days to skip NO-MATCH rows before retrying'
+        required: false
+        default: '30'
+  schedule:
+    - cron: '0 6 * * 1'  # Mondays 06:00 UTC
 
 jobs:
   resolve:
@@ -26,7 +32,8 @@ jobs:
       - name: Resolve DOIs
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
-          MAX_RESOLVE: ${{ github.event.inputs.max_resolve }}
+          MAX_RESOLVE: ${{ github.event.inputs.max_resolve || '500' }}
+          SKIP_NO_MATCH_DAYS: ${{ github.event.inputs.skip_no_match_days || '30' }}
         run: python scripts/resolve_dois.py
 
       - name: Commit and push if changed
@@ -35,9 +42,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/guidebook.db
           if git diff --cached --quiet; then
-            echo "No DOIs resolved — nothing to commit"
+            echo "No DOI changes — nothing to commit"
             exit 0
           fi
-          git commit -m "source-verification: batch DOI resolution via CrossRef [$(date -u '+%Y-%m-%d %H:%M')]"
+          git commit -m "source-verification: DOI resolution via CrossRef+NCBI [$(date -u '+%Y-%m-%d %H:%M')]"
           git pull --rebase origin main
           git push origin main
