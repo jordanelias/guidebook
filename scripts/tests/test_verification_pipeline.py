@@ -4,7 +4,8 @@ Tests cover: new columns, ORCID, full author lists, Phase 4 DOI-lookup, COMPLETE
 """
 import sqlite3, shutil, sys, traceback, importlib.util, os
 
-DB_ORIG = "/home/claude/live-v1.db"
+import os
+DB_ORIG = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 DB_TEST = "/tmp/v12-test.db"
 
 results = []
@@ -24,7 +25,7 @@ def fresh():
 def read(conn, ref_id):
     return dict(conn.execute("SELECT * FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone() or {})
 
-spec = importlib.util.spec_from_file_location("resolve_dois", "/home/claude/resolve_dois_v1.py")
+spec = importlib.util.spec_from_file_location("resolve_dois", "scripts/resolve_dois.py")
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
