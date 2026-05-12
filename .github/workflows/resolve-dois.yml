@@ -1,10 +1,21 @@
-name: Resolve DOIs via CrossRef and NCBI
+name: Source verification pipeline (V1)
+
+# 5-phase pipeline per references/audits/verification-pipeline-proposal-2026-05-12-v2.md:
+#   Phase 0  PMC extractor (no network)
+#   Phase 1a PMID -> DOI via NCBI
+#   Phase 1b PMCID -> DOI via NCBI
+#   Phase 2a CrossRef structured (person-author academic)
+#   Phase 2b CrossRef bibliographic (corporate-author academic)
+#   Phase 3  CrossRef type:standard (ISO/EN/BSI/IEC/PAS standards)
+#
+# Writes back via scripts/resolve_dois.py write_verification() — never clobbers
+# existing data; NO-MATCH writes preserve verification_status.
 
 on:
   workflow_dispatch:
     inputs:
       max_resolve:
-        description: 'Maximum CrossRef Phase 2 candidates per run'
+        description: 'Max candidates per CrossRef phase (2a/2b/3)'
         required: false
         default: '500'
       skip_no_match_days:
@@ -14,9 +25,16 @@ on:
   schedule:
     - cron: '0 6 * * 1'  # Mondays 06:00 UTC
 
+# Prevent overlapping runs that would race on data/guidebook.db.
+concurrency:
+  group: source-verification
+  cancel-in-progress: false
+
 jobs:
   resolve:
+    name: Resolve DOIs and verify sources
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write
 
@@ -29,12 +47,49 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Resolve DOIs
+      - name: Pre-run state
+        run: |
+          python <<'PY'
+          import sqlite3
+          c = sqlite3.connect('data/guidebook.db')
+          r = c.execute("""
+              SELECT
+                COUNT(*) AS total,
+                SUM(CASE WHEN doi IS NOT NULL AND doi != '' THEN 1 ELSE 0 END),
+                SUM(CASE WHEN verification_status = 'VERIFIED' THEN 1 ELSE 0 END),
+                SUM(CASE WHEN pmcid IS NOT NULL AND pmcid != '' THEN 1 ELSE 0 END)
+              FROM evidence_sources
+          """).fetchone()
+          print(f"PRE-RUN: total={r[0]} doi={r[1]} verified={r[2]} pmcid={r[3]}")
+          # Persist for the commit message later
+          with open('/tmp/pre.txt', 'w') as f:
+              f.write(f"{r[1]} {r[2]} {r[3]}")
+          PY
+
+      - name: Run verification pipeline
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
           MAX_RESOLVE: ${{ github.event.inputs.max_resolve || '500' }}
           SKIP_NO_MATCH_DAYS: ${{ github.event.inputs.skip_no_match_days || '30' }}
         run: python scripts/resolve_dois.py
+
+      - name: Post-run state
+        run: |
+          python <<'PY'
+          import sqlite3
+          c = sqlite3.connect('data/guidebook.db')
+          r = c.execute("""
+              SELECT
+                COUNT(*),
+                SUM(CASE WHEN doi IS NOT NULL AND doi != '' THEN 1 ELSE 0 END),
+                SUM(CASE WHEN verification_status = 'VERIFIED' THEN 1 ELSE 0 END),
+                SUM(CASE WHEN pmcid IS NOT NULL AND pmcid != '' THEN 1 ELSE 0 END)
+              FROM evidence_sources
+          """).fetchone()
+          print(f"POST-RUN: total={r[0]} doi={r[1]} verified={r[2]} pmcid={r[3]}")
+          with open('/tmp/post.txt', 'w') as f:
+              f.write(f"{r[1]} {r[2]} {r[3]}")
+          PY
 
       - name: Commit and push if changed
         run: |
@@ -42,9 +97,32 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/guidebook.db
           if git diff --cached --quiet; then
-            echo "No DOI changes — nothing to commit"
+            echo "No verification changes — nothing to commit"
             exit 0
           fi
-          git commit -m "source-verification: DOI resolution via CrossRef+NCBI [$(date -u '+%Y-%m-%d %H:%M')]"
-          git pull --rebase origin main
-          git push origin main
+
+          # Build informative commit message with state delta.
+          read PRE_DOI PRE_VER PRE_PMCID </tmp/pre.txt
+          read POST_DOI POST_VER POST_PMCID </tmp/post.txt
+          DOI_DELTA=$((POST_DOI - PRE_DOI))
+          VER_DELTA=$((POST_VER - PRE_VER))
+          PMCID_DELTA=$((POST_PMCID - PRE_PMCID))
+          SIGN_DOI=$([ $DOI_DELTA -ge 0 ] && echo "+" || echo "")
+          SIGN_VER=$([ $VER_DELTA -ge 0 ] && echo "+" || echo "")
+          SIGN_PMCID=$([ $PMCID_DELTA -ge 0 ] && echo "+" || echo "")
+          MSG="source-verification: V1 pipeline run — doi ${SIGN_DOI}${DOI_DELTA}, verified ${SIGN_VER}${VER_DELTA}, pmcid ${SIGN_PMCID}${PMCID_DELTA} [$(date -u '+%Y-%m-%d %H:%M')]"
+
+          git commit -m "$MSG"
+
+          # Retry push on race with concurrent main commits.
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main || true
+            if git push origin main; then
+              echo "Push succeeded on attempt $i"
+              exit 0
+            fi
+            echo "Push attempt $i failed; backing off..."
+            sleep $((i * 5))
+          done
+          echo "ERROR: push failed after 5 attempts"
+          exit 1
