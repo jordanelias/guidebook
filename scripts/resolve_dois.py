@@ -440,44 +440,63 @@ def enrich_from_crossref(conn, ref_id, item, ts=None):
     enrichment, evaluates whether the row now meets COMPLETE criteria and
     promotes metadata_quality accordingly.
 
-    Fields written (only if currently NULL):
-      pub_title      ← item['title'][0]
-      pub_year       ← item['issued']['date-parts'][0][0]
-      journal_abbrev ← item['container-title'][0]
-      volume         ← item['volume']
-      issue          ← item['issue']
-      publisher      ← item['publisher']
-      issn           ← item['ISSN'][0]
+    Fields written (only if currently NULL or empty):
+      pub_title        ← item['title'][0]
+      pub_year         ← item['issued'/'published-print'/'published-online'][0][0]
+      pub_month        ← item['issued'/'published-print'/'published-online'][0][1]
+      journal_abbrev   ← item['container-title'][0]
+      volume           ← item['volume']
+      issue            ← item['issue']
+      pages            ← item['page'] or item['article-number']
+      publisher        ← item['publisher']
+      issn             ← item['ISSN'][0]
+      language         ← item['language']
+      subtype          ← item['subtype'] (if present, e.g., 'review-article')
+      citation_count   ← item['is-referenced-by-count']
+
+    Then triggers author enrichment if author_count_is_complete = 0 / NULL.
     """
     if not item:
         return
     ts = ts or time.strftime("%Y-%m-%d %H:%M", time.gmtime())
 
-    def _extract_year(it):
+    def _date_part(it, idx):
         for key in ("published-print", "published-online", "issued"):
             dp = (it.get(key) or {}).get("date-parts")
             if dp:
                 try:
-                    y = dp[0][0]
-                    if y:
-                        return int(y)
+                    v = dp[0][idx]
+                    if v is not None:
+                        return int(v)
                 except (IndexError, TypeError, ValueError):
                     pass
         return None
 
-    cr_title = (item.get("title") or [""])[0] or None
-    cr_year = _extract_year(item)
+    # Extract fields from CrossRef item
+    cr_title   = (item.get("title") or [""])[0] or None
+    cr_year    = _date_part(item, 0)
+    cr_month   = _date_part(item, 1)
     cr_journal = ((item.get("container-title") or [""])[0]) or None
-    cr_volume = item.get("volume") or None
-    cr_issue = item.get("issue") or None
+    cr_volume  = item.get("volume") or None
+    cr_issue   = item.get("issue") or None
+    cr_pages   = item.get("page") or item.get("article-number") or None
     cr_publisher = item.get("publisher") or None
-    cr_issn = ((item.get("ISSN") or [""])[0]) or None
+    cr_issn    = ((item.get("ISSN") or [""])[0]) or None
+    cr_lang    = item.get("language") or None
+    cr_subtype = item.get("subtype") or item.get("type") or None
+    cr_cites   = item.get("is-referenced-by-count")
+    if cr_cites is not None:
+        try:
+            cr_cites = int(cr_cites)
+        except (ValueError, TypeError):
+            cr_cites = None
 
-    # Fetch current row to avoid overwriting
+    # Fetch current row
     row = conn.execute("""
-        SELECT pub_title, pub_year, journal_abbrev, volume, issue,
-               publisher, issn, doi, first_author_last, is_corporate_primary,
-               metadata_quality
+        SELECT pub_title, pub_year, pub_month, journal_abbrev, volume, issue, pages,
+               publisher, issn, language, subtype, citation_count,
+               doi, first_author_last, is_corporate_primary, metadata_quality,
+               author_count, author_count_is_complete
         FROM evidence_sources WHERE ref_id = ?
     """, (ref_id,)).fetchone()
     if not row:
@@ -486,34 +505,68 @@ def enrich_from_crossref(conn, ref_id, item, ts=None):
     sets, params = [], []
 
     def _fill(col, new_val):
-        if new_val is not None and (row[col] is None or str(row[col]).strip() == ""):
+        if new_val is None:
+            return
+        cur = row[col]
+        if cur is None or (isinstance(cur, str) and not cur.strip()):
             sets.append(f"{col} = ?")
             params.append(new_val)
 
-    _fill("pub_title",     cr_title)
-    _fill("pub_year",      cr_year)
+    _fill("pub_title",      cr_title)
+    _fill("pub_year",       cr_year)
+    _fill("pub_month",      cr_month)
     _fill("journal_abbrev", cr_journal)
-    _fill("volume",        cr_volume)
-    _fill("issue",         cr_issue)
-    _fill("publisher",     cr_publisher)
-    _fill("issn",          cr_issn)
+    _fill("volume",         cr_volume)
+    _fill("issue",          cr_issue)
+    _fill("pages",          cr_pages)
+    _fill("publisher",      cr_publisher)
+    _fill("issn",           cr_issn)
+    _fill("language",       cr_lang)
+    _fill("subtype",        cr_subtype)
+    _fill("citation_count", cr_cites)
 
-    if not sets:
-        return  # Nothing to enrich
+    # Author enrichment: if author list is flagged incomplete OR empty, refresh from CrossRef.
+    # Respect author_count_is_complete=1 unconditionally — never replace a manually-curated
+    # complete author list, even if CrossRef has more authors.
+    cr_authors = item.get("author") or []
+    person_authors = [a for a in cr_authors if isinstance(a, dict) and a.get("family")]
+    author_refreshed = False
+    if person_authors and not row["is_corporate_primary"]:
+        is_complete = row["author_count_is_complete"]
+        if is_complete in (0, None):
+            # Replace author rows with the CrossRef-supplied full list
+            conn.execute("DELETE FROM evidence_source_authors WHERE ref_id=?", (ref_id,))
+            for i, a in enumerate(person_authors, start=1):
+                orcid = a.get("ORCID") or None
+                if orcid and "orcid.org/" in orcid:
+                    orcid = orcid.split("orcid.org/")[-1]
+                conn.execute("""
+                    INSERT INTO evidence_source_authors
+                      (ref_id, position, last_name, first_name, orcid,
+                       is_corporate, created_at, created_by_session)
+                    VALUES (?, ?, ?, ?, ?, 0, ?, ?)
+                """, (ref_id, i, a.get("family"), a.get("given"), orcid, ts, SESSION))
+            sets.append("author_count = ?")
+            params.append(len(person_authors))
+            sets.append("author_count_is_complete = ?")
+            params.append(1)
+            author_refreshed = True
 
-    # After hypothetical enrichment, re-evaluate COMPLETE criteria:
-    #   doi + pub_title + pub_year + (first_author_last OR is_corporate_primary)
-    new_title  = cr_title  if (row["pub_title"] is None or not str(row["pub_title"]).strip()) else row["pub_title"]
-    new_year   = cr_year   if (row["pub_year"] is None) else row["pub_year"]
-    doi_ok     = bool(row["doi"])
-    title_ok   = bool(new_title and str(new_title).strip())
-    year_ok    = bool(new_year)
-    author_ok  = bool(row["first_author_last"] or row["is_corporate_primary"])
+    # Re-evaluate COMPLETE after enrichment
+    new_title = cr_title if (row["pub_title"] is None or not str(row["pub_title"]).strip()) else row["pub_title"]
+    new_year  = cr_year  if row["pub_year"] is None else row["pub_year"]
+    doi_ok    = bool(row["doi"])
+    title_ok  = bool(new_title and str(new_title).strip())
+    year_ok   = bool(new_year)
+    author_ok = bool(row["first_author_last"] or row["is_corporate_primary"] or author_refreshed)
     will_complete = doi_ok and title_ok and year_ok and author_ok
 
     if will_complete and row["metadata_quality"] != "COMPLETE":
         sets.append("metadata_quality = ?")
         params.append("COMPLETE")
+
+    if not sets:
+        return  # Nothing to write (already fully enriched)
 
     sets += ["updated_at = ?", "updated_by_session = ?"]
     params += [ts, SESSION]
@@ -525,8 +578,30 @@ def enrich_from_crossref(conn, ref_id, item, ts=None):
     )
     enriched_fields = [s.split(" = ")[0] for s in sets
                        if s.split(" = ")[0] not in ("updated_at", "updated_by_session", "metadata_quality")]
-    print(f"    enrich: {ref_id} ← {enriched_fields}"
-          + (" [→COMPLETE]" if will_complete and row["metadata_quality"] != "COMPLETE" else ""))
+    extras = []
+    if author_refreshed: extras.append(f"+{len(person_authors)} authors")
+    if will_complete and row["metadata_quality"] != "COMPLETE": extras.append("→COMPLETE")
+    suffix = " [" + ", ".join(extras) + "]" if extras else ""
+    print(f"    enrich: {ref_id} ← {enriched_fields}{suffix}")
+
+
+# ─── CrossRef DOI lookup (Phase 4: enrich rows that already have a DOI) ──────
+
+def crossref_doi_lookup(doi):
+    """Fetch full CrossRef metadata by DOI. Returns item or None on transient error."""
+    if not doi:
+        return None
+    url = f"https://api.crossref.org/works/{urllib.parse.quote(doi, safe='/')}"
+    try:
+        data = fetch_json(url, timeout=15)
+        return data.get("message")
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None  # DOI not in CrossRef (rare but possible)
+        # 403/429/5xx: transient — caller will retry next run
+        return None
+    except Exception:
+        return None
 
 
 # ─── Phase 0: PMC ID extractor (no network) ─────────────────────────────────
@@ -605,12 +680,17 @@ def main():
           phase_2b_no_match  INTEGER DEFAULT 0,
           phase_3_resolved   INTEGER DEFAULT 0,
           phase_3_no_match   INTEGER DEFAULT 0,
+          phase_4_enriched   INTEGER DEFAULT 0,
+          phase_4_complete   INTEGER DEFAULT 0,
+          phase_4_transient  INTEGER DEFAULT 0,
           doi_before         INTEGER DEFAULT 0,
           doi_after          INTEGER DEFAULT 0,
           verified_before    INTEGER DEFAULT 0,
           verified_after     INTEGER DEFAULT 0,
           pmcid_before       INTEGER DEFAULT 0,
           pmcid_after        INTEGER DEFAULT 0,
+          metadata_complete_before INTEGER DEFAULT 0,
+          metadata_complete_after  INTEGER DEFAULT 0,
           total_resolved     INTEGER DEFAULT 0,
           run_by_session     TEXT
         )
@@ -623,16 +703,21 @@ def main():
     doi_before = _count(f"SELECT COUNT(*) FROM {TABLE} WHERE doi IS NOT NULL AND doi != ''")
     verified_before = _count(f"SELECT COUNT(*) FROM {TABLE} WHERE verification_status='VERIFIED'")
     pmcid_before = _count(f"SELECT COUNT(*) FROM {TABLE} WHERE pmcid IS NOT NULL AND pmcid != ''")
+    metadata_complete_before = _count(
+        f"SELECT COUNT(*) FROM {TABLE} WHERE metadata_quality='COMPLETE'")
 
     run_id = now_iso
     conn.execute("""
         INSERT OR REPLACE INTO pipeline_runs
-          (run_id, started_at, doi_before, verified_before, pmcid_before, run_by_session)
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (run_id, now_iso, doi_before, verified_before, pmcid_before, SESSION))
+          (run_id, started_at, doi_before, verified_before, pmcid_before,
+           metadata_complete_before, run_by_session)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (run_id, now_iso, doi_before, verified_before, pmcid_before,
+          metadata_complete_before, SESSION))
     conn.commit()
     print(f"Run {run_id}: doi_before={doi_before} verified_before={verified_before} "
-          f"pmcid_before={pmcid_before} rate_limit={RATE_LIMIT}s\n")
+          f"pmcid_before={pmcid_before} complete_before={metadata_complete_before} "
+          f"rate_limit={RATE_LIMIT}s\n")
 
     # ── Phase 0: PMC extractor ──────────────────────────────────────────────
     print("=" * 56)
@@ -842,6 +927,49 @@ def main():
         print(f"  {k}: {v}")
     print()
 
+    # ── Phase 4: CrossRef DOI-lookup enrichment for rows with DOI but missing metadata ─
+    print("=" * 56)
+    print("Phase 4 — CrossRef DOI-lookup enrichment")
+    print("=" * 56)
+    p4_rows = conn.execute(f"""
+        SELECT ref_id, doi FROM {TABLE}
+        WHERE doi IS NOT NULL AND doi != ''
+        AND (
+            journal_abbrev IS NULL OR journal_abbrev = ''
+            OR volume IS NULL
+            OR language IS NULL OR language = ''
+            OR pages IS NULL OR pages = ''
+            OR citation_count IS NULL
+        )
+        AND source_type IN ('journal_article','book','book_chapter','conference_paper',
+                            'thesis','primary_research','case_study','standard')
+        ORDER BY ref_id
+        LIMIT ?
+    """, (MAX_RESOLVE,)).fetchall()
+    print(f"  Candidates (DOI present but enrichment incomplete): {len(p4_rows)}")
+    p4_enriched = p4_complete = p4_transient = 0
+    for r in p4_rows:
+        item = crossref_doi_lookup(r["doi"])
+        if item is None:
+            p4_transient += 1
+            time.sleep(RATE_LIMIT)
+            continue
+        # Check if it'll likely complete before calling enrich (for counter)
+        pre_quality = conn.execute(
+            f"SELECT metadata_quality FROM {TABLE} WHERE ref_id=?",
+            (r["ref_id"],)).fetchone()[0]
+        enrich_from_crossref(conn, r["ref_id"], item, now_iso)
+        post_quality = conn.execute(
+            f"SELECT metadata_quality FROM {TABLE} WHERE ref_id=?",
+            (r["ref_id"],)).fetchone()[0]
+        p4_enriched += 1
+        if pre_quality != "COMPLETE" and post_quality == "COMPLETE":
+            p4_complete += 1
+        time.sleep(RATE_LIMIT)
+    conn.commit()
+    print(f"Phase 4 done: {p4_enriched} enriched, {p4_complete} newly COMPLETE, "
+          f"{p4_transient} transient\n")
+
     # ── Summary + pipeline_runs write ─────────────────────────────────────
     total = conn.execute(f"SELECT COUNT(*) FROM {TABLE}").fetchone()[0]
     doi_after = conn.execute(
@@ -859,6 +987,9 @@ def main():
     pmcid_after = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE pmcid IS NOT NULL AND pmcid != ''"
     ).fetchone()[0]
+    metadata_complete_after = conn.execute(
+        f"SELECT COUNT(*) FROM {TABLE} WHERE metadata_quality='COMPLETE'"
+    ).fetchone()[0]
     this_run_ok = p1a_ok + p1b_ok + p2a_ok + p2b_ok + p3_ok
     completed_at = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
 
@@ -872,9 +1003,11 @@ def main():
           phase_2a_resolved  = ?, phase_2a_no_match  = ?,
           phase_2b_resolved  = ?, phase_2b_no_match  = ?,
           phase_3_resolved   = ?, phase_3_no_match   = ?,
+          phase_4_enriched   = ?, phase_4_complete   = ?, phase_4_transient = ?,
           doi_after          = ?,
           verified_after     = ?,
           pmcid_after        = ?,
+          metadata_complete_after = ?,
           total_resolved     = ?
         WHERE run_id = ?
     """, (
@@ -885,28 +1018,33 @@ def main():
         p2a_ok, p2a_no,
         p2b_ok, p2b_no,
         p3_ok, p3_no,
+        p4_enriched, p4_complete, p4_transient,
         doi_after,
         verified_after,
         pmcid_after,
+        metadata_complete_after,
         this_run_ok,
         run_id,
     ))
     conn.commit()
 
     print("=" * 56)
-    print(f"  Total sources:               {total}")
-    print(f"  With DOI:                    {doi_after} ({100*doi_after//total}%)  delta={doi_after-doi_before:+d}")
+    print(f"  Total sources:                {total}")
+    print(f"  With DOI:                     {doi_after} ({100*doi_after//total}%)  delta={doi_after-doi_before:+d}")
     print(f"  verification_status VERIFIED: {verified_after}  delta={verified_after-verified_before:+d}")
-    print(f"  PMC IDs extracted this run:  {extracted}")
-    print(f"  NO-MATCH (retry in {SKIP_NO_MATCH_DAYS}d):    {no_match}")
-    print(f"  REVERTED (never retry):      {reverted}")
-    print(f"  This run resolved:           {this_run_ok}")
-    print(f"    Phase 1a (PMID):                {p1a_ok}")
-    print(f"    Phase 1b (PMCID):               {p1b_ok}")
-    print(f"    Phase 2a (CrossRef structured): {p2a_ok}")
-    print(f"    Phase 2b (CrossRef bib):        {p2b_ok}")
-    print(f"    Phase 3 (CrossRef standard):    {p3_ok}")
-    print(f"  Run record:                  pipeline_runs['{run_id}']")
+    print(f"  metadata_quality COMPLETE:    {metadata_complete_after}  delta={metadata_complete_after-metadata_complete_before:+d}")
+    print(f"  PMC IDs extracted this run:   {extracted}")
+    print(f"  NO-MATCH (retry in {SKIP_NO_MATCH_DAYS}d):     {no_match}")
+    print(f"  REVERTED (never retry):       {reverted}")
+    print(f"  This run resolved/enriched:")
+    print(f"    Phase 0 (PMC extract):           {extracted}")
+    print(f"    Phase 1a (PMID -> DOI):          {p1a_ok}")
+    print(f"    Phase 1b (PMCID -> DOI):         {p1b_ok}")
+    print(f"    Phase 2a (CrossRef structured):  {p2a_ok}")
+    print(f"    Phase 2b (CrossRef bib):         {p2b_ok}")
+    print(f"    Phase 3 (CrossRef standard):     {p3_ok}")
+    print(f"    Phase 4 (DOI-lookup enrich):     {p4_enriched} enriched, {p4_complete} newly COMPLETE")
+    print(f"  Run record:                   pipeline_runs['{run_id}']")
     print("=" * 56)
 
     conn.close()
