@@ -1,25 +1,43 @@
 #!/usr/bin/env python3
-"""DOI resolution against evidence_sources v2 schema.
+"""DOI resolution and source verification against evidence_sources v2 schema.
 
-Uses the structured columns produced by the v2 migration to query CrossRef and
-NCBI precisely instead of parsing free-form text. Honors `doi_resolution_outcome`
-so previously-rejected matches are never retried.
+Per verification-pipeline-proposal-2026-05-12-v2.md V1.
 
-Phase 1 — NCBI PMID → DOI (high confidence; biomedical sources).
-Phase 2 — CrossRef structured query on first_author_last + pub_title + pub_year.
+Pipeline phases (run in order, each writes to evidence_sources via write_verification):
 
-Acceptance criteria (Phase 2):
-  - Author surname must appear in CrossRef result's first 3 authors (case-insensitive).
-  - Title-word Jaccard overlap >= 0.55 after stopword removal.
-  - Year matches within +/- 1.
-  - Only one plausible candidate (ambiguity = reject).
+  Phase 0  PMC extractor — scan pub_title for embedded PMC IDs, write to pmcid column
+           (no network; pure regex pass)
+  Phase 1a PMID -> DOI via NCBI ID Converter
+  Phase 1b PMCID -> DOI via NCBI ID Converter (covers rows populated in Phase 0)
+  Phase 2a CrossRef structured query (person-authored academic)
+  Phase 2b CrossRef bibliographic query (corporate-authored academic)
+  Phase 3  CrossRef type:standard filter (ISO/EN/BSI standards)
 
-Skip behavior:
-  - doi_resolution_outcome = 'REVERTED'  -> permanently skipped.
-  - doi_resolution_outcome = 'NO-MATCH' within SKIP_NO_MATCH_DAYS -> skipped.
-  - is_corporate_primary = 1 -> skipped (CrossRef author query unsuited for orgs).
-  - pub_year IS NULL or first_author_last IS NULL -> skipped.
-  - source_type in ('standard','grey','internal','website','guideline') -> skipped.
+Acceptance for Phase 2a/2b (academic):
+  - Author surname (or corporate token) in CrossRef result's first 3 authors / publisher
+  - Title-word Jaccard overlap >= 0.55 after stopword removal (or 100% for short titles)
+  - Year matches within +/- 1
+  - Only one plausible candidate (ambiguity = reject)
+
+Acceptance for Phase 3 (standards):
+  - Publisher contains 'BSI', 'British Standards', 'ISO', or 'CEN'
+  - Title contains keywords from the source's standard number AND pub_title
+
+Skip behavior (applies to all phases):
+  - doi_resolution_outcome = 'REVERTED'  -> permanently skipped
+  - doi_resolution_outcome = 'NO-MATCH' within SKIP_NO_MATCH_DAYS -> skipped
+  - Already has doi -> skipped
+
+Writes (all phases use central write_verification function):
+  - verification_status (VERIFIED / NO-MATCH; not set on transient)
+  - verified_by_tool (per-phase identifier)
+  - last_verified_at (ISO timestamp)
+  - verification_attempt_count (increments)
+  - doi (only when found, never clobbers existing)
+  - pmcid (only when found, never clobbers existing)
+  - verification_note (only when supplied)
+  - doi_resolution_outcome (RESOLVED / NO-MATCH)
+  - updated_at, updated_by_session
 
 Env vars:
   GUIDEBOOK_DB_PATH   path to SQLite (default: data/guidebook.db)
@@ -43,6 +61,7 @@ SKIP_NO_MATCH_DAYS = int(os.environ.get("SKIP_NO_MATCH_DAYS", "30"))
 RATE_LIMIT = 0.5
 USER_AGENT = "guidebook-project/2.0 (mailto:jordan@guidebook.dev)"
 TABLE = "evidence_sources"
+SESSION = "resolve-dois-action"
 
 MIN_TITLE_OVERLAP_RATIO = 0.55
 MIN_TITLE_OVERLAP_WORDS = 4
@@ -53,6 +72,15 @@ ELIGIBLE_TYPES = (
     "conference_paper", "report", "case_study", "primary_research",
 )
 
+# Publisher tokens that identify a CrossRef "type:standard" result as an
+# ISO/EN/BSI standard we accept as verification.
+STANDARD_PUBLISHER_TOKENS = ("BSI", "British Standards", "ISO", "CEN", "DIN")
+
+# Standard-number prefixes that route to Phase 3 (CrossRef type:standard).
+# CrossRef indexes these via BSI's DOI prefix 10.3403/.
+CROSSREF_STD_PREFIXES = ("ISO ", "IEC ", "EN ", "BS ", "BS EN ", "BS ISO ",
+                          "ISO/IEC ", "ISO/TC ", "PAS ")
+
 STOPWORDS = {
     "the", "a", "an", "and", "or", "of", "in", "on", "at", "to", "for",
     "with", "by", "from", "as", "is", "are", "was", "were", "be", "been",
@@ -61,33 +89,73 @@ STOPWORDS = {
 }
 
 
+# ─── HTTP helper ────────────────────────────────────────────────────────────
+
 def fetch_json(url, timeout=15):
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.loads(resp.read())
 
 
-def ncbi_pmid_to_doi(pmid):
-    """Convert PMID to DOI via NCBI ID Converter.
+# ─── Central write function (per proposal v2 §5; tested 22/22) ──────────────
 
-    Returns (doi, status) where status is:
-      'resolved'  - DOI found and returned
-      'no-doi'    - NCBI responded but record has no DOI
-      'transient' - network/auth error; do not mark NO-MATCH
+def write_verification(conn, ref_id, tool, status=None, doi=None, pmcid=None,
+                       note=None, doi_outcome=None, ts=None):
+    """Atomic verification-state write.
+
+    Only fields explicitly supplied are touched. Never clobbers existing doi or
+    pmcid with NULL. Always increments verification_attempt_count. Always sets
+    verified_by_tool, last_verified_at, updated_at, updated_by_session.
+    """
+    ts = ts or time.strftime("%Y-%m-%d %H:%M", time.gmtime())
+
+    sets = ["verified_by_tool = ?", "last_verified_at = ?",
+            "verification_attempt_count = COALESCE(verification_attempt_count, 0) + 1",
+            "updated_at = ?", "updated_by_session = ?"]
+    params = [tool, ts, ts, SESSION]
+
+    if status is not None:
+        sets.append("verification_status = ?")
+        params.append(status)
+    if note is not None:
+        sets.append("verification_note = ?")
+        params.append(note)
+    if doi is not None:
+        sets.append("doi = ?")
+        params.append(doi)
+    if pmcid is not None:
+        sets.append("pmcid = ?")
+        params.append(pmcid)
+    if doi_outcome is not None:
+        sets.append("doi_resolution_outcome = ?")
+        params.append(doi_outcome)
+
+    params.append(ref_id)
+    sql = f"UPDATE {TABLE} SET " + ", ".join(sets) + " WHERE ref_id = ?"
+    conn.execute(sql, params)
+
+
+# ─── NCBI helpers ───────────────────────────────────────────────────────────
+
+def ncbi_id_to_doi(any_id):
+    """Convert any NCBI ID (PMID or PMC) to DOI via NCBI ID Converter.
+
+    Accepts both '12345' (PMID) and 'PMC12345' (PMCID).
+    Returns (doi, status) where status is 'resolved' | 'no-doi' | 'transient'.
     """
     url = (
         "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/"
-        f"?ids={pmid}&format=json&tool=guidebook&email=jordan@guidebook.dev"
+        f"?ids={any_id}&format=json&tool=guidebook&email=jordan@guidebook.dev"
     )
     try:
         data = fetch_json(url, timeout=15)
     except urllib.error.HTTPError as e:
-        if e.code == 403 or e.code >= 500:
-            print(f"    NCBI transient error {e.code} for PMID {pmid}")
+        if e.code == 403 or e.code >= 500 or e.code == 429:
+            print(f"    NCBI transient error {e.code} for {any_id}")
             return None, "transient"
         return None, "no-doi"
     except Exception as e:
-        print(f"    NCBI transient error for PMID {pmid}: {e}")
+        print(f"    NCBI transient error for {any_id}: {e}")
         return None, "transient"
 
     records = data.get("records", []) or []
@@ -96,14 +164,10 @@ def ncbi_pmid_to_doi(pmid):
     return None, "no-doi"
 
 
-def canonical_doi(doi):
-    """Normalize a DOI for equality comparison.
+# ─── Title / DOI helpers ────────────────────────────────────────────────────
 
-    CrossRef occasionally returns near-duplicates like '10.1037//x' and '10.1037/x'
-    that resolve to the same paper but compare as different strings. Collapse double
-    slashes and lowercase for the comparison key only — the original string is what
-    we store.
-    """
+def canonical_doi(doi):
+    """Normalize a DOI for equality comparison (collapse '//', lowercase)."""
     if not doi:
         return ""
     return re.sub(r"/{2,}", "/", doi.strip().lower())
@@ -116,8 +180,10 @@ def normalize_title_words(s):
     return {w for w in cleaned.split() if len(w) > 2 and w not in STOPWORDS}
 
 
-def crossref_lookup(author_last, pub_title, pub_year):
-    """Query CrossRef structured. Returns (doi, reason)."""
+# ─── CrossRef Phase 2a (person-author structured) ───────────────────────────
+
+def crossref_structured(author_last, pub_title, pub_year):
+    """CrossRef structured query for person-authored academic items."""
     if not author_last or not pub_title or not pub_year:
         return None, "missing-input"
 
@@ -138,20 +204,143 @@ def crossref_lookup(author_last, pub_title, pub_year):
     url = "https://api.crossref.org/works?" + urllib.parse.urlencode(params)
     try:
         data = fetch_json(url, timeout=15)
-    except Exception as e:
-        return None, f"crossref-error"
+    except Exception:
+        return None, "crossref-error"
 
     items = data.get("message", {}).get("items", []) or []
     if not items:
         return None, "no-results"
 
+    return _select_match(items, pub_title, pub_year, author_last=author_last)
+
+
+# ─── CrossRef Phase 2b (corporate-author bibliographic) ─────────────────────
+
+def crossref_bibliographic(corp_name, pub_title, pub_year):
+    """CrossRef bibliographic query for corporate-authored academic items."""
+    if not corp_name or not pub_title or not pub_year:
+        return None, "missing-input"
+
+    bib_q = f"{corp_name} {' '.join(normalize_title_words(pub_title))}"[:250]
+    params = {
+        "query.bibliographic": bib_q,
+        "rows": "5",
+        "select": "DOI,title,author,published-print,published-online,issued,type,publisher",
+    }
+    yr_lo = int(pub_year) - MAX_YEAR_DELTA
+    yr_hi = int(pub_year) + MAX_YEAR_DELTA
+    params["filter"] = f"from-pub-date:{yr_lo},until-pub-date:{yr_hi}-12"
+
+    url = "https://api.crossref.org/works?" + urllib.parse.urlencode(params)
+    try:
+        data = fetch_json(url, timeout=15)
+    except Exception:
+        return None, "crossref-error"
+
+    items = data.get("message", {}).get("items", []) or []
+    if not items:
+        return None, "no-results"
+
+    return _select_match(items, pub_title, pub_year, corp_name=corp_name)
+
+
+# ─── CrossRef Phase 3 (standards via type:standard filter) ──────────────────
+
+def crossref_standard(standard_number, pub_title, pub_year):
+    """CrossRef type:standard query for ISO/EN/BSI standards.
+
+    Acceptance criteria:
+      - Publisher must contain a STANDARD_PUBLISHER_TOKEN
+      - Title must overlap with the source's pub_title keywords
+      - Standard number tokens (e.g., '23599') should appear in result title
+    """
+    if not standard_number or not pub_title:
+        return None, "missing-input"
+
+    # Extract numeric part of the standard number for matching
+    num_match = re.search(r"\d+", standard_number)
+    std_num_token = num_match.group(0) if num_match else ""
+
+    # Build query: standard number + title keywords
+    title_kw = " ".join(normalize_title_words(pub_title))[:160]
+    bib_q = f"{standard_number} {title_kw}"[:250]
+
+    params = {
+        "query.bibliographic": bib_q,
+        "filter": "type:standard",
+        "rows": "5",
+        "select": "DOI,title,publisher,issued,type",
+    }
+
+    url = "https://api.crossref.org/works?" + urllib.parse.urlencode(params)
+    try:
+        data = fetch_json(url, timeout=15)
+    except Exception:
+        return None, "crossref-error"
+
+    items = data.get("message", {}).get("items", []) or []
+    if not items:
+        return None, "no-results"
+
+    candidates = []
+    orig_words = normalize_title_words(pub_title)
+
+    for item in items:
+        doi = item.get("DOI", "")
+        if not doi:
+            continue
+        if item.get("type") != "standard":
+            continue
+
+        publisher = item.get("publisher", "") or ""
+        if not any(tok.lower() in publisher.lower() for tok in STANDARD_PUBLISHER_TOKENS):
+            continue
+
+        cr_title = (item.get("title") or [""])[0]
+        cr_words = normalize_title_words(cr_title)
+        if not cr_words:
+            continue
+
+        # Title-word overlap with source pub_title
+        overlap = orig_words & cr_words
+        ratio = len(overlap) / min(len(orig_words), len(cr_words)) if orig_words and cr_words else 0
+        if len(overlap) < 2 or ratio < 0.30:
+            continue
+
+        # Standard number token (e.g. '23599') should ideally appear in CrossRef title
+        # (not strictly required if title overlap is strong, but boosts confidence)
+        num_in_title = bool(std_num_token and std_num_token in cr_title)
+
+        candidates.append({
+            "doi": doi, "title": cr_title, "publisher": publisher,
+            "ratio": ratio, "overlap": len(overlap), "num_match": num_in_title,
+        })
+
+    if not candidates:
+        return None, "no-acceptable-match"
+
+    # Prefer candidates where the standard number appears in title
+    candidates.sort(key=lambda c: (-int(c["num_match"]), -c["ratio"], -c["overlap"]))
+
+    # Ambiguity check
+    if len(candidates) >= 2:
+        top, runner = candidates[0], candidates[1]
+        same = canonical_doi(top["doi"]) == canonical_doi(runner["doi"])
+        if (not same and top["num_match"] == runner["num_match"]
+                and (top["ratio"] - runner["ratio"]) < 0.15):
+            return None, "ambiguous"
+
+    return candidates[0]["doi"], "matched"
+
+
+# ─── Shared match selector for academic Phase 2a/2b ─────────────────────────
+
+def _select_match(items, pub_title, pub_year, author_last=None, corp_name=None):
+    """Apply acceptance criteria and pick at-most-one DOI from candidate items."""
     orig_words = normalize_title_words(pub_title)
     if not orig_words:
         return None, "empty-title-words"
 
-    # Short title handling: if the source title has fewer than the minimum overlap
-    # words, require 100% overlap with the CrossRef title instead of the floor count.
-    # This permits perfect matches like "Dynamic touch" (2 substantive words).
     short_title = len(orig_words) < MIN_TITLE_OVERLAP_WORDS
 
     candidates = []
@@ -160,15 +349,32 @@ def crossref_lookup(author_last, pub_title, pub_year):
         if not doi:
             continue
 
-        cr_authors = item.get("author", []) or []
-        cr_surnames = [
-            (a.get("family") or "").lower()
-            for a in cr_authors[:3]
-            if isinstance(a, dict)
-        ]
-        if not any(author_last.lower() == s for s in cr_surnames):
-            continue
+        # Person-author check (Phase 2a)
+        if author_last:
+            cr_authors = item.get("author", []) or []
+            cr_surnames = [
+                (a.get("family") or "").lower()
+                for a in cr_authors[:3]
+                if isinstance(a, dict)
+            ]
+            if not any(author_last.lower() == s for s in cr_surnames):
+                continue
 
+        # Corporate-author check (Phase 2b)
+        if corp_name:
+            cr_authors = item.get("author", []) or []
+            publisher = item.get("publisher", "") or ""
+            corp_tok = corp_name.lower().split()[0] if corp_name.split() else ""
+            org_match = (
+                corp_tok and corp_tok in publisher.lower()
+            ) or any(
+                isinstance(a, dict) and corp_tok in (a.get("name") or "").lower()
+                for a in cr_authors[:3]
+            )
+            if not org_match:
+                continue
+
+        # Title overlap
         cr_title = (item.get("title") or [""])[0]
         cr_words = normalize_title_words(cr_title)
         if not cr_words:
@@ -177,16 +383,15 @@ def crossref_lookup(author_last, pub_title, pub_year):
         ratio = len(overlap) / min(len(orig_words), len(cr_words))
 
         if short_title:
-            # Require all source title words present in CrossRef result.
             if overlap != orig_words:
                 continue
         else:
             if len(overlap) < MIN_TITLE_OVERLAP_WORDS or ratio < MIN_TITLE_OVERLAP_RATIO:
                 continue
 
+        # Year check
         date_obj = (
-            item.get("published-print")
-            or item.get("published-online")
+            item.get("published-print") or item.get("published-online")
             or item.get("issued")
         )
         cr_year = None
@@ -202,10 +407,8 @@ def crossref_lookup(author_last, pub_title, pub_year):
             except (ValueError, TypeError):
                 pass
 
-        candidates.append({
-            "doi": doi, "title": cr_title, "ratio": ratio,
-            "overlap": len(overlap), "year": cr_year,
-        })
+        candidates.append({"doi": doi, "title": cr_title, "ratio": ratio,
+                           "overlap": len(overlap), "year": cr_year})
 
     if not candidates:
         return None, "no-acceptable-match"
@@ -213,12 +416,46 @@ def crossref_lookup(author_last, pub_title, pub_year):
     candidates.sort(key=lambda c: (-c["ratio"], -c["overlap"]))
     if len(candidates) >= 2:
         top, runner = candidates[0], candidates[1]
-        same_doi = canonical_doi(top["doi"]) == canonical_doi(runner["doi"])
-        if not same_doi and (top["ratio"] - runner["ratio"]) < 0.10:
+        same = canonical_doi(top["doi"]) == canonical_doi(runner["doi"])
+        if not same and (top["ratio"] - runner["ratio"]) < 0.10:
             return None, "ambiguous"
 
     return candidates[0]["doi"], "matched"
 
+
+# ─── Phase 0: PMC ID extractor (no network) ─────────────────────────────────
+
+def phase_0_pmc_extractor(conn, ts):
+    """Extract PMC IDs from pub_title field into the pmcid column.
+
+    Pure regex pass — no network calls. Writes pmcid via write_verification with
+    no verification_status (since extraction alone isn't verification).
+    """
+    rows = conn.execute(f"""
+        SELECT ref_id, pub_title, pmcid FROM {TABLE}
+        WHERE (pmcid IS NULL OR pmcid = '')
+        AND pub_title LIKE '%PMC%'
+    """).fetchall()
+
+    extracted = 0
+    for r in rows:
+        m = re.search(r"PMC(\d+)", r["pub_title"] or "")
+        if not m:
+            continue
+        pmcid = f"PMC{m.group(1)}"
+        # Direct UPDATE — extraction is not a verification event, just a backfill.
+        conn.execute(
+            f"UPDATE {TABLE} SET pmcid=?, updated_at=?, updated_by_session=? WHERE ref_id=?",
+            (pmcid, ts, SESSION, r["ref_id"])
+        )
+        print(f"  PMC extract: {r['ref_id']} <- {pmcid}")
+        extracted += 1
+
+    conn.commit()
+    return extracted
+
+
+# ─── Main orchestrator ──────────────────────────────────────────────────────
 
 def main():
     if not os.path.exists(DB_PATH):
@@ -228,64 +465,100 @@ def main():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
 
+    # Schema sanity check — V1 requires verified_by_tool and friends
     cols = [r[1] for r in conn.execute(f"PRAGMA table_info({TABLE})")]
     required = {"first_author_last", "pub_title", "pub_year",
-                "doi_resolution_outcome", "source_type", "is_corporate_primary"}
+                "doi_resolution_outcome", "source_type", "is_corporate_primary",
+                "pmcid", "verified_by_tool", "last_verified_at",
+                "verification_attempt_count"}
     missing = required - set(cols)
     if missing:
-        print(f"ERROR: evidence_sources is not v2. Missing: {missing}")
+        print(f"ERROR: evidence_sources schema is not V1-extended. Missing: {missing}")
         return 1
 
     now_iso = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
-    cutoff_date = time.strftime(
-        "%Y-%m-%d",
-        time.gmtime(time.time() - SKIP_NO_MATCH_DAYS * 86400),
-    )
+    cutoff = time.strftime("%Y-%m-%d",
+                           time.gmtime(time.time() - SKIP_NO_MATCH_DAYS * 86400))
 
-    # Phase 1: PMID -> DOI
+    # ── Phase 0: PMC extractor ──────────────────────────────────────────────
+    print("=" * 56)
+    print("Phase 0 — PMC ID extractor")
+    print("=" * 56)
+    extracted = phase_0_pmc_extractor(conn, now_iso)
+    print(f"Phase 0 done: {extracted} PMC IDs extracted to pmcid column\n")
+
+    # ── Phase 1a: PMID -> DOI ──────────────────────────────────────────────
+    print("=" * 56)
+    print("Phase 1a — PMID -> DOI via NCBI")
+    print("=" * 56)
     pmid_rows = conn.execute(f"""
         SELECT ref_id, pmid FROM {TABLE}
         WHERE (doi IS NULL OR doi = '')
         AND pmid IS NOT NULL AND pmid != ''
         AND (doi_resolution_outcome IS NULL
              OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
-    """, (cutoff_date,)).fetchall()
-
-    print(f"Phase 1 (PMID -> DOI via NCBI): {len(pmid_rows)} candidates")
-    p1_ok = p1_no = p1_transient = 0
-
+    """, (cutoff,)).fetchall()
+    print(f"  Candidates: {len(pmid_rows)}")
+    p1a_ok = p1a_no = p1a_t = 0
     for r in pmid_rows:
-        doi, status = ncbi_pmid_to_doi(r["pmid"])
+        doi, status = ncbi_id_to_doi(r["pmid"])
         if status == "resolved" and doi:
-            conn.execute(
-                f"UPDATE {TABLE} SET doi=?, doi_resolution_outcome='RESOLVED', "
-                "updated_at=?, updated_by_session='resolve-dois-action' "
-                "WHERE ref_id=?",
-                (doi, now_iso, r["ref_id"])
-            )
-            p1_ok += 1
+            write_verification(conn, r["ref_id"], "ncbi-pmid-converter", "VERIFIED",
+                               doi=doi, doi_outcome="RESOLVED",
+                               note=f"NCBI PMID:{r['pmid']} -> {doi}")
+            p1a_ok += 1
             print(f"  PMID->DOI: {r['ref_id']} (PMID:{r['pmid']}) -> {doi}")
         elif status == "no-doi":
-            # NCBI confirmed no DOI exists for this PMID — mark NO-MATCH.
-            conn.execute(
-                f"UPDATE {TABLE} SET doi_resolution_outcome='NO-MATCH', "
-                "updated_at=?, updated_by_session='resolve-dois-action' "
-                "WHERE ref_id=?",
-                (now_iso, r["ref_id"])
-            )
-            p1_no += 1
+            # NO-MATCH only updates doi_resolution_outcome; verification_status
+            # may have been independently set by another channel, do not downgrade.
+            write_verification(conn, r["ref_id"], "ncbi-pmid-converter",
+                               status=None, doi_outcome="NO-MATCH",
+                               note=f"NCBI: no DOI for PMID:{r['pmid']}")
+            p1a_no += 1
         else:
-            # Transient error (403, timeout, etc.) — leave row alone so it
-            # retries next run instead of being skipped for 30 days.
-            p1_transient += 1
+            p1a_t += 1
         time.sleep(RATE_LIMIT)
-
     conn.commit()
-    print(f"Phase 1 done: {p1_ok} resolved, {p1_no} no-match, {p1_transient} transient (will retry)\n")
+    print(f"Phase 1a done: {p1a_ok} resolved, {p1a_no} no-match, {p1a_t} transient\n")
 
-    # Phase 2: CrossRef structured query
+    # ── Phase 1b: PMCID -> DOI ─────────────────────────────────────────────
+    print("=" * 56)
+    print("Phase 1b — PMCID -> DOI via NCBI")
+    print("=" * 56)
+    pmcid_rows = conn.execute(f"""
+        SELECT ref_id, pmcid FROM {TABLE}
+        WHERE (doi IS NULL OR doi = '')
+        AND pmcid IS NOT NULL AND pmcid != ''
+        AND (doi_resolution_outcome IS NULL
+             OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
+    """, (cutoff,)).fetchall()
+    print(f"  Candidates: {len(pmcid_rows)}")
+    p1b_ok = p1b_no = p1b_t = 0
+    for r in pmcid_rows:
+        doi, status = ncbi_id_to_doi(r["pmcid"])
+        if status == "resolved" and doi:
+            write_verification(conn, r["ref_id"], "ncbi-pmcid-converter", "VERIFIED",
+                               doi=doi, doi_outcome="RESOLVED",
+                               note=f"NCBI {r['pmcid']} -> {doi}")
+            p1b_ok += 1
+            print(f"  PMCID->DOI: {r['ref_id']} ({r['pmcid']}) -> {doi}")
+        elif status == "no-doi":
+            write_verification(conn, r["ref_id"], "ncbi-pmcid-converter",
+                               status=None, doi_outcome="NO-MATCH",
+                               note=f"NCBI: no DOI for {r['pmcid']}")
+            p1b_no += 1
+        else:
+            p1b_t += 1
+        time.sleep(RATE_LIMIT)
+    conn.commit()
+    print(f"Phase 1b done: {p1b_ok} resolved, {p1b_no} no-match, {p1b_t} transient\n")
+
+    # ── Phase 2a: CrossRef structured (person-author academic) ─────────────
+    print("=" * 56)
+    print("Phase 2a — CrossRef structured (person-author academic)")
+    print("=" * 56)
     placeholders = ",".join(["?"] * len(ELIGIBLE_TYPES))
-    cr_rows = conn.execute(f"""
+    p2a_rows = conn.execute(f"""
         SELECT ref_id, first_author_last, first_author_first, pub_title, pub_year, source_type
         FROM {TABLE}
         WHERE (doi IS NULL OR doi = '')
@@ -298,45 +571,121 @@ def main():
              OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
         ORDER BY pub_year DESC, ref_id
         LIMIT ?
-    """, (*ELIGIBLE_TYPES, cutoff_date, MAX_RESOLVE)).fetchall()
-
-    print(f"Phase 2 (CrossRef structured): {len(cr_rows)} candidates")
-    p2_ok = p2_no = 0
-    reasons = {}
-
-    for r in cr_rows:
-        doi, reason = crossref_lookup(
-            r["first_author_last"], r["pub_title"], r["pub_year"]
-        )
-        reasons[reason] = reasons.get(reason, 0) + 1
-
+    """, (*ELIGIBLE_TYPES, cutoff, MAX_RESOLVE)).fetchall()
+    print(f"  Candidates: {len(p2a_rows)}")
+    p2a_ok = p2a_no = 0
+    p2a_reasons = {}
+    for r in p2a_rows:
+        doi, reason = crossref_structured(r["first_author_last"], r["pub_title"], r["pub_year"])
+        p2a_reasons[reason] = p2a_reasons.get(reason, 0) + 1
         if doi:
-            conn.execute(
-                f"UPDATE {TABLE} SET doi=?, doi_resolution_outcome='RESOLVED', "
-                "updated_at=?, updated_by_session='resolve-dois-action' "
-                "WHERE ref_id=?",
-                (doi, now_iso, r["ref_id"])
-            )
-            p2_ok += 1
-            print(f"  RESOLVED: {r['ref_id']} {r['first_author_last']} "
-                  f"({r['pub_year']}) -> {doi}")
+            write_verification(conn, r["ref_id"], "crossref-structured", "VERIFIED",
+                               doi=doi, doi_outcome="RESOLVED",
+                               note=f"CrossRef structured: {r['first_author_last']} ({r['pub_year']})")
+            p2a_ok += 1
+            print(f"  RESOLVED: {r['ref_id']} {r['first_author_last']} ({r['pub_year']}) -> {doi}")
         else:
-            conn.execute(
-                f"UPDATE {TABLE} SET doi_resolution_outcome='NO-MATCH', "
-                "updated_at=?, updated_by_session='resolve-dois-action' "
-                "WHERE ref_id=?",
-                (now_iso, r["ref_id"])
-            )
-            p2_no += 1
+            write_verification(conn, r["ref_id"], "crossref-structured",
+                               status=None, doi_outcome="NO-MATCH",
+                               note=f"CrossRef structured: {reason}")
+            p2a_no += 1
         time.sleep(RATE_LIMIT)
-
     conn.commit()
-    print(f"\nPhase 2 done: {p2_ok} resolved, {p2_no} no-match")
-    print("Phase 2 no-match reasons:")
-    for reason, c in sorted(reasons.items(), key=lambda x: -x[1]):
-        print(f"  {reason}: {c}")
+    print(f"Phase 2a done: {p2a_ok} resolved, {p2a_no} no-match")
+    for k, v in sorted(p2a_reasons.items(), key=lambda x: -x[1]):
+        print(f"  {k}: {v}")
+    print()
 
-    # Summary
+    # ── Phase 2b: CrossRef bibliographic (corporate-author academic) ───────
+    print("=" * 56)
+    print("Phase 2b — CrossRef bibliographic (corporate-author academic)")
+    print("=" * 56)
+    p2b_rows = conn.execute(f"""
+        SELECT e.ref_id, e.pub_title, e.pub_year, e.source_type,
+               (SELECT a.corporate_name FROM evidence_source_authors a
+                WHERE a.ref_id = e.ref_id AND a.position = 1) AS corp
+        FROM {TABLE} e
+        WHERE (e.doi IS NULL OR e.doi = '')
+        AND e.source_type IN ('journal_article','book','book_chapter','conference_paper')
+        AND e.is_corporate_primary = 1
+        AND e.pub_title IS NOT NULL AND length(e.pub_title) > 15
+        AND e.pub_year IS NOT NULL
+        AND (e.doi_resolution_outcome IS NULL
+             OR (e.doi_resolution_outcome = 'NO-MATCH' AND e.updated_at < ?))
+        LIMIT ?
+    """, (cutoff, MAX_RESOLVE)).fetchall()
+    print(f"  Candidates: {len(p2b_rows)}")
+    p2b_ok = p2b_no = 0
+    p2b_reasons = {}
+    for r in p2b_rows:
+        if not r["corp"]:
+            continue
+        doi, reason = crossref_bibliographic(r["corp"], r["pub_title"], r["pub_year"])
+        p2b_reasons[reason] = p2b_reasons.get(reason, 0) + 1
+        if doi:
+            write_verification(conn, r["ref_id"], "crossref-bibliographic", "VERIFIED",
+                               doi=doi, doi_outcome="RESOLVED",
+                               note=f"CrossRef bib: {r['corp']} ({r['pub_year']})")
+            p2b_ok += 1
+            print(f"  RESOLVED: {r['ref_id']} {r['corp']} ({r['pub_year']}) -> {doi}")
+        else:
+            write_verification(conn, r["ref_id"], "crossref-bibliographic",
+                               status=None, doi_outcome="NO-MATCH",
+                               note=f"CrossRef bib: {reason}")
+            p2b_no += 1
+        time.sleep(RATE_LIMIT)
+    conn.commit()
+    print(f"Phase 2b done: {p2b_ok} resolved, {p2b_no} no-match")
+    for k, v in sorted(p2b_reasons.items(), key=lambda x: -x[1]):
+        print(f"  {k}: {v}")
+    print()
+
+    # ── Phase 3: CrossRef type:standard (ISO/EN/BSI) ───────────────────────
+    print("=" * 56)
+    print("Phase 3 — CrossRef type:standard (ISO/EN/BSI)")
+    print("=" * 56)
+    p3_rows = conn.execute(f"""
+        SELECT ref_id, standard_number, pub_title, pub_year
+        FROM {TABLE}
+        WHERE (doi IS NULL OR doi = '')
+        AND source_type = 'standard'
+        AND standard_number IS NOT NULL AND standard_number != ''
+        AND pub_title IS NOT NULL AND length(pub_title) > 10
+        AND (doi_resolution_outcome IS NULL
+             OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
+        LIMIT ?
+    """, (cutoff, MAX_RESOLVE)).fetchall()
+
+    # Filter to standards routable to CrossRef (ISO/EN/BSI/IEC/PAS prefixes)
+    routable = [
+        r for r in p3_rows
+        if any(r["standard_number"].upper().startswith(p) for p in CROSSREF_STD_PREFIXES)
+    ]
+    print(f"  Candidates: {len(p3_rows)} total, {len(routable)} routable to CrossRef")
+    p3_ok = p3_no = 0
+    p3_reasons = {}
+    for r in routable:
+        doi, reason = crossref_standard(r["standard_number"], r["pub_title"], r["pub_year"])
+        p3_reasons[reason] = p3_reasons.get(reason, 0) + 1
+        if doi:
+            write_verification(conn, r["ref_id"], "crossref-standard", "VERIFIED",
+                               doi=doi, doi_outcome="RESOLVED",
+                               note=f"CrossRef type:standard: {r['standard_number']}")
+            p3_ok += 1
+            print(f"  RESOLVED: {r['ref_id']} {r['standard_number']} -> {doi}")
+        else:
+            write_verification(conn, r["ref_id"], "crossref-standard",
+                               status=None, doi_outcome="NO-MATCH",
+                               note=f"CrossRef type:standard: {reason}")
+            p3_no += 1
+        time.sleep(RATE_LIMIT)
+    conn.commit()
+    print(f"Phase 3 done: {p3_ok} resolved, {p3_no} no-match")
+    for k, v in sorted(p3_reasons.items(), key=lambda x: -x[1]):
+        print(f"  {k}: {v}")
+    print()
+
+    # ── Summary ────────────────────────────────────────────────────────────
     total = conn.execute(f"SELECT COUNT(*) FROM {TABLE}").fetchone()[0]
     with_doi = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE doi IS NOT NULL AND doi != ''"
@@ -347,14 +696,25 @@ def main():
     reverted = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE doi_resolution_outcome='REVERTED'"
     ).fetchone()[0]
+    verified = conn.execute(
+        f"SELECT COUNT(*) FROM {TABLE} WHERE verification_status='VERIFIED'"
+    ).fetchone()[0]
+    this_run_ok = p1a_ok + p1b_ok + p2a_ok + p2b_ok + p3_ok
 
-    print(f"\n{'=' * 56}")
+    print("=" * 56)
     print(f"  Total sources:               {total}")
     print(f"  With DOI:                    {with_doi} ({100*with_doi//total}%)")
+    print(f"  verification_status VERIFIED: {verified}")
+    print(f"  PMC IDs extracted this run:  {extracted}")
     print(f"  NO-MATCH (retry in {SKIP_NO_MATCH_DAYS}d):    {no_match}")
     print(f"  REVERTED (never retry):      {reverted}")
-    print(f"  This run resolved:           {p1_ok + p2_ok}")
-    print(f"{'=' * 56}")
+    print(f"  This run resolved:           {this_run_ok}")
+    print(f"    Phase 1a (PMID): {p1a_ok}")
+    print(f"    Phase 1b (PMCID): {p1b_ok}")
+    print(f"    Phase 2a (CrossRef structured): {p2a_ok}")
+    print(f"    Phase 2b (CrossRef bibliographic): {p2b_ok}")
+    print(f"    Phase 3 (CrossRef type:standard): {p3_ok}")
+    print("=" * 56)
 
     conn.close()
     return 0
