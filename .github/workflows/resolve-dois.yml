@@ -8,8 +8,8 @@ name: Source verification pipeline (V1)
 #   Phase 2b CrossRef bibliographic (corporate-author academic)
 #   Phase 3  CrossRef type:standard (ISO/EN/BSI/IEC/PAS standards)
 #
-# Writes back via scripts/resolve_dois.py write_verification() — never clobbers
-# existing data; NO-MATCH writes preserve verification_status.
+# State before/after and per-phase counts are written to the pipeline_runs table
+# in data/guidebook.db — consistent with the project's SQLite-first tracking pattern.
 
 on:
   workflow_dispatch:
@@ -22,10 +22,14 @@ on:
         description: 'Days to skip NO-MATCH rows before retrying'
         required: false
         default: '30'
+      rate_limit:
+        description: 'Seconds between API calls'
+        required: false
+        default: '5.0'
   schedule:
     - cron: '0 6 * * 1'  # Mondays 06:00 UTC
 
-# Prevent overlapping runs that would race on data/guidebook.db.
+# Prevent overlapping runs racing on data/guidebook.db.
 concurrency:
   group: source-verification
   cancel-in-progress: false
@@ -34,7 +38,7 @@ jobs:
   resolve:
     name: Resolve DOIs and verify sources
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 360
     permissions:
       contents: write
 
@@ -47,48 +51,52 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Pre-run state
-        run: |
-          python <<'PY'
-          import sqlite3
-          c = sqlite3.connect('data/guidebook.db')
-          r = c.execute("""
-              SELECT
-                COUNT(*) AS total,
-                SUM(CASE WHEN doi IS NOT NULL AND doi != '' THEN 1 ELSE 0 END),
-                SUM(CASE WHEN verification_status = 'VERIFIED' THEN 1 ELSE 0 END),
-                SUM(CASE WHEN pmcid IS NOT NULL AND pmcid != '' THEN 1 ELSE 0 END)
-              FROM evidence_sources
-          """).fetchone()
-          print(f"PRE-RUN: total={r[0]} doi={r[1]} verified={r[2]} pmcid={r[3]}")
-          # Persist for the commit message later
-          with open('/tmp/pre.txt', 'w') as f:
-              f.write(f"{r[1]} {r[2]} {r[3]}")
-          PY
-
       - name: Run verification pipeline
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
           MAX_RESOLVE: ${{ github.event.inputs.max_resolve || '500' }}
           SKIP_NO_MATCH_DAYS: ${{ github.event.inputs.skip_no_match_days || '30' }}
+          RATE_LIMIT: ${{ github.event.inputs.rate_limit || '5.0' }}
         run: python scripts/resolve_dois.py
 
-      - name: Post-run state
+      - name: Build commit message from pipeline_runs
+        id: msg
         run: |
-          python <<'PY'
-          import sqlite3
+          python - <<'PY'
+          import sqlite3, os
           c = sqlite3.connect('data/guidebook.db')
           r = c.execute("""
-              SELECT
-                COUNT(*),
-                SUM(CASE WHEN doi IS NOT NULL AND doi != '' THEN 1 ELSE 0 END),
-                SUM(CASE WHEN verification_status = 'VERIFIED' THEN 1 ELSE 0 END),
-                SUM(CASE WHEN pmcid IS NOT NULL AND pmcid != '' THEN 1 ELSE 0 END)
-              FROM evidence_sources
+              SELECT run_id, total_resolved,
+                     doi_before, doi_after,
+                     verified_before, verified_after,
+                     pmcid_before, pmcid_after,
+                     phase_0_extracted,
+                     phase_1a_resolved, phase_1b_resolved,
+                     phase_2a_resolved, phase_2b_resolved,
+                     phase_3_resolved,
+                     phase_1a_transient + phase_1b_transient AS transient
+              FROM pipeline_runs
+              ORDER BY started_at DESC LIMIT 1
           """).fetchone()
-          print(f"POST-RUN: total={r[0]} doi={r[1]} verified={r[2]} pmcid={r[3]}")
-          with open('/tmp/post.txt', 'w') as f:
-              f.write(f"{r[1]} {r[2]} {r[3]}")
+          if not r:
+              msg = "source-verification: V1 pipeline run — no run record found"
+          else:
+              (run_id, total, doi_b, doi_a, ver_b, ver_a,
+               pmc_b, pmc_a, p0, p1a, p1b, p2a, p2b, p3, transient) = r
+              doi_d = doi_a - doi_b
+              ver_d = ver_a - ver_b
+              pmc_d = pmc_a - pmc_b
+              msg = (
+                  f"source-verification: V1 run {run_id} — "
+                  f"doi {doi_d:+d} ({doi_a} total), "
+                  f"verified {ver_d:+d} ({ver_a} total), "
+                  f"pmcid {pmc_d:+d} ({pmc_a} total); "
+                  f"phases p0={p0} p1a={p1a} p1b={p1b} p2a={p2a} p2b={p2b} p3={p3}"
+                  + (f"; {transient} transient" if transient else "")
+              )
+          print(msg)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"msg={msg}\n")
           PY
 
       - name: Commit and push if changed
@@ -100,20 +108,7 @@ jobs:
             echo "No verification changes — nothing to commit"
             exit 0
           fi
-
-          # Build informative commit message with state delta.
-          read PRE_DOI PRE_VER PRE_PMCID </tmp/pre.txt
-          read POST_DOI POST_VER POST_PMCID </tmp/post.txt
-          DOI_DELTA=$((POST_DOI - PRE_DOI))
-          VER_DELTA=$((POST_VER - PRE_VER))
-          PMCID_DELTA=$((POST_PMCID - PRE_PMCID))
-          SIGN_DOI=$([ $DOI_DELTA -ge 0 ] && echo "+" || echo "")
-          SIGN_VER=$([ $VER_DELTA -ge 0 ] && echo "+" || echo "")
-          SIGN_PMCID=$([ $PMCID_DELTA -ge 0 ] && echo "+" || echo "")
-          MSG="source-verification: V1 pipeline run — doi ${SIGN_DOI}${DOI_DELTA}, verified ${SIGN_VER}${VER_DELTA}, pmcid ${SIGN_PMCID}${PMCID_DELTA} [$(date -u '+%Y-%m-%d %H:%M')]"
-
-          git commit -m "$MSG"
-
+          git commit -m "${{ steps.msg.outputs.msg }}"
           # Retry push on race with concurrent main commits.
           for i in 1 2 3 4 5; do
             git pull --rebase origin main || true
