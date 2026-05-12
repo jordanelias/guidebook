@@ -41,8 +41,9 @@ Writes (all phases use central write_verification function):
 
 Env vars:
   GUIDEBOOK_DB_PATH   path to SQLite (default: data/guidebook.db)
-  MAX_RESOLVE         max Phase 2 candidates per run (default: 500)
+  MAX_RESOLVE         max candidates per CrossRef phase (default: 500)
   SKIP_NO_MATCH_DAYS  days before retrying a NO-MATCH (default: 30)
+  RATE_LIMIT          seconds between API calls (default: 5.0 — conservative)
 """
 
 import json
@@ -58,7 +59,7 @@ import urllib.request
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 MAX_RESOLVE = int(os.environ.get("MAX_RESOLVE", "500"))
 SKIP_NO_MATCH_DAYS = int(os.environ.get("SKIP_NO_MATCH_DAYS", "30"))
-RATE_LIMIT = 0.5
+RATE_LIMIT = float(os.environ.get("RATE_LIMIT", "5.0"))
 USER_AGENT = "guidebook-project/2.0 (mailto:jordan@guidebook.dev)"
 TABLE = "evidence_sources"
 SESSION = "resolve-dois-action"
@@ -480,6 +481,54 @@ def main():
     cutoff = time.strftime("%Y-%m-%d",
                            time.gmtime(time.time() - SKIP_NO_MATCH_DAYS * 86400))
 
+    # Ensure pipeline_runs table exists (idempotent).
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS pipeline_runs (
+          run_id             TEXT PRIMARY KEY,
+          started_at         TEXT NOT NULL,
+          completed_at       TEXT,
+          phase_0_extracted  INTEGER DEFAULT 0,
+          phase_1a_resolved  INTEGER DEFAULT 0,
+          phase_1a_no_match  INTEGER DEFAULT 0,
+          phase_1a_transient INTEGER DEFAULT 0,
+          phase_1b_resolved  INTEGER DEFAULT 0,
+          phase_1b_no_match  INTEGER DEFAULT 0,
+          phase_1b_transient INTEGER DEFAULT 0,
+          phase_2a_resolved  INTEGER DEFAULT 0,
+          phase_2a_no_match  INTEGER DEFAULT 0,
+          phase_2b_resolved  INTEGER DEFAULT 0,
+          phase_2b_no_match  INTEGER DEFAULT 0,
+          phase_3_resolved   INTEGER DEFAULT 0,
+          phase_3_no_match   INTEGER DEFAULT 0,
+          doi_before         INTEGER DEFAULT 0,
+          doi_after          INTEGER DEFAULT 0,
+          verified_before    INTEGER DEFAULT 0,
+          verified_after     INTEGER DEFAULT 0,
+          pmcid_before       INTEGER DEFAULT 0,
+          pmcid_after        INTEGER DEFAULT 0,
+          total_resolved     INTEGER DEFAULT 0,
+          run_by_session     TEXT
+        )
+    """)
+
+    # Snapshot pre-run state.
+    def _count(q):
+        return conn.execute(q).fetchone()[0]
+
+    doi_before = _count(f"SELECT COUNT(*) FROM {TABLE} WHERE doi IS NOT NULL AND doi != ''")
+    verified_before = _count(f"SELECT COUNT(*) FROM {TABLE} WHERE verification_status='VERIFIED'")
+    pmcid_before = _count(f"SELECT COUNT(*) FROM {TABLE} WHERE pmcid IS NOT NULL AND pmcid != ''")
+
+    run_id = now_iso
+    conn.execute("""
+        INSERT OR REPLACE INTO pipeline_runs
+          (run_id, started_at, doi_before, verified_before, pmcid_before, run_by_session)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (run_id, now_iso, doi_before, verified_before, pmcid_before, SESSION))
+    conn.commit()
+    print(f"Run {run_id}: doi_before={doi_before} verified_before={verified_before} "
+          f"pmcid_before={pmcid_before} rate_limit={RATE_LIMIT}s\n")
+
     # ── Phase 0: PMC extractor ──────────────────────────────────────────────
     print("=" * 56)
     print("Phase 0 — PMC ID extractor")
@@ -685,9 +734,9 @@ def main():
         print(f"  {k}: {v}")
     print()
 
-    # ── Summary ────────────────────────────────────────────────────────────
+    # ── Summary + pipeline_runs write ─────────────────────────────────────
     total = conn.execute(f"SELECT COUNT(*) FROM {TABLE}").fetchone()[0]
-    with_doi = conn.execute(
+    doi_after = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE doi IS NOT NULL AND doi != ''"
     ).fetchone()[0]
     no_match = conn.execute(
@@ -696,24 +745,60 @@ def main():
     reverted = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE doi_resolution_outcome='REVERTED'"
     ).fetchone()[0]
-    verified = conn.execute(
+    verified_after = conn.execute(
         f"SELECT COUNT(*) FROM {TABLE} WHERE verification_status='VERIFIED'"
     ).fetchone()[0]
+    pmcid_after = conn.execute(
+        f"SELECT COUNT(*) FROM {TABLE} WHERE pmcid IS NOT NULL AND pmcid != ''"
+    ).fetchone()[0]
     this_run_ok = p1a_ok + p1b_ok + p2a_ok + p2b_ok + p3_ok
+    completed_at = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
+
+    # Commit per-phase results to pipeline_runs.
+    conn.execute("""
+        UPDATE pipeline_runs SET
+          completed_at       = ?,
+          phase_0_extracted  = ?,
+          phase_1a_resolved  = ?, phase_1a_no_match  = ?, phase_1a_transient = ?,
+          phase_1b_resolved  = ?, phase_1b_no_match  = ?, phase_1b_transient = ?,
+          phase_2a_resolved  = ?, phase_2a_no_match  = ?,
+          phase_2b_resolved  = ?, phase_2b_no_match  = ?,
+          phase_3_resolved   = ?, phase_3_no_match   = ?,
+          doi_after          = ?,
+          verified_after     = ?,
+          pmcid_after        = ?,
+          total_resolved     = ?
+        WHERE run_id = ?
+    """, (
+        completed_at,
+        extracted,
+        p1a_ok, p1a_no, p1a_t,
+        p1b_ok, p1b_no, p1b_t,
+        p2a_ok, p2a_no,
+        p2b_ok, p2b_no,
+        p3_ok, p3_no,
+        doi_after,
+        verified_after,
+        pmcid_after,
+        this_run_ok,
+        run_id,
+    ))
+    conn.commit()
 
     print("=" * 56)
     print(f"  Total sources:               {total}")
-    print(f"  With DOI:                    {with_doi} ({100*with_doi//total}%)")
-    print(f"  verification_status VERIFIED: {verified}")
+    print(f"  With DOI:                    {doi_after} ({100*doi_after//total}%)  delta={doi_after-doi_before:+d}")
+    print(f"  verification_status VERIFIED: {verified_after}  delta={verified_after-verified_before:+d}")
     print(f"  PMC IDs extracted this run:  {extracted}")
     print(f"  NO-MATCH (retry in {SKIP_NO_MATCH_DAYS}d):    {no_match}")
     print(f"  REVERTED (never retry):      {reverted}")
     print(f"  This run resolved:           {this_run_ok}")
-    print(f"    Phase 1a (PMID): {p1a_ok}")
-    print(f"    Phase 1b (PMCID): {p1b_ok}")
+    print(f"    Phase 1a (PMID):                {p1a_ok}")
+    print(f"    Phase 1b (PMCID):               {p1b_ok}")
     print(f"    Phase 2a (CrossRef structured): {p2a_ok}")
-    print(f"    Phase 2b (CrossRef bibliographic): {p2b_ok}")
-    print(f"    Phase 3 (CrossRef type:standard): {p3_ok}")
+    print(f"    Phase 2b (CrossRef bib):        {p2b_ok}")
+    print(f"    Phase 3 (CrossRef standard):    {p3_ok}")
+    print(f"  Run record:                  pipeline_runs['{run_id}']")
     print("=" * 56)
 
     conn.close()
