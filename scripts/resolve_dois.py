@@ -62,7 +62,7 @@ SKIP_NO_MATCH_DAYS = int(os.environ.get("SKIP_NO_MATCH_DAYS", "30"))
 RATE_LIMIT = float(os.environ.get("RATE_LIMIT", "5.0"))
 USER_AGENT = "guidebook-project/2.0 (mailto:jordan@guidebook.dev)"
 TABLE = "evidence_sources"
-SESSION = "resolve-dois-action"
+SESSION = os.environ.get("GITHUB_RUN_ID", "resolve-dois-action") or "resolve-dois-action"
 
 MIN_TITLE_OVERLAP_RATIO = 0.55
 MIN_TITLE_OVERLAP_WORDS = 4
