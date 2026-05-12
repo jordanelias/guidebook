@@ -118,15 +118,32 @@ jobs:
             exit 0
           fi
           git commit -m "${{ steps.msg.outputs.msg }}"
-          # Retry push on race with concurrent main commits.
+
+          # Push with race-aware retry. The DB is a binary file — git cannot
+          # auto-merge it, so a conflicting rebase indicates main has advanced
+          # since our checkout and our work is now based on an obsolete state.
+          # In that case we abandon this run's results and exit cleanly; the
+          # next scheduled run will start from the new state and reprocess.
           for i in 1 2 3 4 5; do
-            git pull --rebase origin main || true
-            if git push origin main; then
-              echo "Push succeeded on attempt $i"
+            git fetch origin main
+            if git rebase origin/main; then
+              # No conflict — try to push.
+              if git push origin main; then
+                echo "Push succeeded on attempt $i"
+                exit 0
+              fi
+              echo "Push attempt $i failed (non-conflict, likely transient); backing off..."
+              sleep $((i * 5))
+            else
+              # Rebase conflict. Binary DB cannot auto-merge.
+              # The run's results were computed against an obsolete DB state.
+              # Discarding cleanly so the next run can start fresh.
+              echo "Rebase conflict on data/guidebook.db: main advanced during this run."
+              echo "Discarding this run's results; next scheduled run will reprocess."
+              git rebase --abort 2>/dev/null || true
+              git reset --hard origin/main
               exit 0
             fi
-            echo "Push attempt $i failed; backing off..."
-            sleep $((i * 5))
           done
-          echo "ERROR: push failed after 5 attempts"
+          echo "ERROR: push failed after 5 transient retries"
           exit 1
