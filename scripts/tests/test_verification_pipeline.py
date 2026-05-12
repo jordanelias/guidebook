@@ -208,16 +208,25 @@ except Exception as e:
 # C02: Write pmcid back from extraction BEFORE calling NCBI
 try:
     conn = fresh_conn()
-    ref_id = "REF-00012"
+    # Use synthetic ref to guarantee pmcid starts NULL (real refs may have been
+    # populated by a prior V1 Phase 0 run)
+    ref_id = "REF-TEST-C02"
+    conn.execute("""INSERT OR IGNORE INTO evidence_sources
+        (ref_id, source_type, pub_title, pub_year, first_author_last,
+         is_corporate_primary, pmcid)
+        VALUES (?,?,?,?,?,?,?)""",
+        (ref_id, 'journal_article',
+         'Test paper for C02 extraction PMC12345678 embedded',
+         2022, 'Tester', 0, None))
+    conn.commit()
     before = read_row(conn, ref_id)
-    # Simulate: extractor found PMC10621028 in title, writes pmcid first
+    # Extractor runs: finds PMC12345678 in title, writes pmcid
     conn.execute("UPDATE evidence_sources SET pmcid=?, updated_at=?, updated_by_session=? WHERE ref_id=?",
-                 ("PMC10621028", NOW, SESSION, ref_id))
+                 ("PMC12345678", NOW, SESSION, ref_id))
     conn.commit()
     after = read_row(conn, ref_id)
     record("C02", "pmcid written from pub_title extraction before NCBI call",
-           after.get("pmcid") == "PMC10621028" and
-           before.get("pmcid") != "PMC10621028",
+           after.get("pmcid") == "PMC12345678" and before.get("pmcid") is None,
            details=f"pmcid before={before.get('pmcid')} after={after.get('pmcid')}")
 except Exception as e:
     record("C02", "pmcid write", False, error=traceback.format_exc(limit=3))
