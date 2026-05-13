@@ -218,3 +218,57 @@ cluster_verification_pass:
     8: GB China (6)
     9-12: NFPA, ANSI/ASA, NZS, IEC TR
 ```
+
+
+---
+
+## DIN cluster verification (continued in same session, after supplement)
+
+10 records VERIFIED. Every record received BOTH a publisher-catalog URL AND a DIN-assigned DOI (`10.31030/{N}` pattern) — strongest evidence trail of the session.
+
+### Designations verified (4 editions + 1 draft)
+
+| Designation | Catalog | DOI | Records | Notes |
+|---|---|---|---|---|
+| DIN 18040-1:2010-10 | dinmedia.de/en/standard/din-18040-1/133692028 | 10.31030/1715500 | 3 (REF-00351, 00422, 00445) | "Publicly accessible buildings" |
+| DIN 18040-2:2011-09 | dinmedia.de/en/standard/din-18040-2/142706210 | 10.31030/1803049 | 6 (REF-00144, 00207, 00323, 00412, 00431, partial 00445) | "Dwellings" |
+| DIN 18040-2:2023-02 (draft) | dinmedia.de/en/draft-standard/din-18040-2/361873058 | 10.31030/3401735 | covered in REF-00412 | Draft for revision; co-cited |
+| DIN 18041:2016-03 | dinmedia.de/en/standard/din-18041/245356770 | 10.31030/2395845 | 1 (REF-00329) | "Hörsamkeit / Acoustic quality" |
+| DIN 32984:2011-10 | dinmedia.de/en/standard/din-32984/144226501 | 10.31030/1812864 | 1 (REF-00018) | Superseded; see note |
+
+### Notable findings
+
+- **DIN 32984:2011-10 is no longer current.** Superseded by 2020-12 (further by 2023-04). Citation of 2011-10 still valid for historical reference. Additionally, a published correction exists: DIN 32984 Berichtigung 1:2012-10 (DOI 10.31030/1917071). Flag for content review: should the Guidebook cite the current 2023-04 edition instead?
+- **REF-00144** had standard_number 'DIN 18040-2' without year suffix. Inferred to be 2011-09 by content + pub_year. Flagged in note for human review.
+- **REF-00412 dual citation** ('DIN 18040-2:2011 + Draft E DIN 18040-2:2023') — both editions independently verified at DIN Media; primary url set to 2011 edition, draft preserved in pub_title.
+- **REF-00445 dual citation** ('DIN 18040-1/-2 — Türen') — primary url set to Part 1; Part 2 also verified in same session (REF-00207, 00323, 00431). Flag: consider splitting into two ref rows per IEC 60118-4 multi-scope-citation pattern.
+
+### Method note for next session
+
+DIN's catalog URL pattern is `dinmedia.de/en/standard/din-<designation>/<numeric-id>` for published, `dinmedia.de/en/draft-standard/din-<designation>/<numeric-id>` for draft. Numeric IDs are not predictable — must search-then-fetch. **Every published DIN standard has a DOI** at `dx.doi.org/10.31030/{N}` — extractable from the catalog page HTML. This is the most reliable verification path for DIN going forward; if DIN Media URLs ever change, the DOIs remain stable.
+
+### State deltas (cumulative, session 2026-05-13a)
+
+| Metric | Session start | After main+supplement+DIN | Δ |
+|---|---|---|---|
+| VERIFIED | 361 | 405 | +44 |
+| UNVERIFIED-1 | 8 | 1 | −7 |
+| UNVERIFIED-CLOSED | 0 | 5 | +5 |
+| NULL verification | 305 | 263 | −42 |
+| URLs added | (n) | +17 | (Stream 1+2 = 9; cluster A.A = 27; +DIN URLs were the 5 unique editions added to 10 record url fields) |
+| DOIs added | (n) | +6 | (REF-00023 PubMed correction + 5 new DIN DOIs distributed across 10 records) |
+| Publishers added | 0 | +36 | (BSI + ISO + DOJ + DIN Media) |
+
+### Next-session priority queue (unchanged from supplement)
+
+DIN now COMPLETE. Remaining clusters:
+2. AS 1428 Australia (5)
+3. NCC + Livable Housing (3)
+4. NEN 9120 Netherlands (3)
+5. NBR 9050 Brazil (5)
+6. TEK17 Norway (5)
+7. BFS Sweden (5)
+8. GB China (6)
+9–12. NFPA, ANSI/ASA, NZS, IEC TR (10 total)
+
+Approximately 40 more records achievable via publisher-catalog verification before hitting the no-standard-number remainder.
