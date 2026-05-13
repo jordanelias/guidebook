@@ -428,3 +428,152 @@ push_round_trips:
   all_round_trip_integrity_check: ok
   final_remote_commit: (see below)
 ```
+
+
+---
+
+# FINAL HANDOFF — session 2026-05-13a-url-verification
+
+Written 2026-05-13 03:00 UTC after comprehensive 8-check integrity audit of remote state.
+
+## State, in one screen
+
+```
+Repo:    jordanelias/guidebook @ main
+DB:      data/guidebook.db   3,379,200 bytes   integrity_check: ok
+LATEST:  sessions/session_2026-05-13a-url-verification.md
+
+Evidence verification:
+  VERIFIED          410 / 675  (60.7%)    +49 this session
+  UNVERIFIED-1        1                   −7
+  UNVERIFIED-CLOSED   5                   +5
+  NULL              258                   −47
+
+Audit ledger (4 url_verification_runs rows, chain consistent):
+  url-verify             14 attempted   7 verified  (361 → 369)
+  cluster-verify         26 attempted  26 verified  (369 → 395)   ISO + ADA + BSI
+  cluster-verify-din     10 attempted  10 verified  (395 → 405)   DIN
+  cluster-verify-as1428   5 attempted   5 verified  (405 → 410)   Standards Australia
+```
+
+## 8-check integrity audit results (executed against remote, 2026-05-13 03:00 UTC)
+
+| # | Check | Result |
+|---|---|---|
+| 1 | DB integrity | `PRAGMA integrity_check` → `ok` |
+| 2 | Per-record audit trail | 55 records updated; 0 have audit-trail gaps; all have `last_verified_at`, `verified_by_tool`, `verification_note`, `verification_attempt_count ≥ 1` |
+| 3 | Orphan slug_links | 0 orphans (every `source_slug_links.ref_id` resolves) |
+| 4 | Session-name normalization | 0 stale refs to `session_2026-05-12k` in any of: `evidence_sources.updated_by_session`, `url_verification_runs.run_by_session`, free-text `verification_note` |
+| 5 | Pipeline run ledger | 4 rows; chain consistent (each run's `verified_before` = prior run's `verified_after`); net delta = +49 matches state delta |
+| 6 | Session file + LATEST | LATEST points to session file; file present at 28 KB; contains expected cluster headings |
+| 7 | Commits on main | 11 commits from this session, all reachable on `main` (no orphans or detached HEADs) |
+| 8 | PAT redaction state | Real PAT not in repo (repo-side PI at `references/project-instructions.md` is a deprecated v9.0 stub that says PAT lives only in Claude Project custom instructions). Live PI in claude.ai project knowledge contains the PAT inline per single-user private-repo decision. |
+
+## ⚠ Two pre-existing integrity findings surfaced (NOT from this session)
+
+These were caught by `PRAGMA foreign_key_check` during audit. Both predate this session's work. Documenting for whoever picks up next.
+
+### Finding A — `spec_value_probes` foreign key points to LEGACY table
+
+```sql
+ref_id TEXT REFERENCES "evidence_sources_v1_legacy"(ref_id)
+```
+
+After the v1→v2 schema migration (`cutover_evidence_sources_v2_2026-05-11`), the canonical table was renamed `evidence_sources` and the old one became `evidence_sources_v1_legacy`. The `spec_value_probes.ref_id` FK was created during/before that migration and was never updated. Going forward, every new PMP walk row points at a deprecated table for validation.
+
+**Fix:** schema migration to rebuild `spec_value_probes` with `REFERENCES evidence_sources(ref_id)`. SQLite cannot ALTER a foreign key; the rebuild pattern is: `CREATE TABLE _new`, `INSERT INTO _new SELECT * FROM`, `DROP TABLE` original, `RENAME _new`. Wrap in transaction with foreign_keys=OFF then re-enable.
+
+### Finding B — One existing PMP probe row has invalid `ref_id`
+
+`spec_value_probes.probe_id = PMP-A02-001-S2` has `ref_id = 'ANSI-S12.60-S5.3'` (a standard section identifier, not a REF-NNNNN). The slot was used as freeform text rather than a foreign-key value. Origin: `created_by_session = session_2026-05-10e-slug3-adversarial`. The ANSI/ASA S12.60 standard IS represented in `evidence_sources` (REF-00326, REF-00335, REF-00563, REF-00604, all VERIFIED this session), so the correct `ref_id` is recoverable.
+
+**Fix:** UPDATE this single row to point at the appropriate REF-ID (likely REF-00335 by closest content match — REF-00335 is the bare designation citation; REF-00326/563/604 are the more specific framings). Decision deferred to content review.
+
+## What was committed this session (full artifact list with SHAs)
+
+| SHA | What | Why |
+|---|---|---|
+| 15eece2444c5 | session file 2026-05-13a — initial | Main session record |
+| b044b16acb35 | sessions/LATEST → 2026-05-13a | Pointer update |
+| 16a59feb51ea | data/guidebook.db: Stream 1+2+3 + Tier-A | First DB write |
+| d702df145e34 | data/guidebook.db: session-name normalization | Self-correction (12k→13a) |
+| 1cea1ad9d2d6 | session file: name-normalization yaml | Document the rename |
+| 5cb17e4c19bd | session file: ISO+ADA+BSI cluster supplement | Cluster Phase 1 doc |
+| 59ed8c55a0d7 | data/guidebook.db: ISO+ADA+BSI cluster | +26 VERIFIED |
+| acdd0c9f57a6 | data/guidebook.db: DIN cluster | +10 VERIFIED, +10 DOIs |
+| 328c0b1aeca5 | session file: append DIN section | DIN doc |
+| fa4b3c6d7a08 | data/guidebook.db: AS 1428 + session close | +5 VERIFIED |
+| 335aebc6d86e | session file: AS 1428 + final consolidation | Session close doc |
+
+11 commits, all on `main`, all reachable.
+
+## What was deliberately NOT auto-applied (deferred to content review)
+
+12 content flags raised with full notes in the affected records' `verification_note` field. Searchable in DB by:
+
+```sql
+SELECT ref_id, verification_note FROM evidence_sources
+WHERE verification_note LIKE '%[session_2026-05-13a-url-verification]%'
+  AND verification_note LIKE '%flag for%';
+```
+
+Summary:
+
+1. REF-00023 — author table needs rewrite (Steinfeld is 1st of 4, not D'Souza 1st of 1). CrossRef enrichment via corrected DOI will fill.
+2. REF-00128 — possible content swap to Fleming 2011 *Australas J Ageing* PMID 21923702 (same 30-care-home EAT validation, different author/journal/tool than DB record).
+3. REF-00051/129/517/592 ASPECTSS cluster — replace with actual Mostafa 2021 DCU AFU design guide citation (currently cites a DOI that doesn't resolve).
+4. REF-00521 — tier=4 likely miscategorised for a Lindenwood faculty paper.
+5. REF-00297 — title typo fixed (Bauen→Wohnen); URL maps to DStGB press release describing the underlying study, not the study itself.
+6. REF-00298+REF-00312 — reframed as intentional multi-scope, not dup (parallel IEC 60118-4 precedent).
+7. REF-00533 — `standard_number='BS 8300:2018'` missing part suffix; content maps to BS 8300-2:2018.
+8. REF-00249 — dual citation "BS 8300-1:2018 + Manual for Streets"; the Manual for Streets piece is a separate UK DfT document not separately verified.
+9. REF-00144 — `standard_number='DIN 18040-2'` lacked year; inferred 2011-09 by content + pub_year.
+10. REF-00412 — cites both DIN 18040-2:2011 and 2023 draft; both verified; consider splitting.
+11. REF-00445 — cites DIN 18040 -1/-2 doors; primary URL set to Part 1; consider splitting.
+12. AS 1428.1:2021 — published but not yet regulatory-mandatory; NCC/Premises Standards still reference 2009 edition. Affects 4 records.
+
+## Schema gaps surfaced by rule #7 / rule #8 spot-checks (carried forward unchanged from main session)
+
+1. `evidence_population_match` needs `gap_id` FK column for rule #7 audit support.
+2. `spec_value_probes.search_query` + `.search_query_alt` need population on the 8 existing rows and `NOT NULL` going forward (rule #8 audit support).
+
+Now joined by finding A above (`spec_value_probes.ref_id` FK pointing to legacy table) and finding B (invalid ref_id `ANSI-S12.60-S5.3`).
+
+## Next-session priority queue (ranked by catalog accessibility + record count)
+
+Codes/standards no-DOI bucket: 36 records remain across 10 clusters before falling into the no-standard-number remainder.
+
+1. **NCC + Livable Housing AU** — 3 records — `ncc.abcb.gov.au` (free public access for code text)
+2. **NEN 9120 NL** — 3 records — `nen.nl`
+3. **NBR 9050 BR** — 5 records — `abntcatalogo.com.br`
+4. **TEK17 NO** — 5 records — `dibk.no` (free public access)
+5. **BFS 2024 SE** — 5 records — `boverket.se`
+6. **GB 50763 CN** — 6 records — Chinese MOHURD; English-catalog access limited; may end at cross-reference only
+7. **NFPA 72** — 2 records — `nfpa.org` (free metadata, paywall for full text)
+8. **ANSI/ASA S12.60** — 4 records — `webstore.ansi.org` or `asa.scitation.org`
+9. **NZS 4121** — 2 records — `standards.govt.nz`
+10. **IEC TR 63079** — 1 record — `iec.ch`
+
+Then the no-standard-number remainder (~78 records) needing title-only verification or content-review reassignment.
+
+## Method notes that will save the next agent time
+
+- **ISO catalog IDs are NOT predictable.** Two of my three initial guesses landed on unrelated documents. Always search-then-fetch.
+- **BSI knowledge URLs** — `knowledge.bsigroup.com/products/<slug>` (no trailing `-1`). Use store URL, not the older shop URLs.
+- **DIN has DOIs.** Every published DIN standard has a DOI at `dx.doi.org/10.31030/{N}`, extractable from the catalog page HTML. Strongest verification path for DIN going forward.
+- **Standards Australia does NOT have DOIs.** Use `store.standards.org.au/product/...` URLs.
+- **DOJ ada.gov is more canonical than access-board.gov** for the 2010 ADA Standards (cleaner `<title>` for verification).
+- **Two-criteria match in HTML body** (designation + title fragment) is more reliable than `<title>` parsing alone — many publisher catalog pages return `<title>` empty if their site relies on client-side rendering, but the body still has the canonical text.
+- **Always GET, not HEAD.** Last session's "ASPECTSS URL blocked" was based on HEAD returning 403; GET on the same URL returns 404 (DOI never registered).
+- **Codes don't disappear from publisher catalogs the way papers disappear from CrossRef.** Treat catalog-miss as `UNVERIFIED-1` (catalog access issue), not `CLOSED-DELETED` (non-existence). Rule #1's "2 failed searches → CLOSED-DELETED" was written for paper citations.
+- **Per-cluster transaction boundary.** One transaction per cluster means a network or schema failure mid-cluster doesn't compound across clusters.
+
+## Security note for next session
+
+User opened all egress domains at session start. The PAT is inline in the live PI. If the next session does fetches from low-trust domains, recommend:
+- Re-lock egress to `api.github.com` + `raw.githubusercontent.com` only, or
+- Migrate PAT to file-based pattern outside the conversation context (e.g. environment variable from a sidecar, GitHub App fine-grained token issued per-session).
+
+Not urgent for a single-user private repo, but the wider-than-needed blast radius is real.
+
+## End of handoff
