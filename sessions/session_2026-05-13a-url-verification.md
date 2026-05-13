@@ -100,6 +100,11 @@ deliverables_committed:
   - data/guidebook.db
   - sessions/session_2026-05-13a-url-verification.md (NEW)
   - sessions/LATEST (updated)
+session_name_normalization: |
+  Initial DB writes used SESSION='session_2026-05-12k-url-verification' (wrong UTC day).
+  Actual UTC date of work is 2026-05-13. Normalized 15 DB rows and 14 verification_note
+  free-text references from 'session_2026-05-12k-url-verification' → 'session_2026-05-13a-url-verification'
+  in a separate post-push pass; second DB push completes the integrity fix.
 gaps_raised: 2 (schema instrumentation — see "Schema gaps surfaced")
 gaps_resolved: 0
 skills_invoked: []  # No skill files invoked directly — all work via direct DB + url-fetch
