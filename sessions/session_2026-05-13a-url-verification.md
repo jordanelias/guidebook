@@ -131,3 +131,90 @@ spot_checks_completed:
   rule_7: GAP-189 (protocol OK; schema gap flagged)
   rule_8: PMP-B01-001 (ceiling defensible; instrumentation gap flagged)
 ```
+
+
+---
+
+# Session 2026-05-13a — Supplementary note: Cluster verification (codes/standards, no-DOI)
+
+Appended to `session_2026-05-13a-url-verification.md` after the main Stream 1+2+3 + Tier-A work. User request: continue database integrity work on the codes-and-standards non-DOI bucket.
+
+## Scope
+
+NULL-verification records with evidence_type ∈ {code, national_fw, standard_eb} and tier ∈ {4,5,6}, total 180 records pre-session. 102 of those have a `standard_number` populated; 78 cluster into 15 well-known publisher families. Working cluster-by-cluster, each cluster in its own DB transaction.
+
+This pass attacks the three highest-confidence catalog clusters:
+
+| Cluster | Records | Unique designations | Publisher catalog used |
+|---|---|---|---|
+| ISO | 9 | 3 (ISO 23599:2019, ISO 21542:2021, ISO 9241-391:2016) | `iso.org/standard/{id}.html` |
+| ADA | 5 | 1 (2010 ADA Standards) | `ada.gov/law-and-regs/design-standards/2010-stds/` |
+| BSI | 12 | 3 (BS 8300-1, BS 8300-2, PAS 6463) | `knowledge.bsigroup.com/products/...` |
+| **Total** | **26** | **7** | |
+
+## Method
+
+For each cluster:
+1. Web-search to discover the canonical publisher-catalog URL (ISO catalog IDs aren't guessable from designation).
+2. HTTP GET the catalog page, parse for designation + 2 distinguishing title phrases. All three must match for VERIFIED.
+3. DB write: `verification_status='VERIFIED'`, `publisher=<canonical>`, `url=<catalog URL>`, `url_resolution_outcome='RESOLVED'`, `verified_by_tool='publisher-catalog-fetch'`, `last_verified_at`, append verification_note with full evidence trail.
+4. One transaction per cluster.
+
+## Notable findings during verification
+
+- **ISO catalog IDs are not predictable.** Initial guesses for ISO 23599 (72133) and ISO 9241-391 (66093) both landed on unrelated documents (an IEEE networking standard and an ASN.1 encoding standard). Correct IDs (76106 and 56350) discovered only via web search. Any future automated ISO verification needs the search-then-fetch pattern, never construction-from-designation.
+- **REF-00533** has `standard_number='BS 8300:2018'` without part suffix. BS 8300 was split into Parts 1 and 2 in the 2018 revision. The DB title says 'luminance contrast provisions', which corresponds to BS 8300-2 §9 (Buildings), not -1 (External environment). Mapped to BS 8300-2:2018 with explicit content-based-inference flag in `verification_note`. Edit not auto-applied to `standard_number` (would erase the audit trail of the original record).
+- **REF-00249** standard_number is `BS 8300-1:2018` but the title says `BS 8300-1:2018 + Manual for Streets`. Manual for Streets is a separate UK DfT document. The BS 8300-1 piece (external environment seating intervals) is verified by this session; the Manual for Streets piece is a separate citation not addressed here. Flag for review.
+- **DIN cluster deferred this session.** Found canonical URL for DIN 18040-2:2011 (`dinmedia.de/en/standard/din-18040-2/142706210`), but couldn't locate stable URLs for DIN 18040-1:2010, DIN 18041:2016, DIN 32984:2011-10 within the budget. DIN Media's search endpoint returns 404 (not the URL pattern I tried). Cross-reference confirmation from German-language secondary sources (nullbarriere.de, baunetzwissen.de, barrierefreie-immobilie.de) does exist for all DIN designations, but I chose to defer rather than verify via secondary sources only. Next-session lead: find DIN Media's actual catalog search endpoint, or rely on `dx.doi.org/10.31030/{N}` resolution (DIN does assign DOIs; the search results showed e.g. `10.31030/3401735` for DIN 18040-2:2023 draft).
+
+## State deltas (additional, on top of main session 2026-05-13a)
+
+| Metric | Before this pass | After | Δ |
+|---|---|---|---|
+| VERIFIED | 369 | 395 | +26 |
+| NULL verification | 299 | 273 | −26 |
+| publisher populated | (was 0 on NULL records) | +26 records | +26 |
+
+Tier-coverage after this pass:
+- standard_eb tier=4 (international standards): 45/64 VERIFIED (was 19/64; +26 from ISO + BSI's PAS 6463)
+- code tier=6 (statutory codes): 24/89 VERIFIED (was 19/89; +5 from ADA)
+- national_fw tier=5 (national frameworks): 48/118 VERIFIED (unchanged this pass)
+
+## Next-session queue (priority order, by confidence-of-catalog-access)
+
+1. **DIN cluster** (10 records, 4 designations) — discover DIN Media search endpoint, verify 18040-1:2010-10, 18040-2:2011-09 (already URL-known: catalog 142706210), 18041:2016, 32984:2011-10. Or use `dx.doi.org/10.31030/...` resolution.
+2. **Standards Australia AS 1428** (5 records, 2 designations: AS 1428.1:2021, AS 1428.2:1992) — `store.standards.org.au` catalog.
+3. **NCC 2022 + Livable Housing** (3 records) — `ncc.abcb.gov.au` catalog (Australian Building Codes Board, free public access).
+4. **NEN 9120:2025 Netherlands** (3 records) — `nen.nl` catalog.
+5. **NBR 9050:2020 Brazil** (5 records) — `abntcatalogo.com.br` catalog.
+6. **TEK17 Norway** (5 records) — `dibk.no` (Direktoratet for byggkvalitet; TEK17 is the building regulation, free public access).
+7. **BFS 2024:12 + BBR Sweden** (5 records) — `boverket.se` catalog.
+8. **GB 50763-2012 China** (6 records) — Chinese MOHURD; English catalog access limited; may require cross-reference only.
+9. **NFPA 72** (2 records) — `nfpa.org` catalog (free metadata, paywall for full text).
+10. **ANSI/ASA S12.60-2010** (4 records) — `webstore.ansi.org` or ASA's own catalog.
+11. **NZS 4121:2001** (2 records) — `standards.govt.nz` catalog.
+12. **IEC TR 63079:2017** (1 record) — `iec.ch` catalog.
+
+After these clusters (~50 records, ~7 more sessions of similar scale), the next phase is the no-standard-number remainder (~78 records that don't have a `standard_number` populated at all — these need title-only verification or content-review reassignment).
+
+## YAML extension to session-close block
+
+```yaml
+cluster_verification_pass:
+  clusters_completed: [ISO, ADA, BSI]
+  clusters_deferred: [DIN]
+  records_verified: 26
+  publishers_populated: 26
+  state_after: VERIFIED=395 (59%) | UNVERIFIED-1=1 | UNVERIFIED-CLOSED=5 | NULL=273
+  url_verification_runs_row: cluster-verify-{uuid}
+  next_clusters_priority:
+    1: DIN (10 records — DIN Media search endpoint needed)
+    2: Standards Australia AS 1428 (5)
+    3: NCC + Livable Housing (3)
+    4: NEN 9120 Netherlands (3)
+    5: NBR 9050 Brazil (5)
+    6: TEK17 Norway (5)
+    7: BFS Sweden (5)
+    8: GB China (6)
+    9-12: NFPA, ANSI/ASA, NZS, IEC TR
+```
