@@ -272,3 +272,159 @@ DIN now COMPLETE. Remaining clusters:
 9–12. NFPA, ANSI/ASA, NZS, IEC TR (10 total)
 
 Approximately 40 more records achievable via publisher-catalog verification before hitting the no-standard-number remainder.
+
+
+---
+
+## AS 1428 cluster verification (Standards Australia)
+
+5 records VERIFIED via `store.standards.org.au` catalog.
+
+### Designations verified
+
+| Designation | URL | Records | Notes |
+|---|---|---|---|
+| AS 1428.1:2021 | store.standards.org.au/product/as-1428-1-2021 | 4 (REF-00417, 00436, 00446, 00532) | Published but **not yet mandatory** — see integrity note below |
+| AS 1428.2:1992 | store.standards.org.au/product/as-1428-2-1992 | 1 (REF-00211) | Reconfirmed 2015; current |
+
+### Integrity note (added to all 4 AS 1428.1:2021 records)
+
+AS 1428.1:2021 is the latest published edition but is **NOT YET MANDATORY** under Australian regulatory frameworks. The NCC (National Construction Code) and Disability (Access to Premises — Buildings) Standards both still reference **AS 1428.1:2009 (+ Amendments 1 and 2)** for regulatory compliance. Citation of 2021 edition is appropriate for best-practice guidance; cite 2009 for regulatory compliance discussions. Per source: accessed.com.au/news/when-can-i-start-using-as-142812021. Flagged for content review across all 4 records.
+
+### Method note for next session
+
+Standards Australia catalog uses two URL patterns:
+- `store.standards.org.au/product/as-{N}-{N}-{YYYY}` — canonical e-commerce URL, full title in body
+- `standards.org.au/standards-catalogue/standard-details?designation=as-{N}-{N}-{YYYY}` — generic catalogue browser, less informative
+
+Used store URL as canonical. Standards Australia does NOT assign DOIs to their standards (unlike DIN), so url-only verification is the best available evidence trail for this publisher.
+
+---
+
+# Final session-close consolidation
+
+**Session 2026-05-13a-url-verification — COMPLETE**
+
+## Cumulative state deltas (entire session)
+
+| Metric | Session start | Session end | Δ |
+|---|---|---|---|
+| VERIFIED | 361 (53%) | 410 (60.7%) | **+49** |
+| UNVERIFIED-1 | 8 | 1 | −7 |
+| UNVERIFIED-CLOSED | 0 | 5 | +5 |
+| NULL verification | 305 | 258 | −47 |
+| URL populated (Δ on touched records) | — | +22 | (Stream 1+2: 9; ISO+ADA+BSI+DIN+AS clusters: 13 unique URLs distributed across 41 records) |
+| DOI populated | — | +6 | (REF-00023 PubMed correction; 5 unique DIN DOIs distributed across 10 records) |
+| Publisher populated | — | +41 | (BSI 12, ISO 9, DOJ 5, DIN Media 10, Standards Australia 5) |
+
+## Work pipeline summary
+
+| Phase | Records | Method | Outcome |
+|---|---|---|---|
+| Stream 1 (URL-only) | 6 | direct url-fetch | 5 VERIFIED, 1 UNVERIFIED-1 |
+| Stream 2 (grey-lit) | 4 | web-search-multi | 3 VERIFIED, 1 UNVERIFIED-CLOSED |
+| Stream 3 (ASPECTSS) | 4 | DOI 404-confirm GET | 4 UNVERIFIED-CLOSED |
+| Tier A corrections | 3 | mechanical (DOI/title) | REF-00023, REF-00297, REF-00378 |
+| Cluster: ISO | 9 | publisher catalog | all VERIFIED, 3 unique pages |
+| Cluster: ADA | 5 | publisher catalog (DOJ) | all VERIFIED |
+| Cluster: BSI | 12 | publisher catalog (BSI Knowledge) | all VERIFIED |
+| Cluster: DIN | 10 | publisher catalog + DOI extraction | all VERIFIED, +5 unique DOIs distributed |
+| Cluster: AS 1428 | 5 | publisher catalog (Standards Australia) | all VERIFIED |
+| **Total touched** | **58** | mixed | **49 net VERIFIED, 5 closed, 1 partial** |
+
+## Integrity flags raised (deferred to content review, not auto-applied)
+
+1. **REF-00023** — author rewrite (Steinfeld 1st of 4, not D'Souza 1st of 1) pending CrossRef enrichment
+2. **REF-00128** — candidate content swap to Fleming 2011 *Australas J Ageing*
+3. **ASPECTSS cluster** (REF-00051/129/517/592) — replace with actual Mostafa 2021 DCU AFU design guide
+4. **REF-00521** — tier reclassification (tier=4 looks wrong for a Lindenwood faculty paper)
+5. **REF-00297** title-typo fixed; URL maps to DStGB press release describing the underlying study (not the study itself)
+6. **REF-00298/312 + ASPECTSS-cluster** "not duplicates" reframe (intentional multi-scope per IEC 60118-4 precedent)
+7. **REF-00533** standard_number missing part suffix (mapped to BS 8300-2:2018 by content)
+8. **REF-00249** dual citation (BS 8300-1:2018 + Manual for Streets) — Manual for Streets not separately verified
+9. **REF-00144** standard_number lacked year (inferred to be DIN 18040-2:2011-09)
+10. **REF-00412 + REF-00445** — dual-citation rows worth splitting per IEC 60118-4 precedent
+11. **DIN 32984:2011-10 is no longer current** — superseded by 2020-12 (further by 2023-04). Citation still valid for historical reference; consider updating to current.
+12. **AS 1428.1:2021** — published but not yet mandatory; NCC/Premises Standards still cite 2009 edition. Affects all 4 records.
+
+## Schema gaps surfaced during rule #7 + #8 spot-checks (carried forward from main session)
+
+1. `evidence_population_match` needs `gap_id` FK column (rule #7 audit support)
+2. `spec_value_probes.search_query` and `.search_query_alt` need population/NOT NULL (rule #8 audit support)
+
+## Next-session priority queue
+
+DIN, ADA, ISO, BSI, AS 1428 — COMPLETE.
+
+**Remaining priority clusters** (~36 records across 9 clusters):
+- NCC + Livable Housing — 3 (ncc.abcb.gov.au, free public access)
+- NEN 9120 Netherlands — 3 (nen.nl)
+- NBR 9050 Brazil — 5 (abntcatalogo.com.br)
+- TEK17 Norway — 5 (dibk.no, free public access)
+- BFS Sweden — 5 (boverket.se)
+- GB China — 6 (Chinese MOHURD; English-catalog access limited)
+- NFPA — 2 (nfpa.org)
+- ANSI/ASA — 4 (webstore.ansi.org or asa.scitation.org)
+- NZS — 2 (standards.govt.nz)
+- IEC TR — 1 (iec.ch)
+
+After these clusters (~36 records, ~5 more sessions of similar scale), the next phase is the no-standard-number remainder (~78 records that don't have a `standard_number` populated at all).
+
+## YAML session-close block (final)
+
+```yaml
+session_id: session_2026-05-13a-url-verification
+session_close: 2026-05-13 02:45 UTC
+deliverables_committed:
+  - data/guidebook.db (5 pushes this session: 14 + 26 + 10 + 5 + name-normalization)
+  - sessions/session_2026-05-13a-url-verification.md (NEW + 4 appends)
+  - sessions/LATEST (updated to point to new session file)
+gaps_raised: 2 (schema instrumentation: epm.gap_id; pvp.search_query)
+gaps_resolved: 0 (verification work doesn't close existing gaps directly; future content
+                  swaps and reassignments will close GAP records as they're applied)
+skills_invoked: []
+clusters_completed_this_session: [ISO, ADA, BSI, DIN, AS_1428]
+clusters_remaining_priority:
+  1: NCC + Livable Housing (3)
+  2: NEN 9120 (3)
+  3: NBR 9050 (5)
+  4: TEK17 (5)
+  5: BFS 2024 (5)
+  6: GB 50763 (6)
+  7: NFPA 72 (2)
+  8: ANSI/ASA S12.60 (4)
+  9: NZS 4121 (2)
+  10: IEC TR 63079 (1)
+next_action: >
+  Continue Phase B URL/catalog verification. Pick up at NCC cluster (Australian Building
+  Codes Board, ncc.abcb.gov.au — free public access for code text). Alternatively, address
+  the 12 deferred content flags (REF-00023 author rewrite, REF-00128 Fleming swap,
+  ASPECTSS cluster reassignment, etc.).
+  Alternatively, address the 2 schema gaps surfaced by spot-checks.
+blockers:
+  - 263 remaining NULL records of which 73 are no-standard-number-no-doi-no-url
+    (will require manual/institutional verification; Phase B.7)
+  - 12 content-review items deferred
+  - 2 schema gaps in audit support
+verification_state_final:
+  VERIFIED: 410 (60.7%)
+  UNVERIFIED-1: 1
+  UNVERIFIED-CLOSED: 5
+  NULL: 258
+  url_RESOLVED: 22
+  url_RESOLVED-PARTIAL: 1
+  url_DEAD: 4
+  records_with_publisher: +41 from this session
+  records_with_DIN_DOI: 14 total
+spot_checks_completed:
+  rule_7: GAP-189 — protocol OK; schema gap flagged
+  rule_8: PMP-B01-001 — ceiling defensible; instrumentation gap flagged
+session_name_normalization:
+  initial: session_2026-05-12k-url-verification
+  corrected: session_2026-05-13a-url-verification
+  rows_normalized: 15 + 14 note-text refs
+push_round_trips:
+  total_db_pushes: 5
+  all_round_trip_integrity_check: ok
+  final_remote_commit: (see below)
+```
