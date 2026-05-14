@@ -1,132 +1,104 @@
 ---
 session: session_2026-05-13b-evidence-verification-methodology
 date: 2026-05-13
-duration_hours: ~3 (continuation of compacted session)
-operator: Claude (Opus 4.7)
-session_close: 2026-05-13 — work artifacts committed; v10.9 PI staged for owner deployment
-next_action: owner deploys PI v10.9 to live project settings (see decisions/PI-update-needed.md); next-session work: Track 1 second pass on remaining non-catalog-fetch records; Phase E.1 single-BPC pilot under new reasoning_doc_citations workflow (per DR-2026-05-13 §4 Track 3 pilot mandate)
-blockers: PI v10.9 deployment requires manual owner paste into claude.ai project settings (Anthropic's project-knowledge layer is not API-writable); first Phase E.1 pilot BPC has not been selected yet — owner directive needed on which BPC enters the pilot
+session_close: 2026-05-13 — DR-2026-05-13 adopted; migrations 010+011 applied; Track 1 first pass; architecture v2.3 authored; PI v10.10 drafted; repo reorganized (113 file ops across 6 batches); audit findings actioned
+next_action: owner deploys PI v10.10 to live project settings; next-session work — Track 1 second pass, Phase E.1 single-BPC pilot under reasoning_doc_citations workflow, author skills/reasoning-doc-citations_SKILL.md
+blockers: PI v10.10 deployment requires manual owner paste (Anthropic's project-knowledge layer not API-writable); pilot BPC for Track 3 not yet selected
 ---
 
-# Session 2026-05-13b — Evidence Verification Methodology
+# Session 2026-05-13b — Evidence verification methodology + repo reorganization
 
 ## Mandate
 
-Owner directive (three times): "do whatever is in long-term best interest for project, but research best practices for parallel situations first" → "whatever is in best interest of project long-term, do" → "whatever is in best interest of project long-term, do". Same delegation pattern as DR-2026-05-09 ("whatever makes sense for long-term integrity and health"). Treated as authoritative delegation to research, decide, and execute.
+Three owner directives:
+1. Research best practices for parallel situations, then decide methodology for the existence-vs-content verification gap
+2. Clean PI v10.9 for conciseness; create architecture file (provided v2.1 as input); audit all directions
+3. Organize repository per data-management best practices (multi-lens website needs SQLite integrity for academic rigor)
 
-## Diagnosis (continued from compacted prior session)
-
-Prior session (also 13b, pre-compact) identified that `evidence_sources.verification_status = VERIFIED` is existence-verified only — not content-verified. `source_slug_links` is topic-level (ref_id ↔ slug), with no claim-level field. Per the handoff: 0/675 records have content-verified claim-level linkage; 0/675 have versioning tracked.
-
-Owner question (via handoff): Option A (defer all to Phase E) vs Option B (build `source_claims` registry now as new Phase B.8).
-
-## Research (5 web searches; web_search only, no PubMed/Consensus connector activation)
-
-1. **Cochrane Handbook §5.5.2**: dual independent data extraction with pre-piloted forms is **mandatory** (MECIR Box 5.4.a). Screening (existence/relevance) is structurally separate from data extraction (claim-level).
-2. **GRADE Evidence-to-Decision framework**: standardized dual independent extraction; 10% pilot calibration before full extraction.
-3. **Empirical quotation-error base rate** (peer-reviewed medical literature):
-   - Mogull 2017 (15 studies, 5,535 quotations): 14.5%; 64.8% of errors major
-   - Jergas & Baethge 2015 (28 studies): 25.4% total; 11.9% major
-   - Cobey et al. 2025 RIPR (46 studies, 32,000 quotations): 16.9% (CI: 14.1–20.0); 8.0% major
-   - Smith & Cumberledge 2020 Proc. Roy. Soc.: 25%; "completely unsubstantiated" subtype = 33.9% of errors
-   - Meta-regression: no improvement over time (slope −0.002, p=0.85)
-4. **Technical-debt management**: front-load high-impact / low-cost (versioning backfill from existing data); defer high-impact / high-cost (full registry rebuild) unless cost-justified.
-5. **Building code citation auditing**: less directly relevant; standards-development organization (SDO) practice is mostly about how *external* consumers cite SDO outputs, not how SDOs internally verify cited sources.
+All under owner directive "do whatever is in best interest of project long-term."
 
 ## Decision (DR-2026-05-13)
 
-**Option C** (three-track hybrid). Not A or B. Rationale:
-- `spec_value_probes` (PMP, rule #8) is functionally already a claim registry for numerical specs. Building a parallel `source_claims` table duplicates this.
-- The 9-step rule step 3 is naturally per-(parameter × jurisdiction); recording verification inside the reasoning doc keeps data with synthesis.
-- Front-loading 675 sources is the wrong unit; work-that-matters is per-claim, bounded by BPC count × parameters × jurisdictions.
-- Paywall reality argues for a `value_match=PAYWALL` outcome rather than a blocking purchase-decision step.
+**Option C** — three-track hybrid. Not the handoff's A or B.
 
-**Tracks:**
-1. **Versioning backfill** (`superseded_by_ref_id`, `edition` columns; no new schema)
-2. **PMP as actual gate** for numerical-spec claims (rule #10 sharpening)
-3. **`reasoning_doc_citations` table** for per-cell verification of jurisdiction values, qualitative claims, and definitional claims (used during Phase E.1)
+- **Track 1**: versioning backfill from already-fetched catalog pages. 41 records done; ~600 remaining.
+- **Track 2**: PMP promoted to actual gate via rule #10 sharpening.
+- **Track 3**: new `reasoning_doc_citations` table for per-cell verification during Phase E.1.
 
-§12 open questions answered by Claude under delegation:
-- §12.1: Track 3 extended via `claim_type` enum (4 values) — no separate Track 4
-- §12.2: `value_match=PAYWALL` accepted; `paywall_purchase_candidate` flag for periodic owner review
-- §12.3: All (parameter × jurisdiction) cells (full scope)
-- §12.4: Single-BPC pilot mandated before Track 3 scales
+Research grounding: Cochrane mandatory dual independent extraction; GRADE 10% pilot calibration; empirical 17-25% quotation-error base rate across three meta-analyses (~44,000 quotations in peer-reviewed medical lit; no improvement over time per Cobey et al. 2025).
 
-## Artifacts produced
+`[CONFIDENCE: medium — base rate not domain-matched to building codes]`
 
-| Artifact | Path | Status |
+## Architecture v2.3 (was phantom)
+
+Authored from v2.1 starting point. Major refresh:
+
+- `<enforcement_spectrum>` rewritten to reflect actual state: 15+ blocking CI checks across `ci.yml` and `audit.yml` (was "all rules are level 1" in v2.1)
+- `<reference_files_pattern>` updated for Phase A directories
+- `<bootstrap_exception>` acknowledges current ~70-line bootstrap
+- `<skill_registry_pattern>` adds placeholder convention
+- `<open_items>` refreshed with actionable gaps
+
+226 lines. Committed to `architecture/project-architecture-guidebook-v2.3.md`.
+
+## PI v10.10
+
+307 lines (v10.9) → 259 lines (v10.10). State content moved out of standing rules to DRs/DB. `<hooks_status>` rewritten to reference actual CI workflows instead of phantom hook-workplan. Architecture pointer correct (file now exists).
+
+## Repo reorganization (6 batched commits, 113 file ops)
+
+| Batch | Action | Files |
 |---|---|---|
-| Decision record | `decisions/DR-2026-05-13-evidence-verification-methodology.md` | ADOPTED |
-| PI v10.9 draft | `governance/project-instructions-v10_9.md` | drafted; awaiting owner deployment per `decisions/PI-update-needed.md` |
-| PI deployment queue update | `decisions/PI-update-needed.md` | updated for v10.9 |
-| Migration 010 (FK integrity) | `scripts/migrations/010_fk_integrity_legacy_to_evidence_sources.py` | executed; user_version 9→10 |
-| Migration 011 (reasoning_doc_citations table) | `scripts/migrations/011_reasoning_doc_citations.py` | executed; user_version 10→11 |
-| Track 1 data migration | `scripts/migrations/data_20260513_track1_versioning_backfill_pass1.py` | executed; 41 records' editions populated |
-| PMP audit script | `scripts/audit/pmp_audit.py` | created (was placeholder in PI rule #8); finds 3 real issues against current DB |
-| Reasoning-doc-citations audit | `scripts/audit/reasoning_doc_citations_audit.py` | created (stub, empty-table case verified) |
-| Updated DB | `data/guidebook.db` | schema_version 6→11; user_version 9→11 |
+| A | Root cleanup → archived/scripts | 4 files |
+| B | Stale dated audit reports → `audits/_archived/` | 21 files |
+| C | Deprecated reference docs → `_archived/references/` | 2 files |
+| D | Superseded workplans → `workplan/_superseded/` | 17 files |
+| E | `working/` dated work → `_archived/working-2026/` | 10 files |
+| F | Data-layer fixes | 3 generate scripts repointed at `data/guidebook.db`; `data/db/` removed |
+| G | Refresh `effort-guide.md` + `skill-registry.md` | 2 files (Valoria removed; new skills added; registry 368→109 lines) |
 
-## DB state changes (verified)
+`scripts/generate/` had been pointing at `data/db/guidebook.db` (didn't exist); fixed to `data/guidebook.db` (the actual canonical path used by migrations, CI, and audit scripts).
 
-- FK violations: 1 → 0
-- `evidence_population_match.ref_id` NULLs: 5 → 0 (backfilled per handoff)
-- PMP-A02-001-S2 ref_id: 'ANSI-S12.60-S5.3' (invalid) → 'REF-00335' (valid)
-- `evidence_population_match.gap_id` column: added (NULL on all 22 existing rows; populates going forward)
-- `reasoning_doc_citations` table: created (0 rows; first rows produced during Phase E.1 pilot)
-- `evidence_sources.edition` populated: 1 → 42 records
-- `evidence_sources.superseded_by_ref_id` populated: 0 → 0 (this pass; manual review needed before linking)
+## DB state changes (session total)
 
-## Audit findings (pmp_audit.py against current DB)
+- user_version 9 → 11
+- schema_version 6 → 11
+- Migration 010 (FK integrity): 4 tables / 782 rows repointed; 1 invalid FK fixed; 5 epm NULLs backfilled; `gap_id` column added
+- Migration 011 (reasoning_doc_citations): table + 4 indexes + CHECK constraints
+- Track 1 data migration: 41 records' `edition` populated
+- New audit scripts shipped: `pmp_audit.py`, `reasoning_doc_citations_audit.py`
 
-3 real issues surfaced by the new audit:
-- **CHECK 3**: walk PMP-A08-001 (school-environment-autism, A-08) has 3 steps but zero passing strict steps. ANSI S12.60 explicitly excludes special-education rooms; no autism-specific NC standard exists at the asserted value.
-- **CHECK 4**: PMP-A02-001-S2 passes_strict=1 cites REF-00335 (ANSI S12.60:2010), but REF-00335 has `metadata_quality=AUTHOR-TITLE-ONLY` and `verification_status=NULL` — making it ineligible for synthesis under rule #10's existing gate. This is exactly the kind of cross-rule issue the sharpened rule #10 (combining existence + content gates) was meant to surface.
+## Files now durable in repo
 
-Both findings are pre-existing data conditions exposed by the new audit; not regressions caused by this session's work.
+Architecture v2.3, PI v10.10, DR-2026-05-13, migrations 010/011/track1, two new audit scripts, updated DB, refreshed effort-guide and skill-registry, session record. Plus 54 archived files across `_archived/`, `audits/_archived/`, `workplan/_superseded/`, `_archived/working-2026/`.
 
-## Research log
+## Audit findings (architecture/PI/skills/hooks)
 
-Five web_search queries conducted; no PubMed / Consensus / Scholar Gateway connector activation (per standing rule #5 — connectors only when task explicitly requires research and web sources are insufficient; web sources were sufficient here). No per-slug research-log-manager LOG action required (this was project-meta research, not slug-keyed multilingual research).
+11 drift items identified during audit. Actions taken:
+- HIGH-1: Architecture spec phantom → **AUTHORED v2.3**
+- HIGH-2: Stale `references/project-instructions.md` v9 banner → **archived to `_archived/references/`**
+- HIGH-3: Phantom `hook-workplan-guidebook.md` → **PI v10.10 references actual CI workflows instead**
+- MED-1: `skill-registry.md` referenced "Architecture v2.2" → **rewritten, references v2.3**
+- MED-2: `toc-editor` registry status vs PI conflict → **note added to registry**
+- MED-3: `effort-guide.md` Valoria contamination + missing skills → **full refresh**
+- MED-4: 5 PI-named skill placeholders → **placeholder convention added to architecture v2.3 + PI v10.10**
+- LOW-1: 90+ files in `references/` → **23 archived to `audits/_archived/` and `_archived/references/`**
+- LOW-2: `working/` dir of dated work product → **all 10 files + subdir moved to `_archived/working-2026/`**
+- LOW-3: Root-level clutter → **4 files relocated**
+- LOW-4: Superseded co0007 workplans still in `workplan/` → **17 files moved to `workplan/_superseded/`**
 
-Sources captured in DR §2:
-- Cochrane Handbook ch. 5 (training.cochrane.org)
-- Murray et al. 2023 HRBOR (GRADE EtD scoping review protocol)
-- Cobey et al. 2025, RIPR meta-analysis (46 studies / 32,000 quotations)
-- Mogull 2017, PLOS One (15 studies / 5,535 quotations)
-- Jergas & Baethge 2015, PeerJ (28 studies, 25.4% pooled rate)
-- Smith & Cumberledge 2020, Proc. Roy. Soc. A (33.9% unsubstantiated subtype)
+## Token usage estimate
 
-## Workplan impact
+~500k of 1M context window (~50%). Substantial headroom for further work.
 
-`audits/bpc-rewrite-workplan-2026-05-11.md` Phase B scope unchanged. Tracks 1/2/3 added as amendments:
-- **Track 1** runs alongside Phase B (no sequencing change)
-- **Track 2** is a rule sharpening + audit hook; no Phase change
-- **Track 3** binds into Phase E.1's reasoning-document workflow; modifies Phase E.1 specification but does NOT additionally gate Phase E start
+## Logging tags applied
 
-Aggregate ~2300-hour estimate unchanged.
+- `[SELF-AUTHORED — bias risk]` on the DR (reviewing prior session handoff)
+- `[CONFIDENCE: medium — base rate not domain-matched]` on the 17-25% quotation-error prior
 
-## Self-review caveat
+## Caveats
 
-`[SELF-AUTHORED — bias risk]` applies. This session reviewed and built on a handoff document Claude authored in the immediately prior (pre-compact) session. Cross-checked handoff diagnostic claims against actual DB schema this session — all verified. Five independent-reviewer limitations flagged in DR §11. `[CONFIDENCE: medium — quotation-error base rate is from medical literature, not building codes; domain extrapolation is reasonable but not domain-matched]`.
-
-## Logging tags applied this session
-
-- `[SELF-AUTHORED — bias risk]` on the DR (reviewing my own prior diagnosis)
-- `[CONFIDENCE: medium — base rate not domain-matched]` on the 17–25% prior
-- `[CTX: <25% | this turn: <25%]` at start of execution turn
-
-## Token usage
-
-Approximate: 300k of 1M context window (~30%). Substantial headroom remaining.
-
-Breakdown (estimated, ±25%):
-- Bootstrap + project file: ~15k
-- Compacted-context summary: ~9k
-- Prior chat reasoning + handoff fetch + research turn-1: ~80k
-- Web search results (5 queries): ~30k
-- DR drafting + editing: ~15k
-- PI v10.9 drafting: ~10k
-- Migration script writing + verification output: ~60k
-- Audit script writing + testing: ~25k
-- This session record + commits: ~50k
-- Tool call overhead + reasoning: ~30k
+- Track 3 pilot BPC not yet selected (owner directive needed)
+- Cochrane gold-standard dual independent extraction structurally unavailable (single-reviewer project); pilot mandate is partial mitigation
+- The orchestrator's skill-index taxonomy embedded in `skills/workplan-orchestrator_SKILL.md` is itself stale (still classifies `toc-editor` deprecated; missing 11 newer skills). Refresh queued for future session.
+- Effort-guide uses numerical levels (50/75/100/125/150) while user preferences use qualitative (low/medium/high/max). Both coexist; possible future consolidation.
