@@ -1,10 +1,8 @@
 # Effort Level Guide
-**Last updated:** 2026-05-13 (full refresh; session_2026-05-13b)
-**Active PI version:** v10.10
 
-This file lists per-skill effort overrides. The `/effort` parameter sets Claude's extended-thinking token budget — more reasoning steps before responding. It does not change the model. Model assignment is separate (per skill frontmatter).
+Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's extended-thinking token budget — more reasoning steps before responding. It does not change the model. Model assignment is separate (per skill frontmatter).
 
-**Default if a skill is not listed: 100.** Per user preferences `<effort_levels>`, sessions default to `max` (qualitative) which maps loosely to 125–150 numerical depending on the skill class.
+**Default if a skill is not listed: 100.** User preference `<effort_levels>` qualitative default `max` applies when the user has not overridden.
 
 ---
 
@@ -42,17 +40,17 @@ This file lists per-skill effort overrides. The `/effort` parameter sets Claude'
 | evidence-auditor | Stratum determination; SelfCheck with divergent framing; contested-claim arbitration |
 | functional-deficit-researcher | Opus-assigned for synthesis/NOVEL/REFINES classification; ICF → spatial requirement reasoning |
 | cross-population-conflict-mapper | Opus-assigned for resolution synthesis and best-practice determination |
-| adversarial-research | Per DR-2026-05-09. Confidence intervals, dissenter search, falsification conditions. Opus required for genuine adversarial framing |
+| adversarial-research | Confidence intervals, dissenter search, falsification conditions; Opus required for genuine adversarial framing |
 
 ### 125 — Heavy multi-source judgment; maximum Sonnet reasoning demand
 
 | Skill | Rationale |
 |---|---|
-| item-specification-writer | Evidence and framing decisions; three-tier hierarchy; BPC Opus-synthesis check gate |
+| item-specification-writer | Evidence and framing decisions; three-tier hierarchy; BPC synthesis gate check |
 | sensory-coherence-checker | Cross-domain judgment across acoustic, visual, thermal, olfactory specs |
 | literature-review-planner | PRISMA protocol construction; evidence hierarchy mapping |
 | economics-researcher | Cost claim verification; cross-jurisdictional economic evidence |
-| progressive-measurement | Per DR-2026-05-10. Iterative spec-value probing with strict termination criteria. Heavy reasoning per step |
+| progressive-measurement | Iterative spec-value probing with strict termination criteria; heavy reasoning per step |
 | economics-auditor | Cost-data verification across jurisdictions and contexts |
 | functional-deficit-auditor | Audit pass over functional-deficit research output |
 
@@ -71,15 +69,13 @@ This file lists per-skill effort overrides. The `/effort` parameter sets Claude'
 | structure-auditor | Structural integrity judgment; orphan detection |
 | audit-consolidator | Cross-audit synthesis; finding deduplication |
 | item-audit-pipeline | Multi-stage audit pipeline coordination |
-| evidence-auditor (gates) | When invoked specifically for gate checking rather than full stratum review |
 | cell-curator | Per-cell evidence curation in jurisdiction comparison tables |
-| reasoning-doc-citations | Per DR-2026-05-13 Track 3. Per-cell verification recording during Phase E.1. (Skill file pending; expected to author Phase A parallel-track.) |
+| reasoning-doc-citations | Per-cell verification recording for synthesis claims (skill placeholder) |
 | connection-discovery | Identify candidate cross-BPC connections |
 | connection-auditor | Audit existing connections for validity and currency |
 | cross-reference-resolver | Audit and classify broken refs; mechanical repair handoff |
 | doctrine-recheck | A13 doctrine snapshot + cross-reference recheck |
 | relational-integrity-checker | DB referential integrity validation |
-| literature-review-planner (mechanical mode) | When invoked for protocol assembly without new synthesis |
 
 ### 75 — Single-pass pattern recognition; limited judgment; tool-dependent
 
@@ -103,14 +99,12 @@ This file lists per-skill effort overrides. The `/effort` parameter sets Claude'
 | markdown-formatter | Heading hierarchy correction |
 | github-io | Pure I/O; no judgment |
 | github-filing | File move operations |
-| toc-editor (record mode) | Structural change recording; Change Order generation. (Frontmatter and codes only — semantic judgment for relocation lives elsewhere.) |
+| toc-editor | Structural change recording; Change Order generation (frontmatter and codes only) |
 | research-log-manager | Log read/write; BPC retrieval |
 
 ---
 
 ## Notes
 
-- **Default `medium` per preferences.** When a skill is not listed here, sessions invoking it should default to 100, but the user preference `<effort_levels>` default `max` applies if the user has not overridden.
-- **Numerical vs qualitative.** User preferences use qualitative levels (low/medium/high/max). This file uses numerical (50/75/100/125/150) reflecting older convention. The two coexist: qualitative levels apply when the user invokes `/effort low|medium|high|max`; numerical values document the skill's expected reasoning depth for routing decisions.
-- **Deprecated skills** (e.g., `connection-scout`, `bulk-renumber`, `chunk-assembler`, `file-splitter`, `fix-linebreaks`, `haiku-chunker`, `vol2-item-formatter`, `volii-validator`, `bibliography-updater`, `evidence-marker`, `keyword-lookup`, `neufert-image-analyzer`) live in `skills/deprecated/` and are not assigned an effort level. If a deprecated skill must be invoked, default to 50.
-- **Cross-project skills removed.** Earlier versions of this file contained `valoria-*` skill entries from a different project. Those have been removed.
+- When a skill is not listed here, sessions invoking it default to 100. Numerical and qualitative levels coexist: qualitative levels (low/medium/high/max) apply when the user invokes `/effort low|medium|high|max`; numerical values document the skill's expected reasoning depth for routing decisions.
+- **Deprecated skills** (`skills/deprecated/`) are not assigned an effort level. If a deprecated skill must be invoked, default to 50.

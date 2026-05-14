@@ -1,130 +1,132 @@
 # Project Architecture — Guidebook
-**V2.3 · 2026-05-13**
-Project-specific architecture governance. Lives in `architecture/` of `jordanelias/guidebook`.
-Companions: `userPreferences-v6.1.md` (account-wide), `governance/project-instructions-v10_9.md` (this project's PI).
 
-<governs>
-This document governs the Accessible Built Environments Guidebook project. It defines what belongs in the user preferences, the PI, the skills, the audit scripts, and the CI workflows — and how those layers interact.
-</governs>
+This file describes how the Guidebook project is structured, where things belong, and how the layers interact. It governs and frames. It does not log specific issues, decisions, or session activity — that content lives in `decisions/`, `audits/`, `sessions/`, and git history.
 
-<three_layer_model>
-```
-┌──────────────────────────────────────┐
-│  USER PREFERENCES (account-wide)     │  ← v6.1
-│  In claude.ai Settings → Profile     │
-└──────────────────────────────────────┘
-            ↓ outer wins by default
-┌──────────────────────────────────────┐
-│  GUIDEBOOK PI (this project)         │  ← v10.9
-│  In claude.ai Project Instructions   │
-└──────────────────────────────────────┘
-            ↓ outer wins by default
-┌──────────────────────────────────────┐
-│  GUIDEBOOK SKILLS (executable)       │
-│  In jordanelias/guidebook/skills/    │
-└──────────────────────────────────────┘
-            ↓ cross-cutting enforcement
-┌──────────────────────────────────────┐
-│  AUDIT SCRIPTS + CI WORKFLOWS        │
-│  scripts/audit/ + .github/workflows/ │
-└──────────────────────────────────────┘
-```
+---
 
-Conflict resolution:
-1. Outer layer wins by default.
-2. PI may override a preference only with an explicit clause naming the rule and scope. Implicit overrides are ignored.
-3. Skills override PI only on execution mechanics; PI governs trigger conditions and assignments.
-4. CI workflows and audit scripts (the cross-cutting layer) trump text rules for the matching check, regardless of where the text rule lives.
-</three_layer_model>
+<identity>
+**Project:** Accessible Built Environments Guidebook — a reference document on architecture, accessibility, and built environment standards.
+**Surface:** claude.ai chat with Code Interpreter.
+**Repository convention:** single primary author; main branch protected by CI; data layer is authoritative.
+</identity>
 
-<layer_ownership>
-**User preferences** own: tone · output format · logging conventions · effort calibration · web/MCP defaults · token reporting · accuracy and uncertainty tags · persistence mitigation · model identity policy · model routing for artifact-side calls · extended thinking guidance · execution permissions.
+<layer_model>
+Three runtime layers govern Claude's behavior. Outer wins by default; layers override only with explicit named clauses.
 
-Preferences exclude: anything project-specific.
+| Layer | Source | Scope |
+|---|---|---|
+| User preferences | `userPreferences-v*.md` | Cross-project |
+| Project instructions (PI) | `governance/project-instructions-v*.md` | This project only |
+| Skills + hooks + CI | `skills/`, `.github/workflows/`, `scripts/audit/` | Execution mechanics |
 
-**Guidebook PI** owns: project identity (repo, branch, PAT) · bootstrap (the documented exception) · project terminology (DD, RFO, BPC, PMP) · project-specific standing rules · skill assignments · reference file declarations · commit convention · session close protocol · override clauses · the architecture/PI/skills/CI pointer.
+PI overrides preferences only via explicit clause naming the rule and scope. Skills override PI on mechanics; PI governs whether a skill runs and under what conditions. Code-enforced checks (hooks, CI) trump text rules for the matching invariant.
 
-PI excludes: re-statements of preference-level rules · procedural detail (lives in skills) · transient state (lives in DB, sessions, or DRs) · anything not project-specific.
-
-**Guidebook skills** own: the actual procedures (how to run a research check, how to consolidate a session, how to write an item specification, etc.) · templates · skill metadata · per-skill model assignment.
-
-Skills exclude: project identity · user preferences · trigger-condition policy (that's PI's job).
-
-**Audit scripts and CI workflows** own: mechanical compliance checks · regression tests · referential integrity · format validation.
-
-The cross-cutting layer exists because text rules degrade over time without mechanical enforcement. Rules that the project cannot afford to drift on get promoted from text (level 1) → audit script (level 2) → CI (level 3/4).
-</layer_ownership>
-
-<bootstrap_exception>
-PI may contain bootstrap procedure inline. This is the only procedural exception.
-
-**Why:** skills load on trigger, but bootstrap must run *before* skills can load. A skill cannot bootstrap itself.
-
-**Constraints:**
-- minimal · executable (actual bash, not abstract description) · idempotent (safe to re-run) · self-reporting (outputs a status block)
-- portable backend: gh CLI if available, curl otherwise (PI v10.3 added this)
-- read-only: bootstrap never writes
-- runtime under ~30 seconds when network responsive
-
-**Current size note.** PI v10.9's bootstrap is ~70 lines (vs v2.1's stated 30-line target). The growth comes from the SQLite query block (rule #8 PMP metrics, rule #10 evidence-gate metrics, v10.9's Track 1 / Track 3 progress counters) added across v10.7-v10.9. Reading the DB on bootstrap is high-value (state visibility before every session) and outweighs the size discipline. If bootstrap grows past ~100 lines or runtime exceeds 30 seconds, extract the SQLite block to a `bootstrap-status` skill and leave a thin caller in PI.
-</bootstrap_exception>
-
-<surface>
-**Guidebook targets claude.ai chat with Code Interpreter.**
-
-Bootstrap requires code execution. Without Code Interpreter, the PI's bash + curl calls cannot run and the project fails to load. If a session is opened without Code Interpreter, the PI's bootstrap-exempt clause applies: limit work to review/conversation that doesn't touch repo state.
-
-Skills are repo-resident files in `jordanelias/guidebook/skills/`, fetched into context on demand. They are not claude.ai Settings → Capabilities skills (which are global to the account).
-
-The Code Interpreter container is ephemeral. Files at `/tmp/*` and `/home/claude/*` reset between turns; all durable work must be committed to the repo via the GitHub Contents API.
-</surface>
+A cross-cutting **data layer** sits beneath all three: `data/guidebook.db` (canonical SQLite), schemas in `schemas/`, migrations in `scripts/migrations/`. The website and all derived artifacts read from this layer. Direct writes that bypass migrations are prohibited; CI enforces reproducibility.
+</layer_model>
 
 <reference_files_pattern>
-Guidebook maintains a `references/` directory in the repo. The PI declares which files are loaded on bootstrap; everything else is read on demand.
+The PI declares which reference files it expects. Each file has a single defined purpose. Reference files contain **rules, taxonomies, and structured registries** — not session activity, dated reports, or transient state.
 
-**Required (loaded on bootstrap):**
-- `project-standards.md` — domain conventions, citation style, voice rules, structural rules
-- `skill-registry.md` — index of all skills with status/classification/triggers. Source of truth for skill assignments per `<skill_registry_pattern>` below.
+Conventional locations:
 
-**Required (read on demand):**
-- `effort-guide.md` — per-skill effort overrides. Default `medium` if not listed.
+| Directory | Contents |
+|---|---|
+| `references/` | Production reference material consumed by ongoing work |
+| `audits/` | Audit reports (dated); `audits/_archived/` for resolved findings |
+| `decisions/` | Decision records (DR-YYYY-MM-DD-slug.md) and transient deployment queues |
+| `sessions/` | Per-session records and `sessions/LATEST` pointer |
+| `workplan/` | Active workplans; `workplan/_superseded/` for retired plans |
+| `_archived/` | Files removed from active circulation but preserved for git history |
 
-**Phase A directories** (per BPC rewrite workplan `audits/bpc-rewrite-workplan-2026-05-11.md`):
-- `bpc-reasoning/<slug>.md` — per-BPC reasoning documents (Phase E.1 target: 95 docs)
-- `connection-reasoning/<con-id>.md` — per-connection reasoning documents (Phase D target: 245 docs)
-- `keyword-compendiums/<lang>.md` — per-language native-vocabulary compendiums (Phase A.11; required for AR/HI/ID/SW/BN before they exit `[UNVERIFIED-TERMS]` status)
+When a reference file accumulates session-specific notes, dated commentary, or resolved-item logs, that content is extracted to the appropriate directory above. Reference files should read the same six months from now as they do today.
+</reference_files_pattern>
 
-**Removed:**
-- `canonical-sources.md` — removed in v10.3 per PI changelog
+<skill_registry_pattern>
+PI declares skill *assignments* — one-line entries naming which skills the PI itself invokes. Detail (location, status, purpose, triggers, dependencies) lives in `references/skill-registry.md`.
 
-**Reference files are project context, not skills.** Treat them as production documents — version them, audit them, keep them tight.
+Skill files are flat: `skills/<name>_SKILL.md`. Deprecated skills live in `skills/deprecated/` and are not loaded on trigger.
 
-**Sprawl warning.** The current `references/` directory contains 90+ files, many of which are one-off audit reports (e.g., `bibliography-citation-audit-2026-04-09.md`, `co1-verification-report-2026-04-23.md`). These should be migrated to `_archived/` once their findings have been actioned, to keep the namespace navigable. See `<open_items>
-**Resolved in session_2026-05-13b (this session, after audit):**
-- ✓ `architecture/project-architecture-guidebook-v2.3.md` — was phantom across PI v10.3–v10.9; authored this session
-- ✓ `references/project-instructions.md` — deprecated v9 PI shell archived to `_archived/references/project-instructions-v9-deprecated.md`
-- ✓ `references/effort-guide.md` — full refresh; Valoria cross-project contamination removed; 4 missing skills added
-- ✓ `references/skill-registry.md` — 368 → 109 lines; reconciled with current `skills/` state; architecture pointer corrected v2.2 → v2.3
-- ✓ Phantom `hook-workplan-guidebook.md` — PI v10.10 `<hooks_status>` rewritten to reference actual `.github/workflows/ci.yml` + `audit.yml`
-- ✓ `references/` sprawl — 21 dated audit reports moved to `audits/_archived/`; references/ now at 48 files (was 70+)
-- ✓ Root-level clutter — 4 files relocated (`gap_register*.md` → `_archived/`; `tag_*_claims.py` → `scripts/`)
-- ✓ Superseded `co0007-*` workplans — 17 files moved to `workplan/_superseded/`
-- ✓ `working/` dated work product — 10 files moved to `_archived/working-2026/`
-- ✓ Critical data-layer fix — `scripts/generate/{spec,room,population}_page.py` had `DB_PATH = data/db/guidebook.db` (non-existent); corrected to `data/guidebook.db`. Vestigial `data/db/` directory removed.
+**Universality requirement.** A skill file describes a protocol Claude executes when invoked. The protocol is generic over inputs: it cites no specific session IDs, no specific dates, no commit SHAs, no specific gaps, no embedded changelog. Project-specific state that the skill operates on lives in the database or in DRs the skill references by stable identifier. If a skill cannot be authored without specific project state, the state belongs in the PI rule that invokes the skill, not in the skill itself.
 
-**Still open:**
-- `[GAP: skills/workplan-orchestrator_SKILL.md embedded skill-index taxonomy is stale — still classifies toc-editor as deprecated despite PI rule #3 invoking it; missing 11 newer skills. Refresh queued for future session.]`
-- `[GAP: skills/reasoning-doc-citations_SKILL.md placeholder named in PI v10.10 rule #10; skill file to be authored in Phase A parallel-track.]`
-- `[GAP: ~14 working-doc files remain in references/ (theory-gap-analysis.md, throughline-*.md, methodology-*.md, parser-source-readiness.md, etc.) — looked stale during reorg but not unambiguously archivable without owner input. Triage queued.]`
-- `[GAP: effort-guide.md uses numerical levels (50/75/100/125/150) while user preferences use qualitative (low/medium/high/max). Both coexist functionally; harmonization decision deferred.]`
-- `[ASSUMPTION: Guidebook continues to target only claude.ai chat with Code Interpreter — basis: no requirement has surfaced for API, Claude Code, or other surfaces. Revisit if scope changes.]`
-- `[ASSUMPTION: Pre-commit hooks (level 5) remain deferred. Basis: single primary author + CI catches everything. Revisit when contributor count > 1.]`
-</open_items>
+**Placeholder convention.** When PI references a skill that does not yet have a file, the PI states "skill placeholder" or "no skill file exists" inline so the absence is intentional rather than a bug.
 
-<changelog>
-- **V2.3 (2026-05-13)** — Major refresh after audit. Replaces stale v2.1 description of enforcement state ("all rules are level 1") with current reality: 15+ blocking CI checks across `ci.yml` and `audit.yml`. Enforcement spectrum expanded to five levels with concrete examples per level. Added cross-cutting `<layer_ownership>` description of audit scripts and CI workflows. `<reference_files_pattern>` updated for Phase A directories (`bpc-reasoning/`, `connection-reasoning/`, `keyword-compendiums/`) and notes the `references/` sprawl problem. `<bootstrap_exception>` acknowledges current ~70-line bootstrap as deliberate. `<skill_registry_pattern>` adds the placeholder convention (PI v10.9 uses this for 5 named-but-not-built skills). PI growth target raised from 150 → 200 lines. New examples #4–5, #8–9 in `<conflict_resolution_examples>`. `<open_items>` refreshed with current gaps and decisions log.
-- **V2.2 (never committed)** — Referenced by `references/skill-registry.md` (2026-05-08) but no file existed. v2.3 supersedes.
-- **V2.1 (2026-05-07)** — Removed cross-references to other projects in ecosystem. Project-isolated.
-- **V2.0 (2026-05-07)** — Split from generic spec into project-specific governance. XML tag wrapping. Identity at top, current state at bottom per Anthropic attention guidance.
-- **V1.x** — Generic ecosystem-wide spec. Superseded.
-</changelog>
+**Drift between PI references and `skills/` content** is reconciled in `references/skill-registry.md`, not in PI itself.
+</skill_registry_pattern>
+
+<enforcement_spectrum>
+Rules live at one of five enforcement levels. Higher levels are more reliable but more expensive to author and maintain.
+
+| Level | Mechanism | Where | Reliability |
+|---|---|---|---|
+| 1 | Text rule | PI standing rules, DRs, skill descriptions | Low |
+| 2 | Audit script | `scripts/audit/*.py` (CLI, manual or scheduled) | Medium |
+| 3 | CI workflow, non-blocking | `.github/workflows/*.yml` with `continue-on-error: true` | High |
+| 4 | CI workflow, blocking | `.github/workflows/*.yml` with `continue-on-error: false` | Highest |
+| 5 | Pre-commit hook (local) | `.git/hooks/` | Highest (local) |
+
+**Promotion path.** New rules start at level 1 in PI standing rules. If the rule is mechanically checkable AND drift is observably costly, promote to level 2 by writing an audit script. If the rule must never drift in `main`, promote to level 4 by adding the audit script as a blocking job in CI. Pre-commit hooks (level 5) are deferred until contributor count exceeds one.
+
+**Demotion path.** Audit scripts that haven't found an issue in 6 months may be downgraded to scheduled execution (e.g., weekly cron via GitHub Actions) rather than per-push, to reduce CI cost.
+
+**Audit script style.** Module docstring lists checks numerically with rule provenance. Single `audit()` function with each check as a numbered SQL query or comparison. Reports formatted with `=` separators. Exit code 0 = pass, 1 = any issues found. Repository root resolved relative to `__file__` (no hardcoded absolute paths). DB path defaults to `data/guidebook.db` relative to repo root, overridable via `GUIDEBOOK_DB_PATH` environment variable to mirror `scripts/migrate_db.py`.
+</enforcement_spectrum>
+
+<data_layer_pattern>
+The SQLite database at `data/guidebook.db` is the single source of truth for project content. Markdown files and JSON exports may derive from it but never compete with it.
+
+**Schema discipline.**
+- Schema changes ship as numbered SQL migrations: `scripts/migrations/NNN_<slug>.sql`. Forward-only. Tracked via `PRAGMA user_version`.
+- Data changes ship as timestamped SQL migrations: `scripts/migrations/data_<YYYYMMDDHHMMSS>_<slug>.sql`. Forward-only, append-only. Tracked via the `data_migrations` table.
+- The runner is `scripts/migrate_db.py`. It applies pending migrations on push and supports `--rebuild` for CI reproducibility verification.
+
+**Reproducibility invariant.** The committed `data/guidebook.db` must be reproducible from its migration history. CI rebuilds a fresh DB by replaying all migrations and compares key invariants against the committed file. Any direct DB write that bypasses the migration framework fails this check.
+
+**Schema documentation.** Pydantic schemas in `schemas/` mirror the SQLite layout. Drift between Pydantic and SQLite is a CI-detectable bug.
+
+**FK integrity.** `PRAGMA foreign_keys = ON` at session start; `PRAGMA foreign_key_check` returns empty on a healthy DB. Migrations that bulk-load may toggle FK enforcement off within their script body and back on at exit, but must leave the DB in a referentially-consistent state.
+</data_layer_pattern>
+
+<bootstrap_pattern>
+Each session loads project context via a bootstrap block at the start of the PI. The bootstrap pulls files from GitHub, queries `data/guidebook.db` for current state, and prints a status summary.
+
+**Constraints.**
+- Halt on critical fetch failure; log `[GAP: <filename> — not present]` on non-critical failure.
+- Total runtime budget: under 30 seconds. Total line count: under 100 lines.
+- Use `gh` CLI when available; fall back to `curl` with PAT.
+
+When bootstrap grows past these budgets, extract the heaviest portion (typically SQLite state queries) to a `bootstrap-status` skill and leave a thin caller in PI.
+
+**Bootstrap-exempt operations.** Pure governance work on PI / preferences / architecture themselves; tooling questions not touching repo state; workflow conversations that do not touch repo content.
+</bootstrap_pattern>
+
+<conflict_resolution>
+| # | Situation | Resolution |
+|---|---|---|
+| 1 | Preference says X, PI silent | Preference applies |
+| 2 | PI explicitly overrides a preference with named clause | PI applies |
+| 3 | PI rule and skill content conflict on procedure | Skill wins on mechanics; PI wins on whether the skill runs |
+| 4 | Text rule and CI workflow disagree on the same check | CI wins; record drift as `[ASSUMPTION]` in the next session record |
+| 5 | Audit script (level 2) and CI workflow (level 4) check the same thing | CI is authoritative; the level-2 script remains for local debugging |
+| 6 | Two skills overlap on the same trigger | `[GAP]` in `skill-registry.md` — disambiguate explicitly |
+| 7 | Architecture spec and PI conflict | Architecture wins on architectural rules (layer ownership, enforcement spectrum, where things belong); PI wins on project specifics (skill assignments, terminology, identity) |
+| 8 | Bootstrap procedure exceeds 100 lines or 30s runtime | Refactor: extract SQLite/state-query block to a `bootstrap-status` skill, leave thin caller in PI |
+| 9 | A PI-referenced skill file doesn't exist | If labeled "placeholder" → OK (future hook); otherwise `[GAP]` — author the skill or remove the reference |
+</conflict_resolution>
+
+<migration_and_growth>
+**Adding a feature to PI.** Classify: preference-level (covered by user preferences, don't restate) · project-specific (add to PI) · procedural (extract to skill) · architectural (add here). Decide enforcement level. If level 2+, write the audit script as part of the change. If the change is workplan-level (affects multiple BPCs or rewrites a phase), write a DR in `decisions/` and reference it from the PI.
+
+**PI growth.** PI standing rules describe rules, not state. State content — "current AUTHOR-TITLE-ONLY counts," retraction banners, session-specific commentary — belongs in DRs, audit scripts, or the DB. When PI exceeds its size budget, audit for state content that should move out. The budget is set in the PI itself, not here.
+
+**Bootstrap growth.** When bootstrap exceeds its budgets in `<bootstrap_pattern>`, extract to a skill.
+
+**Shipping a new audit script.** Place at `scripts/audit/<name>.py` following the style in `<enforcement_spectrum>`. Reference from the corresponding PI standing rule. If blocking-in-CI, add a job to the appropriate workflow.
+
+**Adopting a new DR.** File at `decisions/DR-YYYY-MM-DD-<slug>.md`. If the DR sharpens or adds a standing rule, draft the corresponding PI bump in `governance/project-instructions-v<next>.md` and queue via `decisions/PI-update-needed.md`. The PI bump goes live only when the owner manually pastes the new content into claude.ai project settings — this layer is not API-writable.
+
+**Retiring content.** Move to `_archived/` rather than delete. Preserves git history while reducing namespace noise. Subdirectories under `_archived/` mirror the origin location.
+</migration_and_growth>
+
+<scope_assumptions>
+The architecture currently assumes a single primary author, single deployment surface (claude.ai chat), and no concurrent contributors. Pre-commit hooks (level 5 enforcement), multi-surface PI specialization, and contributor-coordination mechanics are out of scope until those assumptions change.
+</scope_assumptions>
