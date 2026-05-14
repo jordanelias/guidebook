@@ -99,127 +99,31 @@ Guidebook maintains a `references/` directory in the repo. The PI declares which
 
 **Reference files are project context, not skills.** Treat them as production documents — version them, audit them, keep them tight.
 
-**Sprawl warning.** The current `references/` directory contains 90+ files, many of which are one-off audit reports (e.g., `bibliography-citation-audit-2026-04-09.md`, `co1-verification-report-2026-04-23.md`). These should be migrated to `_archived/` once their findings have been actioned, to keep the namespace navigable. See `<open_items>`.
-</reference_files_pattern>
+**Sprawl warning.** The current `references/` directory contains 90+ files, many of which are one-off audit reports (e.g., `bibliography-citation-audit-2026-04-09.md`, `co1-verification-report-2026-04-23.md`). These should be migrated to `_archived/` once their findings have been actioned, to keep the namespace navigable. See `<open_items>
+**Resolved in session_2026-05-13b (this session, after audit):**
+- ✓ `architecture/project-architecture-guidebook-v2.3.md` — was phantom across PI v10.3–v10.9; authored this session
+- ✓ `references/project-instructions.md` — deprecated v9 PI shell archived to `_archived/references/project-instructions-v9-deprecated.md`
+- ✓ `references/effort-guide.md` — full refresh; Valoria cross-project contamination removed; 4 missing skills added
+- ✓ `references/skill-registry.md` — 368 → 109 lines; reconciled with current `skills/` state; architecture pointer corrected v2.2 → v2.3
+- ✓ Phantom `hook-workplan-guidebook.md` — PI v10.10 `<hooks_status>` rewritten to reference actual `.github/workflows/ci.yml` + `audit.yml`
+- ✓ `references/` sprawl — 21 dated audit reports moved to `audits/_archived/`; references/ now at 48 files (was 70+)
+- ✓ Root-level clutter — 4 files relocated (`gap_register*.md` → `_archived/`; `tag_*_claims.py` → `scripts/`)
+- ✓ Superseded `co0007-*` workplans — 17 files moved to `workplan/_superseded/`
+- ✓ `working/` dated work product — 10 files moved to `_archived/working-2026/`
+- ✓ Critical data-layer fix — `scripts/generate/{spec,room,population}_page.py` had `DB_PATH = data/db/guidebook.db` (non-existent); corrected to `data/guidebook.db`. Vestigial `data/db/` directory removed.
 
-<skill_registry_pattern>
-PI declares skill *assignments* as one-line entries (which skills the PI itself invokes). Detail (location, status, purpose, triggers, dependencies, classification) lives in `references/skill-registry.md`.
-
-Skill files use flat form: `skills/<name>_SKILL.md` (not directory form).
-
-Deprecated skills live in `skills/deprecated/` and are not loaded on trigger.
-
-**Pruning rule:** any skill that stays at `planned` for >90 days without invocation gets demoted from PI assignments. Avoid carrying ghost skills.
-
-**Placeholder convention.** When PI references a skill that does not yet have a file, the PI must explicitly state "skill placeholder" or "no skill file exists" inline. This avoids confusion between "missing skill" (a bug) and "named informational hook for future work" (deliberate). PI v10.9 follows this convention for `reasoning-doc-citations`, `bpc-curator`, `gap-register`, `bpc-writer`, and `opus-synthesis`.
-
-**Drift between PI references and actual `skills/` content** is reconciled in `skill-registry.md`'s "Reconciliation drift" section, not in PI itself.
-</skill_registry_pattern>
-
-<enforcement_spectrum>
-Rules can live at any of five levels. Higher levels are more reliable but more expensive to author and maintain.
-
-| Level | Mechanism | Where | Reliability |
-|---|---|---|---|
-| 1 | Text rule | PI standing rules, DRs, skill descriptions | Low |
-| 2 | Audit script | `scripts/audit/*.py` (CLI, manual or scheduled) | Medium |
-| 3 | CI workflow, non-blocking | `.github/workflows/*.yml` with `continue-on-error: true` | High |
-| 4 | CI workflow, blocking | `.github/workflows/*.yml` with `continue-on-error: false` | Highest |
-| 5 | Pre-commit hook (local) | `.git/hooks/` (not yet installed in this project) | Highest (local) |
-
-**Current state (2026-05-13):**
-
-*Level 1 (text only):*
-- Standing rules #1 (source discipline), #2 (synthesis routing), #5 (connector posture) — judgment calls, stay text
-- Most of the rest of the PI's standing rules have level 2-4 enforcement supplementing them
-
-*Level 2 (audit scripts, manual run):*
-- `scripts/audit/pmp_audit.py` — rule #8 + rule #10 sub-rule 1 enforcement (added 2026-05-13)
-- `scripts/audit/reasoning_doc_citations_audit.py` — rule #10 sub-rules 2/3 enforcement (added 2026-05-13)
-- `scripts/audit/research_protocol_audit.py` — rule #7 enforcement
-- `scripts/audit_evidence_metadata.py` — rule #10 existence-gate enforcement (top-level scripts/)
-- `scripts/audit_adversarial_use.py`, `scripts/decision_capture.py`, `scripts/doctrine_recheck.py` — promoted to level 4 via `ci.yml` governance job
-
-*Level 3-4 (CI workflows, currently 15+ blocking checks):*
-- `.github/workflows/ci.yml`:
-  - **syntax** — UTF-8 / JSON / YAML validity (blocking)
-  - **structure** — `validate_bpc.py --all`, `validate_cross_refs.py`, `check_thresholds.py` (blocking)
-  - **commit-msg** — commit message format per PI convention (blocking)
-  - **schema** — `validate_schema.py`, `validate_evidence_state.py`, `validate_population.py`, `validate_jurisdiction.py`, `validate_temporal.py` (blocking; some `continue-on-error: true`)
-  - **db_integrity** — `test_db_integrity.py` (35 checks; blocking)
-  - **governance** — A10 adversarial-use catalogue, A12 decision register, A13 doctrine recheck (blocking)
-- `.github/workflows/audit.yml`:
-  - **source_slug_links duplicates** — blocking (per GAP-287)
-  - **citation-mining completeness (current session)** — blocking
-  - **migration reproducibility** — blocking (per GAP-290); rebuilds DB from migration history and compares invariants
-  - Two informational citation-mining checks at T1-2 and T1-3 (continue-on-error: true)
-- `.github/workflows/verify-urls.yml`, `.github/workflows/resolve-dois.yml` — scheduled jobs (not on push)
-
-*Level 5 (pre-commit hooks, local):*
-- None installed. Pre-commit hooks would catch issues before push (faster feedback) but require per-developer setup. Given the project has a single primary author and CI catches everything, deferred indefinitely.
-
-**Promotion path.** New rules start at level 1 in PI standing rules. If the rule is mechanically checkable AND drift is observably costly, promote to level 2 by writing an audit script. If the rule must NEVER drift in `main`, promote to level 4 by adding the audit script as a blocking job in CI.
-
-**Demotion path.** Audit scripts that haven't found an issue in 6 months may be downgraded to scheduled (weekly cron via GitHub Actions) rather than per-push, to reduce CI cost.
-
-**Audit script style** (per existing examples in `scripts/audit/`):
-- Module docstring lists checks numerically with rule provenance
-- Single `audit()` function with each check as a numbered SQL query or comparison
-- Reports formatted with "=" separators
-- Exit code 0 = pass, 1 = any issues found
-- Reads `data/guidebook.db` via `REPO = Path(__file__).resolve().parent.parent.parent` resolution
-</enforcement_spectrum>
-
-<conflict_resolution_examples>
-| # | Situation | Resolution |
-|---|---|---|
-| 1 | Preference says X, PI silent | Preference applies |
-| 2 | PI explicitly overrides a preference with named clause | PI applies |
-| 3 | PI rule and skill content conflict on procedure | Skill wins on mechanics; PI wins on whether the skill runs |
-| 4 | Text rule and CI workflow disagree on the same check | CI wins; flag drift as `[ASSUMPTION]` in the next session record |
-| 5 | Audit script (level 2) and CI workflow (level 4) check the same thing | CI is authoritative; the level-2 script remains for local debugging |
-| 6 | Two skills overlap on the same trigger | `[GAP]` — disambiguate explicitly in `skill-registry.md` |
-| 7 | Architecture spec and PI conflict | Architecture wins on architectural rules (layer ownership, enforcement spectrum, where things belong); PI wins on project specifics (skill assignments, terminology, identity) |
-| 8 | Bootstrap procedure in PI > 100 lines or runtime > 30s | Refactor: extract SQLite/state-query block to a `bootstrap-status` skill, leave thin caller in PI |
-| 9 | A PI-referenced skill file doesn't exist | If labeled "placeholder" → OK (future hook); otherwise `[GAP]` — author the skill or remove the reference |
-</conflict_resolution_examples>
-
-<migration_and_growth>
-**Adding a new feature to PI:**
-1. Classify: preference-level (already covered by v6.1, don't restate) · project-specific (add to PI) · procedural (extract to skill) · architectural (add here).
-2. Decide enforcement level. If level 2+, write the audit script as part of the change.
-3. Update PI changelog.
-4. If the change is workplan-level (affects multiple BPCs or rewrites a phase), write a DR in `decisions/` and reference it from the PI.
-
-**Bootstrap or PI grows past target size:**
-- Bootstrap >100 lines or runtime >30s → extract to skill
-- PI >200 lines (current target; was 150 in v2.1) → audit for state content that should move to DRs, audit scripts, or the DB. PI should describe rules, not record state. Specific anti-patterns: "current state as of YYYY-MM-DD: N/M records...", banners for transient conditions, session-specific commentary.
-
-**Shipping a new audit script:**
-- Place at `scripts/audit/<name>.py` following the style in `<enforcement_spectrum>` above.
-- Update `<enforcement_spectrum>` in this file with the new script entry.
-- Reference from the corresponding PI standing rule.
-- If blocking-in-CI: add job to `.github/workflows/ci.yml` or `.github/workflows/audit.yml`.
-
-**Adopting a new DR:**
-- File at `decisions/DR-YYYY-MM-DD-<slug>.md` following the style of existing DRs.
-- If the DR sharpens or adds a standing rule: draft the corresponding PI bump in `governance/project-instructions-v10_X.md` and queue via `decisions/PI-update-needed.md`.
-- The PI bump goes live only when the owner manually pastes the new content into claude.ai project settings — this layer is not API-writable.
-</migration_and_growth>
-
-<open_items>
-- `[GAP: references/project-instructions.md still bears deprecation banner referencing "v10.4" (now v10.9). Stale banner should be updated, or file moved to _archived/.]`
-- `[GAP: effort-guide.md is dated 2026-04-07 and contains skills from another project (Valoria cross-contamination: valoria-mechanic-audit, valoria-canon-guard, valoria-simulator, valoria-orchestrator, valoria-chunker). It also lacks adversarial-research, progressive-measurement, reasoning-doc-citations. Major refresh needed.]`
-- `[GAP: skill-registry.md is from 2026-05-08 and references "Architecture v2.2"; needs refresh to v2.3 and to reconcile the "missing from repo / unclassified" lists against current state. toc-editor specifically should be removed from "deprecated" classification — it's actively maintained per PI rule #3.]`
-- `[GAP: hook-workplan-guidebook.md referenced by PI v10.9 `<hooks_status>` does not exist. The concept ("Phase 1 hooks targeting 5 rules") was superseded by the CI workflows that actually shipped. Update PI to reference `.github/workflows/ci.yml` + `audit.yml` directly instead, or author a brief hook-workplan that documents the current state.]`
-- `[GAP: ~80 of the 90+ files in references/ are one-off audit reports. Recommend a sweep to migrate dated audit reports to _archived/ to keep references/ navigable. Candidates: anything named *-audit-YYYY-MM-DD.md, *-report-YYYY-MM-DD.md, or with a "_2026-04-XX" suffix.]`
+**Still open:**
+- `[GAP: skills/workplan-orchestrator_SKILL.md embedded skill-index taxonomy is stale — still classifies toc-editor as deprecated despite PI rule #3 invoking it; missing 11 newer skills. Refresh queued for future session.]`
+- `[GAP: skills/reasoning-doc-citations_SKILL.md placeholder named in PI v10.10 rule #10; skill file to be authored in Phase A parallel-track.]`
+- `[GAP: ~14 working-doc files remain in references/ (theory-gap-analysis.md, throughline-*.md, methodology-*.md, parser-source-readiness.md, etc.) — looked stale during reorg but not unambiguously archivable without owner input. Triage queued.]`
+- `[GAP: effort-guide.md uses numerical levels (50/75/100/125/150) while user preferences use qualitative (low/medium/high/max). Both coexist functionally; harmonization decision deferred.]`
 - `[ASSUMPTION: Guidebook continues to target only claude.ai chat with Code Interpreter — basis: no requirement has surfaced for API, Claude Code, or other surfaces. Revisit if scope changes.]`
 - `[ASSUMPTION: Pre-commit hooks (level 5) remain deferred. Basis: single primary author + CI catches everything. Revisit when contributor count > 1.]`
 </open_items>
 
 <changelog>
 - **V2.3 (2026-05-13)** — Major refresh after audit. Replaces stale v2.1 description of enforcement state ("all rules are level 1") with current reality: 15+ blocking CI checks across `ci.yml` and `audit.yml`. Enforcement spectrum expanded to five levels with concrete examples per level. Added cross-cutting `<layer_ownership>` description of audit scripts and CI workflows. `<reference_files_pattern>` updated for Phase A directories (`bpc-reasoning/`, `connection-reasoning/`, `keyword-compendiums/`) and notes the `references/` sprawl problem. `<bootstrap_exception>` acknowledges current ~70-line bootstrap as deliberate. `<skill_registry_pattern>` adds the placeholder convention (PI v10.9 uses this for 5 named-but-not-built skills). PI growth target raised from 150 → 200 lines. New examples #4–5, #8–9 in `<conflict_resolution_examples>`. `<open_items>` refreshed with current gaps and decisions log.
-- **V2.2 (prepared but never committed)** — Referenced by `references/skill-registry.md` (2026-05-08) but no file was committed to repo. Content believed lost; v2.3 supersedes.
+- **V2.2 (never committed)** — Referenced by `references/skill-registry.md` (2026-05-08) but no file existed. v2.3 supersedes.
 - **V2.1 (2026-05-07)** — Removed cross-references to other projects in ecosystem. Project-isolated.
 - **V2.0 (2026-05-07)** — Split from generic spec into project-specific governance. XML tag wrapping. Identity at top, current state at bottom per Anthropic attention guidance.
 - **V1.x** — Generic ecosystem-wide spec. Superseded.
