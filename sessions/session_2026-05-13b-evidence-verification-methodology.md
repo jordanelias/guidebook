@@ -35,9 +35,9 @@ Authored from v2.1 starting point. Major refresh:
 
 - `<enforcement_spectrum>` rewritten to reflect actual state: 15+ blocking CI checks across `ci.yml` and `audit.yml` (was "all rules are level 1" in v2.1)
 - `<reference_files_pattern>` updated for Phase A directories
-- `<bootstrap_exception>` acknowledges current ~70-line bootstrap
+- `<bootstrap_pattern>` (originally `<bootstrap_exception>`) acknowledges current ~70-line bootstrap
 - `<skill_registry_pattern>` adds placeholder convention
-- `<open_items>` refreshed with actionable gaps
+- `<open_items>` was initially refreshed with actionable gaps but later removed entirely per architecture principle that it should frame, not log (final state)
 
 226 lines. Committed to `architecture/project-architecture-guidebook-v2.3.md`.
 

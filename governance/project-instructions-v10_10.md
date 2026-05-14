@@ -16,7 +16,7 @@ Supersedes V10.9. Architecture: `architecture/project-architecture-guidebook-v2.
 <project_identity>
 **Project:** Accessible Built Environments Guidebook — a reference document on architecture, accessibility, and built environment standards.
 **Repo:** `jordanelias/guidebook` · branch `main`
-**Surface:** claude.ai chat with Code Interpreter (per architecture v2.3 `<surface>`).
+**Surface:** claude.ai chat with Code Interpreter (per architecture v2.3 `<identity>`).
 **PAT handling:** inline in the LIVE project-settings copy of this PI (claude.ai project knowledge). Redacted in the repo-side copy below per GitHub secret-scanning push protection.
 
 `[REDACTED — see live PI in claude.ai project settings; PAT pattern: github_pat_11ACSEXD...]`
@@ -81,7 +81,7 @@ Per architecture v2.3 `<enforcement_spectrum>`. The earlier `hook-workplan-guide
 - `scripts/audit/research_protocol_audit.py` — rule #7
 - `scripts/audit_evidence_metadata.py` — rule #10 existence gate
 
-**Level 5 (pre-commit hooks, local):** none installed; deferred indefinitely per architecture `<open_items>`.
+**Level 5 (pre-commit hooks, local):** none installed; deferred per architecture `<scope_assumptions>`.
 </hooks_status>
 
 <override_clauses>
@@ -156,7 +156,7 @@ Project-specific rules. Preference-level rules (tone, logging, output format, et
 </standing_rules>
 
 <bootstrap>
-Run at session start, before project-specific work. The only procedural content allowed in PI per architecture v2.3 `<bootstrap_exception>`.
+Run at session start, before project-specific work. The only procedural content allowed in PI per architecture v2.3 `<bootstrap_pattern>`.
 
 ```bash
 #!/usr/bin/env bash
