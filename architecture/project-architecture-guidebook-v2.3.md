@@ -125,6 +125,8 @@ When bootstrap grows past these budgets, extract the heaviest portion (typically
 **Adopting a new DR.** File at `decisions/DR-YYYY-MM-DD-<slug>.md`. If the DR sharpens or adds a standing rule, draft the corresponding PI bump in `governance/project-instructions-v<next>.md` and queue via `decisions/PI-update-needed.md`. The PI bump goes live only when the owner manually pastes the new content into claude.ai project settings — this layer is not API-writable.
 
 **Retiring content.** Move to `_archived/` rather than delete. Preserves git history while reducing namespace noise. Subdirectories under `_archived/` mirror the origin location.
+
+**Removing or renaming structural elements.** When any structural element is removed or renamed — XML tag, section heading, file path, identifier, schema column, skill name, table name — the change is not complete until a caller-sweep is performed. The verification pass searches non-archived locations for the old name and confirms zero orphan references remain. Renames substitute the new name in every caller. Removals decide per caller whether to delete the citation, redirect to a replacement section, or rewrite the surrounding context. Cleanup operations frequently introduce downstream broken references that pass naive verification — the change itself landed cleanly, but a caller two directories away still cites the old name. The check is not "did the removal succeed" but "are all callers now valid."
 </migration_and_growth>
 
 <scope_assumptions>
