@@ -118,8 +118,18 @@ def run_checks(db_path):
     record("B03", "doi_resolution_outcome values", bad == 0,
            f"{bad} invalid values" if bad else "")
 
+    # Two URL-resolution vocabularies coexist:
+    #   - granular pipeline outputs from scripts/url_verifier.py
+    #     (MATCHED/PARTIAL/NO-MATCH/DEAD-LINK/DEAD-DNS/WAYBACK-*/URL-NO-MATCH)
+    #   - simpler DOI-resolver/url-fetch outputs that pre-date the granular
+    #     pipeline and align with B03's doi_resolution_outcome vocabulary
+    #     (RESOLVED/DEAD/RESOLVED-PARTIAL). RESOLVED is the same value B03 uses.
+    # The two vocabularies are NOT equivalent (MATCHED implies title-match
+    # check; RESOLVED does not), so they are accepted as parallel valid sets
+    # rather than merged.
     VALID_URL_OUT = ("MATCHED","PARTIAL","NO-MATCH","DEAD-LINK","DEAD-DNS",
-                     "WAYBACK-MATCH","WAYBACK-PARTIAL","URL-NO-MATCH")
+                     "WAYBACK-MATCH","WAYBACK-PARTIAL","URL-NO-MATCH",
+                     "RESOLVED","DEAD","RESOLVED-PARTIAL")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE url_resolution_outcome IS NOT NULL
         AND url_resolution_outcome NOT IN ({','.join('?'*len(VALID_URL_OUT))})
@@ -219,6 +229,8 @@ def run_checks(db_path):
     # should be reduced and the check rewritten to use that column instead.
     KNOWN_DUP_DOIS = (
         "10.31030/2853913",           # IEC 60118-4 — 3 scope citations (hearing loops)
+        "10.31030/1803049",           # DIN 18040-2 — 5 distinct-section citations (residential accessibility): visitability / reach range / bathroom-laundry-kitchen / entry / threshold
+        "10.31030/1715500",           # DIN 18040-1 — 3 distinct-section citations (public buildings): induction loops / circulation geometry / door hardware
         "10.1016/S0140-6736(14)61006-0",  # HIPI study — 2 BPC citations (falls + lighting)
         "10.1016/j.buildenv.2021.108352",  # Inclusive design failures — 2 BPCs
         "10.1016/j.dhjo.2022.101281", # Accessible design features — 2 BPCs
