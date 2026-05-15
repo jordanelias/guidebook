@@ -219,7 +219,7 @@ def run_checks(db_path):
     # should be reduced and the check rewritten to use that column instead.
     KNOWN_DUP_DOIS = (
         "10.31030/2853913",           # IEC 60118-4 — 3 scope citations (hearing loops)
-        "10.1016/S0140-6736(14",      # HIPI study — 2 BPC citations (falls + lighting)
+        "10.1016/S0140-6736(14)61006-0",  # HIPI study — 2 BPC citations (falls + lighting)
         "10.1016/j.buildenv.2021.108352",  # Inclusive design failures — 2 BPCs
         "10.1016/j.dhjo.2022.101281", # Accessible design features — 2 BPCs
         "10.1044/2022_LSHSS-21-00181", # Speech intelligibility SR — 2 BPCs
