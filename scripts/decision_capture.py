@@ -258,20 +258,19 @@ def main() -> int:
 
     # Report
     if register:
-        active = sum(
-            1 for d in register.decisions
-            if (d.status if isinstance(d.status, str) else d.status.value) == "ACTIVE"
-        )
-        superseded = sum(
-            1 for d in register.decisions
-            if (d.status if isinstance(d.status, str) else d.status.value) == "SUPERSEDED"
-        )
-        retired = sum(
-            1 for d in register.decisions
-            if (d.status if isinstance(d.status, str) else d.status.value) == "RETIRED"
-        )
+        def _count(s):
+            return sum(
+                1 for d in register.decisions
+                if (d.status if isinstance(d.status, str) else d.status.value) == s
+            )
+        proposed    = _count("PROPOSED")
+        provisional = _count("PROVISIONAL")
+        active      = _count("ACTIVE")
+        superseded  = _count("SUPERSEDED")
+        retired     = _count("RETIRED")
         print(
             f"Decision-capture audit: register v{register.register_version} — "
+            f"{proposed} PROPOSED / {provisional} PROVISIONAL / "
             f"{active} ACTIVE / {superseded} SUPERSEDED / {retired} RETIRED"
         )
     else:
