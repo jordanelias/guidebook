@@ -451,10 +451,20 @@ class DelegationCategory(str, Enum):
 class DecisionStatus(str, Enum):
     """Lifecycle status of a Decision record.
 
-    ACTIVE: decision in force
-    SUPERSEDED: replaced by a later decision (named successor)
-    RETIRED: removed without a named successor
+    PROPOSED:    decision drafted; not yet provisionally accepted
+    PROVISIONAL: decision tentatively in force pending owner adoption
+    ACTIVE:      decision adopted and in force
+    SUPERSEDED:  replaced by a later decision (named successor)
+    RETIRED:     removed without a named successor
+
+    Lifecycle: PROPOSED → PROVISIONAL → ACTIVE → (SUPERSEDED | RETIRED).
+    PROPOSED and PROVISIONAL were added 2026-05-15 to match the
+    project's actual decision protocol (see governance/decision-protocol.md
+    §3 lifecycle and DR-2026-05-13's adoption pattern of "PROPOSED by Claude,
+    PENDING project-owner adoption" then promoted to ACTIVE on directive).
     """
+    PROPOSED = "PROPOSED"
+    PROVISIONAL = "PROVISIONAL"
     ACTIVE = "ACTIVE"
     SUPERSEDED = "SUPERSEDED"
     RETIRED = "RETIRED"
