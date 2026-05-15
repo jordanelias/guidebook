@@ -69,21 +69,56 @@ def applied_data_migrations(conn) -> set:
 
 
 def discover_schema_migrations() -> list:
+    """Return ordered list of (version, path) for schema migrations.
+
+    Baseline convention (per DR-2026-05-15): if any schema migration is
+    explicitly named with `baseline` in its filename (e.g., 012_baseline_*.sql),
+    it supersedes all earlier-numbered schema migrations at rebuild time.
+    Earlier migrations remain on disk for archaeological reference but are
+    skipped during rebuild. Migrations numbered >= baseline run normally.
+    """
     out = []
     for path in sorted(MIGRATIONS_DIR.glob("*.sql")):
         m = SCHEMA_PATTERN.match(path.name)
         if m:
             out.append((int(m.group(1)), path))
+    baselines = [(v, p) for v, p in out if "baseline" in p.name]
+    if baselines:
+        baseline_version = max(v for v, _ in baselines)
+        out = [(v, p) for v, p in out if v >= baseline_version]
     return out
 
 
+def baseline_version() -> int | None:
+    """Highest baseline version present, or None."""
+    versions = []
+    for path in MIGRATIONS_DIR.glob("*.sql"):
+        m = SCHEMA_PATTERN.match(path.name)
+        if m and "baseline" in path.name:
+            versions.append(int(m.group(1)))
+    return max(versions) if versions else None
+
+
 def discover_data_migrations() -> list:
+    """Return ordered list of (timestamp, migration_id, path) for data migrations.
+
+    Baseline convention (per DR-2026-05-15): when a baseline schema migration
+    is present, data migrations with timestamps preceding the baseline are
+    skipped — the baseline already contains the data they would have loaded.
+    The cutoff is encoded as `BASELINE_DATA_CUTOFF_TS`, refreshed whenever a
+    new baseline is committed.
+    """
+    BASELINE_DATA_CUTOFF_TS = "20260515000000"  # 2026-05-15: data baked into 012_baseline
     out = []
+    bv = baseline_version()
     for path in sorted(MIGRATIONS_DIR.glob("data_*.sql")):
         m = DATA_PATTERN.match(path.name)
         if m:
-            migration_id = path.stem  # filename without .sql
-            out.append((m.group(1), migration_id, path))  # (timestamp, id, path)
+            ts = m.group(1)
+            if bv is not None and ts < BASELINE_DATA_CUTOFF_TS:
+                continue  # pre-baseline; data is in baseline already
+            migration_id = path.stem
+            out.append((ts, migration_id, path))
     out.sort(key=lambda x: x[0])
     return out
 
@@ -99,7 +134,8 @@ def apply_schema_migrations(conn, current_version: int, dry_run: bool) -> int:
         print(f"    Applying {mig.name} (→ version {version})...")
         if not dry_run:
             conn.executescript(sql)
-            set_user_version(conn, version)
+            if "baseline" not in mig.name:
+                set_user_version(conn, version)
             conn.commit()
     return pending[-1][0]
 
@@ -195,7 +231,10 @@ def rebuild_from_migrations(target_db_path: str, dry_run: bool = False):
         sql = path.read_text()
         if not dry_run:
             conn.executescript(sql)
-            set_user_version(conn, version)
+            # Baselines set their own PRAGMA user_version inside the script;
+            # honor it. Non-baseline migrations follow the filename-number rule.
+            if "baseline" not in path.name:
+                set_user_version(conn, version)
             conn.commit()
 
     # Apply all data migrations in timestamp order
