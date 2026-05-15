@@ -213,8 +213,13 @@ def t05_version_filenames() -> tuple[list, list]:
     versions_dir = os.path.join(REPO_ROOT, "versions")
     if not os.path.isdir(versions_dir):
         return [], []
+    # Non-snapshot documentation files (banners, READMEs) live alongside snapshots
+    # but are not subject to the version-filename pattern.
+    NON_SNAPSHOT_NAMES = {"DEPRECATED.md", "README.md"}
     for path in sorted(glob.glob(os.path.join(versions_dir, "**", "*.md"), recursive=True)):
         name = os.path.basename(path)
+        if name in NON_SNAPSHOT_NAMES:
+            continue
         if not VERSION_FILENAME_PATTERN.match(name):
             errors.append(
                 f"T-05 versions/.../{name}: filename does not match "
