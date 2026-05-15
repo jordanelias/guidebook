@@ -24,8 +24,8 @@ cell-curator                      economics-researcher             practice-note
 citation-miner                    evidence-auditor                 progressive-measurement          supplemental-integrator
 citation-verifier                 find-and-replace                 prose-style-checker              table-formatter
 connection-auditor                functional-deficit-auditor       question-author                  toc-editor
-connection-discovery              functional-deficit-researcher    relational-integrity-checker     version-diff
-content-gap-analyzer              github-filing                                                     voice-style
+connection-discovery              functional-deficit-researcher    reasoning-doc-citations          version-diff
+content-gap-analyzer              github-filing                    relational-integrity-checker     voice-style
 critique-report-writer            github-io                                                         workplan-orchestrator
 cross-population-conflict-mapper  guidebook-auditor
                                   item-audit-pipeline
@@ -63,7 +63,6 @@ In `skills/deprecated/`. Listed for archaeological reference; do not invoke.
 
 | Name | Purpose |
 |---|---|
-| `reasoning-doc-citations` | Per-cell verification of jurisdiction-comparison and qualitative claims in BPC reasoning documents; supports PI standing rule on synthesis evidence |
 | `bpc-curator` | Informational; current BPC maintenance is via `scripts/validate_bpc.py` and ad-hoc Opus sessions |
 | `gap-register` | Informational; gaps live in the `gaps` table, accessed via `scripts/db.py` |
 | `bpc-writer` | Informational; BPC synthesis is ad-hoc Opus session work |
