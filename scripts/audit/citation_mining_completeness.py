@@ -55,7 +55,7 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     # was added in that session.
     where_session = "AND es.created_by_session = :session" if session else ""
     rows = con.execute(f"""
-        SELECT DISTINCT es.ref_id, es.tier, es.authors, es.year, es.title, es.doi,
+        SELECT DISTINCT es.ref_id, es.tier, es.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi,
                         es.created_by_session, es.verification_status,
                         GROUP_CONCAT(DISTINCT ssl.slug) as slugs
         FROM evidence_sources es
@@ -71,7 +71,7 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     # Also report rows where cm exists but both backward=0 AND forward=0 AND no deferred_reason
     bad_cm = con.execute(f"""
         SELECT cm.global_ref_id, cm.slug, cm.local_ref_id, cm.backward, cm.forward,
-               cm.deferred_reason, es.tier, es.authors, es.year, es.created_by_session
+               cm.deferred_reason, es.tier, es.author_display AS authors, es.pub_year AS year, es.created_by_session
         FROM citation_mining cm
         JOIN evidence_sources es ON cm.global_ref_id = es.ref_id
         WHERE es.tier BETWEEN 1 AND :tier_max
@@ -86,7 +86,7 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     bad_cm = []
     for cm in con.execute("""
         SELECT cm.global_ref_id, cm.slug, cm.local_ref_id, cm.backward, cm.forward,
-               cm.deferred_reason, es.tier, es.authors, es.year,
+               cm.deferred_reason, es.tier, es.author_display AS authors, es.pub_year AS year,
                es.created_by_session as es_session, cm.created_by_session as cm_session
         FROM citation_mining cm
         JOIN evidence_sources es ON cm.global_ref_id = es.ref_id
