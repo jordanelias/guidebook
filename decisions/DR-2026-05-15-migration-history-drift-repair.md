@@ -1,6 +1,6 @@
 # Decision Record: Migration-History Drift — Repair Strategy
 **Date:** 2026-05-15
-**Status:** PROPOSED — awaiting owner directive on repair strategy (A / B / C)
+**Status:** ADOPTED — Option B (Baseline Reset). Applied 2026-05-15 by owner via commits `d5449e8f` (baseline 012), `5026e827` (`migrate_db.py` baseline-aware discovery), `9e8c2d1d` + `5070a223` (dedup migration), `4d0e9b05` + `d36f55b3` (v1_legacy sync). Header updated 2026-05-15 in `session_2026-05-15a-governance-reconciliation.md` upon owner directive.
 **Author:** Claude (session_2026-05-15, continuation under DR-2026-05-13 delegation framing)
 **Self-review caveat:** This DR diagnoses drift my predecessor sessions allowed to accumulate (i.e., other Claude sessions). `[SELF-AUTHORED — bias risk]` applies in the AI-system sense; independent-human-reviewer limitations are flagged in §6.
 
