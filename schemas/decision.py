@@ -28,11 +28,11 @@ DECISION_ID_PATTERN = re.compile(r"^D-\d{4,5}$")
 
 # Per governance/decision-protocol.md §4.4
 MODEL_ROUTING_PATTERN = re.compile(
-    r"^(opus|sonnet|haiku|human|legacy)/(150|125|100|75|50|none)/"
+    r"^(opus|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/"
     r"(synth|arbitrate|extract|format|route|none)$"
 )
 
-VALID_EFFORT_LEVELS = {150, 125, 100, 75, 50}
+VALID_EFFORT_LEVELS = {200, 150, 125, 100, 75, 50}
 
 
 # --- Entity ---
@@ -81,7 +81,7 @@ class Decision(GuidebookEntity):
         if not MODEL_ROUTING_PATTERN.match(v):
             raise ValueError(
                 f"model_routing must match {{opus|sonnet|haiku|human|legacy}}/"
-                f"{{150|125|100|75|50|none}}/{{synth|arbitrate|extract|format|"
+                f"{{200|150|125|100|75|50|none}}/{{synth|arbitrate|extract|format|"
                 f"route|none}}, got: '{v}'"
             )
         return v

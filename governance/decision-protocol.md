@@ -110,7 +110,7 @@ Every decision record carries these required fields:
 | `decision_date` | YYYY-MM-DD HH:MM, UTC |
 | `decided_by` | Agent identifier (project owner; Opus session; Sonnet session; review batch) |
 | `model_routing` | Standardised model-routing notation per §4 |
-| `effort_level` | Per `references/effort-guide.md`; one of 150, 125, 100, 75, 50 |
+| `effort_level` | Per `references/effort-guide.md`; one of 200, 150, 125, 100, 75, 50 |
 | `decision_artifacts` | Cross-references to governance docs, schemas, validators, commits where the decision lives |
 | `predecessors` | Other decision_ids this decision builds on or extends |
 | `supersedes` | Other decision_ids this decision retires (uses A9 SupersedenceLink primitive) |
@@ -161,7 +161,7 @@ Where:
 | Component | Allowed values | Required? |
 |---|---|---|
 | `model_tier` | `opus`, `sonnet`, `haiku`, `human` | Yes |
-| `effort_level` | `150`, `125`, `100`, `75`, `50` | Yes |
+| `effort_level` | `200`, `150`, `125`, `100`, `75`, `50` | Yes |
 | `reasoning_modifier` | `synth`, `arbitrate`, `extract`, `format`, `route`, `none` | Yes |
 
 Examples:
@@ -182,7 +182,11 @@ Every phase table that records model-routing uses this notation. The skill index
 
 ### 4.4 Notation in decision records
 
-Every Decision record's `model_routing` field uses this notation. Decisions made by the project owner without model assistance use `human/none/none`. Decisions made by an Opus session at effort 150 producing best-practice synthesis use `opus/150/synth`. The validator (§7) checks the notation against the regex `^(opus|sonnet|haiku|human)/(150|125|100|75|50|none)/(synth|arbitrate|extract|format|route|none)$` and rejects anything else.
+Every Decision record's `model_routing` field uses this notation. Decisions made by the project owner without model assistance use `human/none/none`. Decisions made by an Opus session at effort 150 producing best-practice synthesis use `opus/150/synth`. The validator (§7) checks the notation against the regex `^(opus|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/(synth|arbitrate|extract|format|route|none)$` and rejects anything else.
+
+**Effort level 200 — when to use.** Standard synthesis sessions run at effort 150 (Opus 4.6/4.7 at `max` per `userPreferences <effort_levels>`). Effort 200 marks sessions whose synthesis load exceeds the standard ceiling — typically a doctrinal commitment that integrates a deep chain of prior sessions, decisions, frameworks, and weightings into one defensible commit. Use sparingly; if multiple sessions in a quarter claim 200, the ceiling is no longer differentiating and the calibration of all levels should be revisited. First documented use: D-0138 (Operative storage form selection, 2026-05-02).
+
+**Legacy tier.** Decisions extracted from pre-A12 records during initial register seeding carry `model_routing: legacy/none/none` and `effort_level: 100` as placeholder values (per §5.3). The `legacy` tier is reserved for that seeding pattern; new decisions should not use it.
 
 ### 4.5 Phase-level routing
 

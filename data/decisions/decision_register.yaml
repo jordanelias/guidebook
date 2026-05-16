@@ -4152,7 +4152,7 @@ decisions:
   - D-0137
   supersedes: []
   status: PROVISIONAL
-  review_status: PENDING
+  review_status: NA
   notes: >
     DG-NON per A12 §2.2 D-DOCT default delegation. Storage form is doctrinal because it
     governs synthesis structure for 12+ years and reaches into all downstream work
@@ -4179,6 +4179,17 @@ decisions:
     of this session — the selection rationale integrates 7 prior sessions of evidence
     + 5 prior decisions + the framework + the weighting + the doctrinal anchors into
     a defensible commitment. This is the highest-effort session of B1.
+
+    [Reconciliation 2026-05-15, session_2026-05-15a] review_status migrated PENDING → NA
+    per C8 (DG-NON requires review_status=NA). The "awaiting project-owner adoption"
+    semantic was previously expressed via review_status=PENDING because the
+    DecisionStatus enum did not include PROVISIONAL at the time D-0138 was authored
+    (2026-05-02). The 2026-05-15 widening of DecisionStatus (PROPOSED/PROVISIONAL)
+    moved that semantic to the status field, where it remains as PROVISIONAL. The
+    review_status field reverts to its protocol-intended meaning: NA for DG-NON
+    delegations (which have no DG-REVIEW review batch). The opus/200/synth →
+    effort_level 200 widening was applied to schemas/decision.py and
+    governance/decision-protocol.md §3.2 + §4.2 + §4.4 in the same session.
 - decision_id: D-0139
   category: D-SCHEMA
   delegation: DG-REVIEW
