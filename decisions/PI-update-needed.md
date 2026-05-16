@@ -1,33 +1,38 @@
-# PI v10.10 Deployment
+# PI Deployment Queue
 
-**Status:** v10.10 committed to repo as `governance/project-instructions-v10_10.md` @ session_2026-05-13b
-**Action:** Owner must manually paste v10.10 content into claude.ai project knowledge.
+**Live in claude.ai project settings:** v10.11 (deployed by owner sometime between session_2026-05-13b close and session_2026-05-15a; the present-session prompt loads v10.11, confirming deployment).
+**Pending deployment:** v10.12 (drafted in session_2026-05-15a).
 
-## What changed vs live v10.6
+---
 
-v10.6 → v10.10 in one paste. Cumulative changes:
+## v10.12 — Pending
 
-- **Architecture pointer corrected**: now references `architecture/project-architecture-guidebook-v2.3.md` which actually exists in repo (was phantom in v10.3-v10.9).
-- **Standing rule #6** (workplan): operative plan = `audits/bpc-rewrite-workplan-2026-05-11.md`. `workplan-co0007-v4.md` SUPERSEDED. Strict sequential B before E. (v10.8)
-- **Standing rule #7** (adversarial research): per DR-2026-05-09. Four required fields per closed gap. (v10.6, already live)
-- **Standing rule #8** (PMP): per DR-2026-05-10. PMP walks for numerical specs. Migration 006 applied. (v10.7)
-- **Standing rule #9** (9-step cross-jurisdictional synthesis): per BPC rewrite workplan §1. Multilingual 19×46. (v10.8)
-- **Standing rule #10** (evidence verification gate): per DR-2026-05-13. Existence verification (Phase B) distinguished from content verification. Three sub-rules by claim type (numerical via PMP; jurisdiction-comparison + qualitative via `reasoning_doc_citations`). (v10.9 → sharpened in v10.10)
-- **`<hooks_status>`** rewritten in v10.10: references actual CI workflows (`ci.yml`, `audit.yml`) instead of the phantom `hook-workplan-guidebook.md`.
-- **`<skills_assigned>`** clarifies 5 placeholder skills (no file) vs 8 real PI-invoked skills.
-- **Bootstrap status block** extended with versioning backfill, reasoning_doc_citations count, PAYWALL candidate count.
-- **PI size**: 307 lines (v10.9) → 259 lines (v10.10). State content moved to DRs/DB.
+**Status:** v10.12 drafted at `governance/project-instructions-v10_12.md` @ session_2026-05-15a.
+**Action:** Owner manually pastes v10.12 content into claude.ai → Project Settings → Custom Instructions when convenient.
 
-## Schema changes already in DB
+### What changed vs live v10.11
 
-- Migration 010: FK integrity (4 tables / 782 rows from `evidence_sources_v1_legacy` → `evidence_sources`)
-- Migration 011: `reasoning_doc_citations` table (Track 3 of DR-2026-05-13)
-- Data migration: Track 1 first pass — `edition` populated on 41 catalog-fetch records
-- user_version 9 → 11; schema_version 6 → 11
+Single-purpose patch.
 
-## Owner action
+- **Bootstrap pattern fix.** Replaced `echo "Skills: $(grep -c '^### ' /tmp/registry.md) registered"` (matched 0 against current registry shape) with a backend-aware `_GH_SKILLS()` helper that counts `skills/*_SKILL.md` files via the GitHub contents API and excludes `skills/deprecated/`. Helper added to both `gh` and `curl` backend blocks (lines 175 and 184 in v10.11 source). Status-block label `Skills: X registered` → `Skills: X active`.
+- **Changelog entry** for v10.12 added at top.
+- **No standing-rule changes.** No `<skills_assigned>` changes. No structural removals or renames — no caller-sweep required.
+
+### Owner action
 
 - [ ] Open claude.ai → Project Settings → Custom Instructions
-- [ ] Replace live PI (currently v10.6) with content of `governance/project-instructions-v10_10.md`
-- [ ] Verify version line reads "V10.10 · Revised 2026-05-13"
-- [ ] Save; next chat will bootstrap under v10.10
+- [ ] Replace live PI (currently v10.11) with content of `governance/project-instructions-v10_12.md`
+- [ ] Verify version line reads `V10.12 · Revised 2026-05-15`
+- [ ] Save; next chat will bootstrap under v10.12 and the `Skills: X active` line will show a non-zero count
+
+---
+
+## v10.11 — Confirmed deployed
+
+The earlier entry for v10.10 deployment is retired; v10.10 → v10.11 was a small surgical patch (single-skill promotion) and the live PI in session_2026-05-15a's prompt is v10.11, so deployment of both v10.10 and v10.11 is treated as complete.
+
+Historical detail of v10.6 → v10.10 → v10.11 cumulative changes is preserved in:
+- `governance/project-instructions-v10_10.md` (v10.10 snapshot, with v10.6→v10.10 changelog entries)
+- `governance/project-instructions-v10_11.md` (v10.11 snapshot)
+- `sessions/session_2026-05-13b-evidence-verification-methodology.md` (architecture v2.3 + DR-2026-05-13 + PI v10.10 work)
+- `sessions/session_2026-05-15a-governance-reconciliation.md` (v10.11 promotion + 2026-05-15 governance reconciliation)
