@@ -441,3 +441,71 @@ Cross-validator pass found `scripts/validate_db.py` failing on `sqlite3.Operatio
 | 8 | `validate_db.py` references removed column `doi_less_key` | Deferred (not in CI) |
 | 9 | All 81 ACTIVE slugs have `sl_path == bpc_path` (silent drift) | Fixed (data migration) |
 | — | bpc_type taxonomy for index BPCs | Outstanding policy decision (DR-class) |
+
+---
+
+## Fifth-round addendum — pivot to Phase E.1 Track 3 pilot
+
+Owner directive `proceed next` (fifth in chat) authorized pivoting from governance reconciliation to the Phase E.1 pilot itself, after Claude surfaced three pilot scoping options and the owner clarified "BPC is not necessarily 1:1 with items" — re-shaping the unit-of-pilot question.
+
+### Pilot unit settled
+
+After scoping discussion: pilot unit = **one rule-#9 walk per parameter, all populations covered by parent BPC**. The reasoning doc lives at `references/bpc-reasoning/{slug}.md`; multiple parameters in scope yield multiple rule-#9 walks within one doc. Rationale: matches the unit Phase E will iterate on; honors DR-2026-05-13 "formal inline review" mandate (one walk reviewable in one session); does not pre-commit on the items↔BPCs schema question (pilot results inform it).
+
+### Pilot BPC selected: `room-acoustic-performance`
+
+Chosen because: 18 eligible sources (highest in candidate pool); Opus-synthesized; PARTIAL jurisdictional status (18/24 covered — rule #9 step 3 gets real exercise on partial set); CON-0264 multi-population convergence (RT60 ≤ 0.4 s across DEAF, NDV/AUT, MH, PAIN, OFS) restored 2026-05-16 in this same session lands directly in this BPC's scope; documented contestation on NDV/AUT acoustic targets exercises rule #7 properly.
+
+### Pilot parameter selected: RT60
+
+Strongest Tier-1 evidence (Iglehart 2020, AJA; encoded in ANSI/ASA S12.60-2010/Part 1 Footnote e). Cleanest multi-population structure (5 disability populations + general). Documented numerical contestation for NDV/AUT.
+
+### Pass 1 completed
+
+Authored `references/bpc-reasoning/room-acoustic-performance.md` (167 lines) covering rule-#9 walk steps 1, 2, 3 for parameter RT60:
+- Step 1 — parameter declaration (units, accessibility direction, worst-case point convention)
+- Step 2 — per-population worst-case user statements for DEAF, NDV/AUT, DEM, NEU/PCS, OFS/PAIN, general (with source basis per population, no cross-population arbitration — deferred to step 9 per rule #9)
+- Step 3 — jurisdiction comparison table across 14 jurisdictions (US, UK, DE, IT, FR, AU/NZ, JP, CN, DK/NO/SE/FI, NL, BE, ES, PT, KR) with values at worst-case point per (general / DEAF / NDV-AUT)
+
+Also recorded:
+- Pilot scoping note (PILOT designation, pilot scope this session, skill chain order, pre-flight anomaly)
+- Pass 2 plan (steps 4-9 to-do per population)
+- Pass 3 plan (~40-60 reasoning_doc_citations rows to author)
+- Out-of-band: rule #7 adversarial-research pass + rule #8 PMP-DEAF-RT60 walk queued as next-session pre-requisites
+
+### Live finding during Pass 1: REF-00561 metadata anomaly
+
+`REF-00561` (Bettarello et al. 2021, "Room acoustic parameters and accessibility") has `metadata_quality = COMPLETE` and `verification_status = VERIFIED`, but the DOI `10.3403/30081120u` resolves to a British Standards Institution standard, not the Bettarello paper. The actual paper is published in MDPI *Applied Sciences*. Publisher field reads "BSI British Standards" — also wrong.
+
+This is precisely the anti-pattern rule #10 sub-rule 2 was authored to catch: `VERIFIED` means a DOI resolved, not that the content matches. Pilot did not need to be running for this to be wrong, but the pilot's "open every cited source at the cited section" discipline is what surfaced it. Flagged for `citation-miner` correction before any reasoning-doc-citations row is created against this source. Does not block Pass 1 (Iglehart 2020 is the load-bearing source for the strongest claim).
+
+### Pilot artifact and CI state
+
+- New file: `references/bpc-reasoning/room-acoustic-performance.md` (Pass 1)
+- Existing validators: `validate_cross_refs.py` (2 index-BPC residuals, unchanged), `decision_capture.py` (exit 0), `reasoning_doc_citations_audit.py` (0 rows, table-existence check passes)
+- No DB writes this session — Pass 1 is markdown-only. DB writes start in next-session pre-pass (rule #7 → `gaps` row; rule #8 → `spec_value_probes` walk; rule #10 → `reasoning_doc_citations` rows).
+
+### Inline review checkpoint per DR-2026-05-13
+
+Pass 1 ends at the natural review boundary. Inline review of:
+- Step 1's parameter-declaration completeness (units, direction, worst-case point convention)
+- Step 2's per-population statements (no inline cross-population arbitration; per-population evidence basis)
+- Step 3's jurisdiction-comparison table (14 jurisdictions; values at worst-case point; scope column populated; thin-coverage acknowledgements where applicable)
+- Pass 2 / Pass 3 / pre-pass plans (skill chain order: rule #7 → rule #8 → rule #9 steps 4-9 → rule #10)
+
+This is the first formal pilot review. Per DR-2026-05-13: review feedback drives methodology adjustment before pilot scales to subsequent parameters within room-acoustic-performance and to other BPCs.
+
+### Next session opens at
+
+Rule #7 adversarial-research on the strongest contested claim ("NDV/AUT require quantified RT60 targets but no Tier-1 evidence base exists for what those targets should be") + rule #8 PMP-DEAF-RT60 ≤ 0.3 s walk. These are pre-passes that must clear before Pass 2 (rule #9 steps 4-9) can populate "guidebook chosen value per population" defensibly.
+
+### Cumulative session ledger (final, 15 commits across 5 rounds)
+
+| Round | Commits | Focus |
+|---|---|---|
+| 1 | `c742d7f2` + `dd41dd0b` + `30ecab78` | Session record + LATEST + PI v10.12 + first CI addendum |
+| 2 | `0cc4b8f5` + `af0b5abd` + `632bddb5` + `0ebbad06` | Anomalies #7 + #4 + #6 + second addendum |
+| 3 | `78dc9618` + `19c09b33` + `430ac7a3` | CON-0247..0274 restoration + third addendum |
+| 4 | `37d0fb0c` + `23a16c57` + `b66e9d3c` + `8ebc157d` | sl_path fix + ot-cpg search-log + STUB-skip + relocations + fourth addendum |
+| 5 | (this round, this commit) | Pilot Pass 1 + fifth addendum |
+
