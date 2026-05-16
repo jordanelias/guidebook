@@ -240,3 +240,86 @@ Net CI improvement after the second-half work:
 - Structure CI red on real residuals (9 search-log + ~17 BROKEN_CON_ID); not blocking pilot, but on the data-integrity-verification-plan.md Phase 1.1 acceptance criterion.
 
 **Cross-rule signal carried forward (unchanged):** `PMP-A02-001-S2` cites `REF-00335` which is `AUTHOR-TITLE-ONLY` → ineligible per rule #10 → invalidates the PMP walk per rule #8. Resolution path: either upgrade `REF-00335` metadata to COMPLETE (Track 1 work) or re-walk PMP with a different cited source.
+
+---
+
+## Third-round addendum — BROKEN_CON_ID resolution + search-log residual triage
+
+Owner directive `proceed` (third in the chat) authorized continued work on the Structure CI residuals flagged in the second-half addendum. Two threads: BROKEN_CON_ID set (resolved) and search-log residuals (triaged, policy-decisions surfaced).
+
+### BROKEN_CON_ID set — resolved via data migration
+
+**Root cause traced:** the missing CON-IDs were not validator drift — they were a real data loss. Historical thread reconstructed from git:
+
+- **2026-05-06 14:05 (commit `3254705c`)**: synthesis-scan added CON-0253..CON-0274 (22 connections); combined with CON-0247..0252 added earlier in the same session-window, the connections table held 273 rows with max=CON-0274.
+- **2026-05-07 21:43 (commit `412739f7`)**: "decision-capture: init tracking DB + migrations 001-005 + 86 items populated" — the DB was re-initialised and connections were reset to 0.
+- **2026-05-13 20:38 (commit `d717bfae`)**: connections restored to 245 rows, max CON-0246. The restoration migration used a pre-2026-05-06 source; CON-0247..0274 were not in that source.
+- **2026-05-15 baseline 012**: captured the 245-connection state as new starting line per DR-2026-05-15 Option B. Lost connections now absent from migration history entirely.
+
+Twenty-eight markdown references to the lost CON-IDs remained in place (in `parts/v10/part03.md`, `parts/v10/part04.md`, `references/connections/_index.md`, `skills/citation-miner_SKILL.md`) — substantive content like CON-0264 "RT60 ≤0.4 s multi-population convergence" referenced as the universal acoustic target in `parts/v10/part04.md`. **This is the caller-sweep miss that architecture v2.3 `<migration_and_growth>` was authored to prevent** — the 2026-05-07 DB reset succeeded mechanically but left orphan markdown citations a sweep would have caught.
+
+**Resolution:** authored `scripts/migrations/data_20260516030900_restore_synthesis_scan_connections_con_0247_to_0274.sql` (566 lines, 28 INSERTs + full header + `data_migrations` registration). Extracted source rows verbatim from the historical DB at SHA `3254705c`; same 13-column schema applies, no schema migration intervening. Sandbox applied cleanly (245 → 273 connections, max CON-0274, FK clean); committed-DB application followed. `validate_cross_refs.py` BROKEN_CON_ID count 17 → 0. Reproducibility: `migrate_db.py --rebuild /tmp/test.db` from baseline 012 + all data migrations including the new one produces 273 connections / max CON-0274 / 669 evidence_sources matching committed DB. (Note: rebuild's `data_migrations` table contains 3 more rows than committed — one per migration whose SQL also self-registers; this is a pre-existing pattern across the dedup migrations and not introduced here.)
+
+Commits: `78dc9618` (migration file), `19c09b33` (DB application).
+
+### Search-log residuals — policy decisions surfaced, not made
+
+Nine real drift cases. Diagnosis shows two distinct sub-patterns; each requires owner judgment.
+
+**4 BPCs without matching search-log:**
+
+| BPC | Status | Disposition recommendation |
+|---|---|---|
+| `references/bpc/economics/economics-sources.md` | Index/meta-BPC | Likely warrants validator exemption — index BPCs aren't parameter BPCs and have no research pass to log. |
+| `references/bpc/economics/government-grant-programmes.md` | Sibling of `government-grant-programmes-home-adaptation.md` which DOES have a matching log | Probably the parent/index of the home-adaptation BPC; same exemption category as above. |
+| `references/bpc/population-general/ot-cpg-built-environment.md` | Real BPC, Co-2 OT clinical guidelines inventory, "Opus synthesis: YES" | Has substantive research content; the corresponding search-log was likely authored under a different filename or path during the 2026-03-28 work. Find it or re-author. |
+| `references/bpc/sensory-environment/school-environment-autism.md` | Explicitly marked `STUB — new slug created B2. Full BPC research pass deferred.` | Search-log will be created when the BPC research pass runs (Phase E or later). Could add to a validator known-stub exemption list. |
+
+**5 economics search-logs without matching BPC:**
+
+| Search-log | Apparent type |
+|---|---|
+| `economics-audit-cost-premium-cross-jurisdiction.md` | Cross-jurisdiction research-audit log, not a parameter search-log |
+| `economics-citation-chain-chandola-carnemolla.md` | Citation chain trace for two specific authors |
+| `economics-japanese-housing-adaptation-costs.md` | Country-scoped sub-topic, not a parameter search-log |
+| `economics-research-session2-citation-mining.md` | Session-2 citation-mining log (header explicitly says so) |
+| `economics-session2-final-citation-mining.md` | Session-2 final citation-mining log |
+
+All five appear to be **session-level research/citation-mining sub-logs**, not the 1:1-per-BPC search-logs the validator expects. The other 5 search-logs in `references/search-log/economics/` (`accessibility-feature-market-value-uplift-framing`, `accessible-design-economics-cost-premium`, `case-study-economics-financial-data`, `construction-cost-data`, `government-grant-programmes-home-adaptation`) DO match economics BPCs 1:1. So the 5 orphans are misfiled artifact-type — they likely belong in a `references/research-logs/` or `references/citation-mining-logs/` directory, or in `_archived/` as session artifacts.
+
+**Recommended actions (owner judgment required, not taken this session):**
+1. Decide whether index/meta-BPCs (`economics-sources`, `government-grant-programmes`) should be validator-exempt; if yes, either add an exemption list or a frontmatter flag (e.g., `bpc_type: index`).
+2. Decide whether stub BPCs (`school-environment-autism`) get a known-pending exemption or are excluded from the 1:1 check until research runs.
+3. Investigate the `ot-cpg-built-environment` search-log location — research was clearly done; the log file may exist under a different name.
+4. Move the 5 economics session-citation-mining logs to an appropriate directory (`research-logs/` or `_archived/`) so the validator stops counting them as orphan search-logs.
+
+These are all small mechanical operations once the policy direction is set. None are blockers for the Phase E.1 pilot.
+
+### Final CI status
+
+| Job | Status |
+|---|---|
+| Syntax check | ✓ |
+| Commit message format | ✓ |
+| Governance validation | ✓ (closed this session — anomaly #7) |
+| Schema validation | ✓ |
+| DB integrity | ✓ |
+| Repo Integrity Audits (separate workflow) | ✓ |
+| Structure validation | ✗ — 9 search-log residuals only; all BROKEN_CON_IDs cleared |
+
+5 of 6 Guidebook CI jobs + Repo Integrity Audits = green. One remaining red job, on 9 cases requiring policy decisions surfaced above.
+
+### Cumulative session ledger (9 commits)
+
+| # | Commit | Concern |
+|---|---|---|
+| 1 | `c742d7f2` | session record + LATEST bump |
+| 2 | `dd41dd0b` | PI v10.12 (bootstrap pattern fix) + PI-update-needed refresh |
+| 3 | `30ecab78` | session record: first addendum (CI red baseline) |
+| 4 | `0cc4b8f5` | anomaly #7 (governance CI) — enum widening + protocol + data record |
+| 5 | `af0b5abd` | anomaly #4 — DR-2026-05-15 ADOPTED Option B |
+| 6 | `632bddb5` | anomaly #6 (partial) — validator path fix + template skip |
+| 7 | `0ebbad06` | session record: second addendum |
+| 8 | `78dc9618` | data migration: restore CON-0247..0274 |
+| 9 | `19c09b33` | apply migration to committed DB |
+| 10 | (this commit) | session record: third addendum |
