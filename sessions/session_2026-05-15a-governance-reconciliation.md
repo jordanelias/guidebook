@@ -162,3 +162,81 @@ Pushed commits land green on `Repo Integrity Audits` (source_slug_links duplicat
 Both are pre-existing on commit `d36f55b3` (immediate predecessor of this session) and confirmed unrelated to this session's file changes (governance v10.12 patch + PI-update-needed + session record + LATEST). The team has been operating with red Guidebook CI for ~10 commits — implied force-merge posture.
 
 **Next-session recommendation:** before the Phase E.1 pilot, decide whether to (a) fix the two CI failures and return Guidebook CI to green so the pilot lands on a clean baseline, or (b) accept the red CI as scope-out and proceed. Option (a) is preferred per the integrity argument that prompted this whole session; the `data-integrity-verification-plan.md` (2026-05-14) Phase 1.1 already calls for verifying CI passes, so addressing these is on-plan. The two fixes look small: extend `effort_level` and `model_routing` enums in `schemas/enums.py` (mirror the `DecisionStatus` widening pattern); for the BPC search-log expectation, decide if it's still applicable post-rewrite-workplan and either restore the search logs or update/disable that validator check.
+
+---
+
+## Second-half addendum — anomalies 4, 6, 7 worked in same session
+
+Owner directive `proceed` (received after the initial addendum was pushed) authorized continuing on the queue. The session was extended.
+
+### Anomaly #7 — Governance CI (resolved)
+
+The validators live in `schemas/decision.py`, not `schemas/enums.py` as the first addendum guessed.
+
+Root cause: D-0138 (Operative storage form selection, 2026-05-02) was authored at effort 200 with `model_routing: opus/200/synth` to signal a higher synthesis load than any prior session — but the schema constraints + `governance/decision-protocol.md` only enumerated `{150, 125, 100, 75, 50}`. The decision pre-dated the protocol's ability to express it. A second issue: D-0138 also used `review_status: PENDING` to express "awaiting project-owner adoption" — but the C8 rule says DG-NON requires `review_status=NA`. The "awaiting adoption" semantic was a status concept, not a review-status concept, and is now properly expressed by `status: PROVISIONAL` (which D-0138 already had; PROVISIONAL was added to the enum on 2026-05-15 in the same commit family).
+
+Fix:
+- `schemas/decision.py`: extended `MODEL_ROUTING_PATTERN` to permit `200`; extended `VALID_EFFORT_LEVELS` to include `200`; error message updated.
+- `governance/decision-protocol.md`: amended §3.2 row 110, §4.2 row 164, §4.4 regex (line 185) to add `200`. §4.4 regex was also missing `legacy` from its protocol text despite the implementation accepting it — fixed in the same edit (pre-existing protocol-vs-implementation drift). Added explanatory paragraphs to §4.4: "Effort level 200 — when to use" (sparingly; multiple-per-quarter signals re-calibration) and "Legacy tier" (reserved for initial-seeding pattern per §5.3).
+- `data/decisions/decision_register.yaml`: D-0138 `review_status` migrated `PENDING` → `NA` per C8; added migration note to D-0138's `notes` field explaining the semantic shift (status field now carries the "awaiting adoption" signal).
+
+Verification: `python3 scripts/decision_capture.py` exits 0 locally. Register reports 1 PROPOSED / 2 PROVISIONAL / 147 ACTIVE / 0 SUPERSEDED / 0 RETIRED. WARNINGs remain on 4 pre-existing rationale-norm cases (C3/C6) — unchanged and not blocking.
+
+Commit: `0cc4b8f5`.
+
+### Anomaly #4 — DR-2026-05-15 status (resolved by owner directive)
+
+Owner's `proceed` directive interpreted as authorization to mark DR-2026-05-15 ADOPTED — Option B, since the commit history (`d5449e8f` + `5026e827` + `9e8c2d1d` + `5070a223` + `4d0e9b05` + `d36f55b3`) shows Option B was selected and applied in full.
+
+Fix: `decisions/DR-2026-05-15-migration-history-drift-repair.md` header `Status: PROPOSED → ADOPTED — Option B (Baseline Reset). Applied 2026-05-15 by owner via [commit list]. Header updated 2026-05-15 in session_2026-05-15a-governance-reconciliation.md upon owner directive.`
+
+Commit: `af0b5abd`.
+
+### Anomaly #6 — Structure CI (partial resolution; residuals flagged)
+
+Root cause was a one-character path-name drift, not content drift: `scripts/validate_cross_refs.py` defined `SEARCH_LOG_ROOT = "references/search-logs"` (plural) while the actual directory in the repo is `references/search-log/` (singular). `scripts/validate_population.py` had the same orphan reference at line 305. Validator was glob-ing an empty directory and counted every BPC as `MISSING_SEARCH_LOG`. ~30 false-positive failures collapsed to:
+
+- 4 real `MISSING_SEARCH_LOG` cases (BPCs without logs): `economics-sources`, `government-grant-programmes`, `ot-cpg-built-environment`, `school-environment-autism`
+- 5 real `ORPHAN_SEARCH_LOG` cases (logs without BPCs, all economics-related): `economics-audit-cost-premium-cross-jurisdiction`, `economics-citation-chain-chandola-carnemolla`, `economics-japanese-housing-adaptation-costs`, `economics-research-session2-citation-mining`, `economics-session2-final-citation-mining`
+
+Also added: skip underscore-prefixed BPC files (`_template.md`) in `collect_bpc_slugs` — templates aren't BPCs and shouldn't trip the co-existence check.
+
+**Structure validation will still fail in CI** on the 9 residuals + a previously-masked set of `BROKEN_CON_ID` errors in `parts/v10/part04.md` and a few other files (the validator was bailing on the false-positive search-log block before reaching the CON-ID checks; lifting that block exposed the next layer). The 9 search-log residuals and the BROKEN_CON_ID set are real drift requiring owner judgment, not validator-typo cleanup — explicitly flagged for next-session triage rather than addressed here.
+
+Commit: `632bddb5`.
+
+### Out-of-scope finding flagged for next-session attention
+
+`parts/v10/part04.md` and `parts/v10/part03.md` cite CON-0247, CON-0259..CON-0274 etc. which the validator reports as not present in the SQLite `connections` table. The mismatches were previously masked by the search-log validator bailing early. With the validator's false-positive search-log block cleared, these CON-ID references are now visible. Two possible repairs (not chosen this session):
+1. Connections were renumbered in the database without updating `parts/v10/*.md` — fix the references in the markdown files.
+2. Connections were dropped from the database without removing the references — restore the connections or remove the references.
+
+Net CI improvement after the second-half work:
+- Repo Integrity Audits: was green, still green.
+- Guidebook CI Governance validation: red → **green** (was anomaly #7).
+- Guidebook CI Structure validation: red → still red but now red on real issues (~9 search-log + ~17 BROKEN_CON_ID drift cases), not validator-typo false positives.
+
+### Files touched in second half (5 commits total this session)
+
+| Commit | Files |
+|---|---|
+| `c742d7f2` | `sessions/session_2026-05-15a-governance-reconciliation.md` (created), `sessions/LATEST` |
+| `dd41dd0b` | `governance/project-instructions-v10_12.md` (created), `decisions/PI-update-needed.md` (replaced) |
+| `30ecab78` | `sessions/session_2026-05-15a-governance-reconciliation.md` (first addendum) |
+| `0cc4b8f5` | `schemas/decision.py`, `governance/decision-protocol.md`, `data/decisions/decision_register.yaml` |
+| `af0b5abd` | `decisions/DR-2026-05-15-migration-history-drift-repair.md` |
+| `632bddb5` | `scripts/validate_cross_refs.py`, `scripts/validate_population.py` |
+
+(This appendix is itself a 7th commit on the same session record.)
+
+### Revised handoff
+
+**session_close (final):** 2026-05-15 — governance trail reconciled 2026-05-13b → 2026-05-15; PI v10.12 drafted (bootstrap pattern fix); LATEST bumped; PI-update-needed refreshed; anomaly #4 closed (DR-2026-05-15 ADOPTED — Option B); anomaly #6 substantially fixed (path-name drift cleared, residuals flagged); anomaly #7 closed (governance validation green).
+
+**next_action (revised):** Phase E.1 single-BPC pilot under `reasoning-doc-citations` workflow. Pilot BPC selection criterion unchanged (≥ 5 sources at `metadata_quality = COMPLETE` AND `verification_status ∈ {VERIFIED, UNVERIFIED-1}`); a single SQL query against `evidence_sources` + `source_slug_links` will surface candidates. Before the pilot starts, owner may want a brief triage of the 9 search-log residuals and BROKEN_CON_ID set so Structure CI can return green — both look small.
+
+**blockers (revised):**
+- Pilot BPC for Track 3 still not selected (carried forward).
+- Structure CI red on real residuals (9 search-log + ~17 BROKEN_CON_ID); not blocking pilot, but on the data-integrity-verification-plan.md Phase 1.1 acceptance criterion.
+
+**Cross-rule signal carried forward (unchanged):** `PMP-A02-001-S2` cites `REF-00335` which is `AUTHOR-TITLE-ONLY` → ineligible per rule #10 → invalidates the PMP walk per rule #8. Resolution path: either upgrade `REF-00335` metadata to COMPLETE (Track 1 work) or re-walk PMP with a different cited source.
