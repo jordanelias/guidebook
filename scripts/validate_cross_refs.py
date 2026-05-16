@@ -33,7 +33,7 @@ from pathlib import Path
 
 DB_PATH = "data/guidebook.db"
 BPC_ROOT = "references/bpc"
-SEARCH_LOG_ROOT = "references/search-logs"
+SEARCH_LOG_ROOT = "references/search-log"
 
 SCAN_PATTERNS = [
     "references/bpc/**/*.md",
@@ -104,6 +104,9 @@ def collect_bpc_slugs(repo_root: str) -> dict[str, str]:
     result = {}
     for path in glob.glob(pattern, recursive=True):
         stem = Path(path).stem
+        if stem.startswith("_"):
+            # Skip templates and other underscore-prefixed private files
+            continue
         result[stem] = path
     return result
 

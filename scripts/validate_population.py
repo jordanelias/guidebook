@@ -302,7 +302,7 @@ def main():
         if not args.bpc_only:
             md_patterns.extend([
                 os.path.join(repo_root, "references", "bpc", "**", "*.md"),
-                os.path.join(repo_root, "references", "search-logs", "**", "*.md"),
+                os.path.join(repo_root, "references", "search-log", "**", "*.md"),
                 os.path.join(repo_root, "references", "connections", "**", "*.md"),
             ])
         else:
