@@ -148,3 +148,17 @@ Provenance chain is complete and reconstructible from repo state.
 **Cross-rule signal carried forward:** `PMP-A02-001-S2` cites `REF-00335` which is `AUTHOR-TITLE-ONLY` → ineligible per rule #10 → invalidates the PMP walk per rule #8. First documented case of the cross-rule-8-and-10 bridge. Resolution path: either upgrade `REF-00335` metadata to COMPLETE (Track 1 work) or re-walk PMP with a different cited source. Not addressed this session.
 
 **Audit trail integrity:** restored as of this commit. Next session can bootstrap on clean ground.
+
+---
+
+## Addendum — CI status at session close
+
+Pushed commits land green on `Repo Integrity Audits` (source_slug_links duplicates, citation-mining completeness, migration reproducibility per `audit.yml`) and on the relevant `Guidebook CI` jobs (commit-msg format, syntax, schema, DB integrity). However, `Guidebook CI` overall remains **red** on this commit and has been red on every push since at least commit `0333f405` (2026-05-15 16:10) — ≥10 consecutive failing runs. Two pre-existing failures:
+
+**Anomaly 6 — Structure validation: MISSING_SEARCH_LOG on ~30 BPC files.** `references/bpc/ALL-ENV.md`, `references/bpc/ALL-FW.md`, `references/bpc/_template.md`, and many domain BPC files have no matching search-log. Pre-existing drift unrelated to this session's work (BPC files untouched). Likely fallout from the bpc-rewrite-workplan-2026-05-11 restructuring; the search-log expectation is from the pre-rewrite era and may be obsolete OR the search logs were archived without updating the validator.
+
+**Anomaly 7 — Governance validation: decisions.137 enum violation.** `decisions.137` has `effort_level: 200` and `model_routing: 'opus/200/synth'`, both outside current enum constraints (`{50|75|100|125|150}` for effort; `opus|sonnet|haiku|human|legacy / 150|125|100|75|50|none / synth|arbitrate|extract|format|route|none` for routing). Likely in-flight from the 2026-05-15 enum-widening commits (`a2c5ff6d` + `8f2e06c3`) that added `PROPOSED`/`PROVISIONAL` to `DecisionStatus` but did not also widen `effort_level` / `model_routing` enums to cover values now present in the register.
+
+Both are pre-existing on commit `d36f55b3` (immediate predecessor of this session) and confirmed unrelated to this session's file changes (governance v10.12 patch + PI-update-needed + session record + LATEST). The team has been operating with red Guidebook CI for ~10 commits — implied force-merge posture.
+
+**Next-session recommendation:** before the Phase E.1 pilot, decide whether to (a) fix the two CI failures and return Guidebook CI to green so the pilot lands on a clean baseline, or (b) accept the red CI as scope-out and proceed. Option (a) is preferred per the integrity argument that prompted this whole session; the `data-integrity-verification-plan.md` (2026-05-14) Phase 1.1 already calls for verifying CI passes, so addressing these is on-plan. The two fixes look small: extend `effort_level` and `model_routing` enums in `schemas/enums.py` (mirror the `DecisionStatus` widening pattern); for the BPC search-log expectation, decide if it's still applicable post-rewrite-workplan and either restore the search logs or update/disable that validator check.
