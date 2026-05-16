@@ -150,6 +150,15 @@ def check_bpc_searchlog_coexistence(
     errors = []
     for slug, bpc_path in bpc_slugs.items():
         if slug not in sl_slugs:
+            # Skip BPCs explicitly marked as STUBs — search-log will be authored
+            # when the BPC research pass runs (per workplan Phase E or later).
+            try:
+                with open(bpc_path, encoding="utf-8") as f:
+                    head = f.read(2000)
+                if re.search(r"\*\*Status:\*\*\s*STUB\b", head):
+                    continue
+            except Exception:
+                pass
             errors.append((
                 bpc_path,
                 f"MISSING_SEARCH_LOG: BPC '{slug}' has no matching search-log"
