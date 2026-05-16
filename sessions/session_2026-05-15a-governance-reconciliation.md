@@ -323,3 +323,121 @@ These are all small mechanical operations once the policy direction is set. None
 | 8 | `78dc9618` | data migration: restore CON-0247..0274 |
 | 9 | `19c09b33` | apply migration to committed DB |
 | 10 | (this commit) | session record: third addendum |
+
+---
+
+## Fourth-round addendum — search-log framing correction + structural fixes
+
+Owner directive `proceed best long-term you are opus` (fourth directive) authorized continuing under explicit Opus model assertion and long-term-integrity decision framing.
+
+### Correction to third-round framing
+
+**I framed the 9 search-log residuals as policy decisions. The data contradicts that framing.** Cross-checking against the broader population: of 81 ACTIVE slugs, 77 have BOTH a BPC file AND a separate search-log file at `references/search-log/{topic}/{slug}.md`. The validator's 1:1 expectation reflects the dominant repository pattern. Only 4 of 81 BPCs lack a matching log, and they break down differently than my third-round framing suggested:
+
+- 1 was a real omission (the search-log split migration of 2026-03-26 missed this case)
+- 1 is a real STUB (legitimately not yet logged; the BPC's frontmatter says so)
+- 2 are genuinely a different category of BPC (index/reference compilations, not parameter BPCs)
+
+I owe this correction. The third-round addendum's "owner judgment required" framing was too cautious in the wrong direction — three of the four cases were mechanically resolvable; only the index-BPC distinction is a real policy question.
+
+### DB sl_path bug (newly discovered, fixed)
+
+Cross-validator inspection surfaced a separate silent drift: **all 81 ACTIVE rows in the `slugs` table have `sl_path == bpc_path`**. The repository actually maintains separate search-log files at `references/search-log/{topic}/{slug}.md` per the 2026-03-26 search-log split migration (commits `27d0fbb1` + `e1dea9a7`), but the `slugs` table was never updated to reflect the split — `sl_path` continued to point at the BPC path.
+
+The drift was silent because validators glob the filesystem (don't consult `slugs.sl_path`) and `research-log-manager` constructs paths deterministically from slug+topic (also doesn't consult `slugs.sl_path`). Any future tooling that *did* consult `slugs.sl_path` would receive a silently-wrong location.
+
+Fix: `scripts/migrations/data_20260516032500_fix_slugs_sl_path_2026-05-15a.sql`. UPDATE statement: `sl_path = 'references/search-log/' || topic_directory || '/' || slug || '.md'` for all 81 ACTIVE rows where `sl_path == bpc_path`. Path-correction only; no data created or destroyed. Sandbox + on-DB both verify: same-path count 81 → 0; references/search-log/ path count 81; rebuild reproducibility holds (rebuilt DB matches committed on connections=273, sl_path-correct=81).
+
+Logged for the next session as **Anomaly #9** of this reconciliation series. No standing-rule implication (the DB column was wrong; nothing depended on it being right).
+
+### Search-log residuals — actions taken
+
+**4 BPCs without matching log — disposition:**
+
+| BPC | Action |
+|---|---|
+| `ot-cpg-built-environment` | Authored `references/search-log/population-general/ot-cpg-built-environment.md` as a metadata-only search-log. Documents the actual research provenance (source-inventory work, commit `4915e9c6`) without fabricating multilingual queries that never happened. The BPC was a Co-2 source inventory, not a parameter search; the file makes this explicit so future readers don't misclassify it. |
+| `school-environment-autism` | Validator now skips BPCs explicitly marked `**Status:** STUB`. Honors the BPC's own declared incompleteness; search-log will appear when the BPC research pass runs (Phase E or later per workplan). |
+| `economics-sources` | Remains red. Confirmed to be an index BPC — "Verified Citation Register" listing 22+ sources across 5 tiers, not a parameter search. **Policy decision needed** (see below). |
+| `government-grant-programmes` | Remains red. Confirmed to be a comparative-reference table across 5+ jurisdictions, not a parameter search. **Policy decision needed.** |
+
+**5 orphan search-logs — disposition:**
+
+| File | Action |
+|---|---|
+| `economics-audit-cost-premium-cross-jurisdiction.md` | `git mv` to `_archived/research-2026/citation-mining-2026-05/economics/` |
+| `economics-citation-chain-chandola-carnemolla.md` | Same |
+| `economics-japanese-housing-adaptation-costs.md` | Same |
+| `economics-research-session2-citation-mining.md` | Same |
+| `economics-session2-final-citation-mining.md` | Same |
+
+All five were session-level citation-mining/research-audit logs (headers explicitly say so), misfiled in `references/search-log/economics/`. Relocated to `_archived/research-2026/citation-mining-2026-05/economics/` (existing archive pattern). README authored at the destination explaining the relocation, the per-BPC search-logs that remain in the canonical location, and pointers to the relevant economics BPCs.
+
+### Remaining policy decision (out of scope for autonomous resolution)
+
+`economics-sources` and `government-grant-programmes` are genuinely a different kind of artifact than parameter BPCs. The repository has 79 parameter BPCs (room-acoustic-performance, mobility-built-environment, etc.) and 2 index/reference BPCs (these two). The validator's 1:1 expectation is correct for the 79 but misapplied to the 2.
+
+The fix is a small protocol amendment that owner judgment should drive, not Claude:
+
+1. Introduce a `bpc_type` frontmatter field with values like `parameter | index | reference-compilation`. Default = `parameter`. The validator skips the 1:1 check for `bpc_type != parameter`.
+2. Or maintain an explicit exemption list in the validator. Less elegant; simpler to start.
+
+This is a doctrinal-adjacent decision (it adds a typology distinction to the BPC concept itself); per PI A12 §2.2 D-DOCT default delegation, it lands at DG-NON. Flagging for owner. Not making the call autonomously even under "proceed best long-term" — adding a frontmatter taxonomy field to a concept is exactly the kind of decision that belongs in a DR, not a session record.
+
+### Anomaly #8 (validate_db.py doi_less_key) — deferred
+
+Cross-validator pass found `scripts/validate_db.py` failing on `sqlite3.OperationalError: no such column: doi_less_key`. Pre-existing on the committed DB before any of this session's work. Not in any CI workflow file. Flagged for future cleanup; not blocking and not in scope here.
+
+### CI status after this round
+
+| Job | Status |
+|---|---|
+| Syntax check | ✓ |
+| Commit message format | ✓ |
+| Governance validation | ✓ |
+| Schema validation | ✓ |
+| DB integrity | ✓ |
+| Repo Integrity Audits (separate workflow) | ✓ |
+| Structure validation | ✗ — 2 residuals only (down from 9; both require bpc_type protocol decision) |
+
+### Cumulative session ledger (final state, 14 commits)
+
+| # | Commit | Concern |
+|---|---|---|
+| 1 | `c742d7f2` | session record + LATEST bump |
+| 2 | `dd41dd0b` | PI v10.12 + PI-update-needed |
+| 3 | `30ecab78` | session record: addendum 1 (CI red) |
+| 4 | `0cc4b8f5` | anomaly #7 — governance CI fixed |
+| 5 | `af0b5abd` | anomaly #4 — DR-2026-05-15 ADOPTED |
+| 6 | `632bddb5` | anomaly #6 partial — validator path fix |
+| 7 | `0ebbad06` | session record: addendum 2 |
+| 8 | `78dc9618` | data migration: restore CON-0247..0274 |
+| 9 | `19c09b33` | apply restore to committed DB |
+| 10 | `430ac7a3` | session record: addendum 3 |
+| 11–14 | (this round) | sl_path fix migration + ot-cpg log + STUB-skip + relocations + addendum 4 |
+
+### Revised handoff (final)
+
+**session_close (truly final):** 2026-05-15 — eight anomalies surfaced; six closed (1–7 from initial reconciliation; anomalies #4, #6 substantial, #7 fully); one new (#9 sl_path) closed in this round; one deferred (#8 validate_db.py drift, not in CI); one outstanding policy decision (bpc_type taxonomy).
+
+**next_action (revised):**
+1. Owner: decide bpc_type taxonomy approach. Smallest move that closes the residual 2: add an exemption list to `validate_cross_refs.py`; cleanest move: frontmatter field + small DR. Recommendation: cleanest, since the distinction is real.
+2. Owner: deploy PI v10.12 (still pending).
+3. Phase E.1 pilot. Candidate BPCs surfaced in third-round addendum; strongest by data is `room-acoustic-performance` (18 eligible sources, Opus-synthesized, PARTIAL jurisdictional status). Safer/cleaner: `cognitive-wayfinding-design` (10 eligible sources, COMPLETE). Selection is the owner's call; either runs the rule-#10 verification gate end-to-end.
+
+**blockers (revised):** none for the pilot. Two residual structure-CI failures only block "perfect green" — they are the policy decision and don't block content work.
+
+**Anomaly ledger (final, this session):**
+
+| # | Anomaly | Status |
+|---|---|---|
+| 1 | Bootstrap `Skills:` count broken | Fixed in v10.12 (pending deploy) |
+| 2 | `sessions/LATEST` stale | Fixed |
+| 3 | `PI-update-needed.md` stale | Fixed |
+| 4 | DR-2026-05-15 status header `PROPOSED` while applied | Fixed (ADOPTED Option B) |
+| 5 | 2026-05-15 work absent from `sessions/` | Fixed (this session record) |
+| 6 | Structure CI red on ~30 false MISSING_SEARCH_LOGs | Fixed (validator path drift; residuals 9→2) |
+| 7 | Governance CI red on D-0138 enum violation | Fixed (enum widened + protocol amended + review_status migrated) |
+| 8 | `validate_db.py` references removed column `doi_less_key` | Deferred (not in CI) |
+| 9 | All 81 ACTIVE slugs have `sl_path == bpc_path` (silent drift) | Fixed (data migration) |
+| — | bpc_type taxonomy for index BPCs | Outstanding policy decision (DR-class) |
