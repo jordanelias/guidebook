@@ -65,6 +65,53 @@ jobs:
       - name: Validate HEAD commit message format
         run: python3 scripts/ci_helpers/check_commit_msg.py
 
+      - name: Doctrine-SHA token validation
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          set -euo pipefail
+          CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" || git show --name-only --format= "${{ github.sha }}")
+          SYNTHESIS_RE='^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/'
+
+          if ! echo "$CHANGED" | grep -qE "$SYNTHESIS_RE"; then
+            echo "No synthesis paths touched -- doctrine token not required."
+            exit 0
+          fi
+
+          # Exempt: doctrine self-modification (re-attestation window opens; enforced by audit.yml)
+          if echo "$CHANGED" | grep -q '^governance/mission-and-epistemics\.md$'; then
+            echo "Doctrine commit -- token exempt. Re-attestation required within RE_ATTESTATION_WINDOW commits."
+            exit 0
+          fi
+
+          # Exempt: bot / automation authors
+          AUTHOR=$(git log -1 --format=%ae "${{ github.sha }}")
+          case "$AUTHOR" in
+            *dependabot*|*github-actions*|*-bot@*) echo "Bot commit ($AUTHOR) -- exempt."; exit 0 ;;
+          esac
+
+          # Exempt: merge commits
+          PARENTS=$(git log -1 --format=%P "${{ github.sha }}" | wc -w)
+          if [ "$PARENTS" -gt 1 ]; then
+            echo "Merge commit -- exempt."
+            exit 0
+          fi
+
+          MSG=$(git log -1 --format=%B "${{ github.sha }}")
+          TOKEN=$(echo "$MSG" | grep -oE '\[DOCTRINE: [a-f0-9]{7}\]' | grep -oE '[a-f0-9]{7}' | head -1 || true)
+          EXPECTED=$(git rev-parse "HEAD:governance/mission-and-epistemics.md" | cut -c1-7)
+
+          if [ -z "$TOKEN" ]; then
+            echo "FAIL: commit touches synthesis paths; commit message must contain [DOCTRINE: <7-char-sha>]"
+            echo "Expected token: [DOCTRINE: $EXPECTED]"
+            exit 1
+          fi
+          if [ "$TOKEN" != "$EXPECTED" ]; then
+            echo "FAIL: doctrine token [$TOKEN] does not match HEAD:governance/mission-and-epistemics.md ($EXPECTED)"
+            echo "The doctrine has been updated since this commit was authored. Re-read and update the token."
+            exit 1
+          fi
+          echo "PASS: doctrine token $TOKEN matches HEAD."
+
   schema:
     name: Schema validation (entity YAML against Pydantic models)
     runs-on: ubuntu-latest
