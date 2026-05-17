@@ -33,7 +33,44 @@ Pilot will execute the chain in order. Skipping the upstream skills (rule #7, ru
 
 ---
 
-## Rule-#9 walk: RT60 (reverberation time)
+## Owner sign-offs (Phase E.1 pilot inline review per DR-2026-05-13)
+
+This section records owner directives that govern the synthesis logic. Each item carries its directive verbatim and is referenced by step number where it applies.
+
+### Item 1 — Worst-case point convention (RULES STEP 1 + STEP 3)
+
+**Owner directive (2026-05-17):** "you explicitly note the discrepancies when the comparator itself differs. some by metric volume, some by room type"
+
+**Interpretation:** No single global worst-case-point convention is imposed. Each jurisdiction's step 3 table cell is read against the worst-case point as that jurisdiction's code itself structures it (volume-based for ANSI/ASA; room-type-based for DIN 18041, BB93, UNI 11532-2). The comparator type is named explicitly in the step 3 table cell so cross-jurisdictional reads are not silently elided.
+
+**Consequence for step 1:** the "worst-case point of code structure" row above is reframed from "smallest occupied volume" (ANSI-centric) to **"native to each jurisdiction's code structure; named per cell in step 3 table."**
+
+**Consequence for step 3:** the existing table is extended with a "comparator type" column or annotation on each value cell so the structural difference is visible to a reader, not buried.
+
+### Item 2 — NDV/AUT chosen-value approach (RULES STEP 6)
+
+**Owner directive (2026-05-17):** "we explicitly note that this is conjecture rationally informed by literature"
+
+**Interpretation:** The NDV/AUT chosen-value (aspiration ≤ 0.4 s per the Pass 2 plan) is **not** presented as a Tier-1-grounded specification. It is labeled **"conjecture rationally informed by literature"** inline at the point of the claim, not as a softening caveat appended afterward. The phrase carries the epistemic status. The reasoning doc's step 7 (rationale) explicitly names which findings inform the conjecture and which gaps prevent it from being more than conjecture.
+
+**Consequence for step 6:** for NDV/AUT specifically, the chosen-value line reads as a labeled conjecture, e.g.:
+
+> NDV/AUT (autism spectrum, sensory hypersensitivity): RT60 ≤ 0.4 s aspiration — **conjecture rationally informed by literature**. No Tier-1 quantified target exists for this population. Informed by Bettarello et al. 2021 (insufficient existing standards), Caniato et al. 2024 (sensory hypersensitivity to background noise increments), Black 2022 (autism + built environment review); contraindication of sound masking (A-13) and background noise ≤ 30 dB(A) aspiration are companion specifications that carry independent evidentiary support.
+
+**Consequence for the spec layer:** any item that propagates the RT60 ≤ 0.4 s value for NDV/AUT inherits the "conjecture rationally informed by literature" label until or unless the Tier-1 evidence base develops to support a quantified target. Rule #8 PMP for this population specifically uses the conjecture as `spec_value_origin` and probes against literature support, with strict-termination expected to **fail** (no Tier-1 corroboration) — the recorded PMP outcome is the structured form of the conjecture label.
+
+### Items 3, 4, 5 — Pending
+
+Pending owner sign-off:
+3. Pre-pass order (rule #7 adversarial-research vs. rule #8 PMP first)
+4. Items↔BPCs schema model (populate `bpc_source_slug` for 1:1 cases vs. add `item_bpc_links` join table)
+5. Item creation policy for population-specific specs (e.g., whether to author RT60-DEAF as a new item, naming, code-numbering)
+
+No Pass 2 synthesis work, no rule #7 work, no rule #8 work, and no items-table writes proceed until 3, 4, 5 are settled.
+
+---
+
+
 
 ### Step 1 — Parameter declaration
 
@@ -43,7 +80,7 @@ Pilot will execute the chain in order. Skipping the upstream skills (rule #7, ru
 | Units | seconds (s) |
 | Accessibility direction | LOWER is more inclusive (less reverberation = better speech intelligibility for hearing-impaired, lower sensory load for NDV/AUT, less agitation trigger for DEM) |
 | Measurement point convention | Mid-frequency average over 500/1000/2000 Hz octave bands per ISO 3382-2; values reported at occupied room state where specified, otherwise unoccupied |
-| Worst-case point of code structure | Smallest occupied volume where the parameter is regulated (typically classroom ≤ 283 m³; some codes structure by room type rather than volume — recorded per-jurisdiction in step 3) |
+| Worst-case point of code structure | **Native to each jurisdiction's code structure; named per cell in step 3 table.** Comparator type varies — volume-based (ANSI/ASA: ≤ 283 m³ classroom); room-type-based (BB93, DIN 18041:2016, UNI 11532-2:2020 room-class A1-A4); formula-based (DIN 18041 uses a volume-dependent target curve); hybrid (some jurisdictions specify both). The rule #9 step 3 table makes the comparator explicit per cell rather than imposing a single global frame. Per owner sign-off Item 1 (2026-05-17). |
 
 ### Step 2 — Per-population worst-case user
 
@@ -64,24 +101,28 @@ Per rule #9: "Per-population worst-case user (no inline cross-population arbitra
 
 Per rule #9 step 3: "every surveyed jurisdiction's value at worst-case point; `scope` column."
 
-| Jurisdiction | Standard / Code | Worst-case-point value (general) | Worst-case-point value (DEAF / HI) | Worst-case-point value (NDV/AUT) | Scope |
-|---|---|---|---|---|---|
-| **US** | ANSI/ASA S12.60-2010/Part 1 | RT60 ≤ 0.6 s (≤ 283 m³); ≤ 0.7 s (> 283 m³ to 566 m³) | RT60 ≤ 0.3 s (≤ 283 m³) per Footnote e (HA/CI users) | not addressed | classrooms / learning spaces; statutory in many states |
-| **UK** | BB93 (Building Bulletin 93, 2015) | RT60 ≤ 0.4-0.8 s by room type | RT60 ≤ 0.4 s in "specially resourced provision" for hearing-impaired | not addressed | new build schools; statutory under Education (School Premises) Regulations |
-| **UK (transversal)** | PAS 6463:2022 | qualitative ("acoustic calm in sensory-sensitive spaces") | references BB93 | qualitative guidance, no quantified RT60 | publicly accessible buildings; not statutory |
-| **DE** | DIN 18041:2016 | RT60 by room type and volume (formula-based: typically 0.4-0.8 s) | annex addresses "Hörsamkeit bei Behinderung" qualitatively | not quantified | acoustic quality in small-to-medium rooms; widely referenced in DE design |
-| **IT** | UNI 11532-2:2020 | RT60 by room class A1-A4; A4 (high-criticality educational) ≈ 0.5 s | category A3.1 / A4 explicitly addresses students with hearing deficit; lower RT targets | not quantified specifically; category A4 considers cognitive accessibility qualitatively | classrooms; mandatory citation in IT acoustic design |
-| **FR** | NF S 31-080 (2006) | RT60 ≤ 0.4-0.8 s by room category | not differentiated | not addressed | classrooms / offices |
-| **AU/NZ** | AS/NZS 2107:2016 | RT60 by space type (table); typical classroom 0.4-0.6 s | references but does not quantify HI-specific | not addressed | recommended levels for indoor spaces |
-| **JP** | JIS Z 8731 framework + Barrier-Free Law | general RT guidance; no disability-specific differentiation in the acoustic standard itself | Barrier-Free Law addresses physical access; acoustic provisions not quantified per population | not addressed | acoustic measurement; barrier-free is separate regulation |
-| **CN** | GB 50118-2010 | RT60 ≤ 0.7-0.9 s (classroom, by volume) | not differentiated | not addressed | civil-building acoustic design |
-| **DK / NO / SE / FI** | National building codes referencing ISO 3382 / NS-EN 16798 | typical 0.4-0.6 s (classrooms) | thin coverage; some references to assistive-listening infrastructure | not addressed | school acoustics |
-| **NL** | NEN 3088 | RT60 ≤ 0.5-0.8 s | not differentiated | not addressed | school acoustics |
-| **BE** | NBN S 01-400-2 | RT60 ≤ 0.8 s typical classroom | not differentiated | not addressed | acoustic performance |
-| **ES** | DB-HR (CTE) | RT60 ≤ 0.7 s typical classroom | not differentiated | not addressed | sound protection (technical building code) |
-| **PT** | Portuguese national requirements (RGR / school acoustic guidance) | not separately codified per the BPC's coverage | not differentiated | not addressed | partial coverage in BPC |
-| **KR** | KS F 2814 + barrier-free law framework | not separately codified per the BPC's coverage | not differentiated | not addressed | partial coverage in BPC |
-| **NL/KO/SV-FI thin** | per BPC header "NL, KO, SV/FI thin; 18/24 jurisdictions" | acknowledged thin coverage | acknowledged thin coverage | acknowledged thin coverage | gap documented |
+Per owner sign-off Item 1: comparator type named per row so structural differences across codes are explicit, not elided.
+
+| Jurisdiction | Standard / Code | Comparator type | Worst-case-point (general) | Worst-case-point (DEAF / HI) | Worst-case-point (NDV/AUT) | Scope |
+|---|---|---|---|---|---|---|
+| **US** | ANSI/ASA S12.60-2010/Part 1 | volume-based (≤ 283 m³ / 283-566 m³) | RT60 ≤ 0.6 s (≤ 283 m³); ≤ 0.7 s (> 283 m³ to 566 m³) | RT60 ≤ 0.3 s (≤ 283 m³) per Footnote e (HA/CI users) | not addressed | classrooms / learning spaces; statutory in many states |
+| **UK** | BB93 (Building Bulletin 93, 2015) | room-type-based (by space function) | RT60 ≤ 0.4-0.8 s by room type | RT60 ≤ 0.4 s in "specially resourced provision" for hearing-impaired | not addressed | new build schools; statutory under Education (School Premises) Regulations |
+| **UK (transversal)** | PAS 6463:2022 | qualitative; no numeric comparator | qualitative ("acoustic calm in sensory-sensitive spaces") | references BB93 | qualitative guidance, no quantified RT60 | publicly accessible buildings; not statutory |
+| **DE** | DIN 18041:2016 | formula-based (volume-dependent target curve) by room type | target curve typically 0.4-0.8 s | annex addresses "Hörsamkeit bei Behinderung" qualitatively | not quantified | acoustic quality in small-to-medium rooms; widely referenced in DE design |
+| **IT** | UNI 11532-2:2020 | room-class-based (categories A1-A4) | RT60 by room class A1-A4; A4 (high-criticality educational) ≈ 0.5 s | category A3.1 / A4 explicitly addresses students with hearing deficit; lower RT targets | not quantified specifically; category A4 considers cognitive accessibility qualitatively | classrooms; mandatory citation in IT acoustic design |
+| **FR** | NF S 31-080 (2006) | room-category-based | RT60 ≤ 0.4-0.8 s by room category | not differentiated | not addressed | classrooms / offices |
+| **AU/NZ** | AS/NZS 2107:2016 | space-type-based table | RT60 by space type (table); typical classroom 0.4-0.6 s | references but does not quantify HI-specific | not addressed | recommended levels for indoor spaces |
+| **JP** | JIS Z 8731 framework + Barrier-Free Law | measurement-method; no quantified-target comparator in acoustic standard | general RT guidance; no disability-specific differentiation in the acoustic standard itself | Barrier-Free Law addresses physical access; acoustic provisions not quantified per population | not addressed | acoustic measurement; barrier-free is separate regulation |
+| **CN** | GB 50118-2010 | volume-based (classroom) | RT60 ≤ 0.7-0.9 s (classroom, by volume) | not differentiated | not addressed | civil-building acoustic design |
+| **DK / NO / SE / FI** | National building codes referencing ISO 3382 / NS-EN 16798 | room-type-based (classroom focus) | typical 0.4-0.6 s (classrooms) | thin coverage; some references to assistive-listening infrastructure | not addressed | school acoustics |
+| **NL** | NEN 3088 | room-type-based | RT60 ≤ 0.5-0.8 s | not differentiated | not addressed | school acoustics |
+| **BE** | NBN S 01-400-2 | room-type-based | RT60 ≤ 0.8 s typical classroom | not differentiated | not addressed | acoustic performance |
+| **ES** | DB-HR (CTE) | room-type-based | RT60 ≤ 0.7 s typical classroom | not differentiated | not addressed | sound protection (technical building code) |
+| **PT** | Portuguese national requirements (RGR / school acoustic guidance) | coverage thin in BPC | not separately codified per the BPC's coverage | not differentiated | not addressed | partial coverage in BPC |
+| **KR** | KS F 2814 + barrier-free law framework | coverage thin in BPC | not separately codified per the BPC's coverage | not differentiated | not addressed | partial coverage in BPC |
+| **NL/KO/SV-FI thin** | per BPC header | acknowledged thin coverage | acknowledged thin coverage | acknowledged thin coverage | acknowledged thin coverage | gap documented |
+
+**Structural observation surfaced by the comparator-type column:** the surveyed jurisdictions divide into four families — volume-based (US, CN), room-type-based (UK BB93, FR, AU/NZ, NL, BE, ES, Nordic), formula-based with room-type input (DE DIN 18041), room-class-based (IT UNI 11532-2). Cross-jurisdictional reads at the same nominal point ("classroom RT60 target") are not directly comparable without first noting which family the source jurisdiction belongs to. This is the heart of why rule #9 step 3 cannot collapse into a single ranked column — different jurisdictions answer different questions.
 
 **Citation-grade verification of this table is PENDING.** Every cell that asserts a specific value for a specific jurisdiction at the worst-case point becomes a `reasoning_doc_citations` row in the rule-#10 pass. None of those rows exist yet; this Pass-1 table is the structure that the Pass-3 pass will verify against the cited sources.
 
@@ -95,24 +136,24 @@ Per `<long_deliverable_protocol>`, this turn ends at the natural review boundary
 
 ### Pass 2 plan (next session)
 
-Step 4 — Lowest-barrier code(s) per population (per terminology entry: "the jurisdiction-level regulatory standard that imposes the lowest barrier to access for the most-constrained user in the parameter's target population, evaluated at the worst-case point in the code's structure"):
-- DEAF: ANSI/ASA S12.60 Footnote e (US) — RT60 ≤ 0.3 s — explicitly the lowest barrier in the surveyed set
+Step 4 — Lowest-barrier code(s) per population (per terminology entry: "the jurisdiction-level regulatory standard that imposes the lowest barrier to access for the most-constrained user in the parameter's target population, evaluated at the worst-case point in the code's structure"). Per Item 1 sign-off: "worst-case point in the code's structure" is read against each jurisdiction's native comparator type — not a single global frame:
+- DEAF: ANSI/ASA S12.60 Footnote e (US) — RT60 ≤ 0.3 s — explicitly the lowest barrier in the surveyed set, evaluated at the US volume-based ≤ 283 m³ frame
 - NDV/AUT: no quantified jurisdictional standard; PAS 6463 (UK) qualitative is the only codified mention
 - DEM: no quantified jurisdictional standard
-- general: ANSI/ASA S12.60 main rule (RT60 ≤ 0.6 s) is the lowest barrier at the smallest-volume worst-case point
+- general: ANSI/ASA S12.60 main rule (RT60 ≤ 0.6 s, ≤ 283 m³) is the lowest barrier at the smallest-volume worst-case point; in room-type-based jurisdictions (BB93, DIN, UNI) the lowest-barrier room class is the comparator at the same epistemic register
 
 Step 5 — Tier 1 / Co-1 / Tier 2 / Co-2 / Tier 3 evidence per population:
 - DEAF: Tier 1 dominant (Iglehart 2020/2016, Wroblewski 2012, Neuman 2010, Reinhart 2019, McGarrigle 2019, Saravanan 2019). Co-1: Iglehart's ASA committee role anchors the ANSI footnote.
 - NDV/AUT: Tier 3 only (Bettarello 2021, Black 2022) + Tier 4 international (PAS 6463 qualitative). Tier 1 evidence base does not yet exist for quantified RT60-NDV targets.
 - DEM: Tier 2-3 (Devos 2019; BrainXchange; Lyngby-Taarbæk POE).
 
-Step 6 — Guidebook chosen value per population (these are the synthesis claims that rule #10 will verify):
-- DEAF: RT60 ≤ 0.3 s (proposed, anchored in Iglehart 2020). PMP walk required (rule #8) before this can be a numerical-spec claim.
-- NDV/AUT: aspiration ≤ 0.4 s with explicit note "no Tier-1 quantified target available" + reliance on background-noise and sound-masking-contraindication specs from the BPC.
+Step 6 — Guidebook chosen value per population (these are the synthesis claims that rule #10 will verify). Per Item 2 sign-off: NDV/AUT line carries the "conjecture rationally informed by literature" label inline:
+- DEAF: RT60 ≤ 0.3 s (proposed, anchored in Iglehart 2020). PMP walk required (rule #8) before this can be a numerical-spec claim. Items 4 + 5 (schema decisions) are upstream of the PMP walk.
+- NDV/AUT: RT60 ≤ 0.4 s aspiration — **conjecture rationally informed by literature**. No Tier-1 quantified target exists for this population. Informed by Bettarello et al. 2021 (insufficient existing standards), Caniato et al. 2024 (sensory hypersensitivity to background noise increments), Black 2022 (autism + built environment review); contraindication of sound masking (A-13) and background noise ≤ 30 dB(A) aspiration are companion specifications that carry independent evidentiary support. Rule #8 PMP for this population uses the conjecture as `spec_value_origin`; strict-termination is expected to FAIL (no Tier-1 corroboration) and the recorded PMP outcome is the structured form of the conjecture label.
 - DEM: ≤ 0.5 s in occupied common areas (matching the BPC's existing language).
 - general: ≤ 0.6 s (matches consensus).
 
-Step 7 — Rationale (historical context + clinical basis): drafted from BPC Opus synthesis notes.
+Step 7 — Rationale (historical context + clinical basis): drafted from BPC Opus synthesis notes. For NDV/AUT specifically: rationale names which findings inform the conjecture and which gaps prevent it from being more than conjecture (per Item 2 sign-off).
 
 Step 8 — Trade-offs: NRC ≥ 0.85 broadband absorption can degrade STI per Amlani & Russo 2016 (REF-00580); the GAP-RAP-01 evidence-auditor adjudication is the trade-off statement.
 
