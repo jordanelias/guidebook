@@ -509,3 +509,48 @@ Rule #7 adversarial-research on the strongest contested claim ("NDV/AUT require 
 | 4 | `37d0fb0c` + `23a16c57` + `b66e9d3c` + `8ebc157d` | sl_path fix + ot-cpg search-log + STUB-skip + relocations + fourth addendum |
 | 5 | (this round, this commit) | Pilot Pass 1 + fifth addendum |
 
+---
+
+## Sixth-round addendum — PMP route blocked by same schema question; REF-00561 corrected as out-of-review-band work
+
+Owner directive `proceed` (sixth in chat). The directive arrived without explicit answers to the three sign-offs the fifth addendum requested for inline review per DR-2026-05-13. Reading the directive as "continue with anything that doesn't violate the inline-review boundary" rather than "answer the questions for me and roll forward."
+
+### What was done
+
+**REF-00561 metadata corrected** (citation-miner-role work that does not gate on Pass 1 review):
+- Authored `scripts/migrations/data_20260516172800_correct_ref_00561_bettarello_2021_metadata.sql`.
+- Web-verified the actual paper via MDPI catalog 2026-05-16: Bettarello, Caniato, Scavuzzo, Gasparella (2021), "Indoor Acoustic Requirements for Autism-Friendly Spaces," *Applied Sciences* 11(9):3942, DOI 10.3390/app11093942, MDPI.
+- Migration corrects: pub_title, doi, publisher, journal_name, journal_name_en, author_count (1→4), author_count_is_complete (0→1), author_display, subtype, verification_note, verified_by_tool, last_verified_at, verification_attempt_count.
+- Sandbox + on-DB applied; rebuild reproducibility holds.
+- First concrete instance of rule #10 sub-rule 2 catching a wrong-content VERIFIED record before any reasoning_doc_citations row creation. The CrossRef DOI backfill (`Jaccard=0.50`) accepted a sub-threshold match; this finding suggests a methodology-level review of the citation-miner skill's confidence-cutoff for CrossRef backfills (logged here, not addressed).
+
+### What was attempted, then blocked
+
+**PMP-DEAF-RT60 ≤ 0.3 s walk** was the queued out-of-review-band work per the fifth addendum. Cannot proceed: `spec_value_probes.item_code` is a `NOT NULL FK` to `items(item_code)`, and the items table has no RT60 row for the DEAF population. The closest existing item is `A-10b` ("RT60 for Hydrotherapy and Pool Environments"), specialized to a different context.
+
+Authoring an item for "RT60, DEAF population, ≤0.3 s" — what `item_code` to use, how to scope it, whether one item handles multiple populations or each population gets its own — is the items↔BPCs schema question owner held open in the chat. Pilot work just demonstrated the question is forcing: PMP cannot run without it. Reverting to inline review.
+
+### Updated review queue
+
+Three Pass-1 sign-offs from the fifth addendum remain open:
+1. Worst-case point convention (smallest occupied volume vs. room-type-based).
+2. NDV/AUT chosen-value approach (aspiration ≤ 0.4 s with explicit "no Tier-1 quantified target" caveat vs. alternative framings).
+3. Pre-pass order: rule #7 (adversarial-research) vs. rule #8 (PMP) first.
+
+Now two additional structural decisions:
+4. **Items↔BPCs schema model.** PMP requires items; reasoning docs cite at BPC level; current schema has `items.bpc_source_slug` (single source, NULL across all 18 acoustic items). Smallest move: populate `bpc_source_slug` for existing items where the link is 1:1. Cleanest move: add `item_bpc_links(item_code, bpc_slug, link_type, weight)` join table. Cleanest serves long-term integrity if BPCs ground multiple items and items can cite multiple BPCs.
+5. **Item creation policy for population-specific specs.** The current items table mixes per-item-per-spec items (A-02 NRC ≥0.85 single-population-agnostic) with population-targeted items (A-10b RT60 for hydrotherapy, A-13 No sound masking in neurological populations). RT60-DEAF would need a new item; conventions for naming, code-numbering, and scope need to be set.
+
+### Cumulative session ledger (16 commits)
+
+| Round | Commits | Focus |
+|---|---|---|
+| 1-5 | (prior 15) | governance reconciliation + pilot Pass 1 |
+| 6 | (this commit) | REF-00561 correction + sixth addendum + PMP-block finding |
+
+### Next session opens at
+
+Inline review of the five outstanding items (3 Pass-1 sign-offs + 2 schema decisions). Pilot Pass 2 (rule #9 steps 4-9), the rule #7 adversarial-research pass, and the rule #8 PMP walk all depend on at least items 2 and 4-5 being settled. Item 1 (worst-case point convention) gates rule #9 step 6 specifically. Item 3 (pre-pass order) is the lowest-stakes — either order works.
+
+The pilot is functioning exactly as DR-2026-05-13 intended: it's surfacing methodology gaps, citation-quality gaps, and schema gaps the abstract workflow design did not predict. Single-reviewer-with-Claude is not equivalent to dual-reviewer Cochrane (per the skill file's documented ceiling), but the pilot's inline-review discipline is doing the work it was authored to do.
+
