@@ -66,10 +66,16 @@ jobs:
         run: python3 scripts/ci_helpers/check_commit_msg.py
 
       - name: Doctrine-SHA token validation
-        if: ${{ github.event_name == 'push' }}
         run: |
           set -euo pipefail
-          CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" || git show --name-only --format= "${{ github.sha }}")
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            TARGET="${{ github.event.pull_request.head.sha }}"
+            BEFORE="${{ github.event.pull_request.base.sha }}"
+          else
+            TARGET="${{ github.sha }}"
+            BEFORE="${{ github.event.before }}"
+          fi
+          CHANGED=$(git diff --name-only "$BEFORE" "$TARGET" 2>/dev/null || git show --name-only --format= "$TARGET")
           SYNTHESIS_RE='^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/'
 
           if ! echo "$CHANGED" | grep -qE "$SYNTHESIS_RE"; then
@@ -84,25 +90,26 @@ jobs:
           fi
 
           # Exempt: bot / automation authors
-          AUTHOR=$(git log -1 --format=%ae "${{ github.sha }}")
+          AUTHOR=$(git log -1 --format=%ae "$TARGET")
           case "$AUTHOR" in
             *dependabot*|*github-actions*|*-bot@*) echo "Bot commit ($AUTHOR) -- exempt."; exit 0 ;;
           esac
 
-          # Exempt: merge commits
-          PARENTS=$(git log -1 --format=%P "${{ github.sha }}" | wc -w)
+          # Exempt: merge commits (only meaningful on push; PR uses head SHA which is single-parent)
+          PARENTS=$(git log -1 --format=%P "$TARGET" | wc -w)
           if [ "$PARENTS" -gt 1 ]; then
             echo "Merge commit -- exempt."
             exit 0
           fi
 
-          MSG=$(git log -1 --format=%B "${{ github.sha }}")
+          MSG=$(git log -1 --format=%B "$TARGET")
           TOKEN=$(echo "$MSG" | grep -oE '\[DOCTRINE: [a-f0-9]{7}\]' | grep -oE '[a-f0-9]{7}' | head -1 || true)
           EXPECTED=$(git rev-parse "HEAD:governance/mission-and-epistemics.md" | cut -c1-7)
 
           if [ -z "$TOKEN" ]; then
             echo "FAIL: commit touches synthesis paths; commit message must contain [DOCTRINE: <7-char-sha>]"
             echo "Expected token: [DOCTRINE: $EXPECTED]"
+            echo "PR note: only the PR head commit message is checked; intermediate commits not walked."
             exit 1
           fi
           if [ "$TOKEN" != "$EXPECTED" ]; then
