@@ -105,3 +105,71 @@ jobs:
         env:
           GUIDEBOOK_DB_PATH: data/guidebook.db
         run: python3 scripts/audit/citation_mining_completeness.py --tier-max 3
+
+  attestation_schema:
+    runs-on: ubuntu-latest
+    name: Attestation schema + presence (blocking)
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install jsonschema
+        run: pip install jsonschema
+
+      - name: Validate all changed attestations + presence
+        run: |
+          set -euo pipefail
+          python3 scripts/audit/adherence_log_audit.py --check presence
+          python3 scripts/audit/adherence_log_audit.py --check schema
+
+  attestation_evidence:
+    runs-on: ubuntu-latest
+    name: Attestation evidence (Level 2 shakedown; not blocking)
+    needs: attestation_schema
+    continue-on-error: true   # Level 2 during shakedown; flip to false after Day-7 gate met
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install jsonschema
+        run: pip install jsonschema
+
+      - name: Run evidence check
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/adherence_log_audit.py --check evidence
+
+  attestation_verdict:
+    runs-on: ubuntu-latest
+    name: Attestation verdict surface (annotation-only)
+    needs: attestation_schema
+    continue-on-error: true   # Never blocking by design
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Surface NON-COMPLIANT verdicts
+        run: |
+          python3 scripts/audit/adherence_log_audit.py --check verdict > /tmp/verdict.txt || true
+          if grep -q NON-COMPLIANT /tmp/verdict.txt; then
+            echo "::warning::NON-COMPLIANT verdict present in attestation — see /tmp/verdict.txt"
+            cat /tmp/verdict.txt
+          fi
