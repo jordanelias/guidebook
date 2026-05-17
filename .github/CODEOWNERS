@@ -1,0 +1,11 @@
+# CODEOWNERS — owner sign-off required on changes to enforcement substrate.
+# Single-author repo today; this file enforces a deliberateness gate
+# regardless of contributor count.
+
+/governance/                @jordanelias
+/schemas/                   @jordanelias
+/scripts/audit/             @jordanelias
+/scripts/migrations/        @jordanelias
+/.github/workflows/         @jordanelias
+/.github/CODEOWNERS         @jordanelias
+/references/skill-registry.md @jordanelias
