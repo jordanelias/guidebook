@@ -1,9 +1,10 @@
 # Project Instructions — Accessible Built Environments Guidebook
-**V10.12 · Revised 2026-05-15**
-Supersedes V10.11. Architecture: `architecture/project-architecture-guidebook-v2.3.md`. Preferences: `userPreferences-v6.1.md`.
+**V10.12 · Revised 2026-05-15; amended 2026-05-17 (rule #11 added)**
+Supersedes V10.11. Architecture: `architecture/project-architecture-guidebook-v2.3.md`. Preferences: `userPreferences-v6.2.md`.
 
 <changelog>
 - **V10.12 (2026-05-15)** — Bootstrap pattern bug fix. The status-block line `echo "Skills: $(grep -c '^### ' /tmp/registry.md) registered"` matched the registry's pre-v10.6 shape (per-skill `### ` headings) and returned 0 against the current registry, which uses `##` sections plus a code-block listing. Replaced with `_GH_SKILLS()` helper that counts `skills/*_SKILL.md` files via the GitHub contents API (excludes `skills/deprecated/`). Helper added to both gh and curl backend blocks. Label changed `registered` → `active` to reflect what is now counted. No standing-rule changes; no other content changes. Anomaly discovered and resolved in `sessions/session_2026-05-15a-governance-reconciliation.md`.
+- **V10.12 amend (2026-05-17)** — Standing rule #11 added: adherence logging and attestation. Per `workplan/adherence-attestation-build-2026-05-17.md` §4.3 (Session 2). Bundles with the bootstrap fix under the v10.12 version label per workplan literal spec; version-hygiene note that v10.12 now contains two distinct content changes. Preferences pointer also bumped to `userPreferences-v6.2.md` (adds `<adherence_logging>` section).
 - **V10.11 (2026-05-15)** — `reasoning-doc-citations` promoted from skill placeholder to active skill. Skill file `skills/reasoning-doc-citations_SKILL.md` authored; registered in `references/skill-registry.md`. Placeholder line removed from `<skills_assigned>`. No standing-rule changes; rule #10 sub-rules 2/3 unchanged.
 - **V10.10 (2026-05-13)** — Conciseness pass per `<migration_and_growth>` of architecture v2.3 (PI growth target 200 lines). v10.9 was 307 lines; v10.10 is ~190. State content (current AUTHOR-TITLE-ONLY counts, retraction banners, session-specific commentary) moved to DR-2026-05-13 and the DB. Standing rules trimmed to rule-only — supporting detail lives in the cited DR or skill. `<hooks_status>` rewritten to reference the actual CI workflows that exist (`ci.yml`, `audit.yml`) instead of the phantom `hook-workplan-guidebook.md`. Architecture pointer corrected to v2.3 (was v2.3 in PI v10.9 already, but the file is now present in repo).
 - **V10.9 (2026-05-13)** — Standing rule #10 sharpened per DR-2026-05-13 (adopted session_2026-05-13b). Distinguishes existence verification from claim verification by claim type. Migrations 010 (FK integrity) and 011 (`reasoning_doc_citations`) applied. user_version 9→11. Track 1 versioning backfill initiated. `reasoning-doc-citations` skill placeholder added.
@@ -155,6 +156,20 @@ Project-specific rules. Preference-level rules (tone, logging, output format, et
     BPCs bearing `opus_synthesis: YES [OPUS-SYNTHESIS]` from the 2026-03-30 round carry a `synthesis_validity: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner until Phase E.2g overwrites. Live state counts queryable via bootstrap status block; not restated in PI.
 
     Audits: `scripts/audit_evidence_metadata.py` (existence gate); `scripts/audit/pmp_audit.py` (sub-rule 1); `scripts/audit/reasoning_doc_citations_audit.py` (sub-rules 2/3).
+
+11. **Adherence logging and attestation.** Per `userPreferences-v6.2.md` `<adherence_logging>`. At every `<audit_trail>` stage boundary, emit `[ADHERENCE-LOG]` per the defined structure.
+
+    Commits modifying `references/bpc-reasoning/`, `references/connection-reasoning/`, `decisions/`, or synthesis-bearing files under `sessions/` MUST:
+    (a) Include `[DOCTRINE: <7-char-sha>]` in the commit message, where the SHA matches `HEAD:governance/mission-and-epistemics.md`. Exempt when the commit itself modifies `governance/mission-and-epistemics.md`; in that case, affected downstream artifacts must be re-attested within RE_ATTESTATION_WINDOW (default 5) commits or by next session close, whichever first.
+    (b) Add or update `attestations/<artifact-slug>.json` validating against `schemas/attestation.schema.json`. Backfill-on-touch: existing artifacts grandfather; first edit creates the attestation.
+
+    CI enforcement:
+    - `ci.yml` `commit-msg` job — doctrine-SHA token validation (Level 4 blocking from day one).
+    - `audit.yml` `attestation_schema` — JSON schema validation (Level 4 blocking).
+    - `audit.yml` `attestation_evidence` — cross-reference rule-status to commit content (Level 2 → 4 after 7-day shakedown meeting the gate in workplan §8).
+    - `audit.yml` `attestation_verdict` — NON-COMPLIANT count surfaced as PR comment / commit annotation; never blocking.
+
+    Audit script: `scripts/audit/adherence_log_audit.py` (Level 2). Skipping adherence logging while authoring synthesis content is a methodology-grade failure on the same severity as skipping rule #7 (adversarial-research) or rule #8 (PMP).
 </standing_rules>
 
 <bootstrap>
