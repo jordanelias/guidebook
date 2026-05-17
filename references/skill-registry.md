@@ -4,6 +4,27 @@ This file is the source of truth for skill assignments. PI `<skills_assigned>` p
 
 ---
 
+## Identifier stability
+
+Skill identifiers in this registry are STABLE. They are the canonical
+strings referenced from `attestations/*.json` files (per PI v10.12 rule #11)
+and from rule cross-references throughout the project.
+
+Renaming a skill identifier is a governance event that requires:
+1. A DR documenting the rename rationale and migration plan.
+2. A timestamped data-migration script at
+   `scripts/migrations/data_<YYYYMMDDHHMMSS>_rename-skill-<old>-to-<new>.sql`
+   (or `.py`) that rewrites every existing `attestations/*.json` file
+   to use the new identifier.
+3. Lockstep update of any skill files, audit-script rule maps, and
+   PI standing rules referencing the old name.
+
+The audit script `scripts/audit/adherence_log_audit.py` check #3 validates
+that every rule identifier in an attestation resolves to a stable identifier
+listed in this registry.
+
+---
+
 ## Conventions
 
 - **Active** — skill file present in `skills/` and not flagged deprecated.
