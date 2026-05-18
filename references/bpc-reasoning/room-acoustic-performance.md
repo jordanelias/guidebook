@@ -59,14 +59,37 @@ This section records owner directives that govern the synthesis logic. Each item
 
 **Consequence for the spec layer:** any item that propagates the RT60 ≤ 0.4 s value for NDV/AUT inherits the "conjecture rationally informed by literature" label until or unless the Tier-1 evidence base develops to support a quantified target. Rule #8 PMP for this population specifically uses the conjecture as `spec_value_origin` and probes against literature support, with strict-termination expected to **fail** (no Tier-1 corroboration) — the recorded PMP outcome is the structured form of the conjecture label.
 
-### Items 3, 4, 5 — Pending
+### Item 3 — Pre-pass order (CHAIN ORDER)
 
-Pending owner sign-off:
-3. Pre-pass order (rule #7 adversarial-research vs. rule #8 PMP first)
-4. Items↔BPCs schema model (populate `bpc_source_slug` for 1:1 cases vs. add `item_bpc_links` join table)
-5. Item creation policy for population-specific specs (e.g., whether to author RT60-DEAF as a new item, naming, code-numbering)
+**Owner directive (2026-05-17, via delegation "do whatever makes most sense long-term integrity"):** Option A — rule #7 (adversarial-research) → rule #8 (PMP) → rule #10 (reasoning-doc-citations).
 
-No Pass 2 synthesis work, no rule #7 work, no rule #8 work, and no items-table writes proceed until 3, 4, 5 are settled.
+**Interpretation:** No integrity-relevant alternative. `progressive-measurement_SKILL.md` line 25: "PMP probes within a validated claim, so the underlying claim must clear adversarial first." `reasoning-doc-citations_SKILL.md` "Integration with sibling skills" § states the same dependency. Reversing the order would force PMP onto an unvalidated claim — a documented failure mode.
+
+**Consequence:** Pass 2 opens with `adversarial-research` on the strongest contested claim (NDV/AUT quantified RT60 targets without Tier-1 base, per line 170), then `progressive-measurement` for DEAF RT60 ≤ 0.3 s, then rule #9 steps 4–9, then Pass 3 rule #10.
+
+### Item 4 — Items↔BPCs schema model
+
+**Owner directive (2026-05-17, via delegation):** Option B — add `item_bpc_links` join table; `items.bpc_source_slug` retained read-only for backward compatibility until all 91 items migrated, then deprecated.
+
+**Rationale:** A-10b ("RT60 for Hydrotherapy and Pool Environments") already demonstrates a multi-BPC item in practice — it draws on `room-acoustic-performance` (parameter) and a hydrotherapy/pool BPC (context). The forthcoming `cross-population-conflict-resolutions` BPC will produce more such items. Denormalized 1:1 (Option A) would force an arbitrary "primary BPC" choice per multi-source item, captured only in `notes` — this replicates at the schema level the same topic-vs-claim conflation rule #10 sub-rule 2 exists to prevent at the citation level. One-time migration cost (new table, new validator) is preferable to permanent per-item schema-reality drift.
+
+**Consequence:** `scripts/migrations/NNN_add_item_bpc_links.sql` authors the join table — columns `(item_code, slug, link_type, created_at, created_by_session)` with `link_type ∈ {primary, parameter, context, secondary}` and FK to both `items(item_code)` and `slugs(slug)`. CI structure check extended to verify every ACTIVE item has ≥1 link with `link_type='primary'`. Migration is the first sub-task of the next session, before Pass 2.
+
+### Item 5 — Item creation policy for population-specific specs
+
+**Owner directive (2026-05-17, via delegation):** Option A — single item per parameter-context, with population-specific values captured in `item_population_elaborations`. `item_population_links` records which populations a given item applies to; `item_population_elaborations` (schema fields `spec_variant_a`, `spec_variant_b`) records the population-specific spec variants.
+
+**Rationale:** The schema already answers this question. `item_population_elaborations` was designed for "one item, multiple population-keyed spec values" (e.g., RT60 ≤ 0.3 s for DEAF / ≤ 0.5 s for DEM / ≤ 0.6 s for general). Forking items per population (Option B) breaks normalization and explodes item count at the 95 BPCs × ~5 parameters × ~4 populations rewrite scale. Option C (context-keyed items, e.g., RT60-classroom vs RT60-hydrotherapy) remains operative for context differentiation but does not solve population differentiation; the two compose — context-keyed items carrying population variants via elaborations.
+
+**Consequence for the spec layer:** An acoustic parent item (existing A-NN family) holds the canonical parameter. Population-specific values are rows in `item_population_elaborations` keyed to that item — `spec_variant_a` carries the chosen value, `spec_variant_b` an alternate if a population's evidence supports a range. The NDV/AUT "conjecture rationally informed by literature" label (Item 2) propagates via the elaboration row's `notes` field, with the PMP outcome attached per Item 2's strict-termination-expected-to-FAIL contract.
+
+### REF-00561 (Bettarello 2021) metadata correction — routing decision
+
+**Owner directive (2026-05-17, via delegation):** Route REF-00561 to `citation-miner` as the first sub-task of the next session, before any Pass 2 work that depends on Bettarello 2021. DOI prefix `10.3403/...` (BSI) and publisher `BSI British Standards` are wrong for the MDPI *Applied Sciences* paper; both must be corrected before any `reasoning_doc_citations` row cites this source. The pilot's evidentiary purpose includes demonstrating rule #10 sub-rule 2 in action — leaving the error in place defeats that purpose.
+
+---
+
+**Pilot gate status (post-2026-05-17 sign-offs):** All five sign-off items closed (1 worst-case-point convention; 2 NDV/AUT conjecture label; 3 chain order; 4 schema model; 5 population-spec policy). Pass 2 (rule #7 → rule #8 → rule #9 steps 4–9) and the `item_bpc_links` migration are unblocked. Pass 3 (rule #10 reasoning-doc-citations) remains gated on REF-00561 metadata correction for any row citing Bettarello 2021.
 
 ---
 
