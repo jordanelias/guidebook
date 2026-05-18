@@ -13,7 +13,7 @@ Flags:
 3. PMP walks with all-failing strict termination (no supporting evidence
    found at any tried value — origin spec value may be unsupported).
 4. PMP walks whose `ref_id` points to an evidence_sources record that is
-   ineligible for synthesis per rule #10 (AUTHOR-TITLE-ONLY or NULL
+   ineligible for synthesis per rule #10 (AUTHOR-TITLE-ONLY/NULL/GREY; not COMPLETE or COMPLETE-STATUTORY per DR-2026-05-18; or NULL
    verification_status) — the walk found a source, but the source is
    not gate-eligible.
 5. PMP walks with passes_strict=1 step but no ref_id linkage (claim

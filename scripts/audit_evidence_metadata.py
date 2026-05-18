@@ -3,7 +3,7 @@
 
 Standing rule #10 (evidence verification gate):
   No BPC synthesis claim may cite a source with metadata_quality = AUTHOR-TITLE-ONLY
-  or verification_status = NULL. Required minimum: metadata_quality = COMPLETE
+  or verification_status = NULL. Required minimum: metadata_quality IN (COMPLETE, COMPLETE-STATUTORY) per DR-2026-05-18
   AND verification_status IN ('VERIFIED', 'UNVERIFIED-1').
 
 This script enforces that gate by reporting:
@@ -43,7 +43,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", str(REPO_ROOT / "data" / "guidebook.db"))
 
 # Rule #10 eligibility — required minimum for a source to be cited in synthesis
-ELIGIBLE_METADATA = {"COMPLETE"}
+ELIGIBLE_METADATA = {"COMPLETE", "COMPLETE-STATUTORY"}
 ELIGIBLE_VERIFICATION = {"VERIFIED", "UNVERIFIED-1"}
 EXCLUDED_VERIFICATION = {"UNVERIFIED-CLOSED", "CLOSED-DELETED"}
 
@@ -101,7 +101,7 @@ def per_slug_eligibility(conn, min_eligible: int, min_tiers: int) -> list:
         SELECT s.slug,
                COUNT(DISTINCT sl.ref_id) as total_sources,
                COUNT(DISTINCT CASE
-                 WHEN es.metadata_quality = 'COMPLETE'
+                 WHEN es.metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')
                  AND es.verification_status IN ('VERIFIED', 'UNVERIFIED-1')
                  THEN sl.ref_id END) as eligible_sources,
                COUNT(DISTINCT CASE
@@ -130,7 +130,7 @@ def per_slug_eligibility(conn, min_eligible: int, min_tiers: int) -> list:
             FROM source_slug_links sl
             JOIN evidence_sources es ON sl.ref_id = es.ref_id
             WHERE sl.slug = ?
-            AND es.metadata_quality = 'COMPLETE'
+            AND es.metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')
             AND es.verification_status IN ('VERIFIED', 'UNVERIFIED-1')
             GROUP BY es.tier
         """, (slug,)).fetchall()
@@ -183,7 +183,7 @@ def quick_wins(conn, top_n: int = 20) -> dict:
                COUNT(DISTINCT sl.slug) as bpc_uses
         FROM evidence_sources es
         LEFT JOIN source_slug_links sl ON es.ref_id = sl.ref_id
-        WHERE es.metadata_quality = 'COMPLETE'
+        WHERE es.metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')
         AND (es.verification_status IS NULL OR es.verification_status NOT IN ('VERIFIED', 'UNVERIFIED-1', 'UNVERIFIED-CLOSED', 'CLOSED-DELETED'))
         GROUP BY es.ref_id
         ORDER BY bpc_uses DESC, es.ref_id
@@ -196,7 +196,7 @@ def quick_wins(conn, top_n: int = 20) -> dict:
         FROM evidence_sources es
         LEFT JOIN source_slug_links sl ON es.ref_id = sl.ref_id
         WHERE es.verification_status IN ('VERIFIED', 'UNVERIFIED-1')
-        AND (es.metadata_quality != 'COMPLETE' OR es.metadata_quality IS NULL)
+        AND (es.metadata_quality NOT IN ('COMPLETE','COMPLETE-STATUTORY') OR es.metadata_quality IS NULL)
         GROUP BY es.ref_id
         ORDER BY bpc_uses DESC, es.ref_id
         LIMIT ?

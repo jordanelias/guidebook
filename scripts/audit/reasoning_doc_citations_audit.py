@@ -10,7 +10,7 @@ Flags:
 3. PAYWALL rows without a downgrade note in `notes` (per rule #10 sub-rule 2/3,
    PAYWALL requires either downgraded grade or non-paywalled corroboration).
 4. Rows where source_ref_id points to an evidence_sources record with
-   metadata_quality='AUTHOR-TITLE-ONLY' or verification_status NULL — these
+   metadata_quality='AUTHOR-TITLE-ONLY' (not COMPLETE/COMPLETE-STATUTORY per DR-2026-05-18) or verification_status NULL — these
    sources are ineligible for synthesis per the existence-level gate of rule #10.
 5. Rows where source_ref_id is VERIFIED but source_section is empty — content
    verification without recording where the claim was found is incomplete.
