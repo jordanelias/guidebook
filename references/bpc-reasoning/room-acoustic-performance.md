@@ -112,7 +112,7 @@ Per rule #9: "Per-population worst-case user (no inline cross-population arbitra
 | Population | Worst-case user statement | Source basis (Phase B-eligible) |
 |---|---|---|
 | **DEAF (hearing aid / cochlear implant users, children)** | Pediatric hearing-aid or CI user, school-age, in classroom listening at distance > 1.5 m from speaker, background noise present, competing-talker conditions. Speech-perception threshold materially degrades above RT60 ≈ 0.3 s; effect is non-linear, sharpest in the 0.3-0.6 s band where typical-hearing peers remain functional. | Iglehart 2020 (REF-00325, T1); Iglehart 2016 (REF-00578, T1); Neuman 2010 (REF-00577, T1); Wroblewski 2012 (REF-00576, T1) |
-| **NDV/AUT (autism spectrum, sensory hypersensitivity)** | Autistic individual in occupied space with sudden noise events + reverberant acoustic environment. Threshold of distress varies across the population; no quantified RT60 ceiling has been established that the literature treats as evidence-based for this population. Existing standards explicitly inadequate per the BPC's Opus synthesis. | Bettarello 2021 (REF-00561, T3 — metadata flagged); Caniato 2024 (cited in BPC, ref not yet linked); Black 2022 (REF-00589, T3) |
+| **NDV/AUT (autism spectrum, sensory hypersensitivity)** | Autistic individual in occupied space with sudden noise events + reverberant acoustic environment. Threshold of distress varies across the population. **No Tier-1 quantified RT60 threshold exists** — independently corroborated by Marzi 2025 (REF-00727, Sci Rep): *"In the absence of specific quantitative data on sound levels tailored to autistic users, a study on neurotypical students was referenced."* Bettarello 2021 (REF-00561, Tier 3) DOES propose an aspirational range of **0.4–0.7 s** from a single Italian daily-care facility (n=7 rooms) — a quantified design recommendation, not a Tier-1 threshold. Adversarial-research pass closed under GAP-291 (2026-05-17); confidence 85–95%. | Bettarello 2021 (REF-00561, T3); Marzi 2024 (REF-00726, T1 review); Marzi 2025 (REF-00727, T1 primary); Black 2022 (REF-00589, T3) |
 | **DEM (dementia)** | Person living with dementia in long-term care common areas during peak occupancy. Acoustic environment is a confirmed contributor to agitation-event frequency; therapeutic target is acoustic calm. RT60 reduction documented as part of intervention bundles; no isolated RT60 dose-response curve in the literature reviewed. | Devos 2019 (REF-00571, T3); BrainXchange Canada (Tier 2 Co-1, ref not yet linked); Lyngby-Taarbæk POE (Tier 2 case study, ref not yet linked) |
 | **NEU/PCS (post-concussion syndrome, photo/phonosensitivity)** | Person in post-concussion recovery with phonosensitivity. RT60-specific evidence not located in the populations covered by Phase B; PCS population is absent from acoustic standards in any jurisdiction reviewed. | NO direct evidence in eligible-source pool; claim downgraded to "no quantified target available" at step 6 |
 | **OFS/PAIN (orthostatic / pain populations)** | No room-acoustic mechanism identified that this population requires differently from general. | THIN-BASE per BPC; no claim made |
@@ -167,12 +167,12 @@ Step 4 — Lowest-barrier code(s) per population (per terminology entry: "the ju
 
 Step 5 — Tier 1 / Co-1 / Tier 2 / Co-2 / Tier 3 evidence per population:
 - DEAF: Tier 1 dominant (Iglehart 2020/2016, Wroblewski 2012, Neuman 2010, Reinhart 2019, McGarrigle 2019, Saravanan 2019). Co-1: Iglehart's ASA committee role anchors the ANSI footnote.
-- NDV/AUT: Tier 3 only (Bettarello 2021, Black 2022) + Tier 4 international (PAS 6463 qualitative). Tier 1 evidence base does not yet exist for quantified RT60-NDV targets.
+- NDV/AUT: Tier 3 primary (Bettarello 2021, Black 2022); **Tier 1 venue-level** sources confirming evidence-absence (Marzi 2024 B&E review REF-00726; Marzi 2025 Sci Rep REF-00727 — same research group as Bettarello, four years later); Tier 4 international (PAS 6463 qualitative). Tier 1 quantified threshold does not exist (corroborated under GAP-291).
 - DEM: Tier 2-3 (Devos 2019; BrainXchange; Lyngby-Taarbæk POE).
 
 Step 6 — Guidebook chosen value per population (these are the synthesis claims that rule #10 will verify). Per Item 2 sign-off: NDV/AUT line carries the "conjecture rationally informed by literature" label inline:
 - DEAF: RT60 ≤ 0.3 s (proposed, anchored in Iglehart 2020). PMP walk required (rule #8) before this can be a numerical-spec claim. Items 4 + 5 (schema decisions) are upstream of the PMP walk.
-- NDV/AUT: RT60 ≤ 0.4 s aspiration — **conjecture rationally informed by literature**. No Tier-1 quantified target exists for this population. Informed by Bettarello et al. 2021 (insufficient existing standards), Caniato et al. 2024 (sensory hypersensitivity to background noise increments), Black 2022 (autism + built environment review); contraindication of sound masking (A-13) and background noise ≤ 30 dB(A) aspiration are companion specifications that carry independent evidentiary support. Rule #8 PMP for this population uses the conjecture as `spec_value_origin`; strict-termination is expected to FAIL (no Tier-1 corroboration) and the recorded PMP outcome is the structured form of the conjecture label.
+- NDV/AUT: RT60 ≤ 0.4 s aspiration -- **conjecture rationally informed by literature**. No Tier-1 quantified threshold exists (GAP-291 closed-resolved 2026-05-17, confidence 85-95%; Marzi 2025 REF-00727 Tier-1 corroboration of absence). Bettarello 2021 (REF-00561, Tier 3) proposes a 0.4-0.7 s aspirational range from a single Italian daily-care facility (n=7 rooms); the pilot's chosen ≤ 0.4 s sits at the lower bound of that Tier-3 recommendation. Informed by Bettarello et al. 2021, Marzi/Caniato/Gasparella 2024 (REF-00726 review), Marzi/Caniato/Gasparella 2025 (REF-00727 primary), Black 2022 (autism + built environment review). Contraindication of sound masking (A-13) and background noise ≤ 30 dB(A) aspiration are companion specifications that carry independent evidentiary support. Rule #8 PMP for this population uses the conjecture as `spec_value_origin`; strict-termination is expected to FAIL (no Tier-1 corroboration) and the recorded PMP outcome is the structured form of the conjecture label.
 - DEM: ≤ 0.5 s in occupied common areas (matching the BPC's existing language).
 - general: ≤ 0.6 s (matches consensus).
 
@@ -180,19 +180,29 @@ Step 7 — Rationale (historical context + clinical basis): drafted from BPC Opu
 
 Step 8 — Trade-offs: NRC ≥ 0.85 broadband absorption can degrade STI per Amlani & Russo 2016 (REF-00580); the GAP-RAP-01 evidence-auditor adjudication is the trade-off statement.
 
-Step 9 — Cross-population conflict flag: DEAF target (0.3 s) and DEM target (0.5 s) are not in conflict (both lower than general). NDV target (≤ 0.4 s aspiration) is also compatible. **No conflict flag for this parameter** — convergent multi-population case (matches restored CON-0264).
+Step 9 — Cross-population conflict flag: DEAF target (0.3 s) and DEM target (0.5 s) are not in conflict (both lower than general). NDV target (≤ 0.4 s aspiration) is also compatible. **No conflict flag for this parameter** -- convergent multi-population case (matches restored CON-0264).
 
 ### Pass 3 plan (subsequent session)
 
 Run `reasoning-doc-citations` on every cell of step 3's jurisdiction table that asserts a value + every claim in steps 6-7 attributed to a specific source. Estimate: ~40-60 rows. Each row requires opening the cited source at the cited section and confirming `value_match` or `claim_match`.
 
-Pre-flight: REF-00561 metadata correction must happen before any citation against Bettarello 2021 can land.
+Pre-flight: REF-00561 metadata correction status -- RESOLVED 2026-05-16 (see "Pre-flight anomaly" above). Source is eligible for citation.
 
-### Out-of-band: rule #7 adversarial-research pass
+### Rule #7 adversarial-research pass -- COMPLETED 2026-05-17
 
-Adversarial-research on the strongest contested claim — **"NDV/AUT require quantified RT60 targets but no Tier-1 evidence base exists for what those targets should be"** — is the next-session priority alongside or before Pass 2. The session should produce a `gaps` row with all four required fields (`confidence_interval`, `shift_conditions`, `named_dissenter`, `falsification_condition`) per rule #7.
+Adversarial-research on the contested claim **"NDV/AUT require quantified RT60 targets but no Tier-1 evidence base exists for what those targets should be"** was run during this resumption session. Closed under **GAP-291** (CLOSED-RESOLVED) with all four protocol fields populated:
+- `confidence_interval`: 85-95%
+- `named_dissenter`: NONE FOUND for the Tier-1-threshold-absence claim. Partial sharpening from Bettarello 2021 (Tier-3 design recommendation 0.4-0.7 s exists, just not at Tier 1).
+- `shift_conditions`: drops to 50-65% on non-English Tier-1 threshold publication; rises to 95%+ on 2026 affirmation; etc.
+- `falsification_condition`: peer-reviewed primary study N>20 autistic occupants with RT60 dose-response, OR new ISO/ANSI/PAS standard with quantified NDV/AUT RT60 target, OR systematic review identifying ≥3 such missed studies.
 
-Pre-PMP for DEAF RT60 ≤ 0.3 s: queued for the same next-session run; the empirical ceiling probe must clear strict termination before this becomes a numerical-spec claim per rule #8.
+Four `evidence_population_match` rows logged (EPM-RAP-001..004) grading REF-00561 (PARTIAL), REF-00726 (PROXY: review), REF-00727 (PARTIAL — EXACT corroboration of the absence claim itself), REF-00642 (PROXY: grey-lit).
+
+Per data migration `data_20260517235900_adversarial_research_ndv_aut_rt60_target_absence.sql`. Sub-task 1 of Pass 2 complete.
+
+### Rule #8 PMP pass -- NEXT
+
+Pre-PMP for DEAF RT60 ≤ 0.3 s: next session sub-task. Empirical ceiling probe must clear strict termination before this becomes a numerical-spec claim per rule #8. Iglehart 2020 (REF-00325) is the Tier-1 anchor.
 
 ---
 
