@@ -153,81 +153,124 @@ Per owner sign-off Item 1: comparator type named per row so structural differenc
 
 ---
 
-## Pass 1 deliverable boundary
+## Pass 2 — Rule #9 steps 4 through 9
 
-Per `<long_deliverable_protocol>`, this turn ends at the natural review boundary. Steps 4-9 of the rule-#9 walk + the reasoning-doc-citations pass come in subsequent sessions with inline review at each.
+### Step 4 — Lowest-barrier code per population
 
-### Pass 2 plan (next session)
+Per the project's `<terminology>` definition: the jurisdiction-level regulatory standard imposing the lowest barrier to access for the most-constrained user, evaluated at the worst-case point in the code's structure. Per Item 1 sign-off, "worst-case point" is read against each jurisdiction's native comparator type (volume-based, room-type-based, formula-based, room-class-based), not a single global frame.
 
-Step 4 — Lowest-barrier code(s) per population (per terminology entry: "the jurisdiction-level regulatory standard that imposes the lowest barrier to access for the most-constrained user in the parameter's target population, evaluated at the worst-case point in the code's structure"). Per Item 1 sign-off: "worst-case point in the code's structure" is read against each jurisdiction's native comparator type — not a single global frame:
-- DEAF: ANSI/ASA S12.60 Footnote e (US) — RT60 ≤ 0.3 s — explicitly the lowest barrier in the surveyed set, evaluated at the US volume-based ≤ 283 m³ frame
-- NDV/AUT: no quantified jurisdictional standard; PAS 6463 (UK) qualitative is the only codified mention
-- DEM: no quantified jurisdictional standard
-- general: ANSI/ASA S12.60 main rule (RT60 ≤ 0.6 s, ≤ 283 m³) is the lowest barrier at the smallest-volume worst-case point; in room-type-based jurisdictions (BB93, DIN, UNI) the lowest-barrier room class is the comparator at the same epistemic register
+- **DEAF.** ANSI/ASA S12.60-2010/Part 1 Footnote e + Commentary 5.3.1 (US) — RT60 ≤ 0.3 s in core learning spaces ≤ 283 m³ for children with hearing impairment. Lowest barrier in the surveyed set evaluated at the US volume-based worst-case point. BB93 (UK) "specially resourced provision" at ≤ 0.4 s is the next-lowest in the room-type-based family.
+- **NDV/AUT.** No jurisdiction codifies a quantified RT60 for autistic occupants. PAS 6463:2022 (UK) is the only standards-body publication explicitly addressing neurodivergent occupant acoustic needs and stays qualitative. Marzi 2025 (REF-00727) documents the absence on the literature side as well. Functionally, the lowest barrier reached by any code for this population is the room's general-occupant target.
+- **DEM.** No jurisdiction codifies an RT60 specific to dementia care environments. WELL Building Standard addresses reverberation generally (≤ 0.6 s for ≤ 280 m³) but not population-specifically. The lowest barrier in practice comes from healthcare design guidance (FGI in US, HBN in UK) referencing general acoustic standards without dementia-specific quantification.
+- **general.** ANSI/ASA S12.60-2010/Part 1 main rule (RT60 ≤ 0.6 s, ≤ 283 m³) is the lowest barrier at the smallest-volume worst-case point in the volume-based family. In room-type-based jurisdictions (BB93, DIN 18041, UNI 11532-2, AS/NZS 2107), the lowest-barrier room class at the same epistemic register is the comparator. Cross-family comparison requires the comparator-type translation per step 3.
 
-Step 5 — Tier 1 / Co-1 / Tier 2 / Co-2 / Tier 3 evidence per population:
-- DEAF: Tier 1 dominant (Iglehart 2020/2016, Wroblewski 2012, Neuman 2010, Reinhart 2019, McGarrigle 2019, Saravanan 2019). Co-1: Iglehart's ASA committee role anchors the ANSI footnote.
-- NDV/AUT: Tier 3 primary (Bettarello 2021, Black 2022); **Tier 1 venue-level** sources confirming evidence-absence (Marzi 2024 B&E review REF-00726; Marzi 2025 Sci Rep REF-00727 — same research group as Bettarello, four years later); Tier 4 international (PAS 6463 qualitative). Tier 1 quantified threshold does not exist (corroborated under GAP-291).
-- DEM: Tier 2-3 (Devos 2019; BrainXchange; Lyngby-Taarbæk POE).
+### Step 5 — Tier evidence per population
 
-Step 6 — Guidebook chosen value per population (these are the synthesis claims that rule #10 will verify). Per Item 2 sign-off: NDV/AUT line carries the "conjecture rationally informed by literature" label inline:
-- DEAF: RT60 ≤ 0.3 s (proposed, anchored in Iglehart 2020). PMP walk required (rule #8) before this can be a numerical-spec claim. Items 4 + 5 (schema decisions) are upstream of the PMP walk.
-- NDV/AUT: RT60 ≤ 0.4 s aspiration -- **conjecture rationally informed by literature**. No Tier-1 quantified threshold exists (GAP-291 closed-resolved 2026-05-17, confidence 85-95%; Marzi 2025 REF-00727 Tier-1 corroboration of absence). Bettarello 2021 (REF-00561, Tier 3) proposes a 0.4-0.7 s aspirational range from a single Italian daily-care facility (n=7 rooms); the pilot's chosen ≤ 0.4 s sits at the lower bound of that Tier-3 recommendation. Informed by Bettarello et al. 2021, Marzi/Caniato/Gasparella 2024 (REF-00726 review), Marzi/Caniato/Gasparella 2025 (REF-00727 primary), Black 2022 (autism + built environment review). Contraindication of sound masking (A-13) and background noise ≤ 30 dB(A) aspiration are companion specifications that carry independent evidentiary support. Rule #8 PMP for this population uses the conjecture as `spec_value_origin`; strict-termination is expected to FAIL (no Tier-1 corroboration) and the recorded PMP outcome is the structured form of the conjecture label.
-- DEM: ≤ 0.5 s in occupied common areas (matching the BPC's existing language).
-- general: ≤ 0.6 s (matches consensus).
+Tier 1 / Co-1 / Tier 2 / Co-2 / Tier 3 enumeration per rule #9. Tier 4 (international advisory) and Tier 5 (national-recommended) excluded at this step.
 
-Step 7 — Rationale (historical context + clinical basis): drafted from BPC Opus synthesis notes. For NDV/AUT specifically: rationale names which findings inform the conjecture and which gaps prevent it from being more than conjecture (per Item 2 sign-off).
+- **DEAF.**
+  - Tier 1: Iglehart 2020 (REF-00325, primary validation of 0.3 s with hearing-aid users, N=10); Iglehart 2016 (REF-00578); Neuman 2010 (REF-00577); Wroblewski 2012 (REF-00576).
+  - Co-1: Iglehart's role on the ASA S12 working group anchors the ANSI/ASA S12.60 footnote — primary research and standards-setting overlap.
+  - Tier 2: none additional surfaced in BPC inventory.
+  - Co-2: none.
+  - Tier 3: clinical-audiology guidance from professional bodies (ASHA classroom-acoustics portal; AAA pediatric guidance) — corroborative, not primary.
+- **NDV/AUT.**
+  - Tier 1: Marzi 2024 (REF-00726, B&E comprehensive review of neurodivergent indoor comfort); Marzi 2025 (REF-00727, Sci Rep primary documenting threshold-absence and attentional decrement at 55 dB(A) background).
+  - Co-1: Bozen-Bolzano + Stuttgart research group carries multi-paper continuity from 2021 Bettarello onward — same investigators appearing in both Tier-1 and Tier-3 sources.
+  - Tier 2: none in BPC inventory.
+  - Co-2: none.
+  - Tier 3: Bettarello 2021 (REF-00561, n=7 rooms, proposes 0.4-0.7 s aspirational range); Black 2022 (REF-00589, autism + built environment review); Caniato 2022 (Energy Reports Parts 1+2).
+- **DEM.**
+  - Tier 1: none — no peer-reviewed primary with isolated RT60 dose-response for this population.
+  - Co-1: none.
+  - Tier 2: Lyngby-Taarbæk POE (DK case study, RT60 reduction within multi-component intervention).
+  - Co-2: BrainXchange Canada (Tier 2 Co-1, knowledge-translation network).
+  - Tier 3: Devos 2019 (REF-00571, review).
+- **general.**
+  - Tier 1: speech-perception primary literature (Bradley & Sato 1990s-2000s; underlying STI development).
+  - Co-1: standards-setting working groups (ASA S12 in US, BB93 in UK, DIN 18041 in DE) include primary researchers.
+  - Tier 2: jurisdiction-level technical reports.
+  - Co-2: none distinct from Co-1.
+  - Tier 3: practitioner literature (ASHA, ASA educational materials).
 
-Step 8 — Trade-offs: NRC ≥ 0.85 broadband absorption can degrade STI per Amlani & Russo 2016 (REF-00580); the GAP-RAP-01 evidence-auditor adjudication is the trade-off statement.
+### Step 6 — Guidebook chosen value per population
 
-Step 9 — Cross-population conflict flag: DEAF target (0.3 s) and DEM target (0.5 s) are not in conflict (both lower than general). NDV target (≤ 0.4 s aspiration) is also compatible. **No conflict flag for this parameter** -- convergent multi-population case (matches restored CON-0264).
+Per Item 2 sign-off: NDV/AUT line carries the "conjecture rationally informed by literature" label inline.
+
+- **DEAF: RT60 ≤ 0.3 s** in occupied learning and listening spaces ≤ 283 m³. Empirically validated by PMP walk PMP-A18-001 (2026-05-18); strict termination PASSED at V₀ = 0.3 s with Iglehart 2020 (REF-00325) anchor; gap_signed = 0.00. Co-supported by ANSI/ASA S12.60-2010/Part 1 (REF-00335, pending citation-miner pass for rule-#10 eligibility).
+- **NDV/AUT: RT60 ≤ 0.4 s aspiration** — **conjecture rationally informed by literature**. No Tier-1 quantified threshold exists (GAP-291 closed-resolved 2026-05-17 at 85-95% confidence; Marzi 2025 corroborates absence). Bettarello 2021 (Tier 3) proposes 0.4-0.7 s from one Italian facility (n=7 rooms); the pilot's chosen value sits at the lower bound of that recommendation. Companion specifications (no sound masking per A-13; background noise ≤ 30 dB(A) aspiration) carry independent evidentiary support. Future PMP walk for this population will exercise the conjecture against strict termination; failure is the expected and structurally correct outcome — the recorded PMP outcome is the structured form of the conjecture label.
+- **DEM: RT60 ≤ 0.5 s** in occupied common areas. Matches the BPC's existing language. Evidence base Tier 2-3.
+- **general: RT60 ≤ 0.6 s** in occupied general-use indoor space ≤ 283 m³. Matches cross-jurisdictional convergence.
+
+### Step 7 — Rationale per population
+
+Historical context + clinical basis per rule #9.
+
+**DEAF.** The US ANSI/ASA S12.60 standard originated in a 1998 US Access Board + Acoustical Society of America working group convened to address chronic underperformance of school acoustic environments for children at risk — including children with hearing loss, temporary hearing impairment from otitis media, learning disabilities, and non-native speakers of English. The 2002 first edition set 35 dB(A) background and 0.6 s reverberation for typical classrooms ≤ 283 m³ but did not differentiate by occupant hearing status. The 2010 revision retained 0.6 s general and added §5.3 Footnote e + Annex Commentary 5.3.1 specifying RT60 ≤ 0.3 s for children with hearing impairment in the same volume — based at the time on preliminary conference proceedings (Iglehart 2007, 2008a, 2008b) rather than peer-reviewed publication. Iglehart 2020 (REF-00325) is the first peer-reviewed validation: children with hearing loss using hearing aids tested across four RT conditions showed speech perception in 0.3-s RT measurably below sound-booth baseline but acceptable, with significant degradation at longer RTs. The clinical basis is mechanistic: hearing aids and cochlear implants amplify reverberant energy along with direct speech signal, so any given RT60 has greater perceptual impact for HA/CI users than for typical-hearing peers; reduced auditory cortical adaptation in HA/CI users compounds this; and the binaural cues typical-hearing listeners use to separate direct speech from reflections are degraded in HA/CI processing. 0.3 s is therefore not a comfort threshold but a speech-access threshold — below the RT at which hearing-aid amplification stops being a net benefit. Adoption into the 2016 IBC reference brought the value into US building code where state and local jurisdictions ratify.
+
+**NDV/AUT.** No regulatory tradition addresses autism-specific acoustic requirements. PAS 6463:2022 (UK) is the first major standards-body publication to acknowledge neurodivergent occupant acoustic needs and remains qualitative. The empirical lineage is recent: Caldas/Masiero/Wang surveyed teachers of children with ASD and identified air conditioning noise and reverberant echoes as the dominant in-classroom acoustic stressors; Zaniboni et al. 2021 surveyed parents/caregivers and found 48% of autistic individuals report reverberation as actively problematic. Bettarello et al. 2021 (REF-00561) produced the first quantified design recommendation — 0.4-0.7 s — from acoustic optimization of one Italian daily-care facility (n=7 rooms). Caniato et al. 2022 (Energy Reports Parts 1+2) and Marzi/Caniato/Gasparella 2024 (REF-00726, B&E review) extended the line. Marzi 2025 (REF-00727, Sci Rep) tested autistic and typically-developed individuals across six environmental scenarios and documented attentional decrement for autistic participants at 55 dB(A) background where TD participants showed none; the paper opens its acoustic methods by stating that no specific quantitative thresholds tailored to autistic users exist. The clinical basis is sensory hypersensitivity: reverberation increases ambiguity in source identification (Bettarello's framing — autistic listeners report greater confusion between sound and noise than typical), and sudden noise events are disproportionately distressing. The pilot's ≤ 0.4 s aspiration sits at the lower bound of Bettarello's range — choosing the most conservative end of the only quantified Tier-3 recommendation available, while explicitly carrying the conjecture label until a future Tier-1 publication tests the value directly.
+
+**DEM.** Acoustic environment in long-term dementia care surfaced as an agitation modifier in nursing-home research in the 1990s-2000s without producing isolated RT60 dose-response data. Intervention studies that include acoustic modification typically bundle RT60 reduction with other environmental changes (lighting, color, wayfinding cues), so the contribution of RT60 alone is not separable in current literature. Devos 2019 (REF-00571) characterizes the position. BrainXchange Canada and the Lyngby-Taarbæk POE document RT60 reduction within real-world intervention bundles. The clinical basis is reduced cognitive bandwidth for noise filtering: dementia is associated with disproportionate distress from acoustic complexity, and the therapeutic target is acoustic calm rather than speech intelligibility per se. The BPC's ≤ 0.5 s is therefore not anchored in an isolated dose-response study but in the convergent pattern of intervention bundles that include RT60 reduction at roughly this magnitude alongside other modifications. **Honest characterization: this is the thinnest evidence base of the four populations addressed by this BPC; the ≤ 0.5 s value should be read as defensible-but-not-empirically-validated, pending Tier-1 publication of an isolated dose-response.**
+
+**general.** The 0.6 s typical-classroom value descends from a long lineage of speech-intelligibility research — Sabine's foundational absorption work (early 1900s), the Speech Transmission Index framework developed by Houtgast & Steeneken (1970s onward), Bradley & Sato's classroom-acoustics studies (1990s-2000s) — converging on the band 0.4-0.8 s as the range within which typical-hearing listeners maintain effective speech understanding at conversational distance under controlled background noise. ANSI/ASA S12.60-2002 codified 0.6 s for ≤ 283 m³ as the central value, retained in the 2010 revision. The cross-jurisdictional convergence visible in step 3 (UK BB93, DE DIN 18041, IT UNI 11532-2, AU/NZ AS/NZS 2107, NL/BE/ES national codes, FR NF S 31-080) is independent rather than copy-derived — different working groups landed in the same band from different epistemic frames. The clinical basis is the same speech-perception physics that underlies the DEAF rationale, with wider tolerance because typical-hearing listeners can use binaural cues, contextual prediction, and active gain control that HA/CI users cannot.
+
+### Step 8 — Trade-offs
+
+- **NRC vs STI.** Broadband absorption ≥ 0.85 NRC (item A-02) can degrade Speech Transmission Index by reducing not only reverberant noise but also useful early reflections that aid speech intelligibility — documented in Amlani & Russo 2016 (REF-00580). GAP-RAP-01's evidence-auditor adjudication treats this as a co-design constraint: absorption placement (rear and side walls, ceiling tiles preferentially over upper third) matters as much as bulk absorption magnitude. The pilot does not resolve to a single rule; the trade-off is named so downstream design guidance can address it.
+- **DEAF target vs general target in shared-occupancy buildings.** The DEAF ≤ 0.3 s requires roughly twice the absorption of the general ≤ 0.6 s target in the same volume. In buildings serving both populations (mainstream schools with HA/CI students, mixed-occupancy classrooms), the design implication is universal application of the DEAF target rather than per-room differentiation — simpler in practice and avoids stigmatizing designated "hearing-impaired classrooms." Cost trade-off lives elsewhere in the BPC.
+- **NDV/AUT aspiration vs current jurisdictional codes.** The ≤ 0.4 s aspiration sits below every surveyed jurisdiction's general target (≤ 0.5 s in IT UNI A4 category is the closest). In jurisdictions where building codes set ≤ 0.6 s or higher as the regulatory floor, designing to ≤ 0.4 s for NDV/AUT-occupied spaces is supererogatory — exceeds code — with no enforcement against under-compliance to the aspiration. The trade-off is between aspiration and what a designer can defend to a client at code-compliance budget.
+- **Absorption strategy vs visual / wayfinding / contamination considerations.** Carpet and soft furnishings are dominant RT60-reduction strategies but trade against VIS-navigability (carpet pattern can disorient vision-impaired users) and air-quality / infection control (carpets retain particulates and allergens). Item A-05 names this trade-off; resolution is context-dependent.
+
+### Step 9 — Cross-population conflict flag
+
+**No conflict for RT60 across the four populations addressed.** All population-specific values (DEAF ≤ 0.3 s, NDV/AUT ≤ 0.4 s aspiration, DEM ≤ 0.5 s, general ≤ 0.6 s) point in the same direction — lower RT60 is more accessible — and the most-constrained value (DEAF ≤ 0.3 s) is implementable in any space that meets the general code. The relationship is structurally **convergent**, not in tension: a building designed to the DEAF target automatically satisfies all three others. This is the matched-direction case noted in the restored CON-0264 connection record. Cross-population arbitration is therefore moot for this parameter; no arbitration-BPC routing required. The pilot's first cross-jurisdictional synthesis under rule #9 produces a clean convergent result — useful as a baseline before subsequent BPCs surface the conflicted cases (e.g., MS thermal needs vs DEM thermal needs, where direction itself diverges).
+
+---
+
+## Session log
 
 ### Pass 3 plan (subsequent session)
 
 Run `reasoning-doc-citations` on every cell of step 3's jurisdiction table that asserts a value + every claim in steps 6-7 attributed to a specific source. Estimate: ~40-60 rows. Each row requires opening the cited source at the cited section and confirming `value_match` or `claim_match`.
 
-Pre-flight: REF-00561 metadata correction status -- RESOLVED 2026-05-16 (see "Pre-flight anomaly" above). Source is eligible for citation.
+Pre-flight: REF-00561 metadata correction status — RESOLVED 2026-05-16. REF-00335 (ANSI/ASA S12.60-2010) requires `citation-miner` pass before any reasoning-doc-citations row referencing US standard claims can land; surfaced by this session's PMP walk.
 
-### Rule #7 adversarial-research pass -- COMPLETED 2026-05-17
+### Rule #7 adversarial-research pass — COMPLETED 2026-05-17
 
-Adversarial-research on the contested claim **"NDV/AUT require quantified RT60 targets but no Tier-1 evidence base exists for what those targets should be"** was run during this resumption session. Closed under **GAP-291** (CLOSED-RESOLVED) with all four protocol fields populated:
+Adversarial-research on the contested claim **"NDV/AUT require quantified RT60 targets but no Tier-1 evidence base exists for what those targets should be"** closed under **GAP-291** (CLOSED-RESOLVED) with all four protocol fields populated:
 - `confidence_interval`: 85-95%
 - `named_dissenter`: NONE FOUND for the Tier-1-threshold-absence claim. Partial sharpening from Bettarello 2021 (Tier-3 design recommendation 0.4-0.7 s exists, just not at Tier 1).
 - `shift_conditions`: drops to 50-65% on non-English Tier-1 threshold publication; rises to 95%+ on 2026 affirmation; etc.
 - `falsification_condition`: peer-reviewed primary study N>20 autistic occupants with RT60 dose-response, OR new ISO/ANSI/PAS standard with quantified NDV/AUT RT60 target, OR systematic review identifying ≥3 such missed studies.
 
-Four `evidence_population_match` rows logged (EPM-RAP-001..004) grading REF-00561 (PARTIAL), REF-00726 (PROXY: review), REF-00727 (PARTIAL — EXACT corroboration of the absence claim itself), REF-00642 (PROXY: grey-lit).
+Four `evidence_population_match` rows logged (EPM-RAP-001..004). Per migration `data_20260517235900_adversarial_research_ndv_aut_rt60_target_absence.sql`.
 
-Per data migration `data_20260517235900_adversarial_research_ndv_aut_rt60_target_absence.sql`. Sub-task 1 of Pass 2 complete.
+### Rule #8 PMP pass — COMPLETED 2026-05-18
 
-### Rule #8 PMP pass -- COMPLETED 2026-05-18
-
-PMP walk **PMP-A18-001** ran for A-18 DEAF RT60 maximum 0.3 s. Setup: V₀ = 0.3 s, U = s, D = down, claim_type = maximum, δ_min = 0.05 s. Walk produced three probe rows:
+PMP walk **PMP-A18-001** for A-18 DEAF RT60 maximum 0.3 s. Setup: V₀ = 0.3 s, U = s, D = down, claim_type = maximum, δ_min = 0.05 s. Three probe rows:
 
 | step | phase | V_test | passes_strict | anchor |
 |---|---|---|---|---|
-| 1 | outer-stop | 0.24 s | 0 | (no source; 0.24 s appeared only as Iglehart 2020 calibration signal, topic-not-claim) |
-| 2 | refinement-stop | 0.27 s | 0 | (no source; nearest published values 0.3 s / 0.45 s — DGUV) |
+| 1 | outer-stop | 0.24 s | 0 | (no source; 0.24 s appears only as Iglehart 2020 calibration signal, topic-not-claim) |
+| 2 | refinement-stop | 0.27 s | 0 | (no source; nearest published values 0.3 s / 0.45 s DGUV) |
 | 3 | **final** | **0.30 s** | **1** | **REF-00325 Iglehart 2020 (Tier 1, COMPLETE/VERIFIED)** |
 
-**V_empirical_ceiling = 0.30 s** (matches V₀). **gap_signed = 0.00**. Strict termination PASSED. Iglehart 2020 specifically tested 0.3 s as an experimental RT condition with CHH using hearing aids and concluded the value supports the ANSI/ASA S12.60-2010 standard for this population — claim-level validation per the detection question, not topic-level. Co-supporting source ANSI/ASA S12.60-2010 (REF-00335) corroborates 0.3 s independently but is AUTHOR-TITLE-ONLY and rule-#10-ineligible; logged in PMP notes for citation-miner pickup.
+**V_empirical_ceiling = 0.30 s** (matches V₀). **gap_signed = 0.00**. Strict termination PASSED. Co-supporting source REF-00335 (ANSI/ASA S12.60-2010) is AUTHOR-TITLE-ONLY and rule-#10-ineligible; logged for citation-miner pickup. Per migration `data_20260518010000_pmp_walk_a18_deaf_rt60.sql`.
 
-Items.pmp_* updated: pmp_empirical_ceiling = 0.30, pmp_gap_signed = 0.00, pmp_direction = down, pmp_delta_min = 0.05, pmp_last_walk_at = 2026-05-18 01:00.
+### Rule #9 steps 4-9 authoring — COMPLETED 2026-05-18
 
-Per data migration `data_20260518010000_pmp_walk_a18_deaf_rt60.sql`. Pass 2 sub-task 2 complete.
+Steps 4-9 authored from primitives this session (Pass 2 sub-task 3). Step 7 historical/clinical rationale paragraphs grounded in source reads — ANSI S12.60 lineage (1998 Access Board working group, 2002 first edition, 2010 revision adding 0.3 s for HI), Bettarello/Marzi/Caniato research line for NDV/AUT, Devos 2019 + intervention-bundle pattern for DEM, Sabine/STI/Bradley-Sato lineage for general. DEM rationale explicitly characterizes thin-evidence base honestly. Step 8 expanded to four trade-offs (NRC↔STI, DEAF-vs-general in shared-occupancy, NDV/AUT aspiration vs code floor, absorption-vs-visual/contamination). Step 9 verdict: convergent no-conflict case.
 
-### Rule #9 steps 4-9 authoring -- NEXT
-
-Sub-task 3 of Pass 2: author steps 4-9 of the reasoning doc per the 9-step rule. Steps 4-9 cover lowest-barrier code per population, Tier evidence per population, chosen value per population (now empirically validated for DEAF at 0.3 s), rationale, trade-offs, and cross-population conflict flag. Prior pilot-doc drafts of steps 5-9 anticipate the structure; sub-task 3 formalizes them into the doc with explicit citations ready for Pass 3 (rule #10) verification.
+Pass 2 complete. Pass 3 (rule #10 reasoning-doc-citations) is the next session.
 
 ---
 
 ## Outstanding flags from this pilot session
 
-1. `REF-00561` (Bettarello 2021) metadata is wrong (DOI + publisher) — flagged for `citation-miner` correction before any rule-#10 row is created against it.
-2. Items↔BPCs linkage question (`items.bpc_source_slug = NULL` across all acoustic items) is deferred per the chat's strategic discussion — pilot evidence will inform whether a join table is needed before scaling Phase E.
-3. PCS population has no acoustic evidence in the eligible-source pool; chosen-value will be "no quantified target available" at step 6 rather than a fabricated number. Confirms rule #10 sub-rule 2 working as intended.
-4. KO, NL, SV, FI thin-jurisdiction coverage per BPC header is real and acknowledged; rule #9 step 3 table marks them. Multilingual extension is a Phase A.11 sequel, not in scope.
+1. **REF-00335 (ANSI/ASA S12.60-2010) is AUTHOR-TITLE-ONLY** — surfaced by PMP walk PMP-A18-001 as the binding gap. Co-supports DEAF 0.3 s independently of Iglehart 2020; rule-#10-ineligible until `citation-miner` brings it to COMPLETE/VERIFIED. Blocks step-3 jurisdiction-comparison rows for US/ANSI in Pass 3.
+2. PCS population has no acoustic evidence in the eligible-source pool; chosen-value will be "no quantified target available" at step 6 rather than a fabricated number. Confirms rule #10 sub-rule 2 working as intended.
+3. KO, NL, SV, FI thin-jurisdiction coverage per BPC header is real and acknowledged; rule #9 step 3 table marks them. Multilingual extension is a Phase A.11 sequel, not in scope.
+4. DEM rationale evidence base is the thinnest of four populations — no isolated RT60 dose-response published. Step 7 names this explicitly; ≤ 0.5 s value is defensible-but-not-empirically-validated.
 
 ---
 
@@ -237,8 +280,8 @@ Sub-task 3 of Pass 2: author steps 4-9 of the reasoning doc per the 9-step rule.
 reasoning_doc_slug: room-acoustic-performance
 parent_bpc: references/bpc/sensory-environment/room-acoustic-performance.md
 pilot_designation: TRACK-3-PILOT-1
-pilot_pass_completed: PASS-1
-pilot_pass_pending: PASS-2 (rule #9 steps 4-9), PASS-3 (rule #10 reasoning-doc-citations), PRE-PASS (rule #7 adversarial-research + rule #8 PMP for DEAF RT60 ≤ 0.3s)
+pilot_pass_completed: PASS-2
+pilot_pass_pending: PASS-3 (rule #10 reasoning-doc-citations)
 parameters_in_scope:
   - RT60  # this walk
   - NC    # subsequent walks
