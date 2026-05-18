@@ -28,8 +28,8 @@ This reasoning doc is being authored as the **first BPC reasoning doc** under th
 
 Pilot will execute the chain in order. Skipping the upstream skills (rule #7, rule #8) is not "minimum viable pilot" — DR-2026-05-13 §1 and PI rule #10 explicitly chain them.
 
-**Pre-flight anomaly flagged for triage (does not block pilot):**
-`REF-00561` (Bettarello 2021, *Applied Sciences*, MDPI) has `metadata_quality=COMPLETE verification_status=VERIFIED` but the DOI `10.3403/30081120u` and publisher `BSI British Standards` are clearly wrong for this paper — that DOI prefix belongs to British Standards Institution. The `VERIFIED` tag confirmed a target resolved, but rule #10 sub-rule 2 (claim-content matching) catches the inconsistency. The actual Bettarello et al. 2021 paper is in MDPI *Applied Sciences*. Logged here; route to `citation-miner` next-session to correct metadata before this source is used to ground any reasoning-doc-citations row.
+**Pre-flight anomaly — RESOLVED 2026-05-16:**
+`REF-00561` (Bettarello 2021, *Applied Sciences*, MDPI) was previously stored with DOI `10.3403/30081120u` and publisher `BSI British Standards` — a CrossRef Jaccard=0.50 backfill that mis-matched the paper to a BSI standard. Corrected via data migration `data_20260516172800_correct_ref_00561_bettarello_2021_metadata.sql` (applied 2026-05-16 17:28 in session_2026-05-15a) to DOI `10.3390/app11093942`, publisher `MDPI`, journal `Applied Sciences` 11(9):3942. Independently re-verified 2026-05-17 against MDPI catalog, ResearchGate record, and downstream citing-paper bibliographic entries. Source is eligible for Pass 3 `reasoning_doc_citations` rows without further action. **First concrete instance of rule #10 sub-rule 2 catching a wrong-content VERIFIED record before reasoning_doc_citations row creation** — pilot evidentiary purpose served.
 
 ---
 
@@ -83,13 +83,13 @@ This section records owner directives that govern the synthesis logic. Each item
 
 **Consequence for the spec layer:** An acoustic parent item (existing A-NN family) holds the canonical parameter. Population-specific values are rows in `item_population_elaborations` keyed to that item — `spec_variant_a` carries the chosen value, `spec_variant_b` an alternate if a population's evidence supports a range. The NDV/AUT "conjecture rationally informed by literature" label (Item 2) propagates via the elaboration row's `notes` field, with the PMP outcome attached per Item 2's strict-termination-expected-to-FAIL contract.
 
-### REF-00561 (Bettarello 2021) metadata correction — routing decision
+### REF-00561 (Bettarello 2021) metadata correction — RESOLVED (no routing needed)
 
-**Owner directive (2026-05-17, via delegation):** Route REF-00561 to `citation-miner` as the first sub-task of the next session, before any Pass 2 work that depends on Bettarello 2021. DOI prefix `10.3403/...` (BSI) and publisher `BSI British Standards` are wrong for the MDPI *Applied Sciences* paper; both must be corrected before any `reasoning_doc_citations` row cites this source. The pilot's evidentiary purpose includes demonstrating rule #10 sub-rule 2 in action — leaving the error in place defeats that purpose.
+**Status (2026-05-17, post-bottom-up verification):** Already corrected. Data migration `data_20260516172800_correct_ref_00561_bettarello_2021_metadata.sql` was applied 2026-05-16 17:28 in session_2026-05-15a, ahead of this resumption session — the pre-flight note above was stale relative to repo state. Independent web verification 2026-05-17 confirms DOI `10.3390/app11093942` resolves to MDPI *Applied Sciences* 11(9):3942 with the correct authors. Source eligible for Pass 3 `reasoning_doc_citations` rows without further action.
 
 ---
 
-**Pilot gate status (post-2026-05-17 sign-offs):** All five sign-off items closed (1 worst-case-point convention; 2 NDV/AUT conjecture label; 3 chain order; 4 schema model; 5 population-spec policy). Pass 2 (rule #7 → rule #8 → rule #9 steps 4–9) and the `item_bpc_links` migration are unblocked. Pass 3 (rule #10 reasoning-doc-citations) remains gated on REF-00561 metadata correction for any row citing Bettarello 2021.
+**Pilot gate status (post-2026-05-17 sign-offs and migration):** All five sign-off items closed. REF-00561 metadata previously stale-flagged in the pre-flight; confirmed already corrected 2026-05-16, independently re-verified 2026-05-17. Schema migration `013_item_bpc_links.sql` authored and applied 2026-05-17 — `item_bpc_links` table available with `link_type ∈ {primary, parameter, context, secondary}`, unique-primary-per-item constraint, FK to items and slugs. Pass 2 (rule #7 → rule #8 → rule #9 steps 4–9) fully unblocked. Pass 3 (rule #10 reasoning-doc-citations) ready when Pass 2 completes; first row will exercise the rule-#10 verification gate end-to-end.
 
 ---
 
