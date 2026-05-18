@@ -89,7 +89,7 @@ This section records owner directives that govern the synthesis logic. Each item
 
 ---
 
-**Pilot gate status (post-2026-05-17 sign-offs and migration):** All five sign-off items closed. REF-00561 metadata previously stale-flagged in the pre-flight; confirmed already corrected 2026-05-16, independently re-verified 2026-05-17. Schema migration `013_item_bpc_links.sql` authored and applied 2026-05-17 — `item_bpc_links` table available with `link_type ∈ {primary, parameter, context, secondary}`, unique-primary-per-item constraint, FK to items and slugs. Pass 2 (rule #7 → rule #8 → rule #9 steps 4–9) fully unblocked. Pass 3 (rule #10 reasoning-doc-citations) ready when Pass 2 completes; first row will exercise the rule-#10 verification gate end-to-end.
+**Pilot gate status (post-2026-05-18 PMP walk):** All five sign-off items closed. REF-00561 confirmed corrected. Schema migration 013 applied. A-18 authored under standing rule #3 Change Order with 4 population elaborations (closes GAP-282). GAP-291 closed-resolved on NDV/AUT RT60 target-absence claim (rule #7 pass). PMP-A18-001 walk passed strict termination at 0.30 s with REF-00325 (Iglehart 2020) Tier-1 anchor (rule #8 pass). Pass 2 sub-tasks 1 and 2 complete; sub-task 3 (rule #9 steps 4-9 authoring) is next. Pass 3 (rule #10 reasoning-doc-citations) follows once Pass 2 completes.
 
 ---
 
@@ -200,9 +200,25 @@ Four `evidence_population_match` rows logged (EPM-RAP-001..004) grading REF-0056
 
 Per data migration `data_20260517235900_adversarial_research_ndv_aut_rt60_target_absence.sql`. Sub-task 1 of Pass 2 complete.
 
-### Rule #8 PMP pass -- NEXT
+### Rule #8 PMP pass -- COMPLETED 2026-05-18
 
-Pre-PMP for DEAF RT60 ≤ 0.3 s: next session sub-task. Empirical ceiling probe must clear strict termination before this becomes a numerical-spec claim per rule #8. Iglehart 2020 (REF-00325) is the Tier-1 anchor.
+PMP walk **PMP-A18-001** ran for A-18 DEAF RT60 maximum 0.3 s. Setup: V₀ = 0.3 s, U = s, D = down, claim_type = maximum, δ_min = 0.05 s. Walk produced three probe rows:
+
+| step | phase | V_test | passes_strict | anchor |
+|---|---|---|---|---|
+| 1 | outer-stop | 0.24 s | 0 | (no source; 0.24 s appeared only as Iglehart 2020 calibration signal, topic-not-claim) |
+| 2 | refinement-stop | 0.27 s | 0 | (no source; nearest published values 0.3 s / 0.45 s — DGUV) |
+| 3 | **final** | **0.30 s** | **1** | **REF-00325 Iglehart 2020 (Tier 1, COMPLETE/VERIFIED)** |
+
+**V_empirical_ceiling = 0.30 s** (matches V₀). **gap_signed = 0.00**. Strict termination PASSED. Iglehart 2020 specifically tested 0.3 s as an experimental RT condition with CHH using hearing aids and concluded the value supports the ANSI/ASA S12.60-2010 standard for this population — claim-level validation per the detection question, not topic-level. Co-supporting source ANSI/ASA S12.60-2010 (REF-00335) corroborates 0.3 s independently but is AUTHOR-TITLE-ONLY and rule-#10-ineligible; logged in PMP notes for citation-miner pickup.
+
+Items.pmp_* updated: pmp_empirical_ceiling = 0.30, pmp_gap_signed = 0.00, pmp_direction = down, pmp_delta_min = 0.05, pmp_last_walk_at = 2026-05-18 01:00.
+
+Per data migration `data_20260518010000_pmp_walk_a18_deaf_rt60.sql`. Pass 2 sub-task 2 complete.
+
+### Rule #9 steps 4-9 authoring -- NEXT
+
+Sub-task 3 of Pass 2: author steps 4-9 of the reasoning doc per the 9-step rule. Steps 4-9 cover lowest-barrier code per population, Tier evidence per population, chosen value per population (now empirically validated for DEAF at 0.3 s), rationale, trade-offs, and cross-population conflict flag. Prior pilot-doc drafts of steps 5-9 anticipate the structure; sub-task 3 formalizes them into the doc with explicit citations ready for Pass 3 (rule #10) verification.
 
 ---
 
