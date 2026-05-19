@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-19-deployment-state-reconciliation",
+  "artifact": "decisions/PI-update-needed.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "structural-changes",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "NOT-FIRED",
+      "reason": "No new sources introduced; this commit reconciles deployment state of PI versions previously logged, not research content."
+    },
+    "structural-changes": {
+      "status": "NOT-FIRED",
+      "reason": "decisions/PI-update-needed.md is a transient queue file per architecture v2.3 reference_files_pattern; rewriting its body does not affect TOC, item codes, part/section nomenclature, or cross-references in BPC content."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/PI-update-needed.json"
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Backfill-on-touch: no prior attestation existed for this artifact and attestations/ directory did not exist before this commit; first edit creates the attestation per the rule itself. No deviation in spirit; this row exists for audit completeness."
+    }
+  ],
+  "bias_direction": "Self-authored review bias risk: I drafted the diagnostic that surfaced the queue-file staleness and now author the file that closes it. The bias direction is toward declaring the queue closed cleanly when residual ambiguity may exist (e.g., whether v10.11 truly deployed at the exact session_2026-05-15a boundary).",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that the table claims v10.12 deployed 'before 2026-05-17 amend' without a confirming session prompt snapshot in evidence; the prior queue file inferred deployment from the v10.13 prompt loading and the v10.12 amend bundling, which is indirect. The deployment of v10.11 and v10.12 individually is presumed-but-unverified prior to the v10.13 prompt observation.",
+  "verdict": "DEVIATION-LOGGED"
+}

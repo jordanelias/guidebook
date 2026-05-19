@@ -1,70 +1,39 @@
 # PI Deployment Queue
 
-**Live in claude.ai project settings:** v10.11 (deployed by owner sometime between session_2026-05-13b close and session_2026-05-15a; the present-session prompt loads v10.11, confirming deployment).
-**Pending deployment:** v10.12 (drafted in session_2026-05-15a).
+**Live in claude.ai project settings:** v10.13 (deployed by owner; the present-session prompt loads v10.13, confirming deployment).
+**Repo-side snapshot:** `governance/project-instructions-v10_13.md` (commit `29ea3bf`, 2026-05-19).
+**Pending deployment:** none. Queue is empty.
 
 ---
 
-## v10.13 — Pending (NEW, blocks Pass 3)
+## State as of 2026-05-19
 
-**Status:** Not yet drafted as `governance/project-instructions-v10_13.md`. Awaits v10.12 deployment first; v10.13 supersedes v10.12 cumulatively when authored.
-**Trigger:** DR-2026-05-18 statutory-metadata-completeness (adopted 2026-05-18 in session_2026-05-17-pilot-pass-3-blocker-resolution).
-**Action:** Standing rule #10 eligibility predicate text must be amended.
+All three pending entries (v10.11, v10.12, v10.13) deployed and snapshotted. No outstanding PI bumps.
 
-### What changes
+| Version    | Live in claude.ai | Repo snapshot                                 | Notes                                                                                 |
+|------------|-------------------|-----------------------------------------------|---------------------------------------------------------------------------------------|
+| v10.11     | Yes (since ≤2026-05-15) | `governance/project-instructions-v10_11.md` | `reasoning-doc-citations` skill promotion.                                            |
+| v10.12     | Yes (deployed before 2026-05-17 amend) | `governance/project-instructions-v10_12.md` | Bootstrap `_GH_SKILLS()` fix + standing rule #11 amend (adherence logging).            |
+| v10.13     | Yes (loads this session) | `governance/project-instructions-v10_13.md` (commit `29ea3bf`) | DR-2026-05-18: `COMPLETE-STATUTORY` peer value in rule #10. |
 
-Standing rule #10 currently reads:
-
-> Required minimum: `metadata_quality = COMPLETE` AND `verification_status ∈ {VERIFIED, UNVERIFIED-1}`.
-
-Amend to:
-
-> Required minimum: `metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}` AND `verification_status ∈ {VERIFIED, UNVERIFIED-1}`. The `COMPLETE-STATUTORY` value (introduced 2026-05-18 per DR-2026-05-18) certifies that a statutory document (standard, guideline) carries the metadata fields appropriate to its source type — issuing body, edition year, jurisdiction, and standard number or publisher — rather than the academic-publication fields (DOI, journal, page range, named authors) the unqualified `COMPLETE` requires. Both values clear the existence gate; they remain queryably distinct for audit purposes.
-
-### Why this is blocking
-
-PI v10.11 / v10.12 rule #10 reads strictly `metadata_quality = COMPLETE`. Until v10.13 deploys, any Pass 3 work citing a `COMPLETE-STATUTORY` source is operating under a rule-bend that is documented in the DR but not yet ratified in the live PI text. The bend is defensible (DR adopted; data already promoted) but creates rule/code drift per architecture v2.3 `<conflict_resolution>` row 4 (text rule vs CI workflow) — though here the CI predicate has already been updated in `scripts/audit_evidence_metadata.py`, so the inverse: code is ahead of text.
-
-### Owner action
-
-- [ ] After v10.12 deploys, draft v10.13 as a minimal patch (single rule-#10 text amendment + changelog entry)
-- [ ] Paste into claude.ai → Project Settings → Custom Instructions
-- [ ] Verify version line reads `V10.13 · Revised 2026-05-18`
-
-### Until ratified
-
-Pass 3 work this pilot session may proceed citing COMPLETE-STATUTORY sources because (a) DR-2026-05-18 is adopted, (b) the eligibility predicate is updated in code, (c) the rule/text drift is acknowledged here. Each Pass 3 row referencing a COMPLETE-STATUTORY source carries an implicit `[DRIFT: rule-#10 text vs code — DR-2026-05-18 adopted, PI v10.13 not yet deployed]` tag that becomes explicit in the audit trail if surfaced for review.
+Historical detail of v10.6 → v10.11 cumulative changes is preserved in the corresponding `governance/project-instructions-v10_*.md` snapshots and in `sessions/session_2026-05-13b-evidence-verification-methodology.md` plus `sessions/session_2026-05-15a-governance-reconciliation.md`.
 
 ---
 
-## v10.12 — Pending
+## Drift observations carried forward
 
-**Status:** v10.12 drafted at `governance/project-instructions-v10_12.md` @ session_2026-05-15a.
-**Action:** Owner manually pastes v10.12 content into claude.ai → Project Settings → Custom Instructions when convenient.
+These are not PI-bump candidates — they are downstream content/code drift surfaced during the 2026-05-19 robustness review of `evidence_sources`:
 
-### What changed vs live v10.11
+1. **PI rule #10 numerator drift.** Rule #10 prose and the bootstrap status block reference `/661` evidence_sources rows; actual count is 671 (+10). Cosmetic but visible at every session start. Candidate for inclusion in the next substantive PI bump rather than a standalone v10.14 patch.
+2. **`evidence_sources` row count drift.** Same root cause; tracked in the DB itself, no separate remediation needed.
+3. **Bootstrap status grep no-op.** The line `grep -E "session_close|next_action|blockers" /tmp/session.md` does not match the current session-record header format. Status block still prints the session ID. Candidate for the same future PI patch.
 
-Single-purpose patch.
-
-- **Bootstrap pattern fix.** Replaced `echo "Skills: $(grep -c '^### ' /tmp/registry.md) registered"` (matched 0 against current registry shape) with a backend-aware `_GH_SKILLS()` helper that counts `skills/*_SKILL.md` files via the GitHub contents API and excludes `skills/deprecated/`. Helper added to both `gh` and `curl` backend blocks (lines 175 and 184 in v10.11 source). Status-block label `Skills: X registered` → `Skills: X active`.
-- **Changelog entry** for v10.12 added at top.
-- **No standing-rule changes.** No `<skills_assigned>` changes. No structural removals or renames — no caller-sweep required.
-
-### Owner action
-
-- [ ] Open claude.ai → Project Settings → Custom Instructions
-- [ ] Replace live PI (currently v10.11) with content of `governance/project-instructions-v10_12.md`
-- [ ] Verify version line reads `V10.12 · Revised 2026-05-15`
-- [ ] Save; next chat will bootstrap under v10.12 and the `Skills: X active` line will show a non-zero count
+None of these block synthesis work. Defer.
 
 ---
 
-## v10.11 — Confirmed deployed
+## Conventions reminder
 
-The earlier entry for v10.10 deployment is retired; v10.10 → v10.11 was a small surgical patch (single-skill promotion) and the live PI in session_2026-05-15a's prompt is v10.11, so deployment of both v10.10 and v10.11 is treated as complete.
+Per architecture v2.3 `<migration_and_growth>`: PI bumps go live only when the owner manually pastes the new content into claude.ai → Project Settings. Repo-side snapshot files in `governance/` are the audit-trail counterpart and are committed directly. The repo-side commit does not change the live PI.
 
-Historical detail of v10.6 → v10.10 → v10.11 cumulative changes is preserved in:
-- `governance/project-instructions-v10_10.md` (v10.10 snapshot, with v10.6→v10.10 changelog entries)
-- `governance/project-instructions-v10_11.md` (v10.11 snapshot)
-- `sessions/session_2026-05-13b-evidence-verification-methodology.md` (architecture v2.3 + DR-2026-05-13 + PI v10.10 work)
-- `sessions/session_2026-05-15a-governance-reconciliation.md` (v10.11 promotion + 2026-05-15 governance reconciliation)
+Per standing rule #11: commits modifying this file (`decisions/PI-update-needed.md`) require a `[DOCTRINE: <sha>]` token and a corresponding `attestations/PI-update-needed.json` entry.
