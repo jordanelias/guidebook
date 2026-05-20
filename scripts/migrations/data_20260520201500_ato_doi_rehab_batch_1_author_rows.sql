@@ -25,11 +25,5 @@ INSERT INTO evidence_source_authors (ref_id, position, last_name, first_name, su
 INSERT INTO evidence_source_authors (ref_id, position, last_name, first_name, suffix, orcid, is_corporate, corporate_name, corporate_name_en, role, created_at, created_by_session) VALUES ('REF-00602', 4, 'Lundberg', 'Emily M. H.', NULL, NULL, 0, NULL, NULL, 'author', '2026-05-20T20:15:00Z', 'session_2026-05-20-ato-rehab');
 INSERT INTO evidence_source_authors (ref_id, position, last_name, first_name, suffix, orcid, is_corporate, corporate_name, corporate_name_en, role, created_at, created_by_session) VALUES ('REF-00602', 5, 'Arehart', 'Kathryn H.', NULL, '0000-0002-5767-6584', 0, NULL, NULL, 'author', '2026-05-20T20:15:00Z', 'session_2026-05-20-ato-rehab');
 
-INSERT INTO data_migrations (migration_id, applied_at, content_sha, applied_by_session, notes) VALUES (
-  'data_20260520201500_ato_doi_rehab_batch_1_author_rows',
-  '2026-05-20T20:15:00Z',
-  'computed-at-apply-time',
-  'session_2026-05-20-ato-rehab',
-  'Author-row backfill for 3 G02-flagged refs from ATO-DOI-rehab batch 1: 13 author rows added.'
-);
+-- (data_migrations tracking row is inserted by scripts/migrate_db.py runner)
 COMMIT;

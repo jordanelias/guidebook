@@ -836,16 +836,7 @@ UPDATE evidence_sources SET
   verification_attempt_count=COALESCE(verification_attempt_count,0)+1
 WHERE ref_id='REF-00640';
 
--- Record this migration's application
-INSERT INTO data_migrations (migration_id, applied_at, content_sha, applied_by_session, notes)
-VALUES (
-  'data_20260520200000_ato_doi_rehab_batch_1',
-  '2026-05-20T20:05:00Z',
-  'computed-at-apply-time',
-  'session_2026-05-20-ato-rehab',
-  'AUTHOR-TITLE-ONLY × VERIFIED × DOI rehab batch 1: 35 upgrades to COMPLETE, 24 held with metadata_integrity_status flags'
-);
-
+-- (data_migrations tracking row is inserted by scripts/migrate_db.py runner)
 COMMIT;
 
 -- Summary: 35 upgrades, 24 integrity holds, total 59 rows touched.
