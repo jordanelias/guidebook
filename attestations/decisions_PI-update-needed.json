@@ -10,8 +10,8 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/PI-update-needed.md#v10-14-specific-changes",
-      "reason": "All three v10.14 changes are tied to actual git artifacts: rule #11(a) ordering is grounded in concrete six-commit failure record (SHAs listed); /670 numerator is grounded in the actual data_20260519060000 dedup migration; bootstrap grep change is grounded in actual section-header inventory across both prior and current session records."
+      "evidence_path": "decisions/PI-update-needed.md#what-this-changes-about-future-workflow",
+      "reason": "v10.14 reformulation grounded in concrete artifacts: scripts/bootstrap.sh exists in this commit and was smoke-tested end-to-end against /mnt/project/GitHub_pat (HTTP 200 fetches across 5 critical files, DB query returns 670/670 dynamic ratios, header grep finds 3 expected section names, exit code 0). The before/after table is verifiable by comparing v10.13 inline-bootstrap to v10.14 thin-caller diff. The architecture v2.3 extraction guidance is cited verbatim."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -19,7 +19,7 @@
     }
   },
   "deviations": [],
-  "bias_direction": "v10.14 is authored at the close of the same session that surfaced the drifts it documents. The patches respond exactly to drifts observed THIS session \u2014 risk that the patches over-fit to the specific session's experience rather than addressing the broader drift class. The grep update in particular is calibrated to match the two most-recent session-record formats; an older session-record format (pre-architecture-split) would still not match. Decision to defer cross-historical compatibility to the future-archaeology session that needs it.",
-  "independent_reviewer_counterclaim": "An outside reviewer would object that v10.14 is housekeeping bundled under a single bump and should arguably have been three separate bumps (one per drift, ordered by severity). Counter: the architecture-v2.3 PI-growth guidance discourages thrashing the PI version number for minor patches; v10.13 was itself a single-rule bump and the v10.12 amend pattern shows micro-bumps are acceptable within a version label. v10.14 stays under that budget by bundling three documentation-only patches under one minor-version bump.",
+  "bias_direction": "v10.14 was rewritten mid-session in response to owner frustration with PI bump frequency. The bias risk is toward over-claiming what extraction solves: not all PI bumps are bootstrap-related, so the 'last bootstrap-related PI bump' framing is true narrowly but does not mean PI bumps disappear. Rule changes, skill assignments, and override clauses will still require bumps. The before/after workflow table addresses this honestly by listing what STAYS in the PI bump column.",
+  "independent_reviewer_counterclaim": "An outside reviewer could object that extracting bootstrap to a script trades one form of fragility (PI bump-and-paste) for another (network dependency at session start to fetch the script from main). If main is unreachable, the entire bootstrap fails. Counter: the existing inline bootstrap already needs network to fetch sessions/LATEST, project-standards.md, the session record, skill-registry, workplan, and the DB — all 6 critical fetches require network. Fetching the bootstrap script itself is one additional fetch with the same failure mode, not a new class of risk.",
   "verdict": "CLEAN"
 }

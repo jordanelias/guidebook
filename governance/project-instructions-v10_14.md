@@ -3,7 +3,7 @@
 Supersedes V10.13. Architecture: `architecture/project-architecture-guidebook-v2.3.md`. Preferences: `userPreferences-v6.3.md`.
 
 <changelog>
-- **V10.14 (2026-05-20)** — Minor-patch bump per session_2026-05-19-deployment-state-reconciliation drift documentation. Three changes: (1) Standing rule #11 sub-(a) explicit token placement: `[DOCTRINE: <7-char-sha>]` placed BEFORE the trailing `[YYYY-MM-DD HH:MM]` timestamp so the regex in `scripts/ci_helpers/check_commit_msg.py` (which requires the timestamp as the LAST bracket on the line) accepts the doctrine-bearing commit. Six governance commits in session 2026-05-19 silently failed the commit-msg format check by placing the token after the timestamp. (2) Bootstrap status-block numerator updated `/661` → `/670` reflecting the post-dedup `evidence_sources` count (REF-00047 removed in `data_20260519060000_dedup_bettarello_2021_app11093942.sql`). (3) Bootstrap state-query grep updated from `session_close|next_action|blockers` to `^## (Headline|Known broken|Next-action|Next action)` to match the actual session-record section headers (the prior pattern matched the pre-architecture-split format and quietly returned no lines on the current format). Preferences pointer bumped to `userPreferences-v6.3.md`. No standing-rule semantic changes; no skill assignment changes.
+- **V10.14 (2026-05-20)** — Two changes, after which future bootstrap drift no longer requires PI bumps. (1) **Standing rule #11 sub-(a) explicit token placement**: `[DOCTRINE: <7-char-sha>]` placed BEFORE the trailing `[YYYY-MM-DD HH:MM]` timestamp because `scripts/ci_helpers/check_commit_msg.py` requires the timestamp as the LAST bracket on the line. Six governance commits in session 2026-05-19 silently failed the format check by placing the token after the timestamp. Canonical form: `{skill}: {action} [DOCTRINE: <sha>] [YYYY-MM-DD HH:MM]`. (2) **Bootstrap extracted to scripts/bootstrap.sh**: the inline bash block in the bootstrap section is replaced with a 6-line thin caller that pulls the script from the repo and pipes it to bash. The script derives the evidence_sources numerator from the DB at runtime (no more hardcoded /661 or /670 drift), reads the session-record section grep from a stable pattern matching the post-architecture-split format, and is editable via normal commits to main. Future bootstrap-content changes (status-block formatting, new state queries, mechanic updates) ship as ordinary commits without requiring a PI version bump or owner paste. Preferences pointer bumped to userPreferences-v6.3.md. No standing-rule semantic changes beyond rule #11(a) clarification; no skills_assigned changes.
 - **V10.13 (2026-05-18)** — Standing rule #10 eligibility predicate amended per DR-2026-05-18 (statutory metadata completeness). Adds `COMPLETE-STATUTORY` as a peer value to `COMPLETE` for the existence gate, reflecting that statutory documents (standards, guidelines) carry issuing-body / edition-year / jurisdiction / standard-number fields that complete them without academic fields (DOI, PMID, named authors, journal, pagination). Both values clear the gate; they remain queryably distinct for audits. Minimal patch — no other rule changes, no `<skills_assigned>` changes, no bootstrap changes, no structural rename or removal. Closes the rule-vs-code drift surfaced in `decisions/PI-update-needed.md` (code in `scripts/audit_evidence_metadata.py` already updated; this PI text now ratifies that change).
 - **V10.12 (2026-05-15)** — Bootstrap pattern bug fix. The status-block line `echo "Skills: $(grep -c '^### ' /tmp/registry.md) registered"` matched the registry's pre-v10.6 shape (per-skill `### ` headings) and returned 0 against the current registry, which uses `##` sections plus a code-block listing. Replaced with `_GH_SKILLS()` helper that counts `skills/*_SKILL.md` files via the GitHub contents API (excludes `skills/deprecated/`). Helper added to both gh and curl backend blocks. Label changed `registered` → `active` to reflect what is now counted. No standing-rule changes; no other content changes. Anomaly discovered and resolved in `sessions/session_2026-05-15a-governance-reconciliation.md`.
 - **V10.12 amend (2026-05-17)** — Standing rule #11 added: adherence logging and attestation. Per `workplan/adherence-attestation-build-2026-05-17.md` §4.3 (Session 2). Bundles with the bootstrap fix under the v10.12 version label per workplan literal spec; version-hygiene note that v10.12 now contains two distinct content changes. Preferences pointer also bumped to `userPreferences-v6.2.md` (adds `<adherence_logging>` section).
@@ -175,80 +175,16 @@ Project-specific rules. Preference-level rules (tone, logging, output format, et
 </standing_rules>
 
 <bootstrap>
-Run at session start, before project-specific work. The only procedural content allowed in PI per architecture v2.3 `<bootstrap_pattern>`.
+Run at session start, before project-specific work. PI declares the trigger; bootstrap mechanics live in `scripts/bootstrap.sh` in the repo and update via ordinary commits per architecture v2.3 `<bootstrap_pattern>` extraction guidance.
 
 ```bash
 #!/usr/bin/env bash
-# Guidebook bootstrap — PI v10.10. Idempotent. Halt on critical, log [GAP] on non-critical.
+# Guidebook bootstrap thin caller — PI v10.14. Loads scripts/bootstrap.sh from main.
 set -uo pipefail
-PAT="REDACTED_IN_REPO_COPY_SEE_PROJECT_SETTINGS"
-REPO="jordanelias/guidebook"
-echo "Session start: loading Guidebook context"
-
-# Backend: gh if available, else curl
-if command -v gh >/dev/null 2>&1; then
-  echo "$PAT" | gh auth login --with-token 2>/dev/null || true
-  _GET()     { gh api "repos/$REPO/contents/$1" --jq .content 2>/dev/null | base64 -d >"$2" 2>/dev/null; [ -s "$2" ]; }
-  _GET_BIN() { gh api "repos/$REPO/contents/$1" -H "Accept: application/vnd.github.raw" >"$2" 2>/dev/null; [ -s "$2" ]; }
-  _GH_LEN()  { gh api "repos/$REPO/contents/$1" --jq 'length' 2>/dev/null || echo 0; }
-  _GH_SKILLS() { gh api "repos/$REPO/contents/skills" --jq '[.[] | select(.type=="file" and (.name | endswith("_SKILL.md")))] | length' 2>/dev/null || echo "?"; }
-else
-  echo "[ASSUMPTION: gh CLI unavailable — using curl]"
-  AUTH="Authorization: Bearer $PAT"
-  _GET()     { curl -fsSL -H "$AUTH" "https://api.github.com/repos/$REPO/contents/$1" 2>/dev/null \
-                 | python3 -c "import sys,json,base64;sys.stdout.buffer.write(base64.b64decode(json.load(sys.stdin)['content']))" >"$2" 2>/dev/null; [ -s "$2" ]; }
-  _GET_BIN() { curl -fsSL -H "$AUTH" -H "Accept: application/vnd.github.raw" "https://api.github.com/repos/$REPO/contents/$1" -o "$2" 2>/dev/null; [ -s "$2" ]; }
-  _GH_LEN()  { curl -fsSL -H "$AUTH" "https://api.github.com/repos/$REPO/contents/$1" 2>/dev/null \
-                 | python3 -c "import sys,json; d=json.load(sys.stdin); print(len(d) if isinstance(d,list) else 0)" 2>/dev/null || echo 0; }
-  _GH_SKILLS() { curl -fsSL -H "$AUTH" "https://api.github.com/repos/$REPO/contents/skills" 2>/dev/null \
-                 | python3 -c "import sys,json; d=json.load(sys.stdin); print(sum(1 for f in d if isinstance(f,dict) and f.get('type')=='file' and f.get('name','').endswith('_SKILL.md')))" 2>/dev/null || echo "?"; }
-fi
-
-# Critical fetches (halt on any failure)
-_GET "sessions/LATEST" /tmp/latest.txt                          || { echo "HALT: sessions/LATEST"; exit 1; }
-SESSION=$(tr -d '\n\r ' </tmp/latest.txt)
-_GET "sessions/$SESSION" /tmp/session.md                        || { echo "HALT: sessions/$SESSION"; exit 1; }
-_GET "references/project-standards.md" /tmp/standards.md        || { echo "HALT: project-standards.md"; exit 1; }
-_GET "references/skill-registry.md" /tmp/registry.md            || { echo "HALT: skill-registry.md"; exit 1; }
-_GET "audits/bpc-rewrite-workplan-2026-05-11.md" /tmp/workplan.md || { echo "HALT: bpc-rewrite-workplan"; exit 1; }
-
-# State queries from SQLite
-P1="?"; PMP_BACKLOG="?"; ATT_ONLY="?"; UNVERIFIED="?"; VERS_BACKFILL="?"; RDC_TOTAL="?"; RDC_PAYWALL="?"
-if _GET_BIN "data/guidebook.db" /tmp/guidebook.db; then
-  Q() { python3 -c "import sqlite3;print(sqlite3.connect('/tmp/guidebook.db').execute(\"$1\").fetchone()[0])" 2>/dev/null || echo "?"; }
-  P1=$(Q "SELECT COUNT(*) FROM gaps WHERE priority='P1' AND status NOT LIKE 'CLOSED%'")
-  PMP_BACKLOG=$(Q "SELECT COUNT(DISTINCT i.item_code) FROM items i WHERE i.pmp_last_walk_at IS NULL AND i.status NOT IN ('archived','superseded')")
-  ATT_ONLY=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='AUTHOR-TITLE-ONLY'")
-  UNVERIFIED=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE verification_status IS NULL OR verification_status=''")
-  VERS_BACKFILL=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id IS NOT NULL OR edition IS NOT NULL")
-  RDC_EXISTS=$(python3 -c "import sqlite3;print(1 if sqlite3.connect('/tmp/guidebook.db').execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='reasoning_doc_citations'\").fetchone() else 0)" 2>/dev/null)
-  if [ "$RDC_EXISTS" = "1" ]; then
-    RDC_TOTAL=$(Q "SELECT COUNT(*) FROM reasoning_doc_citations")
-    RDC_PAYWALL=$(Q "SELECT COUNT(*) FROM reasoning_doc_citations WHERE paywall_purchase_candidate=1")
-  else
-    RDC_TOTAL=0; RDC_PAYWALL=0
-  fi
-else
-  echo "[GAP: data/guidebook.db — not fetched]"
-fi
-
-REASONING_BPC=$(_GH_LEN "references/bpc-reasoning")
-REASONING_CON=$(_GH_LEN "references/connection-reasoning")
-
-echo "=== STATUS ==="
-echo "session: $SESSION"
-grep -E "^## (Headline|Known broken|Next-action|Next action)" /tmp/session.md
-echo "P1 OPEN: $P1"
-echo "PMP backlog: $PMP_BACKLOG"
-echo "Evidence AUTHOR-TITLE-ONLY: $ATT_ONLY / 670  (ineligible for synthesis per rule #10)"
-echo "Evidence verification_status NULL: $UNVERIFIED / 670"
-echo "Versioning backfilled: $VERS_BACKFILL / 675  (Track 1)"
-echo "reasoning_doc_citations rows: $RDC_TOTAL  (Track 3)"
-echo "PAYWALL candidates flagged: $RDC_PAYWALL"
-echo "BPC reasoning docs: $REASONING_BPC / 95  (Phase E target)"
-echo "Connection reasoning docs: $REASONING_CON / 245  (Phase D target)"
-echo "Skills: $(_GH_SKILLS) active  (count of skills/*_SKILL.md, excludes skills/deprecated/)"
-echo "Workplan: bpc-rewrite-workplan-2026-05-11 (LIVE) | superseded: workplan-co0007-v4"
+PAT=$(sed -E 's/^`//; s/`$//' /mnt/project/GitHub_pat | tr -d '\n')
+export PAT REPO="jordanelias/guidebook"
+curl -fsSL -H "Authorization: Bearer $PAT" \
+  "https://raw.githubusercontent.com/${REPO}/main/scripts/bootstrap.sh" | bash
 ```
 
 **Bootstrap-exempt** (proceed without bootstrap):

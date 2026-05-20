@@ -2,32 +2,77 @@
 
 **Live in claude.ai project settings:** v10.13 (deployed by owner; the most recent session prompt loaded v10.13, confirming deployment).
 **Repo-side snapshot:** `governance/project-instructions-v10_13.md` (commit `29ea3bf`, 2026-05-19).
-**Pending deployment:** **v10.14** — `governance/project-instructions-v10_14.md` (this session, 2026-05-20).
+**Pending deployment:** **v10.14** — `governance/project-instructions-v10_14.md` (rewritten 2026-05-20).
 
 ---
 
 ## State as of 2026-05-20
 
-One pending entry: v10.14. Owner action needed to paste contents of `governance/project-instructions-v10_14.md` into claude.ai → Project Settings to make it live.
+One pending entry: v10.14. Owner action: paste contents of `governance/project-instructions-v10_14.md` into claude.ai → Project Settings.
 
 | Version | Live in claude.ai | Repo snapshot | Notes |
 |---|---|---|---|
 | v10.11 | Yes (since ≤2026-05-15) | `governance/project-instructions-v10_11.md` | `reasoning-doc-citations` skill promotion. |
 | v10.12 | Yes (deployed before 2026-05-17 amend) | `governance/project-instructions-v10_12.md` | Bootstrap `_GH_SKILLS()` fix + standing rule #11 amend (adherence logging). |
 | v10.13 | Yes (loads this session) | `governance/project-instructions-v10_13.md` (commit `29ea3bf`) | DR-2026-05-18: `COMPLETE-STATUTORY` peer value in rule #10. |
-| **v10.14** | **No — paste needed** | `governance/project-instructions-v10_14.md` (this session) | Three minor-patch drifts from session 2026-05-19: rule #11(a) token placement, bootstrap `/661`→`/670`, bootstrap grep update. Preferences pointer bump to `userPreferences-v6.3.md`. |
+| **v10.14** | **No — paste needed** | `governance/project-instructions-v10_14.md` (commit on 2026-05-20) | (1) Rule #11(a) explicit token placement clarification. (2) Bootstrap extracted to `scripts/bootstrap.sh` — future bootstrap drift no longer requires PI bumps. |
 
 ---
 
 ## v10.14 specific changes
 
-1. **Standing rule #11 sub-(a) explicit token placement.** Adds the canonical form `{skill}: {action} [DOCTRINE: <sha>] [YYYY-MM-DD HH:MM]` to the rule text. Rationale: `scripts/ci_helpers/check_commit_msg.py` regex requires the timestamp as the LAST bracket. Token-after-timestamp ordering fails the format check silently. Six session-2026-05-19 governance commits hit this (`9e2b986`, `d641e42`, `1290f2d`, `662af85`, `478683f`, `2a9fad3`). v10.14 commit `b6d2c58` (this session record) demonstrates the corrected ordering and passes CI.
+**The point of v10.14 is to be the last bootstrap-related PI bump.** After this paste, future bootstrap drift (status-block formatting, numerator updates, new state queries, grep-pattern tweaks) ships as ordinary commits to `scripts/bootstrap.sh` on main — no PI bump, no owner paste.
 
-2. **Bootstrap `evidence_sources` numerator.** `/661` → `/670`. Post-dedup count after `data_20260519060000_dedup_bettarello_2021_app11093942.sql` removed REF-00047. Both occurrences (AUTHOR-TITLE-ONLY ratio + NULL verification_status ratio) updated.
+1. **Standing rule #11 sub-(a) explicit token placement.** Adds the canonical form `{skill}: {action} [DOCTRINE: <sha>] [YYYY-MM-DD HH:MM]` to the rule text. Rationale: `scripts/ci_helpers/check_commit_msg.py` regex requires the timestamp as the LAST bracket. Token-after-timestamp ordering fails the format check silently. Six session-2026-05-19 governance commits hit this (`9e2b986`, `d641e42`, `1290f2d`, `662af85`, `478683f`, `2a9fad3`). Commit `a262dcd` (first v10.14 author) and `b6d2c58` (session record) demonstrate the corrected ordering and pass CI.
 
-3. **Bootstrap state-query grep.** `grep -E "session_close|next_action|blockers"` → `grep -E "^## (Headline|Known broken|Next-action|Next action)"`. The prior pattern matched no headers in the current session-record format (architecture v2.3 era), quietly returning empty lines on every session start. Updated to match both `## Headline outcomes` (v2026-05-19 format) and `## Known broken / pending work` (v2026-05-17 format) and `## Next-action handoff` (variant).
+2. **Bootstrap extracted to `scripts/bootstrap.sh`.** The inline bash block in the PI's `<bootstrap>` section is replaced with a 6-line thin caller:
 
-No standing-rule semantic changes. No `<skills_assigned>` changes. No structural rename or removal. Preferences pointer updated `userPreferences-v6.2.md` → `userPreferences-v6.3.md`.
+    ```bash
+    PAT=$(sed -E 's/^`//; s/`$//' /mnt/project/GitHub_pat | tr -d '\n')
+    export PAT REPO="jordanelias/guidebook"
+    curl -fsSL -H "Authorization: Bearer $PAT" \
+      "https://raw.githubusercontent.com/${REPO}/main/scripts/bootstrap.sh" | bash
+    ```
+
+    The script itself:
+    - Reads `PAT` from env (set by the thin caller from `/mnt/project/GitHub_pat`, which is provided by claude.ai project knowledge — no PAT in repo).
+    - Derives the `evidence_sources` numerator from a DB query at runtime (no hardcoded `/661` or `/670` to drift).
+    - Uses a stable section-grep pattern (`^## (Headline|Known broken|Next-action|Next action)`) matching the post-architecture-split session-record format.
+    - Lives in the repo and updates via normal commits.
+
+    Architecturally aligned with architecture v2.3 `<bootstrap_pattern>` which explicitly contemplated this extraction: "When bootstrap grows past these budgets, extract the heaviest portion (typically SQLite state queries) to a `bootstrap-status` skill and leave a thin caller in PI."
+
+**Effect on PI size:** v10.13 was 280 lines; v10.14 is 217 lines (–63 lines, ~–23%). The deleted lines moved to `scripts/bootstrap.sh` (verbatim plus the inline patches the session would have otherwise needed).
+
+**Bootstrap-exempt clause stays in PI** (it's a rule about when bootstrap runs, not bootstrap mechanics).
+
+---
+
+## What this changes about future workflow
+
+Before v10.14:
+
+| Change type | Required action |
+|---|---|
+| Standing rule edit | PI bump + owner paste |
+| New skill assignment | PI bump + owner paste |
+| Bootstrap status-block content update | PI bump + owner paste |
+| Bootstrap grep pattern fix | PI bump + owner paste |
+| Numerator update | PI bump + owner paste |
+| New state-query addition | PI bump + owner paste |
+
+After v10.14 paste:
+
+| Change type | Required action |
+|---|---|
+| Standing rule edit | PI bump + owner paste |
+| New skill assignment | PI bump + owner paste |
+| Bootstrap status-block content update | **commit to main only** |
+| Bootstrap grep pattern fix | **commit to main only** |
+| Numerator update | **commit to main only** (or dynamic via DB query) |
+| New state-query addition | **commit to main only** |
+
+The PI becomes the rule layer it was supposed to be; mechanics live in the repo where they belong.
 
 ---
 
@@ -35,4 +80,4 @@ No standing-rule semantic changes. No `<skills_assigned>` changes. No structural
 
 Per architecture v2.3 `<migration_and_growth>`: PI bumps go live only when the owner manually pastes the new content into claude.ai → Project Settings. Repo-side snapshot files in `governance/` are the audit-trail counterpart and are committed directly. The repo-side commit does not change the live PI.
 
-Per standing rule #11: commits modifying this file (`decisions/PI-update-needed.md`) require a `[DOCTRINE: <sha>]` token AND a corresponding `attestations/decisions_PI-update-needed.json` entry. Going forward (per v10.14): token placement is BEFORE the timestamp.
+Per standing rule #11 (per v10.13 still live; v10.14 adds the explicit ordering): commits modifying this file (`decisions/PI-update-needed.md`) require a `[DOCTRINE: <sha>]` token AND a corresponding `attestations/decisions_PI-update-needed.json` entry. Going forward (per v10.14): token placement is BEFORE the timestamp.
