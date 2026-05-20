@@ -13,21 +13,21 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-3",
-      "reason": "All five batch-3 probes performed live this session with HTTP responses recorded as observed: SE Boverket 3-URL 404; CA RHFAC two-hop home→/rhfac-v40 200 75KB; SG BCA 403; INT ISO multiple URL 404+wrong-match; INT ASPECTSS Archnet 429 + DCU 404 + Emerald 403 + CrossRef wrong-year. Eligibility delta arithmetic reconciled explicitly: 221 + 4 batch1 + 0 batch2 - 1 dedup + 1 batch3 = 225, not papered over."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-4-inheritance-application",
+      "reason": "Inheritance candidates derived by exact-string match on standard_number across NULL-verification rows. The same-edition constraint is explicit. No new external probes; inheritance writes reference the canonical row whose probe is logged in prior session writes."
     },
     "best-practice-synthesis-routing": {
       "status": "NOT-FIRED",
-      "reason": "DR amendment is methodology; Sonnet scope."
+      "reason": "Methodology amendment, not synthesis content."
     },
     "adversarial-research-protocol": {
       "status": "NOT-FIRED",
-      "reason": "No gap rows touched."
+      "reason": "No gaps table writes."
     },
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#cumulative-pilot-across-3-batches",
-      "reason": "Batch 3 added 1 strict VERIFIED to rule #10 eligible pool. Cumulative across 3 batches: 5 of 14 (36%) cleared gate, 6 of 14 (43%) owner-actionable via paywall or human, 3 of 14 (21%) V2-blocked. The middle-cohort yield validates the population-yield projection from batch 2's amendment within tolerance, sharpening the §6 step 5 promotion-to-skill calibration. Also expanded test_db_integrity B01 allowlist to match V1 §4 state-machine spec rather than only data observed."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-4-amendment-standard-number-inheritance-mechanic",
+      "reason": "Inheritance mechanic extends rule #10's existence-axis writes to duplicate-standard rows. The constraint (exact standard_number match) preserves rule #10's verification meaning per row — inheriting rows do not claim independent verification, they claim equivalence to a canonical verification. Net +10 to eligible pool from this mechanic without new external probes."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -35,7 +35,7 @@
     }
   },
   "deviations": [],
-  "bias_direction": "The cumulative 36% gate-clear rate falls within the projected 25-40% range from batch 2 amendment. Batch 3 was deliberately structured to test mid-difficulty cases — that increases the risk of confirmation bias (picking sites I knew or suspected would work, e.g., rickhansen.com, which I had not actually probed before but which had high prior probability of being static-EN-NGO). The honest accounting in the changelog includes the dedup absorption (REF-00047 deleted) that masked one batch-3 gain, rather than reporting the gross +1 as if it were a clean net gain.",
-  "independent_reviewer_counterclaim": "An outside reviewer could argue that batch 3 still oversamples favorable cases: 1 of 5 cleared the gate, but the 4 non-clearing rows split into 3 actionable lanes (IS-PAYWALL, NEEDS-HUMAN, DEFERRED-V2-AUTOMATED), which makes them look more tractable than they are. NEEDS-HUMAN in particular assumes the owner will follow up on different-IP fetches, but there are 2 such rows now and no demonstrated cycle of one closing. The IS-PAYWALL queue (4 rows) also has no demonstrated end-to-end cycle. Until those cycles close, the 'owner-actionable' framing is theoretical, not validated. The DR §6 step 5 third requirement (≥1 IS-PAYWALL purchase cycle) remains unmet and the recommendation to defer skill promotion until then is the correct call.",
+  "bias_direction": "Inheritance is a yield-multiplier mechanic introduced AFTER the cumulative 3-batch yield results (5/14 = 36% gate-clear) showed slower-than-projected progress. The bias risk is toward inheritance over-reaching — claiming verification status for rows that may differ in edition or scope from the canonical even when standard_number strings match. The exact-string-match constraint mitigates this but does not eliminate it. Two rows can have the same standard_number value and still differ in pub_year, in scope-of-citation, or in which clause is being cited. The verification_note must explicitly reference the canonical so the audit trail catches mismatches when they surface.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that inheritance is a procedural shortcut that defeats the point of per-row verification. Why not just deduplicate same-standard rows entirely, like the Bettarello dedup earlier in this session? Counter: the project's slug-based citation model deliberately allows the same source to be cited under different slug-and-scope contexts (per the KNOWN_DUP_DOIS allowlist in test_db_integrity D01 — IEC 60118-4 triple, DIN 18040-2 five-section citations, etc.). Same-standard same-edition is NOT a dedup signal; it is a multi-section citation signal. The right operation is to inherit status across the multi-section citations, not collapse them into one row. The inheritance mechanic respects the project's intentional same-source-multiple-citations pattern.",
   "verdict": "DEVIATION-LOGGED"
 }

@@ -342,3 +342,33 @@ The third requirement remains pending. The protocol is ready for skill promotion
 - Batch 3: +1 (1 VERIFIED) → 225
 
 Net session contribution: +4 eligible (221 → 225, 33.0% → 33.6%), 14 rows moved from NULL into explicit-cause states, 4 IS-PAYWALL + 2 NEEDS-HUMAN owner-actionable, 3 DEFERRED-V2-AUTOMATED rows establish the V2-scraper-priority queue.
+
+### 2026-05-19 — pilot batch 4 amendment: standard-number-inheritance mechanic
+
+When a standard has been pilot-verified for one ref_id (canonical), additional ref_ids in `evidence_sources` that share the same `standard_number` value represent the same source cited under different slugs. Walking each duplicate is wasted work — the catalog probe outcome cannot differ between two rows that name the same standard.
+
+**Inheritance rule** (§3.5 extension):
+
+> When a `standard_number` value has at least one row marked `VERIFIED`, `UNVERIFIED-1`, `IS-PAYWALL`, `DEFERRED-V2-AUTOMATED`, or `NEEDS-HUMAN` via the V2-manual track, additional rows in `evidence_sources` with the same exact `standard_number` value and `(verification_status IS NULL OR verification_status='')` MAY inherit that status without re-probing. The inheriting row's `verification_note` must explicitly reference the canonical ref_id and the original probe session.
+
+Inheritance applies only across rows with identical `standard_number` strings — not approximate matches, not abbreviation variants, not different editions. For edition mismatches the inheriting row routes to its own probe per the matrix.
+
+**`verified_by_tool` convention for inherited rows**: append `-inherited` to the canonical's tool string (e.g., `manual-AU-inherited`) so audits can distinguish probed-vs-inherited writes.
+
+**Pilot batch 4 inheritance application** (21 rows, no new portal probes):
+
+| canonical | status inherited | inheriting ref_ids |
+|---|---|---|
+| REF-00146 NCC 2022 (AU) | VERIFIED | REF-00416, REF-00548 |
+| REF-00117 RHFAC v4.0 (CA) | VERIFIED | REF-00210, REF-00410, REF-00470 |
+| REF-00145 TEK17 (NO) | VERIFIED | REF-00349, REF-00411, REF-00432, REF-00448 |
+| REF-00081 NZS 4121:2001 (NZ) | UNVERIFIED-1 | REF-00450 |
+| REF-00071 NEN 9120:2025 (NL) | IS-PAYWALL | REF-00433, REF-00466 |
+| REF-00077 NBR 9050:2020 (BR) | IS-PAYWALL | REF-00208, REF-00414, REF-00435, REF-00456 |
+| REF-00016 GB 50763-2012 (CN) | DEFERRED-V2-AUTOMATED | REF-00359, REF-00375, REF-00462, REF-00475, REF-00510 |
+
+Net inheritance batch: +9 VERIFIED, +1 UNVERIFIED-1, +6 IS-PAYWALL, +5 DEFERRED-V2-AUTOMATED.
+Eligible-pool delta: **+10** (225 → 235; 33.6% → 35.1%).
+
+**Risk acknowledged**: an outside reviewer would object that inheritance assumes the inheriting row is *the same edition* of the standard. The constraint above requires exact `standard_number` match including edition suffix, which mitigates this — but a future case of two rows naming the same standard with the canonical's edition being wrong would propagate the error. The inheriting `verification_note` references the canonical so the audit trail catches this if discovered later.
+
