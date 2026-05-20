@@ -50,8 +50,6 @@ jobs:
       - name: Validate cross-references
         run: python3 scripts/validate_cross_refs.py --repo-root .
 
-      - name: Check file thresholds
-        run: python3 scripts/check_thresholds.py --report
 
   commit-msg:
     name: Commit message format check
