@@ -95,6 +95,8 @@ def run_checks(db_path):
 
     VALID_VSTATUS = ("VERIFIED","UNVERIFIED-1","UNVERIFIED-CLOSED",
                      "PROBABILISTIC","CO1-VERIFIED",
+                     # V1 state machine §4 (verification-pipeline-proposal-2026-05-12-v2):
+                     "NO-MATCH","NEEDS-HUMAN","SUPERSEDED","REVERTED",
                      # DR-2026-05-19 amendment 2026-05-19 — manual-track explicit-cause states:
                      "IS-PAYWALL","DEFERRED-V2-AUTOMATED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
