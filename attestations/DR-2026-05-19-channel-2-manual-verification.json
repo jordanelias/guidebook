@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-19-deployment-state-reconciliation",
+  "artifact": "decisions/DR-2026-05-19-channel-2-manual-verification.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "best-practice-synthesis-routing",
+    "adversarial-research-protocol",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#section-1.3-and-section-3.4",
+      "reason": "All cited portal probes (NCC AU HTTP 200 42KB; openstd.samr.gov.cn returning 100KB; standards.govt.nz search 1MB no inline tokens; ANSI 403; ABNT 503; CrossRef GB-50763 returning IEEE ethernet) were performed live during this session, not pattern-matched from training. URLs and HTTP status codes recorded in §1.2-1.4 and §3.4 are observed, not invented."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "This DR specifies verification methodology, not BPC synthesis content. No best_practice_synthesis written by Sonnet; the DR is methodology, which is Sonnet-eligible per rule #2's scope."
+    },
+    "adversarial-research-protocol": {
+      "status": "NOT-FIRED",
+      "reason": "Rule #7 governs research-generating gap closures. This DR proposes a protocol; it does not close any gap row in the gaps table. The protocol itself does not assert empirical claims that would trigger rule #7's four-field requirement."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#section-1.1-and-section-3",
+      "reason": "Rule #10 is the rule this DR operationalizes. §1.1 quantifies the rule #10 eligibility bottleneck; §3 specifies the new manual-verification track that writes to the rule #10 verification_status axis without modifying rule #10's predicate. The DR explicitly preserves rule #10 sub-rules 1/2/3 content-verification requirements (§5.5)."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/DR-2026-05-19-channel-2-manual-verification.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Strong self-authoring bias risk. This DR was authored in direct response to a sweep promise I made earlier in the same session that turned out to be infeasible. The bias direction is toward designing a protocol that makes the failed sweep retroactively feasible (i.e., toward optimism about manual-track yield, toward minimizing the SPA-coverage limitation, toward minimizing the single-reviewer error risk). I addressed this head-on in §5.1 but the surface area is large enough that an independent reviewer should specifically pressure-test §3.4's routing table and §3.2's UNVERIFIED-1 admission criterion.",
+  "independent_reviewer_counterclaim": "An outside reviewer's strongest objection (acknowledged in §5.1): the worked example walks a single, unusually accommodating jurisdiction (AU, with a fully static government portal). It is not representative of the 55-row population, which is dominated by JP/CN/NL/NO/BR/SE — i.e., the harder SPA cases. The protocol's actual yield against this population is unknown until ≥3 jurisdictions are walked. A reviewer might further argue that admitting UNVERIFIED-1 as gate-passing for SPA-routed sources weakens rule #10's existence-verification semantics, since the SPA case verifies only that 'the body publishes something' rather than 'the specific cited document is fetchable.' The pilot gate in §6 step 3-4 is the partial mitigation; if the pilot fails, the protocol should be revoked rather than expanded.",
+  "verdict": "DEVIATION-LOGGED"
+}
