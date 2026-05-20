@@ -234,3 +234,67 @@ Pilot batch walked 4 rows across 4 jurisdictions (AU/NO/US/NZ); 3 VERIFIED, 1 UN
 No changes to §3.2 criteria, §3.5 state transitions, or §6 implementation order. The four refinements above inform the future skill (`skills/manual-statutory-verification_SKILL.md`) when promoted per §2.
 
 Eligible-pool delta from this batch: 221 → 225 (+4). Pilot considered validated per §6 step 4; further batches may proceed. Promotion to skill (§6 step 5) still requires the ≥3-jurisdiction gate already cleared *plus* a second batch under different session conditions to confirm reproducibility — deferred.
+
+### 2026-05-19 — pilot batch 2 findings; state-machine extension (session_2026-05-19-deployment-state-reconciliation)
+
+Batch 2 deliberately sampled the hard-case cohort (CN/JP/NL/BR/JA) to test population-representative yield. Zero rows reached VERIFIED. The original `NEEDS-HUMAN` state from V1 §4 proved insufficient — it conflated three structurally different downstream lanes that have different action paths and different resolution timelines. Per owner directive 2026-05-19: paywall cases must be tagged explicitly so the action lane is unambiguous; `NEEDS-HUMAN` implies a generic human-resolvable item that is not always true.
+
+**State-machine extension** (sixth and seventh specified states in §3.5):
+
+5. **`IS-PAYWALL`** — Source verified to exist in a paywalled commercial catalog (NEN, ABNT, JSA, DIN, BSI, ANSI). The catalog page returned with matching standard number / title / issuing-body tokens, OR the body's catalog is known commercial and the URL guess landed on a price-bearing catalog page. Content gated behind purchase. Excluded from rule #10 existence gate until purchase resolves. Parallel concept to rule #10 sub-rule 2's `PAYWALL` value_match — both axes consistently exclude paywalled content from synthesis. Distinct from `NEEDS-HUMAN`: `IS-PAYWALL` names the resource gate (money + catalog access). Action lane: purchase + post-purchase content-verification.
+
+6. **`DEFERRED-V2-AUTOMATED`** — Source's standards body is reachable but the catalog is SPA-rendered AND the source language falls outside the project's covered languages OR is in a covered language but with no headless-browser-free way to extract tokens. No human path resolves this within current resourcing; only V2-automated scrapers (headless browser, per-body API integration) can resolve. Excluded from rule #10 existence gate until V2 ships. Distinct from `NO-MATCH`: NO-MATCH means "portal returned nothing or 404"; DEFERRED-V2-AUTOMATED means "portal exists and serves the document but in a way the manual track cannot read." Distinct from `NEEDS-HUMAN`: the project owner has no out-of-band lane that resolves this (owner constraint 2026-05-19: cannot help with non-English non-paywalled blocks).
+
+**Updated `NEEDS-HUMAN` scope** (sharpening of §3.2):
+
+> Restricted to (English-language paywalled sources where the owner has access) ∪ (English-language Cloudflare-blocked sources where a different-IP fetch resolves) ∪ (cases requiring human disambiguation between near-identical entries). Non-English non-paywalled SPA blocks route to `DEFERRED-V2-AUTOMATED` instead.
+
+**Owner-action matrix** under the refined protocol:
+
+| Block type | language | paywalled? | Status | Owner can help? |
+|---|---|---|---|---|
+| Cloudflare 403 | EN | n/a | `NEEDS-HUMAN` | yes (different-IP fetch) |
+| SPA catalog | EN | yes | `IS-PAYWALL` | yes (purchase) |
+| SPA catalog | non-EN | yes | `IS-PAYWALL` | yes (purchase; project's multilingual-research lane handles content-verification later) |
+| SPA catalog | EN | no | `UNVERIFIED-1` | n/a (cleared gate per §3.2) |
+| SPA catalog | non-EN | no | `DEFERRED-V2-AUTOMATED` | no |
+| 403 / DNS / blocked | non-EN | no | `DEFERRED-V2-AUTOMATED` | no |
+| URL-guess fails | any | no | `DEFERRED-V2-AUTOMATED` | no (until V2 ships URL-discovery via standards-body API integration) |
+
+**TRANSIENT handling**: V1 state machine §4 specifies TRANSIENT (retry next run, no state mutation). For the manual track, sustained TRANSIENT (e.g., ABNT catalog 503 on multiple consecutive attempts) maps to `IS-PAYWALL` if the body is known commercial — the 503 reflects load on a paywalled-catalog server, not absence of the resource. One-off TRANSIENT continues to write nothing and is retried next session.
+
+**Batch 2 row outcomes** (all decided live this session):
+
+| ref_id | jurisdiction | status | reasoning |
+|---|---|---|---|
+| REF-00016 | CN GB 50763-2012 | `DEFERRED-V2-AUTOMATED` | openstd.samr.gov.cn SPA returned 19KB JS shell with 0 tokens; gov.cn archive 404; mohurd.gov.cn DNS unresolved from container. Non-English (ZH), free national standard. No owner action available. |
+| REF-00017 | JP JIS T 9251:2006 | `IS-PAYWALL` | JISC 403 service-stopped; JSA commercial catalog reachable with sale/purchase tokens (販売/購入) on JIS-T-9251 search page; standard is commercial product (Japanese). Owner can purchase via JSA. |
+| REF-00071 | NL NEN 9120:2025 | `IS-PAYWALL` | NEN URL-guess and search both 404; NEN home reachable confirming body publishes 9120 series; commercial Dutch catalog. Owner can purchase via NEN. |
+| REF-00077 | BR NBR 9050:2020 | `IS-PAYWALL` | ABNT catalog sustained 503 across multiple attempts; abnt.org.br corporate page reachable confirming body publishes 9050; commercial Portuguese catalog. Owner can purchase via ABNT. |
+| REF-00198 | JA MEXT 特別支援学校施設整備指針 | `DEFERRED-V2-AUTOMATED` | 4 URL attempts on mext.go.jp; index page is 1.4KB redirect stub; specific guideline URL not discoverable via guess. Non-English (JA), free MEXT publication. No owner action available; V2-automated URL-discovery (via MEXT API integration if any exists) is the path. |
+
+**Yield analysis revised**:
+
+- Batch 1 (easy-case): 4/4 cleared gate (3 VERIFIED + 1 UNVERIFIED-1) = 100% gate-pass
+- Batch 2 (hard-case): 0/5 cleared gate (3 IS-PAYWALL + 2 DEFERRED-V2-AUTOMATED) = 0% gate-pass
+
+Combined 9-row pilot: 4 cleared gate (44%), 5 excluded (56%). The original DR §5.1 named "the worked example uses a single jurisdiction with an unusually accommodating portal" — batch 2 quantifies this. Realistic population-wide yield projection for the remaining 51 rows:
+
+- ~15–20% strict VERIFIED (~8–10 rows; AU/NO/US-government static-portal slice)
+- ~10–15% UNVERIFIED-1 (~5–8 rows; EN/Dutch SPA without paywall)
+- ~30–40% IS-PAYWALL (~15–20 rows; commercial standards bodies — DIN, BSI, NEN, JSA, ABNT, AS/NZS, ANSI, UNI)
+- ~25–35% DEFERRED-V2-AUTOMATED (~13–18 rows; non-EN non-paywall SPA — CN, JP-MLIT, JA-MEXT)
+
+Manual-track contribution to rule #10 eligibility at population scale: roughly **+13–18 rows** (the VERIFIED + UNVERIFIED-1 columns), not the 40+ originally implied. Eligible-pool ratio moves from 33% to ~36% — meaningful but smaller than the optimistic framing. The IS-PAYWALL column is also meaningful — it transforms ~15–20 ambiguous-cited sources into a costed, actionable purchase queue with clear scope.
+
+**Promotion gate update (§6 step 5)**: Skill promotion now requires not just ≥3 jurisdictions validated but also at least one cycle of `IS-PAYWALL` → purchased → re-verified to confirm the paywall lane closes end-to-end. Deferred until first purchase completes.
+
+**Routing-table refinements** (§3.4):
+
+- **CN openstd / MOHURD**: both routes attempted; openstd is hcno-keyed SPA; mohurd DNS unresolved from container. CN entry in §3.4 confirmed accurate; "static portal preferred" is aspirational not achievable from container.
+- **JP JISC**: 403 "service stopped" — consistent with bot/geo block. §3.4 JP entry "SPA" understates the case; JISC also actively refuses container-class traffic. Refinement: route JP commercial standards directly to JSA paywall lane (`IS-PAYWALL`), skip JISC catalog probe.
+- **JA MEXT**: URL-guess for specific guidelines fails because MEXT publishes via document-ID-keyed URLs that aren't predictable from standard number. §3.4 JA entry should record this.
+- **BR ABNT**: 503 sustained across attempts; treat as `IS-PAYWALL` per the TRANSIENT-on-commercial-catalog rule above. §3.4 BR entry refined.
+- **NL NEN**: commercial Dutch catalog; URL-guesses fail. Route directly to NEN paywall (`IS-PAYWALL`). §3.4 NL entry refined.
+
+Eligible-pool delta from batch 2: **+0** (no rows added to gate). Total session pilot contribution: +4 from batch 1, +0 from batch 2 = +4 eligible (221 → 225).

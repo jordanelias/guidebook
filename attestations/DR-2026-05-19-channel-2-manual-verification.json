@@ -13,21 +13,21 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-1",
-      "reason": "All four pilot probes performed live in session against real URLs: ncc.abcb.gov.au returning HTTP 200 42KB; dibk.no returning 200 214KB; nfpa.org returning 200 260KB; standards.govt.nz shop URL returning 200 961-byte stub. Token counts and HTTP statuses recorded in changelog and migration file are observed, not pattern-matched. Boverket URL guesses all returned 404 — recorded honestly rather than fabricated as a different status."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-2",
+      "reason": "All five batch-2 probes performed live this session. HTTP responses recorded as observed: CN openstd 200 19KB, gov.cn 404, mohurd DNS-unresolved; JP JISC 403 service-stopped, JSA catalog 200 with 販売/購入 commercial tokens, MLIT barrierfree 200 no 9251 tokens; NL NEN 404 on URL-guess and search, home 200 164KB no 9120 tokens; BR ABNT catalog sustained 503; JA MEXT 4 URL attempts including 1.4KB stub, no specific guideline page found. Owner constraint received and integrated rather than papered over."
     },
     "best-practice-synthesis-routing": {
       "status": "NOT-FIRED",
-      "reason": "Pilot batch wrote to verification_status axis only; no best_practice_synthesis content authored. Phase B work, not Phase E."
+      "reason": "DR amendment is methodology, not synthesis content. Sonnet scope."
     },
     "adversarial-research-protocol": {
       "status": "NOT-FIRED",
-      "reason": "Rule #7 governs research-generating gap closures (gaps table writes). This batch wrote to evidence_sources verification_status; no gap rows touched. The pilot itself produces empirical findings (4 portal probes) but these are tooling observations, not synthesis claims."
+      "reason": "No gap rows touched; no research-generating gap closure performed."
     },
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
-      "evidence_path": "scripts/migrations/data_20260519020000_v2_manual_verification_pilot_batch_1.sql",
-      "reason": "The pilot batch directly advances rule #10's verification_status axis. Eligible pool grew 221 -> 225 (+4). Each row was evaluated against §3.2's four criteria explicitly. The UNVERIFIED-1 admission for REF-00081 (NZ) explicitly preserves rule #10's existence gate while flagging the SPA limitation for downstream Pass 3 awareness."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-2-state-machine-extension",
+      "reason": "DR extends the verification_status state machine with IS-PAYWALL and DEFERRED-V2-AUTOMATED to honestly characterize rule #10 ineligibility causes. Neither state clears the existence gate; both preserve rule #10's predicate. The IS-PAYWALL state explicitly parallels rule #10 sub-rule 2's existing PAYWALL value_match — consistency across the two rule-#10 axes."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -37,10 +37,10 @@
   "deviations": [
     {
       "rule": "evidence-verification-gate-for-synthesis",
-      "reason": "REF-00081 NZ marked UNVERIFIED-1 rather than VERIFIED because the catalog portal is SPA-rendered and the cited document's identity could not be confirmed from initial static HTML. UNVERIFIED-1 clears the rule #10 existence gate per DR-2026-05-13 §3 (both VERIFIED and UNVERIFIED-1 admit) but represents weaker existence-verification than a static-portal VERIFIED row. The independent-reviewer counterclaim in the DR §5.1 names this exact trade-off."
+      "reason": "Two new verification_status enum values introduced (IS-PAYWALL, DEFERRED-V2-AUTOMATED) without prior CI schema validation. The evidence_sources.verification_status column appears to be free-text (no CHECK constraint observed); the values are documented in the DR but not yet propagated to scripts/audit_evidence_metadata.py or scripts/audit/reasoning_doc_citations_audit.py. Risk: audits may treat these as unknown/invalid until updated. Mitigation: audit scripts to be updated in a follow-up commit before promotion to skill per DR §6 step 5."
     }
   ],
-  "bias_direction": "Same self-authoring bias as the original DR commit. The pilot was authored against a protocol I designed earlier in this same session. Pilot outcomes are reported as I observed them (3 VERIFIED, 1 UNVERIFIED-1), but the choice of pilot rows favored jurisdictions where the protocol was more likely to succeed (AU and NO are known government-portal-friendly jurisdictions). A pilot that started with CN or BR (where probe-feasibility is much weaker) would have produced a less favorable yield ratio.",
-  "independent_reviewer_counterclaim": "An outside reviewer would object that pilot batch 1 oversampled the easy cases. AU government code with fully static portal is not representative of the 55-row population, which is dominated by SPA-portal jurisdictions (CN, JP, NL, NZ — together 17 of 55 rows). The pilot's 3-VERIFIED / 1-UNVERIFIED-1 yield ratio (75% strict VERIFIED) is likely an upper bound; population-wide yield could be closer to 25-40% strict VERIFIED with the remainder UNVERIFIED-1, NEEDS-HUMAN, or NO-MATCH. The pilot validates the protocol's state-machine logic but does not validate its yield-at-scale.",
+  "bias_direction": "Compounding self-authoring bias: the batch-2 yield (0/5 cleared gate) is unambiguously worse than the optimistic projection in the original DR §5.1. The amendment translates this into a less-favorable but honest yield projection (+13-18 rows instead of 40+). Bias risk is now toward overcompensating in the pessimistic direction — i.e., the protocol could now under-promise its own value to insulate against further yield surprises. The +13-18 rows figure is genuine ('roughly' qualifier preserved), not deliberately deflated.",
+  "independent_reviewer_counterclaim": "An outside reviewer could argue that introducing IS-PAYWALL and DEFERRED-V2-AUTOMATED at the protocol layer is the wrong fix — the right fix is to abandon the manual-track entirely now that hard-case yield is confirmed 0%, redirect effort to building V2-automated scrapers, and let the existing UNVERIFIED-CLOSED status absorb the unverifiable rows. Counter: V2-automated remains pending with no estimated ship date; the manual track is still recovering +13-18 rows that V2 would otherwise recover later; and the explicit IS-PAYWALL queue transforms an ambiguous 15-20-row liability into a costed actionable backlog. The manual-track value proposition is reduced but not eliminated by batch 2 results.",
   "verdict": "DEVIATION-LOGGED"
 }
