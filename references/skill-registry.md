@@ -43,12 +43,13 @@ audit-consolidator                doctrine-recheck                 markdown-form
 bibliography-compiler             economics-auditor                multilingual-research            session-consolidator
 cell-curator                      economics-researcher             practice-note-generator          structure-auditor
 citation-miner                    evidence-auditor                 progressive-measurement          supplemental-integrator
-citation-verifier                 find-and-replace                 prose-style-checker              table-formatter
-connection-auditor                functional-deficit-auditor       question-author                  toc-editor
-connection-discovery              functional-deficit-researcher    reasoning-doc-citations          version-diff
-content-gap-analyzer              github-filing                    relational-integrity-checker     voice-style
-critique-report-writer            github-io                                                         workplan-orchestrator
-cross-population-conflict-mapper  guidebook-auditor
+citation-verifier                 evidence-metadata-rehabilitation prose-style-checker              table-formatter
+connection-auditor                find-and-replace                 question-author                  toc-editor
+connection-discovery              functional-deficit-auditor       reasoning-doc-citations          version-diff
+content-gap-analyzer              functional-deficit-researcher    relational-integrity-checker     voice-style
+critique-report-writer            github-filing                                                     workplan-orchestrator
+cross-population-conflict-mapper  github-io
+                                  guidebook-auditor
                                   item-audit-pipeline
                                   item-consolidation-analyzer
                                   item-specification-writer
