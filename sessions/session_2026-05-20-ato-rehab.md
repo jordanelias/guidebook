@@ -239,30 +239,28 @@ MISMATCH-YEAR                 1
 
 ## Known broken / pending work
 
-### Owner-review queue: 24 metadata-integrity holds
+### Owner-review queue: 28 metadata-integrity holds (final post-session count)
 
 Queryable: `SELECT ref_id, metadata_integrity_status, metadata_integrity_detail FROM evidence_sources WHERE metadata_integrity_status LIKE 'MISMATCH%' OR metadata_integrity_status LIKE 'DOI-%' ORDER BY metadata_integrity_status;`
 
-By type:
-- **MISMATCH-TITLE (7 rows)** — `pub_title` is a citation shorthand; canonical title at DOI differs. Resolution: confirm DOI is correct, move existing text to `bpc_note`, replace `pub_title` with canonical.
-- **DOI-TRUNCATED (6 rows)** — stored DOI is publisher-prefix fragment. Resolution: re-search by author+year+title for full DOI.
-- **MISMATCH-MULTI (5 rows)** — multiple-field disagreement, likely wrong DOI entirely.
+By type (post-batch-3):
+- **MISMATCH-TITLE (10 rows)** — `pub_title` is citation shorthand or wrong-attribution; canonical title at identifier differs.
+- **MISMATCH-MULTI (8 rows)** — multiple-field disagreement, likely wrong identifier (REF-00069, REF-00096 flagged by BOTH Crossref AND PubMed).
 - **MISMATCH-AUTHOR (5 rows)** — surname mismatch. Possible misattribution.
-- **MISMATCH-YEAR (1 row)** — year off by >1; possible misattribution.
+- **DOI-TRUNCATED (4 rows, post-rescue)** — stored DOI is publisher-prefix fragment; no PMID for rescue. Re-search by author+year+title needed.
+- **MISMATCH-YEAR (1 row)** — year off by >1.
 
-### Remaining AUTHOR-TITLE-ONLY cohort (277 rows)
+### Remaining AUTHOR-TITLE-ONLY cohort (272 rows post-session)
 
-- 128 VERIFIED × no-DOI (16 have PMID — PubMed-resolution pilot is the natural next batch)
-- 149 NULL × all types (full V2-manual-equivalent probe needed)
+- 126 VERIFIED × no-DOI / no-PMID  — natural next batch: Crossref title-search path. Many are reports/guidelines.
+- 145 NULL × all types  — full-probe required; type-determination first.
+- 1 IS-PAYWALL (REF-00469 SBi 230) — paywall queue.
 
-### Remaining NULL verification (149 rows after this session — went from 203 to 149)
+### Remaining NULL verification (145 rows post-session, was 203 pre-session)
 
-- 149 AUTHOR-TITLE-ONLY × NULL (overlap with above)
-- 54 GREY × NULL (different track entirely)
-
-### 10 NULL-metadata × VERIFIED
-
-Classification gap — VERIFIED but no `metadata_quality` value. Out of scope this session.
+- 145 AUTHOR-TITLE-ONLY × NULL (same set as above)
+- 54 GREY × NULL — separate track entirely; type-determination first
+- 10 NULL-metadata × VERIFIED — classification-gap rows (VERIFIED existence but no metadata_quality value)
 
 ---
 
