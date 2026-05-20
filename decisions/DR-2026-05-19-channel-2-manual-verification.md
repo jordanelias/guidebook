@@ -217,3 +217,20 @@ If ratified:
 - Architecture guidebook v2.3 `<enforcement_spectrum>` — promotion path (this DR is level 1; audit ships at level 2)
 - Architecture guidebook v2.3 `<data_layer_pattern>` — write_verification discipline
 - `evidence_sources` columns `verification_status`, `verified_by_tool`, `last_verified_at`, `verification_attempt_count`, `verification_note`, `superseded_by_ref_id` — V1 schema additions, reused unchanged
+
+---
+
+## Changelog (forward-only amendments per §6 step 4)
+
+### 2026-05-19 — pilot batch 1 findings (session_2026-05-19-deployment-state-reconciliation)
+
+Pilot batch walked 4 rows across 4 jurisdictions (AU/NO/US/NZ); 3 VERIFIED, 1 UNVERIFIED-1 (NZ SPA, as DR predicted). Three jurisdictions cleared §6 step 3 ratification gate. Zero unspecified state transitions occurred. The following routing-table refinements emerged and are appended here without rewriting §3.4:
+
+1. **NO year-encoded standard_number IDs** (TEK17 = 2017, TEK10 = 2010 by convention). §3.2 criterion 3 (edition-year match) satisfies via the year encoded in the `standard_number` itself when the portal does not display the edition year explicitly. Apply to other year-encoded national codes as discovered.
+2. **US NFPA JSON-in-HTML edition metadata.** NFPA portal pages return HTML containing edition data as JSON tokens (e.g., `"Edition":{"value":"2022"}`). These tokens are present in the initial HTTP response body without JavaScript execution and satisfy §3.2 criterion 4. Verbatim string-search against JSON-tokens is acceptable evidence.
+3. **SE Boverket — routing remains pending probe.** Three URL guesses (gallande/bfs-202412/, gallande/bbr---bfs-201156/, aktuell/) all returned HTTP 404 from container. The site's URL structure is not guess-friendly. SE row verification deferred until an external-search-based route is discovered (likely requires `web_search` tool, not bash curl). Routing table §3.4 entry "pending probe" remains correct.
+4. **NZ SPA confirmed as designed.** standards.govt.nz shop direct URL (`/shop/NZS-41212001`) returns a 961-byte stub with zero token matches; search URL returns 78KB but with only one back-reference match. UNVERIFIED-1 route as specified in §3.4. The row clears rule #10 existence gate but flags for V2-automated re-verification.
+
+No changes to §3.2 criteria, §3.5 state transitions, or §6 implementation order. The four refinements above inform the future skill (`skills/manual-statutory-verification_SKILL.md`) when promoted per §2.
+
+Eligible-pool delta from this batch: 221 → 225 (+4). Pilot considered validated per §6 step 4; further batches may proceed. Promotion to skill (§6 step 5) still requires the ≥3-jurisdiction gate already cleared *plus* a second batch under different session conditions to confirm reproducibility — deferred.
