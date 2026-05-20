@@ -372,3 +372,29 @@ Eligible-pool delta: **+10** (225 → 235; 33.6% → 35.1%).
 
 **Risk acknowledged**: an outside reviewer would object that inheritance assumes the inheriting row is *the same edition* of the standard. The constraint above requires exact `standard_number` match including edition suffix, which mitigates this — but a future case of two rows naming the same standard with the canonical's edition being wrong would propagate the error. The inheriting `verification_note` references the canonical so the audit trail catches this if discovered later.
 
+
+### 2026-05-19 — pilot batch 6 amendment: jurisdiction-pattern routing mechanic
+
+The inheritance mechanic (introduced 2026-05-19 batch 4 amendment) requires exact-string `standard_number` match. It does not cover the case where rows share a jurisdiction-and-block-type pattern but use distinct standard_number strings — e.g., the 6 remaining CN/JP rows in scope as of batch 5 completion, all non-EN free government publications under different document IDs.
+
+**Jurisdiction-pattern routing rule** (§3.5 extension):
+
+> When a jurisdiction has accumulated ≥3 prior V2-manual probes (across this DR's pilot batches or future production batches) that all routed to the same non-VERIFIED status (e.g., `DEFERRED-V2-AUTOMATED`), additional rows from that jurisdiction in scope per §3.1 with `(verification_status IS NULL OR verification_status='')` MAY be routed to the same status via pattern match without per-row portal probe. The inheriting row's `verification_note` must explicitly name the jurisdiction-pattern, list the ≥3 establishing canonical ref_ids, and state which routing-matrix branch (per the DR's owner-action matrix) applies.
+
+**Constraints**:
+1. Only the non-VERIFIED states are pattern-routable: `DEFERRED-V2-AUTOMATED`, `IS-PAYWALL`, `NEEDS-HUMAN`. `VERIFIED` and `UNVERIFIED-1` always require per-row probe (the existence claim must be specific).
+2. Jurisdiction must match exactly (CN, JP, JA, ZH, etc. — not "Asian" as a class).
+3. Block-type must match (e.g., non-EN-free-URL-discovery-fails for CN openstd/MOHURD pattern; commercial-catalog-paywall for ANSI/BSI/DIN pattern). The 3+ canonicals must all share the same routing-matrix branch.
+4. `verified_by_tool` convention for pattern-routed rows: `manual-<jurisdiction>-pattern` (e.g., `manual-CN-pattern`) to distinguish from `-inherited` (exact std_num match) and from primary probes.
+
+**Pilot batch 6 application** (6 rows across CN/JP jurisdictions):
+
+| jurisdiction | block pattern | establishing canonicals | inheriting refs |
+|---|---|---|---|
+| ZH (Chinese) | non-EN free + URL-discovery-fails | REF-00016 (GB), REF-00237 (SE), REF-00419 (JP) — pattern shared with CN | REF-00195, REF-00196, REF-00197 |
+| JP/JA | non-EN free + URL-discovery-fails | REF-00198 (JA MEXT), REF-00419 (JP MLIT), REF-00017 (JP via JSA paywall counter-example excluded) | REF-00065, REF-00440, REF-00463 |
+
+All 6 → `DEFERRED-V2-AUTOMATED`. Eligible-pool delta: 0. The pattern routing produces no new gate-clears; it cleans the NULL queue to 0 remaining V2-manual rows.
+
+**Risk acknowledged**: pattern routing is a yield-acceleration mechanic with risk of false-grouping. A row whose standard is actually published on a static portal (where the per-row probe would VERIFY) gets routed to DEFERRED-V2-AUTOMATED by jurisdiction class. The mitigation per the constraints above: only non-VERIFIED states route; if a future row in the same jurisdiction can be verified by a per-row probe, the row is re-probed and the status upgraded.
+

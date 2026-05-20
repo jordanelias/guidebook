@@ -13,29 +13,23 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-4-inheritance-application",
-      "reason": "Inheritance candidates derived by exact-string match on standard_number across NULL-verification rows. The same-edition constraint is explicit. No new external probes; inheritance writes reference the canonical row whose probe is logged in prior session writes."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-6-amendment-jurisdiction-pattern-routing-mechanic",
+      "reason": "Pattern routing is grounded in actual probe results: at least 3 distinct CN/JP probes across batches 2/3/5 established the non-EN-free-URL-discovery-fails pattern. No new claims about source existence are made; pattern routing is a procedural shortcut that respects the conservative non-VERIFIED-only constraint."
     },
-    "best-practice-synthesis-routing": {
-      "status": "NOT-FIRED",
-      "reason": "Methodology amendment, not synthesis content."
-    },
-    "adversarial-research-protocol": {
-      "status": "NOT-FIRED",
-      "reason": "No gaps table writes."
-    },
+    "best-practice-synthesis-routing": {"status": "NOT-FIRED", "reason": "Methodology amendment."},
+    "adversarial-research-protocol": {"status": "NOT-FIRED", "reason": "No gap writes."},
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-4-amendment-standard-number-inheritance-mechanic",
-      "reason": "Inheritance mechanic extends rule #10's existence-axis writes to duplicate-standard rows. The constraint (exact standard_number match) preserves rule #10's verification meaning per row — inheriting rows do not claim independent verification, they claim equivalence to a canonical verification. Net +10 to eligible pool from this mechanic without new external probes."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-6-application",
+      "reason": "Pattern routing is constrained to non-VERIFIED states only — preserves rule #10 existence-gate meaning. The mechanic does NOT enable new claims of gate-clearance via pattern; it only moves NULL rows into explicit-cause states."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "attestations/DR-2026-05-19-channel-2-manual-verification.json"
+      "evidence_path": "attestations/decisions_DR-2026-05-19-channel-2-manual-verification.json"
     }
   },
   "deviations": [],
-  "bias_direction": "Inheritance is a yield-multiplier mechanic introduced AFTER the cumulative 3-batch yield results (5/14 = 36% gate-clear) showed slower-than-projected progress. The bias risk is toward inheritance over-reaching — claiming verification status for rows that may differ in edition or scope from the canonical even when standard_number strings match. The exact-string-match constraint mitigates this but does not eliminate it. Two rows can have the same standard_number value and still differ in pub_year, in scope-of-citation, or in which clause is being cited. The verification_note must explicitly reference the canonical so the audit trail catches mismatches when they surface.",
-  "independent_reviewer_counterclaim": "An outside reviewer would object that inheritance is a procedural shortcut that defeats the point of per-row verification. Why not just deduplicate same-standard rows entirely, like the Bettarello dedup earlier in this session? Counter: the project's slug-based citation model deliberately allows the same source to be cited under different slug-and-scope contexts (per the KNOWN_DUP_DOIS allowlist in test_db_integrity D01 — IEC 60118-4 triple, DIN 18040-2 five-section citations, etc.). Same-standard same-edition is NOT a dedup signal; it is a multi-section citation signal. The right operation is to inherit status across the multi-section citations, not collapse them into one row. The inheritance mechanic respects the project's intentional same-source-multiple-citations pattern.",
+  "bias_direction": "Pattern routing is a yield-acceleration mechanic introduced after 5 batches of incremental yield (236 eligible vs original 221). The bias risk is toward closing out the V2-manual NULL queue with pattern-routing to artificially zero out the backlog without genuine resolution of the underlying rows. The constraint (non-VERIFIED states only) addresses the worst version of this risk — pattern routing cannot fabricate gate-clears — but it does push 6 rows into DEFERRED-V2-AUTOMATED that might (low-probability) be VERIFIABLE via portals I haven't tried. The conservative posture: future probes can upgrade pattern-routed rows; pattern routing is not a terminal state.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that pattern routing is exactly the kind of methodological shortcut that erodes manual verification's value. If the answer for each new CN/JP row is 'route by pattern', the manual track is functionally identical to a bulk SQL UPDATE on jurisdiction class. Counter: pattern routing is explicit and audit-trailed — every pattern-routed row's verification_note names the establishing canonicals and the routing-matrix branch. A future contributor (or me in a later session) can re-probe any pattern-routed row at any time; the routing is not destructive. By contrast, leaving rows NULL hides the routing decision entirely.",
   "verdict": "DEVIATION-LOGGED"
 }
