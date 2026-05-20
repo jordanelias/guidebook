@@ -10,22 +10,30 @@
 
 ## Headline outcomes
 
-| Metric | Pre-session | Post-session | Δ |
-|---|---|---|---|
-| Eligible pool (rule #10) | 236 (35.2%) | 271 (40.4%) | +35 (+5.2pp) |
-| AUTHOR-TITLE-ONLY | 312 | 277 | −35 |
-| COMPLETE | 147 | 182 | +35 |
-| metadata_integrity_status flags | none (column didn't exist) | 35 OK + 18 MISMATCH-* + 6 DOI-TRUNCATED | new tracking dimension |
-| Schema version | 13 | 14 | +1 |
-| Both CI workflows green on HEAD | ✓ (`75158a9b`) | ✓ (`66dc69e9`) | held; mid-session red on `ad92e95c` |
+| Metric | Pre-session | Post-batch-1 | Post-batch-2 | Post-batch-3 | Session Δ |
+|---|---|---|---|---|---|
+| Eligible pool (rule #10) | 236 (35.2%) | 271 (40.4%) | 273 (40.7%) | 276 (41.2%) | **+40 (+6.0pp)** |
+| AUTHOR-TITLE-ONLY | 312 | 277 | 275 | 272 | −40 |
+| COMPLETE | 147 | 182 | 184 | 184 | +37 |
+| COMPLETE-STATUTORY | 134 | 134 | 134 | 137 | +3 |
+| metadata_integrity_status flags | none (column didn't exist) | 35 OK + 24 holds | 37 OK + 25 holds | 41 OK + 28 holds | new tracking dimension |
+| Schema version | 13 | 14 | 14 | 14 | +1 |
+| Both CI workflows green on HEAD | ✓ (`75158a9b`) | ✓ (`66dc69e9`) | ✓ (`f028b395`) | ✓ (`15b286d2`) | held; mid-session red on `ad92e95c`, `460e02c5` (both diagnosed + fixed in-session) |
 
 ---
 
 ## Commits in chronological order
 
 1. `d9253768` — governance: schema 014 add metadata_integrity_status + metadata_integrity_detail columns
-2. `ad92e95c` — evidence-metadata-rehabilitation: ATO-DOI rehab batch 1 (collapsed commit, amended message describes contents honestly) — **broke CI on push** (commit-msg format + migration reproducibility)
-3. `66dc69e9` — evidence-metadata-rehabilitation: strip self-insert from batch 1 migrations — runner handles data_migrations tracking; restores --rebuild parity (GAP-290 CI fix) — **CI back to green**
+2. `ad92e95c` — evidence-metadata-rehabilitation: ATO-DOI rehab batch 1 (collapsed commit, **CI failed**: commit-msg + GAP-290 migration reproducibility)
+3. `66dc69e9` — evidence-metadata-rehabilitation: strip self-insert from batch 1 migrations (CI green)
+4. `460e02c5` — session-consolidator: initial session record (**CI failed**: rule #11 missing DOCTRINE + attestation)
+5. `20d23f55` — session-consolidator: attestation for session record + DOCTRINE token (CI green)
+6. `f028b395` — evidence-metadata-rehabilitation: ATO-PMID rehab batch 2 — 2 upgrades incl. DOI rescue, 7 holds (CI green)
+7. `b84041e0` — evidence-metadata-rehabilitation: statutory rehab batch 3 — 3 upgrades, 1 IS-PAYWALL, 3 holds (CI green)
+8. `15b286d2` — evidence-metadata-rehabilitation: DR-2026-05-20 + skill + audit script + registry (CI green)
+
+Two mid-session CI regressions, both diagnosed and fixed within the session. Final HEAD `15b286d2`.
 
 ---
 
@@ -116,6 +124,67 @@ Push of `ad92e95c` failed both CI workflows:
 
 Fix in `66dc69e9`: stripped the `INSERT INTO data_migrations ...` block from both my data migration files, replaced with a comment `-- (data_migrations tracking row is inserted by scripts/migrate_db.py runner)`. Local `scripts/migrate_db.py --rebuild` verified 3 schema + 22 data migrations replay cleanly before push.
 
+### 7. Pilot batch 2: AUTHOR-TITLE-ONLY × VERIFIED × has-PMID (+ DOI-TRUNCATED rescue path)
+
+Script: `scripts/probes/probe_ato_verified_pmid.py`. Cohort: 9 rows (7 ATO×VERIFIED×has-PMID + 2 batch-1 DOI-TRUNCATED rescue candidates with PMIDs).
+
+Applied batch-1 lessons:
+- NFKD-strip normalizer (eliminates the diacritic FP class the batch-1 manual reclass exposed)
+- No `INSERT INTO data_migrations` (runner tracks via filename stem)
+- New rescue path: when `metadata_integrity_status='DOI-TRUNCATED'` AND PMID present, PubMed's `articleids` list can recover the canonical DOI
+
+Verdict distribution:
+
+| Verdict | n | % |
+|---|---|---|
+| ATO→COMPLETE-PUBMED-MATCH | 1 | 11% |
+| ATO→COMPLETE-PUBMED-MATCH-DOI-RESCUE | 1 | 11% |
+| HOLD-PUBMED-MISMATCH | 7 | 78% |
+| **Total** | **9** | |
+
+Net: 2 upgrades (REF-00027 truncated-DOI rescue → canonical `10.1080/10400435.2014.976799`; REF-00538 clean match), 7 holds.
+
+**78% mismatch rate isn't classifier strictness — it's structural.** The mismatches cluster in two patterns:
+
+- **Journal-name-as-title (REF-00100, 00101, 00103, 00105)** — `pub_title` stores the journal name or `<journal> — <topic>` string rather than the canonical paper title. Same family as batch 1's note-as-title pattern. Affects ~7% of the academic-PMID cohort.
+- **Wrong-PMID misattribution (REF-00069, 00096, 00527)** — the PMID resolves to an unrelated paper. REF-00069 and REF-00096 also had `MISMATCH-MULTI` from batch 1's Crossref probe; both APIs flagging the same row is strong evidence of full-row misattribution at ingest.
+
+REF-00527's batch-1 `DOI-TRUNCATED` flag was escalated to `MISMATCH-MULTI` (wrong PMID is bigger than truncation).
+
+### 8. Pilot batch 3: statutory cohort (source_type=standard × NULL)
+
+Cohort: 7 rows (KR/SG/UK/UK/ES/DK/KR). All seven had `jurisdiction` + `standard_number` + `tier` + `evidence_type` populated; missing `publisher` (issuing body) and `pub_year` (edition year) — the two remaining COMPLETE-STATUTORY requirements per DR-2026-05-18.
+
+Protocol: per-row web research with cross-check between stored title and standard_number's documented content. No single-call resolver (unlike DOI/PMID); each row required individual judgment.
+
+Dispositions:
+
+| Ref | Decision | Why |
+|---|---|---|
+| REF-00020 (KR 편의증진법 시행규칙) | → COMPLETE-STATUTORY × UNVERIFIED-1 | Korean Ministry of Health & Welfare, enacted 1997; non-EN primary text with EN secondary corroboration via WHO MiNDbank |
+| REF-00164 (SG EASE 2.0) | → MISMATCH-MULTI | EASE 2.0 is an HDB subsidy programme (2024), not a standards document. Owner reclassification needed |
+| REF-00193 (UK HBN 00-03) | → MISMATCH-TITLE | HBN 00-03 documented as "Clinical and clinical support spaces" (NHS England, 2013); DB `pub_title="healthcare bariatric guidance"` is wrong-attribution |
+| REF-00403 (UK HTM 08-01 Acoustics) | → COMPLETE-STATUTORY × VERIFIED | NHS England 2013-03-19, open-access PDF |
+| REF-00464 (ES DB SUA) | → COMPLETE-STATUTORY × VERIFIED | Ministerio de Transportes/Movilidad/Agenda Urbana, base year 2010, open-access at codigotecnico.org |
+| REF-00469 (DK SBi 230) | → IS-PAYWALL (metadata_quality unchanged) | SBi/AAU commercial; cannot confirm edition year without paywall purchase |
+| REF-00511 (KR 편의증진법 — 점자블록) | → MISMATCH-MULTI | `standard_number` is note-style ("점자블록 statutory provisions"), not a stable identifier |
+
+3 upgrades, 4 holds. The note-as-title pattern from batches 1-2 has a statutory analog: **programme-as-standard** (EASE 2.0) and **note-style standard_number** (편의증진법 — 점자블록). Pattern is cohort-spanning, not academic-specific.
+
+### 9. Skill promotion (DR + skill + audit + registry registration)
+
+Three cohorts validated → skill promotion threshold met per DR-2026-05-19 step 5 precedent (≥3 distinct cohorts).
+
+Artifacts shipped in commit `15b286d2`:
+
+- **`decisions/DR-2026-05-20-evidence-metadata-rehabilitation.md`** — methodology DR codifying the type-routed protocol with mandatory cross-check. Status PROPOSED pending owner ratification. Documents the three findings as cohort-spanning patterns; establishes a new fourth acceptance predicate (`metadata_integrity_status ∈ {OK,RESOLVED}` AND `verification_note` carries probe timestamp).
+- **`skills/evidence-metadata-rehabilitation_SKILL.md`** — protocol skill mirroring the `adversarial-research_SKILL.md` format. Universal per architecture v2.3 (no session IDs / dates / SHAs in body). Type routing table, mandatory cross-check with NFKD normalizer, HOLD-state enum, multi-API reconciliation logic, DOI rescue path, statutory path with V2-manual routing reference, worked examples.
+- **`scripts/audit/metadata_integrity_audit.py`** — Level 2 audit script. Three checks: (1) inconsistency FAIL on COMPLETE rows with open MISMATCH/DOI status; (2) INFO on rule #10 eligible rows lacking cross-check record (236 / 276 are legacy pre-DR); (3) INFO surfaces the owner-review queue counts. Exit code 0 on PASS, 1 on inconsistency.
+- **`references/skill-registry.md`** — `evidence-metadata-rehabilitation` registered alphabetically in active-skills list.
+- **`attestations/decisions_DR-2026-05-20-evidence-metadata-rehabilitation.json`** — rule #11 attestation. Notes the self-authored-DR bias risk and an independent-reviewer counterclaim on classifier-strictness assumptions. Verdict: DEVIATION-LOGGED.
+
+Audit script run at HEAD: 0 inconsistencies; 236/276 (85.5%) eligible rows are pre-DR legacy needing cross-check before any future synthesis use; 28-row owner-review queue.
+
 ---
 
 ## Surfaced patterns / drift
@@ -153,16 +222,18 @@ Fix in `66dc69e9`: stripped the `INSERT INTO data_migrations ...` block from bot
 
 ```
 metadata_integrity_status     count
-NULL                          611
-OK                            35
-MISMATCH-TITLE                7
-DOI-TRUNCATED                 6
-MISMATCH-MULTI                5
+NULL                          601
+OK                            41
+MISMATCH-TITLE                10
+MISMATCH-MULTI                8
 MISMATCH-AUTHOR               5
+DOI-TRUNCATED                 4
 MISMATCH-YEAR                 1
 ```
 
-24 holds queryable as `WHERE metadata_integrity_status NOT IN ('OK', 'RESOLVED', NULL)`. This is the owner-review queue.
+28 holds queryable as `WHERE metadata_integrity_status NOT IN ('OK', 'RESOLVED', NULL)`. This is the owner-review queue surfaced by `scripts/audit/metadata_integrity_audit.py`.
+
+41 OK comprises 40 this-session upgrades + 1 batch-2 NULL→OK promotion (REF-00538). Pre-DR-2026-05-20 legacy rows: 236 / 276 eligible (85.5%) — they cleared rule #10 but predate cross-check; future synthesis claims on them should run cross-check first.
 
 ---
 
@@ -197,16 +268,41 @@ Classification gap — VERIFIED but no `metadata_quality` value. Out of scope th
 
 ## Next-action handoff
 
-1. **Pilot batch 2 — PMID→PubMed resolution.** 16 AUTHOR-TITLE-ONLY × VERIFIED × has-PMID rows. Mirror the probe_ato_verified_doi.py pattern against NCBI EUtils. Expected yield ~50–60% upgrade based on academic-source distribution. If mismatch rate is similar to DOI cohort (~31%), this confirms the note-as-title pattern is systemic.
+### Completed this session ✓
 
-2. **Pilot batch 3 — statutory cohort.** 7 `source_type=standard` × NULL rows + ~40 statutory-looking guidelines. V2-manual probe protocol with COMPLETE-STATUTORY target.
+- [x] Schema 014 (`metadata_integrity_status`, `metadata_integrity_detail` columns)
+- [x] Batch 1: 35 ATO×DOI → COMPLETE (Crossref)
+- [x] Batch 2: 2 ATO×PMID → COMPLETE incl. REF-00027 truncated-DOI rescue
+- [x] Batch 3: 3 statutory → COMPLETE-STATUTORY (UK HTM 08-01 VERIFIED, ES DB SUA VERIFIED, KR 편의증진법 UNVERIFIED-1)
+- [x] DR-2026-05-20 authored, attested, committed
+- [x] Skill `evidence-metadata-rehabilitation_SKILL.md` authored, registered in skill-registry
+- [x] Level-2 audit `scripts/audit/metadata_integrity_audit.py`
 
-3. **Skill promotion candidate.** After batches 2 + 3 validate the type-routed protocol across ≥3 cohorts (academic-DOI, academic-PMID, statutory), promote to `skills/evidence-metadata-rehabilitation_SKILL.md`. Companion audit script `scripts/audit/metadata_integrity_audit.py` (level 2 → 4 after shakedown) checks for note-as-title and truncated-DOI patterns on new sources at ingest.
+### Pending — next session candidates (handoff queue)
 
-4. **DR candidate** — methodology refinement based on the note-as-title finding + truncated-DOI finding. Author after batch 2 confirms the pattern is academic-cohort-wide. Establish that ATO→COMPLETE upgrades MUST run cross-check, not silent metadata-import.
+1. **No-DOI/no-PMID × VERIFIED cohort** (~126 rows). Crossref title-search path. Probe script analog to `probe_ato_verified_doi.py` but using `https://api.crossref.org/works?query.title=X&query.author=Y`. Yield estimate 30–50%.
 
-5. **GitHub Issues for owner-review queues** (process change, owner-ratification needed). Move IS-PAYWALL (18), NEEDS-HUMAN (2), metadata-mismatch (18), truncated-DOI (6) from session records to labeled GitHub Issues. Persists across sessions; doesn't bury in handoff text.
+2. **ATO × NULL full-probe cohort** (~145 rows). Mixed types. Per-row triage first to assign academic vs statutory vs grey-org path, then run the appropriate probe.
 
-6. **NULL queue not in AUTHOR-TITLE-ONLY** — 54 GREY × NULL + 10 NULL-metadata × VERIFIED. These belong to different verification tracks; not on this session's protocol.
+3. **GREY × NULL cohort** (54 rows). Separate track. Type-determination-first.
 
-session_close marker: this session ends here. Next session bootstrap should fetch `sessions/LATEST` → `session_2026-05-20-ato-rehab.md` and pick from items 1–6 above.
+4. **Cross-check the 236 legacy COMPLETE rows** (check 2 of metadata_integrity_audit.py). These cleared rule #10 pre-DR but never had cross-check. Before next major synthesis push, batch-probe them via DOI/PMID where present.
+
+5. **Owner-action queue (28 rows in `metadata_integrity_status` queue)** — needs owner disposition:
+   - 10 MISMATCH-TITLE: re-attribution or accept (move note to `bpc_note`, adopt canonical title)
+   - 8 MISMATCH-MULTI: likely wrong-identifier; verify and either correct identifier or delete row
+   - 5 MISMATCH-AUTHOR: re-attribution or normalize name-form
+   - 4 DOI-TRUNCATED (no rescuable PMID): re-search by author+year+title
+   - 1 MISMATCH-YEAR: verify identifier is correct
+
+6. **Owner-action: paywall queue** — REF-00074 (BCA Code on Accessibility 2025, SG; commercial), REF-00469 (SBi 230, DK; commercial) plus existing IS-PAYWALL rows. Purchase or alternate route.
+
+7. **GitHub Issues for owner queues** (process change). 28-row metadata-integrity queue + IS-PAYWALL queue + NEEDS-HUMAN queue belong as labeled GitHub Issues, not buried in session records. Owner ratification needed before auto-creating issues.
+
+### Pending — for owner ratification
+
+- **DR-2026-05-20 status PROPOSED → RATIFIED**. After ratification, the new acceptance predicate (`verification_note` carries probe timestamp) becomes binding.
+- **Audit script promotion Level 2 → Level 4** (blocking) after a 7-day shakedown period per workplan §8.
+- **GitHub Issues for owner-action queues** (per #7 above).
+
+session_close marker: this session ends here. Final HEAD `15b286d2`. Eligible pool **276/670 (41.2%)**. Next session bootstrap should fetch `sessions/LATEST` → `session_2026-05-20-ato-rehab.md` and pick from items 1–7 above.
