@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-20-ato-rehab",
+  "artifact": "sessions/session_2026-05-20-ato-rehab.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "best-practice-synthesis-routing",
+    "adversarial-research-protocol",
+    "progressive-measurement-probe",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-20-ato-rehab.md#4-methodology-finding-new--dr-candidate",
+      "reason": "Crossref cross-check surfaced 31% mismatch rate (18 of 59 rows). Per rule #1, refused to auto-overwrite mismatched fields. The 18 mismatches retained their original DB-recorded metadata and were flagged via metadata_integrity_status=MISMATCH-* for owner review. No inferred metadata written to fields where the canonical source disagrees with the recorded value."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "No best-practice synthesis content authored. Session is Phase B mechanical rehabilitation work — Sonnet-appropriate per workplan §1."
+    },
+    "adversarial-research-protocol": {
+      "status": "NOT-FIRED",
+      "reason": "No gap closures or research-generating claims in this session."
+    },
+    "progressive-measurement-probe": {
+      "status": "NOT-FIRED",
+      "reason": "No numerical specification values written. Session writes are metadata fields (journal_name, volume, etc.) and integrity flags."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-20-ato-rehab.md#headline-outcomes",
+      "reason": "Direct purpose of session: move 35 rows past the rule #10 existence gate (AUTHOR-TITLE-ONLY → COMPLETE × VERIFIED). New metadata_integrity_status=OK provides content-level verification beyond plain existence per rule #10 sub-rule clarification of DR-2026-05-13. Mismatch holds explicitly stay AUTHOR-TITLE-ONLY (ineligible) until owner review resolves discrepancy."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-05-20-ato-rehab.json"
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Initial push of session record (commit 460e02c5) lacked DOCTRINE token in commit subject and lacked paired attestation file. Rule #11(a) treats sessions/*.md as synthesis-bearing requiring both. This attestation and a follow-up commit with DOCTRINE token are the corrective action; the prior commit remains in history per last-session precedent of not force-pushing main to fix commit-msg drift."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "Reclassified REF-00398 from HOLD-CROSSREF-MISMATCH to MATCH inline (diacritic-only difference Lariviere/Larivière). The reclassification was correct on substance but bypassed the encoded cross-check — the normalizer should strip NFKD combining marks rather than relying on manual override. Followup: patch normalize() in probe script before batch 2."
+    }
+  ],
+  "bias_direction": "Self-authored bias risk on protocol design: the cross-check uses a conservative threshold (any token disagreement on author surname, year-diff > 1, < 3 shared title tokens triggers HOLD). This pushes toward HIGH false-positive HOLD rate — some MISMATCH-flagged rows may actually be cleanly upgradeable with a tolerant normalizer. The 31% HOLD rate is suspicious for that reason; it may be inflated by classifier strictness rather than real mismatches. The diacritic case (REF-00398) is direct evidence of this. Counterweight: holding too many rows is recoverable (next session re-probes with better normalizer); auto-upgrading a row whose pub_title was actually a citation note is destructive (canonical title overwrites the note). Conservative bias is the safer direction for evidence integrity but is bias.",
+  "independent_reviewer_counterclaim": "An outside reviewer would say the methodology finding (note-as-title pattern) is overclaimed from a single 59-row batch — three of the seven title-only mismatches (REF-00069, 00091, 00136) might be genuine wrong-DOI rather than note-as-title, and Claude does not distinguish those cases. The framing 'pub_title was used as citation shorthand' presumes intent that cannot be verified without re-reading the original BPCs that cited each REF. Counter: the framing is a hypothesis with explicit owner-review queue (not a fait-accompli protocol change), and the metadata_integrity_status='MISMATCH-TITLE' makes the rows individually inspectable; no downstream synthesis claim is being made about which interpretation is right. The reviewer's objection still holds for the DR candidate (item 4 in handoff) — that DR must wait for batch-2 evidence before claiming a systemic pattern.",
+  "verdict": "DEVIATION-LOGGED"
+}
