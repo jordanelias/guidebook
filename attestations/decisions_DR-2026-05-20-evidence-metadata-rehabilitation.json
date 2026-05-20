@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-20-ato-rehab",
+  "artifact": "decisions/DR-2026-05-20-evidence-metadata-rehabilitation.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "best-practice-synthesis-routing",
+    "adversarial-research-protocol",
+    "progressive-measurement-probe",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-20-evidence-metadata-rehabilitation.md#2-cross-check-is-mandatory",
+      "reason": "The DR codifies the mandatory cross-check that prevents auto-overwriting BPC-author-recorded metadata when canonical disagrees. This is the procedural implementation of rule #1 source-discipline. Failure modes named (note-as-title, journal-as-title, programme-as-standard) are documented from pilot evidence rather than asserted by analogy."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "DR governs evidence metadata, not BPC synthesis routing. The routing matrix referenced (V2-manual from DR-2026-05-19) is a different layer."
+    },
+    "adversarial-research-protocol": {
+      "status": "NOT-FIRED",
+      "reason": "DR is methodological, not a gap closure. The integration-with-related-skills section notes that adversarial-research applies AFTER this skill clears a row; that's a sequencing observation, not a current-DR firing."
+    },
+    "progressive-measurement-probe": {
+      "status": "NOT-FIRED",
+      "reason": "DR does not assert numerical specification values; it adds metadata-attribution layer beneath any future PMP-governed synthesis claim."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-20-evidence-metadata-rehabilitation.md#acceptance-criteria-for-this-protocol",
+      "reason": "DR introduces a new acceptance predicate: metadata_integrity_status ∈ {OK, RESOLVED} AND verification_note carries probe timestamp. This is added to (not replacing) rule #10's existing acceptance gate. Legacy pre-DR rows are explicitly marked as needing fresh cross-check before synthesis use."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-05-20-evidence-metadata-rehabilitation.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Self-authored DR bias: the cross-check protocol is conservative-by-design and was authored by the same Claude session that ran the three pilot batches. There is a natural pull toward formalizing the existing protocol as 'the right way' even though the 31% / 78% / 57% hold-rates across the three cohorts could reflect classifier strictness rather than only real data quality issues. Three specific guard-rails partially counterweight this: (1) the NFKD-normalizer fix surfaced one diacritic FP in batch 1 that triggered manual reclassification, showing the protocol is not invariably correct; (2) the DR's anti-patterns section names the classifier-strictness risk explicitly; (3) the acceptance criteria carve out a separate predicate (verification_note timestamp) that allows legacy rows to coexist rather than forcing back-classification of all 236 pre-DR COMPLETE rows. The remaining bias risk: future sessions may pattern-match novel ATO subtypes to one of the named MISMATCH categories rather than identifying new ones.",
+  "independent_reviewer_counterclaim": "An independent reviewer would object that the DR is being authored from a single session's evidence without an arms-length pilot review and without owner ratification. Three batches across three cohorts is the minimum threshold per DR-2026-05-19 step 5 precedent, but it is the floor of that threshold, not a robust signal. The reviewer would specifically push back on: (a) the truncated-DOI heuristic (slash-count + length) which catches 5 of 6 batch-1 cases but is a brittle pattern that may produce FPs on legitimate short DOIs; (b) the title-shared-token threshold of 3, which is sensitive to title length and stop-word fraction; (c) the assumption that pub_year disagreement >1 indicates wrong identifier when in fact preprint/online-ahead-of-print drift can exceed 1 year for some journals. Counter: the DR status is PROPOSED, not ratified. The owner has the floor on whether to ratify; the audit script is Level 2 (surface, not block) precisely so the protocol can be tightened without breaking the eligible-pool count. The skill file and audit script make the protocol falsifiable — future sessions can override specific decisions and the trail is preserved.",
+  "verdict": "DEVIATION-LOGGED"
+}
