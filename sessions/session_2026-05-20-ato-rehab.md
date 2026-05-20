@@ -207,6 +207,20 @@ Audit script run at HEAD: 0 inconsistencies; 236/276 (85.5%) eligible rows are p
 
 ---
 
+### Drift 3: Inherited row-level rebuild parity gap (NOT introduced by this session)
+
+**Issue.** Local `--rebuild` invariant check during post-session double-check revealed 10 rows where committed DB shows `metadata_quality='COMPLETE'` but rebuilt-from-migrations DB shows `metadata_quality='COMPLETE-STATUTORY'`. The 10 rows: REF-00018, REF-00144, REF-00207, REF-00323, REF-00329, REF-00351, REF-00412, REF-00422, REF-00431, REF-00445. Migration `data_20260518050000_promote_statutory_metadata.sql` in the history promotes them; the committed DB never received the promotion (their `updated_by_session='26025520450'` is a Unix-epoch artifact suggesting a non-runner write path).
+
+**Pre-session check.** Verified via `git checkout 75158a9b -- data/guidebook.db` (the pre-session commit): 10/10 rows showed COMPLETE then too. Drift inherited; not introduced this session.
+
+**Why CI didn't catch it.** The `migration-reproducibility` job in `audit.yml` (GAP-290 blocker) compares 6 invariants between committed and rebuilt DBs: `user_version`, total counts of `evidence_sources` / `citation_mining` / `source_slug_links` / `gaps` / `connections` / `items`. Bucketed `metadata_quality` distributions are not in that invariant set. CI is satisfied; bit-parity is not.
+
+**Correction to earlier session record claim.** "Local `scripts/migrate_db.py --rebuild` verified 3 schema + 22 data migrations replay cleanly before push" (line 125) is true narrowly — the runner exits 0 — but misleading. It does not establish row-level parity, and 10 rows of preexisting drift were present then and now.
+
+**Implications for net session figures.** My headline claim was eligible pool 236→276 (+40, +6.0pp). That figure compares committed DB pre-session to committed DB post-session. If we use the rebuilt-from-history DB as the truth source, the 10 drift rows would already count as COMPLETE-STATUTORY × VERIFIED — meaning the pre-session truth was 246/670 (36.7%), not 236/670 (35.2%). Net session delta would be +30, not +40. The drift doesn't reduce my work; it changes the starting line.
+
+**Forward.** This belongs to a future GAP-290 audit script revision: extend the invariant comparison to include `metadata_quality` cross-tab. Either reconcile the committed DB to the migration history (apply the missing UPDATE), or emit a new data migration that explicitly reverts the 10 rows if the committed state is the intended one. Either resolution needs owner direction since the source of the 10 COMPLETE values is unknown.
+
 ## Rule traceability
 
 | Rule | Mechanism | This session's instance |

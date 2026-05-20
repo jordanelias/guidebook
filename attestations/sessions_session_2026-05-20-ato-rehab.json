@@ -49,6 +49,10 @@
       "reason": "Reclassified REF-00398 from HOLD-CROSSREF-MISMATCH to MATCH inline (diacritic-only difference Lariviere/Larivière). The reclassification was correct on substance but bypassed the encoded cross-check — the normalizer should strip NFKD combining marks rather than relying on manual override. Corrected in batch 2's probe_ato_verified_pmid.py with NFKD-strip in normalize()."
     },
     {
+      "rule": "source-discipline",
+      "reason": "Post-session verification pass revealed 10 rows of preexisting rebuild-parity drift (committed DB shows metadata_quality=COMPLETE for refs that migration history says are COMPLETE-STATUTORY). The drift was inherited at session start, NOT introduced by this session — verified via git-checkout to pre-session commit 75158a9b. However, prior to verification the session record claimed 'verified 3 schema + 22 data migrations replay cleanly,' which is true narrowly (runner exits 0) but misleading about row-level bit-parity. Documented in Drift 3 section. CI does not catch this because audit.yml's migration-reproducibility invariant set does not include metadata_quality cross-tab — a gap in the GAP-290 audit that this session surfaces but does not fix."
+    },
+    {
       "rule": "evidence-verification-gate-for-synthesis",
       "reason": "Batch 3 statutory rehab introduced 3 new COMPLETE-STATUTORY rows. REF-00020 (KR 편의증진법) was upgraded to UNVERIFIED-1 via non-EN primary text + EN secondary corroboration only — the V2-manual routing matrix from DR-2026-05-19 allows this, but the cross-check between stored pub_title and standard_number's documented content is weaker for statutory rows than for academic rows (no canonical title-string API; relies on web-search judgment). Documented in DR-2026-05-20 as a known limitation of the statutory path."
     }
