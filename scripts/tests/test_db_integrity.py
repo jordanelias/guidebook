@@ -94,7 +94,9 @@ def run_checks(db_path):
     print("\n[B] Enum column validation")
 
     VALID_VSTATUS = ("VERIFIED","UNVERIFIED-1","UNVERIFIED-CLOSED",
-                     "PROBABILISTIC","CO1-VERIFIED")
+                     "PROBABILISTIC","CO1-VERIFIED",
+                     # DR-2026-05-19 amendment 2026-05-19 — manual-track explicit-cause states:
+                     "IS-PAYWALL","DEFERRED-V2-AUTOMATED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status IS NOT NULL
         AND verification_status NOT IN ({','.join('?'*len(VALID_VSTATUS))})
@@ -102,7 +104,9 @@ def run_checks(db_path):
     record("B01", "verification_status values", bad == 0,
            f"{bad} invalid values" if bad else "")
 
-    VALID_MQ = ("COMPLETE","AUTHOR-TITLE-ONLY","GREY","PMID-ONLY","NULL")
+    VALID_MQ = ("COMPLETE","AUTHOR-TITLE-ONLY","GREY","PMID-ONLY","NULL",
+                # DR-2026-05-18 — statutory metadata completeness:
+                "COMPLETE-STATUTORY")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE metadata_quality IS NOT NULL
         AND metadata_quality NOT IN ({','.join('?'*len(VALID_MQ))})

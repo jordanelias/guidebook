@@ -79,12 +79,3 @@ UPDATE evidence_sources SET
     updated_at = '2026-05-19 19:30',
     updated_by_session = 'session_2026-05-19-deployment-state-reconciliation'
 WHERE ref_id = 'REF-00198';
-
-INSERT INTO data_migrations (migration_id, applied_at, content_sha, applied_by_session, notes)
-VALUES (
-    'data_20260519050000_v2_manual_verification_pilot_batch_2',
-    '2026-05-19 19:30',
-    'update_5_evidence_sources_3_IS-PAYWALL_2_DEFERRED-V2-AUTOMATED_hard_case_cohort',
-    'session_2026-05-19-deployment-state-reconciliation',
-    'DR-2026-05-19 channel-2 manual verification pilot batch 2 (hard-case test). Five rows walked: REF-00016 (CN GB 50763-2012 DEFERRED-V2-AUTOMATED), REF-00017 (JP JIS T 9251 IS-PAYWALL), REF-00071 (NL NEN 9120:2025 IS-PAYWALL), REF-00077 (BR NBR 9050:2020 IS-PAYWALL), REF-00198 (JA MEXT guideline DEFERRED-V2-AUTOMATED). Zero rows added to rule #10 eligible pool. Five rows moved from NULL to explicit-cause states per the DR amendment 2026-05-19 introducing IS-PAYWALL and DEFERRED-V2-AUTOMATED. Three IS-PAYWALL rows establish the purchase queue; two DEFERRED rows establish the V2-scraper queue. Combined batch 1 + batch 2 pilot: 9 rows attempted, 4 cleared gate (44%), 3 paywall-queued, 2 V2-deferred.'
-);

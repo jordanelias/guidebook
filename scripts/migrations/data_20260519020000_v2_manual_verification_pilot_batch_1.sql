@@ -75,12 +75,3 @@ UPDATE evidence_sources SET
     updated_at = '2026-05-19 18:55',
     updated_by_session = 'session_2026-05-19-deployment-state-reconciliation'
 WHERE ref_id = 'REF-00081';
-
-INSERT INTO data_migrations (migration_id, applied_at, content_sha, applied_by_session, notes)
-VALUES (
-    'data_20260519020000_v2_manual_verification_pilot_batch_1',
-    '2026-05-19 18:55',
-    'update_4_evidence_sources_verification_3_VERIFIED_AU_NO_US_1_UNVERIFIED1_NZ',
-    'session_2026-05-19-deployment-state-reconciliation',
-    'DR-2026-05-19 channel-2 manual verification pilot batch 1. Four rows walked: REF-00146 (AU NCC 2022 VERIFIED), REF-00145 (NO TEK17 VERIFIED), REF-00536 (US NFPA 72-2022 VERIFIED), REF-00081 (NZ NZS 4121:2001 UNVERIFIED-1 SPA route). Three jurisdictions cleared §6 step 3 ratification gate. Pilot revealed 4 routing-table observations: year-encoded NO IDs satisfy criterion 3; JSON-in-HTML NFPA pages satisfy criterion 4; SE Boverket URL-guess fails (routing pending); NZ SPA confirmed UNVERIFIED-1 as designed. All 4 criteria evaluated live in session, not pattern-matched. Eligible pool grows 221 -> 224 (three new VERIFIED + one new UNVERIFIED-1 = +4 to gate-passing set; net +3 to strict-VERIFIED count, +1 to UNVERIFIED-1 count).'
-);
