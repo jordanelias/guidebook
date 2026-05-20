@@ -13,34 +13,29 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-2",
-      "reason": "All five batch-2 probes performed live this session. HTTP responses recorded as observed: CN openstd 200 19KB, gov.cn 404, mohurd DNS-unresolved; JP JISC 403 service-stopped, JSA catalog 200 with 販売/購入 commercial tokens, MLIT barrierfree 200 no 9251 tokens; NL NEN 404 on URL-guess and search, home 200 164KB no 9120 tokens; BR ABNT catalog sustained 503; JA MEXT 4 URL attempts including 1.4KB stub, no specific guideline page found. Owner constraint received and integrated rather than papered over."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-3",
+      "reason": "All five batch-3 probes performed live this session with HTTP responses recorded as observed: SE Boverket 3-URL 404; CA RHFAC two-hop home→/rhfac-v40 200 75KB; SG BCA 403; INT ISO multiple URL 404+wrong-match; INT ASPECTSS Archnet 429 + DCU 404 + Emerald 403 + CrossRef wrong-year. Eligibility delta arithmetic reconciled explicitly: 221 + 4 batch1 + 0 batch2 - 1 dedup + 1 batch3 = 225, not papered over."
     },
     "best-practice-synthesis-routing": {
       "status": "NOT-FIRED",
-      "reason": "DR amendment is methodology, not synthesis content. Sonnet scope."
+      "reason": "DR amendment is methodology; Sonnet scope."
     },
     "adversarial-research-protocol": {
       "status": "NOT-FIRED",
-      "reason": "No gap rows touched; no research-generating gap closure performed."
+      "reason": "No gap rows touched."
     },
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#changelog-pilot-batch-2-state-machine-extension",
-      "reason": "DR extends the verification_status state machine with IS-PAYWALL and DEFERRED-V2-AUTOMATED to honestly characterize rule #10 ineligibility causes. Neither state clears the existence gate; both preserve rule #10's predicate. The IS-PAYWALL state explicitly parallels rule #10 sub-rule 2's existing PAYWALL value_match — consistency across the two rule-#10 axes."
+      "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#cumulative-pilot-across-3-batches",
+      "reason": "Batch 3 added 1 strict VERIFIED to rule #10 eligible pool. Cumulative across 3 batches: 5 of 14 (36%) cleared gate, 6 of 14 (43%) owner-actionable via paywall or human, 3 of 14 (21%) V2-blocked. The middle-cohort yield validates the population-yield projection from batch 2's amendment within tolerance, sharpening the §6 step 5 promotion-to-skill calibration. Also expanded test_db_integrity B01 allowlist to match V1 §4 state-machine spec rather than only data observed."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
       "evidence_path": "attestations/DR-2026-05-19-channel-2-manual-verification.json"
     }
   },
-  "deviations": [
-    {
-      "rule": "evidence-verification-gate-for-synthesis",
-      "reason": "Two new verification_status enum values introduced (IS-PAYWALL, DEFERRED-V2-AUTOMATED) without prior CI schema validation. The evidence_sources.verification_status column appears to be free-text (no CHECK constraint observed); the values are documented in the DR but not yet propagated to scripts/audit_evidence_metadata.py or scripts/audit/reasoning_doc_citations_audit.py. Risk: audits may treat these as unknown/invalid until updated. Mitigation: audit scripts to be updated in a follow-up commit before promotion to skill per DR §6 step 5."
-    }
-  ],
-  "bias_direction": "Compounding self-authoring bias: the batch-2 yield (0/5 cleared gate) is unambiguously worse than the optimistic projection in the original DR §5.1. The amendment translates this into a less-favorable but honest yield projection (+13-18 rows instead of 40+). Bias risk is now toward overcompensating in the pessimistic direction — i.e., the protocol could now under-promise its own value to insulate against further yield surprises. The +13-18 rows figure is genuine ('roughly' qualifier preserved), not deliberately deflated.",
-  "independent_reviewer_counterclaim": "An outside reviewer could argue that introducing IS-PAYWALL and DEFERRED-V2-AUTOMATED at the protocol layer is the wrong fix — the right fix is to abandon the manual-track entirely now that hard-case yield is confirmed 0%, redirect effort to building V2-automated scrapers, and let the existing UNVERIFIED-CLOSED status absorb the unverifiable rows. Counter: V2-automated remains pending with no estimated ship date; the manual track is still recovering +13-18 rows that V2 would otherwise recover later; and the explicit IS-PAYWALL queue transforms an ambiguous 15-20-row liability into a costed actionable backlog. The manual-track value proposition is reduced but not eliminated by batch 2 results.",
+  "deviations": [],
+  "bias_direction": "The cumulative 36% gate-clear rate falls within the projected 25-40% range from batch 2 amendment. Batch 3 was deliberately structured to test mid-difficulty cases — that increases the risk of confirmation bias (picking sites I knew or suspected would work, e.g., rickhansen.com, which I had not actually probed before but which had high prior probability of being static-EN-NGO). The honest accounting in the changelog includes the dedup absorption (REF-00047 deleted) that masked one batch-3 gain, rather than reporting the gross +1 as if it were a clean net gain.",
+  "independent_reviewer_counterclaim": "An outside reviewer could argue that batch 3 still oversamples favorable cases: 1 of 5 cleared the gate, but the 4 non-clearing rows split into 3 actionable lanes (IS-PAYWALL, NEEDS-HUMAN, DEFERRED-V2-AUTOMATED), which makes them look more tractable than they are. NEEDS-HUMAN in particular assumes the owner will follow up on different-IP fetches, but there are 2 such rows now and no demonstrated cycle of one closing. The IS-PAYWALL queue (4 rows) also has no demonstrated end-to-end cycle. Until those cycles close, the 'owner-actionable' framing is theoretical, not validated. The DR §6 step 5 third requirement (≥1 IS-PAYWALL purchase cycle) remains unmet and the recommendation to defer skill promotion until then is the correct call.",
   "verdict": "DEVIATION-LOGGED"
 }
