@@ -5,30 +5,21 @@
   "doctrine_sha": "61c7f95",
   "rules_in_scope": [
     "source-discipline",
-    "structural-changes",
     "adherence-logging-and-attestation"
   ],
   "per_rule_status": {
     "source-discipline": {
-      "status": "NOT-FIRED",
-      "reason": "No new sources introduced; this commit reconciles deployment state of PI versions previously logged, not research content."
-    },
-    "structural-changes": {
-      "status": "NOT-FIRED",
-      "reason": "decisions/PI-update-needed.md is a transient queue file per architecture v2.3 reference_files_pattern; rewriting its body does not affect TOC, item codes, part/section nomenclature, or cross-references in BPC content."
+      "status": "FIRED",
+      "evidence_path": "decisions/PI-update-needed.md#v10-14-specific-changes",
+      "reason": "All three v10.14 changes are tied to actual git artifacts: rule #11(a) ordering is grounded in concrete six-commit failure record (SHAs listed); /670 numerator is grounded in the actual data_20260519060000 dedup migration; bootstrap grep change is grounded in actual section-header inventory across both prior and current session records."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "attestations/PI-update-needed.json"
+      "evidence_path": "attestations/decisions_PI-update-needed.json"
     }
   },
-  "deviations": [
-    {
-      "rule": "adherence-logging-and-attestation",
-      "reason": "Backfill-on-touch: no prior attestation existed for this artifact and attestations/ directory did not exist before this commit; first edit creates the attestation per the rule itself. No deviation in spirit; this row exists for audit completeness."
-    }
-  ],
-  "bias_direction": "Self-authored review bias risk: I drafted the diagnostic that surfaced the queue-file staleness and now author the file that closes it. The bias direction is toward declaring the queue closed cleanly when residual ambiguity may exist (e.g., whether v10.11 truly deployed at the exact session_2026-05-15a boundary).",
-  "independent_reviewer_counterclaim": "An outside reviewer would object that the table claims v10.12 deployed 'before 2026-05-17 amend' without a confirming session prompt snapshot in evidence; the prior queue file inferred deployment from the v10.13 prompt loading and the v10.12 amend bundling, which is indirect. The deployment of v10.11 and v10.12 individually is presumed-but-unverified prior to the v10.13 prompt observation.",
-  "verdict": "DEVIATION-LOGGED"
+  "deviations": [],
+  "bias_direction": "v10.14 is authored at the close of the same session that surfaced the drifts it documents. The patches respond exactly to drifts observed THIS session \u2014 risk that the patches over-fit to the specific session's experience rather than addressing the broader drift class. The grep update in particular is calibrated to match the two most-recent session-record formats; an older session-record format (pre-architecture-split) would still not match. Decision to defer cross-historical compatibility to the future-archaeology session that needs it.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that v10.14 is housekeeping bundled under a single bump and should arguably have been three separate bumps (one per drift, ordered by severity). Counter: the architecture-v2.3 PI-growth guidance discourages thrashing the PI version number for minor patches; v10.13 was itself a single-rule bump and the v10.12 amend pattern shows micro-bumps are acceptable within a version label. v10.14 stays under that budget by bundling three documentation-only patches under one minor-version bump.",
+  "verdict": "CLEAN"
 }
