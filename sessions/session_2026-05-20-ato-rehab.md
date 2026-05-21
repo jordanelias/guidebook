@@ -762,3 +762,73 @@ HEAD: `169609bd`. Eligibility now 62.4%. Owner-action items unchanged from prior
 | Batches 24-28 close | 389/678 | 57.4% | +18 |
 | Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
 | **Batches 33-35 close** | **423/678** | **62.4%** | **+15** |
+
+---
+
+## CONTINUATION 2026-05-21 (sixth push): Batches 36-38
+
+After 35 batches closed on `0d770c79`, owner said "Continue" again, then again. 3 more batches landed, +18 rows.
+
+### Batches landed (36-38, 18 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 36 | `data_20260521213000_france_batch_36.sql` | 6 | +6 → 429 |
+| 37 | `data_20260521220000_germany_batch_37.sql` | 7 | +7 → 436 |
+| 38 | `data_20260521223000_uk_reports_batch_38.sql` | 3 | +3 → 439 |
+
+### Specific verifications (batches 36-38)
+
+**Batch 36 — France statutory cluster (6 rows):**
+- REF-00415 + REF-00434 Arrêté du 8 décembre 2014 ERP existants dup pair (Article 4 ressaut ≤20mm; JORFTEXT000029893131; modified by Arrêté 28 avril 2017 art. 6; underlying Loi 2005-102)
+- REF-00350 Arrêté du 20 avril 2017 ERP nouvelle construction (abroge Arrêté 1 août 2006; CEREMA BIM 2021 implementing guidance)
+- REF-00476 Décret n° 2009-1272 du 21 octobre 2009 (alarmes visuelles stroboscopiques; Code du travail R.4214-26 + R.4225-8; effective 24 April 2010)
+- REF-00163 MaPrimeAdapt' ANAH (effective 1 January 2024; Décret 2023-1258; cap €22,000 HT; replaces "Habiter Facile" + CNAV + crédit d'impôt; mandatory AMO + ergotherapy diagnostic)
+- REF-00238 PCH Volet 3 Aménagement du logement (Loi 2005-102 art. 12; in force 1 January 2006; cap €10,000 / 10 years; MDPH + CNSA)
+
+**Batch 37 — Germany cluster (7 rows):**
+- REF-00082 Bundesverband Selbsthilfe Körperbehinderter (BSK) "ABC Barrierefreies Bauen" Neuauflage 2017 (125+ pp; based on DIN 18040 series; €5 nominal; Krautheim/Jagst)
+- REF-00087 + REF-00497 KDA "Wohnkonzepte für Menschen mit Demenz" + PRO ALTER quarterly journal dup cluster (Kuratorium Deutsche Altershilfe gGmbH Köln; ISSN 0937-7745; Hausgemeinschaftskonzept = 8-12 residents in family-like setting)
+- REF-00165 KfW 159 "Altersgerecht Umbauen — Kredit" (BMI, since 2009; max €50,000/dwelling; companion 455-B grant discontinued Dec 2024; reactivated April 2026 with €50M)
+- REF-00298 + REF-00312 Deschermeier Hartung Vaché Weber 2020 KfW evaluation dup pair (IWU Darmstadt; commissioned by KfW Research + BMI; €19,100 avg modernization measure)
+- REF-00239 BMFSFJ "Länger zuhause leben" owner-queue
+
+**Batch 38 — UK reports DOI uplift (3 rows):**
+- REF-00394 Ram M, Baltzopoulos V, Shaw A, Maganaris CN, Cullen J, O'Brien TD (2024) Sensors 24(2):526 — DOI 10.3390/s24020526 + PMC10821270 (LJMU RISCS; N=25 older adults; 7-step lab staircase + instrumented shoe sensor; CC BY 4.0) — **UPGRADE TO COMPLETE WITH DOI**
+- REF-00396 Wharton E, O'Brien T, Foster RJ, Giebel C, Shenton J, Akpan A, Mills A, Roys M, Maganaris C (2025) PLOS ONE — DOI 10.1371/journal.pone.0326850 + PMID 40569918 (LJMU + NIHR ARC NWC + UoL; N=22 mixed-methods; 575 deaths + 350k injuries + £435M NHS cost; 40% of staircases failed UK guidelines) — **UPGRADE TO COMPLETE WITH DOI + YEAR CORRECTED 2024→2025**
+- REF-00542 Unwin 2023 autism sensory owner-queue
+
+### New duplicate clusters identified (batches 36-38)
+
+- **REF-00415 + REF-00434** France Arrêté 8 déc 2014 ERP existants 2-row dup
+- **REF-00087 + REF-00497** KDA Wohnkonzepte / PRO ALTER 2-row dup
+- **REF-00298 + REF-00312** Deschermeier 2020 KfW evaluation 2-row dup
+
+### Final state (continuation-6 close)
+
+- HEAD: `dc3c080a` (38 batch commits + 3 audit allowlist commits + 4 session record updates)
+- **Eligible pool: 439/678 (64.7%)** — +144 from start of web-search work; +163 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~122 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### First DOI-resolution upgrades since Day 1
+
+Batch 38 produced the first DOI-resolution upgrades since the Day 1 truncated-DOI rescue work — these are COMPLETE-with-DOI not just COMPLETE-STATUTORY:
+- REF-00394 stair gait (Sensors 2024)
+- REF-00396 stair falls qualitative (PLOS ONE 2025)
+
+This signals that some ATO rows in the no-ID pool actually have findable DOIs via title/author search even when no Crossref hit was found in Day 1 mining. Worth scanning the remaining ~122 rows for additional title-search candidates.
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| Batches 33-35 close | 423/678 | 62.4% | +15 |
+| **Batches 36-38 close** | **439/678** | **64.7%** | **+16** |
