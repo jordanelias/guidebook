@@ -638,3 +638,62 @@ Owner-queue items still pending from across all sessions (Day 1-3 backlog):
 
 Skill+audit promotion Level 2→4: ~7-day shakedown started 2026-05-20; due ~2026-05-27.
 DR-2026-05-20 still PROPOSED — pending owner ratification.
+
+---
+
+## CONTINUATION 2026-05-21 (fourth push): Batches 29-32
+
+After 28 batches closed on `b1aee21e`, owner said "Continue" again. 4 more batches landed, +19 rows.
+
+### Batches landed (29-32, 19 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 29 | `data_20260521184000_statutory_batch_29.sql` | 5 | +5 → 394 |
+| 30 | `data_20260521185000_statutory_batch_30.sql` | 4 | +4 → 398 |
+| 31 | `data_20260521190000_us_guidelines_batch_31.sql` | 5 | +5 → 403 |
+| 32 | `data_20260521193000_int_guidelines_batch_32.sql` | 5 | +5 → 408 |
+
+🎯 **CROSSED 60% MILESTONE** at batch 32. **Eligible 408/678 (60.2%)**.
+
+### Specific verifications (batches 29-32)
+
+**Batch 29 — IE+BE statutory (5 rows):**
+- REF-00079 Ireland NDA "Building for Everyone: A Universal Design Approach" (2012 revised; 10-booklet series per CEUD; original 2002 withdrawn per NBS; Section 7.12 Housing superseded by UD Guidelines for Homes; 25 Clyde Road Dublin 4)
+- REF-00377 Ireland NDA "Universal Design Guidelines for Homes in Ireland" (2015; 5-part research-based; UD Home and UD Home+ wheelchair-liveable; contractors MCO Projects + PRP Architects + Detail Design Studio; Internal Layout Checklist with Age Friendly Ireland updated May 2025)
+- REF-00376 Ireland IWA "Best Practice Access Guidelines: Designing Accessible Environments" (2014; IWA founded 1960 by Fr Leo Close CM; National Access Programme Rosaleen Lally; companion "The Great Outdoors")
+- REF-00360 + REF-00467 Belgium CAWaB "Guide d'aide à la conception d'un bâtiment accessible" 2-row dup pair (Collectif Accessibilité Wallonie-Bruxelles 22-member coalition; complements CoDT chapter 4 ex-CWATUP arts. 414-415 for Wallonia and RRU for Brussels)
+
+**Batch 30 — Sweden + Switzerland statutory (4 rows):**
+- REF-00322 Sweden Boverkets byggregler BFS 2011:6 (Boverket Karlskrona; ~30 amendments through BFS 2024:14; new BFS 2024:12 specifically for accessibility in force 1 Jul 2025 with transition to 30 Jun 2026; underlying PBL 2010:900 + PBF 2011:338)
+- REF-00346 Sweden "Stockholm — en stad för alla" (Stockholms stad; municipal handbook tied to Handikappolitiskt program; targets Stockholm as world's most accessible capital by 2010)
+- REF-00597 Sweden Mynak "Riktlinjer för synergonomi" / "Guidelines for Visual Ergonomics — Lighting and Vision in the Workplace" (2019; English translation available; underlying AFS 2020:1 → AFS 2023:12 + SS-EN 12464-1:2021/-2:2014)
+- REF-00319 Switzerland IV/AI disability insurance Hilfsmittel (BSV/OFAS Bern; 1st pillar social insurance; covers home adaptation + Assistenzbeitrag 34.30/51.50 CHF/hour; ~2.6% Swiss residents on invalidity pension 2020)
+
+**Batch 31 — US guidelines (5 rows):**
+- REF-00235 + REF-00236 Dysautonomia International workplace accommodations dup pair (US 501(c)(3); ADA + ADAAA 2008 framework; companion Bourne 2021 J Intern Med 290(1):203-212 with 52% POTS unemployment finding)
+- REF-00537 Epilepsy Foundation Professional Advisory Board photosensitive seizures (original 2005 Epilepsia 46:1423-1425 DOI 10.1111/j.1528-1167.2005.31405.x; 2022 update PMID 35132632 Wirrell; 2026 Fisher et al update DOI 10.1111/epi.18702; thresholds <2 Hz preferred / 3-60 Hz risk band with 5-30 Hz peak)
+- REF-00295 Joint Center for Housing Studies Harvard five-feature framework (no-step entry, single-floor living, lever door handles, accessible electrical controls, extra-wide doors/hallways; HUD AHS 2011 analysis: <1% wheelchair-accessible, <5% moderate mobility, ~33% Level 1 potentially modifiable)
+- REF-00290 Open Doors Organization 2020 disabled travel spending study ($17B+; MMGY Global partnership; longitudinal since 2002; Eric Lipp founder Chicago)
+
+**Batch 32 — INT guidelines (5 rows):**
+- REF-00226 + REF-00555 + REF-00598 + REF-00618 WELL Building Standard v2 4-row cluster (International WELL Building Institute IWBI New York; administered by GBCI; v1 2014, v2 2018; 10 concepts; max 110 pts; Bronze/Silver/Gold/Platinum 40/50/60/80; 6B+ sqft 100,000 locations 137 countries; T-concept Thermal Comfort T01-T07; L-concept Light L01-L08; A-concept Air A01-A14; v1 Feature 54 = v2 L03 Circadian Lighting)
+- REF-00039 Deafblind International "Guidelines on Best Practice for Service Provision to Deafblind People" (DbI global network; partners CBM, WFDB, Perkins International, Sense International, Royal Dutch Visio; companion CBM 2022 best-practice guidelines)
+
+### New duplicate clusters identified (batches 29-32)
+
+- **REF-00360 + REF-00467** Belgium CAWaB Guide d'accessibilité (FR/NL parallel)
+- **REF-00235 + REF-00236** Dysautonomia International workplace
+- **REF-00226 + REF-00555 + REF-00598 + REF-00618** WELL Building Standard v2 (4-row cluster spanning Thermal, Light, Air concepts)
+
+### Final state (continuation-4 close)
+
+- HEAD: `0efb1024` (32 batch commits + 3 audit allowlist commits + 3 session record updates)
+- **Eligible pool: 408/678 (60.2%)** — +113 from start of web-search work; +132 from session-open baseline (276/670 = 41.2%)
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~155 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Continuation-4 close
+
+HEAD: `0efb1024`. 🎯 Crossed 60% eligibility milestone. Owner-action items unchanged from prior continuation log — see prior continuation-3 section for owner-queue and remaining buckets.
