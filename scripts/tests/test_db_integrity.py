@@ -250,6 +250,7 @@ def run_checks(db_path):
         "10.2196/69442",              # Grab bar / bathroom safety — 2 BPCs
         "10.3389/fpsyt.2021.727353",  # ASPECTSS design index — 4 BPCs (autism)
         "10.4324/9781003564164",      # Inclusive Housing Design Guide — 3 BPCs
+        "10.1016/j.mayocp.2021.07.004", # Bateman et al. ME/CFS Essentials — 4 BPCs (cool environment / sensory / PEM management / post-COVID)
     )
     dup_rows = conn.execute(f"""
         SELECT doi, COUNT(*) AS n FROM evidence_sources
