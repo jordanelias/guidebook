@@ -251,6 +251,7 @@ def run_checks(db_path):
         "10.3389/fpsyt.2021.727353",  # ASPECTSS design index — 4 BPCs (autism)
         "10.4324/9781003564164",      # Inclusive Housing Design Guide — 3 BPCs
         "10.1016/j.mayocp.2021.07.004", # Bateman et al. ME/CFS Essentials — 4 BPCs (cool environment / sensory / PEM management / post-COVID)
+        "10.3390/ijerph192114279",     # Owen & Crane 2022 TID scoping review — 2 BPCs (REF-00090 + REF-00527; Crane first name mismatch in queue)
     )
     dup_rows = conn.execute(f"""
         SELECT doi, COUNT(*) AS n FROM evidence_sources
