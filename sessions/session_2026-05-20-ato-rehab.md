@@ -459,3 +459,99 @@ Owner queue: consolidate or accept-as-separate per BPC slug context.
 ### Continuation close
 
 `66baa31f`. Next session bootstrap: read this session record, then continue from owner-queue items 1-15 above + remaining 205 ATO × no-ID rows. Top remaining buckets: report×US (15), report×INT (11), report×UK (15), guideline×US (10), guideline×UK (7), guideline×FR (6), report×DE (6), guideline×INT (7).
+
+---
+
+## CONTINUATION 2026-05-21 (second push): Batches 15-23
+
+After the morning's continuation closed, owner said "proceed now" multiple times. 9 more batches landed, +29 rows.
+
+### Batches landed (15-23, 29 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 15 | `data_20260521120000_us_reports_batch_15.sql` | 7 | +7 → 349 |
+| 15.5 | audit allowlist (Bateman ME/CFS DOI) | 0 | 349 |
+| 16 | `data_20260521122000_us_reports_batch_16.sql` | 2 | +2 → 351 |
+| 17 | `data_20260521130000_auracast_batch_17.sql` | 5 | +5 → 356 |
+| 18 | `data_20260521133000_us_reports_batch_18.sql` | 3 | +3 → 359 |
+| 19 | `data_20260521140000_int_reports_batch_19.sql` | 4 | +4 → 363 |
+| 19.5 | `data_20260521141000_batch_19_fixup.sql` + audit allowlist (Owen TID DOI) | 0 | 363 |
+| 20 | `data_20260521143000_int_reports_batch_20.sql` | 1 | +1 → 364 |
+| 21 | `data_20260521150000_uk_reports_batch_21.sql` | 4 | +4 → 368 |
+| 22 | `data_20260521152000_uk_reports_batch_22.sql` | 2 | +2 → 370 |
+| 23 | `data_20260521154000_uk_reports_batch_23.sql` | 1 | +1 → 371 |
+
+### Specific verifications (batches 15-23)
+
+**Batch 15 — US reports (7 rows, +56 cumulative since start):**
+- REF-00161 VA SAH/SHA FY2026 (FedReg doc 2025-20047; SAH $126,526, SHA $25,350; 38 U.S.C. 2102(e), 38 CFR 36.4411)
+- REF-00338 Bauman 2010 DeafSpace Design Guidelines 85pp (dup-of REF-00339; same Gallaudet 2010 artifact)
+- REF-00223/00234/00231/00245 ME/CFS Clinical Care — Bateman et al. 2021 Mayo Clin Proc 96(11):2861-2878 DOI `10.1016/j.mayocp.2021.07.004` (4-way duplicate cluster; stored years 2024/2025 → 2021)
+- REF-00042 Clark 2021 "Against Access" McSweeney's Quarterly Concern 64
+
+**Batch 15 audit fixup:** Added `10.1016/j.mayocp.2021.07.004` to KNOWN_DUP_DOIS allowlist (4 BPCs cite same paper).
+
+**Batch 16 — US reports (2 rows):**
+- REF-00276 Accenture+Disability:IN+AAPD 2023 "The Disability Inclusion Imperative" (346-company DEI sample)
+- REF-00731 Szanton et al. 2016 Health Affairs 35(9):1558-1563 "Home-Based Care Program Reduces Disability" DOI `10.1377/hlthaff.2016.0140` (stored year 2019 corrected to 2016; $2,825/participant CAPABLE figure traces to this paper)
+
+**Batch 17 — Auracast cluster (5 rows, +61):**
+- REF-00333/00337/00352/00354 Bluetooth SIG Auracast Broadcast Audio specification 2022 (4-way potential-duplicate cluster — Kirkland WA June 8, 2022; HAP 1.0 + BASS 1.0 + Public Broadcast Profile; Bluetooth Core Spec 5.2+ required)
+- REF-00336 Auri™ first certified Auracast ALS product (Listen Technologies + Ampetronic; shipped Jan 2025)
+
+**Batch 18 — US reports (3 rows):**
+- REF-00092 SAMHSA TIP 57 Trauma-Informed Care in Behavioral Health Services 2014 (HHS Publication No. SMA 14-4816; produced under contracts by KAP/CDM Group/JBS International)
+- REF-00140 Visitability — Eleanor Smith / Concrete Change 1987 (Atlanta; concept origin; 3 core features = zero-step entry + 32" doors + main-floor accessible bath)
+- REF-00113 Center for Health Design Behavioral & Mental Health Toolbox 2018 (issue brief + universal-approach tool + lessons learned)
+
+**Batch 19 — INT reports (4 rows, +69):**
+- REF-00090 Owen & Crane 2022 TID scoping review IJERPH 19(21):14279 DOI `10.3390/ijerph192114279` PMID 36361166 PMC9658651 (Univ. of Tasmania; jurisdiction INT→AU; flagged as duplicate of REF-00527; Crane first name owner-queue: '527 'Jasmine' vs PMC source 'James')
+- REF-00735 Devos et al. 2019 IJERPH 16(24):4904 DOI `10.3390/ijerph16244904` PMC6950055 dementia soundscape (Ghent University BE + UCL + Artevelde UC)
+- REF-00342 Vaughn 2018 "DeafScape: Applying DeafSpace to Landscape" Ground Up Journal Issue 7 (UC Berkeley CED, May 2018; jurisdiction INT→US)
+- REF-00343 Bauman & Murray (eds.) 2014 "Deaf Gain: Raising the Stakes for Human Diversity" Univ. of Minnesota Press ISBN 9780816691227 (H-Dirksen L. Bauman ≠ Hansel Bauman; both at Gallaudet)
+
+**Batch 19 audit fixup:** Inserted Owen + Crane authors for REF-00090; flagged REF-00090+REF-00527 as POTENTIAL-DUPLICATE pair; added `10.3390/ijerph192114279` to KNOWN_DUP_DOIS allowlist.
+
+**Batch 20 — INT reports (1 row):**
+- REF-00291 OECD Tourism Trends and Policies 2016 DOI `10.1787/tour-2016-en` ISBN 9789264245976 (50 OECD countries; biennial; AU 2.8-3.4 disabled-traveler-group multiplier figure confirmed)
+
+**Batch 21 — UK reports (4 rows, +73):**
+- REF-00162/00259/00313 Disabled Facilities Grant 3-row cluster (MHCLG+DHSC; Housing Grants Construction and Regeneration Act 1996; £30k max England, £36k Wales, £25k NI; £711M annual allocation 2024-26)
+- REF-00149 Habinteg "A Forecast for Accessible Homes 2025: One Decade On — Milestone or Millstone?" (311 English local plans; 4% planned new homes M4(3); regional disparity London 1:210 vs NW 1:2006)
+
+**Batch 22 — UK reports (2 rows, +75):**
+- REF-00734 Tibble 2005 "Review of existing research on the extra costs of disability" DWP Working Paper No. 21
+- REF-00268 Provan/Lane/Horne Rowan 2023 LSE CASEreport 147 "The Social and Economic Value of Wheelchair User Homes" (Habinteg public-facing title: "Living Not Existing"; +£22k build cost / £94k 10-yr benefit / 4x ROI for working-age)
+
+**Batch 23 — UK reports (1 row):**
+- REF-00258 M4(3) Wheelchair Standard Cost Study (potential dup-of REF-00268 — both cite Provan 2023 LSE CASEreport 147)
+
+### New duplicate clusters identified (batches 15-23)
+
+- **REF-00338 + REF-00339** Gallaudet DeafSpace Design Guidelines Vol 1 2010 (both cite same Bauman 2010 artifact)
+- **REF-00223/00231/00234/00245** Bateman et al. 2021 ME/CFS Essentials (4-way DOI duplicate)
+- **REF-00333/00337/00352/00354** Bluetooth SIG Auracast spec (4-way potential duplicate)
+- **REF-00162/00259/00313** UK DFG programme (3-row programme cluster — same authority, different facets)
+- **REF-00258 + REF-00268** Provan 2023 LSE CASEreport 147
+
+### New owner-queue rows from batches 15-23
+
+- **REF-00527 vs REF-00090** Crane first name discrepancy: REF-00527 stored 'Jasmine'; PMC9658651 source verified 'James'. Determine if REF-00527 is misattributed or a different work entirely.
+- **REF-00273** Brunson 2019 "An Adorable Housing Paper" — title likely OCR error; could not identify with confidence
+- **REF-00733** Ismail 2023 Fibromyalgia hydrotherapy SR Tandfonline — Crossref + web search did not surface
+- **REF-00292/REF-00293** Modern bathroom / 2026 Rental Market accessibility blog posts — generic blog content; need original BPC context
+- **REF-00304/00305/00308/00309** Cost-of-accessible-design figures — too generic without BPC context
+- **REF-00339** earlier already verified — but stored title "DeafSpace Design Guidelines Vol 1 2010" (verified prior session). Confirm REF-00338 + REF-00339 should consolidate.
+
+### Final state (continuation 2 close)
+
+- HEAD: `6eab3153` (23 batch commits + 3 audit allowlist commits since 2026-05-20 morning session-close)
+- **Eligible pool: 371/678 (54.7%)** — +76 from start of web-search work; +95 from session-open baseline (276/670 = 41.2%)
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~180 rows** (down from 254)
+- All 23 commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Continuation-2 close
+
+`6eab3153`. Next session bootstrap: read this session record, continue from owner-queue items + remaining 180 ATO × no-ID rows. Top remaining buckets: UK guidelines (10), US guidelines (13), INT reports (~13 remaining), report×DE (6), guideline×FR (6), report×NL (5), report×NO (5), report×CA (5).
