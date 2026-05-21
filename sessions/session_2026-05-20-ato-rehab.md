@@ -318,3 +318,144 @@ By type (post-batch-3):
 - **GitHub Issues for owner-action queues** (per #7 above).
 
 session_close marker: this session ends here. Final HEAD `15b286d2`. Eligible pool **276/670 (41.2%)**. Next session bootstrap should fetch `sessions/LATEST` → `session_2026-05-20-ato-rehab.md` and pick from items 1–7 above.
+
+---
+
+## CONTINUATION 2026-05-21: Web-Search Pivot + 14 batches
+
+**Continuation entry appended 2026-05-21 11:10. Prior session_close above was premature; the work continued the next day and is captured below.**
+
+### Methodology pivot (DR-2026-05-18 enforcement)
+
+Owner reminder mid-session: *"non academic doesn't follow the same process for metadata"*. Claude acknowledged misapplying academic protocol (Crossref / PubMed / OpenAlex) to gray-lit cohort for the prior session. Correct path per DR-2026-05-18: gray-lit verifies via **issuing body + edition year + jurisdiction + publisher + URL → COMPLETE-STATUTORY** (no DOI required). Academic books verify via **ISBN + publisher + edition** with `doi_resolution_outcome=NO-MATCH` to clear C04.
+
+Web-search batches pivoted from academic-DOI-probing to issuing-body verification. Each batch:
+
+- Search authoritative source (issuing body's website)
+- Cross-check via 2-3 independent secondary references
+- Capture `url`, `verified_by_tool`, `last_verified_at` as audit trail
+- Promote to `COMPLETE-STATUTORY` (gray-lit) or `COMPLETE` (book with ISBN) or `COMPLETE` (academic article with DOI)
+- Land each batch via discrete `data_2026-05-21*.sql` migration with `BEGIN TRANSACTION; ... COMMIT;` envelope
+- `data_migrations` tracking row inserted by `scripts/migrate_db.py` runner (do NOT include INSERT INTO in migration body — this convention was reconfirmed)
+
+### Batches landed (14 total, 47 rows promoted)
+
+| # | Migration | Rows | Type | Net eligible |
+|---|-----------|------|------|--------------|
+| 1 | `data_20260521040000_uk_guidelines_batch_1.sql` + `040500_audit_trail` | 6 | UK guidelines | +6 → 301 |
+| 2 | `data_20260521050000_uk_guidelines_batch_2.sql` | 5 | UK guidelines | +5 → 306 |
+| 3 | `data_20260521055000_uk_guidelines_batch_3.sql` | 4 | UK guidelines | +4 → 310 |
+| 4 | `data_20260521060000_mixed_batch_4.sql` | 2 | Acad+Stat | +2 → 312 |
+| 5 | `data_20260521065000_us_guidelines_batch_5.sql` | 5 | US guidelines | +5 → 317 |
+| 6 | `data_20260521072000_us_guidelines_batch_6.sql` | 4 | US guidelines | +4 → 321 |
+| 7 | `data_20260521074000_int_reports_batch_7.sql` | 3 | INT reports | +3 → 324 |
+| 8 | `data_20260521080000_books_batch_8.sql` + `080500_audit_trail` | 3 | Books (ISBN) | +3 → 327 |
+| 9 | `data_20260521084000_mixed_batch_9.sql` | 2 | Mixed | +2 → 329 |
+| 10 | `data_20260521090000_mixed_batch_10.sql` | 1 | Academic | +1 → 330 |
+| 11 | `data_20260521094000_au_reports_batch_11.sql` | 5 | AU reports | +5 → 335 |
+| 12 | `data_20260521101000_aucca_batch_12.sql` | 4 | AU+CA | +4 → 339 ⭐ 50% |
+| 13 | `data_20260521103000_ca_batch_13.sql` | 2 | CA | +2 → 341 |
+| 14 | `data_20260521110000_books_batch_14.sql` | 1 | CA book | +1 → 342 |
+
+### Specific row promotions
+
+**UK guidelines (15 rows):**
+- REF-00425 ADM Vol 2 (HM Gov 2024 amendments)
+- REF-00405 Wheelchair Housing Design Guide 3rd ed (Habinteg/RIBA 2018, ISBN 9781859468289)
+- REF-00404 + REF-00437 (dup) Inclusive Housing Design Guide (Runnalls/Walker, RIBA 2024, ISBN 9781915722355)
+- REF-00378 + REF-00053 (dup) Adaptations Without Delay (Russell/Walker/Copeman/Porteus, RCOT/Housing LIN 2019)
+- REF-00084 + REF-00201 (dup) EADDAT (Palmer/DSDC Stirling 2022)
+- REF-00281 Click-Away Pound 2019 (Williams & Brownlow/Freeney Williams)
+- REF-00280 Purple Pound 2020 (Purple/DWP £274B)
+- REF-00022 Building Sight RNIB 2023 (Lewis & Thomas)
+- REF-00248 VisitBritain "Make your business accessible"
+- REF-00264 HM Gov "Raising accessibility standards for new homes" consultation outcome 2022
+- REF-00282 WEC HC 605 "Accessibility of products and services to disabled people" 2024
+- REF-00247 Wheels for Wellbeing "Benches and Seating in Public Spaces" 2025
+
+**US guidelines (9 rows):**
+- REF-00447 ICC A117.1-2017 Accessible and Usable Buildings and Facilities (ISBN 9781609837013)
+- REF-00143 HUD FHA Design Manual 1998 (stored year 2022 corrected; ISBN 9780894992391)
+- REF-00062 PVA Accessible Home Design 2nd ed (Davies & Lopez; ISBN 9780929819181)
+- REF-00316 VA SAH/SHA grants FY2024 Federal Register notice
+- REF-00317 USDA Section 504 Rural Housing Repair (7 CFR Part 3550)
+- REF-00267 Maisel/Smith/Steinfeld 2008 AARP Public Policy Institute Visitability
+- REF-00213 ADA National Network "Opening Doors to Everyone" factsheet 2017
+- REF-00206 Greene 2014 Construction Specifier door requirements
+- REF-00112 Hunt/Sine/McMurray 2024 Behavioral Health Design Guide (26th rev, BHFC)
+
+**INT reports/books/journal articles (8 rows):**
+- REF-00156 UN CRPD General Comment No. 2 on Art 9 Accessibility 2014 (CRPD/C/GC/2)
+- REF-00157 UN CRPD General Comment No. 5 on Art 19 Independent Living 2017 (CRPD/C/GC/5)
+- REF-00158 IDA compilation of CRPD Concluding Observations Art 9
+- REF-00176 Barker 1968 Ecological Psychology Stanford UP (ISBN 9780804706582)
+- REF-00478 Passini 1984 Wayfinding in Architecture Van Nostrand Reinhold (ISBN 9780442275907)
+- REF-00485 Kaplan & Kaplan 1989 Experience of Nature Cambridge UP (ISBN 9780521341394)
+- REF-00484 Kahneman 1973 Attention and Effort Prentice-Hall (ISBN 9780130505187)
+- REF-00203 Walton et al. 2020 MS Atlas 3rd ed Multiple Sclerosis Journal 26(14):1816-1821 DOI 10.1177/1352458520970841
+- REF-00030 Kim et al. 2014 IJIE 44(5):636-646 ramp slope wheelchair DOI 10.1016/j.ergon.2014.07.001
+- REF-00169 Williams/Corbyn/Hart 2023 NDTi sensory environments Child Care in Practice 29(1):35-53 DOI 10.1080/13575279.2022.2126437
+- REF-00339 Gallaudet DeafSpace Design Guidelines Vol 1 2010
+
+**AU/CA (15 rows):**
+- REF-00075 Winkler 2024 Summer Foundation design/construction sector accessibility
+- REF-00076 + REF-00153 (potential-dup) Newton 2023 UTS Inclusive Bathroom Design
+- REF-00315 NDIS Home Modifications NDIA Operational Guideline
+- REF-00501 Dementia Australia Designing Dementia-Friendly Care Environments
+- REF-00271 + REF-00471 (potential-dup) LHA Livable Housing Design Guidelines 4th ed 2017
+- REF-00141 CMHC Universal Design Guide 2023
+- REF-00288 Rick Hansen Foundation Accessibility Certification v4.0 2024
+- REF-00205 CMHC Renovating for Accessibility fact-sheet series 2021
+- REF-00160 CRA Home Accessibility Tax Credit (HATC) Line 31285
+- REF-00177 Townsend & Polatajko 2007 Enabling Occupation II (CAOT ISBN 9781895437768)
+
+### Final state at continuation close
+
+- HEAD: `66baa31f` (14 commits this continuation, all CI green on both workflows)
+- Eligible pool: **342/678 (50.4%)** — ⭐ **CROSSED 50% MILESTONE** at batch 12
+- Net gain this continuation: **+47 rows** (+7.0pp from session-close baseline of 295/670, +15.5pp from session-open baseline)
+- Schema: v14, Total rows: 678
+- Remaining ATO × no-ID: **205 rows** (down from 252 at continuation open, 254 at session open)
+
+### New owner-queue rows from this continuation
+
+Deferred because of ambiguity, source mismatch, or potential duplication:
+
+- **REF-00591** Allen 1988 CDM AJOT — ambiguous; likely actually the 1985 book "Occupational Therapy for Psychiatric Diseases" (ISBN search via owner)
+- **REF-00384** Simoneau 1991 — Crossref returned Journal of Gerontology candidate, journal mismatch with stored "Hum Mov Sci"
+- **REF-00388** Koontz 2012 — Crossref returned J Appl Biomech candidate, but title doesn't match stored "Shoulder moment contributions to wheelchair propulsion. Clin Biomech"
+- **REF-00386** Kim 2014 J Mech Sci Technol — possibly dup of REF-00030, possibly sister paper; needs owner check
+- **REF-00735** Devos 2019 dementia soundscape PMC6950055 — Crossref author+title search did not surface; PMC ID present so PubMed should resolve; deferred
+- **REF-00254** cross-reference only — internal pointer to MST-01/hs3, likely a placeholder not a real citable source; recommend delete or recategorize
+- **REF-00055** Living Well by Design 2023 — ambiguous title
+- **REF-00408** Dementia Design Guidance 2020 — ambiguous (could be UK Dementia Services Development Centre / Stirling, or other)
+- **REF-00428** Lifts in dwellings — could be BS 6440 or BS EN 81-41
+- **REF-00118** Adaptable Housing guide UK 2022 — ambiguous; multiple candidates
+- **REF-00119** Accessible homes guidance UK 2022 — ambiguous
+- **REF-00241** Energy conservation guide UK 2020 — likely Approved Document L of Building Regulations but not confirmed
+- **REF-00615** MCAS environmental management 2023 — likely Mast Cell Action UK Primary Care Guide
+- **REF-00045** AU "Adapting the Environment" 2022 — too generic to identify with confidence
+- **REF-00073** Ringaert 2001 UDI Manitoba — stored title doesn't match either of two Ringaert UD publications (the 2001 Universal Design Handbook ch. 6 or the 2002 Husbanken book chapter)
+
+### Newly identified duplicate pairs (POTENTIAL-DUPLICATE-OF-* tags applied)
+
+- REF-00076 + REF-00153 (both Newton 2023 UTS bathroom)
+- REF-00271 + REF-00471 (both LHA 4th ed 2017)
+- REF-00378 + REF-00053 (both Adaptations Without Delay)
+- REF-00084 + REF-00201 (both EADDAT)
+- REF-00404 + REF-00437 (both Inclusive Housing Design Guide)
+
+Owner queue: consolidate or accept-as-separate per BPC slug context.
+
+### Convention reconfirmations
+
+- Data migrations MUST NOT include `INSERT INTO data_migrations` (runner tracks via filename stem)
+- Books with ISBN as canonical identifier: set `doi_resolution_outcome='NO-MATCH'` to clear C04
+- COMPLETE-STATUTORY is the right metadata_quality value for gray-lit (issuing body + edition + jurisdiction)
+- COMPLETE applies to academic journal articles (DOI-verified) and academic books (ISBN-verified with NO-MATCH outcome)
+- `verified_by_tool` audit field uses naming pattern `web-search-multi+<authoritative-domain>-official`
+- All commits passed both `Guidebook CI` and `Repo Integrity Audits` workflows
+
+### Continuation close
+
+`66baa31f`. Next session bootstrap: read this session record, then continue from owner-queue items 1-15 above + remaining 205 ATO × no-ID rows. Top remaining buckets: report×US (15), report×INT (11), report×UK (15), guideline×US (10), guideline×UK (7), guideline×FR (6), report×DE (6), guideline×INT (7).
