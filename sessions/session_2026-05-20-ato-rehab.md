@@ -555,3 +555,86 @@ After the morning's continuation closed, owner said "proceed now" multiple times
 ### Continuation-2 close
 
 `6eab3153`. Next session bootstrap: read this session record, continue from owner-queue items + remaining 180 ATO × no-ID rows. Top remaining buckets: UK guidelines (10), US guidelines (13), INT reports (~13 remaining), report×DE (6), guideline×FR (6), report×NL (5), report×NO (5), report×CA (5).
+
+---
+
+## CONTINUATION 2026-05-21 (third push): Batches 24-28
+
+After 23 batches closed on `50a0b894`, owner said "Continue" twice. 5 more batches landed, +18 rows.
+
+### Batches landed (24-28, 18 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 24 | `data_20260521160000_uk_guidelines_batch_24.sql` | 3 | +3 → 374 |
+| 25 | `data_20260521164000_statutory_batch_25.sql` | 6 | +6 → 380 |
+| 26 | `data_20260521170000_statutory_batch_26.sql` | 3 | +3 → 383 |
+| 27 | `data_20260521173000_statutory_batch_27.sql` | 4 | +4 → 387 |
+| 28 | `data_20260521180000_norway_batch_28.sql` | 2 | +2 → 389 |
+
+### Specific verifications (batches 24-28)
+
+**Batch 24 — UK guidelines (3 rows):**
+- REF-00230 NICE NG206 ME/CFS 2021 (UK National Institute for Health and Care Excellence; published 29 Oct 2021; last reviewed 24 Jan 2025; supersedes CG53 from 2007; removed GET, downgraded CBT, allows diagnosis after 3 months, PEM as core symptom)
+- REF-00408 DSDC Stirling Dementia Design Guidance 2020 (Dementia Services Development Centre, University of Stirling; established 1989; Chief Architect Lesley Palmer; DDAT 2008 replaced by EADDAT 2022; Stirling Gold accreditation for ~30 buildings globally; "Architecture of Dementia: Stirling Gold 2008-2020" book Sep 2020)
+- REF-00428 BS 6440:2011 Powered vertical lifting platforms (BSI; effective 31 Aug 2011; confirmed Nov 2016; supersedes BS 6440:1999; stored year 2016 corrected to 2011 with confirmation note)
+
+**Batch 25 — Multi-jurisdictional statutory cluster (6 rows in 3 dup pairs):**
+- REF-00424 + REF-00459 Finland Government Decree 241/2017 — Accessibility of Buildings (Ympäristöministeriö / Ministry of the Environment; supersedes 2005 F1 decree and 16 Apr 1997 F1 decision; entered into force early 2018; part of Finland's UN CRPD implementation)
+- REF-00364 + REF-00460 Italy DM 14 giugno 1989 n. 236 (Ministero dei Lavori Pubblici; implementing Legge 13/1989; three quality levels accessibilità/visitabilità/adattabilità; ≥5% subsidized residential units must be fully accessible; extended to public buildings via DPR 503/96)
+- REF-00365 + REF-00465 Portugal Decreto-Lei 163/2006 de 8 de agosto (Governo de Portugal; revokes DL 123/97; amended by DL 136/2014 and DL 125/2017; 10-year adaptation deadline ended 8 Feb 2017; first PT statute extending norms to residential housing)
+
+**Batch 26 — Multi-jurisdictional statutory (3 rows):**
+- REF-00457 Switzerland SIA 500:2009 Hindernisfreie Bauten (Schweizerischer Ingenieur- und Architektenverein; replaces SN 521 500:1988; binding for public buildings, ≥6 dwellings, >50 workplaces; underlying BehiG federal law in force 1 Jan 2004; companion VSS-Norm SN 640 075:2014 for Verkehrsraum)
+- REF-00366 Korea Act on Convenience Promotion for Persons with Disabilities, Elderly, Pregnant Women, etc. (장애인·노인·임산부 등의 편의증진 보장에 관한 법률; Act No. 5332 of 10 Apr 1997; in force 1 Jan 1998; 20+ amendments through Act No. 17091 of 24 Mar 2020)
+- REF-00318 Germany KfW 159 Altersgerecht Umbauen — Kredit (Kreditanstalt für Wiederaufbau, Frankfurt am Main; max €50,000/unit; companion grant 455-B €2,500-6,250; 2026 grant budget €50M reactivated 9 Apr 2026)
+
+**Batch 27 — Multi-jurisdictional statutory (4 rows):**
+- REF-00452 Singapore Code on Accessibility in the Built Environment 2019 (Building and Construction Authority, MND Statutory Board; 5th revision; effective 6 Jan 2020; mandatory accessible changing rooms, wider accessible toilets, lactation rooms ≥5,000 sqm GFA)
+- REF-00507 Singapore Code on Accessibility 2025 — Chapter 8 wayfinding (6th revision; succeeds 2019; owner-queue exact chapter numbering and effective date)
+- REF-00461 Seoul UD Guidelines 2022 (Seoul Metropolitan Government + Seoul Design Foundation; Comprehensive Plan of Universal Design 2020-2024; Seoul UD Certification System test-run launched 2022; Seoul UD Center at Dongdaemun Design Plaza opened Dec 2020)
+- REF-00499 서울형 치매전담실 가이드북 2023 Seoul-style Dementia Dedicated Ward Guidebook (title-based; owner-queue for exact issuing department and bibliography)
+
+**Batch 28 — Norway statutory (2 rows):**
+- REF-00088 Norwegian Nasjonal faglig retningslinje om demens (Helsedirektoratet; first 16 Aug 2017; latest rev 23 Feb 2024; companion Veiviser demens 2022 and Demensplan 2025)
+- REF-00270 Husbanken Lån til livsløpsboliger (FOR-2019-11-18-1546 Kap. 2 under Lov 2009-05-29 nr. 30 om Husbanken §§ 1, 8, 10; amended 25 Jun 2024, in force 1 Jul 2024; up to 90% of construction cost; requirements exceed TEK17)
+
+### New duplicate clusters identified (batches 24-28)
+
+- **REF-00424 + REF-00459** Finland Government Decree 241/2017
+- **REF-00364 + REF-00460** Italy DM 236/89
+- **REF-00365 + REF-00465** Portugal DL 163/2006
+
+### Final state (continuation-3 close)
+
+- HEAD: `a67b0ba7` (28 batch commits + 3 audit allowlist commits + 2 session record updates since 2026-05-20 morning baseline)
+- **Eligible pool: 389/678 (57.4%)** — +94 from start of web-search work; +113 from session-open baseline (276/670 = 41.2%)
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~170 rows**
+- All 28 commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Continuation-3 close
+
+HEAD: `a67b0ba7`. Crossed 57% eligibility milestone. Next session bootstrap: read this session record, continue from owner-queue items + remaining ~170 ATO × no-ID rows. Top remaining buckets after this push:
+- US guidelines (10 remaining): REF-00235/00236 dysautonomia/POTS, REF-00295 "five-feature" inventory, REF-00537 photosensitive epilepsy, REF-00290 Open Doors disability traveler stats, REF-00321 accessible washers/dryers, REF-00442 "Decoded"
+- INT reports (~11 remaining): REF-00039 Sense International deafblind guidelines, REF-00591 Allen 1988 CDM AJOT, REF-00384 Simoneau 1991, REF-00388 Koontz 2012, REF-00386 Kim 2014, REF-00188 housing accessibility handbook, REF-00732 Strassheim OI, REF-00311 OECD social/affordable housing, REF-00529 Thompson 2022, REF-00256 indoor thermal, REF-00607 Speech reverberation, REF-00632 cross-cultural camouflaging
+- UK reports (~10 remaining): REF-00110 DiMHN, REF-00492/00523 dementia tools, REF-00147 Habinteg case study, REF-00542 Unwin sensory room, REF-00353 loops + Auracast, REF-00394/00396 stair falls
+- DE, FR, NO, NL, CA, JP, IE all have multi-row clusters
+
+### Final reminder for next session
+
+Owner-queue items still pending from across all sessions (Day 1-3 backlog):
+- REF-00527 vs REF-00090 Crane first name (Jasmine vs James) — verify which row is misattributed
+- REF-00273 Brunson 2019 "Adorable Housing" — likely OCR error, original intent unclear
+- REF-00733 Ismail fibromyalgia hydrotherapy SR — no Crossref hit
+- REF-00292/00293 modern bathroom / 2026 rental market blog content
+- REF-00304/00305/00308/00309 generic cost-of-accessibility figures
+- REF-00591 Allen 1988 CDM AJOT — needs journal volume/page confirmation
+- REF-00384 Simoneau 1991 journal mismatch
+- REF-00388 Koontz 2012 title mismatch
+- REF-00386 Kim 2014 J Mech Sci Tech possible dup of REF-00030
+- REF-00045 AU "Adapting the Environment" 2022
+- REF-00073 Ringaert 2001 UDI Manitoba
+
+Skill+audit promotion Level 2→4: ~7-day shakedown started 2026-05-20; due ~2026-05-27.
+DR-2026-05-20 still PROPOSED — pending owner ratification.
