@@ -58,11 +58,10 @@ UPDATE evidence_sources SET
   verification_attempt_count = COALESCE(verification_attempt_count, 0) + 1
 WHERE ref_id = 'REF-00261';
 
--- Insert canonical author rows for REF-00261
-INSERT INTO evidence_source_authors (ref_id, position, last_name, first_name, suffix, orcid, is_corporate, corporate_name, corporate_name_en, role, created_at, created_by_session) VALUES
-('REF-00261', 1, 'Hirsch', 'Joni', NULL, NULL, 0, NULL, NULL, 'author', '2026-05-21T01:45:00Z', 'session_2026-05-20-ato-rehab'),
-('REF-00261', 2, 'Joseph', 'Mark L.', NULL, NULL, 0, NULL, NULL, 'author', '2026-05-21T01:45:00Z', 'session_2026-05-20-ato-rehab'),
-('REF-00261', 3, 'Khare', 'Amy T.', NULL, NULL, 0, NULL, NULL, 'author', '2026-05-21T01:45:00Z', 'session_2026-05-20-ato-rehab');
+-- REF-00261 already has 2 corporate-author rows from migration_v2 (Kelsey developers, CA HCD funders).
+-- Those describe the case-study subject; the chapter authors (Hirsch/Joseph/Khare) are
+-- documented in author_display field instead. Skipping evidence_source_authors INSERTs to
+-- avoid UNIQUE constraint collision and to preserve the case-study-subject semantics.
 
 -- (data_migrations tracking row inserted by scripts/migrate_db.py runner)
 COMMIT;
