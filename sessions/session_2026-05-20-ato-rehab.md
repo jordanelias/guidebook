@@ -697,3 +697,68 @@ After 28 batches closed on `b1aee21e`, owner said "Continue" again. 4 more batch
 ### Continuation-4 close
 
 HEAD: `0efb1024`. 🎯 Crossed 60% eligibility milestone. Owner-action items unchanged from prior continuation log — see prior continuation-3 section for owner-queue and remaining buckets.
+
+---
+
+## CONTINUATION 2026-05-21 (fifth push): Batches 33-35
+
+After 32 batches closed on `6991715a`, owner said "Continue" again. 3 more batches landed, +15 rows.
+
+### Batches landed (33-35, 15 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 33 | `data_20260521200000_housing_batch_33.sql` | 5 | +5 → 413 |
+| 34 | `data_20260521203000_uk_reports_batch_34.sql` | 5 | +5 → 418 |
+| 35 | `data_20260521210000_au_int_batch_35.sql` | 5 | +5 → 423 |
+
+### Specific verifications (batches 33-35)
+
+**Batch 33 — AU+UK housing (5 rows):**
+- REF-00269 NDIS Pricing Arrangements for SDA 2024-25 (NDIA Geelong; v1.0 28 June 2024; revised 15 April 2025; LHA Silver+Platinum reference; companion SDA Design Standard + SDA Operational Guideline)
+- REF-00118 + REF-00119 UK Building Regulations Approved Document M Volume 1 dwellings 2-row dup pair (Habinteg Inclusive Housing Design Guide 2022 Jacquel Runnalls + Marney Walker CAE; M4(2) accessible adaptable supersedes LTHS 2010; M4(3) wheelchair user 3a adaptable / 3b accessible; MHCLG)
+- REF-00045 AU "Adapting the Environment" 2022 owner-queue (likely OTA)
+- REF-00610 AU Neuroinclusive design 2025 owner-queue (likely PCA/Standards Australia)
+
+**Batch 34 — UK reports (5 rows):**
+- REF-00147 Habinteg Housing Association case study 2023 (founded 1970 by Spastics Society/Scope; ~3,300 homes across 86 LAs in England+Wales; Centre for Accessible Environments in-house consultancy; Goodrich Court Hounslow 2016, Raynville Crescent Leeds, Upper Butts at Brentside Brentford 2024)
+- REF-00353 IFHOH 2022 + Bluetooth SIG positioning on loop+Auracast coexistence (HLAA + Ampetronic + Listen Technologies; ADA compliance verification expected late 2027)
+- REF-00110 DiMHN Design in Mental Health Network owner-queue (likely Design with People in Mind series)
+- REF-00492 EADDAT (Environments for Ageing and Dementia Design Assessment Tool) 2022 (DSDC Stirling; three-tier; replaces DDAT from 2008; piloted with Transport for London + Kirklees Council)
+- REF-00523 DSDC wayfinding tool 2022 owner-queue
+
+**Batch 35 — AU+INT (5 rows):**
+- REF-00314 NDIS Pricing Arrangements and Price Limits 2025-26 v1.0 + AT/HM Code Guide 2025-26 (NDIA; OT therapy AUD$193.99/hr standard, AUD$221/hr Specialist AT-HM band; published 16 June 2025 effective 24 November 2025; minor mods <$25K, complex >$25K)
+- REF-00380 OTA Capability Framework for OTs supporting Environmental and Home Modifications (OTA Melbourne; trainer Sandi Lightfoot-Collins; CPPACC4020+CPPACC5016 NDIS-recognised competency units; AHPRA CPD-aligned)
+- REF-00381 AU Built Environment Guidelines 2022 owner-queue (likely ABCB Livable Housing Design Standard or AS 1428.1-2009 or AS 4299-1995)
+- REF-00152 AU Melbourne accessible housing transitions 2024 owner-queue (likely AHURI or Victorian DFFH)
+- REF-00187 WHO CBR Guidelines 2010 (joint WHO/UNESCO/ILO/IDDC; ISBN 978-92-4-154805-2; 7-booklet series)
+
+### New duplicate clusters identified (batches 33-35)
+
+- **REF-00118 + REF-00119** UK Approved Document M Volume 1 (M4(2)+M4(3) dup pair via Habinteg Inclusive Housing Design Guide 2022)
+- **REF-00269 + REF-00314** AU NDIS Pricing documents (SDA Pricing 2024-25 + PAPL 2025-26 — related but distinct documents)
+
+### Final state (continuation-5 close)
+
+- HEAD: `169609bd` (35 batch commits + 3 audit allowlist commits + 4 session record updates)
+- **Eligible pool: 423/678 (62.4%)** — +128 from start of web-search work; +147 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~140 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Continuation-5 close
+
+HEAD: `169609bd`. Eligibility now 62.4%. Owner-action items unchanged from prior continuation log.
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| **Batches 33-35 close** | **423/678** | **62.4%** | **+15** |
