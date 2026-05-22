@@ -252,6 +252,8 @@ def run_checks(db_path):
         "10.4324/9781003564164",      # Inclusive Housing Design Guide — 3 BPCs
         "10.1016/j.mayocp.2021.07.004", # Bateman et al. ME/CFS Essentials — 4 BPCs (cool environment / sensory / PEM management / post-COVID)
         "10.3390/ijerph192114279",     # Owen & Crane 2022 TID scoping review — 2 BPCs (REF-00090 + REF-00527; Crane first name mismatch in queue)
+        "10.1177/1937586717730338", # Lee 2018 HERD Beyond ADA — 2 BPCs (REF-00033 + REF-00034)
+        "10.3389/frdem.2025.1524425", # van Buuren 2025 Frontiers in Dementia wayfinding — 2 BPCs (REF-00488 + REF-00520)
     )
     dup_rows = conn.execute(f"""
         SELECT doi, COUNT(*) AS n FROM evidence_sources
