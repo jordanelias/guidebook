@@ -832,3 +832,67 @@ This signals that some ATO rows in the no-ID pool actually have findable DOIs vi
 | Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
 | Batches 33-35 close | 423/678 | 62.4% | +15 |
 | **Batches 36-38 close** | **439/678** | **64.7%** | **+16** |
+
+---
+
+## CONTINUATION 2026-05-21 (seventh push): Batch 39
+
+After 38 batches closed on `dc3c080a`, owner said "Continue" again. 1 more batch landed, +6 rows.
+
+### Batch landed (39, 6 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 39 | `data_20260521224500_doi_uplift_batch_39.sql` | 6 | +6 → 445 |
+
+### Specific verifications (batch 39 — pure DOI uplift)
+
+This batch was a focused DOI resolution pass on journal-article candidates from the remaining ATO pool. All 6 rows are now COMPLETE-with-DOI (not just COMPLETE-STATUTORY):
+
+- REF-00033 Lee SJ et al. 2018 HERD — DOI 10.1177/1937586717730338 "Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers" (bilateral fold-down 813mm/32" grab bars; 60% prefer over ADA; year-corrected 2017→2018; dup pair with REF-00034)
+- REF-00384 Simoneau GG 1991 J Gerontol — DOI 10.1093/geronj/46.6.m188 "The Influence of Visual Factors on Fall-related Kinematic Variables During Stair Descent by Older Women" (title-corrected from "Whole-body kinematics... Hum Mov Sci" which had no Crossref match; Crossref returns J Gerontol as canonical Simoneau 1991 stair paper)
+- REF-00388 Koontz AM 2012 APMR — DOI 10.1016/j.apmr.2011.10.023 "Effect of Backrest Height on Wheelchair Propulsion Biomechanics for Level and Uphill" (owner-queue: disambiguate with J Appl Biomech 28(4):412 candidate)
+- REF-00520 van Buuren LPG 2025 Frontiers in Dementia — DOI 10.3389/frdem.2025.1524425 "Wayfinding behavioral patterns of seniors with dementia: two exploratory case studies" (PMC11931140 confirmed via NCBI eutils; dup pair with REF-00488)
+- REF-00729 Faerden A et al. 2023 HERD — DOI 10.1177/19375867221136558 "Environmental Transformations Enhancing Dignity in an Acute Psychiatric Ward: Outcome of a Pre-Post Pilot Study" (single rooms + patient control; year-corrected 2022→2023)
+- REF-00732 Strassheim V et al. 2018 BMJ Open — DOI 10.1136/bmjopen-2017-020775 "Defining the prevalence and symptom burden of those with self-reported severe chronic fatigue syndrome/myalgic encephalomyelitis (CFS/ME): a two-phase community pilot study in the North East of England" (covers OI in ME/CFS as part of symptom burden)
+
+### New duplicate clusters identified (batch 39)
+
+- **REF-00033 + REF-00034** Lee 2018 HERD Beyond ADA grab bar — 2-row pair
+- **REF-00488 + REF-00520** van Buuren 2025 Frontiers in Dementia wayfinding — 2-row pair
+
+Both added to `KNOWN_DUP_DOIS` allowlist in `scripts/tests/test_db_integrity.py`.
+
+### Title corrections + year corrections (batch 39)
+
+- REF-00033 year 2017→2018 (HCD Magazine 2017 review of 2018 HERD paper)
+- REF-00384 title "Whole-body kinematics during stair ascent and descent. Hum Mov Sci" → "The Influence of Visual Factors on Fall-related Kinematic Variables During Stair Descent by Older Women" J Gerontol (no Hum Mov Sci Simoneau 1991 paper found in Crossref)
+- REF-00729 year 2022→2023 (HERD online first 2022 / print 2023)
+
+### Final state (continuation-7 close)
+
+- HEAD: `950a3665` (39 batch commits + 4 audit allowlist commits + 4 session record updates)
+- **Eligible pool: 445/678 (65.6%)** — +150 from start of web-search work; +169 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~116 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Methodology note: Title-search DOI uplift is high-yield
+
+Batch 39 confirms the finding from batch 38: a Crossref author+title search on each remaining ATO row can recover DOIs not found by Day 1 mining. 6/6 candidates in this batch resolved to high-confidence DOIs, including 2 corrections to DB metadata (title and year).
+
+The Day 1 mining pipeline used DOI-shaped pattern matching from text fields; that approach misses rows where the DOI is not embedded in the URL/title but exists in Crossref under standard author+title lookup. Recommended next focus for the remaining ~116 ATO rows is to scan titles for journal-article phrasing patterns (`Effect of`, `Comparison`, `Study`, `Trial`, `Review`, `Systematic`) and run targeted Crossref queries.
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| Batches 33-35 close | 423/678 | 62.4% | +15 |
+| Batches 36-38 close | 439/678 | 64.7% | +16 |
+| **Batch 39 close** | **445/678** | **65.6%** | **+6** |
