@@ -1444,3 +1444,60 @@ After 61 batches closed on `0c4cfc7d` and continuation-15 session record on `cbc
 | Batches 50-56 (72.7%) | 493/678 | 72.7% | +18 |
 | Batches 57-61 (74.9%) | 508/678 | 74.9% | +15 |
 | **Batches 62-63 (75.7%)** | **513/678** | **75.7%** | **+5** |
+
+---
+
+## CONTINUATION 2026-05-22 (seventeenth push): Batch 64 + gap decomposition
+
+After 63 batches closed on `25339248` and continuation-16 session record on `f30e6288`, owner said "continue" and asked about the post-cohort residual (gap from 558 to 678). 1 more batch landed, +3 rows. **Documented 165-row non-eligible composition (5 buckets) for forward planning.**
+
+### Batch landed (64, 3 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 64 | `data_20260522102000_mixed_batch_64.sql` | 3 | +3 → **516 (76.1%)** |
+
+### Specific verifications (batch 64)
+
+**Batch 64 — NL Hogeweyk + US MH + UK bariatric (3 rows):**
+- REF-00287 NL "Living with Dementia in Dignity: The Dutch Hogeweyk Concept" — iGlobenews 3 April 2025; co-creators Yvonne van Amerongen + Jannette Spiering (1992 origin) + Eloy van Hal (later); 23 houses + 150-169 residents + 6-7 per household; antipsychotic use 1-in-10 vs 1-in-4 standard NL dementia care
+- REF-00111 US outpatient MH environment patient-perspective qualitative study (n=13) — context framework: Center for Health Design + HERD + SAMHSA Trauma-Informed Care; placeholder author row inserted; owner-queue first-author confirmation pending
+- REF-00193 UK healthcare bariatric design — NHS HBN 00-04 + HBN 04-02 + BS 8300-2:2018 + IHEEM Health Technical Memoranda; 250 kg SWL grab rails, 350 kg bariatric-spec equipment, 1500mm corridors, 4.5×4.5m bariatric bay, 250-500 kg ceiling-track hoists; underlying NHS Estates ADB + HBNs hierarchy
+
+### Gap decomposition: 678 ← 165 non-eligible (post-cohort residual)
+
+Owner question: after the current ATO × no-ID cohort clears, what comprises the difference between ~558 (eligible-if-cohort-cleared) and 678 (total)?
+
+The 165 non-eligible rows fall into **five buckets** that the current web-search work-stream does not address:
+
+| Bucket | Count | Why non-eligible | Future clearance channel |
+|---|---|---|---|
+| 1. `mq=GREY × vs=NULL` (pre-DR-2026-05-18) | 53 | Gray-lit rows never re-graded after 2026-05-18 DR introduced `COMPLETE-STATUTORY` as alternate path | One-shot SQL regrade similar to Day-1 32-statutory cleanup |
+| 2. `mq=AUTHOR-TITLE-ONLY × vs=NULL` (pre-ID + pre-verification) | 30 | ATO rows never touched by either Channel-1 or Channel-2 verification (separate from the 34 currently-being-cleared cohort that has `vs=VERIFIED` already from Day-1 pass) | Same web-search method as current batches OR Channel-2 if HAS-ID |
+| 3. `mq=ATO × vs=VERIFIED` (verified-existence but missing metadata) | 19 | DOI/PMID present + source exists but metadata fields never populated | Channel-2 automated Crossref/PubMed enrichment pipeline (script: `scripts/probes/citation_mining_pipeline.py`) |
+| 4. `mq=COMPLETE-STATUTORY × vs=DEFERRED-V2-AUTOMATED` | 19 | Queued for v2 automated verification; never executed | Channel-2 automated re-verification run |
+| 5. `mq=COMPLETE-STATUTORY × vs=IS-PAYWALL` | 18 | Verification source paywalled; rule #10(2) requires `PAYWALL→downgrade-or-non-paywalled-corroboration` | Web-search for non-paywalled corroboration |
+| 6. `mq=GREY × vs=VERIFIED` (verified gray-lit, never regraded) | 12 | Gray-lit existing rows that were verified but stuck at `mq=GREY` instead of `mq=COMPLETE-STATUTORY` | One-shot SQL regrade (subset of bucket 1 — easier; already verified) |
+| 7. Other residual (NULL × various, NEEDS-HUMAN, PROBABILISTIC, UNVERIFIED-CLOSED) | 14 | Mixed long-tail | Case-by-case |
+
+**Takeaway:** The current ATO × no-ID work-stream targets only ~34 of the 165 non-eligible. Reaching 678/678 will require: (a) bucket-1 SQL regrade run (~50-65 rows quick win), (b) Channel-2 enrichment pipeline run (~15-30 rows), (c) paywall pass (~15-18 rows), (d) deferred-v2 batch run (~19 rows). Estimated ceiling ~660+ after these passes; ~15-20 rows will remain UNVERIFIED-CLOSED.
+
+### Final state (continuation-17 close)
+
+- HEAD: `bcb86b25` (64 batch commits + 7 audit allowlist commits + 9 session record updates pre-this-update)
+- **Eligible pool: 516/678 (76.1%)** — +221 from start of web-search work; +240 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~31 rows**
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-61 (74.9%) | 508/678 | 74.9% | +33 |
+| Batches 62-63 (75.7%) | 513/678 | 75.7% | +5 |
+| **Batch 64 (76.1%)** | **516/678** | **76.1%** | **+3** |
