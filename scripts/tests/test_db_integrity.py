@@ -247,7 +247,7 @@ def run_checks(db_path):
         "10.1177/1533317509334959",    # Dementia-friendly architecture — 2 BPCs
         "10.1177/193758671100400207",  # EADDAT validation — 2 BPCs
         "10.1371/journal.pone.0269657", # Wheelchair biomechanics — 2 BPCs
-        "10.2196/69442",              # Grab bar / bathroom safety — 2 BPCs
+        "10.2196/69442",              # Levine 2025 JMIR R&AT grab bar/bathroom safety — 3 BPCs (REF-00029+00367+00391)
         "10.3389/fpsyt.2021.727353",  # ASPECTSS design index — 4 BPCs (autism)
         "10.4324/9781003564164",      # Inclusive Housing Design Guide — 3 BPCs
         "10.1016/j.mayocp.2021.07.004", # Bateman et al. ME/CFS Essentials — 4 BPCs (cool environment / sensory / PEM management / post-COVID)
@@ -257,6 +257,7 @@ def run_checks(db_path):
         "10.1016/j.ergon.2014.07.001",  # Kim 2014 IJIE ramp slope wheelchair — 2 BPCs (REF-00030 + REF-00386)
         "10.1177/13623613231180266",  # Unwin 2024 Autism multi-sensory environments — 2 BPCs (REF-00542 + REF-00609)
         "10.1177/19375867211043546",  # van Buuren 2022 HERD Dementia-Friendly Design — 2 BPCs (REF-00301 + REF-00487)
+        "10.2196/60622",              # Harper 2025 IJMR stair high-contrast striping — 2 BPCs (REF-00395 + REF-00534)
     )
     dup_rows = conn.execute(f"""
         SELECT doi, COUNT(*) AS n FROM evidence_sources
