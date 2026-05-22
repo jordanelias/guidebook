@@ -1349,3 +1349,53 @@ After 56 batches closed on `7e890dc6` and continuation-13 session record on `9e5
 | Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
 | Batches 50-56 (72.7%) | 493/678 | 72.7% | +18 |
 | **Batches 57-59 (73.9%)** | **501/678** | **73.9%** | **+8** |
+
+---
+
+## CONTINUATION 2026-05-22 (fifteenth push): Batches 60-61
+
+After 59 batches closed on `7831c9cf` and continuation-14 session record on `8107240c`, owner said "proceed". 2 more batches landed, +7 rows. **Major ASPECTSS Mostafa 2014 cluster correction (4 BPCs) + UD bathroom ROI + Accenture Getting to Equal + DeafSpace Gallaudet SLCC. Crossed 74% milestone.**
+
+### Batches landed (60-61, 7 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 60 | `data_20260522080000_aspectss_batch_60.sql` | 4 | +4 → 505 (74.5%) |
+| 61 | `data_20260522084000_us_reports_batch_61.sql` | 3 | +3 → **508 (74.9%)** |
+
+### Specific verifications (batches 60-61)
+
+**Batch 60 — ASPECTSS cluster fix (4 rows):**
+- REF-00051, REF-00129, REF-00517, REF-00592 — **MAJOR JOURNAL+YEAR CLUSTER CORRECTION** Mostafa M (2014) "ARCHITECTURE FOR AUTISM: Autism ASPECTSS™ in School Design" *Archnet-IJAR* 8(1):143-158 DOI 10.26687/archnet-ijar.v8i1.314 (Crossref-confirmed). Prior DB cited Frontiers in Psychiatry DOI 10.3389/fpsyt.2021.727353 (404 invalid). 4 author rows inserted (Magda Mostafa, American University in Cairo). Seven principles: Acoustics, Spatial sequencing, Escape, Compartmentalization, Transition spaces, Sensory zoning, Safety. Advance Centre for Special Needs Qattameya Cairo (Progressive Architects). Sister paper 2014 IJCE DOI 10.18848/2154-8587/cgp/v04i02/37413; 2015 Archnet-IJAR 9(1) sister paper. Mostafa now developing 500,000 m² ASPECTSS-based UAE community.
+
+**Batch 61 — US reports (3 rows):**
+- REF-00274 Cost vs Value Report — Zonda Media (Remodeling Magazine + JLC Online); 28-35 projects × 119-150 US markets; UD bathroom remodel ROI: 57.9% (2021), 60.1% midrange bath (2021), 61.2% (2025, +11pts), pre-pandemic ~68-70% (matches DB description "≈68–70%"); project scope 5×7 ft bathroom wheelchair access + curbless roll-in shower + grab bars + fold-down seat + comfort-height toilet + LVT flooring
+- REF-00275 Getting to Equal: The Disability Inclusion Advantage — Accenture + Disability:IN + AAPD 2018 (17 pages; 140 companies via DEI 4-year analysis; 45 best-in-class; 28% higher revenue, 2× net income, 30% higher economic profit margins; 29% PwD vs 75% non-disabled employment July 2018; 15.1M PwD US working-age; $25B GDP potential; four-pillar Employ/Enable/Engage/Empower)
+- REF-00170 DeafSpace SLCC self-report (Gallaudet University DeafSpace Project; Hansel Bauman + SmithGroupJJR; Sorenson Language and Communication Center 2008; DeafSpace Guidelines ~150 design elements × 5 categories: Space and Proximity, Sensory Reach, Mobility and Proximity, Light and Color, Acoustics; rounded corners + curved-wall principles; Co-1 designer-affiliated evidence ranking)
+
+### Duplicate clusters extended (continuation-15)
+- 10.26687/archnet-ijar.v8i1.314 (Mostafa ASPECTSS 2014) — 4 BPCs (REF-00051+00129+00517+00592)
+
+### Major topic+journal+year rebinds (batches 60-61)
+- **REF-00051/00129/00517/00592 cluster**: journal Front Psychiatry→Archnet-IJAR; year 2021→2014; DOI 10.3389/fpsyt.2021.727353 (INVALID 404)→10.26687/archnet-ijar.v8i1.314 (resolved)
+
+### Final state (continuation-15 close)
+
+- HEAD: `0c4cfc7d` (61 batch commits + 7 audit allowlist commits + 7 session record updates pre-this-update)
+- **Eligible pool: 508/678 (74.9%)** — +213 from start of web-search work; +232 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~50 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-56 (72.7%) | 493/678 | 72.7% | +18 |
+| Batches 57-59 (73.9%) | 501/678 | 73.9% | +8 |
+| **Batches 60-61 (74.9%)** | **508/678** | **74.9%** | **+7** |
