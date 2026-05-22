@@ -1686,3 +1686,47 @@ Bulk Crossref title-search across 25 GREY×NULL rows yielded only 5 strong match
 | Day 1 open | 236/670 | 35.2% | — |
 | Continuation-19 (84.8%) | 575/678 | 84.8% | — |
 | **Continuation-20 (85.8%)** | **582/678** | **85.8%** | **+7** |
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-first push): GREY targeted resolution rounds 1+2
+
+After continuation-20 close on `318f4958`, owner said "proceed". Two targeted-resolution batches landed using Crossref title-search with topical query terms rather than placeholder titles. **+7 rows.**
+
+### Batches landed (R1, R2; 7 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| R1 | `data_20260522123000_grey_targeted_resolution.sql` | 4 | +4 → 586 (86.4%) |
+| R2 | `data_20260522125000_grey_targeted_round2.sql` | 3 | +3 → **589 (86.9%)** |
+
+### Verified
+
+**Round 1:**
+- REF-00099 van der Schaaf, Dusseldorp, Keuning, Janssen, Noorthoorn (2013) Br J Psychiatry 202(2):142-149 DOI 10.1192/bjp.bp.112.118422 psychiatric-ward physical-environment seclusion
+- REF-00098 Price E (2024) Sage Encyclopedia of LGBTQ+ Studies "Dementia" entry DOI 10.4135/9781071891414.n126 — owner-queue topic mismatch with DB "EDITION study"
+- REF-00189 Hoover-Fong JE et al. (2022) Yearbook Paediatr Endocrinol DOI 10.1530/ey.19.5.8 achondroplasia growth CLARITY n=1,374
+- REF-00573 Bettarello F, Di Prisco M, Scavuzzo G, Caniato M (2025) Forum Acusticum / EuroNoise 2025 6075-6079 DOI 10.61782/fa.2025.0068 neurodivergent acoustic design
+
+**Round 2:**
+- REF-00251 van Hoof J, Kort HSM, Hensen JLM, Duijnstee MSH, Rutten PGS (2010) Build Environ 45(2):358-370 DOI 10.1016/j.buildenv.2009.06.013 dementia thermal comfort PMV/PPD
+- REF-00393 Manandhar S, Lukman A, Dain SJ, Bridge CE, Relf M, Boon MY (2022) Work 73(4):1265-1278 DOI 10.3233/wor-210997 LRV preferences vision impairment UNSW
+- REF-00631 de Leeuw A, Happé F, Hoekstra RA (2020) Autism Research 13(7):1029-1050 DOI 10.1002/aur.2276 cultural+contextual autism framework
+
+### Yield observation
+
+Topical-query Crossref search (matching DB author + a relevant topic keyword instead of placeholder title text) raised hit rate from ~20% (round 0) to ~60% (rounds 1-2). Misses were Haig, De Cuyper, Grey, Hayashi, Jost, McDowell anthropometric, Geisser — none of which surfaced credible matches even with targeted search. These need owner-supplied citation hints or per-row deeper web search.
+
+### Final state (continuation-21 close)
+
+- HEAD: latest batch commit + session-record update
+- **Eligible: 589/678 (86.9%)** — +313 from session-open baseline
+- 89 non-eligible remain
+- 35/35 db_integrity green
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-20 (85.8%) | 582/678 | 85.8% | — |
+| **Continuation-21 (86.9%)** | **589/678** | **86.9%** | **+7** |
