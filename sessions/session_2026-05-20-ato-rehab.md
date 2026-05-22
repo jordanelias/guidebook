@@ -1293,3 +1293,59 @@ After 53 batches closed on `f32b0e18` and continuation-12 session record on `681
 | Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
 | Batches 50-53 (71.7%) | 486/678 | 71.7% | +11 |
 | **Batches 54-56 (72.7%)** | **493/678** | **72.7%** | **+7** |
+
+---
+
+## CONTINUATION 2026-05-22 (fourteenth push): Batches 57-59
+
+After 56 batches closed on `7e890dc6` and continuation-13 session record on `9e5716b5`, owner said "proceed". 3 more batches landed, +8 rows. Multi-jurisdictional CAN/DK + first US dementia village + DOI uplift + Christogianni MS heat sensitivity. **Crossed 73% milestone + ~500/678 floor.**
+
+### Batches landed (57-59, 8 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 57 | `data_20260522063000_mixed_batch_57.sql` | 3 | +3 → 496 |
+| 58 | `data_20260522070000_us_dementia_batch_58.sql` | 2 | +2 → 498 |
+| 59 | `data_20260522074000_canada_dk_batch_59.sql` | 3 | +3 → **501 (73.9%)** |
+
+### Specific verifications (batches 57-59)
+
+**Batch 57 — RHFAC + MS heat + Norway doors (3 rows):**
+- REF-00300 hcma + Rick Hansen Foundation RHFAC Retrofits + Upgrades Cost Study Jan 2024 (10 office towers + 10 schools BC+Ontario 1974-2019; RHFAC Gold <0.5% replacement cost office tower; <1.5% K-12 school; $1.50/sf offices + $9.00/sf schools; underlying NBC 2015 + OBC 2018 + Accessible Canada Act)
+- REF-00254 Christogianni A, O'Garro J, Bibb R, Filtness A, Filingeri D (2022) MSARD 67:104075 DOI 10.1016/j.msard.2022.104075 (n=757; SOURCE_TYPE REBIND guideline→journal_article; 5 author rows; University of Southampton + MS Society UK; Uhthoff's phenomenon; **D01 duplicate cluster with REF-VERIFIED-010** — allowlisted)
+- REF-00468 Norway Husbanken/DiBK doors guidance — TEK17 §12-2 + §12-12 + §12-15 (terskel ≤25mm); Husbankens veileder til grunnlån kap. 5; companion 2002 Universal Design compendium ed. Asmervik + Rønnevig
+
+**Batch 58 — US dementia villages (2 rows):**
+- REF-00286 Avandell first U.S. dementia village — United Methodist Communities + Perkins Eastman; Holmdel NJ 18 acres; 15 seven-bedroom houses; 105 residents; founder Larry Carlson (book "Avandell: Reimagining the Dementia Experience" 2023); inspired by Hogeweyk (Carlson 2017 visit); NYT feature July 2023; still in zoning April 2024; ~$12,000/month private-pay projection
+- REF-00285 Dementia Village Viability Within the Current U.S. Healthcare System 2024 analysis (Hogeweyk-model replication challenges in US private-pay context; owner-queue specific paper)
+
+**Batch 59 — Canada UDI + dementia/noise + Denmark NVD (3 rows):**
+- REF-00073 Ringaert L, Rapson D, Qui J, Cooper J, Shwedyk E (2001) — UDI University of Manitoba Determination of New Dimensions for UD Codes and Standards (5 author rows; cited in Steinfeld et al. 2005 IDEA Center; cross-jurisdictional ANSI A117.1 + CSA B651-04 + BS 8300:2001 + AS 1428.2-1992; lead author Laurie Ringaert now on ASC Board)
+- REF-00569 Canada dementia + noise — Condran S (Shannex Arborstone Halifax NS 2017 sound audit pilot + CABHI Toronto; WHO 2011 EU DALY environmental noise report; 1 author row; owner-queue year clarification)
+- REF-00599 Denmark NVD (Nationalt Videnscenter for Demens) circadian lighting — Rigshospitalet under Region Hovedstadens Psykiatri; CIE S 026:2018 melanopic-EDI framework; EN 17037:2018 + EN 12464-1:2021 daylight standards
+
+### Duplicate clusters extended (continuation-14)
+- 10.1016/j.msard.2022.104075 (Christogianni MS heat 2022) — 2 BPCs (REF-00254 + REF-VERIFIED-010 pre-existing)
+
+### Genre/topic rebinds (batches 57-59)
+- **REF-00254 MS heat**: source_type guideline→journal_article; rebound to Christogianni Filingeri 2022 MSARD as canonical underlying source
+
+### Final state (continuation-14 close)
+
+- HEAD: `7831c9cf` (59 batch commits + 6 audit allowlist commits + 6 session record updates pre-this-update)
+- **Eligible pool: 501/678 (73.9%)** — +206 from start of web-search work; +225 from session-open baseline. **First time crossing 500/678 floor.**
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~57 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-56 (72.7%) | 493/678 | 72.7% | +18 |
+| **Batches 57-59 (73.9%)** | **501/678** | **73.9%** | **+8** |
