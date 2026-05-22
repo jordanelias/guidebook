@@ -1239,3 +1239,57 @@ After 51 batches closed on `57f96425`, owner said "proceed". 2 more batches land
 | Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
 | Batches 50-51 (71%) | 482/678 | 71.1% | +7 |
 | **Batches 52-53 (71.7%)** | **486/678** | **71.7%** | **+4** |
+
+---
+
+## CONTINUATION 2026-05-22 (thirteenth push): Batches 54-56
+
+After 53 batches closed on `f32b0e18` and continuation-12 session record on `6811edf0`, owner said "proceed". 3 more batches landed, +7 rows. Two genre/topic rebinds (Castell + Allen) + DOI uplifts + multi-jurisdictional LRV standard + Ireland NCSE Sensory Spaces + Hogeweyk POE. **Crossed 72% milestone.**
+
+### Batches landed (54-56, 7 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 54 | `data_20260522050000_ie_nl_batch_54.sql` | 2 | +2 → 488 (72.0%) |
+| 55 | `data_20260522054000_mixed_batch_55.sql` | 3 | +3 → 491 (72.4%) |
+| 56 | `data_20260522060000_doi_uplift_batch_56.sql` | 2 | +2 → **493 (72.7%)** |
+
+### Specific verifications (batches 54-56)
+
+**Batch 54 — Ireland + Netherlands (2 rows):**
+- REF-00085 De Hogeweyk Dementia Village POE (Weesp NL; opened 2009; architects MBVDA Molenaar&Bol&vanDillen; founders Eloy van Hal + Yvonne van Amerongen Vivium Zorggroep; 23 apartments + outpatient unit; 6-7 person small-household model; ~40% wheelchair residents; CDA-AMC + IPA Cambridge + ScienceDirect 2021 mixed-methods scoping review synthesis-package evidence; 2 author rows inserted; underlying Wlz)
+- REF-00545 Ireland NCSE Sensory Spaces in Schools 2025 update (first edition Oct 2021; 2025 update March + Dec 2025 republication; ETSS June 2024 + Eurydice ECEA 22 Jan 2025; 39 OTs+SLTs+5 BPs recruitment; underlying EPSEN Act 2004 + Education Act 1998 + DES School Design Guide 2021 + Wellbeing Policy Statement 2019)
+
+**Batch 55 — Castell + Lund thesis + RadarAdvies (3 rows):**
+- REF-00004 Castell L (2008) — **MAJOR GENRE+TOPIC REBIND** — "Building access for the intellectually disabled" *Facilities* (Emerald) 26(3/4):117-130 DOI 10.1108/02632770810849463 (Crossref-confirmed; 1 author row; was misattributed as a dementia-design book; now correctly identified as Facilities journal article on ID building access; owner-queue downstream BPC re-attribution)
+- REF-00310 Lund University 2023 PhD dissertation "Universal design in practice: förståelse, genomförande och samskapande" (qualitative methods 55 participants 3 Swedish municipalities; NO-MATCH DOI; owner-queue author surname pending portal.research.lu.se record)
+- REF-00498 NL RadarAdvies 2023 Dementievriendelijke ontmoetingsplekken pilot evaluation (Alzheimer Nederland + Vilans framework; underlying Wlz + WMO 2015)
+
+**Batch 56 — Allen 1988 + Canada LRV (2 rows):**
+- REF-00591 Allen CK (1988) — **JOURNAL CORRECTION** — "Occupational Therapy: Functional Assessment of the Severity of Mental Disorders" *Hospital and Community Psychiatry* (renamed *Psychiatric Services* 1995) 39(2):140-142 DOI 10.1176/ps.39.2.140 (Crossref-confirmed; prior DB cited AJOT; 1 author row; foundational CDM reference Claudia K Allen psychiatric inpatient settings ACLS-5 lacing stitches 6 cognitive levels expanded to 26 Modes of Performance Allen 1992 with Earhart CA)
+- REF-00531 Canada LRV 30% — **MULTI-JURISDICTIONAL STANDARD** — Accessibility Standards Canada CAN-ASC-2.4 Wayfinding+Signage clause 10 Table 1 + BS 8300-2:2018 (UK) + AS 1428.1:2009 (AU, Bowman-Sapolinski equation); large surfaces ≥40 LRV light + ≥30% Michelson; hazards ≥50/≥60%; text ≥70/≥60%; underlying Accessible Canada Act 2019 + UK Equality Act 2010 + AU DDA; argument: 30% is regulatory FLOOR not functional optimum (CMHR adopts 70% best-practice)
+
+### Genre/topic rebinds (batches 54-56)
+
+- **REF-00004 Castell 2008**: source_type guideline→journal_article; pub_title "Designing for People with Dementia and Other Cognitive Disabilities"→"Building access for the intellectually disabled" (different topic entirely); journal *Facilities* (Emerald); DOI uplift to 10.1108/02632770810849463
+- **REF-00591 Allen 1988**: journal_name AJOT→*Hospital and Community Psychiatry* (Psychiatric Services); DOI uplift to 10.1176/ps.39.2.140
+
+### Final state (continuation-13 close)
+
+- HEAD: `7e890dc6` (56 batch commits + 5 audit allowlist commits + 5 session record updates pre-this-update)
+- **Eligible pool: 493/678 (72.7%)** — +198 from start of web-search work; +217 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~62 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-53 (71.7%) | 486/678 | 71.7% | +11 |
+| **Batches 54-56 (72.7%)** | **493/678** | **72.7%** | **+7** |
