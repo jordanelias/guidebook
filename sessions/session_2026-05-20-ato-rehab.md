@@ -983,3 +983,64 @@ Title-search DOI uplift now confirmed as a high-yield channel for the remaining 
 | Batches 36-38 close | 439/678 | 64.7% | +16 |
 | Batch 39 close | 445/678 | 65.6% | +6 |
 | **Batches 40-42 close** | **454/678** | **67.0%** | **+9** |
+
+---
+
+## CONTINUATION 2026-05-22 (ninth push): Batches 43-44
+
+After 42 batches closed on `8282395f`, owner said "proceed". 2 more batches landed, +8 rows. Mixed DOI uplift + statutory.
+
+### Batches landed (43-44, 8 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 43 | `data_20260522000000_doi_uplift_batch_43.sql` | 3 | +3 → 457 |
+| 44 | `data_20260522001500_statutory_batch_44.sql` | 5 | +5 → 462 |
+
+### Specific verifications (batches 43-44)
+
+**Batch 43 — Journal-article DOI uplift (3 rows):**
+- REF-00175 Turvey MT (1996) American Psychologist 51(11):1134 — DOI 10.1037/0003-066x.51.11.1134 "Dynamic touch" (year-corrected 1995→1996; the foundational haptic-perception paper by Michael T. Turvey)
+- REF-00385 Waters RL, Mulroy S (1988) J Orthop Res 6(2) — DOI 10.1002/jor.1100060208 "Energy-speed relationship of walking: Standard tables" (year-corrected 1985→1988; standard tables for gait energy economics)
+- REF-00383 Templer J (1992) MIT Press — ISBN 978-0-262-20088-2 "The Staircase: Studies of Hazards, Falls, and Safer Design" (book — set doi_resolution_outcome=NO-MATCH per books-as-canonical convention; companion 1994 review at DOI 10.2307/3106526 in Technology and Culture)
+
+**Batch 44 — Multi-jurisdiction statutory (5 rows):**
+- REF-00509 India MoHUA + CPWD + IIT Roorkee (Prof. Gaurav Raheja PI) + NIUA — "Harmonised Guidelines and Standards for Universal Accessibility in India 2021" (HGS-2021) (released Dec 2021; supersedes Feb 2016 Barrier-Free Built Environment for PwD and Elderly guidelines; amended by RPwD Amendment Rules 2023 vide G.S.R. 413(E))
+- REF-00633 Chile Congreso Nacional — Ley N° 21.545 (Ley TEA) (promulgated 2 March 2023; Diario Oficial 10 March 2023; first Latin American autism statute; Art. 66 quinquies Código del Trabajo labour permit; Arts. 18+21 accessibility-of-education)
+- REF-00494 Singapore CLC + AIC — "Dementia-Friendly Neighbourhood Design Guide" (launched 2 Dec 2023 by PM Lee Hsien Loong; built on AIC-CLC DFN Study; for Singapore high-rise high-density context)
+- REF-00495 Yuen B, Bhuyan MR, Song S, Moogoor A, Yap W, Močnik Š, Chua R (2022) "Age-Friendly Neighbourhood Planning and Design Guidelines: A Singapore Case Study" World Scientific — DOI 10.1142/12467 ISBN 978-981-122-997-1 (title-corrected from "Six Principles..."; year-corrected 2020→2022; SUTD team; owner-queue if intended Mitchell+Burton 2010 instead)
+- REF-00347 Italy Repubblica Italiana — Decreto-Legge 22 marzo 2021 n. 41 art. 34-ter Decreto Sostegni (convertito Legge 21 maggio 2021 n. 69) recognising LIS (Lingua dei Segni Italiana) + LIS Tattile
+
+### Title/year/initial/journal corrections (batches 43-44)
+
+- REF-00175: year 1995→1996
+- REF-00385: year 1985→1988
+- REF-00495: title from generic "Six Principles" to actual book title; year 2020→2022
+
+### Final state (continuation-9 close)
+
+- HEAD: `0c72b540` (44 batch commits + 5 audit allowlist commits + 4 session record updates)
+- **Eligible pool: 462/678 (68.1%)** — +167 from start of web-search work; +186 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~98 rows** (under 100 for first time)
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Methodology continuing to validate
+
+Combined DOI-uplift + statutory pass continues to yield results. Continuation-9 added 5 statutory + 3 DOI = 8 rows. Next session should sweep remaining no-author ATO rows for statutory cluster matches (UK guidelines, US guidelines, Norway, Japan, Korea, Nordic).
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| Batches 33-35 close | 423/678 | 62.4% | +15 |
+| Batches 36-38 close | 439/678 | 64.7% | +16 |
+| Batch 39 close | 445/678 | 65.6% | +6 |
+| Batches 40-42 close (67% crossed) | 454/678 | 67.0% | +9 |
+| **Batches 43-44 close (68% crossed)** | **462/678** | **68.1%** | **+8** |
