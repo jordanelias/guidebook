@@ -896,3 +896,90 @@ The Day 1 mining pipeline used DOI-shaped pattern matching from text fields; tha
 | Batches 33-35 close | 423/678 | 62.4% | +15 |
 | Batches 36-38 close | 439/678 | 64.7% | +16 |
 | **Batch 39 close** | **445/678** | **65.6%** | **+6** |
+
+---
+
+## CONTINUATION 2026-05-21 (eighth push): Batches 40-42
+
+After 39 batches closed on `950a3665`, owner said "Continue" again. 3 more batches landed, +10 rows. All pure DOI uplift.
+
+### Batches landed (40-42, 10 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 40 | `data_20260521230000_doi_uplift_batch_40.sql` | 4 | +3 → 448 |
+| 41 | `data_20260521232000_doi_uplift_batch_41.sql` | 4 | +4 → 452 |
+| 42 | `data_20260521234000_doi_uplift_batch_42.sql` | 2 | +2 → 454 |
+
+Note: Batch 40 reports 4 rows verified but only +3 to eligible count because REF-00386 was already COMPLETE-STATUTORY (kept eligible during type promotion from -STATUTORY to COMPLETE-with-DOI).
+
+### Specific verifications (batches 40-42 — pure DOI uplift)
+
+All 10 rows now COMPLETE-with-DOI (high-confidence journal-article metadata).
+
+**Batch 40 — additional initial/title/journal corrections (4 rows):**
+- REF-00386 Kim C, Lee D, Kwon S, Chung M (2014) Int J Ind Ergon — DOI 10.1016/j.ergon.2014.07.001 "Effects of ramp slope, ramp height and users' pushing force on performance, muscular activity and subjective ratings during wheelchair driving on a ramp" (DB had initial W→C corrected + journal J Mech Sci Technol→IJIE corrected; dup pair with REF-00030)
+- REF-00301 van Buuren LPG (Lyanne), Mohammadi M (2022) HERD — DOI 10.1177/19375867211043546 "Dementia-Friendly Design: A Set of Design Criteria and Design Typologies Supporting Wayfinding" (DB had initial R→L corrected + title-corrected from generic; dup pair with REF-00487; this is the foundation paper for REF-00488+00520 follow-up)
+- REF-00542 Unwin KL, Powell G, Price A, Jones CRG (2024) Autism — DOI 10.1177/13623613231180266 "Patterns of equipment use for autistic children in multi-sensory environments: Time spent with sensory equipment varies by-population" (year-corrected 2023→2024; dup pair with REF-00609)
+- REF-00632 Keating CT + 17 co-authors (2024) PLOS ONE — DOI 10.1371/journal.pone.0299824 "Cross-cultural variation in experiences of acceptance, camouflaging and mental health difficulties in autism: A registered report" (Crompton-hint was incorrect — Connor T. Keating is lead author; 18 author rows inserted into evidence_source_authors)
+
+**Batch 41 — 4 rows:**
+- REF-00607 Tsironis A, Vlahou E, Kontou P, Bagos P, Kopčo N (2024) Trends in Hearing — DOI 10.1177/23312165241273399 "Adaptation to Reverberation for Speech Perception: A Systematic Review"
+- REF-00256 Tang Y, Yu H, Mao H, Zhang K, Wang M (2025) J Build Eng — DOI 10.1016/j.jobe.2024.111714 "Indoor thermal comfort and ageing: A systematic review" (year-corrected 2024→2025; DOI prefix is 2024 manuscript)
+- REF-00391 Levine I, Nirmalanathan K, Montgomery R, Novak A (2025) JMIR R&AT — DOI 10.2196/69442 "Grab Bar Grasp Location During Bathtub Exit and Sit-to-Stand Transfers: Biomechanical Evaluation" (existing dup with REF-00029 + REF-00367 — cluster grew 2→3)
+- REF-00395 Harper S, Brown C, Poulsen S, Barrett T, Dakin C (2025) IJMR — DOI 10.2196/60622 "Interstep Variations of Stairways and Associations of High-Contrast Striping and Fall-Related Events: Observational Study" (dup pair with REF-00534)
+
+**Batch 42 — 2 rows:**
+- REF-00296 + REF-00307 Ielegems E, Vanrie J (2024) Archnet-IJAR 18(4) — DOI 10.1108/arch-07-2023-0178 "The cost of universal design for public buildings: exploring a realistic, context-dependent research approach" (dup pair; jurisdiction corrected INT→BE for Belgium-affiliated Hasselt University authors)
+
+### New duplicate clusters identified (batches 40-42)
+
+- **REF-00030 + REF-00386** Kim 2014 IJIE ramp slope wheelchair
+- **REF-00301 + REF-00487** van Buuren 2022 HERD Dementia-Friendly Design
+- **REF-00542 + REF-00609** Unwin 2024 Autism multi-sensory
+- **REF-00029 + REF-00367 + REF-00391** Levine 2025 JMIR R&AT grab bar — 3-row cluster (was 2-row)
+- **REF-00395 + REF-00534** Harper 2025 IJMR stair striping
+- **REF-00296 + REF-00307** Ielegems 2024 Archnet-IJAR
+
+### Title/year/journal/initial corrections (batches 40-42)
+
+- REF-00386: initial W→C, journal JMST→IJIE, full author list updated
+- REF-00301: initial R→L, title corrected from generic, full author list updated
+- REF-00542: year 2023→2024
+- REF-00632: 18-author roster inserted (DB row had 0 author rows; G02 audit was failing)
+- REF-00256: year 2024→2025
+
+### Notes on Crossref+title-search pipeline
+
+The 14-row DOI-uplift sweep (batches 38-42) achieves a 100% hit rate on rows where title and author hint are sufficient to disambiguate. This contrasts with the Day 1 mining pipeline (which used URL-embedded DOI pattern matching and missed all 14 of these).
+
+Pre-existing DB metadata issues uncovered by this work and now corrected: 5 year errors, 1 journal error, 2 initial errors, 1 18-author roster gap. All corrections logged in metadata_integrity_status. These will need owner re-review before Phase E (reasoning-doc) cites them — owner-queue items list now ~38.
+
+The ASPECTSS DOI `10.3389/fpsyt.2021.727353` in the existing KNOWN_DUP_DOIS allowlist returns 404 from Crossref — appears to be a pre-existing data issue (4-row cluster REF-00051, REF-00129, REF-00517, REF-00592 all sharing an invalid DOI). Out of scope for these continuation batches but flagged for next session's pre-Phase-B cleanup.
+
+### Final state (continuation-8 close)
+
+- HEAD: `8282395f` (42 batch commits + 5 audit allowlist commits + 4 session record updates)
+- **Eligible pool: 454/678 (67.0%)** — +159 from start of web-search work; +178 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~106 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Methodology updates
+
+Title-search DOI uplift now confirmed as a high-yield channel for the remaining ATO pool. 14/14 candidates in batches 38-42 (100%) resolved to high-confidence DOIs. Next continuation should sweep the remaining 23 author-hint ATO rows by the same protocol before moving to no-author rows.
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| Batches 33-35 close | 423/678 | 62.4% | +15 |
+| Batches 36-38 close | 439/678 | 64.7% | +16 |
+| Batch 39 close | 445/678 | 65.6% | +6 |
+| **Batches 40-42 close** | **454/678** | **67.0%** | **+9** |
