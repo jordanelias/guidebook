@@ -1646,3 +1646,43 @@ Per query: 670/678 rows (98.8%) are cited in `source_slug_links`, `evidence_popu
 | Batches 50-64 (76.1%) | 516/678 | 76.1% | +41 |
 | Continuation-18 (79.4%) [Channel-2 + regrade pivot] | 538/678 | 79.4% | +22 |
 | **Continuation-19 (84.8%) [DEFERRED-V2 + paywall]** | **575/678** | **84.8%** | **+37** |
+
+---
+
+## CONTINUATION 2026-05-22 (twentieth push): GREY+ATO null resolution
+
+After 68 migration commits closed on `694277ac` and continuation-19 session record on `0ce22ae6`, owner said "proceed". One batch landed via Crossref/PubMed title-search resolution of author+year hints already in DB. **+7 rows.**
+
+### Batch landed
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| GR | `data_20260522121000_grey_ato_null_resolution.sql` | 7 | +7 → **582 (85.8%)** |
+
+### Specific verifications (continuation-20)
+
+- REF-00104 Askew, Fisher, Beazley 2020 J Psychiatr Ment Health Nurs 27(3):272-280 DOI 10.1111/jpm.12576 forensic seclusion; year-corrected 2019→2020
+- REF-00132 Iwarsson, Nygren, Slaug 2005 Scand J Occup Ther 12(1):29-39 DOI 10.1080/11038120510027144 Housing Enabler inter-rater reliability (Lund)
+- REF-00135 Russell, Ormerod, Newton 2018 J Aging Res 2018:4904379 DOI 10.1155/2018/4904379 4-phase 9-subphase OT-design protocol (Salford SURFACE)
+- REF-00138 Zallio, Chivaran, Capece, Clarkson, Buono 2023 Strateg Des Res J 15(3):262-276 DOI 10.4013/sdrj.2022.153.04 inclusive spatial learning
+- REF-00219 Chaseling, Batlett, Capon, Crandall, Fiatarone Singh, Bi 2022 FASEB J 36(S1):R3555 DOI 10.1096/fasebj.2022.36.s1.r3555 beta-blocker thermal-strain abstract
+- REF-00407 + REF-00454 Putthinoi, Lersilp, Chakpitak 2017 J Aging Res 2017:2865960 DOI 10.1155/2017/2865960 PMID 28656108 PMC5471586 Thai elderly ICF — D01 cluster allowlisted
+
+### Yield observation
+
+Bulk Crossref title-search across 25 GREY×NULL rows yielded only 5 strong matches (~20%); rest were wrong-author/topic noise. This bucket is harder than DEFERRED-V2 or IS-PAYWALL — many rows have intentional `[Title unverified — X et al. Y]` placeholders that require manual resolution. The "easy cluster" gains are largely exhausted; remaining work needs targeted web search per row.
+
+### Final state (continuation-20 close)
+
+- HEAD: `0934d7b9` (69 migration commits + 9 audit allowlist commits + 12 session record updates pre-this-update)
+- **Eligible pool: 582/678 (85.8%)** — +287 from start of web-search work; +306 from session-open baseline
+- 96 non-eligible remain
+- All commits pass 35/35 db_integrity
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Continuation-19 (84.8%) | 575/678 | 84.8% | — |
+| **Continuation-20 (85.8%)** | **582/678** | **85.8%** | **+7** |
