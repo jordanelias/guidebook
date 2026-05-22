@@ -1137,3 +1137,62 @@ Statutory-cluster pass + INT report pass both yielding consistent results. 10 st
 - ASPECTSS 4-row cluster (REF-00051/00129/00517/00592) — pre-existing 404 DOI, needs cleanup
 - Pure ISBN-book candidates: REF-00179 Baum, REF-00004 Castell
 - Remaining single-row jurisdictions: NG, UAE, IE, IT, DE
+
+---
+
+## CONTINUATION 2026-05-22 (eleventh push): Batches 50-51
+
+After 49 batches closed on `aaed5c6e`, owner said "proceed". 2 more batches landed, +7 rows. Mixed DOI + statutory + book-chapter ISBN-canonical. **Crossed 71% milestone.**
+
+### Batches landed (50-51, 7 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 50 | `data_20260522023000_mixed_batch_50.sql` | 4 | +4 → 479 |
+| 51 | `data_20260522030000_mixed_batch_51.sql` | 3 | +3 → **482 (71.1%)** |
+
+### Specific verifications (batches 50-51)
+
+**Batch 50 — Mixed (4 rows):**
+- REF-00179 Baum CM, Christiansen CH, Bass JD (2015) "The Person-Environment-Occupation-Performance (PEOP) Model" book chapter — In: Christiansen CH, Baum CM, Bass JD (Eds.) *Occupational Therapy: Performance, Participation and Well-being* 4th ed., SLACK Incorporated, Thorofare NJ, pp. 49-56 (ISBN 978-1-61711-803-0; books-as-canonical, NO-MATCH DOI; 3 author rows inserted)
+- REF-00080 Finland Invalidiliitto Esteettömyyskeskus ESKE (2018) — ESKEH (Esteettömyyskartoitusmenetelmä) Built Environment Accessibility Audit Framework 2018 update (originally ESKEH-projekti 2007-2009, RAY + Helsinki kaikille funded; companion Luonto-ESKEH 2014/2019/2024)
+- REF-00636 India Autism Center (IAC) — Practice Design (Sandip Agarwal, Mumbai+Kolkata); Sirakole/Shirakole West Bengal; 52-acre integrated autism township; 350 residents + 250 daycare; expected completion 2030; founders Suresh Kumar + Namita Somani
+- REF-00392 Owsley C, McGwin G, Sloane ME, Stalvey BT, Wells J (2001) "Timed Instrumental Activities of Daily Living (TIADL) Tasks: Relationship to Visual Function in Older Adults" Optom Vis Sci 78(5):350-359 DOI 10.1097/00006324-200105000-00019 PMID 11384013 (owner-queue: title may need rebind; 5 author rows inserted)
+
+**Batch 51 — Mixed statutory + report (3 rows):**
+- REF-00496 France Cerema (2022) — "Construire ou rénover une structure d'accueil Alzheimer — La qualité d'usage des bâtiments. Série de fiches. Fiche n°8" (13-author fiche team Demanche, Lucas, Racineux, Maître, Barbe, Gallard, Bes, Pignal, Bauregard, Labry, Saby, Rivoire, Tolleron; underlying CASF art. L.311-3 (3°); ANESM/HAS framework)
+- REF-00021 Korea — 한국시각장애인연합회 (KBU) 시각장애인편의시설지원센터 + 한국시각장애인복지관 (KWFB) 점자블록 (tactile paving) advocacy 2019 (선형 + 점형 blocks; height ≥2mm threshold; Hankook Ilbo Oct 2019 Seoul subway 12-station reportage; underlying 편의증진법)
+- REF-00072 France Ifop — Enquête Ifop pour APF France handicap 2020 (recurring accessibility-of-built-environment + autonomy poll; underlying Loi du 11 février 2005 + Ad'AP + CCH L111-7)
+
+### Title corrections + author rosters (batches 50-51)
+
+- REF-00179: title updated from generic "PEOP model" to specific book chapter title
+- REF-00080: pub_year confirmed 2018 (was 2018 — kept; mapped to 2018 update edition, not earlier 2007-2009 framework)
+- REF-00179 PEOP: 3 author rows inserted (Baum, Christiansen, Bass)
+- REF-00392 Owsley: 5 author rows inserted
+
+### Final state (continuation-11 close)
+
+- HEAD: `57f96425` (51 batch commits + 5 audit allowlist commits + 4 session record updates pre-this-update)
+- **Eligible pool: 482/678 (71.1%)** — +187 from start of web-search work; +206 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~80 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| Batches 33-35 close | 423/678 | 62.4% | +15 |
+| Batches 36-38 close | 439/678 | 64.7% | +16 |
+| Batch 39 close | 445/678 | 65.6% | +6 |
+| Batches 40-42 close (67% crossed) | 454/678 | 67.0% | +9 |
+| Batches 43-44 close (68% crossed) | 462/678 | 68.1% | +8 |
+| Batches 45-49 close (70% crossed) | 475/678 | 70.1% | +13 |
+| **Batches 50-51 close (71% crossed)** | **482/678** | **71.1%** | **+7** |
