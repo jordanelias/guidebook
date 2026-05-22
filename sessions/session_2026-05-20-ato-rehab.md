@@ -1578,3 +1578,71 @@ Continuation-17 gap-decomposition identified that the current ATO × no-ID web-s
 | Batches 50-61 (74.9%) | 508/678 | 74.9% | +33 |
 | Batches 62-64 (76.1%) | 516/678 | 76.1% | +8 |
 | **Continuation-18 (79.4%) [pivot to Channel-2 + regrade]** | **538/678** | **79.4%** | **+22** |
+
+---
+
+## CONTINUATION 2026-05-22 (nineteenth push): DEFERRED-V2 + IS-PAYWALL pivots
+
+Owner asked about citation utilization. Answer: 670/678 rows are cited (98.8%); only 8 are orphans. Of 140 non-eligible at continuation-18 close, 129 were cited (high priority — providing value but blocked); 1 was uncited (REF-00733 Ismail fibromyalgia hydrotherapy SR — candidate for retirement). 7 uncited × eligible rows (REF-00728-00735 range) are orphans-but-valid; future BPCs may pull them.
+
+Owner said "proceed". This push **continued the Channel-2/non-web-search pivot** with two cluster batches targeting the cited × non-eligible pool. **2 batches landed, +37 rows.**
+
+### Batches landed (DEFERRED-V2, paywall; 37 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| DV2 | `data_20260522113000_deferred_v2_batch.sql` | 19 | +19 → 557 (82.2%) |
+| PW | `data_20260522114000_paywall_batch.sql` | 18 | +18 → **575 (84.8%)** |
+
+### Specific verifications (continuation-19)
+
+**DEFERRED-V2 batch — 19 non-English statutory standards flipped DEFERRED-V2-AUTOMATED → VERIFIED:**
+- **China GB 50763-2012 cluster (6 rows):** REF-00016, REF-00359, REF-00375, REF-00462, REF-00475, REF-00510 — 无障碍设计规范 Code for Accessibility Design; issuing body MOHURD + CDPF; effective 2012-09-01
+- **Japan バリアフリー法 cluster (3 rows):** REF-00419, REF-00440, REF-00463 — Act No. 91 of 2006 (建築物移動等円滑化誘導基準); MLIT issuing body
+- **Japan 建築設計標準 (REF-00065):** MLIT Housing Bureau 2025 update; duplicated title text cleaned
+- **Japan 特別支援学校施設整備指針 (REF-00198):** MEXT 2021 Special Support School Facilities Design Guidelines
+- **Sweden BFS 2024:12 cluster (5 rows):** REF-00237, REF-00413, REF-00423, REF-00439, REF-00449 — Boverket BBR/ALM/TIL; underlying SFS 2010:900 Plan- och bygglag
+- **China school standards (3 rows):** REF-00195 建标156-2011 (national); REF-00196 Beijing Special Education School Design; REF-00197 Zhejiang DB3303/T 084-2025 (provincial)
+
+**IS-PAYWALL batch — 18 standards verified via issuing-body catalog corroboration (per DR-2026-05-13 rule #10(2)):**
+- **Brazil ABNT NBR 9050:2020 cluster (5 rows):** REF-00077, REF-00208, REF-00414, REF-00435, REF-00456 — abntcatalogo.com.br corroboration
+- **NL NEN 9120:2025 cluster (3 rows):** REF-00071, REF-00433, REF-00466 — nen.nl catalog
+- **US ANSI/ASA S12.60-2010 Part 1 cluster (4 rows):** REF-00326, REF-00335, REF-00563, REF-00604 — webstore.ansi.org catalog
+- **Japan JIS T 9251:2006 (REF-00017):** JISC catalog tactile-block standard
+- **ISO 10535:2021 (REF-00116):** ISO catalog hoists for disabled persons (BSI/CEN adoption)
+- **IEC TR 63079:2017 (REF-00334):** IEC webstore hearing loop systems code of practice
+- **CIE TN 015:2023 (REF-00560):** CIE catalog circadian + neurophysiological photometry
+- **IES RP-46-23 (REF-00559):** IES catalog hospital and healthcare facility lighting
+- **Denmark SBi-anvisning 218 (REF-00575):** SBi/BUILD catalog school-classroom indoor environment + acoustics
+
+### Citation-utilization framing established
+
+Per query: 670/678 rows (98.8%) are cited in `source_slug_links`, `evidence_population_match`, `reasoning_doc_citations`, `spec_value_probes`, `item_population_elaborations`, or `citation_mining`. Only 8 rows are orphans. **All work is directly uplifting BPC value.** The pivot strategy (Channel-2 / regrade / catalog-corroboration) is hitting the highest-leverage rows because they share patterns (clusters of same standard, paywalled catalogs, ID-but-not-enriched).
+
+### Final state (continuation-19 close)
+
+- HEAD: `694277ac` (68 migration commits + 8 audit allowlist commits + 11 session record updates pre-this-update)
+- **Eligible pool: 575/678 (84.8%)** — +280 from start of web-search work; +299 from session-open baseline
+- Schema v14, 678 rows
+- All commits pass 35/35 db_integrity + Guidebook CI
+
+### Remaining non-eligible composition (103)
+
+- GREY × NULL (53 placeholder rows without IDs)
+- ATO × NULL (26 untouched ATO without IDs)
+- GREY × VERIFIED with publisher only (5)
+- ATO × VERIFIED (7 — Channel-2 candidates; REF-00543 truncated DOI)
+- COMPLETE-STATUTORY × NEEDS-HUMAN (2)
+- COMPLETE × PROBABILISTIC (1) + UNVERIFIED-CLOSED (1)
+- Cited × orphan (1; uncited × non-eligible REF-00733)
+- Long-tail mixed (7)
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-49 (70%) | 475/678 | 70.1% | +239 |
+| Batches 50-64 (76.1%) | 516/678 | 76.1% | +41 |
+| Continuation-18 (79.4%) [Channel-2 + regrade pivot] | 538/678 | 79.4% | +22 |
+| **Continuation-19 (84.8%) [DEFERRED-V2 + paywall]** | **575/678** | **84.8%** | **+37** |
