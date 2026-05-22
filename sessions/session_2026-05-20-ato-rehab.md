@@ -1501,3 +1501,80 @@ The 165 non-eligible rows fall into **five buckets** that the current web-search
 | Batches 50-61 (74.9%) | 508/678 | 74.9% | +33 |
 | Batches 62-63 (75.7%) | 513/678 | 75.7% | +5 |
 | **Batch 64 (76.1%)** | **516/678** | **76.1%** | **+3** |
+
+---
+
+## CONTINUATION 2026-05-22 (eighteenth push): Pivot to Channel-2 + regrade strategy
+
+After 64 batches closed on `bcb86b25` and continuation-17 session record on `b4706265`, owner said "proceed". This push **pivoted from the web-search-only strategy to the Channel-2 + regrade strategy** identified in the gap decomposition. 3 sub-passes landed, +22 rows total.
+
+### Passes landed (regrade1, regrade2, channel2-enrichment; 22 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| R1 | `data_20260522103000_grey_regrade_pass1.sql` | 5 | +5 → 521 (76.8%) |
+| R2 | `data_20260522104000_grey_regrade_pass2.sql` | 5 | +5 → 526 (77.6%) |
+| C2 | `data_20260522110000_ato_verified_enrichment.sql` | 12 | +12 → **538 (79.4%)** |
+
+### Specific verifications (continuation-18)
+
+**Regrade Pass 1 — 5 GREY rows with DOI + publisher + author + Crossref-backfill:**
+- REF-00374 Golding-Day S 2018 BATH-OUT HSCC Wiley DOI 10.1111/hsc.12824 → COMPLETE + 1 author
+- REF-00379 AOTA 2023 Home Modification Practice Guidelines Routledge book DOI 10.4324/9781003525264-4 → COMPLETE (corporate)
+- REF-00131 Holohan E 2022 AUT trauma-informed design scoping review DOI 10.24135/10292/18859 → COMPLETE-STATUTORY (institutional grey-lit) + 1 author
+- REF-00628 Crompton CJ 2024 UAlbany institutional repository DOI 10.54014/7sew-4fp4 → COMPLETE-STATUTORY (preprint/IR) + 1 author
+- REF-00642 Simpson K, Adams D, Dargue N 2025 IJIE Informa DOI 10.1080/13603116.2025.2589290 → COMPLETE + 3 authors
+
+**Regrade Pass 2 — 5 GREY rows with valid DOIs Crossref-resolved (placeholder titles → canonical):**
+- REF-00356 Stark, Keglovits, Arbesman, Lieberman 2017 AJOT 71(2):7102290010 home-modification SR DOI 10.5014/ajot.2017.018887 + 4 authors
+- REF-00363 Gitlin, Winter, Dennis, Corcoran, Schinfeld, Hauck 2006 JAGS 54(5):809-816 multicomponent home intervention DOI 10.1111/j.1532-5415.2006.00703.x + 6 authors
+- REF-00368 Greene, Levine, Guay, Novak 2024 CJOT 91(2):183-193 grab-bar biomechanics DOI 10.1177/00084174231186066 + 4 authors
+- REF-00371 Guay, Latulippe, Auger, Giroux, Séguin-Tremblay, Gauthier, Genest, Morales, Vincent 2020 JMIR 22(8):e16175 Hygiene 2.0 bathroom AT DOI 10.2196/16175 + 9 authors
+- REF-00242 Hersche, Weise 2022 Occup Ther Int 2022:4590154 post-COVID-19 OT energy management DOI 10.1155/2022/4590154 + 2 authors
+
+**Channel-2 enrichment — 12 ATO×VERIFIED rows had DOI/PMID; Crossref/PubMed-resolved:**
+- REF-00008 van der Kuil et al. 2022 Neuropsychol Rehabil 32(7):1405-1428 ABI navigation
+- REF-00041 Hu 2024 Can J Disabil Stud 13(1):164-168 (Touch the Future book review)
+- REF-00068 + REF-00151 Keall et al. 2015 Lancet 385(9964):231-238 HIPI cluster (allowlisted, 26% fall reduction)
+- REF-00091 Ames + Loebach 2023 J Child Adolesc Trauma 16(4):805-817 TID therapeutic residential
+- REF-00100 PMID 39128221 Hospital design psychiatry umbrella review J Psychiatr Res 2024 (owner-queue authors)
+- REF-00101 Schreiber et al. 2022 BMC HSR 22(1) Open Doors by Fair Means
+- REF-00103 Husum et al. 2010 BMC HSR 10(1) Norwegian psychiatric seclusion+restraint
+- REF-00105 PMID 38193620 Int J Ment Health Nurs 2024 Protocols to reduce seclusion (owner-queue)
+- REF-00136 Zallio + Clarkson 2021 Build Environ 206:108352 IDEA framework
+- REF-00172 Haber 1980 Science 209(4458):799-800 (review of Gibson 1979 Ecological Approach)
+- REF-00261 Hirsch + Joseph + Khare 2021 Cities + Affordable Housing Routledge chapter 92-112 (Kelsey Civic Center context)
+
+### Strategic shift documented
+
+Continuation-17 gap-decomposition identified that the current ATO × no-ID web-search work-stream only addresses ~31 of the 165 non-eligible rows. **This push validated that pivot:** in ~30 minutes of pivoting to Channel-2 + regrade, +22 rows landed vs ~3-7 rows/batch via web-search. Per-row cost dropped roughly 5×.
+
+### Final state (continuation-18 close)
+
+- HEAD: `69836a83` (66 migration commits + 8 audit allowlist commits + 10 session record updates pre-this-update)
+- **Eligible pool: 538/678 (79.4%)** — +243 from start of web-search work; +262 from session-open baseline
+- Schema v14, 678 rows
+- All commits pass 35/35 db_integrity + Guidebook CI
+
+### Updated non-eligible composition (140 remaining)
+
+- GREY × VERIFIED with publisher only (no DOI): 5 (owner-queue or web-search)
+- GREY × NULL (53 placeholders without IDs): 53 (web-search per ATO method or Channel-2 if findable)
+- ATO × NULL (untouched ATO): 30 (same web-search method)
+- ATO × VERIFIED with DOI/PMID: 1 (REF-00543 truncated DOI; needs Crossref resolve)
+- COMPLETE-STATUTORY × DEFERRED-V2-AUTOMATED: 19
+- COMPLETE-STATUTORY × IS-PAYWALL: 18
+- Other long-tail (NULL/NEEDS-HUMAN/PROBABILISTIC/UNVERIFIED-CLOSED): 14
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-61 (74.9%) | 508/678 | 74.9% | +33 |
+| Batches 62-64 (76.1%) | 516/678 | 76.1% | +8 |
+| **Continuation-18 (79.4%) [pivot to Channel-2 + regrade]** | **538/678** | **79.4%** | **+22** |
