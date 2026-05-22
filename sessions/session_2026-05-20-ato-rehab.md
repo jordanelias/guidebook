@@ -1399,3 +1399,48 @@ After 59 batches closed on `7831c9cf` and continuation-14 session record on `810
 | Batches 50-56 (72.7%) | 493/678 | 72.7% | +18 |
 | Batches 57-59 (73.9%) | 501/678 | 73.9% | +8 |
 | **Batches 60-61 (74.9%)** | **508/678** | **74.9%** | **+7** |
+
+---
+
+## CONTINUATION 2026-05-22 (sixteenth push): Batches 62-63
+
+After 61 batches closed on `0c4cfc7d` and continuation-15 session record on `cbc2c501`, owner said "continue". 2 more batches landed, +5 rows. **Crossed 75% MILESTONE.**
+
+### Batches landed (62-63, 5 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 62 | `data_20260522092000_mixed_batch_62.sql` | 3 | +3 → 511 (75.4%) |
+| 63 | `data_20260522094000_jp_nordic_batch_63.sql` | 2 | +2 → **513 (75.7%)** |
+
+### Specific verifications (batches 62-63)
+
+**Batch 62 — Mixed Crossref + Norway BCR + Latiff (3 rows):**
+- REF-00606 Lee S-M, Park C-J, Haan C-H (2022) "Investigation of the Appropriate Reverberation Time in Learning Spaces for Elderly People Using Speech Intelligibility Tests" *Buildings* 12(11):1943 DOI 10.3390/buildings12111943 (3 author rows; Crossref-confirmed; Korea aging-society context; 5 reverberation conditions 0.4-1.2s; CVC tests; RT60+D50+STI parameters; sister paper Jo A-H et al. 2022 *Buildings* 12(6):808)
+- REF-00299 Norway Government Action Plan for Universal Design 2015-2019 — Bufdir + Norwegian Ministry of Children, Equality and Social Inclusion; 47 measures; UNCRPD ratified 2013; UD2024 conference (Sept 2024) benefit-cost framework: Andresen+Sveen Bufdir, Lindberg+Amilon BCR mapping, Harsheim Oslo Economics; owner-queue Fuglerud rebind (Fuglerud's research is digital accessibility, not built-environment BCR)
+- REF-00641 Latiff 2024 biophilic outdoor transitional zones NDV — Crossref returned no relevant matches; underlying Kellert+Browning Terrapin Bright Green 14 Patterns framework; 1 author row inserted as placeholder; owner-queue citation pending
+
+**Batch 63 — JP + Nordic deafblind (2 rows):**
+- REF-00044 全国盲ろう者協会 (Japan Deafblind Association, JDBA) deafblind communication framework — founded 1991 as Japan's sole national social-welfare-corporation for deafblind welfare; 通訳・介助員 mandatory service under 障害者総合支援法 + 身体障害者福祉法 1949; 6 communication methods (触手話, 弱視手話, ブリスタ, 指点字, 手書き文字, アルファベット式+日本語式指文字); DINF chapter 4 reference
+- REF-00040 Nordic Deafblind Field — Nordens Välfärdscenter (NVC, Nordic Welfare Centre) under Nordic Council of Ministers; Nordic Definition of Deafblindness (revised 2007); congenital vs acquired classification (USHER 1/2/3, CHARGE association, rubella embryopathy); companion DbI + Helen Keller National Center + Sense UK + EDBN; UN CRPD Art. 24(3)(c) + Art. 9
+
+### Final state (continuation-16 close)
+
+- HEAD: `25339248` (63 batch commits + 7 audit allowlist commits + 8 session record updates pre-this-update)
+- **Eligible pool: 513/678 (75.7%)** — +218 from start of web-search work; +237 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~45 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-56 (72.7%) | 493/678 | 72.7% | +18 |
+| Batches 57-61 (74.9%) | 508/678 | 74.9% | +15 |
+| **Batches 62-63 (75.7%)** | **513/678** | **75.7%** | **+5** |
