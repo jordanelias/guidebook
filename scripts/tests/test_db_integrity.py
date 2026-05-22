@@ -252,6 +252,7 @@ def run_checks(db_path):
         "10.4324/9781003564164",      # Inclusive Housing Design Guide — 3 BPCs
         "10.1016/j.mayocp.2021.07.004", # Bateman et al. ME/CFS Essentials — 4 BPCs (cool environment / sensory / PEM management / post-COVID)
         "10.3390/ijerph192114279",     # Owen & Crane 2022 TID scoping review — 2 BPCs (REF-00090 + REF-00527; Crane first name mismatch in queue)
+        "10.1016/j.msard.2022.104075", # Christogianni Filingeri 2022 MS heat sensitivity — 2 BPCs (REF-00254 + REF-VERIFIED-010 pre-existing)
         "10.1177/1937586717730338", # Lee 2018 HERD Beyond ADA — 2 BPCs (REF-00033 + REF-00034)
         "10.3389/frdem.2025.1524425", # van Buuren 2025 Frontiers in Dementia wayfinding — 2 BPCs (REF-00488 + REF-00520)
         "10.1016/j.ergon.2014.07.001",  # Kim 2014 IJIE ramp slope wheelchair — 2 BPCs (REF-00030 + REF-00386)
