@@ -1196,3 +1196,46 @@ After 49 batches closed on `aaed5c6e`, owner said "proceed". 2 more batches land
 | Batches 43-44 close (68% crossed) | 462/678 | 68.1% | +8 |
 | Batches 45-49 close (70% crossed) | 475/678 | 70.1% | +13 |
 | **Batches 50-51 close (71% crossed)** | **482/678** | **71.1%** | **+7** |
+
+---
+
+## CONTINUATION 2026-05-22 (twelfth push): Batches 52-53
+
+After 51 batches closed on `57f96425`, owner said "proceed". 2 more batches landed, +4 rows. All statutory + Norwegian SINTEF book.
+
+### Batches landed (52-53, 4 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 52 | `data_20260522040000_nordic_nl_batch_52.sql` | 2 | +2 → 484 |
+| 53 | `data_20260522043000_jp_us_batch_53.sql` | 2 | +2 → 486 |
+
+### Specific verifications (batches 52-53)
+
+**Batch 52 — Norway SINTEF + NL (2 rows):**
+- REF-00263 Denizou K (2019) — SINTEF Fag #60 "Nye kriterier for Husbankens grunnlån — Merkostnader og betalingsvilje for livsløpsboliger" (ISBN 978-82-536-1611-6; SINTEF Akademisk Forlag; commissioned by KMD; published 25 June 2019; 1 author row inserted; books-as-canonical NO-MATCH DOI)
+- REF-00086 Netherlands Alzheimer Nederland + Vilans dementia-friendly design (Hogeweyk Care Concept companion; underlying Wlz + WMO 2015; owner-queue: title remains generic)
+
+**Batch 53 — Japan voluntary + US deafblind (2 rows):**
+- REF-00355 Japan 全日本難聴者・中途失聴者団体連合会 (Zen-Nan-Cho) ヒアリングループマーク (jurisdiction-corrected JA→JP; adopted 26 Oct 2014 at 全難聴福祉大会 Mie; companion 耳マーク 2003; nomenclature change 磁気誘導ループ→ヒアリングループ 2017 ahead of Tokyo 2020; voluntary not mandatory)
+- REF-00043 US Protactile — aj granda + Jelica Nuccio (Seattle DeafBlind community founders) + Robert R. Clark + PLINEP Western Oregon University + Helen Keller National Center collaborations
+
+### Final state (continuation-12 close)
+
+- HEAD: `f32b0e18` (53 batch commits + 5 audit allowlist commits + 4 session record updates pre-this-update)
+- **Eligible pool: 486/678 (71.7%)** — +191 from start of web-search work; +210 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~76 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Δ |
+|----------|----------|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Batches 1-14 (51%) | 342/670 | 51.0% | +106 |
+| Batches 15-32 (60%) | 408/678 | 60.2% | +66 |
+| Batches 33-42 (67%) | 454/678 | 67.0% | +46 |
+| Batches 43-49 (70%) | 475/678 | 70.1% | +21 |
+| Batches 50-51 (71%) | 482/678 | 71.1% | +7 |
+| **Batches 52-53 (71.7%)** | **486/678** | **71.7%** | **+4** |
