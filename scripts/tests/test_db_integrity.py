@@ -254,6 +254,7 @@ def run_checks(db_path):
         "10.3390/ijerph192114279",     # Owen & Crane 2022 TID scoping review — 2 BPCs (REF-00090 + REF-00527; Crane first name mismatch in queue)
         "10.1016/j.msard.2022.104075", # Christogianni Filingeri 2022 MS heat sensitivity — 2 BPCs (REF-00254 + REF-VERIFIED-010 pre-existing)
         "10.26687/archnet-ijar.v8i1.314", # Mostafa 2014 Archnet-IJAR ARCHITECTURE FOR AUTISM ASPECTSS — 4 BPCs (REF-00051+00129+00517+00592)
+        "10.1155/2017/2865960",        # Putthinoi+Lersilp+Chakpitak 2017 J Aging Res Thai elderly — 2 BPCs (REF-00407+REF-00454)
         "10.1177/1937586717730338", # Lee 2018 HERD Beyond ADA — 2 BPCs (REF-00033 + REF-00034)
         "10.3389/frdem.2025.1524425", # van Buuren 2025 Frontiers in Dementia wayfinding — 2 BPCs (REF-00488 + REF-00520)
         "10.1016/j.ergon.2014.07.001",  # Kim 2014 IJIE ramp slope wheelchair — 2 BPCs (REF-00030 + REF-00386)
