@@ -1044,3 +1044,96 @@ Combined DOI-uplift + statutory pass continues to yield results. Continuation-9 
 | Batch 39 close | 445/678 | 65.6% | +6 |
 | Batches 40-42 close (67% crossed) | 454/678 | 67.0% | +9 |
 | **Batches 43-44 close (68% crossed)** | **462/678** | **68.1%** | **+8** |
+
+---
+
+## CONTINUATION 2026-05-22 (tenth push): Batches 45-49
+
+After 44 batches closed on `0c72b540`, owner said "proceed" twice. 5 more batches landed, +13 rows. All statutory + INT reports. **Crossed 70% milestone.**
+
+### Batches landed (45-49, 13 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 45 | `data_20260522003000_nordic_batch_45.sql` | 4 | +4 → 466 |
+| 46 | `data_20260522010000_asia_batch_46.sql` | 3 | +3 → 469 |
+| 47 | `data_20260522012000_eu_dk_batch_47.sql` | 2 | +2 → 471 |
+| 48 | `data_20260522014000_jp_eu_batch_48.sql` | 2 | +2 → 473 |
+| 49 | `data_20260522020000_int_reports_batch_49.sql` | 2 | +2 → **475 (70.1%)** |
+
+### Specific verifications (batches 45-49)
+
+**Batch 45 — Nordic statutory (4 rows):**
+- REF-00168 Denmark Folketinget — Lov om social service §116 boligindretning (LBK nr 1129 af 22/09/2025; Vejledning 10328/2017; free-choice provision)
+- REF-00167 Sweden Riksdagen — Lag (2018:222) om bostadsanpassningsbidrag (year-corrected 2024→2018; Förordning 2018:224; Boverket admin; Prop. 2017/18:80)
+- REF-00166 Norway Husbanken — tilskudd til tilpasning av bolig + grunnlån livsløpsbolig (Husbankloven; SINTEF/NTNU companion research)
+- REF-00064 Norway DiBK — "Tilgjengelige bygg og uteområder" 2014 veileder (companion to TEK10/TEK17)
+
+**Batch 46 — Asia statutory (3 rows):**
+- REF-00511 Korea — 장애인·노인·임산부 등의 편의증진보장에 관한 법률 (편의증진법) 1997 + amendments (점자블록 tactile paving provisions)
+- REF-00164 Singapore HDB+AIC — Enhancement for Active Seniors (EASE) Programme (launched July 2012; EASE 2.0 1 April 2024; 87.5-95% subsidy; 11 fittings; ~340k households as Jan 2025; extended to private homes 1 April 2026)
+- REF-00474 Japan 総務省消防庁 — 光警報装置の設置に係るガイドライン 2016 (recommended; underlying 差別解消法 2013 + UNCRPD 2014)
+
+**Batch 47 — EU + DK statutory (2 rows):**
+- REF-00124 European Commission DG EMPL — AccessibleEU Centre (launched 4 July 2023 Brussels EESC, Helena Dalli; flagship Disability Rights Strategy 2021-2030; consortium Fundación ONCE lead + ENAT + EASPD + Johannes Kepler Linz + UNE; 4 domains)
+- REF-00469 Denmark SBi — SBi-anvisning 230 (4th ed Jan 2014; BR10 interpretation; alment teknisk fælleseje status; doors-description-flagged owner-queue; successor SBi-anvisning 272 BR18)
+
+**Batch 48 — JP statistics + EU report (2 rows):**
+- REF-00252 Japan 厚生労働省 — 令和5年 (2023) 人口動態統計 (6,073 bathtub drowning deaths aged 65+ ICD-10 W65; 2.3× traffic fatalities; ~17,000-20,000 bath-related annually per CAA; companion peer-reviewed scholarship: Suzuki 2017 Circ J + Tai 2025 Front Public Health + Katsuyama 2023 Sci Rep + TMIG)
+- REF-00277 Eichhorn V, Li G, Miller G, Chen J (2014) — EC DG ENTR "Economic Impact and Travel Patterns of Accessible Tourism in Europe — Final Report" (Univ Surrey consortium; GfK Belgium + Neumann Consult + ProAsolutions; 17.6M EU accessible-tourism trips 2012; 4 author rows inserted)
+
+**Batch 49 — INT reports (2 rows):**
+- REF-00188 UN-Habitat Housing Unit + GNSH — "Accessibility of Housing: A Handbook of Inclusive Affordable Housing Solutions for Persons with Disabilities and Older Persons" (year-corrected 2016→2014; OHCHR cites as 2014; SDG 11.1)
+- REF-00311 OECD DELSA Social Policy Division — Affordable Housing Database overview 2020 (underlying QuASH 2016/2019/2021/2023; PH3-PH7 indicators; ~28M social-rental dwellings 6-7% OECD+EU avg)
+
+### Title/year corrections (batches 45-49)
+
+- REF-00167: pub_year 2024→2018 (DB year confusion with Boverket evaluation rapport 2023:11 timing)
+- REF-00188: pub_year 2016→2014 (OHCHR authoritative citation 2014; Issuu re-publication 2016)
+
+### Author roster insertions (batches 45-49)
+
+- REF-00277 Eichhorn et al. — 4 author rows inserted (Eichhorn V, Li G, Miller G, Chen J) for G02 audit
+
+### Final state (continuation-10 close)
+
+- HEAD: `aaed5c6e` (49 batch commits + 5 audit allowlist commits + 4 session record updates pre-this-update)
+- **Eligible pool: 475/678 (70.1%)** — +180 from start of web-search work; +199 from session-open baseline
+- Schema v14, 678 rows
+- ATO × no-ID remaining: **~85 rows**
+- All commits pass 35/35 db_integrity + Guidebook CI + Repo Integrity Audits
+- **70% milestone crossed on batch 49 (REF-00311 OECD)**
+
+### Methodology continuing to validate
+
+Statutory-cluster pass + INT report pass both yielding consistent results. 10 statutory verifications across batches 45-47 plus 4 INT reports + 1 EU report + Japan statistics. Owner-queue items now ~42 (added REF-00469 doors description, REF-00632 Crompton-hint as already noted).
+
+### Trajectory across the multi-day session
+
+| Snapshot | Eligible | % | Change |
+|----------|----------|---|--------|
+| Day 1 open (2026-05-20 baseline) | 236/670 | 35.2% | — |
+| Day 2 open (after schema 014 + 8 statutory) | 276/670 | 41.2% | +40 |
+| Batches 1-14 close | 342/670 | 51.0% | +66 |
+| Batches 15-23 close | 371/678 | 54.7% | +29 |
+| Batches 24-28 close | 389/678 | 57.4% | +18 |
+| Batches 29-32 close (60% crossed) | 408/678 | 60.2% | +19 |
+| Batches 33-35 close | 423/678 | 62.4% | +15 |
+| Batches 36-38 close | 439/678 | 64.7% | +16 |
+| Batch 39 close | 445/678 | 65.6% | +6 |
+| Batches 40-42 close (67% crossed) | 454/678 | 67.0% | +9 |
+| Batches 43-44 close (68% crossed) | 462/678 | 68.1% | +8 |
+| **Batches 45-49 close (70% CROSSED)** | **475/678** | **70.1%** | **+13** |
+
+### Anticipated remaining work
+
+~85 ATO × no-ID rows. Next session targets:
+- US guidelines (8 rows; mostly blog-style → owner-queue)
+- UK guidelines (5 rows)
+- US reports (8 rows after batch 48 covered some)
+- JP reports (3 left)
+- NL reports (3)
+- CA reports (3 left)
+- ASPECTSS 4-row cluster (REF-00051/00129/00517/00592) — pre-existing 404 DOI, needs cleanup
+- Pure ISBN-book candidates: REF-00179 Baum, REF-00004 Castell
+- Remaining single-row jurisdictions: NG, UAE, IE, IT, DE
