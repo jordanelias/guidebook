@@ -258,6 +258,7 @@ def run_checks(db_path):
         "10.1177/13623613231180266",  # Unwin 2024 Autism multi-sensory environments — 2 BPCs (REF-00542 + REF-00609)
         "10.1177/19375867211043546",  # van Buuren 2022 HERD Dementia-Friendly Design — 2 BPCs (REF-00301 + REF-00487)
         "10.2196/60622",              # Harper 2025 IJMR stair high-contrast striping — 2 BPCs (REF-00395 + REF-00534)
+        "10.1108/arch-07-2023-0178",   # Ielegems & Vanrie 2024 Archnet-IJAR 18(4) cost UD public buildings — 2 BPCs (REF-00296 + REF-00307)
     )
     dup_rows = conn.execute(f"""
         SELECT doi, COUNT(*) AS n FROM evidence_sources
