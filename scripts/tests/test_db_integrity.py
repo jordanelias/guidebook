@@ -242,6 +242,7 @@ def run_checks(db_path):
         "10.1016/j.dhjo.2022.101281", # Accessible design features — 2 BPCs
         "10.1044/2022_LSHSS-21-00181", # Speech intelligibility SR — 2 BPCs
         "10.1080/10400430903496580",   # Wheeled mobility dimensions — 2 BPCs
+        "10.1080/10400430903520280",   # Steinfeld Maisel Feathers D'Souza 2010 Anthropometry+Standards Wheeled Mobility — 2 BPCs (REF-00060 + REF-00192)
         "10.1136/bmjopen-2020-046647", # MHIPI study — 2 BPCs
         "10.1177/13623613221102753",   # Autism built environment — 2 BPCs
         "10.1177/1533317509334959",    # Dementia-friendly architecture — 2 BPCs
