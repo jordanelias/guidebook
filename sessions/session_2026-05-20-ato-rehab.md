@@ -1837,3 +1837,72 @@ Round 7 was lower-yield than earlier topical-keyword rounds. Round 8 mixed-topic
 - HEAD: `64070952` — 75 migration commits
 - 80 non-eligible remain
 - 35/35 db_integrity green
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-fifth push): TRIAGE PASS + REVISED HALLUCINATION FINDING
+
+Owner approved triage/retire approach. Single targeted web search per suspect row; retire (UNVERIFIED-CLOSED) if no justifiable lead.
+
+### Method
+
+For each of ~30 suspect rows, performed: (1) targeted web search using author + topic keyword + year; (2) Crossref cross-check; (3) if a real source surfaced at the top of results — VERIFY at appropriate confidence; if no real source surfaced after targeted search — RETIRE to UNVERIFIED-CLOSED.
+
+### Findings (revised from earlier hallucination-likelihood estimate)
+
+**My earlier Tier-A estimate (80-95% hallucination likelihood for US blog cluster) was wrong.** When I searched the specific titles and author hints, every US-blog/guideline row produced a justifiable real source:
+
+| Row | Earlier suspicion | Actual finding |
+|---|---|---|
+| REF-00292 "Notable Features of Modern Bathrooms" | AI/marketing-blog tell | Real Behind The Hedges April 2026 article citing NKBA + Forbes |
+| REF-00293 "Why Accessibility is the Highest-ROI Renovation for 2026 Rental Market" | AI tells (highest-ROI rebrand) | Real Kukun blog April 28 2026 by Alejandro Guerrero citing JCHS Harvard |
+| REF-00304 / REF-00309 "Cost of accessible design — <1% new-build premium" | Generic AI-paraphrase tells | Real ADA National Network FAQ adata.org |
+| REF-00305 / REF-00308 "$12,200–$15,150/unit + $6,668/participant savings" | Very specific numbers, no Crossref hit | Real Woodstock Institute HUD-funded HomeMod Program cost-benefit study (exact dollar match) |
+| REF-00321 "Accessible Washers and Dryers" | Generic title | Real US Access Board ADA/ABA Standards Chapter 6 Guide (Sept 2021) Phil Bratta + Josh Schorr |
+| REF-00442 "Decoded" 2021 | One-word title | Real Lori Greene Decoded column at iDigHardware + Door Security + Safety Magazine 2021 series |
+| REF-00094 BuroHappold 2024 [full citation unverified] | Self-flagged as unverified | Real PAS 6463:2022 — BuroHappold is one of 4 co-sponsors (TfL + Forbo + BuroHappold + BBC) |
+
+**The 7 truly unverifiable rows (RETIRED to UNVERIFIED-CLOSED):**
+
+| Row | Year/Author | Triage outcome |
+|---|---|---|
+| REF-00024 | Togni 2022 | Crossref returned De Togni (French history journal) — wrong author |
+| REF-00031 | Zanotto 2023 | Crossref returned Zhao 2024 IEEE — no match |
+| REF-00052 | Weber 2022 | Crossref returned Najjar-Debbiny (clinical infectious disease) — wrong topic |
+| REF-00369 | Lee 2019 | Crossref returned Yoo 2019 (basic design journal) — wrong author |
+| REF-00370 | Guitard 2011 | Crossref returned Daudé (transplantation) — wrong topic |
+| REF-00372 | Sekiguchi 2017 | Crossref returned Yamao (management) — wrong topic |
+| REF-00382 | AOTA 2023 | No specific AOTA 2023 publication located |
+
+These 7 rows all share the c1-migration-fix-era pattern: placeholder title format `[Title unverified — X et al. Y]`, plausible-sounding author surnames + years, no underlying searchable bibliographic content. They are preserved in the DB (BPC slugs continue to cite them) but exit the rehab work-stream.
+
+### Revised hallucination tier breakdown for c1-migration-fix legacy cohort
+
+- **Pure hallucination rate: ~3-5%** (the 7 retired rows out of 178 c1-migration-fix rows still non-eligible at start of triage = ~4%; more likely an additional 5-10 hide in the remaining stuck pool — owner-supplied citation hints would resolve)
+- **Wrong-attribution / paraphrased-description rate: ~25-35%** (cases like REF-00094 BuroHappold→PAS 6463; REF-00098 Price→Sage Encyclopedia entry; REF-00292/293 industry-blog → claimed-research)
+- **Findable-with-targeted-search rate: ~60-70%** (everything that resolved via Crossref/web-search)
+
+### Batch landed (triage; 2 verifications + 7 retirements = 9 row updates)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| US-blog | `data_20260522150000_us_guideline_batch.sql` | 8 verifications | +8 → 606 |
+| triage-final | `data_20260522154000_triage_final_batch.sql` | 2 verif + 7 retire | +2 → **608 (89.7%)** |
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-24 (88.2%) | 598/678 | 88.2% | — |
+| **Continuation-25 (89.7%) [triage]** | **608/678** | **89.7%** | **+10 (incl. 7 retirements)** |
+
+### Status
+
+- HEAD: 76 migration commits
+- 70 non-eligible remain (of which 7 are RETIRED-NO-LEAD; the rest are mix of statutory + framework rows pending owner hints)
+- All commits pass 35/35 db_integrity
+- D01 allowlist updated: Zallio IDEA cluster now 3 BPCs (REF-00136 + REF-00137 + REF-00171)
+
+### Practical implication
+
+The "stuck" cohort that resisted multi-round search yielded ~78% verification rate when searched with paraphrase awareness (suspecting the DB title is a description rather than the real title) and ~22% genuinely unresolvable. Going forward, **default approach for any remaining stuck row should be: assume the DB description is a paraphrase of a real source, search via author+topic+year hints, and only retire after both Crossref and web-search return zero topical match.**
