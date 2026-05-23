@@ -238,7 +238,7 @@ def run_checks(db_path):
         "10.31030/1803049",           # DIN 18040-2 — 5 distinct-section citations (residential accessibility): visitability / reach range / bathroom-laundry-kitchen / entry / threshold
         "10.31030/1715500",           # DIN 18040-1 — 3 distinct-section citations (public buildings): induction loops / circulation geometry / door hardware
         "10.1016/S0140-6736(14)61006-0",  # HIPI study — 2 BPC citations (falls + lighting)
-        "10.1016/j.buildenv.2021.108352",  # Inclusive design failures — 2 BPCs
+        "10.1016/j.buildenv.2021.108352",  # Zallio + Clarkson 2021 IDEA — 3 BPCs (REF-00136 + REF-00137 + REF-00171)
         "10.1016/j.dhjo.2022.101281", # Accessible design features — 2 BPCs
         "10.1044/2022_LSHSS-21-00181", # Speech intelligibility SR — 2 BPCs
         "10.1080/10400430903496580",   # Wheeled mobility dimensions — 2 BPCs
