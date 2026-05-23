@@ -1802,3 +1802,38 @@ Round 5 specific-topic Crossref hits dropped to ~30% as easy candidates exhaust.
 - HEAD: `12d6df63` — 74 migration commits
 - 83 non-eligible remain
 - 35/35 db_integrity green
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-fourth push): UK FIA + Singapore BCA + Marquardt cluster
+
+After continuation-23 close on `ac5cf435`, owner said "proceed". One batch landed. **+3 rows.**
+
+### Batch landed (round 7-8; 3 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| 7-8 | `data_20260522144000_round7_8_batch.sql` | 3 | +3 → **598 (88.2%)** |
+
+### Verified
+
+- REF-VERIFIED-007 UK Fire Industry Association (FIA) "Fire Alarm Considerations for People with Sensory Sensitivities" Guidance Document GD-05-22 (May 2022) — launched at FIREX 2022 ExCeL London; initiated mid-2021 by Sonny White (16-year-old) + James Jones (FIA Board, MD Vimpex); addresses BS 5839-1 gap on autism/sensory sensitivities beyond hearing impairment + photosensitive epilepsy; ~700,000 UK persons with ASD + ~1,500 special schools affected; specifies BS 5839-8:2013 Clause 20 attention-drawing signal parameters (2-tone 550-825 Hz alternating ≤0.5 s), EN54-23 VAD selectable power, pre-warned tests, ear defenders, bedroom-paired smoke alarm; underlying Equality Act 2010 + BS 5839-1 Clause 7
+- REF-00074 Singapore BCA Code on Accessibility in the Built Environment 2025 (5th edition; 2007, 2013, 2019, 2025); mandated by Building Control Act (Cap. 29); companion UD Mark voluntary certification (2008+); Enabling Masterplan 2030; LTA Barrier-Free Code 2020
+- REF-00128 Marquardt G (2011) "Wayfinding for People with Dementia: A Review of the Role of Architectural Design" HERD 4(2):75-90 DOI 10.1177/193758671100400207 — joins existing 2-BPC cluster with REF-00202 (DB description "EADDAT validation (30 care homes)" may be paraphrased context; owner-queue if different paper meant)
+
+### Yield notes
+
+Round 7 was lower-yield than earlier topical-keyword rounds. Round 8 mixed-topic batch (FIA + Singapore + Marquardt) succeeded because the items were well-known framework references that web-search resolves quickly even without DOI-matching.
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-23 (87.8%) | 595/678 | 87.8% | — |
+| **Continuation-24 (88.2%)** | **598/678** | **88.2%** | **+3** |
+
+### Status
+
+- HEAD: `64070952` — 75 migration commits
+- 80 non-eligible remain
+- 35/35 db_integrity green
