@@ -1730,3 +1730,39 @@ Topical-query Crossref search (matching DB author + a relevant topic keyword ins
 |---|---|---|---|
 | Continuation-20 (85.8%) | 582/678 | 85.8% | — |
 | **Continuation-21 (86.9%)** | **589/678** | **86.9%** | **+7** |
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-second push): GREY rounds 3-4 + Steinfeld 1979 foundational
+
+After continuation-21 close on `025d3e7d`, owner said "proceed". 2 more batches landed. **+3 rows.**
+
+### Batches landed (R3, R4; 3 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| R3 | `data_20260522131000_grey_round3.sql` | 2 | +2 → 591 (87.2%) |
+| R4 | `data_20260522134000_statutory_round4.sql` | 1 | +1 → **592 (87.3%)** |
+
+### Verified
+
+**Round 3:**
+- REF-00032 Cockayne S et al. (2021) F1000Research 10:500 DOI 10.12688/f1000research.52313.1 OTIS trial home hazard environmental modification falls (10-author York Trials Unit)
+- REF-00097 Haig S, Hallett N (2023) Int J Ment Health Nurs 32(1):54-75 DOI 10.1111/inm.13065 sensory rooms psychiatric inpatient SR (Birmingham)
+
+**Round 4:**
+- REF-VERIFIED-001 Schroeder S, Steinfeld E (1979) "The Estimated Cost of Accessible Buildings" Syracuse University + US HUD Office of Policy Development and Research HUD-PDR-400 series; 9 buildings; retrofit 0.12-0.5% / new-build 0.006-0.13% / ~1% conservative; foundational US accessibility-cost reference underlying ADA 1990 + ANSI A117.1 + FHA 1988 amendments
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-21 (86.9%) | 589/678 | 86.9% | — |
+| **Continuation-22 (87.3%)** | **592/678** | **87.3%** | **+3** |
+
+### Status
+
+- HEAD: `21fb839d`
+- 86 non-eligible remain
+- 35/35 db_integrity green
+- Per-row Crossref+web-search work-rate continues at ~2-3 rows per round; topic-keyword query technique stable at ~40-60% hit rate
