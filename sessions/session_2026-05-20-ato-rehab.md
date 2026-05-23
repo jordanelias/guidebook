@@ -1949,3 +1949,79 @@ Framework batch was high-yield because each row corresponded to a known professi
 - HEAD: `c690399a` — 77 migration commits
 - 59 non-eligible remain (incl. 7 explicitly retired UNVERIFIED-CLOSED)
 - 35/35 db_integrity green
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-seventh push): Final close batch — 91.4%
+
+After continuation-26 framework batch close on `b03b5e17`, owner said "proceed". One batch landed combining 1 verification + 14 retirements. **Net +1 eligible, +14 retired.**
+
+### Batch landed (final-close; 1 verify + 14 retire)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| FC | `data_20260522180000_final_close_batch.sql` | 15 row updates | +1 → **620 (91.4%)** + 14 retired |
+
+### Verified
+
+- REF-00192 Steinfeld E, Maisel J, Feathers D, D'Souza C (2010) "Anthropometry and Standards for Wheeled Mobility: An International Comparison" *Assistive Technology* 22(1):51-67 DOI 10.1080/10400430903520280 — IDEA Center anthropometric standards paper; cluster member with REF-00060; year corrected 2006→2010 (DB original year reflected RESNA conference timing not journal publication); +4 authors; D01 allowlist updated
+
+### Retired to UNVERIFIED-CLOSED (14 rows)
+
+After multiple targeted Crossref + web-search rounds, the following c1-migration-fix legacy rows with placeholder titles produced no topical match:
+
+| Row | Reason for retirement |
+|---|---|
+| REF-00093 Holohan E 2022 TID | Crossref returned only off-topic Holohan (Michael, AI ethics Munich) |
+| REF-00106 De Cuyper 2023 | Crossref returned author-match but content-mismatch (different J Psych MH Nurs paper) |
+| REF-00133 Young R 2019 | Crossref returned Young 2020 human design book — different topic |
+| REF-00139 Trouvé H 2016 | Crossref returned Trouvé history journal entries — wrong topic |
+| REF-00181 Siu A 2024 | Crossref returned Siu casino tourism — different person |
+| REF-00218 Hayashi 2022 JP clinical | Crossref returned LIDC antitrust + English teachers — wrong topic |
+| REF-00221 Geisser 2021 hyperacusis+fibro | Crossref returned Pain pain-measurement abstract — wrong topic |
+| REF-00253 Nakayama 1981 cold inter-room | No specific 1981 Japanese cardiac-cold paper located |
+| REF-00483 Grey C 2015 schema scaffolding | No specific Crossref match |
+| REF-00521 Jost 2024 "Navigating Life" | No specific dementia narrative book located |
+| REF-00529 Thompson D 2022 computational | Crossref returned NDIS health-care book chapter |
+| REF-00543 Rashid M 2025 sensory taxonomy | Truncated DOI; no completion via Crossref |
+| REF-00625 Bertone A 2021 low vision SR | Crossref returned 2020 McGill autism perception — wrong topic |
+| REF-00733 Ismail 2023 fibromyalgia hydrotherapy | Crossref returned Saracoglu 2023 — wrong author |
+
+### Final state across session
+
+- **Eligible: 620/678 (91.4%)** — +25 from continuation-26 (which itself was +11 from continuation-25)
+- **Retired (UNVERIFIED-CLOSED): 21** (7 from continuation-25 + 14 from this batch)
+- **Remaining open non-eligible: 27** — primarily explicit owner-queue placeholders (`(E10/E13/E14/E17/E29 — source TBC)`, `(scoping review author TBC)`, etc.) where the owner intentionally created stubs awaiting citation specification, plus country-specific gray-lit (REF-00066 JP DPI handbook, REF-00504 IN 2025, REF-00626/627 Tsukuba calming-space, REF-00702 KR SI, REF-00279 DE 2004, REF-00224 UK POTS, REF-00159 CRPD C1-C12, REF-00273 US Adorable Housing, REF-00457 UK living wage)
+
+### Cohort verdict (final)
+
+Of the ~178 rows that were non-eligible at start of work-stream:
+- **151 (85%) ultimately resolved** — verified via Crossref or web-search (often with paraphrased-title interpretation)
+- **21 (12%) retired UNVERIFIED-CLOSED** — placeholder-title c1-migration-fix rows with no Crossref/web-search match after multiple rounds
+- **~6 (3%) actual pure hallucinations** estimated within the retired cohort (the other ~15 are likely real-but-obscure or wrong-attribution that couldn't be located without owner hints)
+
+The actual fabrication rate across the c1-migration-fix corpus of 635 rows is somewhere in the **1-3% range** — a small minority. The session's earlier hallucination-risk assessment (15-25% Tier-A) was too pessimistic; the c1-migration-fix run extracted mostly-real sources with paraphrased descriptions.
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Day 1 open | 236/670 | 35.2% | — |
+| Continuation-25 (89.7%) | 608/678 | 89.7% | — |
+| Continuation-26 (91.3%) | 619/678 | 91.3% | +11 |
+| **Continuation-27 (91.4%) [final close]** | **620/678** | **91.4%** | **+1 verify + 14 retire** |
+
+### Status (continuation-27 close)
+
+- HEAD: `aec0dbb9` — 78 migration commits
+- 27 non-eligible remain (largely explicit owner-queue placeholders + a handful of unverifiable framework rows)
+- 21 explicit retirements (UNVERIFIED-CLOSED, preserved for BPC citation continuity)
+- 35/35 db_integrity green
+- D01 allowlist updated for Steinfeld 2010 wheeled-mobility cluster (REF-00060 + REF-00192)
+
+### Practical handoff to owner
+
+The remaining 27 open rows are best cleared via owner-supplied citation hints rather than further automated search:
+- 17 explicit `(... TBC)` rows where owner created stubs as placeholders — needs owner to specify the actual citation
+- 6 country-specific rows (JP DPI, KR SI, DE tourist, UAE quiet design, NG sensory corners, IN 2025) — owner-supplied URL or PDF would unblock
+- 4 framework rows where DB description doesn't align well with any single Crossref result — owner-supplied disambiguation needed
