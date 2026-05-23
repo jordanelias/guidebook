@@ -1,6 +1,10 @@
 ## visitability-residential-accessibility-minimum-standards
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 4–5 (programme evaluation + cost data)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Visitability — three core requirements for all new single-family and low-rise residential construction — adds approximately $100–600 to new construction cost and achieves basic access for wheelchair users to visit any home. It is the documented minimum accessible residential provision, below which a building functionally excludes wheelchair users from social participation at private homes.
 **Three core visitability requirements (Concrete Change/Eleanor Smith 1987):**
   1. At least one zero-step entrance

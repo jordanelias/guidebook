@@ -2,6 +2,9 @@
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** 3 (systematic reviews); Co-1 (lived experience)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|

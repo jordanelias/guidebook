@@ -1,6 +1,10 @@
 ## cross-population-conflict-resolutions
 
 **Updated:** 2026-05-10  **Original search:** 2026-05-10  **Evidence tier range:** Tier 1–Tier 3  **Opus synthesis:** YES [OPUS-SYNTHESIS-PROVISIONAL]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Status:** PROVISIONAL — initial draft from BPC audit Pass 2C; covers 4 conflicts (corridor width; spatial enclosure; thermal default; lighting kelvin). Cross-population conflict registry from `synthesis-scan-2026-05-06.md` to be merged in next pass.
 
 ### Concept boundary notes

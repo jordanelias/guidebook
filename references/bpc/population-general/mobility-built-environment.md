@@ -2,6 +2,9 @@
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 23:45  **Evidence tier range:** Co-1 – Tier 6  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Status:** COMPLETE — all 24 jurisdictions Co-1 attempted (BE Tier 5 only outstanding); all 14 languages SEARCHED (ES THIN); 1524mm REJECTED as best-practice floor; floor = 1700mm
 
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|

@@ -2,6 +2,10 @@
 
 **Updated:** 2026-03-18 22:00  **Evidence tier:** 4–5 (standards-based; no peer-reviewed clinical trials for fold-down bars in isolation)
 **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Fold-down grab bars require ≥200 kg safe working load minimum for standard provision; structural wall backing/blocking is mandatory at all positions and must span full toilet wall length to allow bilateral positioning. ADA floor standard is 250 lbs (1.1 kN). Centrepoint of fold-down bar to be 400 mm from toilet centreline.
 **Load ratings:**
   - Standard floor: ADA ≥250 lbs (1.1 kN) at any point on bar, fastener, or supporting structure (US Access Board 2010)

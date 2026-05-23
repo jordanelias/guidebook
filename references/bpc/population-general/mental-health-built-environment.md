@@ -1,6 +1,10 @@
 ## mental-health-built-environment
 
 **Updated:** 2026-03-30  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS 2026-03-30]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Status:** PARTIAL — Co-1 EN complete 2026-03-30; PubMed + citation mining complete 2026-03-27; Opus synthesis complete 2026-03-30. Phase 3 ready: YES. Remaining gaps: 5 languages unsearched (NL partial via citation mining); FDR not run; female-only area provision unitemised.
 
 ### Best-practice synthesis

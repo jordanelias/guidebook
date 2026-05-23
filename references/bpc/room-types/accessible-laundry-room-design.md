@@ -1,6 +1,10 @@
 ## accessible-laundry-room-design
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 22:00  **Evidence tier range:** 4–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PARTIAL-RETAINED
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **STATUS: PARTIAL** — 4 jurisdictions searched; Co-1 pass: 0 jurisdictions; ADA S611 is the sole source with quantified appliance-height specifications.
 
 ### Concept boundary notes

@@ -2,6 +2,10 @@
 
 **Updated:** 2026-05-10  **Original search:** 2026-03-19  **Evidence tier range:** Tier 1–4 (OT clinical + standards + BPC audit)
 **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Twelve documented conflicts between accessibility provisions for different disability categories have explicit architectural resolutions (nine original + three from BPC audit 2026-05-10; one forward-flagged for next pass).
 **Priority hierarchy (Part IIB §B.2):**
   1. Safety-critical (fire evacuation, scalding, fall prevention) always overrides

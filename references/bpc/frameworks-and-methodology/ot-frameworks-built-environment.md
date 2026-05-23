@@ -1,6 +1,10 @@
 ## ot-frameworks-built-environment
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** All four major OT frameworks explicitly position the physical built environment as a primary enabler or barrier to occupational participation. PEOP is the most internationally validated across populations and settings. Kawa Model is most directly aligned with CRPD social model framing.
 **Frameworks:**
   - CMOP-E (Townsend & Polatajko 2007): Physical environment as outer ring; occupational engagement across self-care, productivity, leisure

@@ -1,6 +1,10 @@
 ## sensory-processing-model-design-application
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 23:00  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Dunn's Sensory Processing Model identifies four processing profiles that require distinct — and in some cases conflicting — environmental design responses. Accessible design specifications for acoustic (Category A), lighting (Category B), and colour/surface (Category C) must be calibrated across all four profiles simultaneously, not optimised for a single profile.
 **Four profiles and design implications:**
   - Sensory seeking: seeks high stimulation; benefits from varied spatial experience, rich biophilic elements, textured surfaces, vibrant but controlled colour

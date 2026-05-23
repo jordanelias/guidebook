@@ -1,6 +1,9 @@
 ## accessibility-feature-market-value-uplift-framing
 **Updated:** 2026-05-02 21:00 (Session 2 — alternative-channels investigation)  **Evidence tier range:** Tier 1–6  **Opus synthesis:** YES [OPUS-SYNTHESIS — PROVISIONAL — 2-session run]
 
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 ### Metadata
 ```yaml
 slug: accessibility-feature-market-value-uplift-framing

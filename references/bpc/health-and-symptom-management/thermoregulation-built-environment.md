@@ -1,6 +1,10 @@
 # BPC Entry — thermoregulation-built-environment
 **Topic:** health-and-symptom-management
 **Status:** COMPLETE — Opus synthesis complete
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **GAP:** GAP-LRP-01 (P1)
 **Phase:** 1-A (Sessions 1–3)
 **Last updated:** 2026-04-07 04:30

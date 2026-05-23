@@ -1,6 +1,10 @@
 ## stair-ramp-threshold-biomechanics-accessibility
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Accessibility specifications for stairs, ramps, thresholds, corridors, and seating height are biomechanically derived, not arbitrary. Each specification corresponds to a functional threshold with documented evidence.
 **Key biomechanical evidence:**
 

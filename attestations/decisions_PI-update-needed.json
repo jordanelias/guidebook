@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "session": "session_2026-05-19-deployment-state-reconciliation",
+  "session": "session_2026-05-23-bpc-rewrite-phase-b-closure",
   "artifact": "decisions/PI-update-needed.md",
   "doctrine_sha": "61c7f95",
   "rules_in_scope": [
@@ -10,8 +10,8 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/PI-update-needed.md#what-this-changes-about-future-workflow",
-      "reason": "v10.14 reformulation grounded in concrete artifacts: scripts/bootstrap.sh exists in this commit and was smoke-tested end-to-end against /mnt/project/GitHub_pat (HTTP 200 fetches across 5 critical files, DB query returns 670/670 dynamic ratios, header grep finds 3 expected section names, exit code 0). The before/after table is verifiable by comparing v10.13 inline-bootstrap to v10.14 thin-caller diff. The architecture v2.3 extraction guidance is cited verbatim."
+      "evidence_path": "decisions/PI-update-needed.md#v1015-queued-added-2026-05-23",
+      "reason": "v10.15 entry grounds the rule #10 text patch against DR-2026-05-23. The new text is a faithful generalization of the literal wording ('from the 2026-03-30 round' \u2192 'any positive [OPUS-SYNTHESIS*] tag pre-dating the 2026-05-23 rehab closure'), with the DR cited inline so the rationale is auditable. Cohort scope, banner text, and DB mirror are all consistent with the artifacts touched this session."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -19,7 +19,7 @@
     }
   },
   "deviations": [],
-  "bias_direction": "v10.14 was rewritten mid-session in response to owner frustration with PI bump frequency. The bias risk is toward over-claiming what extraction solves: not all PI bumps are bootstrap-related, so the 'last bootstrap-related PI bump' framing is true narrowly but does not mean PI bumps disappear. Rule changes, skill assignments, and override clauses will still require bumps. The before/after workflow table addresses this honestly by listing what STAYS in the PI bump column.",
-  "independent_reviewer_counterclaim": "An outside reviewer could object that extracting bootstrap to a script trades one form of fragility (PI bump-and-paste) for another (network dependency at session start to fetch the script from main). If main is unreachable, the entire bootstrap fails. Counter: the existing inline bootstrap already needs network to fetch sessions/LATEST, project-standards.md, the session record, skill-registry, workplan, and the DB — all 6 critical fetches require network. Fetching the bootstrap script itself is one additional fetch with the same failure mode, not a new class of risk.",
-  "verdict": "CLEAN"
+  "bias_direction": "v10.15 entry was authored in the same session that applied B.0 closure under the broader cohort definition. The bias risk is that queueing the PI patch in the same session legitimizes a cohort decision that an arms-length review might narrow. Mitigation: the patch is a queue entry only \u2014 the live PI in claude.ai is unaffected until owner paste. The DR (DR-2026-05-23) provides the deliberative-record basis; this entry merely points to it.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that PI text changes should not be queued by the same Claude session that committed a cohort interpretation under that text; this conflates 'I applied X under reading Y' with 'X should be amended to match reading Y.' Counter: the entry is a queue, not a deployment; the owner has the floor on whether to paste v10.15 and can reject the wording change while keeping the B.0 application (since the DB state holds independent of PI wording). The repo-side audit trail is preserved either way.",
+  "verdict": "DEVIATION-LOGGED"
 }

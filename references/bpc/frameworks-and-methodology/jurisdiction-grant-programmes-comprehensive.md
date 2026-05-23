@@ -1,6 +1,10 @@
 ## jurisdiction-grant-programmes-comprehensive
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 23:45  **Evidence tier:** 5 (regulatory/programme data, verified)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Comprehensive home adaptation grant programmes exist across all major jurisdictions. Nordic countries (Sweden, Norway, Denmark) operate uncapped needs-based systems. UK DFG is the highest-volume English-language programme. Singapore operates the most generous subsidy rate (87.5–95%). All programmes cover retrofit only; none fund design-stage accessible construction.
 **Selected programme corrections/updates vs. earlier BPC entry:**
   - VA SAH: updated to $126,526 aggregate max (FY2026), not $109,986

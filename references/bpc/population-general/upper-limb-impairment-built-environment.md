@@ -2,6 +2,10 @@
 
 **Updated:** 2026-03-30 (Co-1 EN pass)  **Evidence tier:** 1–3
 **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Co-1 status:** PARTIAL EN — Fredericks et al. 2024 (wheelchair user cooperative inquiry, ZA); Widehammar et al. 2017 (n=156 AT users, SE). Environmental barriers confirmed as primary participation restrictor. No contradictions to BPC specifications.
 **Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains with the largest evidence-practice conflicts across all major standards. UPL built environment evidence base is critically thin — zero indexed studies on one-handed kitchen/bathroom design.
 **Core evidence-practice conflicts:**

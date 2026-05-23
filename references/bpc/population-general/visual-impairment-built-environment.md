@@ -2,6 +2,9 @@
 
 **Updated:** 2026-03-30 (Co-1 EN pass)  **Original search:** 2026-03-19 19:18  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Co-1 status:** PARTIAL EN — Town Planning Review 2022; PMC 12082883; RNIB HQ user trials; NITC 2022. All BPC provisions confirmed; shared space emphasis and VIS/NDV lighting tension (VIS=cooler, NDV=warmer; resolution=adjustability) added. No contradictions.  **Evidence tier range:** 4–6
 
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|

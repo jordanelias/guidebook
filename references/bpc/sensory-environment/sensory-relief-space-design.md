@@ -2,6 +2,10 @@
 
 **Updated:** 2026-03-19 11:00
 **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Evidence tier:** 3 (scoping reviews, controlled studies, OT practice research); 5 (PAS 6463:2022, NCC AU 2022); 2 (NAS, Amaze)
 **Status:** COMPLETE (9 core languages + NL extended)
 **Evidence note:** No Tier 1 RCTs exist for dedicated sensory room architectural design specifically. All evidence is Tier 3 or below. Guidebook specifications carry EMERGING evidence stratum for dimensional requirements; MODERATE for sensory control principle.

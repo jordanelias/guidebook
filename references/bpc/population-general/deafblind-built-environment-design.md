@@ -1,6 +1,10 @@
 ## deafblind-built-environment-design
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 14:30  **Evidence tier:** 4-5  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Zero Tier 1-2 evidence for DBL built-environment design in any searched language. Evidence is exclusively Tier 4-5: DeafSpace Design Guidelines (2010), practitioner guidance (JJones 2025), organisational guidance (NELOWV 2025). Nordic Welfare Centre provides clinical/communication research only.
 **Key design principles (all Tier 4-5):** Tactile-first redundancy; textured zone transitions; corridors >=1500mm for intervenor; glare-free shadow-free illumination; vibrotactile alert supplement; intervenor clear floor space >=900x1500mm at service counters (GAP-NEW-01); acoustic differentiation (A-15) as primary navigation channel.
 **Jurisdictions confirmed:** No jurisdiction has DBL-specific built-environment standards

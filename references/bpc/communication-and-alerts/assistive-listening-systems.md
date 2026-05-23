@@ -1,6 +1,10 @@
 ## assistive-listening-systems|DEAF
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 11:00  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Evidence tier:** 4 (IEC 60118-4 international standard); 2 (HLAA, RNID, Zennancho advocacy); 5 (Auracast emerging)
 **Status:** COMPLETE (9 core languages + NL extended)
 

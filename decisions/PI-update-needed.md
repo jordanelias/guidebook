@@ -76,6 +76,24 @@ The PI becomes the rule layer it was supposed to be; mechanics live in the repo 
 
 ---
 
+## v10.15 queued (added 2026-05-23)
+
+| Version | Live in claude.ai | Repo snapshot | Notes |
+|---|---|---|---|
+| **v10.15** | **No — paste needed when authored** | not yet authored — will be `governance/project-instructions-v10_15.md` | Rule #10 final paragraph cohort wording: drop the "from the 2026-03-30 round" restrictor. Sharpened by DR-2026-05-23. |
+
+**v10.15 specific change.** Standing rule #10 final paragraph currently reads:
+
+> BPCs bearing `opus_synthesis: YES [OPUS-SYNTHESIS]` from the 2026-03-30 round carry a `synthesis_validity: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner until Phase E.2g overwrites.
+
+Operational application (B.0 closure on 2026-05-23) found that the 2026-03-30 round is the largest single cohort but not the only pre-rehab synthesis batch — four rounds collectively touched 70 files across 68 unique slugs, all of which used pre-rehab evidence. DR-2026-05-23 redefined the cohort as any positive `[OPUS-SYNTHESIS*]` tag pre-dating the 2026-05-23 rehab closure. The v10.15 patch ratifies the DR's cohort definition in PI rule #10 text. The replacement text is:
+
+> BPCs bearing any positive `[OPUS-SYNTHESIS*]` tag (any variant — bare, dated, provisional, or annotated) where the synthesis date predates the 2026-05-23 evidence-metadata-rehabilitation closure (commit `b0a4a25`) carry a `**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner until Phase E.2g overwrites. Cohort enumeration and selection criterion: DR-2026-05-23. Live state of which BPCs carry the banner: `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'`.
+
+No other rule changes; no skill-assignment changes; no bootstrap changes.
+
+---
+
 ## Conventions reminder
 
 Per architecture v2.3 `<migration_and_growth>`: PI bumps go live only when the owner manually pastes the new content into claude.ai → Project Settings. Repo-side snapshot files in `governance/` are the audit-trail counterpart and are committed directly. The repo-side commit does not change the live PI.

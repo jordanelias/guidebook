@@ -1,6 +1,10 @@
 # BPC Entry — wayfinding-global-south
 **Topic:** wayfinding-and-signage
 **Status:** COMPLETE — Opus synthesis complete
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **GAP:** GAP-LRP-03 (P1)
 **Phase:** 1-C (Session 1)
 **Last updated:** 2026-04-07 00:33

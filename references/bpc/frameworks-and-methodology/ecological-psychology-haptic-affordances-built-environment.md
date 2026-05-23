@@ -1,6 +1,10 @@
 ## ecological-psychology-haptic-affordances-built-environment
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 3–4 (theoretical with empirical application)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Affordances are organism-specific action possibilities — the same environment affords different actions to different users. Accessibility specifications (900 mm corridor, 175 mm riser, 1200 mm counter) are minimum functional thresholds at which affordances switch from available to unavailable. Handrails and grab bars are haptic navigation structures, not safety add-ons — interruption at any point destroys the haptic route.
 **Key frameworks:**
   - Gibson (1979): affordances as action possibilities specific to the organism

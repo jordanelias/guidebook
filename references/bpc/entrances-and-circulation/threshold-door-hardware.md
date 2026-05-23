@@ -6,6 +6,10 @@
 
 ## threshold-door-hardware
 **Updated:** 2026-04-07 03:03 (citation mining pass)  **Evidence tier range:** 1–6 (statutory standards dominant; 1 Tier 1 OT source; EN Co-1 complete; citation mining complete)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PARTIAL-RETAINED
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Status:** PARTIAL — 24/24 jurisdictions have Tier 6 data; 12 SEARCHED + 13 THIN (THIN = Tier 6 only, Tier 5 from training knowledge). EN Co-1 COMPLETE. Citation mining COMPLETE (1 new source — Brandt 2016, empirical operating force study). 13 non-EN languages Co-1 not run. FDR complete (see log). All non-EN/DE/SV/NO/FR jurisdiction values carry [TRAINING-KNOWLEDGE — verify before publication].
 
 ### Concept boundary notes

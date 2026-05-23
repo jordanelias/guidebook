@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-23-bpc-rewrite-phase-b-closure",
+  "artifact": "sessions/session_2026-05-23-bpc-rewrite-phase-b-closure.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "canonical-workplan",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-23-bpc-rewrite-phase-b-closure.md#headline-outcomes",
+      "reason": "Every number in the Headline Outcomes table and the Artifacts Touched table is derived from the session's own tool output (DB queries, file system scans, audit script verdict) and is replayable by re-running scripts/audit/pre_rehab_banner_audit.py against HEAD. The Cohort-vs-Handoff section explicitly names the bias direction (broader application) and the forward-reversibility of the migration. No invented metrics; no rounded-up claims."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-23-bpc-rewrite-phase-b-closure.md#next-action-handoff",
+      "reason": "Session record names B.0 as closed and lists B.11, B.9, B.8, B.10, B.12 as remaining substantive items per the workplan structure. Phase E.1 pilot mandate (rule #10 Track 3) is named as the immediate post-Phase-B step. Workplan §B.0 self-update is named as a known-pending item; phase ordering is preserved (no Phase E content authored this session)."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-23-bpc-rewrite-phase-b-closure.md#artifacts-touched",
+      "reason": "Banner application is the operational implementation of rule #10's final-paragraph retraction predicate. The session does NOT author any synthesis claims; the banner explicitly marks the 70 files as retracted-pending-reverification, which preserves rather than violates the synthesis gate. The 638/638 eligibility predicate is verified unchanged (rule #10 main gate)."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-05-23-bpc-rewrite-phase-b-closure.json"
+    }
+  },
+  "deviations": [
+    {
+      "rule": "evidence-verification-gate-for-synthesis",
+      "reason": "Rule #10 final paragraph literal text refers to 'the 2026-03-30 round' as the cohort source. This session applied the banner to the broader cohort defined by DR-2026-05-23 (any positive [OPUS-SYNTHESIS*] tag pre-dating 2026-05-23 rehab closure). The v10.15 queue entry in decisions/PI-update-needed.md proposes amending the rule text to match the DR; until owner paste, the rule-text-vs-application gap is logged as [ASSUMPTION: applying broader cohort per DR-2026-05-23]."
+    }
+  ],
+  "bias_direction": "Session bias toward declaring B.0 closed under a broader cohort interpretation than the handoff stated. The Cohort-vs-Handoff section is honest about the 2.3× factor and the alternative narrower-interpretation availability, but the headline framing (`B.0 closed`) presupposes the broader interpretation is correct. A future session that adopts a narrower cohort would need to reopen B.0 and selectively unbanner — the language `forward-reversible` understates the work cost of doing so (~30 file edits + 1 SQL migration + 1 re-attestation per slug transitioned).",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that the session record claims closure on a workplan item the owner sized at ~30 BPCs while actually touching ~70. The closure claim is contingent on accepting the DR's cohort definition, which is itself authored by the same session. The reviewer would push back on the framing of the [ASSUMPTION:] tag as 'standing for this session' — calling it standing implies it was deliberated rather than that the session simply proceeded under it. Counter: the DR (DEVIATION-LOGGED verdict, not CLEAN) and the v10.15 queue entry both make the cohort interpretation owner-overridable. The session record names this as Known Pending Work item #5 and as an Owner Action Queue item, surfacing the discretion rather than hiding it.",
+  "verdict": "DEVIATION-LOGGED"
+}

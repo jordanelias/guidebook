@@ -1,6 +1,10 @@
 ## deaf-classroom-reverberation-time
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-26 05:30  **Evidence tier range:** 1–4  **Opus synthesis:** YES [OPUS-SYNTHESIS] — TARGETED-RETRIEVAL
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Status:** TARGETED RETRIEVAL — focused subset of room-acoustic-performance BPC; Iglehart 2020 is Tier 1.
 
 ### Best-practice synthesis

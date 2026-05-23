@@ -1,6 +1,10 @@
 # BPC Entry — crpd-implementation-built-environment
 **Topic:** frameworks-and-methodology
 **Status:** COMPLETE — Opus synthesis complete (mapping pass)
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **GAP:** GAP-LRP-11 (P1)
 **Phase:** 2
 **Last updated:** 2026-04-07 03:03 (Phase 2 — C10/C11/C12 added)

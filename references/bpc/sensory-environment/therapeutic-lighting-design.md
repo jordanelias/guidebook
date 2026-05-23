@@ -1,6 +1,10 @@
 ## therapeutic-lighting-design|ALL
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 13:30  **Evidence tier:** 1–3 (clinical research); Tier 4–6 (standards)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Circadian-effective daytime lighting (≥150–200 EML at eye level, ≥4000 K CCT) significantly improves sleep-wake outcomes and reduces agitation in dementia; evening shift to ≤2700 K / ≤10 EML supports circadian entrainment; flicker-free LED (IEEE 1789-2015) is mandatory for NDV/NEU populations.
 **Key specification:** Morning bright light ≥2500 lux (photopic) / ≥200 EML demonstrated in RCTs for dementia; WELL v2 Feature 54: ≥200 EML at 75% of workstations 9am–1pm; SV: CS ≥0.3 for ≥30 min morning (workplace standard)
 **Jurisdictions confirmed:** US (WELL v2, IEEE 1789), UK (Building Regs L + CIBSE), SV (BBR/BFS 2024, Arbetsmiljöverket 2019), NO, DA (DemensCentrum Aarhus), CN (RCT), EU (EN 12464-1)

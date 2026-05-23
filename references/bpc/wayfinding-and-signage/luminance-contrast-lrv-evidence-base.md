@@ -1,6 +1,10 @@
 ## luminance-contrast-lrv-evidence-base
 
 **Updated:** 2026-05-10 (multilingual search correction)  **Original search:** 2026-03-18 23:30  **Evidence tier:** 3–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Multilingual search:** 2026-05-10 (13/14 langs)
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Luminance contrast thresholds for the built environment are NOT internationally consistent. At least six mathematically incompatible formula types exist across jurisdictions, and several major jurisdictions (China, South Korea, Denmark) specify no numerical threshold at all. The "≥30 LRV difference" framing is specific to UK/AU/ES and should not be presented as a global consensus. Even jurisdictions that mandate numerical thresholds use different formulas (LRV subtraction, Michelson ratio, NCS lightness, luminance ratio, percentage-based), meaning identical surfaces can pass in one jurisdiction and fail in another. The UK-origin 30% threshold derives from DDA regulatory guidance, not peer-reviewed empirical evidence.
 **Key evidence:**
   - Regulatory origin confirmed: 30% threshold adopted from UK DDA guidance; directly carried into AS 1428.1:2009 and AS 1428.1:2021 without independent empirical validation (GAP-007 research, 2026)

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-23-bpc-rewrite-phase-b-closure",
+  "artifact": "decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "canonical-workplan",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-23-cohort-manifest.json",
+      "reason": "Cohort enumeration is derived from a deterministic scan of references/bpc/*.md against the committed DB state at HEAD b0a4a25; the manifest is committed alongside the DR for replay. Counts (70 files, 68 unique slugs, 2 duplicate slugs named) are all empirically verified by scripts/audit/pre_rehab_banner_audit.py (PASS verdict in-session). No invented sources; no pattern-matched claims; the handoff's ~30 estimate was surfaced as a `[GAP]` and reconciled against actual evidence rather than back-solved to match."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md#related",
+      "reason": "DR closes workplan §B.0 (Retraction banners on pre-rehabilitation opus-synthesis BPCs). Phase ordering respected — Phase B work continues; no Phase E synthesis content authored; no synthesis claim made on any of the 70 cohort BPCs."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md#phase-e2g-overwrite",
+      "reason": "DR sharpens rule #10's final-paragraph cohort wording for the retraction banner. Existence gate unchanged (still {COMPLETE, COMPLETE-STATUTORY} × {VERIFIED, UNVERIFIED-1}); sub-rules 1/2/3 unchanged. The change is scope of who carries the banner, not what clears it. Banner-removal predicate explicitly restated to anchor against drift."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-05-23-pre-rehab-banner-cohort-definition.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Self-authored DR bias: the cohort definition was widened from the PI rule's literal text ('2026-03-30 round') to ~70 files based on the same session's scan of [OPUS-SYNTHESIS*] tag variants. There is a natural pull toward maximalist banner application when uncertain. The handoff's ~30 estimate was honored as a data point but ultimately overridden by file-level evidence; this could over-correct if the owner's ~30 estimate reflected a deliberate scope narrowing (e.g., 'only the formally-published opus-synthesis round, not provisional or annotated tags'). Mitigation: cohort manifest committed and audit script ships; if Phase E.2g reverification finds the broader cohort was wrong, the migration is forward-reversible by transitioning specific slugs out of RETRACTED-PRE-REHAB without retracting the DR.",
+  "independent_reviewer_counterclaim": "An independent reviewer would object that the DR is being authored mid-session from a single Claude's evidence sweep, in the same turn that applies the changes it ratifies. The proper sequence under DR-2026-05-19's pilot-first norm would be: (1) author the DR PROPOSED, (2) wait for owner ratification, (3) apply. The reviewer would also push back on widening the cohort 2.3× from the handoff's stated target without first asking 'is ~30 a deliberate subset?' (the user answered 'proceed' to the catalog, which the session interpreted as approving the recommended Option B — defensible but not the only reading). Counter: the DR status is PROPOSED, not ratified; the changes are forward-reversible at the DB and markdown level; the cohort manifest is frozen at HEAD b0a4a25 so replay is deterministic; the audit script makes ongoing drift detectable.",
+  "verdict": "DEVIATION-LOGGED"
+}

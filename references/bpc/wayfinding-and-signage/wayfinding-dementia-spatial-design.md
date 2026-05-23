@@ -1,6 +1,10 @@
 ## wayfinding-dementia-spatial-design
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 2–3  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** People with dementia retain capacity for sub-plans and minor decisions but progressively lose ability to form cognitive maps. Design should target residual egocentric (route-following) navigation; allocentric (cognitive map) navigation is impaired earliest in Alzheimer's disease.
 **Key evidence:**
   - Navigation progression: allocentric (cognitive map) impaired earliest → route knowledge → landmark knowledge (most preserved) (PMC8545728, 2021, Tier 3)

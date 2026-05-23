@@ -1,6 +1,10 @@
 ## wayfinding-cognitive-science-spatial-design
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Spatial configuration outperforms signage density as the primary wayfinding mechanism. Architecture should be self-explanatory at the layout level, with signage as reinforcement. Wayfinding fails when it imposes excessive extraneous cognitive load — directly reducing functional capacity for users with TBI/ABI, dementia, ADHD, or PCS.
 **Key evidence:**
   - Spatial configuration vs. signage: floor plan configuration has a stronger effect on wayfinding accuracy than signage quantity — buildings should be designed for topological legibility first (O'Neill 1991, Tier 3; Passini 1984)

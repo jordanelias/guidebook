@@ -2,6 +2,10 @@
 
 **Updated:** 2026-03-19 22:00  **Evidence tier range:** 3–4
 **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **STATUS: PROVISIONAL** — all specifications carry `[TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026]`; v9.0 interim only; full evidence review deferred to v10.0.
 
 ### Concept boundary notes

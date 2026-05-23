@@ -1,6 +1,10 @@
 ## multilingual-evidence-convergence-non-english
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 01:00  **Evidence tier:** 3–5 (systematic review; non-English sources)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Seven provisions have stronger empirical evidence in non-English language literature than in English-language sources. Five provisions have cross-linguistic consensus (≥5 language bodies). Three provisions lack any non-English evidence base and rest entirely on English-language sources.
 **Stronger in non-English literature:**
   | Provision | Strongest evidence language | Key finding |

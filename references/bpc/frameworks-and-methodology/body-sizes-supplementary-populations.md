@@ -1,6 +1,10 @@
 ## body-sizes-supplementary-populations
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 23:59  **Evidence tier:** 3–5 (anthropometric data, standards, limited OT evidence)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** All four supplementary populations (children, short stature/dwarfism, extreme height, large body size) are entirely absent from all reviewed international accessibility standards (ADA, BS 8300, ISO 21542, DIN 18040, NS 11001, BCA 2025, CSA B651). Design provisions must be derived from anthropometric databases and expert consensus in the absence of dedicated standards.
 **CHD — Children (age-staged):**
   - CHD sub-code framework: CHD/INF (0–2 yrs, ~75–87 cm); CHD/PRE (3–5 yrs, ~96–110 cm); CHD/ESA (6–8 yrs, ~116–128 cm); CHD/MCA (9–12 yrs, ~133–150 cm); CHD/ADO (13–17 yrs)

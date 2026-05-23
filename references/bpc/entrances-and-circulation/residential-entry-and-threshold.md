@@ -1,6 +1,10 @@
 ## residential-entry-and-threshold
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 21:05  **Evidence tier range:** 4–6  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PROVISIONAL-RETAINED
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **STATUS: PROVISIONAL — 11 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 7/24. Do not use as sole basis for specification writing.**
 
 ### Concept boundary notes

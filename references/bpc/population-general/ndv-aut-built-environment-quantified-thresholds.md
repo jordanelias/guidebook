@@ -2,6 +2,10 @@
 
 **Updated:** 2026-03-30 (Co-1 EN pass)  **Evidence tier:** 3–5 (thin base; practitioner consensus dominant)
 **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Co-1 status:** PARTIAL EN — Bagatell et al. 2022; Scientific Reports 2025 — confirms acoustic/sensory sensitivity drives space avoidance; no contradictions; threshold gap confirmed consumer-side
 **Consensus finding:** Evidence for specific quantitative built environment design thresholds for NDV/AUT populations is Tier 4–5 (practitioner consensus and limited empirical work). Peer-reviewed literature provides directional guidance on domains but rarely specifies validated dB or lux thresholds. The evidence is building but has not yet reached RCT-level validation for built environment specifications.
 **Three primary design domains (Tola et al. 2021, Tier 1 scoping review):**

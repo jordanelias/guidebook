@@ -2,6 +2,9 @@
 
 **Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19  **Evidence tier:** Tier 1–2 (mixed; see population notes)  **Early-close:** no  **Status:** PARTIAL (NL, KO, SV/FI thin; 18/24 jurisdictions covered)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
 
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 ### Concept boundary notes
 | Language | Alias | Map quality | Warning |
 |---|---|---|---|

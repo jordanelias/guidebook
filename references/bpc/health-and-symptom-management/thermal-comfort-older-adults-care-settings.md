@@ -1,6 +1,10 @@
 ## thermal-comfort-older-adults-care-settings
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 1–3  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** Standard PMV/PPD thermal comfort model has limited suitability for older adults; age-differentiated targets are required. Neutral temperature for older adults in care settings is approximately 24.9°C (comfort zone 18.3–26.3°C). Unheated bathroom cold shock is the leading residential thermal hazard in cold climates, responsible for 6,073 bathtub drowning deaths in Japan (2023).
 **Key evidence:**
   - Neutral temperature older adults (care homes, cold winter climate): 24.9°C; comfort zone 18.3–26.3°C (Baquero et al. 2023, Tier 3, n=1065 nursing home residents)

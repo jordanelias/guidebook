@@ -1,6 +1,10 @@
 ## ot-cpg-built-environment
 
 **Created:** 2026-03-28  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Evidence tier:** Co-2 (OT Clinical Practice Guidelines)  
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Status:** COMPLETE — Co-2 source inventory for §1.5 Evidence Hierarchy
 
 ### Purpose

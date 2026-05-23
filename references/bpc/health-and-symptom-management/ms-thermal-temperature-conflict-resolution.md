@@ -1,6 +1,10 @@
 ## ms-thermal-temperature-conflict-resolution
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** MS (Uhthoff's phenomenon), fibromyalgia, and OFS/MCAS thermal requirements are directly conflicting and irreconcilable in a shared space without individual controls. The only design resolution is ambient ≤18–21°C with individual supplemental heating at each seat/workstation. No single fixed ambient temperature serves all three populations.
 **Conflict table:**
   | Population | Thermal requirement | Clinical basis | Quantified threshold (Jevotovsky 2025, MST-11) |

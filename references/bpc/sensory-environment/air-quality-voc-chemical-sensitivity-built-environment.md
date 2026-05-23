@@ -1,6 +1,10 @@
 ## air-quality-voc-chemical-sensitivity-built-environment
 
 **Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 4–5  **Opus synthesis:** YES [OPUS-SYNTHESIS] (clinical trigger literature + engineering standards; no RCT-level evidence for built-environment-specific thresholds)
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Consensus finding:** MCAS, multiple chemical sensitivity (MCS), PCS/TBI, and chemically sensitive NDV populations require both policy-level fragrance-free zones and built-in physical air quality specifications. MERV 13+ filtration and TVOC ≤0.5 mg/m³ are the primary built-environment interventions; all specifications are derived from MCAS trigger literature and HVAC engineering standards, not from built-environment RCTs.
 **Key specifications (F-04 item):**
   - Filtration: MERV 13 minimum in all AHUs serving OFS-occupied spaces; HEPA for OFS/MCAS primary spaces

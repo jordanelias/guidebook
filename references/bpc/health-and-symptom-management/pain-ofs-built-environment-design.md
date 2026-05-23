@@ -6,6 +6,10 @@
 
 ## pain-ofs-built-environment-design
 **Updated:** 2026-03-26 23:00  **Evidence tier range:** 1–5 (THIN BASE — GAP-029 P2 OPEN)  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PROVISIONAL-RETAINED
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 **Status:** PROVISIONAL — 10/24 jurisdictions NOT-RUN; 7/14 languages Co-1 not attempted. Structural evidence gap: zero built-environment spatial parameters exist for PAIN/OFS in any jurisdiction or language.
 
 ### Concept boundary notes

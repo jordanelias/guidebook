@@ -2,6 +2,9 @@
 
 **Updated:** 2026-03-26 16:45  **Evidence tier range:** 2–6  **Opus synthesis:** YES [OPUS-SYNTHESIS] 2026-03-29 — PROVISIONAL-RETAINED  **Status: PROVISIONAL** (19/24 jurisdictions searched; tier5 8/24 — structural gap accepted; 6 NOT-RUN)
 
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
