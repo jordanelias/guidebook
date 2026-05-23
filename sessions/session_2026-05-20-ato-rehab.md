@@ -1906,3 +1906,46 @@ These 7 rows all share the c1-migration-fix-era pattern: placeholder title forma
 ### Practical implication
 
 The "stuck" cohort that resisted multi-round search yielded ~78% verification rate when searched with paraphrase awareness (suspecting the DB title is a description rather than the real title) and ~22% genuinely unresolvable. Going forward, **default approach for any remaining stuck row should be: assume the DB description is a paraphrase of a real source, search via author+topic+year hints, and only retire after both Crossref and web-search return zero topical match.**
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-sixth push): Framework batch — crossed 90% + 91%
+
+After continuation-25 triage close on `1b40606c`, owner said "proceed". One batch landed targeting well-known framework sources for which DB descriptions were paraphrased but underlying citations findable via single targeted web search. **+11 rows.**
+
+### Batch landed (framework; 11 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| FW | `data_20260522170000_framework_batch.sql` | 11 | +11 → **619 (91.3%)** |
+
+### Verified frameworks
+
+- REF-00057 CAOT 2024 "OT Practice Document: Home Assessment and Modifications" caot.ca/document/8205
+- REF-00058 COTEC + WFOT 2022 joint position statement on OT and accessibility (UN CRPD Art. 9 + Art. 19)
+- REF-00055 RCOT Living Well by Design 2023 UK (Care Act 2014 + Approved Document M)
+- REF-00241 RCOT energy conservation guidance UK (NICE NG206 ME/CFS alignment)
+- REF-00549 RCOT + NAS sensory environment guidance UK (Autism Act 2009 + PAS 6463:2022)
+- REF-00477 Bufdir Norway "Lydalarm og blinkende lys" visual + audible alerting universal-design (TEK17 §11-12 + EN 54-23 + Likestillings- og diskrimineringsloven 2017)
+- REF-00615 Mast Cell Action UK MCAS environmental-management guidance 2023 (Reg. Charity 1185486)
+- REF-00289 KultureCity Sensory Inclusive Certification 2024 (US 501(c)(3); UCLA Center for Autism affiliated; NFL/NBA/MLB/Disney/Port of Seattle partners)
+- REF-00294 Port of Seattle Sea-Tac Sensory Room case study + design guidance 2024 (Arc of King County + KultureCity partners)
+- REF-00491 Mostafa ASPECTSS 2.0 / Autism-Friendly University framework 2023 (AUC + Progressive Architects; companion to 4-BPC ASPECTSS cluster REF-00051+00129+00517+00592+00724)
+- REF-00344 RIT/NTID InfoGuides DeafSpace bibliographic resource (companion to Gallaudet REF-00170)
+
+### Yield observation
+
+Framework batch was high-yield because each row corresponded to a known professional-body, government-agency, or organisation publication. Single search per row hit the canonical landing page in every case. **The c1-migration-fix legacy cohort assumption — that "stuck" means "doesn't exist" — is wrong; stuck just means the DB description format made first-pass automated search fail.**
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-25 (89.7%) | 608/678 | 89.7% | — |
+| **Continuation-26 (91.3%)** | **619/678** | **91.3%** | **+11** |
+
+### Status
+
+- HEAD: `c690399a` — 77 migration commits
+- 59 non-eligible remain (incl. 7 explicitly retired UNVERIFIED-CLOSED)
+- 35/35 db_integrity green
