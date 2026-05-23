@@ -1766,3 +1766,39 @@ After continuation-21 close on `025d3e7d`, owner said "proceed". 2 more batches 
 - 86 non-eligible remain
 - 35/35 db_integrity green
 - Per-row Crossref+web-search work-rate continues at ~2-3 rows per round; topic-keyword query technique stable at ~40-60% hit rate
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-third push): Grey round 5 + UK/US guidelines
+
+After continuation-22 close on `f44ffb8d`, owner said "proceed". 2 batches landed. **+3 rows.**
+
+### Batches landed (R5, UK/US; 3 rows)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| R5 | `data_20260522135000_grey_round5.sql` | 1 | +1 → 593 |
+| UK+US | `data_20260522141000_uk_us_guidelines_batch.sql` | 2 | +2 → **595 (87.8%)** |
+
+### Verified
+
+- REF-00217 Christogianni A, Bibb R, Filingeri D (2024) J Therm Biol 123:103887 DOI 10.1016/j.jtherbio.2024.103887 high-density thermal sensitivity maps pwMS — continuation of REF-00254 2022 MSARD paper (same Southampton group); year corrected 2025→2024
+- REF-00357 UK Foundations (national HIA body since 2000) + AKW Medi-Care 2023 — Disabled Facilities Grant framework; underlying Housing Grants, Construction and Regeneration Act 1996 + Care Act 2014; DFG budget £623m for 2023/24
+- REF-00324 SDSU Extension + NDSU Extension Voices for Home Modification of the Dakota — Laundry Room Design for Independence 2020 + companion universal-design publications; 36" door, 5-foot turning radius, 18" lateral clearance, 12" pedestal
+
+### Yield notes
+
+Round 5 specific-topic Crossref hits dropped to ~30% as easy candidates exhaust. Round 6 (Geisser fibromyalgia, Hayashi Japanese clinical, Nakayama 1981, Trouvé FR, De Cuyper NL, Weber dementia, McDowell anthropometric) all hit wrong-author or off-topic matches — owner-queue.
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-22 (87.3%) | 592/678 | 87.3% | — |
+| **Continuation-23 (87.8%)** | **595/678** | **87.8%** | **+3** |
+
+### Status
+
+- HEAD: `12d6df63` — 74 migration commits
+- 83 non-eligible remain
+- 35/35 db_integrity green
