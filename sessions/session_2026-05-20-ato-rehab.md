@@ -2025,3 +2025,41 @@ The remaining 27 open rows are best cleared via owner-supplied citation hints ra
 - 17 explicit `(... TBC)` rows where owner created stubs as placeholders — needs owner to specify the actual citation
 - 6 country-specific rows (JP DPI, KR SI, DE tourist, UAE quiet design, NG sensory corners, IN 2025) — owner-supplied URL or PDF would unblock
 - 4 framework rows where DB description doesn't align well with any single Crossref result — owner-supplied disambiguation needed
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-eighth push): JP+KR+DE batch — 92.2%
+
+After continuation-27 final-close on `aec0dbb9`, owner said "proceed". One batch: 5 verifications + 1 retirement.
+
+### Batch landed (jp-kr-de; 6 row updates)
+
+| # | Migration | Rows | Net eligible |
+|---|-----------|------|--------------|
+| JKD | `data_20260522190000_jp_kr_de_batch.sql` | 6 | +5 → **625 (92.2%)** + 1 retired |
+
+### Verified
+
+- REF-00066 MLIT 2024 障害者の居住にも対応した住宅の設計ハンドブック — first Japanese accessibility-housing handbook for new-build rentals; 髙橋儀平 (Toyo University emeritus) + DPI Japan + 佐藤聡 partnership; supersedes inadequate 2009 elderly-only guidance
+- REF-00626 Sasaki Ginga + Matsumoto Mari 2024 *AIJT* 30(75):915 "Inclusive Quiet Room" calming-space empirical experiment DOI 10.3130/aijt.30.915 (Tsukuba University + Nomura Kogeisha collaboration; 2021 Accessible Study Room prototype)
+- REF-00627 Tsukuba 2025 biosignal + questionnaire follow-on study (companion to REF-00626 + 2024-10-20 AIJT 30:76 French validation)
+- REF-00702 Korean Academy of Sensory Integration 2022 SR for ASD children (10 Korean studies 2011-2020 via RISS+DBpia; Kosin University grant; PICO framework)
+- REF-00279 BMWi 2008 accessible-tourism economic-impact study (University of Münster + PROJECT M GmbH; year corrected 2004→2008)
+
+### Retired
+
+- REF-00273 Brunson + Buttimer 2019 "An Adorable Housing Paper" — Crossref + web-search both returned nothing; title phrasing atypical of academic work; likely c1-migration-fix fabrication or wrong-attribution
+
+### Trajectory
+
+| Snapshot | Eligible | % | Δ |
+|---|---|---|---|
+| Continuation-27 (91.4%) | 620/678 | 91.4% | — |
+| **Continuation-28 (92.2%)** | **625/678** | **92.2%** | **+5 + 1 retire** |
+
+### Status
+
+- HEAD: `32aab1a9` — 79 migration commits
+- 22 retired (UNVERIFIED-CLOSED)
+- 21 open remaining — primarily explicit `(... source TBC)` owner-queue placeholders
+- 35/35 db_integrity green
