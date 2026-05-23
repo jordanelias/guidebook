@@ -2063,3 +2063,60 @@ After continuation-27 final-close on `aec0dbb9`, owner said "proceed". One batch
 - 22 retired (UNVERIFIED-CLOSED)
 - 21 open remaining — primarily explicit `(... source TBC)` owner-queue placeholders
 - 35/35 db_integrity green
+
+---
+
+## CONTINUATION 2026-05-22 (twenty-ninth push): retire + redo CRPD + final two close — 92.6%
+
+Per owner directive: retire rows that can't be verified; redo CRPD from scratch.
+
+### Batch landed (retire-unverifiable + crpd-redo + final-two; 22 row updates)
+
+| Action | Rows | Notes |
+|---|---|---|
+| Retire to UNVERIFIED-CLOSED | 18 | c1-migration-fix faithful copies of `[GREY — full citation required]` markers |
+| Redo REF-00159 CRPD C01-C12 stub | 1 | Resolved to Broderick A 2020 *Int J Hum Rights* 24(4):393-413 DOI 10.1080/13642987.2019.1634556 |
+| Resolve final 2 open | 2 | REF-00191 → Fryar 2021 NHANES PMID 33541517; REF-00224 → Strassheim 2018 Newcastle PoTS DOI 10.1016/j.autneu.2018.02.003 |
+| B05 fix | 1 | REF-00191 source_type government_report → report |
+
+### Retired (18 rows)
+
+REF-00001 (IntD home design TBC), REF-00182 (E10), REF-00183 (E13), REF-00184 (E14), REF-00185 (E17), REF-00186 (E29), REF-00232 (ME/CFS env review TBC), REF-00243 (ME/CFS pacing TBC), REF-00257 (internal), REF-00504 (India 2025 TBC), REF-00513 (TWSI scoping TBC), REF-00514 (wayfinding scoping TBC), REF-00594 (ambient light RCT TBC), REF-00595 (24-week cluster TBC), REF-00596 (therapeutic lighting SR TBC), REF-00629 (UAE quiet design), REF-00634 (NG DIY sensory corners), REF-00635 (2024 scoping multi-country).
+
+Status applied: `metadata_integrity_status='TRIAGE-RETIRED-OWNER-GAP'` — distinct from the c1-migration-fix-fabricated `TRIAGE-RETIRED-NO-LEAD` category.
+
+### CRPD redo finding
+
+The CRB-05–CRB-12 bundle in `references/bpc/frameworks-and-methodology/crpd-implementation-built-environment.md` line 104 was an unresolved stub. The BPC reasoning doc said "full citations in search log" but the search log (`references/search-log/frameworks-and-methodology/crpd-implementation-built-environment.md`) is YAML-only — no source table. The list was never recorded.
+
+REF-00159 now anchors the CRPD-implementation literature with Broderick A 2020 "Of rights and obligations: the birth of accessibility" — Maastricht University legal scholarship on CRPD Art. 9 as a new human right. The migration detail records 3 companion sources that should be added as new REF-IDs in future work: (a) Jónasdóttir et al. 2020 Scand J Disabil Res 22(1):371-381 DOI 10.16993/sjdr.730 (Iceland case); (b) UN OHCHR SDG-CRPD Resource Package Article 9 Indicators; (c) G3ict Toolkit Key Indicators of Accessibility.
+
+### Final state (continuation-29 close)
+
+- HEAD: `0b1cb4e7` — 81 migration commits
+- **Eligible: 628/678 (92.6%)** · **40 retired** · **0 open**
+- All commits pass 35/35 db_integrity
+- Authors populated for Broderick (REF-00159), Fryar+Carroll+Gu+Afful+Ogden (REF-00191), Strassheim+Welford+Ballantine+Newton (REF-00224)
+
+### Cohort-level final verdict
+
+Of ~178 rows non-eligible at the start of this work-stream:
+- **150 verified** (84%) — resolved via Crossref/PubMed/web-search with paraphrase-aware methodology
+- **40 retired UNVERIFIED-CLOSED** (22%) — broken down:
+  - 21 c1-migration-fix-fabricated rows with no underlying real source (`TRIAGE-RETIRED-NO-LEAD` status)
+  - 18 c1-migration-fix faithful copies of owner-flagged citation gaps in BPC reasoning docs (`TRIAGE-RETIRED-OWNER-GAP` status)
+  - 1 wrong-attribution retirement (REF-00273 Brunson)
+
+The owner-gap retirements aren't hallucinations — they're acknowledged gaps the project itself flagged but never resolved. They were retired here because they couldn't be verified without owner search-log work.
+
+### Trajectory
+
+| Snapshot | Eligible | % | Retired | Open |
+|---|---|---|---|---|
+| Day 1 open | 236/670 | 35.2% | — | — |
+| Continuation-28 (92.2%) | 625/678 | 92.2% | 22 | 21 |
+| **Continuation-29 (92.6%)** | **628/678** | **92.6%** | **40** | **0** |
+
+### Practical end of work-stream
+
+All non-eligible rows are now either verified or retired. No outstanding owner-queue rows. The remaining gap to 100% would require either: (a) owner search-log work to retrieve E-code primary citations that may exist in pre-c1-migration-fix backups; (b) acceptance that ~6% of the 678-row corpus is genuinely irrecoverable.
