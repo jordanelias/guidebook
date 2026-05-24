@@ -1,0 +1,549 @@
+{
+  "RAP-marzi-2025": {
+    "openalex_id": "W4410838466",
+    "openalex_cited_by_count": 2,
+    "citers_fetched": 2,
+    "relevant_n": 1,
+    "already_in_es_n": 0,
+    "new_discovery_n": 1,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-marzi-2024": {
+    "openalex_id": "W4403969072",
+    "openalex_cited_by_count": 15,
+    "citers_fetched": 15,
+    "relevant_n": 11,
+    "already_in_es_n": 1,
+    "new_discovery_n": 10,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.buildenv.2025.112874",
+        "year": 2025,
+        "first_author": "Godasiaei",
+        "title_short": "Integrating experimental analysis and machine learning for enhancing energy efficiency and indoor air quality in educati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2025.113634",
+        "year": 2025,
+        "first_author": "Masiero",
+        "title_short": "Ten questions concerning autism and auditory accessibility in buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvman.2025.127676",
+        "year": 2025,
+        "first_author": "Dosumu",
+        "title_short": "Generative physics-informed machine learning for modeling indoor air quality and its impact on student health and perfor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-025-02358-4",
+        "year": 2025,
+        "first_author": "Marzi",
+        "title_short": "The influence of indoor temperature and noise on autistic individuals",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2025.114179",
+        "year": 2026,
+        "first_author": "Kwong",
+        "title_short": "Auditory-perception-based tuneable noise control approach for improving acoustic comfort and behaviour of autistic indiv",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18260/1-2--57274",
+        "year": 2025,
+        "first_author": "Kurdi",
+        "title_short": "The use of digital twins and AR for indoor environmental quality: classroom as a dynamic laboratory for hands-on and app",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14659891.2026.2627192",
+        "year": 2026,
+        "first_author": "Green",
+        "title_short": "Letter to the editor: how to create a safe clinical space for neurodivergent clients seeking substance use treatment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1420326x261433042",
+        "year": 2026,
+        "first_author": "Shen",
+        "title_short": "Design optimisation study of indoor environments in student dormitories with enclosed balconies through multi-algorithm ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6020064",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "From Sensory Design to Regulatory Architecture: A Systematic Review of Inclusive Early Childhood Learning Environments f",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-23": {
+    "openalex_id": "W3187823847",
+    "openalex_cited_by_count": 44,
+    "citers_fetched": 43,
+    "relevant_n": 32,
+    "already_in_es_n": 0,
+    "new_discovery_n": 32,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.buildenv.2021.108582",
+        "year": 2021,
+        "first_author": "Minelli",
+        "title_short": "Acoustical parameters for learning in classroom: A review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-023-40660-1",
+        "year": 2023,
+        "first_author": "Visentin",
+        "title_short": "Individual characteristics moderate listening effort in noisy classrooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-024-76932-7",
+        "year": 2024,
+        "first_author": "Seitz",
+        "title_short": "Listening effort in children and adults in classroom noise",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2022.105430",
+        "year": 2022,
+        "first_author": "Fang",
+        "title_short": "A review of research on the impact of the classroom physical environment on schoolchildren's health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1351010x221117899",
+        "year": 2022,
+        "first_author": "Mealings",
+        "title_short": "A scoping review of the effects of classroom acoustic conditions on primary school children\u2019s mental wellbeing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph20064822",
+        "year": 2023,
+        "first_author": "Visentin",
+        "title_short": "Be Quiet! Effects of Competing Speakers and Individual Characteristics on Listening Comprehension for Primary School Stu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jer.2023.100009",
+        "year": 2023,
+        "first_author": "Alqahtani",
+        "title_short": "Revealing factors influencing classroom noise in the universities teaching and learning environment: A design of experim",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/f-03-2022-0036",
+        "year": 2023,
+        "first_author": "Radun",
+        "title_short": "Pupils\u2019 experience of noise in two acoustically different classrooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apacoust.2024.110498",
+        "year": 2024,
+        "first_author": "D\u2019Orazio",
+        "title_short": "The Italian standard on classroom acoustics UNI 11532-2:2020 explained through case studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-024-70820-w",
+        "year": 2024,
+        "first_author": "Ishikawa",
+        "title_short": "Cognitive load associated with speaking clearly in reverberant rooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2024_jslhr-24-00261",
+        "year": 2024,
+        "first_author": "Mealings",
+        "title_short": "A Methodological Review of Stimuli Used for Classroom Speech-in-Noise Tests",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00405-025-09232-z",
+        "year": 2025,
+        "first_author": "Spoorthi",
+        "title_short": "The effect of noise on listening effort in children as measured using different methods: a systematic review and meta-an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2025.112173",
+        "year": 2025,
+        "first_author": "Yan",
+        "title_short": "Research on regulating classroom reverberation time by using wood materials",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/a-1865-3449",
+        "year": 2022,
+        "first_author": "K\u0131l\u0131\u00e7",
+        "title_short": "Listening Effort in Hearing Aid Users: Is It Related to Hearing Aid Use and Satisfaction?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/23312165241276435",
+        "year": 2024,
+        "first_author": "Holube",
+        "title_short": "Automated Measurement of Speech Recognition, Reaction Time, and Speech Rate and Their Relation to Self-Reported Listenin",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.heares.2023.108697",
+        "year": 2023,
+        "first_author": "Sadagopan",
+        "title_short": "Quantitative models of auditory cortical processing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/10.0024461",
+        "year": 2024,
+        "first_author": "Peng",
+        "title_short": "Development of amplitude modulation, voice onset time, and consonant identification in noise and reverberation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s42003-023-04816-z",
+        "year": 2023,
+        "first_author": "Parida",
+        "title_short": "Adaptive mechanisms facilitate robust performance in noise and in reverberation in an auditory categorization model",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2025.113959",
+        "year": 2025,
+        "first_author": "Visentin",
+        "title_short": "Let's get loud: How classroom activities influence speech and noise levels during lessons",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000001759",
+        "year": 2025,
+        "first_author": "Seitz",
+        "title_short": "Differences Between Subjective and Behavioral Listening Effort in Children Across Age and Task Complexity",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/app13148256",
+        "year": 2023,
+        "first_author": "Li",
+        "title_short": "The Effects of Noise and Reverberation Time on Auditory Sustained Attention",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2024_jslhr-23-00574",
+        "year": 2025,
+        "first_author": "Tuohimaa",
+        "title_short": "Factors Associated With Social-Pragmatic Understanding in Deaf and Hard of Hearing and Typically Hearing 6-Year-Old Chil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10904018.2023.2229368",
+        "year": 2023,
+        "first_author": "Mealings",
+        "title_short": "A Methodological Review of Listening Comprehension Tests for Primary School Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14670100.2024.2304468",
+        "year": 2024,
+        "first_author": "G\u00f6kay",
+        "title_short": "The validity and reliability of Turkish version of the children's home inventory for listening difficulties \u2013 (C.H.I.L.D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1101/2022.09.25.509412",
+        "year": 2022,
+        "first_author": "Parida",
+        "title_short": "Adaptive mechanisms facilitate robust performance in noise and in reverberation in an auditory categorization model",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/i3da57090.2023.10289357",
+        "year": 2023,
+        "first_author": "Prodi",
+        "title_short": "Using response time to evaluate noise fluctuations and Lombard speech in auralizations",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-4022395/v1",
+        "year": 2024,
+        "first_author": "Ishikawa",
+        "title_short": "Cognitive Load Associated with Speaking Clearly in Reverberant Rooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.25144/16585",
+        "year": 2023,
+        "first_author": "Greenland",
+        "title_short": "INCLUSIVE ACOUSTIC DESIGN FOR MAINSTREAM SCHOOLS: AN EVIDENCE BASED APPROACH",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/acoustics7040080",
+        "year": 2025,
+        "first_author": "Kawata",
+        "title_short": "Acoustic Conditions and Listening Performance in High-Stakes EFL Tests: An Observational Study of Real-World Data",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1051/aacus/2026003",
+        "year": 2026,
+        "first_author": "Ermert",
+        "title_short": "Heard-text recall and listening effort under irrelevant speech and pseudo-speech in virtual reality",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/23312165261436198",
+        "year": 2026,
+        "first_author": "Noordanus",
+        "title_short": "Measuring Spectrotemporal Sensitivity in Cochlear Implant Users With a Reaction-Time Paradigm: A Comparison of Two Imple",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/2050571x.2026.2661025",
+        "year": 2026,
+        "first_author": "Mealings",
+        "title_short": "An umbrella review of the effect of the classroom environment on children's hearing, listening, comprehending, and commu",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-11": {
+    "openalex_id": "W2995960266",
+    "openalex_cited_by_count": 23,
+    "citers_fetched": 22,
+    "relevant_n": 15,
+    "already_in_es_n": 1,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.buildenv.2021.108582",
+        "year": 2021,
+        "first_author": "Minelli",
+        "title_short": "Acoustical parameters for learning in classroom: A review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3926/jotse.1098",
+        "year": 2021,
+        "first_author": "Recalde",
+        "title_short": "How classroom acoustics influence students and teachers: A systematic literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2022_lshss-21-00181",
+        "year": 2022,
+        "first_author": "Murgia",
+        "title_short": "Systematic Review of Literature on Speech Intelligibility and Classroom Acoustics in Elementary Schools",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1097/aud.0000000000001481",
+        "year": 2024,
+        "first_author": "Easwar",
+        "title_short": "Neural Envelope Processing at Low Frequencies Predicts Speech Understanding of Children With Hearing Loss in Noise and R",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2024_jslhr-24-00261",
+        "year": 2024,
+        "first_author": "Mealings",
+        "title_short": "A Methodological Review of Stimuli Used for Classroom Speech-in-Noise Tests",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-0042-1755319",
+        "year": 2022,
+        "first_author": "Lewis",
+        "title_short": "Remote-Microphone Benefit in Noise and Reverberation for Children Who are Hard of Hearing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14670100.2023.2179753",
+        "year": 2023,
+        "first_author": "\u00d6ZCAN",
+        "title_short": "Development of the Turkish hearing in noise test for children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/21695717.2023.2181562",
+        "year": 2023,
+        "first_author": "Sendesen",
+        "title_short": "The right ear advantage \u2013 a perspective from speech perception in noise test",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000001627",
+        "year": 2025,
+        "first_author": "Meijer",
+        "title_short": "The Auditory Environment at Early Intervention Groups for Young Children With Hearing Loss: Signal to Noise Ratio, Backg",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su12229733",
+        "year": 2020,
+        "first_author": "Laur\u00eca",
+        "title_short": "Acoustic Comfort as a Salutogenic Resource in Learning Environments\u2014A Proposal for the Design of a System to Improve the",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.61782/fa.2023.0362",
+        "year": 2024,
+        "first_author": "Iglehart",
+        "title_short": "Proposed Revision of Reverberation Time by International Code Council for Classrooms with Children deaf/hard of Hearing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/s0270-401320250000039005",
+        "year": 2025,
+        "first_author": "Martin",
+        "title_short": "Special Education of Students With Deaf/Hard of Hearing: Involving Families",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2025_aja-25-00151",
+        "year": 2026,
+        "first_author": "Neumann",
+        "title_short": "Improved Speech Recognition for Children With Limited Usable Hearing Unilaterally When Using a Remote Microphone in a Si",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000001809",
+        "year": 2026,
+        "first_author": "Eeckhoutte",
+        "title_short": "Phoneme Perception in Children With Bilateral Cochlear Implants or Hearing Aids in Quiet, Noise, and Reverberation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2026.103028",
+        "year": 2026,
+        "first_author": "Libbi",
+        "title_short": "Affordances for deaf and hard of hearing students\u2019 social participation in mainstream school environments",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-24": {
+    "openalex_id": "W2987309630",
+    "openalex_cited_by_count": 19,
+    "citers_fetched": 19,
+    "relevant_n": 12,
+    "already_in_es_n": 0,
+    "new_discovery_n": 12,
+    "discoveries": [
+      {
+        "doi": "10.1080/14643154.2021.1992829",
+        "year": 2021,
+        "first_author": "Todorov",
+        "title_short": "Barriers and facilitators to engaging in mainstream primary school classrooms: Voices of students who are deaf or hard-o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/deafed/enab003",
+        "year": 2021,
+        "first_author": "Todorov",
+        "title_short": "Engagement of Children who are Deaf or Hard-of-Hearing Attending Mainstream Schools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2021_aja-21-00065",
+        "year": 2021,
+        "first_author": "Gustafson",
+        "title_short": "Perceived Listening Difficulty in the Classroom, Not Measured Noise Levels, Is Associated With Fatigue in Children With ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2025_jslhr-24-00456",
+        "year": 2025,
+        "first_author": "J\u00f8nsberg",
+        "title_short": "Language Interventions for School-Aged Children Who Are d/Deaf and Hard of Hearing: A Systematic Review and Meta-Analysi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1351010x221119381",
+        "year": 2022,
+        "first_author": "Selim",
+        "title_short": "Enhancing the classroom acoustic environment in Badr University, Egypt: A case study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-0042-1755319",
+        "year": 2022,
+        "first_author": "Lewis",
+        "title_short": "Remote-Microphone Benefit in Noise and Reverberation for Children Who are Hard of Hearing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2022_ajslp-22-00002",
+        "year": 2022,
+        "first_author": "Reynolds",
+        "title_short": "Impact of FM System Use on Acquisition of Phonological Awareness Skills for Children at Risk of Dyslexia: A Preliminary ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000001627",
+        "year": 2025,
+        "first_author": "Meijer",
+        "title_short": "The Auditory Environment at Early Intervention Groups for Young Children With Hearing Loss: Signal to Noise Ratio, Backg",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fped.2023.1252452",
+        "year": 2023,
+        "first_author": "Lewis",
+        "title_short": "Impact of room acoustics and visual cues on speech perception and talker localization by children with mild bilateral or",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-0043-1764134",
+        "year": 2023,
+        "first_author": "Lewis",
+        "title_short": "Speech Understanding in Complex Environments by School-Age Children with Mild Bilateral or Unilateral Hearing Loss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2025_aja-25-00015",
+        "year": 2026,
+        "first_author": "Findlen",
+        "title_short": "Improvements in Pediatric Speech Perception in Noise Using Classifier-Based Noise Management",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000001794",
+        "year": 2026,
+        "first_author": "Picou",
+        "title_short": "Do Adolescent Hearing Aid Users Prefer Digital Noise Reduction to Be Activated? Findings From the Laboratory and Home En",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

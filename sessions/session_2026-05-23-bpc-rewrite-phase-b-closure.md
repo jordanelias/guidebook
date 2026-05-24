@@ -3,7 +3,7 @@
 **Session ID:** `session_2026-05-23-bpc-rewrite-phase-b-closure`
 **Span:** 2026-05-23 ~23:00 UTC → 2026-05-23 ~23:50 UTC
 **Bootstrap version:** PI v10.14 + architecture v2.3 + userPreferences v6.3
-**Headline outcome:** B.0 closed — 68 unique slugs / 70 BPC files carry the `SYNTHESIS VALIDITY: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner; `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` for the 68 slugs. New DR (DR-2026-05-23) defines the cohort; new audit script (Level 2) verifies four invariants. v10.15 PI queue entry briefly proposed then withdrawn per owner directive (no PI bump unless critical armature) — the DR + audit + DB state are sufficient armature. B.10/B.8 trivial gap closed: REF-00734 Tibble 2005 `synthesis_attribution_required` flag backfilled; 30/30 co1 rows now flagged. B.11 batch 1 completed: 5 Tier-1 sources in `room-acoustic-performance` backward-mined via CrossRef with full protocol (PubMed verify, relevance filter, dedup); forward DEFERRED with reason logged per skill §0 partial-availability rule (Scholar Gateway connector lacks cited-by API in this environment). Discovery surface (173 NEW candidate references across the 5 sources) preserved at `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` for next-session triage. GAP-292 logged: REF-00571 (Kotloski 2020 rat-kindling paper) is misclassified under `room-acoustic-performance` slug.
+**Headline outcome:** B.0 closed — 68 unique slugs / 70 BPC files carry the `SYNTHESIS VALIDITY: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner; `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` for the 68 slugs. New DR (DR-2026-05-23) defines the cohort; new audit script (Level 2) verifies four invariants. v10.15 PI queue entry briefly proposed then withdrawn per owner directive (no PI bump unless critical armature) — the DR + audit + DB state are sufficient armature. B.10/B.8 trivial gap closed: REF-00734 Tibble 2005 `synthesis_attribution_required` flag backfilled; 30/30 co1 rows now flagged. **B.11 batch 1 completed (backward + forward) for 5 Tier-1 sources in `room-acoustic-performance`** via CrossRef (backward) and OpenAlex `cites:` API (forward); B=1/F=1 on all 5 rows; 173 backward + 69 forward = 242 NEW candidate references surfaced for next-session triage. (Turn 4's initial DEFERRED forward state was corrected in turn 5 once owner pushback prompted investigation of alternatives — Scholar Gateway unavailability does not mean ALL forward sources unavailable; OpenAlex provides free programmatic cited-by lookup matching skill §2's spirit.)
 
 ---
 
@@ -17,12 +17,14 @@
 | co1 rows with `synthesis_attribution_required = 1` (B.10) | 29/30 | 30/30 | +1 |
 | Co-1 six-field set (B.8) | 29/30 | 30/30 | +1 |
 | citation_mining backward=1 rows (B.11) | 2 (school-environment-autism) | 7 (+ 5 room-acoustic-performance) | +5 |
+| citation_mining forward=1 rows (B.11) | 0 | 5 (room-acoustic-performance) | +5 |
 | B.11 unmined T1-3 sources for room-acoustic-performance | 22 | 17 | -5 |
-| Discovery surface preserved for next-session triage (NEW candidate refs) | n/a | 173 | new |
+| Backward discovery surface (NEW candidate refs) | n/a | 173 | new |
+| Forward discovery surface (NEW candidate refs) | n/a | 69 | new |
 | Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | 2 (B.11 in progress, B.9) | -3 |
 | Eligible evidence pool (rule #10) | 638/638 (100%) | 638/638 (100%) | unchanged |
 | pre_rehab_banner_audit invariants | n/a (script didn't exist) | 4/4 PASS | new audit |
-| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 117 | +3 |
+| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 118 | +4 |
 
 ---
 
@@ -57,9 +59,11 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `sessions/LATEST` | UPDATED | Pointer → `session_2026-05-23-bpc-rewrite-phase-b-closure.md` |
 | `decisions/PI-update-needed.md` | RE-MODIFIED (later in session) | v10.15 queue entry withdrawn per owner directive; replaced with "considered and rejected" note citing architecture v2.3 state-vs-rule clause |
 | `decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md` | RE-MODIFIED (later in session) | Companion-to-PI-update-needed line removed; new "Why no PI amendment is needed" section added |
-| `scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql` | NEW | B.11 batch 1 migration — backward mining log for 5 Tier-1 sources in `room-acoustic-performance` with forward DEFERRED |
-| `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` | NEW | Discovery surface from CrossRef backward mining — 5 sources × 173 NEW candidate refs (relevance-filtered) — preserved for next-session triage |
-| `data/guidebook.db` (B.11 update) | RE-UPDATED | 5 citation_mining rows (room-acoustic-performance) + 1 GAP row (GAP-292 RAP-13 misclassification) + 1 data_migrations entry |
+| `scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql` | NEW | B.11 batch 1 BACKWARD migration — CrossRef-sourced ref lists for 5 Tier-1 sources |
+| `scripts/migrations/data_20260524063500_b11_room_acoustic_forward_mining.sql` | NEW | B.11 batch 1 FORWARD migration via OpenAlex `cites:` API — supersedes turn-4 DEFERRED state |
+| `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` | NEW | BACKWARD discovery surface — 5 sources × 173 NEW candidate refs |
+| `sessions/artifacts/2026-05-23-b11-room-acoustic-forward-discoveries.json` | NEW | FORWARD discovery surface — 5 sources × 69 NEW candidate refs (OpenAlex citers) |
+| `data/guidebook.db` (B.11 update) | RE-UPDATED | 5 citation_mining rows (B=1, F=1, deferred_reason cleared) + 1 GAP row (GAP-292) + 3 data_migrations entries |
 
 ---
 
@@ -78,9 +82,9 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 citation mining.** ~58 slugs / ~80+ sources remaining. **Batch 1 of room-acoustic-performance complete (5/22 Tier-1 sources mined; 17 remaining in this slug).** Skill: `citation-miner`. Per-slug effort: ~1 hour per 5-source batch given the forward-DEFERRED workflow (CrossRef + relevance filter is fast; full per-discovery INSERT to evidence_sources is the heavy step deferred this session).
-  - **Discovery triage queue:** 173 NEW candidate refs in `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` need per-row tier classification + verification + INSERT before they can support synthesis. Workflow option A: process discoveries before moving to next batch (preserves backward-mining momentum within slug). Workflow option B: rotate to other slug batches and bulk-triage discoveries periodically (preserves discovery depth across slugs).
-  - **Forward mining is structurally blocked** without a cited-by API in the connector surface. Skill §0 says PubMed `find_related_articles` is not a substitute (it's word-weighted similarity, not citation relationships). When forward becomes available (Scholar Gateway citations endpoint, OpenAlex inbound-citations, Semantic Scholar API), the deferred_reason on every backward-only row will surface the work to do.
+- **B.11 citation mining.** ~58 slugs / ~80+ sources remaining. **Batch 1 of room-acoustic-performance complete (5/22 Tier-1 sources mined backward + forward; 17 remaining in this slug).** Skill: `citation-miner`. Per-slug effort: ~30 min per 5-source batch using the CrossRef (backward) + OpenAlex `cites:` (forward) pattern validated this session.
+  - **Discovery triage queue:** 173 backward + 69 forward = 242 NEW candidate refs in `sessions/artifacts/2026-05-23-b11-room-acoustic-*-discoveries.json` need per-row tier classification + verification + INSERT before they can support synthesis. Workflow option A: process discoveries before moving to next batch (preserves mining momentum within slug). Workflow option B: rotate to other slug batches and bulk-triage discoveries periodically (preserves discovery depth across slugs).
+  - **Forward mining via OpenAlex** is the validated path. Skill §0 names Scholar Gateway as "preferred for forward"; when Scholar Gateway's `cites` endpoint is unavailable, OpenAlex's free `filter=cites:{work_id}` endpoint provides equivalent citation-relationship data and matches skill §2 spirit ("Scholar Gateway forward citations or Google Scholar 'cited by'"). The skill text could be amended to name OpenAlex explicitly as an accepted forward source; that is a skill-file edit not a PI bump.
 - **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining at ~10 min each. Can run in parallel with B.11.
 - ~~B.8 Co-1 six fields.~~ **CLOSED this session** — 30/30 via REF-00734 backfill.
 - ~~B.10 synthesis_attribution_required.~~ **CLOSED this session** — 30/30 co1 rows flagged.
