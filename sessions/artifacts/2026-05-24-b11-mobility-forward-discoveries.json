@@ -1,0 +1,1568 @@
+{
+  "MOB-01": {
+    "openalex_id": "W2168815645",
+    "openalex_cited_by_count": 34,
+    "citers_fetched": 34,
+    "relevant_n": 25,
+    "already_in_es_n": 1,
+    "new_discovery_n": 24,
+    "discoveries": [
+      {
+        "doi": "10.1080/17483107.2022.2111723",
+        "year": 2022,
+        "first_author": "Kapsalis",
+        "title_short": "Disabled-by-design: effects of inaccessible urban public spaces on users of mobility assistive devices \u2013 a systematic re",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2017.02.008",
+        "year": 2017,
+        "first_author": "D\u2019Souza",
+        "title_short": "Effects of transit bus interior configuration on performance of wheeled mobility users during simulated boarding and dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/phm.0000000000000203",
+        "year": 2014,
+        "first_author": "Sawatzky",
+        "title_short": "The Need for Updated Clinical Practice Guidelines for Preservation of Upper Extremities in Manual Wheelchair Users",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/17483107.2017.1401128",
+        "year": 2017,
+        "first_author": "D\u2019Souza",
+        "title_short": "Self-reported difficulty and preferences of wheeled mobility device users for simulated low-floor bus boarding, interior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/17483107.2010.549898",
+        "year": 2011,
+        "first_author": "King",
+        "title_short": "Design of built environments to accommodate mobility scooter users: part II",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3141/2145-08",
+        "year": 2010,
+        "first_author": "D\u2019Souza",
+        "title_short": "Space Requirements for Wheeled Mobility Devices in Public Transportation: Analysis of Clear Floor Space Requirements",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.promfg.2015.07.736",
+        "year": 2015,
+        "first_author": "Carneiro",
+        "title_short": "Usability and User Experience of Technical Aids for People with Disabilities? A Preliminary Study with a Wheelchair",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2014.12.013",
+        "year": 2015,
+        "first_author": "Frost",
+        "title_short": "Ramp-Related Incidents Involving Wheeled Mobility Device Users During Transit Bus Boarding/Alighting",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/17483107.2010.509885",
+        "year": 2010,
+        "first_author": "Dutta",
+        "title_short": "Design of built environments to accommodate mobility scooter users: part I",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00038-011-0290-4",
+        "year": 2011,
+        "first_author": "Helle",
+        "title_short": "Lack of research-based standards for accessible housing: problematization and exemplification of consequences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0733464813503042",
+        "year": 2013,
+        "first_author": "Helle",
+        "title_short": "Validation of Housing Standards Addressing Accessibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.2012.680660",
+        "year": 2013,
+        "first_author": "Frost",
+        "title_short": "Wheelchair Securement and Occupant Restraint System (WTORS) Practices in Public Transit Buses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0361198118787082",
+        "year": 2018,
+        "first_author": "Bharathy",
+        "title_short": "Revisiting Clear Floor Area Requirements for Wheeled Mobility Device Users in Public Transportation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.measurement.2018.11.002",
+        "year": 2018,
+        "first_author": "Adnan",
+        "title_short": "Applied anthropometric for wheelchair user in Malaysia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18062840",
+        "year": 2021,
+        "first_author": "Lim",
+        "title_short": "Wheeled Mobility Use on Accessible Fixed-Route Transit: A Field Study in Environmental Docility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jth.2021.101093",
+        "year": 2021,
+        "first_author": "Unsworth",
+        "title_short": "Powered mobility aid access on public transport: A validation study of compliance with disability standards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2020,
+        "first_author": "Rojas",
+        "title_short": "Vehicle Performance Analysis of an Autonomous Electric Shuttle Modified for Wheelchair Accessibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jet-02-2018-0007",
+        "year": 2018,
+        "first_author": "Morales",
+        "title_short": "Pilot study to measure wheelchair users\u2019 space requirements in the bathroom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2011,
+        "first_author": "Hernandez",
+        "title_short": "THE IMPACT OF TRANSFER SETUP ON THE PERFORMANCE OF INDEPENDENT TRANSFERS",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2013,
+        "first_author": "Helle",
+        "title_short": "Housing Accessibility Methodology Targeting Older Poeple - Reliable Assessments and Valid Standards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/154193121005400901",
+        "year": 2010,
+        "first_author": "Nasarwanji",
+        "title_short": "Restricted vs. Unrestricted Space for L-Turns: A Debate in Environmental Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2011,
+        "first_author": "Steinfeld",
+        "title_short": "DR #15: Clear Floor Area for Wheeled Mobility: Redefining the 'common",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3990/1.9789036548519",
+        "year": 2019,
+        "first_author": "Laat",
+        "title_short": "Design for change for a more sustainable resource usage in construction",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/03611981231168128",
+        "year": 2023,
+        "first_author": "Choi",
+        "title_short": "Video Observations and Large Accessible Transit Vehicle Operator Evaluations of Two Wheelchair Securement Systems",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/9781394321759.ch20",
+        "year": 2019,
+        "first_author": "Feathers",
+        "title_short": "Technology and environmental interventions to promote community mobility",
+        "in_evidence_sources": false
+      }
+    ],
+    "doi_used": "10.1080/10400430903520280",
+    "doi_in_db": "10.1080/10400430903496580"
+  },
+  "MOB-02": {
+    "openalex_id": "W2168815645",
+    "openalex_cited_by_count": 34,
+    "citers_fetched": 34,
+    "relevant_n": 25,
+    "already_in_es_n": 1,
+    "new_discovery_n": 24,
+    "discoveries": [
+      {
+        "doi": "10.1080/17483107.2022.2111723",
+        "year": 2022,
+        "first_author": "Kapsalis",
+        "title_short": "Disabled-by-design: effects of inaccessible urban public spaces on users of mobility assistive devices \u2013 a systematic re",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2017.02.008",
+        "year": 2017,
+        "first_author": "D\u2019Souza",
+        "title_short": "Effects of transit bus interior configuration on performance of wheeled mobility users during simulated boarding and dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/phm.0000000000000203",
+        "year": 2014,
+        "first_author": "Sawatzky",
+        "title_short": "The Need for Updated Clinical Practice Guidelines for Preservation of Upper Extremities in Manual Wheelchair Users",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/17483107.2017.1401128",
+        "year": 2017,
+        "first_author": "D\u2019Souza",
+        "title_short": "Self-reported difficulty and preferences of wheeled mobility device users for simulated low-floor bus boarding, interior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/17483107.2010.549898",
+        "year": 2011,
+        "first_author": "King",
+        "title_short": "Design of built environments to accommodate mobility scooter users: part II",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3141/2145-08",
+        "year": 2010,
+        "first_author": "D\u2019Souza",
+        "title_short": "Space Requirements for Wheeled Mobility Devices in Public Transportation: Analysis of Clear Floor Space Requirements",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.promfg.2015.07.736",
+        "year": 2015,
+        "first_author": "Carneiro",
+        "title_short": "Usability and User Experience of Technical Aids for People with Disabilities? A Preliminary Study with a Wheelchair",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2014.12.013",
+        "year": 2015,
+        "first_author": "Frost",
+        "title_short": "Ramp-Related Incidents Involving Wheeled Mobility Device Users During Transit Bus Boarding/Alighting",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/17483107.2010.509885",
+        "year": 2010,
+        "first_author": "Dutta",
+        "title_short": "Design of built environments to accommodate mobility scooter users: part I",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00038-011-0290-4",
+        "year": 2011,
+        "first_author": "Helle",
+        "title_short": "Lack of research-based standards for accessible housing: problematization and exemplification of consequences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0733464813503042",
+        "year": 2013,
+        "first_author": "Helle",
+        "title_short": "Validation of Housing Standards Addressing Accessibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.2012.680660",
+        "year": 2013,
+        "first_author": "Frost",
+        "title_short": "Wheelchair Securement and Occupant Restraint System (WTORS) Practices in Public Transit Buses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0361198118787082",
+        "year": 2018,
+        "first_author": "Bharathy",
+        "title_short": "Revisiting Clear Floor Area Requirements for Wheeled Mobility Device Users in Public Transportation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.measurement.2018.11.002",
+        "year": 2018,
+        "first_author": "Adnan",
+        "title_short": "Applied anthropometric for wheelchair user in Malaysia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18062840",
+        "year": 2021,
+        "first_author": "Lim",
+        "title_short": "Wheeled Mobility Use on Accessible Fixed-Route Transit: A Field Study in Environmental Docility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jth.2021.101093",
+        "year": 2021,
+        "first_author": "Unsworth",
+        "title_short": "Powered mobility aid access on public transport: A validation study of compliance with disability standards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2020,
+        "first_author": "Rojas",
+        "title_short": "Vehicle Performance Analysis of an Autonomous Electric Shuttle Modified for Wheelchair Accessibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jet-02-2018-0007",
+        "year": 2018,
+        "first_author": "Morales",
+        "title_short": "Pilot study to measure wheelchair users\u2019 space requirements in the bathroom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2011,
+        "first_author": "Hernandez",
+        "title_short": "THE IMPACT OF TRANSFER SETUP ON THE PERFORMANCE OF INDEPENDENT TRANSFERS",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2013,
+        "first_author": "Helle",
+        "title_short": "Housing Accessibility Methodology Targeting Older Poeple - Reliable Assessments and Valid Standards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/154193121005400901",
+        "year": 2010,
+        "first_author": "Nasarwanji",
+        "title_short": "Restricted vs. Unrestricted Space for L-Turns: A Debate in Environmental Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2011,
+        "first_author": "Steinfeld",
+        "title_short": "DR #15: Clear Floor Area for Wheeled Mobility: Redefining the 'common",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3990/1.9789036548519",
+        "year": 2019,
+        "first_author": "Laat",
+        "title_short": "Design for change for a more sustainable resource usage in construction",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/03611981231168128",
+        "year": 2023,
+        "first_author": "Choi",
+        "title_short": "Video Observations and Large Accessible Transit Vehicle Operator Evaluations of Two Wheelchair Securement Systems",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/9781394321759.ch20",
+        "year": 2019,
+        "first_author": "Feathers",
+        "title_short": "Technology and environmental interventions to promote community mobility",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MOB-05": {
+    "openalex_id": "W4402958929",
+    "openalex_cited_by_count": 1,
+    "citers_fetched": 1,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "MOB-10": {
+    "openalex_id": "W2092907196",
+    "openalex_cited_by_count": 226,
+    "citers_fetched": 226,
+    "relevant_n": 137,
+    "already_in_es_n": 1,
+    "new_discovery_n": 136,
+    "discoveries": [
+      {
+        "doi": "10.1001/jama.2017.15006",
+        "year": 2017,
+        "first_author": "Tricco",
+        "title_short": "Comparisons of Interventions for Preventing Falls in Older Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/mds.27195",
+        "year": 2017,
+        "first_author": "Fasano",
+        "title_short": "Falls in Parkinson's disease: A complex and evolving picture",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmj.i1419",
+        "year": 2016,
+        "first_author": "Vieira",
+        "title_short": "Prevention of falls in older people living in the community",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2016.06.030",
+        "year": 2016,
+        "first_author": "Jacobs",
+        "title_short": "A review of stairway falls and stair negotiation: Lessons learned and future needs to reduce injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0176561",
+        "year": 2017,
+        "first_author": "Timsina",
+        "title_short": "Circumstances of fall-related injuries by age and gender among community-dwelling adults in the United States",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s12603-016-0741-y",
+        "year": 2016,
+        "first_author": "Blain",
+        "title_short": "A comprehensive fracture prevention strategy in older adults: The European Union Geriatric Medicine Society (EUGMS) stat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1146/annurev-publhealth-071521-111836",
+        "year": 2022,
+        "first_author": "Howden\u2010Chapman",
+        "title_short": "Review of the Impact of Housing Quality on Inequalities in Health and Well-Being",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/14651858.cd013258.pub2",
+        "year": 2023,
+        "first_author": "Clemson",
+        "title_short": "Environmental interventions for preventing falls in older people living in the community",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su9050702",
+        "year": 2017,
+        "first_author": "Zavadskas",
+        "title_short": "MCDM Assessment of a Healthy and Safe Built Environment According to Sustainable Development Principles: A Practical Nei",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph14060567",
+        "year": 2017,
+        "first_author": "Baker",
+        "title_short": "Is Housing a Health Insult?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gerinurse.2015.08.006",
+        "year": 2015,
+        "first_author": "Enderlin",
+        "title_short": "Summary of factors contributing to falls in older adults and nursing implications",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/app12157934",
+        "year": 2022,
+        "first_author": "Giovannini",
+        "title_short": "Falls among Older Adults: Screening, Identification, Rehabilitation, and Management",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/wvn.12571",
+        "year": 2022,
+        "first_author": "Schoberer",
+        "title_short": "Fall prevention in hospitals and nursing homes: Clinical practice guideline",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-019-1329-2",
+        "year": 2019,
+        "first_author": "Choi",
+        "title_short": "Fall-related emergency department visits and hospitalizations among community-dwelling older adults: examination of heal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13643-024-02681-3",
+        "year": 2024,
+        "first_author": "Pillay",
+        "title_short": "Falls prevention interventions for community-dwelling older adults: systematic review and meta-analysis of benefits, har",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11914-021-00685-9",
+        "year": 2021,
+        "first_author": "Komisar",
+        "title_short": "The Role of Fall Biomechanics in the Cause and Prevention of Bone Fractures in Older Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jamaoto.2021.3673",
+        "year": 2022,
+        "first_author": "Herssens",
+        "title_short": "Falls Among People With Bilateral Vestibulopathy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1299/jbse.17-00389",
+        "year": 2017,
+        "first_author": "Yamaguchi",
+        "title_short": "Relationship between slip angle in ramp test and coefficient of friction values at shoe-floor interface measured with ca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph15112345",
+        "year": 2018,
+        "first_author": "Sharpe",
+        "title_short": "Making the Case for \u201cWhole System\u201d Approaches: Integrating Public Health and Housing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40520-016-0588-4",
+        "year": 2016,
+        "first_author": "Group,",
+        "title_short": "A comprehensive fracture prevention strategy in older adults: the European Union Geriatric Medicine Society (EUGMS) stat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/injuryprev-2016-041999",
+        "year": 2016,
+        "first_author": "Pega",
+        "title_short": "Home safety assessment and modification to reduce injurious falls in community-dwelling older adults: cost<b>-</b>utilit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ajo.2018.04.024",
+        "year": 2018,
+        "first_author": "Sotimehin",
+        "title_short": "Locations, Circumstances, and Outcomes of Falls in Patients With Glaucoma",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/injuryprev-2015-041947",
+        "year": 2016,
+        "first_author": "Keall",
+        "title_short": "Cost\u2013benefit analysis of fall injuries prevented by a programme of home modifications: a cluster randomised controlled t",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jocn.13995",
+        "year": 2017,
+        "first_author": "Lee",
+        "title_short": "Falls, a fear of falling and related factors in older adults with complex chronic disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronb/gby131",
+        "year": 2018,
+        "first_author": "Granbom",
+        "title_short": "Household Accessibility and Residential Relocation in Older Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/jmir.8095",
+        "year": 2017,
+        "first_author": "Bayen",
+        "title_short": "Reduction in Fall Rate in Dementia Managed Care Through Video Incident Review: Pilot Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3310/phr06080",
+        "year": 2018,
+        "first_author": "Rodgers",
+        "title_short": "Health impact, and economic value, of meeting housing quality standards: a retrospective longitudinal data linkage study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph14111352",
+        "year": 2017,
+        "first_author": "Telfar-Barnard",
+        "title_short": "Measuring the Effect of Housing Quality Interventions: The Case of the New Zealand \u201cRental Warrant of Fitness\u201d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2471/blt.20.263285",
+        "year": 2021,
+        "first_author": "Riggs",
+        "title_short": "Environmental burden of disease from unsafe and substandard housing, New Zealand, 2010\u20132017",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijge.2016.05.009",
+        "year": 2017,
+        "first_author": "\u00d6zt\u00fcrk",
+        "title_short": "Factors Associated With Multiple Falls Among Elderly Patients Admitted to Emergency Department",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2017.1363379",
+        "year": 2017,
+        "first_author": "Bierre",
+        "title_short": "Telling stories: the role of narratives in rental housing policy change in New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/emp2.12517",
+        "year": 2021,
+        "first_author": "Ouchi",
+        "title_short": "Home hospital as a disposition for older adults from the emergency department: Benefits and opportunities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-022-03204-2",
+        "year": 2022,
+        "first_author": "Schorderet",
+        "title_short": "Needs, benefits, and issues related to home adaptation: a user-centered case series applying a mixed-methods design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ggi.13494",
+        "year": 2018,
+        "first_author": "Tanaka",
+        "title_short": "Environmental and physical factors predisposing middle\u2010aged and older Japanese adults to falls and fall\u2010related fracture",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph182212060",
+        "year": 2021,
+        "first_author": "Capasso",
+        "title_short": "Housing and Health: Here We Go Again",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1753-6405.12519",
+        "year": 2016,
+        "first_author": "Bennett",
+        "title_short": "Towards an agreed quality standard for rental housing: field testing of a New Zealand housing WOF tool",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.archger.2017.02.010",
+        "year": 2017,
+        "first_author": "Ueda",
+        "title_short": "Tailored education program using home floor plans for falls prevention in discharged older patients: A pilot randomized ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2019.1597803",
+        "year": 2019,
+        "first_author": "Tsuchiya\u2010Ito",
+        "title_short": "The Physical Housing Environment and Subjective Well-Being Among Older People Using Long-Term Care Services in Japan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2468-2667(21)00135-3",
+        "year": 2021,
+        "first_author": "Keall",
+        "title_short": "Home modifications to prevent home fall injuries in houses with M\u0101ori occupants (MHIPI): a randomised controlled trial",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/03036758.2023.2170427",
+        "year": 2023,
+        "first_author": "Howden\u2010Chapman",
+        "title_short": "He K\u0101inga Oranga: reflections on 25 years of measuring the improved health, wellbeing and sustainability of healthier ho",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph16091598",
+        "year": 2019,
+        "first_author": "Edwards",
+        "title_short": "A Scoping Review of Epidemiological, Ergonomic, and Longitudinal Cohort Studies Examining the Links between Stair and Ba",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2020.1755141",
+        "year": 2020,
+        "first_author": "Thordardottir",
+        "title_short": "Participation in Everyday Life Before and After a Housing Adaptation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00099228221099097",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Physical and Environmental Barriers to Mobility and Participation in Children With Medical Complexity: A Qualitative Stu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/2475-8876.12275",
+        "year": 2022,
+        "first_author": "Kawakubo",
+        "title_short": "Influence of residential performance on residents' health status (part <scp>II</scp>): Nationwide survey of environmenta",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-024-05306-5",
+        "year": 2024,
+        "first_author": "Shishov",
+        "title_short": "Interactions during falls with environmental objects: evidence from real-life falls in long-term care captured on video",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph22020225",
+        "year": 2025,
+        "first_author": "Huntsman",
+        "title_short": "Home Environment as a Therapeutic Target for Prevention and Treatment of Chronic Diseases: Delivering Restorative Living",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/afaf307",
+        "year": 2025,
+        "first_author": "Haley",
+        "title_short": "Falling short on implementation of fall prevention guidelines in health services: a systematic review with meta-analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/afaf260",
+        "year": 2025,
+        "first_author": "Cheng",
+        "title_short": "Housing quality and related housing environmental factors associated with falls in older adults: results from the longit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/jech-2017-210370",
+        "year": 2018,
+        "first_author": "Rodgers",
+        "title_short": "Emergency hospital admissions associated with a non-randomised housing intervention meeting national housing quality sta",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-016-0391-2",
+        "year": 2016,
+        "first_author": "Swenor",
+        "title_short": "Evaluation of the Home Environment Assessment for the Visually Impaired (HEAVI): an instrument designed to quantify fall",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0184538",
+        "year": 2017,
+        "first_author": "Wilson",
+        "title_short": "Home modification to reduce falls at a health district level: Modeling health gain, health inequalities and health costs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph14111424",
+        "year": 2017,
+        "first_author": "Chisholm",
+        "title_short": "Using Twitter to Explore (un)Healthy Housing: Learning from the #Characterbuildings Campaign in New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.injury.2016.05.001",
+        "year": 2016,
+        "first_author": "Saadat",
+        "title_short": "Incidence of fall-related injuries in Iran: A population-based nationwide study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/injuryprev-2016-042309",
+        "year": 2018,
+        "first_author": "Deverall",
+        "title_short": "Exercise programmes to prevent falls among older adults: modelling health gain, cost-utility and equity impacts",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12889-018-6200-4",
+        "year": 2018,
+        "first_author": "Whitehead",
+        "title_short": "Bathing adaptations in the homes of older adults (BATH-OUT): results of a feasibility randomised controlled trial (RCT)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ssmph.2019.100432",
+        "year": 2019,
+        "first_author": "Pierse",
+        "title_short": "Service usage by a New Zealand Housing First cohort prior to being housed.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.eurger.2016.04.012",
+        "year": 2016,
+        "first_author": "Blain",
+        "title_short": "A comprehensive fracture prevention strategy in older adults: The European union geriatric medicine society (EUGMS) stat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare5040066",
+        "year": 2017,
+        "first_author": "Carlsson",
+        "title_short": "Falls and Fear of Falling among Persons Who Receive Housing Adaptations\u2014Results from a Quasi-Experimental Study in Swede",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2018.1451800",
+        "year": 2018,
+        "first_author": "Thordardottir",
+        "title_short": "Participation in Everyday Life Before and After a Housing Adaptation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/hpja.247",
+        "year": 2019,
+        "first_author": "Chisholm",
+        "title_short": "Promoting health through housing improvements, education and advocacy: Lessons from staff involved in Wellington's Healt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1753-6405.12895",
+        "year": 2019,
+        "first_author": "Chisholm",
+        "title_short": "Why don't owners improve their homes? Results from a survey following a housing warrant-of-fitness assessment for health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/hsc.13398",
+        "year": 2021,
+        "first_author": "Ng",
+        "title_short": "Bathroom modifications among community\u2010dwelling older adults who experience falls in the United States: A cross\u2010sectiona",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph13010091",
+        "year": 2015,
+        "first_author": "Thordardottir",
+        "title_short": "Heterogeneity of Characteristics among Housing Adaptation Clients in Sweden\u2014Relationship to Participation and Self-Rated",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/jom.0000000000001355",
+        "year": 2018,
+        "first_author": "Muramatsu",
+        "title_short": "Slips, Trips, and Falls Among Home Care Aides",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2018-026290",
+        "year": 2018,
+        "first_author": "Hollinghurst",
+        "title_short": "Study protocol for investigating the impact of community home modification services on hospital utilisation for fall inj",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jsr.2020.02.016",
+        "year": 2020,
+        "first_author": "Ekbrand",
+        "title_short": "Fall-related injuries for three ages groups \u2013 Analysis of Swedish registry data 1999\u20132013",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/injuryprev-2015-041621",
+        "year": 2015,
+        "first_author": "Shields",
+        "title_short": "Structural housing elements associated with home injuries in children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638288.2021.1955983",
+        "year": 2021,
+        "first_author": "Huang",
+        "title_short": "How does perceived fall risk influence decisions about whether to undertake activities in people with Parkinson\u2019s diseas",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-022-03100-9",
+        "year": 2022,
+        "first_author": "Tsuchiya\u2010Ito",
+        "title_short": "Implementation and costs of housing adaptations among older adults with different functional limitations in Japan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x21001367",
+        "year": 2021,
+        "first_author": "Newton",
+        "title_short": "Exploring the contribution of housing adaptations in supporting everyday life for people with dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-023-09890-x",
+        "year": 2023,
+        "first_author": "Tsuchiya\u2010Ito",
+        "title_short": "Association of housing adaptation services with the prevention of care needs level deterioration for older adults with f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15452/cejnm.2019.10.0009",
+        "year": 2019,
+        "first_author": "Tiefenbachov\u00e1",
+        "title_short": "The effect of educational intervention by nurses on home environmental risk factors for falls",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1090198120967932",
+        "year": 2020,
+        "first_author": "Howden\u2010Chapman",
+        "title_short": "Commentary on Housing, Health, and Well-Being in Aotearoa/New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2468-2667(22)00034-2",
+        "year": 2022,
+        "first_author": "Keall",
+        "title_short": "Considerations for maintaining functional mobility in older populations",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08882746.2022.2079943",
+        "year": 2022,
+        "first_author": "Warner",
+        "title_short": "Exploring perspectives on healthy housing among low-income prospective residents of a future co-housing \u201cMicrovillage\u201d i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpubh.2023.1151035",
+        "year": 2023,
+        "first_author": "Ladlow",
+        "title_short": "The REtirement in ACTion exercise programme and its effects on elements of long term functionality in older adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.112233",
+        "year": 2024,
+        "first_author": "Kamata",
+        "title_short": "Comprehensive estimation model for the health economic impact of the residential environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10852352.2024.2441605",
+        "year": 2024,
+        "first_author": "Greiman",
+        "title_short": "Community starts at home: Toward understanding the dynamic relationship between home usability and community participati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/66854",
+        "year": 2025,
+        "first_author": "Lee",
+        "title_short": "Understanding Barriers to Home Safety Assessment Adoption in Older Adults: Qualitative Human-Centered Design Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/ip-2025-045643",
+        "year": 2025,
+        "first_author": "Ordoobadi",
+        "title_short": "Economic modelling of fall prevention interventions delivered by community emergency medical services: a decision-tree a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2025.102641",
+        "year": 2025,
+        "first_author": "Wang",
+        "title_short": "Psychological factors affecting home modification decision-making among older adults in low-income communities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2016.1224788",
+        "year": 2016,
+        "first_author": "Ekstam",
+        "title_short": "Negotiating Control: From Recognizing a Need to Making a Decision to Apply for a Housing Adaptation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01634372.2017.1341444",
+        "year": 2017,
+        "first_author": "Bakk",
+        "title_short": "Home Modifications among Community-Dwelling Older Adults: A Closer Look at Race and Ethnicity",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/11038128.2016.1139622",
+        "year": 2016,
+        "first_author": "Thordardottir",
+        "title_short": "Factors associated with participation frequency and satisfaction among people applying for a housing adaptation grant",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2018.1431585",
+        "year": 2018,
+        "first_author": "Shin",
+        "title_short": "Listen to the Elders: Design Guidelines for Affordable Multifamily Housing for the Elderly Based on Their Experiences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1753-6405.12695",
+        "year": 2017,
+        "first_author": "Berry",
+        "title_short": "Housing tenure as a focus for reducing inequalities in the home safety environment: evidence from Growing Up in New Zeal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2019-035701",
+        "year": 2020,
+        "first_author": "Golding-Day",
+        "title_short": "Bathing adaptations in the homes of older adults and their carers (BATH-OUT): a qualitative extended follow-up study wit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19105888",
+        "year": 2022,
+        "first_author": "Kim",
+        "title_short": "Effect of Number of Household Members on Falls among Disabled Older People",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638288.2018.1550530",
+        "year": 2019,
+        "first_author": "Luther",
+        "title_short": "Identifying and validating housing adaptation client profiles \u2013 a mixed methods study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jgs.17725",
+        "year": 2022,
+        "first_author": "Schroeder",
+        "title_short": "Effectiveness of autonomous home hazard reduction on fear of falling in community\u2010dwelling older women",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2016-013448",
+        "year": 2016,
+        "first_author": "Whitehead",
+        "title_short": "Bathing adaptations in the homes of older adults (BATH-OUT): protocol for a feasibility randomised controlled trial (RCT",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0151812",
+        "year": 2016,
+        "first_author": "Pega",
+        "title_short": "A Systematic Review of Health Economic Analyses of Housing Improvement Interventions and Insecticide-Treated Bednets in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/scs.12400",
+        "year": 2017,
+        "first_author": "Granbom",
+        "title_short": "Cohabitants\u2019 perspective on housing adaptations: a piece of the puzzle",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638288.2018.1471168",
+        "year": 2018,
+        "first_author": "Xu",
+        "title_short": "Therapists\u2019 perspectives on adapting the Stepping On falls prevention programme for community-dwelling stroke survivors ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/jtn.0000000000000295",
+        "year": 2017,
+        "first_author": "Berg",
+        "title_short": "Development of a Falls Registry: A Pilot Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2020.1833397",
+        "year": 2020,
+        "first_author": "Tsuchiya\u2010Ito",
+        "title_short": "Housing Assessment Tools Developed or Adapted for Use in East and Southeast Asia: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08882746.2021.1996201",
+        "year": 2021,
+        "first_author": "Peek",
+        "title_short": "The influence of length of residence and home modifications on housing unit satisfaction: implications for the aging pop",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/bjcn.2022.27.2.78",
+        "year": 2022,
+        "first_author": "Yeni",
+        "title_short": "Nurse-led home modification interventions for community-dwelling older adults with dementia and their impact on falls pr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.14519/kjot.2020.28.1.01",
+        "year": 2020,
+        "first_author": "Park",
+        "title_short": "Trend Analysis of Domestic Studies on Home Modification for Older Adults: Home Modification as a Way of Supporting Aging",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/9781108594455.024",
+        "year": 2021,
+        "first_author": "Clemson",
+        "title_short": "Environmental Interventions to Prevent Falls at Home and in the Community",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19031585",
+        "year": 2022,
+        "first_author": "Ueda",
+        "title_short": "Effectiveness of a Tailored Fall-Prevention Program for Discharged Older Patients: A Multicenter, Preliminary, Randomize",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13063-023-07677-3",
+        "year": 2024,
+        "first_author": "Whitehead",
+        "title_short": "Bathing Adaptations in the Homes of Older Adults (BATH-OUT-2): study protocol for a randomised controlled trial, economi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ggi.12889",
+        "year": 2017,
+        "first_author": "Lee",
+        "title_short": "Risk assessment and falls prevention in the older adult: Asian experience with the Falls Risk for Older People in the Co",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3346/jkms.2021.36.e53",
+        "year": 2021,
+        "first_author": "Na",
+        "title_short": "Risk Factors for Intracranial Injury Caused by Falls at Home in Korea Using Data from the Emergency Department-based Inj",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.archger.2023.105149",
+        "year": 2023,
+        "first_author": "Lee",
+        "title_short": "Identifying demographic and home features influencing older adults\u2019 home functioning by using machine learning models",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/ip-2023-045168",
+        "year": 2024,
+        "first_author": "Cavadino",
+        "title_short": "Ethnic variation in access to publicly funded care for unintentional injuries in older adults in Aotearoa New Zealand: a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1590/1980-220x-reeusp-2024-0192en",
+        "year": 2024,
+        "first_author": "Silva",
+        "title_short": "Domestic accidents due to children\u2019s falls: a cross-sectional study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2016.1198737",
+        "year": 2016,
+        "first_author": "Beck",
+        "title_short": "Provision of Universal Design Educational Material Following a Homeowner's Insurance Claim",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1590/1981-22562020023.190180",
+        "year": 2020,
+        "first_author": "Filho",
+        "title_short": "The Brazilian version of the Home Falls and Accidents Screening Tool (HOME FAST): translation, cross-cultural adaptation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12889-019-7815-9",
+        "year": 2019,
+        "first_author": "F\u00e4nge",
+        "title_short": "Effects of applying a standardized assessment and evaluation protocol in housing adaptation implementation \u2013 results fro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.46409/001.jgwi9785",
+        "year": 2020,
+        "first_author": "Deer",
+        "title_short": "The Risk Factors and Preventive Measures Regarding Fall-Related Injuries at Home Among Older Adults: A Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18189704",
+        "year": 2021,
+        "first_author": "F\u00e4nge",
+        "title_short": "One-Year Changes in Activities of Daily Living, Usability, Falls and Concerns about Falling, and Self-Rated Health for D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpubh.2021.713202",
+        "year": 2021,
+        "first_author": "Ferreira",
+        "title_short": "Reliability of HOME FAST BRAZIL\u2014Self-Reported Version for Community-Dwelling Older Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/bjha.2022.16.5.242",
+        "year": 2022,
+        "first_author": "Yeni",
+        "title_short": "Nurse-led home modification interventions for community-dwelling older adults with dementia and their impact on falls pr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2023.2224242",
+        "year": 2023,
+        "first_author": "Bierre",
+        "title_short": "Framing home injury: opportunities and barriers to regulating for safer rental housing in Aotearoa/New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0140-6736(14)61188-0",
+        "year": 2014,
+        "first_author": "Robinovitch",
+        "title_short": "Home-safety modifications to reduce injuries from falls",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1515/ijhp-2016-0018",
+        "year": 2016,
+        "first_author": "M\u00fcller",
+        "title_short": "Potential analysis for research on occupational therapy-led physical exercise programmes and home environment adaptation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/pq.v11i3.4549",
+        "year": 2015,
+        "first_author": "Howden\u2010Chapman",
+        "title_short": "What effect will the 2015 budget have on housing?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/safety4020026",
+        "year": 2018,
+        "first_author": "Keall",
+        "title_short": "Lessons Learned from Implementing a Programme of Home Modifications to Prevent Falls amongst the General Population",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/mps3040071",
+        "year": 2020,
+        "first_author": "Keall",
+        "title_short": "Study Protocol of a Randomized Controlled Trial of Home Modification to Prevent Home Fall Injuries in Houses with M\u0101ori ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/pq.v19i4.8649",
+        "year": 2023,
+        "first_author": "Howden\u2010Chapman",
+        "title_short": "Research-informed Public Policy a case study of housing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2015,
+        "first_author": "Oubeja",
+        "title_short": "( Home - related injuries and falls causing hospitalization )",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4172/2167-1168.1000247",
+        "year": 2015,
+        "first_author": "Koike",
+        "title_short": "Role of Care for the Prevention of Falls and Fractures among Elderly Persons Living in Long-Term Care Facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2018,
+        "first_author": "Zhou",
+        "title_short": "Housing adaptations for ageing in the UK : policy, legislation and practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-74605-6_90",
+        "year": 2021,
+        "first_author": "Boon",
+        "title_short": "Preferences of People with Vision Impairment with Respect to Visibility of Elements in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2468-2667(21)00137-7",
+        "year": 2021,
+        "first_author": "Hill",
+        "title_short": "Home modifications: important for fall injury prevention for M\u0101ori in New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24377/ljmu.t.00015358",
+        "year": 2021,
+        "first_author": "Skervin",
+        "title_short": "The horizontal-vertical illusion on stairs: optimising the visual appearance of stairs to reduce falls risk",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-2780976/v1",
+        "year": 2023,
+        "first_author": "author",
+        "title_short": "The effectiveness of a program on home environmental management for fall prevention in older adults, lower northern Thai",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7759/cureus.80924",
+        "year": 2025,
+        "first_author": "Sawa",
+        "title_short": "Characteristics and Risk Factors of Falls Within a Residential Environment: A Follow-Up Study of Community-Dwelling Japa",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13584-025-00678-4",
+        "year": 2025,
+        "first_author": "Attal",
+        "title_short": "Housing and health in Israel: the need for local policy-oriented interdisciplinary research",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/15394492251344529",
+        "year": 2025,
+        "first_author": "Ellison",
+        "title_short": "Identifying Home Safety Concerns Among Older Adults Aging With Pets",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/safety11030081",
+        "year": 2025,
+        "first_author": "Keall",
+        "title_short": "Association by Age Groups Between Retrofitting Home Heating and Insulation and Subsequent Hospitalised Home Fall Rates: ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17480272.2025.2556005",
+        "year": 2025,
+        "first_author": "Lee-Confer",
+        "title_short": "The role of brush type and sand additive layering on the frictional properties of surface coated wood surfaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10848223251385093",
+        "year": 2025,
+        "first_author": "G\u00fcn",
+        "title_short": "Emerging Medical, Social, and Technological Challenges in Home Health Care for Older Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2025.106077",
+        "year": 2026,
+        "first_author": "Bergh",
+        "title_short": "How Housing Influences Nursing Home Utilization in the United States: An Integrative Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-026-07302-3",
+        "year": 2026,
+        "first_author": "Qahtani",
+        "title_short": "\u201cFalls in older people receiving home healthcare services at armed forces hospital Southern Region: prevalence, associat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/73802",
+        "year": 2026,
+        "first_author": "Zhang",
+        "title_short": "Global, Regional, and National Burden of Falls Among Older Adults Aged 65 Years and Above: Secondary Data Analysis of th",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MOB-11": {
+    "openalex_id": "W3180186138",
+    "openalex_cited_by_count": 44,
+    "citers_fetched": 44,
+    "relevant_n": 9,
+    "already_in_es_n": 2,
+    "new_discovery_n": 7,
+    "discoveries": [
+      {
+        "doi": "10.1177/19375867221136558",
+        "year": 2022,
+        "first_author": "F\u00e6rden",
+        "title_short": "Environmental Transformations Enhancing Dignity in an Acute Psychiatric Ward: Outcome of a User-Driven Service Design Pr",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/19375867231219031",
+        "year": 2024,
+        "first_author": "Rodr\u00edguez-Labajos",
+        "title_short": "The Role of the Built Environment as a Therapeutic Intervention in Mental Health Facilities: A Systematic Literature Rev",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.jpsychires.2024.07.045",
+        "year": 2024,
+        "first_author": "Bodryzlova",
+        "title_short": "Hospital design for inpatient psychiatry: A realistic umbrella review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2023-074368",
+        "year": 2024,
+        "first_author": "Rodr\u00edguez-Labajos",
+        "title_short": "Impact of the design of adult mental health inpatient facilities on healthcare staff: a mixed methods systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/cbm.2241",
+        "year": 2022,
+        "first_author": "Oostermeijer",
+        "title_short": "Relational security: The impact of facility design on youth custodial staffs' practices and approaches",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/hrp.0000000000000398",
+        "year": 2024,
+        "first_author": "Crnic",
+        "title_short": "Psychiatric Hospitals and the Ethics of Salutogenic Design: The Return of Moral Architecture?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10398562241278570",
+        "year": 2024,
+        "first_author": "Grynevych",
+        "title_short": "The impact of psychiatric facility design on reducing aggressive behaviours in an adult population: a narrative literatu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-65766-5_22",
+        "year": 2024,
+        "first_author": "Jonescu",
+        "title_short": "Designing Mental Health-Friendly Spaces: An Empathy-Based Service Design Approach to Optimising the Built Environment fo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20479700.2025.2546539",
+        "year": 2025,
+        "first_author": "Tian",
+        "title_short": "Hospital furniture design: Cultural evolution and future trends",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MOB-12": {
+    "openalex_id": "W2049057222",
+    "openalex_cited_by_count": 26,
+    "citers_fetched": 26,
+    "relevant_n": 19,
+    "already_in_es_n": 1,
+    "new_discovery_n": 18,
+    "discoveries": [
+      {
+        "doi": "10.1080/10790268.2015.1120408",
+        "year": 2015,
+        "first_author": "Morgan",
+        "title_short": "A motor learning approach to training wheelchair propulsion biomechanics for new manual wheelchair users: A pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/tnsre.2020.2965281",
+        "year": 2020,
+        "first_author": "Klerk",
+        "title_short": "Technical Note: A Novel Servo-Driven Dual-Roller Handrim Wheelchair Ergometer",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/md.0000000000015418",
+        "year": 2019,
+        "first_author": "Rice",
+        "title_short": "Validation of an individualized reduction of falls intervention program among wheelchair and scooter users with multiple",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.46292/sci20-00061",
+        "year": 2021,
+        "first_author": "Alvarado",
+        "title_short": "Upper Extremity Overuse Injuries and Obesity After Spinal Cord Injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1440-1630.12992",
+        "year": 2024,
+        "first_author": "Charlton",
+        "title_short": "Manual wheelchair training approaches and intended training outcomes for adults who are new to wheelchair use: A scoping",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jbiomech.2025.112678",
+        "year": 2025,
+        "first_author": "Salzmann",
+        "title_short": "Exploring the biomechanical link between wheelchair propulsion, shoulder injury and shoulder pain: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2055668316678362",
+        "year": 2016,
+        "first_author": "Symonds",
+        "title_short": "Identifying key experience-related differences in over-ground manual wheelchair propulsion biomechanics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0234742",
+        "year": 2020,
+        "first_author": "Misch",
+        "title_short": "Modeling manual wheelchair propulsion cost during straight and curvilinear trajectories",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2055668320907819",
+        "year": 2020,
+        "first_author": "Sprigle",
+        "title_short": "Manual wheelchair propulsion cost across different components and configurations during straight and turning maneuvers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jelekin.2019.05.019",
+        "year": 2019,
+        "first_author": "Jahanian",
+        "title_short": "Glenohumeral joint dynamics and shoulder muscle activity during geared manual wheelchair propulsion on carpeted floor in",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17483107.2016.1278472",
+        "year": 2017,
+        "first_author": "Symonds",
+        "title_short": "A systematic review: the influence of real time feedback on wheelchair propulsion biomechanics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0317504",
+        "year": 2025,
+        "first_author": "Salm",
+        "title_short": "The effect of a cognitive dual-task on the control of wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jbiomech.2020.109725",
+        "year": 2020,
+        "first_author": "Briley",
+        "title_short": "Propulsion biomechanics do not differ between athletic and nonathletic manual wheelchair users in their daily wheelchair",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12984-021-00936-x",
+        "year": 2021,
+        "first_author": "Yan",
+        "title_short": "Augmented feedback for manual wheelchair propulsion technique training in a virtual reality simulator",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fresc.2022.777085",
+        "year": 2022,
+        "first_author": "Klerk",
+        "title_short": "Learning of Wheelchair Racing Propulsion Skills Over Three Weeks of Wheeling Practice on an Instrumented Ergometer in Ab",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/biosmart.2019.8734235",
+        "year": 2019,
+        "first_author": "Taylor",
+        "title_short": "A lightweight wheelchair propulsion dynamometer for improving user energy efficiency and mobility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2019.12.022",
+        "year": 2019,
+        "first_author": "Martin-Lemoyne",
+        "title_short": "Effects of a trained mobility assistance dog on upper extremity muscular effort during wheelchair propulsion on tiled an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2017.04.023",
+        "year": 2017,
+        "first_author": "Lawati",
+        "title_short": "Getting a Manual Wheelchair Over a Threshold Using the Momentum Method: A Descriptive Study of Common Errors",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1049/htl.2016.0056",
+        "year": 2016,
+        "first_author": "Symonds",
+        "title_short": "Sensewheel: an adjunct to wheelchair skills training",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

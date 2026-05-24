@@ -1,0 +1,791 @@
+{
+  "MOB-01": {
+    "doi": "10.1080/10400430903520280",
+    "doi_in_db": "10.1080/10400430903496580",
+    "total_refs": 21,
+    "doi_only_refs": 2,
+    "relevant_n": 8,
+    "already_in_es_n": 0,
+    "new_discovery_n": 8,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "British Standards Institution",
+        "title_short": "BS8300:2001 Design of buildings and their approaches to meet the needs of disabled people\u2014Code of practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "Canadian Standards Association",
+        "title_short": "CAN/CSA B651-04 accessible design for the built environment standard",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ergon.2003.08.001",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ergon.2003.10.003",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Ringaert L.",
+        "title_short": "Determination of new dimensions for universal design codes and standards with consideration of powered wheelchair and sc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Seeger B.",
+        "title_short": "Final report of consultancy on wheelchair user requirements for the National Accessible Transport Committee Commonwealth",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1992",
+        "author": "Standards Australia International",
+        "title_short": "AS1428.2\u20131992, Design for access and mobility\u2014Part 2: Enhanced and additional requirements\u2014Buildings and facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Standards Australia International",
+        "title_short": "AS1428.1\u20132001, Design for access and mobility\u2014Part 1: General requirements for access\u2014New building work",
+        "in_evidence_sources": false
+      }
+    ],
+    "note": "DB DOI 10.1080/10400430903496580 is INCORRECT (404 on both CrossRef + OpenAlex). PubMed PMID 20402047 returns correct DOI 10.1080/10400430903520280 \u2014 mined with the correct one."
+  },
+  "MOB-02": {
+    "doi": "10.1080/10400430903520280",
+    "total_refs": 21,
+    "doi_only_refs": 2,
+    "relevant_n": 8,
+    "already_in_es_n": 0,
+    "new_discovery_n": 8,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "British Standards Institution",
+        "title_short": "BS8300:2001 Design of buildings and their approaches to meet the needs of disabled people\u2014Code of practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "Canadian Standards Association",
+        "title_short": "CAN/CSA B651-04 accessible design for the built environment standard",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ergon.2003.08.001",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ergon.2003.10.003",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Ringaert L.",
+        "title_short": "Determination of new dimensions for universal design codes and standards with consideration of powered wheelchair and sc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Seeger B.",
+        "title_short": "Final report of consultancy on wheelchair user requirements for the National Accessible Transport Committee Commonwealth",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1992",
+        "author": "Standards Australia International",
+        "title_short": "AS1428.2\u20131992, Design for access and mobility\u2014Part 2: Enhanced and additional requirements\u2014Buildings and facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Standards Australia International",
+        "title_short": "AS1428.1\u20132001, Design for access and mobility\u2014Part 1: General requirements for access\u2014New building work",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MOB-05": {
+    "doi": "10.4324/9781003564164",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "MOB-10": {
+    "doi": "10.1016/S0140-6736(14)61006-0",
+    "total_refs": 23,
+    "doi_only_refs": 0,
+    "relevant_n": 8,
+    "already_in_es_n": 0,
+    "new_discovery_n": 8,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.aap.2007.10.003",
+        "year": "2008",
+        "author": "Keall",
+        "title_short": "Association between the number of home injury hazards and home injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/14651858.cd007146.pub3",
+        "year": "2012",
+        "author": "Gillespie",
+        "title_short": "Interventions for preventing falls in older people living in the community",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.aap.2013.08.001",
+        "year": "2013",
+        "author": "Young",
+        "title_short": "Preventing childhood falls within the home: overview of systematic reviews and a systematic review of primary studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.aap.2013.04.011",
+        "year": "2013",
+        "author": "Keall",
+        "title_short": "Formulating a programme of repairs to structural home injury hazards in New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmj.a1411",
+        "year": "2008",
+        "author": "Howden-Chapman",
+        "title_short": "Effects of improved home heating on asthma in community dwelling children: randomised community study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1532-5415.2001.4911236.x",
+        "year": "2001",
+        "author": "Stevens",
+        "title_short": "Preventing falls in older adults: outcome evaluation of a randomized controlled trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/1476-069x-10-98",
+        "year": "2011",
+        "author": "Keall",
+        "title_short": "Injuries associated with housing conditions in Europe: a burden of disease study based on 2008 injury data",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0140-6736(05)67604-0",
+        "year": "2005",
+        "author": "Kannus",
+        "title_short": "Prevention of falls and consequent injuries in elderly people",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MOB-11": {
+    "doi": "10.1136/bmjopen-2020-046647",
+    "total_refs": 66,
+    "doi_only_refs": 22,
+    "relevant_n": 29,
+    "already_in_es_n": 1,
+    "new_discovery_n": 28,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Scalzo S . Design for mental health - Towards an Australian Approach. Melbourne, 2016.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671300600408",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2018.05.002",
+        "year": "2018",
+        "author": "Ulrich",
+        "title_short": "Psychiatric ward design can reduce aggressive behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12012",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "HASSELL studio . Future directions in design for mental health facilities. Melbourne, Australia, 2014.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11126-013-9262-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jclinepi.2020.10.007",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/2046-4053-1-1",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1039856215593397",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ppc.12036",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.62.5.477",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnu.2009.09.003",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20100303-02",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/bsl.2127",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1742646414000065",
+        "year": "2015",
+        "author": "Jenkins",
+        "title_short": "A study of agitation, conflict and containment in association with change in ward physical environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.201300383",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2850.2011.01753.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.62.5.498",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1039856212459585",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20131126-06",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20120410-04",
+        "year": "2012",
+        "author": "Southard",
+        "title_short": "Enclosed versus open nursing stations in adult acute care psychiatric settings: does the design affect the therapeutic m",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586716634017",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjp.bp.112.118422",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1371/journal.pmed.1000097",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08873267.1990.9976897",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12129",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12559",
+        "year": "2019",
+        "author": "Fletcher",
+        "title_short": "Working towards least restrictive environments in acute mental health wards in the context of locked door policy and pra",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jclinepi.2020.09.041",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/bsl.506",
+        "year": "2002",
+        "author": "Dvoskin",
+        "title_short": "Architectural design of a secure forensic state psychiatric hospital",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MOB-12": {
+    "doi": "10.1097/PHM.0000000000000203",
+    "total_refs": 63,
+    "doi_only_refs": 0,
+    "relevant_n": 51,
+    "already_in_es_n": 2,
+    "new_discovery_n": 49,
+    "discoveries": [
+      {
+        "doi": "10.1097/00003086-198808000-00016",
+        "year": "1988",
+        "author": "Gellman",
+        "title_short": "Late complications of weight-bearing upper extremity in the paraplegic patient.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2003.11.016",
+        "year": "2004",
+        "author": "Boninger",
+        "title_short": "Relation between median and ulnar nerve function and wrist kinematics during wheelchair propulsion.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2009.02.019",
+        "year": "2009",
+        "author": "Impink",
+        "title_short": "Ultrasonographic median nerve changes after a wheelchair sporting event.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jelekin.2009.02.001",
+        "year": "2009",
+        "author": "Morrow",
+        "title_short": "Shoulder demands in manual wheelchair users across a spectrum of activities.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1053/apmr.2002.32455",
+        "year": "2002",
+        "author": "Boninger",
+        "title_short": "Propulsion patterns and pushrim biomechanics in manual wheelchair propulsion.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1682/jrrd.2004.08.0106",
+        "year": "2005",
+        "author": "Koontz",
+        "title_short": "A kinetic analysis of manual wheelchair propulsion during start-up on select indoor and outdoor surfaces.",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1038/sc.2008.139",
+        "year": "2009",
+        "author": "Rice",
+        "title_short": "Manual wheelchair stroke characteristics during an extended period of propulsion.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/17483100903499716",
+        "year": "2010",
+        "author": "Verza",
+        "title_short": "Manual wheelchair propulsion pattern use by people with multiple sclerosis.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/17483107.2011.650781",
+        "year": "2012",
+        "author": "Kwarciak",
+        "title_short": "The effects of four different stroke patterns on manual wheelchair propulsion and upper limb muscle strain.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "Giesbrecht",
+        "title_short": "Experiences with using a pushrim activated power-assisted wheelchair for community based occupations: A qualitative expl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2008.10.034",
+        "year": "2009",
+        "author": "Cowan",
+        "title_short": "Impact of surface type, wheelchair weight, and axle position on wheelchair propulsion by novice older adults.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002060-199409000-00004",
+        "year": "1994",
+        "author": "Kirby",
+        "title_short": "Wheelchair-related accidents caused by tips and falls among non-institutionalized users of manually propelled wheelchair",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/sj.sc.3101872",
+        "year": "2006",
+        "author": "Middleton",
+        "title_short": "Five additional mobility and locomotor items to improve responsiveness of the FIM in wheelchair-dependent individuals wi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/tad-2004-16103",
+        "year": "2004",
+        "author": "Routhier",
+        "title_short": "Development of an obstacle course assessment of wheelchair user performances (OCAWUP): A content validity study.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2003.07.007",
+        "year": "2004",
+        "author": "Kirby",
+        "title_short": "The Wheelchair Skills Test (version 2.4): Measurement properties.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0003-9993(03)00364-2",
+        "year": "2004",
+        "author": "Macphee",
+        "title_short": "Wheelchair skills training program: A randomized clinical trial of wheelchair users undergoing initial rehabilitation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2012.09.023",
+        "year": "2013",
+        "author": "Fliess-Douer",
+        "title_short": "Reliability of the test of wheeled mobility (TOWM) and the short Wheelie test.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2340/16501977-1069",
+        "year": "2013",
+        "author": "Rushton",
+        "title_short": "Measure for the assessment of confidence with manual wheelchair use (WheelCon-M) version 2.1: Reliability and validity.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0269215510367981",
+        "year": "2010",
+        "author": "Fliess-Douer",
+        "title_short": "A systematic review of wheelchair skills test for manual wheelchair users with a spinal cord injury: Towards a standardi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1440-1630.2011.00964.x",
+        "year": "2012",
+        "author": "Sawatzky",
+        "title_short": "Wheelchair skills training programme: A pilot study.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2010.11.024",
+        "year": "2011",
+        "author": "Smith",
+        "title_short": "Manual wheelchair skills capacity and safety of residents of a long term care facility.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0269215510386979",
+        "year": "2011",
+        "author": "Ozturk",
+        "title_short": "Effectiveness of a wheelchair skills training programme for community-living users of manual wheelchair in Turkey: A ran",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1053/apmr.2002.36066",
+        "year": "2002",
+        "author": "Kilkens",
+        "title_short": "The wheelchair circuit: Reliability of a test to assess mobility in persons with spinal cord injuries.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2011.03.010",
+        "year": "2011",
+        "author": "Cowan",
+        "title_short": "Adapted manual wheelchair circuit: Test-retest reliability and discriminative validity in persons with spinal cord injur",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2009.04.013",
+        "year": "2009",
+        "author": "Kirby",
+        "title_short": "Manual wheelchair-handling skills by caregivers using new and conventional rear anti-tip devices: A randomized controlle",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2011.11.027",
+        "year": "2012",
+        "author": "Inkpen",
+        "title_short": "Manual wheelchair skills capacity versus performance.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2010.07.226",
+        "year": "2010",
+        "author": "Lindquist",
+        "title_short": "Reliability of the performance and safety scores of the Wheelchair Skills Test Version 4.1 for manual wheelchair users.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1310/sci1802-138",
+        "year": "2012",
+        "author": "Oyster",
+        "title_short": "Wheelchair skill performance of manual wheelchair users with spinal cord injury.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2010.05.011",
+        "year": "2010",
+        "author": "Sagawa",
+        "title_short": "Effects of wheelchair mass on the physiologic responses perception of exertion and performance during various simulated ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2007.09.052",
+        "year": "2008",
+        "author": "Collinger",
+        "title_short": "Shoulder biomechanics during the push phase of wheelchair propulsion: A multisite study of persons with paraplegia.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1682/jrrd.2003.01.0008",
+        "year": "2004",
+        "author": "Kotajarvi",
+        "title_short": "The effect of seat position on wheelchair propulsion biomechanics.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10790268.2005.11753816",
+        "year": "2005",
+        "author": "Gutierrez",
+        "title_short": "Effect of fore-aft seat position on shoulder demands during wheelchair propulsion: Part 2. An electromyographic analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2340/16501977-0296",
+        "year": "2009",
+        "author": "van der Woude",
+        "title_short": "Seat height: Effects on submaximal hand rim wheelchair performance during spinal cord injury rehabilitation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1682/jrrd.2004.01.0065",
+        "year": "2004",
+        "author": "Samuelsson",
+        "title_short": "The effect of rear-wheel position on seating ergonomics and mobility efficiency in wheelchair users with spinal cord inj",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00140130412331290862",
+        "year": "2004",
+        "author": "Sawatzky",
+        "title_short": "The ergonomics of different tyres and tyre pressure during wheelchair propulsion.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/tbme.2008.918462",
+        "year": "2008",
+        "author": "Desroches",
+        "title_short": "The effect of resultant force at the pushrim on shoulder kinetics during manual wheelchair propulsion: A simulation stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2009.05.022",
+        "year": "2009",
+        "author": "Koontz",
+        "title_short": "Manual wheelchair propulsion patterns on natural surfaces during start-up propulsion.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2004.05.017",
+        "year": "2005",
+        "author": "Algood",
+        "title_short": "Effect of a pushrim-activated power-assist wheelchair on the functional capabilities of persons with tetraplegia.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2011.11.010",
+        "year": "2012",
+        "author": "Kloosterman",
+        "title_short": "Comparison of shoulder load during power-assisted and purely hand-rim wheelchair propulsion.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/phm.0b013e3181c9d7df",
+        "year": "2010",
+        "author": "Giacobbi",
+        "title_short": "Wheelchair users perceptions of and experiences with power assist wheels.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1191/0269215505cr823oa",
+        "year": "2005",
+        "author": "Sawatzky",
+        "title_short": "Measuring energy expenditure using heart rate to assess the effects of wheelchair tyre pressure.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1995",
+        "author": "Curtis",
+        "title_short": "Reliability and validity of the Wheelchair Users Shoulder Pain Index (WUSPI).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Hurd",
+        "title_short": "Influence of varying level terrain on wheelchair propulsion biomechanics.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400430903520280",
+        "year": "2010",
+        "author": "Steinfeld",
+        "title_short": "Anthropometry and standards for wheeled mobility: An international comparison.",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/17483100802542603",
+        "year": "2009",
+        "author": "Bennett",
+        "title_short": "Wheelchair accessibility: Descriptive survey of curb ramps in an urban area.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2010.01.009",
+        "year": "2010",
+        "author": "Koontz",
+        "title_short": "Design features that affect the manoeuvrability of wheelchairs and scooters.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0003-9993(03)00427-1",
+        "year": "2004",
+        "author": "Mountain",
+        "title_short": "The Wheelchair Skills Test, version 2.4: Validity of an algorithm-based questionnaire version.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2009.10.004",
+        "year": "2010",
+        "author": "Howarth",
+        "title_short": "Use of a geared wheelchair wheel to reduce propulsive muscular demand during ramp ascent: Analysis of muscle activation ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2008.07.019",
+        "year": "2009",
+        "author": "Chow",
+        "title_short": "Kinematic and electromyographic analysis of wheelchair propulsion on ramps of different slopes for young men with parapl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2006.09.017",
+        "year": "2007",
+        "author": "Richter",
+        "title_short": "Stroke pattern and handrim biomechanics for level and uphill wheelchair propulsion at self-selected speeds.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2003.10.024",
+        "year": "2004",
+        "author": "Sabick",
+        "title_short": "A new method to quantify demand on the upper extremity during manual wheelchair propulsion.",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

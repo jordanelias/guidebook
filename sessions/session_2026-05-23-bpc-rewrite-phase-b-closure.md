@@ -16,17 +16,17 @@
 | Active workplan §B.0 status | OPEN, target ~30 BPCs | CLOSED, applied to 70 files / 68 slugs | closed |
 | co1 rows with `synthesis_attribution_required = 1` (B.10) | 29/30 | 30/30 | +1 |
 | Co-1 six-field set (B.8) | 29/30 | 30/30 | +1 |
-| citation_mining backward=1 rows (B.11) | 2 (school-environment-autism) | 46 (RAP 19 + MHB 16 + CWD 11) | +44 |
-| citation_mining forward=1 rows (B.11) | 0 | 47 (RAP 20 + MHB 16 + CWD 11) | +47 |
-| Slugs with `citation_mining_complete = 1` | 0 | 3 | +3 |
-| `cognitive-wayfinding-design` | 0 of 15 mined | 11 full + 4 defer; CLOSED | done |
-| Backward discovery surface (NEW candidate refs) | n/a | 1,100 (RAP 316 + MHB 264 + CWD 520) | new |
-| Forward discovery surface (NEW candidate refs) | n/a | 1,464 (RAP 538 + MHB 359 + CWD 567) | new |
-| Combined B.11 discoveries surfaced | n/a | 2,564 | new |
-| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | B.11 (85 slugs remain), B.9 | -3 |
+| citation_mining backward=1 rows (B.11) | 2 (school-environment-autism) | 52 (RAP 19 + MHB 16 + CWD 11 + MOB 6) | +50 |
+| citation_mining forward=1 rows (B.11) | 0 | 53 (RAP 20 + MHB 16 + CWD 11 + MOB 6) | +53 |
+| Slugs with `citation_mining_complete = 1` | 0 | 4 | +4 |
+| `mobility-built-environment` | 0 of 15 mined | 6 full + 9 grey-lit defer; CLOSED | done |
+| Backward discovery surface (NEW candidate refs) | n/a | 1,201 (RAP 316 + MHB 264 + CWD 520 + MOB 101) | new |
+| Forward discovery surface (NEW candidate refs) | n/a | 1,673 (RAP 538 + MHB 359 + CWD 567 + MOB 209) | new |
+| Combined B.11 discoveries surfaced | n/a | 2,874 | new |
+| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | B.11 (84 slugs remain), B.9 | -3 |
 | Eligible evidence pool (rule #10) | 638/638 (100%) | 638/638 (100%) | unchanged |
 | pre_rehab_banner_audit invariants | n/a (script didn't exist) | 4/4 PASS | new audit |
-| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 124 | +10 |
+| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 126 | +12 |
 
 ---
 
@@ -75,7 +75,10 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `sessions/artifacts/2026-05-24-b11-mental-health-backward-discoveries.json` | NEW | MHB BACKWARD discovery surface (264 NEW refs across 16 sources) |
 | `scripts/migrations/data_20260524212000_b11_cognitive_wayfinding_design.sql` | NEW | B.11 slug closure: cognitive-wayfinding-design (11 full + 4 grey-lit defer) + DOI-only-ref filter fix documented in header |
 | `sessions/artifacts/2026-05-24-b11-cognitive-wayfinding-backward-discoveries.json` | NEW | CWD BACKWARD discovery surface (520 NEW refs across 11 sources; post-DOI-only-fix) |
-| `sessions/artifacts/2026-05-24-b11-cognitive-wayfinding-forward-discoveries.json` | NEW | CWD FORWARD discovery surface (567 NEW refs across 11 sources) |
+| `scripts/migrations/data_20260524223000_b11_mobility_built_environment.sql` | NEW | B.11 slug closure: mobility-built-environment (6 full + 9 grey-lit defer) |
+| `scripts/migrations/data_20260524223100_gap_294_steinfeld_doi_typo.sql` | NEW | GAP-294 materialization (db.py add-gap bypass paired) |
+| `sessions/artifacts/2026-05-24-b11-mobility-backward-discoveries.json` | NEW | MOB BACKWARD discovery surface (101 NEW refs) |
+| `sessions/artifacts/2026-05-24-b11-mobility-forward-discoveries.json` | NEW | MOB FORWARD discovery surface (209 NEW refs) |
 
 ---
 
@@ -87,7 +90,8 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 4. **`bpc-rewrite-workplan-2026-05-11.md` §B.0 status update.** The workplan still lists B.0 as "Target: ~30 BPCs; Current: 0 applied." That document should be updated to reflect the closure (with the corrected cohort size of 70 files / 68 unique slugs). Not done this session; queued.
 5. **PI rule #10 cohort wording — no amendment.** The live PI in claude.ai (v10.14) reads "from the 2026-03-30 round." Per owner directive 2026-05-23, this is not amended — the DR + audit script + DB state are the operational armature for the broader cohort. Architecture v2.3 `<migration_and_growth>` explicitly places state of this kind out of PI. The `[ASSUMPTION: applying broader cohort per DR-2026-05-23]` tag that briefly stood for the v10.15-queued period is retired; the DR is the standing reference.
 6. **GAP-292 (logged this session): REF-00571 misclassification.** Kotloski 2020 rat-kindling/TBI-seizure paper (DOI `10.3389/fneur.2019.01286`) is linked to slug `room-acoustic-performance` as RAP-13 but is unrelated to acoustic performance. Surfaced during B.11 backward mining. Owner action: reclassify or retire the `source_slug_links` row. P2 priority.
-7. **GAP-293 (logged this session): scripts/db.py code-ordering bug + fix.** The `if __name__ == "__main__": main()` block was placed at line 1099, BEFORE the definitions of `update_bpc_metadata`, `insert_evidence_source`, `insert_source_slug_link`, `get_unmined_for_all_slugs`. `db.py update-bpc` hit NameError. Fixed surgically in this session by relocating the `__main__` block to actual end of file. P3 (CLI was unusable for 4 commands but the fix is small and self-contained). Surfaced when B.11 batch 2 closure tried to set `citation_mining_complete = 1`.
+7. **GAP-293 (logged this session): scripts/db.py code-ordering bug + fix.** The `if __name__ == "__main__": main()` block was placed at line 1099, BEFORE the definitions of `update_bpc_metadata`, `insert_evidence_source`, `insert_source_slug_link`, `get_unmined_for_all_slugs`. `db.py update-bpc` hit NameError. Fixed surgically in this session by relocating the `__main__` block to actual end of file. P3.
+8. **GAP-294 (logged this session): REF-00059 DOI typo.** evidence_sources.doi for REF-00059 (Steinfeld 2010 'Anthropometry and standards for wheeled mobility', PMID 20402047) is `10.1080/10400430903496580` — returns HTTP 404 on both CrossRef and OpenAlex. Correct DOI per PubMed eutils is `10.1080/10400430903520280` (suffix digits transposed/incorrect). MOB-01 mining row uses the correct DOI; the evidence_sources fix is pending. Owner action: `UPDATE evidence_sources SET doi = '10.1080/10400430903520280' WHERE ref_id = 'REF-00059'`. P3.
 
 ---
 
@@ -95,11 +99,10 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 citation mining.** **3 slugs closed** (`room-acoustic-performance`, `mental-health-built-environment`, `cognitive-wayfinding-design`); 85 active slugs remain. Pattern: CrossRef (backward) + OpenAlex `cites:` (forward) + OpenAlex `pmid:`/title-search for no-DOI recovery + full-DEFER for grey-lit/unresolvable + **DOI-only-ref inclusion** (CWD batch fix).
-  - **Per-slug velocity (validated by 3 closures):** 15-20 source slug ≈ 30-45 min. Larger slugs scale ~linearly.
-  - **Filter improvement worth noting**: prior batches dropped DOI-only refs at the title-relevance filter; the corrected pipeline includes them as candidates (parent paper editorial vouching is the relevance signal). Net effect on CWD: 214 → 520 backward NEW. Room-acoustic and mental-health batches may have under-counted; not re-run this session but worth a separate sweep if discovery yield matters.
-  - **Discovery triage queue:** 2,564 NEW candidate refs across 8 artifact files. Per-row tier classification + verification + INSERT to evidence_sources is the heavy arm of skill §4 that has been deferred across all of B.11. **Worth designing a sub-protocol for** before queue grows further.
-  - **Next slug candidates** (refreshed queue): mobility-built-environment (15), school-environment-autism (15, partial — has 14 DEFERRED depth-1-discovery rows from 2026-05-11g), stair-ramp-threshold-biomechanics-accessibility (14), upper-limb-impairment-built-environment (14), sensory-room-user-control (12, partial), accessibility-feature-market-value-uplift-framing (10), accessible-bathroom-and-grab-bar (10), accessible-design-economics-cost-premium (9).
+- **B.11 citation mining.** **4 slugs closed** (`room-acoustic-performance`, `mental-health-built-environment`, `cognitive-wayfinding-design`, `mobility-built-environment`); 84 active slugs remain. Pattern stable: CrossRef (backward) + OpenAlex `cites:` (forward) + DOI-only-ref inclusion + OpenAlex `pmid:`/title-search for no-DOI recovery + full-DEFER for grey-lit/multilingual non-academic.
+  - **Yield pattern:** 4 slugs yielded 2,874 NEW candidate refs. Grey-lit-heavy slugs (mobility) yield less (310) than academic-heavy slugs (cognitive-wayfinding 1,087). Multilingual institutional content (French, German, Norwegian, Finnish, Dutch, Japanese, Chinese) is reliably grey-lit DEFER under current connectors.
+  - **Discovery triage queue:** 2,874 candidate refs across 10 artifact files. Heavy arm of skill §4 still deferred.
+  - **Next slug candidates:** school-environment-autism (15, partial; has 14 DEFERRED depth-1-discovery rows from 2026-05-11g), stair-ramp-threshold (14), upper-limb-impairment (14), sensory-room-user-control (12, partial), accessibility-feature-market-value-uplift-framing (10), accessible-bathroom-and-grab-bar (10), accessible-design-economics-cost-premium (9).
 - **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining at ~10 min each.
 - ~~B.8 Co-1 six fields.~~ **CLOSED**.
 - ~~B.10 synthesis_attribution_required.~~ **CLOSED**.
