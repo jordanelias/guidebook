@@ -76,21 +76,17 @@ The PI becomes the rule layer it was supposed to be; mechanics live in the repo 
 
 ---
 
-## v10.15 queued (added 2026-05-23)
+## v10.15 — considered and rejected (2026-05-23)
 
-| Version | Live in claude.ai | Repo snapshot | Notes |
-|---|---|---|---|
-| **v10.15** | **No — paste needed when authored** | not yet authored — will be `governance/project-instructions-v10_15.md` | Rule #10 final paragraph cohort wording: drop the "from the 2026-03-30 round" restrictor. Sharpened by DR-2026-05-23. |
+A v10.15 entry was briefly queued in this file on 2026-05-23 (commit `be146a2`) to amend standing rule #10 final-paragraph cohort wording (broaden "from the 2026-03-30 round" to "any positive `[OPUS-SYNTHESIS*]` tag pre-dating the 2026-05-23 rehab closure"). Withdrawn the same session per owner directive: no PI bump unless critical armature.
 
-**v10.15 specific change.** Standing rule #10 final paragraph currently reads:
+Rationale for withdrawal — the proposed amendment was not critical armature:
 
-> BPCs bearing `opus_synthesis: YES [OPUS-SYNTHESIS]` from the 2026-03-30 round carry a `synthesis_validity: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner until Phase E.2g overwrites.
+- **The DR governs cohort scope.** `decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md` defines the cohort criterion and freezes enumeration in `decisions/DR-2026-05-23-cohort-manifest.json`. PI rule #10 already cites DRs as the authoritative locus for cohort decisions (the rule's own banner-removal predicate references sub-rules 1/2/3 by content, not by enumerated slug list).
+- **State, not rule.** Per architecture v2.3 `<migration_and_growth>` ("PI standing rules describe rules, not state. State content — current AUTHOR-TITLE-ONLY counts, retraction banners, session-specific commentary — belongs in DRs, audit scripts, or the DB"), which BPCs hold the banner is state. The rule predicate ("any positive `[OPUS-SYNTHESIS*]` tag pre-rehab") is also operational classification, not a standing-rule mechanism change.
+- **Audit + DB carry the load.** `scripts/audit/pre_rehab_banner_audit.py` (Level 2) enforces the four invariants against the DR. `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` is the queryable source of truth. The literal PI text "from the 2026-03-30 round" remains defensible reading as descriptive shorthand for the dominant round; the DR sharpens scope without contradicting the rule.
 
-Operational application (B.0 closure on 2026-05-23) found that the 2026-03-30 round is the largest single cohort but not the only pre-rehab synthesis batch — four rounds collectively touched 70 files across 68 unique slugs, all of which used pre-rehab evidence. DR-2026-05-23 redefined the cohort as any positive `[OPUS-SYNTHESIS*]` tag pre-dating the 2026-05-23 rehab closure. The v10.15 patch ratifies the DR's cohort definition in PI rule #10 text. The replacement text is:
-
-> BPCs bearing any positive `[OPUS-SYNTHESIS*]` tag (any variant — bare, dated, provisional, or annotated) where the synthesis date predates the 2026-05-23 evidence-metadata-rehabilitation closure (commit `b0a4a25`) carry a `**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner until Phase E.2g overwrites. Cohort enumeration and selection criterion: DR-2026-05-23. Live state of which BPCs carry the banner: `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'`.
-
-No other rule changes; no skill-assignment changes; no bootstrap changes.
+The cohort decision is captured durably without touching PI. Future Phase E.2g overwrites transition specific slugs out of `RETRACTED-PRE-REHAB` per the DR's overwrite predicate; no PI bump required for that workflow either.
 
 ---
 

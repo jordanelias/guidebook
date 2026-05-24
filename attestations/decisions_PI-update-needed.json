@@ -10,8 +10,8 @@
   "per_rule_status": {
     "source-discipline": {
       "status": "FIRED",
-      "evidence_path": "decisions/PI-update-needed.md#v1015-queued-added-2026-05-23",
-      "reason": "v10.15 entry grounds the rule #10 text patch against DR-2026-05-23. The new text is a faithful generalization of the literal wording ('from the 2026-03-30 round' \u2192 'any positive [OPUS-SYNTHESIS*] tag pre-dating the 2026-05-23 rehab closure'), with the DR cited inline so the rationale is auditable. Cohort scope, banner text, and DB mirror are all consistent with the artifacts touched this session."
+      "evidence_path": "decisions/PI-update-needed.md#v1015--considered-and-rejected-2026-05-23",
+      "reason": "v10.15 queue entry withdrawn per owner directive (no PI bump unless critical armature). Withdrawal kept as a 'considered and rejected' note with explicit citation of architecture v2.3 <migration_and_growth> ('state belongs in DRs, audit scripts, or the DB, not in PI'). Audit trail preserved without re-queuing the patch."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -19,7 +19,7 @@
     }
   },
   "deviations": [],
-  "bias_direction": "v10.15 entry was authored in the same session that applied B.0 closure under the broader cohort definition. The bias risk is that queueing the PI patch in the same session legitimizes a cohort decision that an arms-length review might narrow. Mitigation: the patch is a queue entry only \u2014 the live PI in claude.ai is unaffected until owner paste. The DR (DR-2026-05-23) provides the deliberative-record basis; this entry merely points to it.",
-  "independent_reviewer_counterclaim": "An outside reviewer would object that PI text changes should not be queued by the same Claude session that committed a cohort interpretation under that text; this conflates 'I applied X under reading Y' with 'X should be amended to match reading Y.' Counter: the entry is a queue, not a deployment; the owner has the floor on whether to paste v10.15 and can reject the wording change while keeping the B.0 application (since the DB state holds independent of PI wording). The repo-side audit trail is preserved either way.",
-  "verdict": "DEVIATION-LOGGED"
+  "bias_direction": "This edit reverses an action from the prior commit (be146a2) by the same session. The bias risk is the appearance of churn \u2014 owner correction triggered a same-session walkback. The 'considered and rejected' framing is honest about the sequence; the alternative (silent removal) would lose the audit signal of why this isn't queued.",
+  "independent_reviewer_counterclaim": "An outside reviewer would observe that a session that adds and removes a PI queue entry within ~30 minutes is symptomatic of insufficient up-front deliberation. Counter: the queue addition was a defensible mirror of a same-session DR; the removal followed an explicit owner directive that arrived after the queue was visible to the owner. The two-step is the intended human-in-the-loop pattern for PI changes; the audit trail of both steps is the feature, not a defect.",
+  "verdict": "CLEAN"
 }

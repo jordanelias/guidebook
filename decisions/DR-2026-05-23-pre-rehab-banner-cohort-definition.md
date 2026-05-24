@@ -2,8 +2,7 @@
 
 **Status:** PROPOSED (pending owner ratification)
 **Adopted by:** session_2026-05-23-bpc-rewrite-phase-b-closure (B.0 banner application)
-**Sharpens:** PI v10.14 standing rule #10 final paragraph (cohort definition)
-**Companion:** see PI-update-needed.md for the rule #10 text patch this implies for v10.15.
+**Sharpens:** PI v10.14 standing rule #10 final paragraph (cohort definition) — operational scope only; no PI text amendment required.
 
 ## Problem
 
@@ -41,6 +40,21 @@ Phase E.2g reverification.)
 ```
 
 **DB state mirror.** Each unique slug in the cohort gets `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'`. Applied via timestamped data migration (forward-only, append-only) per architecture v2.3 `<data_layer_pattern>`.
+
+## Why no PI amendment is needed
+
+Per architecture v2.3 `<migration_and_growth>`: "PI standing rules describe rules, not state. State content — current AUTHOR-TITLE-ONLY counts, retraction banners, session-specific commentary — belongs in DRs, audit scripts, or the DB."
+
+The cohort scope decision is operational classification (which BPCs satisfy the banner predicate), not a change to the banner mechanism, the banner removal predicate, or the eligibility gate. The rule's existing text ("from the 2026-03-30 round") is defensible as descriptive shorthand for the dominant batch; this DR refines the practical scope without contradicting the rule's predicate or mechanism.
+
+Armature for the broader-cohort interpretation lives outside PI:
+
+- **DR (this document)** — codifies criterion + enumeration.
+- **`decisions/DR-2026-05-23-cohort-manifest.json`** — frozen enumeration at HEAD `b0a4a25`.
+- **`scripts/audit/pre_rehab_banner_audit.py`** — Level 2 audit enforcing the four invariants below.
+- **`bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'`** — queryable source of truth, mirrored across 68 unique slugs.
+
+If a future owner directive narrows the cohort (e.g., back to the literal 2026-03-30 round), the path is forward-reversible per slug via a counter-migration; no PI text changes are required to apply or to unwind.
 
 ## Cohort enumeration
 

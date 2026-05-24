@@ -3,7 +3,7 @@
 **Session ID:** `session_2026-05-23-bpc-rewrite-phase-b-closure`
 **Span:** 2026-05-23 ~23:00 UTC → 2026-05-23 ~23:50 UTC
 **Bootstrap version:** PI v10.14 + architecture v2.3 + userPreferences v6.3
-**Headline outcome:** B.0 closed — 68 unique slugs / 70 BPC files carry the `SYNTHESIS VALIDITY: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner; `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` for the 68 slugs. New DR (DR-2026-05-23) defines the cohort; new audit script (Level 2) verifies four invariants.
+**Headline outcome:** B.0 closed — 68 unique slugs / 70 BPC files carry the `SYNTHESIS VALIDITY: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner; `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` for the 68 slugs. New DR (DR-2026-05-23) defines the cohort; new audit script (Level 2) verifies four invariants. v10.15 PI queue entry briefly proposed then withdrawn per owner directive (no PI bump unless critical armature) — the DR + audit + DB state are sufficient armature. B.10/B.8 trivial gap closed: REF-00734 Tibble 2005 `synthesis_attribution_required` flag backfilled; 30/30 co1 rows now flagged.
 
 ---
 
@@ -14,10 +14,12 @@
 | bpc_metadata rows with `evidence_state = 'RETRACTED-PRE-REHAB'` | 0 | 68 | +68 |
 | BPC md files carrying SYNTHESIS VALIDITY banner | 0 | 70 | +70 |
 | Active workplan §B.0 status | OPEN, target ~30 BPCs | CLOSED, applied to 70 files / 68 slugs | closed |
-| Phase B substantive items remaining | 3 (B.0, B.11, B.9) | 2 (B.11, B.9) | -1 |
+| co1 rows with `synthesis_attribution_required = 1` (B.10) | 29/30 | 30/30 | +1 |
+| Co-1 six-field set (B.8) | 29/30 | 30/30 | +1 |
+| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | 2 (B.11, B.9) | -3 |
 | Eligible evidence pool (rule #10) | 638/638 (100%) | 638/638 (100%) | unchanged |
 | pre_rehab_banner_audit invariants | n/a (script didn't exist) | 4/4 PASS | new audit |
-| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 115 | +1 |
+| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 116 | +2 |
 
 ---
 
@@ -50,6 +52,10 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `attestations/decisions_PI-update-needed.json` | MODIFIED | Re-attested for this session's PI-update-needed edit |
 | `attestations/sessions_session_2026-05-23-bpc-rewrite-phase-b-closure.json` | NEW | Per-rule status for this session record |
 | `sessions/LATEST` | UPDATED | Pointer → `session_2026-05-23-bpc-rewrite-phase-b-closure.md` |
+| `decisions/PI-update-needed.md` | RE-MODIFIED (later in session) | v10.15 queue entry withdrawn per owner directive; replaced with "considered and rejected" note citing architecture v2.3 state-vs-rule clause |
+| `decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md` | RE-MODIFIED (later in session) | Companion-to-PI-update-needed line removed; new "Why no PI amendment is needed" section added |
+| `scripts/migrations/data_20260523233000_b10_b8_close_ref00734.sql` | NEW | B.10/B.8 closure migration — sets `synthesis_attribution_required = 1` for REF-00734 (Tibble 2005); 30/30 co1 rows flagged |
+| `data/guidebook.db` (B.10/B.8 update) | RE-UPDATED | REF-00734 row + `data_migrations` entry for `data_20260523233000_b10_b8_close_ref00734` |
 
 ---
 
@@ -59,7 +65,7 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 2. **Two duplicate-slug files surfaced in the cohort.** `thermoregulation-built-environment` and `cross-population-conflict-resolutions` each have two markdown copies in different directories. Both copies received the banner this session. Duplicate-file resolution is a Phase E.2g triage task per the DR; not in scope this session.
 3. **Markdown citation drift from 40 excised ref-ids.** BPC reasoning docs still contain textual citations to the 40 ref-ids excised on 2026-05-23. Source_slug_links rows cascade-deleted on the DB side, but raw markdown readers see dangling pointers. Separate cleanup pass — not started in this session, not started in the prior either.
 4. **`bpc-rewrite-workplan-2026-05-11.md` §B.0 status update.** The workplan still lists B.0 as "Target: ~30 BPCs; Current: 0 applied." That document should be updated to reflect the closure (with the corrected cohort size of 70 files / 68 unique slugs). Not done this session; queued.
-5. **PI rule #10 text drift.** The live PI in claude.ai (v10.14) still reads "from the 2026-03-30 round." The repo-side queue entry (`decisions/PI-update-needed.md`) names v10.15 as the next paste with the corrected wording. Until owner paste, there is a rule-text-vs-application gap; the conflict-resolution table row 4 ("text rule and CI workflow disagree → CI wins; record drift as `[ASSUMPTION]`") applies — `[ASSUMPTION: applying broader cohort per DR-2026-05-23; PI rule #10 literal text awaits v10.15 paste]` was the standing tag for this session.
+5. **PI rule #10 cohort wording — no amendment.** The live PI in claude.ai (v10.14) reads "from the 2026-03-30 round." Per owner directive 2026-05-23, this is not amended — the DR + audit script + DB state are the operational armature for the broader cohort. Architecture v2.3 `<migration_and_growth>` explicitly places state of this kind out of PI. The `[ASSUMPTION: applying broader cohort per DR-2026-05-23]` tag that briefly stood for the v10.15-queued period is retired; the DR is the standing reference.
 
 ---
 
@@ -69,8 +75,8 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 - **B.11 citation mining.** ~60 slugs remaining. Highest leverage for Phase E. Skill: `citation-miner`. Use `references/citation-mining-register.md` as the queue. Per-slug effort: ~1 hour. Total: ~60 hours of dispersed work; pace per session = however many slugs can be cleared at high quality before bootstrap exhaustion (~5–8 per session is the recent rate).
 - **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining at ~10 min each. Can run in parallel with B.11.
-- **B.8 Co-1 six fields.** 29/30 — one row outstanding, trivial closure.
-- **B.10 synthesis_attribution_required.** 29/638 — verify cohort overlap with Co-1 next session; if equal, may already be complete.
+- ~~B.8 Co-1 six fields.~~ **CLOSED this session** — 30/30 via REF-00734 backfill.
+- ~~B.10 synthesis_attribution_required.~~ **CLOSED this session** — 30/30 co1 rows flagged.
 - **B.12 Tier 2 jurisdictional instruments.** Partial across rehab batches; needs an inventory pass.
 
 **After all of Phase B closure:**
@@ -79,6 +85,5 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Owner action queue:**
 
-- Paste v10.15 (when authored) into claude.ai → Project Settings to land the rule #10 cohort wording correction.
 - Optionally: review DR-2026-05-23 cohort definition — if `~30` was the intended scope, narrow back via a follow-up migration transitioning specific slugs out of `RETRACTED-PRE-REHAB`.
 - The pre-existing data_migrations tracking drift is owner-visible but not yet on a queue; consider whether to address before the next migration session.
