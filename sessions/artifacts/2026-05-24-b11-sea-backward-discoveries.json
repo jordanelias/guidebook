@@ -1,0 +1,2836 @@
+{
+  "SEA-01": {
+    "doi": "10.1080/13603116.2025.2589290",
+    "total_refs": 68,
+    "doi_only_refs": 61,
+    "relevant_n": 67,
+    "already_in_es_n": 4,
+    "new_discovery_n": 63,
+    "discoveries": [
+      {
+        "doi": "10.1176/appi.books.9780890425596",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1440-1630.12025",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.62.5.564",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-019-04180-0",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-008-0593-3",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10803-020-04425-3",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-021-04991-0",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1364/oe.24.00a907",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2019.04.005",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4102/sajce.v1i2.82",
+        "year": "2011",
+        "author": "de Jager P.",
+        "title_short": "\u00ab the Identification of Sensory Processing Difficulties of Learners Experiencing Asperger\u2019s Syndrome (AS) in Two Mainstr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-017-3360-5",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/004005990203400603",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1539449215617923",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2014.12.034",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ina.12403",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jadohealth.2012.06.019",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Gaines K. S.",
+        "title_short": "The Perceived Effects of Visual Design and Features on Students with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2021",
+        "author": "Gonz\u00e1lez B. A.",
+        "title_short": "Sensory Hypersensitivity in the School Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2016.01976",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/dev0000271",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-021-06122-y",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-015-2693-1",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08856257.2020.1783800",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/11.11.429",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1365480220973112",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/bul0000317",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2020.101515",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.tine.2014.09.001",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-018-3685-8",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2012.004010",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1002/aur.2670",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/2331186x.2021.1957530",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2020.0053",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/aur.2762",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15700/saje.v36n2a1201",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1203/pdr.0b013e3182130c54",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/aia-09-2018-0034",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/mbe.12240",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12160",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s40688-023-00450-y",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2009.01420.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Mostafa M.",
+        "title_short": "An Architecture for Autism: Concepts of Design Intervention for the Autistic User",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.1042641",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461.3104.356",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/092434505000114173",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1260/135101008786939982",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmj.n71",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2021-0196",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/23969415221123429",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/mtp/miu044",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-017-3114-4",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-010-1173-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-13-6092-3_8",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13229-021-00471-5",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1504/ijart.2019.098847",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2812596",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-019-03889-2",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10826-019-01576-5",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613211072593",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Stickney M. A. 2018. \u201cThe Impact of Classroom Lighting Changes for Students With Autism Spectrum Disorder.\u201d PhD diss. Tr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/08856257.2021.1878657",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2011.000760",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Weiss S. M. 2021. \u201cAdults With ASD Perceptions of Inclusion Education.\u201d PhD diss. Walden University. https://scholarwork",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00131911.2018.1483895",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20473869.2018.1468619",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-02": {
+    "doi": "10.3390/ijerph18063203",
+    "total_refs": 52,
+    "doi_only_refs": 0,
+    "relevant_n": 26,
+    "already_in_es_n": 12,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1002/9781119053484",
+        "year": null,
+        "author": null,
+        "title_short": "Bates, C., Imrie, R., and Kullman, K. (2017). Designing with Care and Caring with Design. Care and Design. Bodies, Build",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.15585/mmwr.ss6904a1",
+        "year": "2020",
+        "author": "Maenner",
+        "title_short": "Prevalence of autism spectrum disorder among children aged 8 Years-Autism and developmental disabilities monitoring netw",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15585/mmwr.ss6706a1",
+        "year": "2018",
+        "author": "Baio",
+        "title_short": "Prevalence of autism spectrum disorder among children aged 8 Years\u2014Autism and developmental disabilities monitoring netw",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15585/mmwr.ss6513a1",
+        "year": "2018",
+        "author": "Christensen",
+        "title_short": "Prevalence and Characteristics of Autism Spectrum Disorder Among Children Aged 8 Years\u2014Autism and Developmental Disabili",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Bogdashina, O. (2011). Le Percezioni Sensoriali Nell\u2019autismo e Nella Sindrome di Asperger, uovonero.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Ahrentzen, S., and Steele, K. (2009). Advancing Full Spectrum Housing. Designing for Adults with Spectrum Disorders, Ari",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.aej.2018.10.014",
+        "year": "2019",
+        "author": "Barakat",
+        "title_short": "Nature as a healer for autistic children",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Brand, A. (2010). Living in the Community. Housing Design for Adults, Helen Hamlyn Centre.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ohi-01-2010-b0004",
+        "year": "2010",
+        "author": "Mostafa",
+        "title_short": "Housing Adaptation for Adults with Autistic Spectrum Disorder",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1539449216665116",
+        "year": "2016",
+        "author": "Piller",
+        "title_short": "The Sensory Environment and Participation of Preschool Children with Autism Spectrum Disorder",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Sachs, N., and Vincenta, T. (2011). Outdoor Environments for Children with Autism and Special Needs, Informe Design, Imp",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Vogel, C.L. (2008). Classroom Design for Living and Learning with Autism. Autism Asperger\u2019s Digest, Future Horizons.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Gaudion, K., and McGinley, C. (2012). Green Spaces. Outdoor Environments for Adults with Autism, Helen Hamlyn Centre for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2012.01525.x",
+        "year": "2012",
+        "author": "McAllister",
+        "title_short": "Design considerations for the autism spectrum disorder-friendly Key Stage 1 classroom",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/1467-8578.12160",
+        "year": "2016",
+        "author": "McAllister",
+        "title_short": "Designed by the pupils, for the pupils: An autism friendly school",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/1467-9604.12103",
+        "year": "2015",
+        "author": "Deochand",
+        "title_short": "Design Considerations for an Intensive Autism Treatment Centre",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Gaines",
+        "title_short": "The perceived effects of visual design and features on students with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "year": "2017",
+        "author": "Kanakri",
+        "title_short": "Noise and autism spectrum disorder in children: An exploratory survey",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Mostafa",
+        "title_short": "Architecture for Autism: Autism ASPECTSS\u2122 in School Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2018.05.001",
+        "year": "2018",
+        "author": "Nagib",
+        "title_short": "Creating \u201ctherapeutic landscapes\u201d at home: The experiences of families of children with autism",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10901-008-9129-6",
+        "year": "2009",
+        "author": "Tufvesson",
+        "title_short": "The building process as a tool towards an all-inclusive school. A Swedish example focusing on children with defined conc",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.5014/ajot.2012.004010",
+        "year": "2012",
+        "author": "Kinnealey",
+        "title_short": "Effect of classroom modification on attention and engagement of students with autism or dyspraxia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Mostafa",
+        "title_short": "An Architecture for Autism: Concepts of Design Intervention for the Autistic User",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v12i3.1589",
+        "year": "2018",
+        "author": "Mostafa",
+        "title_short": "Designing for autism: An aspectss\u2122 post-occupancy evaluation of learning environments",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Decker, E.F. (2014). A City for Marc. An Inclusive Urban Design Approach to Planning for Adults with Autism. [Master\u2019s T",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2013.04.007",
+        "year": "2013",
+        "author": "Fornasari",
+        "title_short": "Navigation and exploration of an urban virtual environment by children with autism spectrum disorder compared to childre",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-03": {
+    "doi": "10.1192/j.eurpsy.2024.272",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "SEA-bw-711-724": {
+    "doi": "10.26687/archnet-ijar.v8i1.314",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "SEA-bw-711-725": {
+    "doi": "10.1108/arch-11-2022-0258",
+    "total_refs": 16,
+    "doi_only_refs": 0,
+    "relevant_n": 12,
+    "already_in_es_n": 2,
+    "new_discovery_n": 10,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.buildenv.2015.02.013",
+        "year": "2015",
+        "author": null,
+        "title_short": "The impact of classroom design on pupils' learning: final results of a holistic, multi-level analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2000",
+        "author": null,
+        "title_short": "Thirty-Three Educational Design Principles for Schools and Community Learning Centers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2007.10.009",
+        "year": "2008",
+        "author": null,
+        "title_short": "Environmental personalization and elementary school children's self-esteem",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2012",
+        "author": null,
+        "title_short": "School as \u2018micro-city\u2019 for the autism spectrum disorder (ASD) pupil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": null,
+        "title_short": "An architecture for autism: concepts of design intervention for the autistic user",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Mostafa, M. (2012), \u201cExpert spotlight 4.1 architecture for autism\u201d, in Kopec, D.A. (Ed.), Environmental Psychology for D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": null,
+        "title_short": "Architecture for autism: autism ASPECTSS\u2122 in school design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18848/1833-1874/cgp/v08/38300",
+        "year": "2015",
+        "author": null,
+        "title_short": "An architecture for autism: built environment performance in accordance to the autism ASPECTSS\u2122 design index",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v12i3.1589",
+        "year": "2018",
+        "author": null,
+        "title_short": "Designing for autism: an ASPECTSS\u2122 post-occupancy evaluation of learning environments",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2021",
+        "author": null,
+        "title_short": "The Autism Friendly University Design Guide",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "year": "2017",
+        "author": null,
+        "title_short": "Noise and autism spectrum disorder in children: an exploratory survey",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/0013916516669389",
+        "year": "2017",
+        "author": null,
+        "title_short": "An observational study of classroom acoustical design and repetitive behaviors in children with autism",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-713": {
+    "doi": "10.1016/j.aej.2018.10.014",
+    "total_refs": 31,
+    "doi_only_refs": 0,
+    "relevant_n": 20,
+    "already_in_es_n": 0,
+    "new_discovery_n": 20,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Autism Resource Foundation, Physical Therapy Exercises for Autistic Children http://autismresourcefoundation.org/.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Beverly Jean Wilson, Sensory Gardens for Children with Autism spectrum Disorders, The University of Arizona, 2006.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Kate Wilkes, The Sensory World of the Autistic Spectrum: a greater understanding, National Autistic Society under a Memo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/004005990904200104",
+        "year": null,
+        "author": null,
+        "title_short": "Sonia Mastrangelo, Harnessing the Power of Play: Opportunities for Children with Autism Spectrum Disorders, TEACHING Exc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "William Crain, How Nature Helps Children Develop, Montessori Life, summer 2001, 2001.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0169-2046(00)00045-1",
+        "year": "2000",
+        "author": "Fjortoft",
+        "title_short": "The natural environment as a playground for children: LANDSCAPE description and analysis of a natural landscape",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "S. Cottrell, J. Raadik-Cottrell, Benefits of outdoor skills to health, learning and lifestyle. A literature review: Asso",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Wilson",
+        "title_short": "The wonders of nature: honoring children's ways of knowing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503035003001",
+        "year": "2003",
+        "author": "Wells",
+        "title_short": "Nearby nature: a buffer of life stress among rural children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1996",
+        "author": "Moore",
+        "title_short": "Compact nature: the role of playing and learning gardens on children's lives",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11154-007-9072-y",
+        "year": "2008",
+        "author": "Huh",
+        "title_short": "Vitamin D deficiency in children and adolescents: epidemiology, impact and treatment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160121972864",
+        "year": "2001",
+        "author": "Taylor",
+        "title_short": "Coping with ADD: the surprising connection to green play settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1012576913074",
+        "year": "2001",
+        "author": "Fjortoft",
+        "title_short": "The natural environment as a playground for children: the impact of outdoor play activities in pre-primary school childr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0300443961150104",
+        "year": "1996",
+        "author": "Davies",
+        "title_short": "Outdoors: an important context for young children\u2019s development",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1993",
+        "author": "Henniger",
+        "title_short": "Enriching the outdoor play experience",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Joan Almon, The fear of play. Exchange, 2009, March/April, 42\u201344.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Sachs Naomi, Vincenta Tara, Outdoor Environments for Children with Autism and Special Needs, 2011. Website www.informede",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5772/55766",
+        "year": null,
+        "author": null,
+        "title_short": "G\u00f6k\u00e7en Firdevs Y\u00fccel, Hospital Outdoor Landscape Design, Advances in Landscape Architecture, 2013, Dr. Murat Ozyavuz (Ed",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Bonnie B. Hebert, Design Guidelines of a Therapeutic Garden for Autistic Children, Faculty of the Louisiana State Univer",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Robin C. Moore, Nilda G. Cosco, LATIS forum on Therapeutic Garden Design, part two, Well-being by Nature: Therapeutic Ga",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-714": {
+    "doi": "10.1108/OHI-01-2010-B0004",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "SEA-bw-715": {
+    "doi": "10.1177/1539449216665116",
+    "total_refs": 40,
+    "doi_only_refs": 32,
+    "relevant_n": 37,
+    "already_in_es_n": 2,
+    "new_discovery_n": 35,
+    "discoveries": [
+      {
+        "doi": "10.5014/ajot.2014.682006",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.books9780890425596.744053",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.62.5.564",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1979",
+        "author": "Ayres A. J.",
+        "title_short": "Ayres A. J. (1979). Sensory integration and the child. Los Angeles, CA: Western Psychological Services.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2010.09149",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2010.12.029",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.11777/1053815110362690",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Bronfenbrenner U.",
+        "title_short": "Bronfenbrenner U. (1994). Ecological models of human development. In Husen T., Postlethwaite T. N. (Eds.), International",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1005687310346",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/sj.bdj.2008.292",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2012",
+        "author": "Chapparo C.",
+        "title_short": "Chapparo C., Lowe S. (2012). School: Participating in more than just the classroom. In Lane S., Bundy A. (Eds.), Kids ca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2011.000596",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.48.7.595",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2016.016881",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2015.014829",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2014.12.034",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1365-2214.2002.00272.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1049732305276687",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/j006v23n01_05",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2012.004010",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.5014/ajot.2012.004390",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2214.2012.01365.x.",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Lane S. J.",
+        "title_short": "Lane S. J., Smith Roley S., Champagne T. (2014). Sensory integration and processing. In Schell B. A. B., Gillen G., Scaf",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/000841740407100107",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/15394492-20100823-01",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/000841749606300103",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.5014/ajot.2014.009894",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02701367.2013.784725",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-005-3294-1",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-010-1173-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2214.2011.01303.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/1098-240x(200008)23:4<334::aid-nur9>3.0.co;2-g",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0963828031000137090",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2015.012476",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15453/2168-6408.1082",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2014.06.006",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "Ziviani J.",
+        "title_short": "Ziviani J., Rodger S. (2006). Environmental influences on children\u2019s participation. In Ziviani J., Rodger S. (Eds.), Occ",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-716": {
+    "doi": "10.1111/j.1467-9604.2012.01525.x",
+    "total_refs": 37,
+    "doi_only_refs": 6,
+    "relevant_n": 26,
+    "already_in_es_n": 2,
+    "new_discovery_n": 24,
+    "discoveries": [
+      {
+        "doi": "10.1016/s0140-6736(06)69041-7",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "BEAVER C.(2006)Designing environments for children and adults with autism spectrum disorder. Paper presented to the Inte",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "DEPARTMENT FOR EDUCATION AND EMPLOYMENT (DfEE)",
+        "title_short": "Inclusive School Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "DEPARTMENT FOR EDUCATION AND EMPLOYMENT (DfEE)",
+        "title_short": "Designing for Disabled Children and Children with Special Educational Needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "DUDEK M.",
+        "title_short": "Children's Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1025850715183",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "HERTZBERGER H.",
+        "title_short": "Space and Learning: Lessons in Architecture 3",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2007.00367.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "KHARE R.",
+        "title_short": "Designing Inclusive Educational Spaces for Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "KHARE R.andMULLICK A.(2008)Educational spaces for children with autism: design development process. International Meetin",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21606/drs.2010.84",
+        "year": null,
+        "author": null,
+        "title_short": "MCALLISTER K.(2010)The ASD\u2010friendly classroom: design complexity challenge and characteristics.DRS2010 Conference Montre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "MCALLISTER K.andMAGUIRE B.(2011)Threshold in school \u2013 as event and place for the autism spectrum disorder pupil. Confere",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "MOSTAFA M.",
+        "title_short": "An architecture for autism: concepts of design intervention for the autistic user",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ohi-01-2010-b0004",
+        "year": "2010",
+        "author": "MOSTAFA M.",
+        "title_short": "Housing adaption for adults with autistic spectrum disorder",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "MYLER P. FANTACONE T.andMERRITT E.(2003)Eliminating distractions.American School & University. [Online athttp://asumag.c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "NAIR P.",
+        "title_short": "The Language of School Design: Design Patterns for 21st Century Schools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "PLIMLEY L.",
+        "title_short": "Analysis of a student task to create an autism friendly living environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "SCOTT I.",
+        "title_short": "Designing learning spaces for children on the autistic spectrum",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "SHABHA G.andGAINES K.(2011)Therapeutically enhanced school design for pupils with autism spectrum disorders (ASD): a com",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10901-008-9129-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "VOGEL C.",
+        "title_short": "Classroom design for living and learning with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2008.00375.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "WHITEHURST T.",
+        "title_short": "Evaluation of Features Specific to an ASD Designed Living Accommodation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "WHITEHURST T.",
+        "title_short": "The Impact of Building Design on Children with Autistic Spectrum Disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/bf01531288",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "WOODCOCK A. GEORGIOU D. JACKSON J.andWOOLNER A.(2006)Designing a Tailorable Environment for Children with Autism Spectru",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-717": {
+    "doi": "10.1111/1467-8578.12160",
+    "total_refs": 52,
+    "doi_only_refs": 16,
+    "relevant_n": 36,
+    "already_in_es_n": 0,
+    "new_discovery_n": 36,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "1972",
+        "author": "Alexander C.",
+        "title_short": "Human Identity in the Urban Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "Bogdashina O.",
+        "title_short": "Sensory Perceptual Issues in Autism and Asperger Syndrome (2nd edn)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-011-1241-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9780203857588",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9780080550978",
+        "year": "2007",
+        "author": "Day C.",
+        "title_short": "Environment and Children: Passive Lessons from the Everyday Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "DfEE (Department for Education & Employment)",
+        "title_short": "Building Bulletin 94 (BB94) Inclusive School Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "DfEE (Department for Education & Employment)",
+        "title_short": "Building Bulletin 102 (BB102) Designing for Disabled Children and Children with Special Educational Needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1088357614539833",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "Dudek M.",
+        "title_short": "Children's Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1471-3802.2010.01145.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15710882.2014.997829",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-8578.2010.00482.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Hertzberger H.",
+        "title_short": "Space and Learning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2007.00367.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08856250903450855",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9780203456699",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Khare R.",
+        "title_short": "Designing Inclusive Educational Spaces for Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9604.12075",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12006",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2015",
+        "author": "McAllister K.",
+        "title_short": "Navigating and exploring the ASD\u2010friendly landscape",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "McNally H.",
+        "title_short": "Aldo Goes to Primary School: experiencing school through the lens of the autistic spectrum",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1471-3802.12092",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Mostafa M.",
+        "title_short": "Architecture for autism: autism ASPECTSS in school design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "Nair P.",
+        "title_short": "The Language of School Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12074",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "Reed R.",
+        "title_short": "Good Design \u2013 it all adds up",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.53841/bpsecp.2011.28.1.64",
+        "year": "2011",
+        "author": "Rigolon A.",
+        "title_short": "Children and their development as the starting point: a new way to think about the design of elementary schools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Sanoff H.",
+        "title_short": "Multiple views of participatory design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/cbo9780511521232",
+        "year": "2006",
+        "author": "Spencer C.",
+        "title_short": "Children and Their Environments: learning, using and designing spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1088357610364530",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Taylor A.",
+        "title_short": "Linking Architecture and Education: sustainable design for learning environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1989",
+        "author": "UN (United Nations)",
+        "title_short": "The United Nations Convention on the Rights of the Child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Vogel C.",
+        "title_short": "Classroom design for living & learning with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "Whitehurst T.",
+        "title_short": "The Impact of Building Design on Children with Autistic Spectrum Disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/bf01531288",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1365480211434796",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-719": {
+    "doi": "10.1016/j.ridd.2017.02.004",
+    "total_refs": 44,
+    "doi_only_refs": 0,
+    "relevant_n": 28,
+    "already_in_es_n": 1,
+    "new_discovery_n": 27,
+    "discoveries": [
+      {
+        "doi": "10.5014/ajot.62.5.564",
+        "year": "2008",
+        "author": "Ashburner",
+        "title_short": "Sensory processing and classroom emotional: behavioral and educational outcomes in children with autism spectrum disorde",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2009.07.002",
+        "year": "2010",
+        "author": "Ashburner",
+        "title_short": "Surviving in the mainstream: Capacity of children with autism spectrum disorders to perform academically and regulate th",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "Atmaca",
+        "title_short": "Industrial noise and its effects on humans",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0145482x1410800405",
+        "year": "2014",
+        "author": "Banda",
+        "title_short": "A review of intervention studies conducted with individuals with autism and sensory impairments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jcpp.12035",
+        "year": "2013",
+        "author": "Ben-Sasson",
+        "title_short": "Early sensory over-responsivity in toddlers with autism spectrum disorders as a predictor of family impairment and paren",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1362361313517762",
+        "year": "2015",
+        "author": "Case-Smith",
+        "title_short": "A systematic review of sensory processing interventions for children with autism spectrum disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2012.004242",
+        "year": "2012",
+        "author": "Chang",
+        "title_short": "Autonomic and behavioral responses of children with autism to auditory stimuli",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.113525",
+        "year": "2013",
+        "author": "Connolly",
+        "title_short": "Adolescents' perceptions of their school's acoustic environment: The development of an evidence based questionnaire",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461.3104.362",
+        "year": "2000",
+        "author": "Crandell",
+        "title_short": "Classroom acoustics for children with normal hearing and with hearing impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/smj.0b013e3180318be5",
+        "year": "2007",
+        "author": "Goines",
+        "title_short": "Noise pollution: A modern plague",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1362361300004002002",
+        "year": "2000",
+        "author": "Kim",
+        "title_short": "The prevalence of anxiety and mood problems among children with autism and Asperger syndrome",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2012.004010",
+        "year": "2012",
+        "author": "Kinnealey",
+        "title_short": "Effect of classroom modification on attention and engagement of students with autism of dyspraxia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10803-009-0840-2",
+        "year": "2010",
+        "author": "Lane",
+        "title_short": "Sensory processing subtypes in autism: Association with adaptive behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.56212",
+        "year": "2009",
+        "author": "Ljung",
+        "title_short": "Effects of road traffic noise and irrelevant speech onhildren\u2019s reading and mathematical performance",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2307/1128373",
+        "year": "1977",
+        "author": "Lovaas",
+        "title_short": "Some observations on the non-extinguishability of children's speech",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Martin",
+        "title_short": "Exploring the impact of the design of the physical classroom environment on young children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1979",
+        "author": "Melnick",
+        "title_short": "Hearing loss from noise exposure",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Orekhova",
+        "title_short": "Arousal and attention re-orienting in autism spectrum disorders: Evidence from auditory event-related potentials",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.121254",
+        "year": "2013",
+        "author": "Persson",
+        "title_short": "Classroom acoustics and hearing ability as determinants for perceived social climate and intentions to stay at work",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2812596",
+        "year": "2008",
+        "author": "Shield",
+        "title_short": "The effects of environmental and classroom noise on the academic attainments of primary school children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.70501",
+        "year": "2010",
+        "author": "Shield",
+        "title_short": "Noise in open plan classrooms in primary schools: A review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "Stiegler",
+        "title_short": "Managing sound sensitivity in individuals with ASD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1901/jaba.2002.35-95",
+        "year": "2002",
+        "author": "Tang",
+        "title_short": "Functional analysis of stereotypical ear covering in a child with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2014.06.006",
+        "year": "2014",
+        "author": "Tomcheck",
+        "title_short": "Patterns of sensory processing in children with an autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.112361",
+        "year": "2013",
+        "author": "Van Kamp",
+        "title_short": "Noise and health in vulnerable groups: A review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/bf00924508",
+        "year": "1979",
+        "author": "Varni",
+        "title_short": "An analysis of observational learning in autistic and normal children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinthera.2012.02.023",
+        "year": "2012",
+        "author": "Varni",
+        "title_short": "Effect of Aripiprazole 2\u201315mg/d on health-related quality of life in the treatment of irritability associated with Autis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph7083255",
+        "year": "2010",
+        "author": "Woolner",
+        "title_short": "Noise in schools: A holistic approach to the issue International",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-720": {
+    "doi": "10.1016/j.healthplace.2018.05.001",
+    "total_refs": 67,
+    "doi_only_refs": 0,
+    "relevant_n": 45,
+    "already_in_es_n": 1,
+    "new_discovery_n": 44,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "Ahmad",
+        "title_short": "Effectiveness of home modification on quality of life on wheel chair user paraplegic population",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Ahrentzen, S., Steele, K., Christensen, T., 2009. Advancing full spectrum housing. Technical Report. Phoenix: Arizona Bo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301217712294",
+        "year": "2017",
+        "author": "Allen",
+        "title_short": "How people with dementia and their carers adapt their homes. A qualitative study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Anderson, J.M., 1998. Sensory-motor issues in autism. Psychological Corporation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Beaver, C., 2010. Autism-friendly environment. The Autism File, 34, 82\u201385.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.parkreldis.2015.08.025",
+        "year": "2015",
+        "author": "Bhidayasiri",
+        "title_short": "What is the evidence to support home environmental adaptation in Parkinson's disease? A call for multidisciplinary inter",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/096973309900600206",
+        "year": "1999",
+        "author": "Brinchmann",
+        "title_short": "When the home becomes a prison: living with a severely disabled child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1362361304047224",
+        "year": "2004",
+        "author": "Bromley",
+        "title_short": "Mothers supporting children with autistic spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Carr, E.G., 2007. A context-based model of problem behavior. NADD Bulletins (X):4, article 1. Available at \u3008http://thena",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Davy, L., Adams, T., Bridge, C., 2014. Caring for the carer: home design and modification for carers of young people wit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2007",
+        "author": "Donovan",
+        "title_short": "Home as therapeutic landscapes: family caregivers providing palliative care at home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1540-4560.00074",
+        "year": "2003",
+        "author": "Evans",
+        "title_short": "Housing and mental health: a review of the evidence and methodological and conceptual critique",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.59.3.296",
+        "year": "2005",
+        "author": "Fange",
+        "title_short": "Changes in ADL dependence and aspects of usability following housing adaptation: a longitudinal perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Geores",
+        "title_short": "Compromised space: contests over the provision of a therapeutic environment for people with mental health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0277-9536(92)90360-3",
+        "year": "1992",
+        "author": "Gesler",
+        "title_short": "Therapeutic landscapes: medical issues in light of the new cultural geography",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2007",
+        "author": "Gesler",
+        "title_short": "Application of the concept of therapeutic landscapes to the design of hospitals in the UK: the example of a mental healt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1201/9781315145686-5",
+        "year": "2017",
+        "author": "Guillet",
+        "title_short": "Designing formall controlled smart home systems for people with disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2007",
+        "author": "Hallman",
+        "title_short": "A Family-friendly place: family leisure, identity and wellbeing \u2013 the Zoo as therapeutic landscapes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1088357612472932",
+        "year": "2013",
+        "author": "Hodgetts",
+        "title_short": "Home sweet home? Families' experience with aggression in children with autism spectrum disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02185385.2015.1116192",
+        "year": "2015",
+        "author": "Hong",
+        "title_short": "Home modification among families with older adults with disability in Korea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0008417414564864",
+        "year": "2015",
+        "author": "Jutras",
+        "title_short": "Reappropriation of residential space of families with a person with a spinal cord injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1362361307075702",
+        "year": "2007",
+        "author": "Kern",
+        "title_short": "Sensory correlations in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Khare",
+        "title_short": "Incorporating the behavioral dimension in designing inclusive learning environment for autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.ans.0000334289.04225.68",
+        "year": "2008",
+        "author": "Marshall",
+        "title_short": "Home as place for healing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1471-3802.12092",
+        "year": "2016",
+        "author": "Martin",
+        "title_short": "Exploring the impact of the design of the physical classroom environment on young children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12160",
+        "year": "2016",
+        "author": "McAllister",
+        "title_short": "Designed by the pupils, for the pupils: an autism\u2010friendly school",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "McDowell",
+        "title_short": "Rehabilitation in Parkinson's disease, day care programs for demented patients, and aids for living and home modificatio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/nur.10048",
+        "year": "2002",
+        "author": "Messecar",
+        "title_short": "Home environment modification strategies used by caregivers of elders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Mostafa",
+        "title_short": "An architecture for autism: concepts of design intervention for autistic user",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18848/2154-8587/cgp/v04i02/37413",
+        "year": "2014",
+        "author": "Mostafa",
+        "title_short": "An architecture for autism: application of the autism ASPECTS design index to home environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2012",
+        "author": "Muenchberger",
+        "title_short": "Experience of place for young adults under 65 years with complex disabilities moving into purpose-built residential care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2009.01.004",
+        "year": "2009",
+        "author": "Myers",
+        "title_short": "My greatest joy and my greatest ache:\u00a0parents own words on how having a child in the autism spectrum has affected their ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2016.1181719",
+        "year": "2017",
+        "author": "Nagib",
+        "title_short": "Toward an autism-friendly home environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2017",
+        "author": "Owen",
+        "title_short": "Transforming home: parents' experiences of caring for children on the autism spectrum in Tasmania, Australia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Palka",
+        "title_short": "Accessible wilderness as a therapeutic landscape: experiencing the nature of Denali National Park, Alaska",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/030802260907200902",
+        "year": "2009",
+        "author": "Pengelly",
+        "title_short": "Space at home for families with a child with autistic spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Pomana, A.N.D.R.E.I., 2014. November). Design approach for autism treatment centers. In: Proceedings of the LUMEN Intern",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/tad-1993-2403",
+        "year": "1993",
+        "author": "Pynoos",
+        "title_short": "Toward a national policy on home modification",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18061/dsq.v30i1.1069",
+        "year": "2010",
+        "author": "Robertson",
+        "title_short": "Neurodiversity, quality of life, and autistic adults: shifting research and professional focuses onto real-life challeng",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Seamon D., 2012. Physical and virtual environment: Meaning of place and space. In Schell, B. and Scaffa, M. (Eds.), Will",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2012.649468",
+        "year": "2012",
+        "author": "Smith",
+        "title_short": "Population aging, disability and housing accessibility: implications for sub-national areas in the United States",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2015",
+        "author": "Tukiman",
+        "title_short": "A home for autistic child: residential spaces intervention in Malaysia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Wertz, S., 2012. Creating an optimum home environment for children with autism spectrum disorder. Available at \u3008http://w",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Williams",
+        "title_short": "Place, identity and therapeutic landscapes: the case of home care workers in a medically underserviced area",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0277-9536(01)00209-x",
+        "year": "2002",
+        "author": "Williams",
+        "title_short": "Changing geographies of care: employing the concept of therapeutic landscapes as a framework in examining home space",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-721": {
+    "doi": "10.1007/s10901-008-9129-6",
+    "total_refs": 66,
+    "doi_only_refs": 0,
+    "relevant_n": 58,
+    "already_in_es_n": 0,
+    "new_discovery_n": 58,
+    "discoveries": [
+      {
+        "doi": "10.1017/s135561770505040x",
+        "year": "2005",
+        "author": "SJ Archibald",
+        "title_short": "Archibald, S. J., Kerns, K. A., Mateer, C. A., & Ismay, L. (2005). Evidence of utilization behavior in children with ADH",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.pedn.2005.02.012",
+        "year": "2005",
+        "author": "S Barber",
+        "title_short": "Barber, S., Grubbs, L., & Cottrell, B. (2005). Self-perception in children with attention deficit/hyperactivity disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1025827427901",
+        "year": "2003",
+        "author": "N Bauminger",
+        "title_short": "Bauminger, N., Shulman, C., & Agam, G. (2003). Peer intervention and loneliness in high-functioning children with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-7610.2005.01443.x",
+        "year": "2006",
+        "author": "JM Bebko",
+        "title_short": "Bebko, J. M., Weiss, J. A., Demark, J. L., & Gomez, P. (2006). Discrimination of temporal synchrony in intermodal events",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/b:jadd.0000037420.16169.28",
+        "year": "2004",
+        "author": "AA Bieberich",
+        "title_short": "Bieberich, A. A., & Morgan, S. B. (2004). Self-regulation and affective expression during play in children with autism o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jslhr.4305.1146",
+        "year": "2000",
+        "author": "DM Boudreau",
+        "title_short": "Boudreau, D. M., & Chapman, R. S. (2000). The relationship between event representation and linguistic skill in narrativ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0193-3973(97)80004-4",
+        "year": "1997",
+        "author": "MB Bronson",
+        "title_short": "Bronson, M. B., Hauser-Cram, P., & Erickson Warfield, M. (1997). Classroom matter: Relations between the classroom envir",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00787-006-0508-9",
+        "year": "2006",
+        "author": "B Bruce",
+        "title_short": "Bruce, B., Thernlund, G., & Nettelbladt, U. (2006). ADHD and language impairment. A study of the parent questionnaire FT",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0270-4684(83)90006-x",
+        "year": "1983",
+        "author": "MH Charlop",
+        "title_short": "Charlop, M. H., Schreibman, L., Mason, J., & Vesey, W. (1983). Behavior-setting interactions of autistic children: A beh",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13682820210136287",
+        "year": "2002",
+        "author": "J Clibbens",
+        "title_short": "Clibbens, J., Powell, G. G., & Atkinson, E. (2002). Strategies for achieving joint attention when signing to children wi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8527.00242",
+        "year": "2002",
+        "author": "P Cuckle",
+        "title_short": "Cuckle, P., & Wilson, J. (2002). Social relationships and friendships among young people with Down\u2019s syndrome in seconda",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ics.2005.06.026",
+        "year": "2005",
+        "author": "MA Deacon",
+        "title_short": "Deacon, M. A., Woodhouse, J. M., & Watts, P. O. (2005). Investigation of ocular alignment and binocular single vision in",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1012524929004",
+        "year": "2001",
+        "author": "S Doctoroff",
+        "title_short": "Doctoroff, S. (2001). Adapting the physical environment to meet the needs of all young children for play. Early Childhoo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-7610.2004.00384.x",
+        "year": "2005",
+        "author": "R Dreschler",
+        "title_short": "Dreschler, R., Brandeis, D., F\u00f6ld\u00e9nyi, M., Imhof, K., & Steinhausen, H. (2005). The course of neuropsychological functio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2004.09.005",
+        "year": "2004",
+        "author": "I Enmarker",
+        "title_short": "Enmarker, I., & Boman, E. (2004). Noise annoyance responses of middle school pupils and teachers. Journal of Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1146/annurev.psych.57.102904.190057",
+        "year": "2006",
+        "author": "GW Evans",
+        "title_short": "Evans, G. W. (2006). Child development and the physical environment. Annual Review of Psychology, 57, 423\u2013451.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1006/jevp.2001.0241",
+        "year": "2002",
+        "author": "A Faber Taylor",
+        "title_short": "Faber Taylor, A., Kuo, F., & Sullivan, W. C. (2002). Views of nature and self-discipline: Evidence from inner city child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-7610.2005.01446.x",
+        "year": "2006",
+        "author": "SE Gathercole",
+        "title_short": "Gathercole, S. E., & Alloway, T. P. (2006). Practitioner review: Short-term and working memory impairments in neurodevel",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9604.00188",
+        "year": "2001",
+        "author": "F Gathorne-Hardy",
+        "title_short": "Gathorne-Hardy, F. (2001). Inclusive design in schools. Support for Learning, 16(2), 53\u201355.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neulet.2004.10.081",
+        "year": "2005",
+        "author": "V Gumenyuk",
+        "title_short": "Gumenyuk, V., Korzyukov, O., Escera, C., H\u00e4m\u00e4l\u00e4inen, M., Huotilainen, M., H\u00e4yrinen, T., et al. (2005). Electrophysiologi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1365-2788.2002.00405.x",
+        "year": "2002",
+        "author": "MJ Guralnick",
+        "title_short": "Guralnick, M. J. (2002). Involvement with peers: Comparisons between young children with and without Down\u2019s syndrome. Jo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2004.10.003",
+        "year": "2005",
+        "author": "RP Hastings",
+        "title_short": "Hastings, R. P., Beck, A., Daley, D., & Hill, C. (2005). Symptoms of ADHD and their correlates in children with intellec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1471-6712.2002.00109.x",
+        "year": "2002",
+        "author": "G Hedov",
+        "title_short": "Hedov, G., Ann\u00e9ren, G., & Wikblad, K. (2002). Swedish parents of children with Down\u2019s syndrome. Scandinavian Journal of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1995",
+        "author": "D Huse",
+        "title_short": "Huse, D. (1995). Restructuring and the physical context: Designing learning environments. Children, Youth and Environmen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9450.00316",
+        "year": "2003",
+        "author": "S Hygge",
+        "title_short": "Hygge, S., Boman, E., & Enmarker, I. (2003). The effects of road traffic noise and meaningful irrelevant speech on diffe",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2000",
+        "author": "M Johansson",
+        "title_short": "Johansson, M. (2000). Psychological motivation of pro-environmental travel behaviour in an urban area. In T. Rothengatte",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2006.05.005",
+        "year": "2006",
+        "author": "M Johansson",
+        "title_short": "Johansson, M. (2006). Environment and parental factors as determinants of mode for children\u2019s leisure travel. Journal of",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503255613",
+        "year": "2004",
+        "author": "EJ Kantrowitz",
+        "title_short": "Kantrowitz, E. J., & Evans, G. W. (2004). The relation between the ratio of children per activity area and off-task beha",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160121973115",
+        "year": "2001",
+        "author": "R Kaplan",
+        "title_short": "Kaplan, R. (2001). The nature of the view from home. Environment and Behavior, 33(4), 507\u2013542.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1991",
+        "author": "R K\u00fcller",
+        "title_short": "K\u00fcller, R. (1991). Environmental assessment from a neuropsychological perspective. In T. G\u00e4rling & G. W. Evans (Eds.), E",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2114/jpa.21.87",
+        "year": "2002",
+        "author": "R K\u00fcller",
+        "title_short": "K\u00fcller, R. (2002). The influence of light on circarhythms in humans. Journal of Physiological Anthropology and Applied H",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "K\u00fcller, R. (2004). Planning for good indoor lighting. Building Issues, 14. Lund: SIDA and HDM.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/001401398186928",
+        "year": "1998",
+        "author": "R K\u00fcller",
+        "title_short": "K\u00fcller, R., & Laike, T. (1998). The impact flicker from fluorescent lighting on well-being, performance and physiologica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0272-4944(05)80079-9",
+        "year": "1992",
+        "author": "R K\u00fcller",
+        "title_short": "K\u00fcller, R., & Lindsten, C. (1992). Health and behavior of children in classrooms with and without windows. Journal of En",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1995",
+        "author": "T Laike",
+        "title_short": "Laike, T. (1995). Observing the emotional state of healthy children. Children\u2019s Environments, 12(3), 328\u2013339.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9450.00029",
+        "year": "1997",
+        "author": "T Laike",
+        "title_short": "Laike, T. (1997). The impact of daycare environments on children\u2019s mood and behavior. Scandinavian Journal of Psychology",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0031-9406(05)65896-8",
+        "year": "1998",
+        "author": "PEM Lauteslager",
+        "title_short": "Lauteslager, P. E. M., Vermeer, A., & Helders, P. J. M. (1998). Disturbances in the motor behavior of children with Down",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503035004005",
+        "year": "2003",
+        "author": "A Legendr\u00e9",
+        "title_short": "Legendr\u00e9, A. (2003). Environmental features influencing toddlers\u2019 biomotional reactions in day care centres. Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0272-4944(02)00084-1",
+        "year": "2003",
+        "author": "M Lehnung",
+        "title_short": "Lehnung, M., Leplow, B., Oksendal, H., Vegard, M. M., & Ferstl, R. (2003). Pointing accuracy in children is dependent on",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503256260",
+        "year": "2003",
+        "author": "P Lercher",
+        "title_short": "Lercher, P., Evans, G. W., & Meis, M. (2003). Ambient noise and cognitive processes among primary schoolchildren. Enviro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1006/jevp.2001.0239",
+        "year": "2002",
+        "author": "SH Martin",
+        "title_short": "Martin, S. H. (2002). The classroom environment and its effects on the practice of teachers. Journal of Environmental Ps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1006/jevp.1999.0144",
+        "year": "2000",
+        "author": "LE Maxwell",
+        "title_short": "Maxwell, L. E., & Evans, G. W. (2000). The effects of noise on pre-school children\u2019s pre-reading skills. Journal of Envi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1993",
+        "author": "GT Moore",
+        "title_short": "Moore, G. T., & Lackney, J. A. (1993). School design: Crisis, educational performance and design applications. Children\u2019",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1034/j.1601-183x.2003.00026.x",
+        "year": "2003",
+        "author": "L Nadel",
+        "title_short": "Nadel, L. (2003). Down\u2019s syndrome: A genetic disorder in biobehavioral perspective. Genes, Brain and Behavior, 2, 156\u201316",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "JT Nigg",
+        "title_short": "Nigg, J. T., & Casey, B. J. (2005). An integrative theory of attention-deficit/hyperactivity disorder based on the cogni",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/092434505000114173",
+        "year": "2005",
+        "author": "T Norlander",
+        "title_short": "Norlander, T., Mo\u00e5s, L., & Archer, T. (2005). Noise and stress in primary and secondary school children: Noise reduction",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-7610.2005.01460.x",
+        "year": "2006",
+        "author": "SJ Paterson",
+        "title_short": "Paterson, S. J., Girelli, L., Butterworth, B., & Karmiloff-Smith, A. (2006). Are numerical impairments syndrome specific",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s007870050093",
+        "year": "1999",
+        "author": "MN Pavuluri",
+        "title_short": "Pavuluri, M. N., Luk, S.-L., & McGee, R. (1999). Parent reported preschool attention deficit hyperactivity: Measurement ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jecp.2005.01.002",
+        "year": "2005",
+        "author": "HRM Purser",
+        "title_short": "Purser, H. R. M., & Jarrold, C. (2005). Impaired verbal short-term memory in Down syndrome reflects a capacity limitatio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-005-5032-0",
+        "year": "2005",
+        "author": "RM Reese",
+        "title_short": "Reese, R. M., Richman, D. M., Belmont, J. M., & Morse, P. (2005). Functional characteristics of disruptive behavior in d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1362361306062011",
+        "year": "2006",
+        "author": "NJ Rinehart",
+        "title_short": "Rinehart, N. J., Bradshaw, J. L., Moss, S. A., Brereton, A. V., & Tonge, B. J. (2006). Pseudo-random number generation i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-7610.2005.01431.x",
+        "year": "2005",
+        "author": "SJ Rogers",
+        "title_short": "Rogers, S. J., & Ozonoff, S. (2005). Annotation: What do we know about sensory dysfunction in autism? A critical review ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Schneider, P. (2002). Do school facilities affect academic outcomes? National Clearinghouse for Educational Facilities, ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2466/pr0.2002.91.1.69",
+        "year": "2002",
+        "author": "JM Strayhorn Jr",
+        "title_short": "Strayhorn, J. M., Jr., & Bickel, D. (2002). Reduction in children\u2019s symptoms of attention deficit hyperactivity disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0272-4944(95)90016-0",
+        "year": "1995",
+        "author": "CM Tennessen",
+        "title_short": "Tennessen, C. M., & Cimprich, B. (1995). Views to nature: Effects on attention. Journal of Environmental Psychology, 15,",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00787-006-0511-1",
+        "year": "2006",
+        "author": "A Thapar",
+        "title_short": "Thapar, A., van den Bree, M., Fowler, T., Langley, K., & Whittinger, N. (2006). Predictors of antisocial behaviour in ch",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Tufvesson, C. (2007). Concentration difficulties in the school environment\u2014with focus on children with ADHD, Autism and ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/pits.20114",
+        "year": "2005",
+        "author": "SS Zentall",
+        "title_short": "Zentall, S. S. (2005). Theory- and evidence-based strategies for children with attentional problems. Psychology in the S",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-722": {
+    "doi": "10.5014/ajot.2012.004010",
+    "total_refs": 39,
+    "doi_only_refs": 0,
+    "relevant_n": 29,
+    "already_in_es_n": 0,
+    "new_discovery_n": 29,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Adams",
+        "title_short": "Advice for parents of young autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1542/peds.2007-3000",
+        "year": "2008",
+        "author": "Altevogt",
+        "title_short": "Autism and the environment: Challenges and opportunities for research",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.62.5.564",
+        "year": "2008",
+        "author": "Ashburner",
+        "title_short": "Sensory processing and classroom emotional, behavioral, and educational outcomes in children with autism spectrum disord",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-007-0459-0",
+        "year": "2008",
+        "author": "Baker",
+        "title_short": "The relationship between sensory processing patterns and behavioral responsiveness in autistic disorder: A pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/108835760001500303",
+        "year": "2000",
+        "author": "Barnhill",
+        "title_short": "Asperger syndrome: A study of the cognitive profiles of 37 children and adolescents",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "CAST",
+        "title_short": "Universal design for learning guidelines, version 2.0",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Coster",
+        "title_short": "School Function Assessment.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Dunn",
+        "title_short": "The Sensory Profile: User\u2019s manual",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.55.6.629",
+        "year": "2001",
+        "author": "Fertel-Daly",
+        "title_short": "Effects of a weighted vest on attention to task and self-stimulatory behaviors in preschoolers with pervasive developmen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "Grandin",
+        "title_short": "My experiences with visual thinking sensory problems and communication difficulties",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.aud.0000215979.65645.22",
+        "year": "2006",
+        "author": "Gravel",
+        "title_short": "Peripheral audition of children on the autistic spectrum",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "Greenspan",
+        "title_short": "Working with the child who shows attention problems: Understanding the reasons why children have difficulty paying atten",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Greenspan",
+        "title_short": "An integral developmental approach to interventions for young children with severe difficulties in relating and communic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2007",
+        "author": "Jimenez",
+        "title_short": "Gaining access to general education: The promise of universal design for learning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/001401398186928",
+        "year": "1998",
+        "author": "K\u00fcller",
+        "title_short": "The impact of flicker from fluorescent lighting on well-being, performance and physiological arousal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1362361306062021",
+        "year": "2006",
+        "author": "Liss",
+        "title_short": "Sensory and attention abnormalities in autistic spectrum disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2003",
+        "author": "Lorelei",
+        "title_short": "Incandescent light: The healthier alternative?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "McCreery",
+        "title_short": "Illuminating the classroom environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.61.2.135",
+        "year": "2007",
+        "author": "Miller",
+        "title_short": "Concept evolution in sensory integration: A proposed nosology for diagnosis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.61.2.228",
+        "year": "2007",
+        "author": "Miller",
+        "title_short": "A randomized controlled pilot study of the effectiveness of occupational therapy for children with sensory modulation di",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-007-0528-4",
+        "year": "2008",
+        "author": "Minshew",
+        "title_short": "Sensory sensitivities and performance on sensory perceptual tasks in high-functioning individuals with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0074-7750(00)80009-9",
+        "year": "2001",
+        "author": "Mundy",
+        "title_short": "Neural plasticity, joint attention, and a transactional social orienting model of autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1025850431170",
+        "year": "1997",
+        "author": "O\u2019Neill",
+        "title_short": "Sensory\u2013perceptual abnormalities in autism: A case for more research",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1988",
+        "author": "Ornitz",
+        "title_short": "Autism: A disorder of directed attention",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1058-0360(2010/09-0081)",
+        "year": "2011",
+        "author": "Patten",
+        "title_short": "Interventions targeting attention in young children with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.62.3.274",
+        "year": "2008",
+        "author": "Pfeiffer",
+        "title_short": "Effectiveness of Disc \u2018O\u2019 Sit cushions on attention to task in second-grade students with attention difficulties",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-006-0222-y",
+        "year": "2007",
+        "author": "Ruble",
+        "title_short": "Individual and environmental determinants of engagement in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/b:jadd.0000037418.48587.f4",
+        "year": "2004",
+        "author": "Schilling",
+        "title_short": "Alternative seating for young children with autism spectrum disorder: Effects on classroom behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.61.2.190",
+        "year": "2007",
+        "author": "Tomchek",
+        "title_short": "Sensory processing in children with and without autism: A comparative study using the Short Sensory Profile",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-723": {
+    "doi": "10.26687/archnet-ijar.v12i3.1589",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  }
+}

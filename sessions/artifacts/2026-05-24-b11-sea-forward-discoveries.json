@@ -1,0 +1,4261 @@
+{
+  "SEA-01": {
+    "openalex_id": "W4416723462",
+    "openalex_cited_by_count": 3,
+    "citers_fetched": 3,
+    "relevant_n": 1,
+    "already_in_es_n": 0,
+    "new_discovery_n": 1,
+    "discoveries": [
+      {
+        "doi": "10.1177/27546330261443570",
+        "year": 2026,
+        "first_author": "Jones",
+        "title_short": "The Effect of the Classroom Sensory Environment on Engagement for Autistic Pupils: Classroom Noise and Classroom Display",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-02": {
+    "openalex_id": "W3138118944",
+    "openalex_cited_by_count": 92,
+    "citers_fetched": 92,
+    "relevant_n": 57,
+    "already_in_es_n": 3,
+    "new_discovery_n": 54,
+    "discoveries": [
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Considerations of the built environment for autistic individuals: A review of the literature",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.1042641",
+        "year": 2022,
+        "first_author": "Nair",
+        "title_short": "A case study on the effect of light and colors in the built environment on autistic children\u2019s behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111981",
+        "year": 2024,
+        "first_author": "Qutub",
+        "title_short": "Impacts of school environment quality on autistic pupil's behaviours \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2022.2139210",
+        "year": 2022,
+        "first_author": "McAllister",
+        "title_short": "Autism spectrum condition and the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/3597638.3608413",
+        "year": 2023,
+        "first_author": "Dotch",
+        "title_short": "Understanding Noise Sensitivity through Interactions in Two Online Autism Forums",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19095037",
+        "year": 2022,
+        "first_author": "Zwilling",
+        "title_short": "How Well Environmental Design Is and Can Be Suited to People with Autism Spectrum Disorder (ASD): A Natural Language Pro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1051/e3sconf/202343606005",
+        "year": 2023,
+        "first_author": "Attaianese",
+        "title_short": "Inclusive mental well-being through environmental design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/scd.13003",
+        "year": 2024,
+        "first_author": "Tirupathi",
+        "title_short": "Effect of Sensory Adapted Dental Environment (SADE) on physiological and behavioral parameters related to stress and anx",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2024.050345",
+        "year": 2024,
+        "first_author": "Marcham",
+        "title_short": "Relationship Between Directly Observed Sensory Reactivity Differences and Classroom Behaviors of Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15710882.2025.2468445",
+        "year": 2025,
+        "first_author": "Hijab",
+        "title_short": "Let\u2019s join the toy inventors: designing an inclusive collaborative play toy with and for autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2024.102488",
+        "year": 2024,
+        "first_author": "Brouche",
+        "title_short": "Parental descriptions of sensory processing in Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/disabilities4030032",
+        "year": 2024,
+        "first_author": "Cushley",
+        "title_short": "The NaviSight Study: Investigating How Diabetic Retinopathy and Retinitis Pigmentosa Affect Navigating the Built Environ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-10-2024-0453",
+        "year": 2025,
+        "first_author": "Watchorn",
+        "title_short": "\u201cA calm space to reset\u201d: perceptions of sensory rooms in Australian public buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2589290",
+        "year": 2025,
+        "first_author": "Adams",
+        "title_short": "Are sensory aspects of the built school environment associated with learning or well-being outcomes for autistic student",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1145/3706598.3713539",
+        "year": 2025,
+        "first_author": "Piedade",
+        "title_short": "Towards Neuroqueer Spatial Justice: A Critical Literature Review of Public Space Technologies for Neurodivergent Populat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1057/s41599-025-05820-w",
+        "year": 2025,
+        "first_author": "Kavaz",
+        "title_short": "The impacts of light color on autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2023.2280288",
+        "year": 2023,
+        "first_author": "Iyendo",
+        "title_short": "Soundscape and natural landscape as a design construct for improving psycho-physiological health in cities: a semi-syste",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/children12101366",
+        "year": 2025,
+        "first_author": "Coelho",
+        "title_short": "Sensory Processing of Time and Space in Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15152735",
+        "year": 2025,
+        "first_author": "Liang",
+        "title_short": "Responsive Therapeutic Environments: A Dual-Track Review of the Research Literature and Design Case Studies in Art Thera",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_31",
+        "year": 2023,
+        "first_author": "Alfonso",
+        "title_short": "Frameworks for Dynamic Environments and Neurodiversity. Soft, a Deployable, Stress-Relief and, Adaptive Safe Space",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2024.0021",
+        "year": 2024,
+        "first_author": "Ponting",
+        "title_short": "The Architectural Needs and Preferences of Autistic People Versus Gerontological Residential Care Facility Design Practi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.psychsport.2025.102867",
+        "year": 2025,
+        "first_author": "Parsons",
+        "title_short": "A systematic review of behaviour change techniques employed in interventions aimed to change physical activity behaviour",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251353735",
+        "year": 2025,
+        "first_author": "Vetter",
+        "title_short": "The Impact of Pediatric Outpatient Waiting Room Design on the Experiences of Autistic Children: A Pilot Study",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.dhjo.2026.102033",
+        "year": 2026,
+        "first_author": "Celestin",
+        "title_short": "Sensory maps 2.0: New approaches and visualizations in support of sensory processing disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2026.103013",
+        "year": 2026,
+        "first_author": "Mattsson",
+        "title_short": "The nature \u201cpill\u201d for neurodiverse children and youth: a scoping review of plausible mechanisms, explanatory theories an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16081490",
+        "year": 2026,
+        "first_author": "Huaman-Meza",
+        "title_short": "Evidence-Based Sensory Architecture Applied to the Design of Therapeutic Centers for Children and Adolescents with Autis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.reia.2026.202932",
+        "year": 2026,
+        "first_author": "Keramati",
+        "title_short": "Classifying sensory design principles for autism-friendly environments: A PRISMA-based systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/indianjpsychiatry.indianjpsychiatry_792_23",
+        "year": 2024,
+        "first_author": "Gupta",
+        "title_short": "Clinical practice guidelines on the environment and mental well-being",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s41252-022-00295-1",
+        "year": 2022,
+        "first_author": "Blagrave",
+        "title_short": "Physical Activity Preference and Parent Report of Experiences for Children on the Autism Spectrum with Complex Communica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.lana.2024.100736",
+        "year": 2024,
+        "first_author": "Antosh",
+        "title_short": "Use of an adaptive sensory environment in patients with autism spectrum disorder (ASD) in the perioperative environment:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02614367.2024.2446190",
+        "year": 2024,
+        "first_author": "Tiefenbacher",
+        "title_short": "The possibilities of separate leisure: organising opportunities for children with disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnu.2025.151912",
+        "year": 2025,
+        "first_author": "Koluk\u0131sa",
+        "title_short": "Mothers of children with autism spectrum disorder: Their views on their children's hospital experiences, expectations fr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-99-9595-0_3",
+        "year": 2024,
+        "first_author": "Deng",
+        "title_short": "Implementing a Participatory Design Approach to Create a Sensory-Friendly Public Space for Children with Special Needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.6007/ijarbss/v12-i10/15682",
+        "year": 2022,
+        "first_author": "Alsalahat",
+        "title_short": "The Impact of Classroom Design according TEACCH System in Dealing with Behavioral Problems of Severe Autism Spectrum Dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-33863-2_8",
+        "year": 2024,
+        "first_author": "Hamzehloui",
+        "title_short": "Calm Space, an Outdoor Escape Area: A Feasibility Study on Social Participation of Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32920/26866612",
+        "year": 2024,
+        "first_author": "Munshaw",
+        "title_short": "Sensorial Stimuli in the Built Environment: A Review of the Effects of Stimuli for People Living with Autism and Solutio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v10i31.6494",
+        "year": 2025,
+        "first_author": "Abdullah",
+        "title_short": "Exploration of Outdoor Learning Space Towards ASD Children: A Systematic Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3724/sp.j.1042.2025.1367",
+        "year": 2025,
+        "first_author": "YANG",
+        "title_short": "The cognitive mechanisms of cross-situational word learning deficits in children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.30682/diid8525j",
+        "year": 2025,
+        "first_author": "Elia",
+        "title_short": "Autism-Friendly Inclusive Tools Design for the Observation, Perception and Knowledge of Artworks",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.62154/ajesre.2025.020.01013",
+        "year": 2025,
+        "first_author": "Tiwo",
+        "title_short": "Architectural Design for Autism Spectrum Disorders: Assessing Inclusive Strategies within the Nigerian Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.64628/aa.cjn9wmtka",
+        "year": 2024,
+        "first_author": "Aminpour",
+        "title_short": "What is biophilic design? 3 ways \u2018green\u2019 buildings work better for neurodivergent people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251373096",
+        "year": 2025,
+        "first_author": "Zaikina",
+        "title_short": "Systematic Literature Review: Indoor Lighting and Color Effects on Persons With ASD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15213932",
+        "year": 2025,
+        "first_author": "Li",
+        "title_short": "Promoting Health and Well-Being: Environment Design of Rehabilitation Centers for Autistic Children Under the Theory of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613251390609",
+        "year": 2025,
+        "first_author": "Albin",
+        "title_short": "Applying the World Health Organization\u2019s International Classification of Functioning, Disability and Health to speech-la",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-025-07156-5",
+        "year": 2025,
+        "first_author": "Gaines",
+        "title_short": "A Sensory Approach to Design: Inclusive Principles",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14659891.2026.2627192",
+        "year": 2026,
+        "first_author": "Green",
+        "title_short": "Letter to the editor: how to create a safe clinical space for neurodivergent clients seeking substance use treatment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cities.2026.106819",
+        "year": 2026,
+        "first_author": "Deng",
+        "title_short": "Exploring barriers to inclusion for neurodivergent children in public spaces: Case study evidence from urbanising Wenzho",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-032-16451-3_20",
+        "year": 2026,
+        "first_author": "Ajovalasit",
+        "title_short": "Towards Defining an\u00a0Intelligent System to\u00a0Enhance Dentistry Experience for\u00a0Children with\u00a0Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.reia.2026.202856",
+        "year": 2026,
+        "first_author": "Dando",
+        "title_short": "AI-supported residential care placement decision making for individuals with autism spectrum disorder and complex medica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-026-00540-6",
+        "year": 2026,
+        "first_author": "Carroll",
+        "title_short": "Autistic Children\u2019s Wellbeing at School: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijchm-07-2025-1130",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Enhancing hospitality for families with autistic children: toward an actionable service framework",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6020064",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "From Sensory Design to Regulatory Architecture: A Systematic Review of Inclusive Early Childhood Learning Environments f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0347308",
+        "year": 2026,
+        "first_author": "Weaver",
+        "title_short": "Healthcare built environment and behavioural and physiological indicators of stress responses in autism spectrum disorde",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16102032",
+        "year": 2026,
+        "first_author": "Saavedra-Torres",
+        "title_short": "Multisensory Architecture and Cognitive Development in Students with ASD: Correlational Analysis and Empirical Hierarchi",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-03": {
+    "openalex_id": "W4401921452",
+    "openalex_cited_by_count": 1,
+    "citers_fetched": 1,
+    "relevant_n": 1,
+    "already_in_es_n": 0,
+    "new_discovery_n": 1,
+    "discoveries": [
+      {
+        "doi": "10.62154/ajesre.2025.020.01013",
+        "year": 2025,
+        "first_author": "Tiwo",
+        "title_short": "Architectural Design for Autism Spectrum Disorders: Assessing Inclusive Strategies within the Nigerian Built Environment",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-711-724": {
+    "openalex_id": "W1932144093",
+    "openalex_cited_by_count": 146,
+    "citers_fetched": 143,
+    "relevant_n": 96,
+    "already_in_es_n": 6,
+    "new_discovery_n": 90,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/0013916516669389",
+        "year": 2016,
+        "first_author": "Kanakri",
+        "title_short": "An Observational Study of Classroom Acoustical Design and Repetitive Behaviors in Children With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12160",
+        "year": 2016,
+        "first_author": "McAllister",
+        "title_short": "Designed by the pupils, for the pupils: an autism\u2010friendly school",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v12i3.1589",
+        "year": 2018,
+        "first_author": "Mostafa",
+        "title_short": "DESIGNING FOR AUTISM: AN ASPECTSS\u2122 POST-OCCUPANCY EVALUATION OF LEARNING ENVIRONMENTS",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.asej.2020.09.005",
+        "year": 2020,
+        "first_author": "Jebril",
+        "title_short": "The architectural strategies of classrooms for intellectually disabled students in primary schools regarding space and e",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.egyr.2022.01.011",
+        "year": 2022,
+        "first_author": "Caniato",
+        "title_short": "Evaluation of the main sensitivity drivers in relation to indoor comfort for individuals with autism spectrum disorder. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.asej.2022.102039",
+        "year": 2022,
+        "first_author": "Habbak",
+        "title_short": "Multi-sensory interactive interior design for enhancing skills in children with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2024.2341643",
+        "year": 2024,
+        "first_author": "Rajotte",
+        "title_short": "A Neuroinclusive School Model: Focus on the School, Not on the Child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40653-023-00528-y",
+        "year": 2023,
+        "first_author": "Ames",
+        "title_short": "Applying Trauma-Informed Design Principles to Therapeutic Residential Care Facilities to Reduce Retraumatization and Pro",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.112254",
+        "year": 2024,
+        "first_author": "Marzi",
+        "title_short": "Inclusive indoor comfort of neurodivergent individuals diagnosed before adulthood: A comprehensive study on thermal, aco",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/ajbes.v3i14.165",
+        "year": 2018,
+        "first_author": "Ghazali",
+        "title_short": "The Effects of Sensory Design on Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v4i10.1618",
+        "year": 2019,
+        "first_author": "Ghazali",
+        "title_short": "Creating Positive Environment for Autism Using Sensory Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jppi.12377",
+        "year": 2021,
+        "first_author": "Casson",
+        "title_short": "Housing Design and Modifications for Individuals With Intellectual and Developmental Disabilities and Complex Behavioral",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613231225490",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "School participation of autistic youths: The influence of youth, family and school factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-13-6092-3_8",
+        "year": 2019,
+        "first_author": "Saggers",
+        "title_short": "Creating Learning Spaces that Promote Wellbeing, Participation and Engagement: Implications for Students on the Autism S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/03080226231183291",
+        "year": 2023,
+        "first_author": "Yong",
+        "title_short": "Home environment design theories and models related to the occupational performance, participation and well-being of peo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.11648/j.ajp.20170306.15",
+        "year": 2017,
+        "first_author": "Kanakri",
+        "title_short": "Spaces Matters: Classroom Acoustics and Repetitive Behaviors in Preschool Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9604.12466",
+        "year": 2024,
+        "first_author": "Pouya",
+        "title_short": "Sensory garden design proposal for children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/pediatric17010004",
+        "year": 2025,
+        "first_author": "Savarese",
+        "title_short": "Preliminary Results of Sensorimotor Room Training for the Improvement of Sensory and Motor Skills in Children with Autis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture4030029",
+        "year": 2024,
+        "first_author": "Vollmer",
+        "title_short": "Therapeutic Architecture and Temporality: Evidence-Based Design for Long-Stay Facilities for Individuals with Severe Int",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13229-020-00352-3",
+        "year": 2020,
+        "first_author": "Dwyer",
+        "title_short": "Defining clusters of young autistic and typically developing children based on loudness-dependent auditory electrophysio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1088/1742-6596/2069/1/012177",
+        "year": 2021,
+        "first_author": "Zaniboni",
+        "title_short": "Comfortable and safe environments for people with autism: preliminary analysis of risks and definition of priorities in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/urbansci2020042",
+        "year": 2018,
+        "first_author": "Chan",
+        "title_short": "Neurodivergent Themed Neighbourhoods as A Strategy to Enhance the Liveability of Cities: The Blueprint of an Autism Vill",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211012489",
+        "year": 2021,
+        "first_author": "Norouzi",
+        "title_short": "Architecture for Children With Autism Spectrum Disorder and Their Therapists",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31224/osf.io/fkaqj",
+        "year": 2020,
+        "first_author": "Sadia",
+        "title_short": "Exploring the Design Preferences of Neurodivergent Populations for Quiet Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231173393",
+        "year": 2023,
+        "first_author": "Ellis",
+        "title_short": "Systematic Review on Environmental Design for Adaptive and Problem Behaviors of People With Intellectual and Development",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/ebpj.v6i16.2696",
+        "year": 2021,
+        "first_author": "Ghazali",
+        "title_short": "Determinant Factors of Sensory in Creating Autism Learning Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/jdn.10304",
+        "year": 2023,
+        "first_author": "Kahveci",
+        "title_short": "The effect of the home environment on children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613241259932",
+        "year": 2024,
+        "first_author": "Tsou",
+        "title_short": "Social connectedness and loneliness in school for autistic and allistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jfp-07-2017-0027",
+        "year": 2018,
+        "first_author": "Worthington",
+        "title_short": "The multi-component model of harmful sexual behaviour for people with autism and co-morbid intellectual disabilities \u2013 a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijbpa-12-2021-0165",
+        "year": 2022,
+        "first_author": "Far",
+        "title_short": "Relationship between physical environment and neuropsychological perception in children with Asperger\u2019s disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231178312",
+        "year": 2023,
+        "first_author": "Roos",
+        "title_short": "Challenging Behavior in Context: A Case Study on How People, Space, and Activities Interact",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/27546330251370655",
+        "year": 2025,
+        "first_author": "McGoldrick",
+        "title_short": "Autistic SPACE for Inclusive Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.57568/iulres.v3i6.313",
+        "year": 2022,
+        "first_author": "Alterator",
+        "title_short": "The evaluation of inclusive school environments: a scoping review of the literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-025-02358-4",
+        "year": 2025,
+        "first_author": "Marzi",
+        "title_short": "The influence of indoor temperature and noise on autistic individuals",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.52957/2782-1919-2024-4-4-61-74",
+        "year": 2023,
+        "first_author": "Chebereva",
+        "title_short": "Architectural experience of creating groups of resource rooms in schools for children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.52957/2782-1919-2024-5-4-90-101",
+        "year": 2024,
+        "first_author": "Chebereva",
+        "title_short": "Case study on acoustic architectural practices in schools for children with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12577",
+        "year": 2025,
+        "first_author": "Lawrence",
+        "title_short": "Making the spoons last longer: Parents' views on flexischooling with their child with special educational needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.dhjo.2026.102033",
+        "year": 2026,
+        "first_author": "Celestin",
+        "title_short": "Sensory maps 2.0: New approaches and visualizations in support of sensory processing disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.reia.2026.202932",
+        "year": 2026,
+        "first_author": "Keramati",
+        "title_short": "Classifying sensory design principles for autism-friendly environments: A PRISMA-based systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v8i3.372",
+        "year": 2014,
+        "first_author": "Martin",
+        "title_short": "Implementation of Evidence-Based Design (EBD) by Non-Healthcare Design Practitioners",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1440-1630.12601",
+        "year": 2019,
+        "first_author": "Fletcher",
+        "title_short": "Caregivers\u2019 perceptions of barriers and supports for children with sensory processing disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15320/iconarp.2021.158",
+        "year": 2021,
+        "first_author": "\u015eENY\u0130\u011e\u0130T",
+        "title_short": "An Awareness Experience by Empathic Design Method in Architectural Design Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-022-00345-3",
+        "year": 2022,
+        "first_author": "Harris",
+        "title_short": "Developing Inclusive Playgrounds That Welcome All Children\u2014Including Those with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4236/ce.2022.1311230",
+        "year": 2022,
+        "first_author": "Mohamad",
+        "title_short": "Parents\u2019 Perceptions of Using Picture Exchange Communication System (PECS) in English for Autism Spectrum Disorder (ASD)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2025.2462569",
+        "year": 2025,
+        "first_author": "Yi",
+        "title_short": "Perception and experience of multisensory environments among neurodivergent people: systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2017.1390075",
+        "year": 2017,
+        "first_author": "Owen",
+        "title_short": "Transforming<i>Home:</i>parents\u2019 experiences of caring for children on the autism spectrum in Tasmania, Australia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v3i8.1392",
+        "year": 2018,
+        "first_author": "Ghazali",
+        "title_short": "Preliminary Study on Sensory Design for Autism Centre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/3404649.3406877",
+        "year": 2020,
+        "first_author": "Shan",
+        "title_short": "A Theoretical and Practical Review on Multi-Sensory Interactive Space Design for Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.47696/adved.202054",
+        "year": 2020,
+        "first_author": "Abdullah",
+        "title_short": "TEACHERS\u2019 PERSPICACITY ON THE IMPLEMENTATION OF SNOEZELEN ROOM FOR EMOTIONAL THERAPY OF AUTISTIC CHILDREN",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00400599231171715",
+        "year": 2023,
+        "first_author": "Fletcher",
+        "title_short": "Guidelines for Sensory Havens in Autism and Sensory-Friendly Events",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7454/mst.v25i1.3920",
+        "year": 2021,
+        "first_author": "Jalalian",
+        "title_short": "Improving the Intellectual and Social Development of Children with Autism: Design of a Training Center for Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/ebpj.v6i17.2806",
+        "year": 2021,
+        "first_author": "Ghazali",
+        "title_short": "The Knowledge of Awareness on Designing Physical Learning Environment for Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.54097/ijeh.v6i3.4184",
+        "year": 2023,
+        "first_author": "Zeng",
+        "title_short": "A Review of Physical Safety for Individual with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17547075.2024.2375453",
+        "year": 2024,
+        "first_author": "Rispoli",
+        "title_short": "Design Before Design: Learning to be Affected by Neurodiverse Spatial Practices",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-024-00484-9",
+        "year": 2024,
+        "first_author": "VanAbel",
+        "title_short": "Biophilic Approaches to Learning Environments for Children with Autism: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-78155-1_13",
+        "year": 2024,
+        "first_author": "Calle",
+        "title_short": "Interior Design Model for an Inclusive Classroom Focused on Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijcci.2025.100726",
+        "year": 2025,
+        "first_author": "Ragone",
+        "title_short": "Supporting and understanding autistic children\u2019s non-verbal interactions through OSMoSIS, a motion-based sonic system",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22492/ije.8.4.11",
+        "year": 2020,
+        "first_author": "Zhi",
+        "title_short": "Introducing Animal-Assisted Intervention for Special Education in Integrated Farming System",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2016,
+        "first_author": "Owen",
+        "title_short": "Design across the Spectrum: Play Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24404/624f0b6beba5200cfabcc6a3",
+        "year": 2022,
+        "first_author": "Roos",
+        "title_short": "How to Study Interactions between Challenging Behaviour and Space? Exploring the Relevance of Routinely Collected Data",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3280/oa-548.141",
+        "year": 2020,
+        "first_author": "Pecora",
+        "title_short": "Virtual Environment for Autism. Drawing Space for Connection and Inclusion: an Open Debate",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.2.22455/v2",
+        "year": 2020,
+        "first_author": "Dwyer",
+        "title_short": "Defining Clusters of Young Autistic and Typically-Developing Children Based on Loudness-Dependent Auditory Electrophysio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.2.22455/v1",
+        "year": 2020,
+        "first_author": "Dwyer",
+        "title_short": "Defining Clusters of Young Autistic and Typically-Developing Children Based on Loudness-Dependent Auditory Electrophysio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7190/shu-thesis-00382",
+        "year": 2020,
+        "first_author": "Connolly",
+        "title_short": "How students on the autism spectrum experience higher education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5204/thesis.eprints.244529",
+        "year": 2023,
+        "first_author": "Kelly",
+        "title_short": "Let me play, too! Co-designing inclusive sensory play spaces in collaboration with neurodiverse and neurotypical childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/3772318.3790732",
+        "year": 2026,
+        "first_author": "Zhang",
+        "title_short": "Belonging in the Making: Investigating Inclusive Makerspace Design for Youth with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15740/has/ajhs/12.2/636-641",
+        "year": 2017,
+        "first_author": "BAVITA",
+        "title_short": "Furniture arrangement for children with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2019,
+        "first_author": "Hall",
+        "title_short": "A Transcendental Phenomenological Study on the Experiences of Christian School Teachers Educating Students with Autism S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-16-0119-4_21",
+        "year": 2021,
+        "first_author": "Venkataraman",
+        "title_short": "Application of ASPECTSS\u2122 to the Design of Vocational Training Spaces for Individuals with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31579/2767-7370/020",
+        "year": 2021,
+        "first_author": "Wolf",
+        "title_short": "Intergenerational Facility Alternatives: Transitioning Care Options for Aging Parents and Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.20473/jvhs.v6.i1.2022.1-8",
+        "year": 2022,
+        "first_author": "Andeizi",
+        "title_short": "ANALYSIS THE EFFECT OF SENSORY INTERVENTION ON PATIENT\u2019S ANXIETY ACCORDING TO MAGNETIC RESONANCE IMAGING-ANXIETY QUESTIO",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5151/eneac2022-050",
+        "year": 2022,
+        "first_author": "Albuquerque",
+        "title_short": "PERCEP\u00c7\u00c3O SENS\u00d3RIO-ESPACIAL DO AMBIENTE EDUCACIONAL COM FOCO NAS PESSOAS COM TEA \u00c0 LUZ DO DESIGN UNIVERSAL",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5604/01.3001.0016.3350",
+        "year": 2023,
+        "first_author": "Bujniewicz",
+        "title_short": "Analiza rozwiza projektowych zastosowanych w szkole dla uczniwze spektrum autyzmu. Studium przypadku obiektu Giant Steps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21608/idj.2023.204682.1068",
+        "year": 2023,
+        "first_author": "Noaman",
+        "title_short": "The Effect of Orientation by Light and Color on the Visual Memory of Autistic Patients",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.53660/clm-1202-23e24a",
+        "year": 2023,
+        "first_author": "Silva",
+        "title_short": "The sensorially and socially adapted architecture: an analysis of the environment and its impact on the learning of stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_54",
+        "year": 2023,
+        "first_author": "Friedlaender",
+        "title_short": "Multi-Sensory Wayfinding: Lessons from the Margins Towards the Design of Equitable and Healthy Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1063/5.0171102",
+        "year": 2023,
+        "first_author": "Li",
+        "title_short": "Environmental factors and problem behaviors of ASD children: Redefinition, classification and association",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-47281-7_41",
+        "year": 2023,
+        "first_author": "Dutton",
+        "title_short": "\u201cNothing in This House Is by Chance\u201d: Design Ethnography for the Well-Being of Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-33863-2_8",
+        "year": 2024,
+        "first_author": "Hamzehloui",
+        "title_short": "Calm Space, an Outdoor Escape Area: A Feasibility Study on Social Participation of Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-67444-0_32",
+        "year": 2024,
+        "first_author": "Rachakonda",
+        "title_short": "A Framework for Personalised Multisensory Rooms: Smart Home Environments for Children Diagnosed with Autism Spectrum Dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22215/etd/2024-16069",
+        "year": 2024,
+        "first_author": "Egan",
+        "title_short": "The Spectrum of Accessible Architectures: Designing for Neurodivergence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32920/26866612",
+        "year": 2024,
+        "first_author": "Munshaw",
+        "title_short": "Sensorial Stimuli in the Built Environment: A Review of the Effects of Stimuli for People Living with Autism and Solutio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.46932/sfjdv5n12-048",
+        "year": 2024,
+        "first_author": "Laouni",
+        "title_short": "Designing a psycho-pedagogical space with considerations of spatial requirements, such as lighting and its sensory aspec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.55905/cuadv17n1-124",
+        "year": 2025,
+        "first_author": "Britto",
+        "title_short": "Creation and validation of an auditory behavior test to evaluate auditory hypersensitivity in wistar rats exposed to val",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2478/acee-2024-0025",
+        "year": 2024,
+        "first_author": "Abdallah",
+        "title_short": "Assessment of the Correspondence Between User Needs and Classroom Design Criteria for Pre-Schoolers with Autism Spectrum",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-96-4051-5_147",
+        "year": 2025,
+        "first_author": "Muneer",
+        "title_short": "Universal Design for Neurodiverse in New Zealand Workspaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2478/acee-2025-0017",
+        "year": 2025,
+        "first_author": "Mentel",
+        "title_short": "Inclusive Primary Schools in Sweden: Case Studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.30682/diid8525j",
+        "year": 2025,
+        "first_author": "Elia",
+        "title_short": "Autism-Friendly Inclusive Tools Design for the Observation, Perception and Knowledge of Artworks",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31675/1607-1859-2025-27-6-78-89",
+        "year": 2026,
+        "first_author": "Chebereva",
+        "title_short": "Classification of Premises for Buildings of General Education Schools with Inclusive Educational Trajectories for Childr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2026.1810785",
+        "year": 2026,
+        "first_author": "Maggio",
+        "title_short": "Enhancing adaptation and learning in educational environments (SENSE project): a case series study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16102032",
+        "year": 2026,
+        "first_author": "Saavedra-Torres",
+        "title_short": "Multisensory Architecture and Cognitive Development in Students with ASD: Correlational Analysis and Empirical Hierarchi",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-711-725": {
+    "openalex_id": "W4385405028",
+    "openalex_cited_by_count": 13,
+    "citers_fetched": 12,
+    "relevant_n": 12,
+    "already_in_es_n": 0,
+    "new_discovery_n": 12,
+    "discoveries": [
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10639-024-12844-3",
+        "year": 2024,
+        "first_author": "El-Sattar",
+        "title_short": "Future metaverse-based education to promote daily living activities in learners with autism using immersive technologies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-10-2024-0453",
+        "year": 2025,
+        "first_author": "Watchorn",
+        "title_short": "\u201cA calm space to reset\u201d: perceptions of sensory rooms in Australian public buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22215/etd/2024-16069",
+        "year": 2024,
+        "first_author": "Egan",
+        "title_short": "The Spectrum of Accessible Architectures: Designing for Neurodivergence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.46932/sfjdv5n12-048",
+        "year": 2024,
+        "first_author": "Laouni",
+        "title_short": "Designing a psycho-pedagogical space with considerations of spatial requirements, such as lighting and its sensory aspec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31660/2782-232x-2025-2-8-25",
+        "year": 2025,
+        "first_author": "Strelnikova",
+        "title_short": "Effectiveness of architectural and planning solutions in inclusive educational environment for children with autism spec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-025-21586-2",
+        "year": 2025,
+        "first_author": "Paengkumhag",
+        "title_short": "Enhancing ADL skill acquisition in children with ASD through a personalized, fuzzy logic-based tablet game: a pilot stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08856257.2025.2577923",
+        "year": 2025,
+        "first_author": "Mealings",
+        "title_short": "What we do and do not know about how the classroom environment affects listening, learning, and wellbeing in autistic ch",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.envpol.2026.127992",
+        "year": 2026,
+        "first_author": "Qutub",
+        "title_short": "Impact of indoor environment quality on autistic behaviours in autism schools of Saudi Arabia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16102032",
+        "year": 2026,
+        "first_author": "Saavedra-Torres",
+        "title_short": "Multisensory Architecture and Cognitive Development in Students with ASD: Correlational Analysis and Empirical Hierarchi",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-713": {
+    "openalex_id": "W2914357237",
+    "openalex_cited_by_count": 33,
+    "citers_fetched": 33,
+    "relevant_n": 24,
+    "already_in_es_n": 1,
+    "new_discovery_n": 23,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3389/fpsyg.2023.1201030",
+        "year": 2023,
+        "first_author": "Szabo",
+        "title_short": "Touch, feel, heal. The use of hospital green spaces and landscape as sensory-therapeutic gardens: a case study in a univ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ufug.2019.126511",
+        "year": 2019,
+        "first_author": "Scartazza",
+        "title_short": "Caring local biodiversity in a healing garden: Therapeutic benefits in young subjects with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph20032549",
+        "year": 2023,
+        "first_author": "Baird",
+        "title_short": "The Association between Physical Environment and Externalising Problems in Typically Developing and Neurodiverse Childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0193945920929950",
+        "year": 2020,
+        "first_author": "Carlson",
+        "title_short": "Nature-based Group Therapy Reflections: A Grounded Theory Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s40561-024-00309-6",
+        "year": 2024,
+        "first_author": "Honorato",
+        "title_short": "Gameful strategies in the education of autistic children: a systematic literature review, scientometric analysis, and fu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9604.12466",
+        "year": 2024,
+        "first_author": "Pouya",
+        "title_short": "Sensory garden design proposal for children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su16031077",
+        "year": 2024,
+        "first_author": "Dennis",
+        "title_short": "Nature-Based Interventions for Adults with Developmental Disabilities: A Scoping Review Centering Autistic Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.asej.2024.103055",
+        "year": 2024,
+        "first_author": "Doaee",
+        "title_short": "Architectural Strategies for Fostering Creativity and Enhancing Education for Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2021-0196",
+        "year": 2022,
+        "first_author": "Patel",
+        "title_short": "Development of special needs classroom prototypes to respond to the sensory needs of students with exceptionalities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00163-022-00387-y",
+        "year": 2022,
+        "first_author": "Chulvi",
+        "title_short": "How the type of methodology used, when working in a natural environment, affects the designer's creativity",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9604.12486",
+        "year": 2024,
+        "first_author": "Zelcek",
+        "title_short": "Investigation of the effect of the sandplay therapy in the open area to improve the social behaviour of children with au",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijbpa-12-2021-0165",
+        "year": 2022,
+        "first_author": "Far",
+        "title_short": "Relationship between physical environment and neuropsychological perception in children with Asperger\u2019s disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2024.0088",
+        "year": 2025,
+        "first_author": "McCabe",
+        "title_short": "Insights into Sensory and Relaxation Preferences to Inform the Design of Calming Spaces and Sensory Rooms for Autistic A",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijedro.2025.100494",
+        "year": 2025,
+        "first_author": "Kelly",
+        "title_short": "Let\u2019s Play: Co-designing inclusive school playgrounds with neurodivergent children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.36456/special.vol4.no1.a7288",
+        "year": 2023,
+        "first_author": "Salsabila",
+        "title_short": "Analysis of Nature-Based-Learning for Children with Autism Spectrum Disorder in Elementary School Age: A Systematic Revi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18355/xl.2020.13.02.21",
+        "year": 2020,
+        "first_author": "Prasetyoningsih",
+        "title_short": "Exploring illocutionary acts employed by autistic children: The case of Indonesian children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21608/jur.2022.125873.1090",
+        "year": 2022,
+        "first_author": "El-Kholei",
+        "title_short": "Bring Nature Back to the City; Keep Invasive Species Out",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph192416399",
+        "year": 2022,
+        "first_author": "Bystr\u00f6m",
+        "title_short": "COMSI\u00ae\u2014A Form of Treatment That Offers an Opportunity to Play, Communicate and Become Socially Engaged through the Lens ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-024-00484-9",
+        "year": 2024,
+        "first_author": "VanAbel",
+        "title_short": "Biophilic Approaches to Learning Environments for Children with Autism: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22492/ije.8.4.11",
+        "year": 2020,
+        "first_author": "Zhi",
+        "title_short": "Introducing Animal-Assisted Intervention for Special Education in Integrated Farming System",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5204/thesis.eprints.244529",
+        "year": 2023,
+        "first_author": "Kelly",
+        "title_short": "Let me play, too! Co-designing inclusive sensory play spaces in collaboration with neurodiverse and neurotypical childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.61405/31d72w69",
+        "year": 2024,
+        "first_author": "Amalan",
+        "title_short": "Application of Autism-Friendly Concept in the Interior Design of Autism Self-Development and Therapy Center in Surakarta",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v10i31.6494",
+        "year": 2025,
+        "first_author": "Abdullah",
+        "title_short": "Exploration of Outdoor Learning Space Towards ASD Children: A Systematic Literature Review",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-714": {
+    "openalex_id": "W3119440633",
+    "openalex_cited_by_count": 44,
+    "citers_fetched": 44,
+    "relevant_n": 28,
+    "already_in_es_n": 5,
+    "new_discovery_n": 23,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.buildenv.2016.12.008",
+        "year": 2016,
+        "first_author": "Heylighen",
+        "title_short": "Ten questions concerning inclusive design of the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Considerations of the built environment for autistic individuals: A review of the literature",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.112254",
+        "year": 2024,
+        "first_author": "Marzi",
+        "title_short": "Inclusive indoor comfort of neurodivergent individuals diagnosed before adulthood: A comprehensive study on thermal, aco",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111881",
+        "year": 2024,
+        "first_author": "Bagheri",
+        "title_short": "Visual and acoustic discomfort: A comparative study of impacts on individuals with and without ADHD using electroencepha",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2012.01525.x",
+        "year": 2012,
+        "first_author": "McAllister",
+        "title_short": "Design considerations for the autism spectrum disorder\u2010friendly Key Stage 1 classroom",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3390/app11093942",
+        "year": 2021,
+        "first_author": "Bettarello",
+        "title_short": "Indoor Acoustic Requirements for Autism-Friendly Spaces",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/1467-8578.12006",
+        "year": 2012,
+        "first_author": "McAllister",
+        "title_short": "A design model: the <scp>A</scp> utism <scp>S</scp> pectrum <scp>D</scp> isorder <scp>C</scp> lassroom <scp>D</scp> esig",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18848/2154-8587/cgp/v04i02/37413",
+        "year": 2014,
+        "first_author": "Mostafa",
+        "title_short": "Architecture for Autism: Application of the Autism ASPECTSS\u2122 Design Index to Home Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/03080226231183291",
+        "year": 2023,
+        "first_author": "Yong",
+        "title_short": "Home environment design theories and models related to the occupational performance, participation and well-being of peo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/aur.2653",
+        "year": 2021,
+        "first_author": "Scheeren",
+        "title_short": "The importance of home: Satisfaction with accommodation, neighborhood, and life in adults with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/urbansci2020042",
+        "year": 2018,
+        "first_author": "Chan",
+        "title_short": "Neurodivergent Themed Neighbourhoods as A Strategy to Enhance the Liveability of Cities: The Blueprint of an Autism Vill",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su15042899",
+        "year": 2023,
+        "first_author": "Alizadeh",
+        "title_short": "Home Indoor Environmental Quality and Attention Deficit Hyperactivity Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-28833-4_8",
+        "year": 2019,
+        "first_author": "Atsmon",
+        "title_short": "Adults on the Autism Spectrum and Their Families: Residential Issues",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231173393",
+        "year": 2023,
+        "first_author": "Ellis",
+        "title_short": "Systematic Review on Environmental Design for Adaptive and Problem Behaviors of People With Intellectual and Development",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08882746.2023.2295183",
+        "year": 2024,
+        "first_author": "Nguyen",
+        "title_short": "Home tailoring: independent living on the autism spectrum",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2024.0021",
+        "year": 2024,
+        "first_author": "Ponting",
+        "title_short": "The Architectural Needs and Preferences of Autistic People Versus Gerontological Residential Care Facility Design Practi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/joid.12227",
+        "year": 2022,
+        "first_author": "Tackx",
+        "title_short": "Student Life on the Autism Spectrum: Exploring the Role of Student Housing in Experiences of Three Students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2017.1390075",
+        "year": 2017,
+        "first_author": "Owen",
+        "title_short": "Transforming<i>Home:</i>parents\u2019 experiences of caring for children on the autism spectrum in Tasmania, Australia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_28",
+        "year": 2023,
+        "first_author": "Nguyen",
+        "title_short": "Housing Design Strategies versus Users\u2019 Experiences: Lessons Learned from a Group Home for Autistic Residents",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2013,
+        "first_author": "Owen",
+        "title_short": "Picturing home: self-directed photography as a lens to explore the home environment in the care of children with Autism ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ohi-12-2021-0254",
+        "year": 2022,
+        "first_author": "Nguyen",
+        "title_short": "Residential design for adults on the autism spectrum: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-33863-2_8",
+        "year": 2024,
+        "first_author": "Hamzehloui",
+        "title_short": "Calm Space, an Outdoor Escape Area: A Feasibility Study on Social Participation of Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2139/ssrn.4790417",
+        "year": 2024,
+        "first_author": "Bagheri",
+        "title_short": "Neuro-Inclusive Smart Building Design: Unveiling the Subjectivity of Comfort Experiences Through Biosignals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-032-10366-6_4",
+        "year": 2026,
+        "first_author": "Catalano",
+        "title_short": "Sensible Design: Functional Design, Comfort, and Well-being",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-715": {
+    "openalex_id": "W2518765358",
+    "openalex_cited_by_count": 52,
+    "citers_fetched": 52,
+    "relevant_n": 42,
+    "already_in_es_n": 2,
+    "new_discovery_n": 40,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.rasd.2020.101515",
+        "year": 2020,
+        "first_author": "Jones",
+        "title_short": "Distraction, distress and diversity: Exploring the impact of sensory processing differences on learning and school life ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1539449217743456",
+        "year": 2017,
+        "first_author": "Kashefimehr",
+        "title_short": "The Effect of Sensory Integration Therapy on Occupational Performance in Children With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s41252-023-00348-z",
+        "year": 2023,
+        "first_author": "Cherewick",
+        "title_short": "Neurodiversity in Practice: a Conceptual Model of Autistic Strengths and Potential Mechanisms of Change to Support Posit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2021.695825",
+        "year": 2021,
+        "first_author": "Mallory",
+        "title_short": "Implications of Sensory Processing and Attentional Differences Associated With Autism in Academic Settings: An Integrati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnint.2019.00040",
+        "year": 2019,
+        "first_author": "Lane",
+        "title_short": "Sensory Over-Responsivity as an Added Dimension in ADHD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-017-3273-3",
+        "year": 2017,
+        "first_author": "Piller",
+        "title_short": "Reliability of the Participation and Sensory Environment Questionnaire: Teacher Version",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13575279.2022.2149471",
+        "year": 2023,
+        "first_author": "Donaghy",
+        "title_short": "Co-Occurring Physical Health Challenges in Neurodivergent Children and Young People: A Topical Review and Recommendation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-021-00248-9",
+        "year": 2021,
+        "first_author": "Dargue",
+        "title_short": "Can Characteristics of the Physical Environment Impact Engagement in Learning Activities in Children with Autism? A Syst",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2018.1496872",
+        "year": 2018,
+        "first_author": "Benson",
+        "title_short": "Sensory-based intervention in the schools: a survey of occupational therapy practitioners",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2023.050135",
+        "year": 2023,
+        "first_author": "Whiting",
+        "title_short": "A Sensory Integration Intervention in the School Setting to Support Performance and Participation: A Multiple-Baseline S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.edurev.2023.100555",
+        "year": 2023,
+        "first_author": "Tamblyn",
+        "title_short": "How do physical or sensory early childhood education and care environment factors affect children's social and emotional",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/18369391231221560",
+        "year": 2023,
+        "first_author": "Tamblyn",
+        "title_short": "Educators\u2019 perspectives on the role the early childhood education and care environment plays in supporting children\u2019s so",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17408989.2025.2553285",
+        "year": 2025,
+        "first_author": "Waddington",
+        "title_short": "Autistic adolescents and their experiences of physical education at school",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph17051799",
+        "year": 2020,
+        "first_author": "Ng",
+        "title_short": "The Relationship between Affiliate Stigma in Parents of Children with Autism Spectrum Disorder and Their Children\u2019s Acti",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2020.039297",
+        "year": 2020,
+        "first_author": "Lin",
+        "title_short": "Activity Participation and Sensory Processing Patterns of Preschool-Age Children With Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2023.77s3004",
+        "year": 2023,
+        "first_author": "?",
+        "title_short": "Sensory Integration Approaches for Children and Youth in Occupational Therapy Practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2021.1959486",
+        "year": 2021,
+        "first_author": "Whiting",
+        "title_short": "A Multi-Tiered and Multi-Dimensional Approach to Intervention in Schools: Recommendations for Children with Sensory Inte",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2024.102362",
+        "year": 2024,
+        "first_author": "Williams",
+        "title_short": "Use of sensory adaptive environments with autistic children: A scoping review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1108/ijot-01-2019-0001",
+        "year": 2019,
+        "first_author": "Ruttledge",
+        "title_short": "An evaluation of sensory processing training on the competence, confidence and practice of teachers working with childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2024.050345",
+        "year": 2024,
+        "first_author": "Marcham",
+        "title_short": "Relationship Between Directly Observed Sensory Reactivity Differences and Classroom Behaviors of Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-021-05268-2",
+        "year": 2021,
+        "first_author": "Bejn\u00f6",
+        "title_short": "From Someone Who May Cause Trouble to Someone You Can Play With: Stakeholders' Perspectives on Preschool Program Quality",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijdrr.2024.104850",
+        "year": 2024,
+        "first_author": "Aslan",
+        "title_short": "Exposure to the earthquake with a child with autism: A qualitative study on parenting experiences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/27546330251370655",
+        "year": 2025,
+        "first_author": "McGoldrick",
+        "title_short": "Autistic SPACE for Inclusive Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15152735",
+        "year": 2025,
+        "first_author": "Liang",
+        "title_short": "Responsive Therapeutic Environments: A Dual-Track Review of the Research Literature and Design Case Studies in Art Thera",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20473869.2024.2443699",
+        "year": 2025,
+        "first_author": "Ranadive",
+        "title_short": "Effect of sensory enriched environment as an intervention on behaviors in children with autism spectrum disorder: a syst",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1440-1630.70027",
+        "year": 2025,
+        "first_author": "Hockey",
+        "title_short": "Trauma\u2010informed or sensory\u2010based practices in preschool settings: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2019.03.008",
+        "year": 2019,
+        "first_author": "Pfeiffer",
+        "title_short": "Reliability of the participation and sensory environment questionnaire: Community scales",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10983007231200529",
+        "year": 2023,
+        "first_author": "Zimmerman",
+        "title_short": "The Impact of Fidget Toys on Story Detail Acquisition and Visual Attention for Elementary Students With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2020.036509",
+        "year": 2020,
+        "first_author": "Bevans",
+        "title_short": "Psychometric Evaluation of the Participation and Sensory Environment Questionnaire\u2013Home Scale (PSEQ\u2013H)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2023.2203419",
+        "year": 2023,
+        "first_author": "Chr\u00e9tien-Vincent",
+        "title_short": "Outcomes of an Intervention to Build Early Childhood Educators\u2019 Capacity to Promote the Participation of Autistic Childr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2024.2351477",
+        "year": 2024,
+        "first_author": "Ayuso",
+        "title_short": "TEAttention!: A pilot study of occupational therapy and virtual reality for improving school participation in children w",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/jcm14103283",
+        "year": 2025,
+        "first_author": "Alotaibi",
+        "title_short": "Diagnostic and Psychometric Properties of the Arabic Sensory Processing Measure\u2014Second Edition, Adult Version",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2021,
+        "first_author": "Tynan",
+        "title_short": "An exploration of teachers\u2019 perceptions of how the classroom environment can support pupils with Autism Spectrum Disorde",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1534508418758363",
+        "year": 2018,
+        "first_author": "Piller",
+        "title_short": "Construct Validity of the Participation and Sensory Environment Questionnaire\u2013Teacher Version",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/15394492231216663",
+        "year": 2024,
+        "first_author": "Lo",
+        "title_short": "Relationship Between Change in Participation and Later Mental Health Problems in Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32920/26866612",
+        "year": 2024,
+        "first_author": "Munshaw",
+        "title_short": "Sensorial Stimuli in the Built Environment: A Review of the Effects of Stimuli for People Living with Autism and Solutio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/15394492241280039",
+        "year": 2024,
+        "first_author": "Piller",
+        "title_short": "Perceived Impact of Sensory Integration Therapy on the Family",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1471-3802.70005",
+        "year": 2025,
+        "first_author": "Oskarsson",
+        "title_short": "Special Educational Needs Coordinators' knowledge and understanding of perception in preschool children with autism: A f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2025.2531326",
+        "year": 2025,
+        "first_author": "Niblock",
+        "title_short": "Impact of professional development on knowledge of sensory integration and processing for educators: A mixed methods stu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-025-07186-z",
+        "year": 2025,
+        "first_author": "Urban",
+        "title_short": "What Do We Know About the Home Literacy and Numeracy Environments of Autistic Preschoolers? A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2026.1810785",
+        "year": 2026,
+        "first_author": "Maggio",
+        "title_short": "Enhancing adaptation and learning in educational environments (SENSE project): a case series study",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-716": {
+    "openalex_id": "W2164672583",
+    "openalex_cited_by_count": 59,
+    "citers_fetched": 59,
+    "relevant_n": 41,
+    "already_in_es_n": 2,
+    "new_discovery_n": 39,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.healthplace.2018.11.005",
+        "year": 2018,
+        "first_author": "Li",
+        "title_short": "Exposure to nature for children with autism spectrum disorder: Benefits, caveats, and barriers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2022.0024",
+        "year": 2022,
+        "first_author": "MacLennan",
+        "title_short": "\u201cIt Is a Big Spider Web of Things\u201d: Sensory Experiences of Autistic Adults in Public Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1471-3802.12092",
+        "year": 2014,
+        "first_author": "Martin",
+        "title_short": "Exploring the impact of the design of the physical classroom environment on young children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916516669389",
+        "year": 2016,
+        "first_author": "Kanakri",
+        "title_short": "An Observational Study of Classroom Acoustical Design and Repetitive Behaviors in Children With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/23969415221123429",
+        "year": 2022,
+        "first_author": "Petersson\u2010Bloom",
+        "title_short": "Strategies in supporting inclusive education for autistic students\u2014A systematic review of qualitative research results",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111981",
+        "year": 2024,
+        "first_author": "Qutub",
+        "title_short": "Impacts of school environment quality on autistic pupil's behaviours \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12006",
+        "year": 2012,
+        "first_author": "McAllister",
+        "title_short": "A design model: the <scp>A</scp> utism <scp>S</scp> pectrum <scp>D</scp> isorder <scp>C</scp> lassroom <scp>D</scp> esig",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/feduc.2021.668991",
+        "year": 2021,
+        "first_author": "Friedman",
+        "title_short": "\u201cI just want to stay out there all day\u201d: A Case Study of Two Special Educators and Five Autistic Children Learning Outsi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18848/2154-8587/cgp/v04i02/37413",
+        "year": 2014,
+        "first_author": "Mostafa",
+        "title_short": "Architecture for Autism: Application of the Autism ASPECTSS\u2122 Design Index to Home Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2022.2139210",
+        "year": 2022,
+        "first_author": "McAllister",
+        "title_short": "Autism spectrum condition and the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613231225490",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "School participation of autistic youths: The influence of youth, family and school factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-13-6092-3_8",
+        "year": 2019,
+        "first_author": "Saggers",
+        "title_short": "Creating Learning Spaces that Promote Wellbeing, Participation and Engagement: Implications for Students on the Autism S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.11648/j.ajp.20170306.15",
+        "year": 2017,
+        "first_author": "Kanakri",
+        "title_short": "Spaces Matters: Classroom Acoustics and Repetitive Behaviors in Preschool Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10984-018-9263-3",
+        "year": 2018,
+        "first_author": "Pulay",
+        "title_short": "A case study comparing the influence of LED and fluorescent lighting on early childhood student engagement in a classroo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31224/osf.io/fkaqj",
+        "year": 2020,
+        "first_author": "Sadia",
+        "title_short": "Exploring the Design Preferences of Neurodivergent Populations for Quiet Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.emospa.2022.100906",
+        "year": 2022,
+        "first_author": "Willis",
+        "title_short": "Investigating the potential of EDA data from biometric wearables to inform inclusive design of the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su15042899",
+        "year": 2023,
+        "first_author": "Alizadeh",
+        "title_short": "Home Indoor Environmental Quality and Attention Deficit Hyperactivity Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638288.2020.1743776",
+        "year": 2020,
+        "first_author": "Kolne",
+        "title_short": "Assessing the environmental quality of an adapted, play-based LEGO <sup>\u00ae</sup> robotics program to achieve optimal outc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231173393",
+        "year": 2023,
+        "first_author": "Ellis",
+        "title_short": "Systematic Review on Environmental Design for Adaptive and Problem Behaviors of People With Intellectual and Development",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.57568/iulres.v3i6.313",
+        "year": 2022,
+        "first_author": "Alterator",
+        "title_short": "The evaluation of inclusive school environments: a scoping review of the literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.foar.2025.10.007",
+        "year": 2025,
+        "first_author": "Aminpour",
+        "title_short": "Neurodiverse-friendly preschools: Aligning inclusive pedagogy and spatial design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9604.12103",
+        "year": 2015,
+        "first_author": "Deochand",
+        "title_short": "Design Considerations for an Intensive Autism Treatment Centre",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.31234/osf.io/9qadm",
+        "year": 2022,
+        "first_author": "MacLennan",
+        "title_short": "\u201cIt is a big spider web of things\u201d: Sensory experiences of autistic adults in public spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/ebpj.v6i17.2806",
+        "year": 2021,
+        "first_author": "Ghazali",
+        "title_short": "The Knowledge of Awareness on Designing Physical Learning Environment for Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083.v1",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/036063251504500116",
+        "year": 2015,
+        "first_author": "Hegde",
+        "title_short": "Sensory Sensitivity and the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2021,
+        "first_author": "Tynan",
+        "title_short": "An exploration of teachers\u2019 perceptions of how the classroom environment can support pupils with Autism Spectrum Disorde",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2022-0153",
+        "year": 2023,
+        "first_author": "Sheykhmaleki",
+        "title_short": "Comparing desired spatial ratios among autistic and non-autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.33015/dominican.edu/2023.ot.01",
+        "year": 2022,
+        "first_author": "Baustista",
+        "title_short": "Promoting Cultural Arts Access through Sensory-Friendly Theatre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5204/thesis.eprints.244529",
+        "year": 2023,
+        "first_author": "Kelly",
+        "title_short": "Let me play, too! Co-designing inclusive sensory play spaces in collaboration with neurodiverse and neurotypical childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.34074/thes.5736",
+        "year": 2022,
+        "first_author": "Keegan",
+        "title_short": "Developing best practice guidelines in designing physical learning environments for students with complex needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24834/isbn.9789178773176",
+        "year": 2022,
+        "first_author": "Petersson\u2010Bloom",
+        "title_short": "Equity in education for autistic students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijer.2024.102498",
+        "year": 2024,
+        "first_author": "Pasenidou",
+        "title_short": "A co-designed by students \u201carchitecture of schooling\u201d framework: Informing a novel architecture lens within the field of",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2298/spat220923013a",
+        "year": 2024,
+        "first_author": "Alizadeh",
+        "title_short": "Development and validation of the Housing Environmental Quality Assessment Tool (HEQAT) for children with ADHD using the",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.64628/aa.cjn9wmtka",
+        "year": 2024,
+        "first_author": "Aminpour",
+        "title_short": "What is biophilic design? 3 ways \u2018green\u2019 buildings work better for neurodivergent people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251373096",
+        "year": 2025,
+        "first_author": "Zaikina",
+        "title_short": "Systematic Literature Review: Indoor Lighting and Color Effects on Persons With ASD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-717": {
+    "openalex_id": "W2574280766",
+    "openalex_cited_by_count": 64,
+    "citers_fetched": 64,
+    "relevant_n": 48,
+    "already_in_es_n": 4,
+    "new_discovery_n": 44,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.chb.2017.05.030",
+        "year": 2017,
+        "first_author": "Constantin",
+        "title_short": "Designing computer-based rewards with and for children with Autism Spectrum Disorder and/or Intellectual Disability",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Considerations of the built environment for autistic individuals: A review of the literature",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/23969415221123429",
+        "year": 2022,
+        "first_author": "Petersson\u2010Bloom",
+        "title_short": "Strategies in supporting inclusive education for autistic students\u2014A systematic review of qualitative research results",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2021.1916105",
+        "year": 2021,
+        "first_author": "Page",
+        "title_short": "Including students with disabilities in innovative learning environments: a model for inclusive practices",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2021.695825",
+        "year": 2021,
+        "first_author": "Mallory",
+        "title_short": "Implications of Sensory Processing and Attentional Differences Associated With Autism in Academic Settings: An Integrati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2024.2341643",
+        "year": 2024,
+        "first_author": "Rajotte",
+        "title_short": "A Neuroinclusive School Model: Focus on the School, Not on the Child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111981",
+        "year": 2024,
+        "first_author": "Qutub",
+        "title_short": "Impacts of school environment quality on autistic pupil's behaviours \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2019.01.008",
+        "year": 2019,
+        "first_author": "Howard",
+        "title_short": "The school experiences of bilingual children on the autism spectrum: An interpretative phenomenological analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2018.05.001",
+        "year": 2018,
+        "first_author": "Nagib",
+        "title_short": "Creating \u201ctherapeutic landscapes\u201d at home: The experiences of families of children with autism",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s11920-021-01266-4",
+        "year": 2021,
+        "first_author": "Hugh",
+        "title_short": "School-Implemented Interventions for Preschool to High School Students with Autism: An Update on Recent Research",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s44217-024-00242-3",
+        "year": 2024,
+        "first_author": "Senoo",
+        "title_short": "Barriers to inclusive education of children with autism: Ghanaian teachers\u2019 perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2490596",
+        "year": 2025,
+        "first_author": "Ward",
+        "title_short": "The lived experiences of primary and secondary education for autistic university students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/jehp.jehp_58_25",
+        "year": 2025,
+        "first_author": "Fitri",
+        "title_short": "The autistic child friendly school environment model for behavioral development in children with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2589290",
+        "year": 2025,
+        "first_author": "Adams",
+        "title_short": "Are sensory aspects of the built school environment associated with learning or well-being outcomes for autistic student",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/01942638.2021.1968096",
+        "year": 2021,
+        "first_author": "Golos",
+        "title_short": "The Structured Preschool Participation Observation (SPO) for Children with ASD: Adaptation, Initial Psychometric Propert",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31224/osf.io/fkaqj",
+        "year": 2020,
+        "first_author": "Sadia",
+        "title_short": "Exploring the Design Preferences of Neurodivergent Populations for Quiet Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/27546330251370655",
+        "year": 2025,
+        "first_author": "McGoldrick",
+        "title_short": "Autistic SPACE for Inclusive Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.foar.2025.10.007",
+        "year": 2025,
+        "first_author": "Aminpour",
+        "title_short": "Neurodiverse-friendly preschools: Aligning inclusive pedagogy and spatial design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12577",
+        "year": 2025,
+        "first_author": "Lawrence",
+        "title_short": "Making the spoons last longer: Parents' views on flexischooling with their child with special educational needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2560002",
+        "year": 2025,
+        "first_author": "Ward",
+        "title_short": "Supporting mainstream school staff in England to meet the needs and address educational inequalities in autistic girls",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.56383/kwaw2002",
+        "year": 2022,
+        "first_author": "Kraftl",
+        "title_short": "Learning spaces: built, natural and digital considerations for learning and learners",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-022-00345-3",
+        "year": 2022,
+        "first_author": "Harris",
+        "title_short": "Developing Inclusive Playgrounds That Welcome All Children\u2014Including Those with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14733285.2023.2245778",
+        "year": 2023,
+        "first_author": "Tiefenbacher",
+        "title_short": "Designing and making a separate leisure space: exploring the geographies of children with disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7454/mst.v25i1.3920",
+        "year": 2021,
+        "first_author": "Jalalian",
+        "title_short": "Improving the Intellectual and Social Development of Children with Autism: Design of a Training Center for Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083.v1",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/pits.23512",
+        "year": 2025,
+        "first_author": "Nesbit",
+        "title_short": "Parents Perceptions of Play in School: Findings From the British Children's Play Survey",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31583/esss.20190506",
+        "year": 2019,
+        "first_author": "Allcock",
+        "title_short": "Iriss ESSS Outline: Healing environments for children who have experienced trauma",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-4569474/v1",
+        "year": 2024,
+        "first_author": "Senoo",
+        "title_short": "Barriers to inclusive education of children with autism: Ghanaian teachers\u2019 perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7302/1729",
+        "year": 2021,
+        "first_author": "Kudryashov",
+        "title_short": "Participatory Design of Augmentative and Alternative Communication (AAC) Technology with Autistic Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5204/thesis.eprints.244529",
+        "year": 2023,
+        "first_author": "Kelly",
+        "title_short": "Let me play, too! Co-designing inclusive sensory play spaces in collaboration with neurodiverse and neurotypical childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2019,
+        "first_author": "Bridal",
+        "title_short": "Designing with Diversity in Mind: Co-Creating Inclusively Built Learning Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.17863/cam.52528",
+        "year": 2020,
+        "first_author": "Howard",
+        "title_short": "When bilingualism meets autism: The perspectives and experiences of children, parents and educational practitioners",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/3537797.3537851",
+        "year": 2022,
+        "first_author": "Storni",
+        "title_short": "PDC Places: Landscapes of Participatory design in Ireland",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24834/isbn.9789178773176",
+        "year": 2022,
+        "first_author": "Petersson\u2010Bloom",
+        "title_short": "Equity in education for autistic students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5604/01.3001.0016.3350",
+        "year": 2023,
+        "first_author": "Bujniewicz",
+        "title_short": "Analiza rozwiza projektowych zastosowanych w szkole dla uczniwze spektrum autyzmu. Studium przypadku obiektu Giant Steps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1063/5.0171102",
+        "year": 2023,
+        "first_author": "Li",
+        "title_short": "Environmental factors and problem behaviors of ASD children: Redefinition, classification and association",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7454/epidkes.v8i1.1098",
+        "year": 2024,
+        "first_author": "?",
+        "title_short": "A Comprehensive Scoping Review of Snoezelen Room in Occupatioanal Therapy Best Practices",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-64499-3_22",
+        "year": 2024,
+        "first_author": "Reed",
+        "title_short": "Mainstream Education for Children with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2478/acee-2025-0017",
+        "year": 2025,
+        "first_author": "Mentel",
+        "title_short": "Inclusive Primary Schools in Sweden: Case Studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4018/979-8-3693-8044-4.ch010",
+        "year": 2025,
+        "first_author": "Moore",
+        "title_short": "Trauma-Informed Approaches in Higher Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.64628/aa.cjn9wmtka",
+        "year": 2024,
+        "first_author": "Aminpour",
+        "title_short": "What is biophilic design? 3 ways \u2018green\u2019 buildings work better for neurodivergent people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10212-025-00987-x",
+        "year": 2025,
+        "first_author": "H\u00f6hle",
+        "title_short": "Facilitators and barriers for inclusion of students with autism in mainstream secondary education: a mixed-method system",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613261426099",
+        "year": 2026,
+        "first_author": "Cook",
+        "title_short": "The impact of specialist resource centres on autistic pupils\u2019 experience of mainstream school",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-719": {
+    "openalex_id": "W2589787503",
+    "openalex_cited_by_count": 80,
+    "citers_fetched": 79,
+    "relevant_n": 57,
+    "already_in_es_n": 6,
+    "new_discovery_n": 51,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Considerations of the built environment for autistic individuals: A review of the literature",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3389/fpsyt.2021.695825",
+        "year": 2021,
+        "first_author": "Mallory",
+        "title_short": "Implications of Sensory Processing and Attentional Differences Associated With Autism in Academic Settings: An Integrati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3926/jotse.1098",
+        "year": 2021,
+        "first_author": "Recalde",
+        "title_short": "How classroom acoustics influence students and teachers: A systematic literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ssci.2023.106093",
+        "year": 2023,
+        "first_author": "Yang",
+        "title_short": "Linking construction noise to worker safety behavior: The role of negative emotion and regulatory focus",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-018-3685-8",
+        "year": 2018,
+        "first_author": "Keith",
+        "title_short": "The Influence of Noise on Autonomic Arousal and Cognitive Performance in Adolescents with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.egyr.2022.01.011",
+        "year": 2022,
+        "first_author": "Caniato",
+        "title_short": "Evaluation of the main sensitivity drivers in relation to indoor comfort for individuals with autism spectrum disorder. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2024.2341643",
+        "year": 2024,
+        "first_author": "Rajotte",
+        "title_short": "A Neuroinclusive School Model: Focus on the School, Not on the Child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111981",
+        "year": 2024,
+        "first_author": "Qutub",
+        "title_short": "Impacts of school environment quality on autistic pupil's behaviours \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.112254",
+        "year": 2024,
+        "first_author": "Marzi",
+        "title_short": "Inclusive indoor comfort of neurodivergent individuals diagnosed before adulthood: A comprehensive study on thermal, aco",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/2050571x.2024.2372181",
+        "year": 2024,
+        "first_author": "Mealings",
+        "title_short": "Listening and learning challenges for deaf or hard of hearing students during different classroom scenarios: an itineran",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-019-04244-1",
+        "year": 2019,
+        "first_author": "Schelinski",
+        "title_short": "Brief Report: Speech-in-Noise Recognition and the Relation to Vocal Pitch Perception in Adults with Autism Spectrum Diso",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916520950277",
+        "year": 2020,
+        "first_author": "Massonni\u00e9",
+        "title_short": "Learning in Noisy Classrooms: Children\u2019s Reports of Annoyance and Distraction from Noise are Associated with Individual ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/app11093942",
+        "year": 2021,
+        "first_author": "Bettarello",
+        "title_short": "Indoor Acoustic Requirements for Autism-Friendly Spaces",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.24105/apr.2018.5.15",
+        "year": 2018,
+        "first_author": "Morrow",
+        "title_short": "The impact of fluorescent and led lighting on students attitudes and behavior in the classroom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnint.2020.00039",
+        "year": 2020,
+        "first_author": "Foxe",
+        "title_short": "Multisensory Audiovisual Processing in Children With a Sensory Processing Disorder (II): Speech Integration Under Noisy ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1351010x221126680",
+        "year": 2022,
+        "first_author": "Mealings",
+        "title_short": "Classroom acoustic conditions and primary school children\u2019s behaviour: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.smhl.2023.100444",
+        "year": 2023,
+        "first_author": "Deng",
+        "title_short": "Language-assisted deep learning for autistic behaviors recognition",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.concog.2018.02.006",
+        "year": 2018,
+        "first_author": "Tyndall",
+        "title_short": "Effects of perceptual load and socially meaningful stimuli on crossmodal selective attention in Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-11-2022-0258",
+        "year": 2023,
+        "first_author": "Mostafa",
+        "title_short": "The impact of ASPECTSS-based design intervention in autism school design: a case study",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/13623613231225490",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "School participation of autistic youths: The influence of youth, family and school factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/10.0024272",
+        "year": 2024,
+        "first_author": "Alvar",
+        "title_short": "Effects of background noise on autonomic arousal (skin conductance level)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/2331186x.2021.1957530",
+        "year": 2021,
+        "first_author": "Kulawiak",
+        "title_short": "Academic benefits of wearing noise-cancelling headphones during class for typically developing students and students wit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jer.2023.100009",
+        "year": 2023,
+        "first_author": "Alqahtani",
+        "title_short": "Revealing factors influencing classroom noise in the universities teaching and learning environment: A design of experim",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijbpa-09-2021-0115",
+        "year": 2022,
+        "first_author": "Latif",
+        "title_short": "Creating a link between healthy homes and architectural elements: a qualitative study of modern residential buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11356-023-25643-z",
+        "year": 2023,
+        "first_author": "Amoatey",
+        "title_short": "Contribution of outdoor noise-induced health risk in schools located in urbanized arid country",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/mbe.12240",
+        "year": 2020,
+        "first_author": "Massonni\u00e9",
+        "title_short": "Scientific Collaboration with Educators: Practical Insights from an in\u2010Class Noise\u2010Reduction Intervention",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41390-022-02180-y",
+        "year": 2022,
+        "first_author": "Woodward",
+        "title_short": "Factors associated with MRI success in children cooled for neonatal encephalopathy and controls",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/incae.2018.8579418",
+        "year": 2018,
+        "first_author": "Kirana",
+        "title_short": "The Effect of Sound Manipulation to Know Response Rate in Autism Children Using FFT",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19148815",
+        "year": 2022,
+        "first_author": "Massonni\u00e9",
+        "title_short": "Children\u2019s Effortful Control Skills, but Not Their Prosocial Skills, Relate to Their Reactions to Classroom Noise",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-025-02358-4",
+        "year": 2025,
+        "first_author": "Marzi",
+        "title_short": "The influence of indoor temperature and noise on autistic individuals",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1002/bin.1901",
+        "year": 2022,
+        "first_author": "Gale",
+        "title_short": "Effects of enthusiastic and non\u2010enthusiastic voice in praise on the behavior of children with autism and typically devel",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15511/tjtfp.19.00278",
+        "year": 2019,
+        "first_author": "Karavu\u015f",
+        "title_short": "A qualitative research about autism friendly house environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2024.102359",
+        "year": 2024,
+        "first_author": "Yadon",
+        "title_short": "Broad autism phenotype traits and self-reported sensory processing across sensory modalities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijcci.2025.100726",
+        "year": 2025,
+        "first_author": "Ragone",
+        "title_short": "Supporting and understanding autistic children\u2019s non-verbal interactions through OSMoSIS, a motion-based sonic system",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.16966/2576-6430.118",
+        "year": 2019,
+        "first_author": "Pollock",
+        "title_short": "Lawn and Garden Equipment Sound: A Comparison of Gas and Battery Electric Equipment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31234/osf.io/u84vd",
+        "year": 2019,
+        "first_author": "Schelinski",
+        "title_short": "Speech-in-noise recognition and the relation to vocal pitch perception in adults with autism spectrum disorder and typic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1155/2022/8963416",
+        "year": 2022,
+        "first_author": "Wu",
+        "title_short": "[Retracted] Study on the Influence of Urban Built Environment Factors on the Social Behavior of ASD Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.17501/26731029.2020.1201",
+        "year": 2021,
+        "first_author": "Imam",
+        "title_short": "Noise and Health in Vulnerable Groups: A Case Study of a Diagnostic Clinic for Autistic Children in Mohammedpur, Dhaka",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.53902/jpssr.2021.01.000521",
+        "year": 2021,
+        "first_author": "Eruslu",
+        "title_short": "An Early Identification of Autism Spectrum Disorder and Intervention/Treatment for Children: Two Case Studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-1655488/v1",
+        "year": 2022,
+        "first_author": "Amoatey",
+        "title_short": "Contribution of outdoor noise-induced health risk in schools located in urbanized arid country",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.53841/bpscog.2019.1.4.33",
+        "year": 2019,
+        "first_author": "Tyndall",
+        "title_short": "Do I have your full attention? Effects of perceptual load and meaningful stimuli on selective attention in Autism Spectr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5604/01.3001.0016.3350",
+        "year": 2023,
+        "first_author": "Bujniewicz",
+        "title_short": "Analiza rozwiza projektowych zastosowanych w szkole dla uczniwze spektrum autyzmu. Studium przypadku obiektu Giant Steps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/incacct57535.2023.10141699",
+        "year": 2023,
+        "first_author": "Aldawood",
+        "title_short": "Nabigh: Activities-based online educational platform for Autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.25144/16585",
+        "year": 2023,
+        "first_author": "Greenland",
+        "title_short": "INCLUSIVE ACOUSTIC DESIGN FOR MAINSTREAM SCHOOLS: AN EVIDENCE BASED APPROACH",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31234/osf.io/dyj3c",
+        "year": 2024,
+        "first_author": "Tsuji",
+        "title_short": "Difficulties perceiving speech in (non-)social noise in children and adolescents with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32920/26866612",
+        "year": 2024,
+        "first_author": "Munshaw",
+        "title_short": "Sensorial Stimuli in the Built Environment: A Review of the Effects of Stimuli for People Living with Autism and Solutio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-64499-3_22",
+        "year": 2024,
+        "first_author": "Reed",
+        "title_short": "Mainstream Education for Children with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-83833-0_12",
+        "year": 2025,
+        "first_author": "Caymaz",
+        "title_short": "Autism-Friendly Built Environment Design Criteria for Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-96-4051-5_147",
+        "year": 2025,
+        "first_author": "Muneer",
+        "title_short": "Universal Design for Neurodiverse in New Zealand Workspaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2478/acee-2025-0017",
+        "year": 2025,
+        "first_author": "Mentel",
+        "title_short": "Inclusive Primary Schools in Sweden: Case Studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08856257.2025.2577923",
+        "year": 2025,
+        "first_author": "Mealings",
+        "title_short": "What we do and do not know about how the classroom environment affects listening, learning, and wellbeing in autistic ch",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.envpol.2026.127992",
+        "year": 2026,
+        "first_author": "Qutub",
+        "title_short": "Impact of indoor environment quality on autistic behaviours in autism schools of Saudi Arabia",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-720": {
+    "openalex_id": "W2804003424",
+    "openalex_cited_by_count": 38,
+    "citers_fetched": 38,
+    "relevant_n": 18,
+    "already_in_es_n": 2,
+    "new_discovery_n": 16,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.wss.2021.100035",
+        "year": 2021,
+        "first_author": "Finlay",
+        "title_short": "Clinical geography: A proposal to embrace space, place and wellbeing through person-centered practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.1042641",
+        "year": 2022,
+        "first_author": "Nair",
+        "title_short": "A case study on the effect of light and colors in the built environment on autistic children\u2019s behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2019.102148",
+        "year": 2019,
+        "first_author": "Motealleh",
+        "title_short": "Creating a dementia-friendly environment through the use of outdoor natural landscape design intervention in long-term c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/app11093942",
+        "year": 2021,
+        "first_author": "Bettarello",
+        "title_short": "Indoor Acoustic Requirements for Autism-Friendly Spaces",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10708-022-10713-5",
+        "year": 2022,
+        "first_author": "Williams",
+        "title_short": "Nature-based tourism as therapeutic landscape in a COVID era: autoethnographic learnings from a visitor\u2019s experience in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.47836/mjmhs.19.1.11",
+        "year": 2023,
+        "first_author": "Mah",
+        "title_short": "Effectiveness of \u201cOral Health Care for Children with Autism Spectrum Disorder Module\u201d in Improving Tooth-Brushing Practi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10882-020-09768-4",
+        "year": 2020,
+        "first_author": "Mullan",
+        "title_short": "The Impact of a Brief Home-Based Intervention on Families with a Child with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32598/jrh.11.3.118.4",
+        "year": 2021,
+        "first_author": "Kakabaraee",
+        "title_short": "Effect of the Problem-solving on the Mental Well-being of Mothers With Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/jbcr/irab172",
+        "year": 2021,
+        "first_author": "Sadeq",
+        "title_short": "Evaluating Burn Recovery Outcomes in Children With Neurodevelopmental Symptoms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2022-0153",
+        "year": 2023,
+        "first_author": "Sheykhmaleki",
+        "title_short": "Comparing desired spatial ratios among autistic and non-autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5204/thesis.eprints.128644",
+        "year": 2019,
+        "first_author": "Baird-Bate",
+        "title_short": "Making Visible The Lived Experiences of Mothers of Children with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1051/e3sconf/202127401025",
+        "year": 2021,
+        "first_author": "Alshawaf",
+        "title_short": "Standards for achieving a comfortable design for the Alzheimer's patients pathways",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/anzf.1605",
+        "year": 2024,
+        "first_author": "G\u00f6kalp",
+        "title_short": "Effect of problem\u2010solving training for mothers of children with special needs: A randomised controlled study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frsc.2025.1506672",
+        "year": 2025,
+        "first_author": "Ekhaese",
+        "title_short": "Sensory sustainable homes, a study of the healthy happy home (3H) conceptual design model: an explanatory qualitative st",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.socscimed.2026.119129",
+        "year": 2026,
+        "first_author": "Yan",
+        "title_short": "Between hospital and home: Hospital-adjacent neighborhood as a third therapeutic place for China's long-distance patient",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-721": {
+    "openalex_id": "W2037308411",
+    "openalex_cited_by_count": 54,
+    "citers_fetched": 54,
+    "relevant_n": 42,
+    "already_in_es_n": 3,
+    "new_discovery_n": 39,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/1471-3802.12092",
+        "year": 2014,
+        "first_author": "Martin",
+        "title_short": "Exploring the impact of the design of the physical classroom environment on young children with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916516669389",
+        "year": 2016,
+        "first_author": "Kanakri",
+        "title_short": "An Observational Study of Classroom Acoustical Design and Repetitive Behaviors in Children With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Considerations of the built environment for autistic individuals: A review of the literature",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/15710882.2014.997829",
+        "year": 2015,
+        "first_author": "Gaudion",
+        "title_short": "A designer's approach: how can autistic adults with learning disabilities be involved in the design process?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/11038128.2020.1832145",
+        "year": 2020,
+        "first_author": "Leifler",
+        "title_short": "Does the learning environment \u2018make the grade\u2019? A systematic review of accommodations for children on the autism spectru",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111981",
+        "year": 2024,
+        "first_author": "Qutub",
+        "title_short": "Impacts of school environment quality on autistic pupil's behaviours \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2012.01525.x",
+        "year": 2012,
+        "first_author": "McAllister",
+        "title_short": "Design considerations for the autism spectrum disorder\u2010friendly Key Stage 1 classroom",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/13603116.2025.2553212",
+        "year": 2025,
+        "first_author": "Cleveland",
+        "title_short": "Inclusive learning spaces in Australian schools: an exploration of stakeholder participation, perspectives and prioritie",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15173016",
+        "year": 2025,
+        "first_author": "\u00d6zt\u00fcrk",
+        "title_short": "Unseen Needs: The Imperative of Building Biology-Based Design in Educational Spaces for Individuals with Down Syndrome",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10984-025-09561-0",
+        "year": 2025,
+        "first_author": "Olsson",
+        "title_short": "Designing for diversity: teachers\u2019 strategies for creating inclusive learning environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.sbspro.2012.06.200",
+        "year": 2012,
+        "first_author": "Gavald\u00e1",
+        "title_short": "Improving the Process of Inclusive Education in Children with ASD in Mainstream Schools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2014,
+        "first_author": "Gaines",
+        "title_short": "The perceived effects of visual design and features on students with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2021-0196",
+        "year": 2022,
+        "first_author": "Patel",
+        "title_short": "Development of special needs classroom prototypes to respond to the sensory needs of students with exceptionalities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31224/osf.io/fkaqj",
+        "year": 2020,
+        "first_author": "Sadia",
+        "title_short": "Exploring the Design Preferences of Neurodivergent Populations for Quiet Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su15042899",
+        "year": 2023,
+        "first_author": "Alizadeh",
+        "title_short": "Home Indoor Environmental Quality and Attention Deficit Hyperactivity Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.57568/iulres.v3i6.313",
+        "year": 2022,
+        "first_author": "Alterator",
+        "title_short": "The evaluation of inclusive school environments: a scoping review of the literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/1554480x.2025.2609436",
+        "year": 2026,
+        "first_author": "Cleveland",
+        "title_short": "Learning spaces in schools: a pedagogic research agenda",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2010,
+        "first_author": "McAllister",
+        "title_short": "The ASD Friendly Classroom - Design Complexity, Challenge & Characteristics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-40409-7_26",
+        "year": 2016,
+        "first_author": "Gaudion",
+        "title_short": "The Triad of Strengths: A Strengths-Based Approach for Designing with Autistic Adults with Additional Learning Disabilit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2014,
+        "first_author": "Gaudion",
+        "title_short": "Design and wellbeing: Bridging the empathy gap between neurotypical designers and autistic adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083.v1",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32350/uer.12.03",
+        "year": 2018,
+        "first_author": "Malik",
+        "title_short": "The Role of Architecture in the Identification of Obstacles and Spatial Solutions to Inclusive Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-18096-0_32",
+        "year": 2016,
+        "first_author": "Kochtitzky",
+        "title_short": "Built Environments for Improving Human Development and Promoting Health and Quality of Life",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2017,
+        "first_author": "Schelings",
+        "title_short": "Inclusion of Down Syndrome in Architectural Design: Towards a Methodology",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2017,
+        "first_author": "Schelings",
+        "title_short": "A Method for Architectural Inclusive Design: the Case of Users Experiencing Down Syndrome",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.20885/jars.vol7.iss1.art1",
+        "year": 2023,
+        "first_author": "Wijaya",
+        "title_short": "Evaluation of The Special School Criteria in Meeting the Needs of Students with Mentally Disabled",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24385/lincoln.24325861",
+        "year": 2017,
+        "first_author": "Alabri",
+        "title_short": "The Inclusion of children with Down\u2019s syndrome in mainstream primary schools in Saudi Arabia: understanding the perspect",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5204/thesis.eprints.244529",
+        "year": 2023,
+        "first_author": "Kelly",
+        "title_short": "Let me play, too! Co-designing inclusive sensory play spaces in collaboration with neurodiverse and neurotypical childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_53",
+        "year": 2023,
+        "first_author": "H\u00f8eg",
+        "title_short": "Making the Special the General: Design Parameters for Supporting Inclusivity in Schools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21776/ub.ijds.2023.10.02.4",
+        "year": 2023,
+        "first_author": "Chalim",
+        "title_short": "Visual Environment Aspects of Public Building Design for People with Down Syndrome",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2298/spat220923013a",
+        "year": 2024,
+        "first_author": "Alizadeh",
+        "title_short": "Development and validation of the Housing Environmental Quality Assessment Tool (HEQAT) for children with ADHD using the",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10598405251319982",
+        "year": 2025,
+        "first_author": "Sandberg",
+        "title_short": "Navigating School Meal Environments: Perspectives of Pupils Diagnosed With Autism Spectrum Disorder or ADHD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08856257.2025.2577923",
+        "year": 2025,
+        "first_author": "Mealings",
+        "title_short": "What we do and do not know about how the classroom environment affects listening, learning, and wellbeing in autistic ch",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2012,
+        "first_author": "Daun",
+        "title_short": "Hur gymnasieelever med Asperger syndrom upplever Aspergerstudio och skolg\u00e5ng",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13467581.2026.2621574",
+        "year": 2026,
+        "first_author": "En",
+        "title_short": "Architectural colour and lighting strategies for autism-friendly physical learning environment in Malaysia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6020064",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "From Sensory Design to Regulatory Architecture: A Systematic Review of Inclusive Early Childhood Learning Environments f",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-722": {
+    "openalex_id": "W1983886763",
+    "openalex_cited_by_count": 113,
+    "citers_fetched": 113,
+    "relevant_n": 95,
+    "already_in_es_n": 7,
+    "new_discovery_n": 88,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.rasd.2014.06.006",
+        "year": 2014,
+        "first_author": "Tomchek",
+        "title_short": "Patterns of sensory processing in children with an autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2015.018051",
+        "year": 2015,
+        "first_author": "Watling",
+        "title_short": "Effectiveness of Ayres Sensory Integration\u00ae and Sensory-Based Interventions for People With Autism Spectrum Disorder: A ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2018.029413",
+        "year": 2017,
+        "first_author": "Bodison",
+        "title_short": "Specific Sensory Techniques and Sensory Environmental Modifications for Children and Youth With Sensory Integration Diff",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.healthplace.2018.11.005",
+        "year": 2018,
+        "first_author": "Li",
+        "title_short": "Exposure to nature for children with autism spectrum disorder: Benefits, caveats, and barriers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "year": 2017,
+        "first_author": "Kanakri",
+        "title_short": "Noise and autism spectrum disorder in children: An exploratory survey",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1089/aut.2022.0024",
+        "year": 2022,
+        "first_author": "MacLennan",
+        "title_short": "\u201cIt Is a Big Spider Web of Things\u201d: Sensory Experiences of Autistic Adults in Public Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613211050176",
+        "year": 2021,
+        "first_author": "Unwin",
+        "title_short": "The use of Multi-Sensory Environments with autistic children: Exploring the effect of having control of sensory changes",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/0013916516669389",
+        "year": 2016,
+        "first_author": "Kanakri",
+        "title_short": "An Observational Study of Classroom Acoustical Design and Repetitive Behaviors in Children With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2021.695825",
+        "year": 2021,
+        "first_author": "Mallory",
+        "title_short": "Implications of Sensory Processing and Attentional Differences Associated With Autism in Academic Settings: An Integrati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su12083453",
+        "year": 2020,
+        "first_author": "Manca",
+        "title_short": "The Effect of School Design on Users\u2019 Responses: A Systematic Review (2008\u20132017)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.hkjot.2016.09.001",
+        "year": 2016,
+        "first_author": "Ikuta",
+        "title_short": "Effectiveness of Earmuffs and Noise-cancelling Headphones for Coping with Hyper-reactivity to Auditory Stimuli in Childr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/prj0000099",
+        "year": 2014,
+        "first_author": "Pfeiffer",
+        "title_short": "Sensory processing, participation, and recovery in adults with serious mental illnesses.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2015.019430",
+        "year": 2015,
+        "first_author": "Miller-Kuhaneck",
+        "title_short": "Development of the Classroom Sensory Environment Assessment (CSEA)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-021-00248-9",
+        "year": 2021,
+        "first_author": "Dargue",
+        "title_short": "Can Characteristics of the Physical Environment Impact Engagement in Learning Activities in Children with Autism? A Syst",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "year": 2023,
+        "first_author": "Zaniboni",
+        "title_short": "Indoor environment perception of people with autism spectrum condition: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17483107.2018.1533595",
+        "year": 2018,
+        "first_author": "Lim",
+        "title_short": "Effects of environmental modification on activities of daily living, social participation and quality of life in the old",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2018.1496872",
+        "year": 2018,
+        "first_author": "Benson",
+        "title_short": "Sensory-based intervention in the schools: a survey of occupational therapy practitioners",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2023.050135",
+        "year": 2023,
+        "first_author": "Whiting",
+        "title_short": "A Sensory Integration Intervention in the School Setting to Support Performance and Participation: A Multiple-Baseline S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2024.2341643",
+        "year": 2024,
+        "first_author": "Rajotte",
+        "title_short": "A Neuroinclusive School Model: Focus on the School, Not on the Child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111981",
+        "year": 2024,
+        "first_author": "Qutub",
+        "title_short": "Impacts of school environment quality on autistic pupil's behaviours \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/jcm13144162",
+        "year": 2024,
+        "first_author": "Domenico",
+        "title_short": "Exploring the Usefulness of a Multi-Sensory Environment on Sensory Behaviors in Children with Autism Spectrum Disorder",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/13623613251333860",
+        "year": 2025,
+        "first_author": "Price",
+        "title_short": "\u2018It just feels unnatural being here\u2019: Autistic secondary school students\u2019 experiences of sensory sensitivities in the sc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613251320424",
+        "year": 2025,
+        "first_author": "Leonardi",
+        "title_short": "The use of multisensory environments in children and adults with autism spectrum disorder: A systematic review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/0008417413520440",
+        "year": 2014,
+        "first_author": "Ashburner",
+        "title_short": "Optimizing participation of children with autism spectrum disorder experiencing sensory challenges: A clinical reasoning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1539449216665116",
+        "year": 2016,
+        "first_author": "Piller",
+        "title_short": "The Sensory Environment and Participation of Preschool Children With Autism Spectrum Disorder",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10803-017-3371-2",
+        "year": 2017,
+        "first_author": "Spaniol",
+        "title_short": "Attention Training in Autism as a Potential Approach to Improving Academic Performance: A School-Based Pilot Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/jmt/thu030",
+        "year": 2014,
+        "first_author": "Pasiali",
+        "title_short": "The Effect of Musical Attention Control Training (MACT) on Attention Skills of Adolescents with Neurodevelopmental Delay",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2017.019281",
+        "year": 2017,
+        "first_author": "Reynolds",
+        "title_short": "Using a Multifaceted Approach to Working With Children Who Have Differences in Sensory Processing and Integration",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.chc.2019.12.005",
+        "year": 2020,
+        "first_author": "Flannery",
+        "title_short": "Autism and Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10598650.2017.1407915",
+        "year": 2018,
+        "first_author": "Fletcher",
+        "title_short": "Can Sensory Gallery Guides for Children with Sensory Processing Challenges Improve Their Museum Experience?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/ajbes.v3i14.165",
+        "year": 2018,
+        "first_author": "Ghazali",
+        "title_short": "The Effects of Sensory Design on Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/access.2020.3045042",
+        "year": 2020,
+        "first_author": "Banire",
+        "title_short": "The Effects of Visual Stimuli on Attention in Children With Autism Spectrum Disorder: An Eye-Tracking Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/aia-05-2019-0015",
+        "year": 2020,
+        "first_author": "Mills",
+        "title_short": "The impact of sensory activity schedule (SAS) intervention on classroom task performance in students with autism \u2013 a pil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10534512221093786",
+        "year": 2022,
+        "first_author": "Dynia",
+        "title_short": "Addressing Sensory Needs for Children With Autism Spectrum Disorder in the Classroom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijot-01-2019-0001",
+        "year": 2019,
+        "first_author": "Ruttledge",
+        "title_short": "An evaluation of sensory processing training on the competence, confidence and practice of teachers working with childre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613231225490",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "School participation of autistic youths: The influence of youth, family and school factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-13-6092-3_8",
+        "year": 2019,
+        "first_author": "Saggers",
+        "title_short": "Creating Learning Spaces that Promote Wellbeing, Participation and Engagement: Implications for Students on the Autism S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/access.2023.3297651",
+        "year": 2023,
+        "first_author": "Miao",
+        "title_short": "Analysis of Facial Expressions to Estimate the Level of Engagement in Online Lectures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ejn.16463",
+        "year": 2024,
+        "first_author": "Parada",
+        "title_short": "Applied human neuroscience: Fostering and designing inclusive environments with the 3E\u2010Cognition perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.11648/j.ajp.20170306.15",
+        "year": 2017,
+        "first_author": "Kanakri",
+        "title_short": "Spaces Matters: Classroom Acoustics and Repetitive Behaviors in Preschool Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11257-023-09371-0",
+        "year": 2023,
+        "first_author": "Banire",
+        "title_short": "One size does not fit all: detecting attention in children with autism using machine learning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/tlt.2024.3409702",
+        "year": 2024,
+        "first_author": "Varghese",
+        "title_short": "Attention Level Evaluation in Children With Autism: Leveraging Head Pose and Gaze Parameters From Videos for Educational",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2021.2003737",
+        "year": 2022,
+        "first_author": "Brady",
+        "title_short": "An Investigation of the Association between School-Aged Children\u2019s Sensory Processing and Their Self-Reported Leisure Ac",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2589290",
+        "year": 2025,
+        "first_author": "Adams",
+        "title_short": "Are sensory aspects of the built school environment associated with learning or well-being outcomes for autistic student",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/14771535251366853",
+        "year": 2025,
+        "first_author": "Noble",
+        "title_short": "Autistic people\u2019s perception of interior electric lighting systems: An initial study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2014.011114",
+        "year": 2014,
+        "first_author": "Kreider",
+        "title_short": "Review of Occupational Therapy Intervention Research in the Practice Area of Children and Youth 2009\u20132013",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-017-0111-7",
+        "year": 2017,
+        "first_author": "Kruk",
+        "title_short": "Improved Signal-to-Noise Ratio and Classroom Performance in Children with Autism Spectrum Disorder: a Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2013.008557",
+        "year": 2013,
+        "first_author": "Whitney",
+        "title_short": "Intervention Effectiveness for Children and Youth",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15453/2168-6408.1354",
+        "year": 2017,
+        "first_author": "Wagenfeld",
+        "title_short": "Exploring the Value of Interprofessional Collaboration between Occupational Therapy and Design: A Pilot Survey Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1440-1630.12381",
+        "year": 2017,
+        "first_author": "Mills",
+        "title_short": "Listening to teachers: Views on delivery of a classroom based sensory intervention for students with autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1477153520904405",
+        "year": 2020,
+        "first_author": "Hughes",
+        "title_short": "Identifying new concepts for innovative lighting-based interventions to influence movement and behaviours in train stati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1155/2020/5909347",
+        "year": 2020,
+        "first_author": "Mills",
+        "title_short": "A Survey of Occupational Therapists on a New Tool for Sensory Processing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31224/osf.io/fkaqj",
+        "year": 2020,
+        "first_author": "Sadia",
+        "title_short": "Exploring the Design Preferences of Neurodivergent Populations for Quiet Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231173393",
+        "year": 2023,
+        "first_author": "Ellis",
+        "title_short": "Systematic Review on Environmental Design for Adaptive and Problem Behaviors of People With Intellectual and Development",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/ebpj.v6i16.2696",
+        "year": 2021,
+        "first_author": "Ghazali",
+        "title_short": "Determinant Factors of Sensory in Creating Autism Learning Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2024.050766",
+        "year": 2024,
+        "first_author": "Unwin",
+        "title_short": "Evidence Synthesis and Clinical Recommendations for Supporting School Students With Sensory Processing Challenges: A Rap",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-23563-5_4",
+        "year": 2019,
+        "first_author": "Banire",
+        "title_short": "Attention Assessment: Evaluation of Facial Expressions of Children with Autism Spectrum Disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2018.1432442",
+        "year": 2018,
+        "first_author": "Miller-Kuhaneck",
+        "title_short": "The classroom sensory environment assessment as an educational tool for teachers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2991/ahsr.k.210127.061",
+        "year": 2021,
+        "first_author": "Marwati",
+        "title_short": "Visual-Sensory-Based Quiet Room for Reducing Maladaptive Behavior and Emotion in Autistic Individuals: A Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10983007231200529",
+        "year": 2023,
+        "first_author": "Zimmerman",
+        "title_short": "The Impact of Fidget Toys on Story Detail Acquisition and Visual Attention for Elementary Students With Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/jabs.v4i14.338",
+        "year": 2019,
+        "first_author": "Ghazali",
+        "title_short": "Sensory Design of Learning Environment for Autism : Architects awareness?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2018.1558523",
+        "year": 2018,
+        "first_author": "Strong",
+        "title_short": "Occupational Therapy and Literacy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v3i8.1392",
+        "year": 2018,
+        "first_author": "Ghazali",
+        "title_short": "Preliminary Study on Sensory Design for Autism Centre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2018,
+        "first_author": "Block",
+        "title_short": "Classroom Design and its Influence on Students\u2019 Performance Within the Autism Spectrum Diagnosis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31234/osf.io/9qadm",
+        "year": 2022,
+        "first_author": "MacLennan",
+        "title_short": "\u201cIt is a big spider web of things\u201d: Sensory experiences of autistic adults in public spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-91297-0_3",
+        "year": 2022,
+        "first_author": "Holmqvist",
+        "title_short": "Children with Autism Spectrum Conditions: Social Norms and Expectations in Swedish Preschools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-024-06473-5",
+        "year": 2024,
+        "first_author": "Pang",
+        "title_short": "Assessing the Relationship Between Teacher Inclusive Beliefs, Behaviors, and Competences of Students with Autism Spectru",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-35681-0_37",
+        "year": 2023,
+        "first_author": "Houki",
+        "title_short": "A Tool to Assess the Attention of Children with Autism Spectrum Disorder (ASD): from Design to Evaluation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.psc.2020.08.004",
+        "year": 2020,
+        "first_author": "Flannery",
+        "title_short": "Autism and Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2020.1862729",
+        "year": 2021,
+        "first_author": "DeBoth",
+        "title_short": "Caregiver Perceptions of Child Participation in Sensory Friendly Community Events",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26681/jote.2021.050107",
+        "year": 2021,
+        "first_author": "Michail",
+        "title_short": "The Impact of The Sensory Form on Confidence and Competence in Occupational Therapy Students: A Quasi-Experimental Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.23880/aphot-16000183",
+        "year": 2020,
+        "first_author": "MSP",
+        "title_short": "An Increasing Emphasis of Evidence-Based Practice in Children with Developmental Disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40474-023-00288-2",
+        "year": 2023,
+        "first_author": "Wong",
+        "title_short": "Sensory-Based Interventions for Managing Difficulties of Children with Autism Spectrum Disorder at School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/9781118911389.hautc16",
+        "year": 2014,
+        "first_author": "Baranek",
+        "title_short": "Sensory Features in Autism Spectrum Disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2018,
+        "first_author": "Alresheed",
+        "title_short": "Comparing Single-Case Design Non-Overlap Metrics and Visual Analysis Examining School-Based Interventions for Students w",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-1604663/v1",
+        "year": 2022,
+        "first_author": "Banire",
+        "title_short": "One Size Does Not Fit All: Detecting Attention in Children with Autism Using Machine Learning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2013,
+        "first_author": "Smith",
+        "title_short": "Environmental modifications in grade two classrooms of learners with learning disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2015,
+        "first_author": "Sane",
+        "title_short": "Creating sensory environments for children with Autism, SPD and ADHD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1534508418758363",
+        "year": 2018,
+        "first_author": "Piller",
+        "title_short": "Construct Validity of the Participation and Sensory Environment Questionnaire\u2013Teacher Version",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2017,
+        "first_author": "Luers",
+        "title_short": "Promoting Interdisciplinary Collaboration Across School Contexts: A Toolkit for Occupational Therapists",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/southeastcon42311.2019.9020563",
+        "year": 2019,
+        "first_author": "Chalman",
+        "title_short": "Sensory Walls: Engineering a Dynamic Therapeutic Solution for Children with Disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2019,
+        "first_author": "Sproul",
+        "title_short": "Visual light hypersensitivity, classroom digital media and inclusive pedagogy: Untangling the maze",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19411243.2021.1934236",
+        "year": 2021,
+        "first_author": "Spires",
+        "title_short": "Positive Mental Health Strategies Impact on Students with Emotional Disturbances\u2019 Attention to Task",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2019,
+        "first_author": "Gruben",
+        "title_short": "Perceptions of Exemplary Special Education Teachers: Instructional and Management Strategies For Special Education Stude",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.6007/ijarbss/v12-i10/15682",
+        "year": 2022,
+        "first_author": "Alsalahat",
+        "title_short": "The Impact of Classroom Design according TEACCH System in Dealing with Behavioral Problems of Severe Autism Spectrum Dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.24305416",
+        "year": 2023,
+        "first_author": "Noble",
+        "title_short": "Exploring How Interior Electric Lighting Systems meet the Needs of Autistic People",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31234/osf.io/bpkce",
+        "year": 2023,
+        "first_author": "Parada",
+        "title_short": "Applied Human Neuroscience: Fostering and Designing Inclusive Environments with the 3E-Cognition Perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22318/icls2023.626912",
+        "year": 2023,
+        "first_author": "Bonnette",
+        "title_short": "Building Belonging for Multiply Marginalized Neurodivergent Students in STEM Higher Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.sftr.2025.101126",
+        "year": 2025,
+        "first_author": "Baeyaert",
+        "title_short": "The philosophy of cognitive diversity: Rethinking ethical AI design through the lens of neurodiversity",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1460-6984.70146",
+        "year": 2025,
+        "first_author": "Rollins",
+        "title_short": "Well\u2010Being of Children With Stuttering and Autism: A First Glance",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/sen2.70018",
+        "year": 2025,
+        "first_author": "Kaundinya",
+        "title_short": "Sensory Responses in Autistic Individuals\u2014A Narrative Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.envpol.2026.127992",
+        "year": 2026,
+        "first_author": "Qutub",
+        "title_short": "Impact of indoor environment quality on autistic behaviours in autism schools of Saudi Arabia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2026.1810785",
+        "year": 2026,
+        "first_author": "Maggio",
+        "title_short": "Enhancing adaptation and learning in educational environments (SENSE project): a case series study",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SEA-bw-723": {
+    "openalex_id": "W2899040667",
+    "openalex_cited_by_count": 35,
+    "citers_fetched": 35,
+    "relevant_n": 25,
+    "already_in_es_n": 2,
+    "new_discovery_n": 23,
+    "discoveries": [
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": 2021,
+        "first_author": "Tola",
+        "title_short": "Built Environment Design and People with Autism Spectrum Disorder (ASD): A Scoping Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/19411243.2024.2341643",
+        "year": 2024,
+        "first_author": "Rajotte",
+        "title_short": "A Neuroinclusive School Model: Focus on the School, Not on the Child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10984-024-09494-0",
+        "year": 2024,
+        "first_author": "Kowaltowski",
+        "title_short": "Better school architecture through design patterns",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-11-2022-0258",
+        "year": 2023,
+        "first_author": "Mostafa",
+        "title_short": "The impact of ASPECTSS-based design intervention in autism school design: a case study",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1108/arch-10-2024-0453",
+        "year": 2025,
+        "first_author": "Watchorn",
+        "title_short": "\u201cA calm space to reset\u201d: perceptions of sensory rooms in Australian public buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/joid.12164",
+        "year": 2020,
+        "first_author": "Park",
+        "title_short": "Creating and Testing a Sensory Well\u2013Being Hub for Adolescents with Developmental Disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.57568/iulres.v3i6.313",
+        "year": 2022,
+        "first_author": "Alterator",
+        "title_short": "The evaluation of inclusive school environments: a scoping review of the literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.foar.2025.10.007",
+        "year": 2025,
+        "first_author": "Aminpour",
+        "title_short": "Neurodiverse-friendly preschools: Aligning inclusive pedagogy and spatial design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.reia.2026.202932",
+        "year": 2026,
+        "first_author": "Keramati",
+        "title_short": "Classifying sensory design principles for autism-friendly environments: A PRISMA-based systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083.v1",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7275/17512702",
+        "year": 2021,
+        "first_author": "Szczypinski",
+        "title_short": "Spatial Design for Behavioral Education",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2022-0153",
+        "year": 2023,
+        "first_author": "Sheykhmaleki",
+        "title_short": "Comparing desired spatial ratios among autistic and non-autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31579/2767-7370/020",
+        "year": 2021,
+        "first_author": "Wolf",
+        "title_short": "Intergenerational Facility Alternatives: Transitioning Care Options for Aging Parents and Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14974083",
+        "year": 2021,
+        "first_author": "Hansen",
+        "title_short": "The Autism Friendly School",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5604/01.3001.0016.3350",
+        "year": 2023,
+        "first_author": "Bujniewicz",
+        "title_short": "Analiza rozwiza projektowych zastosowanych w szkole dla uczniwze spektrum autyzmu. Studium przypadku obiektu Giant Steps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2024.111228",
+        "year": 2024,
+        "first_author": "Shen",
+        "title_short": "Spatial adaptation in children with autism - A study based on behavioural dynamic video data",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2478/acee-2024-0025",
+        "year": 2024,
+        "first_author": "Abdallah",
+        "title_short": "Assessment of the Correspondence Between User Needs and Classroom Design Criteria for Pre-Schoolers with Autism Spectrum",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-96-4051-5_147",
+        "year": 2025,
+        "first_author": "Muneer",
+        "title_short": "Universal Design for Neurodiverse in New Zealand Workspaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-443-23536-8.00013-7",
+        "year": 2025,
+        "first_author": "Anthony",
+        "title_short": "Design for mental and behavioral health: Social and psychological issues",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2478/acee-2025-0017",
+        "year": 2025,
+        "first_author": "Mentel",
+        "title_short": "Inclusive Primary Schools in Sweden: Case Studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/07380577.2026.2614420",
+        "year": 2026,
+        "first_author": "Yong",
+        "title_short": "Enabling Change and Home Participation for an Individual with Intellectual Disability: A Case Study in Complex Occupatio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.envpol.2026.127992",
+        "year": 2026,
+        "first_author": "Qutub",
+        "title_short": "Impact of indoor environment quality on autistic behaviours in autism schools of Saudi Arabia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16102032",
+        "year": 2026,
+        "first_author": "Saavedra-Torres",
+        "title_short": "Multisensory Architecture and Cognitive Development in Students with ASD: Correlational Analysis and Empirical Hierarchi",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}
