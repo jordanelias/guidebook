@@ -1,0 +1,1352 @@
+[
+  {
+    "local_ref": "RAP-marzi-2025",
+    "doi": "10.1038/s41598-025-02358-4",
+    "total_refs": 160,
+    "relevant_n": 65,
+    "with_doi_n": 53,
+    "already_in_es_n": 5,
+    "new_discovery_n": 60,
+    "discoveries": [
+      {
+        "doi": "10.1136/oem.30.4.313",
+        "author": "PO Fanger",
+        "year": "1973",
+        "title_short": "Fanger, P. O. Assessment of man\u2019s thermal comfort in practice. Occup. Environ. Med. 30(4), 313\u2013324 (1973).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1600-0668.2007.00516.x",
+        "author": "J Van Hoof",
+        "year": "2008",
+        "title_short": "Van Hoof, J. Forty years of Fanger\u2019s model of thermal comfort: comfort for all?. Indoor Air 18(3), 182 (2008).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "International Organization for Standardization: Geneva, Switzerland. ISO 7730: Ergonomics of the thermal environment. An",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "International Organization for Standardization: Geneva, Switzerland, ISO 16814: Building environment design\u2014Indoor air q",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/s21093134",
+        "author": "C Prandi",
+        "year": "2021",
+        "title_short": "Prandi, C., Delnevo, G., Salomoni, P. & Mirri, S. On supporting university communities in indoor wayfinding: An inclusiv",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-35861-7_3",
+        "author": "I Shuayb",
+        "year": "2020",
+        "title_short": "Shuayb, I. Emergence of design standards and inclusive design. In Inclusive University Built Environments: The Impact of",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5749/minnesota/9781517901639.001.0001",
+        "author": null,
+        "year": null,
+        "title_short": "Hamraie, A. Building Access: Universal Design and the Politics of Disability. U of Minnesota Press (2017).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2013.07.002",
+        "author": "K Fabbri",
+        "year": "2013",
+        "title_short": "Fabbri, K. Thermal comfort evaluation in kindergarten: PMV and PPD measurement through datalogger and questionnaire. Bui",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/2331205x.2020.1736829",
+        "author": "A Galiana-Simal",
+        "year": "2020",
+        "title_short": "Galiana-Simal, A. et al. Sensory processing disorder: Key points of a frequent alteration in neurodevelopmental disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "H Morgan",
+        "year": "2019",
+        "title_short": "Morgan, H. Connections between sensory sensitivities in autism; the importance of sensory friendly environments for acce",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2021.108056",
+        "author": "B Brik",
+        "year": "2021",
+        "title_short": "Brik, B., Esseghir, M., Merghem-Boulahia, L. & Snoussi, H. An IoT-based deep learning approach to analyse indoor thermal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "author": "SM Kanakri",
+        "year": "2017",
+        "title_short": "Kanakri, S. M., Shepley, M., Varni, J. W. & Tassinary, L. G. Noise and autism spectrum disorder in children: An explorat",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.egyr.2022.01.011",
+        "author": "M Caniato",
+        "year": "2022",
+        "title_short": "Caniato, M., Zaniboni, L., Marzi, A. & Gasparella, A. Evaluation of the main sensitivity drivers in relation to indoor c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.egyr.2022.01.009",
+        "author": "M Caniato",
+        "year": "2022",
+        "title_short": "Caniato, M., Zaniboni, L., Marzi, A. & Gasparella, A. Evaluation of the main sensitivity drivers in relation to indoor c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1351010x18775022",
+        "author": "KA van den Bosch",
+        "year": "2018",
+        "title_short": "van den Bosch, K. A., Andringa, T. C., Post, W. J., Ruijssenaars, W. A. & Vlaskamp, C. The relationship between soundsca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/en14154530",
+        "author": "Y Bouzidi",
+        "year": "2021",
+        "title_short": "Bouzidi, Y., El Akili, Z., Gademer, A., Tazi, N. & Chahboun, A. How can we adapt thermal comfort for disabled patients? ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110545",
+        "author": "L Zaniboni",
+        "year": "2023",
+        "title_short": "Zaniboni, L. & Toftum, J. Indoor environment perception of people with autism spectrum condition: A scoping review. Buil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2024.102362",
+        "author": "KL Williams",
+        "year": "2024",
+        "title_short": "Williams, K. L. et al. Use of sensory adaptive environments with autistic children: A scoping review. Res. Autism Spectr",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "Block, S. M. Classroom Design and its Influence on Students\u2019 Performance Within the Autism Spectrum Diagnosis (2018).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111463",
+        "author": "W Song",
+        "year": "2024",
+        "title_short": "Song, W. & Calautit, J. K. Inclusive comfort: A review of techniques for monitoring thermal comfort among individuals wi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.112254",
+        "author": null,
+        "year": null,
+        "title_short": "A. Marzi, M. Caniato, and A. Gasparella, \u201cInclusive Indoor Comfort of neurodivergent individuals diagnosed before adulth",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2011.07.022",
+        "author": "L Huang",
+        "year": "2012",
+        "title_short": "Huang, L., Zhu, Y., Ouyang, Q. & Cao, B. A study on the effects of thermal, luminous, and acoustic environments on indoo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph17072499",
+        "author": "Q Meng",
+        "year": "2020",
+        "title_short": "Meng, Q., Jiang, J., Liu, F. & Xu, X. Effects of the musical sound environment on communicating emotion. Int. J. Environ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-94622-1_18",
+        "author": null,
+        "year": null,
+        "title_short": "Preto, S. & Gomes, C. C. Lighting in the workplace: Recommended illuminance (LUX) at workplace environs. In Advances in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "Morandi, F., Pittana, I., Cappelletti, F., Gasparella, A. & Tzempelikos, A. Assessing overall indoor environmental comfo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s41983-023-00628-4",
+        "author": "E Nasiri",
+        "year": "2023",
+        "title_short": "Nasiri, E. et al. A comprehensive review of attention tests: Can we assess what we exactly do not understand?. Egypt. J.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/acprof:oso/9780195179941.001.0001",
+        "author": null,
+        "year": null,
+        "title_short": "Cornish, K. & Wilding, J. Attention, Genes, and Developmental Disorders. Oxford University Press (2010).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s41235-020-00267-w",
+        "author": "M Trevi\u00f1o",
+        "year": "2021",
+        "title_short": "Trevi\u00f1o, M. et al. How do we measure attention? Using factor analysis to establish construct validity of neuropsychologi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2009.06.013",
+        "author": "J van Hoof",
+        "year": "2010",
+        "title_short": "van Hoof, J., Kort, H. S. M., Hensen, J. L. M., Duijnstee, M. S. H. & Rutten, P. G. S. Thermal comfort and the integrate",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v8i1.314",
+        "author": "M Mostafa",
+        "year": "2014",
+        "title_short": "Mostafa, M. Architecture for autism: Autism ASPECTSS\u2122 in school design. Int. J. Archit. Res. ArchNet-IJAR 8(1), 143\u2013158 ",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2009.02.001",
+        "author": "L Lan",
+        "year": "2009",
+        "title_short": "Lan, L. & Lian, Z. Use of neurobehavioral tests to evaluate the effects of indoor environment quality on productivity. B",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111567",
+        "author": "W Liu",
+        "year": "2024",
+        "title_short": "Liu, W. et al. The relationship between thermal comfort, performance, and electroencephalogram during cognitive tests at",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000441350",
+        "author": "H Lu",
+        "year": "2016",
+        "title_short": "Lu, H., Chan, S. S., Fung, A. W. & Lam, L. C. Efficiency of attentional components in elderly with mild neurocognitive d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su15043826",
+        "author": "X Fu",
+        "year": "2023",
+        "title_short": "Fu, X., Feng, D., Jiang, X. & Wu, T. The effect of correlated color temperature and illumination level of LED lighting o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1088/1361-6579/ab1816",
+        "author": "F Barbic",
+        "year": "2019",
+        "title_short": "Barbic, F. et al. Effects of different classroom temperatures on cardiac autonomic control and cognitive performances in",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3992/jgb.11.1.108.1",
+        "author": "S Hoque",
+        "year": "2016",
+        "title_short": "Hoque, S. & Weil, B. The relationship between comfort perceptions and academic performance in university classroom build",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ina.12745",
+        "author": "HW Brink",
+        "year": "2021",
+        "title_short": "Brink, H. W., Loomans, M. G., Mobach, M. P. & Kort, H. S. Classrooms\u2019 indoor environmental conditions affecting the acad",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2009.06.022",
+        "author": "T Akimoto",
+        "year": "2010",
+        "title_short": "Akimoto, T., Tanabe, S., Yanai, T. & Sasaki, M. Thermal comfort and productivity-Evaluation of workplace environment in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "GD Ander",
+        "year": "2003",
+        "title_short": "Ander, G. D. Daylighting Performance and Design (Wiley, 2003).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1600-0668.2011.00745.x",
+        "author": "M Frontczak",
+        "year": "2012",
+        "title_short": "Frontczak, M. et al. Quantitative relationships between occupant satisfaction and satisfaction aspects of indoor environ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "Balazova, I., Clausen, G., Rindel, J. H., Poulsen, T. & Wyon, D. P. Open-plan office environments: A laboratory experime",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "Toftum, J., Lund, S., Kristiansen, J. & Clausen, G. Effect of open-plan office noise on occupant comfort and performance",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-9280.00014",
+        "author": "GW Evans",
+        "year": "1998",
+        "title_short": "Evans, G. W., Bullinger, M. & Hygge, S. Chronic noise exposure and physiological response: A prospective study of childr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09297040500350938",
+        "author": "BA Corbett",
+        "year": "2006",
+        "title_short": "Corbett, B. A. & Constantine, L. J. Autism and attention deficit hyperactivity disorder: Assessing attention and respons",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3922/j.psns.2013.3.08",
+        "author": "EV Camelo",
+        "year": "2013",
+        "title_short": "Camelo, E. V., Velasques, B., Ribeiro, P., Netto, T. & Cheniaux, E. Attention impairment in bipolar disorder: A systemat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/brainsci11010042",
+        "author": "T Zagaria",
+        "year": "2021",
+        "title_short": "Zagaria, T., Antonucci, G., Buono, S., Recupero, M. & Zoccolotti, P. Executive functions and attention processes in adol",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2022.108940",
+        "author": "J Woo",
+        "year": "2022",
+        "title_short": "Woo, J., Rajagopalan, P. & Andamon, M. M. An evaluation of measured indoor conditions and student performance using d2 T",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2017.06.048",
+        "author": "F Zhang",
+        "year": "2017",
+        "title_short": "Zhang, F. et al. The effects of higher temperature setpoints during summer on office workers\u2019 cognitive load and thermal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-07-2021-0199",
+        "author": "JA PaschoalinFilho",
+        "year": "2022",
+        "title_short": "PaschoalinFilho, J. A., Guerner Dias, A. J., Storopoli, J. H., Ghermandi, A. & de Carvalho, H. C. Relationship between e",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-018-3685-8",
+        "author": "JM Keith",
+        "year": "2019",
+        "title_short": "Keith, J. M., Jamieson, J. P. & Bennetto, L. The influence of noise on autonomic arousal and cognitive performance in ad",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/oxfordhb/9780199675111.001.0001",
+        "author": "K Nobre",
+        "year": "2014",
+        "title_short": "Nobre, K. & Kastner, S. The Oxford Handbook of Attention (Oxford Library of Psychology, 2014).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1420326x19875795",
+        "author": "L Rohde",
+        "year": "2020",
+        "title_short": "Rohde, L., Larsen, T. S., Jensen, R. L. & Larsen, O. K. Framing holistic indoor environment: Definitions of comfort, hea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2020.106808",
+        "author": "L Zaniboni",
+        "year": "2020",
+        "title_short": "Zaniboni, L., Pernigotto, G., Toftum, J., Gasparella, A. & Olesen, B. W. Subjective and objective assessment of thermal ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "Zimmermann, P. & Fimm, B. TAP Test of Attentional Performance Version 2.3.1. Vera Fimm, Psychologische Testsysteme (2021",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "P Zimmermann",
+        "year": "2004",
+        "title_short": "Zimmermann, P. & Fimm, B. A test battery for attentional performance. In Applied Neuropsychology of Attention 124\u2013165 (P",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinph.2003.09.014",
+        "author": "F Moss",
+        "year": "2004",
+        "title_short": "Moss, F., Ward, L. M. & Sannita, W. G. Stochastic resonance and sensory information processing: A tutorial and review of",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/acprof:oso/9780199234110.003.05",
+        "author": "J Spikman",
+        "year": "2010",
+        "title_short": "Spikman, J. & Van Zomeren, E. Assessment of attention. In The Handbook of Clinical Neuropsychology (eds Gurd, J. et al.)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/arclin/9.5.383",
+        "author": "M Schmidt",
+        "year": "1994",
+        "title_short": "Schmidt, M., Trueblood, W., Merwin, M. & Durham, R. L. How much do \u2018attention\u2019tests tell us?. Arch. Clin. Neuropsychol. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "M Lamar",
+        "year": "2007",
+        "title_short": "Lamar, M. & Raz, A. Neuropsychological assessment of attention and executive functioning. Camb. Handb. Psychol. Health M",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s135561770410307x",
+        "author": "ME Bates",
+        "year": "2004",
+        "title_short": "Bates, M. E. & Lemay, E. P. The d2 Test of attention: Construct validity and extensions in scoring techniques. J. Int. N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/arclin/acx123",
+        "author": "P Lee",
+        "year": "2018",
+        "title_short": "Lee, P., Lu, W.-S., Liu, C.-H., Lin, H.-Y. & Hsieh, C.-L. Test\u2013retest reliability and minimal detectable change of the D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0031512518812183",
+        "author": "P Baghaei",
+        "year": "2019",
+        "title_short": "Baghaei, P., Ravand, H. & Nadri, M. Is the d2 test of attention Rasch scalable? Analysis with the Rasch Poisson counts m",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "Robertson, I. H., Ward, T. Ridgeway, V. & Nimmo-Smith, I. The test of everyday attention (TEA). Bury St Edmunds UK Thame",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1355617700001697",
+        "author": "IH Robertson",
+        "year": "1996",
+        "title_short": "Robertson, I. H., Ward, T., Ridgeway, V. & Nimmo-Smith, I. A. N. The structure of normal human attention: The test of ev",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph15061256",
+        "author": "L Xiong",
+        "year": "2018",
+        "title_short": "Xiong, L. et al. Impact of indoor physical environment on learning efficiency in different types of tasks: A 3 \u00d7 4 \u00d7 3 f",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  {
+    "local_ref": "RAP-marzi-2024",
+    "doi": "10.1016/j.buildenv.2024.112254",
+    "total_refs": 146,
+    "relevant_n": 40,
+    "with_doi_n": 28,
+    "already_in_es_n": 3,
+    "new_discovery_n": 37,
+    "discoveries": [
+      {
+        "doi": null,
+        "author": "Olesen",
+        "year": "2005",
+        "title_short": "Indoor environment-health-comfort and productivity",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "De Luca",
+        "year": "2020",
+        "title_short": "A case study of teaching method and students\u2019 learning experience in integrating urban design and performance simulation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rser.2019.109593",
+        "author": "Wang",
+        "year": "2020",
+        "title_short": "Learning occupants\u2019 indoor comfort temperature through a Bayesian inference approach for office buildings in United Stat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.erss.2022.102778",
+        "author": "Cureau",
+        "year": "2022",
+        "title_short": "Bridging the gap from test rooms to field-tests for human indoor comfort studies: a critical review of the sustainabilit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Elzeyadi",
+        "year": "2002",
+        "title_short": "Designing for indoor comfort: a systemic model for assessing occupant comfort in sustainable office buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Spoladore",
+        "year": "2019",
+        "title_short": "ComfOnt: a semantic framework for indoor comfort and energy saving in smart homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Wang",
+        "year": "2017",
+        "title_short": "A survey on indoor comfort and energy consumption in a care home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Zaniboni",
+        "year": "2016",
+        "title_short": "Indoor comfort evaluation of a health care facility: a case study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2010.12.014",
+        "author": "Verheyen",
+        "year": "2011",
+        "title_short": "Thermal comfort of patients: objective and subjective measurements in patient rooms of a Belgian healthcare facility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2020.107354",
+        "author": "Tejedor",
+        "year": "2020",
+        "title_short": "Human comfort modelling for elderly people by infrared thermography: evaluating the thermoregulation system responses in",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/3449151",
+        "author": "Zolyomi",
+        "year": "2021",
+        "title_short": "Social-emotional-sensory design map for affective computing informed by neurodivergent experiences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apacoust.2024.109876",
+        "author": "Kwong",
+        "year": "2024",
+        "title_short": "Healthcare headset with tuneable auditory characteristics control for children with Autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings10100174",
+        "author": "Jayathissa",
+        "year": "2020",
+        "title_short": "Humans-as-a-sensor for buildings\u2014Intensive longitudinal indoor comfort models",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/02632770610639189",
+        "author": "Shabha",
+        "year": "2006",
+        "title_short": "An assessment of the impact of the sensory environment on individuals\u2019 behaviour in special needs schools",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-7610.2005.01546.x",
+        "author": "Baranek",
+        "year": "2006",
+        "title_short": "Sensory experiences questionnaire: discriminating sensory features in young children with autism, developmental delays, ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2009.07.009",
+        "author": "Cheung",
+        "year": "2009",
+        "title_short": "A comparison of patterns of sensory processing in children with and without developmental disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Balazova",
+        "year": "2008",
+        "title_short": "Open-plan office environments: a laboratory experiment to examine the effect of office noise and temperature on human pe",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Mills",
+        "year": "2023",
+        "title_short": "Perceptions of a virtual reality sensory room for adults with neurodevelopmental disabilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v3i7.1262",
+        "author": "Ghazali",
+        "year": "2018",
+        "title_short": "A review of sensory design physical learning environment for autism centre in Malaysia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.buildenv.2018.04.040",
+        "author": "Wang",
+        "year": "2018",
+        "title_short": "Individual difference in thermal comfort: a literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Karyono",
+        "year": "2020",
+        "title_short": "The adaptive thermal comfort review from the 1920s, the present, and the future",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v8i1.314",
+        "author": "Mostafa",
+        "year": "2014",
+        "title_short": "Architecture for autism: autism ASPECTSS\u2122 in school design",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "author": "Piccardi",
+        "year": "2007",
+        "title_short": "Wearcam: a head mounted wireless camera for monitoring gaze attention and for the diagnosis of developmental disorders i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2013.11.007",
+        "author": "Liang",
+        "year": "2014",
+        "title_short": "Satisfaction of occupants toward indoor environment quality of certified green office buildings in Taiwan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2741/3645",
+        "author": "Van Hoof",
+        "year": "2010",
+        "title_short": "Thermal comfort: research and practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2021.108056",
+        "author": "Brik",
+        "year": "2021",
+        "title_short": "An IoT-based deep learning approach to analyse indoor thermal comfort of disabled people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Mueller-Schotte",
+        "year": "2022",
+        "title_short": "The influence of the indoor environment on people displaying challenging behaviour: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "author": "Kanakri",
+        "year": "2017",
+        "title_short": "Noise and autism spectrum disorder in children: an exploratory survey",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10803-018-3685-8",
+        "author": "Keith",
+        "year": "2019",
+        "title_short": "The influence of noise on autonomic arousal and cognitive performance in adolescents with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "S.M. Block, \u201cClassroom design and its influence on students\u2019 performance within the autism spectrum diagnosis,\u201d 2018.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.1042641",
+        "author": "Nair",
+        "year": "2022",
+        "title_short": "A case study on the effect of light and colors in the built environment on autistic children's behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.egyr.2022.01.009",
+        "author": "Caniato",
+        "year": "2022",
+        "title_short": "Evaluation of the main sensitivity drivers in relation to indoor comfort for individuals with autism spectrum disorder. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.egyr.2022.01.011",
+        "author": "Caniato",
+        "year": "2022",
+        "title_short": "Evaluation of the main sensitivity drivers in relation to indoor comfort for individuals with autism spectrum disorder. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neuro.2022.12.003",
+        "author": "Chen",
+        "year": "2023",
+        "title_short": "Chronic exposure to indoor air pollutants in association with attention-deficit/hyperactivity disorder symptoms in Chine",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su15042899",
+        "author": "Alizadeh",
+        "year": "2023",
+        "title_short": "Home indoor environmental quality and attention deficit hyperactivity disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/en14154530",
+        "author": "Bouzidi",
+        "year": "2021",
+        "title_short": "How can we adapt thermal comfort for disabled patients? A case study of french healthcare buildings in summer",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jpsychires.2022.02.037",
+        "author": "Podoly",
+        "year": "2022",
+        "title_short": "Sensory over-responsivity and obsessive-compulsive disorder: measuring habituation and sensitivity through self-report, ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111463",
+        "author": "Song",
+        "year": "2024",
+        "title_short": "Inclusive comfort: a review of techniques for monitoring thermal comfort among individuals with the inability to provide",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31224/osf.io/fkaqj",
+        "author": null,
+        "year": null,
+        "title_short": "T. Sadia, \u201cExploring the design preferences of neurodivergent populations for quiet spaces,\u201d 2020, doi: https://doi.org/",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0143624418754498",
+        "author": "Shahzad",
+        "year": "2018",
+        "title_short": "Does a neutral thermal sensation determine thermal comfort?",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  {
+    "local_ref": "RAP-23",
+    "doi": "10.1097/AUD.0000000000001110",
+    "total_refs": 97,
+    "relevant_n": 74,
+    "with_doi_n": 70,
+    "already_in_es_n": 4,
+    "new_discovery_n": 70,
+    "discoveries": [
+      {
+        "doi": "10.1097/aud.0000000000000697",
+        "author": "Alhanbali",
+        "year": "2019",
+        "title_short": "Measures of listening effort are multidimensional.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3766/jaaa.15096",
+        "author": "Amlani",
+        "year": "2016",
+        "title_short": "Negative effect of acoustic panels on listening effort in a classroom environment.",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1055/s-2004-828663",
+        "author": "Anderson",
+        "year": "2014",
+        "title_short": "The problem of classroom acoustics: The typical classroom soundscape is a barrier to learning.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.427932",
+        "author": "Bradley",
+        "year": "1999",
+        "title_short": "On the combined effects of signal-to-noise ratio and room acoustics on speech intelligibility.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2021.101552",
+        "author": "Caviola",
+        "year": "2021",
+        "title_short": "Out of the noise: Effects of sound environment on maths performance in middle-school students.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1092-4388(2008/076)",
+        "author": "Choi",
+        "year": "2008",
+        "title_short": "Attentional modulation of word recognition by children in a dual-task paradigm.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1515/aoa-2017-0056",
+        "author": "Choi",
+        "year": "2017",
+        "title_short": "Comparison of two types of combined measures, STI and U50, for predicting speech intelligibility in classrooms.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01411920600635494",
+        "author": "Dockrell",
+        "year": "2006",
+        "title_short": "Acoustical barriers in classrooms: The impact of noise on performance in the classroom.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/00206090109073110",
+        "author": "Dreschler",
+        "year": "2001",
+        "title_short": "ICRA noises: Artificial noise signals with speech-like spectral and temporal properties for hearing instrument assessmen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2015_jslhr-h-13-0335",
+        "author": "Fontan",
+        "year": "2015",
+        "title_short": "Relationship between speech intelligibility and speech comprehension in babble noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1351010x19886035",
+        "author": "Gheller",
+        "year": "2020",
+        "title_short": "Classroom acoustics: Listening problems in children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.aud.0000440715.85844.b8",
+        "author": "Gustafson",
+        "year": "2014",
+        "title_short": "Listening effort and perceived clarity for normal-hearing children with the use of digital noise reduction.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2016.01196",
+        "author": "Halin",
+        "year": "2016",
+        "title_short": "Distracted while reading? Changing to a hard-to-read font shields against the effects of environmental noise and speech ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2331216516667734",
+        "author": "Holube",
+        "year": "2016",
+        "title_short": "Subjective listening effort and electrodermal activity in listening situations with reverberation and noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/14992027.2013.832415",
+        "author": "Houben",
+        "year": "2013",
+        "title_short": "Using response time to speech as a measure for listening effort.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000436",
+        "author": "Hsu",
+        "year": "2017",
+        "title_short": "Listening effort through depth of processing in school-age children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/pchj.44",
+        "author": "Hughes",
+        "year": "2014",
+        "title_short": "Auditory distraction: A duplex-mechanism account.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Hurtig",
+        "year": "2015",
+        "title_short": "Children\u2019s recall of words spoken in their first and second language: Effects of signal-to-noise ratio and reverberation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jslhr.4301.144",
+        "author": "Johnson",
+        "year": "2000",
+        "title_short": "Children\u2019s phoneme identification in reverberation and noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Kjellberg",
+        "year": "2004",
+        "title_short": "Effects of reverberation time on the cognitive load in speech communication: Theoretical considerations.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2013.00578",
+        "author": "Klatte",
+        "year": "2013",
+        "title_short": "Does noise affect learning? A short review on noise effects on cognitive performance in children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916509336813",
+        "author": "Klatte",
+        "year": "2010",
+        "title_short": "Effects of classroom acoustics on performance and well-being in elementary school children: A field study.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.70506",
+        "author": "Klatte",
+        "year": "2010",
+        "title_short": "Effects of noise and reverberation on speech perception and listening comprehension of children and adults in a classroo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.36982",
+        "author": "Klatte",
+        "year": "2007",
+        "title_short": "Effects of irrelevant speech and traffic noise on speech perception and cognitive performance in elementary school child",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e3182310019",
+        "author": "Koelewijn",
+        "year": "2012",
+        "title_short": "Pupil dilation uncovers extra listening effort in the presence of a single-talker masker.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000569",
+        "author": "Koopmans",
+        "year": "2018",
+        "title_short": "Speech recognition abilities in normal-hearing children 4 to 12 years of age in stationary and interrupted noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2014_aja-14-0020",
+        "author": "Lewis",
+        "year": "2014",
+        "title_short": "Children\u2019s understanding of instructions presented in noise and reverberation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2016_jslhr-h-15-0207",
+        "author": "Lewis",
+        "year": "2016",
+        "title_short": "Effects of noise on speech recognition and listening effort in children with normal hearing and children with mild bilat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1260/135101009789877031",
+        "author": "Ljung",
+        "year": "2009",
+        "title_short": "Poor listening conditions impair memory for intelligible lectures: Implications for acoustic classroom standards.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20445911.2019.1575387",
+        "author": "MacCutcheon",
+        "year": "2019",
+        "title_short": "Second language vocabulary level is related to benefits for second language listening comprehension under lower reverber",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.biopsycho.2019.01.002",
+        "author": "Marois",
+        "year": "2019",
+        "title_short": "Is auditory distraction by changing-state and deviant sounds underpinned by the same mechanism? Evidence from pupillomet",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cognition.2008.08.003",
+        "author": "Marsh",
+        "year": "2009",
+        "title_short": "Interference by process, not content, determines semantic auditory distraction.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e31828576e2",
+        "author": "McCreery",
+        "year": "2013",
+        "title_short": "The effects of limited bandwidth and noise on verbal processing time and word recall in normal-hearing children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jecp.2017.04.006",
+        "author": "McGarrigle",
+        "year": "2017",
+        "title_short": "Measuring listening-related effort and fatigue in school-aged children using pupillometry.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000623",
+        "author": "McGarrigle",
+        "year": "2019",
+        "title_short": "Behavioral measures of listening effort in school-age children: Examining the effects of signal-to-noise ratio, hearing ",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3109/14992027.2014.890296",
+        "author": "McGarrigle",
+        "year": "2014",
+        "title_short": "Listening effort and fatigue: What exactly are we measuring? A British Society of Audiology Cognition in Hearing Special",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4931903",
+        "author": "Mealings",
+        "year": "2015",
+        "title_short": "The effect of different open plan and enclosed classroom acoustic conditions on speech perception in Kindergarten childr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/acp.3098",
+        "author": "Meinhardt-Injac",
+        "year": "2014",
+        "title_short": "Auditory distraction by meaningless irrelevant speech. A developmental study.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2331216518793255",
+        "author": "Meister",
+        "year": "2018",
+        "title_short": "Verbal response times as a potential indicator of cognitive load during conventional speech audiometry with matrix sente",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.396880",
+        "author": "N\u00e1b\u0115lek",
+        "year": "1988",
+        "title_short": "Identification of vowels in quiet, noise, and reverberation: Relationships with age and hearing loss.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e3181d3d514",
+        "author": "Neuman",
+        "year": "2010",
+        "title_short": "Combined effects of noise and reverberation on speech recognition performance of normal-hearing children and adults.",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.specom.2019.11.005",
+        "author": "Nirme",
+        "year": "2020",
+        "title_short": "Audio-visual speech comprehension in noise with real and virtual speakers.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2020_jslhr-19-00330",
+        "author": "Oosthuizen",
+        "year": "2020",
+        "title_short": "Listening effort in native and nonnative english-speaking children using low linguistic single- and dual-task paradigms.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4929614",
+        "author": "Pals",
+        "year": "2015",
+        "title_short": "Validation of a simple response-time measure of listening effort.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000494",
+        "author": "Peelle",
+        "year": "2018",
+        "title_short": "Listening effort: How the cognitive consequences of acoustic challenge are reflected in brain and behavior.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4948564",
+        "author": "Peng",
+        "year": "2016",
+        "title_short": "Effects of noise, reverberation and foreign accent on native and non-native listeners\u2019 performance of English speech com",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2018_jslhr-h-17-0423",
+        "author": "Peng",
+        "year": "2019",
+        "title_short": "Listening effort by native and nonnative listeners due to noise, reverberation, and talker foreign accent during English",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000312",
+        "author": "Pichora-Fuller",
+        "year": "2016",
+        "title_short": "Hearing impairment and cognitive energy: The framework for understanding effortful listening (FUEL).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2019.01749",
+        "author": "Picou",
+        "year": "2019",
+        "title_short": "Moderate reverberation does not increase subjective fatigue, subjective listening effort, or behavioral listening effort",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000222",
+        "author": "Picou",
+        "year": "2016",
+        "title_short": "The effects of noise and reverberation on listening effort in adults with normal hearing.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apacoust.2019.03.026",
+        "author": "Prodi",
+        "year": "2019",
+        "title_short": "An experimental study of a time-frame implementation of the speech transmission index in fluctuating speech-like noise c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2019_jslhr-h-19-0180",
+        "author": "Prodi",
+        "year": "2019",
+        "title_short": "Impact of background noise fluctuation and reverberation on response time in a speech reception task.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2019.02166",
+        "author": "Prodi",
+        "year": "2019",
+        "title_short": "Noise, age, and gender effects on speech intelligibility and sentence comprehension for 11- to 13-year-old children in r",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apacoust.2021.108239",
+        "author": "Prodi",
+        "year": "2021",
+        "title_short": "Using speech comprehension to qualify communication in classrooms: Influence of listening condition, task complexity, st",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2018_lshss-18-0039",
+        "author": "Prodi",
+        "year": "2019",
+        "title_short": "Investigating listening effort in classrooms for 5-to 7-year-old children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.3436563",
+        "author": "Prodi",
+        "year": "2010",
+        "title_short": "Intelligibility, listening difficulty and listening efficiency in auralized classrooms.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4770259",
+        "author": "Prodi",
+        "year": "2013",
+        "title_short": "On the perception of speech in primary school classrooms: Ranking of noise interference and of age influence.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/14992027.2015.1061709",
+        "author": "Puglisi",
+        "year": "2015",
+        "title_short": "An Italian matrix sentence test for the evaluation of speech intelligibility in noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2017.07.005",
+        "author": "Reinten",
+        "year": "2017",
+        "title_short": "The indoor sound environment and human task performance: A literature review on the role of room acoustics.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4897398",
+        "author": "Rennies",
+        "year": "2014",
+        "title_short": "Listening effort and speech intelligibility in listening situations affected by noise and reverberation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14015439.2017.1324914",
+        "author": "Sahl\u00e9n",
+        "year": "2018",
+        "title_short": "Is children\u2019s listening effort in background noise influenced by the speaker\u2019s voice quality?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2885750",
+        "author": "Sato",
+        "year": "2008",
+        "title_short": "Relationship between listening difficulty and acoustical objective measures in reverberant sound fields.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Schafer",
+        "year": "2013",
+        "title_short": "Listening comprehension in background noise in children with normal hearing.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4904528",
+        "author": "Shield",
+        "year": "2015",
+        "title_short": "A survey of acoustic conditions and noise levels in secondary school classrooms in England.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1260/135101003768965960",
+        "author": "Shield",
+        "year": "2003",
+        "title_short": "The effects of noise on children at school: A review.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2812596",
+        "author": "Shield",
+        "year": "2008",
+        "title_short": "The effects of environmental and classroom noise on the academic attainments of primary school children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000322",
+        "author": "Sommers",
+        "year": "2016",
+        "title_short": "Listening effort in younger and older adults: A comparison of auditory-only and auditory-visual presentations.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "S\u00f6rqvist",
+        "year": "2014",
+        "title_short": "On interpretation and task selection in studies on the effects of noise on cognitive performance.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/sjop.12115",
+        "author": "S\u00f6rqvist",
+        "year": "2014",
+        "title_short": "High second-language proficiency protects against the effects of reverberation on listening comprehension.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0141945",
+        "author": "Steel",
+        "year": "2015",
+        "title_short": "Correction: Binaural fusion and listening effort in children who use bilateral cochlear implants: A psychoacoustic and p",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2018_jslhr-h-17-0257",
+        "author": "Strand",
+        "year": "2018",
+        "title_short": "Measuring listening effort: Convergent validity, sensitivity, and links with cognitive and personality measures.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.3662059",
+        "author": "Valente",
+        "year": "2012",
+        "title_short": "Experimental investigation of the effects of the acoustical conditions in a simulated classroom on speech recognition an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2018.03.020",
+        "author": "Visentin",
+        "year": "2018",
+        "title_short": "Using listening effort assessment in the acoustical design of rooms for speech.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e31825aecad",
+        "author": "Wr\u00f3blewski",
+        "year": "2012",
+        "title_short": "Effects of reverberation on speech recognition in stationary and modulated noise by school-aged children and young adult",
+        "in_evidence_sources": true
+      }
+    ]
+  },
+  {
+    "local_ref": "RAP-11",
+    "doi": "10.1044/2019_AJA-19-0010",
+    "total_refs": 52,
+    "relevant_n": 5,
+    "with_doi_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 5,
+    "discoveries": [
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "All Noise Control. (2007). NRC rating. Retrieved from http://www.allnoisontrol.com/products/CeilingBaffles.cfm",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": null,
+        "year": null,
+        "title_short": "American Speech-Language-Hearing Association. (2018). Practice portal\u2014Classroom acoustics. Retrieved from https://www.as",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Anderson K. L.",
+        "year": "2005",
+        "title_short": "Benefit of S/N enhancing devices to speech perception of children listening in a typical classroom with hearing aids or ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Crandell C. C.",
+        "year": "1994",
+        "title_short": "An update of classroom acoustics for children with hearing impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "author": "Iglehart F.",
+        "year": "2008",
+        "title_short": "Effects of reverberation and noise on speech perception by children with normal and impaired hearing\u2014Preliminary results",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  {
+    "local_ref": "RAP-24",
+    "doi": "10.1044/2019_AJA-19-0041",
+    "total_refs": 20,
+    "relevant_n": 1,
+    "with_doi_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 1,
+    "discoveries": [
+      {
+        "doi": null,
+        "author": "Crukley J.",
+        "year": "2011",
+        "title_short": "An exploration of non-quiet listening at school",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+]

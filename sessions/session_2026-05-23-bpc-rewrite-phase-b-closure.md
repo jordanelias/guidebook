@@ -3,7 +3,7 @@
 **Session ID:** `session_2026-05-23-bpc-rewrite-phase-b-closure`
 **Span:** 2026-05-23 ~23:00 UTC → 2026-05-23 ~23:50 UTC
 **Bootstrap version:** PI v10.14 + architecture v2.3 + userPreferences v6.3
-**Headline outcome:** B.0 closed — 68 unique slugs / 70 BPC files carry the `SYNTHESIS VALIDITY: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner; `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` for the 68 slugs. New DR (DR-2026-05-23) defines the cohort; new audit script (Level 2) verifies four invariants. v10.15 PI queue entry briefly proposed then withdrawn per owner directive (no PI bump unless critical armature) — the DR + audit + DB state are sufficient armature. B.10/B.8 trivial gap closed: REF-00734 Tibble 2005 `synthesis_attribution_required` flag backfilled; 30/30 co1 rows now flagged.
+**Headline outcome:** B.0 closed — 68 unique slugs / 70 BPC files carry the `SYNTHESIS VALIDITY: PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION` banner; `bpc_metadata.evidence_state = 'RETRACTED-PRE-REHAB'` for the 68 slugs. New DR (DR-2026-05-23) defines the cohort; new audit script (Level 2) verifies four invariants. v10.15 PI queue entry briefly proposed then withdrawn per owner directive (no PI bump unless critical armature) — the DR + audit + DB state are sufficient armature. B.10/B.8 trivial gap closed: REF-00734 Tibble 2005 `synthesis_attribution_required` flag backfilled; 30/30 co1 rows now flagged. B.11 batch 1 completed: 5 Tier-1 sources in `room-acoustic-performance` backward-mined via CrossRef with full protocol (PubMed verify, relevance filter, dedup); forward DEFERRED with reason logged per skill §0 partial-availability rule (Scholar Gateway connector lacks cited-by API in this environment). Discovery surface (173 NEW candidate references across the 5 sources) preserved at `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` for next-session triage. GAP-292 logged: REF-00571 (Kotloski 2020 rat-kindling paper) is misclassified under `room-acoustic-performance` slug.
 
 ---
 
@@ -16,10 +16,13 @@
 | Active workplan §B.0 status | OPEN, target ~30 BPCs | CLOSED, applied to 70 files / 68 slugs | closed |
 | co1 rows with `synthesis_attribution_required = 1` (B.10) | 29/30 | 30/30 | +1 |
 | Co-1 six-field set (B.8) | 29/30 | 30/30 | +1 |
-| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | 2 (B.11, B.9) | -3 |
+| citation_mining backward=1 rows (B.11) | 2 (school-environment-autism) | 7 (+ 5 room-acoustic-performance) | +5 |
+| B.11 unmined T1-3 sources for room-acoustic-performance | 22 | 17 | -5 |
+| Discovery surface preserved for next-session triage (NEW candidate refs) | n/a | 173 | new |
+| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | 2 (B.11 in progress, B.9) | -3 |
 | Eligible evidence pool (rule #10) | 638/638 (100%) | 638/638 (100%) | unchanged |
 | pre_rehab_banner_audit invariants | n/a (script didn't exist) | 4/4 PASS | new audit |
-| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 116 | +2 |
+| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 117 | +3 |
 
 ---
 
@@ -54,8 +57,9 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `sessions/LATEST` | UPDATED | Pointer → `session_2026-05-23-bpc-rewrite-phase-b-closure.md` |
 | `decisions/PI-update-needed.md` | RE-MODIFIED (later in session) | v10.15 queue entry withdrawn per owner directive; replaced with "considered and rejected" note citing architecture v2.3 state-vs-rule clause |
 | `decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md` | RE-MODIFIED (later in session) | Companion-to-PI-update-needed line removed; new "Why no PI amendment is needed" section added |
-| `scripts/migrations/data_20260523233000_b10_b8_close_ref00734.sql` | NEW | B.10/B.8 closure migration — sets `synthesis_attribution_required = 1` for REF-00734 (Tibble 2005); 30/30 co1 rows flagged |
-| `data/guidebook.db` (B.10/B.8 update) | RE-UPDATED | REF-00734 row + `data_migrations` entry for `data_20260523233000_b10_b8_close_ref00734` |
+| `scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql` | NEW | B.11 batch 1 migration — backward mining log for 5 Tier-1 sources in `room-acoustic-performance` with forward DEFERRED |
+| `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` | NEW | Discovery surface from CrossRef backward mining — 5 sources × 173 NEW candidate refs (relevance-filtered) — preserved for next-session triage |
+| `data/guidebook.db` (B.11 update) | RE-UPDATED | 5 citation_mining rows (room-acoustic-performance) + 1 GAP row (GAP-292 RAP-13 misclassification) + 1 data_migrations entry |
 
 ---
 
@@ -66,6 +70,7 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 3. **Markdown citation drift from 40 excised ref-ids.** BPC reasoning docs still contain textual citations to the 40 ref-ids excised on 2026-05-23. Source_slug_links rows cascade-deleted on the DB side, but raw markdown readers see dangling pointers. Separate cleanup pass — not started in this session, not started in the prior either.
 4. **`bpc-rewrite-workplan-2026-05-11.md` §B.0 status update.** The workplan still lists B.0 as "Target: ~30 BPCs; Current: 0 applied." That document should be updated to reflect the closure (with the corrected cohort size of 70 files / 68 unique slugs). Not done this session; queued.
 5. **PI rule #10 cohort wording — no amendment.** The live PI in claude.ai (v10.14) reads "from the 2026-03-30 round." Per owner directive 2026-05-23, this is not amended — the DR + audit script + DB state are the operational armature for the broader cohort. Architecture v2.3 `<migration_and_growth>` explicitly places state of this kind out of PI. The `[ASSUMPTION: applying broader cohort per DR-2026-05-23]` tag that briefly stood for the v10.15-queued period is retired; the DR is the standing reference.
+6. **GAP-292 (logged this session): REF-00571 misclassification.** Kotloski 2020 rat-kindling/TBI-seizure paper (DOI `10.3389/fneur.2019.01286`) is linked to slug `room-acoustic-performance` as RAP-13 but is unrelated to acoustic performance. Surfaced during B.11 backward mining. Owner action: reclassify or retire the `source_slug_links` row. P2 priority.
 
 ---
 
@@ -73,7 +78,9 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 citation mining.** ~60 slugs remaining. Highest leverage for Phase E. Skill: `citation-miner`. Use `references/citation-mining-register.md` as the queue. Per-slug effort: ~1 hour. Total: ~60 hours of dispersed work; pace per session = however many slugs can be cleared at high quality before bootstrap exhaustion (~5–8 per session is the recent rate).
+- **B.11 citation mining.** ~58 slugs / ~80+ sources remaining. **Batch 1 of room-acoustic-performance complete (5/22 Tier-1 sources mined; 17 remaining in this slug).** Skill: `citation-miner`. Per-slug effort: ~1 hour per 5-source batch given the forward-DEFERRED workflow (CrossRef + relevance filter is fast; full per-discovery INSERT to evidence_sources is the heavy step deferred this session).
+  - **Discovery triage queue:** 173 NEW candidate refs in `sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json` need per-row tier classification + verification + INSERT before they can support synthesis. Workflow option A: process discoveries before moving to next batch (preserves backward-mining momentum within slug). Workflow option B: rotate to other slug batches and bulk-triage discoveries periodically (preserves discovery depth across slugs).
+  - **Forward mining is structurally blocked** without a cited-by API in the connector surface. Skill §0 says PubMed `find_related_articles` is not a substitute (it's word-weighted similarity, not citation relationships). When forward becomes available (Scholar Gateway citations endpoint, OpenAlex inbound-citations, Semantic Scholar API), the deferred_reason on every backward-only row will surface the work to do.
 - **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining at ~10 min each. Can run in parallel with B.11.
 - ~~B.8 Co-1 six fields.~~ **CLOSED this session** — 30/30 via REF-00734 backfill.
 - ~~B.10 synthesis_attribution_required.~~ **CLOSED this session** — 30/30 co1 rows flagged.

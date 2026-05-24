@@ -7,7 +7,9 @@
     "source-discipline",
     "canonical-workplan",
     "evidence-verification-gate-for-synthesis",
-    "adherence-logging-and-attestation"
+    "adherence-logging-and-attestation",
+    "citation-mining",
+    "adversarial-research-protocol"
   ],
   "per_rule_status": {
     "source-discipline": {
@@ -28,10 +30,19 @@
     "adherence-logging-and-attestation": {
       "status": "FIRED",
       "evidence_path": "attestations/sessions_session_2026-05-23-bpc-rewrite-phase-b-closure.json"
+    },
+    "citation-mining": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql",
+      "reason": "B.11 batch 1: 5 Tier-1 sources in room-acoustic-performance backward-mined via CrossRef per skill \u00a72 (PubMed identity verification for the source, CrossRef ref-list fetch, relevance filter per \u00a73, dedup against existing evidence_sources by DOI). Forward DEFERRED with reason populated per skill \u00a70 partial-availability rule (Scholar Gateway connector exposes semanticSearch only; no cited-by API). Discovery surface preserved at sessions/artifacts/2026-05-23-b11-room-acoustic-mining-discoveries.json for next-session per-discovery triage (tier classification + verification + INSERT to evidence_sources is the heavy arm of \u00a74 not run this session). 5 citation_mining rows transitioned to backward=1, F=0, deferred_reason set."
+    },
+    "adversarial-research-protocol": {
+      "status": "NOT-FIRED",
+      "reason": "B.11 batch is mining only \u2014 no synthesis claims authored, no gap closures requiring CI/shift-conditions/dissenter/falsification fields. The adversarial-research protocol fires AFTER mining when discoveries are evaluated for synthesis support; that step is deferred to follow-up triage of the discovery-surface artifact."
     }
   },
   "deviations": [],
-  "bias_direction": "Session bias toward declaring B.0 closed under a broader cohort interpretation than the handoff stated. The Cohort-vs-Handoff section is honest about the 2.3\u00d7 factor and the alternative narrower-interpretation availability, but the headline framing (`B.0 closed`) presupposes the broader interpretation is correct. Owner directive 2026-05-23 confirmed the operational application stands without PI amendment (the DR is the standing reference); the narrower-cohort exit ramp remains via per-slug counter-migration. A future session that narrows the cohort would need to reopen B.0 and selectively unbanner \u2014 the language `forward-reversible` understates the work cost of doing so (~30 file edits + 1 SQL migration + 1 re-attestation per slug transitioned).",
-  "independent_reviewer_counterclaim": "An outside reviewer would object that the session record claims closure on a workplan item the owner sized at ~30 BPCs while actually touching ~70. The closure claim is contingent on the DR's cohort definition, which is itself authored by the same session. The same session also added then withdrew a PI queue entry within ~30 minutes \u2014 symptomatic of insufficient up-front deliberation. Counter: the DR (DEVIATION-LOGGED, not CLEAN) and the explicit owner directive that landed mid-session make the cohort interpretation owner-overridable. The session record names this as Known Pending Work item #5 and as an Owner Action Queue item, surfacing the discretion rather than hiding it. The PI queue add/remove is part of the audit trail (visible in commit history); the human-in-the-loop pattern of 'queue, then owner directs' is the intended mechanism, not a defect.",
+  "bias_direction": "Session bias toward declaring B.0 closed under a broader cohort interpretation than the handoff stated. The Cohort-vs-Handoff section is honest about the 2.3\u00d7 factor and the alternative narrower-interpretation availability, but the headline framing (`B.0 closed`) presupposes the broader interpretation is correct. Owner directive 2026-05-23 confirmed the operational application stands without PI amendment (the DR is the standing reference); the narrower-cohort exit ramp remains via per-slug counter-migration. A future session that narrows the cohort would need to reopen B.0 and selectively unbanner. Additional B.11 bias: the 'log mining without auto-INSERTing 173 discoveries' decision is self-protective \u2014 it limits this session's blast radius but defers work that the skill's \u00a74 strict reading calls for. The discovery-surface artifact preserves replayability so the deferral is auditable; an outside reviewer would object that the skill calls for INSERT, and counter that PI rule #10 demands per-row verification before INSERT is safe.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that the session record claims closure on a workplan item the owner sized at ~30 BPCs while actually touching ~70. The closure claim is contingent on the DR's cohort definition, which is itself authored by the same session. The same session also added then withdrew a PI queue entry within ~30 minutes \u2014 symptomatic of insufficient up-front deliberation. On B.11 the reviewer would push back on the choice to log backward-mined sources without inserting discoveries to evidence_sources \u2014 that is the letter of the skill (\u00a74 'If new: INSERT into evidence_sources + source_slug_links'). Counter: PI rule #10 demands metadata_quality + verification_status for any row that will support synthesis; 173 unverified INSERTs would reintroduce exactly the AUTHOR-TITLE-ONLY pile the 2026-05-23 rehab session just closed. The discovery-surface artifact preserves every reference for replayable triage. The conservative read matches the 2026-05-11g prior session pattern.",
   "verdict": "CLEAN"
 }
