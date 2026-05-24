@@ -1,0 +1,4262 @@
+{
+  "CWD-01": {
+    "openalex_id": "W2003033699",
+    "openalex_cited_by_count": 168,
+    "citers_fetched": 168,
+    "relevant_n": 131,
+    "already_in_es_n": 6,
+    "new_discovery_n": 125,
+    "discoveries": [
+      {
+        "doi": "10.3310/hta18390",
+        "year": 2014,
+        "first_author": "Livingston",
+        "title_short": "A systematic review of the clinical effectiveness and cost-effectiveness of sensory, psychological and behavioural inter",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301217731433",
+        "year": 2017,
+        "first_author": "H\u00e9bert",
+        "title_short": "Dementia friendly initiatives: A state of the science review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216648670",
+        "year": 2016,
+        "first_author": "Woodbridge",
+        "title_short": "Use of the physical environment to support everyday activities for people with dementia: A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fneur.2017.00173",
+        "year": 2017,
+        "first_author": "Xie",
+        "title_short": "Vestibular Loss in Older Adults Is Associated with Impaired Spatial Navigation: Data from the Triangle Completion Task",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-018-0728-0",
+        "year": 2018,
+        "first_author": "F\u00f8rsund",
+        "title_short": "The experience of lived space in persons with dementia: a systematic meta-synthesis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1377/hlthaff.2013.1268",
+        "year": 2014,
+        "first_author": "Gaugler",
+        "title_short": "Alzheimer\u2019s Disease And Nursing Homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610217000631",
+        "year": 2017,
+        "first_author": "Ward",
+        "title_short": "The lived neighborhood: understanding how people with dementia engage with their local environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718800482",
+        "year": 2018,
+        "first_author": "Zamani",
+        "title_short": "Effects of Emergency Department Physical Design Elements on Security, Wayfinding, Visibility, Privacy, and Efficiency an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2021.101744",
+        "year": 2021,
+        "first_author": "Kalantari",
+        "title_short": "Evaluating the impacts of color, graphics, and architectural features on wayfinding in healthcare settings using EEG dat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1057/s41599-020-0460-1",
+        "year": 2020,
+        "first_author": "Pykett",
+        "title_short": "Developing a Citizen Social Science approach to understand urban stress and promote wellbeing in urban communities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18010057",
+        "year": 2020,
+        "first_author": "Boer",
+        "title_short": "The Homestead: Developing a Conceptual Framework through Co-Creation for Innovating Long-Term Dementia Care Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10339-021-01031-8",
+        "year": 2021,
+        "first_author": "Wiener",
+        "title_short": "Ageing- and dementia-friendly design: theory and evidence from cognitive psychology, neuropsychology and environmental p",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/09613218.2021.1984867",
+        "year": 2021,
+        "first_author": "Engelen",
+        "title_short": "Design for healthy ageing \u2013 the relationship between design, well-being, and quality of life: a review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2023.110720",
+        "year": 2023,
+        "first_author": "Kumar",
+        "title_short": "Ten questions concerning smart and healthy built environments for older adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2021.107734",
+        "year": 2021,
+        "first_author": "Leung",
+        "title_short": "Integrated model for indoor built environment and cognitive functional ability of older residents with dementia in care ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09687599.2022.2070060",
+        "year": 2022,
+        "first_author": "Peterson",
+        "title_short": "\u2018Sick with stress\u2019: perspectives on airport travel from persons living with dementia and their travel companions",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/encyclopedia3030076",
+        "year": 2023,
+        "first_author": "Quirke",
+        "title_short": "Environmental Design for People Living with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111980",
+        "year": 2024,
+        "first_author": "Leung",
+        "title_short": "Impact of indoor visual environment on emotional and behavioral symptoms of older people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2024.108843",
+        "year": 2024,
+        "first_author": "Pouyan",
+        "title_short": "The elderly wayfinding performance in an informative healthcare design indoors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2016.00064",
+        "year": 2016,
+        "first_author": "Proulx",
+        "title_short": "Where am I? Who am I? The Relation Between Spatial Cognition, Social Cognition and Individual Differences in the Built E",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2016.07.010",
+        "year": 2016,
+        "first_author": "Bosch",
+        "title_short": "Flying solo: A review of the literature on wayfinding for older adults experiencing visual or cognitive decline",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/00989134-20160212-07",
+        "year": 2016,
+        "first_author": "Davis",
+        "title_short": "Creating a Supportive Environment Using Cues for Wayfinding in Dementia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1108/f-06-2017-0062",
+        "year": 2018,
+        "first_author": "Fisher",
+        "title_short": "Building design for people with dementia: a case study of a UK care home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnw168",
+        "year": 2016,
+        "first_author": "Lorusso",
+        "title_short": "Impact of Multisensory Environments on Behavior for People With Dementia: A Systematic Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.maturitas.2019.06.011",
+        "year": 2019,
+        "first_author": "Ludden",
+        "title_short": "Environmental design for dementia care - towards more meaningful experiences through design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916516677341",
+        "year": 2016,
+        "first_author": "Davis",
+        "title_short": "Salient Cues and Wayfinding in Alzheimer\u2019s Disease Within a Virtual Senior Residence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.dadm.2018.08.001",
+        "year": 2018,
+        "first_author": "Neubauer",
+        "title_short": "What do we know about strategies to manage dementia\u2010related wandering? A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s40064-016-2978-7",
+        "year": 2016,
+        "first_author": "Tommaso",
+        "title_short": "Testing a novel method for improving wayfinding by means of a P3b Virtual Reality Visual Paradigm in normal aging",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2021.102931",
+        "year": 2021,
+        "first_author": "Pouyan",
+        "title_short": "Impact of circulation complexity on hospital wayfinding behavior (Case study: Milad 1000-bed hospital, Tehran, Iran)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/opn.12102",
+        "year": 2016,
+        "first_author": "Innes",
+        "title_short": "Living with dementia in hospital wards: a comparative study of staff perceptions of practice and observed patient experi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jan.13358",
+        "year": 2017,
+        "first_author": "Nordin",
+        "title_short": "The association between the physical environment and the well\u2010being of older people in residential care facilities: A mu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02697459.2017.1379336",
+        "year": 2017,
+        "first_author": "Biglieri",
+        "title_short": "Implementing Dementia-Friendly Land Use Planning: An Evaluation of Current Literature and Financial Implications for Gre",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0898264319870090",
+        "year": 2019,
+        "first_author": "Ferdous",
+        "title_short": "Positive Social Interaction by Spatial Design: A Systematic Review of Empirical Literature in Memory Care Facilities for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2020.1870845",
+        "year": 2021,
+        "first_author": "Br\u00fcchert",
+        "title_short": "Social determinants of older adults\u2019 urban design preference: a cross-sectional study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnagi.2021.607219",
+        "year": 2021,
+        "first_author": "Davis",
+        "title_short": "The Feasibility of Using Virtual Reality and Eye Tracking in Research With Older Adults With and Without Alzheimer's Dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211043546",
+        "year": 2021,
+        "first_author": "Buuren",
+        "title_short": "Dementia-Friendly Design: A Set of Design Criteria and Design Typologies Supporting Wayfinding",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/0739456x221113796",
+        "year": 2022,
+        "first_author": "Biglieri",
+        "title_short": "Fostering Mobility for People Living with Dementia in Suburban Neighborhoods Through Land Use, Urban Design and Wayfindi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7717/peerj.15040",
+        "year": 2023,
+        "first_author": "Chepisheva",
+        "title_short": "Spatial orientation, postural control and the vestibular system in healthy elderly and Alzheimer\u2019s dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301218808591",
+        "year": 2018,
+        "first_author": "Brorsson",
+        "title_short": "How accessible are grocery shops for people with dementia? A qualitative study using photo documentation and focus group",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/col.22272",
+        "year": 2018,
+        "first_author": "S\u00fczer",
+        "title_short": "The aid of colour on visuospatial navigation of elderly people in a virtual polyclinic environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301219896453",
+        "year": 2019,
+        "first_author": "Olsson",
+        "title_short": "Strategies used by people with Alzheimer\u2019s disease for outdoor wayfinding: A repeated observational study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916520953148",
+        "year": 2020,
+        "first_author": "O\u2019Malley",
+        "title_short": "(Dis)orientation and Design Preferences Within an Unfamiliar Care Environment: A Content Analysis of Older Adults\u2019 Quali",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/col.22570",
+        "year": 2020,
+        "first_author": "McLachlan",
+        "title_short": "Colour here, there, and in\u2010between\u2014Placemaking and wayfinding in mental health environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17482631.2022.2087273",
+        "year": 2022,
+        "first_author": "Kevdzija",
+        "title_short": "\u201cEverything looks the same\u201d: wayfinding behaviour and experiences of stroke inpatients in rehabilitation clinics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231152611",
+        "year": 2023,
+        "first_author": "Verderber",
+        "title_short": "Residential Environments for Older Persons: A Comprehensive Literature Review (2005\u20132022)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211062847",
+        "year": 2021,
+        "first_author": "Bae",
+        "title_short": "Interior Environments in Long-Term Care Units From the Theory of Supportive Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14092986",
+        "year": 2024,
+        "first_author": "Zhou",
+        "title_short": "An Analysis of Pedestrian Preferences for Wayfinding Signage in Urban Settings: Evidence from Nanning, China",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x20001701",
+        "year": 2020,
+        "first_author": "Heward",
+        "title_short": "\u2018We go for a homely feel \u2026 not the clinical dementia side\u2019: care home managers\u2019 experiences of supporting residents with",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.46632/sabm/1/1/1",
+        "year": 2022,
+        "first_author": "James",
+        "title_short": "A Review on Architectural Design and its Process",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph21081047",
+        "year": 2024,
+        "first_author": "Oher",
+        "title_short": "The Design of Health Promoting Outdoor Environments for People with Young-Onset Dementia\u2014A Study from a Rehabilitation G",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0714980823000776",
+        "year": 2024,
+        "first_author": "Perez",
+        "title_short": "Risk Factors Associated with Missing Incidents among Persons Living with Dementia: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cities.2025.105969",
+        "year": 2025,
+        "first_author": "Yuan",
+        "title_short": "Mindful walks: Understanding the connection between street characteristics and recreational walking routes in older adul",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2025.1524425",
+        "year": 2025,
+        "first_author": "Buuren",
+        "title_short": "Wayfinding behavioral patterns of seniors with dementia: two exploratory case studies",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1097/nr9.0000000000000036",
+        "year": 2023,
+        "first_author": "Li",
+        "title_short": "Autonomy-supportive environments for people with dementia: an evidence-based review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781003416241-23",
+        "year": 2024,
+        "first_author": "Carbone",
+        "title_short": "Dementia-friendly design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/nrec.2013.15.6.438",
+        "year": 2013,
+        "first_author": "Pollock",
+        "title_short": "Designing for dementia: creating a therapeutic environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1440-1630.12243",
+        "year": 2015,
+        "first_author": "Richards",
+        "title_short": "Comparison of a traditional and non\u2010traditional residential care facility for persons living with dementia and the impac",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586715573740",
+        "year": 2015,
+        "first_author": "Hadjri",
+        "title_short": "Housing Choices and Care Home Design for People With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586716648703",
+        "year": 2016,
+        "first_author": "Nordin",
+        "title_short": "Exploring Environmental Variation in Residential Care Facilities for Older People",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1420326x20977609",
+        "year": 2020,
+        "first_author": "Poto\u010dnik",
+        "title_short": "Colour preference in relation to personal determinants and implications for indoor circadian luminous environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.2021.2020378",
+        "year": 2021,
+        "first_author": "Kowe",
+        "title_short": "The patients\u2019 and caregivers\u2019 perspective: In-hospital navigation aids for people with dementia- a qualitative study wit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jpd-202035",
+        "year": 2020,
+        "first_author": "Ramos",
+        "title_short": "The Role of Architecture and Design in the Management of Parkinson\u2019s Disease: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-170781",
+        "year": 2018,
+        "first_author": "Jonveaux",
+        "title_short": "When Art Meets Gardens: Does It Enhance the Benefits? The Nancy Hypothesis of Care for Persons with Alzheimer\u2019s Disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/hcs-03-2020-0004",
+        "year": 2020,
+        "first_author": "Barrett",
+        "title_short": "Understanding and supporting safe walking with purpose among people living with dementia in extra care, retirement and d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211042344",
+        "year": 2021,
+        "first_author": "Ghamari",
+        "title_short": "Wandering Eyes: Using Gaze-Tracking Method to Capture Eye Fixations in Unfamiliar Healthcare Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0264619616653991",
+        "year": 2016,
+        "first_author": "Bowes",
+        "title_short": "Design of residential environments for people with dementia and sight loss: A structured literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/hcs-12-2018-0035",
+        "year": 2019,
+        "first_author": "Gresham",
+        "title_short": "Developing evaluation of signage for people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17483107.2021.1900935",
+        "year": 2021,
+        "first_author": "Lancioni",
+        "title_short": "Use of technology to sustain mobility in older people with cognitive impairment and dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-32835-1_19",
+        "year": 2020,
+        "first_author": "Niedderer",
+        "title_short": "Working with Experts with Experience: Charting Co-production and Co-design in the Development of HCI-Based Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2022.102940",
+        "year": 2022,
+        "first_author": "Ward",
+        "title_short": "Getting lost with dementia: Encounters with the time-space of not knowing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2021.631531",
+        "year": 2021,
+        "first_author": "Zhang",
+        "title_short": "Study of Effective Corridor Design to Improve Wayfinding in Underground Malls",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15627/jd.2020.3",
+        "year": 2020,
+        "first_author": "Tuaycharoen",
+        "title_short": "Lighting to Enhance Wayfinding for Thai Elderly Adults in Nursing Homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/07334648211050376",
+        "year": 2021,
+        "first_author": "Wang",
+        "title_short": "Influences of Physical Environmental Cues on People With Dementia: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su151612324",
+        "year": 2023,
+        "first_author": "Chen",
+        "title_short": "Habitual Activities for People with Dementia: The Role of Interiors in Supporting Their Development after Relocating to ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2014.930365",
+        "year": 2014,
+        "first_author": "Hoof",
+        "title_short": "The Essential Elements for a Nursing Home According to Stakeholders from Healthcare and Technology: Perspectives from Mu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216656087",
+        "year": 2016,
+        "first_author": "F\u00f8rsund",
+        "title_short": "Finding a place to connect: A qualitative study exploring the influences of the physical and social environments on spou",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ajag.12574",
+        "year": 2018,
+        "first_author": "Tao",
+        "title_short": "Legibility of floor plans and wayfinding satisfaction of residents in Care and Attention homes in Hong Kong",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.jamda.2013.01.018",
+        "year": 2013,
+        "first_author": "Morley",
+        "title_short": "Future Nursing Home Design: An Important Component in Enhancing Quality of Life",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/14717791311311111",
+        "year": 2013,
+        "first_author": "Tooke",
+        "title_short": "Involving people with dementia in the work of an organisation: Service User Review Panels",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijhg-05-2016-0027",
+        "year": 2017,
+        "first_author": "Eastham",
+        "title_short": "Dementia-friendly wards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31449/inf.v45i5.3454",
+        "year": 2021,
+        "first_author": "Ai",
+        "title_short": "The effect of visual attention on stereoscopic lighting of museum ceramic exhibits\uff1a A virtual environment mixed with eye",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2018.1561591",
+        "year": 2019,
+        "first_author": "Neylon",
+        "title_short": "Improving Australian Residential Aged Care Facilities: A Review of Minor Refurbishment Elements",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnad029",
+        "year": 2023,
+        "first_author": "Miola",
+        "title_short": "Navigability of Residential Care Homes From Residents\u2019, Family Members\u2019, and Staff\u2019s Points of View: The Residential Car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/09514848231179176",
+        "year": 2023,
+        "first_author": "Suen",
+        "title_short": "A systematic review of typologies on aged care system components to facilitate complex comparisons",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1680/udap.14.00031",
+        "year": 2015,
+        "first_author": "Faith",
+        "title_short": "Finding a way: long-term care homes to support dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/978-1-78769-971-720191004",
+        "year": 2019,
+        "first_author": "Bowes",
+        "title_short": "Designing Environments for People with Dementia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/ajag.12367",
+        "year": 2017,
+        "first_author": "Neylon",
+        "title_short": "The effectiveness of environment assessment tools to guide refurbishment of Australian residential aged care facilities:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x16001409",
+        "year": 2017,
+        "first_author": "Bowes",
+        "title_short": "Developing best practice guidelines for designing living environments for people with dementia and sight loss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/2968219.2968526",
+        "year": 2016,
+        "first_author": "Ly",
+        "title_short": "Smart lighting in dementia care facility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/2829875.2829899",
+        "year": 2015,
+        "first_author": "Ly",
+        "title_short": "Towards Intelligent and Implicit Assistance for People with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2021.1927667",
+        "year": 2021,
+        "first_author": "Charras",
+        "title_short": "Exploring homeostatic value of space to prevent maladaptive behaviours of people living with dementia: a narrative study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-33540-3_3",
+        "year": 2019,
+        "first_author": "Buuren",
+        "title_short": "Evaluating Three Validation-Methods for an Architectural Intervention for Seniors with Dementia in the Empathic Design F",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-75028-6_11",
+        "year": 2018,
+        "first_author": "Kirch",
+        "title_short": "Breaking Down Barriers: Promoting a New Look at Dementia-Friendly Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24404/621c931cb866263c923ea96b",
+        "year": 2022,
+        "first_author": "Buuren",
+        "title_short": "Design for enabling movement behavior of seniors with demen-tia: design (process) requirements based upon person-centere",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4017/gt.2020.19.s.69659",
+        "year": 2020,
+        "first_author": "Neubauer",
+        "title_short": "A framework to describe the levels of risk associated with dementia-related wandering",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21608/dusj.2023.291088",
+        "year": 2023,
+        "first_author": "Makram",
+        "title_short": "A framework for supporting humanistic design in health-care facility environments.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.51261/yiu.2023.1343342",
+        "year": 2023,
+        "first_author": "G\u00fczel",
+        "title_short": "Assessment of Fall Risk, Reaction Time, Spatial Orientation, and Lower Extremity Strength in Dementia Patients: A Correl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s44223-025-00087-2",
+        "year": 2025,
+        "first_author": "Alsaggaf",
+        "title_short": "A machine learning framework for early-stage dementia-friendly architectural design evaluation using visual access metri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31979/etd.2s5z-359b",
+        "year": 2013,
+        "first_author": "Su",
+        "title_short": "Built for Dementia: Urban Design Analysis for Dementia-Friendly Communities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15682/jkiha.2015.21.3.9",
+        "year": 2015,
+        "first_author": "Choi",
+        "title_short": "A Study on Environment-related Factors that Affect Wandering for People with Dementia - A Systematic Review of Literatur",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31436/japcm.v11i1.626",
+        "year": 2021,
+        "first_author": "Ismail",
+        "title_short": "Appraising A Sense of Community in Designing Senior Housing for Elderly Quality of Life",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.55612/s-5002-054-005",
+        "year": 2022,
+        "first_author": "Elnimr",
+        "title_short": "A Study of Architectural Barriers and the Potential Role of Assistive Technologies in Long-term Healthcare Centres for P",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231180905",
+        "year": 2023,
+        "first_author": "Davis",
+        "title_short": "The Assessment of Long-Term Care Environments for Wayfinding Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-89899-5_19",
+        "year": 2018,
+        "first_author": "Nordin",
+        "title_short": "The Importance of the\u00a0Physical Environment to Support Individualised Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32469/10355/62509",
+        "year": 2016,
+        "first_author": "Ding",
+        "title_short": "Evidence-based design utilized in hospital architecture and changing the design process: a hospital case study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31979/etd.2s5z-359b",
+        "year": 2013,
+        "first_author": "Su",
+        "title_short": "Built for Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15682/jkiha.2014.20.4.27",
+        "year": 2014,
+        "first_author": "Choi",
+        "title_short": "A Study on Environment-related Factors that Promote Wayfinding for People with Dementia - Focused on the Context of Long",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.17013131",
+        "year": 2015,
+        "first_author": "Lambert",
+        "title_short": "Reinvigorating Life: An Architecture for Younger Onset Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5072/prism/25890",
+        "year": 2014,
+        "first_author": "Marcy\u2010Edwards",
+        "title_short": "Engaging at a Garden Vignette: The Effect on Neuropsychiatric Behaviour in Moderate to Severe Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3889/seejad.2016.10024",
+        "year": 2016,
+        "first_author": "Krliu",
+        "title_short": "Interior Design of Care Homes for People with Alzheimer's Disease: A Comparative Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2019,
+        "first_author": "Bae",
+        "title_short": "The Impact of Ambient Scent Environment on Residents\u2019 Wellness and Their Perception of Interior Environments in Long-Ter",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22215/etd/2016-11605",
+        "year": 2016,
+        "first_author": "Hassan",
+        "title_short": "Social Architecture: Aging in Community",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-12-818685-5.00010-6",
+        "year": 2020,
+        "first_author": "Fleming",
+        "title_short": "Can buildings contribute to the rehabilitation of people living with dementia?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08959420.2020.1851434",
+        "year": 2021,
+        "first_author": "Neylon",
+        "title_short": "Can a Modified Environment Assessment Tool Guide Priorities for Minor Refurbishments at a Residential Aged Care Facility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.14419/ijet.v7i4.33.23518",
+        "year": 2018,
+        "first_author": "Lesmana",
+        "title_short": "Wayfinding for Pedestrians: Overview of the Role of Sidewalk Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14214473.v1",
+        "year": 2021,
+        "first_author": "Patel",
+        "title_short": "Patient Safety of Older Adults with Cognitive Impairment: Evaluation of a Service Improvement Initiative",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14214473",
+        "year": 2021,
+        "first_author": "Patel",
+        "title_short": "Patient Safety of Older Adults with Cognitive Impairment: Evaluation of a Service Improvement Initiative",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22215/etd/2017-11917",
+        "year": 2017,
+        "first_author": "Molife",
+        "title_short": "Housing and the City: Supporting the Process of Aging in Place Through the Development of Architectural Guidelines",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-09439-2_7",
+        "year": 2023,
+        "first_author": "Guaita",
+        "title_short": "A \u201cProsthetic Environment\u201d for Individuals with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronb/gbad041",
+        "year": 2023,
+        "first_author": "Boedeker",
+        "title_short": "Give Me a Sign: Concrete Symbols Facilitate Orientation in Alzheimer\u2019s Disease Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5151/ergodesign2023-64",
+        "year": 2023,
+        "first_author": "Dario",
+        "title_short": "Os principios de design de ambiente de Fleming\u2013Bennett na percepcao familiares de idosos com demencia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_22",
+        "year": 2023,
+        "first_author": "Sou",
+        "title_short": "Research on Inclusive Design Strategy to Enhance Accessibility in Global Ageing: A Case Study of the Public Housing Wayf",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7771/3067-4883.1187",
+        "year": 2025,
+        "first_author": "Leung",
+        "title_short": "Improving User Experience through Bedroom Lighting Services for Older People Living in Personal Houses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2327857925141026",
+        "year": 2025,
+        "first_author": "El-Sawy",
+        "title_short": "A Framework for Designing Spatial Orientation Tools to Enhance the Experiences of Persons Living with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1101/2025.07.18.25331765",
+        "year": 2025,
+        "first_author": "Everson-Hock",
+        "title_short": "Strategies to support safe wandering in care homes for older adults \u2013 what works, for whom, and in which circumstances?:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnaf256",
+        "year": 2025,
+        "first_author": "Chen",
+        "title_short": "Dementia-friendly communities: the role of built environment and implementation challenges in the United States",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2026.105347",
+        "year": 2026,
+        "first_author": "Hock",
+        "title_short": "Strategies to support safe wandering in care homes for older adults \u2013 what works, for whom, and in which circumstances?:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114380",
+        "year": 2026,
+        "first_author": "Luo",
+        "title_short": "Evaluation models of environmental cognitive performance in the indoor visual environments of care facilities for older ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.11648/j.ejcbs.20261201.12",
+        "year": 2026,
+        "first_author": "Subramanian",
+        "title_short": "Environmental Contexts and the Neural Basis of Memory and Spatial Navigation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867261421977",
+        "year": 2026,
+        "first_author": "Ashour",
+        "title_short": "Designing Human-Centered Journeys: Design Strategies for Enhancing Wayfinding in Complex Healthcare Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2026.2665296",
+        "year": 2026,
+        "first_author": "\u00d6zdem",
+        "title_short": "Design of Care Environments for Alzheimer\u2019s Disease: Developing Design Proposals Based on Healthcare Professionals\u2019 Expe",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-02": {
+    "openalex_id": "W2014022472",
+    "openalex_cited_by_count": 184,
+    "citers_fetched": 183,
+    "relevant_n": 132,
+    "already_in_es_n": 6,
+    "new_discovery_n": 126,
+    "discoveries": [
+      {
+        "doi": "10.1093/geront/gnw259",
+        "year": 2017,
+        "first_author": "Chaudhury",
+        "title_short": "The Influence of the Physical Environment on Residents With Dementia in Long-Term Care Settings: A Review of the Empiric",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671400800111",
+        "year": 2014,
+        "first_author": "Marquardt",
+        "title_short": "Impact of the Design of the Built Environment on People with Dementia: An Evidence-Based Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1533317509358885",
+        "year": 2010,
+        "first_author": "Hoof",
+        "title_short": "Environmental Interventions and the Design of Homes for Older Adults With Dementia: An Overview",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671100400207",
+        "year": 2011,
+        "first_author": "Marquardt",
+        "title_short": "Wayfinding for People with Dementia: A Review of the Role of Architectural Design",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1471301217731433",
+        "year": 2017,
+        "first_author": "H\u00e9bert",
+        "title_short": "Dementia friendly initiatives: A state of the science review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2016.12.008",
+        "year": 2016,
+        "first_author": "Heylighen",
+        "title_short": "Ten questions concerning inclusive design of the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216648670",
+        "year": 2016,
+        "first_author": "Woodbridge",
+        "title_short": "Use of the physical environment to support everyday activities for people with dementia: A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnx146",
+        "year": 2017,
+        "first_author": "Calkins",
+        "title_short": "From Research to Application: Supportive and Therapeutic Environments for People Living With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-018-0728-0",
+        "year": 2018,
+        "first_author": "F\u00f8rsund",
+        "title_short": "The experience of lived space in persons with dementia: a systematic meta-synthesis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-020-01926-9",
+        "year": 2020,
+        "first_author": "Clemmensen",
+        "title_short": "The role of physical and cognitive function in performance of activities of daily living in patients with mild-to-modera",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317517704898",
+        "year": 2017,
+        "first_author": "Tartarini",
+        "title_short": "Indoor Air Temperature and Agitation of Nursing Home Residents With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10339-021-01031-8",
+        "year": 2021,
+        "first_author": "Wiener",
+        "title_short": "Ageing- and dementia-friendly design: theory and evidence from cognitive psychology, neuropsychology and environmental p",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1017/s0144686x17000277",
+        "year": 2017,
+        "first_author": "O\u2019Malley",
+        "title_short": "\u2018All the corridors are the same\u2019: a qualitative study of the orientation experiences and design preferences of UK older ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13195-021-00849-w",
+        "year": 2021,
+        "first_author": "Bourdon",
+        "title_short": "Enriched gardens improve cognition and independence of nursing home residents with dementia: a pilot controlled trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2021.107734",
+        "year": 2021,
+        "first_author": "Leung",
+        "title_short": "Integrated model for indoor built environment and cognitive functional ability of older residents with dementia in care ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15265161.2025.2497980",
+        "year": 2025,
+        "first_author": "Peterson",
+        "title_short": "Mind Care: The Moral Significance of the Dementia Caregiving Dyad",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2024.108843",
+        "year": 2024,
+        "first_author": "Pouyan",
+        "title_short": "The elderly wayfinding performance in an informative healthcare design indoors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14103066",
+        "year": 2024,
+        "first_author": "Luo",
+        "title_short": "Association between the Indoor Visual Environment and Cognition in Older Adults: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11940-013-0257-2",
+        "year": 2013,
+        "first_author": "Cohen\u2010Mansfield",
+        "title_short": "Nonpharmacologic Treatment of Behavioral Disorders in Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2016.00064",
+        "year": 2016,
+        "first_author": "Proulx",
+        "title_short": "Where am I? Who am I? The Relation Between Spatial Cognition, Social Cognition and Individual Differences in the Built E",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2016.07.010",
+        "year": 2016,
+        "first_author": "Bosch",
+        "title_short": "Flying solo: A review of the literature on wayfinding for older adults experiencing visual or cognitive decline",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301215591334",
+        "year": 2015,
+        "first_author": "O\u2019Malley",
+        "title_short": "Decreasing spatial disorientation in care-home settings: How psychology can guide the development of dementia friendly d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2702.2012.04305.x",
+        "year": 2012,
+        "first_author": "Wolf\u2010Ostermann",
+        "title_short": "Health outcomes and quality of life of residents of shared\u2010housing arrangements compared to residents of special care un",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2011.595612",
+        "year": 2011,
+        "first_author": "Marquardt",
+        "title_short": "A Descriptive Study of Home Modifications for People with Dementia and Barriers to Implementation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2015.1056336",
+        "year": 2015,
+        "first_author": "Ahrentzen",
+        "title_short": "The role of building design and interiors in ageing actively at home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2013.12.003",
+        "year": 2014,
+        "first_author": "Caff\u00f2",
+        "title_short": "Comparing two different orientation strategies for promoting indoor traveling in people with Alzheimer's disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2011.09.017",
+        "year": 2011,
+        "first_author": "Lancioni",
+        "title_short": "Technology-aided pictorial cues to support the performance of daily activities by persons with moderate Alzheimer's dise",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301214535134",
+        "year": 2014,
+        "first_author": "Caspi",
+        "title_short": "Wayfinding difficulties among elders with dementia in an assisted living residence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jocn.12669",
+        "year": 2014,
+        "first_author": "Hynninen",
+        "title_short": "The care of older people with dementia in surgical wards from the point of view of the nursing staff and physicians",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.maturitas.2019.06.011",
+        "year": 2019,
+        "first_author": "Ludden",
+        "title_short": "Environmental design for dementia care - towards more meaningful experiences through design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610211002675",
+        "year": 2012,
+        "first_author": "Garcia",
+        "title_short": "Perceptions of family and staff on the role of the environment in long-term care homes for people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916516677341",
+        "year": 2016,
+        "first_author": "Davis",
+        "title_short": "Salient Cues and Wayfinding in Alzheimer\u2019s Disease Within a Virtual Senior Residence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2018.1489473",
+        "year": 2018,
+        "first_author": "Barrett",
+        "title_short": "Optimal spaces for those living with dementia: principles and evidence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2019.04.019",
+        "year": 2019,
+        "first_author": "Leung",
+        "title_short": "A qualitative and quantitative investigation of effects of indoor built environment for people with dementia in care and",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2012.08.016",
+        "year": 2012,
+        "first_author": "Lancioni",
+        "title_short": "Technology-based orientation programs to support indoor travel by persons with moderate Alzheimer's disease: Impact asse",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.tourman.2016.12.018",
+        "year": 2017,
+        "first_author": "Connell",
+        "title_short": "Business engagement in a civil society: Transitioning towards a dementia-friendly visitor economy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.archger.2014.07.012",
+        "year": 2014,
+        "first_author": "Kim",
+        "title_short": "Home modification by older adults and their informal caregivers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su13031084",
+        "year": 2021,
+        "first_author": "Kuliga",
+        "title_short": "Wayfinding in People with Alzheimer\u2019s Disease: Perspective Taking and Architectural Cognition\u2014A Vision Paper on Future D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2011.03.020",
+        "year": 2011,
+        "first_author": "Lancioni",
+        "title_short": "Persons with mild or moderate Alzheimer's disease use a basic orientation technology to travel to different rooms within",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2019.106532",
+        "year": 2019,
+        "first_author": "Leung",
+        "title_short": "Structural model for the relationships between indoor built environment and behaviors of residents with dementia in care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301215614572",
+        "year": 2015,
+        "first_author": "Graham",
+        "title_short": "From wandering to wayfaring: Reconsidering movement in people with dementia in long-term care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0898264319870090",
+        "year": 2019,
+        "first_author": "Ferdous",
+        "title_short": "Positive Social Interaction by Spatial Design: A Systematic Review of Empirical Literature in Memory Care Facilities for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2013.04.020",
+        "year": 2013,
+        "first_author": "Lancioni",
+        "title_short": "Supporting daily activities and indoor travel of persons with moderate Alzheimer's disease through standard technology r",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211043546",
+        "year": 2021,
+        "first_author": "Buuren",
+        "title_short": "Dementia-Friendly Design: A Set of Design Criteria and Design Typologies Supporting Wayfinding",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1471301219896453",
+        "year": 2019,
+        "first_author": "Olsson",
+        "title_short": "Strategies used by people with Alzheimer\u2019s disease for outdoor wayfinding: A repeated observational study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718796614",
+        "year": 2018,
+        "first_author": "Hecke",
+        "title_short": "How Enclosure and Spatial Organization Affect Residents\u2019 Use and Experience of a Dementia Special Care Unit: A Case Stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su12114393",
+        "year": 2020,
+        "first_author": "Carta",
+        "title_short": "Self-Organising Floor Plans in Care Homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916520953148",
+        "year": 2020,
+        "first_author": "O\u2019Malley",
+        "title_short": "(Dis)orientation and Design Preferences Within an Unfamiliar Care Environment: A Content Analysis of Older Adults\u2019 Quali",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2022.05.026",
+        "year": 2022,
+        "first_author": "Bourdon",
+        "title_short": "Effect of the Physical Environment on Health and Well-Being of Nursing Homes Residents: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17482631.2022.2087273",
+        "year": 2022,
+        "first_author": "Kevdzija",
+        "title_short": "\u201cEverything looks the same\u201d: wayfinding behaviour and experiences of stroke inpatients in rehabilitation clinics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231152611",
+        "year": 2023,
+        "first_author": "Verderber",
+        "title_short": "Residential Environments for Older Persons: A Comprehensive Literature Review (2005\u20132022)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2021.1984869",
+        "year": 2021,
+        "first_author": "Quirke",
+        "title_short": "A design assessment tool for layout planning in residential care for dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2024.1327272",
+        "year": 2024,
+        "first_author": "Santini",
+        "title_short": "A quasi-experimental mixed-method pilot study to check the efficacy of the \u201cSOUND\u201d active and passive music-based interv",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x20001701",
+        "year": 2020,
+        "first_author": "Heward",
+        "title_short": "\u2018We go for a homely feel \u2026 not the clinical dementia side\u2019: care home managers\u2019 experiences of supporting residents with",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2023.102065",
+        "year": 2023,
+        "first_author": "Merhav",
+        "title_short": "How pathways' configuration impacts wayfinding in young and older adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14103307",
+        "year": 2024,
+        "first_author": "Quesada-Garc\u00eda",
+        "title_short": "Residential Care Facilities for Users with Alzheimer\u2019s Disease: Characterisation of Their Architectural Typology",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2025.1524425",
+        "year": 2025,
+        "first_author": "Buuren",
+        "title_short": "Wayfinding behavioral patterns of seniors with dementia: two exploratory case studies",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1097/nr9.0000000000000036",
+        "year": 2023,
+        "first_author": "Li",
+        "title_short": "Autonomy-supportive environments for people with dementia: an evidence-based review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781003416241-23",
+        "year": 2024,
+        "first_author": "Carbone",
+        "title_short": "Dementia-friendly design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-016-0249-7",
+        "year": 2016,
+        "first_author": "Palm",
+        "title_short": "People with dementia in nursing home research: a methodological review of the definition and identification of the study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x11001231",
+        "year": 2012,
+        "first_author": "Karmel",
+        "title_short": "Care trajectories through community and residential aged care services: disease effects",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317513517033",
+        "year": 2013,
+        "first_author": "Mazzei",
+        "title_short": "Exploring the Influence of Environment on the Spatial Behavior of Older Adults in a Purpose-Built Acute Care Dementia Un",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586715573740",
+        "year": 2015,
+        "first_author": "Hadjri",
+        "title_short": "Housing Choices and Care Home Design for People With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-31416-7_24",
+        "year": 2016,
+        "first_author": "Fornara",
+        "title_short": "Healthy Residential Environments for the Elderly",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/scs.12240",
+        "year": 2015,
+        "first_author": "Vracem",
+        "title_short": "Agitation in dementia and the role of spatial and sensory interventions: experiences of professional and family caregive",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnr.2013.11.002",
+        "year": 2013,
+        "first_author": "Wolf\u2010Ostermann",
+        "title_short": "Quality of Care and Its Impact on Quality of Life for Care-Dependent Persons With Dementia in Shared-Housing Arrangement",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00391-016-1079-0",
+        "year": 2017,
+        "first_author": "B\u00fcter",
+        "title_short": "[Dementia-friendly hospital wards : Expert recommendations for planning and design].",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.2021.2020378",
+        "year": 2021,
+        "first_author": "Kowe",
+        "title_short": "The patients\u2019 and caregivers\u2019 perspective: In-hospital navigation aids for people with dementia- a qualitative study wit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301219874220",
+        "year": 2019,
+        "first_author": "Houston",
+        "title_short": "Accessible design and dementia: A neglected space in the equality debate",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-1-4899-8029-8_1",
+        "year": 2014,
+        "first_author": "Lancioni",
+        "title_short": "Assistive Technologies for Improving Quality of Life",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-170781",
+        "year": 2018,
+        "first_author": "Jonveaux",
+        "title_short": "When Art Meets Gardens: Does It Enhance the Benefits? The Nancy Hypothesis of Care for Persons with Alzheimer\u2019s Disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211043073",
+        "year": 2021,
+        "first_author": "Fahsold",
+        "title_short": "German Translation, Linguistic Validation, and Cultural Adaptation of the Environmental Audit Tool\u2014High Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/joid.12094",
+        "year": 2017,
+        "first_author": "Mobley",
+        "title_short": "Examining Relationships between Physical Environments and Behaviors of Residents with Dementia in a Retrofit Special Car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17483107.2021.1900935",
+        "year": 2021,
+        "first_author": "Lancioni",
+        "title_short": "Use of technology to sustain mobility in older people with cognitive impairment and dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718779172",
+        "year": 2018,
+        "first_author": "Catt",
+        "title_short": "The Reality of Well-Being-Focused Design in Dementia Care: A Case Study of Acute Dementia Wards in the United Kingdom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2022.2092927",
+        "year": 2022,
+        "first_author": "Wahlroos",
+        "title_short": "Physical Environment Maintaining Independence and Self-management of Older People in Long-Term Care Settings\u2014An Integrat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15627/jd.2020.3",
+        "year": 2020,
+        "first_author": "Tuaycharoen",
+        "title_short": "Lighting to Enhance Wayfinding for Thai Elderly Adults in Nursing Homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su141711076",
+        "year": 2022,
+        "first_author": "Tseng",
+        "title_short": "A Device Designed to Improve Care and Wayfinding Assistance for Elders with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2025.1470066",
+        "year": 2025,
+        "first_author": "Sun",
+        "title_short": "Defining familiarity in nursing homes providing care for residents with dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14051427",
+        "year": 2024,
+        "first_author": "Jee",
+        "title_short": "Enhancing Dementia Nursing Homes in South Korea: Lessons from German Building Standards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317510387584",
+        "year": 2011,
+        "first_author": "Marquardt",
+        "title_short": "Association of the Spatial Layout of the Home and ADL Abilities Among Older Adults With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2012.01.003",
+        "year": 2012,
+        "first_author": "Slaughter",
+        "title_short": "Functional Outcomes of Nursing Home Residents in Relation to Features of the Environment: Validity of the Professional E",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216656087",
+        "year": 2016,
+        "first_author": "F\u00f8rsund",
+        "title_short": "Finding a place to connect: A qualitative study exploring the influences of the physical and social environments on spou",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2013.01.018",
+        "year": 2013,
+        "first_author": "Morley",
+        "title_short": "Future Nursing Home Design: An Important Component in Enhancing Quality of Life",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cger.2011.01.001",
+        "year": 2011,
+        "first_author": "Rhodes\u2010Kropf",
+        "title_short": "Managing the Patient with Dementia in Long-Term Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3384/ijal.1652-8670.17344",
+        "year": 2018,
+        "first_author": "Annear",
+        "title_short": "Dementia in a regional hospital setting: contextual challenges and barriers to effective care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/iv51561.2020.00045",
+        "year": 2020,
+        "first_author": "Zhang",
+        "title_short": "Developing a visually impaired older people Virtual Reality (VR) simulator to apply VR in the aged living design workflo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211064538",
+        "year": 2022,
+        "first_author": "Rom",
+        "title_short": "Analyzing the Layout of Long-Term Care Facilities: A Psycho-Spatial Approach",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2018.1561591",
+        "year": 2019,
+        "first_author": "Neylon",
+        "title_short": "Improving Australian Residential Aged Care Facilities: A Review of Minor Refurbishment Elements",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnad029",
+        "year": 2023,
+        "first_author": "Miola",
+        "title_short": "Navigability of Residential Care Homes From Residents\u2019, Family Members\u2019, and Staff\u2019s Points of View: The Residential Car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su17031074",
+        "year": 2025,
+        "first_author": "Zhang",
+        "title_short": "Research on Home Environment Design to Improve the Autonomy of Elderly People with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1680/udap.14.00031",
+        "year": 2015,
+        "first_author": "Faith",
+        "title_short": "Finding a way: long-term care homes to support dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jfmpc-06-2015-0019",
+        "year": 2016,
+        "first_author": "Pantzartzis",
+        "title_short": "A built environment response to the rising costs of dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2016.11.001",
+        "year": 2016,
+        "first_author": "Morley",
+        "title_short": "The Future of Long-Term Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2011,
+        "first_author": "Marquardt",
+        "title_short": "Wayfinding for People With Dementia: The Role of Architectural Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/19404921-20170621-03",
+        "year": 2017,
+        "first_author": "Thurman",
+        "title_short": "A Capabilities Approach to Environmental Impact on Nursing Home Resident Quality of Life",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867221100210",
+        "year": 2022,
+        "first_author": "Shabha",
+        "title_short": "Toward an Integrated Context-Based Design Approach for Dementia Residential Care Homes: A Review of Key Operational Desi",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3390/brainsci14121217",
+        "year": 2024,
+        "first_author": "Carton",
+        "title_short": "Effects of Route Complexity and Lighting on Route Following in Alzheimer\u2019s Disease and Posterior Cortical Atrophy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10901-011-9254-5",
+        "year": 2012,
+        "first_author": "Hsieh",
+        "title_short": "A study on the formation of a measurement scale for the environmental quality of Taiwan\u2019s long-term care institutions by",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-52869-0_15",
+        "year": 2020,
+        "first_author": "Brambilla",
+        "title_short": "Built Environment and Alzheimer. Quality Evaluation of Territorial Structures for Patients with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24404/62257f1976cff8c5d2559df3",
+        "year": 2022,
+        "first_author": "Rom",
+        "title_short": "Does the shape of Long-Term Care Units support well-being? A psycho-spatial analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s11556-024-00365-4",
+        "year": 2024,
+        "first_author": "Adams",
+        "title_short": "\u2018Can do\u2019 versus \u2018Do do\u2019 in nursing home residents: identification of contextual factors discriminating groups with align",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s44223-025-00087-2",
+        "year": 2025,
+        "first_author": "Alsaggaf",
+        "title_short": "A machine learning framework for early-stage dementia-friendly architectural design evaluation using visual access metri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-025-14586-9",
+        "year": 2025,
+        "first_author": "Rom",
+        "title_short": "Correlations between the architectural plans of dementia units and residents\u2019 well-being",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/21681015.2013.846944",
+        "year": 2013,
+        "first_author": "Ou",
+        "title_short": "Effects of electronic maps on wayfinding abilities of patients with mild Alzheimer disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2015,
+        "first_author": "Wolf\u2010Ostermann",
+        "title_short": "Physical and Psychosocial Outcomes of People with Dementia in Shared Housing Arrangements - A Cluster-Randomized Study o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31979/etd.2s5z-359b",
+        "year": 2013,
+        "first_author": "Su",
+        "title_short": "Built for Dementia: Urban Design Analysis for Dementia-Friendly Communities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1061/41204(426)54",
+        "year": 2012,
+        "first_author": "Ahn",
+        "title_short": "Sustainable Design Strategies to Assist the Elderly with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/nrec.2017.19.9.499",
+        "year": 2017,
+        "first_author": "Lillyman",
+        "title_short": "Adapting the home to enhance resident wellbeing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231180905",
+        "year": 2023,
+        "first_author": "Davis",
+        "title_short": "The Assessment of Long-Term Care Environments for Wayfinding Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/9781118539415.wbwell069",
+        "year": 2014,
+        "first_author": "Payne",
+        "title_short": "Linking the Physical Design of Health\u2010Care Environments to Wellbeing Indicators",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2298/fuace1004389d",
+        "year": 2010,
+        "first_author": "Dietrich",
+        "title_short": "Margi Park concept design: Nursing home for seniors and EU-standards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2016,
+        "first_author": "Lacey-Avon",
+        "title_short": "Examining the Livability of a Day Program for Individuals with Alzheimer\u2019s Disease and Other Memory-related Disorders: A",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/9781119857198.ch20",
+        "year": 2023,
+        "first_author": "Shin",
+        "title_short": "Design Guidelines for Effective Long\u2010term Care Needs of Older Adults at Home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2312/egve.jvrc13.001-008",
+        "year": 2013,
+        "first_author": "Dyck",
+        "title_short": "Evaluation of Surround-View and Self-Rotation in the OCTAVIS VR-System",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/nrec.2012.14.2.93",
+        "year": 2012,
+        "first_author": "Wilkinson",
+        "title_short": "Providing quality dementia care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15682/jkiha.2014.20.4.27",
+        "year": 2014,
+        "first_author": "Choi",
+        "title_short": "A Study on Environment-related Factors that Promote Wayfinding for People with Dementia - Focused on the Context of Long",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2012,
+        "first_author": "Hunt",
+        "title_short": "INNOVATIONS IN WAYFINDING USING CUPBOARD DOOR DESIGN TEMPLATES FOR DEMENTIA",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4018/978-1-4666-8478-2.ch006",
+        "year": 2015,
+        "first_author": "Toms",
+        "title_short": "Awareness, Self, and the Experience of Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2017,
+        "first_author": "Kordbacheh",
+        "title_short": "Designing for People with Alzheimer\u2019s Disease: The Case of Halk Vakf\u0131 Senior Care Center, Iskele, North Cyprus",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.14129018.v1",
+        "year": 2021,
+        "first_author": "Leech",
+        "title_short": "Architecturalising Aged Care Delivery for Urban Dwelling Elderly",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31579/2767-7370/020",
+        "year": 2021,
+        "first_author": "Wolf",
+        "title_short": "Intergenerational Facility Alternatives: Transitioning Care Options for Aging Parents and Children with Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.17771/pucrio.acad.53317",
+        "year": 2021,
+        "first_author": "AZEVEDO",
+        "title_short": "DESIGN E DOEN\u00c7A DE ALZHEIMER: CONCEITOS NORTEADORES E DIRETRIZES PARA A ADAPTA\u00c7\u00c3O DO LAR DO IDOSO COM DEM\u00caNCIA",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-298311/v1",
+        "year": 2021,
+        "first_author": "Bourdon",
+        "title_short": "Enriched gardens improve cognition and independence of nursing home residents with dementia: a controlled trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-93875-8_15",
+        "year": 2022,
+        "first_author": "Baert",
+        "title_short": "Dementia-Friendly Communities and Challenges from Built Environment Design: The Belgian Case",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-09439-2_7",
+        "year": 2023,
+        "first_author": "Guaita",
+        "title_short": "A \u201cProsthetic Environment\u201d for Individuals with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_22",
+        "year": 2023,
+        "first_author": "Sou",
+        "title_short": "Research on Inclusive Design Strategy to Enhance Accessibility in Global Ageing: A Case Study of the Public Housing Wayf",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-91038-8_12",
+        "year": 2025,
+        "first_author": "Fauth",
+        "title_short": "Aging in Place or Long-term Care? Changing the Narrative to Promote Aging in Place in Long-Term Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1101/2025.07.18.25331765",
+        "year": 2025,
+        "first_author": "Everson-Hock",
+        "title_short": "Strategies to support safe wandering in care homes for older adults \u2013 what works, for whom, and in which circumstances?:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2026.105347",
+        "year": 2026,
+        "first_author": "Hock",
+        "title_short": "Strategies to support safe wandering in care homes for older adults \u2013 what works, for whom, and in which circumstances?:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114380",
+        "year": 2026,
+        "first_author": "Luo",
+        "title_short": "Evaluation models of environmental cognitive performance in the indoor visual environments of care facilities for older ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/jdad3010010",
+        "year": 2026,
+        "first_author": "Buuren",
+        "title_short": "(De)signs of Confusion: Architectural Environments Causing Confusion for People with Advanced Dementia During Wayfinding",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-03": {
+    "openalex_id": "W3199828201",
+    "openalex_cited_by_count": 22,
+    "citers_fetched": 22,
+    "relevant_n": 19,
+    "already_in_es_n": 2,
+    "new_discovery_n": 17,
+    "discoveries": [
+      {
+        "doi": "10.1002/alz.13809",
+        "year": 2024,
+        "first_author": "?",
+        "title_short": "2024 Alzheimer's disease facts and figures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/alz.70235",
+        "year": 2025,
+        "first_author": "?",
+        "title_short": "2025 Alzheimer's disease facts and figures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111980",
+        "year": 2024,
+        "first_author": "Leung",
+        "title_short": "Impact of indoor visual environment on emotional and behavioral symptoms of older people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.111452",
+        "year": 2024,
+        "first_author": "Ma",
+        "title_short": "Exploring the influence of indoor environment and spatial layout on changed behaviours of people with dementia in a nurs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.archger.2023.105135",
+        "year": 2023,
+        "first_author": "Chee",
+        "title_short": "Navigating the twilight years: Supporting older adults\u2019 orientation and wayfinding in senior living facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15030385",
+        "year": 2025,
+        "first_author": "Ghamari",
+        "title_short": "Dementia Friendly Buildings\u2014Approach on Architectures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14103307",
+        "year": 2024,
+        "first_author": "Quesada-Garc\u00eda",
+        "title_short": "Residential Care Facilities for Users with Alzheimer\u2019s Disease: Characterisation of Their Architectural Typology",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2025.1524425",
+        "year": 2025,
+        "first_author": "Buuren",
+        "title_short": "Wayfinding behavioral patterns of seniors with dementia: two exploratory case studies",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1080/13607863.2024.2338204",
+        "year": 2024,
+        "first_author": "Griffiths",
+        "title_short": "Exploring the impact of care home environments and culture on supporting residents to \u2018wander\u2019 safely",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2024.2302190",
+        "year": 2024,
+        "first_author": "Alves",
+        "title_short": "Exploring Dementia-Friendly Environments in Long-Term Care Facilities: Perspectives from Multiple Stakeholders in Portug",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231185851",
+        "year": 2023,
+        "first_author": "Alam",
+        "title_short": "Navigating the Maze: Caregivers Perception on Design Elements to Improve Wayfinding for Older Adults With Dementia in Lo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867221100210",
+        "year": 2022,
+        "first_author": "Shabha",
+        "title_short": "Toward an Integrated Context-Based Design Approach for Dementia Residential Care Homes: A Review of Key Operational Desi",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.24404/621c931cb866263c923ea96b",
+        "year": 2022,
+        "first_author": "Buuren",
+        "title_short": "Design for enabling movement behavior of seniors with demen-tia: design (process) requirements based upon person-centere",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24404/62257f1976cff8c5d2559df3",
+        "year": 2022,
+        "first_author": "Rom",
+        "title_short": "Does the shape of Long-Term Care Units support well-being? A psycho-spatial analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s44223-025-00087-2",
+        "year": 2025,
+        "first_author": "Alsaggaf",
+        "title_short": "A machine learning framework for early-stage dementia-friendly architectural design evaluation using visual access metri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5151/ergodesign2023-64",
+        "year": 2023,
+        "first_author": "Dario",
+        "title_short": "Os principios de design de ambiente de Fleming\u2013Bennett na percepcao familiares de idosos com demencia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_22",
+        "year": 2023,
+        "first_author": "Sou",
+        "title_short": "Research on Inclusive Design Strategy to Enhance Accessibility in Global Ageing: A Case Study of the Public Housing Wayf",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114380",
+        "year": 2026,
+        "first_author": "Luo",
+        "title_short": "Evaluation models of environmental cognitive performance in the indoor visual environments of care facilities for older ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/alz.71345",
+        "year": 2026,
+        "first_author": "?",
+        "title_short": "2026 Alzheimer's disease facts and figures",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-04": {
+    "openalex_id": "W4408299319",
+    "openalex_cited_by_count": 4,
+    "citers_fetched": 4,
+    "relevant_n": 3,
+    "already_in_es_n": 0,
+    "new_discovery_n": 3,
+    "discoveries": [
+      {
+        "doi": "10.1007/s44223-025-00087-2",
+        "year": 2025,
+        "first_author": "Alsaggaf",
+        "title_short": "A machine learning framework for early-stage dementia-friendly architectural design evaluation using visual access metri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5934/kjhe.2025.34.5.841",
+        "year": 2025,
+        "first_author": "Lee",
+        "title_short": "A Comparative Study of Residents\u2019 Quality of Life in Dementia Care Facilities: Traditional Settings vs. Green Care Farms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fmed.2025.1737721",
+        "year": 2026,
+        "first_author": "Li",
+        "title_short": "From images to health insight: integrating MLLM, NLP, and objective Q-sorting of nursing-home built environment orientat",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-05": {
+    "openalex_id": "W3165181264",
+    "openalex_cited_by_count": 51,
+    "citers_fetched": 51,
+    "relevant_n": 39,
+    "already_in_es_n": 1,
+    "new_discovery_n": 38,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.jobe.2024.108843",
+        "year": 2024,
+        "first_author": "Pouyan",
+        "title_short": "The elderly wayfinding performance in an informative healthcare design indoors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2024.1348023",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "Environmental therapy: interface design strategies for color graphics to assist navigational tasks in patients with visu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2023.102065",
+        "year": 2023,
+        "first_author": "Merhav",
+        "title_short": "How pathways' configuration impacts wayfinding in young and older adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15030385",
+        "year": 2025,
+        "first_author": "Ghamari",
+        "title_short": "Dementia Friendly Buildings\u2014Approach on Architectures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2025.1524425",
+        "year": 2025,
+        "first_author": "Buuren",
+        "title_short": "Wayfinding behavioral patterns of seniors with dementia: two exploratory case studies",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/07334648221112425",
+        "year": 2022,
+        "first_author": "Gaber",
+        "title_short": "Social Citizenship Through Out-of-Home Participation Among Older Adults With and Without Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2025.1470066",
+        "year": 2025,
+        "first_author": "Sun",
+        "title_short": "Defining familiarity in nursing homes providing care for residents with dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2025.2520165",
+        "year": 2025,
+        "first_author": "Nouri",
+        "title_short": "Twenty key insights into neighborhood walking experiences of people living with dementia in Metro Vancouver: a quantitat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/20552076251365070",
+        "year": 2025,
+        "first_author": "Rijke",
+        "title_short": "Usability assessment of a digital tool to enhance person\u2013clinician communication in the memory clinic: An expert evaluat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2025.113558",
+        "year": 2025,
+        "first_author": "Ruiz",
+        "title_short": "Multi-domain comfort and environmental control in senior living: Lessons from older adult perspectives",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnagi.2025.1602945",
+        "year": 2025,
+        "first_author": "Chargo",
+        "title_short": "Age- and sex-related differences in landmark recall following a virtual spatial navigation task",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1155/2022/5661221",
+        "year": 2022,
+        "first_author": "Yang",
+        "title_short": "Application of Cognitive System Model and Gestalt Psychology in Residential Healthy Environment Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-85540-6_139",
+        "year": 2021,
+        "first_author": "Zhu",
+        "title_short": "Social Inclusion in an Aging World: Envisioning Elderly-Friendly Digital Interfaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnad029",
+        "year": 2023,
+        "first_author": "Miola",
+        "title_short": "Navigability of Residential Care Homes From Residents\u2019, Family Members\u2019, and Staff\u2019s Points of View: The Residential Car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2023.1092715",
+        "year": 2023,
+        "first_author": "Hamburger",
+        "title_short": "Cognitive landmark research beyond visual cues using GIScience",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijbpa-05-2023-0069",
+        "year": 2024,
+        "first_author": "Ajani",
+        "title_short": "Building design considerations for healthy and active aging-in-place",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2025.2506060",
+        "year": 2025,
+        "first_author": "Machry",
+        "title_short": "Cognitive-Aging-in-Place: Home Design Factors Influencing Instrumental Activities of Daily Living for Older Adults Facin",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-99-0872-1_7",
+        "year": 2023,
+        "first_author": "Luk",
+        "title_short": "The Creation of Dementia-Friendly Communities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1163/29498902-202400011",
+        "year": 2024,
+        "first_author": "Tabaszewska",
+        "title_short": "Memory as Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s44223-025-00087-2",
+        "year": 2025,
+        "first_author": "Alsaggaf",
+        "title_short": "A machine learning framework for early-stage dementia-friendly architectural design evaluation using visual access metri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231180905",
+        "year": 2023,
+        "first_author": "Davis",
+        "title_short": "The Assessment of Long-Term Care Environments for Wayfinding Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1061/jaeied.aeeng-1530",
+        "year": 2023,
+        "first_author": "Ismail",
+        "title_short": "Beyond Physical Accessibility for Inclusive Age-Friendly Homes: Insights from a Comparative Study of Two Residential Dev",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-97-1979-2_4",
+        "year": 2024,
+        "first_author": "Wang",
+        "title_short": "Analysis on the Operation Mode of Project Studio System in Computer Aided Design and Environmental Design Specialty",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronb/gbad041",
+        "year": 2023,
+        "first_author": "Boedeker",
+        "title_short": "Give Me a Sign: Concrete Symbols Facilitate Orientation in Alzheimer\u2019s Disease Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_22",
+        "year": 2023,
+        "first_author": "Sou",
+        "title_short": "Research on Inclusive Design Strategy to Enhance Accessibility in Global Ageing: A Case Study of the Public Housing Wayf",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-56870-1_2",
+        "year": 2024,
+        "first_author": "Hyd\u00e9n",
+        "title_short": "What Is Dementia and Late-Stage Dementia?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2024.102377",
+        "year": 2024,
+        "first_author": "Domm\u00e8s",
+        "title_short": "Landmark-based guidance and cognitive saliency: Age-related benefits in spatial performance",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24042/biosfer.v15i1.20376",
+        "year": 2024,
+        "first_author": "Pratama",
+        "title_short": "Factors Influencing Students' Pro-Environmental Behavior: A Systematic Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/opn.12651",
+        "year": 2024,
+        "first_author": "Moody",
+        "title_short": "The Experience of Hospitalisation for People Living With Dementia: A Qualitative Exploration of How Context Shapes Exper",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-443-23536-8.00014-9",
+        "year": 2025,
+        "first_author": "Calkins",
+        "title_short": "Memory care settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01634372.2025.2544298",
+        "year": 2025,
+        "first_author": "Dong",
+        "title_short": "Dementia Friendly Communities and Older Adults Living with Dementia in the United States: An Integrative Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1101/2025.07.18.25331765",
+        "year": 2025,
+        "first_author": "Everson-Hock",
+        "title_short": "Strategies to support safe wandering in care homes for older adults \u2013 what works, for whom, and in which circumstances?:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2026.102900",
+        "year": 2026,
+        "first_author": "Merhav",
+        "title_short": "How environmental geometry influences navigation in young and older adults?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2026.105347",
+        "year": 2026,
+        "first_author": "Hock",
+        "title_short": "Strategies to support safe wandering in care homes for older adults \u2013 what works, for whom, and in which circumstances?:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12677/ar.2026.131007",
+        "year": 2026,
+        "first_author": "\u674e",
+        "title_short": "A Study on the \u201cForm-Making\u201d and \u201cImagery\u201d of Therapeutic Landscapes under the Rehabilitation-Oriented Goals for Dementi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/jdad3010010",
+        "year": 2026,
+        "first_author": "Buuren",
+        "title_short": "(De)signs of Confusion: Architectural Environments Causing Confusion for People with Advanced Dementia During Wayfinding",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/03601277.2026.2649353",
+        "year": 2026,
+        "first_author": "Swearinger",
+        "title_short": "Interinstitutional relocation in nursing homes: Supporting older adults and staff through institutional and educational ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/07334648261437463",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Burnout Among Direct Care Workers in Chinese Long-term Care Facilities: A Multilevel Analysis Integrating the Stress Pro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2026.2665296",
+        "year": 2026,
+        "first_author": "\u00d6zdem",
+        "title_short": "Design of Care Environments for Alzheimer\u2019s Disease: Developing Design Proposals Based on Healthcare Professionals\u2019 Expe",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-06": {
+    "openalex_id": "W2164173071",
+    "openalex_cited_by_count": 220,
+    "citers_fetched": 220,
+    "relevant_n": 172,
+    "already_in_es_n": 5,
+    "new_discovery_n": 167,
+    "discoveries": [
+      {
+        "doi": "10.1093/geront/gnw259",
+        "year": 2017,
+        "first_author": "Chaudhury",
+        "title_short": "The Influence of the Physical Environment on Residents With Dementia in Long-Term Care Settings: A Review of the Empiric",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671400800111",
+        "year": 2014,
+        "first_author": "Marquardt",
+        "title_short": "Impact of the Design of the Built Environment on People with Dementia: An Evidence-Based Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1471301217731433",
+        "year": 2017,
+        "first_author": "H\u00e9bert",
+        "title_short": "Dementia friendly initiatives: A state of the science review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnx146",
+        "year": 2017,
+        "first_author": "Calkins",
+        "title_short": "From Research to Application: Supportive and Therapeutic Environments for People Living With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-018-0728-0",
+        "year": 2018,
+        "first_author": "F\u00f8rsund",
+        "title_short": "The experience of lived space in persons with dementia: a systematic meta-synthesis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare6040137",
+        "year": 2018,
+        "first_author": "Boer",
+        "title_short": "The Physical Environment of Nursing Homes for People with Dementia: Traditional Nursing Homes, Small-Scale Living Facili",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-020-05618-3",
+        "year": 2020,
+        "first_author": "R\u00f8svik",
+        "title_short": "What are the needs of people with dementia in acute hospital settings, and what interventions are made to meet these nee",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jpainsymman.2017.09.011",
+        "year": 2017,
+        "first_author": "Zadeh",
+        "title_short": "Environmental Design for End-of-Life Care: An Integrative Review on Improving the Quality of Life and Managing Symptoms ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/24735132.2017.1296274",
+        "year": 2017,
+        "first_author": "Jakob",
+        "title_short": "Sensory enrichment for people living with dementia: increasing the benefits of multisensory environments in dementia car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnw197",
+        "year": 2016,
+        "first_author": "Carder",
+        "title_short": "State Regulatory Approaches for Dementia Care in Residential Care and Assisted Living",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720903845",
+        "year": 2020,
+        "first_author": "Gaminiesfahani",
+        "title_short": "A Scoping Review of the Impact on Children of the Built Environment Design Characteristics of Healing Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10339-021-01031-8",
+        "year": 2021,
+        "first_author": "Wiener",
+        "title_short": "Ageing- and dementia-friendly design: theory and evidence from cognitive psychology, neuropsychology and environmental p",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1017/s0144686x18001721",
+        "year": 2019,
+        "first_author": "Wada",
+        "title_short": "Perceptions of home in long-term care settings: before and after institutional relocation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720921407",
+        "year": 2020,
+        "first_author": "MohammadiGorji",
+        "title_short": "Investigating the Impact of Healthcare Environmental Design on Staff Security: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2023.101970",
+        "year": 2023,
+        "first_author": "Gripko",
+        "title_short": "Effects of the physical environment on children and families in hospital-based emergency departments: A systematic liter",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/encyclopedia3030076",
+        "year": 2023,
+        "first_author": "Quirke",
+        "title_short": "Environmental Design for People Living with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586715615348",
+        "year": 2016,
+        "first_author": "Cerruti",
+        "title_short": "The Effects of Spatial Enclosure on Social Interaction Between Older Adults With Dementia and Young Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2022.102957",
+        "year": 2022,
+        "first_author": "Chen",
+        "title_short": "A sense of home for people with dementia in a long-term care facility: A design perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvman.2025.126070",
+        "year": 2025,
+        "first_author": "Wang",
+        "title_short": "Human-perceived vs actual built environment: Using human-centred GeoAI and street view images to support urban planning ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geroni/igy001",
+        "year": 2017,
+        "first_author": "Caspar",
+        "title_short": "Nonpharmacological Management of Behavioral and Psychological Symptoms of Dementia: What Works, in What Circumstances, a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnw168",
+        "year": 2016,
+        "first_author": "Lorusso",
+        "title_short": "Impact of Multisensory Environments on Behavior for People With Dementia: A Systematic Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586719826058",
+        "year": 2019,
+        "first_author": "Setola",
+        "title_short": "The Impact of the Physical Environment on Intrapartum Maternity Care: Identification of Eight Crucial Building Spaces",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.maturitas.2019.06.011",
+        "year": 2019,
+        "first_author": "Ludden",
+        "title_short": "Environmental design for dementia care - towards more meaningful experiences through design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2018.1489473",
+        "year": 2018,
+        "first_author": "Barrett",
+        "title_short": "Optimal spaces for those living with dementia: principles and evidence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2019.1683672",
+        "year": 2020,
+        "first_author": "Valipoor",
+        "title_short": "Falls in Older Adults: A Systematic Review of Literature on Interior-Scale Elements of the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/f-08-2018-0094",
+        "year": 2020,
+        "first_author": "Gharaveis",
+        "title_short": "A systematic framework for understanding environmental design influences on physical activity in the elderly population",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/19404921-20190522-01",
+        "year": 2019,
+        "first_author": "Adekoya",
+        "title_short": "Wandering Behavior From the Perspectives of Older Adults With Mild to Moderate Dementia in Long-Term Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jan.13358",
+        "year": 2017,
+        "first_author": "Nordin",
+        "title_short": "The association between the physical environment and the well\u2010being of older people in residential care facilities: A mu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s40945-022-00134-5",
+        "year": 2022,
+        "first_author": "Ries",
+        "title_short": "A framework for rehabilitation for older adults living with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13607863.2018.1516193",
+        "year": 2018,
+        "first_author": "Carver",
+        "title_short": "Is greenery associated with mental health among residents of aged care facilities? A systematic search and narrative rev",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-215483",
+        "year": 2022,
+        "first_author": "Ag\u00fcera-Ort\u00edz",
+        "title_short": "Psychosis as a Treatment Target in Dementia: A Roadmap for Designing Interventions",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2021.1933889",
+        "year": 2021,
+        "first_author": "Kirch",
+        "title_short": "Towards human-centred general hospitals: the potential of dementia-friendly design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/14713012211003994",
+        "year": 2021,
+        "first_author": "Lee",
+        "title_short": "Staff perspectives on the role of physical environment in long-term care facilities on dementia care in Canada and Swede",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2021.707809",
+        "year": 2021,
+        "first_author": "Liu",
+        "title_short": "The Effectiveness of Facial Expression Recognition in Detecting Emotional Responses to Sound Interventions in Older Adul",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jar.12795",
+        "year": 2020,
+        "first_author": "Watchman",
+        "title_short": "A person\u2010centred approach to implementation of psychosocial interventions with people who have an intellectual disabilit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jan.13812",
+        "year": 2018,
+        "first_author": "Bj\u00f6rk",
+        "title_short": "Exploring resident thriving in relation to the nursing home environment: A cross\u2010sectional study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17452007.2021.1965949",
+        "year": 2021,
+        "first_author": "Fran\u00e7a",
+        "title_short": "The role of the built environment in updating design requirements in the post-pandemic scenario: a case study of selecte",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/trc2.12353",
+        "year": 2022,
+        "first_author": "Calkins",
+        "title_short": "Evaluation of environmental assessment tools for settings for individuals living with dementia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/ajag.12964",
+        "year": 2021,
+        "first_author": "Gresham",
+        "title_short": "Specialist residential dementia care for people with severe and persistent behaviours: A ten\u2010year retrospective review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/14651858.cd012892.pub2",
+        "year": 2022,
+        "first_author": "Harrison",
+        "title_short": "Physical environmental designs in residential care to improve quality of life of older people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/pts.0000000000000613",
+        "year": 2019,
+        "first_author": "Pati",
+        "title_short": "The Impact of the Built Environment on Patient Falls in Hospital Rooms: An Integrative Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2021.1932012",
+        "year": 2021,
+        "first_author": "Cater",
+        "title_short": "\u201c<i>Home is Home:\u201d</i> Exploring the Meaning of Home across Long-Term Care Settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph182010906",
+        "year": 2021,
+        "first_author": "Liu",
+        "title_short": "The Relationship between Sustainable Built Environment, Art Therapy and Therapeutic Design in Promoting Health and Well-",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/14713012221080003",
+        "year": 2022,
+        "first_author": "Nguyen",
+        "title_short": "Communication in dementia care: Experiences and needs of carers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19159120",
+        "year": 2022,
+        "first_author": "Li",
+        "title_short": "Assessment of Environmental Demands of Age-Friendly Communities from Perspectives of Different Residential Groups: A Cas",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718796614",
+        "year": 2018,
+        "first_author": "Hecke",
+        "title_short": "How Enclosure and Spatial Organization Affect Residents\u2019 Use and Experience of a Dementia Special Care Unit: A Case Stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su12114393",
+        "year": 2020,
+        "first_author": "Carta",
+        "title_short": "Self-Organising Floor Plans in Care Homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1123/japa.2021-0459",
+        "year": 2022,
+        "first_author": "Portegijs",
+        "title_short": "Physical Activity in People With Dementia Living in Long-Term Care Facilities and the Connection With Environmental Fact",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2023.2223589",
+        "year": 2023,
+        "first_author": "Bowes",
+        "title_short": "Housing Design Evaluation Research for People Living with Cognitive Change: A Systematic Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231152611",
+        "year": 2023,
+        "first_author": "Verderber",
+        "title_short": "Residential Environments for Older Persons: A Comprehensive Literature Review (2005\u20132022)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2024.1348023",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "Environmental therapy: interface design strategies for color graphics to assist navigational tasks in patients with visu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2021.1984869",
+        "year": 2021,
+        "first_author": "Quirke",
+        "title_short": "A design assessment tool for layout planning in residential care for dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211059757",
+        "year": 2021,
+        "first_author": "Sugiyama",
+        "title_short": "Views of Greenery and Psychological Well-Being in Residential Aged Care Facilities: Longitudinal Associations",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211062847",
+        "year": 2021,
+        "first_author": "Bae",
+        "title_short": "Interior Environments in Long-Term Care Units From the Theory of Supportive Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2022.2030845",
+        "year": 2022,
+        "first_author": "Brennan",
+        "title_short": "Small-Scale Living Environments' Impact on Positive Behaviors and Quality of Life for Residents with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867221125930",
+        "year": 2022,
+        "first_author": "Anderson",
+        "title_short": "Built Environment Design Interventions at the Exits of Secured Dementia Care Units: A Review of the Empirical Literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14092701",
+        "year": 2024,
+        "first_author": "Yan",
+        "title_short": "Healing Spaces Improve the Well-Being of Older Adults: A Systematic Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnad034",
+        "year": 2023,
+        "first_author": "Niedoba",
+        "title_short": "Person\u2013Environment Exchange Processes in Transition into Dementia: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-200241",
+        "year": 2020,
+        "first_author": "Wang",
+        "title_short": "Development and Psychometrics Test of Home Environment Assessment Checklist for Community-Dwelling Older Adults with Dem",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2024.2409399",
+        "year": 2024,
+        "first_author": "Lee",
+        "title_short": "The Impact of Physical Environment on Residents\u2019 Well-Being and Staff Care Practice in Dementia Care Homes in Canada and",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jobe.2024.111031",
+        "year": 2024,
+        "first_author": "Li",
+        "title_short": "Evaluating building performance and patient well-being in healthcare facilities: A literature review of environmental qu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2025.114093",
+        "year": 2025,
+        "first_author": "Lee",
+        "title_short": "Designing homes for ageing minds: A systematic review of design research on cognitive and emotional responses to residen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-13-3693-5_10",
+        "year": 2019,
+        "first_author": "Liddicoat",
+        "title_short": "Older Adults as Co-researchers for Built Environments: Virtual Reality as a Means of Engagement",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jaging.2024.101287",
+        "year": 2024,
+        "first_author": "McGann",
+        "title_short": "Socio-spatial analysis of Australian residential care facilities: A case study of traditional, medium, and small househo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13872877251372144",
+        "year": 2025,
+        "first_author": "Kramer",
+        "title_short": "The role of built and social environments in Alzheimer's disease dementia prevalence in the United States: A machine lea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2025.2552796",
+        "year": 2025,
+        "first_author": "Haghnia",
+        "title_short": "The Impact of the Physical Environment on the Autonomy of Older Adults in Residential Care: A\u00a0Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781003416241-23",
+        "year": 2024,
+        "first_author": "Carbone",
+        "title_short": "Dementia-friendly design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare13141727",
+        "year": 2025,
+        "first_author": "Choe",
+        "title_short": "Effectiveness of Nature-Based Interventions in Reducing Agitation Among Older Adults with Dementia: A Systematic Review ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2019.02.002",
+        "year": 2019,
+        "first_author": "Bosch",
+        "title_short": "Promoting patient and family engagement through healthcare facility design: A systematic literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-017-2165-8",
+        "year": 2017,
+        "first_author": "Easton",
+        "title_short": "Where\u2019s the evidence? a systematic review of economic analyses of residential aged care infrastructure",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301218786277",
+        "year": 2018,
+        "first_author": "Mart\u00ednez-Ruiz",
+        "title_short": "Individual risk factors for possible undetected dementia amongst community-dwelling older people in New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00391-016-1079-0",
+        "year": 2017,
+        "first_author": "B\u00fcter",
+        "title_short": "[Dementia-friendly hospital wards : Expert recommendations for planning and design].",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301217712294",
+        "year": 2017,
+        "first_author": "Allen",
+        "title_short": "How People with Dementia and their Carers Adapt their Homes. A Qualitative Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301219874220",
+        "year": 2019,
+        "first_author": "Houston",
+        "title_short": "Accessible design and dementia: A neglected space in the equality debate",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jpd-202035",
+        "year": 2020,
+        "first_author": "Ramos",
+        "title_short": "The Role of Architecture and Design in the Management of Parkinson\u2019s Disease: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720980175",
+        "year": 2020,
+        "first_author": "Sun",
+        "title_short": "The Development and Reliability of the Singaporean Environmental Assessment Tool (SEAT) for Facilities Providing High Le",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586715619740",
+        "year": 2015,
+        "first_author": "Motzek",
+        "title_short": "Environmental Cues in Double-Occupancy Rooms to Support Patients With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph192114233",
+        "year": 2022,
+        "first_author": "Men\u00e9ndez",
+        "title_short": "Best Practices from Eight European Dementia-Friendly Study Cases of Innovation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.asej.2022.101975",
+        "year": 2022,
+        "first_author": "Babbu",
+        "title_short": "A framework for the design of pediatric healthcare environment using the Delphi technique",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/joid.12094",
+        "year": 2017,
+        "first_author": "Mobley",
+        "title_short": "Examining Relationships between Physical Environments and Behaviors of Residents with Dementia in a Retrofit Special Car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867221085040",
+        "year": 2022,
+        "first_author": "Roos",
+        "title_short": "Unlimited Surrounding: A Scoping Review on the Impact of the Built Environment on Health, Behavior, and Quality of Life ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586716679403",
+        "year": 2016,
+        "first_author": "Motzek",
+        "title_short": "Investigation of Eligible Picture Categories for Use as Environmental Cues in Dementia-Sensitive Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720922852",
+        "year": 2020,
+        "first_author": "Lorusso",
+        "title_short": "Sensory Environments for Behavioral Health in Dementia: Diffusion of an Environmental Innovation at the Veterans Health ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718779172",
+        "year": 2018,
+        "first_author": "Catt",
+        "title_short": "The Reality of Well-Being-Focused Design in Dementia Care: A Case Study of Acute Dementia Wards in the United Kingdom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720929044",
+        "year": 2020,
+        "first_author": "Sun",
+        "title_short": "The Appropriateness of Adapting the Australian Environmental Assessment Tool\u2013High Care (EAT-HC) for Persons With Dementi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x21001367",
+        "year": 2021,
+        "first_author": "Newton",
+        "title_short": "Exploring the contribution of housing adaptations in supporting everyday life for people with dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2022.2092927",
+        "year": 2022,
+        "first_author": "Wahlroos",
+        "title_short": "Physical Environment Maintaining Independence and Self-management of Older People in Long-Term Care Settings\u2014An Integrat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/14651858.cd013482",
+        "year": 2019,
+        "first_author": "Grey",
+        "title_short": "Hospital design for older people with cognitive impairment including dementia and delirium: supporting inpatients and ac",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211053861",
+        "year": 2021,
+        "first_author": "Lorusso",
+        "title_short": "Investigating the Feasibility of Multisensory Environments to Improve the Assisted Bathing Experience for Veterans With ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/wwop-09-2021-0049",
+        "year": 2021,
+        "first_author": "Evans",
+        "title_short": "Designing inclusive environments for people living with dementia: how much do we really know?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph20054197",
+        "year": 2023,
+        "first_author": "Hall",
+        "title_short": "Key Considerations When Providing Physical Rehabilitation for People with Advanced Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/07334648211050376",
+        "year": 2021,
+        "first_author": "Wang",
+        "title_short": "Influences of Physical Environmental Cues on People With Dementia: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.14207/ejsd.2023.v12n1p113",
+        "year": 2023,
+        "first_author": "Babbu",
+        "title_short": "Design Characteristics for Sustainable Pediatric Healthcare Environments: Stakeholder\u2019s Perception",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231175916",
+        "year": 2023,
+        "first_author": "Jamshidi",
+        "title_short": "Hierarchy of Evidence: An Appraisal Tool for Weighting the Evidence in Healthcare Design Research Based on Internal Vali",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.15627/jd.2024.6",
+        "year": 2024,
+        "first_author": "Fani",
+        "title_short": "Exploring Methodological Considerations: A Literature Review on How Lighting Affects the Sleep and Cognition in Healthy ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/shti220856",
+        "year": 2022,
+        "first_author": "Mangili",
+        "title_short": "Healthcare Facilities and Dementia Development of a Framework to Assess Design Quality",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/pds.2024.160",
+        "year": 2024,
+        "first_author": "Golgolnia",
+        "title_short": "Implementing the model-based systems engineering (MBSE) approach to develop an assessment framework for healthcare facil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13607863.2024.2338204",
+        "year": 2024,
+        "first_author": "Griffiths",
+        "title_short": "Exploring the impact of care home environments and culture on supporting residents to \u2018wander\u2019 safely",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2024.105298",
+        "year": 2024,
+        "first_author": "Brouwers",
+        "title_short": "Depressive Signs and Daily Life of Residents When Relocating from a Regular to an Innovative Nursing Home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2024.1470036",
+        "year": 2024,
+        "first_author": "Wrublowsky",
+        "title_short": "Environmental audit scoring evaluation: evolution of an evidence-based environmental assessment tool to support person-c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867241276211",
+        "year": 2024,
+        "first_author": "Lian",
+        "title_short": "The Study on the Chinese Environmental Audit Tool (C-EAT) for Long-Term Care Facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/30495334251345092",
+        "year": 2025,
+        "first_author": "Siegelaar",
+        "title_short": "The Physical Environment and the Quality of Life and Behavior in People With Dementia: A Systematic Meta-Review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/19375867251365876",
+        "year": 2025,
+        "first_author": "Jonescu",
+        "title_short": "A Collaborative Communities-of-Practice Methodology for Environmental Design Research: A Case Study Application in Palli",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0714980825100391",
+        "year": 2025,
+        "first_author": "Gagnon-Roy",
+        "title_short": "Aging-in-Place (Vieillir Chez Soi, VCS) in a Seniors\u2019 Residence: Co-Development, Implementation, and Evaluation of a Car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v11i1.1206",
+        "year": 2017,
+        "first_author": "McIntyre",
+        "title_short": "THE EFFECTS OF BUILT ENVIRONMENT DESIGN ON OPPORTUNITIES FOR WELLBEING IN CARE HOMES",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216656087",
+        "year": 2016,
+        "first_author": "F\u00f8rsund",
+        "title_short": "Finding a place to connect: A qualitative study exploring the influences of the physical and social environments on spou",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/ijpn.2016.22.8.396",
+        "year": 2016,
+        "first_author": "Bolton",
+        "title_short": "Carer experiences of inpatient hospice care for people with dementia, delirium and related cognitive impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijhg-05-2016-0027",
+        "year": 2017,
+        "first_author": "Eastham",
+        "title_short": "Dementia-friendly wards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638288.2021.2019840",
+        "year": 2022,
+        "first_author": "Janssen",
+        "title_short": "Impairments, and physical design and culture of a rehabilitation unit influence stroke survivor activity: qualitative an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19127025",
+        "year": 2022,
+        "first_author": "Giebel",
+        "title_short": "Developing a Meaningful Garden Space in a Care Home with Staff and Family Members: A Qualitative Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2018.1561591",
+        "year": 2019,
+        "first_author": "Neylon",
+        "title_short": "Improving Australian Residential Aged Care Facilities: A Review of Minor Refurbishment Elements",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7577/formakademisk.4143",
+        "year": 2021,
+        "first_author": "Elnimr",
+        "title_short": "Interactive architecture as a therapeutic environment for people with Alzheimer\u2019s disease, a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su17031074",
+        "year": 2025,
+        "first_author": "Zhang",
+        "title_short": "Research on Home Environment Design to Improve the Autonomy of Elderly People with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jet-11-2017-0043",
+        "year": 2018,
+        "first_author": "Verkerk",
+        "title_short": "A neurological and philosophical perspective on the design of environments and technology for older people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/f-09-2020-0106",
+        "year": 2021,
+        "first_author": "Quirke",
+        "title_short": "Design stage evaluation tools for residential dementia care environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/ijpn.2016.22.3.130",
+        "year": 2016,
+        "first_author": "Bolton",
+        "title_short": "Te Kete Marie\u2014the peaceful basket: an initiative for supporting people with dementia or delirium",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/14651858.cd012892",
+        "year": 2017,
+        "first_author": "Harrison",
+        "title_short": "Physical environmental designs in residential care to improve quality of life of older people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17533015.2017.1370717",
+        "year": 2017,
+        "first_author": "Graham",
+        "title_short": "Painting<i>in situ</i>: the benefits of live mural painting for residents on two secure long-term care dementia units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2021.1917336",
+        "year": 2021,
+        "first_author": "Francis",
+        "title_short": "The inclusion and efficacy of first-person narrative in the design of long-term care homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4172/2329-8847.1000185",
+        "year": 2018,
+        "first_author": "Haghnia",
+        "title_short": "Iranian Older Peoples Emotional Well-being in Long-term Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2022.876173",
+        "year": 2022,
+        "first_author": "Dong",
+        "title_short": "Development of a Psychometric Test: A Care Risk Scale for Homebound Older People With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867221100210",
+        "year": 2022,
+        "first_author": "Shabha",
+        "title_short": "Toward an Integrated Context-Based Design Approach for Dementia Residential Care Homes: A Review of Key Operational Desi",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.colegn.2022.12.007",
+        "year": 2023,
+        "first_author": "Bail",
+        "title_short": "A 4-Bed Close-Observation Pod model of multidisciplinary care in hospital: A mixed methods study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geroni/igad039",
+        "year": 2023,
+        "first_author": "Kaup",
+        "title_short": "The Environmental Audit Screening Evaluation: Establishing Reliability and Validity of an Evidence-Based Design Tool",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/ijbpa-05-2023-0069",
+        "year": 2024,
+        "first_author": "Ajani",
+        "title_short": "Building design considerations for healthy and active aging-in-place",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-28528-8_7",
+        "year": 2023,
+        "first_author": "Golgolnia",
+        "title_short": "Proposing a Systematic Assessment Tool for Evaluating the Architectural Variables of Dementia-Friendly Design in Nursing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-58488-6_4",
+        "year": 2024,
+        "first_author": "Leontjevas",
+        "title_short": "Treatment of Challenging Behavior in Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14113370",
+        "year": 2024,
+        "first_author": "Hou",
+        "title_short": "Research on Optimization Design of Corridor Entry Space of Elderly Facilities Based on Visual\u2013Perceptual and Electroence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2025.2506060",
+        "year": 2025,
+        "first_author": "Machry",
+        "title_short": "Cognitive-Aging-in-Place: Home Design Factors Influencing Instrumental Activities of Daily Living for Older Adults Facin",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718820663",
+        "year": 2019,
+        "first_author": "Zadeh",
+        "title_short": "Palliative Design Meets Palliative Medicine: A Strategic Approach to the Design, Construction, and Operation of Healthca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-12-811481-0.00014-7",
+        "year": 2018,
+        "first_author": "Calkins",
+        "title_short": "Memory Care and Alzheimer\u2019s Units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-52869-0_15",
+        "year": 2020,
+        "first_author": "Brambilla",
+        "title_short": "Built Environment and Alzheimer. Quality Evaluation of Territorial Structures for Patients with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-75028-6_11",
+        "year": 2018,
+        "first_author": "Kirch",
+        "title_short": "Breaking Down Barriers: Promoting a New Look at Dementia-Friendly Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-63135-2_25",
+        "year": 2021,
+        "first_author": "Helvik",
+        "title_short": "Coping and Health Promotion in Persons with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.6107/jkha.2021.32.6.023",
+        "year": 2021,
+        "first_author": "Lee",
+        "title_short": "Role of Physical Environment in Quality of Life among Residents in Dementia Care Facilities through a Longitudinal Obser",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/56452",
+        "year": 2024,
+        "first_author": "Au\u2010Yeung",
+        "title_short": "Examining the Relationships Between Indoor Environmental Quality Parameters Pertaining to Light, Noise, Temperature, and",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10499091221129203",
+        "year": 2022,
+        "first_author": "Knox",
+        "title_short": "Design-Related Impacts on End-of-Life Experience: A Brief Report of Findings from an Exploratory Qualitative Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/a-2326-6612",
+        "year": 2024,
+        "first_author": "Fahsold",
+        "title_short": "Dementia-Sensitive Environmental Design of Living Units in German Nursing Homes: First Results of the German Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/haschl/qxaf026",
+        "year": 2025,
+        "first_author": "Elliot",
+        "title_short": "What happens behind closed doors? Investigating care practices in nursing home and assisted living memory care units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-33540-3_5",
+        "year": 2019,
+        "first_author": "McCracken",
+        "title_short": "Developing Dementia Personas for User Centered Architectural Design Considerations in Non-specialized Contexts",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301217692905",
+        "year": 2017,
+        "first_author": "Steenwinkel",
+        "title_short": "Offering architects insights into experiences of living with dementia: A case study on orientation in space, time, and i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-12-805469-7.00011-5",
+        "year": 2020,
+        "first_author": "Chong",
+        "title_short": "A contextual model of care for persons with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14606925.2022.2088100",
+        "year": 2022,
+        "first_author": "Walker",
+        "title_short": "Exploring how design can support the expression of personal aesthetic preferences in dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.55612/s-5002-054-005",
+        "year": 2022,
+        "first_author": "Elnimr",
+        "title_short": "A Study of Architectural Barriers and the Potential Role of Assistive Technologies in Long-term Healthcare Centres for P",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867231195283",
+        "year": 2023,
+        "first_author": "Wang",
+        "title_short": "Home Triad: A New Exploration of Home for People Living With Dementia Based on Lefebvre\u2019s Spatial Triad",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-89899-5_19",
+        "year": 2018,
+        "first_author": "Nordin",
+        "title_short": "The Importance of the\u00a0Physical Environment to Support Individualised Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/9781119857198.ch20",
+        "year": 2023,
+        "first_author": "Shin",
+        "title_short": "Design Guidelines for Effective Long\u2010term Care Needs of Older Adults at Home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26686/wgtn.17142164.v1",
+        "year": 2020,
+        "first_author": "Kuboshima",
+        "title_short": "Design of housing that improves the quality of life of the high-needs elderly in New Zealand",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-12-818685-5.00010-6",
+        "year": 2020,
+        "first_author": "Fleming",
+        "title_short": "Can buildings contribute to the rehabilitation of people living with dementia?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08959420.2020.1851434",
+        "year": 2021,
+        "first_author": "Neylon",
+        "title_short": "Can a Modified Environment Assessment Tool Guide Priorities for Minor Refurbishments at a Residential Aged Care Facility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnab044",
+        "year": 2021,
+        "first_author": "Kaup",
+        "title_short": "Dementia-Friendly Hospitals: Applications and Limitations to Evidence-Based Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/9781108594455.028",
+        "year": 2021,
+        "first_author": "Becker",
+        "title_short": "Fall Prevention in Residential Aged Care Facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22215/etd/2017-11917",
+        "year": 2017,
+        "first_author": "Molife",
+        "title_short": "Housing and the City: Supporting the Process of Aging in Place Through the Development of Architectural Guidelines",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14606925.2022.2144527",
+        "year": 2022,
+        "first_author": "Chen",
+        "title_short": "The role of interior design in promoting a sense of home in people with dementia living in care facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-09439-2_7",
+        "year": 2023,
+        "first_author": "Guaita",
+        "title_short": "A \u201cProsthetic Environment\u201d for Individuals with Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18178/ijssh.2023.v13.1114",
+        "year": 2023,
+        "first_author": "Lee",
+        "title_short": "Assessing the Therapeutic Environment of Residential Aged Care Facilities for People with Dementia in Taiwan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.51819/jaltc.2023.1294510",
+        "year": 2023,
+        "first_author": "Bayram",
+        "title_short": "Validation of the Turkish Revised Algase Wandering Scale \u2013 Long Term Care Version (TR-RAWS-LTC) For People With Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24404/6230a64f59007c84b02b57e0",
+        "year": 2022,
+        "first_author": "Mangili",
+        "title_short": "Relationship between Built Environment and Dementia. Evaluation of five Nursing Homes in Lombardy region, Italy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.24404/621cb161a03fefa3b272b9cc",
+        "year": 2022,
+        "first_author": "M\u00f6hn",
+        "title_short": "A new approach to the living environment of people with intellectual disabilities and severe behavioural problems in lon",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781003416241-7",
+        "year": 2024,
+        "first_author": "Ong",
+        "title_short": "The voice of people with dementia at the core of environmental design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781003416241-4",
+        "year": 2024,
+        "first_author": "Calkins",
+        "title_short": "Creating homes for individuals living with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/preprints.56452",
+        "year": 2024,
+        "first_author": "Au\u2010Yeung",
+        "title_short": "Examining the Relationships Between Indoor Environmental Quality Parameters Pertaining to Light, Noise, Temperature, and",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5151/eneac2024-831318",
+        "year": 2024,
+        "first_author": "SILVA",
+        "title_short": "Arquitetura e Alzheimer: Considera\u00e7\u00f5es Projetuais para Institui\u00e7\u00f5es de Longa Perman\u00eancia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-84901-5_3",
+        "year": 2025,
+        "first_author": "Walker",
+        "title_short": "Does the Mind\u2019s Eye Remain Intact? Using Colour to Support the Expression of Everyday Aesthetic Preferences in Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-443-23536-8.00014-9",
+        "year": 2025,
+        "first_author": "Calkins",
+        "title_short": "Memory care settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-443-23536-8.00013-7",
+        "year": 2025,
+        "first_author": "Anthony",
+        "title_short": "Design for mental and behavioral health: Social and psychological issues",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251343909",
+        "year": 2025,
+        "first_author": "Paoli",
+        "title_short": "Linking Older Adults\u2019 Psychosocial Well-Being With Objective and Perceived Environments in Slovenia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-86885-6_5",
+        "year": 2025,
+        "first_author": "Juzwishin",
+        "title_short": "Long Term Residential Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-05-2025-0222",
+        "year": 2025,
+        "first_author": "Jung",
+        "title_short": "Voices from the frontline: care managers' insights on quality of life in extra care housing environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14789949.2025.2594455",
+        "year": 2025,
+        "first_author": "Roper",
+        "title_short": "Dementia in forensic mental health settings: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10488-026-01502-0",
+        "year": 2026,
+        "first_author": "Gripko",
+        "title_short": "A Systematic Review of Built Environment Interventions to Improve Patient and Staff Outcomes in Emergency Department Men",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/vrw70859.2026.00096",
+        "year": 2026,
+        "first_author": "Amaro",
+        "title_short": "Reducing Loneliness in Older Adults with AI and VR: A Caregiver-Informed Study on Design and Implementation of Virtual E",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-07": {
+    "openalex_id": "W3138118944",
+    "openalex_cited_by_count": 92,
+    "citers_fetched": 92,
+    "relevant_n": 47,
+    "already_in_es_n": 3,
+    "new_discovery_n": 44,
+    "discoveries": [
+      {
+        "doi": "10.1177/13623613221102753",
+        "year": 2022,
+        "first_author": "Black",
+        "title_short": "Considerations of the built environment for autistic individuals: A review of the literature",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.1042641",
+        "year": 2022,
+        "first_author": "Nair",
+        "title_short": "A case study on the effect of light and colors in the built environment on autistic children\u2019s behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2022.2139210",
+        "year": 2022,
+        "first_author": "McAllister",
+        "title_short": "Autism spectrum condition and the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph19095037",
+        "year": 2022,
+        "first_author": "Zwilling",
+        "title_short": "How Well Environmental Design Is and Can Be Suited to People with Autism Spectrum Disorder (ASD): A Natural Language Pro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1051/e3sconf/202343606005",
+        "year": 2023,
+        "first_author": "Attaianese",
+        "title_short": "Inclusive mental well-being through environmental design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/scd.13003",
+        "year": 2024,
+        "first_author": "Tirupathi",
+        "title_short": "Effect of Sensory Adapted Dental Environment (SADE) on physiological and behavioral parameters related to stress and anx",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2024.050345",
+        "year": 2024,
+        "first_author": "Marcham",
+        "title_short": "Relationship Between Directly Observed Sensory Reactivity Differences and Classroom Behaviors of Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rasd.2024.102488",
+        "year": 2024,
+        "first_author": "Brouche",
+        "title_short": "Parental descriptions of sensory processing in Autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/disabilities4030032",
+        "year": 2024,
+        "first_author": "Cushley",
+        "title_short": "The NaviSight Study: Investigating How Diabetic Retinopathy and Retinitis Pigmentosa Affect Navigating the Built Environ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-10-2024-0453",
+        "year": 2025,
+        "first_author": "Watchorn",
+        "title_short": "\u201cA calm space to reset\u201d: perceptions of sensory rooms in Australian public buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2589290",
+        "year": 2025,
+        "first_author": "Adams",
+        "title_short": "Are sensory aspects of the built school environment associated with learning or well-being outcomes for autistic student",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1145/3706598.3713539",
+        "year": 2025,
+        "first_author": "Piedade",
+        "title_short": "Towards Neuroqueer Spatial Justice: A Critical Literature Review of Public Space Technologies for Neurodivergent Populat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1057/s41599-025-05820-w",
+        "year": 2025,
+        "first_author": "Kavaz",
+        "title_short": "The impacts of light color on autistic children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2023.2280288",
+        "year": 2023,
+        "first_author": "Iyendo",
+        "title_short": "Soundscape and natural landscape as a design construct for improving psycho-physiological health in cities: a semi-syste",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/children12101366",
+        "year": 2025,
+        "first_author": "Coelho",
+        "title_short": "Sensory Processing of Time and Space in Autistic Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15152735",
+        "year": 2025,
+        "first_author": "Liang",
+        "title_short": "Responsive Therapeutic Environments: A Dual-Track Review of the Research Literature and Design Case Studies in Art Thera",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2024.0021",
+        "year": 2024,
+        "first_author": "Ponting",
+        "title_short": "The Architectural Needs and Preferences of Autistic People Versus Gerontological Residential Care Facility Design Practi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.psychsport.2025.102867",
+        "year": 2025,
+        "first_author": "Parsons",
+        "title_short": "A systematic review of behaviour change techniques employed in interventions aimed to change physical activity behaviour",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251353735",
+        "year": 2025,
+        "first_author": "Vetter",
+        "title_short": "The Impact of Pediatric Outpatient Waiting Room Design on the Experiences of Autistic Children: A Pilot Study",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.dhjo.2026.102033",
+        "year": 2026,
+        "first_author": "Celestin",
+        "title_short": "Sensory maps 2.0: New approaches and visualizations in support of sensory processing disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6010044",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Sensory and Interactive Architectural Design Strategies for Inclusive Early Childhood Learning Environments Supporting N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16081490",
+        "year": 2026,
+        "first_author": "Huaman-Meza",
+        "title_short": "Evidence-Based Sensory Architecture Applied to the Design of Therapeutic Centers for Children and Adolescents with Autis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.reia.2026.202932",
+        "year": 2026,
+        "first_author": "Keramati",
+        "title_short": "Classifying sensory design principles for autism-friendly environments: A PRISMA-based systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.lana.2024.100736",
+        "year": 2024,
+        "first_author": "Antosh",
+        "title_short": "Use of an adaptive sensory environment in patients with autism spectrum disorder (ASD) in the perioperative environment:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s42379-024-00168-1",
+        "year": 2024,
+        "first_author": "Zhang",
+        "title_short": "Potential impacts of population aging and artificial intelligence on households, living arrangements and sustainable dev",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnu.2025.151912",
+        "year": 2025,
+        "first_author": "Koluk\u0131sa",
+        "title_short": "Mothers of children with autism spectrum disorder: Their views on their children's hospital experiences, expectations fr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-99-9595-0_3",
+        "year": 2024,
+        "first_author": "Deng",
+        "title_short": "Implementing a Participatory Design Approach to Create a Sensory-Friendly Public Space for Children with Special Needs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.6007/ijarbss/v12-i10/15682",
+        "year": 2022,
+        "first_author": "Alsalahat",
+        "title_short": "The Impact of Classroom Design according TEACCH System in Dealing with Behavioral Problems of Severe Autism Spectrum Dis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32920/26866612",
+        "year": 2024,
+        "first_author": "Munshaw",
+        "title_short": "Sensorial Stimuli in the Built Environment: A Review of the Effects of Stimuli for People Living with Autism and Solutio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v10i31.6494",
+        "year": 2025,
+        "first_author": "Abdullah",
+        "title_short": "Exploration of Outdoor Learning Space Towards ASD Children: A Systematic Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.30682/diid8525j",
+        "year": 2025,
+        "first_author": "Elia",
+        "title_short": "Autism-Friendly Inclusive Tools Design for the Observation, Perception and Knowledge of Artworks",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.62154/ajesre.2025.020.01013",
+        "year": 2025,
+        "first_author": "Tiwo",
+        "title_short": "Architectural Design for Autism Spectrum Disorders: Assessing Inclusive Strategies within the Nigerian Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.64628/aa.cjn9wmtka",
+        "year": 2024,
+        "first_author": "Aminpour",
+        "title_short": "What is biophilic design? 3 ways \u2018green\u2019 buildings work better for neurodivergent people",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2025.2551444",
+        "year": 2025,
+        "first_author": "Davoodian",
+        "title_short": "Young autistic adults\u2019 active travel (walking) behaviours mirror those of older adults: a pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251373096",
+        "year": 2025,
+        "first_author": "Zaikina",
+        "title_short": "Systematic Literature Review: Indoor Lighting and Color Effects on Persons With ASD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15213932",
+        "year": 2025,
+        "first_author": "Li",
+        "title_short": "Promoting Health and Well-Being: Environment Design of Rehabilitation Centers for Autistic Children Under the Theory of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-025-07156-5",
+        "year": 2025,
+        "first_author": "Gaines",
+        "title_short": "A Sensory Approach to Design: Inclusive Principles",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14659891.2026.2627192",
+        "year": 2026,
+        "first_author": "Green",
+        "title_short": "Letter to the editor: how to create a safe clinical space for neurodivergent clients seeking substance use treatment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613261416670",
+        "year": 2026,
+        "first_author": "Janicki",
+        "title_short": "Autism, dementia, and post-diagnostic support: A consensus report from the Second International Summit on Intellectual D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cities.2026.106819",
+        "year": 2026,
+        "first_author": "Deng",
+        "title_short": "Exploring barriers to inclusion for neurodivergent children in public spaces: Case study evidence from urbanising Wenzho",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.reia.2026.202856",
+        "year": 2026,
+        "first_author": "Dando",
+        "title_short": "AI-supported residential care placement decision making for individuals with autism spectrum disorder and complex medica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s40489-026-00540-6",
+        "year": 2026,
+        "first_author": "Carroll",
+        "title_short": "Autistic Children\u2019s Wellbeing at School: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/architecture6020064",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "From Sensory Design to Regulatory Architecture: A Systematic Review of Inclusive Early Childhood Learning Environments f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0347308",
+        "year": 2026,
+        "first_author": "Weaver",
+        "title_short": "Healthcare built environment and behavioural and physiological indicators of stress responses in autism spectrum disorde",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16102032",
+        "year": 2026,
+        "first_author": "Saavedra-Torres",
+        "title_short": "Multisensory Architecture and Cognitive Development in Students with ASD: Correlational Analysis and Empirical Hierarchi",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-08": {
+    "openalex_id": "W4282826350",
+    "openalex_cited_by_count": 68,
+    "citers_fetched": 68,
+    "relevant_n": 33,
+    "already_in_es_n": 2,
+    "new_discovery_n": 31,
+    "discoveries": [
+      {
+        "doi": "10.3389/fpsyt.2022.1042641",
+        "year": 2022,
+        "first_author": "Nair",
+        "title_short": "A case study on the effect of light and colors in the built environment on autistic children\u2019s behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613231183541",
+        "year": 2023,
+        "first_author": "Manning",
+        "title_short": "Sensory-inclusive spaces for autistic people: We need to build the evidence base",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2024.112483",
+        "year": 2024,
+        "first_author": "Zaniboni",
+        "title_short": "Thermal comfort of autistic people with and without a view out",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2459737",
+        "year": 2025,
+        "first_author": "Al-Harasis",
+        "title_short": "Developing a taxonomy for sensory-informed architectural design qualities in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613231180266",
+        "year": 2023,
+        "first_author": "Unwin",
+        "title_short": "Patterns of equipment use for autistic children in multi-sensory environments: Time spent with sensory equipment varies ",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1051/e3sconf/202343606005",
+        "year": 2023,
+        "first_author": "Attaianese",
+        "title_short": "Inclusive mental well-being through environmental design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613241290628",
+        "year": 2024,
+        "first_author": "Visser",
+        "title_short": "Unmet need for autism-aware care for gynaecological, menstrual and sexual wellbeing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1145/3706598.3713903",
+        "year": 2025,
+        "first_author": "Rao",
+        "title_short": "What Do We Design for When We Design \"Smart Buildings\"? - A Scoping Review of Human Experience Design Research in Buildi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/disabilities4030032",
+        "year": 2024,
+        "first_author": "Cushley",
+        "title_short": "The NaviSight Study: Investigating How Diabetic Retinopathy and Retinitis Pigmentosa Affect Navigating the Built Environ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.socscimed.2025.117842",
+        "year": 2025,
+        "first_author": "Alderton",
+        "title_short": "Characteristics of geographic environments that support the health and wellbeing of young people with disability: A scop",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/arch-10-2024-0453",
+        "year": 2025,
+        "first_author": "Watchorn",
+        "title_short": "\u201cA calm space to reset\u201d: perceptions of sensory rooms in Australian public buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13603116.2025.2589290",
+        "year": 2025,
+        "first_author": "Adams",
+        "title_short": "Are sensory aspects of the built school environment associated with learning or well-being outcomes for autistic student",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s40489-025-00511-3",
+        "year": 2025,
+        "first_author": "Herrebr\u00f8den",
+        "title_short": "Audio Technology for Autistic Persons with Auditory Sensory Differences\u2014A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2024.2421926",
+        "year": 2024,
+        "first_author": "Leonards",
+        "title_short": "Putting the sensory individual at the centre of architectural design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2024.0088",
+        "year": 2025,
+        "first_author": "McCabe",
+        "title_short": "Insights into Sensory and Relaxation Preferences to Inform the Design of Calming Spaces and Sensory Rooms for Autistic A",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1089/aut.2024.0021",
+        "year": 2024,
+        "first_author": "Ponting",
+        "title_short": "The Architectural Needs and Preferences of Autistic People Versus Gerontological Residential Care Facility Design Practi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20473869.2024.2443699",
+        "year": 2025,
+        "first_author": "Ranadive",
+        "title_short": "Effect of sensory enriched environment as an intervention on behaviors in children with autism spectrum disorder: a syst",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.dhjo.2026.102033",
+        "year": 2026,
+        "first_author": "Celestin",
+        "title_short": "Sensory maps 2.0: New approaches and visualizations in support of sensory processing disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21608/idj.2024.340122",
+        "year": 2024,
+        "first_author": "Mohamed",
+        "title_short": "The role of architectural and interior design in creating an autism-friendly environment to promote sensory-mitigated de",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.lana.2024.100736",
+        "year": 2024,
+        "first_author": "Antosh",
+        "title_short": "Use of an adaptive sensory environment in patients with autism spectrum disorder (ASD) in the perioperative environment:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-36302-3_28",
+        "year": 2023,
+        "first_author": "Nguyen",
+        "title_short": "Housing Design Strategies versus Users\u2019 Experiences: Lessons Learned from a Group Home for Autistic Residents",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.70020",
+        "year": 2025,
+        "first_author": "Bruce",
+        "title_short": "The <scp>WISE</scp> Room: An innovative multisensory space for self\u2010regulation and immersive support for neurodivergent ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31234/osf.io/udgp6",
+        "year": 2024,
+        "first_author": "McCabe",
+        "title_short": "Insights into Sensory and Relaxation Preferences to Inform the Design of Sensory Rooms for Autistic Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.32920/26866612",
+        "year": 2024,
+        "first_author": "Munshaw",
+        "title_short": "Sensorial Stimuli in the Built Environment: A Review of the Effects of Stimuli for People Living with Autism and Solutio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.62154/ajesre.2025.020.01013",
+        "year": 2025,
+        "first_author": "Tiwo",
+        "title_short": "Architectural Design for Autism Spectrum Disorders: Assessing Inclusive Strategies within the Nigerian Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/23748834.2025.2551444",
+        "year": 2025,
+        "first_author": "Davoodian",
+        "title_short": "Young autistic adults\u2019 active travel (walking) behaviours mirror those of older adults: a pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251373096",
+        "year": 2025,
+        "first_author": "Zaikina",
+        "title_short": "Systematic Literature Review: Indoor Lighting and Color Effects on Persons With ASD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-025-07156-5",
+        "year": 2025,
+        "first_author": "Gaines",
+        "title_short": "A Sensory Approach to Design: Inclusive Principles",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2026.114271",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Sensory stimuli in the built environment for autistic people: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings16030489",
+        "year": 2026,
+        "first_author": "Chidiac",
+        "title_short": "The Needs of People with Developmental Disabilities Vis-\u00e0-Vis Accessibility Standards in the Built Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13467581.2026.2621574",
+        "year": 2026,
+        "first_author": "En",
+        "title_short": "Architectural colour and lighting strategies for autism-friendly physical learning environment in Malaysia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/13623613261416670",
+        "year": 2026,
+        "first_author": "Janicki",
+        "title_short": "Autism, dementia, and post-diagnostic support: A consensus report from the Second International Summit on Intellectual D",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0347308",
+        "year": 2026,
+        "first_author": "Weaver",
+        "title_short": "Healthcare built environment and behavioural and physiological indicators of stress responses in autism spectrum disorde",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-11": {
+    "openalex_id": "W4303517920",
+    "openalex_cited_by_count": 21,
+    "citers_fetched": 21,
+    "relevant_n": 16,
+    "already_in_es_n": 1,
+    "new_discovery_n": 15,
+    "discoveries": [
+      {
+        "doi": "10.1002/trc2.12353",
+        "year": 2022,
+        "first_author": "Calkins",
+        "title_short": "Evaluation of environmental assessment tools for settings for individuals living with dementia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1093/geroni/igae058",
+        "year": 2024,
+        "first_author": "Fahsold",
+        "title_short": "The Perspective of Residents Living With Dementia Toward Their Built Environment: A Walking Interview Study in German Nu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2024.1470691",
+        "year": 2024,
+        "first_author": "Nordin",
+        "title_short": "Outdoor stays\u2014A basic human need except for older adults in residential care facilities? Researcher-practitioner interac",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781003416241-23",
+        "year": 2024,
+        "first_author": "Carbone",
+        "title_short": "Dementia-friendly design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/trc2.12359",
+        "year": 2022,
+        "first_author": "Zimmerman",
+        "title_short": "Measurement to improve care and outcomes for persons with Alzheimer's disease and dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/pds.2024.160",
+        "year": 2024,
+        "first_author": "Golgolnia",
+        "title_short": "Implementing the model-based systems engineering (MBSE) approach to develop an assessment framework for healthcare facil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/nup.70018",
+        "year": 2025,
+        "first_author": "Meng",
+        "title_short": "Exploring the Relevance of Indigenous Knowledges to Dementia Care in Nursing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/frdem.2024.1470036",
+        "year": 2024,
+        "first_author": "Wrublowsky",
+        "title_short": "Environmental audit scoring evaluation: evolution of an evidence-based environmental assessment tool to support person-c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geroni/igad039",
+        "year": 2023,
+        "first_author": "Kaup",
+        "title_short": "The Environmental Audit Screening Evaluation: Establishing Reliability and Validity of an Evidence-Based Design Tool",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-28528-8_7",
+        "year": 2023,
+        "first_author": "Golgolnia",
+        "title_short": "Proposing a Systematic Assessment Tool for Evaluating the Architectural Variables of Dementia-Friendly Design in Nursing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2023-075350",
+        "year": 2023,
+        "first_author": "Fahsold",
+        "title_short": "Methods for the involvement of people living with dementia in research focused on the built environment: a protocol for ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/a-2326-6612",
+        "year": 2024,
+        "first_author": "Fahsold",
+        "title_short": "Dementia-Sensitive Environmental Design of Living Units in German Nursing Homes: First Results of the German Environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/08982643231200691",
+        "year": 2023,
+        "first_author": "Guti\u00e9rrez",
+        "title_short": "Alzheimer\u2019s Centers in US Hospitals: Enough to Adequately Address Dementia Care Nationwide?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867241302798",
+        "year": 2024,
+        "first_author": "Machado",
+        "title_short": "Design for People With Dementia: A Scoping Review on the Perspective of Inclusion, Accessibility, and Equity in Healthca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/26892618.2026.2626901",
+        "year": 2026,
+        "first_author": "Peng",
+        "title_short": "Psychometric Evaluation and Digital Implementation of the Environmental Assessment Tool for Dementia Care in Long-Term C",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/nhh.0000000000001429",
+        "year": 2026,
+        "first_author": "Lee",
+        "title_short": "Feasibility and Acceptability of a Virtual Home Assessment for Supporting People with Dementia to Live at Home",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-19": {
+    "openalex_id": "W4220749106",
+    "openalex_cited_by_count": 0,
+    "citers_fetched": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "CWD-22": {
+    "openalex_id": "W4411284602",
+    "openalex_cited_by_count": 1,
+    "citers_fetched": 1,
+    "relevant_n": 1,
+    "already_in_es_n": 0,
+    "new_discovery_n": 1,
+    "discoveries": [
+      {
+        "doi": "10.1177/14713012261448306",
+        "year": 2026,
+        "first_author": "Liempd",
+        "title_short": "Family Perspectives on Freedom of Movement for Nursing Home Residents With Dementia: A Qualitative Study",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

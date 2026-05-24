@@ -1,0 +1,3940 @@
+{
+  "CWD-01": {
+    "doi": "10.1177/193758671100400207",
+    "total_refs": 66,
+    "doi_only_refs": 46,
+    "relevant_n": 57,
+    "already_in_es_n": 1,
+    "new_discovery_n": 56,
+    "discoveries": [
+      {
+        "doi": "10.1159/000076361",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2007",
+        "author": "American Psychiatric Association",
+        "title_short": "Practice guideline for the treatment of patients with Alzheimer's disease and other dementias",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/(sici)1099-1166(199707)12:7<718::aid-gps608>3.0.co;2-3",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Brawley E.",
+        "title_short": "Designing for Alzheimer's disease: Strategies for creating better care environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/gero13.2.65",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1300/j081v21n03_11",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1076/anec.10.4.255.28971",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1991",
+        "author": "Cohen U.",
+        "title_short": "Holding on to home: Designing environments for people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.4.397",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1353/book.3240",
+        "year": "2006",
+        "author": "Diaz Moore K.",
+        "title_short": "Designing a better day. Guidelines for adult and dementia day services centers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/35.1.127",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/arclin/acq037",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-199703000-00008",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1006/nimg.1995.1025",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/43.2.219",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/(sici)1099-1166(200002)15:2<181::aid-gps96>3.0.co;2-i",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503262536",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/56.11.m693",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/174498719600100313",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjp.bp.104.007658",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.bbr.2008.12.029",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Judd S.",
+        "title_short": "Design for dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1982",
+        "author": "Kahana E.",
+        "title_short": "Aging and the environment. Theoretical approaches",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Kawas C.",
+        "title_short": "Alzheimer disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0272-4944(05)80194-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/8.2.108",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.45.1.67",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.6.663",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317509334959",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/s0140-6736(02)09461-8",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930060810",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/1360786031000150676",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610298005365",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1068/b29100",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1212/wnl.61.11.1491",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759100600605",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759200700105",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/29.5.699",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759100600603",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930040305",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750101600413",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301210364449",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160021972748",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000109998",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neurobiolaging.2007.05.027",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/ajp.139.9.1136",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jama.299.22.2642",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Rodiek S.",
+        "title_short": "Outdoor environments for people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301206062254",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01358.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317509357735",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Topo P.",
+        "title_short": "Dementia, design and technology: Time to get involved",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-003-0683-7",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2000",
+        "author": "Warner M.",
+        "title_short": "The complete guide to Alzheimer's-proofing your home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1987",
+        "author": "Weisman G. D.",
+        "title_short": "Housing the aged. Design directives and policy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/(sici)1099-1166(199912)14:12<1000::aid-gps46>3.0.co;2-e",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/43.5.697",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-02": {
+    "doi": "10.1177/1533317509334959",
+    "total_refs": 22,
+    "doi_only_refs": 13,
+    "relevant_n": 15,
+    "already_in_es_n": 1,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1007/s00391-002-0066-9",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/10044-020",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1093/geront/8.2.108",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.4.397",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Brawley E.",
+        "title_short": "Designing for Alzheimer\u2019s Disease-Strategies for creating better care environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1998.tb02720.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/43.5.697",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-199703000-00008",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930040305",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160021972748",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/ajp.139.9.1136",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.45.1.67",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0272-4944(05)80194-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1006/nimg.1995.1025",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Zeisel J.",
+        "title_short": "Universal design to support the brain and its development",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-03": {
+    "doi": "10.1177/19375867211043546",
+    "total_refs": 35,
+    "doi_only_refs": 16,
+    "relevant_n": 28,
+    "already_in_es_n": 2,
+    "new_discovery_n": 26,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Aedes-Actiz. (2018). Toolkit Dementievriendelijke Ontwerpen. Een gezonde woonomgeving voor mensen met dementie. [Toolkit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Alzheimer Nederland. (2020). Factsheet. Cijfers en feiten over dementie. [Factsheet. Numbers and facts on dementia]. htt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Brawley E",
+        "title_short": "Brawley E. (1997). Designing for Alzheimer\u2019s disease: Strategies for creating better care environments. Wiley.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/leader.ftr4.13082008.24",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1991",
+        "author": "Cohen U.",
+        "title_short": "Cohen U., Weisman G. D. (1991). Holding on to home: Designing environments for people with dementia. John Hopkins Univer",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.4.397",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "De Vos F",
+        "title_short": "8 belangrijke omgevingsfactoren voor mensen met dementie. [Eight important environmental factors for people with dementi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-199703000-00008",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610210000438",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0272-4944(85)80015-3",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Jong De T. M.",
+        "title_short": "Jong De T. M., van der Voordt D. J. M. (Eds.). (2002). Ways to study and research: Urban, architectural, and technical d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-90-313-8061-9",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718813194",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/8.2.108",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671100400207",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1533317509334959",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/153331759100600605",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930040305",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "Nillesen J.",
+        "title_short": "Nillesen J., Optiz S. (2013). Dimensie voor dementie. [Dimensions for dementia]. Wiegerinck Architectuur en Stedenbouw.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0142-694x(96)00001-4",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160021972748",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Passini R.",
+        "title_short": "Wayfinding with dementia: Some research findings and a new look at design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0142-694x(96)00016-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Van Liempd H. M. J. A",
+        "title_short": "Van Liempd H. M. J. A, van Hoekstra E. K., Huibers L. S., Oel C. J. (2009). Evaluatieonderzoek naar de kwaliteit van de ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Verhaest P.",
+        "title_short": "Verhaest P. (2008). Basisinformatie dementie. [Basic information on dementia]. Expertisecentrum Dementie Vlaanderen vzw.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2000",
+        "author": "Warner M.",
+        "title_short": "Warner M. (2000). The complete guide to Alzheimer\u2019s-proofing your home. Purdue University Press.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Zeisel J",
+        "title_short": "Zeisel J. (2001). Universal design to support the brain and its development. In Preiser W. F. E., Ostroff E., eds. Unive",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/43.5.697",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-04": {
+    "doi": "10.3389/frdem.2025.1524425",
+    "total_refs": 51,
+    "doi_only_refs": 0,
+    "relevant_n": 38,
+    "already_in_es_n": 5,
+    "new_discovery_n": 33,
+    "discoveries": [
+      {
+        "doi": "10.1080/13607860701366434",
+        "year": "2007",
+        "author": "Algase",
+        "title_short": "Mapping the maze of terms and definitions in dementia-related wandering",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/1477-7525-2-52",
+        "year": "2004",
+        "author": "Andersen",
+        "title_short": "Ability to perform activities of daily living is the main factor affecting quality of life in patients with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10339-017-0790-0",
+        "year": "2017",
+        "author": "Balaban",
+        "title_short": "Turn left where you felt unhappy: how affect influences landmark-based wayfinding",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1076/anec.10.4.255.28971",
+        "year": "2003",
+        "author": "Cernin",
+        "title_short": "Color vision in Alzheimer's patients: can we improve object recognition with color cues?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/neu0000435",
+        "year": "2018",
+        "author": "Cogn\u00e9",
+        "title_short": "Are visual cues helpful for virtual spatial navigation and spatial memory in patients with mild cognitive impairment or ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-200004000-00002",
+        "year": "2000",
+        "author": "Cohen-Mansfield",
+        "title_short": "Heterogeneity in dementia: challenges and opportunities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/iovs.01-1101",
+        "year": "2003",
+        "author": "Crow",
+        "title_short": "Sweep visual evoked potential evaluation of contrast sensitivity in Alzheimer's dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000506859",
+        "year": "2020",
+        "author": "Davis",
+        "title_short": "Eye tracking analysis of visual cues during wayfinding in early stage Alzheimer's disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/00989134-20160212-07",
+        "year": "2016",
+        "author": "Davis",
+        "title_short": "Creating a supportive environment using cues for wayfinding in dementia",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/s0072-9752(07)01211-0",
+        "year": "2008",
+        "author": "Frierson",
+        "title_short": "Legal aspects of dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750401900110",
+        "year": "2004",
+        "author": "Gibson",
+        "title_short": "Orientation behaviors in residents relocated to a redesigned dementia care unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503262536",
+        "year": "2004",
+        "author": "Gross",
+        "title_short": "Recognition of self among persons with dementia: pictures versus names as environmental supports",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2015",
+        "author": "Hou",
+        "title_short": "\u201cSpatial layout and spontaneous behaviour for people with dementia: a study of adult day-care centres,\u201d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/bar0000066",
+        "year": "2018",
+        "author": "Ilem",
+        "title_short": "Finding your way home: a systematic investigation of shadowboxes on room recognition in memory care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586718813194",
+        "year": "2019",
+        "author": "Karol",
+        "title_short": "Impact of design on emotional, psychological, or social well-being for people with cognitive impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su13031084",
+        "year": "2021",
+        "author": "Kuliga",
+        "title_short": "Wayfinding in people with Alzheimer's disease: perspective taking and architectural cognition\u2014a vision paper on future d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671100400207",
+        "year": "2011",
+        "author": "Marquardt",
+        "title_short": "Wayfinding for people with dementia: a review of the role of architectural design",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1533317509334959",
+        "year": "2009",
+        "author": "Marquardt",
+        "title_short": "Dementia-friendly architecture: environments that facilitate wayfinding in nursing homes",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1093/geront/31.5.666",
+        "year": "1991",
+        "author": "Martino-Saltzman",
+        "title_short": "Travel behaviour of nursing home residents perceived as wanderers and nonwanderers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2018.1561590",
+        "year": "2019",
+        "author": "Mohammadi",
+        "title_short": "The evolution of housing typologies for older adults in the Netherlands from 1945 to 2016: an analysis in the context of",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930040305",
+        "year": "1989",
+        "author": "Netten",
+        "title_short": "The effect of design of residential homes in creating dependency among confused elderly residents: a study of elderly de",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750101600413",
+        "year": "2001",
+        "author": "Nolan",
+        "title_short": "Using external memory aids to increase room finding by older adults with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.1081",
+        "year": "2004",
+        "author": "Pai",
+        "title_short": "Topographical disorientation in community-residing patients with Alzheimer's disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0142-694x(96)00001-4",
+        "year": "1996",
+        "author": "Passini",
+        "title_short": "Wayfinding design: logic, application and some thoughts on universality",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160021972748",
+        "year": "2000",
+        "author": "Passini",
+        "title_short": "Wayfinding in a nursing home for advanced dementia of the Alzheimer's type",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01688639508402431",
+        "year": "1995",
+        "author": "Passini",
+        "title_short": "Wayfinding in dementia of the Alzheimer type: planning abilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Passini",
+        "title_short": "Wayfinding and dementia: some research findings and a new look at design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1076/anec.8.1.54.846",
+        "year": "2001",
+        "author": "Rainville",
+        "title_short": "A multiple case study of wayfinding in dementia of the Alzheimer type: decision making",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/t48466-000",
+        "year": "1982",
+        "author": "Reisberg",
+        "title_short": "The Global Deterioration Scale for assessment of primary degenerative dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00426-018-1015-6",
+        "year": "2019",
+        "author": "Ruotolo",
+        "title_short": "Putting emotions in routes: the influence of emotionally laden landmarks on spatial memory",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.arr.2014.04.004",
+        "year": "2014",
+        "author": "Serino",
+        "title_short": "The role of egocentric and allocentric abilities in Alzheimer's disease: a systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211043546",
+        "year": "2022",
+        "author": "van Buuren",
+        "title_short": "Dementia-friendly design: a set of design criteria and design typologies supporting wayfinding",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.24404/621c931cb866263c923ea96b",
+        "year": "2023",
+        "author": "van Buuren",
+        "title_short": "Design for enabling movement behavior of seniors with demen-tia: design (process) requirements based upon person-centere",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Veldkamp",
+        "title_short": "\u201cThe use of visual landmarks in a wayfinding system for elderly with beginning dementia,\u201d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/07334648211050376",
+        "year": "2022",
+        "author": "Wang",
+        "title_short": "Influences of physical environmental cues on people with dementia: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916581132004",
+        "year": "1981",
+        "author": "Weisman",
+        "title_short": "Evaluating architectural legibility: wayfinding in the built environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10339-021-01031-8",
+        "year": "2021",
+        "author": "Wiener",
+        "title_short": "Ageing-and dementia-friendly design: theory and evidence from cognitive psychology, neuropsychology and environmental ps",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "1981",
+        "author": "Zeisel",
+        "title_short": "Inquiry by Design: Tools for Environment-Behaviour Research",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-05": {
+    "doi": "10.1007/s10339-021-01031-8",
+    "total_refs": 155,
+    "doi_only_refs": 0,
+    "relevant_n": 93,
+    "already_in_es_n": 3,
+    "new_discovery_n": 90,
+    "discoveries": [
+      {
+        "doi": "10.1006/jevp.1996.0026",
+        "year": "1996",
+        "author": "TM Abu-Ghazzeh",
+        "title_short": "Abu-Ghazzeh TM (1996) Movement and wayfinding in the King Saud University built environment: a look at freshman orientat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1750-3639.2008.00147.x",
+        "year": "2008",
+        "author": "I Alafuzoff",
+        "title_short": "Alafuzoff I, Arzberger T, Al-Sarraj S, Bodi I, Bogdanovic N, Braak H et al (2008) Staging of neurofibrillary pathology i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00006324-199310000-00005",
+        "year": "1993",
+        "author": "CJ Bassi",
+        "title_short": "Bassi CJ, Solomon K, Og Young D (1993) Vision in aging and dementia. Optom vis Sci 70:809\u2013813. https://doi.org/10.1097/0",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/wad.0000000000000009",
+        "year": "2014",
+        "author": "T Benke",
+        "title_short": "Benke T, Karner E, Petermichl S, Prantner V, Kemmler G (2014) Neuropsychological deficits associated with route learning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neuroimage.2016.05.024",
+        "year": "2016",
+        "author": "MJ Betts",
+        "title_short": "Betts MJ, Acosta-Cabronero J, Cardenas-Blanco A, Nestor PJ, D\u00fczel E (2016) High-resolution characterisation of the aging",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/hipo.20715",
+        "year": "2010",
+        "author": "CM Bird",
+        "title_short": "Bird CM, Chan D, Hartley T, Pijnenburg YA, Rossor MN, Burgess N (2010) Topographical short-term memory differentiates Al",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1515/revneuro.2006.17.1-2.239",
+        "year": "2006",
+        "author": "N Burgess",
+        "title_short": "Burgess N, Trinkler I, King J, Kennedy A, Cipolotti L (2006) Impaired allocentric spatial memory underlying topographica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "JR Carpman",
+        "title_short": "Carpman JR, Grant MA (2002) Wayfinding: a broad view. In: Bechtel RB, Churchman A (eds) Handbook of environmental psycho",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301214535134",
+        "year": "2014",
+        "author": "E Caspi",
+        "title_short": "Caspi E (2014) Wayfinding difficulties among elders with dementia in an assisted living residence. Dementia 13:429\u2013450. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1076/anec.10.4.255.28971",
+        "year": "2003",
+        "author": "PA Cernin",
+        "title_short": "Cernin PA, Keller BK, Stoner JA (2003) Color vision in Alzheimer\u2019s patients: can we improve object recognition with colo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "R Cooper",
+        "title_short": "Cooper R (2010) Successful signage: how hospitals have solved wayfinding challenges. Health Facil Manag 23:27\u201330",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1073/pnas.1901600116",
+        "year": "2019",
+        "author": "G Coughlan",
+        "title_short": "Coughlan G, Coutrot A, Khondoker M, Minihane AM, Spiers H, Hornberger M (2019) Toward personalized cognitive diagnostics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/ana.410290110",
+        "year": "1991",
+        "author": "A Cronin-Golomb",
+        "title_short": "Cronin-Golomb A, Corkin S, Rizzo JF, Cohen J, Growdon JH, Banks KS (1991) Visual dysfunction in Alzheimer\u2019s disease: rel",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/iovs.01-1101",
+        "year": "2003",
+        "author": "RW Crow",
+        "title_short": "Crow RW, Levin LB, LaBree L, Rubin R, Feldon SE (2003) Sweep visual evoked potential evaluation of contrast sensitivity ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1212/01.wnl.0000326262.67613.fe",
+        "year": "2008",
+        "author": "LA Cushman",
+        "title_short": "Cushman LA, Stein K, Duffy CJ (2008) Detecting navigational deficits in cognitive aging and Alzheimer disease using virt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/00989134-20160212-07",
+        "year": "2016",
+        "author": "R Davis",
+        "title_short": "Davis R, Weisbeck C (2016) Creating a supportive environment using cues for wayfinding in dementia. J Gerontol Nurs 42(3",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "Dementia Services Development Centre",
+        "title_short": "Dementia Services Development Centre (2011) Dementia design audit tool, 2nd edn. University of Stirling, Stirling, UK",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Edge KJ (2003) Wall color of patient's room: effects on recovery (Doctoral dissertation, University of Florida)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2174/1567205014666171030112339",
+        "year": "2018",
+        "author": "F Fasano",
+        "title_short": "Fasano F, Mitolo M, Gardini S, Venneri A, Caffarra P, Pazzaglia F (2018) Combining structural magnetic resonance imaging",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1741-6612.2010.00444.x",
+        "year": "2011",
+        "author": "R Fleming",
+        "title_short": "Fleming R (2011) An environmental audit tool suitable for use in homelike facilities for people with dementia. Australas",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2019.00856",
+        "year": "2019",
+        "author": "F Fornara",
+        "title_short": "Fornara F, Lai AE, Bonaiuto M, Pazzaglia F (2019) Residential place attachment as an adaptive strategy for coping with t",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750401900110",
+        "year": "2004",
+        "author": "MC Gibson",
+        "title_short": "Gibson MC, MacLean J, Borrie M, Geiger J (2004) Orientation behaviors in residents relocated to a redesigned dementia ca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/qaoa-04-2013-0006",
+        "year": "2014",
+        "author": "B Godwin",
+        "title_short": "Godwin B (2014) Colour consultation with dementia home residents and staff. Qual Ageing Older Adults 15(2):102\u2013119. http",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1518/0018720054679407",
+        "year": "2005",
+        "author": "H Hancock",
+        "title_short": "Hancock H, Fisk A, Rogers W (2005) Comprehending product warning information: age-related effects and the roles of memor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/hipo.22011",
+        "year": "2012",
+        "author": "MA Harris",
+        "title_short": "Harris MA, Wolbers T (2012) Ageing effects on path integration and landmark navigation. Hippocampus 22:1770\u20131780. https:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neurobiolaging.2013.10.086",
+        "year": "2014",
+        "author": "MA Harris",
+        "title_short": "Harris MA, Wolbers T (2014) How age-related strategy switching deficits affect wayfinding in complex environments. Neuro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnagi.2017.00235",
+        "year": "2017",
+        "author": "S Hartmeyer",
+        "title_short": "Hartmeyer S, Grzeschik R, Wolbers T, Wiener JM (2017) The effects of attentional engagement on route learning performanc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cognition.2020.104524",
+        "year": "2021",
+        "author": "C Hilton",
+        "title_short": "Hilton C, Johnson A, Slattery TJ, Miellet S, Wiener JM (2021) The impact of cognitive aging on route learning rate and t",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13607863.2011.556601",
+        "year": "2011",
+        "author": "A Innes",
+        "title_short": "Innes A, Kelly F, Dincarslan O (2011) Care home design for people with dementia: what do people with dementia and their ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13875868.2011.581773",
+        "year": "2012",
+        "author": "T Ishikawa",
+        "title_short": "Ishikawa T, Nakamura U (2012) Landmark selection in the environment: relationships with object characteristics and sense",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Kahana E (1982) A congruence model of person-environment interaction. Aging Environ Theor Appr 97\u2013121",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.bbr.2004.10.016",
+        "year": "2005",
+        "author": "E Kalova",
+        "title_short": "Kalova E, Vlcek K, Jarolimova E, Bures J (2005) Allothetic orientation and sequential ordering of places is impaired in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0882-7974.6.1.10",
+        "year": "1991",
+        "author": "KC Kirasic",
+        "title_short": "Kirasic KC (1991) Spatial cognition and behavior in young and elderly adults: Implications for learning new environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jab.2016.02.002",
+        "year": "2016",
+        "author": "B Klimova",
+        "title_short": "Klimova B, Kuca K (2016) Speech and language impairments in dementia. J Appl Biomed 14:97\u2013103. https://doi.org/10.1016/j",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s13218-017-0487-7",
+        "year": "2017",
+        "author": "J Krukar",
+        "title_short": "Krukar J, Schwering A, Anacta VJ (2017) Landmark-based navigation in cognitive systems. German J Artif Intell 31:121\u2013124",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1126/science.aac8128",
+        "year": "2015",
+        "author": "L Kunz",
+        "title_short": "Kunz L, Schr\u00f6der TN, Lee H, Montag C, Lachmann B, Sariyska R, Fell J (2015) Reduced grid-cell-like representations in ad",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-140063",
+        "year": "2014",
+        "author": "C Lanza",
+        "title_short": "Lanza C, Kn\u00f6rzer O, Weber M, Riepe MW (2014) Autonomous spatial orientation in patients with mild to moderate Alzheimer\u2019",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1977",
+        "author": "MP Lawton",
+        "title_short": "Lawton MP (1977) The impact of environment on ageing and behaviour. In: Schaie KW (ed) Birren JE. Handbook of physiology",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neuron.2017.06.037",
+        "year": "2017",
+        "author": "AW Lester",
+        "title_short": "Lester AW, Moffat SD, Wiener JM, Barnes CA, Wolbers T (2017) The aging navigational system. Neuron 95:1019\u20131035. https:/",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0882-7974.6.1.128",
+        "year": "1991",
+        "author": "PD Lipman",
+        "title_short": "Lipman PD (1991) Age and exposure differences in acquisition of route information. Psychol Aging 6:128. https://doi.org/",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.arr.2012.04.007",
+        "year": "2013",
+        "author": "S Lithfous",
+        "title_short": "Lithfous S, Dufour A, Despr\u00e9s O (2013) Spatial navigation in normal aging and the prodromal stage of Alzheimer\u2019s disease",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0361073x.2018.1560117",
+        "year": "2018",
+        "author": "A Lopez",
+        "title_short": "Lopez A, Caffo O, Spano G, Bosco A (2018) The effect of aging on memory for recent and remote egocentric and allocentric",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/afl126",
+        "year": "2007",
+        "author": "A Macdonald",
+        "title_short": "Macdonald A, Cooper B (2007) Long-term care and dementia services: an impending crisis. Age Ageing 36:16\u201322. https://doi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671100400207",
+        "year": "2011",
+        "author": "G Marquardt",
+        "title_short": "Marquardt G (2011) Wayfinding for people with dementia: a review of the role of architectural design. HERD 4(2):75\u201390",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/1533317509334959",
+        "year": "2009",
+        "author": "G Marquardt",
+        "title_short": "Marquardt G, Schmieg P (2009) Dementia-friendly architecture: environments that facilitate wayfinding in nursing homes. ",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "G Marquardt",
+        "title_short": "Marquardt G, Bueter K, Motzek T (2014) Impact of the design of the built environment on people with dementia: an evidenc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "M Maus",
+        "title_short": "Maus M, Lindeman DA, Satariano WA (2016) Wayfinding, mobility, and technology for an aging society. In: Hunter RH, Ander",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/1360786031000150676",
+        "year": "2003",
+        "author": "KS McGilton",
+        "title_short": "McGilton KS, Rivera TM, Dawson P (2003) Can we help persons with dementia find their way in a new environment? Aging Men",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/03640210802067004",
+        "year": "2008",
+        "author": "T Meilinger",
+        "title_short": "Meilinger T, Knauff M, B\u00fclthoff HH (2008) Working memory in wayfinding: a dual task experiment in a virtual city. Cogn S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-121288",
+        "year": "2013",
+        "author": "M Mitolo",
+        "title_short": "Mitolo M, Gardini S, Fasano F, Crisi G, Pelosi A, Pazzaglia F, Caffarra P (2013) Visuospatial memory and neuroimaging co",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11065-009-9120-3",
+        "year": "2009",
+        "author": "SD Moffat",
+        "title_short": "Moffat SD (2009) Aging and spatial navigation: What do we know and where do we go? Neuropsychol Rev 19:478\u2013489. https://",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.bbr.2016.03.052",
+        "year": "2016",
+        "author": "I Mokrisova",
+        "title_short": "Mokrisova I, Laczo J, Andel R, Gazova I, Vyhnalek M, Nedelska Z, Levcik D, Cerman J, Vlcek K, Hort J (2016) Real-space p",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/bjop.12432",
+        "year": "2020",
+        "author": "V Muffato",
+        "title_short": "Muffato V, Meneghetti C, Doria S, De Beni R (2020) The orientation of young and older adults\u2019 mental representations of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759100600605",
+        "year": "1991",
+        "author": "KH Namazi",
+        "title_short": "Namazi KH, Johnson BD (1991) Physical environmental cues to reduce the problems of incontinence in Alzheimer\u2019s disease u",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930040305",
+        "year": "1989",
+        "author": "A Netten",
+        "title_short": "Netten A (1989) The effect of design of residential homes in creating dependency among confused elderly residents: a stu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "E Noell-Waggoner",
+        "title_short": "Noell-Waggoner E (2002) Light: an essential intervention for Alzheimer\u2019s disease. Alzheimers Care Today 3:343\u2013352",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750101600413",
+        "year": "2001",
+        "author": "B Nolan",
+        "title_short": "Nolan B, Mathews M, Harrison M (2001) Using external memory aids to increase room finding by older adults with dementia.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Nolan B, Mathews R, Truesdell-Todd G, VanDorp A (2002) Evaluation of the effect of orientation cues on wayfinding in per",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301215591334",
+        "year": "2017",
+        "author": "M O\u2019Malley",
+        "title_short": "O\u2019Malley M, Innes A, Wiener JM (2017) Decreasing spatial disorientation in care-home settings: how psychology can guide ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x17000277",
+        "year": "2017",
+        "author": "M O'Malley",
+        "title_short": "O\u2019Malley M, Innes A, Muir S, Wiener JM (2017) \u2018All the corridors are the same\u2019: a qualitative study of the orientation e",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3758/s13421-017-0763-7",
+        "year": "2018",
+        "author": "M O'Malley",
+        "title_short": "O\u2019Malley M, Innes A, Wiener JM (2018) How do we get there? Effects of cognitive aging on route memory. Mem Cognit 2018(4",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2012.12.004",
+        "year": "2013",
+        "author": "A Orrell",
+        "title_short": "Orrell A, McKee K, Torrington J, Barnes S, Darton R, Netten A, Lewis A (2013) The relationship between building design a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.1081",
+        "year": "2004",
+        "author": "MC Pai",
+        "title_short": "Pai MC, Jacobs WJ (2004) Topographical disorientation in community-residing patients with Alzheimer\u2019s disease. Int J Ger",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160021972748",
+        "year": "2000",
+        "author": "R Passini",
+        "title_short": "Passini R, Pigot H, Rainville C, T\u00e9treault MH (2000) Wayfinding in a nursing home for advanced dementia of the Alzheimer",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnhum.2018.00225",
+        "year": "2018",
+        "author": "F Pazzaglia",
+        "title_short": "Pazzaglia F, Meneghetti C, Ronconi L (2018b) Tracing a route and finding a shortcut: the working memory, motivational, a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/jad-2010-100654",
+        "year": "2010",
+        "author": "G Pengas",
+        "title_short": "Pengas G, Patterson K, Arnold RJ, Bird CM, Burgess N, Nestor PJ (2010) Lost and found: bespoke memory testing for Alzhei",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.13140/2.1.3629.3446",
+        "year": null,
+        "author": null,
+        "title_short": "Prince M, Knapp M, Guerchet M, McCrone P, Prina M, Comas HA, Wittenberg A, Adelaja R, Hu B, King B, Rehill D, Salimkumar",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neurobiolaging.2010.07.021",
+        "year": "2012",
+        "author": "MK Rodgers",
+        "title_short": "Rodgers MK, Sindone JA III, Moffat SD (2012) Effects of age on navigation strategy. Neurobiol Aging 33:202\u2013215. https://",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neuropsychologia.2007.06.020",
+        "year": "2007",
+        "author": "TT Rogers",
+        "title_short": "Rogers TT, Patterson K, Graham K (2007) Colour knowledge in semantic dementia: it is not all black and white. Neuropsych",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1355617710000706",
+        "year": "2010",
+        "author": "TA Salthouse",
+        "title_short": "Salthouse TA (2010) Selective review of cognitive aging. J Int Neuropsychol Soc 16:754\u2013760. https://doi.org/10.1017/S135",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3138/cja.27.3.253",
+        "year": "2008",
+        "author": "C Scialfa",
+        "title_short": "Scialfa C, Spadafora P, Klein M, Lesnik A, Dial L, Heinrich A (2008) Iconic sign comprehension in older adults: the role",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.arr.2014.04.004",
+        "year": "2014",
+        "author": "S Serino",
+        "title_short": "Serino S, Cipresso P, Morganti F, Riva G (2014) The role of egocentric and allocentric abilities in Alzheimer\u2019s disease:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnagi.2015.00088",
+        "year": "2015",
+        "author": "S Serino",
+        "title_short": "Serino S, Morganti F, Di Stefano F, Riva G (2015) Detecting early egocentric and allocentric impairments deficits in Alz",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301206062254",
+        "year": "2006",
+        "author": "B Sheehan",
+        "title_short": "Sheehan B, Burton E, Mitchell L (2006) Outdoor wayfinding in dementia. Dementia 5:271\u2013281. https://doi.org/10.1177/14713",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0096-1523.33.2.378",
+        "year": "2007",
+        "author": "BJ Stankiewicz",
+        "title_short": "Stankiewicz BJ, Kalia AA (2007a) Acquistion of structural versus object landmark knowledge. J Exp Psychol Hum Percept Pe",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0096-1523.33.2.378",
+        "year": "2007",
+        "author": "BJ Stankiewicz",
+        "title_short": "Stankiewicz BJ, Kalia AA (2007b) Acquistion of structural versus object landmark knowledge. J Exp Psychol Hum Percep Per",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyg.2015.01936",
+        "year": "1936",
+        "author": "M Strickrodt",
+        "title_short": "Strickrodt M, O\u2019Malley M, Wiener JM (1936) This place looks familiar: how navigators distinguish places with ambiguous l",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "The King\u2019s Fund (2013) Is your ward dementia friendly? EHE environmental assessment tool. http://www.kingsfund.org.uk/si",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "R Tofle",
+        "title_short": "Tofle R, Schwarz B, Yoon S, Max-Royale A (2004) Color in health care environments: a critical review of the literature. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cortex.2015.03.016",
+        "year": "2015",
+        "author": "S Tu",
+        "title_short": "Tu S, Wong S, Hodges JR, Irish M, Piguet O, Hornberger M (2015) Lost in spatial translation: a novel tool to objectively",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/upinlbs.2014.7033716",
+        "year": null,
+        "author": null,
+        "title_short": "Viaene P, Vanclooster A, Ooms K, De Maeyer P (2014) Thinking aloud in search of landmark characteristics in an indoor en",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.cortex.2014.12.007",
+        "year": "2015",
+        "author": "P Vieweg",
+        "title_short": "Vieweg P, Stangl M, Howard LR, Wolbers T (2015) Changes in pattern completion: a key mechanism to explain age-related re",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916581132004",
+        "year": "1981",
+        "author": "J Weisman",
+        "title_short": "Weisman J (1981) Evaluating architectural legibility: way-finding in the built environment. Environ Behav 13:189\u2013204. ht",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1523/jneurosci.0717-12.2013",
+        "year": "2013",
+        "author": "JM Wiener",
+        "title_short": "Wiener JM, de Condappa O, Harris MA, Wolbers T (2013) Maladaptive bias for extrahippocampal navigation strategies in agi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1471-6712.1995.tb00256.x",
+        "year": "1995",
+        "author": "H Wijk",
+        "title_short": "Wijk H, Sivik L (1995) Some aspects of colour perception among patients with Alzheimer\u2019s disease. Scand J Caring Sci 9:3",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/arclin/12.5.483",
+        "year": "1997",
+        "author": "S Wood",
+        "title_short": "Wood S, Mortel KF, Hiscock M, Breitmeyer BG, Caroselli JS (1997) Adaptive and maladaptive utilization of color cues by p",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "World Health Organisation (2017) Dementia fact sheet 2017. http://www.who.int/mediacentre/factsheets/fs362/en/. Accessed",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "World Health Organisation (2019) Dementia fact sheet 2019. https://www.who.int/news-room/fact-sheets/detail/dementia. Ac",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3141/2144-17",
+        "year": "2010",
+        "author": "Y Zhang",
+        "title_short": "Zhang Y, Chen X, Jiang J (2010) Wayfinding-oriented design for passenger guidance signs in large-scale transit center in",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13825585.2019.1632255",
+        "year": "2019",
+        "author": "B Zhao",
+        "title_short": "Zhao B, Gherri E, Della SS (2019) Age effects in mental rotation are due to the use of a different strategy. Aging Neuro",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnagi.2016.00122",
+        "year": "2016",
+        "author": "JY Zhong",
+        "title_short": "Zhong JY, Moffat SD (2016) Age-related differences in associative learning of landmarks and heading directions in a virt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Zimring C (1982) The built environment as a source of psychological stress: impacts of buildings and cities on satisfact",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Zimring C (1990) The costs of confusion: non-monetary and monetary costs of the Emory University hospital wayfinding sys",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-06": {
+    "doi": "10.1177/193758671400800111",
+    "total_refs": 167,
+    "doi_only_refs": 145,
+    "relevant_n": 166,
+    "already_in_es_n": 2,
+    "new_discovery_n": 164,
+    "discoveries": [
+      {
+        "doi": "10.1093/geront/gnr137",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317510365342",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1207/s15402010bsm0101_4",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0277-9536(93)90187-9",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000106620",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1348/014466501163508",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jclinepi.2010.07.015",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.2453",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/38.4.456",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1987.tb04638.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-199703000-00009",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.2460",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Brush J. A.",
+        "title_short": "Using the environment to improve intake for people with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/mlr.0b013e31825dd713",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301211421189",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0882-7974.5.1.146",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1300/j018v11n01_03",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02703180802206280",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Charras K.",
+        "title_short": "Effect of personalization of private spaces in special care units on institutionalized elderly with dementia of the Alzh",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/28.4.511",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.archger.2006.09.001",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13607860903586102",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759501000108",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/38.2.199",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317510387582",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Connell B. R.",
+        "title_short": "Tailoring the environment of oral health care to the needs and abilities of nursing home residents with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1989",
+        "author": "Cooper B.",
+        "title_short": "Testing the use of color in a long-term care setting",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-20040201-08",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Cutler L. J.",
+        "title_short": "Environments for privacy, safety, and movement of persons with dementia: Maximal privacy + moderate barriers = minimal i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763890903327010",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.4.397",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2012.02.007",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930081003",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00391-005-0294-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1300/j074v10n02_03",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/35.1.127",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01543.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0193945907303083",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610205001584",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clnu.2003.09.015",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0898010112461977",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-199703000-00008",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1901/jaba.2004.37-107",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610210000438",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0022-3956(75)90026-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0531-5565(02)00164-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/11038120510031725",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610211002675",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2012.04040.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750401900110",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12927/hcq..18652",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1987",
+        "author": "G\u00f6testam K. G.",
+        "title_short": "G\u00f6testam K. G., & Melin L. (1987). Improving well-being for patients with senile dementia by minor changes in the ward e",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0006-3223(01)01178-7",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916503262536",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671100400210",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0005-7916(81)90053-7",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1996",
+        "author": "Hewawasam L.",
+        "title_short": "Floor patterns limit wandering of people with Alzheimer's",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01428.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/30.2.178",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/(sici)1099-1166(1998100)13:10<682::aid-gps847>3.0.co;2-y",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3130/jaabe.9.371",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronj/42.5.558",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-19961001-12",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2702.2008.02440.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Joosse L. L.",
+        "title_short": "Joosse L. L. (2009). The environmental influences of sound and space related to agitation in people with dementia. (Diss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01169.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000107036",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0733464802250046",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0269215510394221",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Koss E.",
+        "title_short": "Koss E., & Gilmore G. C. (1998). Environmental interventions and functionability of AD patients. In Vellas B. (Ed.), Res",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-19941201-08",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759701200302",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "La Garce M.",
+        "title_short": "Daylight interventions and Alzheimer's behaviors: A twelve-month study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759901400503",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/archinternmed.2009.467",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0165-1781(95)02550-g",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/(sici)1099-1166(199907)14:7<520::aid-gps983>3.0.co;2-m",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/33.5.682",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671300600210",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317509334959",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/153331750101600509",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1988",
+        "author": "Mathew L.",
+        "title_short": "What's different about a special care unit for dementia patients? A comparative study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930060810",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750101600508",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317508320088",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1901/jaba.1981.14-47",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1992",
+        "author": "Meyer D. L.",
+        "title_short": "Effects of a \u2018quiet week\u2019 intervention on behavior in an Alzheimer boarding home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317508316681",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763890903327135",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/070674379003500205",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/07420529808993200",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1600-0447.1994.tb01477.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13607863.2012.717250",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0714980800009235",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/001391659803000404",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/104973299129121721",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2012",
+        "author": "Nakanishi M.",
+        "title_short": "Quality of life of residents with dementia in a group-living situation: An approach to creating small, homelike environm",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759100600605",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1991",
+        "author": "Namazi K. H.",
+        "title_short": "Environmental effects on incontinence problems in Alzheimer's disease patients",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1992",
+        "author": "Namazi K. H.",
+        "title_short": "Pertinent autonomy for residents with dementias: Modification of the physical environment to enhance independence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759200700104",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/29.5.699",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759100600603",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0197-4572(96)80212-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-19900301-09",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-19950501-06",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930040305",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1993",
+        "author": "Netten A.",
+        "title_short": "Netten A. (1993). A positive environment: Physical and social influences on people with senile dementia in residential c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/wad.0b013e31818207d0",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Nolan B. A.",
+        "title_short": "Evaluation of the effect of orientation cues on wayfinding in persons with dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-20041001-07",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750101600413",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0193945910386248",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2005.00562.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139160021972748",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671100400305",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "Perrit M. R.",
+        "title_short": "Research informs design: Empirical findings suggest recommendations for carpet pattern and texture",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jama.1997.03550160060039",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jalz.2012.11.007",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0277-9536(85)90434-4",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/105477389800700207",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/45.suppl_1.74",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2004.52304.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jama.299.22.2642",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1365-2702.1999.0225a.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763893.2011.621862",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.930050204",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/45.suppl_1.19",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/ajp.149.8.1028",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610298005328",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1999.tb07235.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3138/cja.27.3.267",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/(sici)1099-1166(199603)11:3<233::aid-gps313>3.0.co;2-0",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1998.tb02720.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01358.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "Sloane P.",
+        "title_short": "Implementing a lighting intervention in public areas of long-term care facilities: Lessons learned",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610211002377",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317509357735",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671000400102",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671000300401",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317508319155",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0883-9417(93)90007-j",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.2205",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671200500310",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750001500109",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Tilly J.",
+        "title_short": "Literature review: Intervention research on caring for people with dementia in assisted living and nursing homes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/alzrt131",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2008.02.005",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2009.01.009",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0006-3223(97)89928-3",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2702.2011.03759.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s104161020800820x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2010.08.001",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/1472-6963-10-30",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317509350153",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1995",
+        "author": "Webber P. A.",
+        "title_short": "Alzheimer's special care units vs. integrated nursing homes: A comparison of resident outcomes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/00048678709158920",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.2455",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331759701200506",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1741-6612.2005.00105.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0193945905282355",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/43.5.697",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01289.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.2292",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610211001438",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671400800111",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      }
+    ]
+  },
+  "CWD-07": {
+    "doi": "10.3390/ijerph18063203",
+    "total_refs": 52,
+    "doi_only_refs": 0,
+    "relevant_n": 12,
+    "already_in_es_n": 4,
+    "new_discovery_n": 8,
+    "discoveries": [
+      {
+        "doi": "10.1002/9781119053484",
+        "year": null,
+        "author": null,
+        "title_short": "Bates, C., Imrie, R., and Kullman, K. (2017). Designing with Care and Caring with Design. Care and Design. Bodies, Build",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Brand, A. (2010). Living in the Community. Housing Design for Adults, Helen Hamlyn Centre.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1539449216665116",
+        "year": "2016",
+        "author": "Piller",
+        "title_short": "The Sensory Environment and Participation of Preschool Children with Autism Spectrum Disorder",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Sachs, N., and Vincenta, T. (2011). Outdoor Environments for Children with Autism and Special Needs, Informe Design, Imp",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Vogel, C.L. (2008). Classroom Design for Living and Learning with Autism. Autism Asperger\u2019s Digest, Future Horizons.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Gaudion, K., and McGinley, C. (2012). Green Spaces. Outdoor Environments for Adults with Autism, Helen Hamlyn Centre for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9604.2012.01525.x",
+        "year": "2012",
+        "author": "McAllister",
+        "title_short": "Design considerations for the autism spectrum disorder-friendly Key Stage 1 classroom",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/1467-9604.12103",
+        "year": "2015",
+        "author": "Deochand",
+        "title_short": "Design Considerations for an Intensive Autism Treatment Centre",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Gaines",
+        "title_short": "The perceived effects of visual design and features on students with autism spectrum disorder",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Mostafa",
+        "title_short": "Architecture for Autism: Autism ASPECTSS\u2122 in School Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Mostafa",
+        "title_short": "An Architecture for Autism: Concepts of Design Intervention for the Autistic User",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Decker, E.F. (2014). A City for Marc. An Inclusive Urban Design Approach to Planning for Adults with Autism. [Master\u2019s T",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-08": {
+    "doi": "10.1177/13623613221102753",
+    "total_refs": 54,
+    "doi_only_refs": 36,
+    "relevant_n": 43,
+    "already_in_es_n": 7,
+    "new_discovery_n": 36,
+    "discoveries": [
+      {
+        "doi": "10.1080/14606925.2017.1352738",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.books.9780890425596",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/1364557032000119616",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-58640-3_14",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-09439-2_2",
+        "year": null,
+        "author": null,
+        "title_short": "Bolten B., Barbiero G. (2020). Biophilic design: How to enhance physical and psychological health and wellbeing in our b",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13643-017-0644-y",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586719888502",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/1471-2288-13-48",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.socscimed.2009.10.017",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/aur.1485",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/11038128.2016.1198419",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Gaines K., Curry Z., Shroyer J., Amor C., Lock R. H. (2014). The perceived effects of visual design and features on stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijporl.2008.09.020",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v3i7.1262",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Ghazali R., Sakip S. R. M., Samsuddin I. (2018b). Preliminary study on sensory design for autism centre. Environment \u2013 B",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v4i10.1618",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4172/2165-7890.1000227",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Grancich D. D. (2014). Exploring urban design theory: A qualitative study integrating \u2018autism-friendly environments\u2019 as ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.buildenv.2016.12.008",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/dre.25.2.57.66",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Kanakri S. M. F. (2014). The impact of acoustical environmental design on children with autism (3667564) [Ph.D., Texas A",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10901-015-9451-8",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1088/1757-899x/960/4/042093",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1741-6612.2008.00298.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/1748-5908-5-69",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1203/pdr.0b013e3182130c54",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0140-6736(08)61690-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1471-3802.12092",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "McAllister K.",
+        "title_short": "Design Research Society Conference",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/1467-8578.12160",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1108/ohi-01-2010-b0004",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10803-015-2403-z",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2016.1181719",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.sbspro.2012.03.330",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17452007.2005.9684587",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/nrn.2017.112",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15710880701875068",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/f-02-2011-0017",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Stouchlighting LED Lighting Solutions. (n.a.). Lighting comparison: LED vs incandescent lighting. www.stouchlighting.com",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18063203",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1007/s10901-008-9129-6",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.14307/jfcs105.3.9",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "CWD-11": {
+    "doi": "10.1002/trc2.12353",
+    "total_refs": 73,
+    "doi_only_refs": 44,
+    "relevant_n": 59,
+    "already_in_es_n": 1,
+    "new_discovery_n": 58,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "FDA.FDA Grants Accelerated Approval for Alzheimer's Drug. FDA News Release 2021 06\u201007\u20102021 [cited 2021 10\u201015\u20102021]. Avai",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Alzheimer's Association 2019.Alzheimer's DIsease Facts and Figures.2019 Alzheimer's Association: Chicago IL. p.90.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "WHO.Dementia Fact sheet. Fact Sheets [webpage] 2021 09\u201002\u20102021 [cited 2021 10\u201015\u20102021]. Available from:https://www.who.i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2012.09.027",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/ijpn.2008.14.1.28152",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610209990688",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Fazio S",
+        "title_short": "Person\u2010centered care in residential settings: taking a look back while continuing to move forward",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1086/jce199809103",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x00008060",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s1474-4422(08)70063-2",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/bjon.2001.10.11.10430",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5172/conu.2006.23.1.135",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "FaganR WilliamsC BurgerS.Meeting of pioneers in nursing home culture change.1997; Lifespan of Greater Rochester: Rochest",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Pioneer Network.Connect with the Network: Changing the Culture of Aging in the 21st Century.2011; Pioneer Network: Roche",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/48.2.142",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jgs.13866",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2702.2004.00924.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "Downs M",
+        "title_short": "Person\u2010Centered Care for People with Severe Dementia, in Severe Dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnx122",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2009.04.004",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216635829",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnx146",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jan.13281",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1748-3743.2011.00290.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2000",
+        "author": "Kuhn D",
+        "title_short": "Dementia care mapping: an innovative tool to measure person\u2010centered care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gerinurse.2013.01.002",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronb/57.2.s69",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Zeisel J",
+        "title_short": "Best practices: an environment\u2010behavior model for Alzheimer special care unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0164027596183001",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-200001000-00004",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1997.tb04504.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x04002387",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0144686x02008899",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2015",
+        "author": "Nordin S",
+        "title_short": "Assessing the physical environment of older people's residential care facilities: development of the Swedish version of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/46.1.42",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02763890903327010",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/nur.20210",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5042/hcs.2010.0709",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1741-6612.2010.00444.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Cunningham C",
+        "title_short": "Auditing design for dementia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/f\u201009\u20102020\u20100106",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301215622839",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnw261",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": null,
+        "title_short": "Living well with dementia: A national dementia strategy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216689402",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216635829",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2017",
+        "author": "Powers A",
+        "title_short": "Dementia Beyond Drugs: Changing the Culture of Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "Powers A",
+        "title_short": "The Hidden Restraint \u2010 Part 1 \u2013 Restraints, in Changing Aging with Dr. Bill Thomas",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/153331750101600509",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916584166004",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2007.01169.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/46.4.533",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/00989134-20090706-04",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317508320088",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2020",
+        "author": "Kaup M",
+        "title_short": "Validation of the Environmental Audit Scoring Evaluation (EASE) Tool",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00038628.2021.1984869",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.4.397",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnw259",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671400800111",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      }
+    ]
+  },
+  "CWD-19": {
+    "doi": "10.4324/9781003095460-16",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "CWD-22": {
+    "doi": "10.1177/30495334251345092",
+    "total_refs": 44,
+    "doi_only_refs": 0,
+    "relevant_n": 36,
+    "already_in_es_n": 1,
+    "new_discovery_n": 35,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Alzheimer Nederland. (n.d). Feiten en Cijfers over dementia. https://www.alzheimer-nederland.nl/factsheet-cijfers-en-fei",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2014.05.011",
+        "year": null,
+        "author": null,
+        "title_short": "Anderiesen H. Scherder E. J. Goossens R. H. Sonneveld M. H. (2014). A systematic review - physical activity in dementia:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/bf03324268",
+        "year": null,
+        "author": null,
+        "title_short": "Annerstedt L. (1994). An attempt to determine the impact of group living care in comparison to traditional long-term car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000106620",
+        "year": null,
+        "author": null,
+        "title_short": "Annerstedt L. (1997). Group-living care: An alternative for the demented elderly. Dementia and Geriatric Cognitive Disor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gny096",
+        "year": null,
+        "author": null,
+        "title_short": "Boumans J. Van Boekel L. C. Baan C. A. Luijkx K. G. Heyn P. C. (2019). How can autonomy Be maintained and informal care ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/713650005",
+        "year": null,
+        "author": null,
+        "title_short": "Brawley E. C. (2001). Environmental design for Alzheimer\u2019s disease: A quality of life issue. Aging & Mental Health 5 79\u2013",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/nre-2009-0512",
+        "year": null,
+        "author": null,
+        "title_short": "Calkins M. P. (2009). Evidence-based long term care design. NeuroRehabilitation 25(3) 145\u2013154. https://doi.org/10.3233/N",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnw259",
+        "year": null,
+        "author": null,
+        "title_short": "Chaudhury H. Cooke H. A. Cowie H. Razaghi L. (2018). The influence of the physical environment on residents with dementi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1533317513488923",
+        "year": null,
+        "author": null,
+        "title_short": "Chaudhury H. Hung L. Badger M. (2013). The role of physical environment in supporting person-centered dining in long-ter",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301215622839",
+        "year": null,
+        "author": null,
+        "title_short": "Chaudhury H. Hung L. Rust T. Wu S. (2017). Do physical environmental changes make a difference? Supporting person-center",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301217733649",
+        "year": null,
+        "author": null,
+        "title_short": "Daly Lynn J. Rond\u00f3n-Sulbar\u00e1n J. Quinn E. Ryan A. McCormack B. Martin S. (2019). A systematic review of electronic assist",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/40.4.397",
+        "year": null,
+        "author": null,
+        "title_short": "Day K. Carreon D. Stump C. (2000). The therapeutic design of environments for people with dementia: A review of the empi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610205002292",
+        "year": null,
+        "author": null,
+        "title_short": "de Vugt M. E. Stevens F. Aalten P. Lousberg R. Jaspers N. Verhey F. R. (2005). A prospective study of the effects of beh",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002093-199703000-00008",
+        "year": null,
+        "author": null,
+        "title_short": "Elmst\u00e5hl S. Annerstedt L. Ahlund O. (1997). How should a group living unit for demented elderly be designed to decrease ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0898264319870090",
+        "year": null,
+        "author": null,
+        "title_short": "Ferdous F. (2020). Positive social interaction by Spatial Design: A systematic review of empirical literature in memory ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610216001678",
+        "year": null,
+        "author": null,
+        "title_short": "Fleming R. Bennett K. Preece T. Phillipson L. (2017). The development and testing of the dementia friendly communities e",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1041610210000438",
+        "year": null,
+        "author": null,
+        "title_short": "Fleming R. Purandare N. (2010). Long-term care for people with dementia: Environmental design guidelines. International ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/col.22562",
+        "year": null,
+        "author": null,
+        "title_short": "Guerry E. Caumon C. B\u00e9cheras E. Zissis G. (2020). Influence of chromatic and lighting on the visual environment of the e",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/14651858.cd012892.pub2",
+        "year": null,
+        "author": null,
+        "title_short": "Harrison S. L. Dyer S. M. Laver K. E. Milte R. K. Fleming R. Crotty M. (2022). Physical environmental designs in residen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1559-1816.2002.tb01436.x",
+        "year": null,
+        "author": null,
+        "title_short": "Harris P. B. McBride G. Ross C. Curtis L. (2002). A place to heal: Environmental sources of satisfaction among hospital ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1159/000107036",
+        "year": null,
+        "author": null,
+        "title_short": "Kihlgren M. Br\u00e5ne G. Karlsson I. Kuremyr D. Leissner P. Norberg A. (1992). Long-term influences on demented patients in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671400800111",
+        "year": null,
+        "author": null,
+        "title_short": "Marquardt G. Bueter K. Motzek T. (2014). Impact of the design of the built environment on people with dementia: An evide",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/193758671300600210",
+        "year": null,
+        "author": null,
+        "title_short": "Marquardt G. Motzek T. (2013). How to rate the quality of a research paper: Introducing a helpful algorithm for architec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00391-008-0029-x",
+        "year": null,
+        "author": null,
+        "title_short": "Marquardt G. Schmieg P. (2009). [Dementia-friendly architecture. Environments that facilitate wayfinding in nursing home",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Prince M. Wilmo A. World Alzheimer Report. (2015).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2004.52304.x",
+        "year": null,
+        "author": null,
+        "title_short": "Reimer M. A. Slaughter S. Donaldson C. Currie G. Eliasziw M. (2004). Special care facility compared with traditional env",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronb/57.2.s69",
+        "year": "2003",
+        "author": "Sloane P. D.",
+        "title_short": "The Therapeutic Environment Screening Survey for nursing homes (TESS-NH): An observational instrument for assessing the ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/hsc.13618",
+        "year": null,
+        "author": null,
+        "title_short": "Smith M. Brown M. Ritchie L. Papadopoulou C. Tolson D. (2022). Living with dementia in supported housing: A systematic r",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0115425",
+        "year": null,
+        "author": null,
+        "title_short": "Soril L. J. Leggett L. E. Lorenzetti D. L. Silvius J. Robertson D. Mansell L. Holroyd-Leduc J. Noseworthy T. W. Clement ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/gps.2205",
+        "year": null,
+        "author": null,
+        "title_short": "Te Boekhorst S. Depla M. F. de Lange J. Pot A. M. Eefsting J. A. (2009). The effects of group living homes on older peop",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10901-009-9143-3",
+        "year": null,
+        "author": null,
+        "title_short": "van Hoof J. Kort H. S. M. van Waarde H. (2009). Housing and care for older adults with dementia: A European perspective.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jaging.2017.05.001",
+        "year": null,
+        "author": null,
+        "title_short": "Van Steenwinkel I. Dierckx de Casterl\u00e9 B. Heylighen A. (2017). How architectural design affords experiences of freedom i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0098-9134-20031201-06",
+        "year": null,
+        "author": null,
+        "title_short": "Werezak L. J. Morgan D. G. (2003). Creating a therapeutic psychosocial environment in dementia care. A preliminary frame",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2014.05.013",
+        "year": null,
+        "author": null,
+        "title_short": "Whear R. Coon J. T. Bethel A. Abbott R. Stein K. Garside R. (2014). What is the impact of using outdoor spaces such as g",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2021",
+        "author": "WHO",
+        "title_short": "WHO. Public health response to dementia. Geneva: World Health Organization (2021).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1471301216648670",
+        "year": null,
+        "author": null,
+        "title_short": "Woodbridge R. Sullivan M. P. Harding E. Crutch S. Gilhooly K. J. Gilhooly M. McIntyre A. Wilson L. (2018). Use of the ph",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}
