@@ -1,0 +1,2005 @@
+{
+  "MHB-01": {
+    "doi": "10.3390/ijerph192114279",
+    "total_refs": 110,
+    "relevant_n": 68,
+    "already_in_es_n": 0,
+    "new_discovery_n": 68,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Hopper",
+        "title_short": "Shelter from the Storm: Trauma-Informed Care in Homelessness Services Settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20008198.2017.1353383",
+        "year": "2017",
+        "author": "Kessler",
+        "title_short": "Trauma and PTSD in the WHO World Mental Health Surveys",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00048670701827218",
+        "year": "2008",
+        "author": "Taylor",
+        "title_short": "Trauma and Post-Traumatic Stress Disorder among Homeless Adults in Sydney",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3402/ejpt.v5.24794",
+        "year": "2014",
+        "author": "Lagdon",
+        "title_short": "Adult experience of mental health outcomes as a result of intimate partner violence victimisation: A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/jts.22454",
+        "year": "2019",
+        "author": "Cloitre",
+        "title_short": "ICD-11 Posttraumatic Stress Disorder and Complex Posttraumatic Stress Disorder in the United States: A Population-Based ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08882746.2021.1989570",
+        "year": "2021",
+        "author": "Bollo",
+        "title_short": "Trauma-informed design for permanent supportive housing: Four case studies from Seattle and Denver",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18189588",
+        "year": null,
+        "author": null,
+        "title_short": "Rollings, K.A., and Bollo, C.S. (2021). Permanent supportive housing design characteristics associated with the mental h",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Pable, J., and Ellis, A. (2022, October 15). Trauma-informed Design: Definitions and Strategies for Architectural Implem",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph16203818",
+        "year": null,
+        "author": null,
+        "title_short": "Jewkes, Y., Jordan, M., Wright, S., and Bendelow, G. (2019). Designing \u2018Healthy\u2019 Prisons for Women: Incorporating Trauma",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0886571x.2014.918429",
+        "year": "2014",
+        "author": "Lieberman",
+        "title_short": "Trauma-informed care in residential treatment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "(2022, August 12). Trauma-Informed Design Society. Available online: https://traumainformeddesign.org/about-tid/.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/med-psych/9780190052737.001.0001",
+        "year": null,
+        "author": null,
+        "title_short": "Rossen, E. (2020). Design as the missing variable in trauma-informed schools. Supporting and Educating Traumatized Stude",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.pmedr.2021.101501",
+        "year": "2021",
+        "author": "Schroeder",
+        "title_short": "Trauma-informed neighborhoods: Making the built environment trauma-informed",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2019.03.006",
+        "year": "2019",
+        "author": "Friesinger",
+        "title_short": "Studies regarding supported housing and the built environment for people with mental health problems: A mixed-methods li",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10530789.2018.1445507",
+        "year": "2018",
+        "author": "Huffman",
+        "title_short": "Built community: Architecture, community, and participation in a permanent supportive housing project",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2020",
+        "author": "McLane",
+        "title_short": "Architectural Design Characteristics, Uses, and Perceptions of Community Spaces in Permanent Supportive Housing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph15020190",
+        "year": null,
+        "author": null,
+        "title_short": "McPherson, P., Krotofil, J., and Killaspy, H. (2018). What Works? Toward a New Classification System for Mental Health S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10926771.2013.775984",
+        "year": "2013",
+        "author": "Grieder",
+        "title_short": "Applying environmental psychology in the design of domestic violence shelters",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Donnelly, S. (2020). Design Guide for Refuge Accommodation for Women and Children, University of Technology Sydney.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Washington State Coalition against Domestic Violence (2022, August 12). Building Dignity: Design Strategies for Domestic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "Ulrich",
+        "title_short": "A conceptual framework for the domain of evidence-based design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/17465729200700011",
+        "year": "2007",
+        "author": "Clark",
+        "title_short": "A systematic review of the evidence on the effect of the built and physical environment on mental health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/epirev/mxn009",
+        "year": "2008",
+        "author": "Kim",
+        "title_short": "Blues from the Neighborhood? Neighborhood Characteristics and Depression",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/jech-2018-210436",
+        "year": "2018",
+        "author": "Tillmann",
+        "title_short": "Mental health benefits of interactions with nature in children and teenagers: A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph16091516",
+        "year": null,
+        "author": null,
+        "title_short": "Alderton, A., Villanueva, K., O\u2019Connor, M., Boulang\u00e9, C., and Badland, H. (2019). Reducing Inequities in Early Childhood",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s12144-017-9746-x",
+        "year": "2020",
+        "author": "Gharib",
+        "title_short": "Mental health and urban design\u2014Zoning in on PTSD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.socscimed.2021.114242",
+        "year": "2021",
+        "author": "Fleckney",
+        "title_short": "The urban public realm and adolescent mental health and wellbeing: A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586721999787",
+        "year": "2021",
+        "author": "Shin",
+        "title_short": "Mental Health Outcome Measures in Environmental Design Research: A Critical Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781315856964",
+        "year": null,
+        "author": null,
+        "title_short": "Sussman, A., and Hollander, J.B. (2015). Cognitive Architecture: Designing for How We Respond to the Built Environment, ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph15112358",
+        "year": null,
+        "author": null,
+        "title_short": "Olszewska-Guizzo, A., Escoffier, N., Chan, J., and Yok, T.P. (2018). Window view and the brain: Effects of floor level a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586715609562",
+        "year": "2016",
+        "author": "Golembiewski",
+        "title_short": "The Designed Environment and How it Affects Brain Morphology and Mental Health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2019.1648773",
+        "year": "2020",
+        "author": "Koehn",
+        "title_short": "Understanding the pervasiveness of trauma within a housing facility for people living with HIV",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2019",
+        "author": "Lygum",
+        "title_short": "Post-Occupancy Evaluation of a Crisis Shelter Garden and Application of Findings Through the Use of a Participatory Desi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "McLeod",
+        "title_short": "Shelter design and service delivery for women who become homeless after age 50",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2021",
+        "author": "Nuamah",
+        "title_short": "Veteran-Centered Investigation of Architectural and Space Design Considerations for Post-Traumatic Stress Disorder (PTSD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph17228657",
+        "year": null,
+        "author": null,
+        "title_short": "Peters, E., Maas, J., Hovinga, D., Van Den Bogerd, N., and Schuengel, C. (2020). Experiencing nature to satisfy basic ps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10530789.2021.1995937",
+        "year": null,
+        "author": null,
+        "title_short": "Peters, E., Hovinga, D., Maas, J., and Schuengel, C. (2021). Exposure to a natural environment to improve parental wellb",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0013916589214003",
+        "year": "1989",
+        "author": "Refuerzo",
+        "title_short": "Effects of Personal Status and Patterns of Use on Residential Satisfaction in Shelters for Victims of Domestic Violence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2470547017692328",
+        "year": "2017",
+        "author": "McEwen",
+        "title_short": "Neurobiological and Systemic Effects of Chronic Stress",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.pneurobio.2017.05.004",
+        "year": "2017",
+        "author": "Peters",
+        "title_short": "Uncertainty and stress: Why it causes diseases and how it is mastered by the brain",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.31887/dcns.2006.8.4/bmcewen",
+        "year": "2006",
+        "author": "McEwen",
+        "title_short": "Protective and damaging effects of stress mediators: Central role of the brain",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1101/lm.196606",
+        "year": "2006",
+        "author": "McNally",
+        "title_short": "Predicting danger: The nature, consequences, and neural mechanisms of predictive fear learning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fnbeh.2018.00328",
+        "year": "2019",
+        "author": "Javanbakht",
+        "title_short": "A theory of everything: Overlapping neurobiological mechanisms of psychotherapies of fear and anxiety related disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neubiorev.2019.11.006",
+        "year": "2020",
+        "author": "Sangha",
+        "title_short": "Know safety, no fear",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/npp.2013.191",
+        "year": "2014",
+        "author": "Kong",
+        "title_short": "Learning not to Fear: Neural Correlates of Learned Safety",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neuropharm.2011.02.023",
+        "year": "2012",
+        "author": "Jovanovic",
+        "title_short": "Impaired safety signal learning may be a biomarker of PTSD",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.pharmthera.2011.06.006",
+        "year": "2011",
+        "author": "Pryce",
+        "title_short": "Helplessness: A systematic translational review of theory and evidence for its relevance to understanding and treating d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/02673037.2015.1106064",
+        "year": "2016",
+        "author": "Teo",
+        "title_short": "An ecological study of families in transitional housing\u2014\u2018housed but not homed\u2019",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0005-7967(76)90039-5",
+        "year": "1976",
+        "author": "Miller",
+        "title_short": "Learned helplessness, depression and the perception of reinforcement",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0021-843x.85.1.11",
+        "year": "1976",
+        "author": "Klein",
+        "title_short": "Reversal of performance deficits and perceptual deficits in learned helplessness and depression",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0022-3514.33.5.508",
+        "year": "1976",
+        "author": "Klein",
+        "title_short": "Learned helplessness, depression, and the attribution of failure",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1146/annurev-neuro-071714-033928",
+        "year": "2015",
+        "author": "Huys",
+        "title_short": "Depression: A Decision-Theoretic Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ejn.15160",
+        "year": "2022",
+        "author": "Brenes",
+        "title_short": "The environmental enrichment model revisited: A translatable paradigm to study the stress of our modern lifestyle",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ejphar.2014.03.031",
+        "year": "2014",
+        "author": "Hendriksen",
+        "title_short": "From non-pharmacological treatments for post-traumatic stress disorder to novel therapeutic targets",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neubiorev.2014.11.017",
+        "year": "2015",
+        "author": "Crofton",
+        "title_short": "Inoculation stress hypothesis of environmental enrichment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.pbb.2020.172993",
+        "year": "2020",
+        "author": "Smail",
+        "title_short": "Differential impact of stress and environmental enrichment on corticolimbic circuits",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/nrn2647",
+        "year": "2009",
+        "author": "Herman",
+        "title_short": "Neural regulation of endocrine and autonomic stress responses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.landurbplan.2011.12.015",
+        "year": "2012",
+        "author": "Roe",
+        "title_short": "More green space is linked to less stress in deprived communities: Evidence from salivary cortisol patterns",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/jech-2014-204667",
+        "year": "2015",
+        "author": "Turkheimer",
+        "title_short": "Access to green space, physical activity and mental health: A twin study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.pedn.2017.08.027",
+        "year": "2017",
+        "author": "McCormick",
+        "title_short": "Does Access to Green Space Impact the Mental Well-being of Children: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph15122668",
+        "year": null,
+        "author": null,
+        "title_short": "Vanaken, G.-J., and Danckaerts, M. (2018). Impact of Green Space Exposure on Children\u2019s and Adolescents\u2019 Mental Health: ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph17186640",
+        "year": null,
+        "author": null,
+        "title_short": "Zhang, Y., Mavoa, S., Zhao, J., Raphael, D., and Smith, M. (2020). The Association between Green Space and Adolescents\u2019 ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18168713",
+        "year": null,
+        "author": null,
+        "title_short": "Huang, S., Qi, J., Li, W., Dong, J., and van den Bosch, C.K. (2021). The Contribution to Stress Recovery and Attention R",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.healthplace.2019.102168",
+        "year": "2019",
+        "author": "Liu",
+        "title_short": "Exploring the linkage between greenness exposure and depression among Chinese people: Mediating roles of physical activi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Lena",
+        "title_short": "Psychological restoration and urban nature: Some mental health implications",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/bs4040394",
+        "year": "2014",
+        "author": "Berto",
+        "title_short": "The Role of Nature in Coping with Psycho-Physiological Stress: A Literature Review on Restorativeness",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1049732318785355",
+        "year": "2018",
+        "author": "Henwood",
+        "title_short": "Understanding Risk Environments in Permanent Supportive Housing for Formerly Homeless Adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0272-4944(95)90001-2",
+        "year": "1995",
+        "author": "Kaplan",
+        "title_short": "The restorative benefits of nature: Toward an integrative framework",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-02": {
+    "doi": "10.1007/s40653-023-00528-y",
+    "total_refs": 72,
+    "relevant_n": 47,
+    "already_in_es_n": 1,
+    "new_discovery_n": 46,
+    "discoveries": [
+      {
+        "doi": "10.1177/1937586720973767",
+        "year": "2021",
+        "author": "MM Aljunaidy",
+        "title_short": "Aljunaidy, M. M., & Adi, M. N. (2021). Architecture and mental disorders: a systematic study of peer-reviewed literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1300/j007v20n01_02",
+        "year": "2002",
+        "author": "KA Bailey",
+        "title_short": "Bailey, K. A. (2002). The role of the physical environment for children in residential care. Residential Treatment for C",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Barton, S., Gonzalez, R., Tomlinson, P., & Burdekin, B. (2012). Therapeutic residential care for children and young peop",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08882746.2021.1989570",
+        "year": null,
+        "author": null,
+        "title_short": "Bollo, C., & Donofrio, A. (2021). Trauma-informed design for permanent supportive housing: four case studies from Seattl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4159/9780674028845",
+        "year": null,
+        "author": null,
+        "title_short": "Bronfenbrenner, U. (1979). The ecology of human development: experiments by nature and design. Harvard University Press.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.chi.0000127590.95585.65",
+        "year": "2004",
+        "author": "BJ Burns",
+        "title_short": "Burns, B. J., Phillips, S. D., Wagner, H. R., Barth, R. P., Kolko, D. J., Campbell, Y., & Landsverk, J. (2004). Mental h",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "I Clarke",
+        "title_short": "Clarke, I. (2009). Design and dignity in hospitals. Studies: An Irish Quarterly Review, 98(392), 419\u2013428.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/e404122005-001",
+        "year": null,
+        "author": null,
+        "title_short": "Cook, A., Blaustein, M., Spinnazzola, J., Van der Kolk, B., & the Complex Trauma Task Force. (2003). Complex trauma in c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Docherty, C., Kendrick, A., Sloan, P., & Lerpiniere, J. (2006). Designing with care: Interior design and residential chi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1146/annurev.psych.57.102904.190057",
+        "year": "2006",
+        "author": "GW Evans",
+        "title_short": "Evans, G. W. (2006). Child development and the physical environment. Annual Review of Psychology, 57(1), 423\u2013451. https:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "RD Fallot",
+        "title_short": "Fallot, R. D., Harris, M., & Community Connections. (2008). Trauma-informed approaches to systems of care. Trauma Psycho",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Farrell, J. (2018). Trauma informed design: How the physical environment supports recovery from homelessness Committee o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.childyouth.2020.105901",
+        "year": "2021",
+        "author": "E Galvin",
+        "title_short": "Galvin, E., Morris, H., Mousa, A., O\u2019Donnell, R., Halfpenny, N., & Skouteris, H. (2021). Implementation of the Sanctuary",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Grabowska, S., Holtzinger, C., Wilson, J., Rossbert, L., Macur, R., & Brisson, D. (2021). Architectural Principles In Th",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2011",
+        "author": "JKP Greeson",
+        "title_short": "Greeson, J. K. P., Briggs, E. C., Kisiel, C. L., Layne, C. M., Ake, I. I. I., Ko, S. J., Gerrity, E. T., Steinberg, A. M",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1077559516635274",
+        "year": "2016",
+        "author": "RF Hanson",
+        "title_short": "Hanson, R. F., & Lang, J. (2016). A critical look at trauma-informed care among agencies and systems serving maltreated ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.childyouth.2007.04.007",
+        "year": "2007",
+        "author": "Y Hawkins-Rodgers",
+        "title_short": "Hawkins-Rodgers, Y. (2007). Adolescents adjusting to a group home environment: a residential care model of re-organizing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10896-013-9531-z",
+        "year": "2013",
+        "author": "HB Hodgdon",
+        "title_short": "Hodgdon, H. B., Kinniburgh, K., Gabowitz, D., Blaustein, M. E., & Spinazzola, J. (2013). Development and implementation ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "M Holden",
+        "title_short": "Holden, M., Izzo, C., Nunno, M., Smith, E., Endres, T., Holden, J., & Kuhn, F. (2010). Children and residential experien",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18357/ijcyfs102-3201918853",
+        "year": null,
+        "author": null,
+        "title_short": "Holden, M. J., & Sellers, D. (2019). An evidence-based program model for facilitating therapeutic responses to pain-base",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0886571x.2021.1915225",
+        "year": "2021",
+        "author": "J Huefner",
+        "title_short": "Huefner, J., & Ainsworth, F. (2021). Commentary: recognizing the value of the milieu in therapeutic residential care for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10530789.2018.1445507",
+        "year": null,
+        "author": null,
+        "title_short": "Huffman, T. (2018). Built community: Architecture, community, and participation in a permanent supportive housing projec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "VL Hummer",
+        "title_short": "Hummer, V. L., Dollard, N., Robst, J., & Armstrong, M. I. (2010). Innovations in implementation of trauma-informed care ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11121-016-0649-0",
+        "year": null,
+        "author": null,
+        "title_short": "Izzo, C. V., Smith, E. G., Holden, M. J., Norton, C. I., Nunno, M. A., & Sellers, D. E. (2016). Intervening at the setti",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2017",
+        "author": "D Johnson",
+        "title_short": "Johnson, D. (2017). Tangible trauma informed care. Scottish Journal of Residential Child Care, 16(1), 22.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/med-psych/9780190052737.003.0019",
+        "year": null,
+        "author": null,
+        "title_short": "Kopec, D., & Harte, J. D. (2020). Design as the missing variable in trauma-informed schools. In E. Rossen (Ed.), Support",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/tc-01-2015-0005",
+        "year": "2016",
+        "author": "MG Kramer",
+        "title_short": "Kramer, M. G. (2016). Sanctuary in a residential treatment center: creating a therapeutic community of hope countering v",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2215-0366(20)30038-9",
+        "year": "2020",
+        "author": "S Liddicoat",
+        "title_short": "Liddicoat, S., Badcock, P., & Killackey, E. (2020). Principles for designing the built environment of mental health serv",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s12187-019-09716-5",
+        "year": "2020",
+        "author": "E Magalh\u00e3es",
+        "title_short": "Magalh\u00e3es, E., & Calheiros, M. M. (2020). Why place matters in residential care: the mediating role of place attachment ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/19361521.2012.697105",
+        "year": "2012",
+        "author": "MT Marrow",
+        "title_short": "Marrow, M. T., Knudsen, K. J., Olafson, E., & Bucher, S. E. (2012). The value of implementing TARGET within a trauma-inf",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1749-6632.1999.tb08103.x",
+        "year": "1999",
+        "author": "BS McEwen",
+        "title_short": "McEwen, B. S., & Seeman, T. (1999). Protective and damaging effects of mediators of stress: elaborating and testing the ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/joid.12165",
+        "year": "2020",
+        "author": "Y McLane",
+        "title_short": "McLane, Y., & Pable, J. (2020). Architectural design characteristics, uses, and perceptions of Community Spaces in Perma",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/cha.2014.22",
+        "year": "2014",
+        "author": "PJ McLoughlin",
+        "title_short": "McLoughlin, P. J., & Gonzalez, R. (2014). Healing complex trauma through therapeutic residential care: the Lighthouse Fo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.26687/archnet-ijar.v8i1.314",
+        "year": "2014",
+        "author": "M Mostafa",
+        "title_short": "Mostafa, M. (2014). ARCHITECTURE FOR AUTISM: Autism ASPECTSS\u2122 in school design. International Journal of Architectural R",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1111/inm.12012",
+        "year": "2014",
+        "author": "C Muskett",
+        "title_short": "Muskett, C. (2014). Trauma-informed care in inpatient mental health settings: a review of the literature. International ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Pecora, P. J., & English, D. J. (2016). Elements of effective practice for children and youth served by therapeutic resi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Rice, G., Duncalf, Z., & Wilson, L. (2011). Case study: Changing the interior design of a children\u2019s home to engender ow",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "J Rivard",
+        "title_short": "Rivard, J., Bloom, S., Mccorkle, D., & Abramovitz, R. (2005). Preliminary results of a study examining the implementatio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "C Robinson",
+        "title_short": "Robinson, C., & Brown, A. M. (2016). Considering sensory processing issues in trauma affected children: the physical env",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph18189588",
+        "year": "2021",
+        "author": "KA Rollings",
+        "title_short": "Rollings, K. A., & Bollo, C. S. (2021). Permanent supportive housing design characteristics associated with the mental h",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1013002507972",
+        "year": "2001",
+        "author": "MS Scheeringa",
+        "title_short": "Scheeringa, M. S., & Zeanah, C. H. (2001). A relational perspective on PTSD in early childhood. Journal of Traumatic Str",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1353/cye.2006.0008",
+        "year": "2006",
+        "author": "I Stevens",
+        "title_short": "Stevens, I. (2006). Consulting youth about residential care environments in Scotland. Children Youth and Environments, 1",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Substance Abuse and Mental Health Services Administration. (2014). SAMHSA\u2019s concept of trauma and guidance for a trauma-",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Ulrich, R. S. (2001). Effects of healthcare environmental design on medical outcomes. Design and Health: Proceedings of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/jts.20047",
+        "year": "2005",
+        "author": "BA van der Kolk",
+        "title_short": "van der Kolk, B. A., Roth, S., Pelcovitz, D., Sunday, S., & Spinazzola, J. (2005). Disorders of extreme stress: the empi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Whittaker, J. W., Valle, D., J. F., & Holmes, L. (2014). Therapeutic residential care with children and youth: developin",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Wilson, J., Macur, R., Rossbert, L., & Holtzinger, C. (2020). Designing for healing, dignity, and joy. Shopworks Archite",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-07": {
+    "doi": "10.1136/bmjopen-2020-046647",
+    "total_refs": 66,
+    "relevant_n": 40,
+    "already_in_es_n": 0,
+    "new_discovery_n": 40,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Scalzo S . Design for mental health - Towards an Australian Approach. Melbourne, 2016.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-319-40537-7",
+        "year": null,
+        "author": null,
+        "title_short": "Singh NN , Barber JW VSS . Handbook of recovery in inpatient psychiatry. Springer, 2016.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.auec.2019.04.006",
+        "year": "2019",
+        "author": "Liddicoat",
+        "title_short": "Designing a supportive emergency department environment for people with self harm and suicidal ideation: a scoping revie",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08039488.2017.1346142",
+        "year": "2017",
+        "author": "Andersen",
+        "title_short": "Applying sensory modulation to mental health inpatient care to reduce seclusion and restraint: a case control study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2018.05.002",
+        "year": "2018",
+        "author": "Ulrich",
+        "title_short": "Psychiatric ward design can reduce aggressive behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "A National Framework for Recovery-oriented Mental Health Services . Policy and theory. policy and theory. Commonwealth o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Commonwealth of Australia . A national framework for recovery-oriented mental health services: guide for practitioners a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Department of Health . Framework for recovery-oriented practice. Melbourne: State of Victoria, 2011.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/09638237.2015.1124388",
+        "year": "2016",
+        "author": "Wyder",
+        "title_short": "The importance of safety, agency and control during involuntary mental health admissions",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "HASSELL studio . Future directions in design for mental health facilities. Melbourne, Australia, 2014.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "NSW Ministry of Health . Review of seclusion, restraint and observation of consumers with a mental illness in NSW health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnu.2015.09.001",
+        "year": "2016",
+        "author": "Goulet",
+        "title_short": "Post-Seclusion and/or restraint review in psychiatry: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2015",
+        "author": "Roper",
+        "title_short": "Defining seclusion and restraint: legal and policy definitions versus consumer and carer perspectives",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.57022/ihkz3424",
+        "year": null,
+        "author": null,
+        "title_short": "Brophy L , Oostermeijer S , Minshall C , et al . Designing mental health facilities that prevent the use of seclusion an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12205",
+        "year": "2016",
+        "author": "Bj\u00f6rkdahl",
+        "title_short": "Sensory rooms in psychiatric inpatient care: staff experiences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11126-016-9428-0",
+        "year": "2017",
+        "author": "Blair",
+        "title_short": "Reduction of Seclusion and restraint in an inpatient psychiatric setting: a pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0164212x.2015.1076367",
+        "year": "2015",
+        "author": "Bobier",
+        "title_short": "Pilot investigation of the use and usefulness of a sensory modulation room in a child and adolescent psychiatric inpatie",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1447-0349.2011.00756.x",
+        "year": "2012",
+        "author": "Bowers",
+        "title_short": "Manual restraint and shows of force: the City-128 study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1071/ah15128",
+        "year": "2016",
+        "author": "Brophy",
+        "title_short": "Consumers' and their supporters' perspectives on barriers and strategies to reducing seclusion and restraint in mental h",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13033-016-0038-x",
+        "year": "2016",
+        "author": "Brophy",
+        "title_short": "Consumers and carer perspectives on poor practice and the use of seclusion and restraint in mental health settings: resu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/wps.20201",
+        "year": "2015",
+        "author": "Dresler",
+        "title_short": "Effects of improved Hospital architecture on coercive measures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2019.00462",
+        "year": "2019",
+        "author": "Fletcher",
+        "title_short": "Safewards impact in inpatient mental health units in Victoria, Australia: staff perspectives",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12466",
+        "year": "2018",
+        "author": "Forsyth",
+        "title_short": "Sensory strategies in adult mental health: a qualitative exploration of staff perspectives following the introduction of",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1742646409990082",
+        "year": "2010",
+        "author": "Georgieva",
+        "title_short": "Successful reduction of seclusion in a newly developed psychiatric intensive care unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12593",
+        "year": "2019",
+        "author": "Hedlund Lindberg",
+        "title_short": "The experiences of patients in using sensory rooms in psychiatric inpatient care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1742646414000065",
+        "year": "2015",
+        "author": "Jenkins",
+        "title_short": "A study of agitation, conflict and containment in association with change in ward physical environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/18374905.2014.11081887",
+        "year": "2014",
+        "author": "Lloyd",
+        "title_short": "An investigation into the effectiveness of sensory modulation in reducing seclusion within an acute mental health unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12189",
+        "year": "2015",
+        "author": "Muir-Cochrane",
+        "title_short": "Nurses' experiences of restraint and seclusion use in short-stay acute old age psychiatry inpatient units: a qualitative",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s2045796013000693",
+        "year": "2015",
+        "author": "Rose",
+        "title_short": "Life in acute mental health settings: experiences and perceptions of service users and nurses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jcap.12174",
+        "year": "2017",
+        "author": "Seckman",
+        "title_short": "Evaluation of the use of a sensory room on an adolescent inpatient unit and its impact on restraint and seclusion preven",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20110112-01",
+        "year": "2012",
+        "author": "Sivak",
+        "title_short": "Implementation of comfort rooms to reduce seclusion, restraint use, and acting-out behaviors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20120410-04",
+        "year": "2012",
+        "author": "Southard",
+        "title_short": "Enclosed versus open nursing stations in adult acute care psychiatric settings: does the design affect the therapeutic m",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1078390317736136",
+        "year": "2018",
+        "author": "Yakov",
+        "title_short": "Sensory reduction on the general milieu of a High-Acuity inpatient psychiatric unit to prevent use of physical restraint",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20040901-06",
+        "year": "2004",
+        "author": "Champagne",
+        "title_short": "Sensory approaches in inpatient psychiatric settings: innovative alternatives to seclusion & restraint",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "McKenna B , Sutton D , Sweetman L M-W . The role of the Victorian department of health and human services in assisting m",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Melbourne Social Equity Institute . Seclusion and restraint project: report. Melbourne, 2014.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Keppich-Arnold S , Pascu V , Moseley K . Review of Mental Health Inpatient Rehabilitation Services at Glenside Health Se",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/nin.12199",
+        "year": "2017",
+        "author": "Slemon",
+        "title_short": "Safety in psychiatric inpatient care: the impact of risk management culture on mental health nursing practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12559",
+        "year": "2019",
+        "author": "Fletcher",
+        "title_short": "Working towards least restrictive environments in acute mental health wards in the context of locked door policy and pra",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/bsl.506",
+        "year": "2002",
+        "author": "Dvoskin",
+        "title_short": "Architectural design of a secure forensic state psychiatric hospital",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-08": {
+    "doi": "10.1177/1937586720937995",
+    "total_refs": 44,
+    "relevant_n": 3,
+    "already_in_es_n": 0,
+    "new_discovery_n": 3,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Elf M., Eldh A. C. \u00d6hrn K., von Koch L. (2016). Using modeling as a co-design approach in the planning process of new ca",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Grinwis M. (2016). Physical characteristics of environment affecting health and wellbeing of parents and medical profess",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Lootens M. (2014). Wonen voor ouderen met dementie: Onderzoek naar de optimale fysieke vormgeving voor de gebruiker [Hou",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-09": {
+    "doi": "10.1111/inm.13065",
+    "total_refs": 53,
+    "relevant_n": 8,
+    "already_in_es_n": 0,
+    "new_discovery_n": 8,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Champagne T.&Sayer E.(2003).The effects of the use of the sensory room in psychiatry. [Cited 23 April 2019]. Available f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Cummings K. S.",
+        "title_short": "Caring with comfort rooms. Reducing seclusion and restraint use in psychiatric facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Department of Health and Social Care(2021).Mental Health Units (use of Force) Act 2018. [Cited 7 July 2022]. Available f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Herefordshire and Worcestershire Health and Care Trust(2020).Mental health patients to benefit from new state of the art",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Joanna Briggs Institute",
+        "title_short": "Physical restraint \u2013 Part 1: Use in acute and residential care facilities systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Joanna Briggs Institute(2022).8.3 the JBI approach to mixed method systematic reviews. [Cited 1 July 2022]. Available fr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "National Mental Health Commission(2022).Reducing restrictive practices. [Cited 1 July 2022]. Available from: URL:https:/",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "National Institute of Health and Care Excellence(2015b).NG10 Violence and aggression: Short\u2010term management in mental he",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-10": {
+    "doi": "10.4135/9781071891414.n126",
+    "total_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "MHB-11": {
+    "doi": "10.1192/bjp.bp.112.118422",
+    "total_refs": 38,
+    "relevant_n": 6,
+    "already_in_es_n": 0,
+    "new_discovery_n": 6,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Steinert",
+        "title_short": "Incidence of seclusion and restraint in psychiatric hospitals: a literature review and survey of international trends",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2003",
+        "author": "Bower",
+        "title_short": "A synthesis of what we know about the use of physical restraint and seclusion with patients in psychiatric and acute car",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "Karlin",
+        "title_short": "Environmental and therapeutic issues in psychiatric hospital design: toward best practices",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Nijman",
+        "title_short": "Aggressive behaviour on an acute psychiatric admissions ward",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2012",
+        "author": "Janssen",
+        "title_short": "Differences in seclusion rates between admission wards: does patient compilation explain?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1983",
+        "author": "Wilson",
+        "title_short": "Managing disturbed behavior by architectural changes; making space fit the program",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-13": {
+    "doi": "10.1186/s12913-022-08322-6",
+    "total_refs": 21,
+    "relevant_n": 13,
+    "already_in_es_n": 0,
+    "new_discovery_n": 13,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2017",
+        "author": "SB Lo",
+        "title_short": "Lo SB, Gaupp R, Huber C, Schneeberger A, Garic G, Voulgaris A, Walter M, Borgwardt S, Lang UE. Influence of an \u201cOpen Doo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2702.2006.01489.x",
+        "year": "2016",
+        "author": "K Haglund",
+        "title_short": "Haglund K, Von Knorring L, Von Essen L. Psychiatric wards with locked doors\u2013advantages and disadvantages according to nu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jpsychires.2017.08.017",
+        "year": "2017",
+        "author": "AR Schneeberger",
+        "title_short": "Schneeberger AR, Kowalinski E, Fr\u00f6hlich D, Schr\u00f6der K, von Felten S, Zinkler M, Beine KH, Heinz A, Borgwardt S, Lang UE,",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2215-0366(16)30168-7",
+        "year": "2016",
+        "author": "CG Huber",
+        "title_short": "Huber CG, Schneeberger AR, Kowalinski E, Fr\u00f6hlich D, von Felten S, Walter M, Zinkler M, Beine K, Heinz A, Borgwardt S, L",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4321/s0213-61632010000400001",
+        "year": "2010",
+        "author": "UE Lang",
+        "title_short": "Lang UE, Hartmann S, Schulz-Hartmann S, Gudlowski Y, Ricken R, Munk I, von Haebler D, Gallinat J, Heinz A. Do locked doo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-0042-105181",
+        "year": "2016",
+        "author": "ML Cibis",
+        "title_short": "Cibis ML, Wackerhagen C, M\u00fcller S, Lang UE, Schmidt Y, Heinz A. Comparison of aggressive behavior, compulsory medication",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2215-0366(16)30346-7",
+        "year": "2016",
+        "author": "T Pollm\u00e4cher",
+        "title_short": "Pollm\u00e4cher T, Steinert T. Arbitrary classification of hospital policy regarding open and locked doors. Lancet Psychiat. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2850.2008.01378.x",
+        "year": "2009",
+        "author": "M van der Merwe",
+        "title_short": "van der Merwe M, Bowers L, Jones J, Simpson A, Haglund K. Locked doors in acute inpatient psychiatry: a literature revie",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2017",
+        "author": "H Combs",
+        "title_short": "Combs H, Romm S. Psychiatric inpatient suicide: a literature review. Primary Psychiatry. 2017;14:67\u201374.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840802710829",
+        "year": "2009",
+        "author": "L Bowers",
+        "title_short": "Bowers L, Allan T, Simpson A, Jones J, Van der Merwe M, Jeffery D. Identifying key factors associated with aggression on",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-019-2126-3",
+        "year": "2019",
+        "author": "LK Schreiber",
+        "title_short": "Schreiber LK, Metzger FG, Duncker TA, Fallgatter AJ, Steinert T. Open doors by fair means: Study protocol for a 3-year p",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-018-1866-9",
+        "year": "2018",
+        "author": "J Kalagi",
+        "title_short": "Kalagi J, Otte I, Vollmann J, Juckel G, Gather J. Requirements for the implementation of open door policies in acute psy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2017",
+        "author": "J Gather",
+        "title_short": "Gather J, Nyhuis PW, Juckel G. Wie kann eine \u201eoffene Psychiatrie \u201cgelingen? Konzeptionelle \u00dcberlegungen zur T\u00fcr\u00f6ffnung i",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-14": {
+    "doi": "10.1136/bmjopen-2022-067943",
+    "total_refs": 18,
+    "relevant_n": 4,
+    "already_in_es_n": 0,
+    "new_discovery_n": 4,
+    "discoveries": [
+      {
+        "doi": "10.1371/journal.pone.0258346",
+        "year": null,
+        "author": null,
+        "title_short": "Weltens I , Bak M , Verhagen S , et al . Aggression on the psychiatric ward: prevalence and risk factors. A systematic r",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12029",
+        "year": "2013",
+        "author": "Cutcliffe",
+        "title_short": "Systemic perspective of violence and aggression in mental health care: towards a more comprehensive understanding and co",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12028",
+        "year": "2013",
+        "author": "Cutcliffe",
+        "title_short": "Systemic perspective of violence and aggression in mental health care: towards a more comprehensive understanding and co",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2018.00059",
+        "year": "2018",
+        "author": "Itzhaki",
+        "title_short": "Mental health nurse\u2019s exposure to workplace violence leads to job stress, which leads to reduced professional quality of",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-15": {
+    "doi": "10.1186/1472-6963-10-89",
+    "total_refs": 60,
+    "relevant_n": 31,
+    "already_in_es_n": 0,
+    "new_discovery_n": 31,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "WHO",
+        "title_short": "WHO: WHO resource book on mental health, human rights and legislation. Stop exclusion, Dare to care. WHO Library catalog",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2006",
+        "author": "WHO",
+        "title_short": "WHO: World Health Organization (WHO). WHO inform about global action programme in mental health. 2006",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "TW Kallert",
+        "title_short": "Kallert TW, Glockner M, Onchev G, Raboch J, Karastergiou A, Solomon Z, et al: The EUNOMIA project on coercion in psychia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-2006-952005",
+        "year": "2007",
+        "author": "V Martin",
+        "title_short": "Martin V, Bernhardsgrutter R, Gobel R, Steinert T: [The use of mechanical restraint and seclusion: comparing the clinica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1993",
+        "author": "EJ Betemps",
+        "title_short": "Betemps EJ, Somoza E, Buncher CR: Hospital Characteristics, Diagnoses, and Staff Reasons Associated with Use of Seclusio",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1988",
+        "author": "MD Carpenter",
+        "title_short": "Carpenter MD, Hannon VR, McCleery G, Wanderling JA: Variations in seclusion and restraint practices by hospital location",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0924-9338(00)00223-6",
+        "year": "2000",
+        "author": "R Kaltiala-Heino",
+        "title_short": "Kaltiala-Heino R, Korkeila J, Tuohimaki C, Tuori T, Lehtinen V: Coercion and restrictions in psychiatric inpatient treat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.eurpsy.2003.07.002",
+        "year": "2003",
+        "author": "R Kaltiala-Heino",
+        "title_short": "Kaltiala-Heino R, Valimaki M, Korkeila J, Tuohimaki C, Lehtinen V: Involuntary medication in psychiatric inpatient treat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1985",
+        "author": "RL Okin",
+        "title_short": "Okin RL: Variation among state hospitals in use of seclusion and restraint. Hospital and Community Psychiatry. 1985, 36:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-006-0137-0",
+        "year": "2007",
+        "author": "T Steinert",
+        "title_short": "Steinert T, Martin V, Baur M, Bohnet U, Goebel R, Hermelink G, et al: Diagnosis-related frequency of compulsory measures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1990",
+        "author": "BB Way",
+        "title_short": "Way BB, Banks SM: Use of Seclusion and Restraint in Public Psychiatric-Hospitals - Patient Characteristics and Facility ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "T Steinert",
+        "title_short": "Steinert T, Lepping P, Bernhardsgrutter R, Conca A, Hatling T, Janssen W, et al: Incidence of seclusion and restraint in",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "R Wynn",
+        "title_short": "Wynn R: Restraint and seclusion in a Norwegian university psychiatric hospital. 2004, Troms\u00f8: University in Troms\u00f8",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1023/a:1022243423121",
+        "year": "1998",
+        "author": "KA Cope",
+        "title_short": "Cope KA, Encandela JA: Organizational features affecting the use of coercion in the administration of psychiatric care. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1991",
+        "author": "T Palmstierna",
+        "title_short": "Palmstierna T, Huitfeldt B, Wistedt B: The Relationship of Crowding and Aggressive-Behavior on A Psychiatric Intensive-C",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1600-0447.1995.tb09738.x",
+        "year": "1995",
+        "author": "T Palmstierna",
+        "title_short": "Palmstierna T, Wistedt B: Changes in the Pattern of Aggressive-Behavior Among Inpatients with Changed Ward Organization.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00131746-200301000-00006",
+        "year": "2003",
+        "author": "GW Currier",
+        "title_short": "Currier GW: The controversy over \"chemical restraint\" in acute care psychiatry. J Psychiatr Pract. 2003, 9: 59-70. 10.10",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2006.04.005",
+        "year": "2007",
+        "author": "W Janssen",
+        "title_short": "Janssen W, Noorthoorn E, van Linge R, Lendemeijer B: The influence of staffing levels on the use of seclusion. Int J Law",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0160-2527(02)00210-8",
+        "year": "2003",
+        "author": "R Kaltiala-Heino",
+        "title_short": "Kaltiala-Heino R, Tuohimaki C, Korkeila J, Lehtinen V: Reasons for using seclusion and restraint in psychiatric inpatien",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "V Klinge",
+        "title_short": "Klinge V: Staff Opinions About Seclusion and Restraint at A State Forensic Hospital. Hospital and Community Psychiatry. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08039480310003470",
+        "year": "2003",
+        "author": "R Wynn",
+        "title_short": "Wynn R: Staff's attitudes to the use of restraint and seclusion in a Norwegian university psychiatric hospital. Nord J P",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1471-6712.2002.00082.x",
+        "year": "2002",
+        "author": "R Wynn",
+        "title_short": "Wynn R: Medicate, restrain or seclude? Strategies for dealing with violent and threatening behaviour in a Norwegian univ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Norvoll R: Det lukkede rom. Bruk av skjerming som behandling og kontroll i psykiatriske akuttposter (The closed room. Us",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "R Bremnes",
+        "title_short": "Bremnes R, Hatling T, Bj\u00f8rngaard JH: Bruk av tvangsmidler i psykisk helsevern i 2001, 2003, 2005 og 2007 (Use of coerciv",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.yco.0000179497.46182.6f",
+        "year": "2005",
+        "author": "E Sailas",
+        "title_short": "Sailas E, Wahlbeck K: Restraint and seclusion in psychiatric inpatient wards. Current Opinion in Psychiatry. 2005, 18: 5",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-007-0219-7",
+        "year": "2007",
+        "author": "A Keski-Valkama",
+        "title_short": "Keski-Valkama A, Sailas E, Eronen M, Koivisto AM, Lonnqvist J, Kaltiala-Heino R: A 15-year national follow-up: legislati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s1359-1789(01)00073-8",
+        "year": "2002",
+        "author": "M Daffern",
+        "title_short": "Daffern M, Howells K: Psychiatric inpatient aggression - A review of structural and functional assessment approaches. Ag",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1440-1614.2002.01003.x",
+        "year": "2002",
+        "author": "SM El-Badri",
+        "title_short": "El-Badri SM, Mellsop G: A study of the use of seclusion in an acute psychiatric service. Australian and New Zealand Jour",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1365-2850.2006.00931.x",
+        "year": "2006",
+        "author": "L Bowers",
+        "title_short": "Bowers L, Brennan G, Flood C, Lipang M, Oladapo P: Preliminary outcomes of a trial to reduce conflict and containment on",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "A Keski-Valkama",
+        "title_short": "Keski-Valkama A, Sailas E, Eronen M, Koivisto AM, Lonnqvist J, Kaltiala-Heino R: Who are the restrained and secluded pat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjp.bp.106.034538",
+        "year": "2007",
+        "author": "CJ Gaskin",
+        "title_short": "Gaskin CJ, Elsom SJ, Happell B: Interventions for reducing the use of seclusion in psychiatric facilities. British Journ",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-16": {
+    "doi": "10.1111/jpm.12576",
+    "total_refs": 36,
+    "relevant_n": 4,
+    "already_in_es_n": 0,
+    "new_discovery_n": 4,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "Brophy L. M.",
+        "title_short": "Consumers and Carer perspectives on poor practice and the use of seclusion and restraint in mental health settings: Resu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2013",
+        "author": "Faschingbauer K.",
+        "title_short": "Use of seclusion: Finding the voice of the patient to influence practice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/0279-3695-19990301-14",
+        "year": "1999",
+        "author": "Martinez R.",
+        "title_short": "From the other side of the door: Patient views of seclusion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2008",
+        "author": "Ntsaba G. M.",
+        "title_short": "Psychiatric in\u2010patients\u2019 experience of being secluded in a specific hospital in Lesotho",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-19": {
+    "doi": "10.7202/smq",
+    "total_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "MHB-20": {
+    "doi": "10.1111/inm.13070",
+    "total_refs": 38,
+    "relevant_n": 4,
+    "already_in_es_n": 0,
+    "new_discovery_n": 4,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Australian Institute of Health and Welfare(2019).Mental health services\u2014in brief 2019. Canberra. Available from: URL:htt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Carpman J. R.",
+        "title_short": "Consumer involvement in facilities design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "NSW Legislation(2007).Mental Health Act. NSW legislation website: NSW Government. Available from: URL:https://legacy.leg",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Secure Services Policy Team(2011).Environmental Design Guide: Adult Medium Secure Services. Mental Health Care Pathways ",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-21": {
+    "doi": "10.1177/19375867231219031",
+    "total_refs": 57,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "MHB-12": {
+    "doi": "10.1016/j.jpsychires.2024.07.045",
+    "total_refs": 53,
+    "relevant_n": 28,
+    "already_in_es_n": 1,
+    "new_discovery_n": 27,
+    "discoveries": [
+      {
+        "doi": "10.3389/fpsyt.2022.884410",
+        "year": "2022",
+        "author": "Askola",
+        "title_short": "Factors affecting treatment regress and progress in forensic psychiatry: a thematic analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2018",
+        "author": "Bates",
+        "title_short": "Humanizing healthcare environments: architecture, art and design in modern hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671300600408",
+        "year": "2013",
+        "author": "Connellan",
+        "title_short": "Stressed spaces: mental health and architecture",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1891/crnr-d-20-00030",
+        "year": "2020",
+        "author": "Holmes",
+        "title_short": "Safety unseen: leveraging design to improve inpatient mental health-care practices",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2018",
+        "author": "Hunt",
+        "title_short": "Behavioral health design guide",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.52.4.482",
+        "year": "2001",
+        "author": "Jacobson",
+        "title_short": "What is recovery? A conceptual model and explication",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bja.2021.34",
+        "year": "2022",
+        "author": "Kennedy",
+        "title_short": "Models of care in forensic psychiatry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjp.bp.110.083733",
+        "year": "2011",
+        "author": "Leamy",
+        "title_short": "Conceptual framework for personal recovery in mental health: systematic review and narrative synthesis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/ijerph191811414",
+        "year": "2022",
+        "author": "McIntosh",
+        "title_short": "The role of courtyards within acute mental health wards: designing with recovery in mind",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720921407",
+        "year": "2021",
+        "author": "MohammadiGorji",
+        "title_short": "Investigating the impact of healthcare environmental design on staff security: a systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758671200600106",
+        "year": "2012",
+        "author": "OConnor",
+        "title_short": "The environment of inpatient healthcare delivery and its influence on the outcome of care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2020-046647",
+        "year": "2021",
+        "author": "Oostermeijer",
+        "title_short": "Design features that reduce the use of seclusion and restraint in mental health facilities: a rapid systematic review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1192/bjp.bp.114.144873",
+        "year": "2014",
+        "author": "Papoulias",
+        "title_short": "The psychiatric ward as a therapeutic space: systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11017-010-9138-9",
+        "year": "2010",
+        "author": "Pouncey",
+        "title_short": "Madness versus badness: the ethical tension between the recovery movement and forensic psychiatry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.894520",
+        "year": "2022",
+        "author": "Ross",
+        "title_short": "Space and well-being in high security environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjo.2021.1068",
+        "year": "2021",
+        "author": "Senneseth",
+        "title_short": "Personal recovery and its challenges in forensic mental health: systematic review and thematic synthesis of the qualitat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s13033-018-0238-7",
+        "year": "2018",
+        "author": "Sepp\u00e4nen",
+        "title_short": "Modern forensic psychiatric hospital design: clinical, legal and structural aspects",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/cbm.1966",
+        "year": "2016",
+        "author": "Shepherd",
+        "title_short": "Personal recovery within forensic settings--Systematic review and meta-synthesis of qualitative methods studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.genhosppsych.2016.06.003",
+        "year": "2016",
+        "author": "Shepley",
+        "title_short": "Mental and behavioral health environments: critical considerations for facility design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/cbm.823",
+        "year": "2011",
+        "author": "Simpson",
+        "title_short": "The recovery paradigm in forensic mental health services",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "Szabo",
+        "title_short": "Inpatient aggression in community hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2017.12.006",
+        "year": "2018",
+        "author": "Tomlin",
+        "title_short": "Experiences of restrictiveness in forensic psychiatric care: systematic review and concept analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/193758670800100306",
+        "year": "2008",
+        "author": "Ulrich",
+        "title_short": "A review of the research literature on evidence-based healthcare design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2012",
+        "author": "Ulrich",
+        "title_short": "Towards a Design Theory for Reducing Aggression in Psychiatric Facilities",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/prj0000356",
+        "year": "2019",
+        "author": "van Weeghel",
+        "title_short": "Conceptualizations, assessments, and implications of personal recovery in mental illness: a scoping review of systematic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2021",
+        "author": "Weber",
+        "title_short": "Patients' health & well-being in inpatient mental health-care facilities: a systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/ps.2010.61.12.1248",
+        "year": "2010",
+        "author": "Whitley",
+        "title_short": "Recovery: a dimensional approach",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2018",
+        "author": "Wong",
+        "title_short": "Realist review in heatlh policy and system research",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-17": {
+    "doi": "10.1111/inm.13277",
+    "total_refs": 64,
+    "relevant_n": 10,
+    "already_in_es_n": 0,
+    "new_discovery_n": 10,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "American Psychiatric Nurses Association.APNA Position Statement on the Use of Seclusion and Restraint.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Azuela G.F.(2019)The implementation and impact of sensory modulation in Aotearoa New Zealand adult acute mental health s",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Center for Medicaid and State Operations/Survey & Certification Group. (2008)Hospitals \u2013 Restraint/Seclusion Interpretiv",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Clement J. Zablocki VA Medical Center. (2012)Restraint and seclusion. Internal VA Medical Center report. Unpublished.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Iwamasa G.Y.&Czekanski E.R.(2018a)VHA seclusion and restraint reduction toolkit. Internal VHA report. Unpublished.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Iwamasa G.Y.&Czekanski E.R.(2018b)Welcome to the inpatient seclusion and restraint reduction toolkit. Internal VHA repor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "McDonagh J.R.C. Valvano M. York J. Koval R. Wainright F.&Center R.H.J.V.M.(2019)Inpatient recovery programming. Internal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Northern California Health Care System Affairs V. (2019)Response to behavioral emergencies or \u201ccode green\u201d in the Behavi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "SAMHSA Substance Abuse and Mental Health Services Administration. (2020)National guidelines for behavioral health crisis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "U.S. Department of Veterans Affairs V. H. A. (2013)Handbook 1160.06. Inpatient Mental Health Services Handbook. Availabl",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

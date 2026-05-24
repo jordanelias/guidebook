@@ -1,0 +1,2723 @@
+{
+  "MHB-01": {
+    "openalex_id": "W4307990038",
+    "openalex_cited_by_count": 40,
+    "citers_fetched": 40,
+    "relevant_n": 28,
+    "already_in_es_n": 0,
+    "new_discovery_n": 28,
+    "discoveries": [
+      {
+        "doi": "10.3390/buildings15132208",
+        "year": 2025,
+        "first_author": "Valentine",
+        "title_short": "Visual Discomfort in the Built Environment: Leveraging Generative AI and Computational Analysis to Evaluate Predicted Vi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fmed.2025.1610259",
+        "year": 2025,
+        "first_author": "Bu\u0142aj",
+        "title_short": "Biophilic design, neuroarchitecture and therapeutic home environments: harnessing medicinal properties of intentionally-",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.foar.2025.05.004",
+        "year": 2025,
+        "first_author": "Mitcheltree",
+        "title_short": "Investigating visual stress within family and domestic violence refuges in Australia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/gnaf086",
+        "year": 2025,
+        "first_author": "Weldrick",
+        "title_short": "Mechanisms to Promote Social Integration in a Temporary Housing Program for Older Persons Experiencing and At-Risk of Ho",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15710882.2025.2540933",
+        "year": 2025,
+        "first_author": "Mohammed",
+        "title_short": "Re-envisioning a community hub in a US women\u2019s prison: reflections on a trauma-informed co-design (TICo-D) and service-l",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/socsci14070417",
+        "year": 2025,
+        "first_author": "Brisson",
+        "title_short": "Impact of Trauma-Informed Design on Health and Well-Being of People Formerly Experiencing Homelessness in Permanent Supp",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1088/2515-7620/ae5514",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "Architectural environments and women\u2019s sense of safety in domestic violence shelters: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/46842",
+        "year": 2023,
+        "first_author": "Abdulai",
+        "title_short": "Trauma-Informed Care in Digital Health Technologies: Protocol for a Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139165241305485",
+        "year": 2024,
+        "first_author": "Bianchi",
+        "title_short": "Nature, Buildings, and Humans: Residents\u2019 Perceptions of Well-Being in Permanent Supportive Housing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7764/disena.24.article.7",
+        "year": 2024,
+        "first_author": "Eggleston",
+        "title_short": "Repairing the Harm of Digital Design Using a Trauma-informed Approach",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ajr.13150",
+        "year": 2024,
+        "first_author": "Paton",
+        "title_short": "\u2018I am more than my diagnosis\u2019: Amplifying the voice of consumers in the design and delivery of mental health services",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1051/e3sconf/202453401014",
+        "year": 2024,
+        "first_author": "Merylov\u0430",
+        "title_short": "Methodological approaches to designing biophilic rehabilitation buildings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3928/02793695-20240828-02",
+        "year": 2024,
+        "first_author": "Decker",
+        "title_short": "Caring for Veterans With Depression and Cancer: An Overview for Civilian Nurse Clinicians",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10643-025-01921-y",
+        "year": 2025,
+        "first_author": "Chudzik",
+        "title_short": "A Critical Perspective on Trauma-Informed Care in Early Childhood Education: Recommendations for Research, Practice, and",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/nml.70007",
+        "year": 2025,
+        "first_author": "Weber",
+        "title_short": "The Built Environment as Organizational Capacity: A Post\u2010Occupancy Evaluation of a Child Advocacy Center",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/15570851251376331",
+        "year": 2025,
+        "first_author": "Petrillo",
+        "title_short": "Building Hope: Co-producing Trauma-Informed Space with Women in the Justice System",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.actpsy.2025.105786",
+        "year": 2025,
+        "first_author": "Williams",
+        "title_short": "Relationship between neighborhood walkability, perceived neighborhood features, and depression among treatment-seeking v",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/cmrp.cmrp_90_25",
+        "year": 2025,
+        "first_author": "Quon",
+        "title_short": "Trauma-informed system-level policies in healthcare settings: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2025.105971",
+        "year": 2025,
+        "first_author": "Konda",
+        "title_short": "Best Practices for the Design and Evaluation of Bathing Spaces for Older Adults With Cognitive Impairment in Residential",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10901-025-10247-5",
+        "year": 2025,
+        "first_author": "Tucker",
+        "title_short": "A place to call home: design characteristics for transitional housing supporting pathways out of homelessness in Austral",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10966218251395872",
+        "year": 2025,
+        "first_author": "Kimpel",
+        "title_short": "Participant Perceptions of a Trauma-Informed Advanced Care Planning Intervention: A Qualitative Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08964289.2025.2590433",
+        "year": 2025,
+        "first_author": "Gezinski",
+        "title_short": "\u201cIf It\u2019s Not Relevant to Your Diagnosis, We Don\u2019t Need to Ask\u201d: Provider Perspectives on Trauma-Informed Care with Survi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pmen.0000505",
+        "year": 2025,
+        "first_author": "Smith\u2010Carrier",
+        "title_short": "Exploring the bounds of consumer choice in supported housing: A reflexive thematic analysis of data generated from suppo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.socscimed.2026.119130",
+        "year": 2026,
+        "first_author": "Zhang",
+        "title_short": "Built environment features: Predictors or effect modifiers of post-disaster mental health outcomes? A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.wss.2026.100384",
+        "year": 2026,
+        "first_author": "Akter",
+        "title_short": "Trauma-informed housing and wellbeing in resettlement: An actionable design model from refugee children\u2019s perspectives a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0966369x.2026.2652974",
+        "year": 2026,
+        "first_author": "Martino",
+        "title_short": "Caring-from infrastructures of safety: a conceptual review of care ethics, housing and domestic and family violence from",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13467581.2026.2659401",
+        "year": 2026,
+        "first_author": "Wang",
+        "title_short": "An expert-informed weighted measurement model of the architectural environment for women\u2019s sense of safety in Chinese do",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15710882.2026.2659838",
+        "year": 2026,
+        "first_author": "Cao",
+        "title_short": "Trauma informed participatory design: definitions, practices and resources",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-02": {
+    "openalex_id": "W4327605590",
+    "openalex_cited_by_count": 15,
+    "citers_fetched": 15,
+    "relevant_n": 13,
+    "already_in_es_n": 0,
+    "new_discovery_n": 13,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.spen.2024.101139",
+        "year": 2024,
+        "first_author": "Williams",
+        "title_short": "Trauma-informed care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/feduc.2025.1667432",
+        "year": 2025,
+        "first_author": "Bruidegom",
+        "title_short": "\u201cThey should have just talked to me\u201d: educational pathways of youth in residential care \u2013 a participatory action researc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00139165241305485",
+        "year": 2024,
+        "first_author": "Bianchi",
+        "title_short": "Nature, Buildings, and Humans: Residents\u2019 Perceptions of Well-Being in Permanent Supportive Housing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-47917-5_2",
+        "year": 2023,
+        "first_author": "Bartlett",
+        "title_short": "Family Engagement in Mental Health Treatment for Young Children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/08862605251336337",
+        "year": 2025,
+        "first_author": "Chen",
+        "title_short": "Trauma-Informed Care in Residential Care for Children At-Risk: Preliminary Evidence of Effectiveness",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/07448481.2025.2516606",
+        "year": 2025,
+        "first_author": "Whitehouse",
+        "title_short": "College health services should implement trauma-informed design to reduce the negative health effects of sexual miscondu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.chstcc.2025.100208",
+        "year": 2025,
+        "first_author": "Ashana",
+        "title_short": "A Thematic Analysis of Family Perspectives on Traumatic Stress and Critical Illness of a Loved One",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0886571x.2026.2613870",
+        "year": 2026,
+        "first_author": "Haug",
+        "title_short": "The Tension Between Flexibility and Standardization: A Study of Therapeutic Residential Care in Norway",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01944363.2025.2595171",
+        "year": 2026,
+        "first_author": "Iraz\u00e1bal",
+        "title_short": "A Trauma-Informed Planning Framework (TIPF) for Immigrant Belonging",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10926771.2026.2641763",
+        "year": 2026,
+        "first_author": "Qi",
+        "title_short": "Evaluating Trauma-Informed Practices in Judicial Settings: Development and Application of Trauma-Informed Courtroom Obse",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.wss.2026.100384",
+        "year": 2026,
+        "first_author": "Akter",
+        "title_short": "Trauma-informed housing and wellbeing in resettlement: An actionable design model from refugee children\u2019s perspectives a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0886571x.2026.2653863",
+        "year": 2026,
+        "first_author": "Castro",
+        "title_short": "Staff\u2019s Perceptions and Experiences of Delivering Therapeutic Residential Care in Portugal: A Qualitative Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/15710882.2026.2659838",
+        "year": 2026,
+        "first_author": "Cao",
+        "title_short": "Trauma informed participatory design: definitions, practices and resources",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-07": {
+    "openalex_id": "W3180186138",
+    "openalex_cited_by_count": 44,
+    "citers_fetched": 44,
+    "relevant_n": 33,
+    "already_in_es_n": 3,
+    "new_discovery_n": 30,
+    "discoveries": [
+      {
+        "doi": "10.1111/jocn.17041",
+        "year": 2024,
+        "first_author": "Belayneh",
+        "title_short": "Prevalence and variability of restrictive care practice use (physical restraint, seclusion and chemical restraint) in ad",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13065",
+        "year": 2022,
+        "first_author": "Haig",
+        "title_short": "Use of sensory rooms in adult psychiatric inpatient settings: A systematic review and narrative synthesis",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.jad.2023.12.080",
+        "year": 2024,
+        "first_author": "Barker",
+        "title_short": "A systematic review and meta-analysis of the effectiveness of co-designed, in-person, mental health interventions for re",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867221136558",
+        "year": 2022,
+        "first_author": "F\u00e6rden",
+        "title_short": "Environmental Transformations Enhancing Dignity in an Acute Psychiatric Ward: Outcome of a User-Driven Service Design Pr",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/19375867231219031",
+        "year": 2024,
+        "first_author": "Rodr\u00edguez-Labajos",
+        "title_short": "The Role of the Built Environment as a Therapeutic Intervention in Mental Health Facilities: A Systematic Literature Rev",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.jpsychires.2024.07.045",
+        "year": 2024,
+        "first_author": "Bodryzlova",
+        "title_short": "Hospital design for inpatient psychiatry: A realistic umbrella review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2023-074368",
+        "year": 2024,
+        "first_author": "Rodr\u00edguez-Labajos",
+        "title_short": "Impact of the design of adult mental health inpatient facilities on healthcare staff: a mixed methods systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2021.1978597",
+        "year": 2021,
+        "first_author": "Douglas",
+        "title_short": "Patient Experience of Physical Restraint in the Acute Setting: A Systematic Review of the Qualitative Research Evidence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jocn.16679",
+        "year": 2023,
+        "first_author": "Ngune",
+        "title_short": "Developing nurse\u2010sensitive outcomes in acute inpatient mental health settings\u2014A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jocn.17727",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Differentiating Therapeutic Responses That Reduce Restrictive Practice Use and Situational Aggression in an Acute Mental",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare12111104",
+        "year": 2024,
+        "first_author": "Pocobello",
+        "title_short": "No-Restraint Committed General Hospital Psychiatric Units (SPDCs) in Italy\u2014A Descriptive Organizational Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.894520",
+        "year": 2022,
+        "first_author": "Ro\u00df",
+        "title_short": "Space and Well-Being in High Security Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/cbm.2241",
+        "year": 2022,
+        "first_author": "Oostermeijer",
+        "title_short": "Relational security: The impact of facility design on youth custodial staffs' practices and approaches",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-42825-9_2-1",
+        "year": 2023,
+        "first_author": "Huckshorn",
+        "title_short": "Restraint and Seclusion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/hrp.0000000000000398",
+        "year": 2024,
+        "first_author": "Crnic",
+        "title_short": "Psychiatric Hospitals and the Ethics of Salutogenic Design: The Return of Moral Architecture?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10398562241278570",
+        "year": 2024,
+        "first_author": "Grynevych",
+        "title_short": "The impact of psychiatric facility design on reducing aggressive behaviours in an adult population: a narrative literatu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0325558",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Evaluating the Safe Steps for De-escalation: A protocol for a mixed concurrent control study in acute mental health unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2025.2538705",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Drivers of Seclusion and Physical Restraint in an Acute Mental Health Unit: A\u00a0Feature Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70179",
+        "year": 2025,
+        "first_author": "Hawsawi",
+        "title_short": "Carers' Perceptions of Seclusion and Restraints in Mental Healthcare: An Integrative Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.rpsm.2021.08.003",
+        "year": 2021,
+        "first_author": "Fraguas",
+        "title_short": "Humanization in mental health plans in Spain",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-62749-1_5",
+        "year": 2024,
+        "first_author": "Thompson",
+        "title_short": "Seclusion and Restraint in Inpatient Psychiatry: History and Best Practices",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-62749-1_16",
+        "year": 2024,
+        "first_author": "Thompson",
+        "title_short": "Trauma and Trauma-Informed Care in Child and Adolescent Inpatient Psychiatry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/ipm.2024.36",
+        "year": 2024,
+        "first_author": "Eiro\u00e1\u2010Orosa",
+        "title_short": "A qualitative study exploring mental health professionals\u2019 perspectives, opinions, and attitudes on the state of service",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-65766-5_22",
+        "year": 2024,
+        "first_author": "Jonescu",
+        "title_short": "Designing Mental Health-Friendly Spaces: An Empathy-Based Service Design Approach to Optimising the Built Environment fo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70103",
+        "year": 2025,
+        "first_author": "Dawson",
+        "title_short": "Implementation of a Sensory Room in a Psychiatric Intensive Care Unit: A Mixed\u2010Methods Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70127",
+        "year": 2025,
+        "first_author": "Alexander",
+        "title_short": "Victorian Mental Health Nurses' Experiences of Mental Health Reform: A Qualitative Descriptive Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/brb3.70760",
+        "year": 2025,
+        "first_author": "Beck",
+        "title_short": "Violence and Restrictive Practices Reduced by Hospital Relocation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-62749-1_3",
+        "year": 2024,
+        "first_author": "Roberts",
+        "title_short": "Developing and Constructing the Physical and Safety Environment of an Inpatient Psychiatric Hospitalization Unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-51366-5_2",
+        "year": 2024,
+        "first_author": "Huckshorn",
+        "title_short": "Restraint and Seclusion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00048674251326486",
+        "year": 2025,
+        "first_author": "Brakoulias",
+        "title_short": "Transforming mental health facilities: Current trends and considerations",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20479700.2025.2546539",
+        "year": 2025,
+        "first_author": "Tian",
+        "title_short": "Hospital furniture design: Cultural evolution and future trends",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/ajs4.70082",
+        "year": 2025,
+        "first_author": "Elwyn",
+        "title_short": "Narrative Review and Meta\u2010Ethnography of Seclusion and Restraint From the Perspectives of Adults With Lived Experience: ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare14081011",
+        "year": 2026,
+        "first_author": "Almutairi",
+        "title_short": "Incidence of Using Physical, Mechanical Restraints and Seclusion in Saudi Mental Health Settings: A Prospective Cohort S",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-08": {
+    "openalex_id": "W3042375701",
+    "openalex_cited_by_count": 30,
+    "citers_fetched": 23,
+    "relevant_n": 17,
+    "already_in_es_n": 0,
+    "new_discovery_n": 17,
+    "discoveries": [
+      {
+        "doi": "10.1177/19375867211047548",
+        "year": 2021,
+        "first_author": "S\u00f8ndergaard",
+        "title_short": "Patients\u2019 and Nurses\u2019 Experiences of All Single-Room Hospital Accommodation: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-023-09073-8",
+        "year": 2023,
+        "first_author": "Cusack",
+        "title_short": "Comparison of experiences of nursing staff and patients before and after move to 100% single-bed room hospital in Austra",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867241302793",
+        "year": 2024,
+        "first_author": "Read",
+        "title_short": "A Conceptual Framework for Sustainable Evidence-Based Design for Aligning Therapeutic and Sustainability Outcomes in Hea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/su152416662",
+        "year": 2023,
+        "first_author": "Samwinga",
+        "title_short": "A Scientometric Analysis of Wellbeing Research in the Construction Industry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings14103160",
+        "year": 2024,
+        "first_author": "Emami",
+        "title_short": "Evaluating Patients\u2019 Preferences for Dental Clinic Waiting Area Design and the Impact on Perceived Stress",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867211062101",
+        "year": 2021,
+        "first_author": "Bogaert",
+        "title_short": "Moving Toward Person-Centered Care: Valuing Emotions in Hospital Design and Architecture",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.aej.2022.04.027",
+        "year": 2022,
+        "first_author": "Fakhry",
+        "title_short": "Impact of family presence on healthcare outcomes and patients' wards design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/23743735221107240",
+        "year": 2022,
+        "first_author": "Woo",
+        "title_short": "Using Discrete Choice Methodology to Explore the Impact of Patient Room Window Design on Hospital Choice",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17452007.2022.2104206",
+        "year": 2022,
+        "first_author": "Hasanzade",
+        "title_short": "Passengers\u2019 preferences for architectural design characteristics in the design of airport terminals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/13467581.2024.2412120",
+        "year": 2024,
+        "first_author": "Meng",
+        "title_short": "Exploring the health impacts of window views: a literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0303032",
+        "year": 2024,
+        "first_author": "Zijlstra",
+        "title_short": "A randomized controlled trial of Golden Ratio, Feng Shui, and evidence based design in healthcare",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15142474",
+        "year": 2025,
+        "first_author": "Gittler",
+        "title_short": "Decision Making and Decision Support During the Design of Healthcare Facilities: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.25039/x48.2021.op06",
+        "year": 2021,
+        "first_author": "Garcia-Hansen",
+        "title_short": "CAPTURING THE LUMINOUS ENVIRONMENT IN HOSPITAL ROOMS: AN OVERVIEW OF OCCUPANT-CENTERED METHODS TO INFORM DESIGN PRACTICE",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867241279366",
+        "year": 2024,
+        "first_author": "Hussein",
+        "title_short": "Perspectives of Families and Healthcare Staff on the Design of Inpatient Hospital Rooms in Saudi Arabia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.47577/tssj.v59i1.11176",
+        "year": 2024,
+        "first_author": "Adelita",
+        "title_short": "Understanding Patient Preferences: A Review of Patient-Centred Approach in Hospital Ward Interior Design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251357819",
+        "year": 2025,
+        "first_author": "Aburumman",
+        "title_short": "A Systematic Review of Energy Efficiency and Lighting Control Interactions",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09613218.2025.2567323",
+        "year": 2025,
+        "first_author": "Ghadiri",
+        "title_short": "Impact of architectural design characteristics of railway stations on travellers\u2019 preferences: a digital design method",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-09": {
+    "openalex_id": "W4295047892",
+    "openalex_cited_by_count": 37,
+    "citers_fetched": 37,
+    "relevant_n": 18,
+    "already_in_es_n": 0,
+    "new_discovery_n": 18,
+    "discoveries": [
+      {
+        "doi": "10.1080/11038128.2023.2294767",
+        "year": 2023,
+        "first_author": "Forsberg",
+        "title_short": "Experiences of participating in a group-based sensory modulation intervention for mental health service users",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0164212x.2024.2308290",
+        "year": 2024,
+        "first_author": "Doroud",
+        "title_short": "Sensory Rooms within Mental Health Settings: A Systematic Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-025-07034-5",
+        "year": 2025,
+        "first_author": "Forsberg",
+        "title_short": "Implementation of a sensory modulation intervention in mental health outpatient services: a process evaluation study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0319649",
+        "year": 2025,
+        "first_author": "Otsuka",
+        "title_short": "Effects of sensory room intervention on autonomic function in healthy adults: A pilot randomized controlled trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0325558",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Evaluating the Safe Steps for De-escalation: A protocol for a mixed concurrent control study in acute mental health unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13375",
+        "year": 2024,
+        "first_author": "Mubayiwa",
+        "title_short": "Nurses' Perspectives on the Proposed Seclusion Elimination in Mental Health Wards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2025.2538705",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Drivers of Seclusion and Physical Restraint in an Acute Mental Health Unit: A\u00a0Feature Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70179",
+        "year": 2025,
+        "first_author": "Hawsawi",
+        "title_short": "Carers' Perceptions of Seclusion and Restraints in Mental Healthcare: An Integrative Literature Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jmhtep-02-2024-0012",
+        "year": 2024,
+        "first_author": "Azuela",
+        "title_short": "The impact of sensory modulation in acute mental health units: an organisational case study analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70103",
+        "year": 2025,
+        "first_author": "Dawson",
+        "title_short": "Implementation of a Sensory Room in a Psychiatric Intensive Care Unit: A Mixed\u2010Methods Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08039488.2024.2412033",
+        "year": 2024,
+        "first_author": "Kj\u00e6r",
+        "title_short": "\u2018It provided me with a sense of safety that I hadn\u2019t felt in weeks.\u2019 A qualitative case study of service users\u2019 experien",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12688/f1000research.161090.1",
+        "year": 2025,
+        "first_author": "Su",
+        "title_short": "Exploring the relationship between preferred bubble tube speeds in sensory rooms and physiological\u2013psychological factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/preprints.75961",
+        "year": 2025,
+        "first_author": "Ilioudi",
+        "title_short": "Assessing Patient Acceptance of Being Offered a Virtual Calm Room in Psychiatric Inpatient Care: A Mixed-Methods Study (",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.52214/cswr.v23i1.13173",
+        "year": 2025,
+        "first_author": "Costain",
+        "title_short": "Replacing Seclusion &amp; Restraint Practices in Psychiatry With Sensory Rooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/75961",
+        "year": 2025,
+        "first_author": "Ilioudi",
+        "title_short": "Assessing Patient Acceptance of Being Offered a Virtual Calm Room in Psychiatric Inpatient Care: Mixed Methods Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12688/f1000research.161090.2",
+        "year": 2026,
+        "first_author": "Su",
+        "title_short": "Exploring the relationship between preferred bubble tube speeds in sensory rooms and physiological\u2013psychological factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10783903261433565",
+        "year": 2026,
+        "first_author": "Otsuka",
+        "title_short": "Effects of Sensory Room Interventions on Vagal Function in Individuals With Depression: A Randomized Crossover Trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-443-40596-9.00005-1",
+        "year": 2026,
+        "first_author": "Wright",
+        "title_short": "The use and implementation of sensory approaches in acute mental health units",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-10": {
+    "openalex_id": "W4391891002",
+    "openalex_cited_by_count": 0,
+    "citers_fetched": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "MHB-11": {
+    "openalex_id": "W2066573625",
+    "openalex_cited_by_count": 126,
+    "citers_fetched": 126,
+    "relevant_n": 82,
+    "already_in_es_n": 4,
+    "new_discovery_n": 78,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.jenvp.2018.05.002",
+        "year": 2018,
+        "first_author": "Ulrich",
+        "title_short": "Psychiatric ward design can reduce aggressive behavior",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/acps.13152",
+        "year": 2020,
+        "first_author": "Gooding",
+        "title_short": "Preventing and reducing \u2018coercion\u2019 in mental health services: an international scoping review of English\u2010language studie",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-014-0872-6",
+        "year": 2014,
+        "first_author": "Kali\u0161ov\u00e1",
+        "title_short": "Do patient and ward-related characteristics influence the use of coercive measures? Results from the EUNOMIA internation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2019-030230",
+        "year": 2019,
+        "first_author": "Thibaut",
+        "title_short": "Patient safety in inpatient mental health settings: a systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2020-046647",
+        "year": 2021,
+        "first_author": "Oostermeijer",
+        "title_short": "Design features that reduce the use of seclusion and restraint in mental health facilities: a rapid systematic review",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/19375867221136558",
+        "year": 2022,
+        "first_author": "F\u00e6rden",
+        "title_short": "Environmental Transformations Enhancing Dignity in an Acute Psychiatric Ward: Outcome of a User-Driven Service Design Pr",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1177/19375867231219031",
+        "year": 2024,
+        "first_author": "Rodr\u00edguez-Labajos",
+        "title_short": "The Role of the Built Environment as a Therapeutic Intervention in Mental Health Facilities: A Systematic Literature Rev",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1192/bjp.bp.114.144873",
+        "year": 2014,
+        "first_author": "Papoulias",
+        "title_short": "The psychiatric ward as a therapeutic space: systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpubh.2014.00141",
+        "year": 2014,
+        "first_author": "Steinert",
+        "title_short": "The Use of Coercive Interventions in Mental Health Care in Germany and the Netherlands. A Comparison of the Developments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/070674371506000903",
+        "year": 2015,
+        "first_author": "Ling",
+        "title_short": "Understanding Mental Health Service User Experiences of Restraint through Debriefing: A Qualitative Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-015-1094-2",
+        "year": 2015,
+        "first_author": "Noorthoorn",
+        "title_short": "One-year incidence and prevalence of seclusion: Dutch findings in an international perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2015.04.020",
+        "year": 2015,
+        "first_author": "Brown",
+        "title_short": "The role of noise in clinical environments with particular reference to mental health care: A narrative review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.201500414",
+        "year": 2016,
+        "first_author": "Noorthoorn",
+        "title_short": "Seclusion Reduction in Dutch Mental Health Care: Did Hospitals Meet Goals?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.eurpsy.2019.04.005",
+        "year": 2019,
+        "first_author": "Jovanovi\u0107",
+        "title_short": "How to design psychiatric facilities to foster positive social interaction \u2013 A systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12389",
+        "year": 2017,
+        "first_author": "Kuivalainen",
+        "title_short": "De\u2010escalation techniques used, and reasons for seclusion and restraint, in a forensic psychiatric hospital",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2174/1745017901410010094",
+        "year": 2014,
+        "first_author": "Lorenzo",
+        "title_short": "Clinical and Organizational Factors Related to the Reduction of Mechanical Restraint Application in an Acute Ward: An 8-",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3310/hsdr09050",
+        "year": 2021,
+        "first_author": "Baker",
+        "title_short": "Non-pharmacological interventions to reduce restrictive practices in adult mental health inpatient settings: the COMPARE",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ppc.12036",
+        "year": 2013,
+        "first_author": "Bak",
+        "title_short": "Mechanical Restraint in Psychiatry: Preventive Factors in Theory and Practice. A Danish-Norwegian Association Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnu.2015.06.009",
+        "year": 2015,
+        "first_author": "Olsson",
+        "title_short": "Reducing or Increasing Violence in Forensic Care: A Qualitative Study of Inpatient Experiences",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2147/ppa.s67641",
+        "year": 2014,
+        "first_author": "Boyer",
+        "title_short": "Determinants of patient satisfaction with hospital health care in psychiatry: results based on&amp;nbsp;the&amp;nbsp;SAT",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.201300383",
+        "year": 2014,
+        "first_author": "Madan",
+        "title_short": "Efforts to Reduce Seclusion and Restraint Use in a State Psychiatric Hospital: A Ten-Year Perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.eurpsy.2016.08.002",
+        "year": 2016,
+        "first_author": "Verlinde",
+        "title_short": "Seclusion and enforced medication in dealing with aggression: A prospective dynamic cohort study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-018-1866-9",
+        "year": 2018,
+        "first_author": "Kalagi",
+        "title_short": "Requirements for the implementation of open door policies in acute psychiatry from a mental health professionals\u2019 and pa",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2018.08.001",
+        "year": 2018,
+        "first_author": "Fukasawa",
+        "title_short": "Relationship between the use of seclusion and mechanical restraint and the nurse-bed ratio in psychiatric wards in Japan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4324/9781315627823",
+        "year": 2017,
+        "first_author": "Roesch",
+        "title_short": "Handbook of Forensic Mental Health Services",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-019-4215-x",
+        "year": 2019,
+        "first_author": "Rimondini",
+        "title_short": "Patient empowerment in risk management: a mixed-method study to explore mental health professionals\u2019 perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjpo.bp.117.005280",
+        "year": 2017,
+        "first_author": "Haines\u2010Delmont",
+        "title_short": "Factors impacting perceived safety among staff working on mental health wards",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13070",
+        "year": 2022,
+        "first_author": "Wilson",
+        "title_short": "Promoting mental health recovery by design: Physical, procedural, and relational security in the context of the mental h",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3390/healthcare11212834",
+        "year": 2023,
+        "first_author": "Whittington",
+        "title_short": "Zero Tolerance for Coercion? Historical, Cultural and Organisational Contexts for Effective Implementation of Coercion-F",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586720971814",
+        "year": 2020,
+        "first_author": "Lundin",
+        "title_short": "Can Healing Architecture Increase Safety in the Design of Psychiatric Wards?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12723",
+        "year": 2020,
+        "first_author": "Digby",
+        "title_short": "Implementing a Psychiatric Behaviours of Concern emergency team in an acute inpatient psychiatry unit: Staff perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2024.2369594",
+        "year": 2024,
+        "first_author": "Lawrence",
+        "title_short": "The Maintenance Model of Restrictive Practices: A Trauma-Informed, Integrated Model to Explain Repeated Use of Restricti",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/abhs.abhs_52_22",
+        "year": 2023,
+        "first_author": "Alhaj",
+        "title_short": "The effects of sensory modulation on patient\u2019s distress and use of restrictive interventions in adult inpatient psychiat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare12111104",
+        "year": 2024,
+        "first_author": "Pocobello",
+        "title_short": "No-Restraint Committed General Hospital Psychiatric Units (SPDCs) in Italy\u2014A Descriptive Organizational Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.894520",
+        "year": 2022,
+        "first_author": "Ro\u00df",
+        "title_short": "Space and Well-Being in High Security Environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2024.1296356",
+        "year": 2024,
+        "first_author": "Masson",
+        "title_short": "Characteristics and correlates of seclusion and mechanical restraint measures in a Parisian psychiatric hospital group",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2019.1710005",
+        "year": 2020,
+        "first_author": "Allikmets",
+        "title_short": "Seclusion: A Patient Perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s1742646414000065",
+        "year": 2014,
+        "first_author": "Jenkins",
+        "title_short": "A study of agitation, conflict and containment in association with change in ward physical environment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11126-018-9571-x",
+        "year": 2018,
+        "first_author": "Mann-Poll",
+        "title_short": "Long-Term Impact of a Tailored Seclusion Reduction Program: Evidence for Change?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-020-02855-y",
+        "year": 2020,
+        "first_author": "Melle",
+        "title_short": "Does high and intensive care reduce coercion? Association of HIC model fidelity to seclusion use in the Netherlands",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12228",
+        "year": 2016,
+        "first_author": "Sato",
+        "title_short": "Characteristics of aggression among psychiatric inpatients by ward type in Japan: Using the Staff Observation Aggression",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12381",
+        "year": 2017,
+        "first_author": "Sande",
+        "title_short": "Associations between psychiatric symptoms and seclusion use: Clinical implications for care planning",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jenvp.2021.101670",
+        "year": 2021,
+        "first_author": "Rogerson",
+        "title_short": "The relationship between inpatient mental health ward design and aggression",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-017-2777-z",
+        "year": 2017,
+        "first_author": "Roos",
+        "title_short": "Like a hotel, but boring: users\u2019 experience with short-time community-based residential aftercare",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0259620",
+        "year": 2021,
+        "first_author": "Venne",
+        "title_short": "Seclusion in an enriched environment versus seclusion as usual: A quasi-experimental study using mixed methods",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2021.768500",
+        "year": 2021,
+        "first_author": "Ruud",
+        "title_short": "Measuring Seclusion in Psychiatric Intensive Care: Development and Measurement Properties of the Clinical Seclusion Chec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/ipm.2022.42",
+        "year": 2022,
+        "first_author": "O\u2019Donoghue",
+        "title_short": "Impact of a high observation ward on seclusion and restraint episodes",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2025.105028",
+        "year": 2025,
+        "first_author": "Clark",
+        "title_short": "\u201cI don't think I have been out of fight or flight. Ever.\u201d Transgender people's experiences in inpatient psychiatric trea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251383894",
+        "year": 2025,
+        "first_author": "Lin",
+        "title_short": "How Milieu Design Impacts Patient Autonomy in Behavioral Health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2025.1676743",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Maximising relational capabilities and minimising restrictive practices in acute mental health units: the Safe Steps for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/08039488.2014.996600",
+        "year": 2015,
+        "first_author": "Bak",
+        "title_short": "Comparing the effect of non-medical mechanical restraint preventive factors between psychiatric units in Denmark and Nor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/joid.12095",
+        "year": 2017,
+        "first_author": "Platt",
+        "title_short": "Toward a Framework for Designing Person\u2013Centered Mental Health Interiors for Veterans",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1937586715602219",
+        "year": 2015,
+        "first_author": "Ahern",
+        "title_short": "Overcoming the Challenges Inherent in Conducting Design Research in Mental Health Settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7748/mhp.2018.e1258",
+        "year": 2018,
+        "first_author": "Ramluggun",
+        "title_short": "The practice of seclusion: a review of the discourse on its use",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/camh.12690",
+        "year": 2023,
+        "first_author": "Czernin",
+        "title_short": "Space for youth mental health\u2014coercive measure use before and after architectural innovation at a department of child an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2017.00194",
+        "year": 2017,
+        "first_author": "Loi",
+        "title_short": "East London Modified-Broset as Decision-Making Tool to Predict Seclusion in Psychiatric Intensive Care Units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/jfn.0000000000000226",
+        "year": 2019,
+        "first_author": "Wijk",
+        "title_short": "Evidence-Based Design Has a Sustainable Positive Effect on Patients' Perceptions of Quality of Care in Forensic Psychiat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11126-020-09738-1",
+        "year": 2020,
+        "first_author": "Mann-Poll",
+        "title_short": "Three Pathways of Seclusion Reduction Programs to Sustainability: Ten Years Follow Up in Psychiatry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/10547738221085614",
+        "year": 2022,
+        "first_author": "Vahidi",
+        "title_short": "Development of \u201cThe Safe Psychiatric Ward Battery\u201d",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14999013.2022.2150335",
+        "year": 2022,
+        "first_author": "Goulet",
+        "title_short": "Violence Prevention Climate in Civil and Forensic Mental Health Settings: Common Goal, Different Views?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/j.eurpsy.2020.46",
+        "year": 2020,
+        "first_author": "Veereschild",
+        "title_short": "Diagnose, indicate, and treat severe mental illness (DITSMI) as appropriate care: A three-year follow-up study in long-t",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2020-046260",
+        "year": 2021,
+        "first_author": "Bell",
+        "title_short": "Role of occupational therapy in reducing and managing violence among mental health inpatients: a scoping review protocol",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-62749-1_2",
+        "year": 2024,
+        "first_author": "McDonald",
+        "title_short": "Differences in Design: How the Care Environment Impacts Healing and Patient Well-Being",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3310/udbq8402",
+        "year": 2024,
+        "first_author": "Baker",
+        "title_short": "A service-user digital intervention to collect real-time safety information on acute, adult mental health wards: the War",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/brb3.70760",
+        "year": 2025,
+        "first_author": "Beck",
+        "title_short": "Violence and Restrictive Practices Reduced by Hospital Relocation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-12-804394-3.00013-9",
+        "year": 2016,
+        "first_author": "Yurtbasi",
+        "title_short": "Seclusion in the Management of Highly Disturbed Children and Adolescents",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.57022/ihkz3424",
+        "year": 2020,
+        "first_author": "Brophy",
+        "title_short": "Designing mental health facilities that prevent the use of seclusion and restraint_Evidence Check",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2014,
+        "first_author": "Madan",
+        "title_short": "EffortstoReduceSeclusionand RestraintUseinaStatePsychiatric Hospital:ATen-YearPerspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4225/50/5810740eae22a",
+        "year": 2016,
+        "first_author": "Burbridge",
+        "title_short": "Happy homes \u2013 the relationship between homes and mental wellbeing: a review of the literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21203/rs.3.rs-27555/v1",
+        "year": 2020,
+        "first_author": "Melle",
+        "title_short": "Does High and Intensive Care Reduce Coercion? Association of Hic Model Fidelity to Seclusion Use in the Netherlands",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/a-1890-2088",
+        "year": 2022,
+        "first_author": "Mahler",
+        "title_short": "Das Weddinger Modell: Einfluss eines Recovery-orientierten Konzepts auf Zwangsma\u00dfnahmen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.53841/bpsfu.2017.1.126.26",
+        "year": 2017,
+        "first_author": "Grocott",
+        "title_short": "Nursing staff perceptions of factors contributing to an increase in the use of seclusion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.30629/2618-6667-2023-21-2-17-27",
+        "year": 2023,
+        "first_author": "Khommyatov",
+        "title_short": "Rehabilitation Potential of Architectural and Design Components of Psychiatric Hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/9781108976770.006",
+        "year": 2024,
+        "first_author": "Gordon",
+        "title_short": "Psychiatric Intensive Care in Mental Health Secure Units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-61224-4_4",
+        "year": 2024,
+        "first_author": "Aluh",
+        "title_short": "Coercion in Contemporary Mental Health Services: Key Concepts, Historical Development and Contextual Factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-61224-4_12",
+        "year": 2024,
+        "first_author": "Hallett",
+        "title_short": "Ward Culture and Atmosphere",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-61224-4_10",
+        "year": 2024,
+        "first_author": "Kruijff",
+        "title_short": "Ward Design, Coercion and Aggression in Psychiatric (Intensive) Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjoq-2024-002956",
+        "year": 2025,
+        "first_author": "Green",
+        "title_short": "Restraint reduction during psychiatric intensive care: a controlled bi-phasic time series evaluation of a culture change",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s40359-025-03375-8",
+        "year": 2025,
+        "first_author": "Hagerup",
+        "title_short": "Through the lens of patients: a photovoice study exploring inpatients\u2019 sense of safety and well-being in a new Norwegian",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/ajs4.70082",
+        "year": 2025,
+        "first_author": "Elwyn",
+        "title_short": "Narrative Review and Meta\u2010Ethnography of Seclusion and Restraint From the Perspectives of Adults With Lived Experience: ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-030-26825-1_58-1",
+        "year": 2024,
+        "first_author": "Richards",
+        "title_short": "Landscape Design in Mental Health Inpatient Settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.70152",
+        "year": 2026,
+        "first_author": "Karvonen",
+        "title_short": "Workplace Violence Prevention in Forensic Psychiatric Nursing: A Five\u2010Year Qualitative Content Analysis of Incident Repo",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-13": {
+    "openalex_id": "W4286560514",
+    "openalex_cited_by_count": 12,
+    "citers_fetched": 12,
+    "relevant_n": 7,
+    "already_in_es_n": 0,
+    "new_discovery_n": 7,
+    "discoveries": [
+      {
+        "doi": "10.1186/s12888-025-06473-4",
+        "year": 2025,
+        "first_author": "Melillo",
+        "title_short": "Recovery-oriented and trauma-informed care for people with mental disorders to promote human rights and quality of menta",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s2215-0366(24)00039-7",
+        "year": 2024,
+        "first_author": "Indregard",
+        "title_short": "Open-door policy versus treatment-as-usual in urban psychiatric inpatient wards: a pragmatic, randomised controlled, non",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2023.1268727",
+        "year": 2023,
+        "first_author": "Kr\u00fcckl",
+        "title_short": "The association between the admission to wards with open- vs. closed-door policy and the use of coercive measures",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13189",
+        "year": 2023,
+        "first_author": "Searby",
+        "title_short": "Locked external doors on inpatient mental health units: A scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/73610",
+        "year": 2025,
+        "first_author": "Liwinski",
+        "title_short": "Patient Perspectives on Open-Door Policies in Psychiatry: Mixed Methods Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-61224-4_12",
+        "year": 2024,
+        "first_author": "Hallett",
+        "title_short": "Ward Culture and Atmosphere",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jfp-02-2025-0017",
+        "year": 2025,
+        "first_author": "Melunovic",
+        "title_short": "Contributing factors to aggressive incidents in correctional and forensic psychiatric care: a rapid evidence assessment",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-14": {
+    "openalex_id": "W4321211316",
+    "openalex_cited_by_count": 8,
+    "citers_fetched": 8,
+    "relevant_n": 5,
+    "already_in_es_n": 0,
+    "new_discovery_n": 5,
+    "discoveries": [
+      {
+        "doi": "10.1111/inm.70039",
+        "year": 2025,
+        "first_author": "Woodnutt",
+        "title_short": "The Association Between Nurse Staffing and Conflict and Containment in Acute Mental Health Care: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjoq-2023-002448",
+        "year": 2023,
+        "first_author": "Kernaghan",
+        "title_short": "Reducing violence and aggression: a quality improvement project for safety on an acute mental health ward",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.13176",
+        "year": 2025,
+        "first_author": "Arenas",
+        "title_short": "Prevention of Violence in an Acute Psychiatric Unit: Spanish Validation of the Br\u00f8set Violence Checklist and Assessment ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jfp-02-2025-0017",
+        "year": 2025,
+        "first_author": "Melunovic",
+        "title_short": "Contributing factors to aggressive incidents in correctional and forensic psychiatric care: a rapid evidence assessment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0340429",
+        "year": 2026,
+        "first_author": "Vujovi\u0107",
+        "title_short": "Investigating the influence of the physical environment on psychiatric nurses wellbeing and professional interactions: A",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-15": {
+    "openalex_id": "W1991543277",
+    "openalex_cited_by_count": 170,
+    "citers_fetched": 169,
+    "relevant_n": 94,
+    "already_in_es_n": 0,
+    "new_discovery_n": 94,
+    "discoveries": [
+      {
+        "doi": "10.1111/acps.13152",
+        "year": 2020,
+        "first_author": "Gooding",
+        "title_short": "Preventing and reducing \u2018coercion\u2019 in mental health services: an international scoping review of English\u2010language studie",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-014-0872-6",
+        "year": 2014,
+        "first_author": "Kali\u0161ov\u00e1",
+        "title_short": "Do patient and ward-related characteristics influence the use of coercive measures? Results from the EUNOMIA internation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/wps.20264",
+        "year": 2015,
+        "first_author": "Szmukler",
+        "title_short": "Compulsion and \u201ccoercion\u201d in mental health care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1708/1228.13611",
+        "year": 2013,
+        "first_author": "Beghi",
+        "title_short": "Prevalence and risk factors for the use of restraint in psychiatry: a systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1586/14737175.2014.874286",
+        "year": 2014,
+        "first_author": "Luciano",
+        "title_short": "Use of coercive measures in mental health practice and its impact on outcome: a critical review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12586",
+        "year": 2019,
+        "first_author": "Doedens",
+        "title_short": "Influence of nursing staff attitudes and characteristics on the use of coercive measures in acute mental health services",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-019-4727-4",
+        "year": 2019,
+        "first_author": "Haugom",
+        "title_short": "Ethical challenges of seclusion in psychiatric inpatient wards: a qualitative study of the experiences of Norwegian ment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.nepr.2022.103534",
+        "year": 2022,
+        "first_author": "Lockertsen",
+        "title_short": "Second-year undergraduate nursing students\u2019 experiences with clinical simulation training in mental health clinical prac",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-022-02387-8",
+        "year": 2022,
+        "first_author": "Pedersen",
+        "title_short": "Ethnic disparities in the use of restrictive practices in adult mental health inpatient settings: a scoping review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-015-1094-2",
+        "year": 2015,
+        "first_author": "Noorthoorn",
+        "title_short": "One-year incidence and prevalence of seclusion: Dutch findings in an international perspective",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2174/1745017901309010110",
+        "year": 2013,
+        "first_author": "Flammer",
+        "title_short": "Who is Subjected to Coercive Measures as a Psychiatric Inpatient? A Multi-Level Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1751-7893.2011.00330.x",
+        "year": 2012,
+        "first_author": "Georgieva",
+        "title_short": "Early detection of risk factors for seclusion and restraint: a prospective study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/acps.12501",
+        "year": 2015,
+        "first_author": "Fugger",
+        "title_short": "Psychiatric patients' perception of physical restraint",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12574",
+        "year": 2019,
+        "first_author": "Laukkanen",
+        "title_short": "Psychiatric nursing staffs\u2019 attitudes towards the use of containment methods in psychiatric inpatient care: An integrati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2174/1745017901410010094",
+        "year": 2014,
+        "first_author": "Lorenzo",
+        "title_short": "Clinical and Organizational Factors Related to the Reduction of Mechanical Restraint Application in an Acute Ward: An 8-",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/pcn.12078",
+        "year": 2013,
+        "first_author": "Noda",
+        "title_short": "Influence of patient characteristics on duration of seclusion/restrain in acute psychiatric settings in <scp>J</scp>apan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08039488.2017.1373854",
+        "year": 2017,
+        "first_author": "Reitan",
+        "title_short": "Use of mechanical and pharmacological restraint over an eight-year period and its relation to clinical factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-018-1756-1",
+        "year": 2018,
+        "first_author": "Bregar",
+        "title_short": "Cross-sectional study on nurses\u2019 attitudes regarding coercive measures: the importance of socio-demographic characterist",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2147/ppa.s67641",
+        "year": 2014,
+        "first_author": "Boyer",
+        "title_short": "Determinants of patient satisfaction with hospital health care in psychiatry: results based on&amp;nbsp;the&amp;nbsp;SAT",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/acps.12868",
+        "year": 2018,
+        "first_author": "Thomsen",
+        "title_short": "Patient\u2010controlled hospital admission for patients with severe mental disorders: a nationwide prospective multicentre st",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-018-1866-9",
+        "year": 2018,
+        "first_author": "Kalagi",
+        "title_short": "Requirements for the implementation of open door policies in acute psychiatry from a mental health professionals\u2019 and pa",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2016.09.001",
+        "year": 2016,
+        "first_author": "Haugvaldstad",
+        "title_short": "Influence of staff's emotional reactions on the escalation of patient aggression in mental health care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12306",
+        "year": 2017,
+        "first_author": "Barr",
+        "title_short": "Nurses' attitudes towards the use of <scp>PRN</scp> psychotropic medications in acute and forensic mental health setting",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2018.08.001",
+        "year": 2018,
+        "first_author": "Fukasawa",
+        "title_short": "Relationship between the use of seclusion and mechanical restraint and the nurse-bed ratio in psychiatric wards in Japan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08039488.2017.1393560",
+        "year": 2017,
+        "first_author": "Kodal",
+        "title_short": "Mechanical restraint and characteristics of patient, staff and shifts in a psychiatric ward",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2015.03.001",
+        "year": 2015,
+        "first_author": "Boumans",
+        "title_short": "Seclusion and the importance of contextual factors: An innovation project revisited",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12749",
+        "year": 2021,
+        "first_author": "P\u00e9rez\u2010Revuelta",
+        "title_short": "Factors associated with the use of mechanical restraint in a mental health hospitalization unit: 8\u2010year retrospective an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14789949.2018.1432674",
+        "year": 2018,
+        "first_author": "Griffiths",
+        "title_short": "Seclusion: the association with diagnosis, gender, length of stay and HoNOS-secure in low and medium secure inpatient me",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare11212834",
+        "year": 2023,
+        "first_author": "Whittington",
+        "title_short": "Zero Tolerance for Coercion? Historical, Cultural and Organisational Contexts for Effective Implementation of Coercion-F",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ejpsy.2020.06.006",
+        "year": 2020,
+        "first_author": "Chieze",
+        "title_short": "Prevalence and risk factors for seclusion and restraint at Geneva\u2019s adult psychiatric hospital in 2017",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-024-02739-6",
+        "year": 2024,
+        "first_author": "Muluneh",
+        "title_short": "Variations in definitions used for describing restrictive care practices (seclusion and restraint) in adult mental healt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12532",
+        "year": 2018,
+        "first_author": "Lai",
+        "title_short": "Variation in seclusion rates across New Zealand's specialist mental health services: Are sociodemographic and clinical f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5152/pcp.2021.21237",
+        "year": 2021,
+        "first_author": "Vergallo",
+        "title_short": "Physical Restraint in Psychiatric Care: Soon to Fall Out of Use?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare12111104",
+        "year": 2024,
+        "first_author": "Pocobello",
+        "title_short": "No-Restraint Committed General Hospital Psychiatric Units (SPDCs) in Italy\u2014A Descriptive Organizational Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jocn.17588",
+        "year": 2024,
+        "first_author": "Belayneh",
+        "title_short": "Methodological Issues in Measuring Restrictive Care Practices (Mechanical/physical restraint, Chemical restraint and Sec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70039",
+        "year": 2025,
+        "first_author": "Woodnutt",
+        "title_short": "The Association Between Nurse Staffing and Conflict and Containment in Acute Mental Health Care: A Systematic Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijlp.2024.102033",
+        "year": 2024,
+        "first_author": "Yersin",
+        "title_short": "Mental health professionals' perceptions and attitudes towards seclusion: The ambivalent relationship between safety and",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/jcm14092886",
+        "year": 2025,
+        "first_author": "Lorenzo",
+        "title_short": "Staff Attitude Towards Coercive Measures in Hospital and Community Psychiatric Settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10488-011-0396-2",
+        "year": 2011,
+        "first_author": "Pogge",
+        "title_short": "Prevalence and Precursors of the use of Restraint and Seclusion in a Private Psychiatric Hospital: Comparison of Child a",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11126-012-9225-3",
+        "year": 2012,
+        "first_author": "Janssen",
+        "title_short": "Differences in Seclusion Rates Between Admission Wards: Does Patient Compilation Explain?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ppc.12049",
+        "year": 2013,
+        "first_author": "Zhu",
+        "title_short": "Frequency of Physical Restraint and Its Associations With Demographic and Clinical Characteristics in a Chinese Psychiat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1176/appi.ps.201100538",
+        "year": 2012,
+        "first_author": "Heer-Wunderink",
+        "title_short": "Social Inclusion of People With Severe Mental Illness Living in Community Housing Programs",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2017.1297513",
+        "year": 2017,
+        "first_author": "Doedens",
+        "title_short": "Nursing Staff Factors Contributing to Seclusion in Acute Mental Health Care \u2013 An Explorative Cohort Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s11126-015-9352-8",
+        "year": 2015,
+        "first_author": "Green\u2010Hennessy",
+        "title_short": "Predictors of Seclusion or Restraint Use Within Residential Treatment Centers for Children and Adolescents",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jep.13232",
+        "year": 2019,
+        "first_author": "Muir\u2010Cochrane",
+        "title_short": "International research into 22 years of use of chemical restraint: An evidence overview",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12521",
+        "year": 2018,
+        "first_author": "Jury",
+        "title_short": "People who experience seclusion in adult mental health inpatient services: An examination of health of the nation outcom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12591",
+        "year": 2019,
+        "first_author": "Hu",
+        "title_short": "An examination of the incidence and nature of chemical restraint on adult acute psychiatric inpatient units in Adelaide,",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12926",
+        "year": 2021,
+        "first_author": "Mooney",
+        "title_short": "'You get this conflict between you as a person and you in your role\u2026that changes you': A thematic analysis of how inpati",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpubh.2016.00135",
+        "year": 2016,
+        "first_author": "Tribolet\u2010Hardy",
+        "title_short": "Schizophrenic Patients between General and Forensic Psychiatry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnss.2019.10.001",
+        "year": 2019,
+        "first_author": "Zheng",
+        "title_short": "Ethical consideration on use of seclusion in mental health services",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/pts.0000000000000827",
+        "year": 2021,
+        "first_author": "Anderson",
+        "title_short": "Influence of Organizational Climate and Clinician Morale on Seclusion and Physical Restraint Use in Inpatient Psychiatri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1155/2015/347246",
+        "year": 2015,
+        "first_author": "Wynn",
+        "title_short": "The Use of Physical Restraint in Norwegian Adult Psychiatric Hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apnu.2021.07.003",
+        "year": 2021,
+        "first_author": "Doedens",
+        "title_short": "Influence of nursing staff characteristics on seclusion in acute mental health care\u2014A prospective two-year follow-up stu",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2022.791333",
+        "year": 2022,
+        "first_author": "Flammer",
+        "title_short": "\u201cOur Patients Are Different\u201d: Predictors of Seclusion and Restraint in 31 Psychiatric Hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.12761",
+        "year": 2020,
+        "first_author": "Riahi",
+        "title_short": "A hermeneutic phenomenological exploration of \u2018last resort\u2019 in the use of restraint",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/08039488.2020.1733658",
+        "year": 2020,
+        "first_author": "Laukkanen",
+        "title_short": "Seclusion, restraint, and involuntary medication in Finnish psychiatric care: a register study with root-level data",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jcap.12306",
+        "year": 2021,
+        "first_author": "Yurtbasi",
+        "title_short": "Nurse and patient factors: Predicting seclusion in adolescent psychiatric units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5498/wjp.v11.i10.854",
+        "year": 2021,
+        "first_author": "Abidi",
+        "title_short": "Determinants of mechanical restraint in an acute psychiatric care unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/acps.13429",
+        "year": 2022,
+        "first_author": "Efkemann",
+        "title_short": "Influence of mental health professionals\u2019 attitudes and personality traits on decision\u2010making around coercion: Results f",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jpsychires.2022.06.048",
+        "year": 2022,
+        "first_author": "Cole",
+        "title_short": "Patient communication ability as predictor of involuntary admission and coercive measures in psychiatric inpatient treat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2021.768500",
+        "year": 2021,
+        "first_author": "Ruud",
+        "title_short": "Measuring Seclusion in Psychiatric Intensive Care: Development and Measurement Properties of the Clinical Seclusion Chec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12736",
+        "year": 2021,
+        "first_author": "Laukkanen",
+        "title_short": "A Bayesian network model to identify the associations between the use of seclusion in psychiatric care and nursing manag",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13205",
+        "year": 2023,
+        "first_author": "Li",
+        "title_short": "Perspectives on physical restraint in psychiatric hospital: A\u00a0qualitative study of mentally ill patients",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/ipm.2024.60",
+        "year": 2025,
+        "first_author": "O\u2019Mahony",
+        "title_short": "Clinical features of patients who are admitted under different criteria of the Irish Mental Health Act 2001: a retrospec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-025-07025-6",
+        "year": 2025,
+        "first_author": "Wullschleger",
+        "title_short": "Prevalence and risk factors for seclusion and restraint: results of a retrospective analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/ppc.12090",
+        "year": 2014,
+        "first_author": "Guzm\u00e1n\u2010Parra",
+        "title_short": "Effects of a Regulatory Protocol for Mechanical Restraint and Coercion in a Spanish Psychiatric Ward",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1447-0349.2012.00887.x",
+        "year": 2012,
+        "first_author": "Faay",
+        "title_short": "<scp>K</scp>ennedy <scp>A</scp>xis <scp>V</scp>: Clinimetric properties assessed by mental health nurses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0840470415581230",
+        "year": 2015,
+        "first_author": "Mah",
+        "title_short": "Use of control interventions in adult in-patient mental health services",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s40345-017-0084-6",
+        "year": 2017,
+        "first_author": "Belete",
+        "title_short": "Use of physical restraints among patients with bipolar disorder in Ethiopian Mental Specialized Hospital, outpatient dep",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2019.00188",
+        "year": 2019,
+        "first_author": "Hazewinkel",
+        "title_short": "Text Analysis of Electronic Medical Records to Predict Seclusion in Psychiatric Wards: Proof of Concept",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1054773816677807",
+        "year": 2016,
+        "first_author": "Eskandari",
+        "title_short": "Incidence Rate and Patterns of Physical Restraint Use Among Adult Patients in Malaysia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/eip.12739",
+        "year": 2018,
+        "first_author": "Goz",
+        "title_short": "Prevalence and predictors of restrictive interventions in a youth\u2010specific mental health inpatient unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.psychres.2013.02.005",
+        "year": 2013,
+        "first_author": "Nakamura",
+        "title_short": "Length of mechanical restraint following haloperidol injections versus oral atypical antipsychotics for the initial trea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2017.00194",
+        "year": 2017,
+        "first_author": "Loi",
+        "title_short": "East London Modified-Broset as Decision-Making Tool to Predict Seclusion in Psychiatric Intensive Care Units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4314/mmj.v30i3.12",
+        "year": 2018,
+        "first_author": "Barnett",
+        "title_short": "Factors associated with the use of seclusion in an inpatient psychiatric unit in Lilongwe, Malawi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2158244016629526",
+        "year": 2016,
+        "first_author": "Haugom",
+        "title_short": "Shielding in Mental Health Hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjopen-2016-013088",
+        "year": 2016,
+        "first_author": "Thomsen",
+        "title_short": "Patient-controlled hospital admission for patients with severe mental disorders: study protocol for a nationwide prospec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.18488/journal.83/2015.1.1/83.1.1.23",
+        "year": 2015,
+        "first_author": "Dahm",
+        "title_short": "Interventions for Reducing Coercion in Mental Health for Adults: A Systematic Review and the Impact of Updating",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jan.14086",
+        "year": 2019,
+        "first_author": "Jackson",
+        "title_short": "Factors influencing decisions of mental health professionals to release service users from seclusion: A qualitative stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpubh.2016.00285",
+        "year": 2016,
+        "first_author": "Battams",
+        "title_short": "Editorial: Public Mental Health Policy, Mental Health Promotion, and Interventions Which Focus on the Social Determinant",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00406-024-01936-3",
+        "year": 2024,
+        "first_author": "Hochstrasser",
+        "title_short": "Patient-related characteristics or local tradition: what predicts the admission to a locked ward or the use of coercive ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.20299/jpi.2025.003",
+        "year": 2025,
+        "first_author": "Somerville",
+        "title_short": "Predicting the use of restraint on adult inpatient psychiatric wards: a four-year incident report analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2012,
+        "first_author": "Georgieva",
+        "title_short": "Coercive Interventions during Inpatient Psychiatric Care Patient's preference, prevention and effects",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5114/ppn.2017.70544",
+        "year": 2017,
+        "first_author": "Kiejna",
+        "title_short": "Admission without consent and use of\u00a0means of\u00a0physical coercion on the\u00a0example of psychiatric hospital in Wroc\u0142aw",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.12968/bjmh.2021.0016",
+        "year": 2022,
+        "first_author": "Barr",
+        "title_short": "Understanding the influence of nursing staff characteristics on the use of seclusion and restraint in the adult forensic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": 2013,
+        "first_author": "Mah",
+        "title_short": "The Use of Control Interventions in Adult Mental Health Inpatient Services in Ontario Hospitals and Identification of Ri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.33552/ojcam.2019.01.000517",
+        "year": 2019,
+        "first_author": "Harahsheh",
+        "title_short": "Seclusion and Restraint Using Among Psychiatric Patients",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.36347/sasjm.2022.v08i10.008",
+        "year": 2022,
+        "first_author": "Choujaa",
+        "title_short": "Seclusion in a Moroccan Adult Psychiatry Unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.17992/lbl.2023.04.738",
+        "year": 2023,
+        "first_author": "Thorstenson",
+        "title_short": "Involuntary medication in psychiatric units at Landspitali University Hospital in the years 2014-2018",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-29455-6_28",
+        "year": 2023,
+        "first_author": "Gomila",
+        "title_short": "Coercion in Mental Health Treatment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-61224-4_4",
+        "year": 2024,
+        "first_author": "Aluh",
+        "title_short": "Coercion in Contemporary Mental Health Services: Key Concepts, Historical Development and Contextual Factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/ipm.2025.10087",
+        "year": 2025,
+        "first_author": "Hamill",
+        "title_short": "Rates of restrictive practices in acute adult inpatient psychiatry units in Ireland",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12888-025-07404-z",
+        "year": 2025,
+        "first_author": "Touitou-Burckard",
+        "title_short": "Behind closed doors: unlocking hospital variations in the use of seclusion and mechanical restraint \u2013 a nationwide multi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1192/bjb.2025.10164",
+        "year": 2025,
+        "first_author": "Senthil",
+        "title_short": "Prevalence and factors associated with restraints in mental health in-patient wards",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-16": {
+    "openalex_id": "W2991221260",
+    "openalex_cited_by_count": 29,
+    "citers_fetched": 28,
+    "relevant_n": 22,
+    "already_in_es_n": 0,
+    "new_discovery_n": 22,
+    "discoveries": [
+      {
+        "doi": "10.1080/14999013.2021.1887978",
+        "year": 2021,
+        "first_author": "Lawrence",
+        "title_short": "Restrictive Practices in Adult Secure Mental Health Services: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijnurstu.2024.104923",
+        "year": 2024,
+        "first_author": "Hallett",
+        "title_short": "Adverse mental health inpatient experiences: Qualitative systematic review of international literature",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00127-024-02739-6",
+        "year": 2024,
+        "first_author": "Muluneh",
+        "title_short": "Variations in definitions used for describing restrictive care practices (seclusion and restraint) in adult mental healt",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2024.2369594",
+        "year": 2024,
+        "first_author": "Lawrence",
+        "title_short": "The Maintenance Model of Restrictive Practices: A Trauma-Informed, Integrated Model to Explain Repeated Use of Restricti",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13002",
+        "year": 2022,
+        "first_author": "Hansen",
+        "title_short": "What do we know about the experience of seclusion in a forensic setting? An integrative literature review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14789949.2022.2122857",
+        "year": 2022,
+        "first_author": "Tulloch",
+        "title_short": "\u201c<i>It\u2019s the last resort\u2019</i>\u2019 forensic mental health nurses experience on the use of seclusion; implications for use an",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/cls.2024.25",
+        "year": 2024,
+        "first_author": "Perryman",
+        "title_short": "Regulating Restraint: Legal Oversight of Seclusion in Canadian Forensic Psychiatric Hospitals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12907",
+        "year": 2023,
+        "first_author": "Berg",
+        "title_short": "Nurses' perceptions of nurse\u2013patient communication in seclusion rooms in psychiatric inpatient care: A focus group study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/14999013.2023.2223178",
+        "year": 2023,
+        "first_author": "Duffy",
+        "title_short": "An Interpretative Phenomenological Analysis of the Experience of the Therapeutic Relationship between Service Users and ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12979",
+        "year": 2023,
+        "first_author": "Shetty",
+        "title_short": "Patient perspective on observation methods used in seclusion room in an Irish forensic mental health setting: A qualitat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jfp-03-2023-0007",
+        "year": 2023,
+        "first_author": "Humphries",
+        "title_short": "Patients\u2019 experiences of forensic mental health inpatient care: a systematic review and thematic synthesis of qualitativ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13219",
+        "year": 2023,
+        "first_author": "Hipp",
+        "title_short": "Nurses' and patient' descriptions about forms of power in pro re nata medication participation in forensic psychiatric c",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/mhrj-02-2022-0009",
+        "year": 2023,
+        "first_author": "St\u00edobhairt",
+        "title_short": "Are principles of recovery-oriented practice evident in staff and service user perspectives on seclusion?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2025.2451161",
+        "year": 2025,
+        "first_author": "Lawrence",
+        "title_short": "To Seclude or Not to Seclude? Using Grounded Theory to Develop a Model of the Seclusion Decision-Making Process Used by ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/0164212x.2023.2245972",
+        "year": 2023,
+        "first_author": "Knight",
+        "title_short": "A Qualitative Synthesis Exploring the Potential Role for Mental Health Occupational Therapists Working with Patients in ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/03080226241295606",
+        "year": 2024,
+        "first_author": "Bowser",
+        "title_short": "A qualitative study exploring occupational therapist\u2019s experiences of delivering interventions to patients in seclusion ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1101/2023.10.20.23297217",
+        "year": 2023,
+        "first_author": "Hallett",
+        "title_short": "Adverse mental health inpatient experiences: Qualitative systematic review of international literature and development o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/mhrj-08-2022-0058",
+        "year": 2023,
+        "first_author": "St\u00edobhairt",
+        "title_short": "Seclusion in the context of recovery-oriented practice: the perspectives and experiences of psychologists in Ireland",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/healthcare11172432",
+        "year": 2023,
+        "first_author": "Hudon",
+        "title_short": "The Use of Alternative Rooms in Forensic and Regular Psychiatric Units: A Scoping Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1155/2023/6376463",
+        "year": 2023,
+        "first_author": "Varpula",
+        "title_short": "Nursing Interventions during Seclusion and Mechanical Restraint: A Video-Observation Study in Inpatient Psychiatric Care",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.51357/cs.v19i1.289",
+        "year": 2025,
+        "first_author": "BOYD",
+        "title_short": "Scrutinizing Seclusion: Recommendations for How to Protect Patients from Unwarranted Isolation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/09697330261437263",
+        "year": 2026,
+        "first_author": "Johansson",
+        "title_short": "Long-term seclusion in forensic psychiatry: Bare life, social death, and the role of the nurse",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-19": {
+    "openalex_id": "W4235604137",
+    "openalex_cited_by_count": 3,
+    "citers_fetched": 3,
+    "relevant_n": 1,
+    "already_in_es_n": 0,
+    "new_discovery_n": 1,
+    "discoveries": [
+      {
+        "doi": "10.1007/s10826-008-9216-z",
+        "year": 2008,
+        "first_author": "Cl\u00e9ment",
+        "title_short": "The Role of Parental Stress, Mother\u2019s Childhood Abuse and Perceived Consequences of Violence in Predicting Attitudes and",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-20": {
+    "openalex_id": "W4295441857",
+    "openalex_cited_by_count": 19,
+    "citers_fetched": 19,
+    "relevant_n": 14,
+    "already_in_es_n": 0,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1136/bmjopen-2023-074368",
+        "year": 2024,
+        "first_author": "Rodr\u00edguez-Labajos",
+        "title_short": "Impact of the design of adult mental health inpatient facilities on healthcare staff: a mixed methods systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/buildings15101660",
+        "year": 2025,
+        "first_author": "Wang",
+        "title_short": "Development of a Built Environment\u2013Self-Efficacy\u2013Activity Engagement\u2013Self-Rated Health Model for Older Adults in Urban R",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.12983",
+        "year": 2023,
+        "first_author": "Maddineshat",
+        "title_short": "Exploring the safe environment provided by nurses in inpatient psychiatric wards: A <scp>mixed\u2010methods</scp> study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13094",
+        "year": 2022,
+        "first_author": "Hove",
+        "title_short": "Integrated nursing care for people with combined mental health and substance use disorders",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13174",
+        "year": 2023,
+        "first_author": "Andrew",
+        "title_short": "What makes a space safe? Consumers' perspectives on a mental health safe space",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/amajethics.2024.248",
+        "year": 2024,
+        "first_author": "Edwards",
+        "title_short": "How Inpatient Psychiatric Units Can Be Both Safe and Therapeutic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.20935/mhealthwellb7942",
+        "year": 2025,
+        "first_author": "Downs",
+        "title_short": "Toward dignity-centred ethics in the treatment of longstanding and severe eating disorders: a lived experience-led narra",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.13402",
+        "year": 2024,
+        "first_author": "Higgins",
+        "title_short": "Machine Learning Model Reveals Determinators for Admission to Acute Mental Health Wards From Emergency Department Presen",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2024.2362823",
+        "year": 2024,
+        "first_author": "McIntosh",
+        "title_short": "Visitation Restrictions in Inpatient Psychiatric Settings: A Call for Connected Healing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.21834/e-bpj.v9isi20.6099",
+        "year": 2024,
+        "first_author": "Pauzi",
+        "title_short": "Environmental Physical Assessment in Mental Health Services for Adolescents: Using Mixed-Method Analysis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.64898/2026.01.30.26345181",
+        "year": 2026,
+        "first_author": "Jafarifiroozabadi",
+        "title_short": "Rethinking the Design of Adolescent Crisis Stabilization Units: A Mixed-Methods Study Using Physical Mock-Up Simulations",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7748/mhp.2026.e1768",
+        "year": 2026,
+        "first_author": "May",
+        "title_short": "Are interventions in adult inpatient mental health settings influenced by trauma-informed care? A scoping review of the ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/jmq.0000000000000300",
+        "year": 2026,
+        "first_author": "Jafarifiroozabadi",
+        "title_short": "Rethinking the Design of Adolescent Crisis Stabilization Units: A Mixed-Methods Study Using Physical Mock-Up Simulations",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70244",
+        "year": 2026,
+        "first_author": "Foster",
+        "title_short": "Collaboration Between People Admitted to Acute Mental Health Units, Their Family Members and Nurses in the Detection of ",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-21": {
+    "openalex_id": "W4392047736",
+    "openalex_cited_by_count": 17,
+    "citers_fetched": 17,
+    "relevant_n": 15,
+    "already_in_es_n": 0,
+    "new_discovery_n": 15,
+    "discoveries": [
+      {
+        "doi": "10.1177/19375867241302793",
+        "year": 2024,
+        "first_author": "Read",
+        "title_short": "A Conceptual Framework for Sustainable Evidence-Based Design for Aligning Therapeutic and Sustainability Outcomes in Hea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251317241",
+        "year": 2025,
+        "first_author": "Jiang",
+        "title_short": "Investigating the Role of the Physical Environment on Communication Patterns in Emergency Departments During Caregiving ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bmjoq-2025-003397",
+        "year": 2025,
+        "first_author": "Paradza",
+        "title_short": "Reducing incidents of violence and aggression and self-harm on a secure mental health inpatient ward for women with lear",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/diabetology6100118",
+        "year": 2025,
+        "first_author": "Johnson",
+        "title_short": "Barriers and Facilitators to Mental Health Treatment Among Adults with Type 1 Diabetes: Patient Perspectives on Access, ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-026-36804-8",
+        "year": 2026,
+        "first_author": "Sun",
+        "title_short": "A study on the coupling mechanism between the urban environment and depression perception based on deep learning and str",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17482631.2025.2485697",
+        "year": 2025,
+        "first_author": "Hagerup",
+        "title_short": "Psychiatric spaces: a phenomenological case study of staff perspectives after relocation to a new mental health facility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/20479700.2025.2546539",
+        "year": 2025,
+        "first_author": "Tian",
+        "title_short": "Hospital furniture design: Cultural evolution and future trends",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17482631.2025.2566209",
+        "year": 2025,
+        "first_author": "Amico",
+        "title_short": "\u201cThe physical environment is so important, but it's not everything\u201d\u2014nursing staffs' experiences of moving to a new purpo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.61882/pcnm.15.3.91",
+        "year": 2025,
+        "first_author": "Amiri",
+        "title_short": "The importance of psychiatric hospital architecture in promoting mental health: The neglected preventive approach",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2025.1731925",
+        "year": 2026,
+        "first_author": "Liu",
+        "title_short": "Healing spaces: a retrospective cohort study on the effect of outdoor spaces in psychiatric inpatient units on PRN medic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/nop2.70395",
+        "year": 2026,
+        "first_author": "Byrne",
+        "title_short": "Beyond Satisfaction: Person\u2010Centred Care and the Physical Environment Revisited\u2014An Integrative Review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s43995-026-00297-3",
+        "year": 2026,
+        "first_author": "Abdou",
+        "title_short": "Assessment and design framework for therapeutic hospital corridors: from transitional spaces to restorative environments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/01612840.2026.2633310",
+        "year": 2026,
+        "first_author": "G\u00fcner",
+        "title_short": "Turkish Psychiatric Inpatients\u2019 Perceptions of Ward Atmosphere and Associated Factors: A Cross-Sectional Study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/b978-0-443-40596-9.00005-1",
+        "year": 2026,
+        "first_author": "Wright",
+        "title_short": "The use and implementation of sensory approaches in acute mental health units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-981-95-6304-3_12",
+        "year": 2026,
+        "first_author": "Yumna",
+        "title_short": "Integrating Milieu Therapy Principles into Sustainable Interior Design for Eating Disorder Rehabilitation",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-12": {
+    "openalex_id": "W4401275087",
+    "openalex_cited_by_count": 14,
+    "citers_fetched": 14,
+    "relevant_n": 12,
+    "already_in_es_n": 0,
+    "new_discovery_n": 12,
+    "discoveries": [
+      {
+        "doi": "10.3389/fpsyt.2024.1456363",
+        "year": 2024,
+        "first_author": "St\u00fcrner",
+        "title_short": "Institutional influence on length of stay in German forensic hospitals: a multilevel analysis of patients with schizophr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/jpm.70094",
+        "year": 2026,
+        "first_author": "Daguman",
+        "title_short": "Perspectives and Experiences of Nurses Implementing the Safe Steps for De\u2010Escalation in Acute Mental Health Units",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/bs14111116",
+        "year": 2024,
+        "first_author": "Russotto",
+        "title_short": "Patient Safety Incidents in Inpatient Psychiatric Settings: An Expert Opinion Survey",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2025.1739679",
+        "year": 2025,
+        "first_author": "Crocker",
+        "title_short": "From risky individuals to risky systems: a conceptual framework for the next generation of forensic mental health resear",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/19375867251383894",
+        "year": 2025,
+        "first_author": "Lin",
+        "title_short": "How Milieu Design Impacts Patient Autonomy in Behavioral Health",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/brb3.70760",
+        "year": 2025,
+        "first_author": "Beck",
+        "title_short": "Violence and Restrictive Practices Reduced by Hospital Relocation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/inm.70045",
+        "year": 2025,
+        "first_author": "Maguire",
+        "title_short": "Exploring the Utility of the Model for Understanding Inpatient Aggression for General Mental Health Settings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/preprints.80208",
+        "year": 2025,
+        "first_author": "Davidson",
+        "title_short": "Patient Preferences in Inpatient Psychiatry: Structural Elements for Optimal Care (Preprint)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17482631.2025.2566209",
+        "year": 2025,
+        "first_author": "Amico",
+        "title_short": "\u201cThe physical environment is so important, but it's not everything\u201d\u2014nursing staffs' experiences of moving to a new purpo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0306624x251391790",
+        "year": 2025,
+        "first_author": "Imbeault",
+        "title_short": "Clinical Subgroups of Individuals Receiving Care in a Forensic Hospital: A 20-Year Comparison and Treatment Need Implica",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jclinepi.2026.112253",
+        "year": 2026,
+        "first_author": "Meng",
+        "title_short": "When systematic review meets realist review: proposing a hybrid review design to understand complex intervention effecti",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/bjc.70051",
+        "year": 2026,
+        "first_author": "MacDonald\u2010Winship",
+        "title_short": "What are the experiences of people with psychosis, their carers and staff in inpatient mental healthcare services in the",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "MHB-17": {
+    "openalex_id": "W4390731812",
+    "openalex_cited_by_count": 6,
+    "citers_fetched": 6,
+    "relevant_n": 5,
+    "already_in_es_n": 0,
+    "new_discovery_n": 5,
+    "discoveries": [
+      {
+        "doi": "10.1080/01612840.2024.2341034",
+        "year": 2024,
+        "first_author": "Molloy",
+        "title_short": "The Impact of Sensory Modulation Interventions on Practice in Acute Inpatient Mental Health Settings: A Meta-Ethnography",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/978-3-031-68881-2_3",
+        "year": 2024,
+        "first_author": "Murri",
+        "title_short": "Reacting to Demoralization and Investigating the Experience of Dignity in Psychosis: Reflections from an Acute Psychiatr",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0325558",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Evaluating the Safe Steps for De-escalation: A protocol for a mixed concurrent control study in acute mental health unit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3389/fpsyt.2025.1676743",
+        "year": 2025,
+        "first_author": "Daguman",
+        "title_short": "Maximising relational capabilities and minimising restrictive practices in acute mental health units: the Safe Steps for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2174/0118749445411061251006065042",
+        "year": 2025,
+        "first_author": "Mpheng",
+        "title_short": "Strengthening Policy Implementation: A Practice Model for 72-hour Assessments of Involuntary Mental Health Care Users",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

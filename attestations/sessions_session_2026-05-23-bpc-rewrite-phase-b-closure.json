@@ -34,7 +34,7 @@
     "citation-mining": {
       "status": "FIRED",
       "evidence_path": "scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql",
-      "reason": "B.11 first slug closure: room-acoustic-performance has 19 fully-mined sources (B=1, F=1), 2 deferred with explicit reasons (RAP-10 no-DOI, RAP-27 CrossRef-404), 1 excluded (RAP-13 misclassification \u2192 GAP-292). bpc_metadata.citation_mining_complete = 1 set per skill \u00a71 BATCH mode step 3. Pattern: CrossRef API (backward) + OpenAlex cites:{work_id} API (forward), with the same relevance-filter + dedup at both ends. 854 NEW candidate refs surfaced across 4 discovery-artifact files; per-row INSERT to evidence_sources deferred per PI rule #10. Turn-4 self-correction (premature forward-DEFER on Scholar Gateway unavailability) and turn-6 db.py bug fix (code-ordering issue blocking update-bpc) both logged. The protocol is now validated and reproducible for the 87 remaining slugs."
+      "reason": "B.11 closed 2 slugs end-to-end: room-acoustic-performance (19 full + 2 defer + 1 GAP-292 excluded) and mental-health-built-environment (16 full + 4 grey-lit/unresolvable defer). Pattern: CrossRef (backward) + OpenAlex cites: filter (forward), with OpenAlex pmid:/title-search added in turn 7 to recover no-DOI sources before falling to DEFER (MHB-12 + MHB-17 both successfully resolved). 1,477 NEW candidate refs surfaced across 6 discovery-artifact files; per-row INSERT to evidence_sources deferred across all of B.11 per PI rule #10 existence-gate. db.py code-order bug (GAP-293) surfaced and fixed mid-session; misclassified RAP-13 surfaced as GAP-292."
     },
     "adversarial-research-protocol": {
       "status": "NOT-FIRED",
