@@ -1,0 +1,1142 @@
+{
+  "RAP-18": {
+    "total_refs": 18,
+    "relevant_n": 9,
+    "already_in_es_n": 1,
+    "new_discovery_n": 8,
+    "discoveries": [
+      {
+        "doi": "10.1044/0161-1461.3104.362",
+        "year": "2000",
+        "author": "Crandell",
+        "title_short": "C., Smaldino J. J.. Classroom acoustics for children with normal hearing and with hearing impairment.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2945153",
+        "year": "2008",
+        "author": "George",
+        "title_short": "L., Festen J. M., Houtgast T.. The combined effects of reverberation and nonstationary noise on sentence intelligibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jslhr.4306.1402",
+        "year": "2000",
+        "author": "Hartley",
+        "title_short": "E., Wright B. A., Hogan S. C., et al. Age-related improvements in auditory backward and simultaneous masking in 6- to 10",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3766/jaaa.15.7.5",
+        "year": "2004",
+        "author": "Jamieson",
+        "title_short": "G., Kranjc G., Yu K., et al. Speech intelligibility of young school-aged children in the presence of real-life classroom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1467-9280.1993.tb00469.x",
+        "year": "1993",
+        "author": "Jensen",
+        "title_short": "K., Neff D. L.. Development of basic auditory discrimination in preschool children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jslhr.4301.144",
+        "year": "2000",
+        "author": "Johnson",
+        "title_short": "E.. Childrens phoneme identification in reverberation and noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1059-0889(2002/009)",
+        "year": "2002",
+        "author": "Knecht",
+        "title_short": "A., Nelson P. B., Whitelaw G. M., et al. Background noise levels and reverberation times in unoccupied classrooms: Predi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e3181d3d514",
+        "year": "2010",
+        "author": "Neuman",
+        "title_short": "C., Wroblewski M., Hajicek J., et al. Combined effects of noise and reverberation on speech recognition performance of n",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3109/00206098709081552",
+        "year": "1987",
+        "author": "Yacullo",
+        "title_short": "S., Hawkins D. B.. Speech recognition in noise and reverberation by school-age children.",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-19": {
+    "total_refs": 27,
+    "relevant_n": 15,
+    "already_in_es_n": 0,
+    "new_discovery_n": 15,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2002",
+        "author": null,
+        "title_short": "Acoustical Performance Criteria, Design Requirements and Guidelines for Schools. ANSI 12.60-2002.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2000",
+        "author": null,
+        "title_short": "Acoustics-Recommended Design Sound Levels and Reverberation Times for Building Interiors. AS/NZS 2107: Sydney and Wellin",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.aud.0000194510.57677.03",
+        "year": "2006",
+        "author": "Cameron",
+        "title_short": "Development and evaluation of the listening in spatialized noise test.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461.3104.362",
+        "year": "2000",
+        "author": "Crandell",
+        "title_short": "Classroom acoustics for children with normal hearing and with hearing impairment.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": null,
+        "title_short": "Bamford-Kowal-Bench Speech in Noise Test (Version 1.03) Audio CD.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2945153",
+        "year": "2008",
+        "author": "George",
+        "title_short": "The combined effects of reverberation and nonstationary noise on sentence intelligibility.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jslhr.4301.144",
+        "year": "2000",
+        "author": "Johnson",
+        "title_short": "Children's phoneme identification in reverberation and noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1059-0889(2002/009)",
+        "year": "2002",
+        "author": "Knecht",
+        "title_short": "Background noise levels and reverberation times in unoccupied classrooms: predictions and measurements.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00003446-199606000-00004",
+        "year": "1996",
+        "author": "Koehnke",
+        "title_short": "A procedure for testing speech intelligibility in a virtual listening environment.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461(2008/07-0032)",
+        "year": "2008",
+        "author": "Larsen",
+        "title_short": "The effect of classroom amplification on the signal-to-noise ratio in classrooms while class is in session.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1976",
+        "author": "Pearsons",
+        "title_short": "Speech levels in various noise environments (Report No. EPA-600/1-77-025),",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1976",
+        "author": "Plomp",
+        "title_short": "Binaural and monaural speech intelligibility of connected discourse in reverberation as a function of azimuth of a singl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/001440296503100703",
+        "year": "1965",
+        "author": "Sanders",
+        "title_short": "Noise conditions in normal school classrooms.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.1635837",
+        "year": "2004",
+        "author": "Shield",
+        "title_short": "External and internal noise surveys of London primary schools.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/00206098709081552",
+        "year": "1987",
+        "author": "Yacullo",
+        "title_short": "Speech recognition in noise and reverberation by school-age children.",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-20": {
+    "total_refs": 55,
+    "relevant_n": 13,
+    "already_in_es_n": 0,
+    "new_discovery_n": 13,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "All Noise Control. (2007). NRC Rating. Retrieved May 1 2007 from http://www.allnoisecontrol.com/products/CeilingBaffles.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "American National Standards Institute",
+        "title_short": "American National Standards Institute. (2002). Acoustical performance criteria, design requirements, and guidelines for ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "American National Standards Institute/Acoustical Society of America",
+        "title_short": "American National Standards Institute/Acoustical Society of America. (2010). Acoustical performance criteria, design req",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "American Speech-Language-Hearing Association",
+        "title_short": "American Speech-Language-Hearing Association. (2016). Classroom acoustics. Retrieved April 25, 2016, from http://www.ash",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1987",
+        "author": "Berg F. S.",
+        "title_short": "Berg, F. S. (1987). Facilitating classroom listening: A handbook for teachers of normal and hard of hearing students. Bo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Blake P.",
+        "title_short": "Noise levels in New Zealand junior classrooms: Their impact on hearing and teaching",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Crandell C. C.",
+        "title_short": "An update of classroom acoustics for children with hearing impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2005",
+        "author": "Etymotic Research, Inc",
+        "title_short": "Etymotic Research, Inc. (2005). Bamford-Kowal-Bench Speech in Noise Test (Version 1.03) [Audio Compact Disc and Manual] ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Lukas J. S.\n (2001). Noise classroom behavior and third and sixth grade reading achievement. 17th ICA Proceedings Rome 5",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1981",
+        "author": "Lukas J. S.",
+        "title_short": "Lukas, J. S. , DuPree, R. B. , & Swing, J. W. (1981). Effects of noise on academic achievement and classroom behavior (R",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "MacKenzie D. J.",
+        "title_short": "MacKenzie, D. J. , & Airey, S. (1999). Classroom Acoustics (Summary Report) . Edinburgh, Scotland: Heriot-Watt Universit",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1996",
+        "author": "Nilsson M. J.",
+        "title_short": "Nilsson, M. J. , Soli, S. D. , & Gelnett, D. J. (1996). Development of the Sharing in Noise Test for Children (HINT-C). ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1971",
+        "author": "Ross M.",
+        "title_short": "Effects of three classroom listening conditions on speech intelligibility",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-21": {
+    "total_refs": 59,
+    "relevant_n": 14,
+    "already_in_es_n": 0,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1097/00003446-199806000-00004",
+        "year": "1998",
+        "author": "Boothroyd A.",
+        "title_short": "Experiments with classroom FM amplification",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1986",
+        "author": "Crandell C.",
+        "title_short": "Speech recognition of children in a \u201ctypical\u201d classroom setting",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2001",
+        "author": "Crandell C.",
+        "title_short": "Effects of portable sound field FM systems on speech perception in noise",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Crandell C.",
+        "title_short": "Effects of sound field FM amplification on the speech recognition of listeners with cochlear implants",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1987",
+        "author": "Flexer C.",
+        "title_short": "Amplification devices: Evaluating classroom effectiveness for moderately hearing-impaired college students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1971",
+        "author": "Gengel R.",
+        "title_short": "Acceptable speech-to-noise ratios for aided speech discrimination by the hearing-impaired",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jshr.2801.87",
+        "year": "1985",
+        "author": "Gordon-Salant S.",
+        "title_short": "Phoneme feature perception in noise by normal-hearing and hearing-impaired subjects",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.394508",
+        "year": "1987",
+        "author": "Irwin R.",
+        "title_short": "Relations among temporal acuity, hearing loss, and speech distorted by noise and reverberation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1986",
+        "author": "Nabelek A.",
+        "title_short": "Comparison of amplification systems in a classroom",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jshr.1704.724",
+        "year": "1974",
+        "author": "Nabelek A.",
+        "title_short": "Monaural and binaural speech perception through hearing aids under noise and reverberation with normal and hearing-impai",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.1903301",
+        "year": "1974",
+        "author": "Nabelek A.",
+        "title_short": "Reception of consonants in a classroom as affected by monaural and binaural listening, noise, reverberation, and hearing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1986",
+        "author": "Picard M.",
+        "title_short": "Speech perception through FM auditory trainers in noise and reverberation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/001440296503100703",
+        "year": "1965",
+        "author": "Sanders D.",
+        "title_short": "Noise conditions in normal school classrooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1981",
+        "author": "Sarff L. S.",
+        "title_short": "Why not amplification in every classroom?",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-22": {
+    "total_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "RAP-25": {
+    "total_refs": 49,
+    "relevant_n": 36,
+    "already_in_es_n": 1,
+    "new_discovery_n": 35,
+    "discoveries": [
+      {
+        "doi": "10.3766/jaaa.15096",
+        "year": "2016",
+        "author": "Amlani",
+        "title_short": "Negative effect of acoustic panels on listening effort in a classroom environment.",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1044/1092-4388(2010/10-0069)",
+        "year": "2011",
+        "author": "Anderson Gosselin",
+        "title_short": "Older adults expend more listening effort than young adults recognizing speech in noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.neuropsychologia.2010.04.004",
+        "year": "2010",
+        "author": "Bendixen",
+        "title_short": "The time-course of auditory and visual distraction effects in a new crossmodal paradigm.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Bess",
+        "title_short": "How hard can it be to listen? Fatigue in school-age children with hearing loss.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1092-4388(2008/076)",
+        "year": "2008",
+        "author": "Choi",
+        "title_short": "Attentional modulation of word recognition by children in a dual-task paradigm.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1027/1618-3169/a000012",
+        "year": "2010",
+        "author": "Fischer",
+        "title_short": "Auditory warning signals affect mechanisms of response selection: evidence from a Simon task.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1092-4388(2009/08-0140)",
+        "year": "2010",
+        "author": "Fraser",
+        "title_short": "Evaluating the effort expended to understand speech in noise using a dual-task paradigm: the effects of providing visual",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/2331216516687287",
+        "year": "2017",
+        "author": "Gagn\u00e9",
+        "title_short": "Behavioral assessment of listening effort using a dual-task paradigm.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2741/gomes",
+        "year": "2000",
+        "author": "Gomes",
+        "title_short": "The development of auditory attention in children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.aud.0000440715.85844.b8",
+        "year": "2014",
+        "author": "Gustafson",
+        "title_short": "Listening effort and perceived clarity for normal-hearing children with the use of digital noise reduction.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2018_jslhr-h-17-0314",
+        "year": "2018",
+        "author": "Gustafson",
+        "title_short": "Speech-processing related fatigue in children with hearing loss: behavioral, subjective, and electrophysiological measur",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1092-4388(2002/046)",
+        "year": "2002",
+        "author": "Hick",
+        "title_short": "Listening effort and fatigue in school-age children with and without hearing loss.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/14992027.2013.832415",
+        "year": "2013",
+        "author": "Houben",
+        "title_short": "Using response time to speech as a measure for listening effort.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/14992027.2010.520036",
+        "year": "2010",
+        "author": "Howard",
+        "title_short": "Listening effort at signal-to-noise ratios that are typical of the school classroom.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000436",
+        "year": "2017",
+        "author": "Hsu",
+        "title_short": "Listening effort through depth of processing in school-age children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1179/1754762812y.0000000009",
+        "year": "2013",
+        "author": "Hughes",
+        "title_short": "Measuring listening effort expended by adolescents and young adults with unilateral or bilateral cochlear implants or no",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2016_jslhr-h-16-0052",
+        "year": "2017",
+        "author": "Key",
+        "title_short": "Speech-processing fatigue in children: auditory event-related potential and behavioral measures.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.4103/1463-1741.70506",
+        "year": "2010",
+        "author": "Klatte",
+        "title_short": "Effects of noise and reverberation on speech perception and listening comprehension of children and adults in a classroo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461(2008/07-0032)",
+        "year": "2008",
+        "author": "Larsen",
+        "title_short": "The effect of classroom amplification on the signal-to-noise ratio in classrooms while class is in session.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e3182857742",
+        "year": "2013",
+        "author": "Leibold",
+        "title_short": "Influence of hearing loss on children\u2019s identification of spondee words in a speech-shaped noise or a two-talker masker.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2016_jslhr-h-15-0207",
+        "year": "2016",
+        "author": "Lewis",
+        "title_short": "Effects of noise on speech recognition and listening effort in children with normal hearing and children with mild bilat",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461(2008/032)",
+        "year": "2008",
+        "author": "McFadden",
+        "title_short": "Effect of minimal hearing loss on children\u2019s ability to multitask in quiet and in noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jecp.2017.04.006",
+        "year": "2017",
+        "author": "McGarrigle",
+        "title_short": "Measuring listening-related effort and fatigue in school-aged children using pupillometry.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000396",
+        "year": "2017a",
+        "author": "Ohlenforst",
+        "title_short": "Effects of hearing impairment and hearing aid amplification on listening effort: a systematic review.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.heares.2017.05.012",
+        "year": "2017b",
+        "author": "Ohlenforst",
+        "title_short": "Impact of stimulus-related factors and hearing impairment on listening effort as indicated by pupil dilation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4929614",
+        "year": "2015",
+        "author": "Pals",
+        "title_short": "Validation of a simple response-time measure of listening effort.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000312",
+        "year": "2016",
+        "author": "Pichora-Fuller",
+        "title_short": "Hearing impairment and cognitive energy: the Framework for Understanding Effortful Listening (FUEL).",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000222",
+        "year": "2016",
+        "author": "Picou",
+        "title_short": "The effects of noise and reverberation on listening effort in adults with normal hearing.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/2016_aja-16-0059",
+        "year": "2017",
+        "author": "Picou",
+        "title_short": "Child-adult differences in using dual-task paradigms to measure listening effort.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.4897398",
+        "year": "2014",
+        "author": "Rennies",
+        "title_short": "Listening effort and speech intelligibility in listening situations affected by noise and reverberation.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ijporl.2005.01.010",
+        "year": "2005",
+        "author": "Ruscetta",
+        "title_short": "Speech recognition abilities in noise for children with severe-to-profound unilateral hearing impairment.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0117611",
+        "year": "2015",
+        "author": "Steel",
+        "title_short": "Binaural fusion and listening effort in children who use bilateral cochlear implants: a psychoacoustic and pupillometric",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e31806dc265",
+        "year": "2007",
+        "author": "Stelmachowicz",
+        "title_short": "Effect of stimulus bandwidth on auditory skills in normal-hearing and hearing-impaired children.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3758/bf03207468",
+        "year": "1988",
+        "author": "Stoffels",
+        "title_short": "Effects of visual and auditory noise on visual choice reaction time in a continuous-flow paradigm.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0000000000000335",
+        "year": "2016",
+        "author": "Wu",
+        "title_short": "Psychometric functions of dual-task paradigms for measuring listening effort.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/aud.0b013e31820512bb",
+        "year": "2011",
+        "author": "Zekveld",
+        "title_short": "Cognitive load during speech perception in noise: the influence of age, hearing loss, and cognition on the pupil respons",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-26": {
+    "total_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "RAP-27": {
+    "error": "crossref_fetch_failed"
+  },
+  "RAP-28": {
+    "total_refs": 33,
+    "relevant_n": 12,
+    "already_in_es_n": 0,
+    "new_discovery_n": 12,
+    "discoveries": [
+      {
+        "doi": "10.3766/jaaa.15.3.4",
+        "year": "2004",
+        "author": "Bentler",
+        "title_short": "A., Palmer C., Dittberner A. B.. Hearing-in-noise: Comparison of listeners with normal and (aided) impaired hearing.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.400733",
+        "year": "1991",
+        "author": "Grant",
+        "title_short": "W., Braida L. D.. Evaluating the articulation index for auditory-visual input.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2405859",
+        "year": "2007",
+        "author": "Grant",
+        "title_short": "W., Tufts J. B., Greenberg S.. Integration efficiency for speech perception within and across sensory modalities by norm",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jshd.4903.278",
+        "year": "1984",
+        "author": "Hawkins",
+        "title_short": "B., Yacullo W. S.. Signal-to-noise ratio advantage of binaural hearing aids and directional microphones under different ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1092-4388(2008/034)",
+        "year": "2008",
+        "author": "Henning",
+        "title_short": "L., Bentler R. A.. The effects of hearing aid compression parameters on the short-term dynamic range of continuous speec",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/00206099109072895",
+        "year": "1991",
+        "author": "Leeuw",
+        "title_short": "R., Dreschler W. A.. Advantages of directional hearing aid microphones related to room acoustics.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.2108861",
+        "year": "2006",
+        "author": "Souza",
+        "title_short": "E., Jenstad L. M., Boike K. T.. Measuring the acoustic effects of compression amplification on speech in noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.1907309",
+        "year": "1954",
+        "author": "Sumby",
+        "title_short": "H., Pollack I.. Visual contribution to speech intelligibility in noise.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-0042-1748200",
+        "year": "2000",
+        "author": "Walden",
+        "title_short": "E., Surr R. K., Cord M. T., et al. Comparison of benefits provided by different hearing aid technologies.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3766/jaaa.15.5.4",
+        "year": "2004",
+        "author": "Walden",
+        "title_short": "E., Surr R. K., Cord M. T., et al. Predicting hearing aid microphone preference in everyday listening.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3766/jaaa.16.9.4",
+        "year": "2005",
+        "author": "Walden",
+        "title_short": "E., Surr R. K., Grant K. W., et al. Effect of signal-to-noise ratio on directional microphone benefit and preference.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/14992027.2010.551219",
+        "year": "2011",
+        "author": "Wu",
+        "title_short": "H., Bentler R. A.. A method to measure hearing aid directivity index and polar pattern in small and reverberant enclosur",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-29": {
+    "total_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "RAP-30": {
+    "total_refs": 55,
+    "relevant_n": 23,
+    "already_in_es_n": 1,
+    "new_discovery_n": 22,
+    "discoveries": [
+      {
+        "doi": "10.1177/014556130208100411",
+        "year": "2002",
+        "author": "Anderson I.",
+        "title_short": "Recent results with the MED-EL COMBI 40+ cochlear implant and TEMPO+ behind-the-ear processor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/0161-1461(2004/017)",
+        "year": null,
+        "author": null,
+        "title_short": "Anderson K. Goldstein H. Colodzin L. & Iglehart F. (2003). Speech perception benefits of FM and infrared devices: Childr",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": "1977",
+        "author": "Blair J.",
+        "title_short": "Effects of amplification, speechreading, and classroom environments on reception of speech",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jshr.2701.134",
+        "year": "1984",
+        "author": "Boothroyd A.",
+        "title_short": "Auditory perceptions of speech contrasts by subjects with sensorineural hearing loss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1991",
+        "author": "Crandell C.",
+        "title_short": "The effects of classroom acoustics on children with normal hearing: Implications for intervention strategies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Crandell C.",
+        "title_short": "Effects of sound field FM amplification on the speech recognition of listeners with cochlear implants",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1994",
+        "author": "Crandell C.",
+        "title_short": "An update of classroom acoustics for children with hearing impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Finitzo-Heiber T. (1975). The influence of reverberation and noise on the speech intelligibility of normal and hard of h",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/jslhr.4102.285",
+        "year": "1998",
+        "author": "Flynn M.",
+        "title_short": "Aided speech recognition abilities of adults with a severe or severe-to-profound hearing loss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Foster S. Brackett D. & Maxon A. (1997 April). Personal soundfield FM: An alternative way of combating distance and nois",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.1381538",
+        "year": "2001",
+        "author": "Friesen L.",
+        "title_short": "Speech recognition in noise as a function of the number of spectral channels: Comparison of acoustic hearing and cochlea",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Fu Q.",
+        "title_short": "Effects of noise and spectral resolution on vowel and consonant recognition: Acoustic and electric hearing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/00206090109073097",
+        "year": "2001",
+        "author": "Hamzavi J.",
+        "title_short": "Hearing performance in noise of cochlear implant patients versus severely-profoundly hearing-impaired patients with hear",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1044/1059-0889.0403.55",
+        "year": "1995",
+        "author": "Holden L.",
+        "title_short": "Comparison of the normal and noise-suppression settings on the Spectra 22 speech processor of the Nucleus 22-channel coc",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Iglehart F. & Boothroyd A. (2002 August). Costs and benefits of peak clipping in amplification for profound hearing loss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0079-6123(08)62291-8",
+        "year": "1993",
+        "author": "Lawson D.",
+        "title_short": "New processing strategies for multichannel cochlear prostheses",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "McCroskey R. & Devens J. (1975 April 30\u2013May 2). Acoustical characteristics of public school classrooms constructed betwe",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1981",
+        "author": "Merklein R.",
+        "title_short": "A short speech perception test for severely and profoundly deaf children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1995",
+        "author": "M\u00fcller-Deile J.",
+        "title_short": "Effects of noise on speech discrimination in cochlear implant patients",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/001440296503100703",
+        "year": "1965",
+        "author": "Sanders D.",
+        "title_short": "Noise conditions in normal school classrooms",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00034894991080s421",
+        "year": "1999",
+        "author": "Svirsky M.",
+        "title_short": "Comparison of speech perception in pediatric Clarion cochlear implant and hearing aid users",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1121/1.411970",
+        "year": "1995",
+        "author": "van Hoesel R.",
+        "title_short": "Evaluation of a portable two-microphone adaptive beam forming speech processor with cochlear implant patients",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00003446-200110000-00006",
+        "year": "2001",
+        "author": "Wouters J.",
+        "title_short": "Speech recognition in noise for cochlear implantees with a two-microphone monaural adaptive noise reduction system",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-01": {
+    "total_refs": 73,
+    "relevant_n": 15,
+    "already_in_es_n": 1,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1007/bf02178168",
+        "year": "1995",
+        "author": "Rimland",
+        "title_short": "Brief report: A pilot study of auditory integration training in autism",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10803-014-2219-2",
+        "year": "2015",
+        "author": "Kargas",
+        "title_short": "The Relationship Between Auditory Processing and Restricted, Repetitive Behaviors in Adults with Autism Spectrum Disorde",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Bang, M., and Ragnemalm, E.L. (2012). Empowering Independent Living for People with Autism: Designing Supportive, Low-Co",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00779-011-0470-5",
+        "year": null,
+        "author": null,
+        "title_short": "Portet, F., Vacher, M., Golanski, C., Roux, C., and Meillon, B. (2011). Design and Evaluation of a Smart Home Voice Inte",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Chang, C., and Chang, Y. (2013, January 10\u201313). Application of Abnormal Sound Recognition System for Indoor Environment.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Bogdashina, O. (2016). Sensory Perceptual Issues in Autism and Asperger Syndrome, Second Edition: Different Sensory Expe",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ridd.2017.02.004",
+        "year": "2017",
+        "author": "Kanakri",
+        "title_short": "Noise and autism spectrum disorder in children: An exploratory survey",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1203/pdr.0b013e3182130c54",
+        "year": "2011",
+        "author": "Marco",
+        "title_short": "Sensory Processing in Autism: A Review of Neurophysiologic Findings",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2015",
+        "author": "Mostafa",
+        "title_short": "Architecture for autism: Built environment performance in accordance to the autism ASPECTSS\u2122 design index",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Balisha, U. (2017). Autism Friendly Design, Didapress Dipartimento di Architettura, Universit\u00e0 degli Studi di Firenze.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "American National Standards Institute (2010). Acoustical Performance Criteria, Design Requirements, and Guidelines for S",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1260/135101003768965960",
+        "year": "2003",
+        "author": "Shield",
+        "title_short": "The effects of noise on children at school: A review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Bainbridge, W. (2004). User-Centered Design. Encyclopedia of Human-Computer Interaction, Sage Publications.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/iscit.2006.339980",
+        "year": null,
+        "author": null,
+        "title_short": "Meng, Z., Zhao, F., and He, M. (2006). The Just Noticeable Difference of Noise Length and Reverberation Perception, Comm",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Brand, A., Gaudion, K., and Myerson, J. (2012). Exploring Sensory Preferences: Living Environments for Adults with Autis",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-12": {
+    "total_refs": 60,
+    "relevant_n": 5,
+    "already_in_es_n": 0,
+    "new_discovery_n": 5,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "American National Standards Institute. (2010). American national standard acoustical performance criteria design require",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "Mealings K. T.",
+        "title_short": "Mealings, K. T. (2016). Classroom acoustic conditions: Understanding what is suitable through a review of national and i",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "Rabelo A. T. V.",
+        "title_short": "Effect of classroom acoustics on the speech intelligibility of students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Rosenberg G. G.",
+        "title_short": "Improving Classroom Acoustics (ICA): A three-year FM sound field classroom amplification study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1982",
+        "author": "Steeneken H. J.",
+        "title_short": "Some applications of the speech transmission index (STI) in auditoria",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "RAP-15": {
+    "total_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "RAP-31": {
+    "total_refs": 54,
+    "relevant_n": 5,
+    "already_in_es_n": 0,
+    "new_discovery_n": 5,
+    "discoveries": [
+      {
+        "doi": "10.1007/978-3-031-09439-2_2",
+        "year": null,
+        "author": null,
+        "title_short": "Bolten B., Barbiero G. (2020). Biophilic design: How to enhance physical and psychological health and wellbeing in our b",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Gaines K., Curry Z., Shroyer J., Amor C., Lock R. H. (2014). The perceived effects of visual design and features on stud",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Ghazali R., Sakip S. R. M., Samsuddin I. (2018b). Preliminary study on sensory design for autism centre. Environment \u2013 B",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Grancich D. D. (2014). Exploring urban design theory: A qualitative study integrating \u2018autism-friendly environments\u2019 as ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Kanakri S. M. F. (2014). The impact of acoustical environmental design on children with autism (3667564) [Ph.D., Texas A",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}
