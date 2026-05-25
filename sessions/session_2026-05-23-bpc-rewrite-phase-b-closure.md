@@ -174,13 +174,146 @@ Three explicit decisions are needed before any of the remaining open P1 work can
 - **B.12 Tier 2 jurisdictional instruments inventory.** Inventory pass on the 59 T2 evidence_sources rows already linked to slugs.
 - **Skill-file pattern formalizations.** Already partially done (supersession-audit §3 amended for cluster-search + Tier-6 lesson). Remaining: any other skill files where similar lessons apply.
 
-## Commits this session — final
+## Owner directives received and resolved 2026-05-25 (post-triage)
 
-bbd7f47 supersession-audit: P1 gap triage (GAP-278 close + 8 annotations + GAP-296 new)
-5cf09d9 supersession-audit: Pass 3 cleanups (NZS-4121 correction, PAS-6463 dedup, GAP-292 close, GAP-295 new, MHB-10 flag; skill cluster-search + Tier-6 lessons)
-b930512 supersession-audit: SEA + MOB v2 closure (Pass 2 COMPLETE)
-ebcafcf supersession-audit: mental-health-built-environment v2 closure
-c8088b7 supersession-audit: cognitive-wayfinding-design v2 closure
-86f9593 supersession-audit: stair-ramp-threshold-biomechanics-accessibility v2 closure
-9b29927 supersession-audit: room-acoustic-performance v2 closure (amended)
-6d4a6da supersession-audit: DR-2026-05-24 protocol infrastructure (Pass 1)
+After the P1 triage above, owner gave three directives in a single message:
+
+1. **"present the info"** for the `accessible-circulation-geometry.md` Phase E.2g reverification.
+2. **"t2>t3 this is enshrined"** for sr_meta canonical placement.
+3. **"yes, but you have to include a discussion about why turning radius is disingenuous compared to swept path/turning maneouvres"** for the GAP-272 reframing.
+
+Then a fourth directive in a follow-up message:
+
+4. **"important: DIN 2010 is outdated. why are you working from outdated codes? remember that best practice is not the same as convergence/consensus. a 5' wide hallway sucks"**
+
+The fourth directive surfaced a more general failure mode than the original GAP-272 framing: the metadata-quality gate (rule #10) verifies the row parses, not that the cited edition is current, and code-floor convergence is not best-practice evidence.
+
+Resolutions:
+
+- **Directive 1.** Presented in-chat as the 11-row reverification queue. Implementation declined unilaterally pending owner direction on three sub-questions (1800mm "preferred" contradiction; DIN EN 17210:2021 + E DIN 18040-1:2023 inclusion; pre-rehab edit policy). GAP-265/266/268/269 remain OPEN with current-state annotations (added 2026-05-25 triage).
+- **Directive 2.** Resolved via `data_20260525070000_sr_meta_t2_canonicalization.sql` + `governance/tier-system.md` (new canonical document) + `skills/guidebook-auditor_SKILL.md` §4.1/§4.2 amendment. 4 sr_meta rows migrated T3→T2. GAP-273 + GAP-296 CLOSED-FIXED.
+- **Directive 3.** Resolved via `references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md` (new methodology BPC, 10 sections, 4-ground deprecation argument) + REF-00736 Chaikhot 2023 + REF-00737 Steinfeld 2006 RESNA added. GAP-272 CLOSED-FIXED. Authorship-correction note: REF-00736 first authored as "Vergara" from PMC-snippet misread; corrected via `data_20260525090000_chaikhot_2023_authorship_correction.sql` to Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ per PubMed PMID 37383064.
+- **Directive 4.** Resolved structurally via the new Level-2 audit script `scripts/audit/code_currency_audit.py` + schema migration `016_code_currency_columns.sql` (adds 4 columns) + initial backfill `data_20260525100000_code_currency_initial_backfill.sql` (NZS 4121:2001 as VERIFIED-CURRENT worked example + CRPD/ICF/WHO Child Growth Standards as PERMANENT-FRAMEWORK + 5 supersession-mirrored T6). `governance/tier-system.md` §4 amended with audit-script reference. Initial audit queue: 129 T4–T6 rows flagged for direct jurisdiction-source verification.
+
+---
+
+## Lessons recorded for future sessions
+
+**The convergence-not-evidence trap.** Code-floor convergence across multiple Tier 4-6 sources describes regulatory inheritance, not empirical adequacy. The 1500mm "turning circle" across 24 jurisdictions traces back to 1970s US VA / HUD anthropometry; the convergence is downstream from a small shared source, not independent confirmation. Best-practice claims require Tier 1, Co-1, Tier 2, or Co-2 evidence appropriate to the claim type. Documented at `governance/tier-system.md` §3.
+
+**Best-practice ≠ permitted minimum.** A 1525mm corridor isn't merely "cramped" — at ~900 turns/day with 15× braking force on tight spin-turns vs wider-arc roll turns (per Chaikhot et al. 2023 [DOI 10.3389/fspor.2023.1127514](https://doi.org/10.3389/fspor.2023.1127514)), it externalises a biomechanical cost that the codes don't surface. Documented in `references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md` §6.
+
+**Age does not predict supersession.** NZS 4121:2001 is 24 years old and remains the operative NZ Building Act §119 / D1/AS1 Acceptable Solution. DIN 18040-1:2010 is 15 years old and remains legally in force in Germany (MVV TB 2024/1) but is supersedable by DIN EN 17210:2021 and E DIN 18040-1:2023 draft revision. Each flagged row in `code_currency_audit.py`'s output requires direct jurisdiction-source check — the audit produces a triage queue, not a verdict. Documented in audit-script header + skill-file Tier-6 verification lesson.
+
+**Authorship is not separable from metadata quality.** REF-00736's authorship error (Vergara vs Chaikhot) passed the metadata-quality gate because the DOI, title, journal, year, and abstract content were all correct — only the `first_author_last` and `author_display` fields were wrong, drawn from a misread of a co-author or cited-author name in a PMC fulltext snippet. The scheduled `source-verification` job's PubMed XML population caught what my own checking missed. Lesson: when copying from any fulltext or non-canonical source, verify the first-author surname directly against PubMed XML or Crossref before writing the row.
+
+**Audit cluster-search pattern.** All 6 v2 retroactive supersession audits used composite cluster searches (3-6 queries per slug, evaluated against all anchors) rather than per-anchor individual searches. ~5x fewer tool calls with no findings lost on densely-overlapping parameter × population literatures. Documented in `skills/supersession-audit_SKILL.md` §3 (2026-05-25 amendment).
+
+---
+
+## Commits this session — final (in execution order, 2026-05-23 → 2026-05-25)
+
+| SHA | Commit | Notes |
+|---|---|---|
+| `b0a4a25` → `15ba824` | evidence-metadata-rehabilitation cluster (pre-session continuation work) | Closed out the metadata-rehabilitation work-stream; 638/638 rows 100% eligible. Pre-session work that this session builds on. |
+| `be146a2` | governance: B.0 closure — pre-rehab banner applied to 70 BPC files / 68 slugs per DR-2026-05-23 | Pre-rehab quarantine applied. |
+| `db3bb7a` | governance: withdraw v10.15 queue entry + close B.10/B.8 (REF-00734) | Governance housekeeping. |
+| `d0a9f5a` → `606213a` | citation-miner: B.11 batch 1 (6 slugs, 81 mining-completed) | RAP + MHB + CWD + MOB + SEA + SRB Phase B.11 citation mining. Pre-supersession-audit foundation. |
+| `6d4a6da` | governance: DR-2026-05-24 best-practice supersession protocol (Pass 1) | Migration 015 + skill + db.py CLI added. |
+| `e5fac09` | governance: attestation for DR-2026-05-24 | |
+| `9b29927` | supersession-audit: RAP v2 closure (33 anchors; 26 current_best + 7 refined_by; key finding Murgia 2022 refined by Mercugliano 2025) | Pass 2 start. |
+| `86f9593` | supersession-audit: SRB v2 closure (15 anchors; key finding Tanaka 2025 stair-descent phenotype) | |
+| `c8088b7` | supersession-audit: CWD v2 closure (22 anchors; first co1_addition_logged under accumulation rule) | |
+| `ebcafcf` | supersession-audit: MHB v2 closure (23 anchors; PAS 6463 dup + Price 2024 flagged) | |
+| `b930512` | supersession-audit: SEA + MOB v2 closure (Pass 2 COMPLETE — 134 rows across all 6 slugs) | |
+| `5cf09d9` | supersession-audit: Pass 3 cleanups (NZS-4121 correction + PAS-6463 dedup + GAP-292 close + GAP-295 new + MHB-10 flag; skill cluster-search + Tier-6 lessons) | |
+| `bbd7f47` | supersession-audit: P1 gap triage (close GAP-278 + annotate 8 + open GAP-296) | |
+| `868da1e` | guidebook-auditor: session-record handoff (P1 triage outcomes + 3 owner-decision blockers) | First handoff at natural close — superseded by this one. |
+| `9e3d0b7` | doctrine-recheck: enshrine sr_meta at T2 (`governance/tier-system.md` + 4 rows migrated + SKILL §4.1/§4.2; GAP-273+GAP-296 closed) | Owner directive 2 resolved. |
+| `9696e8f` | guidebook-auditor: deprecate turning-radius parameter (methodology BPC + Vergara/Chaikhot 2023 + Steinfeld 2006 RESNA; GAP-272 closed) | Owner directive 3 resolved; CI red on 2 jobs (REF-ID column missing; doi_resolution_outcome/authors NULL). |
+| `5007ede` | source-verification: V1.2 scheduled run | Remote-only — populated correct Chaikhot author rows for REF-00736; surfaced my authorship error. |
+| `9d539af` | guidebook-auditor: CI fixup + authorship correction (Vergara→Chaikhot per PubMed PMID 37383064; doi_resolution_outcome=RESOLVED; Key-sources REF-ID; search-log authored; 35/35 db_integrity + 100/100 validate_bpc + 0 cross-refs) | CI back to green; authorship error corrected on record. |
+| `c7967b2` | doctrine-recheck: code-currency audit (Level 2) — schema 016 + `code_currency_audit.py` + initial backfill (NZS 4121 + CRPD/ICF/WHO + 5 supersession-mirrored T6); `governance/tier-system.md` §4 amended | Owner directive 4 resolved structurally. **Current HEAD.** |
+
+26 commits this session. All CIs green on `c7967b2` (Guidebook CI + Repo Integrity Audits both ✓).
+
+---
+
+## Session metrics — final state
+
+| Metric | Session start | Session close |
+|---|---|---|
+| BPC slugs at v2 closure | 0 | 6 (all v1-closed slugs from Phase B.11 batch 1) |
+| `supersession_check` rows | 0 | 134 (106 current_best + 19 refined_by + 9 co1_addition_logged + 0 superseded + 0 divergent + 0 pending) |
+| `evidence_sources` total | 638 | 640 (+REF-00736 Chaikhot 2023 + REF-00737 Steinfeld 2006 RESNA) |
+| `sr_meta` at Tier 2 | 4 | 8 |
+| `sr_meta` at Tier 3 | 4 | 0 |
+| BPCs total | 99 | 100 (+methodology BPC) |
+| Schema version (`user_version`) | 15 | 16 (+016_code_currency_columns) |
+| Governance canonical docs | 0 | 1 (`governance/tier-system.md`) |
+| Level-2 audit scripts | 4 | 5 (+`code_currency_audit.py`) |
+| Open P1 gaps | 9 | 6 (closed: GAP-272, GAP-273, GAP-278, GAP-296; new GAP-296 also closed in same session) |
+| Closed P1 gaps this session | 0 | 4 |
+| Data migrations applied | — | 15 (this session) |
+| CI sustained-green commits | — | 8 consecutive (since `b930512`) |
+
+---
+
+## Remaining open work — handoff state
+
+### Open P1 gaps (6, all annotated with current-state in their description field)
+
+- **GAP-265** Bauman 2010 / Vaughn 2018 / Cloete & Rout 2025 evidence integration in `accessible-circulation-geometry.md` — content-level fix already present (line 41); CLOSURE blocked on Phase E.2g reverification of PRE-REHAB RETRACTED BPC.
+- **GAP-266** Steinfeld 2006 RESNA entire-sample 180° turn evidence in same BPC — content-level fix already present (line 42); same Phase E.2g block.
+- **GAP-268** DEAF population structurally invisible in 4 of 7 circulation/wayfinding BPCs — scope reduced from 5 to 4 BPCs (per per-BPC scan recorded in gap description); remaining 4 need explicit DEAF-population content sections. Content authorship work.
+- **GAP-269** 1800mm vs 2440mm internal contradiction in `accessible-circulation-geometry.md` — resolved by population stratification in current BPC text (lines 40 vs 41 vs 56); same Phase E.2g block.
+- **GAP-274** 3 STUB BPCs (`sensory-processing-model-design-application`, `sensory-relief-space-design`, `upper-limb-impairment-built-environment`) cited as evidence basis in Part 4 — needs BPC content authorship OR retraction of Part 4 citations.
+- **GAP-283** citation-miner skill invocation pattern — architectural; depends on gap-driven mining protocol decision (owner pivot turn 14, 2026-05-23 — open question).
+
+### Owner decision points blocking further P1 closure
+
+1. **Phase E.2g reverification scope.** When this happens, it closes GAP-265 + GAP-266 + GAP-269 simultaneously on `accessible-circulation-geometry.md`. The 11-row reverification queue is documented in the chat transcript at 2026-05-25 (3 axes per claim: code-edition currency, best-practice-evidence adequacy, internal-contradiction reconciliation). Recommended scope additions surfaced by owner directive 4: code-currency check on every T4–T6 citation in the BPC; convergence-vs-best-practice scrub on every "preferred" or "best practice" label that rests on T5/T6 convergence.
+
+2. **Turning-radius deprecation propagation.** Methodology BPC documents the pattern at `references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md` §5 (deprecation table). 6 downstream BPCs cite "turning circle" / "turning radius" as Guidebook-authored values and need updating: MOB, accessible-circulation-geometry, accessible-bathroom-and-grab-bar, residential-kitchen-and-task-surfaces, threshold-and-level-access, bariatric-turning-radius. **Recommended:** compound with Phase E.2g reverification on each BPC to avoid touching prose twice.
+
+3. **Code-currency audit triage.** 129 T4–T6 rows flagged. Working through them produces the input data Phase E.2g reverification needs (the "is the cited code edition current?" check), so the two efforts feed each other rather than competing. Per the audit's own message: T6 codes commonly persist 15+ years and remain current (NZS 4121:2001 worked example); old age does not predict supersession either way; each flagged row requires direct jurisdiction-source check.
+
+### Code-currency audit queue composition (129 rows for jurisdiction-tracker work)
+
+| Tier | Threshold | Flagged | Suppressed | Notes |
+|---|---|---|---|---|
+| 4 (international standards) | 7 years (pub_year < 2019) | 36 | 7 (6 supersession-checked + 1 PERMANENT-FRAMEWORK CRPD/ICF/WHO) | ISO/IEC/CEN/BSI PAS revisions on 7-10 year cycles |
+| 5 (national frameworks) | 5 years (pub_year < 2021) | 54 | 21 (mostly supersession-checked at v2 closure) | BS 8300, DIN 18040 advisories, etc. |
+| 6 (statutory codes) | 5 years (pub_year < 2021) | 39 | 13 (NZS 4121 + supersession-mirrored + supersession-checked) | ADA, AS 1428.1, NZS 4121, NBR 9050, etc. |
+
+Highest-jurisdictional-coverage candidates for first triage pass (each row has multiple downstream BPC citations):
+- DIN 18040-1:2010 — Germany — referenced in MOB + circulation + bathroom + kitchen + threshold + signage BPCs. Already known supersedable by DIN EN 17210:2021 + E DIN 18040-1:2023.
+- ISO 7730:2005 PMV/PPD — thermal comfort — referenced in MS-thermal + thermal-environment + accessibility BPCs.
+- ANSI/ASA S12.60-2010 — acoustical performance criteria for schools — referenced in deaf-classroom-reverberation-time + deaf-acoustic-built-environment.
+- BS EN 54-23:2010 — fire detection alarm systems — referenced in visual-alerting-and-wayfinding-light + visual-fire-alerting.
+- 2010 ADA Standards — referenced in 12+ US-citing BPCs.
+
+### Tractable work without owner decision
+
+- **Begin code-currency audit triage** (cheapest first: T6 codes from major jurisdictions with direct standards-body URLs).
+- **Continue Phase B.11 citation mining** for the 82 v1-eligible slugs not yet mined (owner pivot turn 14 noted; gap-driven mining protocol still open question — but B.11 work on v1-eligible slugs is unblocked).
+- **B.9 derivation_chain population for the 134 v2-closed-slug anchors** (mechanical; supersession_check.search_strategy_record can feed derivation_chain).
+- **B.12 Tier 2 jurisdictional instruments inventory** (mechanical pass on the 59 T2 evidence_sources rows already linked to slugs).
+
+---
+
+## Semiannual sweep scheduled
+
+First post-DR-2026-05-24 supersession-protocol semiannual sweep: **2026-12-01**. Sweep re-checks all 134 `supersession_check` rows + any newly v2-closed slugs against publication-date filter > 2026-05-25. Owner trigger; not automated.
+
+---
+
+## Where to start next session
+
+If you want to keep closing P1 gaps without owner direction: start the code-currency audit triage (option 3). Each row is a small contained piece of jurisdiction-tracker work and the 129-row queue is exactly the input data Phase E.2g reverification will need anyway.
+
+If you want to unblock the Phase E.2g chain: do one BPC reverification (probably `accessible-circulation-geometry.md`, which closes 3 P1 gaps at once and applies all four lessons from this session — convergence-not-evidence scrubbing, code-currency check, manoeuvring-footprint reframing, and the 1800mm-preferred contradiction).
+
+If you want the deepest structural work: write the gap-driven mining protocol that B.11 has been waiting on since the owner pivot of 2026-05-23. That closes GAP-283 and unlocks the 82-slug citation-mining backlog.
+
+The pre-rehab quarantine is intact. No retracted BPC was touched this session. Everything that landed went through CI clean.
