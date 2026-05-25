@@ -19,9 +19,9 @@
 | citation_mining backward=1 rows (B.11) | 2 (school-environment-autism partial) | 81 (RAP 19 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +79 |
 | citation_mining forward=1 rows (B.11) | 0 | 82 (RAP 20 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +82 |
 | Slugs with `citation_mining_complete = 1` | 0 | 6 | +6 |
-| **Slugs at v2 closure (DR-2026-05-24)** | n/a (DR didn't exist) | **2 (RAP + SRB)** | +2 |
-| `supersession_check` rows | n/a | 48 (33 RAP + 15 SRB) | +48 |
-| RAP supersession outcomes (current_best / refined_by / superseded / divergent / pending) | n/a | RAP: 26/7/0/0/0; SRB: 12/3/0/0/0 | new |
+| **Slugs at v2 closure (DR-2026-05-24)** | n/a (DR didn't exist) | **6 (all closed slugs at v2)** | +6 |
+| `supersession_check` rows | n/a | 134 (RAP 33 + SRB 15 + CWD 22 + MHB 23 + SEA 17 + MOB 24) | +134 |
+| Outcome distribution (current_best / refined_by / co1_addition_logged / superseded / divergent / pending) | n/a | 106 / 19 / 9 / 0 / 0 / 0 | new |
 | Backward discovery surface (NEW candidate refs) | n/a | 1,833 | unchanged this turn |
 | Forward discovery surface (NEW candidate refs) | n/a | 2,988 | unchanged this turn |
 | Combined B.11 discoveries surfaced | n/a | 4,821 | unchanged this turn |
@@ -87,7 +87,11 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `scripts/migrations/015_supersession_check.sql` | NEW | Schema migration: supersession_check table + bpc_metadata.supersession_check_complete + closure_definition_version; schema 14→15 |
 | `scripts/migrations/data_20260525013000_supersession_v1_stamp_correction.sql` | NEW | Correction: relax closure_definition_version CHECK to allow NULL; NULL out for unclosed slugs; stamp v1 only on the 6 actually-closed slugs |
 | `scripts/migrations/data_20260525021000_b11_rap_supersession_audit.sql` | NEW | Pass 2 RAP retroactive supersession audit: 33 supersession_check rows + v2 closure of room-acoustic-performance. 26 current_best + 7 refined_by. Key finding: RAP-12 Murgia 2022 SR refined_by Mercugliano 2025 SR via PubMed parameter+population search (citation mining would have missed it — Mercugliano does not cite Murgia). |
-| `scripts/migrations/data_20260525021500_b11_srb_supersession_audit.sql` | NEW | Pass 2 SRB retroactive supersession audit: 15 supersession_check rows + v2 closure of stair-ramp-threshold-biomechanics-accessibility. 12 current_best + 3 refined_by. Key finding: Tanaka 2025 stair-descent phenotype clustering (doi 10.1007/s40520-025-02929-5) refines SRB-02 Simoneau 1991, SRB-05 Pavol 2001, SRB-13 Ram 2024 on kinematic + strength dimensions. Templer 1992 (foundational T4 stair-design reference) confirmed current best — accumulated refinements but no replacement. No Co-1 anchors so owner Co-1 decision not required. |
+| `scripts/migrations/data_20260525021500_b11_srb_supersession_audit.sql` | NEW | Pass 2 SRB retroactive supersession audit (15 anchors). 12 current_best + 3 refined_by. Key finding: Tanaka 2025 stair-descent phenotype clustering refines SRB-02/05/13. |
+| `scripts/migrations/data_20260525031000_b11_cwd_supersession_audit.sql` | NEW | Pass 2 CWD retroactive (22 anchors). 18 current_best + 3 refined_by + 1 co1_addition_logged. First Co-1 outcome under accumulation rule (CWD-10 DSDC EADDAT 2022). Zaikina 2025 lighting+color SR refines Tola 2021 + Black 2022. |
+| `scripts/migrations/data_20260525033000_b11_mhb_supersession_audit.sql` | NEW | Pass 2 MHB retroactive (23 anchors). 20 current_best + 3 co1_addition_logged. SAMHSA TIP-57 2014 confirmed current. PAS 6463 duplication + Price 2024 misclassification flagged. |
+| `scripts/migrations/data_20260525040000_b11_sea_supersession_audit.sql` | NEW | Pass 2 SEA retroactive (17 anchors, no Co-1). 11 current_best + 6 refined_by. Zaikina 2025 refines 2 T2 SRs; Al Qutub 2026 refines 4 T3 anchors on multi-IEQ/jurisdictional. |
+| `scripts/migrations/data_20260525041500_b11_mob_supersession_audit.sql` | NEW | Pass 2 MOB retroactive FINAL (24 anchors). 19 current_best + 5 co1_addition_logged. 5 T6 codes flagged for jurisdiction-tracker handoff per DR §Out-of-scope (NZS 4121:2001 highest priority). Steinfeld 2010 powered-mobility-demographic-shift gap noted. |
 | `skills/supersession-audit_SKILL.md` | NEW | Skill codifying per-slug + semiannual sweep protocol; search strategy matrix per evidence type; 5-outcome enum |
 | `scripts/db.py` | MODIFIED | Added `add-supersession-check` subcommand + 2 new `update-bpc` flags + `add_supersession_check()` function + 2 new bpc_metadata cols in `_BPC_META_COLS` allowlist |
 
@@ -110,13 +114,21 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 supersession audits** (DR-2026-05-24 Pass 2 in progress). **RAP and SRB complete at v2.** 4 closed slugs remain queued:
-  - **MHB** (16 anchors, has Co-1) — blocked on owner Co-1-supersession-treatment confirmation for Co-1 anchors; Tier 1-5 anchors auditable now.
-  - **CWD** (11 anchors, has Co-1) — same Co-1 dependency.
-  - **SEA** (15 anchors, has Co-1) — same Co-1 dependency.
-  - **MOB** (6 in-scope anchors; 9 grey-lit DEFERs out of supersession scope per DR §Out-of-scope) — smallest in-scope; could be done before MHB/CWD/SEA if Co-1 decision delays. Need to verify MOB Co-1 status before assuming unblocked.
-- **Decision pending — Co-1 supersession treatment.** Schema reversibly supports `co1_addition_logged` (accumulation, current default) or parallel-to-Tier-1 treatment (would require dropping co1_addition_logged outcome). RAP+SRB had no Co-1 anchors so audits proceeded; the next 3 slugs (MHB+CWD+SEA) all have Co-1.
-- **Audit pattern observation (per attestation deviation):** SRB audit used composite cluster searches rather than per-anchor individual searches. 5 cluster queries covered all 15 anchors efficiently when parameter×population overlap was dense. Skill file §4 should be updated to formalize this pattern; currently it implies per-anchor.
+- **B.11 supersession audits COMPLETE for all 6 v1-closed slugs.** RAP + SRB + CWD + MHB + SEA + MOB all at v2 closure-definition. 134 supersession_check rows. **No remaining retroactive audits needed for closed-slug cohort.**
+- **Co-1 audit pattern confirmed working under accumulation rule.** 9 Co-1 outcomes logged across CWD (1), MHB (3), MOB (5). All `co1_addition_logged` — no explicit invalidations found. Pattern: DPO/named-organization Co-1 anchors continue to be operative through 2024-2026 per their respective organizational publications.
+- **Audit-pattern formalization needed for skill file.** All 6 audits used composite cluster searches rather than per-anchor individual searches (per the RAP attestation deviation). Skill file §4 should be updated to formalize this pattern; currently it implies per-anchor. The cluster pattern is replayable (audit trail records cluster query against each anchor) and tractable; per-anchor searches would have produced ~5x more PubMed calls with no additional findings on the densely-overlapping parameter × population literature clusters.
+- **Follow-up items flagged across 6 audits:**
+  - **GAP-292 RAP-13** Kotloski 2020 rat-kindling paper misclassified — queued for source_slug_links cleanup.
+  - **GAP-294 REF-00059** Steinfeld 2010 DOI typo — separate.
+  - **MHB-05/MHB-06 duplication** — PAS 6463:2022 listed as both T4 standard_eb and T5 national_fw in MHB slug. Single tier classification needed (T4 is correct).
+  - **MHB-10 Price 2024** dementia encyclopedia entry — possible misclassification (belongs in CWD?).
+  - **MOB Tier-6 codes (5 anchors)** — jurisdiction-tracker handoff. **NZS 4121:2001 highest priority** (24 years old, likely superseded by NZBC updates).
+  - **Steinfeld 2010 powered-mobility-demographic-shift evidence gap** — flagged for gap-register; not a supersession finding but a real concern about whether 2010 manual-wheelchair-derived dimensions still capture current powered-mobility user demographics. Recommend creating a gap row.
+- **Semiannual sweep schedule established.** First post-DR sweep date: **2026-12-01** per DR-2026-05-24 §Cadence. Sweep will re-check all 134 supersession_check rows + any newly v2-closed slugs against publication-date filter > 2026-05-25.
+- **Phase B remaining work (not supersession):**
+  - B.11 citation mining itself: 82 v1-eligible slugs not yet mined. Owner pivoted to gap-driven mining per turn 14; concrete protocol for gap-driven mining is the open architectural question.
+  - B.9 derivation_chain: 14/638 populated; ~186 cited sources remaining.
+  - B.12 Tier 2 jurisdictional instruments inventory: partial.
 
 **After all of Phase B closure:**
 
