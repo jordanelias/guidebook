@@ -138,3 +138,49 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 - Optionally: review DR-2026-05-23 cohort definition — if `~30` was the intended scope, narrow back via a follow-up migration transitioning specific slugs out of `RETRACTED-PRE-REHAB`.
 - The pre-existing data_migrations tracking drift is owner-visible but not yet on a queue; consider whether to address before the next migration session.
+
+---
+
+## P1 gap triage (2026-05-25 — post-Pass-2/3 cleanup)
+
+After Pass 2 + Pass 3 of DR-2026-05-24, ran triage on all 9 open P1 gaps. Outcome migration: `scripts/migrations/data_20260525060000_p1_gap_triage.sql`.
+
+| Gap | Status before | Status after | Resolution path |
+|---|---|---|---|
+| GAP-265 (DSDG 2440mm missing) | OPEN | OPEN + annotated | Content-level fix present in `accessible-circulation-geometry.md` line 41 (DSDG Bauman 2010 Co-1 + DeafScape Vaughn 2018 Tier 2 + Cloete & Rout 2025 Tier 3); blocked on Phase E.2g reverification of the PRE-REHABILITATION RETRACTED BPC |
+| GAP-266 (Steinfeld 2006 IDEA+BS8300 entire-sample 180° turn missing) | OPEN | OPEN + annotated | Content-level fix present in same BPC line 42 explicitly citing Steinfeld 2006 RESNA 2400mm convergence with DEAF 2440mm; blocked on same reverification |
+| GAP-268 (DEAF invisible in 5 BPCs) | OPEN | OPEN + scope-reduced | Per-BPC scan: accessible-circulation-geometry SUBSTANTIVE (6 refs), visual-alerting-and-wayfinding-light PARTIAL (3), cognitive-wayfinding-design TOKEN (1); wayfinding-cognitive-science-spatial-design, luminance-contrast-and-pattern, detectable-gradient-protocol-sensory-zones, threshold-and-level-access still 0 refs. Scope reduced from 5 to 4 BPCs; content authorship needed |
+| GAP-269 (1800/2440 contradiction) | OPEN | OPEN + annotated | BPC now stratifies by population (1800mm where DEAF not anticipated, 2440mm where signed conversation anticipated, 2440mm "Most inclusive provision" for primary mixed-population); blocked on same Phase E.2g reverification |
+| GAP-272 (turning circle vs swept envelope) | OPEN | OPEN + annotated | Conceptual reframing; needs owner decision on parameter-name treatment |
+| GAP-273 (tier numbering inconsistency) | OPEN | OPEN + annotated | Database scan revealed sr_meta rows split between T2 (4 rows) and T3 (4 rows); guidebook-auditor SKILL §4.1 has shifted system; needs canonical tier-system doc + migration. Follow-up gap GAP-296 opened |
+| GAP-274 (3 STUB BPCs cited as evidence basis) | OPEN | OPEN + annotated | BPC content authorship on 3 STUB BPCs needed |
+| GAP-278 (Avandell-NJ fabrication risk) | OPEN | **CLOSED-FIXED** | Fabrication confirmed at 2026-05-10 Pass 2B and removed inline; BPC lines 27 + 41 explicitly document the removal |
+| GAP-283 (citation-miner integration) | OPEN | OPEN + annotated | Architectural; depends on gap-driven mining protocol decision (owner pivot turn 14) |
+| **NEW: GAP-296** (tier-system reconciliation) | (n/a) | OPEN (P1) | Created during triage; describes required deliverables for tier-system canonicalization |
+
+**Result:** 1 P1 closed; 8 P1 annotated with current state + resolution path; 1 new P1 opened to track the tier-system reconciliation work that emerged from GAP-273 deep-dive. Total open P1 unchanged at 9.
+
+## Owner decision points blocking further Phase B closure
+
+Three explicit decisions are needed before any of the remaining open P1 work can proceed:
+
+1. **Phase E.2g reverification scope.** GAP-265/266/269 cannot be closed while `accessible-circulation-geometry.md` carries the PRE-REHABILITATION RETRACTED flag. Reverifying a single BPC is the smallest Phase E.2g unit and would unblock 3 P1 gaps simultaneously.
+2. **Tier-system canonical placement of `sr_meta`.** GAP-273 + GAP-296: should systematic reviews / meta-analyses live at Tier 2 (alongside named-organization standards as community-consensus synthesis) or Tier 3 (alongside primary clinical work but at a synthesis level)? PI v10.14 line 138 reading favours T2; the database currently has both. The decision drives a migration of 4 rows and a SKILL-file amendment.
+3. **Turning-circle parameter reframing.** GAP-272: deprecate "turning circle" in favour of "swept envelope" / "manoeuvring footprint", or keep both with mandatory dual-spec? Affects mobility-built-environment, accessible-circulation-geometry, bariatric-turning-radius, and any other BPC referencing the parameter.
+
+## Tractable work that does NOT require owner decisions
+
+- **B.9 derivation_chain population for the 134 v2-closed-slug anchors.** Mechanical; the existing supersession_check.search_strategy_record + audit-trail material can populate derivation_chain coherently for the 134 anchors. Scoped subset of the full ~600+ B.9 work.
+- **B.12 Tier 2 jurisdictional instruments inventory.** Inventory pass on the 59 T2 evidence_sources rows already linked to slugs.
+- **Skill-file pattern formalizations.** Already partially done (supersession-audit §3 amended for cluster-search + Tier-6 lesson). Remaining: any other skill files where similar lessons apply.
+
+## Commits this session — final
+
+bbd7f47 supersession-audit: P1 gap triage (GAP-278 close + 8 annotations + GAP-296 new)
+5cf09d9 supersession-audit: Pass 3 cleanups (NZS-4121 correction, PAS-6463 dedup, GAP-292 close, GAP-295 new, MHB-10 flag; skill cluster-search + Tier-6 lessons)
+b930512 supersession-audit: SEA + MOB v2 closure (Pass 2 COMPLETE)
+ebcafcf supersession-audit: mental-health-built-environment v2 closure
+c8088b7 supersession-audit: cognitive-wayfinding-design v2 closure
+86f9593 supersession-audit: stair-ramp-threshold-biomechanics-accessibility v2 closure
+9b29927 supersession-audit: room-acoustic-performance v2 closure (amended)
+6d4a6da supersession-audit: DR-2026-05-24 protocol infrastructure (Pass 1)
