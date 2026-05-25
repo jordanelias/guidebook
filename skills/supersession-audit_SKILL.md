@@ -137,6 +137,14 @@ For each anchor source, after running the search:
 
 **divergent_no_supersession**: multiple recent works exist with diverging findings on the same parameter × population × outcome. No single candidate supersedes; the synthesis cell needs joint assessment rather than single-source replacement. divergence_notes must summarize the divergence.
 
+### Composite cluster searches (formalized 2026-05-25 per Pass-2 audit-pattern observations)
+
+When a slug has multiple anchors covering overlapping parameter × population × outcome cells, per-anchor individual searches return mostly the same candidates at significant tool-call cost. The cluster pattern: identify topic clusters across the slug's anchors (typically 3-6 clusters per slug), run one composite PubMed/Scholar Gateway/standards-body query per cluster, and judge each anchor in the cluster against the cluster's candidate set. Each anchor still gets its own supersession_check row; the row's `search_strategy_record` records the composite query plus a note identifying which cluster the anchor belongs to. This pattern is replayable (the audit trail captures the cluster query verbatim) and tractable (~5x fewer tool calls than per-anchor searches with no loss of findings on densely-overlapping literatures). Per-anchor searches remain appropriate when an anchor has a unique parameter × population × outcome not shared with other slug anchors.
+
+### Tier-6 supersession verification (lesson learned 2026-05-25)
+
+When a Tier-6 statutory code is logged with outcome `current_best` because it is "out-of-scope per DR §Out-of-scope and handed off to jurisdiction-tracker", **do not speculate on supersession status from age alone**. Old codes are often still operative under building-code referencing mechanisms (e.g., NZS 4121:2001 remains the New Zealand Building Code D1/AS1 Acceptable Solution per Building Act 2004 §119 as of 2024-2025). The handoff note should say "queued for jurisdiction-tracker verification" without prejudging the outcome. Lessons surfaced in MOB-23 audit (Pass-2, room-acoustic-performance + mobility-built-environment).
+
 ---
 
 ## 4. Recording the outcome
